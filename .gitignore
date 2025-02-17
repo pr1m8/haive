@@ -1,0 +1,92 @@
+# ---- OS & Editor-specific ----
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+*.iml
+
+# ---- Node.js / Next.js ----
+node_modules/
+.next/
+out/
+npm-debug.log
+yarn-error.log
+pnpm-lock.yaml
+package-lock.json
+.env.local
+.env.development.local
+.env.production.local
+.env.test.local
+
+# ---- Python ----
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.Python
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+pyvenv.cfg
+
+# ---- Logs & Debugging ----
+*.log
+logs/
+debug.log
+*.pid
+*.seed
+*.stackdump
+*.swp
+
+# ---- Build/Generated Files ----
+dist/
+build/
+coverage/
+*.cover
+*.pyc
+*.pyo
+*.pyd
+*.whl
+*.egg
+.mypy_cache/
+.pytest_cache/
+htmlcov/
+
+# ---- Jupyter Notebooks ----
+.ipynb_checkpoints/
+
+# ---- Database / Cache Files ----
+db.sqlite3
+*.sqlite3
+*.db
+*.db-journal
+
+# ---- Docker ----
+docker-compose.override.yml
+*.dockerfile
+*.container
+
+# ---- Supabase (if used) ----
+supabase/.temp
+supabase/.config
+.supabase/
+.supabase_env
+
+# ---- Miscellaneous ----
+*.bak
+*.old
+*.swp
+*.swo
+*.tmp
+*.temp
+*.log
+.npmrc
+.yarnrc
+.ssh/
+*.pem
+*.key
+*.crt
