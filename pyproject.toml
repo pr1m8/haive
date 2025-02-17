@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "haive"
+version = "0.1.0"
+description = "Package for langgraph agents"
+authors = ["0rac130fD31phi <william.astley@algebraicwealth.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+mkdocs = "^1.6.1"
+mkdocs-material = "^9.6.4"
+langchain-core = "^0.3.35"
+langchain = "^0.3.18"
+langchain-community = "^0.3.17"
+langchain-experimental = "^0.3.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
