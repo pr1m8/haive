@@ -1,0 +1,26 @@
+from pydantic import BaseModel
+from typing import Any
+from typing import List
+from src.agents.self_discovery.models import ReasoningModule
+def parse_list_to_string(list_to_parse: List[str]) -> str:
+    """
+    Parse the reasoning modules list into a formatted string.
+
+    Args:
+        reasoning_modules (List[str]): The list of reasoning modules.
+
+    Returns:
+        str: The reasoning modules formatted as a string.
+    """
+    return "\n".join(list_to_parse)
+def parse_reasoning_modules_to_string(modules: List[ReasoningModule]) -> str:
+    """
+    Convert a list of ReasoningModule instances into a formatted string.
+
+    Args:
+        modules (List[ReasoningModule]): List of reasoning modules.
+
+    Returns:
+        str: Reasoning modules formatted as a string.
+    """
+    return "\n".join([f"- {module.name}: {module.description}" for module in modules])
