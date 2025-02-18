@@ -1,6 +1,6 @@
 ### Nodes
 
-
+from pydantic import Field
 def retrieve(state):
     """
     Retrieve documents
@@ -91,3 +91,8 @@ def transform_query(state):
 
 ### Edges
 
+def transform_query(question:str = Field(description="The question to be transformed")):
+    """
+    Transform the query to produce a better question.
+    """
+    question_rewi
