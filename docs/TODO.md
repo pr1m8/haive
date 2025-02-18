@@ -11,8 +11,15 @@
 
 
 # src 
+- Config as part of class?
 # src/config/settings.py
 [   ] ensure directories exist, and they are setup appropriately
+# src/haive/agents
+## React Agent
+[   ] add docs for the react agent
+Add structured output to the react agent
+## Plan and Execute Agent
+[   ] add docs for the plan and execute agent
 
 
 # src/haive/core/models/vectorstore/base.py

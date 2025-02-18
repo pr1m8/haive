@@ -1,4 +1,6 @@
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
+from src.haive.agents.plan_and_execute.models import Plan,Response,Act
+from src.haive.core.aug_llm.base import AugLLMConfig
 
 EXECUTOR_PROMPT = """You are a helpful assistant"""
 EXECUTOR_PROMPT_TEMPLATE = ChatPromptTemplate.from_messages(
@@ -16,10 +18,14 @@ PLANNER_PROMPT_TEMPLATE = ChatPromptTemplate.from_messages(
             "system",
             PLANNER_PROMPT,
         ),
-        MessagesPlaceholder(variable_name="messages"),
+        ("placeholder", "{messages}"),
     ]
 )
-
+planner_aug_llm_config = AugLLMConfig(
+    name="planner",
+    prompt_template=PLANNER_PROMPT_TEMPLATE,
+    structured_output_model=Plan,
+)
 REPLANNER_PROMPT = """For the given objective, come up with a simple step by step plan. \
 This plan should involve individual tasks, that if executed correctly will yield the correct answer. Do not add any superfluous steps. \
 The result of the final step should be the final answer. Make sure that each step has all the information needed - do not skip steps.
@@ -39,7 +45,12 @@ Update your plan accordingly. If no more steps are needed and you can return to 
 REPLANNER_PROMPT_TEMPLATE = ChatPromptTemplate.from_messages(
     [
         ("system", REPLANNER_PROMPT),
-        MessagesPlaceholder(variable_name="messages"),
+        ("placeholder", "{messages}"),
     ]
 )
 
+replanner_aug_llm_config = AugLLMConfig(
+    name="replanner",
+    prompt_template=REPLANNER_PROMPT_TEMPLATE,
+    structured_output_model=Act,
+)
