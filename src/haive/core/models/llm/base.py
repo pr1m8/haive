@@ -3,7 +3,7 @@
 from pydantic import BaseModel, Field
 from typing import Optional, Dict, Any, Type
 from enum import Enum
-
+from src.config.config import *
 # Enum for supported LLM providers
 class LLMProvider(str, Enum):
     OPENAI = "openai"
@@ -34,6 +34,7 @@ class LLMConfig(BaseModel):
     cache_ttl: Optional[int] = Field(default=300, description="Time-to-live for cache (in seconds).")
     extra_params: Optional[Dict[str, Any]] = Field(default=None, description="Optional extra parameters for LLM configuration.")
 
+    
     class Config:
         orm_mode = True
         allow_population_by_field_name = True
@@ -52,10 +53,11 @@ class LLMConfig(BaseModel):
 # Azure-specific LLM configuration
 class AzureLLMConfig(LLMConfig):
     provider: LLMProvider = LLMProvider.AZURE
-    api_version: str = Field(default="2023-03-15-preview", description="Azure API version.")
-    api_base: str = Field(description="Azure API base URL.")
-    api_type: str = Field(default="azure", description="API type for Azure OpenAI services.")
-    api_endpoint: str = Field(default="", description="Custom endpoint if needed (optional).")
+    api_key: str = Field(default=os.getenv("AZURE_OPENAI_API_KEY"), description="Azure API key.")
+    api_version: str = Field(default=os.getenv("AZURE_OPENAI_API_VERSION"), description="Azure API version.")
+    api_base: str = Field(default=os.getenv("AZURE_OPENAI_API_BASE"), description="Azure API base URL.")
+    api_type: str = Field(default=os.getenv("AZURE_OPENAI_API_TYPE"), description="API type for Azure OpenAI services.")
+    api_endpoint: str = Field(default=os.getenv("AZURE_OPENAI_API_ENDPOINT"), description="Custom endpoint if needed (optional).")
 
     def instantiate_llm(self, **kwargs) -> Any:
         """Creates an Azure LLM instance using the provided config."""

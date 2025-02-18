@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 #load_dotenv()
 # Update
-load_dotenv(dotenv_path='/home/will/Projects/haive/haive-bk/config/env/.env')
+load_dotenv(dotenv_path='.env.example')
 class Config:
     APP_ENV = os.getenv("APP_ENV", "production")
     DEBUG = os.getenv("DEBUG", "False").lower() == "true"

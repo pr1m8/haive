@@ -1,7 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List, Literal, Optional
-
-
+from typing import List, Literal, Optional, Union
 
 class Step(BaseModel):
     """
@@ -10,8 +8,8 @@ class Step(BaseModel):
     id: int
     description: str
     status: Literal["not_started", "in_progress", "complete"] = Field(default="not_started")
-    steps: Optional[List['Step']] = []
-    result: Optional[str] = Field(default=None)
+    steps: Optional[List['Step']] = Field(default_factory=list)  # ✅ Use `default_factory`
+    result: Optional[str] = None  # ✅ No `default` Field
 
     def add_result(self, result: str):
         """
@@ -32,15 +30,13 @@ class Step(BaseModel):
         """
         self.steps = [step for step in self.steps if not step.is_complete()]
 
-
 class Plan(BaseModel):
     """
     Represents a plan containing a recursive structure of steps.
     """
-    
-    description: str = Field(default="", description="Description of the plan")
+    description: str = Field(..., description="Description of the plan")  # ✅ `default` removed
     status: Literal["not_started", "in_progress", "complete"] = "not_started"
-    steps: List[Step] = []
+    steps: List[Step] = Field(default_factory=list)  # ✅ Use `default_factory` instead of `default=[]`
 
     def update_status(self):
         """
@@ -64,22 +60,18 @@ class Plan(BaseModel):
         Removes steps that have been completed.
         """
         self.steps = [step for step in self.steps if not step.is_complete()]
-from typing import Union
+
 class Response(BaseModel):
     """Response to user."""
-
     response: str
-
 
 class Act(BaseModel):
     """Action to perform."""
-
     action: Union[Response, Plan] = Field(
         description="Action to perform. If you want to respond to user, use Response. "
         "If you need to further use tools to get the answer, use Plan."
     )
 
-
 # Rebuild forward references for recursive relationships
 Step.model_rebuild()
-#Plan.model_rebuild()
+Plan.model_rebuild()

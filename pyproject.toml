@@ -14,6 +14,17 @@ langchain-core = "^0.3.35"
 langchain = "^0.3.18"
 langchain-community = "^0.3.17"
 langchain-experimental = "^0.3.4"
+tavily-python = "^0.5.1"
+langgraph-checkpoint-postgres = "^2.0.15"
+langgraph = "^0.2.73"
+graphviz = {version = "^0.20.3", source = "pypi"}
+matplotlib = "^3.10.0"
+ipython = "^8.32.0"
+langchain-openai = "^0.3.6"
+wikipedia = "^1.4.0"
+arxiv = "^2.1.3"
+boto3 = "^1.36.22"
+telethon = "^1.38.1"
 
 
 [build-system]
