@@ -1,10 +1,8 @@
-from config.settings import * 
-from src.chains.reflection_chain import ReflectionChain
-from src.tools.reflection_tool import Reflection
+from src.haive.agents.lats.models import Reflection
+from langchain_core.messages import BaseMessage
+from typing import Optional
 import math
 from collections import deque
-from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, ToolMessage
-from typing import Optional
 
 class Node:
     def __init__(
