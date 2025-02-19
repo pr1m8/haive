@@ -21,8 +21,8 @@ class AugLLMConfig(BaseModel):
     tools: Optional[List[BaseTool]] = None  # Optional tools to bind to the LLM
     structured_output_model: Optional[Type[BaseModel]] = None  # Optional structured output model
     output_parser: Optional[BaseOutputParser] = None  # Optional output parser
-
-
+    
+    
 class AugLLMFactory:
     """
     Factory for creating runnables
@@ -67,8 +67,12 @@ class AugLLMFactory:
         return self.runnable_llm
 
 def compose_runnable(runnable_config: AugLLMConfig):
-    #print("runnable_config:",runnable_config)
-    return AugLLMFactory(runnable_config).runnable
+    try:
+        #print("runnable_config:",runnable_config)
+        return AugLLMFactory(runnable_config).runnable
+    except Exception as e:
+        print("Error composing runnable:",e)
+        return None
 def create_runnables_dict(runnables: List[AugLLMConfig]) -> Dict[str,AugLLMConfig]:
     return {runnable.name: runnable for runnable in runnables}
 
