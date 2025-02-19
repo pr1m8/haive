@@ -1,8 +1,9 @@
 import os
 import sys
 
-# Get the base directory of the `src` folder
-SRC_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Determine the absolute path to the root directory
+ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+SRC_DIR = os.path.join(ROOT_DIR, "src")
 
 # Ensure `haive` is in the Python path
 HAIVE_DIR = os.path.join(SRC_DIR, "haive")
@@ -15,18 +16,20 @@ DOCUMENTS_DIR = os.path.join(SRC_DIR, "documents")
 VECTORSTORE_DIR = os.path.join(SRC_DIR, "vectorstore")
 CACHE_DIR = os.path.join(SRC_DIR, "lc_cache")
 AGENTS_DIR = os.path.join(HAIVE_DIR, "agents")  # Agents belong inside `haive`
+RESOURCES_DIR = os.path.join(ROOT_DIR, "resources")  # New resources directory
+GRAPH_IMAGES_DIR = os.path.join(RESOURCES_DIR, "graph_images")  # Store graph images here
 
-# Ensure the `agents` directory exists (initialize it if missing)
-os.makedirs(AGENTS_DIR, exist_ok=True)
-
-# Ensure other directories exist
-#for directory in [PROJECTS_DIR, DOCUMENTS_DIR, VECTORSTORE_DIR, CACHE_DIR]:
-  #  os.makedirs(directory, exist_ok=True)
+# Ensure the necessary directories exist
+for directory in [AGENTS_DIR, PROJECTS_DIR, DOCUMENTS_DIR, VECTORSTORE_DIR, CACHE_DIR, GRAPH_IMAGES_DIR]:
+    os.makedirs(directory, exist_ok=True)
 
 # Print paths for debugging
-print(f"Source Directory: {SRC_DIR}")
-print(f"Projects Directory: {PROJECTS_DIR}")
-print(f"Documents Directory: {DOCUMENTS_DIR}")
-print(f"Vectorstore Directory: {VECTORSTORE_DIR}")
-print(f"Cache Directory: {CACHE_DIR}")
-print(f"Agents Directory: {AGENTS_DIR}")
+#print(f"Root Directory: {ROOT_DIR}")
+#print(f"Source Directory: {SRC_DIR}")
+#print(f"Projects Directory: {PROJECTS_DIR}")
+#print(f"Documents Directory: {DOCUMENTS_DIR}")
+#print(f"Vectorstore Directory: {VECTORSTORE_DIR}")
+#print(f"Cache Directory: {CACHE_DIR}")
+#print(f"Agents Directory: {AGENTS_DIR}")
+#print(f"Resources Directory: {RESOURCES_DIR}")
+#print(f"Graph Images Directory: {GRAPH_IMAGES_DIR}")
