@@ -26,7 +26,7 @@ class ChessMoveModel(BaseModel):
         except ValueError as e:
             raise ValueError(f"Invalid move: {str(e)}")
         return value
-    
+
     @classmethod
     def from_move(cls, move: chess.Move, board_fen: str = None):
         """Creates a ChessMoveModel from a python-chess Move."""
@@ -62,7 +62,6 @@ class SegmentedAnalysis(BaseModel):
     suggested_plans: List[str] = Field(..., description="Recommended next plans")
     defensive_needs: Optional[str] = Field(None, description="Defensive needs and counterplay ideas")
 
-
 class ChessMoveValidation(BaseModel):
     """Validates chess moves and piece ownership."""
     move: str = Field(..., description="Move in UCI notation")
@@ -73,19 +72,30 @@ class ChessMoveValidation(BaseModel):
     def validate_move_and_ownership(cls, move: str, info) -> str:
         board_fen = info.data.get("board_fen")  
         player_color = info.data.get("player_color")
-        try:
-            board = chess.Board(board_fen)
-            chess_move = chess.Move.from_uci(move)
 
-            if chess_move not in board.legal_moves:
-                raise ValueError(f"Illegal move: {move}")
+        if not board_fen:
+            raise ValueError(f"❌ Missing board_fen during validation for move {move}")
 
-            # Validate piece ownership
-            from_square = chess_move.from_square
-            piece = board.piece_at(from_square)
+        board = chess.Board(board_fen)
+        legal_moves = [m.uci() for m in board.legal_moves]  # Extract legal moves
 
-            if not piece:
-                raise ValueError(f"No piece at {chess.square_name(from_square)}")
-        except Exception as e:
-            raise ValueError(f"Move validation failed: {str(e)}")
+        # Debug output
+        print(f"\n🔍 Validating move: {move} | Current Board FEN: {board_fen}")
+        print(f"♟️ Legal Moves Available: {legal_moves}")
+
+        if move not in legal_moves:
+            raise ValueError(f"Illegal move: {move}")
+
+        # ✅ Check if the piece belongs to the correct player
+        chess_move = chess.Move.from_uci(move)
+        piece = board.piece_at(chess_move.from_square)
+        
+        if not piece:
+            raise ValueError(f"❌ No piece at {chess.square_name(chess_move.from_square)}")
+
+        if (piece.color == chess.WHITE and player_color != "white") or (
+            piece.color == chess.BLACK and player_color != "black"
+        ):
+            raise ValueError(f"❌ Move {move} is not allowed for {player_color}, piece belongs to the opponent!")
+
         return move

@@ -5,7 +5,7 @@ from src.haive.agents.agent_games.chess.models import ChessMoveModel,SegmentedAn
 from src.haive.agents.agent_games.chess.models import ChessMoveValidation
 from pydantic import BaseModel, Field, field_validator
 import chess
-
+from typing import Tuple
 class PlayerPrivateState(BaseModel):
     """Private state information for each player"""
     planned_moves: List[str] = Field(default_factory=list)
@@ -25,27 +25,82 @@ class ChessGameState(BaseModel):
         default="ongoing"
     )
     analysis: Optional[str] = None
-class EnhancedChessState(ChessGameState):
-    """Enhanced state tracking for chess game"""
-    current_player: Literal["white", "black"] = Field(..., description="Current player to move")
-    white_analysis: Optional[SegmentedAnalysis] = None
-    black_analysis: Optional[SegmentedAnalysis] = None
-    last_move_validation: Optional[ChessMoveValidation] = None
-    captured_pieces: Dict[str, List[str]] = Field(default_factory=lambda: {"white": [], "black": []})
-    
-    @field_validator("current_player")
-    def validate_turn(cls, v, info):
-        # Get the data from the ValidationInfo object
-        data = info.data
-        
-        if hasattr(data, "get"):
-            board_fen = data.get("board_fen")
-            if board_fen:
-                board = chess.Board(board_fen)
-                expected_turn = "white" if board.turn == chess.WHITE else "black"
-                if v != expected_turn:
-                    raise ValueError(f"Turn mismatch. Board shows {expected_turn}'s turn, but state shows {v}'s turn")
-        return v
+
+import chess
+from pydantic import BaseModel, Field
+from typing import List, Dict, Optional, Literal, Tuple
+import operator
+import chess
+from pydantic import BaseModel, Field
+from typing import List, Dict, Optional, Literal, Tuple
+import operator
+
+
+class EnhancedChessState(BaseModel):
+    """Extended chess game state with structured move history and private analyses."""
+
+    board_fens: List[str] = Field(
+        default_factory=lambda: [chess.Board().fen()],
+        description="List of past FEN board states, latest at the end."
+    )
+
+    move_history: List[Tuple[str, str]] = Field(
+        default_factory=list,
+        description="List of (player_color, UCI move) tuples (trimmed to last 5 moves)."
+    )
+
+    captured_pieces: Dict[str, List[str]] = Field(
+        default_factory=lambda: {"white": [], "black": []},
+        description="Captured pieces per color."
+    )
+
+    turn: Literal["white", "black"] = Field(
+        default="white",
+        description="Indicates which player’s turn it is."
+    )
+
+    current_player: Literal["white", "black"] = Field(
+        default="white",
+        description="Current player making a move."
+    )
+
+    game_status: Literal["ongoing", "ended"] = Field(
+        default="ongoing",
+        description="Indicates if the game is still being played."
+    )
+
+    game_result: Optional[str] = Field(
+        default=None,
+        description="Final game result: winner or draw status."
+    )
+
+    white_analysis: List[Dict] = Field(
+        default_factory=list,
+        description="White's private analysis (trimmed to last 5 analyses)."
+    )
+
+    black_analysis: List[Dict] = Field(
+        default_factory=list,
+        description="Black's private analysis (trimmed to last 5 analyses)."
+    )
+
+    error_message: Optional[str] = Field(
+        default=None,
+        description="Error message if move validation fails."
+    )
+
+    @property
+    def board_fen(self) -> str:
+        """Returns the current board state (latest FEN)."""
+        return self.board_fens[-1] if self.board_fens else chess.Board().fen()
+
+    def trim_history(self):
+        """Ensures lists do not exceed 5 items."""
+        self.move_history = self.move_history[-5:]
+        self.board_fens = self.board_fens[-5:]
+        self.white_analysis = self.white_analysis[-5:]
+        self.black_analysis = self.black_analysis[-5:]
+
 class ChessGameStateManager:
     @staticmethod
     def initialize() -> ChessGameState:
