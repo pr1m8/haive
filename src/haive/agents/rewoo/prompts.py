@@ -1,7 +1,7 @@
 
-from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate,PromptTemplate
 from langchain_core.output_parsers import PydanticOutputParser
-from src.haive.core.agents.rewoo.models import Plan
+from src.haive.agents.rewoo.models import RewooPlan
 system_prompt = """You are a planning agent that creates detailed, structured plans.
 Your role is to break down tasks into specific, actionable steps using available tools.
 Each step must be precise, properly numbered, and include evidence collection.
@@ -41,15 +41,14 @@ messages = [
     ("user", user_prompt)
 ]
 
-planning_output_parser = PydanticOutputParser(pydantic_object=Plan)
+planning_output_parser = PydanticOutputParser(pydantic_object=RewooPlan)
 planning_prompt = ChatPromptTemplate.from_messages(
             messages
         ).partial(
-            tools=self._format_tool_descriptions(),
             format_instructions=planning_output_parser.get_format_instructions()
+        )
 
-
-solve_prompt=  """Solve the following task or problem. To solve the problem, we have made step-by-step Plan and \
+SOLVE_PROMPT_TEMPLATE=  PromptTemplate("""Solve the following task or problem. To solve the problem, we have made step-by-step Plan and \
         retrieved corresponding Evidence to each Plan. Use them with caution since long evidence might \
         contain irrelevant information.
 
@@ -59,4 +58,5 @@ solve_prompt=  """Solve the following task or problem. To solve the problem, we 
         directly with no extra words.
 
         Task: {task}
-        Response:"""
+        Response:""")
+
