@@ -9,7 +9,7 @@ from langchain_core.output_parsers.openai_tools import JsonOutputToolsParser
 from config.settings import *
 from langchain_openai import AzureOpenAI
 from typing import TypedDict
-from src.agents.lats.Node import Node
+from src.haive.agents.lats.node import Node
 from collections import defaultdict
 from typing import Literal
 from langgraph.checkpoint.memory import MemorySaver
@@ -23,6 +23,13 @@ from langchain_core.messages import AIMessage
 search = TavilySearchAPIWrapper()
 tavily_tool = TavilySearchResults(api_wrapper=search, max_results=5)
 # https://langchain-ai.github.io/langgraph/tutorials/lats/lats/#reflection
+from src.haive.agents.base import AgentArchitecture, AgentArchitectureConfig
+
+from src.haive.agents.lats.state import TreeState
+
+class LATSConfig(AgentArchitectureConfig):
+    """LATS Agent Configuration"""
+    aug_llm_configs
 
 
 def should_loop(state: TreeState,num_levels: int):
@@ -66,14 +73,26 @@ class LATS:
         self.steps=[]
         self.solution_node=None
         self.best_trajectory=None
-
+    
+    def generate_candidates(messages: ChatPromptValue, config: RunnableConfig):
+        n = config["configurable"].get("N", 5)
+        bound_kwargs = llm.bind_tools(tools=tools).kwargs
+        chat_result = llm.generate(
+            [messages.to_messages()],
+            n=n,
+            callbacks=config["callbacks"],
+            run_name="GenerateCandidates",
+            **bound_kwargs,
+        )
+        return [gen.message for gen in chat_result.generations[0]]
     # Define the node we will add to the graph
-    def generate_initial_response(self, state: TreeState) -> dict:
+    # Define the node we will add to the graph
+    def generate_initial_response(self,state: TreeState) -> dict:
         """Generate the initial candidate response."""
         res = self.initial_answer_chain.invoke({"input": state["input"]})
         parsed = self.json_parser.invoke(res)
         tool_responses = [
-            self.tool_node.invoke(
+            tool_node.invoke(
                 {
                     "messages": [
                         AIMessage(
@@ -88,12 +107,9 @@ class LATS:
             for r in parsed
         ]
         output_messages = [res] + [tr["messages"][0] for tr in tool_responses]
-
-        # Correctly invoke the reflection chain
-        reflection = self.reflection_chain.invoke(
+        reflection = reflection_chain.invoke(
             {"input": state["input"], "candidate": output_messages}
         )
-
         root = Node(output_messages, reflection=reflection)
         return {
             **state,
@@ -113,6 +129,9 @@ class LATS:
         )
         return [gen.message for gen in chat_result.generations[0]]
     #review
+
+
+    from collections import defaultdict
 
 
     def select(self,root: Node) -> dict:
