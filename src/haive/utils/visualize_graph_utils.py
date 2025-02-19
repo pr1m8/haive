@@ -9,7 +9,8 @@ from pathlib import Path
 #from PIL import Image as PILImage
 #img = PILImage.open(output_path)
 # Function to render and display the graph
-def render_and_display_graph(compiled_graph, output_dir="/Users/will/Projects/codomatic/hive_v8/resources/graph_images",output_name="graph.png",):
+from config.settings import GRAPH_IMAGES_DIR
+def render_and_display_graph(compiled_graph, output_dir=GRAPH_IMAGES_DIR,output_name="graph.png",):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     
