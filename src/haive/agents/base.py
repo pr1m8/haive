@@ -18,7 +18,9 @@ from langchain_core.messages import filter_messages
 from src.haive.core.models.embeddings.base import EmbeddingsConfig
 from src.haive.core.aug_llm.base import AugLLMConfig,compose_runnable
 #from src.agents.base import BaseAgentConfig
-
+import os 
+import json
+from config.settings import RESOURCES_DIR
 """
 class BaseGraphNode(BaseModel):
     runnable_config: CustomRunnableConfig
@@ -150,11 +152,64 @@ class AgentArchitecture:
                 self.compile_graph(checkpointer=self.memory)
             if config.should_visualize_graph:
                 self.visualize_graph(config.visualize_graph_output_name)
-    
-    def setup_workflow(self):
-        """ Overload this function in the child class """
-        raise NotImplementedError("This function must be overloaded in the child class")
-    
+  
+
+    def save_state_history(self):
+        """Save the current agent state to a JSON file in RESOURCES_DIR/State_History."""
+
+        if not self.app or not self.memory:
+            raise RuntimeError("Workflow graph is not compiled or memory is not initialized.")
+
+        # Fetch the current state
+        state_json = self.app.get_state(self.runnable_config)
+
+        if not state_json:
+            print("No state history available to save.")
+            return
+
+        # Ensure JSON serializability
+        state_json = self._ensure_json_serializable(state_json)
+
+        # Determine the script's relative folder name to name the JSON file
+        caller_file = os.path.abspath(__file__)  # Full absolute path
+        caller_name = os.path.splitext(os.path.basename(caller_file))[0]  # Extract filename without extension
+
+        # Define the target directory inside RESOURCES_DIR
+        state_history_dir = os.path.join(RESOURCES_DIR, "State_History")
+
+        # Ensure directory exists
+        os.makedirs(state_history_dir, exist_ok=True)
+
+        # Construct full path for the JSON file
+        output_file = os.path.join(state_history_dir, f"{caller_name}.json")
+
+        # Save to JSON
+        with open(output_file, "w", encoding="utf-8") as f:
+            json.dump(state_json, f, indent=4)
+
+        print(f"State history saved to: {output_file}")
+
+    def _ensure_json_serializable(self, obj):
+        """Ensure the object is JSON serializable, assuming it's a BaseModel if not."""
+        try:
+            json.dumps(obj)  # Test if already serializable
+            return obj
+        except (TypeError, OverflowError):
+            if isinstance(obj, BaseModel):
+                return obj.model_dump()
+            elif isinstance(obj, dict):
+                return {k: self._ensure_json_serializable(v) for k, v in obj.items()}
+            elif isinstance(obj, list):
+                return [self._ensure_json_serializable(v) for v in obj]
+            elif isinstance(obj, tuple):
+                return [self._ensure_json_serializable(v) for v in obj]  # Convert tuples to lists
+            elif hasattr(obj, "__dict__"):  # Handle custom objects
+                return self._ensure_json_serializable(obj.__dict__)
+            elif hasattr(obj, "__str__"):  # Convert unknown objects to string
+                return str(obj)
+            else:
+                return "Unserializable Object"  # Fallback
+
     def compile_workflow(self):
         if self.graph:
             if self.memory:

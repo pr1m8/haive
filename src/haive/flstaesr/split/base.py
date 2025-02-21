@@ -160,7 +160,7 @@ class DynamicModuleConfig(BaseModel):
 
 
 # ✅ **Example Usage**
-config = DynamicModuleConfig(module_names=["langchain_text_splitters"])
+config = DynamicModuleConfig(module_names=["langchain_community.agent_toolkits"])
 # 🎯 Step 1: Retrieve available classes
 available_classes = config.get_available_classes()
 print(f"📌 Available Classes: {list(available_classes.keys())}")
