@@ -4,7 +4,7 @@ import sys
 # Determine the absolute path to the root directory
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 SRC_DIR = os.path.join(ROOT_DIR, "src")
-
+RESOURCES_DIR = os.path.join(ROOT_DIR, "resources")
 # Ensure `haive` is in the Python path
 HAIVE_DIR = os.path.join(SRC_DIR, "haive")
 if HAIVE_DIR not in sys.path:

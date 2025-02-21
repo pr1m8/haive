@@ -173,9 +173,10 @@ class DocumentSource(BaseModel):
         return cls(source=DirectorySource.from_directory(directory_path))
 
 
-class FLSTAESR(BaseModel):
+class FLSTAESRConfig(BaseModel):
     """Represents a structured document in the FLSTAESR system."""
     doc_source: DocumentSource = Field(description="The source of the document")
     doc_type: str = Field(description="The type of the document")
     doc_path: str = Field(description="The path to the document")
     doc_content: str = Field(description="The content of the document")
+    

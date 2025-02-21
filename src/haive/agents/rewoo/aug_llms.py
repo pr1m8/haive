@@ -53,7 +53,7 @@ rewoo_aug_llm_config = AugLLMConfig(
     output_parser=REWOO_OUTPUT_PARSER
 )
 
-REWOO_SOLVE_PROMPT_TEMPLATE=  PromptTemplate("""Solve the following task or problem. To solve the problem, we have made step-by-step Plan and \
+REWOO_SOLVE_PROMPT_TEMPLATE=  PromptTemplate.from_template("""Solve the following task or problem. To solve the problem, we have made step-by-step Plan and \
         retrieved corresponding Evidence to each Plan. Use them with caution since long evidence might \
         contain irrelevant information.
 

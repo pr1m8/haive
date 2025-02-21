@@ -2,22 +2,48 @@ from src.haive.agents.base import AgentArchitectureConfig
 from src.haive.core.aug_llm.base import AugLLMConfig
 from src.haive.core.models.llm.base import AzureLLMConfig
 from src.haive.agents.rewoo.state import ReWOOState
-from pydantic import Field
+from pydantic import Field,model_validator
 from src.haive.agents.base import AgentArchitecture,AgentArchitectureConfig
 from typing import Optional
 from src.haive.agents.rewoo.state import ReWOOState
 from langgraph.types import Command
 from langgraph.graph import START,END
+from langchain_core.tools import BaseTool,StructuredTool
+from pydantic import BaseModel
+from typing import List,Union
+from src.haive.agents.rewoo.aug_llms import rewoo_aug_llm_config,solve_aug_llm_config
+from src.haive.utils.tool_utils import _format_tool_descriptions
+from src.haive.core.tools.search_tools import tavily_search_tool,tavily_search_context,tavily_qna,tavily_extract
+from src.haive.core.aug_llm.base import compose_runnable
+
 class RewooAgentConfig(AgentArchitectureConfig):
-    aug_llm_config: AugLLMConfig = Field(default=AugLLMConfig(name="rewoo_agent",llm_config=AzureLLMConfig(model="gpt-4o",parameters={"temperature": 0.7})),description="The configuration for the LLM")
+    """Configuration for the ReWOO Agent with automatic prompt formatting."""
+
+    planner: AugLLMConfig = Field(default=rewoo_aug_llm_config, description="The configuration for the planner LLM")
+    solver: AugLLMConfig = Field(default=solve_aug_llm_config, description="The configuration for the solver LLM")
+    tools: List[Union[BaseTool, StructuredTool, BaseModel]] = Field(
+        default=[tavily_search_tool, tavily_search_context, tavily_qna, tavily_extract],
+        description="The tools available for the agent",
+    )
     state_schema: ReWOOState = Field(default=ReWOOState)
-    should_visualize_graph: bool = Field(default=True,description="Whether to visualize the graph")
-    visualize_graph_output_name: str = Field(default="rewoo_graph.png",description="The name of the visualization file")
-    
+    should_visualize_graph: bool = Field(default=True, description="Enable graph visualization")
+    visualize_graph_output_name: str = Field(default="rewoo_graph.png", description="Graph output file name")
+
+    @model_validator(mode="after")
+    def format_planning_prompt_with_tools(self):
+        """Ensures `formatted_prompt` is updated based on the available tools."""
+        self.planner.prompt_template = self.planner.prompt_template.partial(
+            tools=_format_tool_descriptions(self.tools)
+        )
+        return self
+
 class RewooAgent(AgentArchitecture):
     def __init__(self,config:RewooAgentConfig):
+        self.planner = compose_runnable(config.planner)
+        self.solver = compose_runnable(config.solver)
         super().__init__(config)
         #self.setup_workflow()
+        
 
     def setup_workflow(self):
         pass
@@ -30,7 +56,7 @@ class RewooAgent(AgentArchitecture):
         return len(state["results"]) + 1
     def plan(self, state: ReWOOState) -> ReWOOState:
         """Generate a plan for the given task"""
-        result = self.planner.invoke({"task": state["task"], "tools": self.tools})
+        result = self.planner.invoke({"task": state["task"]})
         return Command(update={"plan": result})
     
     def tool_execution(self, state: ReWOOState) -> ReWOOState:
@@ -112,4 +138,9 @@ class RewooAgent(AgentArchitecture):
         self.graph.add_edge(START, "planning_phase")
         
         return self.graph
+    def run(self,task:str):
+        for s in self.app.stream({"task": task},config=self.runnable_config):
+            print(s)
+            print("---")
 a = RewooAgent(RewooAgentConfig())
+a.run("Find the sitemap for langgraph")

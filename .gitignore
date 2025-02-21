@@ -19,7 +19,7 @@ package-lock.json
 .env.development.local
 .env.production.local
 .env.test.local
-
+.env.example
 # ---- Python ----
 __pycache__/
 *.pyc
@@ -90,3 +90,4 @@ supabase/.config
 *.pem
 *.key
 *.crt
+docs/_build/

@@ -23,7 +23,7 @@ from langgraph.checkpoint.postgres import PostgresSaver
 import uuid
 from langchain_core.runnables import RunnableConfig
 from src.haive.agents.react_agent.state import ReactAgentState
-
+from src.haive.utils.visualize_graph_utils import render_and_display_graph
 # Utility function to decide whether to continue
 def should_continue(state: ReactAgentState, tool_node_name: str = "tools",) -> str:
     messages = filter_messages(state["messages"], exclude_types=[SystemMessage])
@@ -135,7 +135,7 @@ class ReactAgent(AgentArchitecture):
         #if config.compile_workflow and self.graph:
         #     self.compile_graph()
         super().__init__(config=config)
-        print(self.aug_llm_runnable)
+        #print(self.aug_llm_runnable)
         self.setup_workflow()
         self.compile_graph()
         #self.aug_llm_runnable_input = self.aug_llm_runnable.get_input_schema().model_fields.keys()
@@ -166,8 +166,8 @@ class ReactAgent(AgentArchitecture):
         # Use runnable config with above to get the input schema. 
         # We should look into multi llm chians 
         # We shoudl also look into async optins. 
-        print(self.aug_llm_runnable)
-        print(state)
+        #print(self.aug_llm_runnable)
+        ##print(state)
         response = self.aug_llm_runnable.invoke({"messages":state["messages"]}, config=self.runnable_config,debug=True)
         return Command(update={"messages": state["messages"] + [response]})
     
@@ -228,7 +228,7 @@ class ReactAgent(AgentArchitecture):
      #   """
      #   response = self.model_runnable.invoke({"messages": state["messages"]}, config=self.runnable_config).with_structured_output(schema)
      #   Command(update={"messages": state["messages"] + [response]})
-     
+    
     def setup_workflow(self):
         """
         Configure the workflow graph.
@@ -331,7 +331,9 @@ class ReactAgent(AgentArchitecture):
                 #print("State:",self.app.get_state(self.runnable_config))
                 #print("Messages:",self.app.get_state_history(self.runnable_config))
                 #print("Prompts:",self.app.get_prompts(self.runnable_config))
-   
+    @classmethod
+    def create_react_agent(cls, config: ReactAgentConfig = ReactAgentConfig()):
+        return cls(config=config)
 
 def create_react_agent(config: ReactAgentConfig = ReactAgentConfig()):
     return ReactAgent(config=config)
