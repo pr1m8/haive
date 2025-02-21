@@ -3,8 +3,7 @@
 from langchain_core.prompt_values import ChatPromptValue
 from langchain_core.runnables import RunnableConfig
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder,PromptTemplate
-from src.chains.reflection_chain import ReflectionChain
-from src.tools.reflection_tool import Reflection
+
 from langchain_core.output_parsers.openai_tools import JsonOutputToolsParser
 from config.settings import *
 from langchain_openai import AzureOpenAI
@@ -23,14 +22,15 @@ from langchain_core.messages import AIMessage
 search = TavilySearchAPIWrapper()
 tavily_tool = TavilySearchResults(api_wrapper=search, max_results=5)
 # https://langchain-ai.github.io/langgraph/tutorials/lats/lats/#reflection
+
 from src.haive.agents.base import AgentArchitecture, AgentArchitectureConfig
 
 from src.haive.agents.lats.state import TreeState
 
 class LATSConfig(AgentArchitectureConfig):
     """LATS Agent Configuration"""
-    aug_llm_configs
-
+    llm_config: AugLLMConfig = Field(default=AugLLMConfig(name="lats_llm",llm_config=AzureLLMConfig(model="gpt-4o",parameters={"temperature": 0.7})),description="The configuration for the LLM")
+    reflection_llm_config: AugLLMConfig = Field(default=AugLLMConfig(name="reflection_llm",llm_config=AzureLLMConfig(model="gpt-4o",parameters={"temperature": 0.7})),description="The configuration for the reflection LLM")
 
 def should_loop(state: TreeState,num_levels: int):
     """Determine whether to continue the tree search."""
@@ -41,8 +41,16 @@ def should_loop(state: TreeState,num_levels: int):
         return END
     return "expand"
 
+@as_runnable
+def reflection_chain(inputs) -> Reflection:
+    reflection_llm_chain = compose_runnable(reflection_aug_llm_config)
+    tool_choices = reflection_llm_chain.invoke(inputs)
+    reflection = tool_choices[0]
+    if not isinstance(inputs["candidate"][-1], AIMessage):
+        reflection.found_solution = False
+    return reflection
 
-class LATS:
+class LATS(AgentArchitecture):
     def __init__(self,llm=AzureChatOpenAI(model='gpt-4o'),tools=[tavily_tool],
                  system_prompt="You are an AI Assistant",
                  config: RunnableConfig = {'configurable': {'thread_id':'1'}},

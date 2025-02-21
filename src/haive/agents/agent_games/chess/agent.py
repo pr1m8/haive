@@ -316,7 +316,7 @@ def run_chess_game(agent: ChessAgent):
     }
 
     # ✅ Stream the game loop
-    for step in agent.app.stream(initial_state, config=agent.runnable_config, debug=True, stream_mode="values"):
+    for step in agent.app.stream(initial_state, config=agent.runnable_config, debug=False, stream_mode="values"):
         board = chess.Board(step["board_fens"][-1])
 
         # 🎯 **Game Board Visualization**
@@ -359,6 +359,7 @@ def run_chess_game(agent: ChessAgent):
             print(f"   - Black Captured: {', '.join(step['captured_pieces']['black']) or 'None'}")
 
         print("\n" + "-" * 60)  # Divider for clarity
+    agent.save_state_history()
 # Run the game
 if __name__ == "__main__":
     run_chess_game(agent=ChessAgent(config=ChessAgentConfig()))

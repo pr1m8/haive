@@ -42,9 +42,9 @@ class PlanAndExecuteAgent(AgentArchitecture):
         self.replanner_runnable = compose_runnable(self.config.aug_llm_configs["replanner"])
         super().__init__(config)
     async def planner(self,state:PlanAndExecuteState):
-        print(state['input'])
+        #print(state['input'])
         plan = await self.planner_runnable.ainvoke({"messages": [("user", state["input"])]})
-        print(plan)
+        #print(plan)
         return Command(update={"plan":plan},goto="execute_step",resume={"plan":plan.steps})
     
     
@@ -166,24 +166,24 @@ class PlanAndExecuteAgent(AgentArchitecture):
         if not inputs:
             raise ValueError("Either input_text or input_dict must be provided")
 
-        print("🔍 Debug Inputs:", inputs)  # Debugging line
+        #print("🔍 Debug Inputs:", inputs)  # Debugging line
         
         async for output in self.app.astream(inputs, stream_mode="values", config=self.runnable_config):
             print("📝 Output:", output)  # Debugging line
             if "messages" in output:
                 message = output["messages"][-1]
-                print("💬 Message:", message)
+                #print("💬 Message:", message)
 
             # Ensure update includes required fields
             if not any(key in output for key in ["input", "plan", "past_steps", "response"]):
                 raise ValueError("🚨 Missing required update fields:", output)
-
+        self.save_state_history()
     
 import asyncio
 
 async def main():
     a = PlanAndExecuteAgent(PlanAndExecteConfig())
-    await a.arun(input_text="where was the most recent wimbledon winner born.")
+    await a.arun(input_text="Find a github repo relating to autonomous agents - autogpt,auto-dev,  and find the sitemap to langgraph.")
 
 if __name__ == "__main__":
     asyncio.run(main())
