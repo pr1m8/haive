@@ -1,0 +1,139 @@
+/* Custom CSS for Haive documentation */
+
+/* Improve code block readability */
+div[class^="highlight-"] {
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+pre {
+    padding: 1em;
+    line-height: 1.5;
+}
+
+/* Better typography */
+body {
+    text-rendering: optimizeLegibility;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 1.5em;
+    margin-bottom: 0.75em;
+}
+
+h1 {
+    font-size: 2em;
+    border-bottom: 1px solid var(--color-background-border);
+    padding-bottom: 0.3em;
+}
+
+h2 {
+    font-size: 1.5em;
+    border-bottom: 1px solid var(--color-background-border);
+    padding-bottom: 0.2em;
+}
+
+p {
+    margin-bottom: 1em;
+}
+
+/* Make tables more readable */
+table.docutils {
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5em;
+    width: 100%;
+}
+
+table.docutils th {
+    background-color: var(--color-background-secondary);
+    padding: 8px 12px;
+}
+
+table.docutils td {
+    padding: 8px 12px;
+    border: 1px solid var(--color-background-border);
+}
+
+table.docutils tr:nth-child(even) {
+    background-color: var(--color-background-hover);
+}
+
+/* Improve admonitions (note, warning, etc.) */
+.admonition {
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    margin: 1.5em 0;
+    padding: 0.5em 1em;
+}
+
+.admonition-title {
+    font-weight: bold;
+    margin: 0 -1em 0.5em -1em;
+    padding: 0.5em 1em;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+/* Function signatures and method lists */
+dl.py.function, dl.py.method, dl.py.class {
+    background-color: var(--color-background-secondary);
+    border-radius: 4px;
+    padding: 1em;
+    margin-bottom: 1.5em;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+dl.py dt {
+    border-left: 3px solid var(--color-brand-primary);
+    padding-left: 10px;
+}
+
+/* Sidebar navigation enhancements */
+.sidebar-tree li {
+    margin: 0.25em 0;
+}
+
+.sidebar-tree .current > a {
+    font-weight: bold;
+}
+
+/* Search box improvements */
+.sidebar-search {
+    padding: 1em;
+}
+
+.sidebar-search-container {
+    border-radius: 4px;
+}
+
+/* TOC improvements */
+.toc-tree li {
+    margin: 0.5em 0;
+}
+
+/* API documentation improvements */
+.sig-name {
+    font-weight: bold;
+    color: var(--color-brand-primary);
+}
+
+.sig-param {
+    font-style: italic;
+}
+
+/* Footer styling */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 0;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .sidebar-drawer {
+        width: 75%;
+    }
+}
