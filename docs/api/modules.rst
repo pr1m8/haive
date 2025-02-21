@@ -1,7 +1,9 @@
-haive
-=====
+Main Packages
+============
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
 
-   haive
+   haive.agents
+   haive.flstaesr
+   haive.core
