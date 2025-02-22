@@ -1,0 +1,9 @@
+[submodule "src/haive/agents"]
+	path = src/haive/agents
+	url = https://github.com/0rac130fD31phi/haive-agents.git
+[submodule "src/haive/core"]
+	path = src/haive/core
+	url = https://github.com/0rac130fD31phi/haive-core.git
+[submodule "src/haive/flstaesr"]
+	path = src/haive/flstaesr
+	url = https://github.com/0rac130fD31phi/flstaesr.git
