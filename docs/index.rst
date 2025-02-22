@@ -1,74 +1,51 @@
-.. image:: _static/banner.png
-   :alt: Haive Banner
-   :width: 100%
-   :class: only-light
-
-.. image:: _static/banner_dark.png
-   :alt: Haive Banner (Dark Mode)
-   :width: 100%
-   :class: only-dark
-
 Welcome to Haive
 ===============
 
-**Haive** is a powerful Python framework for [brief description of what your package does].
+.. raw:: html
+
+   <div style="text-align:center; margin-bottom: 2em;">
+     <p style="font-size: 1.2em; color: #555;">
+       A powerful framework for building AI agents
+     </p>
+   </div>
 
 .. grid:: 2
 
-    .. grid-item-card:: :octicon:`rocket` Getting Started
+    .. grid-item-card:: Getting Started
         :link: installation
         :link-type: doc
         :class-card: sd-border-0
 
-        New to Haive? Start here to get up and running quickly.
+        Start building with Haive quickly.
 
-    .. grid-item-card:: :octicon:`book` User Guide
-        :link: usage
+    .. grid-item-card:: API Reference
+        :link: api/index
         :link-type: doc
         :class-card: sd-border-0
 
-        Learn about Haive's core concepts and components.
-
-    .. grid-item-card:: :octicon:`code` API Reference
-        :link: api/modules
-        :link-type: doc
-        :class-card: sd-border-0
-
-        Detailed documentation of Haive's API.
-
-    .. grid-item-card:: :octicon:`git-branch` Contributing
-        :link: contributing
-        :link-type: doc
-        :class-card: sd-border-0
-
-        Want to contribute to Haive? Start here!
+        Explore the Haive API documentation.
 
 Key Features
 -----------
 
-- **Feature 1**: Brief description
-- **Feature 2**: Brief description
-- **Feature 3**: Brief description
+- **Flexible Agent Architecture**: Build agents with different reasoning strategies
+- **State Management**: Track and manage agent state effectively
+- **Tool Integration**: Easily connect agents to external tools and services
+- **Extensible Design**: Create custom agents for your specific needs
 
 .. code-block:: python
-    :caption: Quick Example
+    :caption: Example: Creating a Simple Agent
     :linenos:
 
-    import haive
+    from haive.agents import SummarizerAgent
     
-    # Simple example of Haive usage
-    agent = haive.Agent()
-    result = agent.process("your input here")
+    # Initialize the agent
+    agent = SummarizerAgent()
+    
+    # Process input text
+    result = agent.summarize("Your long text to summarize...")
+    
     print(result)
-
-Getting Help
------------
-
-If you're having issues, please let us know by:
-
-- Filing an issue on `GitHub <https://github.com/yourusername/haive/issues>`_
-- Joining our `Discord community <https://discord.gg/yourdiscord>`_
-- Checking out our `FAQ <faq.html>`_ section
 
 .. toctree::
    :maxdepth: 2
@@ -77,16 +54,6 @@ If you're having issues, please let us know by:
 
    installation
    usage
-   tutorials/index
-   api/modules
-   development/index
+   api/index
+   examples
    contributing
-   faq
-   changelog
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Related Projects
-   :hidden:
-
-   related_projects
