@@ -1,9 +1,9 @@
-Main Packages
+API Reference
 ============
 
 .. toctree::
    :maxdepth: 2
 
    haive.agents
-   haive.flstaesr
    haive.core
+   haive.flstaesr

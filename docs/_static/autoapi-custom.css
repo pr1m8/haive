@@ -1,0 +1,63 @@
+/* Custom styling for AutoAPI-generated documentation */
+
+.module-description {
+    padding: 1em;
+    background-color: rgba(55, 118, 171, 0.05);
+    border-left: 4px solid var(--color-brand-primary);
+    border-radius: 8px;
+    margin-bottom: 2em;
+}
+
+.py-class {
+    padding: 1.5em;
+    background-color: var(--color-background-secondary);
+    border-radius: 8px;
+    margin: 1.5em 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.py-class .sig {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    padding: 0.5em;
+    margin-bottom: 1em;
+}
+
+/* Method and attribute sections */
+.py-method, .py-attribute {
+    margin-top: 1em;
+    border-left: 3px solid rgba(55, 118, 171, 0.5);
+    padding-left: 1em;
+}
+
+/* Parameter tables */
+.py-paramtable {
+    width: 100%;
+    margin: 1em 0;
+}
+
+.py-paramtable th {
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 0.5em;
+    text-align: left;
+}
+
+.py-paramtable td {
+    padding: 0.5em;
+    border-bottom: 1px solid var(--color-background-border);
+}
+
+/* Examples in docstrings */
+.docstring .highlight {
+    margin: 1em 0;
+}
+
+/* Better class cards */
+.class-card {
+    transition: all 0.2s ease-in-out;
+}
+
+.class-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
