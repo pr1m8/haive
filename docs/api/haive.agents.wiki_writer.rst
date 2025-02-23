@@ -36,6 +36,22 @@ haive.agents.wiki\_writer.models module
    :show-inheritance:
    :undoc-members:
 
+haive.agents.wiki\_writer.state module
+--------------------------------------
+
+.. automodule:: haive.agents.wiki_writer.state
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+haive.agents.wiki\_writer.utils module
+--------------------------------------
+
+.. automodule:: haive.agents.wiki_writer.utils
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 Module contents
 ---------------
 

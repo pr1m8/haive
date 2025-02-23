@@ -64,6 +64,7 @@ sphinx-autoapi = "^3.6.0"
 sphinx-copybutton = "^0.5.2"
 sphinx-togglebutton = "^0.3.2"
 jupyter = "^1.1.1"
+sphinx-design = "^0.6.1"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -71,6 +72,12 @@ furo = "^2024.8.6"
 sphinx-copybutton = "^0.5.2"
 sphinx-design = "^0.6.1"
 sphinx-inline-tabs = "^2023.4.21"
+watchdog = "^6.0.0"
+
+
+[tool.poetry.scripts]
+watch-docs = "scripts.docs.watch_docs:main"
+build-docs = "scripts.docs.build:main"
 
 [build-system]
 requires = ["poetry-core"]

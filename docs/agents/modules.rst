@@ -1,7 +1,7 @@
-haive
-=====
+agents
+======
 
 .. toctree::
    :maxdepth: 4
 
-   haive
+   agents

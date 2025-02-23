@@ -1,11 +1,9 @@
-# Configuration file for the Sphinx documentation builder
 import os
 import sys
 from datetime import datetime
 
 # -- Path setup --------------------------------------------------------------
-# Add mockups directory to the path so Sphinx can find the modules
-sys.path.insert(0, os.path.abspath('./mockups'))
+sys.path.insert(0, os.path.abspath('../src'))  # Ensure Haive is in the Python path
 
 # Project information
 project = 'Haive'
@@ -15,7 +13,6 @@ release = '0.1.0'
 
 # -- General configuration ---------------------------------------------------
 extensions = [
-    # Core Sphinx extensions
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
@@ -23,66 +20,35 @@ extensions = [
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.todo',
     'sphinx.ext.mathjax',
-    
-    # Third-party extensions
-    'myst_parser',
     'sphinx_copybutton',
-    'sphinx_design',
+    'sphinx_design',  # Ensure this is here
 ]
 
-# -- Autodoc settings ----------------------------------------------
-autodoc_typehints = 'both'
-autodoc_typehints_format = 'short'
-autodoc_member_order = 'groupwise'  # Group by type (methods, attributes, etc.)
+
+# Ensure Sphinx detects modules correctly
+# Enable automatic module documentation generation
+autosummary_generate = True
 autodoc_default_options = {
     'members': True,
     'undoc-members': True,
     'special-members': '__init__, __call__',
     'inherited-members': True,
     'show-inheritance': True,
-    'member-order': 'groupwise',
 }
 
-# -- Napoleon settings (for Google and NumPy style docstrings) -----------
-napoleon_google_docstring = True
-napoleon_numpy_docstring = True
-napoleon_include_init_with_doc = True
-napoleon_include_private_with_doc = False
-napoleon_include_special_with_doc = True
-napoleon_use_admonition_for_examples = True
-napoleon_use_admonition_for_notes = True
-napoleon_use_admonition_for_references = True
-napoleon_use_ivar = True
-napoleon_use_param = True
-napoleon_use_rtype = True
-napoleon_preprocess_types = True
-napoleon_attr_annotations = True
-
-# -- MyST Parser settings (for Markdown support) ---------------------------
-myst_enable_extensions = [
-    "colon_fence",
-    "deflist",
-    "dollarmath",
-    "amsmath",
-    "html_image",
-    "html_admonition",
-    "replacements",
-    "smartquotes",
-    "tasklist",
+# Enable correct package detection
+autodoc_mock_imports = [
+    'langchain', 'langchain_community', 'pydantic', 'BaseModel'
 ]
-myst_heading_anchors = 3
 
 # -- HTML output settings ---------------------------------------------------
-html_theme = 'furo'  # Modern, clean theme
-html_title = f"{project} Documentation"
-html_short_title = project
+html_theme = 'furo'
+html_title = "Haive Documentation"
+html_short_title = "Haive"
 html_static_path = ['_static']
 html_css_files = ['custom.css']
-html_js_files = ['custom.js']
 html_favicon = '_static/favicon.ico'
 html_logo = '_static/logo.png'
-html_show_sourcelink = False
-html_copy_source = False
 
 # Furo theme options
 html_theme_options = {

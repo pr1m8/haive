@@ -20,6 +20,14 @@ haive.utils.config module
    :show-inheritance:
    :undoc-members:
 
+haive.utils.config\_utils module
+--------------------------------
+
+.. automodule:: haive.utils.config_utils
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 haive.utils.doc\_utils module
 -----------------------------
 
@@ -40,6 +48,14 @@ haive.utils.parser\_utils module
 --------------------------------
 
 .. automodule:: haive.utils.parser_utils
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+haive.utils.state\_utils module
+-------------------------------
+
+.. automodule:: haive.utils.state_utils
    :members:
    :show-inheritance:
    :undoc-members:

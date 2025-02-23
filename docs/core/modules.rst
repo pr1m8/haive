@@ -1,7 +1,7 @@
-haive
-=====
+core
+====
 
 .. toctree::
    :maxdepth: 4
 
-   haive
+   core

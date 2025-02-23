@@ -1,5 +1,5 @@
-haive package
-=============
+core package
+============
 
 Subpackages
 -----------
@@ -7,15 +7,15 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   haive.agents
-   haive.core
-   haive.flstaesr
-   haive.utils
+   core.agent
+   core.aug_llm
+   core.toolkits
+   core.tools
 
 Module contents
 ---------------
 
-.. automodule:: haive
+.. automodule:: core
    :members:
    :show-inheritance:
    :undoc-members:
