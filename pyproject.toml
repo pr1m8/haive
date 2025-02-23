@@ -6,17 +6,34 @@ authors = ["0rac130fD31phi <william.astley@algebraicwealth.com>"]
 license = "MIT"
 readme = "README.md"
 
+
+
+
+
 [tool.poetry.dependencies]
+# Core
 python = "^3.12"
+
+# Langchain
 langchain-core = "^0.3.35"
 langchain = "^0.3.18"
 langchain-community = "^0.3.17"
 langchain-experimental = "^0.3.4"
-tavily-python = "^0.5.1"
-langgraph-checkpoint-postgres = "^2.0.15"
+
+# Langgraph
 langgraph = "^0.2.73"
+## Langgraph Checkpoints
+# Checkpoints
+langgraph-checkpoint-postgres = "^2.0.15"
+
+# Search
+tavily-python = "^0.5.1"
+
+# Data Visualisation
 graphviz = {version = "^0.20.3", source = "pypi"}
 matplotlib = "^3.10.0"
+
+
 ipython = "^8.32.0"
 langchain-openai = "^0.3.6"
 wikipedia = "^1.4.0"
@@ -26,10 +43,17 @@ telethon = "^1.38.1"
 neo4j = "^5.28.1"
 langchain-neo4j = "^0.3.0"
 nest-asyncio = "^1.6.0"
-chess = "^1.11.1"
-sphinx = "^8.2.0"
 setuptools = "^75.8.0"
+
+# Games
+chess = "^1.11.1"
 sente = {git = "https://github.com/Jasperspyke/sente"}
+
+# Documentation
+sphinx = "^8.2.0"
+
+
+## LLM Compiler
 numexpr = "^2.10.2"
 json-repair = "^0.39.0"
 sphinx-rtd-theme = "^3.0.2"
@@ -39,6 +63,7 @@ lxml = "^5.3.1"
 sphinx-autoapi = "^3.6.0"
 sphinx-copybutton = "^0.5.2"
 sphinx-togglebutton = "^0.3.2"
+jupyter = "^1.1.1"
 
 
 [tool.poetry.group.dev.dependencies]
