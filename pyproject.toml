@@ -29,7 +29,7 @@ nest-asyncio = "^1.6.0"
 chess = "^1.11.1"
 sphinx = "^8.2.0"
 setuptools = "^75.8.0"
-sente = {git = "https://github.com/Jasperspyke/sente"}
+#sente = {git = "https://github.com/Jasperspyke/sente"}
 numexpr = "^2.10.2"
 json-repair = "^0.39.0"
 sphinx-rtd-theme = "^3.0.2"

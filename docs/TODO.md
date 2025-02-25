@@ -9,7 +9,7 @@
 
 
 
-
+SEtup - Sente (meson, g++, some other one, we will check link,.)
 # src 
 - Config as part of class?
 # src/config/settings.py
