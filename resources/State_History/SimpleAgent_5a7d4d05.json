@@ -1,0 +1,217 @@
+[
+    {
+        "messages": [
+            [
+                "user",
+                "Tell me about deep learning."
+            ],
+            {
+                "content": "Deep learning is a subset of machine learning in artificial intelligence (AI) that is based on learning data representations, as opposed to task-specific algorithms. It involves neural networks with many layers \u2013 hence the term \"deep.\"\n\nHere are some key points about deep learning:\n\n1. **Neural Networks**: Deep learning models are based on neural networks, which are inspired by the human brain's network of neurons. These models consist of layers of nodes, or \"neurons,\" where each layer processes inputs and transfers them to the next.\n\n2. **Layers**: A deep neural network contains multiple layers:\n   - **Input Layer**: The first layer, which receives the input data.\n   - **Hidden Layers**: Intermediate layers that perform computations to extract features or patterns from the data.\n   - **Output Layer**: Produces the final output or decision.\n\n3. **Types of Networks**: Common deep learning architectures include:\n   - **Convolutional Neural Networks (CNNs)**: Used mainly for image and video recognition due to their ability to capture spatial hierarchies.\n   - **Recurrent Neural Networks (RNNs)**: Effective for sequential data like time series or text because they can maintain memory of previous inputs.\n   - **Transformers**: Widely used for natural language processing tasks due to their efficiency in handling large data sequences.\n\n4. **Learning Process**: Deep learning models typically learn through a process called backpropagation, which uses a method known as gradient descent to minimize the error by adjusting the weights of connections between neurons.\n\n5. **Large Data and Computational Power**: Given their complexity, deep learning models require large amounts of data and significant computational power for training. The rise of GPUs and specialized hardware like TPUs has greatly accelerated their performance.\n\n6. **Applications**: Deep learning is used in various applications, including image and speech recognition, natural language processing, autonomous vehicles, personalized recommendations, and more.\n\n7. **Challenges**: Despite their powerful capabilities, deep learning models can be resource-intensive, require significant amounts of labeled data for effective training, and sometimes operate as \"black boxes,\" making them difficult to interpret.\n\nDeep learning continues to be a rapidly evolving field, driving many advancements in AI and continually expanding into new application areas.",
+                "additional_kwargs": {
+                    "refusal": null
+                },
+                "response_metadata": {
+                    "token_usage": {
+                        "completion_tokens": 459,
+                        "prompt_tokens": 30,
+                        "total_tokens": 489,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    },
+                    "model_name": "gpt-4o-2024-08-06",
+                    "system_fingerprint": "fp_b705f0c291",
+                    "prompt_filter_results": [
+                        {
+                            "prompt_index": 0,
+                            "content_filter_results": {
+                                "hate": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "self_harm": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "sexual": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "violence": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                }
+                            }
+                        }
+                    ],
+                    "finish_reason": "stop",
+                    "logprobs": null,
+                    "content_filter_results": {
+                        "hate": {
+                            "filtered": false,
+                            "severity": "safe"
+                        },
+                        "self_harm": {
+                            "filtered": false,
+                            "severity": "safe"
+                        },
+                        "sexual": {
+                            "filtered": false,
+                            "severity": "safe"
+                        },
+                        "violence": {
+                            "filtered": false,
+                            "severity": "safe"
+                        }
+                    }
+                },
+                "type": "ai",
+                "name": null,
+                "id": "run-686a7f37-f01b-4cb1-b3b2-3b4851fda946-0",
+                "example": false,
+                "tool_calls": [],
+                "invalid_tool_calls": [],
+                "usage_metadata": {
+                    "input_tokens": 30,
+                    "output_tokens": 459,
+                    "total_tokens": 489,
+                    "input_token_details": {
+                        "audio": 0,
+                        "cache_read": 0
+                    },
+                    "output_token_details": {
+                        "audio": 0,
+                        "reasoning": 0
+                    }
+                }
+            }
+        ]
+    },
+    [],
+    {
+        "configurable": {
+            "thread_id": "52a0907f-189f-48ab-b168-34c4a4365309",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1eff931d-6a1e-67a9-8001-fdf38468441f"
+        }
+    },
+    {
+        "source": "loop",
+        "writes": {
+            "agent_node": {
+                "messages": [
+                    [
+                        "user",
+                        "Tell me about deep learning."
+                    ],
+                    {
+                        "content": "Deep learning is a subset of machine learning in artificial intelligence (AI) that is based on learning data representations, as opposed to task-specific algorithms. It involves neural networks with many layers \u2013 hence the term \"deep.\"\n\nHere are some key points about deep learning:\n\n1. **Neural Networks**: Deep learning models are based on neural networks, which are inspired by the human brain's network of neurons. These models consist of layers of nodes, or \"neurons,\" where each layer processes inputs and transfers them to the next.\n\n2. **Layers**: A deep neural network contains multiple layers:\n   - **Input Layer**: The first layer, which receives the input data.\n   - **Hidden Layers**: Intermediate layers that perform computations to extract features or patterns from the data.\n   - **Output Layer**: Produces the final output or decision.\n\n3. **Types of Networks**: Common deep learning architectures include:\n   - **Convolutional Neural Networks (CNNs)**: Used mainly for image and video recognition due to their ability to capture spatial hierarchies.\n   - **Recurrent Neural Networks (RNNs)**: Effective for sequential data like time series or text because they can maintain memory of previous inputs.\n   - **Transformers**: Widely used for natural language processing tasks due to their efficiency in handling large data sequences.\n\n4. **Learning Process**: Deep learning models typically learn through a process called backpropagation, which uses a method known as gradient descent to minimize the error by adjusting the weights of connections between neurons.\n\n5. **Large Data and Computational Power**: Given their complexity, deep learning models require large amounts of data and significant computational power for training. The rise of GPUs and specialized hardware like TPUs has greatly accelerated their performance.\n\n6. **Applications**: Deep learning is used in various applications, including image and speech recognition, natural language processing, autonomous vehicles, personalized recommendations, and more.\n\n7. **Challenges**: Despite their powerful capabilities, deep learning models can be resource-intensive, require significant amounts of labeled data for effective training, and sometimes operate as \"black boxes,\" making them difficult to interpret.\n\nDeep learning continues to be a rapidly evolving field, driving many advancements in AI and continually expanding into new application areas.",
+                        "additional_kwargs": {
+                            "refusal": null
+                        },
+                        "response_metadata": {
+                            "token_usage": {
+                                "completion_tokens": 459,
+                                "prompt_tokens": 30,
+                                "total_tokens": 489,
+                                "completion_tokens_details": {
+                                    "accepted_prediction_tokens": 0,
+                                    "audio_tokens": 0,
+                                    "reasoning_tokens": 0,
+                                    "rejected_prediction_tokens": 0
+                                },
+                                "prompt_tokens_details": {
+                                    "audio_tokens": 0,
+                                    "cached_tokens": 0
+                                }
+                            },
+                            "model_name": "gpt-4o-2024-08-06",
+                            "system_fingerprint": "fp_b705f0c291",
+                            "prompt_filter_results": [
+                                {
+                                    "prompt_index": 0,
+                                    "content_filter_results": {
+                                        "hate": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        },
+                                        "self_harm": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        },
+                                        "sexual": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        },
+                                        "violence": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        }
+                                    }
+                                }
+                            ],
+                            "finish_reason": "stop",
+                            "logprobs": null,
+                            "content_filter_results": {
+                                "hate": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "self_harm": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "sexual": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "violence": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                }
+                            }
+                        },
+                        "type": "ai",
+                        "name": null,
+                        "id": "run-686a7f37-f01b-4cb1-b3b2-3b4851fda946-0",
+                        "example": false,
+                        "tool_calls": [],
+                        "invalid_tool_calls": [],
+                        "usage_metadata": {
+                            "input_tokens": 30,
+                            "output_tokens": 459,
+                            "total_tokens": 489,
+                            "input_token_details": {
+                                "audio": 0,
+                                "cache_read": 0
+                            },
+                            "output_token_details": {
+                                "audio": 0,
+                                "reasoning": 0
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "thread_id": "52a0907f-189f-48ab-b168-34c4a4365309",
+        "step": 1,
+        "parents": {}
+    },
+    "2025-03-04T19:49:52.142307+00:00",
+    {
+        "configurable": {
+            "thread_id": "52a0907f-189f-48ab-b168-34c4a4365309",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1eff931d-2996-63cd-8000-abc3799fd089"
+        }
+    },
+    []
+]

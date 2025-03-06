@@ -1,0 +1,501 @@
+[
+    {
+        "messages": [
+            [
+                "user",
+                "Explain the impact of artificial intelligence on healthcare."
+            ],
+            {
+                "content": "Artificial intelligence (AI) has had a significant impact on various aspects of healthcare, improving patient outcomes, streamlining operations, and advancing medical research. Here's an overview of its impact:\n\n1. **Diagnosis and Treatment**:\n   - AI technologies, including machine learning and deep learning, have enhanced diagnostic accuracy and speed. For example, AI systems can analyze medical images such as X-rays, MRIs, and CT scans more quickly and accurately than some human radiologists.\n   - AI-powered tools can assist in identifying patterns in data that may not be apparent to human doctors, aiding in early detection of diseases like cancer and neurodegenerative disorders.\n\n2. **Personalized Medicine**:\n   - AI facilitates the analysis of large datasets, such as genomic data, enabling the development of personalized treatment plans tailored to an individual's genetic makeup and lifestyle.\n   - Machine learning algorithms can predict how different patients will respond to specific treatments, allowing for more effective and personalized medical interventions.\n\n3. **Administrative Efficiency**:\n   - AI can automate routine administrative tasks such as patient scheduling, billing, and managing electronic health records. This reduces the burden on healthcare staff and minimizes human error.\n   - Natural language processing (NLP) can transcribe and analyze doctors' notes more efficiently, freeing up time for healthcare providers to focus more on patient care.\n\n4. **Predictive Analytics**:\n   - AI models can predict patient admissions and potential disease outbreaks, allowing hospitals and healthcare systems to allocate resources more effectively.\n   - Predictive analytics are also used to identify patients at higher risk of developing certain conditions, facilitating preventative measures.\n\n5. **Drug Discovery and Development**:\n   - AI accelerates the drug discovery process by analyzing chemical compositions and predicting potential drug efficacy, greatly reducing the time and cost required to bring new drugs to market.\n   - AI models can simulate how molecules interact at a high speed, helping researchers identify promising candidates early in the drug development pipeline.\n\n6. **Robotics and Automation**:\n   - AI-driven robots are increasingly used in surgeries, offering high precision, reducing human error, and often resulting in quicker patient recovery times.\n   - Automation of lab processes and data management tasks is improving efficiency in research and clinical environments.\n\n7. **Telemedicine and Remote Monitoring**:\n   - AI supports telemedicine platforms, providing real-time analytics and virtual assistants to aid in remote patient interaction.\n   - Remote monitoring systems use AI to process data from wearable devices, alerting healthcare providers to any significant changes in a patient's condition.\n\n8. **Challenges and Ethical Considerations**:\n   - AI in healthcare raises ethical concerns, including data privacy issues, the potential for biased algorithms, and the need for transparency in AI decision-making processes.\n   - There is ongoing debate over the extent to which AI should be used in clinical decision-making, given the potential for errors and the importance of human oversight.\n\nOverall, AI is transforming healthcare by making processes more efficient, improving patient outcomes, and fostering innovation. However, the integration of AI into healthcare systems requires careful consideration of ethical and practical challenges to ensure these technologies are used safely and equitably.",
+                "additional_kwargs": {
+                    "refusal": null
+                },
+                "response_metadata": {
+                    "token_usage": {
+                        "completion_tokens": 625,
+                        "prompt_tokens": 38,
+                        "total_tokens": 663,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    },
+                    "model_name": "gpt-4o-2024-08-06",
+                    "system_fingerprint": "fp_b705f0c291",
+                    "prompt_filter_results": [
+                        {
+                            "prompt_index": 0,
+                            "content_filter_results": {
+                                "hate": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "self_harm": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "sexual": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "violence": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                }
+                            }
+                        }
+                    ],
+                    "finish_reason": "stop",
+                    "logprobs": null,
+                    "content_filter_results": {
+                        "hate": {
+                            "filtered": false,
+                            "severity": "safe"
+                        },
+                        "self_harm": {
+                            "filtered": false,
+                            "severity": "safe"
+                        },
+                        "sexual": {
+                            "filtered": false,
+                            "severity": "safe"
+                        },
+                        "violence": {
+                            "filtered": false,
+                            "severity": "safe"
+                        }
+                    }
+                },
+                "type": "ai",
+                "name": null,
+                "id": "run-d6c13cf7-4963-4cac-966e-7324cf604900-0"
+            },
+            {
+                "content": "The research information discusses the impact of artificial intelligence (AI) on healthcare across several dimensions. Here's an analysis of the key points:\n\n1. **Diagnosis and Treatment**: AI technologies like machine learning and deep learning have significantly improved diagnostic processes, enhancing both accuracy and speed. AI systems are capable of analyzing medical images more effectively than some radiologists, which aids in the early and accurate detection of diseases.\n\n2. **Personalized Medicine**: AI supports the development of personalized treatment plans by processing large datasets, such as genomic data, to tailor medical interventions according to individual genetic profiles. Machine learning algorithms predict patient responses to treatments, improving the effectiveness of medical care.\n\n3. **Administrative Efficiency**: AI automates routine administrative tasks and manages electronic health records, thus reducing staff burden and minimizing errors. Natural Language Processing (NLP) tools enhance the efficiency of documentation and analysis of medical records, providing healthcare workers more time for direct patient care.\n\n4. **Predictive Analytics**: AI models aid in predicting hospital patient admissions and potential disease outbreaks, allowing for better resource allocation. Additionally, predictive analytics identify individuals at higher risk for certain conditions, promoting preventive healthcare measures.\n\n5. **Drug Discovery and Development**: AI accelerates the drug discovery process by analyzing chemical compositions and predicting drug efficacy, significantly reducing the time and cost of bringing new drugs to market. AI can rapidly simulate molecular interactions, improving early-stage drug candidate identification.\n\n6. **Robotics and Automation**: AI-driven robotics are being employed in surgical settings to enhance precision and reduce errors, benefiting patient recovery. Automation in laboratory processes and data management boosts efficiency and accuracy in both research and clinical environments.\n\n7. **Telemedicine and Remote Monitoring**: AI supports telemedicine platforms with real-time analytics and virtual assistance, optimizing remote patient interactions. AI-processed data from wearable devices enable timely alerts to healthcare providers about patient condition changes.\n\n8. **Challenges and Ethical Considerations**: The implementation of AI in healthcare raises ethical concerns related to data privacy, biased algorithms, and transparency in AI operations. There are debates about AI's role in clinical decision-making, stressing the importance of human oversight to mitigate errors and ensure safe technology integration.\n\nIn summary, AI is significantly transforming healthcare by enhancing efficiency, improving patient outcomes, and facilitating innovation. However, integrating AI into healthcare systems must address ethical and practical challenges to ensure safety and equity.",
+                "additional_kwargs": {
+                    "refusal": null
+                },
+                "response_metadata": {
+                    "token_usage": {
+                        "completion_tokens": 477,
+                        "prompt_tokens": 1023,
+                        "total_tokens": 1500,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    },
+                    "model_name": "gpt-4o-2024-08-06",
+                    "system_fingerprint": "fp_b705f0c291",
+                    "prompt_filter_results": [
+                        {
+                            "prompt_index": 0,
+                            "content_filter_results": {
+                                "hate": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "self_harm": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "sexual": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "violence": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                }
+                            }
+                        }
+                    ],
+                    "finish_reason": "stop",
+                    "logprobs": null,
+                    "content_filter_results": {
+                        "hate": {
+                            "filtered": false,
+                            "severity": "safe"
+                        },
+                        "self_harm": {
+                            "filtered": false,
+                            "severity": "safe"
+                        },
+                        "sexual": {
+                            "filtered": false,
+                            "severity": "safe"
+                        },
+                        "violence": {
+                            "filtered": false,
+                            "severity": "safe"
+                        }
+                    }
+                },
+                "type": "ai",
+                "name": null,
+                "id": "run-38b5edb3-7407-4266-8fdc-9a2c1047035d-0"
+            },
+            {
+                "content": "AI is significantly transforming healthcare by enhancing efficiency, improving patient outcomes, and fostering innovation. Key impacts include improved diagnostic accuracy and speed through machine learning, personalized medicine by analyzing large genomic datasets, and administrative efficiency via automation of routine tasks. AI also plays a role in predictive analytics for better resource allocation, accelerates drug discovery, and enhances surgical precision with robotics. However, its integration raises ethical challenges such as data privacy, algorithmic bias, and the need for transparency, emphasizing the importance of human oversight to ensure safe and equitable use.",
+                "additional_kwargs": {
+                    "refusal": null
+                },
+                "response_metadata": {
+                    "token_usage": {
+                        "completion_tokens": 106,
+                        "prompt_tokens": 1856,
+                        "total_tokens": 1962,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    },
+                    "model_name": "gpt-4o-2024-08-06",
+                    "system_fingerprint": "fp_b705f0c291",
+                    "prompt_filter_results": [
+                        {
+                            "prompt_index": 0,
+                            "content_filter_results": {
+                                "hate": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "self_harm": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "sexual": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "violence": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                }
+                            }
+                        }
+                    ],
+                    "finish_reason": "stop",
+                    "logprobs": null,
+                    "content_filter_results": {
+                        "hate": {
+                            "filtered": false,
+                            "severity": "safe"
+                        },
+                        "self_harm": {
+                            "filtered": false,
+                            "severity": "safe"
+                        },
+                        "sexual": {
+                            "filtered": false,
+                            "severity": "safe"
+                        },
+                        "violence": {
+                            "filtered": false,
+                            "severity": "safe"
+                        }
+                    }
+                },
+                "type": "ai",
+                "name": null,
+                "id": "run-f0876e58-c47c-4a64-8534-e792361c6317-0",
+                "example": false,
+                "tool_calls": [],
+                "invalid_tool_calls": [],
+                "usage_metadata": {
+                    "input_tokens": 1856,
+                    "output_tokens": 106,
+                    "total_tokens": 1962,
+                    "input_token_details": {
+                        "audio": 0,
+                        "cache_read": 0
+                    },
+                    "output_token_details": {
+                        "audio": 0,
+                        "reasoning": 0
+                    }
+                }
+            }
+        ]
+    },
+    [],
+    {
+        "configurable": {
+            "thread_id": "7a684e76-886f-4edf-8415-ca631ead3cd5",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1eff9854-6258-698e-8003-6111f2705ffe"
+        }
+    },
+    {
+        "source": "loop",
+        "writes": {
+            "summarizer": {
+                "messages": [
+                    [
+                        "user",
+                        "Explain the impact of artificial intelligence on healthcare."
+                    ],
+                    {
+                        "content": "Artificial intelligence (AI) has had a significant impact on various aspects of healthcare, improving patient outcomes, streamlining operations, and advancing medical research. Here's an overview of its impact:\n\n1. **Diagnosis and Treatment**:\n   - AI technologies, including machine learning and deep learning, have enhanced diagnostic accuracy and speed. For example, AI systems can analyze medical images such as X-rays, MRIs, and CT scans more quickly and accurately than some human radiologists.\n   - AI-powered tools can assist in identifying patterns in data that may not be apparent to human doctors, aiding in early detection of diseases like cancer and neurodegenerative disorders.\n\n2. **Personalized Medicine**:\n   - AI facilitates the analysis of large datasets, such as genomic data, enabling the development of personalized treatment plans tailored to an individual's genetic makeup and lifestyle.\n   - Machine learning algorithms can predict how different patients will respond to specific treatments, allowing for more effective and personalized medical interventions.\n\n3. **Administrative Efficiency**:\n   - AI can automate routine administrative tasks such as patient scheduling, billing, and managing electronic health records. This reduces the burden on healthcare staff and minimizes human error.\n   - Natural language processing (NLP) can transcribe and analyze doctors' notes more efficiently, freeing up time for healthcare providers to focus more on patient care.\n\n4. **Predictive Analytics**:\n   - AI models can predict patient admissions and potential disease outbreaks, allowing hospitals and healthcare systems to allocate resources more effectively.\n   - Predictive analytics are also used to identify patients at higher risk of developing certain conditions, facilitating preventative measures.\n\n5. **Drug Discovery and Development**:\n   - AI accelerates the drug discovery process by analyzing chemical compositions and predicting potential drug efficacy, greatly reducing the time and cost required to bring new drugs to market.\n   - AI models can simulate how molecules interact at a high speed, helping researchers identify promising candidates early in the drug development pipeline.\n\n6. **Robotics and Automation**:\n   - AI-driven robots are increasingly used in surgeries, offering high precision, reducing human error, and often resulting in quicker patient recovery times.\n   - Automation of lab processes and data management tasks is improving efficiency in research and clinical environments.\n\n7. **Telemedicine and Remote Monitoring**:\n   - AI supports telemedicine platforms, providing real-time analytics and virtual assistants to aid in remote patient interaction.\n   - Remote monitoring systems use AI to process data from wearable devices, alerting healthcare providers to any significant changes in a patient's condition.\n\n8. **Challenges and Ethical Considerations**:\n   - AI in healthcare raises ethical concerns, including data privacy issues, the potential for biased algorithms, and the need for transparency in AI decision-making processes.\n   - There is ongoing debate over the extent to which AI should be used in clinical decision-making, given the potential for errors and the importance of human oversight.\n\nOverall, AI is transforming healthcare by making processes more efficient, improving patient outcomes, and fostering innovation. However, the integration of AI into healthcare systems requires careful consideration of ethical and practical challenges to ensure these technologies are used safely and equitably.",
+                        "additional_kwargs": {
+                            "refusal": null
+                        },
+                        "response_metadata": {
+                            "token_usage": {
+                                "completion_tokens": 625,
+                                "prompt_tokens": 38,
+                                "total_tokens": 663,
+                                "completion_tokens_details": {
+                                    "accepted_prediction_tokens": 0,
+                                    "audio_tokens": 0,
+                                    "reasoning_tokens": 0,
+                                    "rejected_prediction_tokens": 0
+                                },
+                                "prompt_tokens_details": {
+                                    "audio_tokens": 0,
+                                    "cached_tokens": 0
+                                }
+                            },
+                            "model_name": "gpt-4o-2024-08-06",
+                            "system_fingerprint": "fp_b705f0c291",
+                            "prompt_filter_results": [
+                                {
+                                    "prompt_index": 0,
+                                    "content_filter_results": {
+                                        "hate": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        },
+                                        "self_harm": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        },
+                                        "sexual": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        },
+                                        "violence": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        }
+                                    }
+                                }
+                            ],
+                            "finish_reason": "stop",
+                            "logprobs": null,
+                            "content_filter_results": {
+                                "hate": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "self_harm": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "sexual": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "violence": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                }
+                            }
+                        },
+                        "type": "ai",
+                        "name": null,
+                        "id": "run-d6c13cf7-4963-4cac-966e-7324cf604900-0"
+                    },
+                    {
+                        "content": "The research information discusses the impact of artificial intelligence (AI) on healthcare across several dimensions. Here's an analysis of the key points:\n\n1. **Diagnosis and Treatment**: AI technologies like machine learning and deep learning have significantly improved diagnostic processes, enhancing both accuracy and speed. AI systems are capable of analyzing medical images more effectively than some radiologists, which aids in the early and accurate detection of diseases.\n\n2. **Personalized Medicine**: AI supports the development of personalized treatment plans by processing large datasets, such as genomic data, to tailor medical interventions according to individual genetic profiles. Machine learning algorithms predict patient responses to treatments, improving the effectiveness of medical care.\n\n3. **Administrative Efficiency**: AI automates routine administrative tasks and manages electronic health records, thus reducing staff burden and minimizing errors. Natural Language Processing (NLP) tools enhance the efficiency of documentation and analysis of medical records, providing healthcare workers more time for direct patient care.\n\n4. **Predictive Analytics**: AI models aid in predicting hospital patient admissions and potential disease outbreaks, allowing for better resource allocation. Additionally, predictive analytics identify individuals at higher risk for certain conditions, promoting preventive healthcare measures.\n\n5. **Drug Discovery and Development**: AI accelerates the drug discovery process by analyzing chemical compositions and predicting drug efficacy, significantly reducing the time and cost of bringing new drugs to market. AI can rapidly simulate molecular interactions, improving early-stage drug candidate identification.\n\n6. **Robotics and Automation**: AI-driven robotics are being employed in surgical settings to enhance precision and reduce errors, benefiting patient recovery. Automation in laboratory processes and data management boosts efficiency and accuracy in both research and clinical environments.\n\n7. **Telemedicine and Remote Monitoring**: AI supports telemedicine platforms with real-time analytics and virtual assistance, optimizing remote patient interactions. AI-processed data from wearable devices enable timely alerts to healthcare providers about patient condition changes.\n\n8. **Challenges and Ethical Considerations**: The implementation of AI in healthcare raises ethical concerns related to data privacy, biased algorithms, and transparency in AI operations. There are debates about AI's role in clinical decision-making, stressing the importance of human oversight to mitigate errors and ensure safe technology integration.\n\nIn summary, AI is significantly transforming healthcare by enhancing efficiency, improving patient outcomes, and facilitating innovation. However, integrating AI into healthcare systems must address ethical and practical challenges to ensure safety and equity.",
+                        "additional_kwargs": {
+                            "refusal": null
+                        },
+                        "response_metadata": {
+                            "token_usage": {
+                                "completion_tokens": 477,
+                                "prompt_tokens": 1023,
+                                "total_tokens": 1500,
+                                "completion_tokens_details": {
+                                    "accepted_prediction_tokens": 0,
+                                    "audio_tokens": 0,
+                                    "reasoning_tokens": 0,
+                                    "rejected_prediction_tokens": 0
+                                },
+                                "prompt_tokens_details": {
+                                    "audio_tokens": 0,
+                                    "cached_tokens": 0
+                                }
+                            },
+                            "model_name": "gpt-4o-2024-08-06",
+                            "system_fingerprint": "fp_b705f0c291",
+                            "prompt_filter_results": [
+                                {
+                                    "prompt_index": 0,
+                                    "content_filter_results": {
+                                        "hate": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        },
+                                        "self_harm": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        },
+                                        "sexual": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        },
+                                        "violence": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        }
+                                    }
+                                }
+                            ],
+                            "finish_reason": "stop",
+                            "logprobs": null,
+                            "content_filter_results": {
+                                "hate": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "self_harm": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "sexual": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "violence": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                }
+                            }
+                        },
+                        "type": "ai",
+                        "name": null,
+                        "id": "run-38b5edb3-7407-4266-8fdc-9a2c1047035d-0"
+                    },
+                    {
+                        "content": "AI is significantly transforming healthcare by enhancing efficiency, improving patient outcomes, and fostering innovation. Key impacts include improved diagnostic accuracy and speed through machine learning, personalized medicine by analyzing large genomic datasets, and administrative efficiency via automation of routine tasks. AI also plays a role in predictive analytics for better resource allocation, accelerates drug discovery, and enhances surgical precision with robotics. However, its integration raises ethical challenges such as data privacy, algorithmic bias, and the need for transparency, emphasizing the importance of human oversight to ensure safe and equitable use.",
+                        "additional_kwargs": {
+                            "refusal": null
+                        },
+                        "response_metadata": {
+                            "token_usage": {
+                                "completion_tokens": 106,
+                                "prompt_tokens": 1856,
+                                "total_tokens": 1962,
+                                "completion_tokens_details": {
+                                    "accepted_prediction_tokens": 0,
+                                    "audio_tokens": 0,
+                                    "reasoning_tokens": 0,
+                                    "rejected_prediction_tokens": 0
+                                },
+                                "prompt_tokens_details": {
+                                    "audio_tokens": 0,
+                                    "cached_tokens": 0
+                                }
+                            },
+                            "model_name": "gpt-4o-2024-08-06",
+                            "system_fingerprint": "fp_b705f0c291",
+                            "prompt_filter_results": [
+                                {
+                                    "prompt_index": 0,
+                                    "content_filter_results": {
+                                        "hate": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        },
+                                        "self_harm": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        },
+                                        "sexual": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        },
+                                        "violence": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        }
+                                    }
+                                }
+                            ],
+                            "finish_reason": "stop",
+                            "logprobs": null,
+                            "content_filter_results": {
+                                "hate": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "self_harm": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "sexual": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "violence": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                }
+                            }
+                        },
+                        "type": "ai",
+                        "name": null,
+                        "id": "run-f0876e58-c47c-4a64-8534-e792361c6317-0",
+                        "example": false,
+                        "tool_calls": [],
+                        "invalid_tool_calls": [],
+                        "usage_metadata": {
+                            "input_tokens": 1856,
+                            "output_tokens": 106,
+                            "total_tokens": 1962,
+                            "input_token_details": {
+                                "audio": 0,
+                                "cache_read": 0
+                            },
+                            "output_token_details": {
+                                "audio": 0,
+                                "reasoning": 0
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "thread_id": "7a684e76-886f-4edf-8415-ca631ead3cd5",
+        "step": 3,
+        "parents": {}
+    },
+    "2025-03-05T05:47:07.460621+00:00",
+    {
+        "configurable": {
+            "thread_id": "7a684e76-886f-4edf-8415-ca631ead3cd5",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1eff9854-5589-6418-8002-8aa140b68495"
+        }
+    },
+    []
+]
