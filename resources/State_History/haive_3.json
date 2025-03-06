@@ -1,0 +1,217 @@
+[
+    {
+        "messages": [
+            [
+                "user",
+                "Tell me about machine learning."
+            ],
+            {
+                "content": "Machine learning is a subfield of artificial intelligence (AI) focused on developing algorithms and statistical models that enable computers to perform tasks without explicit instructions. Instead of being programmed step-by-step, machine learning systems learn from data, identifying patterns and making decisions based on that data.\n\nThere are several types of machine learning, primarily categorized as:\n\n1. **Supervised Learning**: In this approach, the algorithm is trained on a labeled dataset, which means that each training example is paired with an output label. The algorithm learns to map inputs to the correct outputs. Common tasks in supervised learning include classification (e.g., spam detection in emails) and regression (e.g., predicting house prices).\n\n2. **Unsupervised Learning**: This type does not use labeled data. Instead, the system tries to learn the patterns and structure from the input data on its own. Clustering (e.g., customer segmentation) and association (e.g., market basket analysis) are typical tasks in unsupervised learning.\n\n3. **Semi-supervised Learning**: This is a middle ground between supervised and unsupervised learning. It uses a small amount of labeled data along with a large amount of unlabeled data. This approach is often used when acquiring a fully labeled dataset is expensive or impractical.\n\n4. **Reinforcement Learning**: Here, an agent learns to make decisions by performing certain actions and receiving rewards or penalties in return. Over time, the agent aims to learn a strategy that maximizes the total reward. This is used in various fields, including robotics, game playing (e.g., AlphaGo), and autonomous vehicles.\n\nMachine learning relies heavily on data and computational power. The more data and computational resources available, the more complex models and tasks machine learning systems can handle. Key techniques in machine learning include:\n\n- **Neural Networks**: Inspired by the human brain, these algorithms are particularly powerful for tasks involving image and speech recognition. Deep learning is a branch of machine learning that uses neural networks with many layers (hence \"deep\") to model complex patterns in data.\n\n- **Decision Trees**: These are tree-like models used for classification and regression tasks. They split data into branches based on the value of input features, leading to a decision/numerical output.\n\n- **Support Vector Machines (SVMs)**: Algorithms that classify data by finding the hyperplane that best divides different classes in a dataset.\n\n- **Ensemble Methods**: Techniques like random forests and boosting which combine multiple models to improve the accuracy and robustness of predictions.\n\nMachine learning is widely used across various industries, including finance (for fraud detection), healthcare (for patient diagnosis), marketing (for customer segmentation), and many others. As the field continues to evolve, it's driving advancements in automation, data analysis, and beyond.",
+                "additional_kwargs": {
+                    "refusal": null
+                },
+                "response_metadata": {
+                    "token_usage": {
+                        "completion_tokens": 564,
+                        "prompt_tokens": 30,
+                        "total_tokens": 594,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    },
+                    "model_name": "gpt-4o-2024-08-06",
+                    "system_fingerprint": "fp_b705f0c291",
+                    "prompt_filter_results": [
+                        {
+                            "prompt_index": 0,
+                            "content_filter_results": {
+                                "hate": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "self_harm": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "sexual": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "violence": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                }
+                            }
+                        }
+                    ],
+                    "finish_reason": "stop",
+                    "logprobs": null,
+                    "content_filter_results": {
+                        "hate": {
+                            "filtered": false,
+                            "severity": "safe"
+                        },
+                        "self_harm": {
+                            "filtered": false,
+                            "severity": "safe"
+                        },
+                        "sexual": {
+                            "filtered": false,
+                            "severity": "safe"
+                        },
+                        "violence": {
+                            "filtered": false,
+                            "severity": "safe"
+                        }
+                    }
+                },
+                "type": "ai",
+                "name": null,
+                "id": "run-2fa79ed0-52d7-4ab1-864e-db1f3ab01eb5-0",
+                "example": false,
+                "tool_calls": [],
+                "invalid_tool_calls": [],
+                "usage_metadata": {
+                    "input_tokens": 30,
+                    "output_tokens": 564,
+                    "total_tokens": 594,
+                    "input_token_details": {
+                        "audio": 0,
+                        "cache_read": 0
+                    },
+                    "output_token_details": {
+                        "audio": 0,
+                        "reasoning": 0
+                    }
+                }
+            }
+        ]
+    },
+    [],
+    {
+        "configurable": {
+            "thread_id": "67d77217-f731-4093-b0fb-1b1547a10995",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1eff92e0-d4d5-6209-8001-96a95eb0d8d6"
+        }
+    },
+    {
+        "source": "loop",
+        "writes": {
+            "agent_node": {
+                "messages": [
+                    [
+                        "user",
+                        "Tell me about machine learning."
+                    ],
+                    {
+                        "content": "Machine learning is a subfield of artificial intelligence (AI) focused on developing algorithms and statistical models that enable computers to perform tasks without explicit instructions. Instead of being programmed step-by-step, machine learning systems learn from data, identifying patterns and making decisions based on that data.\n\nThere are several types of machine learning, primarily categorized as:\n\n1. **Supervised Learning**: In this approach, the algorithm is trained on a labeled dataset, which means that each training example is paired with an output label. The algorithm learns to map inputs to the correct outputs. Common tasks in supervised learning include classification (e.g., spam detection in emails) and regression (e.g., predicting house prices).\n\n2. **Unsupervised Learning**: This type does not use labeled data. Instead, the system tries to learn the patterns and structure from the input data on its own. Clustering (e.g., customer segmentation) and association (e.g., market basket analysis) are typical tasks in unsupervised learning.\n\n3. **Semi-supervised Learning**: This is a middle ground between supervised and unsupervised learning. It uses a small amount of labeled data along with a large amount of unlabeled data. This approach is often used when acquiring a fully labeled dataset is expensive or impractical.\n\n4. **Reinforcement Learning**: Here, an agent learns to make decisions by performing certain actions and receiving rewards or penalties in return. Over time, the agent aims to learn a strategy that maximizes the total reward. This is used in various fields, including robotics, game playing (e.g., AlphaGo), and autonomous vehicles.\n\nMachine learning relies heavily on data and computational power. The more data and computational resources available, the more complex models and tasks machine learning systems can handle. Key techniques in machine learning include:\n\n- **Neural Networks**: Inspired by the human brain, these algorithms are particularly powerful for tasks involving image and speech recognition. Deep learning is a branch of machine learning that uses neural networks with many layers (hence \"deep\") to model complex patterns in data.\n\n- **Decision Trees**: These are tree-like models used for classification and regression tasks. They split data into branches based on the value of input features, leading to a decision/numerical output.\n\n- **Support Vector Machines (SVMs)**: Algorithms that classify data by finding the hyperplane that best divides different classes in a dataset.\n\n- **Ensemble Methods**: Techniques like random forests and boosting which combine multiple models to improve the accuracy and robustness of predictions.\n\nMachine learning is widely used across various industries, including finance (for fraud detection), healthcare (for patient diagnosis), marketing (for customer segmentation), and many others. As the field continues to evolve, it's driving advancements in automation, data analysis, and beyond.",
+                        "additional_kwargs": {
+                            "refusal": null
+                        },
+                        "response_metadata": {
+                            "token_usage": {
+                                "completion_tokens": 564,
+                                "prompt_tokens": 30,
+                                "total_tokens": 594,
+                                "completion_tokens_details": {
+                                    "accepted_prediction_tokens": 0,
+                                    "audio_tokens": 0,
+                                    "reasoning_tokens": 0,
+                                    "rejected_prediction_tokens": 0
+                                },
+                                "prompt_tokens_details": {
+                                    "audio_tokens": 0,
+                                    "cached_tokens": 0
+                                }
+                            },
+                            "model_name": "gpt-4o-2024-08-06",
+                            "system_fingerprint": "fp_b705f0c291",
+                            "prompt_filter_results": [
+                                {
+                                    "prompt_index": 0,
+                                    "content_filter_results": {
+                                        "hate": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        },
+                                        "self_harm": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        },
+                                        "sexual": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        },
+                                        "violence": {
+                                            "filtered": false,
+                                            "severity": "safe"
+                                        }
+                                    }
+                                }
+                            ],
+                            "finish_reason": "stop",
+                            "logprobs": null,
+                            "content_filter_results": {
+                                "hate": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "self_harm": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "sexual": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "violence": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                }
+                            }
+                        },
+                        "type": "ai",
+                        "name": null,
+                        "id": "run-2fa79ed0-52d7-4ab1-864e-db1f3ab01eb5-0",
+                        "example": false,
+                        "tool_calls": [],
+                        "invalid_tool_calls": [],
+                        "usage_metadata": {
+                            "input_tokens": 30,
+                            "output_tokens": 564,
+                            "total_tokens": 594,
+                            "input_token_details": {
+                                "audio": 0,
+                                "cache_read": 0
+                            },
+                            "output_token_details": {
+                                "audio": 0,
+                                "reasoning": 0
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "thread_id": "67d77217-f731-4093-b0fb-1b1547a10995",
+        "step": 1,
+        "parents": {}
+    },
+    "2025-03-04T19:22:45.875741+00:00",
+    {
+        "configurable": {
+            "thread_id": "67d77217-f731-4093-b0fb-1b1547a10995",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1eff92e0-81cd-6cb7-8000-97fbb9589276"
+        }
+    },
+    []
+]

@@ -39,6 +39,9 @@ lxml = "^5.3.1"
 sphinx-autoapi = "^3.6.0"
 sphinx-copybutton = "^0.5.2"
 sphinx-togglebutton = "^0.3.2"
+playwright = "^1.50.0"
+networkx = "^3.4.2"
+dill = "^0.3.9"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -46,6 +49,7 @@ furo = "^2024.8.6"
 sphinx-copybutton = "^0.5.2"
 sphinx-design = "^0.6.1"
 sphinx-inline-tabs = "^2023.4.21"
+jupyter = "^1.1.1"
 
 [build-system]
 requires = ["poetry-core"]
