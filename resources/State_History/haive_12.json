@@ -1,0 +1,36 @@
+[
+    {
+        "messages": [
+            [
+                "user",
+                "Create a marketing plan for a new smartphone launch."
+            ]
+        ]
+    },
+    [],
+    {
+        "configurable": {
+            "thread_id": "e7110101-aed2-455a-8469-a38e50be3ef2",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1eff9f47-91a9-671e-8001-7db48f4d5004"
+        }
+    },
+    {
+        "source": "loop",
+        "writes": {
+            "agent_node": null
+        },
+        "thread_id": "e7110101-aed2-455a-8469-a38e50be3ef2",
+        "step": 1,
+        "parents": {}
+    },
+    "2025-03-05T19:03:07.089668+00:00",
+    {
+        "configurable": {
+            "thread_id": "e7110101-aed2-455a-8469-a38e50be3ef2",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1eff9f47-69bf-66ce-8000-d0a7468db566"
+        }
+    },
+    []
+]
