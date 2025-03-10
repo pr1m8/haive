@@ -1,0 +1,59 @@
+[
+    {
+        "messages": [
+            {
+                "content": "Hello, how are you?",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null
+            },
+            [
+                "assistant",
+                "[]"
+            ]
+        ]
+    },
+    [],
+    {
+        "configurable": {
+            "thread_id": "23c75bde-8290-4935-b8e9-2fbfd9ef62b2",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1effbb84-f5d2-696a-8001-55f0eda1af8f"
+        }
+    },
+    {
+        "source": "loop",
+        "writes": {
+            "agent": {
+                "messages": [
+                    {
+                        "content": "Hello, how are you?",
+                        "additional_kwargs": {},
+                        "response_metadata": {},
+                        "type": "human",
+                        "name": null,
+                        "id": null
+                    },
+                    [
+                        "assistant",
+                        "[]"
+                    ]
+                ]
+            }
+        },
+        "thread_id": "23c75bde-8290-4935-b8e9-2fbfd9ef62b2",
+        "step": 1,
+        "parents": {}
+    },
+    "2025-03-08T00:57:29.583420+00:00",
+    {
+        "configurable": {
+            "thread_id": "23c75bde-8290-4935-b8e9-2fbfd9ef62b2",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1effbb84-edf6-6aae-8000-25f2bed541d2"
+        }
+    },
+    []
+]

@@ -1338,6 +1338,18 @@ files = [
 ]
 
 [[package]]
+name = "iniconfig"
+version = "2.0.0"
+description = "brain-dead simple config-ini parsing"
+optional = false
+python-versions = ">=3.7"
+groups = ["main"]
+files = [
+    {file = "iniconfig-2.0.0-py3-none-any.whl", hash = "sha256:b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374"},
+    {file = "iniconfig-2.0.0.tar.gz", hash = "sha256:2d91e135bf72d31a410b17c16da610a82cb55f6b0477d1a902134b24a455b8b3"},
+]
+
+[[package]]
 name = "ipykernel"
 version = "6.29.5"
 description = "IPython Kernel for Jupyter"
@@ -2110,14 +2122,14 @@ tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<10"
 
 [[package]]
 name = "langchain-core"
-version = "0.3.35"
+version = "0.3.41"
 description = "Building applications with LLMs through composability"
 optional = false
 python-versions = "<4.0,>=3.9"
 groups = ["main"]
 files = [
-    {file = "langchain_core-0.3.35-py3-none-any.whl", hash = "sha256:81a4097226e180fa6c64e2d2ab38dcacbbc23b64fc109fb15622910fe8951670"},
-    {file = "langchain_core-0.3.35.tar.gz", hash = "sha256:328688228ece259da734417d477994a69cf8202dea9ed4271f2d792e3575c6fc"},
+    {file = "langchain_core-0.3.41-py3-none-any.whl", hash = "sha256:1a27cca5333bae7597de4004fb634b5f3e71667a3da6493b94ce83bcf15a23bd"},
+    {file = "langchain_core-0.3.41.tar.gz", hash = "sha256:d3ee9f3616ebbe7943470ade23d4a04e1729b1512c0ec55a4a07bd2ac64dedb4"},
 ]
 
 [package.dependencies]
@@ -2199,19 +2211,20 @@ langchain-core = ">=0.3.34,<1.0.0"
 
 [[package]]
 name = "langgraph"
-version = "0.2.73"
+version = "0.3.5"
 description = "Building stateful, multi-actor applications with LLMs"
 optional = false
 python-versions = "<4.0,>=3.9.0"
 groups = ["main"]
 files = [
-    {file = "langgraph-0.2.73-py3-none-any.whl", hash = "sha256:a6c1e491674a11b8d4f946cb7120ae0d18313f0daf6bb16cccd9d49ea547a780"},
-    {file = "langgraph-0.2.73.tar.gz", hash = "sha256:61ae2b2140940d32543a384ebc96f5cca13c14932a377fba58e73257f9997de6"},
+    {file = "langgraph-0.3.5-py3-none-any.whl", hash = "sha256:be313ec300633c857873ea3e44aece4dd7d0b11f131d385108b359d377a85bf7"},
+    {file = "langgraph-0.3.5.tar.gz", hash = "sha256:7c0d8e61aa02578b41036c9f7a599ccba2562d269f66ef76bacbba47a99a7eca"},
 ]
 
 [package.dependencies]
-langchain-core = ">=0.2.43,<0.3.0 || >0.3.0,<0.3.1 || >0.3.1,<0.3.2 || >0.3.2,<0.3.3 || >0.3.3,<0.3.4 || >0.3.4,<0.3.5 || >0.3.5,<0.3.6 || >0.3.6,<0.3.7 || >0.3.7,<0.3.8 || >0.3.8,<0.3.9 || >0.3.9,<0.3.10 || >0.3.10,<0.3.11 || >0.3.11,<0.3.12 || >0.3.12,<0.3.13 || >0.3.13,<0.3.14 || >0.3.14,<0.3.15 || >0.3.15,<0.3.16 || >0.3.16,<0.3.17 || >0.3.17,<0.3.18 || >0.3.18,<0.3.19 || >0.3.19,<0.3.20 || >0.3.20,<0.3.21 || >0.3.21,<0.3.22 || >0.3.22,<0.4.0"
+langchain-core = ">=0.1,<0.4"
 langgraph-checkpoint = ">=2.0.10,<3.0.0"
+langgraph-prebuilt = ">=0.1.1,<0.2"
 langgraph-sdk = ">=0.1.42,<0.2.0"
 
 [[package]]
@@ -2249,15 +2262,31 @@ psycopg = ">=3.2.0,<4.0.0"
 psycopg-pool = ">=3.2.0,<4.0.0"
 
 [[package]]
+name = "langgraph-prebuilt"
+version = "0.1.2"
+description = "Library with high-level APIs for creating and executing LangGraph agents and tools."
+optional = false
+python-versions = "<4.0.0,>=3.9.0"
+groups = ["main"]
+files = [
+    {file = "langgraph_prebuilt-0.1.2-py3-none-any.whl", hash = "sha256:32028c4c4370576748e6c2e075cab1e13b5e3f2c196a390d71cacfb455212311"},
+    {file = "langgraph_prebuilt-0.1.2.tar.gz", hash = "sha256:cfa7e54006d45e8f3d034ee88fa1d457c381bf6a2a0de0e64c5d3a776659e6d0"},
+]
+
+[package.dependencies]
+langchain-core = ">=0.2.43,<0.3.0 || >0.3.0,<0.3.1 || >0.3.1,<0.3.2 || >0.3.2,<0.3.3 || >0.3.3,<0.3.4 || >0.3.4,<0.3.5 || >0.3.5,<0.3.6 || >0.3.6,<0.3.7 || >0.3.7,<0.3.8 || >0.3.8,<0.3.9 || >0.3.9,<0.3.10 || >0.3.10,<0.3.11 || >0.3.11,<0.3.12 || >0.3.12,<0.3.13 || >0.3.13,<0.3.14 || >0.3.14,<0.3.15 || >0.3.15,<0.3.16 || >0.3.16,<0.3.17 || >0.3.17,<0.3.18 || >0.3.18,<0.3.19 || >0.3.19,<0.3.20 || >0.3.20,<0.3.21 || >0.3.21,<0.3.22 || >0.3.22,<0.4.0"
+langgraph-checkpoint = ">=2.0.10,<3.0.0"
+
+[[package]]
 name = "langgraph-sdk"
-version = "0.1.51"
+version = "0.1.55"
 description = "SDK for interacting with LangGraph API"
 optional = false
 python-versions = "<4.0.0,>=3.9.0"
 groups = ["main"]
 files = [
-    {file = "langgraph_sdk-0.1.51-py3-none-any.whl", hash = "sha256:ce2b58466d1700d06149782ed113157a8694a6d7932c801f316cd13fab315fe4"},
-    {file = "langgraph_sdk-0.1.51.tar.gz", hash = "sha256:dea1363e72562cb1e82a2d156be8d5b1a69ff3fe8815eee0e1e7a2f423242ec1"},
+    {file = "langgraph_sdk-0.1.55-py3-none-any.whl", hash = "sha256:266e92a558eb738da1ef04c29fbfc2157cd3a977b80905d9509a2cb79331f8fc"},
+    {file = "langgraph_sdk-0.1.55.tar.gz", hash = "sha256:89a0240157a27822cc4edd1c9e72bc852e20f5c71165a4c9b91eeffa11fd6a6b"},
 ]
 
 [package.dependencies]
@@ -3495,6 +3524,22 @@ greenlet = ">=3.1.1,<4.0.0"
 pyee = ">=12,<13"
 
 [[package]]
+name = "pluggy"
+version = "1.5.0"
+description = "plugin and hook calling mechanisms for python"
+optional = false
+python-versions = ">=3.8"
+groups = ["main"]
+files = [
+    {file = "pluggy-1.5.0-py3-none-any.whl", hash = "sha256:44e1ad92c8ca002de6377e165f3e0f1be63266ab4d554740532335b9d75ea669"},
+    {file = "pluggy-1.5.0.tar.gz", hash = "sha256:2cffa88e94fdc978c4c574f15f9e59b7f4201d439195c3715ca9e2486f1d0cf1"},
+]
+
+[package.extras]
+dev = ["pre-commit", "tox"]
+testing = ["pytest", "pytest-benchmark"]
+
+[[package]]
 name = "prometheus-client"
 version = "0.21.1"
 description = "Python client for the Prometheus monitoring system."
@@ -3945,6 +3990,27 @@ files = [
 
 [package.extras]
 diagrams = ["jinja2", "railroad-diagrams"]
+
+[[package]]
+name = "pytest"
+version = "8.3.5"
+description = "pytest: simple powerful testing with Python"
+optional = false
+python-versions = ">=3.8"
+groups = ["main"]
+files = [
+    {file = "pytest-8.3.5-py3-none-any.whl", hash = "sha256:c69214aa47deac29fad6c2a4f590b9c4a9fdb16a403176fe154b79c0b4d4d820"},
+    {file = "pytest-8.3.5.tar.gz", hash = "sha256:f4efe70cc14e511565ac476b57c279e12a855b11f48f212af1080ef2263d3845"},
+]
+
+[package.dependencies]
+colorama = {version = "*", markers = "sys_platform == \"win32\""}
+iniconfig = "*"
+packaging = "*"
+pluggy = ">=1.5,<2"
+
+[package.extras]
+dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
 
 [[package]]
 name = "python-dateutil"
@@ -5700,4 +5766,4 @@ cffi = ["cffi (>=1.11)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "27c013b6b0a90e7b3c599532428a8596593feb350a938e3890cbd52408b0429e"
+content-hash = "9ea576c8a3d6bcaf5dcdd6cbdddf9ab03e0799f811128c716ade33ad27a34770"

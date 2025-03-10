@@ -1,0 +1,36 @@
+[
+    {
+        "context": "Hello, how are you?\nI am fine, thank you.\nWhat is the weather in Tokyo?\nThe weather in Tokyo is sunny.\ndo you know the weather in Tokyo?\nI like dogs\nyou like cats",
+        "output": ""
+    },
+    [],
+    {
+        "configurable": {
+            "thread_id": "d58f997d-70ec-441f-b58b-b96b78bec903",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1effbe66-d765-6127-8001-d9fe00a63315"
+        }
+    },
+    {
+        "source": "loop",
+        "writes": {
+            "simple_agent_node": {
+                "context": "Hello, how are you?\nI am fine, thank you.\nWhat is the weather in Tokyo?\nThe weather in Tokyo is sunny.\ndo you know the weather in Tokyo?\nI like dogs\nyou like cats",
+                "output": "",
+                "parsed_output": null
+            }
+        },
+        "thread_id": "d58f997d-70ec-441f-b58b-b96b78bec903",
+        "step": 1,
+        "parents": {}
+    },
+    "2025-03-08T06:27:36.929490+00:00",
+    {
+        "configurable": {
+            "thread_id": "d58f997d-70ec-441f-b58b-b96b78bec903",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1effbe66-d1d8-6e61-8000-4c72eeb20625"
+        }
+    },
+    []
+]

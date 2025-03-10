@@ -1,0 +1,171 @@
+[
+    {
+        "messages": [
+            {
+                "content": "Hello, how are you?",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null
+            },
+            {
+                "content": "I am fine, thank you.",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null
+            },
+            {
+                "content": "What is the weather in Tokyo?",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null
+            },
+            {
+                "content": "The weather in Tokyo is sunny.",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null
+            },
+            {
+                "content": "do you know the weather in Tokyo?",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null
+            },
+            {
+                "content": "I like dogs",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null
+            },
+            {
+                "content": "you like cats",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null
+            },
+            {
+                "content": "I encountered an error: \"Input to ChatPromptTemplate is missing variables {'context'}.  Expected: ['context'] Received: ['messages']\\nNote: if you intended {context} to be part of the string and not a variable, please escape it with double curly braces like: '{{context}}'.\\nFor troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/INVALID_PROMPT_INPUT \"",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "ai",
+                "name": null,
+                "id": null,
+                "example": false,
+                "tool_calls": [],
+                "invalid_tool_calls": [],
+                "usage_metadata": null
+            }
+        ]
+    },
+    [],
+    {
+        "configurable": {
+            "thread_id": "fcefc771-be44-4a7b-b032-1b03580bbc9a",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1effbe06-d319-6614-8001-b9f9f2500399"
+        }
+    },
+    {
+        "source": "loop",
+        "writes": {
+            "simple_agent_node": {
+                "messages": [
+                    {
+                        "content": "Hello, how are you?",
+                        "additional_kwargs": {},
+                        "response_metadata": {},
+                        "type": "human",
+                        "name": null,
+                        "id": null
+                    },
+                    {
+                        "content": "I am fine, thank you.",
+                        "additional_kwargs": {},
+                        "response_metadata": {},
+                        "type": "human",
+                        "name": null,
+                        "id": null
+                    },
+                    {
+                        "content": "What is the weather in Tokyo?",
+                        "additional_kwargs": {},
+                        "response_metadata": {},
+                        "type": "human",
+                        "name": null,
+                        "id": null
+                    },
+                    {
+                        "content": "The weather in Tokyo is sunny.",
+                        "additional_kwargs": {},
+                        "response_metadata": {},
+                        "type": "human",
+                        "name": null,
+                        "id": null
+                    },
+                    {
+                        "content": "do you know the weather in Tokyo?",
+                        "additional_kwargs": {},
+                        "response_metadata": {},
+                        "type": "human",
+                        "name": null,
+                        "id": null
+                    },
+                    {
+                        "content": "I like dogs",
+                        "additional_kwargs": {},
+                        "response_metadata": {},
+                        "type": "human",
+                        "name": null,
+                        "id": null
+                    },
+                    {
+                        "content": "you like cats",
+                        "additional_kwargs": {},
+                        "response_metadata": {},
+                        "type": "human",
+                        "name": null,
+                        "id": null
+                    },
+                    {
+                        "content": "I encountered an error: \"Input to ChatPromptTemplate is missing variables {'context'}.  Expected: ['context'] Received: ['messages']\\nNote: if you intended {context} to be part of the string and not a variable, please escape it with double curly braces like: '{{context}}'.\\nFor troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/INVALID_PROMPT_INPUT \"",
+                        "additional_kwargs": {},
+                        "response_metadata": {},
+                        "type": "ai",
+                        "name": null,
+                        "id": null,
+                        "example": false,
+                        "tool_calls": [],
+                        "invalid_tool_calls": [],
+                        "usage_metadata": null
+                    }
+                ]
+            }
+        },
+        "thread_id": "fcefc771-be44-4a7b-b032-1b03580bbc9a",
+        "step": 1,
+        "parents": {}
+    },
+    "2025-03-08T05:44:39.498685+00:00",
+    {
+        "configurable": {
+            "thread_id": "fcefc771-be44-4a7b-b032-1b03580bbc9a",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1effbe06-d308-6eb8-8000-30eab77408fe"
+        }
+    },
+    []
+]

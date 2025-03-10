@@ -1,0 +1,59 @@
+[
+    {
+        "messages": [
+            {
+                "content": "Hello, how are you?",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null
+            },
+            [
+                "assistant",
+                "I don't have a response for that."
+            ]
+        ]
+    },
+    [],
+    {
+        "configurable": {
+            "thread_id": "b306eaa6-233e-4864-8bc5-3b7262327aa2",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1effbccd-cfe5-60de-8001-606e902697fd"
+        }
+    },
+    {
+        "source": "loop",
+        "writes": {
+            "agent": {
+                "messages": [
+                    {
+                        "content": "Hello, how are you?",
+                        "additional_kwargs": {},
+                        "response_metadata": {},
+                        "type": "human",
+                        "name": null,
+                        "id": null
+                    },
+                    [
+                        "assistant",
+                        "I don't have a response for that."
+                    ]
+                ]
+            }
+        },
+        "thread_id": "b306eaa6-233e-4864-8bc5-3b7262327aa2",
+        "step": 1,
+        "parents": {}
+    },
+    "2025-03-08T03:24:37.132898+00:00",
+    {
+        "configurable": {
+            "thread_id": "b306eaa6-233e-4864-8bc5-3b7262327aa2",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1effbccd-cb2d-6db7-8000-c34829f44c3a"
+        }
+    },
+    []
+]

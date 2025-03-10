@@ -1,0 +1,60 @@
+[
+    {
+        "messages": [
+            {
+                "content": "Hello, how are you?",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null,
+                "example": false
+            },
+            {
+                "content": "Hello, how are you?",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null
+            }
+        ]
+    },
+    [],
+    {
+        "configurable": {
+            "thread_id": "6bfab18c-555b-4b57-a9c8-3ef1f2e02cd1",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1effbb54-8741-695c-8001-b528b02538f9"
+        }
+    },
+    {
+        "source": "loop",
+        "writes": {
+            "agent": {
+                "messages": [
+                    {
+                        "content": "Hello, how are you?",
+                        "additional_kwargs": {},
+                        "response_metadata": {},
+                        "type": "human",
+                        "name": null,
+                        "id": null
+                    }
+                ]
+            }
+        },
+        "thread_id": "6bfab18c-555b-4b57-a9c8-3ef1f2e02cd1",
+        "step": 1,
+        "parents": {}
+    },
+    "2025-03-08T00:35:49.499503+00:00",
+    {
+        "configurable": {
+            "thread_id": "6bfab18c-555b-4b57-a9c8-3ef1f2e02cd1",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1effbb54-81d7-6998-8000-4603963cb243"
+        }
+    },
+    []
+]

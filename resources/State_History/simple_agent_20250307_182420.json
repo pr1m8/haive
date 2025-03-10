@@ -1,0 +1,43 @@
+[
+    {
+        "messages": [
+            {
+                "content": "Hello, how are you?",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null,
+                "example": false
+            }
+        ]
+    },
+    [],
+    {
+        "configurable": {
+            "thread_id": "0f1222b6-1366-475e-855d-787e8c34ad16",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1effbab4-c952-6e7a-8001-6ede960282de"
+        }
+    },
+    {
+        "source": "loop",
+        "writes": {
+            "agent": {
+                "messages": []
+            }
+        },
+        "thread_id": "0f1222b6-1366-475e-855d-787e8c34ad16",
+        "step": 1,
+        "parents": {}
+    },
+    "2025-03-07T23:24:21.459900+00:00",
+    {
+        "configurable": {
+            "thread_id": "0f1222b6-1366-475e-855d-787e8c34ad16",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1effbab4-c288-6f46-8000-7dfb85786e9f"
+        }
+    },
+    []
+]
