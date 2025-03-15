@@ -9,7 +9,7 @@ from pathlib import Path
 #from PIL import Image as PILImage
 #img = PILImage.open(output_path)
 # Function to render and display the graph
-from config.settings import GRAPH_IMAGES_DIR
+from src.config.settings import GRAPH_IMAGES_DIR
 def render_and_display_graph(compiled_graph, output_dir=GRAPH_IMAGES_DIR,output_name="graph.png",):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)

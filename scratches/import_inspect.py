@@ -254,7 +254,7 @@ def extract_validate_environment(cls: Type) -> (bool, Optional[str]):
 
 
 # Example usage
-retrievers = get_retrievers("langchain.retrievers")
+retrievers = get_retrievers("langchain_community.agent_toolkits")
 
 # Print dynamically found retrievers with inheritance details
 for name, meta in retrievers.items():

@@ -28,3 +28,10 @@ Add structured output to the react agent
 [   ] add_document method
 [   ] create_vector_store method
 [   ] create_vector_store method
+
+
+# Clean up the docs
+
+# Generalize P&E 
+
+

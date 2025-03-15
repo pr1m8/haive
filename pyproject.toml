@@ -47,6 +47,13 @@ sphinx-copybutton = "^0.5.2"
 sphinx-design = "^0.6.1"
 sphinx-inline-tabs = "^2023.4.21"
 
+[tool.poetry.group.mac.dependencies]
+pyobjc-core = {version = "^9.2", platform = "darwin"}
+pyobjc-framework-Cocoa = {version = "^9.2", platform = "darwin"}
+#py-ime
+
+
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
