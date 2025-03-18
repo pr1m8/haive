@@ -1,0 +1,196 @@
+[
+    {
+        "messages": [
+            {
+                "content": "John Smith is a 42-year-old software developer. You can reach him at john.smith@example.com",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": "28720d52-c6f0-4c5e-99df-772b1a29ad72",
+                "example": false
+            },
+            {
+                "content": "",
+                "additional_kwargs": {
+                    "tool_calls": [
+                        {
+                            "id": "call_RQp5Vi0hn5SNDpwOTBtPF7Gn",
+                            "function": {
+                                "arguments": "{\"name\":\"John Smith\",\"age\":42,\"occupation\":\"software developer\",\"contact\":\"john.smith@example.com\"}",
+                                "name": "extract_PersonInfo"
+                            },
+                            "type": "function"
+                        }
+                    ],
+                    "refusal": null
+                },
+                "response_metadata": {
+                    "token_usage": {
+                        "completion_tokens": 23,
+                        "prompt_tokens": 130,
+                        "total_tokens": 153,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    },
+                    "model_name": "gpt-4o-2024-08-06",
+                    "system_fingerprint": "fp_ded0d14823",
+                    "prompt_filter_results": [
+                        {
+                            "prompt_index": 0,
+                            "content_filter_results": {
+                                "hate": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "self_harm": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "sexual": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                },
+                                "violence": {
+                                    "filtered": false,
+                                    "severity": "safe"
+                                }
+                            }
+                        }
+                    ],
+                    "finish_reason": "stop",
+                    "logprobs": null,
+                    "content_filter_results": {}
+                },
+                "type": "ai",
+                "name": null,
+                "id": "run-c691046b-ee38-4899-9e83-40b563d5477e-0",
+                "example": false,
+                "tool_calls": [
+                    {
+                        "name": "extract_PersonInfo",
+                        "args": {
+                            "name": "John Smith",
+                            "age": 42,
+                            "occupation": "software developer",
+                            "contact": "john.smith@example.com"
+                        },
+                        "id": "call_RQp5Vi0hn5SNDpwOTBtPF7Gn",
+                        "type": "tool_call"
+                    }
+                ],
+                "invalid_tool_calls": [],
+                "usage_metadata": {
+                    "input_tokens": 130,
+                    "output_tokens": 23,
+                    "total_tokens": 153,
+                    "input_token_details": {
+                        "audio": 0,
+                        "cache_read": 0
+                    },
+                    "output_token_details": {
+                        "audio": 0,
+                        "reasoning": 0
+                    }
+                }
+            },
+            {
+                "content": "{\"name\":\"John Smith\",\"age\":42,\"occupation\":\"software developer\",\"contact\":\"john.smith@example.com\"}",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "tool",
+                "name": "extract_PersonInfo",
+                "id": "382068c9-3559-4086-9098-03af2625a5ec",
+                "tool_call_id": "call_RQp5Vi0hn5SNDpwOTBtPF7Gn",
+                "artifact": null,
+                "status": "success"
+            },
+            {
+                "content": "",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "ai",
+                "name": null,
+                "id": "a10705e8-ed97-4904-ae81-6bf09ba40f49",
+                "example": false,
+                "tool_calls": [
+                    {
+                        "name": "extract_PersonInfo",
+                        "args": {
+                            "name": "John Smith",
+                            "age": 42,
+                            "occupation": "software developer",
+                            "contact": "john.smith@example.com"
+                        },
+                        "id": "call_RQp5Vi0hn5SNDpwOTBtPF7Gn",
+                        "type": "tool_call"
+                    }
+                ],
+                "invalid_tool_calls": [],
+                "usage_metadata": null
+            }
+        ],
+        "attempt_number": 2,
+        "initial_num_messages": 1,
+        "input_format": "list"
+    },
+    [],
+    {
+        "configurable": {
+            "thread_id": "762146ce-a348-4949-809d-5506d6f5a26e",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1effe9b1-9a3b-631f-8004-4205d691e849"
+        }
+    },
+    {
+        "source": "loop",
+        "writes": {
+            "finalizer": {
+                "messages": {
+                    "content": "",
+                    "additional_kwargs": {},
+                    "response_metadata": {},
+                    "type": "ai",
+                    "name": null,
+                    "id": "a10705e8-ed97-4904-ae81-6bf09ba40f49",
+                    "example": false,
+                    "tool_calls": [
+                        {
+                            "name": "extract_PersonInfo",
+                            "args": {
+                                "name": "John Smith",
+                                "age": 42,
+                                "occupation": "software developer",
+                                "contact": "john.smith@example.com"
+                            },
+                            "id": "call_RQp5Vi0hn5SNDpwOTBtPF7Gn",
+                            "type": "tool_call"
+                        }
+                    ],
+                    "invalid_tool_calls": [],
+                    "usage_metadata": null
+                }
+            }
+        },
+        "thread_id": "762146ce-a348-4949-809d-5506d6f5a26e",
+        "step": 4,
+        "parents": {}
+    },
+    "2025-03-11T17:05:57.531910+00:00",
+    {
+        "configurable": {
+            "thread_id": "762146ce-a348-4949-809d-5506d6f5a26e",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1effe9b1-9a38-6c45-8003-a17d829502b4"
+        }
+    },
+    []
+]

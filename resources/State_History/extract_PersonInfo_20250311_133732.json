@@ -1,0 +1,42 @@
+[
+    {
+        "messages": [
+            {
+                "content": "Extract PersonInfo from the following text:\n\nJohn Smith is a 42-year-old software developer living in New York.",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": "4e4a1cbf-290a-4920-9bd2-45bd08fdc2ee",
+                "example": false
+            }
+        ],
+        "attempt_number": 0
+    },
+    [],
+    {
+        "configurable": {
+            "thread_id": "5e74ce88-1081-4ae2-be73-d0667f679b0d",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1effe9f8-36cd-6a1c-8001-41eca48bb4e4"
+        }
+    },
+    {
+        "source": "loop",
+        "writes": {
+            "extract": null
+        },
+        "thread_id": "5e74ce88-1081-4ae2-be73-d0667f679b0d",
+        "step": 1,
+        "parents": {}
+    },
+    "2025-03-11T17:37:32.997876+00:00",
+    {
+        "configurable": {
+            "thread_id": "5e74ce88-1081-4ae2-be73-d0667f679b0d",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1effe9f8-3011-6a82-8000-0bf159f87821"
+        }
+    },
+    []
+]
