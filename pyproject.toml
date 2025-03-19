@@ -8,8 +8,8 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-langchain-core = "^0.3.41"
-langchain = "^0.3.18"
+langchain-core = "^0.3.44"
+langchain = "^0.3.20"
 langchain-community = "^0.3.17"
 langchain-experimental = "^0.3.4"
 tavily-python = "^0.5.1"
@@ -51,6 +51,13 @@ langchain-google-community = {extras = ["gmail"], version = "^2.0.7"}
 google-api-python-client = "^2.163.0"
 google-auth-httplib2 = "^0.2.0"
 google-auth-oauthlib = "^1.2.1"
+duckduckgo-search = "^7.5.2"
+html2text = "^2024.2.26"
+markdownify = "^1.1.0"
+pandas = "^2.2.3"
+monopoly = {path = "external/monopoly"}
+rich = "^13.9.4"
+psycopg2 = "^2.9.10"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -59,6 +66,15 @@ sphinx-copybutton = "^0.5.2"
 sphinx-design = "^0.6.1"
 sphinx-inline-tabs = "^2023.4.21"
 jupyter = "^1.1.1"
+ace-tools = "^0.0"
+loguru = "^0.7.3"
+black = "^25.1.0"
+isort = "^6.0.1"
+flake8 = "^7.1.2"
+mypy = "^1.15.0"
+sphinx = "^8.2.3"
+sphinx-autobuild = "^2024.10.3"
+pre-commit = "^4.1.0"
 
 [build-system]
 requires = ["poetry-core"]

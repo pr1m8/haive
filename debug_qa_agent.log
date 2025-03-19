@@ -1,0 +1,14 @@
+2025-03-14 18:24:02,977 - DEBUG - ✅ Created qa_aug_llm_config: name='runnable' llm_config=AzureLLMConfig(provider=<LLMProvider.AZURE: 'azure'>, model='gpt-4o', api_key='6ef276b3ca1a46e2821d16072ac880bf', cache_enabled=False, cache_ttl=300, extra_params=None, api_version='2024-08-01-preview', api_base=None, api_type=None, api_endpoint=None) prompt_template=ChatPromptTemplate(input_variables=['contents'], input_types={}, partial_variables={}, messages=[SystemMessagePromptTemplate(prompt=PromptTemplate(input_variables=[], input_types={}, partial_variables={}, template='\nYou are a highly intelligent AI assistant specializing in **retrieval-augmented generation (RAG)**. Your task is to generate **structured, diverse, and contextually relevant** questions and answers from a given text.\n...\n'), additional_kwargs={}), HumanMessagePromptTemplate(prompt=PromptTemplate(input_variables=['contents'], input_types={}, partial_variables={}, template='{contents}'), additional_kwargs={})]) system_prompt=None tools=[] structured_output_model=<class '__main__.QAs'> tool_kwargs={} bind_tools_kwargs={} bind_tools_config={} structured_output_params={} output_parser=None postprocess=None
+2025-03-14 18:24:02,978 - ERROR - 🚨 ValidationError when initializing SimpleAgentConfig
+Traceback (most recent call last):
+  File "/home/will/Projects/haive/backend/haive/src/haive/agents/simple/qa_agent.py", line 60, in <module>
+    qa_agent_config = SimpleAgentConfig(engine=qa_aug_llm_config)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/pydantic/main.py", line 214, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for SimpleAgentConfig
+engine
+  Input should be a valid dictionary or instance of AugLLMConfig [type=model_type, input_value=AugLLMConfig(name='runnab...=None, postprocess=None), input_type=AugLLMConfig]
+    For further information visit https://errors.pydantic.dev/2.10/v/model_type
+2025-03-14 18:24:02,979 - INFO - ✅ Script execution completed.

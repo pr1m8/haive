@@ -83,7 +83,7 @@ class GuardrailsOutput(BaseModel):
             )
 
     class Config:
-        schema_extra = {
+        json_schema_extra= {
             "example": {
                 "decision": "movie",
                 "allowed_categories": ["movie", "sports", "music"]
