@@ -58,6 +58,11 @@ pandas = "^2.2.3"
 monopoly = {path = "external/monopoly"}
 rich = "^13.9.4"
 psycopg2 = "^2.9.10"
+nox = "^2025.2.9"
+sphinxcontrib-jquery = "^4.1"
+sphinx-sitemap = "^2.6.0"
+sphinxcontrib-mermaid = "^1.0.0"
+sphinxcontrib-youtube = "^1.4.1"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -75,6 +80,11 @@ mypy = "^1.15.0"
 sphinx = "^8.2.3"
 sphinx-autobuild = "^2024.10.3"
 pre-commit = "^4.1.0"
+sphinx-autodoc2 = "^0.5.0"
+sphinx-rtd-theme = "^3.0.2"
+sphinx-press-theme = "^0.9.1"
+myst-parser = "^4.0.1"
+sphinx-tabs = "^3.4.7"
 
 [build-system]
 requires = ["poetry-core"]

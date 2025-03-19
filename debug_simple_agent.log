@@ -6237,3 +6237,131 @@ TypeError: Expected AugLLMConfig, but got <class 'src.haive.core.aug_llm.base.Au
 2025-03-19 12:49:54,893 - DEBUG - Invoking engine with input: {'messages': [{'content': "Web results for 'current market trend for AI technology companies 2023':\n1. Wikipedia: Information about current market trend for AI technology companies 2023\n2. News sites: Recent developments in current market trend for AI technology companies 2023\n3. Blogs: Opinions on current market trend for AI technology companies 2023", 'additional_kwargs': {}, 'response_metadata': {}, 'type': 'tool', 'name': 'search_web', 'id': None}]}
 2025-03-19 12:49:54,893 - ERROR - Error invoking engine: 'tool_call_id'
 2025-03-19 12:49:54,896 - DEBUG - Output: Error encountered: 'tool_call_id'...
+2025-03-19 14:18:55,187 - INFO - AgentStateManager initialized as singleton
+2025-03-19 14:19:12,750 - INFO - AgentStateManager initialized as singleton
+2025-03-19 14:23:22,070 - INFO - Using provided state schema for dynamic_workflow_supervisor
+2025-03-19 14:23:22,071 - INFO - Created graph with only state schema for dynamic_workflow_supervisor
+2025-03-19 14:23:22,071 - INFO - Building engine for dynamic_workflow_supervisor
+2025-03-19 14:23:22,071 - INFO - Setting up workflow for dynamic_workflow_supervisor
+2025-03-19 14:28:15,466 - INFO - Using provided state schema for example_supervisor
+2025-03-19 14:28:15,468 - INFO - Created graph with only state schema for example_supervisor
+2025-03-19 14:28:15,468 - INFO - Building engine for example_supervisor
+2025-03-19 14:28:15,468 - INFO - Setting up workflow for example_supervisor
+2025-03-19 14:28:51,580 - INFO - Using provided state schema for example_supervisor
+2025-03-19 14:28:51,580 - INFO - Created graph with only state schema for example_supervisor
+2025-03-19 14:28:51,580 - INFO - Building engine for example_supervisor
+2025-03-19 14:28:51,580 - INFO - Setting up workflow for example_supervisor
+2025-03-19 14:28:51,581 - INFO - Compiling workflow for example_supervisor
+2025-03-19 14:28:51,591 - INFO - Workflow compiled successfully for example_supervisor
+2025-03-19 14:28:51,591 - INFO - Generating visualization for example_supervisor
+2025-03-19 14:28:51,595 - DEBUG - Starting new HTTPS connection (1): mermaid.ink:443
+2025-03-19 14:28:52,375 - DEBUG - https://mermaid.ink:443 "GET /img/JSV7aW5pdDogeydmbG93Y2hhcnQnOiB7J2N1cnZlJzogJ2xpbmVhcid9fX0lJQpncmFwaCBURDsKCV9fc3RhcnRfXyhbPHA+X19zdGFydF9fPC9wPl0pOjo6Zmlyc3QKCWNvbW1hbmRfaGFuZGxlcihjb21tYW5kX2hhbmRsZXIpCglzdXBlcnZpc29yKHN1cGVydmlzb3IpCglhZ2VudF9leGVjdXRvcihhZ2VudF9leGVjdXRvcikKCWZpbmlzaChmaW5pc2gpCglzdXBlcnZpc29yX3JvdXRlKHN1cGVydmlzb3Jfcm91dGUpCglfX2VuZF9fKFs8cD5fX2VuZF9fPC9wPl0pOjo6bGFzdAoJX19zdGFydF9fIC0tPiBjb21tYW5kX2hhbmRsZXI7CglfX3N0YXJ0X18gLS0+IHN1cGVydmlzb3I7CglhZ2VudF9leGVjdXRvciAtLT4gc3VwZXJ2aXNvcjsKCWNvbW1hbmRfaGFuZGxlciAtLT4gc3VwZXJ2aXNvcjsKCWZpbmlzaCAtLT4gX19lbmRfXzsKCXN1cGVydmlzb3IgLS4tPiBjb21tYW5kX2hhbmRsZXI7CglzdXBlcnZpc29yIC0uICZuYnNwO2NvbnRpbnVlJm5ic3A7IC4tPiBzdXBlcnZpc29yX3JvdXRlOwoJc3VwZXJ2aXNvcl9yb3V0ZSAtLi0+IGFnZW50X2V4ZWN1dG9yOwoJc3VwZXJ2aXNvcl9yb3V0ZSAtLiAmbmJzcDtFTkQmbmJzcDsgLi0+IGZpbmlzaDsKCWNsYXNzRGVmIGRlZmF1bHQgZmlsbDojZjJmMGZmLGxpbmUtaGVpZ2h0OjEuMgoJY2xhc3NEZWYgZmlyc3QgZmlsbC1vcGFjaXR5OjAKCWNsYXNzRGVmIGxhc3QgZmlsbDojYmZiNmZjCg==?type=png&bgColor=!white HTTP/1.1" 200 24840
+2025-03-19 14:28:52,377 - INFO - Graph visualization saved to /home/will/Projects/haive/backend/haive/resources/Graphs/example_supervisor_20250319_142851.png
+2025-03-19 14:28:52,377 - INFO - Agent example_supervisor initialized successfully
+2025-03-19 14:28:52,378 - INFO - Running agent example_supervisor
+2025-03-19 14:30:40,363 - INFO - Using provided state schema for example_supervisor
+2025-03-19 14:30:40,364 - INFO - Created graph with only state schema for example_supervisor
+2025-03-19 14:30:40,365 - INFO - Building engine for example_supervisor
+2025-03-19 14:30:40,365 - INFO - Setting up workflow for example_supervisor
+2025-03-19 14:30:40,366 - INFO - Compiling workflow for example_supervisor
+2025-03-19 14:30:40,375 - INFO - Workflow compiled successfully for example_supervisor
+2025-03-19 14:30:40,375 - INFO - Generating visualization for example_supervisor
+2025-03-19 14:30:40,376 - DEBUG - Starting new HTTPS connection (1): mermaid.ink:443
+2025-03-19 14:30:40,421 - DEBUG - https://mermaid.ink:443 "GET /img/JSV7aW5pdDogeydmbG93Y2hhcnQnOiB7J2N1cnZlJzogJ2xpbmVhcid9fX0lJQpncmFwaCBURDsKCV9fc3RhcnRfXyhbPHA+X19zdGFydF9fPC9wPl0pOjo6Zmlyc3QKCWNvbW1hbmRfaGFuZGxlcihjb21tYW5kX2hhbmRsZXIpCglzdXBlcnZpc29yKHN1cGVydmlzb3IpCglhZ2VudF9leGVjdXRvcihhZ2VudF9leGVjdXRvcikKCWZpbmlzaChmaW5pc2gpCglzdXBlcnZpc29yX3JvdXRlKHN1cGVydmlzb3Jfcm91dGUpCglfX2VuZF9fKFs8cD5fX2VuZF9fPC9wPl0pOjo6bGFzdAoJX19zdGFydF9fIC0tPiBjb21tYW5kX2hhbmRsZXI7CglfX3N0YXJ0X18gLS0+IHN1cGVydmlzb3I7CglhZ2VudF9leGVjdXRvciAtLT4gc3VwZXJ2aXNvcjsKCWNvbW1hbmRfaGFuZGxlciAtLT4gc3VwZXJ2aXNvcjsKCWZpbmlzaCAtLT4gX19lbmRfXzsKCXN1cGVydmlzb3IgLS4tPiBjb21tYW5kX2hhbmRsZXI7CglzdXBlcnZpc29yIC0uICZuYnNwO2NvbnRpbnVlJm5ic3A7IC4tPiBzdXBlcnZpc29yX3JvdXRlOwoJc3VwZXJ2aXNvcl9yb3V0ZSAtLi0+IGFnZW50X2V4ZWN1dG9yOwoJc3VwZXJ2aXNvcl9yb3V0ZSAtLiAmbmJzcDtFTkQmbmJzcDsgLi0+IGZpbmlzaDsKCWNsYXNzRGVmIGRlZmF1bHQgZmlsbDojZjJmMGZmLGxpbmUtaGVpZ2h0OjEuMgoJY2xhc3NEZWYgZmlyc3QgZmlsbC1vcGFjaXR5OjAKCWNsYXNzRGVmIGxhc3QgZmlsbDojYmZiNmZjCg==?type=png&bgColor=!white HTTP/1.1" 200 24840
+2025-03-19 14:30:40,423 - INFO - Graph visualization saved to /home/will/Projects/haive/backend/haive/resources/Graphs/example_supervisor_20250319_143040.png
+2025-03-19 14:30:40,423 - INFO - Agent example_supervisor initialized successfully
+2025-03-19 14:30:40,423 - INFO - Running agent example_supervisor
+2025-03-19 14:43:09,894 - INFO - Using provided state schema for advanced_supervisor
+2025-03-19 14:45:38,076 - INFO - Using provided state schema for advanced_supervisor
+2025-03-19 14:45:38,076 - INFO - Created graph with only state schema for advanced_supervisor
+2025-03-19 14:45:38,076 - INFO - Building engine for advanced_supervisor
+2025-03-19 14:45:38,076 - INFO - Setting up workflow for advanced_supervisor
+2025-03-19 14:45:38,077 - INFO - Compiling workflow for advanced_supervisor
+2025-03-19 14:45:38,085 - INFO - Workflow compiled successfully for advanced_supervisor
+2025-03-19 14:45:38,085 - INFO - Generating visualization for advanced_supervisor
+2025-03-19 14:45:38,087 - DEBUG - Starting new HTTPS connection (1): mermaid.ink:443
+2025-03-19 14:45:38,175 - DEBUG - https://mermaid.ink:443 "GET /img/JSV7aW5pdDogeydmbG93Y2hhcnQnOiB7J2N1cnZlJzogJ2xpbmVhcid9fX0lJQpncmFwaCBURDsKCV9fc3RhcnRfXyhbPHA+X19zdGFydF9fPC9wPl0pOjo6Zmlyc3QKCWNvbW1hbmRfaGFuZGxlcihjb21tYW5kX2hhbmRsZXIpCglzdXBlcnZpc29yKHN1cGVydmlzb3IpCglhZ2VudF9leGVjdXRvcihhZ2VudF9leGVjdXRvcikKCWZpbmlzaChmaW5pc2gpCglzdXBlcnZpc29yX3JvdXRlKHN1cGVydmlzb3Jfcm91dGUpCglfX2VuZF9fKFs8cD5fX2VuZF9fPC9wPl0pOjo6bGFzdAoJX19zdGFydF9fIC0tPiBjb21tYW5kX2hhbmRsZXI7CglfX3N0YXJ0X18gLS0+IHN1cGVydmlzb3I7CglhZ2VudF9leGVjdXRvciAtLT4gc3VwZXJ2aXNvcjsKCWNvbW1hbmRfaGFuZGxlciAtLT4gc3VwZXJ2aXNvcjsKCWZpbmlzaCAtLT4gX19lbmRfXzsKCXN1cGVydmlzb3IgLS4tPiBjb21tYW5kX2hhbmRsZXI7CglzdXBlcnZpc29yIC0uICZuYnNwO2NvbnRpbnVlJm5ic3A7IC4tPiBzdXBlcnZpc29yX3JvdXRlOwoJc3VwZXJ2aXNvcl9yb3V0ZSAtLi0+IGFnZW50X2V4ZWN1dG9yOwoJc3VwZXJ2aXNvcl9yb3V0ZSAtLiAmbmJzcDtFTkQmbmJzcDsgLi0+IGZpbmlzaDsKCWNsYXNzRGVmIGRlZmF1bHQgZmlsbDojZjJmMGZmLGxpbmUtaGVpZ2h0OjEuMgoJY2xhc3NEZWYgZmlyc3QgZmlsbC1vcGFjaXR5OjAKCWNsYXNzRGVmIGxhc3QgZmlsbDojYmZiNmZjCg==?type=png&bgColor=!white HTTP/1.1" 200 24840
+2025-03-19 14:45:38,177 - INFO - Graph visualization saved to /home/will/Projects/haive/backend/haive/resources/Graphs/advanced_supervisor_20250319_144538.png
+2025-03-19 14:45:38,177 - INFO - Agent advanced_supervisor initialized successfully
+2025-03-19 14:45:38,177 - INFO - Running agent advanced_supervisor
+2025-03-19 14:54:56,387 - INFO - Using provided state schema for advanced_supervisor
+2025-03-19 14:54:56,388 - INFO - Created graph with only state schema for advanced_supervisor
+2025-03-19 14:54:56,388 - INFO - Building engine for advanced_supervisor
+2025-03-19 14:54:56,388 - INFO - Setting up workflow for advanced_supervisor
+2025-03-19 14:54:56,389 - INFO - Compiling workflow for advanced_supervisor
+2025-03-19 14:54:56,396 - INFO - Workflow compiled successfully for advanced_supervisor
+2025-03-19 14:54:56,396 - INFO - Generating visualization for advanced_supervisor
+2025-03-19 14:54:56,398 - DEBUG - Starting new HTTPS connection (1): mermaid.ink:443
+2025-03-19 14:54:56,437 - DEBUG - https://mermaid.ink:443 "GET /img/JSV7aW5pdDogeydmbG93Y2hhcnQnOiB7J2N1cnZlJzogJ2xpbmVhcid9fX0lJQpncmFwaCBURDsKCV9fc3RhcnRfXyhbPHA+X19zdGFydF9fPC9wPl0pOjo6Zmlyc3QKCWNvbW1hbmRfaGFuZGxlcihjb21tYW5kX2hhbmRsZXIpCglzdXBlcnZpc29yKHN1cGVydmlzb3IpCglhZ2VudF9leGVjdXRvcihhZ2VudF9leGVjdXRvcikKCWZpbmlzaChmaW5pc2gpCglzdXBlcnZpc29yX3JvdXRlKHN1cGVydmlzb3Jfcm91dGUpCglfX2VuZF9fKFs8cD5fX2VuZF9fPC9wPl0pOjo6bGFzdAoJX19zdGFydF9fIC0tPiBjb21tYW5kX2hhbmRsZXI7CglfX3N0YXJ0X18gLS0+IHN1cGVydmlzb3I7CglhZ2VudF9leGVjdXRvciAtLT4gc3VwZXJ2aXNvcjsKCWNvbW1hbmRfaGFuZGxlciAtLT4gc3VwZXJ2aXNvcjsKCWZpbmlzaCAtLT4gX19lbmRfXzsKCXN1cGVydmlzb3IgLS4tPiBjb21tYW5kX2hhbmRsZXI7CglzdXBlcnZpc29yIC0uICZuYnNwO2NvbnRpbnVlJm5ic3A7IC4tPiBzdXBlcnZpc29yX3JvdXRlOwoJc3VwZXJ2aXNvcl9yb3V0ZSAtLi0+IGFnZW50X2V4ZWN1dG9yOwoJc3VwZXJ2aXNvcl9yb3V0ZSAtLiAmbmJzcDtFTkQmbmJzcDsgLi0+IGZpbmlzaDsKCWNsYXNzRGVmIGRlZmF1bHQgZmlsbDojZjJmMGZmLGxpbmUtaGVpZ2h0OjEuMgoJY2xhc3NEZWYgZmlyc3QgZmlsbC1vcGFjaXR5OjAKCWNsYXNzRGVmIGxhc3QgZmlsbDojYmZiNmZjCg==?type=png&bgColor=!white HTTP/1.1" 200 24840
+2025-03-19 14:54:56,438 - INFO - Graph visualization saved to /home/will/Projects/haive/backend/haive/resources/Graphs/advanced_supervisor_20250319_145456.png
+2025-03-19 14:54:56,438 - INFO - Agent advanced_supervisor initialized successfully
+2025-03-19 14:54:56,438 - INFO - Running agent advanced_supervisor
+2025-03-19 14:55:17,253 - INFO - Using provided state schema for simple_supervisor
+2025-03-19 14:55:17,254 - INFO - Created graph with only state schema for simple_supervisor
+2025-03-19 14:55:17,254 - INFO - Building engine for simple_supervisor
+2025-03-19 14:55:17,254 - INFO - Setting up workflow for simple_supervisor
+2025-03-19 14:55:17,255 - INFO - Compiling workflow for simple_supervisor
+2025-03-19 14:55:17,262 - INFO - Workflow compiled successfully for simple_supervisor
+2025-03-19 14:55:17,262 - INFO - Generating visualization for simple_supervisor
+2025-03-19 14:55:17,264 - DEBUG - Starting new HTTPS connection (1): mermaid.ink:443
+2025-03-19 14:55:17,303 - DEBUG - https://mermaid.ink:443 "GET /img/JSV7aW5pdDogeydmbG93Y2hhcnQnOiB7J2N1cnZlJzogJ2xpbmVhcid9fX0lJQpncmFwaCBURDsKCV9fc3RhcnRfXyhbPHA+X19zdGFydF9fPC9wPl0pOjo6Zmlyc3QKCWNvbW1hbmRfaGFuZGxlcihjb21tYW5kX2hhbmRsZXIpCglzdXBlcnZpc29yKHN1cGVydmlzb3IpCglhZ2VudF9leGVjdXRvcihhZ2VudF9leGVjdXRvcikKCWZpbmlzaChmaW5pc2gpCglzdXBlcnZpc29yX3JvdXRlKHN1cGVydmlzb3Jfcm91dGUpCglfX2VuZF9fKFs8cD5fX2VuZF9fPC9wPl0pOjo6bGFzdAoJX19zdGFydF9fIC0tPiBjb21tYW5kX2hhbmRsZXI7CglfX3N0YXJ0X18gLS0+IHN1cGVydmlzb3I7CglhZ2VudF9leGVjdXRvciAtLT4gc3VwZXJ2aXNvcjsKCWNvbW1hbmRfaGFuZGxlciAtLT4gc3VwZXJ2aXNvcjsKCWZpbmlzaCAtLT4gX19lbmRfXzsKCXN1cGVydmlzb3IgLS4tPiBjb21tYW5kX2hhbmRsZXI7CglzdXBlcnZpc29yIC0uICZuYnNwO2NvbnRpbnVlJm5ic3A7IC4tPiBzdXBlcnZpc29yX3JvdXRlOwoJc3VwZXJ2aXNvcl9yb3V0ZSAtLi0+IGFnZW50X2V4ZWN1dG9yOwoJc3VwZXJ2aXNvcl9yb3V0ZSAtLiAmbmJzcDtFTkQmbmJzcDsgLi0+IGZpbmlzaDsKCWNsYXNzRGVmIGRlZmF1bHQgZmlsbDojZjJmMGZmLGxpbmUtaGVpZ2h0OjEuMgoJY2xhc3NEZWYgZmlyc3QgZmlsbC1vcGFjaXR5OjAKCWNsYXNzRGVmIGxhc3QgZmlsbDojYmZiNmZjCg==?type=png&bgColor=!white HTTP/1.1" 200 24840
+2025-03-19 14:55:17,304 - INFO - Graph visualization saved to /home/will/Projects/haive/backend/haive/resources/Graphs/simple_supervisor_20250319_145517.png
+2025-03-19 14:55:17,304 - INFO - Agent simple_supervisor initialized successfully
+2025-03-19 14:55:17,304 - INFO - Running agent simple_supervisor
+2025-03-19 14:56:29,844 - INFO - Using provided state schema for simple_supervisor
+2025-03-19 14:56:29,844 - INFO - Created graph with only state schema for simple_supervisor
+2025-03-19 14:56:29,845 - INFO - Building engine for simple_supervisor
+2025-03-19 14:56:29,845 - INFO - Setting up workflow for simple_supervisor
+2025-03-19 14:56:29,845 - INFO - Compiling workflow for simple_supervisor
+2025-03-19 14:56:29,853 - INFO - Workflow compiled successfully for simple_supervisor
+2025-03-19 14:56:29,853 - INFO - Generating visualization for simple_supervisor
+2025-03-19 14:56:29,855 - DEBUG - Starting new HTTPS connection (1): mermaid.ink:443
+2025-03-19 14:56:29,953 - DEBUG - https://mermaid.ink:443 "GET /img/JSV7aW5pdDogeydmbG93Y2hhcnQnOiB7J2N1cnZlJzogJ2xpbmVhcid9fX0lJQpncmFwaCBURDsKCV9fc3RhcnRfXyhbPHA+X19zdGFydF9fPC9wPl0pOjo6Zmlyc3QKCWNvbW1hbmRfaGFuZGxlcihjb21tYW5kX2hhbmRsZXIpCglzdXBlcnZpc29yKHN1cGVydmlzb3IpCglhZ2VudF9leGVjdXRvcihhZ2VudF9leGVjdXRvcikKCWZpbmlzaChmaW5pc2gpCglzdXBlcnZpc29yX3JvdXRlKHN1cGVydmlzb3Jfcm91dGUpCglfX2VuZF9fKFs8cD5fX2VuZF9fPC9wPl0pOjo6bGFzdAoJX19zdGFydF9fIC0tPiBjb21tYW5kX2hhbmRsZXI7CglfX3N0YXJ0X18gLS0+IHN1cGVydmlzb3I7CglhZ2VudF9leGVjdXRvciAtLT4gc3VwZXJ2aXNvcjsKCWNvbW1hbmRfaGFuZGxlciAtLT4gc3VwZXJ2aXNvcjsKCWZpbmlzaCAtLT4gX19lbmRfXzsKCXN1cGVydmlzb3IgLS4tPiBjb21tYW5kX2hhbmRsZXI7CglzdXBlcnZpc29yIC0uICZuYnNwO2NvbnRpbnVlJm5ic3A7IC4tPiBzdXBlcnZpc29yX3JvdXRlOwoJc3VwZXJ2aXNvcl9yb3V0ZSAtLi0+IGFnZW50X2V4ZWN1dG9yOwoJc3VwZXJ2aXNvcl9yb3V0ZSAtLiAmbmJzcDtFTkQmbmJzcDsgLi0+IGZpbmlzaDsKCWNsYXNzRGVmIGRlZmF1bHQgZmlsbDojZjJmMGZmLGxpbmUtaGVpZ2h0OjEuMgoJY2xhc3NEZWYgZmlyc3QgZmlsbC1vcGFjaXR5OjAKCWNsYXNzRGVmIGxhc3QgZmlsbDojYmZiNmZjCg==?type=png&bgColor=!white HTTP/1.1" 200 24840
+2025-03-19 14:56:29,955 - INFO - Graph visualization saved to /home/will/Projects/haive/backend/haive/resources/Graphs/simple_supervisor_20250319_145629.png
+2025-03-19 14:56:29,955 - INFO - Agent simple_supervisor initialized successfully
+2025-03-19 14:56:29,955 - INFO - Running agent simple_supervisor
+2025-03-19 14:56:37,425 - INFO - Using provided state schema for simple_supervisor
+2025-03-19 14:56:37,426 - INFO - Created graph with only state schema for simple_supervisor
+2025-03-19 14:56:37,426 - INFO - Building engine for simple_supervisor
+2025-03-19 14:56:37,426 - INFO - Setting up workflow for simple_supervisor
+2025-03-19 14:56:37,427 - INFO - Compiling workflow for simple_supervisor
+2025-03-19 14:56:37,435 - INFO - Workflow compiled successfully for simple_supervisor
+2025-03-19 14:56:37,435 - INFO - Generating visualization for simple_supervisor
+2025-03-19 14:56:37,436 - DEBUG - Starting new HTTPS connection (1): mermaid.ink:443
+2025-03-19 14:56:37,477 - DEBUG - https://mermaid.ink:443 "GET /img/JSV7aW5pdDogeydmbG93Y2hhcnQnOiB7J2N1cnZlJzogJ2xpbmVhcid9fX0lJQpncmFwaCBURDsKCV9fc3RhcnRfXyhbPHA+X19zdGFydF9fPC9wPl0pOjo6Zmlyc3QKCWNvbW1hbmRfaGFuZGxlcihjb21tYW5kX2hhbmRsZXIpCglzdXBlcnZpc29yKHN1cGVydmlzb3IpCglhZ2VudF9leGVjdXRvcihhZ2VudF9leGVjdXRvcikKCWZpbmlzaChmaW5pc2gpCglzdXBlcnZpc29yX3JvdXRlKHN1cGVydmlzb3Jfcm91dGUpCglfX2VuZF9fKFs8cD5fX2VuZF9fPC9wPl0pOjo6bGFzdAoJX19zdGFydF9fIC0tPiBjb21tYW5kX2hhbmRsZXI7CglfX3N0YXJ0X18gLS0+IHN1cGVydmlzb3I7CglhZ2VudF9leGVjdXRvciAtLT4gc3VwZXJ2aXNvcjsKCWNvbW1hbmRfaGFuZGxlciAtLT4gc3VwZXJ2aXNvcjsKCWZpbmlzaCAtLT4gX19lbmRfXzsKCXN1cGVydmlzb3IgLS4tPiBjb21tYW5kX2hhbmRsZXI7CglzdXBlcnZpc29yIC0uICZuYnNwO2NvbnRpbnVlJm5ic3A7IC4tPiBzdXBlcnZpc29yX3JvdXRlOwoJc3VwZXJ2aXNvcl9yb3V0ZSAtLi0+IGFnZW50X2V4ZWN1dG9yOwoJc3VwZXJ2aXNvcl9yb3V0ZSAtLiAmbmJzcDtFTkQmbmJzcDsgLi0+IGZpbmlzaDsKCWNsYXNzRGVmIGRlZmF1bHQgZmlsbDojZjJmMGZmLGxpbmUtaGVpZ2h0OjEuMgoJY2xhc3NEZWYgZmlyc3QgZmlsbC1vcGFjaXR5OjAKCWNsYXNzRGVmIGxhc3QgZmlsbDojYmZiNmZjCg==?type=png&bgColor=!white HTTP/1.1" 200 24840
+2025-03-19 14:56:37,480 - INFO - Graph visualization saved to /home/will/Projects/haive/backend/haive/resources/Graphs/simple_supervisor_20250319_145637.png
+2025-03-19 14:56:37,480 - INFO - Agent simple_supervisor initialized successfully
+2025-03-19 14:56:37,480 - INFO - Running agent simple_supervisor
+2025-03-19 14:57:14,321 - INFO - Using provided state schema for simple_supervisor
+2025-03-19 14:57:14,321 - INFO - Created graph with only state schema for simple_supervisor
+2025-03-19 14:57:14,322 - INFO - Building engine for simple_supervisor
+2025-03-19 14:57:14,322 - INFO - Setting up workflow for simple_supervisor
+2025-03-19 14:57:14,322 - INFO - Compiling workflow for simple_supervisor
+2025-03-19 14:57:14,330 - INFO - Workflow compiled successfully for simple_supervisor
+2025-03-19 14:57:14,330 - INFO - Generating visualization for simple_supervisor
+2025-03-19 14:57:14,331 - DEBUG - Starting new HTTPS connection (1): mermaid.ink:443
+2025-03-19 14:57:14,378 - DEBUG - https://mermaid.ink:443 "GET /img/JSV7aW5pdDogeydmbG93Y2hhcnQnOiB7J2N1cnZlJzogJ2xpbmVhcid9fX0lJQpncmFwaCBURDsKCV9fc3RhcnRfXyhbPHA+X19zdGFydF9fPC9wPl0pOjo6Zmlyc3QKCWNvbW1hbmRfaGFuZGxlcihjb21tYW5kX2hhbmRsZXIpCglzdXBlcnZpc29yKHN1cGVydmlzb3IpCglhZ2VudF9leGVjdXRvcihhZ2VudF9leGVjdXRvcikKCWZpbmlzaChmaW5pc2gpCglzdXBlcnZpc29yX3JvdXRlKHN1cGVydmlzb3Jfcm91dGUpCglfX2VuZF9fKFs8cD5fX2VuZF9fPC9wPl0pOjo6bGFzdAoJX19zdGFydF9fIC0tPiBjb21tYW5kX2hhbmRsZXI7CglfX3N0YXJ0X18gLS0+IHN1cGVydmlzb3I7CglhZ2VudF9leGVjdXRvciAtLT4gc3VwZXJ2aXNvcjsKCWNvbW1hbmRfaGFuZGxlciAtLT4gc3VwZXJ2aXNvcjsKCWZpbmlzaCAtLT4gX19lbmRfXzsKCXN1cGVydmlzb3IgLS4tPiBjb21tYW5kX2hhbmRsZXI7CglzdXBlcnZpc29yIC0uICZuYnNwO2NvbnRpbnVlJm5ic3A7IC4tPiBzdXBlcnZpc29yX3JvdXRlOwoJc3VwZXJ2aXNvcl9yb3V0ZSAtLi0+IGFnZW50X2V4ZWN1dG9yOwoJc3VwZXJ2aXNvcl9yb3V0ZSAtLiAmbmJzcDtFTkQmbmJzcDsgLi0+IGZpbmlzaDsKCWNsYXNzRGVmIGRlZmF1bHQgZmlsbDojZjJmMGZmLGxpbmUtaGVpZ2h0OjEuMgoJY2xhc3NEZWYgZmlyc3QgZmlsbC1vcGFjaXR5OjAKCWNsYXNzRGVmIGxhc3QgZmlsbDojYmZiNmZjCg==?type=png&bgColor=!white HTTP/1.1" 200 24840
+2025-03-19 14:57:14,384 - INFO - Graph visualization saved to /home/will/Projects/haive/backend/haive/resources/Graphs/simple_supervisor_20250319_145714.png
+2025-03-19 14:57:14,384 - INFO - Agent simple_supervisor initialized successfully
+2025-03-19 14:57:14,384 - INFO - Running agent simple_supervisor
+2025-03-19 14:57:14,398 - INFO - State history saved to: /home/will/Projects/haive/backend/haive/resources/State_History/simple_supervisor_20250319_145714.json
+2025-03-19 14:57:14,398 - INFO - Output message: I've completed processing your request. If you need further assistance, please let me know....
+2025-03-19 14:57:14,399 - INFO - Running agent simple_supervisor
+2025-03-19 14:57:14,413 - INFO - State history saved to: /home/will/Projects/haive/backend/haive/resources/State_History/simple_supervisor_20250319_145714.json
+2025-03-19 14:57:14,413 - INFO - Output message: I've completed processing your request. If you need further assistance, please let me know....
+2025-03-19 14:57:14,413 - INFO - Running agent simple_supervisor
+2025-03-19 14:57:14,437 - INFO - State history saved to: /home/will/Projects/haive/backend/haive/resources/State_History/simple_supervisor_20250319_145714.json
+2025-03-19 14:57:14,437 - INFO - Output message: I've completed processing your request. If you need further assistance, please let me know....
+2025-03-19 14:57:14,437 - INFO - Running agent simple_supervisor
+2025-03-19 14:57:14,507 - INFO - State history saved to: /home/will/Projects/haive/backend/haive/resources/State_History/simple_supervisor_20250319_145714.json
+2025-03-19 14:57:14,507 - INFO - Output message: I've completed processing your request. If you need further assistance, please let me know....
+2025-03-19 14:57:14,508 - INFO - Running agent simple_supervisor
+2025-03-19 14:57:14,936 - INFO - State history saved to: /home/will/Projects/haive/backend/haive/resources/State_History/simple_supervisor_20250319_145714.json
+2025-03-19 14:57:14,939 - INFO - Output message: I've completed processing your request. If you need further assistance, please let me know....
+2025-03-19 14:57:14,939 - INFO - Running agent simple_supervisor
+2025-03-19 14:57:18,522 - INFO - State history saved to: /home/will/Projects/haive/backend/haive/resources/State_History/simple_supervisor_20250319_145714.json
+2025-03-19 14:57:18,548 - INFO - Output message: I've completed processing your request. If you need further assistance, please let me know....
+2025-03-19 14:57:18,551 - INFO - Running agent simple_supervisor
+2025-03-19 14:57:47,027 - INFO - State history saved to: /home/will/Projects/haive/backend/haive/resources/State_History/simple_supervisor_20250319_145714.json
+2025-03-19 14:57:47,239 - INFO - Output message: I've completed processing your request. If you need further assistance, please let me know....
+2025-03-19 14:57:47,239 - INFO - Running agent simple_supervisor
