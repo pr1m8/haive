@@ -11,3 +11,4 @@ __pycache__
 *.pyzw
 
 resources/
+credentials.json
