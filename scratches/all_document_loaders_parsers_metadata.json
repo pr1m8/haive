@@ -1,0 +1,475 @@
+{
+  "AzureAIDocumentIntelligenceParser": {
+    "description": "Loads a PDF with Azure Document Intelligence\n    (formerly Forms Recognizer).",
+    "parent_classes": [
+      "BaseBlobParser"
+    ],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "api_endpoint": "str",
+        "api_key": "Optional[str]",
+        "api_version": "Optional[str]",
+        "api_model": "str",
+        "mode": "str",
+        "analysis_features": "Optional[List[str]]",
+        "azure_credential": "Optional['TokenCredential']"
+      },
+      "_generate_docs_page": {
+        "self": "<class 'inspect._empty'>",
+        "result": "Any"
+      },
+      "_generate_docs_single": {
+        "self": "<class 'inspect._empty'>",
+        "result": "Any"
+      },
+      "lazy_parse": {
+        "self": "<class 'inspect._empty'>",
+        "blob": "Blob"
+      },
+      "parse_url": {
+        "self": "<class 'inspect._empty'>",
+        "url": "str"
+      },
+      "parse_bytes": {
+        "self": "<class 'inspect._empty'>",
+        "bytes_source": "bytes"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "BaseImageBlobParser": {
+    "description": "Abstract base class for parsing image blobs into text.",
+    "parent_classes": [
+      "BaseBlobParser"
+    ],
+    "attributes": {},
+    "methods": {
+      "_analyze_image": {
+        "self": "<class 'inspect._empty'>",
+        "img": "Image"
+      },
+      "lazy_parse": {
+        "self": "<class 'inspect._empty'>",
+        "blob": "<class 'langchain_core.documents.base.Blob'>"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "BS4HTMLParser": {
+    "description": "Parse HTML files using `Beautiful Soup`.",
+    "parent_classes": [
+      "BaseBlobParser"
+    ],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "features": "<class 'str'>",
+        "get_text_separator": "<class 'str'>",
+        "kwargs": "typing.Any"
+      },
+      "lazy_parse": {
+        "self": "<class 'inspect._empty'>",
+        "blob": "<class 'langchain_core.documents.base.Blob'>"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "DocAIParser": {
+    "description": ".. deprecated:: 0.0.32 Use ``:class:`~langchain_google_community.DocAIParser``` instead. It will not be removed until langchain-community==1.0.\n\n`Google Cloud Document AI` parser.\n\nFor a detailed explanation of Document AI, refer to the product documentation.\nhttps://cloud.google.com/document-ai/docs/overview",
+    "parent_classes": [
+      "BaseBlobParser"
+    ],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "client": "typing.Optional[ForwardRef('DocumentProcessorServiceClient')]",
+        "location": "typing.Optional[str]",
+        "gcs_output_path": "typing.Optional[str]",
+        "processor_name": "typing.Optional[str]"
+      },
+      "lazy_parse": {
+        "self": "<class 'inspect._empty'>",
+        "blob": "<class 'langchain_core.documents.base.Blob'>"
+      },
+      "online_process": {
+        "self": "<class 'inspect._empty'>",
+        "blob": "<class 'langchain_core.documents.base.Blob'>",
+        "enable_native_pdf_parsing": "<class 'bool'>",
+        "field_mask": "typing.Optional[str]",
+        "page_range": "typing.Optional[typing.List[int]]"
+      },
+      "batch_parse": {
+        "self": "<class 'inspect._empty'>",
+        "blobs": "typing.Sequence[langchain_core.documents.base.Blob]",
+        "gcs_output_path": "typing.Optional[str]",
+        "timeout_sec": "<class 'int'>",
+        "check_in_interval_sec": "<class 'int'>"
+      },
+      "parse_from_results": {
+        "self": "<class 'inspect._empty'>",
+        "results": "typing.List[langchain_community.document_loaders.parsers.docai.DocAIParsingResults]"
+      },
+      "operations_from_names": {
+        "self": "<class 'inspect._empty'>",
+        "operation_names": "typing.List[str]"
+      },
+      "is_running": {
+        "self": "<class 'inspect._empty'>",
+        "operations": "typing.List[ForwardRef('Operation')]"
+      },
+      "docai_parse": {
+        "self": "<class 'inspect._empty'>",
+        "blobs": "typing.Sequence[langchain_core.documents.base.Blob]",
+        "gcs_output_path": "typing.Optional[str]",
+        "processor_name": "typing.Optional[str]",
+        "batch_size": "<class 'int'>",
+        "enable_native_pdf_parsing": "<class 'bool'>",
+        "field_mask": "typing.Optional[str]"
+      },
+      "get_results": {
+        "self": "<class 'inspect._empty'>",
+        "operations": "typing.List[ForwardRef('Operation')]"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "GrobidParser": {
+    "description": "Load  article `PDF` files using `Grobid`.",
+    "parent_classes": [
+      "BaseBlobParser"
+    ],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "segment_sentences": "<class 'bool'>",
+        "grobid_server": "<class 'str'>"
+      },
+      "process_xml": {
+        "self": "<class 'inspect._empty'>",
+        "file_path": "<class 'str'>",
+        "xml_data": "<class 'str'>",
+        "segment_sentences": "<class 'bool'>"
+      },
+      "lazy_parse": {
+        "self": "<class 'inspect._empty'>",
+        "blob": "<class 'langchain_core.documents.base.Blob'>"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "LanguageParser": {
+    "description": "Parse using the respective programming language syntax.\n\n    Each top-level function and class in the code is loaded into separate documents.\n    Furthermore, an extra document is generated, containing the remaining top-level code\n    that excludes the already segmented functions and classes.\n\n    This approach can potentially improve the accuracy of QA models over source code.\n\n    The supported languages for code parsing are:\n\n    - C: \"c\" (*)\n    - C++: \"cpp\" (*)\n    - C#: \"csharp\" (*)\n    - COBOL: \"cobol\"\n    - Elixir: \"elixir\"\n    - Go: \"go\" (*)\n    - Java: \"java\" (*)\n    - JavaScript: \"js\" (requires package `esprima`)\n    - Kotlin: \"kotlin\" (*)\n    - Lua: \"lua\" (*)\n    - Perl: \"perl\" (*)\n    - Python: \"python\"\n    - Ruby: \"ruby\" (*)\n    - Rust: \"rust\" (*)\n    - Scala: \"scala\" (*)\n    - SQL: \"sql\" (*)\n    - TypeScript: \"ts\" (*)\n\n    Items marked with (*) require the packages `tree_sitter` and\n    `tree_sitter_languages`. It is straightforward to add support for additional\n    languages using `tree_sitter`, although this currently requires modifying LangChain.\n\n    The language used for parsing can be configured, along with the minimum number of\n    lines required to activate the splitting based on syntax.\n\n    If a language is not explicitly specified, `LanguageParser` will infer one from\n    filename extensions, if present.\n\n    Examples:\n\n       .. code-block:: python\n\n            from langchain_community.document_loaders.generic import GenericLoader\n            from langchain_community.document_loaders.parsers import LanguageParser\n\n            loader = GenericLoader.from_filesystem(\n                \"./code\",\n                glob=\"**/*\",\n                suffixes=[\".py\", \".js\"],\n                parser=LanguageParser()\n            )\n            docs = loader.load()\n\n        Example instantiations to manually select the language:\n\n        .. code-block:: python\n\n\n            loader = GenericLoader.from_filesystem(\n                \"./code\",\n                glob=\"**/*\",\n                suffixes=[\".py\"],\n                parser=LanguageParser(language=\"python\")\n            )\n\n        Example instantiations to set number of lines threshold:\n\n        .. code-block:: python\n\n            loader = GenericLoader.from_filesystem(\n                \"./code\",\n                glob=\"**/*\",\n                suffixes=[\".py\"],\n                parser=LanguageParser(parser_threshold=200)\n            )",
+    "parent_classes": [
+      "BaseBlobParser"
+    ],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "language": "Optional[Language]",
+        "parser_threshold": "int"
+      },
+      "lazy_parse": {
+        "self": "<class 'inspect._empty'>",
+        "blob": "Blob"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "LLMImageBlobParser": {
+    "description": "Parser for analyzing images using a language model (LLM).\n\n    Attributes:\n        model (BaseChatModel):\n          The language model to use for analysis.\n        prompt (str):\n          The prompt to provide to the language model.",
+    "parent_classes": [
+      "BaseImageBlobParser"
+    ],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "model": "<class 'langchain_core.language_models.chat_models.BaseChatModel'>",
+        "prompt": "<class 'str'>"
+      },
+      "_analyze_image": {
+        "self": "<class 'inspect._empty'>",
+        "img": "Image"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "OpenAIWhisperParser": {
+    "description": "Transcribe and parse audio files.\n\n    Audio transcription is with OpenAI Whisper model.\n\n    Args:\n        api_key: OpenAI API key\n        chunk_duration_threshold: Minimum duration of a chunk in seconds\n            NOTE: According to the OpenAI API, the chunk duration should be at least 0.1\n            seconds. If the chunk duration is less or equal than the threshold,\n            it will be skipped.",
+    "parent_classes": [
+      "BaseBlobParser"
+    ],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "api_key": "typing.Optional[str]",
+        "chunk_duration_threshold": "<class 'float'>",
+        "base_url": "typing.Optional[str]",
+        "language": "typing.Optional[str]",
+        "prompt": "typing.Optional[str]",
+        "response_format": "typing.Optional[typing.Literal['json', 'text', 'srt', 'verbose_json', 'vtt']]",
+        "temperature": "typing.Optional[float]",
+        "model": "<class 'str'>"
+      },
+      "lazy_parse": {
+        "self": "<class 'inspect._empty'>",
+        "blob": "<class 'langchain_core.documents.base.Blob'>"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "PDFMinerParser": {
+    "description": "Parse a blob from a PDF using `pdfminer.six` library.\n\n    This class provides methods to parse a blob from a PDF document, supporting various\n    configurations such as handling password-protected PDFs, extracting images, and\n    defining extraction mode.\n    It integrates the 'pdfminer.six' library for PDF processing and offers synchronous\n    blob parsing.\n\n    Examples:\n        Setup:\n\n        .. code-block:: bash\n\n            pip install -U langchain-community pdfminer.six pillow\n\n        Load a blob from a PDF file:\n\n        .. code-block:: python\n\n            from langchain_core.documents.base import Blob\n\n            blob = Blob.from_path(\"./example_data/layout-parser-paper.pdf\")\n\n        Instantiate the parser:\n\n        .. code-block:: python\n\n            from langchain_community.document_loaders.parsers import PDFMinerParser\n\n            parser = PDFMinerParser(\n                # password = None,\n                mode = \"single\",\n                pages_delimiter = \"\n\f\",\n                # extract_images = True,\n                # images_to_text = convert_images_to_text_with_tesseract(),\n            )\n\n        Lazily parse the blob:\n\n        .. code-block:: python\n\n            docs = []\n            docs_lazy = parser.lazy_parse(blob)\n\n            for doc in docs_lazy:\n                docs.append(doc)\n            print(docs[0].page_content[:100])\n            print(docs[0].metadata)",
+    "parent_classes": [
+      "BaseBlobParser"
+    ],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "extract_images": "bool",
+        "password": "Optional[str]",
+        "mode": "Literal['single', 'page']",
+        "pages_delimiter": "str",
+        "images_parser": "Optional[BaseImageBlobParser]",
+        "images_inner_format": "Literal['text', 'markdown-img', 'html-img']",
+        "concatenate_pages": "Optional[bool]"
+      },
+      "_get_metadata": {
+        "self": "<class 'inspect._empty'>",
+        "fp": "BinaryIO",
+        "password": "str",
+        "caching": "bool"
+      },
+      "lazy_parse": {
+        "self": "<class 'inspect._empty'>",
+        "blob": "Blob"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "PDFPlumberParser": {
+    "description": "Parse `PDF` with `PDFPlumber`.",
+    "parent_classes": [
+      "BaseBlobParser"
+    ],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "text_kwargs": "Optional[Mapping[str, Any]]",
+        "dedupe": "bool",
+        "extract_images": "bool"
+      },
+      "lazy_parse": {
+        "self": "<class 'inspect._empty'>",
+        "blob": "Blob"
+      },
+      "_process_page_content": {
+        "self": "<class 'inspect._empty'>",
+        "page": "pdfplumber.page.Page"
+      },
+      "_extract_images_from_page": {
+        "self": "<class 'inspect._empty'>",
+        "page": "pdfplumber.page.Page"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "PyMuPDFParser": {
+    "description": "Parse a blob from a PDF using `PyMuPDF` library.\n\n    This class provides methods to parse a blob from a PDF document, supporting various\n    configurations such as handling password-protected PDFs, extracting images, and\n    defining extraction mode.\n    It integrates the 'PyMuPDF' library for PDF processing and offers synchronous blob\n    parsing.\n\n    Examples:\n        Setup:\n\n        .. code-block:: bash\n\n            pip install -U langchain-community pymupdf\n\n        Load a blob from a PDF file:\n\n        .. code-block:: python\n\n            from langchain_core.documents.base import Blob\n\n            blob = Blob.from_path(\"./example_data/layout-parser-paper.pdf\")\n\n        Instantiate the parser:\n\n        .. code-block:: python\n\n            from langchain_community.document_loaders.parsers import PyMuPDFParser\n\n            parser = PyMuPDFParser(\n                # password = None,\n                mode = \"single\",\n                pages_delimiter = \"\n\f\",\n                # images_parser = TesseractBlobParser(),\n                # extract_tables=\"markdown\",\n                # extract_tables_settings=None,\n                # text_kwargs=None,\n            )\n\n        Lazily parse the blob:\n\n        .. code-block:: python\n\n            docs = []\n            docs_lazy = parser.lazy_parse(blob)\n\n            for doc in docs_lazy:\n                docs.append(doc)\n            print(docs[0].page_content[:100])\n            print(docs[0].metadata)",
+    "parent_classes": [
+      "BaseBlobParser"
+    ],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "text_kwargs": "Optional[dict[str, Any]]",
+        "extract_images": "bool",
+        "password": "Optional[str]",
+        "mode": "Literal['single', 'page']",
+        "pages_delimiter": "str",
+        "images_parser": "Optional[BaseImageBlobParser]",
+        "images_inner_format": "Literal['text', 'markdown-img', 'html-img']",
+        "extract_tables": "Union[Literal['csv', 'markdown', 'html'], None]",
+        "extract_tables_settings": "Optional[dict[str, Any]]"
+      },
+      "lazy_parse": {
+        "self": "<class 'inspect._empty'>",
+        "blob": "Blob"
+      },
+      "_lazy_parse": {
+        "self": "<class 'inspect._empty'>",
+        "blob": "Blob",
+        "text_kwargs": "Optional[dict[str, Any]]"
+      },
+      "_get_page_content": {
+        "self": "<class 'inspect._empty'>",
+        "doc": "pymupdf.Document",
+        "page": "pymupdf.Page",
+        "text_kwargs": "dict[str, Any]"
+      },
+      "_extract_metadata": {
+        "self": "<class 'inspect._empty'>",
+        "doc": "pymupdf.Document",
+        "blob": "Blob"
+      },
+      "_extract_images_from_page": {
+        "self": "<class 'inspect._empty'>",
+        "doc": "pymupdf.Document",
+        "page": "pymupdf.Page"
+      },
+      "_extract_tables_from_page": {
+        "self": "<class 'inspect._empty'>",
+        "page": "pymupdf.Page"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "PyPDFParser": {
+    "description": "Parse a blob from a PDF using `pypdf` library.\n\n    This class provides methods to parse a blob from a PDF document, supporting various\n    configurations such as handling password-protected PDFs, extracting images.\n    It integrates the 'pypdf' library for PDF processing and offers synchronous blob\n    parsing.\n\n    Examples:\n        Setup:\n\n        .. code-block:: bash\n\n            pip install -U langchain-community pypdf\n\n        Load a blob from a PDF file:\n\n        .. code-block:: python\n\n            from langchain_core.documents.base import Blob\n\n            blob = Blob.from_path(\"./example_data/layout-parser-paper.pdf\")\n\n        Instantiate the parser:\n\n        .. code-block:: python\n\n            from langchain_community.document_loaders.parsers import PyPDFParser\n\n            parser = PyPDFParser(\n                # password = None,\n                mode = \"single\",\n                pages_delimiter = \"\n\f\",\n                # images_parser = TesseractBlobParser(),\n            )\n\n        Lazily parse the blob:\n\n        .. code-block:: python\n\n            docs = []\n            docs_lazy = parser.lazy_parse(blob)\n\n            for doc in docs_lazy:\n                docs.append(doc)\n            print(docs[0].page_content[:100])\n            print(docs[0].metadata)",
+    "parent_classes": [
+      "BaseBlobParser"
+    ],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "password": "Optional[Union[str, bytes]]",
+        "extract_images": "bool",
+        "mode": "Literal['single', 'page']",
+        "pages_delimiter": "str",
+        "images_parser": "Optional[BaseImageBlobParser]",
+        "images_inner_format": "Literal['text', 'markdown-img', 'html-img']",
+        "extraction_mode": "Literal['plain', 'layout']",
+        "extraction_kwargs": "Optional[dict[str, Any]]"
+      },
+      "lazy_parse": {
+        "self": "<class 'inspect._empty'>",
+        "blob": "Blob"
+      },
+      "extract_images_from_page": {
+        "self": "<class 'inspect._empty'>",
+        "page": "pypdf._page.PageObject"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "PyPDFium2Parser": {
+    "description": "Parse a blob from a PDF using `PyPDFium2` library.\n\n    This class provides methods to parse a blob from a PDF document, supporting various\n    configurations such as handling password-protected PDFs, extracting images, and\n    defining extraction mode.\n    It integrates the 'PyPDFium2' library for PDF processing and offers synchronous\n    blob parsing.\n\n    Examples:\n        Setup:\n\n        .. code-block:: bash\n\n            pip install -U langchain-community pypdfium2\n\n        Load a blob from a PDF file:\n\n        .. code-block:: python\n\n            from langchain_core.documents.base import Blob\n\n            blob = Blob.from_path(\"./example_data/layout-parser-paper.pdf\")\n\n        Instantiate the parser:\n\n        .. code-block:: python\n\n            from langchain_community.document_loaders.parsers import PyPDFium2Parser\n\n            parser = PyPDFium2Parser(\n                # password=None,\n                mode=\"page\",\n                pages_delimiter=\"\n\f\",\n                # extract_images = True,\n                # images_to_text = convert_images_to_text_with_tesseract(),\n            )\n\n        Lazily parse the blob:\n\n        .. code-block:: python\n\n            docs = []\n            docs_lazy = parser.lazy_parse(blob)\n\n            for doc in docs_lazy:\n                docs.append(doc)\n            print(docs[0].page_content[:100])\n            print(docs[0].metadata)",
+    "parent_classes": [
+      "BaseBlobParser"
+    ],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "extract_images": "bool",
+        "password": "Optional[str]",
+        "mode": "Literal['single', 'page']",
+        "pages_delimiter": "str",
+        "images_parser": "Optional[BaseImageBlobParser]",
+        "images_inner_format": "Literal['text', 'markdown-img', 'html-img']"
+      },
+      "lazy_parse": {
+        "self": "<class 'inspect._empty'>",
+        "blob": "Blob"
+      },
+      "_extract_images_from_page": {
+        "self": "<class 'inspect._empty'>",
+        "page": "pypdfium2._helpers.page.PdfPage"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "RapidOCRBlobParser": {
+    "description": "Parser for extracting text from images using the RapidOCR library.\n\n    Attributes:\n        ocr:\n          The RapidOCR instance for performing OCR.",
+    "parent_classes": [
+      "BaseImageBlobParser"
+    ],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>"
+      },
+      "_analyze_image": {
+        "self": "<class 'inspect._empty'>",
+        "img": "Image"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "TesseractBlobParser": {
+    "description": "Parse for extracting text from images using the Tesseract OCR library.",
+    "parent_classes": [
+      "BaseImageBlobParser"
+    ],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "langs": "typing.Iterable[str]"
+      },
+      "_analyze_image": {
+        "self": "<class 'inspect._empty'>",
+        "img": "Image"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "VsdxParser": {
+    "description": "Parser for vsdx files.",
+    "parent_classes": [
+      "BaseBlobParser",
+      "ABC"
+    ],
+    "attributes": {},
+    "methods": {
+      "parse": {
+        "self": "<class 'inspect._empty'>",
+        "blob": "<class 'langchain_core.documents.base.Blob'>"
+      },
+      "lazy_parse": {
+        "self": "<class 'inspect._empty'>",
+        "blob": "<class 'langchain_core.documents.base.Blob'>"
+      },
+      "get_pages_content": {
+        "self": "<class 'inspect._empty'>",
+        "zfile": "<class 'zipfile.ZipFile'>",
+        "source": "<class 'str'>"
+      },
+      "get_relationships": {
+        "self": "<class 'inspect._empty'>",
+        "page": "<class 'str'>",
+        "zfile": "<class 'zipfile.ZipFile'>",
+        "filelist": "typing.List[str]",
+        "pagexml_rels": "typing.List[dict]"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  }
+}

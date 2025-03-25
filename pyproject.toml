@@ -7,10 +7,10 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = ">=3.12,<3.13"
 langchain-core = "^0.3.44"
 langchain = "^0.3.20"
-langchain-community = "^0.3.17"
+langchain-community = "^0.3.20"
 langchain-experimental = "^0.3.4"
 tavily-python = "^0.5.1"
 langgraph-checkpoint-postgres = "^2.0.15"
@@ -47,7 +47,6 @@ jsonpatch = "^1.33"
 pydantic = "^2.10.6"
 pytest = "^8.3.5"
 playwright-stealth = "^1.0.6"
-langchain-google-community = {extras = ["gmail"], version = "^2.0.7"}
 google-api-python-client = "^2.163.0"
 google-auth-httplib2 = "^0.2.0"
 google-auth-oauthlib = "^1.2.1"
@@ -63,6 +62,25 @@ sphinxcontrib-jquery = "^4.1"
 sphinx-sitemap = "^2.6.0"
 sphinxcontrib-mermaid = "^1.0.0"
 sphinxcontrib-youtube = "^1.4.1"
+sphinx-press-theme = "^0.9.1"
+furo = "^2024.8.6"
+langchain-anthropic = "^0.3.10"
+langchain-deepseek = "^0.1.2"
+langchain-google-genai = "^2.1.0"
+xmltodict = "^0.14.2"
+langchain-mistralai = "^0.2.8"
+langchain-nvidia-ai-endpoints = "^0.3.9"
+python-steam-api = "^2.1.1"
+python-decouple = "^3.8"
+twilio = "^9.5.1"
+langchain-discord-shikenso = "^1.1.1"
+langchain-discord = "^1.0.2"
+langchain-groq = "^0.3.1"
+langchain-together = "^0.3.0"
+langchain-fireworks = "^0.2.8"
+discord = "^2.3.2"
+langchain-mongodb = "^0.5.0"
+langchain-ollama = "^0.3.0"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -85,6 +103,144 @@ sphinx-rtd-theme = "^3.0.2"
 sphinx-press-theme = "^0.9.1"
 myst-parser = "^4.0.1"
 sphinx-tabs = "^3.4.7"
+
+
+[tool.poetry.group.gmail_toolkit.dependencies]
+google-api-python-client = "^2.165.0"
+google-auth-httplib2 = "^0.2.0"
+google-auth-oauthlib = "^1.2.1"
+langchain-google-community = {version = "^2.0.7", extras = ["gmail"]}
+
+
+
+[tool.poetry.group.github_toolkit.dependencies]
+pygithub = "^2.6.1"
+
+
+[tool.poetry.group.weather_toolkit.dependencies]
+pyowm = "^3.3.0"
+
+
+[tool.poetry.group.reddit_toolkit.dependencies]
+praw = "^7.8.1"
+
+
+[tool.poetry.group.stack_exchange_toolkit.dependencies]
+stackapi = "^0.3.1"
+
+
+[tool.poetry.group.wolframalpha_toolkit.dependencies]
+wolframalpha = "^5.1.3"
+
+
+[tool.poetry.group.semantic_scholar_toolkit.dependencies]
+semanticscholar = "^0.10.0"
+
+
+[tool.poetry.group.steam_toolkit.dependencies]
+python-steam-api = "^2.1.1"
+python-decouple = "^3.8"
+
+
+[tool.poetry.group.arxiv_toolkit.dependencies]
+arxiv = "^2.1.3"
+
+
+[tool.poetry.group.office365_toolkit.dependencies]
+o365 = "^2.1.0"
+
+
+[tool.poetry.group.powerbi_toolkit.dependencies]
+azure-identity = "^1.21.0"
+
+
+[tool.poetry.group.ask_news_toolkit.dependencies]
+asknews = "^0.11.2"
+
+
+[tool.poetry.group.google_tools.dependencies]
+serpapi = "^0.1.5"
+google-search-results = "^2.4.2"
+
+
+[tool.poetry.group.gradio_toolkit.dependencies]
+gradio-tools = "^0.0.9"
+gradio = "^5.22.0"
+
+
+[tool.poetry.group.amadues_toolkit.dependencies]
+amadeus = "^12.0.0"
+
+
+[tool.poetry.group.jira_toolkit.dependencies]
+atlassian-python-api = "^3.41.21"
+
+
+[tool.poetry.group.slack_toolkit.dependencies]
+slack-sdk = "^3.35.0"
+
+
+[tool.poetry.group.asknews_retriever.dependencies]
+asknews = "^0.11.2"
+
+
+[tool.poetry.group.google_toolkit.dependencies]
+googlemaps = "^4.10.0"
+
+
+[tool.poetry.group.document_loaders.dependencies]
+discord = "^2.3.2"
+tweepy = "^4.15.0"
+dropbox = "^12.0.2"
+gitpython = "^3.1.44"
+feedparser = "^6.0.11"
+listparser = "^0.20"
+newspaper3k = "^0.2.8"
+
+
+[tool.poetry.group.chat_models.dependencies]
+langchain-cerebras = "^0.5.0"
+langchain-cohere = "^0.4.3"
+
+
+
+[tool.poetry.group.elevenlabs_tool.dependencies]
+elevenlabs = "^1.54.0"
+
+
+[tool.poetry.group.gitlab_toolkit.dependencies]
+python-gitlab = "^5.6.0"
+
+
+[tool.poetry.group.scenexplain_tool.dependencies]
+jinaai = "^0.2.10"
+
+
+[tool.poetry.group.azure_ai_services_toolkit.dependencies]
+azure-ai-formrecognizer = "^3.3.3"
+azure-cognitiveservices-speech = "^1.43.0"
+azure-ai-textanalytics = "^5.3.0"
+azure-ai-vision-imageanalysis = "^1.0.0"
+
+
+[tool.poetry.group.dalle_image_generator_tool.dependencies]
+opencv-python = "^4.11.0.86"
+scikit-image = "^0.25.2"
+langchain-community = "^0.3.20"
+
+
+[tool.poetry.group.google_toolkits.dependencies]
+google-cloud-translate = "^3.20.2"
+
+
+[tool.poetry.group.yfinance_tool.dependencies]
+yfinance = "^0.2.54"
+
+
+[tool.poetry.group.yt_tools.dependencies]
+youtube-search = "^2.1.2"
+yt-dlp = "^2025.2.19"
+whisper = "^1.1.10"
 
 [build-system]
 requires = ["poetry-core"]

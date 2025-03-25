@@ -1,0 +1,33 @@
+{
+    "description": "Load text file.\n\n\n    Args:\n        file_path: Path to the file to load.\n\n        encoding: File encoding to use. If `None`, the file will be loaded\n        with the default system encoding.\n\n        autodetect_encoding: Whether to try to autodetect the file encoding\n            if the specified encoding fails.",
+    "parent_classes": [
+        "BaseLoader"
+    ],
+    "attributes": {},
+    "methods": {
+        "__init__": {
+            "self": "<class 'inspect._empty'>",
+            "file_path": "typing.Union[str, pathlib.Path]",
+            "encoding": "typing.Optional[str]",
+            "autodetect_encoding": "<class 'bool'>"
+        },
+        "alazy_load": {
+            "self": "<class 'inspect._empty'>"
+        },
+        "aload": {
+            "self": "<class 'inspect._empty'>"
+        },
+        "lazy_load": {
+            "self": "<class 'inspect._empty'>"
+        },
+        "load": {
+            "self": "<class 'inspect._empty'>"
+        },
+        "load_and_split": {
+            "self": "<class 'inspect._empty'>",
+            "text_splitter": "Optional[TextSplitter]"
+        }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+}

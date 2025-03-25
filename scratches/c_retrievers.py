@@ -102,18 +102,18 @@ def _extract_class_attributes(cls) -> Dict[str, Any]:
 
 def _extract_class_methods(cls) -> Dict[str, Dict[str, str]]:
     """
-    Extracts class methods and their parameter types.
-
-    Args:
-        cls (Type): The class to inspect.
-
-    Returns:
-        Dict[str, Dict[str, str]]: A dictionary of method names mapping to their parameter types.
+    Extract methods that are **defined or overridden** in the given class (not just inherited).
     """
     methods = {}
-    for name, method in inspect.getmembers(cls, predicate=inspect.isfunction):
-        sig = inspect.signature(method)
-        methods[name] = {param: str(sig.parameters[param].annotation) for param in sig.parameters}
+
+    for name, method in cls.__dict__.items():
+        if inspect.isfunction(method) or inspect.ismethod(method):
+            sig = inspect.signature(method)
+            methods[name] = {
+                param: str(sig.parameters[param].annotation)
+                for param in sig.parameters
+            }
+
     return methods
 
 
@@ -191,7 +191,7 @@ class DynamicModuleConfig(BaseModel):
 
         return available_classes[self.class_type]
 
-
+"""
 # ✅ Example Usage - Load a Retriever
 RetrieverType = Enum("RetrieverType", {cls: cls for cls in get_available_classes("langchain_community.retrievers")}, type=str)
 
@@ -212,3 +212,50 @@ print(f"📌 Attributes: {metadata['attributes']}")
 print(f"🛠️ Methods: {metadata['methods']}")
 print(f"🔑 Missing Env Vars: {metadata['missing_env_vars']}")
 print(f"✅ Has `validate_environment` Method: {metadata['has_validate_environment']}")
+"""
+
+
+# ✅ Updated Example Usage - Load a Document Loader
+DocumentLoaderType = Enum(
+    "DocumentLoaderType",
+    {cls: cls for cls in get_available_classes("langchain_community.document_loaders")},
+    type=str
+)
+from langchain_community.document_loaders import AZLyricsLoader
+
+loader_config = DynamicModuleConfig(
+    module_name="langchain_community.document_loaders",
+    class_type="TextLoader",  # Replace with a valid loader class you want to use
+    init_kwargs={"file_path": "example.txt"}  # Customize based on your loader’s __init__ params
+)
+
+loader = loader_config.load_instance()
+metadata = loader_config.get_class_metadata()
+
+# ✅ Pretty Print the Extracted Info
+print(f"📄 Document Loader: {loader}")
+print(f"📝 Description: {metadata['description']}")
+print(f"👨‍👩‍👧 Parent Classes: {metadata['parent_classes']}")
+print(f"📌 Attributes: {metadata['attributes']}")
+print(f"🛠️ Methods: {metadata['methods']}")
+print(f"🔑 Missing Env Vars: {metadata['missing_env_vars']}")
+print(f"✅ Has `validate_environment` Method: {metadata['has_validate_environment']}")
+import json
+
+
+if __name__ == "__main__":
+    module_name = "langchain_community.document_loaders.parsers"
+    metadata = get_available_classes(module_name)
+
+    with open("all_document_loaders_parsers_metadata.json", "w", encoding="utf-8") as f:
+        json.dump(metadata, f, indent=2, ensure_ascii=False, default=str)
+
+    print("✅ Saved metadata to all_document_loaders_parsers_metadata.json with full structure.")
+import json
+
+with open("all_document_loaders_parsers_metadata.json", "r", encoding="utf-8") as f:
+    data = json.load(f)
+
+print("Top-level keys (class names):")
+for key in data:
+    print("-", key)
