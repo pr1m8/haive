@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field, field_validator
 from langgraph.graph import StateGraph, END
 from langgraph.checkpoint.memory import MemorySaver
 
-from src.haive.core.aug_llm.base import AugLLMConfig, compose_runnable
+from src.haive.core.engine.aug_llm import AugLLMConfig, compose_runnable
 from src.haive.core.graph.StateSchemaManager import SchemaComposer, StateSchemaManager
 from src.haive.utils.visualize_graph_utils import render_and_display_graph
 from config.settings import RESOURCES_DIR

@@ -1,6 +1,6 @@
-from src.haive.core.aug_llm.base import AugLLMConfig
+from src.haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.prompts import ChatPromptTemplate
-from src.haive.agents.agent_games.checkers.models import CheckersMove, CheckersPlayerAnalysis
+from src.haive.games.checkers.models import CheckersMove, CheckersPlayerAnalysis
 
 # 🔄 **Reusable Prompt Structure**
 def generate_move_prompt(color: str) -> ChatPromptTemplate:

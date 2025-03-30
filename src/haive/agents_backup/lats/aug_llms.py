@@ -6,7 +6,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables import chain as as_runnable
 from src.haive.agents.lats.models import Reflection
 from langchain_core.messages import AIMessage
-from src.haive.core.aug_llm.base import AugLLMConfig,compose_runnable
+from src.haive.core.engine.aug_llm import AugLLMConfig,compose_runnable
 
 
 REFLECTION_PROMPT_TEMPLATE = ChatPromptTemplate.from_messages(

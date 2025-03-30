@@ -1,6 +1,6 @@
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from src.haive.agents.plan_and_execute.models import Plan,Response,Act
-from src.haive.core.aug_llm.base import AugLLMConfig
+from src.haive.core.engine.aug_llm import AugLLMConfig
 
 EXECUTOR_PROMPT = """You are a helpful assistant"""
 EXECUTOR_PROMPT_TEMPLATE = ChatPromptTemplate.from_messages(

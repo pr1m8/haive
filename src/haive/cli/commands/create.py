@@ -271,7 +271,7 @@ Agent ID: {{AGENT_ID}}
 Agent Type: {{AGENT_TYPE}}
 """
 from typing import Dict, Any, List, Optional
-from src.haive.agents.base import Agent, AgentConfig
+from src.haive.core.engine.agent.agent import Agent, AgentConfig
 from src.haive.agents.simple.agent import SimpleAgentConfig, SimpleAgent
 
 class CustomSimpleAgentConfig(SimpleAgentConfig):
@@ -304,7 +304,7 @@ Agent ID: {{AGENT_ID}}
 Agent Type: {{AGENT_TYPE}}
 """
 from typing import Dict, Any, List, Optional
-from src.haive.agents.base import Agent, AgentConfig
+from src.haive.core.engine.agent.agent import Agent, AgentConfig
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 
 class ChatAgent(Agent):

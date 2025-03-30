@@ -1,8 +1,8 @@
 from typing import List, Dict, Literal, Optional
 from typing_extensions import Annotated
 import operator
-from src.haive.agents.agent_games.chess.models import ChessMoveModel,SegmentedAnalysis
-from src.haive.agents.agent_games.chess.models import ChessMoveValidation
+from src.haive.games.chess.models import ChessMoveModel,SegmentedAnalysis
+from src.haive.games.chess.models import ChessMoveValidation
 from pydantic import BaseModel, Field, field_validator
 import chess
 from typing import Tuple

@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import List, Tuple, Dict, Optional, Literal, Generic
-from src.haive.agents.agent_games.base.models import PlayerState, MoveModel,TMove
+from src.haive.games.base.models import PlayerState, MoveModel,TMove
 
 class GameState(BaseModel):
     """Generic state for any multi-agent game."""
