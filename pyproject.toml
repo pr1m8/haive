@@ -6,6 +6,23 @@ authors = ["0rac130fD31phi <william.astley@algebraicwealth.com>"]
 license = "MIT"
 readme = "README.md"
 
+# CUDA TORCH 
+# Define multiple sources correctly
+[[tool.poetry.source]]
+name = "pytorch_cpu"
+url = "https://download.pytorch.org/whl/cpu"
+priority = "explicit"
+
+[[tool.poetry.source]]
+name = "pytorch_cuda"
+url = "https://download.pytorch.org/whl/cu118"
+priority = "explicit"
+
+[[tool.poetry.source]]
+name = "nvidia"
+url = "https://pypi.ngc.nvidia.com"
+priority = "supplemental"
+
 [tool.poetry.dependencies]
 python = ">=3.12,<3.13"
 langchain-core = "^0.3.44"
@@ -54,7 +71,7 @@ duckduckgo-search = "^7.5.2"
 html2text = "^2024.2.26"
 markdownify = "^1.1.0"
 pandas = "^2.2.3"
-monopoly = {path = "external/monopoly"}
+#monopoly = {path = "external/monopoly"}
 rich = "^13.9.4"
 psycopg2 = "^2.9.10"
 nox = "^2025.2.9"
@@ -81,7 +98,33 @@ langchain-fireworks = "^0.2.8"
 discord = "^2.3.2"
 langchain-mongodb = "^0.5.0"
 langchain-ollama = "^0.3.0"
-
+faiss-gpu-cu12 = { version = "^1.10.0", extras = ["fix-cuda"] }
+rank-bm25 = "^0.2.2"
+scikit-learn = "^1.6.1"
+zep-python = "^2.0.2"
+flashrank = "^0.2.10"
+qdrant-client = "^1.13.3"
+googletrans = "^4.0.2"
+deepl = "^1.21.1"
+ragatouille = "^0.0.9"
+youtube-search = "^2.1.2"
+ujson = "^5.10.0"
+stripe-agent-toolkit = "^0.6.1"
+google-search-results = "2.4.2"
+serpapi = "^0.1.5"
+langchain-salesforce = "^0.1.2"
+mwparserfromhell = "^0.6.6"
+esprima = "^4.0.1"
+tree-sitter = "^0.24.0"
+tree-sitter-languages = "^1.10.2"
+youtube-transcript-api = "^1.0.3"
+pytube = "^15.0.0"
+openpyxl = "^3.1.5"
+gradio = "^5.23.1"
+unstructured = {extras = ["all"], version = "^0.17.2"}
+langchain-docling = "^0.2.0"
+secure-smtplib = {version = "^0.1.1", optional = true}
+yagmail = {version = "^0.15.293", optional = true}
 
 [tool.poetry.group.dev.dependencies]
 furo = "^2024.8.6"
@@ -103,6 +146,15 @@ sphinx-rtd-theme = "^3.0.2"
 sphinx-press-theme = "^0.9.1"
 myst-parser = "^4.0.1"
 sphinx-tabs = "^3.4.7"
+torch = { version = "2.6.0+cu118", source = "pytorch_cuda" }
+torchvision = { version = "0.21.0+cu118", source = "pytorch_cuda" }
+torchaudio = { version = "2.6.0+cu118", source = "pytorch_cuda" }
+
+
+[tool.poetry.extras]
+cpu = ["torch", "torchvision", "torchaudio"]
+cuda = ["torch", "torchvision", "torchaudio"]
+
 
 
 [tool.poetry.group.gmail_toolkit.dependencies]
@@ -159,13 +211,11 @@ asknews = "^0.11.2"
 
 
 [tool.poetry.group.google_tools.dependencies]
-serpapi = "^0.1.5"
 google-search-results = "^2.4.2"
 
 
 [tool.poetry.group.gradio_toolkit.dependencies]
 gradio-tools = "^0.0.9"
-gradio = "^5.22.0"
 
 
 [tool.poetry.group.amadues_toolkit.dependencies]
@@ -201,6 +251,9 @@ newspaper3k = "^0.2.8"
 [tool.poetry.group.chat_models.dependencies]
 langchain-cerebras = "^0.5.0"
 langchain-cohere = "^0.4.3"
+langchain-openlm = "^0.1.1"
+langchain-ai21 = "^1.0.1"
+nlpcloud = "^1.1.47"
 
 
 
@@ -241,6 +294,9 @@ yfinance = "^0.2.54"
 youtube-search = "^2.1.2"
 yt-dlp = "^2025.2.19"
 whisper = "^1.1.10"
+
+
+
 
 [build-system]
 requires = ["poetry-core"]

@@ -1,7 +1,7 @@
 #from src.core.prompts.base import PromptTemplateConfig
 from src.haive.agents.self_discover.models import ReasoningModules, Plan, AdaptedModules
 from src.haive.utils.parser_utils import parse_reasoning_modules_to_string
-from src.haive.core.aug_llm.base import AugLLMConfig
+from src.haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
 reasoning_prompt= """

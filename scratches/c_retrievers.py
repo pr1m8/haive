@@ -3,7 +3,7 @@ import importlib
 import inspect
 import functools
 from enum import Enum
-from typing import Any, Dict, List, Type, Optional, Tuple, get_type_hints
+from typing import Any, Dict, List, Type, Optional, Tuple, Union, get_type_hints
 from pydantic import BaseModel, Field, field_validator
 
 
@@ -142,26 +142,36 @@ class DynamicModuleConfig(BaseModel):
     Configuration for dynamically loading LangChain components (retrievers, tools, API wrappers, etc.).
     """
     module_name: str = Field(description="Module path for dynamic loading (e.g., 'langchain_community.retrievers')")
-    class_type: str = Field(description="Specific class to load from the module.")
+    class_type: Optional[str] = Field(default=None, description="Specific class to load from the module.")
     init_kwargs: Dict[str, Any] = Field(default_factory=dict, description="Initialization arguments.")
 
+    @field_validator("module_name")
+    @classmethod
+    def validate_module_name(cls, v: str) -> str:
+        """
+        Validate that the class type exists in the specified module.
+        """
+        
+        module_name = v
+        if not module_name:
+            raise ValueError("Module name must be provided ")
+        return module_name
+    
     @field_validator("class_type")
     @classmethod
-    def validate_class_type(cls, v: str, values) -> str:
+    def validate_class_type(cls, v: Union[str, None], values) -> str:
         """
         Validate that the class type exists in the specified module.
         """
         module_name = values.data.get("module_name")
-        if not module_name:
-            raise ValueError("Module name must be provided before validating class_type.")
-
-        available_classes = get_available_classes(module_name)
-        if v not in available_classes:
-            raise ValueError(
-                f"Invalid class '{v}' for module '{module_name}'. Available: {list(available_classes.keys())}"
-            )
-
-        return v
+        if v is not None:
+            available_classes = get_available_classes(module_name)
+            if v not in available_classes:
+                raise ValueError(
+                    f"Invalid class '{v}' for module '{module_name}'. Available: {list(available_classes.keys())}"
+                )
+        else:
+            return v
 
     def load_instance(self) -> Any:
         """
@@ -217,7 +227,7 @@ print(f"✅ Has `validate_environment` Method: {metadata['has_validate_environme
 
 # ✅ Updated Example Usage - Load a Document Loader
 DocumentLoaderType = Enum(
-    "DocumentLoaderType",
+    "RetrieverType",
     {cls: cls for cls in get_available_classes("langchain_community.document_loaders")},
     type=str
 )
@@ -225,8 +235,8 @@ from langchain_community.document_loaders import AZLyricsLoader
 
 loader_config = DynamicModuleConfig(
     module_name="langchain_community.document_loaders",
-    class_type="TextLoader",  # Replace with a valid loader class you want to use
-    init_kwargs={"file_path": "example.txt"}  # Customize based on your loader’s __init__ params
+    #class_type="TextLoader",  # Replace with a valid loader class you want to use
+    #init_kwargs={"file_path": "example.txt"}  # Customize based on your loader’s __init__ params
 )
 
 loader = loader_config.load_instance()

@@ -14,8 +14,8 @@ from src.haive.core.tools.search_tools import tavily_search_tool
 #from src.haive.agents.react_agent_v2.state_schema import ReactAgentState
 #from src.haive.core.utils.visualize_graph_utils import render_and_display_graph
 from langchain_core.messages import filter_messages
-from src.haive.agents.base import AgentArchitectureConfig,AgentArchitecture
-from src.haive.core.aug_llm.base import AugLLMConfig
+from src.haive.core.engine.agent.agent import AgentArchitectureConfig,AgentArchitecture
+from src.haive.core.engine.aug_llm import AugLLMConfig
 from typing import Dict,Any
 from langchain_core.tools import BaseTool,StructuredTool
 from src.haive.agents.react_agent.aug_llms import default_react_llm_runnable_config

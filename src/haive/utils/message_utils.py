@@ -1,6 +1,8 @@
 from langchain_core.messages import AIMessage
 from typing import Callable, Dict, Any, List, Union
 from langchain_core.messages import HumanMessage, SystemMessage
+from uuid import uuid4
+from langchain_core.messages import AnyMessage
 
 def add_messages(left, right):
     """
@@ -80,3 +82,21 @@ def route_messages(
             return end_route
 
     return continue_route
+
+def reduce_messages(left: list[AnyMessage], right: list[AnyMessage]) -> list[AnyMessage]:
+    # assign ids to messages that don't have them
+    for message in right:
+        if not message.id:
+            message.id = str(uuid4())
+    # merge the new messages with the existing messages
+    merged = left.copy()
+    for message in right:
+        for i, existing in enumerate(merged):
+            # replace any existing messages with the same id
+            if existing.id == message.id:
+                merged[i] = message
+                break
+        else:
+            # append any new messages to the end
+            merged.append(message)
+    return merged

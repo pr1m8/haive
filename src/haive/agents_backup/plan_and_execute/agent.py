@@ -1,8 +1,8 @@
 from haive.agents.plan_and_execute.aug_llms import *
 from src.haive.agents.plan_and_execute.models import *
 from src.haive.agents.plan_and_execute.state import *
-from src.haive.core.aug_llm.base import *
-from src.haive.agents.base import AgentArchitectureConfig,AgentArchitecture
+src.haive.core.engine.aug_llm import *
+from src.haive.core.engine.agent.agent import AgentArchitectureConfig,AgentArchitecture
 from langchain_core.tools import BaseTool,StructuredTool
 from langchain_core.tools import Tool
 from src.haive.core.tools.search_tools import tavily_search_tool

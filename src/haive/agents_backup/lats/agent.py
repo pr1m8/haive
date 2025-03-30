@@ -23,7 +23,7 @@ search = TavilySearchAPIWrapper()
 tavily_tool = TavilySearchResults(api_wrapper=search, max_results=5)
 # https://langchain-ai.github.io/langgraph/tutorials/lats/lats/#reflection
 
-from src.haive.agents.base import AgentArchitecture, AgentArchitectureConfig
+from src.haive.core.engine.agent.agent import AgentArchitecture, AgentArchitectureConfig
 
 from src.haive.agents.lats.state import TreeState
 

@@ -1,6 +1,6 @@
-from src.haive.core.aug_llm.base import AugLLMConfig
+from src.haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.prompts import ChatPromptTemplate
-from src.haive.agents.agent_games.chess.models import ChessPlayerDecision, SegmentedAnalysis
+from src.haive.games.chess.models import ChessPlayerDecision, SegmentedAnalysis
 
 # 🔄 **Reusable Prompt Structure**
 def generate_move_prompt(color: str) -> ChatPromptTemplate:

@@ -1,4 +1,4 @@
-from src.haive.core.aug_llm.base import AugLLMConfig
+from src.haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.prompts import ChatPromptTemplate,MessagesPlaceholder
 from datetime import datetime
 from src.haive.core.tools.search_tools import tavily_search_tool

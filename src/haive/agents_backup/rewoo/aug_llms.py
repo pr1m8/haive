@@ -2,7 +2,7 @@
 from langchain_core.prompts import ChatPromptTemplate,PromptTemplate
 from langchain_core.output_parsers import PydanticOutputParser
 from src.haive.agents.rewoo.models import RewooPlan
-from src.haive.core.aug_llm.base import AugLLMConfig
+from src.haive.core.engine.aug_llm import AugLLMConfig
 REWOO_SYSTEM_PROMPT = """You are a planning agent that creates detailed, structured plans.
 Your role is to break down tasks into specific, actionable steps using available tools.
 Each step must be precise, properly numbered, and include evidence collection.

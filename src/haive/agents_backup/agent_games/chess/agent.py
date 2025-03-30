@@ -1,18 +1,18 @@
-from src.haive.agents.base import AgentArchitecture, AgentArchitectureConfig
-from src.haive.core.aug_llm.base import AugLLMConfig
+from src.haive.core.engine.agent.agent import AgentArchitecture, AgentArchitectureConfig
+from src.haive.core.engine.aug_llm import AugLLMConfig
 from langgraph.graph import StateGraph
 from langgraph.types import Command
 from langgraph.constants import START, END
 import chess
 from typing import Dict, Literal, Optional, List
 from pydantic import BaseModel, Field, field_validator
-from src.haive.agents.agent_games.chess.state import ChessGameState
-from src.haive.agents.agent_games.chess.models import ChessPlayerDecision, ChessAnalysis
+from src.haive.games.chess.state import ChessGameState
+from src.haive.games.chess.models import ChessPlayerDecision, ChessAnalysis
 from langchain_core.prompts import ChatPromptTemplate
-from src.haive.agents.agent_games.chess.models import ChessMoveValidation
-from src.haive.agents.agent_games.chess.aug_llms import aug_llm_configs
-from src.haive.agents.agent_games.chess.state import EnhancedChessState
-from src.haive.core.aug_llm.base import compose_runnable
+from src.haive.games.chess.models import ChessMoveValidation
+from src.haive.games.chess.aug_llms import aug_llm_configs
+from src.haive.games.chess.state import EnhancedChessState
+src.haive.core.engine.aug_llm import compose_runnable
 class ChessAgentConfig(AgentArchitectureConfig):
     """Configuration for the chess agent with segmented analysis"""
     state_schema: type = Field(default=EnhancedChessState)
@@ -297,7 +297,7 @@ class ChessAgent(AgentArchitecture):
         return state.game_status in ["ongoing", "check"]
 import chess
 from typing import Dict, Any
-from src.haive.agents.agent_games.chess.agent import ChessAgent, ChessAgentConfig
+from src.haive.games.chess.agent import ChessAgent, ChessAgentConfig
 
 def run_chess_game(agent: ChessAgent):
     """Run a chess game with visualization and structured output."""

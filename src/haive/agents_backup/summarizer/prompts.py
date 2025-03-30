@@ -1,6 +1,6 @@
 """Prompts for the summarizer agent - The mapping and reducing prompts"""
 from langchain_core.prompts import ChatPromptTemplate
-from src.haive.core.aug_llm.base import AugLLMConfig,compose_runnable
+from src.haive.core.engine.aug_llm import AugLLMConfig,compose_runnable
 
 
 

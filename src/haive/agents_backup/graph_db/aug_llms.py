@@ -4,7 +4,7 @@ from langchain_core.prompts import PromptTemplate
 #from src.haive.core.prompts.base import PromptTemplateConfig
 #from src.haive.core.runnables.runnable import LLMRunnableConfig
 from src.haive.agents.graph_db.models import ValidateCypherOutput,CypherQueryOutput
-from src.haive.core.aug_llm.base import AugLLMConfig
+from src.haive.core.engine.aug_llm import AugLLMConfig
 # Update the example fewshot examples
 CORRECT_CYPHER_SYSTEM_PROMPT = """
 You are a Cypher expert reviewing a statement written by a junior developer. 

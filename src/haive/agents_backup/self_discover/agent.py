@@ -1,8 +1,8 @@
-from src.haive.agents.base import AgentArchitectureConfig
+from src.haive.core.engine.agent.agent import AgentArchitectureConfig
 from src.haive.agents.self_discover.models import Plan
 from pydantic import Field
 from typing import Optional
-from src.haive.agents.base import AgentArchitecture,AgentArchitectureConfig
+from src.haive.core.engine.agent.agent import AgentArchitecture,AgentArchitectureConfig
 from src.haive.agents.self_discover.aug_llms import step_reasoning_chain,select_chain,adapt_chain,structured_chain
 from src.haive.agents.self_discover.state import SelfDiscoverState
 from langgraph.graph import StateGraph, START, END
@@ -11,7 +11,7 @@ from langchain_core.messages import HumanMessage
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
 from typing import Dict
-from src.haive.core.aug_llm.base import AugLLMConfig
+from src.haive.core.engine.aug_llm import AugLLMConfig
 from langgraph.types import Command
 from src.haive.agents.self_discover.models import AdaptedModules,AdaptedModule
 class SelfDiscoverAgentConfig(AgentArchitectureConfig):

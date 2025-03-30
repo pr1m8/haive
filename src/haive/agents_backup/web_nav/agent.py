@@ -1,9 +1,9 @@
 
-from src.haive.agents.base import AgentArchitecture,AgentArchitectureConfig
+from src.haive.core.engine.agent.agent import AgentArchitecture,AgentArchitectureConfig
 from src.haive.agents.web_nav.state import WebNavState
 from typing import List,Callable
 from pydantic import Field
-from src.haive.core.aug_llm.base import AugLLMConfig
+from src.haive.core.engine.aug_llm import AugLLMConfig
 from src.haive.agents.web_nav.utils.utils import mark_page
 from langgraph.types import Command
 import re

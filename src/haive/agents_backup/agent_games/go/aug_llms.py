@@ -1,6 +1,6 @@
-from src.haive.core.aug_llm.base import AugLLMConfig
+from src.haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.prompts import ChatPromptTemplate
-from src.haive.agents.agent_games.go.models import GoPlayerDecision, GoAnalysis
+from src.haive.games.go.models import GoPlayerDecision, GoAnalysis
 
 # 🔄 **Reusable Prompt Structure**
 def generate_go_move_prompt(color: str) -> ChatPromptTemplate:
