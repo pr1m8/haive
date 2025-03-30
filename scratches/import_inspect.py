@@ -86,11 +86,13 @@ def get_retrievers(module_name: str, serialize: bool = True) -> Dict[str, Any]:
                                 k: {"type": str(v["type"]), "default": str(v["default"])}
                                 for k, v in meta["properties"].items()
                             },
+                            
                             "methods": {
                                 method: {
                                     "parameters": {k: str(v) for k, v in meta["methods"][method]["parameters"].items()},
                                     "return_type": str(meta["methods"][method]["return_type"])
                                 }
+                                
                                 for method in meta["methods"]
                             }
                         }
@@ -254,7 +256,7 @@ def extract_validate_environment(cls: Type) -> (bool, Optional[str]):
 
 
 # Example usage
-retrievers = get_retrievers("langchain.retrievers")
+retrievers = get_retrievers("langchain_community.retrievers")
 
 # Print dynamically found retrievers with inheritance details
 for name, meta in retrievers.items():

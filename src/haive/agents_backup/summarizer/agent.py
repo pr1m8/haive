@@ -1,6 +1,6 @@
 from typing import Annotated, List, Literal, TypedDict,Dict
-from src.haive.agents.base import AgentArchitectureConfig,AgentArchitecture
-from src.haive.core.aug_llm.base import AugLLMConfig
+from src.haive.core.engine.agent.agent import AgentArchitectureConfig,AgentArchitecture
+from src.haive.core.engine.aug_llm import AugLLMConfig
 from pydantic import BaseModel,Field
 from src.haive.agents.summarizer.state import SummaryState
 from src.haive.agents.summarizer.aug_llms import *

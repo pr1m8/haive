@@ -1,7 +1,7 @@
 from typing import List, Dict, Literal, Optional, Tuple
 from pydantic import BaseModel, Field
 import sente
-from src.haive.agents.agent_games.go.models import GoMoveModel
+from src.haive.games.go.models import GoMoveModel
 from typing import List, Dict, Literal, Optional, Tuple
 from pydantic import BaseModel, Field, field_validator
 import sente

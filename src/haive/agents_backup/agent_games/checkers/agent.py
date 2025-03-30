@@ -1,11 +1,11 @@
-from src.haive.agents.base import AgentArchitecture, AgentArchitectureConfig
-from src.haive.core.aug_llm.base import compose_runnable
+from src.haive.core.engine.agent.agent import AgentArchitecture, AgentArchitectureConfig
+src.haive.core.engine.aug_llm import compose_runnable
 from langgraph.graph import StateGraph
 from langgraph.types import Command
 from langgraph.constants import START, END
-from src.haive.agents.agent_games.checkers.state import CheckersGameStateManager, CheckersGameState
-from src.haive.agents.agent_games.checkers.models import CheckersMove, CheckersPlayerAnalysis
-from src.haive.agents.agent_games.checkers.aug_llms import aug_llm_configs
+from src.haive.games.checkers.state import CheckersGameStateManager, CheckersGameState
+from src.haive.games.checkers.models import CheckersMove, CheckersPlayerAnalysis
+from src.haive.games.checkers.aug_llms import aug_llm_configs
 from typing import Dict
 from pydantic import Field
 

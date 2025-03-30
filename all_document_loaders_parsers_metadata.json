@@ -1,0 +1,1188 @@
+{
+  "AmazonKendraRetriever": {
+    "description": ".. deprecated:: 0.3.16 Use ``:class:`~langchain_aws.AmazonKendraRetriever``` instead. It will not be removed until langchain-community==1.0.\n\n`Amazon Kendra Index` retriever.\n\nArgs:\n    index_id: Kendra index id\n\n    region_name: The aws region e.g., `us-west-2`.\n        Fallsback to AWS_DEFAULT_REGION env variable\n        or region specified in ~/.aws/config.\n\n    credentials_profile_name: The name of the profile in the ~/.aws/credentials\n        or ~/.aws/config files, which has either access keys or role information\n        specified. If not specified, the default credential profile or, if on an\n        EC2 instance, credentials from IMDS will be used.\n\n    top_k: No of results to return\n\n    attribute_filter: Additional filtering of results based on metadata\n        See: https://docs.aws.amazon.com/kendra/latest/APIReference\n\n    document_relevance_override_configurations: Overrides relevance tuning\n        configurations of fields/attributes set at the index level\n        See: https://docs.aws.amazon.com/kendra/latest/APIReference\n\n    page_content_formatter: generates the Document page_content\n        allowing access to all result item attributes. By default, it uses\n        the item's title and excerpt.\n\n    client: boto3 client for Kendra\n\n    user_context: Provides information about the user context\n        See: https://docs.aws.amazon.com/kendra/latest/APIReference\n\nExample:\n    .. code-block:: python\n\n        retriever = AmazonKendraRetriever(\n            index_id=\"c0806df7-e76b-4bce-9b5c-d5582f6b1a03\"\n        )",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_kendra_query": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>"
+      },
+      "_get_top_k_docs": {
+        "self": "<class 'inspect._empty'>",
+        "result_items": "typing.Sequence[langchain_community.retrievers.kendra.ResultItem]"
+      },
+      "_filter_by_score_confidence": {
+        "self": "<class 'inspect._empty'>",
+        "docs": "typing.List[langchain_core.documents.base.Document]"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      },
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "args": "typing.Any",
+        "kwargs": "typing.Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "AmazonKnowledgeBasesRetriever": {
+    "description": ".. deprecated:: 0.3.16 Use ``:class:`~langchain_aws.AmazonKnowledgeBasesRetriever``` instead. It will not be removed until langchain-community==1.0.\n\nAmazon Bedrock Knowledge Bases retriever.\n\nSee https://aws.amazon.com/bedrock/knowledge-bases for more info.\n\nSetup:\n    Install ``langchain-aws``:\n\n    .. code-block:: bash\n\n        pip install -U langchain-aws\n\nKey init args:\n    knowledge_base_id: Knowledge Base ID.\n    region_name: The aws region e.g., `us-west-2`.\n        Fallback to AWS_DEFAULT_REGION env variable or region specified in\n        ~/.aws/config.\n    credentials_profile_name: The name of the profile in the ~/.aws/credentials\n        or ~/.aws/config files, which has either access keys or role information\n        specified. If not specified, the default credential profile or, if on an\n        EC2 instance, credentials from IMDS will be used.\n    client: boto3 client for bedrock agent runtime.\n    retrieval_config: Configuration for retrieval.\n\nInstantiate:\n    .. code-block:: python\n\n        from langchain_community.retrievers import AmazonKnowledgeBasesRetriever\n\n        retriever = AmazonKnowledgeBasesRetriever(\n            knowledge_base_id=\"<knowledge-base-id>\",\n            retrieval_config={\n                \"vectorSearchConfiguration\": {\n                    \"numberOfResults\": 4\n                }\n            },\n        )\n\nUsage:\n    .. code-block:: python\n\n        query = \"...\"\n\n        retriever.invoke(query)\n\nUse within a chain:\n    .. code-block:: python\n\n        from langchain_aws import ChatBedrockConverse\n        from langchain_core.output_parsers import StrOutputParser\n        from langchain_core.prompts import ChatPromptTemplate\n        from langchain_core.runnables import RunnablePassthrough\n        from langchain_openai import ChatOpenAI\n\n        prompt = ChatPromptTemplate.from_template(\n            \"\"\"Answer the question based only on the context provided.\n\n        Context: {context}\n\n        Question: {question}\"\"\"\n        )\n\n        llm = ChatBedrockConverse(\n            model_id=\"anthropic.claude-3-5-sonnet-20240620-v1:0\"\n        )\n\n        def format_docs(docs):\n            return \"\\n\\n\".join(doc.page_content for doc in docs)\n\n        chain = (\n            {\"context\": retriever | format_docs, \"question\": RunnablePassthrough()}\n            | prompt\n            | llm\n            | StrOutputParser()\n        )\n\n        chain.invoke(\"...\")",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      },
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "args": "typing.Any",
+        "kwargs": "typing.Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "ArceeRetriever": {
+    "description": "Arcee Domain Adapted Language Models (DALMs) retriever.\n\n    To use, set the ``ARCEE_API_KEY`` environment variable with your Arcee API key,\n    or pass ``arcee_api_key`` as a named parameter.\n\n    Example:\n        .. code-block:: python\n\n            from langchain_community.retrievers import ArceeRetriever\n\n            retriever = ArceeRetriever(\n                model=\"DALM-PubMed\",\n                arcee_api_key=\"ARCEE-API-KEY\"\n            )\n\n            documents = retriever.invoke(\"AI-driven music therapy\")",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "data": "typing.Any"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>",
+        "kwargs": "typing.Any"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "ArxivRetriever": {
+    "description": "`Arxiv` retriever.\n\n    Setup:\n        Install ``arxiv``:\n\n        .. code-block:: bash\n\n            pip install -U arxiv\n\n    Key init args:\n        load_max_docs: int\n            maximum number of documents to load\n        get_ful_documents: bool\n            whether to return full document text or snippets\n\n    Instantiate:\n        .. code-block:: python\n\n            from langchain_community.retrievers import ArxivRetriever\n\n            retriever = ArxivRetriever(\n                load_max_docs=2,\n                get_ful_documents=True,\n            )\n\n    Usage:\n        .. code-block:: python\n\n            docs = retriever.invoke(\"What is the ImageBind model?\")\n            docs[0].metadata\n\n        .. code-block:: none\n\n            {'Entry ID': 'http://arxiv.org/abs/2305.05665v2',\n            'Published': datetime.date(2023, 5, 31),\n            'Title': 'ImageBind: One Embedding Space To Bind Them All',\n            'Authors': 'Rohit Girdhar, Alaaeldin El-Nouby, Zhuang Liu, Mannat Singh, Kalyan Vasudev Alwala, Armand Joulin, Ishan Misra'}\n\n    Use within a chain:\n        .. code-block:: python\n\n            from langchain_core.output_parsers import StrOutputParser\n            from langchain_core.prompts import ChatPromptTemplate\n            from langchain_core.runnables import RunnablePassthrough\n            from langchain_openai import ChatOpenAI\n\n            prompt = ChatPromptTemplate.from_template(\n                \"\"\"Answer the question based only on the context provided.\n\n            Context: {context}\n\n            Question: {question}\"\"\"\n            )\n\n            llm = ChatOpenAI(model=\"gpt-3.5-turbo-0125\")\n\n            def format_docs(docs):\n                return \"\\n\\n\".join(doc.page_content for doc in docs)\n\n            chain = (\n                {\"context\": retriever | format_docs, \"question\": RunnablePassthrough()}\n                | prompt\n                | llm\n                | StrOutputParser()\n            )\n\n            chain.invoke(\"What is the ImageBind model?\")\n\n        .. code-block:: none\n\n             'The ImageBind model is an approach to learn a joint embedding across six different modalities - images, text, audio, depth, thermal, and IMU data...'",
+    "parent_classes": [
+      "ArxivAPIWrapper"
+    ],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": true
+  },
+  "AskNewsRetriever": {
+    "description": "AskNews retriever.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "_aget_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.AsyncCallbackManagerForRetrieverRun'>"
+      },
+      "_extract_documents": {
+        "self": "<class 'inspect._empty'>",
+        "response": "typing.Any"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "AzureAISearchRetriever": {
+    "description": "`Azure AI Search` service retriever.\n\n    Setup:\n        See here for more detail: https://python.langchain.com/docs/integrations/retrievers/azure_ai_search/\n\n        We will need to install the below dependencies and set the required\n        environment variables:\n\n        .. code-block:: bash\n\n            pip install -U langchain-community azure-identity azure-search-documents\n            export AZURE_AI_SEARCH_SERVICE_NAME=\"<YOUR_SEARCH_SERVICE_NAME>\"\n            export AZURE_AI_SEARCH_INDEX_NAME=\"<YOUR_SEARCH_INDEX_NAME>\"\n            export AZURE_AI_SEARCH_API_KEY=\"<YOUR_API_KEY>\"\n\n    Key init args:\n        content_key: str\n        top_k: int\n        index_name: str\n\n    Instantiate:\n        .. code-block:: python\n\n            from langchain_community.retrievers import AzureAISearchRetriever\n\n            retriever = AzureAISearchRetriever(\n                content_key=\"content\", top_k=1, index_name=\"langchain-vector-demo\"\n            )\n\n    Usage:\n        .. code-block:: python\n\n            retriever.invoke(\"here is my unstructured query string\")\n\n    Use within a chain:\n        .. code-block:: python\n\n            from langchain_core.output_parsers import StrOutputParser\n            from langchain_core.prompts import ChatPromptTemplate\n            from langchain_core.runnables import RunnablePassthrough\n            from langchain_openai import AzureChatOpenAI\n\n            prompt = ChatPromptTemplate.from_template(\n                \"\"\"Answer the question based only on the context provided.\n\n            Context: {context}\n\n            Question: {question}\"\"\"\n            )\n\n            llm = AzureChatOpenAI(azure_deployment=\"gpt-35-turbo\")\n\n            def format_docs(docs):\n                return \"\\n\\n\".join(doc.page_content for doc in docs)\n\n            chain = (\n                {\"context\": retriever | format_docs, \"question\": RunnablePassthrough()}\n                | prompt\n                | llm\n                | StrOutputParser()\n            )\n\n            chain.invoke(\"...\")",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_build_search_url": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str"
+      },
+      "_search": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str"
+      },
+      "_asearch": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "CallbackManagerForRetrieverRun"
+      },
+      "_aget_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "AsyncCallbackManagerForRetrieverRun"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": true
+  },
+  "AzureCognitiveSearchRetriever": {
+    "description": "`Azure Cognitive Search` service retriever.\n    This version of the retriever will soon be\n    depreciated. Please switch to AzureAISearchRetriever",
+    "parent_classes": [
+      "AzureAISearchRetriever"
+    ],
+    "attributes": {},
+    "methods": {
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": true
+  },
+  "BM25Retriever": {
+    "description": "`BM25` retriever without Elasticsearch.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "CallbackManagerForRetrieverRun"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "BreebsRetriever": {
+    "description": "A retriever class for `Breebs`.\n\n    See https://www.breebs.com/ for more info.\n    Args:\n        breeb_key: The key to trigger the breeb\n        (specialized knowledge pill on a specific topic).\n\n    To retrieve the list of all available Breebs : you can call https://breebs.promptbreeders.com/web/listbreebs",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "breeb_key": "<class 'str'>"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "ChaindeskRetriever": {
+    "description": "`Chaindesk API` retriever.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "datastore_url": "<class 'str'>",
+        "top_k": "typing.Optional[int]",
+        "api_key": "typing.Optional[str]"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>",
+        "kwargs": "typing.Any"
+      },
+      "_aget_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.AsyncCallbackManagerForRetrieverRun'>",
+        "kwargs": "typing.Any"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "ChatGPTPluginRetriever": {
+    "description": "`ChatGPT plugin` retriever.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "CallbackManagerForRetrieverRun"
+      },
+      "_aget_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "AsyncCallbackManagerForRetrieverRun"
+      },
+      "_create_request": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "CohereRagRetriever": {
+    "description": ".. deprecated:: 0.0.30 Use ``:class:`~langchain_cohere.CohereRagRetriever``` instead. It will not be removed until langchain-community==1.0.\n\nCohere Chat API with RAG.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "CallbackManagerForRetrieverRun",
+        "kwargs": "Any"
+      },
+      "_aget_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "AsyncCallbackManagerForRetrieverRun",
+        "kwargs": "Any"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      },
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "args": "typing.Any",
+        "kwargs": "typing.Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "DocArrayRetriever": {
+    "description": "`DocArray Document Indices` retriever.\n\n    Currently, it supports 5 backends:\n    InMemoryExactNNIndex, HnswDocumentIndex, QdrantDocumentIndex,\n    ElasticDocIndex, and WeaviateDocumentIndex.\n\n    Args:\n        index: One of the above-mentioned index instances\n        embeddings: Embedding model to represent text as vectors\n        search_field: Field to consider for searching in the documents.\n            Should be an embedding/vector/tensor.\n        content_field: Field that represents the main content in your document schema.\n            Will be used as a `page_content`. Everything else will go into `metadata`.\n        search_type: Type of search to perform (similarity / mmr)\n        filters: Filters applied for document retrieval.\n        top_k: Number of documents to return",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "_search": {
+        "self": "<class 'inspect._empty'>",
+        "query_emb": "<class 'numpy.ndarray'>",
+        "top_k": "<class 'int'>"
+      },
+      "_similarity_search": {
+        "self": "<class 'inspect._empty'>",
+        "query_emb": "<class 'numpy.ndarray'>"
+      },
+      "_mmr_search": {
+        "self": "<class 'inspect._empty'>",
+        "query_emb": "<class 'numpy.ndarray'>"
+      },
+      "_docarray_to_langchain_doc": {
+        "self": "<class 'inspect._empty'>",
+        "doc": "typing.Union[typing.Dict[str, typing.Any], typing.Any]"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "DriaRetriever": {
+    "description": "`Dria` retriever using the DriaAPIWrapper.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "api_key": "<class 'str'>",
+        "contract_id": "typing.Optional[str]",
+        "kwargs": "typing.Any"
+      },
+      "create_knowledge_base": {
+        "self": "<class 'inspect._empty'>",
+        "name": "<class 'str'>",
+        "description": "<class 'str'>",
+        "category": "<class 'str'>",
+        "embedding": "<class 'str'>"
+      },
+      "add_texts": {
+        "self": "<class 'inspect._empty'>",
+        "texts": "typing.List"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "ElasticSearchBM25Retriever": {
+    "description": "`Elasticsearch` retriever that uses `BM25`.\n\n    To connect to an Elasticsearch instance that requires login credentials,\n    including Elastic Cloud, use the Elasticsearch URL format\n    https://username:password@es_host:9243. For example, to connect to Elastic\n    Cloud, create the Elasticsearch URL with the required authentication details and\n    pass it to the ElasticVectorSearch constructor as the named parameter\n    elasticsearch_url.\n\n    You can obtain your Elastic Cloud URL and login credentials by logging in to the\n    Elastic Cloud console at https://cloud.elastic.co, selecting your deployment, and\n    navigating to the \"Deployments\" page.\n\n    To obtain your Elastic Cloud password for the default \"elastic\" user:\n\n    1. Log in to the Elastic Cloud console at https://cloud.elastic.co\n    2. Go to \"Security\" > \"Users\"\n    3. Locate the \"elastic\" user and click \"Edit\"\n    4. Click \"Reset password\"\n    5. Follow the prompts to reset the password\n\n    The format for Elastic Cloud URLs is\n    https://username:password@cluster_id.region_id.gcp.cloud.es.io:9243.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "add_texts": {
+        "self": "<class 'inspect._empty'>",
+        "texts": "Iterable[str]",
+        "refresh_indices": "bool"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "CallbackManagerForRetrieverRun"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "EmbedchainRetriever": {
+    "description": "`Embedchain` retriever.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "add_texts": {
+        "self": "<class 'inspect._empty'>",
+        "texts": "Iterable[str]"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "CallbackManagerForRetrieverRun"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "GoogleCloudEnterpriseSearchRetriever": {
+    "description": "`Google Vertex Search API` retriever alias for backwards compatibility.\n    DEPRECATED: Use `GoogleVertexAISearchRetriever` instead.",
+    "parent_classes": [
+      "GoogleVertexAISearchRetriever"
+    ],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "data": "Any"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": true
+  },
+  "GoogleDocumentAIWarehouseRetriever": {
+    "description": ".. deprecated:: 0.0.32 Use ``:class:`~langchain_google_community.DocumentAIWarehouseRetriever``` instead. It will not be removed until langchain-community==1.0.\n\nA retriever based on Document AI Warehouse.\n\nDocuments should be created and documents should be uploaded\n    in a separate flow, and this retriever uses only Document AI\n    schema_id provided to search for relevant documents.\n\nMore info: https://cloud.google.com/document-ai-warehouse.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_prepare_request_metadata": {
+        "self": "<class 'inspect._empty'>",
+        "user_ldap": "<class 'str'>"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>",
+        "kwargs": "typing.Any"
+      },
+      "_prepare_search_request": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "kwargs": "typing.Any"
+      },
+      "_parse_search_response": {
+        "self": "<class 'inspect._empty'>",
+        "response": "SearchDocumentsPager"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      },
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "args": "typing.Any",
+        "kwargs": "typing.Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": true
+  },
+  "GoogleVertexAIMultiTurnSearchRetriever": {
+    "description": ".. deprecated:: 0.0.33 Use ``:class:`~langchain_google_community.VertexAIMultiTurnSearchRetriever``` instead. It will not be removed until langchain-community==1.0.\n\n`Google Vertex AI Search` retriever for multi-turn conversations.",
+    "parent_classes": [
+      "_BaseGoogleVertexAISearchRetriever"
+    ],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "kwargs": "Any"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "CallbackManagerForRetrieverRun"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": true
+  },
+  "GoogleVertexAISearchRetriever": {
+    "description": ".. deprecated:: 0.0.33 Use ``:class:`~langchain_google_community.VertexAISearchRetriever``` instead. It will not be removed until langchain-community==1.0.\n\n`Google Vertex AI Search` retriever.\n\nFor a detailed explanation of the Vertex AI Search concepts\nand configuration parameters, refer to the product documentation.\nhttps://cloud.google.com/generative-ai-app-builder/docs/enterprise-search-introduction",
+    "parent_classes": [
+      "_BaseGoogleVertexAISearchRetriever"
+    ],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "kwargs": "Any"
+      },
+      "_create_search_request": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "CallbackManagerForRetrieverRun"
+      },
+      "get_relevant_documents_with_response": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": true
+  },
+  "KayAiRetriever": {
+    "description": "Retriever for Kay.ai datasets.\n\n    To work properly, expects you to have KAY_API_KEY env variable set.\n    You can get one for free at https://kay.ai/.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "CallbackManagerForRetrieverRun"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "KNNRetriever": {
+    "description": "`KNN` retriever.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "CallbackManagerForRetrieverRun"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "LlamaIndexGraphRetriever": {
+    "description": "`LlamaIndex` graph data structure retriever.\n\n    It is used for question-answering with sources over an LlamaIndex\n    graph data structure.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "LlamaIndexRetriever": {
+    "description": "`LlamaIndex` retriever.\n\n    It is used for the question-answering with sources over\n    an LlamaIndex data structure.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "MetalRetriever": {
+    "description": "`Metal API` retriever.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "MilvusRetriever": {
+    "description": "Milvus API retriever.\n\n    See detailed instructions here: https://python.langchain.com/docs/integrations/retrievers/milvus_hybrid_search/\n\n    Setup:\n        Install ``langchain-milvus`` and other dependencies:\n\n        .. code-block:: bash\n\n            pip install -U pymilvus[model] langchain-milvus\n\n    Key init args:\n        collection: Milvus Collection\n\n    Instantiate:\n        .. code-block:: python\n\n            retriever = MilvusCollectionHybridSearchRetriever(collection=collection)\n\n    Usage:\n        .. code-block:: python\n\n            query = \"What are the story about ventures?\"\n\n            retriever.invoke(query)\n\n        .. code-block:: none\n\n            [Document(page_content=\"In 'The Lost Expedition' by Caspian Grey...\", metadata={'doc_id': '449281835035545843'}),\n            Document(page_content=\"In 'The Phantom Pilgrim' by Rowan Welles...\", metadata={'doc_id': '449281835035545845'}),\n            Document(page_content=\"In 'The Dreamwalker's Journey' by Lyra Snow..\", metadata={'doc_id': '449281835035545846'})]\n\n    Use within a chain:\n        .. code-block:: python\n\n            from langchain_core.output_parsers import StrOutputParser\n            from langchain_core.prompts import ChatPromptTemplate\n            from langchain_core.runnables import RunnablePassthrough\n            from langchain_openai import ChatOpenAI\n\n            prompt = ChatPromptTemplate.from_template(\n                \"\"\"Answer the question based only on the context provided.\n\n            Context: {context}\n\n            Question: {question}\"\"\"\n            )\n\n            llm = ChatOpenAI(model=\"gpt-3.5-turbo-0125\")\n\n            def format_docs(docs):\n                return \"\\n\\n\".join(doc.page_content for doc in docs)\n\n            chain = (\n                {\"context\": retriever | format_docs, \"question\": RunnablePassthrough()}\n                | prompt\n                | llm\n                | StrOutputParser()\n            )\n\n            chain.invoke(\"What novels has Lila written and what are their contents?\")\n\n        .. code-block:: none\n\n             \"Lila Rose has written 'The Memory Thief,' which follows a charismatic thief...\"",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "add_texts": {
+        "self": "<class 'inspect._empty'>",
+        "texts": "typing.List[str]",
+        "metadatas": "typing.Optional[typing.List[dict]]"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>",
+        "kwargs": "typing.Any"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "NanoPQRetriever": {
+    "description": "`NanoPQ retriever.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "CallbackManagerForRetrieverRun"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "NeedleRetriever": {
+    "description": "NeedleRetriever retrieves relevant documents or context from a Needle collection\n    based on a search query.\n\n    Setup:\n        Install the `needle-python` library and set your Needle API key.\n\n        .. code-block:: bash\n\n            pip install needle-python\n            export NEEDLE_API_KEY=\"your-api-key\"\n\n    Key init args:\n        - `needle_api_key` (Optional[str]): The API key for authenticating with Needle.\n        - `collection_id` (str): The ID of the Needle collection to search in.\n        - `client` (Optional[NeedleClient]): An optional instance of the NeedleClient.\n        - `top_k` (Optional[int]): Maximum number of results to return.\n\n    Usage:\n        .. code-block:: python\n\n            from langchain_community.retrievers.needle import NeedleRetriever\n\n            retriever = NeedleRetriever(\n                needle_api_key=\"your-api-key\",\n                collection_id=\"your-collection-id\",\n                top_k=10  # optional\n            )\n\n            results = retriever.retrieve(\"example query\")\n            for doc in results:\n                print(doc.page_content)",
+    "parent_classes": [
+      "BaseModel"
+    ],
+    "attributes": {},
+    "methods": {
+      "_initialize_client": {
+        "self": "<class 'inspect._empty'>"
+      },
+      "_search_collection": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "NeuralDBRetriever": {
+    "description": "Document retriever that uses ThirdAI's NeuralDB.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "insert": {
+        "self": "<class 'inspect._empty'>",
+        "sources": "List[Any]",
+        "train": "bool",
+        "fast_mode": "bool",
+        "kwargs": "dict"
+      },
+      "_preprocess_sources": {
+        "self": "<class 'inspect._empty'>",
+        "sources": "list"
+      },
+      "upvote": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "document_id": "int"
+      },
+      "upvote_batch": {
+        "self": "<class 'inspect._empty'>",
+        "query_id_pairs": "List[Tuple[str, int]]"
+      },
+      "associate": {
+        "self": "<class 'inspect._empty'>",
+        "source": "str",
+        "target": "str"
+      },
+      "associate_batch": {
+        "self": "<class 'inspect._empty'>",
+        "text_pairs": "List[Tuple[str, str]]"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "CallbackManagerForRetrieverRun",
+        "kwargs": "Any"
+      },
+      "save": {
+        "self": "<class 'inspect._empty'>",
+        "path": "str"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "OutlineRetriever": {
+    "description": "Retriever for Outline API.\n\n    It wraps run() to get_relevant_documents().\n    It uses all OutlineAPIWrapper arguments without any change.",
+    "parent_classes": [
+      "OutlineAPIWrapper"
+    ],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": true
+  },
+  "PineconeHybridSearchRetriever": {
+    "description": "`Pinecone Hybrid Search` retriever.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "add_texts": {
+        "self": "<class 'inspect._empty'>",
+        "texts": "typing.List[str]",
+        "ids": "typing.Optional[typing.List[str]]",
+        "metadatas": "typing.Optional[typing.List[dict]]",
+        "namespace": "typing.Optional[str]"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>",
+        "kwargs": "typing.Any"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": true
+  },
+  "PubMedRetriever": {
+    "description": "`PubMed API` retriever.\n\n    It wraps load() to get_relevant_documents().\n    It uses all PubMedAPIWrapper arguments without any change.",
+    "parent_classes": [
+      "PubMedAPIWrapper"
+    ],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": true
+  },
+  "QdrantSparseVectorRetriever": {
+    "description": ".. deprecated:: 0.2.16 Use :meth:`~Qdrant vector store now supports sparse retrievals natively. Use langchain_qdrant.QdrantVectorStore#as_retriever() instead. Reference: https://python.langchain.com/docs/integrations/vectorstores/qdrant/#sparse-vector-search` instead. It will be removed in langchain-community==0.5.0.\n\nQdrant sparse vector retriever.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "add_documents": {
+        "self": "<class 'inspect._empty'>",
+        "documents": "typing.List[langchain_core.documents.base.Document]",
+        "kwargs": "typing.Any"
+      },
+      "add_texts": {
+        "self": "<class 'inspect._empty'>",
+        "texts": "typing.Iterable[str]",
+        "metadatas": "typing.Optional[typing.List[dict]]",
+        "ids": "typing.Optional[typing.Sequence[str]]",
+        "batch_size": "<class 'int'>",
+        "kwargs": "typing.Any"
+      },
+      "_generate_rest_batches": {
+        "self": "<class 'inspect._empty'>",
+        "texts": "typing.Iterable[str]",
+        "metadatas": "typing.Optional[typing.List[dict]]",
+        "ids": "typing.Optional[typing.Sequence[str]]",
+        "batch_size": "<class 'int'>"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      },
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "args": "typing.Any",
+        "kwargs": "typing.Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": true
+  },
+  "RememberizerRetriever": {
+    "description": "`Rememberizer` retriever.\n\n    It wraps load() to get_relevant_documents().\n    It uses all RememberizerAPIWrapper arguments without any change.",
+    "parent_classes": [
+      "RememberizerAPIWrapper"
+    ],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": true
+  },
+  "RemoteLangChainRetriever": {
+    "description": "`LangChain API` retriever.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "_aget_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.AsyncCallbackManagerForRetrieverRun'>"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "SVMRetriever": {
+    "description": "`SVM` retriever.\n\n    Largely based on\n    https://github.com/karpathy/randomfun/blob/master/knn_vs_svm.ipynb",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "CallbackManagerForRetrieverRun"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "TavilySearchAPIRetriever": {
+    "description": "Tavily Search API retriever.\n\n    Setup:\n        Install ``langchain-community`` and set environment variable ``TAVILY_API_KEY``.\n\n        .. code-block:: bash\n\n            pip install -U langchain-community\n            export TAVILY_API_KEY=\"your-api-key\"\n\n    Key init args:\n        k: int\n            Number of results to include.\n        include_generated_answer: bool\n            Include a generated answer with results\n        include_raw_content: bool\n            Include raw content with results.\n        include_images: bool\n            Return images in addition to text.\n\n    Instantiate:\n        .. code-block:: python\n\n            from langchain_community.retrievers import TavilySearchAPIRetriever\n\n            retriever = TavilySearchAPIRetriever(k=3)\n\n    Usage:\n        .. code-block:: python\n\n            query = \"what year was breath of the wild released?\"\n\n            retriever.invoke(query)\n\n    Use within a chain:\n        .. code-block:: python\n\n            from langchain_core.output_parsers import StrOutputParser\n            from langchain_core.prompts import ChatPromptTemplate\n            from langchain_core.runnables import RunnablePassthrough\n            from langchain_openai import ChatOpenAI\n\n            prompt = ChatPromptTemplate.from_template(\n                \"\"\"Answer the question based only on the context provided.\n\n            Context: {context}\n\n            Question: {question}\"\"\"\n            )\n\n            llm = ChatOpenAI(model=\"gpt-3.5-turbo-0125\")\n\n            def format_docs(docs):\n                return \"\n\n\".join(doc.page_content for doc in docs)\n\n            chain = (\n                {\"context\": retriever | format_docs, \"question\": RunnablePassthrough()}\n                | prompt\n                | llm\n                | StrOutputParser()\n            )\n\n            chain.invoke(\"how many units did bretch of the wild sell in 2020\")",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "TFIDFRetriever": {
+    "description": "`TF-IDF` retriever.\n\n    Largely based on\n    https://github.com/asvskartheek/Text-Retrieval/blob/master/TF-IDF%20Search%20Engine%20(SKLEARN).ipynb",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "CallbackManagerForRetrieverRun"
+      },
+      "save_local": {
+        "self": "<class 'inspect._empty'>",
+        "folder_path": "str",
+        "file_name": "str"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "VespaRetriever": {
+    "description": "`Vespa` retriever.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_query": {
+        "self": "<class 'inspect._empty'>",
+        "body": "Dict"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "CallbackManagerForRetrieverRun"
+      },
+      "get_relevant_documents_with_filter": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "_filter": "Optional[str]"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "WeaviateHybridSearchRetriever": {
+    "description": ".. deprecated:: 0.3.18 Use ``:class:`~langchain_weaviate.WeaviateVectorStore``` instead. It will not be removed until langchain-community==1.0.\n\n`Weaviate hybrid search` retriever.\n\nSee the documentation:\n  https://weaviate.io/blog/hybrid-search-explained",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "add_documents": {
+        "self": "<class 'inspect._empty'>",
+        "docs": "List[Document]",
+        "kwargs": "Any"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "CallbackManagerForRetrieverRun",
+        "where_filter": "Optional[Dict[str, object]]",
+        "score": "bool",
+        "hybrid_search_kwargs": "Optional[Dict[str, object]]"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      },
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "args": "typing.Any",
+        "kwargs": "typing.Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "WebResearchRetriever": {
+    "description": "`Google Search API` retriever.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "__init__": {
+        "self": "<class 'inspect._empty'>",
+        "kwargs": "typing.Any"
+      },
+      "clean_search_query": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>"
+      },
+      "search_tool": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "num_search_results": "<class 'int'>"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "_aget_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.AsyncCallbackManagerForRetrieverRun'>"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "WikipediaRetriever": {
+    "description": "`Wikipedia API` retriever.\n\n    Setup:\n        Install the ``wikipedia`` dependency:\n\n        .. code-block:: bash\n\n            pip install -U wikipedia\n\n    Instantiate:\n        .. code-block:: python\n\n            from langchain_community.retrievers import WikipediaRetriever\n\n            retriever = WikipediaRetriever()\n\n    Usage:\n        .. code-block:: python\n\n            docs = retriever.invoke(\"TOKYO GHOUL\")\n            print(docs[0].page_content[:100])\n\n        .. code-block:: none\n\n            Tokyo Ghoul (Japanese: 東京喰種（トーキョーグール）, Hepburn: Tōkyō Gūru) is a Japanese dark fantasy\n\n    Use within a chain:\n        .. code-block:: python\n\n            from langchain_core.output_parsers import StrOutputParser\n            from langchain_core.prompts import ChatPromptTemplate\n            from langchain_core.runnables import RunnablePassthrough\n            from langchain_openai import ChatOpenAI\n\n            prompt = ChatPromptTemplate.from_template(\n                \"\"\"Answer the question based only on the context provided.\n\n            Context: {context}\n\n            Question: {question}\"\"\"\n            )\n\n            llm = ChatOpenAI(model=\"gpt-3.5-turbo-0125\")\n\n            def format_docs(docs):\n                return \"\\n\\n\".join(doc.page_content for doc in docs)\n\n            chain = (\n                {\"context\": retriever | format_docs, \"question\": RunnablePassthrough()}\n                | prompt\n                | llm\n                | StrOutputParser()\n            )\n\n            chain.invoke(\n                \"Who is the main character in `Tokyo Ghoul` and does he transform into a ghoul?\"\n            )\n\n        .. code-block:: none\n\n             'The main character in Tokyo Ghoul is Ken Kaneki, who transforms into a ghoul after receiving an organ transplant from a ghoul named Rize.'",
+    "parent_classes": [
+      "WikipediaAPIWrapper"
+    ],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": true
+  },
+  "YouRetriever": {
+    "description": "You.com Search API retriever.\n\n    It wraps results() to get_relevant_documents\n    It uses all YouSearchAPIWrapper arguments without any change.",
+    "parent_classes": [
+      "YouSearchAPIWrapper"
+    ],
+    "attributes": {},
+    "methods": {
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>",
+        "kwargs": "typing.Any"
+      },
+      "_aget_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.AsyncCallbackManagerForRetrieverRun'>",
+        "kwargs": "typing.Any"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": true
+  },
+  "ZepRetriever": {
+    "description": "`Zep` MemoryStore Retriever.\n\n    Search your user's long-term chat history with Zep.\n\n    Zep offers both simple semantic search and Maximal Marginal Relevance (MMR)\n    reranking of search results.\n\n    Note: You will need to provide the user's `session_id` to use this retriever.\n\n    Args:\n        url: URL of your Zep server (required)\n        api_key: Your Zep API key (optional)\n        session_id: Identifies your user or a user's session (required)\n        top_k: Number of documents to return (default: 3, optional)\n        search_type: Type of search to perform (similarity / mmr) (default: similarity,\n                                                                    optional)\n        mmr_lambda: Lambda value for MMR search. Defaults to 0.5 (optional)\n\n    Zep - Fast, scalable building blocks for LLM Apps\n    =========\n    Zep is an open source platform for productionizing LLM apps. Go from a prototype\n    built in LangChain or LlamaIndex, or a custom app, to production in minutes without\n    rewriting code.\n\n    For server installation instructions, see:\n    https://docs.getzep.com/deployment/quickstart/",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_messages_search_result_to_doc": {
+        "self": "<class 'inspect._empty'>",
+        "results": "List[MemorySearchResult]"
+      },
+      "_summary_search_result_to_doc": {
+        "self": "<class 'inspect._empty'>",
+        "results": "List[MemorySearchResult]"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "CallbackManagerForRetrieverRun",
+        "metadata": "Optional[Dict[str, Any]]"
+      },
+      "_aget_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "AsyncCallbackManagerForRetrieverRun",
+        "metadata": "Optional[Dict[str, Any]]"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "ZepCloudRetriever": {
+    "description": "`Zep Cloud` MemoryStore Retriever.\n\n    Search your user's long-term chat history with Zep.\n\n    Zep offers both simple semantic search and Maximal Marginal Relevance (MMR)\n    reranking of search results.\n\n    Note: You will need to provide the user's `session_id` to use this retriever.\n\n    Args:\n        api_key: Your Zep API key\n        session_id: Identifies your user or a user's session (required)\n        top_k: Number of documents to return (default: 3, optional)\n        search_type: Type of search to perform (similarity / mmr)\n            (default: similarity, optional)\n        mmr_lambda: Lambda value for MMR search. Defaults to 0.5 (optional)\n\n    Zep - Recall, understand, and extract data from chat histories.\n    Power personalized AI experiences.\n    =========\n    Zep is a long-term memory service for AI Assistant apps.\n    With Zep, you can provide AI assistants with the ability\n    to recall past conversations,\n    no matter how distant, while also reducing hallucinations, latency, and cost.\n\n    see Zep Cloud Docs: https://help.getzep.com",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "_messages_search_result_to_doc": {
+        "self": "<class 'inspect._empty'>",
+        "results": "List[MemorySearchResult]"
+      },
+      "_summary_search_result_to_doc": {
+        "self": "<class 'inspect._empty'>",
+        "results": "List[MemorySearchResult]"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "CallbackManagerForRetrieverRun",
+        "metadata": "Optional[Dict[str, Any]]"
+      },
+      "_aget_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "str",
+        "run_manager": "AsyncCallbackManagerForRetrieverRun",
+        "metadata": "Optional[Dict[str, Any]]"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  },
+  "ZillizRetriever": {
+    "description": "`Zilliz API` retriever.",
+    "parent_classes": [],
+    "attributes": {},
+    "methods": {
+      "add_texts": {
+        "self": "<class 'inspect._empty'>",
+        "texts": "typing.List[str]",
+        "metadatas": "typing.Optional[typing.List[dict]]"
+      },
+      "_get_relevant_documents": {
+        "self": "<class 'inspect._empty'>",
+        "query": "<class 'str'>",
+        "run_manager": "<class 'langchain_core.callbacks.manager.CallbackManagerForRetrieverRun'>",
+        "kwargs": "typing.Any"
+      },
+      "model_post_init": {
+        "self": "BaseModel",
+        "context": "Any"
+      }
+    },
+    "missing_env_vars": [],
+    "has_validate_environment": false
+  }
+}

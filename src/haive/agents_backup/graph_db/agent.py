@@ -2,10 +2,10 @@ from src.haive.agents.graph_db.state import OverallState,InputState,OutputState
 from src.haive.agents.graph_db.aug_llms import correct_cypher_aug_llm_config,validate_cypher_aug_llm_config,\
       guardrails_aug_llm_config, text2cypher_aug_llm_config, \
         correct_cypher_aug_llm_config, generate_final_aug_llm_config
-from src.haive.agents.base import AgentArchitecture,AgentArchitectureConfig
+from src.haive.core.engine.agent.agent import AgentArchitecture,AgentArchitectureConfig
 from pydantic import Field,BaseModel
 from typing import List,Dict,Literal,Annotated,Union,Any,Optional
-from src.haive.core.aug_llm.base import AugLLMConfig
+from src.haive.core.engine.aug_llm import AugLLMConfig
 from langgraph.types import Command
 from neo4j.exceptions import CypherSyntaxError
 from neo4j import GraphDatabase

@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 from src.haive.core.models.llm.base import LLMConfig,AzureLLMConfig
 from langchain_core.tools import BaseTool,StructuredTool
 from langchain.tools import Tool, StructuredTool
-from src.haive.agents.base import AgentArchitectureConfig
+from src.haive.core.engine.agent.agent import AgentArchitectureConfig
 from langgraph.prebuilt import ToolExecutor,ToolNode
 from langgraph.prebuilt import create_react_agent
 from langgraph.prebuilt.chat_agent_executor import StructuredResponseSchema,StateSchemaType,AgentState,_should_bind_tools
@@ -15,7 +15,7 @@ from langgraph.store.base import BaseStore
 from langgraph.managed import IsLastStep, RemainingSteps
 #from langgraph.types import  $
 from langgraph.checkpoint.base import BaseCheckpointSaver
-from src.haive.core.aug_llm.base import compose_runnable
+src.haive.core.engine.aug_llm import compose_runnable
 from src.config.config import * 
 #from langgraph.checkpoint import Checkpointer
 from langgraph.prebuilt.chat_agent_executor import AgentState

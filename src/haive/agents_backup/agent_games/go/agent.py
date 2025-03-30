@@ -1,15 +1,15 @@
-from src.haive.agents.base import AgentArchitecture, AgentArchitectureConfig
-from src.haive.core.aug_llm.base import AugLLMConfig
+from src.haive.core.engine.agent.agent import AgentArchitecture, AgentArchitectureConfig
+from src.haive.core.engine.aug_llm import AugLLMConfig
 from langgraph.graph import StateGraph
 from langgraph.types import Command
 from langgraph.constants import START, END
 import sente
 from typing import Dict, Literal, Optional
 from pydantic import Field
-from src.haive.agents.agent_games.go.state import GoGameState,GoGameStateManager
-from src.haive.agents.agent_games.go.models import GoPlayerDecision, GoAnalysis
-from src.haive.agents.agent_games.go.aug_llms import aug_llm_configs
-from src.haive.core.aug_llm.base import compose_runnable
+from src.haive.games.go.state import GoGameState,GoGameStateManager
+from src.haive.games.go.models import GoPlayerDecision, GoAnalysis
+from src.haive.games.go.aug_llms import aug_llm_configs
+src.haive.core.engine.aug_llm import compose_runnable
 
 
 class GoAgentConfig(AgentArchitectureConfig):
@@ -148,7 +148,7 @@ class GoAgent(AgentArchitecture):
         return self.analyze_position(state, "white")
 import sente
 from typing import Dict, Any, Optional
-from src.haive.agents.agent_games.go.agent import GoAgent, GoAgentConfig
+from src.haive.games.go.agent import GoAgent, GoAgentConfig
 
 
 def run_go_game(agent: GoAgent):

@@ -1,9 +1,9 @@
-from src.haive.agents.base import AgentArchitectureConfig
-from src.haive.core.aug_llm.base import AugLLMConfig
+from src.haive.core.engine.agent.agent import AgentArchitectureConfig
+from src.haive.core.engine.aug_llm import AugLLMConfig
 from src.haive.core.models.llm.base import AzureLLMConfig
 from src.haive.agents.rewoo.state import ReWOOState
 from pydantic import Field,model_validator
-from src.haive.agents.base import AgentArchitecture,AgentArchitectureConfig
+from src.haive.core.engine.agent.agent import AgentArchitecture,AgentArchitectureConfig
 from typing import Optional
 from src.haive.agents.rewoo.state import ReWOOState
 from langgraph.types import Command
@@ -14,7 +14,7 @@ from typing import List,Union
 from src.haive.agents.rewoo.aug_llms import rewoo_aug_llm_config,solve_aug_llm_config
 from src.haive.utils.tool_utils import _format_tool_descriptions
 from src.haive.core.tools.search_tools import tavily_search_tool,tavily_search_context,tavily_qna,tavily_extract
-from src.haive.core.aug_llm.base import compose_runnable
+src.haive.core.engine.aug_llm import compose_runnable
 
 class RewooAgentConfig(AgentArchitectureConfig):
     """Configuration for the ReWOO Agent with automatic prompt formatting."""

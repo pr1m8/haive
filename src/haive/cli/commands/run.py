@@ -19,7 +19,7 @@ from src.haive.cli.ui.console import create_console
 from src.haive.cli.ui.layouts import create_agent_layout, update_chat_panel, update_state_panel
 from src.haive.cli.utils.config import get_config
 from src.haive.cli.utils.registry import get_agent_path, get_agent_config
-from src.haive.agents.base import Agent
+from src.haive.core.engine.agent.agent import Agent
 
 console = create_console()
 

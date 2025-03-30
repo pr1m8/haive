@@ -80,16 +80,7 @@ def create_pydantic_model(
     model.model_rebuild()
     return model
 
-def create_pydantic_model_tool(model_name: str, fields: Dict[str, Dict[str, Any]]) -> Dict:
-    """
-    Wrapper function to generate a Pydantic model with specified fields.
-    
-    :param model_name: Name of the model.
-    :param fields: Dictionary mapping field names to metadata.
-    :return: JSON schema of the generated model.
-    """
-    model = create_pydantic_model(model_name, fields)
-    return model.model_json_schema()
+
 
 pydantic_tool = StructuredTool.from_function(
     name="pydantic_model_creator",

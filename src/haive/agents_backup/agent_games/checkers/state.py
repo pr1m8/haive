@@ -1,7 +1,7 @@
 from typing import List, Dict, Literal, Optional, Tuple
 from pydantic import BaseModel, Field
 from enum import Enum
-from src.haive.agents.agent_games.checkers.models import CheckersMove, CheckersPlayerAnalysis
+from src.haive.games.checkers.models import CheckersMove, CheckersPlayerAnalysis
 class PieceType(str, Enum):
     MAN = "man"
     KING = "king"
