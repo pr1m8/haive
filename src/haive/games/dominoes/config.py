@@ -1,7 +1,7 @@
 # src/haive/agents/agent_games/dominoes/config.py
 
 from src.haive.games.framework.base.config import GameConfig
-from src.haive.games.dominoes.models import DominoesState, DominoesPlayerDecision, DominoesAnalysis
+from src.haive.games.dominoes.state import DominoesState
 from src.haive.core.engine.aug_llm import AugLLMConfig
 from src.haive.games.dominoes.engines import aug_llm_configs
 from pydantic import Field
