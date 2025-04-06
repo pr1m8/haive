@@ -6,8 +6,9 @@ Description: Converts a natural language query into an SQL SELECT statement (ass
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 from src.haive.core.models.llm.base import AzureLLMConfig
-from src.haive.core.agents.base import AugLLMConfig
-from src.haive.prebuilt.simple.query_models import QueryInput
+from src.haive.core.aug_llm import AugLLMConfig
+from src.haive.prebuilt.simple.query.models import QueryModel
+from src.haive.agents.simple.factory import create_simple_agent
 
 SYSTEM_PROMPT = """
 You are a SQL generator. Given a natural language query and access to a table schema, write the equivalent SQL SELECT statement.
@@ -22,9 +23,14 @@ prompt = ChatPromptTemplate.from_messages([
 class SQLQuery(BaseModel):
     sql: str = Field(..., description="The generated SQL SELECT query.")
 
-config = AugLLMConfig(
+query_to_sql_config = AugLLMConfig(
     name="query_to_sql",
     llm_config=AzureLLMConfig(),
     prompt_template=prompt,
     structured_output_model=SQLQuery,
+)
+
+query_to_sql = create_simple_agent(
+    engine=query_to_sql_config,
+    name="query_to_sql"
 )
