@@ -1,144 +1,186 @@
-from src.haive.games.battleship.state import BattleshipGameState
-from src.haive.games.battleship.models import Coordinates, Board
+from typing import List, Dict, Any, Optional, Tuple
+import copy
 
-class BattleshipGameStateManager:
+from .models import (
+    ShipPlacement,
+    MoveCommand,
+    MoveOutcome,
+    GamePhase,
+    ShipType,
+    Coordinates,
+    MoveResult
+)
+from .state import BattleshipState, PlayerState
+
+class BattleshipStateManager:
     """
-    Manages state transitions and validation for a Battleship game.
+    Manager for Battleship game state transitions.
     
-    This class provides utility methods for initializing, updating, and
-    validating game states, ensuring consistent state transitions.
+    This class provides methods for:
+        - Initializing a new game
+        - Placing ships
+        - Making moves
+        - Checking game status
     """
     
     @staticmethod
-    def initialize() -> BattleshipGameState:
+    def initialize() -> BattleshipState:
         """
-        Creates a new game state with initialized boards and player setups.
+        Initialize a new Battleship game state.
         
         Returns:
-            BattleshipGameState: A fresh game state ready for play
+            BattleshipState: Fresh game state with default settings
         """
-        # Create initial state with default values
-        state = BattleshipGameState()
-        
-        # Initialize player boards
-        state.player1_private.board = Board()
-        state.player2_private.board = Board()
-        
-        # Set initial turn
-        state.turn = "player1"
-        
-        # Clear any move history
-        state.move_history = []
-        
-        return state
+        return BattleshipState(
+            player1_state=PlayerState(),
+            player2_state=PlayerState(),
+            current_player="player1",
+            game_phase=GamePhase.SETUP,
+            move_history=[],
+            error_message=None
+        )
     
     @staticmethod
-    def apply_move(state: BattleshipGameState, player: str, row: int, col: int) -> BattleshipGameState:
+    def place_ships(state: BattleshipState, player: str, placements: List[ShipPlacement]) -> BattleshipState:
         """
-        Validates and applies a move, updating the game state accordingly.
+        Place ships for a player.
+
+        Args:
+            state: Current game state
+            player: Player making the placements ("player1" or "player2")
+            placements: List of ship placements
+
+        Returns:
+            BattleshipState: Updated game state
+        """
+        # Create a copy of the state
+        new_state = copy.deepcopy(state)
+        player_state = new_state.get_player_state(player)
+
+        # If the game is already playing or ended, reject further placements
+        if new_state.game_phase != GamePhase.SETUP:
+            new_state.error_message = f"Cannot place ships once the game has started"
+            return new_state
+
+        # Check if player has already placed ships
+        if player_state.has_placed_ships:
+            new_state.error_message = f"{player} has already placed ships"
+            return new_state
+
+        # Validate ship types (each type should appear exactly once)
+        ship_types = [p.ship_type for p in placements]
+        all_ship_types = list(ShipType)
+
+        if sorted(ship_types) != sorted(all_ship_types):
+            missing_types = set(all_ship_types) - set(ship_types)
+            if missing_types:
+                new_state.error_message = f"Missing ship types: {', '.join(t.value for t in missing_types)}"
+            else:
+                duplicates = [t for t in ship_types if ship_types.count(t) > 1]
+                new_state.error_message = f"Duplicate ship types: {', '.join(t.value for t in set(duplicates))}"
+            return new_state
+
+        # Clear existing ships (just in case)
+        player_state.board.ships = []
+
+        # Try to place each ship
+        for placement in placements:
+            if not player_state.board.place_ship(placement):
+                new_state.error_message = f"Invalid placement for {placement.ship_type.value}"
+                return new_state
+
+        # Record successful placements
+        player_state.ship_placements = placements
+        player_state.has_placed_ships = True
+
+        # Debug logging
+        print(f"[DEBUG] {player} successfully placed ships.")
+
+        # Check if both players have finished setup
+        if new_state.is_setup_complete():
+            print("[DEBUG] Both players placed ships. Game starting!")
+            new_state.game_phase = GamePhase.PLAYING
+
+        return new_state
+
+    @staticmethod
+    def make_move(state: BattleshipState, player: str, move: MoveCommand) -> BattleshipState:
+        """
+        Make a move for a player.
         
         Args:
             state: Current game state
             player: Player making the move ("player1" or "player2")
-            row: Row coordinate (0-9)
-            col: Column coordinate (0-9)
+            move: Attack command
             
         Returns:
-            Updated game state after the move
+            BattleshipState: Updated game state
         """
         # Create a copy of the state
-        updated_state = state.model_copy()
+        new_state = copy.deepcopy(state)
         
-        # Determine opponent
-        opponent = "player2" if player == "player1" else "player1"
+        # Check if it's the right game phase
+        if new_state.game_phase != GamePhase.PLAYING:
+            new_state.error_message = f"Cannot make move in {new_state.game_phase.value} phase"
+            return new_state
         
-        # Validate it's the player's turn
-        if updated_state.turn != player:
-            updated_state.error_message = f"Not {player}'s turn."
-            return updated_state
-        
-        # Convert to Coordinates
-        coords = Coordinates(row=row, col=col)
+        # Check if it's the player's turn
+        if new_state.current_player != player:
+            new_state.error_message = f"Not {player}'s turn"
+            return new_state
         
         # Get player and opponent states
-        player_state = getattr(updated_state, f"{player}_private")
-        opponent_state = getattr(updated_state, f"{opponent}_private")
+        player_state = new_state.get_player_state(player)
+        opponent = new_state.get_opponent(player)
+        opponent_state = new_state.get_player_state(opponent)
         
-        # Check if the move has already been made
-        if coords.to_tuple() in [g.to_tuple() for g in player_state.board.guesses]:
-            updated_state.error_message = f"Invalid move: {coords.to_tuple()} has already been guessed."
-            return updated_state
+        # Process the attack
+        outcome = opponent_state.board.receive_attack(move.row, move.col)
         
-        # Apply the move
-        result = opponent_state.board.receive_attack(row, col)
+        # Update attack tracking for the player
+        coord = Coordinates(row=move.row, col=move.col)
+        player_state.board.attacks.append(coord)
         
-        # Update player's tracking
-        player_state.board.guesses.append(coords)
-        
-        if result.result == "hit" or result.result == "sunk":
-            player_state.board.hits.append(coords)
-        elif result.result == "miss":
-            player_state.board.misses.append(coords)
+        if outcome.result in [MoveResult.HIT, MoveResult.SUNK]:
+            player_state.board.successful_hits.append(coord)
+        elif outcome.result == MoveResult.MISS:
+            player_state.board.failed_attacks.append(coord)
         
         # Record the move in history
-        updated_state.move_history.append((player, coords.to_tuple(), result.result))
+        new_state.move_history.append((player, outcome))
         
-        # Check for game end
-        if BattleshipGameStateManager.check_game_over(updated_state):
-            return updated_state
+        # Check for game over
+        if opponent_state.board.all_ships_sunk():
+            new_state.game_phase = GamePhase.ENDED
+            new_state.winner = player
+        else:
+            # Switch player
+            new_state.current_player = opponent
         
-        # Switch turn
-        updated_state.turn = opponent
-        
-        return updated_state
+        return new_state
     
     @staticmethod
-    def check_game_over(state: BattleshipGameState) -> bool:
+    def add_analysis(state: BattleshipState, player: str, analysis: str) -> BattleshipState:
         """
-        Checks if the game is over and updates game_status and game_result.
+        Add strategic analysis for a player.
         
         Args:
             state: Current game state
+            player: Player for whom to add analysis
+            analysis: Analysis text
             
         Returns:
-            True if game is over, False otherwise
-        """
-        # Check if all ships are sunk for either player
-        player1_all_sunk = state.player1_private.board.all_ships_sunk()
-        player2_all_sunk = state.player2_private.board.all_ships_sunk()
-        
-        if player1_all_sunk or player2_all_sunk:
-            state.game_status = "ended"
-            
-            if player1_all_sunk and player2_all_sunk:
-                # Both players lost their ships - draw
-                state.game_result = "draw"
-            elif player1_all_sunk:
-                # Player 2 wins
-                state.game_result = "player2"
-            else:
-                # Player 1 wins
-                state.game_result = "player1"
-                
-            return True
-            
-        return False
-    
-    @staticmethod
-    def check_game_status(state: BattleshipGameState) -> BattleshipGameState:
-        """
-        Checks and updates the game status, returning the updated state.
-        
-        Args:
-            state: Current game state
-            
-        Returns:
-            Updated game state with correct status
+            BattleshipState: Updated game state
         """
         # Create a copy of the state
-        updated_state = state.model_copy()
+        new_state = copy.deepcopy(state)
+        player_state = new_state.get_player_state(player)
         
-        # Check if game is over
-        BattleshipGameStateManager.check_game_over(updated_state)
+        # Add analysis
+        player_state.strategic_analysis.append(analysis)
         
-        return updated_state
+        # Keep only the most recent analyses (limit to 5)
+        if len(player_state.strategic_analysis) > 5:
+            player_state.strategic_analysis = player_state.strategic_analysis[-5:]
+        
+        return new_state
