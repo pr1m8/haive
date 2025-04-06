@@ -1,5 +1,5 @@
 import pytest
-from src.haive.tools.corporate_bs_tool import get_random_corporate_bs
+from src.haive.tak.tools.corporate_bs_tool import get_random_corporate_bs
 
 
 def test_get_random_corporate_bs():
