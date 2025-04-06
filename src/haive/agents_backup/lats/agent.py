@@ -5,7 +5,7 @@ from langchain_core.runnables import RunnableConfig
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder,PromptTemplate
 
 from langchain_core.output_parsers.openai_tools import JsonOutputToolsParser
-from config.settings import *
+from src.config.settings import *
 from langchain_openai import AzureOpenAI
 from typing import TypedDict
 from src.haive.agents.lats.node import Node

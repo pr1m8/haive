@@ -5,7 +5,7 @@ from langgraph.types import Command
 from langgraph.constants import START, END
 from src.haive.games.checkers.state import CheckersGameStateManager, CheckersGameState
 from src.haive.games.checkers.models import CheckersMove, CheckersPlayerAnalysis
-from src.haive.games.checkers.aug_llms import aug_llm_configs
+from src.haive.games.checkers.engines import aug_llm_configs
 from typing import Dict
 from pydantic import Field
 
