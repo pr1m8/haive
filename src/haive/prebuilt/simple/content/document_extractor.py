@@ -8,8 +8,8 @@ from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 from typing import Optional
 from src.haive.core.models.llm.base import AzureLLMConfig
-from src.haive.core.agents.base import AugLLMConfig
-
+from src.haive.core.aug_llm import AugLLMConfig
+from src.haive.agents.simple.factory import create_simple_agent
 SYSTEM_PROMPT = """
 You are a structured information extractor.
 Given a passage, extract relevant information and return it in a structured form. Prioritize named entities (e.g. person, organization, date, location) and key metadata.
@@ -29,9 +29,16 @@ class ExtractedInfo(BaseModel):
     date: Optional[str] = Field(None, description="Mentioned date or time period.")
     summary: Optional[str] = Field(None, description="A brief abstract of the passage, if appropriate.")
 
-config = AugLLMConfig(
+document_extractor_config = AugLLMConfig(
     name="document_extractor",
     llm_config=AzureLLMConfig(),
     prompt_template=prompt,
     structured_output_model=ExtractedInfo,
 )
+
+document_extractor = create_simple_agent(
+    engine=document_extractor_config,
+    name="document_extractor"
+)
+
+

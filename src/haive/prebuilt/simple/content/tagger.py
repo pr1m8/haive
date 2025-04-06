@@ -9,7 +9,8 @@ from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 from typing import List
 from src.haive.core.models.llm.base import AzureLLMConfig
-from src.haive.core.agents.base import AugLLMConfig
+from src.haive.core.aug_llm import AugLLMConfig
+from src.haive.agents.simple.factory import create_simple_agent
 
 SYSTEM_PROMPT = """
 You are a smart document tagger. Your task is to read the input content and output a list of relevant tags that summarize the key topics, entities, or themes.
@@ -25,9 +26,15 @@ prompt = ChatPromptTemplate.from_messages([
 class TagOutput(BaseModel):
     tags: List[str] = Field(..., description="List of concise, high-level tags representing the document content.")
 
-config = AugLLMConfig(
+document_tagger_config = AugLLMConfig(
     name="document_tagger",
     llm_config=AzureLLMConfig(),
     prompt_template=prompt,
     structured_output_model=TagOutput,
 )
+
+document_tagger = create_simple_agent(
+    engine=document_tagger_config,
+    name="document_tagger"
+)
+

@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 from typing import List
 from src.haive.core.models.llm.base import AzureLLMConfig
 from src.haive.core.engine.aug_llm import AugLLMConfig
-
+from src.haive.agents.simple.factory import create_simple_agent
 SYSTEM_PROMPT = """
 You are a question-answer pair generator for retrieval-augmented generation (RAG).
 Your goal is to extract useful facts from the text and generate realistic, natural questions that could retrieve these facts.
@@ -28,9 +28,14 @@ class QAPair(BaseModel):
 class QAForRAGOutput(BaseModel):
     qa_pairs: List[QAPair] = Field(..., description="A list of question-answer pairs suitable for RAG or QA tasks.")
 
-config = AugLLMConfig(
+qa_for_rag_generator_config = AugLLMConfig(
     name="qa_for_rag_generator",
     llm_config=AzureLLMConfig(),
     prompt_template=prompt,
     structured_output_model=QAForRAGOutput,
+)
+
+qa_for_rag_generator = create_simple_agent(
+    engine=qa_for_rag_generator_config,
+    name="qa_for_rag_generator"
 )
