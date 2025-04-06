@@ -12,7 +12,7 @@ from langchain_core.tools import BaseTool,StructuredTool
 from pydantic import BaseModel
 from typing import List,Union
 from src.haive.agents.rewoo.aug_llms import rewoo_aug_llm_config,solve_aug_llm_config
-from src.haive.utils.tool_utils import _format_tool_descriptions
+from src.haive.core.utils.tool_utils import _format_tool_descriptions
 from src.haive.core.tools.search_tools import tavily_search_tool,tavily_search_context,tavily_qna,tavily_extract
 src.haive.core.engine.aug_llm import compose_runnable
 

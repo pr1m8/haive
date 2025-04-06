@@ -23,7 +23,7 @@ from langgraph.checkpoint.postgres import PostgresSaver
 import uuid
 from langchain_core.runnables import RunnableConfig
 from src.haive.agents.react_agent.state import ReactAgentState
-from src.haive.utils.visualize_graph_utils import render_and_display_graph
+from src.haive.core.utils.visualize_graph_utils import render_and_display_graph
 # Utility function to decide whether to continue
 def should_continue(state: ReactAgentState, tool_node_name: str = "tools",) -> str:
     messages = filter_messages(state["messages"], exclude_types=[SystemMessage])

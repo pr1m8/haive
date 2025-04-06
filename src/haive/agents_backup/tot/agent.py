@@ -1,9 +1,9 @@
-#from config.model_config import *
+#from src.config.model_config import *
 
 from src.haive.agents.tot.models import Problem,Candidate,ScoredCandidate
 
 from langgraph.types import Command
-# from src.agents.tot.utils import generate_candidates,score_candidates,select_best_candidate
+# from.agents.tot.utils import generate_candidates,score_candidates,select_best_candidate
 from langchain_openai import AzureChatOpenAI
 from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.memory import MemorySaver
