@@ -1,59 +1,46 @@
 
 from typing import List, Optional, Dict, Literal
 from pydantic import BaseModel, Field
-from src.haive.games.checkers.models import CheckersPiece, CheckersMove
-class CheckersState(GameState):
-    """State for a checkers game."""
-    board: List[List[Optional[CheckersPiece]]] = Field(
-        ..., description="8x8 board representation"
-    )
-    turn: Literal["red", "black"] = Field(..., description="Current player's turn")
-    game_status: Literal["ongoing", "red_win", "black_win", "draw"] = Field(
-        default="ongoing", description="Status of the game"
-    )
-    move_history: List[CheckersMove] = Field(
-        default_factory=list, description="History of moves"
-    )
-    captured_pieces: Dict[str, int] = Field(
-        default_factory=lambda: {"red": 0, "black": 0},
-        description="Count of captured pieces for each player"
-    )
-    red_analysis: List[Dict] = Field(
-        default_factory=list, description="Analysis history for red player"
-    )
-    black_analysis: List[Dict] = Field(
-        default_factory=list, description="Analysis history for black player"
+from src.haive.games.checkers.models import CheckersMove
+
+
+class CheckersState(BaseModel):
+    """
+    State representation for the checkers game.
+    
+    Attributes:
+        board: 2D grid representation of the board (0=empty, 1=red, 2=red king, 3=black, 4=black king)
+        board_string: String representation of the board for display
+        turn: Current player's turn
+        move_history: History of moves played
+        game_status: Status of the game
+        winner: Winner of the game (if any)
+        red_analysis: Analysis history for red player
+        black_analysis: Analysis history for black player
+        captured_pieces: Record of captured pieces by each player
+    """
+    board: List[List[int]] = Field(..., description="2D grid representation of the board")
+    board_string: str = Field(..., description="String representation of the board")
+    turn: Literal["red", "black"] = Field(default="red", description="Current player's turn")
+    move_history: List[CheckersMove] = Field(default_factory=list, description="History of moves")
+    game_status: Literal["ongoing", "game_over"] = Field(default="ongoing", description="Status of the game")
+    winner: Optional[Literal["red", "black"]] = Field(default=None, description="Winner of the game")
+    red_analysis: List[Dict] = Field(default_factory=list, description="Analysis history for red player")
+    black_analysis: List[Dict] = Field(default_factory=list, description="Analysis history for black player")
+    captured_pieces: Dict[str, List[str]] = Field(
+        default_factory=lambda: {"red": [], "black": []},
+        description="Record of captured pieces by each player"
     )
     
-    @property
-    def active_player(self) -> str:
-        """Get the current active player."""
-        return self.turn
+    def model_dump(self) -> Dict:
+        """Convert to dictionary representation."""
+        result = super().model_dump()
+        return result
     
-    @property
-    def board_string(self) -> str:
-        """Get a string representation of the board."""
-        result = []
-        result.append("    0   1   2   3   4   5   6   7  ")
-        result.append("  +---+---+---+---+---+---+---+---+")
-        
-        for i, row in enumerate(self.board):
-            row_str = f"{i} |"
-            for j, piece in enumerate(row):
-                if piece is None:
-                    # Use different background for black squares
-                    if (i + j) % 2 == 1:
-                        cell = " . "
-                    else:
-                        cell = "   "
-                else:
-                    if piece.color == "red":
-                        symbol = "R" if piece.is_king else "r"
-                    else:
-                        symbol = "B" if piece.is_king else "b"
-                    cell = f" {symbol} "
-                row_str += cell + "|"
-            result.append(row_str)
-            result.append("  +---+---+---+---+---+---+---+---+")
-        
-        return "\n".join(result)
+    def dict(self) -> Dict:
+        """Legacy compatibility method."""
+        return self.model_dump()
+    
+    class Config:
+        """Pydantic configuration."""
+        arbitrary_types_allowed = True

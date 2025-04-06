@@ -2,7 +2,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from src.haive.core.engine.aug_llm import AugLLMConfig
 from src.haive.core.models.llm.base import AzureLLMConfig
 from src.haive.games.checkers.models import CheckersPlayerDecision, CheckersAnalysis
-
+from typing import Dict
 # ------------------------------
 # 📊 Move Prompt
 # ------------------------------
@@ -49,29 +49,30 @@ def generate_analysis_prompt(color: str) -> ChatPromptTemplate:
 # ------------------------------
 # 📊 AugLLM Configurations
 # ------------------------------
-aug_llm_configs = {
-    "red_player": AugLLMConfig(
-        name="red_player",
-        llm_config=AzureLLMConfig(model="gpt-4o"),
+def build_checkers_aug_llms() -> Dict[str, AugLLMConfig]:
+    return {
+        "red_player": AugLLMConfig(
+            name="red_player",
+            llm_config=AzureLLMConfig(model="gpt-4o"),
         prompt_template=generate_move_prompt("red"),
         structured_output_model=CheckersPlayerDecision
-    ),
-    "black_player": AugLLMConfig(
-        name="black_player",
-        llm_config=AzureLLMConfig(model="gpt-4o"),
-        prompt_template=generate_move_prompt("black"),
-        structured_output_model=CheckersPlayerDecision
-    ),
-    "red_analyzer": AugLLMConfig(
-        name="red_analyzer",
-        llm_config=AzureLLMConfig(model="gpt-4o"),
-        prompt_template=generate_analysis_prompt("red"),
-        structured_output_model=CheckersAnalysis
-    ),
-    "black_analyzer": AugLLMConfig(
-        name="black_analyzer",
-        llm_config=AzureLLMConfig(model="gpt-4o"),
-        prompt_template=generate_analysis_prompt("black"),
-        structured_output_model=CheckersAnalysis
-    )
-}
+        ),
+        "black_player": AugLLMConfig(
+            name="black_player",
+            llm_config=AzureLLMConfig(model="gpt-4o"),
+            prompt_template=generate_move_prompt("black"),
+            structured_output_model=CheckersPlayerDecision
+        ),
+        "red_analyzer": AugLLMConfig(
+            name="red_analyzer",
+            llm_config=AzureLLMConfig(model="gpt-4o"),
+            prompt_template=generate_analysis_prompt("red"),
+            structured_output_model=CheckersAnalysis
+        ),
+        "black_analyzer": AugLLMConfig(
+            name="black_analyzer",
+            llm_config=AzureLLMConfig(model="gpt-4o"),
+            prompt_template=generate_analysis_prompt("black"),
+            structured_output_model=CheckersAnalysis
+        )
+    }
