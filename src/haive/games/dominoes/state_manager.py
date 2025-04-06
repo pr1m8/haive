@@ -3,8 +3,8 @@
 import random
 from typing import List, Optional, Dict, Tuple, Union, Literal
 import copy
-from src.haive.games.dominoes.models import DominoesState, DominoTile, DominoMove
-
+from src.haive.games.dominoes.models import DominoTile, DominoMove
+from src.haive.games.dominoes.state import DominoesState
 from src.haive.games.framework.base import GameStateManager
 
 class DominoesStateManager(GameStateManager[DominoesState]):
