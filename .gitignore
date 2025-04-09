@@ -1,8 +1,6 @@
-.pycache
-.venv
-.env
-__pycache__
-*.pyc
+# Python cache & bytecode
+__pycache__/
+*.py[cod]
 *.pyo
 *.pyd
 *.pyw
@@ -10,5 +8,35 @@ __pycache__
 *.pywz
 *.pyzw
 
-resources/
+# Jupyter notebooks (if you don’t want them public)
+*.ipynb
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Environment files
+.env
+.env.*
+.env.example
+
+# Poetry
+poetry.lock
+
+# Credentials and secrets
 credentials.json
+resources/
+
+# Certificates & keys
+*.pem
+*.key
+*.crt
+*.cert
+*.der
+*.pfx
+*.p12
+
+# PyCharm/VSCode or other IDEs (optional)
+.idea/
+.vscode/
