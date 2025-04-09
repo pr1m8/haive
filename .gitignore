@@ -11,7 +11,7 @@ __pycache__/
 *.log
 # Jupyter notebooks (if you don’t want them public)
 *.ipynb
-.ipynb_checkpoints/
+*.ipynb_checkpoints/
 
 
 
@@ -33,6 +33,7 @@ poetry.lock
 credentials.json
 resources/
 scratches/
+reports/
 # Certificates & keys
 *.pem
 *.key
