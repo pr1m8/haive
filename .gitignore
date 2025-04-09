@@ -8,9 +8,10 @@ __pycache__/
 *.pywz
 *.pyzw
 *.pkl
-
+*.log
 # Jupyter notebooks (if you don’t want them public)
 *.ipynb
+.ipynb_checkpoints/
 
 
 
