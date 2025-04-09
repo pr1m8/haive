@@ -7,9 +7,13 @@ __pycache__/
 *.pyz
 *.pywz
 *.pyzw
+*.pkl
 
 # Jupyter notebooks (if you don’t want them public)
 *.ipynb
+
+
+
 
 # Virtual environments
 .venv/
@@ -27,7 +31,7 @@ poetry.lock
 # Credentials and secrets
 credentials.json
 resources/
-
+scratches/
 # Certificates & keys
 *.pem
 *.key
