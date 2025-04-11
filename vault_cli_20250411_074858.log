@@ -1,0 +1,37 @@
+2025-04-11 07:48:58,794 - __main__ - INFO - Starting vault migration...
+2025-04-11 07:48:58,830 - vault_migration_script - INFO - Starting vault reference migration...
+2025-04-11 07:48:58,831 - vault_migration_script - INFO - Migrating environment variables...
+2025-04-11 07:48:59,037 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 400 Bad Request"
+2025-04-11 07:48:59,038 - vault_migration_script - ERROR - Error executing SQL: {'code': '42703', 'details': None, 'hint': None, 'message': 'column "r" does not exist'}
+2025-04-11 07:48:59,038 - vault_migration_script - ERROR - Failed to check if column exists in config.environment_variables
+2025-04-11 07:48:59,038 - vault_migration_script - WARNING - Cannot migrate environment variables without vault_secret_id column
+2025-04-11 07:48:59,038 - vault_migration_script - INFO - Please add the column manually and run the script again
+2025-04-11 07:48:59,038 - vault_migration_script - INFO - Migrating component environment mappings...
+2025-04-11 07:48:59,089 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 400 Bad Request"
+2025-04-11 07:48:59,089 - vault_migration_script - ERROR - Error executing SQL: {'code': '42703', 'details': None, 'hint': None, 'message': 'column "r" does not exist'}
+2025-04-11 07:48:59,089 - vault_migration_script - ERROR - Failed to check if column exists in config.component_env_mappings
+2025-04-11 07:48:59,090 - vault_migration_script - WARNING - Cannot migrate component environment mappings without vault_secret_id column
+2025-04-11 07:48:59,090 - vault_migration_script - INFO - Please add the column manually and run the script again
+2025-04-11 07:48:59,090 - vault_migration_script - INFO - Migrating provider API keys...
+2025-04-11 07:48:59,136 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 400 Bad Request"
+2025-04-11 07:48:59,137 - vault_migration_script - ERROR - Error executing SQL: {'code': '42703', 'details': None, 'hint': None, 'message': 'column "r" does not exist'}
+2025-04-11 07:48:59,137 - vault_migration_script - ERROR - Failed to check if column exists in models.providers
+2025-04-11 07:48:59,137 - vault_migration_script - WARNING - Cannot migrate provider API keys without vault_secret_id column
+2025-04-11 07:48:59,138 - vault_migration_script - INFO - Please add the column manually and run the script again
+2025-04-11 07:48:59,138 - vault_migration_script - INFO - Migrating engine API keys...
+2025-04-11 07:48:59,182 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 400 Bad Request"
+2025-04-11 07:48:59,182 - vault_migration_script - ERROR - Error executing SQL: {'code': '42703', 'details': None, 'hint': None, 'message': 'column "r" does not exist'}
+2025-04-11 07:48:59,182 - vault_migration_script - ERROR - Failed to check if column exists in engines.engines
+2025-04-11 07:48:59,182 - vault_migration_script - WARNING - Cannot migrate engine API keys without vault_secret_id column
+2025-04-11 07:48:59,183 - vault_migration_script - INFO - Please add the column manually and run the script again
+2025-04-11 07:48:59,183 - vault_migration_script - INFO - Adding vault helper functions...
+2025-04-11 07:48:59,229 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 400 Bad Request"
+2025-04-11 07:48:59,229 - vault_migration_script - ERROR - Error executing SQL: {'code': '42703', 'details': None, 'hint': None, 'message': 'column "r" does not exist'}
+2025-04-11 07:48:59,229 - vault_migration_script - WARNING - Failed to create get_vault_secret function
+2025-04-11 07:48:59,229 - vault_migration_script - INFO - Migration completed with the following results:
+2025-04-11 07:48:59,229 - vault_migration_script - INFO - Environment variables migrated: 0
+2025-04-11 07:48:59,230 - vault_migration_script - INFO - Component environment mappings migrated: 0
+2025-04-11 07:48:59,230 - vault_migration_script - INFO - Providers migrated: 0
+2025-04-11 07:48:59,230 - vault_migration_script - INFO - Engines migrated: 0
+2025-04-11 07:48:59,230 - vault_migration_script - INFO - Total items migrated: 0
+2025-04-11 07:48:59,230 - vault_migration_script - WARNING - Migration did not complete successfully
