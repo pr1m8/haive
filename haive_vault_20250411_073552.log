@@ -1,0 +1,42 @@
+2025-04-11 07:35:52,785 - __main__ - INFO - Starting vault reference migration...
+2025-04-11 07:35:52,785 - __main__ - INFO - Migrating environment variables...
+2025-04-11 07:35:52,919 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 200 OK"
+2025-04-11 07:35:52,959 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 400 Bad Request"
+2025-04-11 07:35:52,961 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error ensuring vault_reference column on config.environment_variables: {'code': '42601', 'details': None, 'hint': None, 'message': 'syntax error at or near "TABLE"'}
+2025-04-11 07:35:53,066 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/decrypted_secrets?select=id%2Cname "HTTP/2 200 OK"
+2025-04-11 07:35:53,068 - src.haive.dataflow.registry.utils.vault_migration_script - INFO - Found 0 existing secrets in vault
+2025-04-11 07:35:53,175 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/environment_variables?select=%2A&is_secret=eq.True "HTTP/2 200 OK"
+2025-04-11 07:35:53,176 - src.haive.dataflow.registry.utils.vault_migration_script - INFO - Found 12 sensitive environment variables
+2025-04-11 07:35:53,307 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/secrets "HTTP/2 201 Created"
+2025-04-11 07:35:53,313 - src.haive.dataflow.registry.utils.vault_migration_script - INFO - Created new vault secret for GOOGLE_API_KEY (0fdb7ae6-a472-452c-9256-85e82f68c248)
+2025-04-11 07:35:53,424 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/environment_variables?id=eq.602a96d7-e651-4b78-bda0-c18e908d3dcc "HTTP/2 400 Bad Request"
+2025-04-11 07:35:53,424 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error migrating environment variables: {'code': 'PGRST204', 'details': None, 'hint': None, 'message': "Could not find the 'vault_secret_id' column of 'environment_variables' in the schema cache"}
+2025-04-11 07:35:53,424 - __main__ - INFO - Migrating component environment mappings...
+2025-04-11 07:35:53,466 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 200 OK"
+2025-04-11 07:35:53,515 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 400 Bad Request"
+2025-04-11 07:35:53,516 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error ensuring vault_reference column on config.component_env_mappings: {'code': '42601', 'details': None, 'hint': None, 'message': 'syntax error at or near "TABLE"'}
+2025-04-11 07:35:53,619 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/component_env_mappings?select=%2A "HTTP/2 200 OK"
+2025-04-11 07:35:53,619 - src.haive.dataflow.registry.utils.vault_migration_script - INFO - No component environment mappings found
+2025-04-11 07:35:53,620 - __main__ - INFO - Migrating provider API keys...
+2025-04-11 07:35:53,659 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 200 OK"
+2025-04-11 07:35:53,707 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 400 Bad Request"
+2025-04-11 07:35:53,707 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error ensuring vault_reference column on models.providers: {'code': '42601', 'details': None, 'hint': None, 'message': 'syntax error at or near "TABLE"'}
+2025-04-11 07:35:53,811 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/decrypted_secrets?select=id%2Cname "HTTP/2 200 OK"
+2025-04-11 07:35:53,921 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/providers?select=%2A "HTTP/2 200 OK"
+2025-04-11 07:35:53,922 - src.haive.dataflow.registry.utils.vault_migration_script - INFO - Found 54 providers
+2025-04-11 07:35:53,922 - src.haive.dataflow.registry.utils.vault_migration_script - WARNING - No value found for secret FIREWORKS_AI_API_KEY in environment
+2025-04-11 07:35:54,028 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/secrets "HTTP/2 201 Created"
+2025-04-11 07:35:54,028 - src.haive.dataflow.registry.utils.vault_migration_script - INFO - Created new vault secret for FIREWORKS_AI_API_KEY (53b77fba-df0e-402e-b6d3-206c1d299f6f)
+2025-04-11 07:35:54,129 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/providers?id=eq.a591a051-9828-4119-83af-00da4559cffa "HTTP/2 400 Bad Request"
+2025-04-11 07:35:54,129 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error migrating provider API keys: {'code': 'PGRST204', 'details': None, 'hint': None, 'message': "Could not find the 'vault_secret_id' column of 'providers' in the schema cache"}
+2025-04-11 07:35:54,130 - __main__ - INFO - Migrating engine API keys...
+2025-04-11 07:35:54,176 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 200 OK"
+2025-04-11 07:35:54,218 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 400 Bad Request"
+2025-04-11 07:35:54,219 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error ensuring vault_reference column on engines.engines: {'code': '42601', 'details': None, 'hint': None, 'message': 'syntax error at or near "TABLE"'}
+2025-04-11 07:35:54,318 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/decrypted_secrets?select=id%2Cname "HTTP/2 200 OK"
+2025-04-11 07:35:54,425 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/engines?select=%2A "HTTP/2 200 OK"
+2025-04-11 07:35:54,426 - src.haive.dataflow.registry.utils.vault_migration_script - INFO - No engines found
+2025-04-11 07:35:54,426 - __main__ - INFO - Adding vault helper functions...
+2025-04-11 07:35:54,471 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 400 Bad Request"
+2025-04-11 07:35:54,471 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error creating vault helper functions: {'code': '42601', 'details': None, 'hint': None, 'message': 'syntax error at or near "CREATE"'}
+2025-04-11 07:35:54,471 - __main__ - INFO - Migration completed successfully

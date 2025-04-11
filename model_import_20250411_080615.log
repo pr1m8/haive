@@ -1,0 +1,146 @@
+2025-04-11 08:06:15,240 - src.haive.dataflow.registry.importers.litellm_importer - INFO - Successfully imported Supabase client and helpers
+2025-04-11 08:06:15,262 - __main__ - INFO - Successfully imported Supabase client and helpers
+2025-04-11 08:06:15,263 - __main__ - INFO - Starting model import process...
+2025-04-11 08:06:15,285 - __main__ - INFO - Successfully fetched model data from LiteLLM (901 models)
+2025-04-11 08:06:15,455 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 200 OK"
+2025-04-11 08:06:15,457 - __main__ - INFO - Found existing provider type: llm
+2025-04-11 08:06:15,571 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/providers?select=%2A&name=eq.openai "HTTP/2 200 OK"
+2025-04-11 08:06:15,572 - __main__ - INFO - Found existing provider: openai
+2025-04-11 08:06:15,682 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?select=id&model_id=eq.omni-moderation-latest "HTTP/2 200 OK"
+2025-04-11 08:06:15,790 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?id=eq.699703a7-1dfe-4f95-87cc-92642474fa9a "HTTP/2 200 OK"
+2025-04-11 08:06:15,790 - __main__ - INFO - Updated existing model: omni-moderation-latest
+2025-04-11 08:06:15,898 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?select=id&model_id=eq.699703a7-1dfe-4f95-87cc-92642474fa9a "HTTP/2 200 OK"
+2025-04-11 08:06:16,007 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?id=eq.e1b9d5cf-425d-4011-8b1c-4fce52424832 "HTTP/2 200 OK"
+2025-04-11 08:06:16,114 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?select=id&model_id=eq.699703a7-1dfe-4f95-87cc-92642474fa9a "HTTP/2 200 OK"
+2025-04-11 08:06:16,222 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?id=eq.b0dedc5c-7e75-45cc-9233-1e4868e2fab3 "HTTP/2 200 OK"
+2025-04-11 08:06:16,332 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 200 OK"
+2025-04-11 08:06:16,333 - __main__ - INFO - Found existing provider type: llm
+2025-04-11 08:06:16,443 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/providers?select=%2A&name=eq.openai "HTTP/2 200 OK"
+2025-04-11 08:06:16,444 - __main__ - INFO - Found existing provider: openai
+2025-04-11 08:06:16,553 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?select=id&model_id=eq.omni-moderation-latest-intents "HTTP/2 200 OK"
+2025-04-11 08:06:16,671 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?id=eq.c4eed13f-8ad9-49fd-9b4a-fd9a2be43b07 "HTTP/2 200 OK"
+2025-04-11 08:06:16,672 - __main__ - INFO - Updated existing model: omni-moderation-latest-intents
+2025-04-11 08:06:16,784 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?select=id&model_id=eq.c4eed13f-8ad9-49fd-9b4a-fd9a2be43b07 "HTTP/2 200 OK"
+2025-04-11 08:06:16,897 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?id=eq.861c0b8c-b2ac-4c69-ac76-a7c223137dd5 "HTTP/2 200 OK"
+2025-04-11 08:06:17,003 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?select=id&model_id=eq.c4eed13f-8ad9-49fd-9b4a-fd9a2be43b07 "HTTP/2 200 OK"
+2025-04-11 08:06:17,114 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?id=eq.df80d420-8941-4560-bd28-bad0518fb44f "HTTP/2 200 OK"
+2025-04-11 08:06:17,242 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 200 OK"
+2025-04-11 08:06:17,242 - __main__ - INFO - Found existing provider type: llm
+2025-04-11 08:06:17,348 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/providers?select=%2A&name=eq.openai "HTTP/2 200 OK"
+2025-04-11 08:06:17,349 - __main__ - INFO - Found existing provider: openai
+2025-04-11 08:06:17,448 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?select=id&model_id=eq.omni-moderation-2024-09-26 "HTTP/2 200 OK"
+2025-04-11 08:06:17,554 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?id=eq.82a79ef5-22a7-479c-bbe5-adce90ab539b "HTTP/2 200 OK"
+2025-04-11 08:06:17,554 - __main__ - INFO - Updated existing model: omni-moderation-2024-09-26
+2025-04-11 08:06:17,671 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?select=id&model_id=eq.82a79ef5-22a7-479c-bbe5-adce90ab539b "HTTP/2 200 OK"
+2025-04-11 08:06:17,781 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?id=eq.3e87280d-d7c2-4e85-90be-a1bf946c8400 "HTTP/2 200 OK"
+2025-04-11 08:06:17,889 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?select=id&model_id=eq.82a79ef5-22a7-479c-bbe5-adce90ab539b "HTTP/2 200 OK"
+2025-04-11 08:06:17,998 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?id=eq.4f9b3c5f-b739-40db-b3af-df6d2e679d5d "HTTP/2 200 OK"
+2025-04-11 08:06:18,111 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 200 OK"
+2025-04-11 08:06:18,111 - __main__ - INFO - Found existing provider type: llm
+2025-04-11 08:06:18,217 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/providers?select=%2A&name=eq.openai "HTTP/2 200 OK"
+2025-04-11 08:06:18,217 - __main__ - INFO - Found existing provider: openai
+2025-04-11 08:06:18,322 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?select=id&model_id=eq.gpt-4 "HTTP/2 200 OK"
+2025-04-11 08:06:18,435 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?id=eq.680f7bea-8ae1-48a8-826d-0177a44c4d34 "HTTP/2 200 OK"
+2025-04-11 08:06:18,435 - __main__ - INFO - Updated existing model: gpt-4
+2025-04-11 08:06:18,536 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?select=id&model_id=eq.680f7bea-8ae1-48a8-826d-0177a44c4d34 "HTTP/2 200 OK"
+2025-04-11 08:06:18,637 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?id=eq.4b0bbdeb-a9b1-47a8-8aa4-40210c527fc6 "HTTP/2 200 OK"
+2025-04-11 08:06:18,738 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?select=id&model_id=eq.680f7bea-8ae1-48a8-826d-0177a44c4d34 "HTTP/2 200 OK"
+2025-04-11 08:06:18,838 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?id=eq.aac8c663-4b48-4773-9449-ae32dd090c03 "HTTP/2 200 OK"
+2025-04-11 08:06:18,954 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 200 OK"
+2025-04-11 08:06:18,954 - __main__ - INFO - Found existing provider type: llm
+2025-04-11 08:06:19,063 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/providers?select=%2A&name=eq.openai "HTTP/2 200 OK"
+2025-04-11 08:06:19,064 - __main__ - INFO - Found existing provider: openai
+2025-04-11 08:06:19,168 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?select=id&model_id=eq.gpt-4o "HTTP/2 200 OK"
+2025-04-11 08:06:19,276 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?id=eq.8a6d44d8-f50c-4d05-8208-76315df2ab2a "HTTP/2 200 OK"
+2025-04-11 08:06:19,277 - __main__ - INFO - Updated existing model: gpt-4o
+2025-04-11 08:06:19,385 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?select=id&model_id=eq.8a6d44d8-f50c-4d05-8208-76315df2ab2a "HTTP/2 200 OK"
+2025-04-11 08:06:19,492 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?id=eq.8a77a95e-78d1-4845-9337-f951ec38f219 "HTTP/2 200 OK"
+2025-04-11 08:06:19,593 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?select=id&model_id=eq.8a6d44d8-f50c-4d05-8208-76315df2ab2a "HTTP/2 200 OK"
+2025-04-11 08:06:19,708 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?id=eq.9c25f18c-a68e-4a0b-b741-fe28d10fc5a5 "HTTP/2 200 OK"
+2025-04-11 08:06:19,824 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 200 OK"
+2025-04-11 08:06:19,824 - __main__ - INFO - Found existing provider type: llm
+2025-04-11 08:06:19,927 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/providers?select=%2A&name=eq.watsonx "HTTP/2 200 OK"
+2025-04-11 08:06:19,928 - __main__ - INFO - Found existing provider: watsonx
+2025-04-11 08:06:20,073 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?select=id&model_id=eq.watsonx%2Fibm%2Fgranite-3-8b-instruct "HTTP/2 200 OK"
+2025-04-11 08:06:20,177 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?id=eq.db1005db-7bbf-4152-8e66-9ab63182dc59 "HTTP/2 200 OK"
+2025-04-11 08:06:20,177 - __main__ - INFO - Updated existing model: watsonx/ibm/granite-3-8b-instruct
+2025-04-11 08:06:20,286 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?select=id&model_id=eq.db1005db-7bbf-4152-8e66-9ab63182dc59 "HTTP/2 200 OK"
+2025-04-11 08:06:20,392 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?id=eq.76f56beb-1932-4d90-93ae-7bbcb67177ce "HTTP/2 200 OK"
+2025-04-11 08:06:20,493 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?select=id&model_id=eq.db1005db-7bbf-4152-8e66-9ab63182dc59 "HTTP/2 200 OK"
+2025-04-11 08:06:20,596 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?id=eq.1191f392-91f5-4cd2-ae9e-b85f6c69c26b "HTTP/2 200 OK"
+2025-04-11 08:06:20,705 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 200 OK"
+2025-04-11 08:06:20,705 - __main__ - INFO - Found existing provider type: llm
+2025-04-11 08:06:20,806 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/providers?select=%2A&name=eq.openai "HTTP/2 200 OK"
+2025-04-11 08:06:20,806 - __main__ - INFO - Found existing provider: openai
+2025-04-11 08:06:20,906 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?select=id&model_id=eq.gpt-4o-search-preview-2025-03-11 "HTTP/2 200 OK"
+2025-04-11 08:06:21,007 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?id=eq.dceefba1-9b2a-4b4f-93cc-40fadcbabe73 "HTTP/2 200 OK"
+2025-04-11 08:06:21,008 - __main__ - INFO - Updated existing model: gpt-4o-search-preview-2025-03-11
+2025-04-11 08:06:21,115 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?select=id&model_id=eq.dceefba1-9b2a-4b4f-93cc-40fadcbabe73 "HTTP/2 200 OK"
+2025-04-11 08:06:21,214 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?id=eq.33de4040-37c2-46bf-93c3-617df82ece71 "HTTP/2 200 OK"
+2025-04-11 08:06:21,310 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?select=id&model_id=eq.dceefba1-9b2a-4b4f-93cc-40fadcbabe73 "HTTP/2 200 OK"
+2025-04-11 08:06:21,413 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?id=eq.b0417e1b-b350-4008-b81d-a670d7ab70e7 "HTTP/2 200 OK"
+2025-04-11 08:06:21,518 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 200 OK"
+2025-04-11 08:06:21,519 - __main__ - INFO - Found existing provider type: llm
+2025-04-11 08:06:21,633 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/providers?select=%2A&name=eq.openai "HTTP/2 200 OK"
+2025-04-11 08:06:21,633 - __main__ - INFO - Found existing provider: openai
+2025-04-11 08:06:21,733 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?select=id&model_id=eq.gpt-4o-search-preview "HTTP/2 200 OK"
+2025-04-11 08:06:21,833 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?id=eq.714b3564-a86c-4948-b0fe-f4cfcc8ebad2 "HTTP/2 200 OK"
+2025-04-11 08:06:21,834 - __main__ - INFO - Updated existing model: gpt-4o-search-preview
+2025-04-11 08:06:21,934 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?select=id&model_id=eq.714b3564-a86c-4948-b0fe-f4cfcc8ebad2 "HTTP/2 200 OK"
+2025-04-11 08:06:22,038 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?id=eq.d92d8158-9b09-4cc6-bfd0-7a8b01b61fc4 "HTTP/2 200 OK"
+2025-04-11 08:06:22,138 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?select=id&model_id=eq.714b3564-a86c-4948-b0fe-f4cfcc8ebad2 "HTTP/2 200 OK"
+2025-04-11 08:06:22,238 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?id=eq.8e369eb4-0879-4ffd-bdc9-a63f361d5b29 "HTTP/2 200 OK"
+2025-04-11 08:06:22,347 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 200 OK"
+2025-04-11 08:06:22,348 - __main__ - INFO - Found existing provider type: llm
+2025-04-11 08:06:22,446 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/providers?select=%2A&name=eq.openai "HTTP/2 200 OK"
+2025-04-11 08:06:22,447 - __main__ - INFO - Found existing provider: openai
+2025-04-11 08:06:22,542 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?select=id&model_id=eq.gpt-4.5-preview "HTTP/2 200 OK"
+2025-04-11 08:06:22,644 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?id=eq.7e1b2ba9-cfe6-4623-af49-43397c002200 "HTTP/2 200 OK"
+2025-04-11 08:06:22,644 - __main__ - INFO - Updated existing model: gpt-4.5-preview
+2025-04-11 08:06:22,751 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?select=id&model_id=eq.7e1b2ba9-cfe6-4623-af49-43397c002200 "HTTP/2 200 OK"
+2025-04-11 08:06:22,848 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?id=eq.cd4a57cb-fcb7-4c28-bdbf-ac633ced332b "HTTP/2 200 OK"
+2025-04-11 08:06:22,943 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?select=id&model_id=eq.7e1b2ba9-cfe6-4623-af49-43397c002200 "HTTP/2 200 OK"
+2025-04-11 08:06:23,042 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?id=eq.a74d4bac-0af5-4572-bbb6-ecea6bca19dc "HTTP/2 200 OK"
+2025-04-11 08:06:23,139 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 200 OK"
+2025-04-11 08:06:23,140 - __main__ - INFO - Found existing provider type: llm
+2025-04-11 08:06:23,236 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/providers?select=%2A&name=eq.openai "HTTP/2 200 OK"
+2025-04-11 08:06:23,237 - __main__ - INFO - Found existing provider: openai
+2025-04-11 08:06:23,340 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?select=id&model_id=eq.gpt-4.5-preview-2025-02-27 "HTTP/2 200 OK"
+2025-04-11 08:06:23,446 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_models?id=eq.6c54d8d1-e052-4397-bcd7-a0985ad56fd5 "HTTP/2 200 OK"
+2025-04-11 08:06:23,446 - __main__ - INFO - Updated existing model: gpt-4.5-preview-2025-02-27
+2025-04-11 08:06:23,554 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?select=id&model_id=eq.6c54d8d1-e052-4397-bcd7-a0985ad56fd5 "HTTP/2 200 OK"
+2025-04-11 08:06:23,657 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_capabilities?id=eq.b2912341-fdfd-4f16-96d2-a56a34710130 "HTTP/2 200 OK"
+2025-04-11 08:06:23,765 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?select=id&model_id=eq.6c54d8d1-e052-4397-bcd7-a0985ad56fd5 "HTTP/2 200 OK"
+2025-04-11 08:06:23,866 - httpx - INFO - HTTP Request: PATCH https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/llm_pricing?id=eq.c5fd86b0-79be-40a0-8472-9559854b7e40 "HTTP/2 200 OK"
+2025-04-11 08:06:23,866 - __main__ - INFO - LLM import completed: 10 models imported from 2 providers
+2025-04-11 08:06:23,969 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.embedding "HTTP/2 200 OK"
+2025-04-11 08:06:23,969 - __main__ - INFO - Found existing provider type: embedding
+2025-04-11 08:06:24,065 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/providers?select=%2A&name=eq.openai "HTTP/2 200 OK"
+2025-04-11 08:06:24,066 - __main__ - INFO - Found existing provider: openai
+2025-04-11 08:06:24,156 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/embedding_models?select=id&model_id=eq.openai%2Ftext-embedding-ada-002 "HTTP/2 200 OK"
+2025-04-11 08:06:24,272 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/embedding_models "HTTP/2 201 Created"
+2025-04-11 08:06:24,272 - __main__ - INFO - Created new embedding model: openai/text-embedding-ada-002
+2025-04-11 08:06:24,375 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/embedding_pricing?select=id&model_id=eq.3880d245-087e-4235-8e69-080b315f721b "HTTP/2 200 OK"
+2025-04-11 08:06:24,480 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/embedding_pricing "HTTP/2 201 Created"
+2025-04-11 08:06:24,582 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.embedding "HTTP/2 200 OK"
+2025-04-11 08:06:24,583 - __main__ - INFO - Found existing provider type: embedding
+2025-04-11 08:06:24,685 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/providers?select=%2A&name=eq.openai "HTTP/2 200 OK"
+2025-04-11 08:06:24,685 - __main__ - INFO - Found existing provider: openai
+2025-04-11 08:06:24,790 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/embedding_models?select=id&model_id=eq.openai%2Ftext-embedding-3-small "HTTP/2 200 OK"
+2025-04-11 08:06:24,897 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/embedding_models "HTTP/2 201 Created"
+2025-04-11 08:06:24,897 - __main__ - INFO - Created new embedding model: openai/text-embedding-3-small
+2025-04-11 08:06:26,063 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/embedding_pricing?select=id&model_id=eq.411af1a8-9223-4711-aadd-5931fe92a7d0 "HTTP/2 200 OK"
+2025-04-11 08:06:26,205 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/embedding_pricing "HTTP/2 201 Created"
+2025-04-11 08:06:26,315 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.embedding "HTTP/2 200 OK"
+2025-04-11 08:06:26,315 - __main__ - INFO - Found existing provider type: embedding
+2025-04-11 08:06:26,414 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/providers?select=%2A&name=eq.openai "HTTP/2 200 OK"
+2025-04-11 08:06:26,415 - __main__ - INFO - Found existing provider: openai
+2025-04-11 08:06:26,527 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/embedding_models?select=id&model_id=eq.openai%2Ftext-embedding-3-large "HTTP/2 200 OK"
+2025-04-11 08:06:26,659 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/embedding_models "HTTP/2 201 Created"
+2025-04-11 08:06:26,659 - __main__ - INFO - Created new embedding model: openai/text-embedding-3-large
+2025-04-11 08:06:26,762 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/embedding_pricing?select=id&model_id=eq.9da48e78-b603-43c6-a0c3-8198b5166081 "HTTP/2 200 OK"
+2025-04-11 08:06:26,867 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/embedding_pricing "HTTP/2 201 Created"
+2025-04-11 08:06:26,868 - __main__ - INFO - Embedding import completed: 3 models imported from 1 providers
+2025-04-11 08:06:26,868 - __main__ - INFO - Import completed: 10 LLM models and 3 embedding models imported
+2025-04-11 08:06:26,983 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/import_logs "HTTP/2 201 Created"
+2025-04-11 08:06:26,984 - __main__ - INFO - Added import log for model_import

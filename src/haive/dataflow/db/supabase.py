@@ -7,7 +7,8 @@ from typing import Dict, Any, Optional, Union, Tuple
 load_dotenv()
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_ANON_KEY") if os.getenv("SUPABASE_ANON_KEY") else os.getenv("SUPABASE_SERVICE_KEY")
+# Use SERVICE_KEY primarily, only fall back to ANON_KEY if necessary
+SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_KEY") if os.getenv("SUPABASE_SERVICE_KEY") else os.getenv("SUPABASE_ANON_KEY")
 
 # Map of table names to their schemas for common tables
 DEFAULT_SCHEMA_MAP = {
@@ -71,7 +72,8 @@ DEFAULT_SCHEMA_MAP = {
     "user_profiles": "public",
     "teams": "public",
     "team_members": "public",
-    "api_keys": "public"
+    "api_keys": "public",
+    "vault_secrets": "vault"
 }
 
 def get_supabase_client(schema: Optional[str] = None) -> Client:
