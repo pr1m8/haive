@@ -17,7 +17,7 @@ Example:
 """
 
 from typing import Dict, Any, Optional
-from .state import ChessGameState
+from .state import ChessState
 
 
 class ChessGameStateManager:
@@ -36,7 +36,7 @@ class ChessGameStateManager:
     """
 
     @staticmethod
-    def initialize() -> ChessGameState:
+    def initialize() -> ChessState:
         """Initialize a new chess game state.
         
         This method:
@@ -54,7 +54,7 @@ class ChessGameStateManager:
             >>> assert state.game_status == "ongoing"
         """
         import chess
-        return ChessGameState(
+        return ChessState(
             board_fen=chess.Board().fen(),
             turn="white",
             move_history=[],
@@ -66,7 +66,7 @@ class ChessGameStateManager:
         )
 
     @staticmethod
-    def apply_move(state: ChessGameState, move_uci: str) -> ChessGameState:
+    def apply_move(state: ChessState, move_uci: str) -> ChessState:
         """Apply a move to the current game state.
         
         This method:
@@ -99,7 +99,7 @@ class ChessGameStateManager:
         board.push(move)
         
         # Create new state
-        new_state = ChessGameState(
+        new_state = ChessState(
             board_fen=board.fen(),
             move_history=state.move_history + [move_uci],
             captured_pieces=dict(state.captured_pieces),

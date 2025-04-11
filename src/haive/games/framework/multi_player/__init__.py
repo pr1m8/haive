@@ -16,8 +16,8 @@ Core Components:
     - GamePhase: Common game phase enumerations
 
 Example:
-    >>> from haive.agents.agent_games.framework.multi_player import MultiPlayerGameAgent
-    >>> from haive.agents.agent_games.framework.multi_player import MultiPlayerGameConfig
+    >>> from src.haive.agents.agent_games.framework.multi_player import MultiPlayerGameAgent
+    >>> from src.haive.agents.agent_games.framework.multi_player import MultiPlayerGameConfig
     >>> 
     >>> # Create a custom multi-player game agent
     >>> class MyGameAgent(MultiPlayerGameAgent):

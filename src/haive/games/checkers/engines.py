@@ -7,7 +7,6 @@ from typing import Dict
 # 📊 Move Prompt
 # ------------------------------
 def generate_move_prompt(color: str) -> ChatPromptTemplate:
-    """Generate a prompt for making a move in checkers."""
     return ChatPromptTemplate.from_messages([
         ('system', 
             f"You are the {color} player in a game of checkers. Your goal is to play the best possible move according to strategy. "
@@ -15,26 +14,26 @@ def generate_move_prompt(color: str) -> ChatPromptTemplate:
         ),
         ('human', 
             "Game Board:\n{board}\n\n"
-            f"You are playing as {color}. It's {{turn}}'s turn.\n\n"  # Fixed f-string error
+            f"You are playing as {color}. It's {{turn}}'s turn.\n\n"
             "Legal Moves Available:\n{legal_moves}\n\n"
-            "Captured Pieces:\n- Red: {captured_pieces['red']}\n- Black: {captured_pieces['black']}\n\n"  # Fixed dict keys
+            "Captured Pieces:\n- Red: {captured_red}\n- Black: {captured_black}\n\n"
             "Recent Moves:\n{move_history}\n\n"
             "Your Analysis: {player_analysis}\n\n"
             f"Select the best move for {color}. Provide your reasoning."
         )
     ])
 
+
 # ------------------------------
 # 📊 Analysis Prompt
 # ------------------------------
-def generate_analysis_prompt(color: str) -> ChatPromptTemplate: 
-    """Generate a prompt for analyzing a checkers position."""
+def generate_analysis_prompt(color: str) -> ChatPromptTemplate:
     return ChatPromptTemplate.from_messages([
         ('system', f"You are a checkers analysis expert. Analyze the position from {color}'s perspective."),
-        ('human', 
+        ('human',
             "Game Board:\n{board}\n\n"
-            f"Analyze the position for {color}. It's {{turn}}'s turn.\n\n"  # Fixed f-string error
-            "Captured Pieces:\n- Red: {captured_pieces['red']}\n- Black: {captured_pieces['black']}\n\n"  # Fixed dict keys
+            f"Analyze the position for {color}. It's {{turn}}'s turn.\n\n"
+            "Captured Pieces:\n- Red: {captured_red}\n- Black: {captured_black}\n\n"
             "Recent Moves:\n{move_history}\n\n"
             "Provide a detailed analysis including:\n"
             "1. Material advantage\n"

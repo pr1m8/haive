@@ -66,7 +66,7 @@ def unregister_agent(agent_id: str, delete_files: bool = True) -> bool:
     if 'agents' not in config or agent_id not in config['agents']:
         return False
     
-    # Remove from configuration
+    # Remove from src.configuration
     del config['agents'][agent_id]
     
     # Remove from favorites if present

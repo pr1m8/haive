@@ -1,364 +1,407 @@
-from src.haive.core.engine.agent.agent import AgentArchitecture, AgentArchitectureConfig
-from src.haive.core.engine.aug_llm import AugLLMConfig
-from langgraph.graph import StateGraph
-from langgraph.types import Command
-from langgraph.constants import START, END
+"""
+Chess agent implementation using LangGraph.
+
+This module provides the agent implementation for the chess game,
+including the workflow graph, action handlers, and LLM integration.
+"""
+
+from typing import Dict, Any, List, Optional, Tuple, Literal, Union
+from pydantic import BaseModel, Field
+import copy
+import time
+import os
+import json
 import chess
-from typing import Dict, Literal, Optional, List
-from pydantic import Field 
-from src.haive.games.chess.models import ChessPlayerDecision, ChessAnalysis
-from langchain_core.prompts import ChatPromptTemplate
-from src.haive.games.chess.models import ChessMoveValidation
-from src.haive.games.chess.aug_llms import aug_llm_configs
-from src.haive.games.chess.state import EnhancedChessState
-src.haive.core.engine.aug_llm import compose_runnable
-class ChessAgentConfig(AgentArchitectureConfig):
-    """Configuration for the chess agent with segmented analysis"""
-    state_schema: type = Field(default=EnhancedChessState)
-    aug_llm_configs: Dict[str,AugLLMConfig] = Field(default=aug_llm_configs,description="Config for the agent")
-    should_visualize_graph: bool = Field(default=True,description="Whether to visualize the graph")
-    graph_name: str = Field(default="chess_game.png",description="The name of the graph")
-    enable_analysis: bool = Field(default=True,description="Whether to enable analysis")
+from langgraph.graph import StateGraph, END
+from langgraph.types import Command
+from langchain_core.runnables import Runnable
+from src.haive.core.engine.agent.agent import register_agent, Agent
 
+from src.haive.games.chess.models import ChessMoveModel, SegmentedAnalysis
+from src.haive.games.chess.state import ChessState
+from src.haive.games.chess.config import ChessAgentConfig
+from src.haive.games.chess.utils import determine_game_status
+
+@register_agent(ChessAgentConfig)
+class ChessAgent(Agent[ChessAgentConfig]):
+    """
+    Chess agent implementation using LangGraph.
     
-class ChessAgent(AgentArchitecture):
+    This agent manages a chess game between two AI players, including:
+        - Game state tracking with FEN notation
+        - Move validation and execution
+        - Position analysis (optional)
+        - Game status checking
+        - Turn management
+    
+    Attributes:
+        config (ChessAgentConfig): Configuration for the chess agent
+        engines (Dict[str, Runnable]): Dictionary of LLM engines for players and analyzers
+    """
+    
     def __init__(self, config: ChessAgentConfig):
+        """Initialize the chess agent."""
         super().__init__(config)
+        self.engines = {}
         
-        # ✅ Make sure LLMs are properly composed
-        self.llms = {name: compose_runnable(cfg) for name, cfg in config.aug_llm_configs.items()}
-
-        # ✅ Ensure LLMs are not None
-        for key, llm in self.llms.items():
-            if llm is None:
-                raise ValueError(f"Failed to compose LLM for {key}")
-
-        
-
+        # Ensure engines are properly set up
+        for key, engine_config in config.engines.items():
+            self.engines[key] = engine_config.create_runnable()
+            
+            if self.engines[key] is None:
+                raise ValueError(f"Failed to create engine for {key}")
+    
     def setup_workflow(self):
-        """Setup the chess agent's game workflow ensuring optional analysis and proper status checks."""
+        """
+        Set up the workflow graph for the chess game.
         
-        # ✅ Core Nodes
+        This method:
+            1. Adds nodes for game actions (initialize, move, analyze)
+            2. Connects nodes with edges based on game flow
+            3. Handles conditional routing based on game status
+            4. Configures optional analysis nodes
+        """
+        # Add core nodes
         self.graph.add_node("initialize_game", self.initialize_game)
         self.graph.add_node("white_move", self.make_white_move)
         self.graph.add_node("black_move", self.make_black_move)
-        #self.graph.add_node("check_game_status", self.check_game_status)
-
-        # ✅ Start -> Initialize Game
-        self.graph.add_edge(START, "initialize_game")
-
-        # ✅ Handle optional analysis before moves
+        self.graph.add_node("check_game_status", self.check_game_status)
+        
+        # Set up entry point
+        self.graph.set_entry_point("initialize_game")
+        
+        # Add analysis nodes if enabled
         if self.config.enable_analysis:
-            self.graph.add_node("white_analysis_position", self.analyze_white_position)
-            self.graph.add_node("black_analysis_position", self.analyze_black_position)
-
-            # ✅ Initialize Game → White Analysis → White Move
-            self.graph.add_edge("initialize_game", "white_analysis_position")
-            self.graph.add_edge("white_analysis_position", "white_move")
-
-            # ✅ White Move → Check Game Status → (If ongoing) → Black Analysis → Black Move
+            # Use different node names to avoid collision with state keys
+            self.graph.add_node("analyze_for_white", self.analyze_white_position)
+            self.graph.add_node("analyze_for_black", self.analyze_black_position)
+            
+            # Connect nodes with analysis
+            self.graph.add_edge("initialize_game", "analyze_for_white")
+            self.graph.add_edge("analyze_for_white", "white_move")
+            self.graph.add_edge("white_move", "check_game_status")
+            
+            # Add conditional edges from check_game_status
             self.graph.add_conditional_edges(
-                "white_move",
-                self.should_continue_game,
+                "check_game_status",
+                self.route_next_step,
                 {
-                    True: "black_analysis_position",
-                    False: END
+                    "continue_white": "analyze_for_white",
+                    "continue_black": "analyze_for_black",
+                    "game_over": END
                 }
             )
-            self.graph.add_edge("black_analysis_position", "black_move")
-
-            # ✅ Black Move → Check Game Status → (If ongoing) → White Analysis
-            self.graph.add_conditional_edges(
-                "black_move",
-                self.should_continue_game,
-                {
-                    True: "white_analysis_position",
-                    False: END
-                }
-            )
-        
+            
+            self.graph.add_edge("analyze_for_black", "black_move")
+            self.graph.add_edge("black_move", "check_game_status")
         else:
-            # 🚀 Skip analysis → Directly move between turns
+            # Connect nodes without analysis
             self.graph.add_edge("initialize_game", "white_move")
-
-            # ✅ White Move → Check Game Status → (If ongoing) → Black Move
-            self.graph.add_conditional_edges(
-                "white_move",
-                self.should_continue_game,
-                {
-                    True: "black_move",
-                    False: END
-                }
-            )
-
-            # ✅ Black Move → Check Game Status → (If ongoing) → White Move
-            self.graph.add_conditional_edges(
-                "black_move",
-                self.should_continue_game,
-                {
-                    True: "white_move",
-                    False: END
-                }
-            )
-
-
-        def filter_game_messages(self, state: EnhancedChessState, color: str) -> Dict:
-            """Prepares filtered game data for LLM prompts, ensuring expected keys match the prompt template."""
-
-            return {
-                "color": color,  # ✅ Pass 'white' or 'black'
-                "current_board_fen": state.board_fen,  # ✅ Latest board state
-                "previous_board_fen": state.board_fens[-2] if len(state.board_fens) > 1 else "N/A",  # ✅ Second-to-last board state
-                "recent_moves": state.move_history[-5:],  # ✅ Last 5 moves
-                "captured_pieces": state.captured_pieces,  # ✅ Captured pieces
-                "player_analysis": (
-                    state.white_analysis[-1] if color == "white" and state.white_analysis else
-                    state.black_analysis[-1] if color == "black" and state.black_analysis else "N/A"
-                ),  # ✅ Latest analysis for the current player
-            }
-
-    def initialize_game(self, state: EnhancedChessState) -> Command:
-        """Initialize new game state"""
-        board = chess.Board()
-        return Command(update={
-            "board_fens": [board.fen()],
-            "current_player": "white",
-            "turn": "white",  # Adding required field from parent class
-            "move_history": [],
-            "game_status": "ongoing",
-            "white_analysis": [],
-            "black_analysis": [],
-            "captured_pieces": {"white": [], "black": []}
-        })
-    def make_move(self, state: EnhancedChessState, color: str) -> Command:
-        """Executes a move for the given player (white/black)."""
-
-        player = self.llms.get(f"{color}_player")
-        if player is None:
-            raise ValueError(f"Missing LLM for {color}_player")
-
-        print(f"\n🎯 {color.capitalize()} Player Move Execution")
-        print(f"📜 Board FEN Before Move: {state.board_fen}")  # ✅ Fix: Use `board_fen` property
-        prompt_inputs = {
-            "board_fen": state.board_fen,  # ✅ Latest board state
-            "move_history": state.move_history[-5:],  # ✅ Last 5 moves
-            "color": color,
-            "captured_pieces": state.captured_pieces,
-            "player_analysis": (
-                state.white_analysis[-1] if color == "white" and state.white_analysis else
-                state.black_analysis[-1] if color == "black" and state.black_analysis else "N/A"
-            ),
-            'current_board_fen':state.board_fen,
-            "previous_board_fen": state.board_fens[-2] if len(state.board_fens) > 1 else "N/A",
-            "recent_moves": state.move_history[-5:],
-            "game_status": state.game_status,
-        }
-        #print(prompt)
-        # 🎯 Step 1: Ask the AI for a move
-        move_response = player.invoke({
-            "board_fen": state.board_fen,  # ✅ Latest board state
-            "move_history": state.move_history[-5:],  # ✅ Last 5 moves
-            "color": color,
-            "captured_pieces": state.captured_pieces,
-            "player_analysis": (
-                state.white_analysis[-1] if color == "white" and state.white_analysis else
-                state.black_analysis[-1] if color == "black" and state.black_analysis else "N/A"
-            ),
-            'current_board_fen':state.board_fen,
-            "previous_board_fen": state.board_fens[-2] if len(state.board_fens) > 1 else "N/A",
-            "recent_moves": state.move_history[-5:],
-            "game_status": state.game_status,
-        })
-
-        move_uci = move_response.move.uci  # Extract the UCI move string
-        move = chess.Move.from_uci(move_uci)  # Convert to python-chess move object
-
-        # 🎯 Step 2: Validate the move
-        board = chess.Board(state.board_fen)  # ✅ Fix: Use latest board state
-        if move not in board.legal_moves:
-            print(f"🚨 Suggested Move {move.uci()} is NOT legal!")
-            print(f"♟️ Legal Moves Available: {[m.uci() for m in board.legal_moves]}")
-            return Command(update={"error_message": f"Illegal move suggested by {color}: {move.uci()}"})
-
-        # 🎯 Step 3: Apply the move
-        board.push(move)
-
-        print(f"✅ Move Applied: {move.uci()}")
-        print(f"📜 Board FEN After Move: {board.fen()}")
-
-        # 🎯 Step 4: Update game state
-        next_turn = "black" if color == "white" else "white"
-
-        return Command(update={
-            "board_fens": state.board_fens[-4:] + [board.fen()],  # ✅ Fix: Maintain history up to last 5 states
-            "move_history": state.move_history[-4:] + [(color, move.uci())],  # ✅ Append to history correctly
-            "captured_pieces": state.captured_pieces,  # ✅ Keep existing captured pieces
-            "turn": next_turn,
-            "current_player": next_turn,
-            "game_status": (
-                "checkmate" if board.is_checkmate() else
-                "stalemate" if board.is_stalemate() else
-                "check" if board.is_check() else
-                "ongoing"
-            ),
-            "white_analysis": state.white_analysis[-5:],  # ✅ Trim analysis history
-            "black_analysis": state.black_analysis[-5:],
-            "error_message": None  # ✅ Clear errors
-        })
-
-
-
+            self.graph.add_edge("white_move", "check_game_status")
             
-
-    def analyze_white_position(self, state: EnhancedChessState) -> Command:
-        """Analyze position from white's perspective"""
-        analysis = self.white_analyzer.invoke({
-            "board_fen": state.board_fen,
-            "move_history": state.move_history,
-            "player_color": "white",
-            "captured_pieces": state.captured_pieces
-        })
-        return Command(update={"white_analysis": analysis})
-
-    def analyze_black_position(self, state: EnhancedChessState) -> Command:
-        """Analyze position from black's perspective"""
-        analysis = self.black_analyzer.invoke({
-            "board_fen": state.board_fen,
-            "move_history": state.move_history,
-            "player_color": "black",
-            "captured_pieces": state.captured_pieces
-        })
-        return Command(update={"black_analysis": analysis})
-    def make_white_move(self, state: EnhancedChessState) -> Command:
-        """Make a move for white"""
-        return self.make_move(state, "white")
-
-    def make_black_move(self, state: EnhancedChessState) -> Command:
-        """Make a move for black"""
-        return self.make_move(state, "black")
-
-    def analyze_white_position(self, state: EnhancedChessState) -> Command:
-        """Analyze position from white's perspective and pass the correct prompt inputs."""
-
-        analyzer_key = "white_analyzer"
-        if analyzer_key not in self.llms:
-            raise ValueError(f"Missing LLM for {analyzer_key}")
-
-        # ✅ Fix: Pass ALL required variables to the prompt
-        analysis = self.llms[analyzer_key].invoke({
-            "current_board_fen": state.board_fen,  # ✅ Latest board state
-            "previous_board_fen": state.board_fens[-2] if len(state.board_fens) > 1 else "N/A",  # ✅ Previous board
-            "recent_moves": state.move_history[-5:],  # ✅ Last 5 moves
-            "captured_pieces": state.captured_pieces,  # ✅ Captured pieces
-            "color": "white",  # ✅ Ensure player color is passed
-        })
-
-        # ✅ Convert `SegmentedAnalysis` to a dictionary
-        return Command(update={"white_analysis": state.white_analysis[-4:] + [analysis.dict()]})
-
-    def analyze_black_position(self, state: EnhancedChessState) -> Command:
-        """Analyze position from black's perspective and pass the correct prompt inputs."""
-
-        analyzer_key = "black_analyzer"
-        if analyzer_key not in self.llms:
-            raise ValueError(f"Missing LLM for {analyzer_key}")
-
-        # ✅ Fix: Pass ALL required variables to the prompt
-        analysis = self.llms[analyzer_key].invoke({
-            "current_board_fen": state.board_fen,  # ✅ Latest board state
-            "previous_board_fen": state.board_fens[-2] if len(state.board_fens) > 1 else "N/A",  # ✅ Previous board
-            "recent_moves": state.move_history[-5:],  # ✅ Last 5 moves
-            "captured_pieces": state.captured_pieces,  # ✅ Captured pieces
-            "color": "black",  # ✅ Ensure player color is passed
-        })
-
-        # ✅ Convert `SegmentedAnalysis` to a dictionary
-        return Command(update={"black_analysis": state.black_analysis[-4:] + [analysis.dict()]})
-
-    def check_game_status(self, state: EnhancedChessState) -> Command:
-        """Check and update game status with enhanced validation"""
-        board = chess.Board(state.board_fen)
+            # Add conditional edges from check_game_status
+            self.graph.add_conditional_edges(
+                "check_game_status",
+                self.route_next_step,
+                {
+                    "continue_white": "white_move",
+                    "continue_black": "black_move",
+                    "game_over": END
+                }
+            )
+            
+            self.graph.add_edge("black_move", "check_game_status")
+    
+    def initialize_game(self, state: Optional[ChessState] = None) -> Dict[str, Any]:
+        """
+        Initialize a new chess game.
         
-        status = "ongoing"
-        if board.is_checkmate():
-            status = "checkmate"
-        elif board.is_stalemate():
-            status = "stalemate"
-        elif board.is_insufficient_material():
-            status = "draw"
-        elif board.is_check():
-            status = "check"
+        Args:
+            state: Current state (ignored for initialization)
             
-        return Command(update={"game_status": status})
-
-    def should_continue_game(self, state: EnhancedChessState) -> bool:
-        """Determine if the game should continue"""
-        return state.game_status in ["ongoing", "check"]
-import chess
-from typing import Dict, Any
-#from src.haive.agents.agent_games.chess.agent import ChessAgent, ChessAgentConfig
-
-def run_chess_game(agent: ChessAgent):
-    """Run a chess game with visualization and structured output."""
-
-    # ✅ Initialize the game state
-    initial_state = {
-        "board_fens": [chess.Board().fen()],
-        "current_player": "white",
-        "turn": "white",
-        "move_history": [],
-        "game_status": "ongoing",
-        "white_analysis": [],
-        "black_analysis": [],
-        "captured_pieces": {"white": [], "black": []},
-        "error_message": None
-    }
-
-    # ✅ Stream the game loop
-    for step in agent.app.stream(initial_state, config=agent.runnable_config, debug=False, stream_mode="values"):
-        board = chess.Board(step["board_fens"][-1])
-
-        # 🎯 **Game Board Visualization**
-        print("\n🔷 Current Board Position:")
-        print(board)
-
-        # 🎯 **Game State Information**
-        print(f"\n🎮 Current Player: {step['current_player'].capitalize()}")
-        print(f"♟️ Turn: {step['turn'].capitalize()}")
-        print(f"📌 Game Status: {step['game_status']}")
-        print("-" * 50)
-
-        # ✅ **Display Last Move**
-        if step.get("move_history"):
-            last_move = step["move_history"][-1]
-            print(f"📝 Last Move: {last_move[0].capitalize()} played {last_move[1]}")
-
-        # ✅ **Handle White's Analysis Safely**
-        if step.get("white_analysis"):
-            last_white_analysis: Dict[str, Any] = step["white_analysis"][-1]  # Extract last analysis dictionary
-            print("\n🔍 White's Analysis:")
-            print(f"   - Position Score: {last_white_analysis.get('position_score', 'N/A')}")
-            print(f"   - Attacking Chances: {last_white_analysis.get('attacking_chances', 'N/A')}")
-            print(f"   - Defensive Needs: {last_white_analysis.get('defensive_needs', 'N/A')}")
-            print(f"   - Suggested Plans: {', '.join(last_white_analysis.get('suggested_plans', []))}")
-
-        # ✅ **Handle Black's Analysis Safely**
-        if step.get("black_analysis"):
-            last_black_analysis: Dict[str, Any] = step["black_analysis"][-1]  # Extract last analysis dictionary
-            print("\n🔍 Black's Analysis:")
-            print(f"   - Position Score: {last_black_analysis.get('position_score', 'N/A')}")
-            print(f"   - Attacking Chances: {last_black_analysis.get('attacking_chances', 'N/A')}")
-            print(f"   - Defensive Needs: {last_black_analysis.get('defensive_needs', 'N/A')}")
-            print(f"   - Suggested Plans: {', '.join(last_black_analysis.get('suggested_plans', []))}")
-
-        # ✅ **Captured Pieces**
-        if step.get("captured_pieces"):
-            print("\n🔻 Captured Pieces:")
-            print(f"   - White Captured: {', '.join(step['captured_pieces']['white']) or 'None'}")
-            print(f"   - Black Captured: {', '.join(step['captured_pieces']['black']) or 'None'}")
-
-        print("\n" + "-" * 60)  # Divider for clarity
-    agent.save_state_history()
-# Run the game
-if __name__ == "__main__":
-    run_chess_game(agent=ChessAgent(config=ChessAgentConfig()))
+        Returns:
+            New game state with initial board position
+        """
+        print("♟️ Initializing chess game...")
+        
+        # Create a new chess board with starting position
+        board = chess.Board()
+        
+        # Create initial state
+        new_state = ChessState(
+            board_fens=[board.fen()],
+            current_player="white",
+            turn="white",
+            move_history=[],
+            game_status="ongoing",
+            white_analysis=[],
+            black_analysis=[],
+            captured_pieces={"white": [], "black": []},
+            error_message=None
+        )
+        
+        return new_state.model_dump()
+    
+    def make_move(self, state: Dict[str, Any], color: str) -> Command:
+        """
+        Make a move for the specified player.
+        
+        Args:
+            state: Current game state
+            color: Player color ("white" or "black")
+            
+        Returns:
+            Command with updated state or error message
+        """
+        print(f"\n🎲 {color.capitalize()}'s turn to move")
+        
+        # Handle both dict and ChessState inputs
+        if isinstance(state, ChessState):
+            state_obj = state
+        else:
+            state_obj = ChessState(**state)
+        
+        # Get the engine for this player
+        player_engine = self.engines.get(f"{color}_player")
+        if not player_engine:
+            error_msg = f"Missing engine for {color}_player"
+            print(f"❌ {error_msg}")
+            return Command(update={"error_message": error_msg})
+        
+        try:
+            # Prepare context for the LLM
+            context = {
+                "color": color,
+                "current_board_fen": state_obj.board_fen,
+                "previous_board_fen": state_obj.board_fens[-2] if len(state_obj.board_fens) > 1 else None,
+                "recent_moves": state_obj.move_history[-5:] if state_obj.move_history else [],
+                "captured_pieces": state_obj.captured_pieces,
+                "player_analysis": (
+                    state_obj.white_analysis[-1] if color == "white" and state_obj.white_analysis else None,
+                    state_obj.black_analysis[-1] if color == "black" and state_obj.black_analysis else None
+                )[0]
+            }
+            
+            # Get move from LLM
+            player_decision = player_engine.invoke(context)
+            
+            # Extract and validate the move
+            if hasattr(player_decision, "selected_move") and hasattr(player_decision.selected_move, "move"):
+                move_uci = player_decision.selected_move.move
+            else:
+                # Try to extract from dictionary format
+                move_uci = player_decision.get("selected_move", {}).get("move", None)
+                if not move_uci:
+                    raise ValueError("Invalid move format returned by LLM")
+            
+            print(f"🎯 {color.capitalize()} suggests move: {move_uci}")
+            
+            # Convert to chess.Move and validate
+            board = chess.Board(state_obj.board_fen)
+            try:
+                move = chess.Move.from_uci(move_uci)
+            except ValueError:
+                raise ValueError(f"Invalid UCI format: {move_uci}")
+            
+            # Check if move is legal
+            if move not in board.legal_moves:
+                # Get legal moves for debugging
+                legal_moves = [m.uci() for m in board.legal_moves]
+                print(f"❌ Illegal move! Legal moves are: {legal_moves}")
+                
+                # Try to make a random legal move as fallback
+                if board.legal_moves:
+                    move = list(board.legal_moves)[0]  # Take first legal move
+                    print(f"⚠️ Fallback to legal move: {move.uci()}")
+                else:
+                    raise ValueError("No legal moves available")
+            
+            # Track captured piece if any
+            captured = None
+            captured_piece_type = board.piece_at(move.to_square)
+            if captured_piece_type and board.is_capture(move):
+                captured = captured_piece_type.symbol()
+            
+            # Apply the move
+            board.push(move)
+            
+            # Update captured pieces if a piece was captured
+            updated_captured = copy.deepcopy(state_obj.captured_pieces)
+            if captured:
+                opponent = "black" if color == "white" else "white"
+                updated_captured[color].append(captured)
+                print(f"💥 Captured {opponent}'s {captured}")
+            
+            # Determine new game status
+            new_status = determine_game_status(board)
+            print(f"📊 New game status: {new_status}")
+            
+            # Update state
+            next_player = "black" if color == "white" else "white"
+            
+            return Command(update={
+                "board_fens": state_obj.board_fens + [board.fen()],
+                "move_history": state_obj.move_history + [(color, move.uci())],
+                "current_player": next_player,
+                "turn": next_player,
+                "game_status": new_status,
+                "captured_pieces": updated_captured,
+                "error_message": None
+            })
+            
+        except Exception as e:
+            error_msg = f"Error making move for {color}: {str(e)}"
+            print(f"❌ {error_msg}")
+            return Command(update={"error_message": error_msg})
+    
+    def make_white_move(self, state: Dict[str, Any]) -> Command:
+        """Make a move for the white player."""
+        return self.make_move(state, "white")
+    
+    def make_black_move(self, state: Dict[str, Any]) -> Command:
+        """Make a move for the black player."""
+        return self.make_move(state, "black")
+    
+    def analyze_position(self, state: Dict[str, Any], color: str) -> Command:
+        """
+        Analyze the board position for the specified player.
+        
+        Args:
+            state: Current game state
+            color: Player color ("white" or "black")
+            
+        Returns:
+            Command with updated analysis
+        """
+        print(f"\n🧠 Analyzing position for {color}")
+        
+        # Handle both dict and ChessState inputs
+        if isinstance(state, ChessState):
+            state_obj = state
+        else:
+            state_obj = ChessState(**state)
+        
+        # Get the engine for this analysis
+        analyzer_engine = self.engines.get(f"{color}_analyzer")
+        if not analyzer_engine:
+            error_msg = f"Missing engine for {color}_analyzer"
+            print(f"❌ {error_msg}")
+            return Command(update={"error_message": error_msg})
+        
+        try:
+            # Prepare context for the LLM
+            context = {
+                "color": color,
+                "current_board_fen": state_obj.board_fen,
+                "previous_board_fen": state_obj.board_fens[-2] if len(state_obj.board_fens) > 1 else None,
+                "recent_moves": state_obj.move_history[-5:] if state_obj.move_history else [],
+                "captured_pieces": state_obj.captured_pieces
+            }
+            
+            # Get analysis from LLM
+            analysis_result = analyzer_engine.invoke(context)
+            
+            # Convert analysis to dictionary if needed
+            if hasattr(analysis_result, "model_dump"):
+                analysis_dict = analysis_result.model_dump()
+            elif hasattr(analysis_result, "dict"):
+                analysis_dict = analysis_result.dict()
+            else:
+                analysis_dict = dict(analysis_result)
+            
+            print(f"📝 Analysis completed for {color}")
+            
+            # Update the appropriate analysis field
+            if color == "white":
+                white_analysis = state_obj.white_analysis + [analysis_dict]
+                return Command(update={"white_analysis": white_analysis[-5:]})  # Keep last 5
+            else:
+                black_analysis = state_obj.black_analysis + [analysis_dict]
+                return Command(update={"black_analysis": black_analysis[-5:]})  # Keep last 5
+                
+        except Exception as e:
+            error_msg = f"Error analyzing position for {color}: {str(e)}"
+            print(f"❌ {error_msg}")
+            return Command(update={"error_message": error_msg})
+    
+    def analyze_white_position(self, state: Dict[str, Any]) -> Command:
+        """Analyze the board position for the white player."""
+        return self.analyze_position(state, "white")
+    
+    def analyze_black_position(self, state: Dict[str, Any]) -> Command:
+        """Analyze the board position for the black player."""
+        return self.analyze_position(state, "black")
+    
+    def check_game_status(self, state: Dict[str, Any]) -> Command:
+        """
+        Check and update the game status.
+        
+        Args:
+            state: Current game state
+            
+        Returns:
+            Command with updated game status
+        """
+        # Handle both dict and ChessState inputs
+        if isinstance(state, ChessState):
+            state_obj = state
+        else:
+            state_obj = ChessState(**state)
+            
+        board = chess.Board(state_obj.board_fen)
+        
+        # Check for game end conditions
+        game_status = determine_game_status(board)
+        
+        # Check for max moves
+        move_count = len(state_obj.move_history)
+        if move_count >= self.config.max_moves:
+            game_status = "draw"
+            print(f"🕑 Game drawn by move limit ({self.config.max_moves} moves)")
+        
+        # Check for special draw conditions
+        if game_status == "ongoing" and board.is_insufficient_material():
+            game_status = "draw"
+            print("🤝 Game drawn by insufficient material")
+        
+        # Update the game result if needed
+        game_result = None
+        if game_status in ["checkmate", "stalemate", "draw"]:
+            if game_status == "checkmate":
+                winner = "black" if state_obj.current_player == "white" else "white"
+                game_result = f"{winner}_win"
+                print(f"🏆 Checkmate! {winner.capitalize()} wins")
+            else:
+                game_result = "draw"
+                print("🤝 Game drawn")
+        
+        return Command(update={
+            "game_status": game_status,
+            "game_result": game_result
+        })
+    
+    def route_next_step(self, state: Dict[str, Any]) -> str:
+        """
+        Determine the next step in the workflow.
+        
+        Args:
+            state: Current game state
+            
+        Returns:
+            Next node to route to
+        """
+        # Handle both dict and ChessState inputs
+        if isinstance(state, ChessState):
+            state_obj = state
+        else:
+            state_obj = ChessState(**state)
+        
+        # Check if game is over
+        if state_obj.game_status in ["checkmate", "stalemate", "draw"] or state_obj.game_result:
+            return "game_over"
+        
+        # Route to appropriate player's turn
+        if state_obj.current_player == "white":
+            return "continue_white"
+        else:
+            return "continue_black"

@@ -15,8 +15,8 @@ Experimental Components:
       Warning: This component is experimental and its API may change.
 
 Example:
-    >>> from haive.agents.agent_games.framework.base import GameAgent, GameConfig
-    >>> from haive.agents.agent_games.framework.base import GameTemplateGenerator  # Experimental
+    >>> from src.haive.agents.agent_games.framework.base import GameAgent, GameConfig
+    >>> from src.haive.agents.agent_games.framework.base import GameTemplateGenerator  # Experimental
 """
 
 from .agent import GameAgent,run_game           

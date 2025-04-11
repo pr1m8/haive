@@ -1,728 +1,484 @@
-from typing import Dict, List, Any, Optional, Union, Callable, Type
-from pydantic import BaseModel, Field
-from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage
-from langchain_core.prompts import ChatPromptTemplate
-from langgraph.graph import END, START
-from langgraph.types import Command, Send
-
-from src.haive.core.engine.agent.agent import Agent, AgentConfig, register_agent
-from src.haive.core.engine.aug_llm import AugLLMConfig, compose_runnable
-from src.haive.core.models.llm.base import AzureLLMConfig
-from src.haive.core.graph.GraphBuilder import DynamicGraph
-from src.haive.core.graph.NodeFactory import create_node_function
-from src.haive.games.framework.base.agent import GameAgent
-from src.haive.games.framework.base.config import GameConfig
-
-from src.haive.games.debate.state import DebateState, DebateParticipant, DebateMove, VoteResult
+# src/haive/games/debate/agent.py
+from typing import Dict, List, Any, Optional
+from langgraph.types import Command
+from langgraph.graph import END
+from src.haive.games.framework.multi_player import MultiPlayerGameAgent
+from src.haive.games.debate.config import DebateAgentConfig
+from src.haive.games.debate.state import DebateState
 from src.haive.games.debate.state_manager import DebateStateManager
-from src.haive.games.debate.config import DebateConfig
+from src.haive.games.debate.models import Statement, Topic, Participant, DebatePhase
+from src.haive.core.engine.agent.agent import register_agent
+from src.haive.core.graph.GraphBuilder import DynamicGraph
+import time
 
-@register_agent(DebateConfig)
-class DebateAgent(GameAgent[DebateConfig]):
-    """Agent for multi-agent debates and conversations.
+@register_agent(DebateAgentConfig)
+class DebateAgent(MultiPlayerGameAgent[DebateAgentConfig]):
+    """Agent for facilitating debates and structured discussions."""
     
-    This agent handles multi-party debates with different roles,
-    automatic turn determination, and voting mechanisms.
-    """
-    
-    def __init__(self, config: DebateConfig):
-        """Initialize the debate agent.
-        
-        Args:
-            config: Configuration for the debate
-        """
-        super().__init__(config)
-        
-        # Set state manager
+    def __init__(self, config: DebateAgentConfig):
         self.state_manager = DebateStateManager
-        
-        # Initialize engines
-        self.participant_generator = config.participant_generator_llm.create_runnable()
-        
-        # Initialize engine registry
-        self.engines = {}
-        
-        # Add default engines
-        self.engines["debater"] = config.debater_llm.create_runnable()
-        self.engines["judge"] = config.judge_llm.create_runnable()
-        
-        # Add specific participant engines
-        for participant_id, llm_config in config.participant_llms.items():
-            self.engines[participant_id] = llm_config.create_runnable()
+        super().__init__(config)
     
-    def setup_workflow(self):
-        """Set up the debate workflow using DynamicGraph and NodeFactory."""
-        # Create a dynamic graph builder
-        graph_builder = DynamicGraph(
-            components=[self.config.debater_llm, self.config.judge_llm],
-            state_schema=self.config.state_schema
-        )
+    def initialize_game(self, state: Dict[str, Any]) -> Command:
+        """Initialize the debate with topic and participants."""
+        # Extract debate topic if provided, otherwise use default
+        topic_data = state.get("topic", {
+            "title": "AI Ethics in Society",
+            "description": "Discuss the ethical implications of AI in modern society"
+        })
         
-        # Add core nodes for debate flow
-        graph_builder.add_node("initialize_debate", self.initialize_debate)
-        graph_builder.add_node("generate_participants", self.generate_participants)
-        
-        # Add moderator node to handle turns
-        graph_builder.add_node("moderator", self.moderator_node)
-        
-        # Add participant action nodes
-        graph_builder.add_node("debater_action", self.debater_action)
-        graph_builder.add_node("judge_action", self.judge_action)
-        
-        # Add results node
-        graph_builder.add_node("calculate_results", self.calculate_results)
-        
-        # Set up the flow
-        # 1. Initialize debate and generate participants
-        graph_builder.add_edge(START, "initialize_debate")
-        graph_builder.add_edge("initialize_debate", "generate_participants")
-        graph_builder.add_edge("generate_participants", "moderator")
-        
-        # 2. Moderator routes to appropriate action, which returns to moderator
-        graph_builder.add_conditional_edges(
-            "moderator",
-            self.determine_next_action,
-            {
-                "debater_action": "debater_action",
-                "judge_action": "judge_action",
-                "calculate_results": "calculate_results",
-                "finished": END
-            }
-        )
-        
-        graph_builder.add_edge("debater_action", "moderator")
-        graph_builder.add_edge("judge_action", "moderator")
-        
-        # 3. Results calculation leads to end
-        graph_builder.add_edge("calculate_results", END)
-        
-        # Build the graph
-        self.graph = graph_builder.build()
-    
-    # Node functions
-    def initialize_debate(self, state: Dict[str, Any]) -> Command:
-        """Initialize the debate with basic settings.
-        
-        Args:
-            state: Input state
+        if isinstance(topic_data, str):
+            topic_data = {"title": topic_data, "description": topic_data}
             
-        Returns:
-            Command with initialized debate state
-        """
-        # Create dictionary representation
-        state_dict = state if isinstance(state, dict) else state.dict() if hasattr(state, "dict") else state.model_dump()
+        topic = Topic(**topic_data)
         
-        # Initialize a fresh debate state
+        # Extract participants or use default
+        player_list = state.get("participants", [f"participant_{i}" for i in range(4)])
+        if isinstance(player_list, dict):
+            player_list = list(player_list.keys())
+        
+        # Initialize with format from config
         debate_state = self.state_manager.initialize(
-            topic=state_dict.get("topic", self.config.topic),
-            description=state_dict.get("description", self.config.description),
-            max_rounds=state_dict.get("max_rounds", self.config.max_rounds),
-            phase_sequence=self.config.phases
+            player_list,
+            topic,
+            format_type=self.config.debate_format,
+            time_limit=self.config.time_limit,
+            max_statements=self.config.max_statements,
+            allow_interruptions=self.config.allow_interruptions
         )
         
-        # Add initial message
-        messages = [
-            SystemMessage(content=f"Debate on the topic: {debate_state.topic}"),
-            HumanMessage(content=f"Welcome to the debate on: {debate_state.topic}\n\n{debate_state.description}")
-        ]
-        
-        # Update the state
-        debate_dict = debate_state.model_dump() if hasattr(debate_state, "model_dump") else debate_state.dict()
-        debate_dict["messages"] = messages
-        
-        # Print debug info
-        print(f"Initialized debate on: {debate_state.topic}")
-        print(f"Phase sequence: {debate_state.phase_sequence}")
-        
-        return Command(update=debate_dict)
-    
-    def generate_participants(self, state: Dict[str, Any]) -> Command:
-        """Generate debate participants using the participant generator.
-        
-        Args:
-            state: Current state
-            
-        Returns:
-            Command with generated participants
-        """
-        # Create a copy of the state dict
-        state_dict = state.copy() if isinstance(state, dict) else state.dict() if hasattr(state, "dict") else state.model_dump()
-        
-        # Only generate if we don't already have participants
-        if state_dict.get("participants"):
-            return Command(update=state_dict)
-        
-        # Use the participant generator
-        try:
-            # Create dummy participants for testing
-            print("Generating participants...")
-            participants = []
-            
-            # Add debaters
-            for i in range(self.config.num_debaters):
-                role = "debater"
-                name = f"Debater {i+1}"
-                position = "Prosecution" if i == 0 else "Defense" if i == 1 else f"Position {i+1}"
-                participant = DebateParticipant(
-                    id=f"debater_{i+1}",
-                    name=name,
-                    role=role,
-                    position=position,
-                    personality=f"Focused on {position}",
-                    system_prompt=f"You are {name}, representing the {position}."
-                )
-                participants.append(participant)
-            
-            # Add judges
-            for i in range(self.config.num_judges):
-                role = "judge"
-                name = f"Judge {i+1}"
-                participant = DebateParticipant(
-                    id=f"judge_{i+1}",
-                    name=name,
-                    role=role,
-                    personality=f"Fair and impartial judge {i+1}",
-                    system_prompt=f"You are {name}, a fair and impartial judge."
-                )
-                participants.append(participant)
-            
-            # Update state
-            print(f"Generated {len(participants)} participants")
-            state_dict["participants"] = participants
-            state_dict["judge_participants"] = [p.id for p in participants if p.role == "judge"]
-            state_dict["current_phase"] = "opening_statements"
-            state_dict["game_status"] = "ongoing"
-            
-            # Set initial turn to first debater
-            for participant in participants:
-                if participant.role == "debater":
-                    state_dict["turn"] = participant.id
-                    break
-            
-            # Add message announcing participants
-            messages = state_dict.get("messages", [])
-            
-            participant_announcement = "# Debate Participants\n\n"
-            
-            for participant in participants:
-                if participant.role == "debater":
-                    participant_announcement += f"## {participant.name} (Debater)\n"
-                    if participant.position:
-                        participant_announcement += f"Position: {participant.position}\n\n"
-                else:
-                    participant_announcement += f"## {participant.name} (Judge)\n"
-                    if participant.personality:
-                        participant_announcement += f"{participant.personality}\n\n"
-            
-            messages.append(AIMessage(content=participant_announcement))
-            messages.append(HumanMessage(content=f"The debate will begin with opening statements. {participants[0].name} will go first."))
-            
-            state_dict["messages"] = messages
-            
-            print("Participants generated successfully!")
-            print(f"Transitioning to phase: {state_dict['current_phase']}")
-            print(f"Current turn: {state_dict['turn']}")
-            
-            return Command(update=state_dict)
-            
-        except Exception as e:
-            print(f"Error generating participants: {str(e)}")
-            return Command(update=state_dict)
-    
-    def moderator_node(self, state: Dict[str, Any]) -> Command:
-        """Moderator node to guide the debate flow.
-        
-        Args:
-            state: Current state
-            
-        Returns:
-            Command with moderator actions
-        """
-        print("MODERATOR NODE CALLED")
-        # Create a copy of the state dict
-        state_dict = state.copy() if isinstance(state, dict) else state.dict() if hasattr(state, "dict") else state.model_dump()
-        
-        # Get current phase and participant
-        current_phase = state_dict.get("current_phase", "setup")
-        participants = state_dict.get("participants", [])
-        turn = state_dict.get("turn", "")
-        
-        # Find current participant
-        current_participant = None
-        for p in participants:
-            if p.get("id", "") == turn:
-                current_participant = p
-                break
-                
-        if not current_participant:
-            print("No current participant found")
-            return Command(update=state_dict)
-        
-        # Create moderator message
-        moderator_message = ""
-        
-        print(f"Moderating: Phase={current_phase}, Participant={current_participant.get('name', 'Unknown')}")
-        
-        if current_phase == "opening_statements":
-            move_history = state_dict.get("move_history", [])
-            if move_history and move_history[-1].get("move_type") == "opening_statement":
-                # Transition to next opening statement
-                moderator_message = f"Next, {current_participant.get('name')} will present their opening statement."
-            else:
-                # First opening statement
-                moderator_message = f"We'll begin with opening statements. {current_participant.get('name')} will present their opening statement first."
-        
-        elif current_phase == "arguments":
-            moderator_message = f"Round {state_dict.get('current_round', 0)}: {current_participant.get('name')} will now present their argument."
-        
-        elif current_phase == "closing_statements":
-            moderator_message = f"{current_participant.get('name')} will now present their closing statement."
-        
-        elif current_phase == "voting":
-            moderator_message = f"Judge {current_participant.get('name')} will now cast their vote."
-        
-        elif current_phase == "results":
-            moderator_message = "All judges have voted. Let's tally the results."
-        
-        # Only add message if we have content
-        if moderator_message:
-            messages = state_dict.get("messages", [])
-            messages.append(HumanMessage(content=moderator_message))
-            state_dict["messages"] = messages
-            print(f"Added moderator message: {moderator_message}")
+        # Convert to dict for graph
+        if hasattr(debate_state, "model_dump"):
+            state_dict = debate_state.model_dump()
         else:
-            print("No moderator message to add")
-        
-        return Command(update=state_dict)
+            state_dict = debate_state.dict()
+            
+        return Command(update=state_dict, goto="debate_setup")
     
-    def determine_next_action(self, state: Dict[str, Any]) -> str:
-        """Determine the next action based on current state.
-        
-        Args:
-            state: Current state
-            
-        Returns:
-            Next action to route to
-        """
-        print("DETERMINING NEXT ACTION")
-        # Create a copy of the state dict
-        state_dict = state.copy() if isinstance(state, dict) else state.dict() if hasattr(state, "dict") else state.model_dump()
-        
-        # Check current phase
-        current_phase = state_dict.get("current_phase", "setup")
-        
-        print(f"Current phase: {current_phase}")
-        
-        if current_phase == "completed":
-            print("Phase is completed, finishing")
-            return "finished"
-        
-        if current_phase == "results":
-            print("Phase is results, calculating results")
-            return "calculate_results"
-        
-        # Get current participant
-        turn = state_dict.get("turn", "")
-        participants = state_dict.get("participants", [])
-        
-        current_participant = None
-        for p in participants:
-            if p.get("id", "") == turn:
-                current_participant = p
-                break
-        
-        if not current_participant:
-            print("No current participant found, finishing")
-            return "finished"
-        
-        # Route based on participant role
-        participant_role = current_participant.get("role", "")
-        print(f"Current participant role: {participant_role}")
-        
-        if participant_role == "debater":
-            print("Routing to debater_action")
-            return "debater_action"
-        elif participant_role == "judge":
-            print("Routing to judge_action")
-            return "judge_action"
-        
-        print("No valid action found, finishing")
-        return "finished"
+    def get_player_role(self, state: DebateState, player_id: str) -> str:
+        """Get the role of a player in the debate."""
+        if player_id in state.participants:
+            return state.participants[player_id].role
+        return "debater"  # Default role
     
-    def debater_action(self, state: Dict[str, Any]) -> Command:
-        """Generate a debater's action (opening, argument, closing).
+   # src/haive/games/debate/agent.py (continued)
+    def prepare_move_context(self, state: DebateState, player_id: str) -> Dict[str, Any]:
+        """Prepare context for a participant's move."""
+        participant = state.participants.get(player_id)
+        if not participant:
+            return {}
+            
+        # Get recent statements (last 5)
+        recent_statements = state.statements[-5:] if state.statements else []
+        formatted_recent = []
         
-        Args:
-            state: Current state
-            
-        Returns:
-            Command with debater's move
-        """
-        print("DEBATER ACTION CALLED")
-        # Create a copy of the state dict
-        state_dict = state.copy() if isinstance(state, dict) else state.dict() if hasattr(state, "dict") else state.model_dump()
+        for stmt in recent_statements:
+            speaker_name = state.participants.get(stmt.speaker_id, Participant(id=stmt.speaker_id, name=stmt.speaker_id, role="unknown")).name
+            formatted_recent.append(f"{speaker_name}: {stmt.content}")
         
-        # Get current debater
-        debater_id = state_dict.get("turn", "")
-        participants = state_dict.get("participants", [])
+        # Get this player's previous statements
+        player_statements = [s for s in state.statements if s.speaker_id == player_id]
+        formatted_player = [f"{s.statement_type.capitalize()}: {s.content}" for s in player_statements]
         
-        debater = None
-        for p in participants:
-            if p.get("id", "") == debater_id:
-                debater = p
-                break
+        # Determine statement type based on phase
+        statement_type = "statement"
+        if state.debate_phase == DebatePhase.OPENING_STATEMENTS:
+            statement_type = "opening statement"
+        elif state.debate_phase == DebatePhase.REBUTTAL:
+            statement_type = "rebuttal"
+        elif state.debate_phase == DebatePhase.QUESTIONS:
+            statement_type = "response to question"
+        elif state.debate_phase == DebatePhase.CLOSING_STATEMENTS:
+            statement_type = "closing statement"
         
-        if not debater:
-            print("No current debater found")
-            return Command(update=state_dict)
-        
-        try:
-            # Get the right engine
-            engine = self.engines.get(debater_id, self.engines.get("debater"))
+        # Format based on role
+        if participant.role == "moderator":
+            action_prompt = "provide guidance or ask a question to move the debate forward"
+            if state.debate_phase in [DebatePhase.SETUP, DebatePhase.JUDGMENT]:
+                action_prompt = "summarize the current state and suggest next steps"
             
-            # Determine move type based on phase
-            move_type = "argument"
-            current_phase = state_dict.get("current_phase", "arguments")
-            
-            if current_phase == "opening_statements":
-                move_type = "opening_statement"
-            elif current_phase == "closing_statements":
-                move_type = "closing_statement"
-            
-            # Create a fake debate content for testing
-            print(f"Creating {move_type} for {debater.get('name')}")
-            content = f"{debater.get('name')} presents their {move_type}. "
-            
-            if move_type == "opening_statement":
-                content += f"As representative for the {debater.get('position')}, I will demonstrate why our position is correct."
-            elif move_type == "argument":
-                content += f"The evidence clearly shows that our position ({debater.get('position')}) is supported by facts."
-            elif move_type == "closing_statement":
-                content += f"In conclusion, the {debater.get('position')} position is the only reasonable conclusion."
-            
-            # Create debate move
-            move = {
-                "participant_id": debater_id,
-                "content": content,
-                "move_type": move_type,
-                "round_number": state_dict.get("current_round", 0) if move_type == "argument" else None
+            return {
+                "topic": state.topic.title,
+                "topic_description": state.topic.description,
+                "debate_phase": state.debate_phase,
+                "participants": "\n".join([f"{p.name} ({p.role})" for p in state.participants.values()]),
+                "recent_statements": "\n".join(formatted_recent),
+                "current_speaker": state.participants.get(state.current_speaker, Participant(id="unknown", name="Unknown", role="unknown")).name,
+                "action_prompt": action_prompt
             }
             
-            # Apply move to state
-            move_history = state_dict.get("move_history", [])
-            move_history.append(move)
-            state_dict["move_history"] = move_history
+        elif participant.role == "judge":
+            # For trial format
+            all_statements = [f"{state.participants.get(s.speaker_id, Participant(id=s.speaker_id, name=s.speaker_id, role='unknown')).name}: {s.content}" 
+                            for s in state.statements]
             
-            # Advance to next turn/phase if needed
-            state_dict = self._advance_turn(state_dict)
+            action_prompt = "provide your analysis of the arguments presented so far"
+            if state.debate_phase == DebatePhase.JUDGMENT:
+                action_prompt = "render your final decision with explanation"
             
-            # Add to messages
-            messages = state_dict.get("messages", [])
-            messages.append(AIMessage(content=f"{debater.get('name')}: {content}"))
-            state_dict["messages"] = messages
-            
-            print(f"Added {move_type} for {debater.get('name')}")
-            print(f"New turn: {state_dict.get('turn')}")
-            print(f"New phase: {state_dict.get('current_phase')}")
-            
-            return Command(update=state_dict)
-            
-        except Exception as e:
-            print(f"Error in debater action: {str(e)}")
-            return Command(update=state_dict)
-    
-    def judge_action(self, state: Dict[str, Any]) -> Command:
-        """Generate a judge's vote.
-        
-        Args:
-            state: Current state
-            
-        Returns:
-            Command with judge's vote
-        """
-        print("JUDGE ACTION CALLED")
-        # Create a copy of the state dict
-        state_dict = state.copy() if isinstance(state, dict) else state.dict() if hasattr(state, "dict") else state.model_dump()
-        
-        # Get current judge
-        judge_id = state_dict.get("turn", "")
-        participants = state_dict.get("participants", [])
-        
-        judge = None
-        for p in participants:
-            if p.get("id", "") == judge_id:
-                judge = p
-                break
-        
-        if not judge:
-            print("No current judge found")
-            return Command(update=state_dict)
-        
-        try:
-            # Create a fake vote for testing
-            debaters = [p for p in participants if p.get("role") == "debater"]
-            if not debaters:
-                print("No debaters found")
-                return Command(update=state_dict)
-            
-            # Fake vote for the first debater
-            vote_for = debaters[0].get("name", "Unknown")
-            reasoning = f"As {judge.get('name')}, I find the arguments of {vote_for} more compelling."
-            
-            # Create vote object
-            vote = {
-                "voter_id": judge_id,
-                "personality": judge.get("personality", ""),
-                "vote": vote_for,
-                "reasoning": reasoning
+            return {
+                "topic": state.topic.title,
+                "topic_description": state.topic.description,
+                "debate_phase": state.debate_phase,
+                "all_statements": "\n".join(all_statements),
+                "key_arguments": self._extract_key_arguments(state),
+                "action_prompt": action_prompt
             }
             
-            # Add vote to state
-            votes = state_dict.get("votes", [])
-            votes.append(vote)
-            state_dict["votes"] = votes
+        elif participant.role in ["prosecutor", "defense"]:
+            # For trial format
+            opponent_role = "defense" if participant.role == "prosecutor" else "prosecutor"
+            opponent_claims = [s.content for s in state.statements 
+                              if state.participants.get(s.speaker_id, Participant(id="", name="", role="")).role == opponent_role]
             
-            # Add to messages
-            messages = state_dict.get("messages", [])
-            messages.append(AIMessage(content=f"Judge {judge.get('name')} votes for: {vote_for}\n\nReasoning: {reasoning}"))
-            state_dict["messages"] = messages
+            evidence = "Evidence is still being collected" # Would be populated from state
             
-            # Advance to next turn/phase if needed
-            state_dict = self._advance_turn(state_dict)
+            return {
+                "topic": state.topic.title,
+                "debate_phase": state.debate_phase,
+                "evidence": evidence,
+                "witness_statements": self._format_witness_statements(state),
+                "recent_statements": "\n".join(formatted_recent),
+                "statement_type": statement_type,
+                "prosecution_claims": "\n".join(opponent_claims) if participant.role == "defense" else "",
+                "client_info": "Defendant information" if participant.role == "defense" else ""
+            }
             
-            print(f"Added vote from {judge.get('name')} for {vote_for}")
-            print(f"New turn: {state_dict.get('turn')}")
-            print(f"New phase: {state_dict.get('current_phase')}")
+        else:
+            # Standard debater
+            return {
+                "topic": state.topic.title,
+                "topic_description": state.topic.description,
+                "debate_phase": state.debate_phase,
+                "position": participant.position or "neutral",
+                "recent_statements": "\n".join(formatted_recent),
+                "your_statements": "\n".join(formatted_player),
+                "statement_type": statement_type
+            }
+    
+    def _extract_key_arguments(self, state: DebateState) -> str:
+        """Extract key arguments from debate statements."""
+        pro_args = []
+        con_args = []
+        
+        for stmt in state.statements:
+            participant = state.participants.get(stmt.speaker_id)
+            if not participant:
+                continue
+                
+            if participant.position == "pro":
+                pro_args.append(f"- {stmt.content[:100]}..." if len(stmt.content) > 100 else f"- {stmt.content}")
+            elif participant.position == "con":
+                con_args.append(f"- {stmt.content[:100]}..." if len(stmt.content) > 100 else f"- {stmt.content}")
+        
+        result = "PRO Arguments:\n" + "\n".join(pro_args[-3:])  # Last 3 arguments
+        result += "\n\nCON Arguments:\n" + "\n".join(con_args[-3:])
+        
+        return result
+    
+    def _format_witness_statements(self, state: DebateState) -> str:
+        """Format witness statements for trial format."""
+        witness_stmts = []
+        
+        for stmt in state.statements:
+            participant = state.participants.get(stmt.speaker_id)
+            if participant and participant.role == "witness":
+                witness_stmts.append(f"{participant.name}: {stmt.content}")
+        
+        if not witness_stmts:
+            return "No witness testimony yet."
             
-            return Command(update=state_dict)
+        return "\n".join(witness_stmts)
+    
+    def extract_move(self, response: Any, role: str) -> Dict[str, Any]:
+        """Extract move from engine response."""
+        if isinstance(response, Statement):
+            # If response is already a structured Statement
+            return {
+                "type": "statement",
+                "content": response.content,
+                "statement_type": response.statement_type,
+                "target_id": response.target_id,
+                "references": response.references
+            }
+        
+        # Handle other response types based on role
+        if isinstance(response, dict):
+            if "vote_value" in response:
+                return {
+                    "type": "vote",
+                    "vote_value": response.get("vote_value"),
+                    "target_id": response.get("target_id"),
+                    "reason": response.get("reason", "")
+                }
+            elif "action" in response and role == "moderator":
+                return {
+                    "type": "moderation",
+                    "action": response.get("action"),
+                    "note": response.get("note", "")
+                }
+        
+        # Fallback: treat as general statement
+        content = str(response)
+        if hasattr(response, "content"):
+            content = response.content
+            
+        return {
+            "type": "statement",
+            "content": content,
+            "statement_type": "general"
+        }
+    
+    def debate_setup(self, state: Dict[str, Any]) -> Command:
+        """Handle debate setup phase."""
+        state_obj = DebateState(**state) if isinstance(state, dict) else state
+        
+        # Initialize participant personas if needed
+        if self.config.participant_roles:
+            for player_id, role in self.config.participant_roles.items():
+                if player_id in state_obj.participants:
+                    state_obj.participants[player_id].role = role
+        
+        # Set moderator if configured
+        if self.config.moderator_role and state_obj.players:
+            moderator_id = state_obj.players[0]  # Default first player as moderator
+            if moderator_id in state_obj.participants:
+                state_obj.participants[moderator_id].role = "moderator"
+                state_obj.moderator_id = moderator_id
+        
+        # Advance to opening phase
+        updated_state = self.state_manager.advance_phase(state_obj)
+        
+        if hasattr(updated_state, "model_dump"):
+            return Command(update=updated_state.model_dump(), goto="handle_participant_turn")
+        return Command(update=updated_state.dict(), goto="handle_participant_turn")
+    
+    def handle_participant_turn(self, state: Dict[str, Any]) -> Command:
+        """Handle a participant's turn in the debate."""
+        state_obj = DebateState(**state) if isinstance(state, dict) else state
+        
+        # Check for game end
+        if state_obj.game_status != "ongoing" or state_obj.debate_phase == DebatePhase.CONCLUSION:
+            if hasattr(state_obj, "model_dump"):
+                return Command(update=state_obj.model_dump(), goto=END)
+            return Command(update=state_obj.dict(), goto=END)
+        
+        # Get current speaker
+        current_speaker = state_obj.current_speaker
+        if not current_speaker:
+            # No current speaker, advance phase
+            updated_state = self.state_manager.advance_phase(state_obj)
+            if hasattr(updated_state, "model_dump"):
+                return Command(update=updated_state.model_dump(), goto="handle_phase_transition")
+            return Command(update=updated_state.dict(), goto="handle_phase_transition")
+        
+        # Check if special handling needed for moderator
+        if state_obj.participants.get(current_speaker, Participant(id="", name="", role="")).role == "moderator":
+            updated_state = self.handle_moderator_turn(state_obj)
+            next_step = self.determine_next_step(updated_state)
+            if hasattr(updated_state, "model_dump"):
+                return Command(update=updated_state.model_dump(), goto=next_step)
+            return Command(update=updated_state.dict(), goto=next_step)
+        
+        # Process regular participant turn
+        participant = state_obj.participants.get(current_speaker)
+        if not participant:
+            # Invalid participant, skip turn
+            state_obj.current_speaker_idx = (state_obj.current_speaker_idx + 1) % len(state_obj.turn_order)
+            if hasattr(state_obj, "model_dump"):
+                return Command(update=state_obj.model_dump(), goto="handle_participant_turn")
+            return Command(update=state_obj.dict(), goto="handle_participant_turn")
+        
+        # Get the appropriate engine for this role
+        role = participant.role
+        position = participant.position
+        
+        # Select engine based on role and position
+        if role == "debater" and position in ["pro", "con"]:
+            engine_key = position
+        else:
+            engine_key = "statement"
+            
+        engine = self.get_engine_for_player(role, engine_key)
+        if not engine:
+            # Fallback to default debater engine
+            engine = self.get_engine_for_player("debater", "statement")
+            
+        if not engine:
+            # Still no engine, skip turn
+            state_obj.current_speaker_idx = (state_obj.current_speaker_idx + 1) % len(state_obj.turn_order)
+            if hasattr(state_obj, "model_dump"):
+                return Command(update=state_obj.model_dump(), goto="handle_participant_turn")
+            return Command(update=state_obj.dict(), goto="handle_participant_turn")
+        
+        # Generate move
+        try:
+            context = self.prepare_move_context(state_obj, current_speaker)
+            response = engine.invoke(context)
+            move = self.extract_move(response, role)
+            
+            # Apply move
+            updated_state = self.state_manager.apply_move(state_obj, current_speaker, move)
+            
+            # Check game status
+            updated_state = self.state_manager.check_game_status(updated_state)
+            
+            # Determine next step
+            next_step = self.determine_next_step(updated_state)
+            
+            if hasattr(updated_state, "model_dump"):
+                return Command(update=updated_state.model_dump(), goto=next_step)
+            return Command(update=updated_state.dict(), goto=next_step)
             
         except Exception as e:
-            print(f"Error in judge action: {str(e)}")
-            return Command(update=state_dict)
+            print(f"Error in participant turn: {e}")
+            # Skip turn on error
+            state_obj.current_speaker_idx = (state_obj.current_speaker_idx + 1) % len(state_obj.turn_order)
+            if hasattr(state_obj, "model_dump"):
+                return Command(update=state_obj.model_dump(), goto="handle_participant_turn")
+            return Command(update=state_obj.dict(), goto="handle_participant_turn")
     
-    def calculate_results(self, state: Dict[str, Any]) -> Command:
-        """Calculate and announce the final results.
-        
-        Args:
-            state: Current state
+    def handle_moderator_turn(self, state: DebateState) -> DebateState:
+        """Handle the moderator's turn."""
+        moderator_id = state.moderator_id
+        if not moderator_id:
+            # No designated moderator, skip
+            state.current_speaker_idx = (state.current_speaker_idx + 1) % len(state.turn_order)
+            return state
             
-        Returns:
-            Command with final results
-        """
-        print("CALCULATING RESULTS")
-        # Create a copy of the state dict
-        state_dict = state.copy() if isinstance(state, dict) else state.dict() if hasattr(state, "dict") else state.model_dump()
+        engine = self.get_engine_for_player("moderator", "moderate")
+        if not engine:
+            # No moderator engine, skip
+            state.current_speaker_idx = (state.current_speaker_idx + 1) % len(state.turn_order)
+            return state
+            
+        try:
+            context = self.prepare_move_context(state, moderator_id)
+            response = engine.invoke(context)
+            move = self.extract_move(response, "moderator")
+            
+            # Apply move
+            updated_state = self.state_manager.apply_move(state, moderator_id, move)
+            
+            # Special handling for moderator actions
+            if move.get("type") == "moderation" and move.get("action") == "advance_phase":
+                updated_state = self.state_manager.advance_phase(updated_state)
+            
+            return updated_state
+            
+        except Exception as e:
+            print(f"Error in moderator turn: {e}")
+            # Skip turn on error
+            state.current_speaker_idx = (state.current_speaker_idx + 1) % len(state.turn_order)
+            return state
+    
+    def determine_next_step(self, state: DebateState) -> str:
+        """Determine the next step in the debate flow."""
+        # End if game over
+        if state.game_status != "ongoing" or state.debate_phase == DebatePhase.CONCLUSION:
+            return END
+            
+        # Check phase completion
+        if state.debate_phase in [DebatePhase.OPENING_STATEMENTS, DebatePhase.CLOSING_STATEMENTS]:
+            # Count statements in current phase
+            phase_statements = [s for s in state.statements 
+                               if getattr(s, "timestamp", "").startswith(state.debate_phase)]
+            
+            participant_count = len(state.participants)
+            if len(phase_statements) >= participant_count:
+                return "handle_phase_transition"
+                
+        # Check if everyone has voted in voting phase
+        if state.debate_phase == DebatePhase.VOTING:
+            if len(state.votes) >= len(state.participants):
+                return "handle_phase_transition"
+                
+        # Continue with participant turns
+        return "handle_participant_turn"
+    
+    def handle_phase_transition(self, state: Dict[str, Any]) -> Command:
+        """Handle transition between debate phases."""
+        state_obj = DebateState(**state) if isinstance(state, dict) else state
         
         try:
-            # Calculate fake results for testing
-            votes = state_dict.get("votes", [])
-            participants = state_dict.get("participants", [])
+            # Advance to the next phase
+            updated_state = self.state_manager.advance_phase(state_obj)
             
-            # Count votes by debater
-            vote_counts = {}
-            for vote in votes:
-                vote_name = vote.get("vote", "")
-                if vote_name in vote_counts:
-                    vote_counts[vote_name] += 1
-                else:
-                    vote_counts[vote_name] = 1
+            # Reset speaker index for new phase
+            updated_state.current_speaker_idx = 0
             
-            # Find winner
-            winner_name = max(vote_counts.items(), key=lambda x: x[1])[0] if vote_counts else None
-            
-            # Find winner's ID
-            winner_id = None
-            for p in participants:
-                if p.get("name") == winner_name:
-                    winner_id = p.get("id")
-                    break
-            
-            # Create result text
-            result_text = f"# Final Vote Results\n\n"
-            result_text += f"Total votes cast: {len(votes)}\n\n"
-            
-            for debater_name, count in vote_counts.items():
-                result_text += f"{debater_name}: {count} votes\n"
-            
-            if winner_name:
-                result_text += f"\n## Winner: {winner_name}"
-            else:
-                result_text += "\n## No clear winner"
-            
-            # Add result to state
-            state_dict["result"] = result_text
-            state_dict["winner"] = winner_name
-            state_dict["current_phase"] = "completed"
-            state_dict["game_status"] = "completed"
-            
-            # Add to messages
-            messages = state_dict.get("messages", [])
-            messages.append(HumanMessage(content="The judges have reached their decision."))
-            messages.append(AIMessage(content=f"# FINAL RESULT\n\n{result_text}"))
-            state_dict["messages"] = messages
-            
-            print(f"Calculated results: Winner={winner_name}")
-            print("Debate completed!")
-            
-            return Command(update=state_dict)
+            # Check if game has ended
+            if updated_state.game_status != "ongoing" or updated_state.debate_phase == DebatePhase.CONCLUSION:
+                if hasattr(updated_state, "model_dump"):
+                    return Command(update=updated_state.model_dump(), goto=END)
+                return Command(update=updated_state.dict(), goto=END)
+                
+            # Continue with participant turns in new phase
+            if hasattr(updated_state, "model_dump"):
+                return Command(update=updated_state.model_dump(), goto="handle_participant_turn")
+            return Command(update=updated_state.dict(), goto="handle_participant_turn")
             
         except Exception as e:
-            print(f"Error calculating results: {str(e)}")
-            return Command(update=state_dict)
+            print(f"Error in phase transition: {e}")
+            # On error, end the debate
+            state_obj.game_status = "ended"
+            if hasattr(state_obj, "model_dump"):
+                return Command(update=state_obj.model_dump(), goto=END)
+            return Command(update=state_obj.dict(), goto=END)
     
-    # Helper methods
-    def _advance_turn(self, state_dict: Dict[str, Any]) -> Dict[str, Any]:
-        """Advance to the next turn or phase based on current state.
-        
-        Args:
-            state_dict: Current state dictionary
+    def visualize_state(self, state: Dict[str, Any]) -> None:
+        """Visualize the current debate state."""
+        if not self.config.visualize:
+            return
             
-        Returns:
-            Updated state dictionary
-        """
-        current_phase = state_dict.get("current_phase", "setup")
-        participants = state_dict.get("participants", [])
-        current_turn = state_dict.get("turn", "")
+        state_obj = state if isinstance(state, DebateState) else DebateState(**state)
         
-        print(f"Advancing from phase={current_phase}, turn={current_turn}")
+        print("\n" + "=" * 60)
+        print(f"🎭 DEBATE: {state_obj.topic.title}")
+        print(f"📊 Phase: {state_obj.debate_phase}")
+        print(f"👤 Current Speaker: {state_obj.current_speaker}")
+        print("=" * 60)
         
-        # Get participants for the current phase
-        if current_phase == "opening_statements" or current_phase == "arguments" or current_phase == "closing_statements":
-            phase_participants = [p for p in participants if p.get("role") == "debater"]
-        elif current_phase == "voting":
-            phase_participants = [p for p in participants if p.get("role") == "judge"]
-        else:
-            phase_participants = []
+        # Show recent statements
+        if state_obj.statements:
+            print("\n📝 Recent Statements:")
+            for i, stmt in enumerate(state_obj.statements[-5:]):
+                participant = state_obj.participants.get(stmt.speaker_id, Participant(id=stmt.speaker_id, name=f"Unknown-{stmt.speaker_id}", role="unknown"))
+                print(f"{i+1}. [{participant.role.upper()}] {participant.name}: {stmt.content[:100]}..." 
+                     if len(stmt.content) > 100 else f"{i+1}. [{participant.role.upper()}] {participant.name}: {stmt.content}")
         
-        # Find the index of the current participant
-        current_index = -1
-        for i, p in enumerate(phase_participants):
-            if p.get("id") == current_turn:
-                current_index = i
-                break
-        
-        # Check if we're at the end of the current phase
-        if current_index == len(phase_participants) - 1 or current_index == -1:
-            # Move to the next phase
-            phase_sequence = state_dict.get("phase_sequence", ["setup", "opening_statements", "arguments", "closing_statements", "voting", "results", "completed"])
-            
-            try:
-                current_phase_index = phase_sequence.index(current_phase)
-                next_phase = phase_sequence[current_phase_index + 1] if current_phase_index + 1 < len(phase_sequence) else "completed"
-                
-                # Handle phase transitions
-                if next_phase == "arguments":
-                    state_dict["current_round"] = 1
-                elif current_phase == "arguments" and next_phase == "arguments":
-                    state_dict["current_round"] = state_dict.get("current_round", 1) + 1
-                    if state_dict["current_round"] > state_dict.get("max_rounds", 3):
-                        next_phase = phase_sequence[current_phase_index + 1]
-                
-                state_dict["current_phase"] = next_phase
-                print(f"Advanced to next phase: {next_phase}")
-                
-                # Set the turn to the first participant of the next phase
-                if next_phase == "opening_statements" or next_phase == "arguments" or next_phase == "closing_statements":
-                    debaters = [p for p in participants if p.get("role") == "debater"]
-                    if debaters:
-                        state_dict["turn"] = debaters[0].get("id", "")
-                
-                elif next_phase == "voting":
-                    judges = [p for p in participants if p.get("role") == "judge"]
-                    if judges:
-                        state_dict["turn"] = judges[0].get("id", "")
-                
+        # Show votes in voting phase
+        if state_obj.debate_phase == DebatePhase.VOTING and state_obj.votes:
+            print("\n🗳️ Current Votes:")
+            for voter_id, vote_list in state_obj.votes.items():
+                if not vote_list:
+                    continue
+                voter = state_obj.participants.get(voter_id, Participant(id=voter_id, name=f"Unknown-{voter_id}", role="unknown"))
+                latest_vote = vote_list[-1]
+                target = state_obj.participants.get(latest_vote.target_id, Participant(id=latest_vote.target_id, name=f"Unknown-{latest_vote.target_id}", role="unknown")) if latest_vote.target_id else None
+                if target:
+                    print(f"- {voter.name} voted for {target.name}: {latest_vote.vote_value}")
                 else:
-                    # For phases without turns
-                    state_dict["turn"] = ""
-                    
-            except (ValueError, IndexError):
-                # If the current phase is not found or no next phase
-                state_dict["current_phase"] = "completed"
-                state_dict["turn"] = ""
-                
-        else:
-            # Move to the next participant in the current phase
-            state_dict["turn"] = phase_participants[current_index + 1].get("id", "")
-            print(f"Advanced to next participant: {state_dict['turn']}")
-            
-        return state_dict
-
-
-class DebateConfig(GameConfig):
-    """Configuration for multi-agent debate framework.
-    
-    This configuration extends GameConfig to add debate-specific settings.
-    """
-    # Debate structure
-    topic: str = Field(default="Discuss the benefits and drawbacks of AI", description="Topic of the debate")
-    description: str = Field(default="", description="Description of the debate scenario")
-    max_rounds: int = Field(default=3, description="Maximum number of argument rounds")
-    
-    # Phase configuration
-    phases: List[str] = Field(
-        default=[
-            "setup",
-            "opening_statements",
-            "arguments",
-            "closing_statements",
-            "voting",
-            "results",
-            "completed"
-        ],
-        description="Sequence of phases in the debate"
-    )
-    
-    # Participant configuration
-    num_debaters: int = Field(default=2, description="Number of debaters")
-    num_judges: int = Field(default=3, description="Number of judges")
-    
-    # LLM configurations
-    participant_generator_llm: AugLLMConfig = Field(
-        default=AugLLMConfig(
-            name="participant_generator_llm",
-            llm_config=AzureLLMConfig(model="gpt-4o", parameters={"temperature": 0.9})
-        ),
-        description="LLM for generating debate participants"
-    )
-    
-    debater_llm: AugLLMConfig = Field(
-        default=AugLLMConfig(
-            name="debater_llm",
-            llm_config=AzureLLMConfig(model="gpt-4o", parameters={"temperature": 0.7})
-        ),
-        description="Default LLM for debaters"
-    )
-    
-    judge_llm: AugLLMConfig = Field(
-        default=AugLLMConfig(
-            name="judge_llm",
-            llm_config=AzureLLMConfig(model="gpt-4o", parameters={"temperature": 0.4})
-        ),
-        description="Default LLM for judges"
-    )
-    
-    # Specific participant LLMs (optional)
-    participant_llms: Dict[str, AugLLMConfig] = Field(
-        default_factory=dict,
-        description="LLM configurations for specific participants (by ID)"
-    )
-    
-    # State schema - will use DebateState by default
-    state_schema: Type[BaseModel] = Field(default=DebateState, description="State schema for the debate")
-    
-    @classmethod
-    def create_default(cls, topic: str, max_rounds: int = 3):
-        """Create a default debate configuration.
+                    print(f"- {voter.name} voted: {latest_vote.vote_value}")
         
-        Args:
-            topic: Topic of the debate
-            max_rounds: Maximum number of rounds
-            
-        Returns:
-            Default DebateConfig
-        """
-        return cls(
-            topic=topic,
-            max_rounds=max_rounds
-        )
+        time.sleep(0.5)  # Brief pause for readability
+    
+    def setup_workflow(self) -> None:
+        """Setup the debate workflow."""
+        gb = DynamicGraph(components=[self.config], state_schema=self.config.state_schema)
+        
+        # Add the nodes
+        gb.add_node("initialize", self.initialize_game)
+        gb.add_node("debate_setup", self.debate_setup)
+        gb.add_node("handle_participant_turn", self.handle_participant_turn)
+        gb.add_node("handle_phase_transition", self.handle_phase_transition)
+        
+        # Add the edges
+        gb.add_edge("initialize", "debate_setup")
+        gb.add_edge("debate_setup", "handle_participant_turn")
+        gb.add_edge("handle_participant_turn", "handle_participant_turn")
+        gb.add_edge("handle_participant_turn", "handle_phase_transition")
+        gb.add_edge("handle_phase_transition", "handle_participant_turn")
+        gb.add_edge("handle_phase_transition", END)
+        
+        self.graph = gb.build()

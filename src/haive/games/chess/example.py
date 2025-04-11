@@ -1,40 +1,18 @@
 from src.haive.games.chess.agent import ChessAgent
 from src.haive.games.chess.config import ChessAgentConfig
+from src.haive.core.engine.agent.persistence.postgres_config import PostgresCheckpointerConfig
 from typing import Dict, Any
 import chess
+import json
+import uuid
 
-def run_chess_game(agent: ChessAgent):
-    """Run a chess game with visualization and structured output.
+def run_chess_game(agent: ChessAgent, thread_id: str = None):
+    """Run a chess game using agent.run() with persistent state tracking."""
     
-    This function manages the game loop and provides rich visualization
-    of the game state, including:
-        - Board visualization using ASCII art
-        - Move history tracking
-        - Position analysis display
-        - Captured pieces tracking
-        - Game status updates
-    
-    Args:
-        agent (ChessAgent): The chess agent to run the game with.
-    
-    Example:
-        >>> agent = ChessAgent(ChessAgentConfig(enable_analysis=True))
-        >>> run_chess_game(agent)
-        
-        Current Board Position:
-        r n b q k b n r
-        p p p p p p p p
-        . . . . . . . .
-        . . . . . . . .
-        . . . . . . . .
-        . . . . . . . .
-        P P P P P P P P
-        R N B Q K B N R
-        
-        Current Player: White
-        Game Status: ongoing
-        --------------------------------------------------
-    """
+    # ✅ Generate or use thread_id for persistence continuity
+    thread_id = thread_id or f"chess_thread_{uuid.uuid4().hex[:8]}"
+    print(f"🧵 Using thread_id: {thread_id}")
+
     # ✅ Initialize the game state
     initial_state = {
         "board_fens": [chess.Board().fen()],
@@ -48,52 +26,61 @@ def run_chess_game(agent: ChessAgent):
         "error_message": None
     }
 
-    # ✅ Stream the game loop
-    for step in agent.app.stream(initial_state, config=agent.runnable_config, debug=True, stream_mode="values"):
-        board = chess.Board(step["board_fens"][-1])
+    # 🧠 Run the full agent workflow until END
+    final_state = agent.run(initial_state, thread_id=thread_id)
 
-        # 🎯 **Game Board Visualization**
-        print("\n🔷 Current Board Position:")
-        print(board)
+    # 🎯 Display final board and game outcome
+    board = chess.Board(final_state["board_fens"][-1])
+    print("\n🏁 Final Board:")
+    print(board)
+    print(f"🧠 Final State: Turn = {final_state['turn'].capitalize()}, Status = {final_state['game_status']}")
 
-        # 🎯 **Game State Information**
-       # print(f"\n🎮 Current Player: {step['current_player'].capitalize()}")
-        print(f"♟️ Turn: {step['turn'].capitalize()}")
-        print(f"📌 Game Status: {step['game_status']}")
-        print("-" * 50)
+    # 📝 Display last few moves
+    if final_state.get("move_history"):
+        print("\n📜 Move History:")
+        for color, move in final_state["move_history"]:
+            print(f"   - {color.capitalize()} played {move}")
 
-        # ✅ **Display Last Move**
-        if step.get("move_history"):
-            last_move = step["move_history"][-1]
-            print(f"📝 Last Move: {last_move[0].capitalize()} played {last_move[1]}")
+    # 📊 Display final analyses if any
+    if final_state.get("white_analysis"):
+        wa: Dict[str, Any] = final_state["white_analysis"][-1]
+        print("\n🔍 White's Final Analysis:")
+        print(f"   - Score: {wa.get('position_score')}, Attacking: {wa.get('attacking_chances')}, Defense: {wa.get('defensive_needs')}")
+        print(f"   - Plans: {', '.join(wa.get('suggested_plans', []))}")
 
-        # ✅ **Handle White's Analysis Safely**
-        if step.get("white_analysis"):
-            last_white_analysis: Dict[str, Any] = step["white_analysis"][-1]  # Extract last analysis dictionary
-            print("\n🔍 White's Analysis:")
-            print(f"   - Position Score: {last_white_analysis.get('position_score', 'N/A')}")
-            print(f"   - Attacking Chances: {last_white_analysis.get('attacking_chances', 'N/A')}")
-            print(f"   - Defensive Needs: {last_white_analysis.get('defensive_needs', 'N/A')}")
-            print(f"   - Suggested Plans: {', '.join(last_white_analysis.get('suggested_plans', []))}")
+    if final_state.get("black_analysis"):
+        ba: Dict[str, Any] = final_state["black_analysis"][-1]
+        print("\n🔍 Black's Final Analysis:")
+        print(f"   - Score: {ba.get('position_score')}, Attacking: {ba.get('attacking_chances')}, Defense: {ba.get('defensive_needs')}")
+        print(f"   - Plans: {', '.join(ba.get('suggested_plans', []))}")
 
-        # ✅ **Handle Black's Analysis Safely**
-        if step.get("black_analysis"):
-            last_black_analysis: Dict[str, Any] = step["black_analysis"][-1]  # Extract last analysis dictionary
-            print("\n🔍 Black's Analysis:")
-            print(f"   - Position Score: {last_black_analysis.get('position_score', 'N/A')}")
-            print(f"   - Attacking Chances: {last_black_analysis.get('attacking_chances', 'N/A')}")
-            print(f"   - Defensive Needs: {last_black_analysis.get('defensive_needs', 'N/A')}")
-            print(f"   - Suggested Plans: {', '.join(last_black_analysis.get('suggested_plans', []))}")
+    # ♟️ Show captured pieces
+    print("\n🧾 Captured Pieces:")
+    print(f"   - White Captured: {', '.join(final_state['captured_pieces']['white']) or 'None'}")
+    print(f"   - Black Captured: {', '.join(final_state['captured_pieces']['black']) or 'None'}")
 
-        # ✅ **Captured Pieces**
-        if step.get("captured_pieces"):
-            print("\n🔻 Captured Pieces:")
-            print(f"   - White Captured: {', '.join(step['captured_pieces']['white']) or 'None'}")
-            print(f"   - Black Captured: {', '.join(step['captured_pieces']['black']) or 'None'}")
-
-        print("\n" + "-" * 60)  # Divider for clarity
+    # 🧬 Save to JSON file if needed
     agent.save_state_history()
 
-# Run the game
+# Entry point
 if __name__ == "__main__":
-    run_chess_game(agent=ChessAgent(config=ChessAgentConfig()))
+    # ✅ Optionally configure PostgreSQL checkpointer
+    postgres_config = PostgresCheckpointerConfig(
+        db_host="localhost",
+        db_port=5432,
+        db_name="postgres",
+        db_user="postgres",
+        db_pass="postgres",  # 🔐 Replace with env var in real code
+        ssl_mode="disable",
+        setup_needed=True
+    )
+
+    # ✅ Create agent config
+    config = ChessAgentConfig(
+        enable_analysis=True,
+        persistence=postgres_config,
+        name="postgres_chess_game"
+    )
+
+    agent = ChessAgent(config=config)
+    run_chess_game(agent)

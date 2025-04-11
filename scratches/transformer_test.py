@@ -17,7 +17,7 @@ import re
 # Assume you have a SummarizerAgentConfig
 #summarizer = SummarizerAgent(SummarizerAgentConfig())
 from dotenv import load_dotenv
-load_dotenv('.env.example')
+load_dotenv('.env')
 async def apply_transformers(documents):
     """Apply every document transformer and save results for comparison."""
     results = {"Original": [doc.page_content for doc in documents]}
