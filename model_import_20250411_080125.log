@@ -1,0 +1,614 @@
+2025-04-11 08:01:25,378 - __main__ - INFO - Starting model import process...
+2025-04-11 08:01:25,413 - __main__ - INFO - Successfully fetched model data from LiteLLM (901 models)
+2025-04-11 08:01:25,598 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:25,598 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:25,598 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:25,599 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:25,644 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:25,645 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:25,645 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:25,645 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:25,685 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:25,685 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:25,685 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:25,685 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:25,727 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:25,727 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:25,727 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:25,727 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:25,772 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:25,772 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:25,772 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:25,772 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:25,811 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:25,812 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:25,812 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:25,812 - __main__ - ERROR - Failed to get or create provider watsonx
+2025-04-11 08:01:25,852 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:25,852 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:25,852 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:25,852 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:25,895 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:25,895 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:25,895 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:25,895 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:25,948 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:25,948 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:25,949 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:25,949 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:25,988 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:25,989 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:25,989 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:25,989 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,033 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,034 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,034 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,034 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,076 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,076 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,076 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,076 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,119 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,119 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,119 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,119 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,161 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,161 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,161 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,162 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,201 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,202 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,202 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,202 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,242 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,242 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,242 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,242 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,280 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,281 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,281 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,281 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,325 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,325 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,326 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,326 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,368 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,369 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,369 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,369 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,410 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,410 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,410 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,410 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,451 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,451 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,452 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,452 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,490 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,491 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,491 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,491 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,530 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,530 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,530 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,530 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,572 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,573 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,573 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,573 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,613 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,614 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,614 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,614 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,653 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,653 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,653 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,653 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,692 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,692 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,692 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,693 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,739 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,739 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,739 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,739 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,779 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,780 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,780 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,780 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,819 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,819 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,819 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,819 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,857 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,858 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,858 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,858 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,895 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,895 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,895 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,895 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,944 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,944 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,944 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,945 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:26,990 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:26,991 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:26,991 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:26,991 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,030 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,030 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,030 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,030 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,071 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,074 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,074 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,074 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,114 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,115 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,115 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,115 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,155 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,155 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,155 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,155 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,193 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,193 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,194 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,194 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,234 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,234 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,234 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,234 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,275 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,275 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,275 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,275 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,313 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,314 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,314 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,314 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,354 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,354 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,354 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,354 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,393 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,394 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,394 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,394 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,436 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,437 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,437 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,437 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,480 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,480 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,480 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,480 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,521 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,521 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,521 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,521 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,561 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,561 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,561 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,561 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,599 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,600 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,600 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,600 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,640 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,640 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,640 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,641 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,681 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,682 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,682 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,682 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,723 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,723 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,723 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,723 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,761 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,761 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,761 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,761 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,799 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,800 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,800 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,800 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,844 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,844 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,844 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,844 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,884 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,884 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,884 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,885 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,925 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,926 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,926 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,926 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:27,967 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:27,967 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:27,967 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:27,967 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,006 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,006 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,006 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,007 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,045 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,045 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,045 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,045 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,088 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,088 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,088 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,088 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,128 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,128 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,128 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,128 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,170 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,171 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,171 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,171 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,218 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,218 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,218 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,218 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,256 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,257 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,258 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,258 - __main__ - ERROR - Failed to get or create provider text-completion-openai
+2025-04-11 08:01:28,299 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,299 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,299 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,299 - __main__ - ERROR - Failed to get or create provider text-completion-openai
+2025-04-11 08:01:28,337 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,338 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,338 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,338 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,377 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,378 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,378 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,378 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,421 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,421 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,421 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,421 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,461 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,462 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,462 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,462 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,502 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,502 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,502 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,502 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,551 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,552 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,552 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,552 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,596 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,597 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,597 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,597 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,641 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,641 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,642 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,642 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,680 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,680 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,680 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,680 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,722 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,722 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,722 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,722 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,771 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,771 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,771 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,771 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,813 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,813 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,813 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,814 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,853 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,853 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,853 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,853 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,892 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,893 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,893 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,893 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,934 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,934 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,934 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,934 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:28,971 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:28,972 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:28,972 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:28,972 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:29,012 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,012 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,012 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,012 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:29,052 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,053 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,053 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,053 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:29,094 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,095 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,095 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,095 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:29,135 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,135 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,136 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,136 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:29,175 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,175 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,175 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,176 - __main__ - ERROR - Failed to get or create provider openai
+2025-04-11 08:01:29,216 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,217 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,217 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,217 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:29,254 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,254 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,255 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,255 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:29,293 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,294 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,294 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,294 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:29,339 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,340 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,340 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,340 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:29,381 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,381 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,381 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,381 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:29,418 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,419 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,419 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,419 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:29,459 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,460 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,460 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,460 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:29,501 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,501 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,501 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,501 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:29,543 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,543 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,544 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,544 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:29,592 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,592 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,592 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,592 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:29,631 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,631 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,632 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,632 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:29,670 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,670 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,670 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,670 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:29,709 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,710 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,710 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,710 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:29,753 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,754 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,754 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,754 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:29,803 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,803 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,803 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,803 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:29,849 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,849 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,849 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,849 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:29,891 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,891 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,891 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,891 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:29,929 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,930 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,930 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,930 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:29,967 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:29,968 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:29,968 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:29,968 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,005 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,006 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,006 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,006 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,046 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,046 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,046 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,047 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,083 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,084 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,084 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,084 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,129 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,130 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,130 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,130 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,174 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,175 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,175 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,175 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,215 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,215 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,215 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,215 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,257 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,257 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,257 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,257 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,299 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,299 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,299 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,300 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,340 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,340 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,340 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,340 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,383 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,383 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,385 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,385 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,434 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,434 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,434 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,434 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,478 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,478 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,478 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,478 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,525 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,525 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,525 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,525 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,566 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,566 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,566 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,566 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,608 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,609 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,609 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,609 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,652 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,653 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,653 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,653 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,700 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,701 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,701 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,701 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,745 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,745 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,746 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,746 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,817 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,818 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,818 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,818 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,859 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,859 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,859 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,860 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,902 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,902 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,903 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,903 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:30,946 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:30,947 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:30,947 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:30,947 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,004 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,005 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,005 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,005 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,051 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,052 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,052 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,052 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,092 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,093 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,093 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,093 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,136 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,137 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,137 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,137 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,179 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,180 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,180 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,180 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,223 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,224 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,224 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,224 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,267 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,268 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,268 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,268 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,311 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,312 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,312 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,312 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,354 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,355 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,355 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,355 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,399 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,400 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,400 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,400 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,441 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,441 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,441 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,441 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,486 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,486 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,487 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,487 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,531 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,532 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,532 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,532 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,578 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,578 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,579 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,579 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,624 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,624 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,624 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,624 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,669 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,670 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,670 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,670 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,712 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,712 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,712 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,713 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,755 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,755 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,756 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,756 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,805 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,805 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,806 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,806 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,857 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,857 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,857 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,857 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,899 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,900 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,900 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,900 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:31,950 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:31,951 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:31,951 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:31,951 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:32,008 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:32,009 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:32,009 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:32,009 - __main__ - ERROR - Failed to get or create provider azure
+2025-04-11 08:01:32,055 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:32,056 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:32,056 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:32,056 - __main__ - ERROR - Failed to get or create provider azure_text
+2025-04-11 08:01:32,101 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/provider_types?select=id&name=eq.llm "HTTP/2 404 Not Found"
+2025-04-11 08:01:32,102 - __main__ - ERROR - Error getting or creating provider type llm: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.provider_types" does not exist'}
+2025-04-11 08:01:32,102 - __main__ - ERROR - Failed to get or create provider type llm
+2025-04-11 08:01:32,102 - __main__ - ERROR - Failed to get or create provider azure_text

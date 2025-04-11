@@ -1,0 +1,72 @@
+2025-04-11 07:54:55,571 - __main__ - INFO - Starting vault migration...
+2025-04-11 07:54:55,592 - vault_migration_script - INFO - Starting vault reference migration...
+2025-04-11 07:54:55,592 - vault_migration_script - INFO - Migrating environment variables...
+2025-04-11 07:54:55,768 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 400 Bad Request"
+2025-04-11 07:54:55,769 - __main__ - ERROR - Error ensuring vault_reference column on config.environment_variables: {'code': '42703', 'details': None, 'hint': None, 'message': 'column "r" does not exist'}
+2025-04-11 07:54:55,769 - __main__ - INFO - Please run this SQL in your database: ALTER TABLE config.environment_variables ADD COLUMN IF NOT EXISTS vault_secret_id UUID REFERENCES vault.secrets(id);
+2025-04-11 07:54:55,769 - vault_migration_script - WARNING - Cannot migrate environment variables without vault_secret_id column
+2025-04-11 07:54:55,769 - vault_migration_script - INFO - Please add the column manually and run the script again
+2025-04-11 07:54:55,769 - vault_migration_script - INFO - Migrating component environment mappings...
+2025-04-11 07:54:55,871 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 400 Bad Request"
+2025-04-11 07:54:55,871 - __main__ - ERROR - Error ensuring vault_reference column on config.component_env_mappings: {'code': '42703', 'details': None, 'hint': None, 'message': 'column "r" does not exist'}
+2025-04-11 07:54:55,871 - __main__ - INFO - Please run this SQL in your database: ALTER TABLE config.component_env_mappings ADD COLUMN IF NOT EXISTS vault_secret_id UUID REFERENCES vault.secrets(id);
+2025-04-11 07:54:55,871 - vault_migration_script - WARNING - Cannot migrate component environment mappings without vault_secret_id column
+2025-04-11 07:54:55,871 - vault_migration_script - INFO - Please add the column manually and run the script again
+2025-04-11 07:54:55,871 - vault_migration_script - INFO - Migrating provider API keys...
+2025-04-11 07:54:56,007 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 400 Bad Request"
+2025-04-11 07:54:56,007 - __main__ - ERROR - Error ensuring vault_reference column on models.providers: {'code': '42703', 'details': None, 'hint': None, 'message': 'column "r" does not exist'}
+2025-04-11 07:54:56,007 - __main__ - INFO - Please run this SQL in your database: ALTER TABLE models.providers ADD COLUMN IF NOT EXISTS vault_secret_id UUID REFERENCES vault.secrets(id);
+2025-04-11 07:54:56,007 - vault_migration_script - WARNING - Cannot migrate provider API keys without vault_secret_id column
+2025-04-11 07:54:56,007 - vault_migration_script - INFO - Please add the column manually and run the script again
+2025-04-11 07:54:56,007 - vault_migration_script - INFO - Migrating engine API keys...
+2025-04-11 07:54:56,144 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 400 Bad Request"
+2025-04-11 07:54:56,145 - __main__ - ERROR - Error ensuring vault_reference column on engines.engines: {'code': '42703', 'details': None, 'hint': None, 'message': 'column "r" does not exist'}
+2025-04-11 07:54:56,145 - __main__ - INFO - Please run this SQL in your database: ALTER TABLE engines.engines ADD COLUMN IF NOT EXISTS vault_secret_id UUID REFERENCES vault.secrets(id);
+2025-04-11 07:54:56,145 - vault_migration_script - WARNING - Cannot migrate engine API keys without vault_secret_id column
+2025-04-11 07:54:56,145 - vault_migration_script - INFO - Please add the column manually and run the script again
+2025-04-11 07:54:56,145 - vault_migration_script - INFO - Adding vault helper functions...
+2025-04-11 07:54:56,227 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 400 Bad Request"
+2025-04-11 07:54:56,227 - vault_migration_script - ERROR - Error creating vault helper functions: {'code': '42703', 'details': None, 'hint': None, 'message': 'column "r" does not exist'}
+2025-04-11 07:54:56,227 - vault_migration_script - INFO - Please add the following helper functions to your database manually:
+2025-04-11 07:54:56,227 - vault_migration_script - INFO - 
+        -- Function to get a secret value from vault
+        CREATE OR REPLACE FUNCTION get_vault_secret(secret_id UUID)
+        RETURNS TEXT
+        LANGUAGE plpgsql
+        SECURITY DEFINER
+        AS $$
+        DECLARE
+            secret_value TEXT;
+        BEGIN
+            SELECT decrypted_secret INTO secret_value
+            FROM vault.decrypted_secrets
+            WHERE id = secret_id;
+            
+            RETURN secret_value;
+        END;
+        $$;
+        
+        -- Function to get a secret value by name
+        CREATE OR REPLACE FUNCTION get_vault_secret_by_name(secret_name TEXT)
+        RETURNS TEXT
+        LANGUAGE plpgsql
+        SECURITY DEFINER
+        AS $$
+        DECLARE
+            secret_value TEXT;
+        BEGIN
+            SELECT decrypted_secret INTO secret_value
+            FROM vault.decrypted_secrets
+            WHERE name = secret_name;
+            
+            RETURN secret_value;
+        END;
+        $$;
+        
+2025-04-11 07:54:56,227 - vault_migration_script - INFO - Migration completed with the following results:
+2025-04-11 07:54:56,228 - vault_migration_script - INFO - Environment variables migrated: 0
+2025-04-11 07:54:56,228 - vault_migration_script - INFO - Component environment mappings migrated: 0
+2025-04-11 07:54:56,228 - vault_migration_script - INFO - Providers migrated: 0
+2025-04-11 07:54:56,228 - vault_migration_script - INFO - Engines migrated: 0
+2025-04-11 07:54:56,228 - vault_migration_script - INFO - Total items migrated: 0
+2025-04-11 07:54:56,228 - vault_migration_script - WARNING - Migration did not complete successfully

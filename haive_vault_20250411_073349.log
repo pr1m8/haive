@@ -1,0 +1,48 @@
+2025-04-11 07:33:49,608 - __main__ - INFO - Starting vault reference migration...
+2025-04-11 07:33:49,608 - __main__ - INFO - Migrating environment variables...
+2025-04-11 07:33:49,809 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 200 OK"
+2025-04-11 07:33:49,885 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/rpc/execute_sql "HTTP/2 400 Bad Request"
+2025-04-11 07:33:49,886 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error ensuring vault_reference column on config.environment_variables: {'code': '42601', 'details': None, 'hint': None, 'message': 'syntax error at or near "TABLE"'}
+2025-04-11 07:33:50,029 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/decrypted_secrets?select=id%2Cname "HTTP/2 406 Not Acceptable"
+2025-04-11 07:33:50,030 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error fetching existing vault secrets: {'code': 'PGRST106', 'details': None, 'hint': None, 'message': 'The schema must be one of the following: public, graphql_public, agents, registry, engines, models, tools, workflows, audit, config, games, components'}
+2025-04-11 07:33:50,030 - src.haive.dataflow.registry.utils.vault_migration_script - INFO - Found 0 existing secrets in vault
+2025-04-11 07:33:50,135 - httpx - INFO - HTTP Request: GET https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/environment_variables?select=%2A&is_secret=eq.True "HTTP/2 200 OK"
+2025-04-11 07:33:50,137 - src.haive.dataflow.registry.utils.vault_migration_script - INFO - Found 12 sensitive environment variables
+2025-04-11 07:33:50,257 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/secrets "HTTP/2 406 Not Acceptable"
+2025-04-11 07:33:50,261 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error creating vault secret GOOGLE_API_KEY: {'code': 'PGRST106', 'details': None, 'hint': None, 'message': 'The schema must be one of the following: public, graphql_public, agents, registry, engines, models, tools, workflows, audit, config, games, components'}
+2025-04-11 07:33:50,261 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Failed to create vault secret for GOOGLE_API_KEY
+2025-04-11 07:33:50,261 - src.haive.dataflow.registry.utils.vault_migration_script - WARNING - No value found for secret GEMINI_API_KEY in environment
+2025-04-11 07:33:50,398 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/secrets "HTTP/2 406 Not Acceptable"
+2025-04-11 07:33:50,398 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error creating vault secret GEMINI_API_KEY: {'code': 'PGRST106', 'details': None, 'hint': None, 'message': 'The schema must be one of the following: public, graphql_public, agents, registry, engines, models, tools, workflows, audit, config, games, components'}
+2025-04-11 07:33:50,398 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Failed to create vault secret for GEMINI_API_KEY
+2025-04-11 07:33:50,526 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/secrets "HTTP/2 406 Not Acceptable"
+2025-04-11 07:33:50,526 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error creating vault secret MISTRAL_API_KEY: {'code': 'PGRST106', 'details': None, 'hint': None, 'message': 'The schema must be one of the following: public, graphql_public, agents, registry, engines, models, tools, workflows, audit, config, games, components'}
+2025-04-11 07:33:50,526 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Failed to create vault secret for MISTRAL_API_KEY
+2025-04-11 07:33:50,527 - src.haive.dataflow.registry.utils.vault_migration_script - WARNING - No value found for secret OPENAI_API_KEY in environment
+2025-04-11 07:33:50,668 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/secrets "HTTP/2 406 Not Acceptable"
+2025-04-11 07:33:50,668 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error creating vault secret OPENAI_API_KEY: {'code': 'PGRST106', 'details': None, 'hint': None, 'message': 'The schema must be one of the following: public, graphql_public, agents, registry, engines, models, tools, workflows, audit, config, games, components'}
+2025-04-11 07:33:50,668 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Failed to create vault secret for OPENAI_API_KEY
+2025-04-11 07:33:50,779 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/secrets "HTTP/2 406 Not Acceptable"
+2025-04-11 07:33:50,779 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error creating vault secret AZURE_OPENAI_API_KEY: {'code': 'PGRST106', 'details': None, 'hint': None, 'message': 'The schema must be one of the following: public, graphql_public, agents, registry, engines, models, tools, workflows, audit, config, games, components'}
+2025-04-11 07:33:50,779 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Failed to create vault secret for AZURE_OPENAI_API_KEY
+2025-04-11 07:33:50,926 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/secrets "HTTP/2 406 Not Acceptable"
+2025-04-11 07:33:50,926 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error creating vault secret ANTHROPIC_API_KEY: {'code': 'PGRST106', 'details': None, 'hint': None, 'message': 'The schema must be one of the following: public, graphql_public, agents, registry, engines, models, tools, workflows, audit, config, games, components'}
+2025-04-11 07:33:50,926 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Failed to create vault secret for ANTHROPIC_API_KEY
+2025-04-11 07:33:50,926 - src.haive.dataflow.registry.utils.vault_migration_script - WARNING - No value found for secret CLAUDE_API_KEY in environment
+2025-04-11 07:33:51,033 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/secrets "HTTP/2 406 Not Acceptable"
+2025-04-11 07:33:51,033 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error creating vault secret CLAUDE_API_KEY: {'code': 'PGRST106', 'details': None, 'hint': None, 'message': 'The schema must be one of the following: public, graphql_public, agents, registry, engines, models, tools, workflows, audit, config, games, components'}
+2025-04-11 07:33:51,033 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Failed to create vault secret for CLAUDE_API_KEY
+2025-04-11 07:33:51,033 - src.haive.dataflow.registry.utils.vault_migration_script - WARNING - No value found for secret FIREWORKS_AI_API_KEY in environment
+2025-04-11 07:33:51,138 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/secrets "HTTP/2 406 Not Acceptable"
+2025-04-11 07:33:51,139 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error creating vault secret FIREWORKS_AI_API_KEY: {'code': 'PGRST106', 'details': None, 'hint': None, 'message': 'The schema must be one of the following: public, graphql_public, agents, registry, engines, models, tools, workflows, audit, config, games, components'}
+2025-04-11 07:33:51,139 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Failed to create vault secret for FIREWORKS_AI_API_KEY
+2025-04-11 07:33:51,139 - src.haive.dataflow.registry.utils.vault_migration_script - WARNING - No value found for secret GROQ_API_KEY in environment
+2025-04-11 07:33:51,286 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/secrets "HTTP/2 406 Not Acceptable"
+2025-04-11 07:33:51,287 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error creating vault secret GROQ_API_KEY: {'code': 'PGRST106', 'details': None, 'hint': None, 'message': 'The schema must be one of the following: public, graphql_public, agents, registry, engines, models, tools, workflows, audit, config, games, components'}
+2025-04-11 07:33:51,287 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Failed to create vault secret for GROQ_API_KEY
+2025-04-11 07:33:51,380 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/secrets "HTTP/2 406 Not Acceptable"
+2025-04-11 07:33:51,381 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error creating vault secret DEEPSEEK_API_KEY: {'code': 'PGRST106', 'details': None, 'hint': None, 'message': 'The schema must be one of the following: public, graphql_public, agents, registry, engines, models, tools, workflows, audit, config, games, components'}
+2025-04-11 07:33:51,381 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Failed to create vault secret for DEEPSEEK_API_KEY
+2025-04-11 07:33:51,515 - httpx - INFO - HTTP Request: POST https://zkssazqhwcetsnbiuqik.supabase.co/rest/v1/secrets "HTTP/2 406 Not Acceptable"
+2025-04-11 07:33:51,515 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Error creating vault secret GOOGLE_BOOKS_API_KEY: {'code': 'PGRST106', 'details': None, 'hint': None, 'message': 'The schema must be one of the following: public, graphql_public, agents, registry, engines, models, tools, workflows, audit, config, games, components'}
+2025-04-11 07:33:51,515 - src.haive.dataflow.registry.utils.vault_migration_script - ERROR - Failed to create vault secret for GOOGLE_BOOKS_API_KEY
