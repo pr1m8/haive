@@ -7,7 +7,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnableSequence   
 from pydantic import BaseModel, Field
 import operator
-from haive.utils.message_utils import reduce_messages
+from src.haive.utils.message_utils import reduce_messages
 
 
 class AgentState(BaseModel):

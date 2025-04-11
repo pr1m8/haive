@@ -1,10 +1,22 @@
+"""
+State for the Mancala game.
+
+This module defines the state for the Mancala game,
+which includes the board, turn, game status, move history,
+free turn, winner, and player analyses.
+"""
 from src.haive.games.framework.base.state import GameState          
-from src.haive.games.mancala.models import MancalaMove
+from src.haive.games.mancala.models import MancalaMove, MancalaAnalysis
 from typing import List, Literal, Optional
 from pydantic import BaseModel, Field
 
 class MancalaState(GameState):
-    """State for a Mancala game."""
+    """State for a Mancala game.
+
+    This class defines the structure of the Mancala game state,
+    which includes the board, turn, game status, move history,
+    free turn, winner, and player analyses.
+    """
     # The board has 14 pits:
     # - Indices 0-5: Player 1's pits (bottom row, left to right)
     # - Index 6: Player 1's store (right)
@@ -22,7 +34,9 @@ class MancalaState(GameState):
     winner: Optional[str] = Field(
         default=None, description="Winner of the game, if any"
     )
-    
+    player1_analysis: List[MancalaAnalysis] = Field(default_factory=list, description="Analyses by player1")
+    player2_analysis: List[MancalaAnalysis] = Field(default_factory=list, description="Analyses by player2")
+
     @property
     def player1_score(self) -> int:
         """Get player 1's score (store)."""

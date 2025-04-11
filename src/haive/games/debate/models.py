@@ -1,41 +1,50 @@
-from typing import List, Dict, Any, Optional, Union, Literal
+# src/haive/games/debate/models.py
+from typing import List, Dict, Optional, Union, Literal
 from pydantic import BaseModel, Field
-from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage
-from src.haive.games.framework.base.state import GameState
+from src.haive.games.framework.multi_player.models import GamePhase
+from enum import Enum
+class Statement(BaseModel):
+    """Represents a single statement in a debate or discussion."""
+    content: str = Field(..., description="The text of the statement")
+    speaker_id: str = Field(..., description="ID of the speaker")
+    target_id: Optional[str] = Field(None, description="ID of targeted participant (if any)")
+    statement_type: str = Field("general", description="Type of statement (question, rebuttal, etc.)")
+    references: List[str] = Field(default_factory=list, description="References or citations")
+    sentiment: Optional[float] = Field(None, description="Sentiment score if applicable")
+    timestamp: str = Field(..., description="When the statement was made")
 
-class DebateMove(BaseModel):
-    """A move made by a participant in a debate/conversation."""
-    participant_id: str = Field(..., description="ID of the participant making the move")
-    content: str = Field(..., description="Content of the move (argument, statement, etc.)")
-    move_type: str = Field(default="statement", description="Type of move (opening, argument, closing, etc.)")
-    round_number: Optional[int] = Field(default=None, description="Round number for this move")
-    references: List[str] = Field(default_factory=list, description="References/citations used in this move")
+class Topic(BaseModel):
+    """Represents a debate topic or question."""
+    title: str = Field(..., description="Title of the topic")
+    description: str = Field(..., description="Detailed description of the topic")
+    keywords: List[str] = Field(default_factory=list, description="Key terms related to topic")
+    constraints: Optional[Dict[str, str]] = Field(None, description="Any constraints on discussion")
     
-    def __str__(self) -> str:
-        """String representation of the move."""
-        return f"{self.participant_id}: {self.content[:50]}..."
-
-class VoteResult(BaseModel):
-    """A vote from a judge/evaluator."""
+class Participant(BaseModel):
+    """Represents a participant in the debate."""
+    id: str = Field(..., description="Unique identifier for participant")
+    name: str = Field(..., description="Display name of participant")
+    role: str = Field(..., description="Role in the debate (moderator, debater, etc.)")
+    position: Optional[str] = Field(None, description="Position on topic (pro/con/neutral)")
+    persona: Optional[Dict[str, str]] = Field(None, description="Personality traits and characteristics")
+    expertise: List[str] = Field(default_factory=list, description="Areas of expertise")
+    bias: Optional[float] = Field(None, description="Bias level (-1.0 to 1.0)")
+    
+class Vote(BaseModel):
+    """Represents a vote from a participant."""
     voter_id: str = Field(..., description="ID of the voter")
-    personality: str = Field(..., description="Description of the voter's personality")
-    vote: str = Field(..., description="Who or what the voter voted for")
-    reasoning: str = Field(..., description="Reasoning for the vote")
-    score: Optional[Dict[str, float]] = Field(default=None, description="Optional numerical scores")
-    
-    def __str__(self) -> str:
-        """String representation of the vote."""
-        return f"{self.voter_id} voted for {self.vote}"
+    vote_value: Union[str, int, float] = Field(..., description="Value of the vote")
+    target_id: Optional[str] = Field(None, description="Target of the vote if applicable")
+    reason: Optional[str] = Field(None, description="Reasoning behind the vote")
 
-class DebateParticipant(BaseModel):
-    """Information about a debate participant."""
-    id: str = Field(..., description="Unique identifier for the participant")
-    name: str = Field(..., description="Display name for the participant")
-    role: str = Field(default="debater", description="Role in the debate (debater, judge, moderator)")
-    position: Optional[str] = Field(default=None, description="Position or stance of the participant")
-    personality: Optional[str] = Field(default=None, description="Personality description for the participant")
-    system_prompt: Optional[str] = Field(default=None, description="System prompt for this participant's LLM")
-    
-    def __str__(self) -> str:
-        """String representation of the participant."""
-        return f"{self.name} ({self.role})"
+class DebatePhase(str, Enum):
+    """Phases specific to debate-style interactions."""
+    SETUP = "setup"
+    OPENING_STATEMENTS = "opening_statements"
+    DISCUSSION = "discussion"
+    REBUTTAL = "rebuttal"
+    QUESTIONS = "questions"
+    CLOSING_STATEMENTS = "closing_statements"
+    VOTING = "voting"
+    JUDGMENT = "judgment"
+    CONCLUSION = "conclusion"

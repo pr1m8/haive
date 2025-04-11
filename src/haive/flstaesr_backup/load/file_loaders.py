@@ -11,13 +11,13 @@ from langchain_community.document_loaders import (
     AmazonTextractPDFLoader, DedocPDFLoader, MathpixPDFLoader, OnlinePDFLoader, PagedPDFSplitter,NotebookLoader,
     PythonLoader
 )
-from src.core.text_splitting.config import TextSplitterConfig
+from.core.text_splitting.config import TextSplitterConfig
 from langchain.tools import tool
 from typing import Optional, List, Dict
 import os
 import asyncio
 #from langchain.storage.
-from src.agents.summarizer.summarizer_agent import SummarizerAgent
+from.agents.summarizer.summarizer_agent import SummarizerAgent
 #summarizer = SummarizerAgent()
 #result = asyncio.run(summarizer.run(notebook_docs))
 
@@ -173,8 +173,8 @@ notebook_docs = asyncio.run(load_directory(directory_path='/Users/will/Downloads
 print(notebook_docs)
 
 print(notebook_docs, "load_directory")
-from src.core.vectorstore.config import VectorStoreConfig,create_vector_store,FAISS
-from src.core.doc_loading.url_loaders import load_sitemap_documents
+from.core.vectorstore.config import VectorStoreConfig,create_vector_store,FAISS
+from.core.doc_loading.url_loaders import load_sitemap_documents
 #summarizer = SummarizerAgent()
 #result = asyncio.run(summarizer.run(notebook_docs))
 #print(result)

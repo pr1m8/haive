@@ -16,7 +16,7 @@ Typical usage:
     - Use the setup_workflow method to customize the game flow
 """
 
-from typing import Generic, Type, TypeVar, Any, Dict
+from typing import Generic, Type, TypeVar, Any, Dict, Optional
 from src.haive.games.framework.base.config import GameConfig
 #from src.haive.games.framework.base.state import GameState
 from src.haive.core.engine.agent.agent import Agent
@@ -50,7 +50,7 @@ class GameAgent(Agent[GameConfig], Generic[T]):
         ...         return {"legal_moves": legal_moves}
     """
     
-    def __init__(self, config: GameConfig=GameConfig()):
+    def __init__(self, config: GameConfig):
         """Initialize the game agent.
 
         Args:
@@ -402,7 +402,7 @@ class GameAgent(Agent[GameConfig], Generic[T]):
             ...     return self.analyze_position(state, "player2")
         """
         raise NotImplementedError("Must be implemented by subclass")
-
+    
 """Utility functions for game agents.
 
 This module provides utility functions for running and managing game agents,

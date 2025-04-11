@@ -29,7 +29,7 @@ from pydantic import Field
 from src.haive.games.go.state import GoGameState, GoGameStateManager
 from src.haive.games.go.models import GoPlayerDecision, GoAnalysis
 from src.haive.games.go.aug_llms import aug_llm_configs
-src.haive.core.engine.aug_llm import compose_runnable
+from src.haive.core.engine.aug_llm import compose_runnable
 from src.haive.games.go.config import GoAgentConfig
 
 @register_agent(GoAgentConfig)

@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import List, Dict, Any
 from langchain_core.tools import BaseTool
-from haive.prebuilt.misc.systemic_review_of_scientific_articles.models import AcademicPaperSearchInput      
+from src.haive.prebuilt.misc.systemic_review_of_scientific_articles.models import AcademicPaperSearchInput      
 
 class AcademicPaperSearchTool(BaseTool):
     args_schema: type = AcademicPaperSearchInput  # Explicit type annotation

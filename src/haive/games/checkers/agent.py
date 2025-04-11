@@ -37,7 +37,8 @@ class CheckersAgent(GameAgent[CheckersAgentConfig]):
             "turn": state.turn,
             "color": player,
             "legal_moves": formatted_legal_moves,
-            "captured_pieces": state.captured_pieces,
+            "captured_red": state.captured_pieces["red"],
+            "captured_black": state.captured_pieces["black"],
             "move_history": [str(move) for move in state.move_history[-5:]],
             "player_analysis": player_analysis
         }
@@ -47,7 +48,8 @@ class CheckersAgent(GameAgent[CheckersAgentConfig]):
             "board": state.board_string,
             "turn": state.turn,
             "color": player,
-            "captured_pieces": state.captured_pieces,
+            "captured_red": state.captured_pieces["red"],
+            "captured_black": state.captured_pieces["black"],
             "move_history": [str(move) for move in state.move_history[-5:]]
         }
 
@@ -161,7 +163,7 @@ class CheckersAgent(GameAgent[CheckersAgentConfig]):
             print(f"   - Suggested Moves: {', '.join(a.get('suggested_moves', []))}")
         time.sleep(0.5)
 
-    def run_game(self, visualize: bool = True) -> Dict[str, Any]:
+    def run_game(self, visualize: bool = False) -> Dict[str, Any]:
         if visualize:
             initial_state = self.state_manager.initialize()
             try:
@@ -188,5 +190,3 @@ class CheckersAgent(GameAgent[CheckersAgentConfig]):
         gb.add_edge("player2_move", "analyze_player1")
         gb.add_edge("analyze_player1", "player1_move")
         self.graph = gb.build()
-a = CheckersAgent(CheckersAgentConfig())
-a.run_game(visualize=True)

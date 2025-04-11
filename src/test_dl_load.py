@@ -10,7 +10,7 @@ import langchain_community.document_loaders as base_loader_pkg
 
 from dotenv import dotenv_values
 
-def load_env_files(example_path=".env.example", actual_path=".env") -> dict:
+def load_env_files(example_path=".env", actual_path=".env") -> dict:
     example_vars = dotenv_values(example_path)
     actual_vars = dotenv_values(actual_path)
     return {

@@ -1,38 +1,16 @@
-"""Poker agent implementation for multi-agent Texas Hold'em games.
+"""Enhanced Texas Hold'em Poker agent implementation.
 
-This module implements a sophisticated poker agent that manages a multi-player
-Texas Hold'em game. Key features include:
-    - Multi-agent gameplay with different playing styles
-    - LLM-based decision making for each player
-    - Hand analysis and opponent modeling
-    - Complete game state management
-    - Detailed game history and statistics tracking
-    - Configurable game parameters
-
-The agent uses language models to generate player decisions, analyze hands,
-and create engaging gameplay narratives. Each player can have a different
-playing style (conservative, aggressive, balanced, loose) with corresponding
-LLM configurations.
-
-Example:
-    >>> from poker.agent import PokerAgent
-    >>> from poker.config import PokerAgentConfig
-    >>> 
-    >>> # Create agent with custom config
-    >>> config = PokerAgentConfig(
-    ...     player_names=["Alice", "Bob", "Charlie"],
-    ...     starting_chips=1000,
-    ...     small_blind=5,
-    ...     big_blind=10
-    ... )
-    >>> agent = PokerAgent(config)
-    >>> 
-    >>> # Run a complete game
-    >>> result = agent.run()
+This module implements a robust poker agent with improved:
+- Structured output handling with proper schema validation
+- Comprehensive logging and debugging
+- Error handling and retry policies for invalid moves
+- Enhanced prompts for LLM decisions
 """
-
+import os
 import logging
 import uuid
+import time
+import traceback
 from typing import Dict, List, Any, Optional, Union, Tuple
 from datetime import datetime
 
@@ -52,755 +30,891 @@ from src.haive.games.poker.prompts import (
     game_summary_prompt, get_system_prompt
 )
 from src.haive.games.poker.state_manager import PokerStateManager
-import re
 
+# Set up enhanced logging
 logger = logging.getLogger(__name__)
-logging.basicConfig(
-    filename="poker.log",
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-)
+file_handler = logging.FileHandler("poker_debug.log")
+file_handler.setLevel(logging.DEBUG)
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+console_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
+logger.addHandler(console_handler)
+logger.setLevel(logging.DEBUG)
+
+class RetryConfiguration:
+    """Configuration for retry policies."""
+    MAX_RETRIES = 3
+    RETRY_DELAY = 1.5  # seconds
+    BACKOFF_FACTOR = 1.5  # exponential backoff
+
 @register_agent(PokerAgentConfig)
 class PokerAgent(Agent[PokerAgentConfig]):
-    """Agent class for managing a multi-player Texas Hold'em poker game.
+    """Enhanced agent class for managing a multi-player Texas Hold'em poker game.
 
-    This agent coordinates multiple AI players with different playing styles,
-    manages game state, and handles all aspects of poker gameplay including
-    betting rounds, hand evaluation, and game progression.
-
-    The agent uses LLMs for:
-        - Player decision making (bet, call, fold, etc.)
-        - Hand strength analysis
-        - Opponent modeling and adaptation
-        - Game narration and logging
-
-    Attributes:
-        state_schema_manager (PokerStateManager): Manages game state transitions.
-        hands_played (int): Number of hands completed in current game.
-        player_stats (Dict[str, Dict]): Statistics for each player.
-        player_agents (Dict[str, Dict]): LLM configurations and prompts for each player.
-        hand_analyzer (Optional[Any]): LLM chain for analyzing hand strength.
-
-    Example:
-        >>> agent = PokerAgent()
-        >>> agent.setup_workflow()
-        >>> result = agent.run()
-        >>> print(f"Winner: {result.winner}")
+    Key improvements:
+    - Proper structured output handling
+    - Comprehensive debug logging
+    - Retry policies for failed operations
+    - Enhanced prompts and decision handling
     """
     
     def __init__(self, config: PokerAgentConfig=PokerAgentConfig()):
-        """Initialize the poker agent.
-
-        Args:
-            config (PokerAgentConfig, optional): Configuration for the game.
-                Defaults to a new PokerAgentConfig instance.
-
-        The initialization process:
-            1. Sets up the state manager
-            2. Initializes game statistics
-            3. Creates LLM configurations for each player
-            4. Sets up the hand analyzer
-
-        Example:
-            >>> config = PokerAgentConfig(player_names=["P1", "P2", "P3"])
-            >>> agent = PokerAgent(config)
-        """
-        self.state_schema_manager = PokerStateManager()
+        """Initialize the enhanced poker agent."""
+        logger.info("Initializing Enhanced Poker Agent")
+        self.state_manager = PokerStateManager(debug=True)
         super().__init__(config)
         self.hands_played = 0
         self.player_stats = {}
         self.player_agents = {}
         self.hand_analyzer = None
+        self.retry_history = {}  # Track retry attempts for debugging
         
         # Compose LLM runnables for players and analyzers
         self._setup_agent_runnables()
+        logger.info(f"Agent initialized with {len(self.config.player_names)} players")
         
     def _setup_agent_runnables(self):
-        """Set up LLM runnables for all players and the hand analyzer.
-
-        This method:
-            1. Creates the hand analysis LLM chain if configured
-            2. Sets up player-specific LLM configurations
-            3. Assigns playing styles to players
-            4. Initializes player statistics
-
-        The method supports multiple playing styles:
-            - Conservative: Tight and risk-averse play
-            - Aggressive: Frequent betting and bluffing
-            - Balanced: Adaptable strategy
-            - Loose: Plays many hands
-
-        Side Effects:
-            - Populates self.hand_analyzer
-            - Populates self.player_agents
-            - Initializes self.player_stats
-        """
-        # Set up agent for hand analysis
-        if 'hand_analyzer' in self.config.engines:
-            analyzer_config = self.config.engines['hand_analyzer']
-            analyzer_llm = compose_runnable(analyzer_config)
-            self.hand_analyzer = analyzer_config.prompt_template | analyzer_llm
+        """Set up LLM runnables for all players with improved error handling."""
+        logger.debug("Setting up agent runnables")
         
-        # Set up player agents
-        agent_types = ['conservative_agent', 'aggressive_agent', 'balanced_agent', 'loose_agent']
-        available_configs = [key for key in self.config.engines.keys() if key in agent_types]
-        
-        # Assign agent types to players
-        for i, player_name in enumerate(self.config.player_names):
-            # Choose an agent type (cycle through available types)
-            agent_type = available_configs[i % len(available_configs)]
-            agent_config = self.config.engines[agent_type]
-            style = agent_type.split('_')[0]
-            system_prompt = get_system_prompt(style)
+        try:
+            # Set up agent for hand analysis
+            if 'hand_analyzer' in self.config.engines:
+                logger.debug("Configuring hand analyzer")
+                analyzer_config = self.config.engines['hand_analyzer']
+                analyzer_llm = compose_runnable(analyzer_config)
+                self.hand_analyzer = analyzer_config.prompt_template | analyzer_llm
             
-            # Create runnable with decision prompt
-            agent_llm = compose_runnable(agent_config)
-            prompt_template = agent_config.prompt_template
+            # Set up player agents
+            agent_types = ['conservative_agent', 'aggressive_agent', 'balanced_agent', 'loose_agent']
+            available_configs = [key for key in self.config.engines.keys() if key in agent_types]
             
-            # Store runnable with player ID
-            player_id = f"player_{i}"
-            self.player_agents[player_id] = {
-                'runnable': agent_llm,
-                'prompt_template': prompt_template,
-                'name': player_name,
-                'style': style,
-                'system_prompt': system_prompt
-            }
+            if not available_configs:
+                logger.error("No valid agent configurations found!")
+                raise ValueError("No valid agent configurations found")
             
-            # Initialize player stats
-            self.player_stats[player_id] = {
-                'name': player_name,
-                'hands_played': 0,
-                'hands_won': 0,
-                'chips_won': 0,
-                'chips_lost': 0,
-                'biggest_pot_won': 0,
-                'total_bets': 0,
-                'folds': 0,
-                'checks': 0,
-                'calls': 0,
-                'bets': 0,
-                'raises': 0,
-                'all_ins': 0,
-            }
+            logger.debug(f"Available agent types: {available_configs}")
             
-            logger.info(f"Set up {style} agent for player {player_name} (ID: {player_id})")
+            # Assign agent types to players
+            for i, player_name in enumerate(self.config.player_names):
+                # Choose an agent type (cycle through available types)
+                agent_type = available_configs[i % len(available_configs)]
+                agent_config = self.config.engines[agent_type]
+                style = agent_type.split('_')[0]
+                system_prompt = get_system_prompt(style)
+                
+                # Create runnable with decision prompt
+                agent_llm = compose_runnable(agent_config)
+                prompt_template = agent_config.prompt_template
+                
+                # Store runnable with player ID
+                player_id = f"player_{i}"
+                self.player_agents[player_id] = {
+                    'runnable': agent_llm,
+                    'prompt_template': prompt_template,
+                    'name': player_name,
+                    'style': style,
+                    'system_prompt': system_prompt
+                }
+                
+                # Initialize player stats
+                self.player_stats[player_id] = {
+                    'name': player_name,
+                    'hands_played': 0,
+                    'hands_won': 0,
+                    'chips_won': 0,
+                    'chips_lost': 0,
+                    'biggest_pot_won': 0,
+                    'total_bets': 0,
+                    'folds': 0,
+                    'checks': 0,
+                    'calls': 0,
+                    'bets': 0,
+                    'raises': 0,
+                    'all_ins': 0,
+                    'decision_errors': 0,
+                    'retries': 0
+                }
+                
+                logger.info(f"Set up {style} agent for player {player_name} (ID: {player_id})")
+
+        except Exception as e:
+            logger.error(f"Error setting up agent runnables: {e}")
+            logger.error(traceback.format_exc())
+            raise
 
     def setup_workflow(self):
-        """Set up the poker game workflow graph.
-
-        Creates a directed graph that manages the game flow, including:
-            1. Game initialization
-            2. Hand setup and dealing
-            3. Player decision cycles
-            4. Phase transitions (preflop -> flop -> turn -> river)
-            5. Hand resolution and chip distribution
-            6. Game termination
-
-        The workflow uses conditional edges to handle:
-            - Round completion conditions
-            - Phase transitions
-            - Hand and game ending conditions
-
-        Side Effects:
-            - Adds nodes to self.graph
-            - Adds edges to self.graph
-            - Sets up conditional transitions
-        """
+        """Set up the poker game workflow graph with enhanced error handling."""
         logger.info("Setting up poker game workflow")
         
-        # Define nodes
-        self.graph.add_node("initialize_game", self.initialize_game)
-        self.graph.add_node("setup_hand", self.setup_hand)
-        self.graph.add_node("player_decision", self.handle_player_decision)
-        self.graph.add_node("update_game_phase", self.update_game_phase)
-        self.graph.add_node("end_hand", self.end_hand)
-        self.graph.add_node("end_game", self.end_game)
-        
-        # Define edges
-        self.graph.add_edge(START, "initialize_game")
-        self.graph.add_edge("initialize_game", "setup_hand")
-        self.graph.add_edge("setup_hand", "player_decision")
-        
-        # Player Decision conditions
-        self.graph.add_conditional_edges(
-            "player_decision",
-            self.should_continue_round,
-            {
-                "continue_round": "player_decision",
-                "advance_phase": "update_game_phase",
-                "end_hand": "end_hand"
-            }
-        )
-        
-        # Update Game Phase conditions
-        self.graph.add_conditional_edges(
-            "update_game_phase",
-            self.should_continue_to_next_phase,
-            {
-                "next_phase": "player_decision",
-                "showdown": "end_hand"
-            }
-        )
-        
-        # End Hand conditions
-        self.graph.add_conditional_edges(
-            "end_hand",
-            self.should_play_another_hand,
-            {
-                True: "setup_hand",
-                False: "end_game"
-            }
-        )
-        
-        # End Game -> END
-        self.graph.add_edge("end_game", END)
-        
-        logger.info("Poker game workflow setup complete")
-    
-    def initialize_game(self, state: PokerState) -> PokerState:
-        """Initialize the poker game state.
-
-        Sets up the initial game state with players, chips, and blinds.
-        Resets all game statistics and prepares for the first hand.
-
-        Args:
-            state (PokerState): Current game state to initialize.
-
-        Returns:
-            PokerState: Initialized game state.
-
-        Side Effects:
-            - Resets game statistics
-            - Sets up player positions
-            - Configures blind amounts
-            - Initializes chip stacks
-            - Logs game setup
-
-        Example:
-            >>> state = PokerState()
-            >>> state = agent.initialize_game(state)
-            >>> print(f"Players: {len(state.game.players)}")
-        """
-        # Reset game state
-        state.initialize_game(
-            player_names=self.config.player_names, 
-            starting_chips=self.config.starting_chips
-        )
-        
-        # Set blinds
-        state.game.small_blind = self.config.small_blind
-        state.game.big_blind = self.config.big_blind
-        
-        # Log initialization
-        state.log_event(f"Game initialized with {len(state.game.players)} players")
-        state.log_event(f"Small blind: ${state.game.small_blind}, Big blind: ${state.game.big_blind}")
-        
-        # Reset stats
-        self.hands_played = 0
-        for player_id in self.player_stats:
-            self.player_stats[player_id].update({
-                'hands_played': 0,
-                'hands_won': 0,
-                'chips_won': 0,
-                'chips_lost': 0,
-            })
-        
-        return state
-    
-    def setup_hand(self, state: PokerState) -> PokerState:
-        """Set up a new poker hand.
-
-        Prepares the game state for a new hand by:
-            1. Dealing hole cards to players
-            2. Posting blinds
-            3. Setting up the betting round
-            4. Updating player statistics
-            5. Logging hand information
-
-        Args:
-            state (PokerState): Current game state.
-
-        Returns:
-            PokerState: Updated game state ready for the new hand.
-
-        Side Effects:
-            - Increments hands_played counter
-            - Updates player statistics
-            - Logs hand setup details
-            - Sets waiting_for_player
-
-        Example:
-            >>> state = agent.setup_hand(state)
-            >>> print(f"Hand #{agent.hands_played} started")
-        """
-        # Increment hands played
-        self.hands_played += 1
-        
-        # Start a new hand
-        state.start_new_hand()
-        
-        # Update player stats
-        for player in state.game.players:
-            if player.id in self.player_stats:
-                self.player_stats[player.id]['hands_played'] += 1
-        
-        # Log the start of a new hand
-        state.log_event(f"Hand #{self.hands_played} started")
-        
-        # Log the dealer and blinds
-        dealer_idx = state.game.dealer_position
-        dealer = state.game.players[dealer_idx].name
-        sb_idx = (dealer_idx + 1) % len(state.game.players)
-        small_blind = state.game.players[sb_idx].name
-        bb_idx = (dealer_idx + 2) % len(state.game.players)
-        big_blind = state.game.players[bb_idx].name
-        
-        state.log_event(f"Dealer: {dealer}")
-        state.log_event(f"Small Blind: {small_blind} (${state.game.small_blind})")
-        state.log_event(f"Big Blind: {big_blind} (${state.game.big_blind})")
-        
-        # Log player hole cards (privately)
-        for player in state.game.players:
-            logger.debug(f"Player {player.name}'s hole cards: {player.hand}")
-        
-        # Set waiting_for_player
-        current_player = state.game.players[state.game.current_player_idx]
-        state.waiting_for_player = current_player.id
-        
-        return state
-    
-    def handle_player_decision(self, state: PokerState) -> PokerState:
-        """Process the decision of the current player"""
-        # Get the current player
-        current_player_idx = state.game.current_player_idx
-        current_player = state.game.players[current_player_idx]
-        
-        # Skip players who are not active or all-in
-        if not current_player.is_active or current_player.is_all_in:
-            state.log_event(f"Skipping {current_player.name} (inactive or all-in)")
-            state._advance_to_next_player()
-            
-            # Set waiting_for_player to the next player
-            next_player_idx = state.game.current_player_idx
-            next_player = state.game.players[next_player_idx]
-            state.waiting_for_player = next_player.id
-            
-            return state
-        
-        # Create observation for the current player
-        observation = state.create_player_observation(current_player.id)
-        
-        # Get the player agent
-        player_agent = self.player_agents.get(current_player.id)
-        if not player_agent:
-            error_msg = f"No agent found for player {current_player.id}"
-            state.error = error_msg
-            logger.error(error_msg)
-            return state
-        
-        # Get legal moves
-        legal_moves_list = self.state_manager.get_legal_actions(current_player.id) if hasattr(self, 'state_manager') else []
-        legal_moves_str = ", ".join([f"{move['action']}" for move in legal_moves_list]) if legal_moves_list else "fold, check, call, bet, raise, all-in"
-        
         try:
-            # Format recent actions
-            recent_actions_str = "None" if not observation.recent_actions else "\n".join([
-                f"- {a.player_id.split('_')[1]}: {a.action.value.upper()}"
-                f"{f' + {str(a.amount)}' if a.amount > 0 else ''}"
-                for a in observation.recent_actions
-            ])
+            # Define nodes
+            self.graph.add_node("initialize_game", self.initialize_game)
+            self.graph.add_node("setup_hand", self.setup_hand)
+            self.graph.add_node("player_decision", self.handle_player_decision)
+            self.graph.add_node("update_game_phase", self.update_game_phase)
+            self.graph.add_node("end_hand", self.end_hand)
+            self.graph.add_node("end_game", self.end_game)
             
-            # Format player states
-            player_states_str = "\n".join([
-                f"- {p['name']}: ${p['chips']} "
-                f"({'folded' if not p['is_active'] else 'all-in' if p['is_all_in'] else 'active'}) "
-                f"Current bet: ${p['current_bet']}"
-                for p in observation.visible_players
-            ])
+            # Define edges
+            self.graph.add_edge(START, "initialize_game")
+            self.graph.add_edge("initialize_game", "setup_hand")
+            self.graph.add_edge("setup_hand", "player_decision")
             
-            # Format community cards
-            community_cards_str = "None" if not observation.community_cards else ", ".join(
-                [str(card) for card in observation.community_cards]
+            # Player Decision conditions
+            self.graph.add_conditional_edges(
+                "player_decision",
+                self.should_continue_round,
+                {
+                    "continue_round": "player_decision",
+                    "advance_phase": "update_game_phase",
+                    "end_hand": "end_hand"
+                }
             )
             
-            # Total pot size (sum of all pots)
-            pot_size = sum(pot for pot in observation.pot_sizes)
+            # Update Game Phase conditions
+            self.graph.add_conditional_edges(
+                "update_game_phase",
+                self.should_continue_to_next_phase,
+                {
+                    "next_phase": "player_decision",
+                    "showdown": "end_hand"
+                }
+            )
             
-            # Player's current bet this round
-            player_current_bet = current_player.current_bet
+            # End Hand conditions
+            self.graph.add_conditional_edges(
+                "end_hand",
+                self.should_play_another_hand,
+                {
+                    True: "setup_hand",
+                    False: "end_game"
+                }
+            )
             
-            # Get the LLM and prompt template
-            llm = player_agent['llm'] if 'llm' in player_agent else player_agent['runnable']
+            # End Game -> END
+            self.graph.add_edge("end_game", END)
             
-            # Create input dictionary with all variables the template might need
-            input_values = {
-                "player_id": current_player.id,
-                "position_name": observation.position_name,
-                "phase": observation.phase.value,
-                "hand": str(observation.hand),
-                "community_cards": community_cards_str,
-                "chips": observation.chips,
-                "current_bet": observation.current_bet - player_current_bet,  # What they need to call
-                "pot_size": pot_size,
-                "recent_actions": recent_actions_str,
-                "player_states": player_states_str,
-                "legal_moves": legal_moves_str,
-            }
+            logger.info("Poker game workflow setup complete")
             
-            # Get the decision from the agent - this will return an AgentDecisionSchema object
-            response = llm.invoke(input_values)
-            
-            # IMPORTANT: No need to parse the response, it's already structured!
-            # If using structured output, the response is already an AgentDecisionSchema object
-            if isinstance(response, AgentDecisionSchema):
-                # Create a standard AgentDecision from the structured output
-                decision = AgentDecision(
-                    action=response.action,
-                    amount=response.amount,
-                    reasoning=response.reasoning
-                )
-            else:
-                # Fallback to parsing text if not structured (though this shouldn't happen)
-                decision = self._parse_decision(response.content, current_player, state)
-            
-            # Log the decision
-            state.current_decision = decision
-            
-            # Apply the decision
-            state.handle_player_action(current_player.id, decision)
-            
-            # Update player stats
-            self._update_player_stats(current_player.id, decision)
-            
-            # Set waiting_for_player to the next player
-            next_player_idx = state.game.current_player_idx
-            if next_player_idx < len(state.game.players):
-                next_player = state.game.players[next_player_idx]
-                state.waiting_for_player = next_player.id
-            else:
-                state.waiting_for_player = None
-                
         except Exception as e:
-            error_msg = f"Error getting decision from agent for {current_player.name}: {str(e)}"
-            state.error = error_msg
-            logger.error(error_msg)
-        
-            return state
+            logger.error(f"Error setting up workflow: {e}")
+            logger.error(traceback.format_exc())
+            raise
     
-    def _parse_decision(self, response_text: str, player: Player, state: PokerState) -> AgentDecision:
-        """Parse the agent's decision from the response text"""
-        # Initialize decision with defaults
-        decision = AgentDecision(
-            action=PlayerAction.FOLD,  # Default to FOLD
-            amount=0,
-            reasoning="Default reasoning"
-        )
+    def initialize_game(self, state: PokerState) -> PokerState:
+        """Initialize the poker game state with enhanced logging."""
+        logger.info("Initializing game state")
         
         try:
-            # Extract key parts of the response
-            response_lower = response_text.lower()
+            # Reset game state
+            state.initialize_game(
+                player_names=self.config.player_names, 
+                starting_chips=self.config.starting_chips
+            )
             
-            # Determine the action
-            if "fold" in response_lower:
-                decision.action = PlayerAction.FOLD
-            elif "check" in response_lower:
-                decision.action = PlayerAction.CHECK
-            elif "call" in response_lower:
-                decision.action = PlayerAction.CALL
-            elif "bet" in response_lower:
-                decision.action = PlayerAction.BET
-            elif "raise" in response_lower:
-                decision.action = PlayerAction.RAISE
-            elif "all-in" in response_lower or "all in" in response_lower:
-                decision.action = PlayerAction.ALL_IN
+            # Set blinds
+            state.game.small_blind = self.config.small_blind
+            state.game.big_blind = self.config.big_blind
             
-            # Extract amount if applicable
-            if decision.action in [PlayerAction.BET, PlayerAction.RAISE]:
-                # Look for dollar amounts
-                amount_matches = re.findall(r'\$(\d+)', response_lower)
-                if amount_matches:
-                    decision.amount = int(amount_matches[0])
-                else:
-                    # Try to find numbers
-                    number_matches = re.findall(r'(?:bet|raise)(?:\s+to)?(?:\s+\$)?(\d+)', response_lower)
-                    if number_matches:
-                        decision.amount = int(number_matches[0])
-                    else:
-                        # Fallback values
-                        if decision.action == PlayerAction.BET:
-                            decision.amount = state.game.big_blind
-                        elif decision.action == PlayerAction.RAISE:
-                            decision.amount = state.game.current_bet + state.game.min_raise
+            # Log initialization
+            state.log_event(f"Game initialized with {len(state.game.players)} players")
+            state.log_event(f"Small blind: ${state.game.small_blind}, Big blind: ${state.game.big_blind}")
             
-            # For calls, set the amount to what needs to be called
-            if decision.action == PlayerAction.CALL:
-                decision.amount = state.game.current_bet - player.current_bet
+            # Debug log all player details
+            logger.debug("Players initialized:")
+            for player in state.game.players:
+                logger.debug(f"  {player.id}: {player.name}, ${player.chips}, Position: {player.position}")
             
-            # For all-in, use all remaining chips
-            if decision.action == PlayerAction.ALL_IN:
-                decision.amount = player.chips
+            # Reset stats
+            self.hands_played = 0
+            for player_id in self.player_stats:
+                self.player_stats[player_id].update({
+                    'hands_played': 0,
+                    'hands_won': 0,
+                    'chips_won': 0,
+                    'chips_lost': 0,
+                    'decision_errors': 0,
+                    'retries': 0
+                })
             
-            # Extract reasoning
-            reasoning_match = re.search(r'(?:reasoning|rationale|thinking|analysis):(.*?)(?:\n\n|$)', 
-                                    response_lower, re.IGNORECASE | re.DOTALL)
-            if reasoning_match:
-                decision.reasoning = reasoning_match.group(1).strip()
+            logger.info("Game initialization complete")
+            return state
+            
+        except Exception as e:
+            logger.error(f"Error initializing game: {e}")
+            logger.error(traceback.format_exc())
+            state.error = f"Game initialization error: {str(e)}"
+            return state
+    
+    def setup_hand(self, state: PokerState) -> PokerState:
+        """Set up a new poker hand with enhanced error handling and debugging."""
+        logger.info(f"Setting up hand #{self.hands_played + 1}")
+        
+        try:
+            # Increment hands played
+            self.hands_played += 1
+            
+            # Start a new hand
+            state.start_new_hand()
+            
+            # Update player stats
+            for player in state.game.players:
+                if player.id in self.player_stats:
+                    self.player_stats[player.id]['hands_played'] += 1
+            
+            # Log the start of a new hand
+            state.log_event(f"Hand #{self.hands_played} started")
+            
+            # Log the dealer and blinds
+            dealer_idx = state.game.dealer_position
+            dealer = state.game.players[dealer_idx].name
+            sb_idx = (dealer_idx + 1) % len(state.game.players)
+            small_blind = state.game.players[sb_idx].name
+            bb_idx = (dealer_idx + 2) % len(state.game.players)
+            big_blind = state.game.players[bb_idx].name
+            
+            state.log_event(f"Dealer: {dealer}")
+            state.log_event(f"Small Blind: {small_blind} (${state.game.small_blind})")
+            state.log_event(f"Big Blind: {big_blind} (${state.game.big_blind})")
+            
+            # Debug log all player hole cards
+            logger.debug("Player hole cards:")
+            for player in state.game.players:
+                logger.debug(f"  {player.name}: {player.hand}")
+            
+            # Set waiting_for_player
+            current_player = state.game.players[state.game.current_player_idx]
+            state.waiting_for_player = current_player.id
+            
+            logger.info(f"Hand #{self.hands_played} setup complete")
+            return state
+            
+        except Exception as e:
+            logger.error(f"Error setting up hand: {e}")
+            logger.error(traceback.format_exc())
+            state.error = f"Hand setup error: {str(e)}"
+            return state
+    
+    def handle_player_decision(self, state: PokerState) -> PokerState:
+        """Enhanced player decision handling with improved error recovery.
+        
+        This method:
+        1. Determines the current player
+        2. Calculates legal actions
+        3. Gets decision from the player agent
+        4. Validates and applies the decision
+        5. Updates game state
+        """
+        game = state.game
+        
+        # Skip if game is over or in showdown
+        if game.phase == GamePhase.GAME_OVER or game.phase == GamePhase.SHOWDOWN:
+            logger.info("Game in terminal state, skipping player decision")
+            return state
+        
+        # Get current player
+        current_player_idx = game.current_player_idx
+        
+        # Skip if all players but one have folded (hand is over)
+        active_players = [p for p in game.players if not p.has_folded]
+        if len(active_players) <= 1:
+            logger.info("Only one active player left, skipping player decision")
+            game.phase = GamePhase.SHOWDOWN
+            return state
+        
+        current_player = game.players[current_player_idx]
+        
+        # Skip if player has folded
+        if current_player.has_folded:
+            logger.debug(f"Player {current_player_idx} has folded, moving to next player")
+            game.current_player_idx = self._get_next_player_idx(game)
+            return state
+        
+        # Skip if player is all-in
+        if current_player.is_all_in:
+            logger.debug(f"Player {current_player_idx} is all-in, moving to next player")
+            game.current_player_idx = self._get_next_player_idx(game)
+            return state
+        
+        # Get the agent for this player
+        player_id = f"player_{current_player_idx}"
+        agent_info = self.player_agents.get(player_id)
+        
+        if not agent_info:
+            logger.error(f"No agent found for player {player_id}")
+            # Fallback to basic agent
+            agent_info = next(iter(self.player_agents.values()))
+        
+        # Log player turn
+        logger.info(f"Player {current_player_idx} ({current_player.name}) turn - {agent_info['style']} agent")
+        
+        # Calculate legal actions for this player
+        legal_actions = self._get_legal_actions(game, current_player)
+        
+        # Prepare decision context
+        context = self._prepare_decision_context(state, current_player_idx, legal_actions)
+        
+        # Get decision from agent
+        try:
+            logger.debug(f"Getting decision for player {current_player_idx}")
+            
+            # Add system prompt for better guidance
+            system_prompt = agent_info.get('system_prompt', '')
+            decision_prompt_text = decision_prompt.format(
+                player_cards=context["player_cards"],
+                community_cards=context["community_cards"] or "None",
+                position=context["position"],
+                pot_size=context["pot_size"],
+                current_bet=context["current_bet"],
+                player_chips=context["player_chips"],
+                legal_actions=self._format_legal_actions(legal_actions),
+                other_players=context["other_players"]
+            )
+            
+            # Create a guided prompt with system message
+            messages = [
+                SystemMessage(content=system_prompt),
+                HumanMessage(content=decision_prompt_text)
+            ]
+            
+            # Get decision with retry logic
+            decision = self._get_player_decision_with_retry(agent_info['runnable'], messages, context, legal_actions)
+            
+            # Decision received successfully
+            if decision:
+                logger.info(f"Player {current_player_idx} decision: {decision.action} {decision.amount if hasattr(decision, 'amount') else ''}")
+                
+                # Apply the decision
+                self._apply_player_decision(game, current_player, decision, legal_actions)
+                
+                # Update player stats
+                self._update_player_stats(player_id, decision.action, decision.amount if hasattr(decision, 'amount') else 0)
+                
+                # Move to next player
+                game.current_player_idx = self._get_next_player_idx(game)
             else:
-                # Just use the last paragraph as reasoning
-                paragraphs = response_text.split("\n\n")
-                if paragraphs:
-                    decision.reasoning = paragraphs[-1].strip()
+                # Fallback decision (FOLD or CHECK if possible)
+                logger.warning(f"Using fallback decision for player {current_player_idx}")
+                fallback_action = self._get_fallback_action(legal_actions)
+                self._apply_player_decision(game, current_player, fallback_action, legal_actions)
+                game.current_player_idx = self._get_next_player_idx(game)
         
         except Exception as e:
-            logger.error(f"Error parsing decision: {str(e)}")
-            decision.reasoning = f"Error parsing decision: {str(e)}"
-        
-        # Validate and adjust decision
-        decision = self._validate_and_adjust_decision(decision, player, state)
-        
-        return decision
-        
-    def _validate_and_adjust_decision(self, decision: AgentDecision, player: Player, state: PokerState) -> AgentDecision:
-        """Validate and adjust the decision to ensure it's legal"""
-        
-        # Check if CHECK is valid (only if there's no current bet to call)
-        if decision.action == PlayerAction.CHECK and state.game.current_bet > player.current_bet:
-            logger.warning(f"Invalid CHECK from {player.name}, cannot check when there's a bet to call")
-            decision.action = PlayerAction.FOLD
-            decision.reasoning += " (Adjusted from CHECK to FOLD because there was a bet to call)"
-        
-        # Check if BET is valid (only if no one has bet yet)
-        if decision.action == PlayerAction.BET and state.game.current_bet > 0:
-            logger.warning(f"Invalid BET from {player.name}, cannot bet when there's already a bet")
+            logger.error(f"Error handling player decision: {e}")
+            logger.error(traceback.format_exc())
             
-            # Adjust to CALL or RAISE based on the bet amount
-            if decision.amount <= state.game.current_bet - player.current_bet:
-                decision.action = PlayerAction.CALL
-                decision.amount = state.game.current_bet - player.current_bet
-                decision.reasoning += " (Adjusted from BET to CALL because there was already a bet)"
-            else:
-                decision.action = PlayerAction.RAISE
-                decision.amount = decision.amount
-                decision.reasoning += " (Adjusted from BET to RAISE because there was already a bet)"
-        
-        # Ensure RAISE is at least min raise
-        if decision.action == PlayerAction.RAISE:
-            min_raise_to = state.game.current_bet + state.game.min_raise
-            if decision.amount < min_raise_to:
-                logger.warning(f"Raise amount {decision.amount} less than min raise {min_raise_to}, adjusting")
-                decision.amount = min_raise_to
-                decision.reasoning += f" (Adjusted raise amount to minimum of {min_raise_to})"
-        
-        # Ensure BET is at least big blind
-        if decision.action == PlayerAction.BET and decision.amount < state.game.big_blind:
-            logger.warning(f"Bet amount {decision.amount} less than big blind {state.game.big_blind}, adjusting")
-            decision.amount = state.game.big_blind
-            decision.reasoning += f" (Adjusted bet amount to minimum of {state.game.big_blind})"
-        
-        # Ensure player has enough chips for the action
-        if decision.action in [PlayerAction.BET, PlayerAction.RAISE, PlayerAction.CALL] and decision.amount > player.chips:
-            logger.warning(f"{player.name} doesn't have enough chips for {decision.action}")
+            # Use fallback decision (fold)
+            fallback_action = self._get_fallback_action(legal_actions)
+            logger.warning(f"Using emergency fallback: {fallback_action}")
+            self._apply_player_decision(game, current_player, fallback_action, legal_actions)
+            game.current_player_idx = self._get_next_player_idx(game)
             
-            if decision.amount >= player.chips:
-                # If they're betting almost all chips, make it ALL_IN
-                decision.action = PlayerAction.ALL_IN
-                decision.amount = player.chips
-                decision.reasoning += " (Adjusted to ALL_IN due to insufficient chips)"
+            # Update error stats
+            if player_id in self.player_stats:
+                self.player_stats[player_id]["decision_errors"] += 1
+        
+        return state
+    
+    def _get_player_decision_with_retry(self, runnable, messages, context, legal_actions, max_retries=3):
+        """Get player decision with retry logic for handling invalid outputs."""
+        decision = None
+        retries = 0
+        
+        while retries < max_retries and decision is None:
+            try:
+                raw_decision = runnable.invoke(messages)
+                logger.debug(f"Raw decision: {raw_decision}")
+                
+                # Handle different response formats
+                if isinstance(raw_decision, AgentDecision):
+                    # Properly structured output
+                    decision = raw_decision
+                elif isinstance(raw_decision, dict) and "action" in raw_decision:
+                    # Dict with action field
+                    decision = AgentDecision(
+                        action=raw_decision["action"],
+                        amount=raw_decision.get("amount", 0),
+                        reasoning=raw_decision.get("reasoning", "")
+                    )
+                elif hasattr(raw_decision, "content"):
+                    # Message-like response
+                    content = raw_decision.content
+                    # Try to parse JSON from content
+                    try:
+                        # Extract JSON if it exists
+                        import re
+                        import json
+                        
+                        # Look for JSON pattern
+                        json_match = re.search(r'\{.*\}', content, re.DOTALL)
+                        if json_match:
+                            json_str = json_match.group(0)
+                            decision_dict = json.loads(json_str)
+                            
+                            if "action" in decision_dict:
+                                decision = AgentDecision(
+                                    action=decision_dict["action"],
+                                    amount=decision_dict.get("amount", 0),
+                                    reasoning=decision_dict.get("reasoning", "")
+                                )
+                        else:
+                            # Simple text parsing
+                            action_match = re.search(r'action[:\s]+([A-Z]+)', content, re.IGNORECASE)
+                            amount_match = re.search(r'amount[:\s]+(\d+)', content, re.IGNORECASE)
+                            
+                            if action_match:
+                                action = action_match.group(1).upper()
+                                amount = int(amount_match.group(1)) if amount_match else 0
+                                
+                                decision = AgentDecision(
+                                    action=action,
+                                    amount=amount,
+                                    reasoning=""
+                                )
+                    except Exception as e:
+                        logger.warning(f"Error parsing decision from content: {e}")
+                        # Continue to retry
+                
+                # Validate decision
+                if decision:
+                    if not self._is_valid_decision(decision, legal_actions):
+                        logger.warning(f"Invalid decision: {decision}, retrying")
+                        decision = None
+            
+            except Exception as e:
+                logger.warning(f"Error getting player decision: {e}")
+                logger.debug(traceback.format_exc())
+                decision = None
+            
+            retries += 1
+            
+            if decision is None and retries < max_retries:
+                logger.info(f"Retrying decision, attempt {retries+1}/{max_retries}")
+                time.sleep(1)  # Brief delay before retry
         
         return decision
     
-    def _update_player_stats(self, player_id: str, decision: AgentDecision):
-        """Update player statistics based on their decision"""
+    def _is_valid_decision(self, decision, legal_actions):
+        """Check if a decision is valid given the legal actions."""
+        try:
+            # Convert decision action to enum if it's a string
+            if isinstance(decision.action, str):
+                action_str = decision.action.upper()
+                # Try to convert to PlayerAction enum
+                try:
+                    action = PlayerAction[action_str]
+                except KeyError:
+                    # Handle common variants
+                    action_map = {
+                        "RAISE": PlayerAction.RAISE,
+                        "BET": PlayerAction.BET,
+                        "CALL": PlayerAction.CALL,
+                        "CHECK": PlayerAction.CHECK,
+                        "FOLD": PlayerAction.FOLD,
+                        "ALL_IN": PlayerAction.ALL_IN,
+                        "ALLIN": PlayerAction.ALL_IN,
+                        "ALL-IN": PlayerAction.ALL_IN
+                    }
+                    action = action_map.get(action_str)
+                    if not action:
+                        logger.warning(f"Unknown action: {action_str}")
+                        return False
+            else:
+                action = decision.action
+            
+            # Check if action is in legal actions
+            legal_action_types = [la["action"] for la in legal_actions]
+            
+            if action not in legal_action_types and action.name not in legal_action_types:
+                logger.warning(f"Action {action} not in legal actions: {legal_action_types}")
+                return False
+            
+            # For BET/RAISE, check amount constraints
+            if action in (PlayerAction.BET, PlayerAction.RAISE):
+                for la in legal_actions:
+                    if la["action"] == action or la["action"] == action.name:
+                        min_amount = la.get("min_amount", 0)
+                        max_amount = la.get("max_amount", float("inf"))
+                        
+                        amount = decision.amount if hasattr(decision, "amount") else 0
+                        
+                        if amount < min_amount or amount > max_amount:
+                            logger.warning(f"Amount {amount} outside range [{min_amount}, {max_amount}]")
+                            return False
+                        
+                        return True
+            
+            return True
+        
+        except Exception as e:
+            logger.error(f"Error validating decision: {e}")
+            return False
+    
+    def _get_fallback_action(self, legal_actions):
+        """Get a fallback action when decision fails."""
+        # Prefer CHECK if available
+        for la in legal_actions:
+            if la["action"] == PlayerAction.CHECK:
+                return AgentDecision(action=PlayerAction.CHECK, amount=0, reasoning="Fallback decision")
+        
+        # Otherwise FOLD
+        return AgentDecision(action=PlayerAction.FOLD, amount=0, reasoning="Fallback decision")
+    
+    def _get_player_name(self, player_id: str) -> str:
+        """Get player name from ID, with format 'P1' if not found."""
+        for player in self.state_manager.state.game.players:
+            if player.id == player_id:
+                return player.name
+        # If not found, extract player number from ID
+        if player_id.startswith("player_"):
+            try:
+                player_num = int(player_id.split("_")[1]) + 1
+                return f"P{player_num}"
+            except:
+                pass
+        return player_id
+    
+    def _get_legal_actions(self, state: PokerState, player: Player) -> List[Dict[str, Any]]:
+        """Get legal actions for a player with enhanced error handling."""
+        try:
+            if not player.is_active or player.is_all_in:
+                return []
+                
+            legal_actions = []
+            
+            # Fold is always legal
+            legal_actions.append({
+                "action": PlayerAction.FOLD,
+                "amount": 0
+            })
+            
+            # Check is legal if no bet to call
+            call_amount = state.game.current_bet - player.current_bet
+            if call_amount <= 0:
+                legal_actions.append({
+                    "action": PlayerAction.CHECK,
+                    "amount": 0
+                })
+            
+            # Call is legal if there's a bet to call and player has chips
+            if call_amount > 0 and player.chips >= call_amount:
+                legal_actions.append({
+                    "action": PlayerAction.CALL,
+                    "amount": call_amount
+                })
+            
+            # Bet is legal if no current bet and player has chips
+            if state.game.current_bet == 0 and player.chips > 0:
+                # Minimum bet is big blind
+                min_bet = min(state.game.big_blind, player.chips)
+                legal_actions.append({
+                    "action": PlayerAction.BET,
+                    "amount": min_bet,
+                    "min": min_bet,
+                    "max": player.chips
+                })
+            
+            # Raise is legal if there's a bet and player has enough chips
+            if state.game.current_bet > 0 and player.chips > call_amount:
+                min_raise_to = state.game.current_bet + state.game.min_raise
+                min_raise = min(min_raise_to, player.current_bet + player.chips)
+                legal_actions.append({
+                    "action": PlayerAction.RAISE,
+                    "amount": min_raise,
+                    "min": min_raise,
+                    "max": player.current_bet + player.chips
+                })
+            
+            # All-in is always legal if player has chips
+            if player.chips > 0:
+                legal_actions.append({
+                    "action": PlayerAction.ALL_IN,
+                    "amount": player.chips
+                })
+            
+            logger.debug(f"Legal actions for {player.name}: {[a['action'] for a in legal_actions]}")
+            return legal_actions
+            
+        except Exception as e:
+            logger.error(f"Error getting legal actions: {e}")
+            # Return fold as the only legal action in case of error
+            return [{
+                "action": PlayerAction.FOLD,
+                "amount": 0
+            }]
+        
+    def _prepare_decision_context(self, state: PokerState, player_idx: int, legal_actions: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Prepare the context for decision-making."""
+        game = state.game
+        player = game.players[player_idx]
+        
+        # Extract relevant information
+        player_cards = str(player.hand)
+        community_cards = [str(card) for card in game.community_cards]
+        position = player.position
+        pot_size = sum(pot.amount for pot in game.pots)
+        current_bet = game.current_bet
+        player_chips = player.chips
+        other_players = [p for p in game.players if p.id != player.id]
+        
+        return {
+            "player_cards": player_cards,
+            "community_cards": community_cards,
+            "position": position,
+            "pot_size": pot_size,
+            "current_bet": current_bet,
+            "player_chips": player_chips,
+            "other_players": other_players
+        }
+    
+    def _apply_player_decision(self, game: PokerState, player: Player, decision: AgentDecision, legal_actions: List[Dict[str, Any]]):
+        """Apply the player's decision to the game state."""
+        if decision.action == PlayerAction.FOLD:
+            player.has_folded = True
+            game.current_player_idx = self._get_next_player_idx(game)
+        elif decision.action == PlayerAction.CHECK:
+            game.current_player_idx = self._get_next_player_idx(game)
+        elif decision.action == PlayerAction.CALL:
+            game.current_player_idx = self._get_next_player_idx(game)
+        elif decision.action == PlayerAction.BET:
+            game.current_player_idx = self._get_next_player_idx(game)
+        elif decision.action == PlayerAction.RAISE:
+            game.current_player_idx = self._get_next_player_idx(game)
+        elif decision.action == PlayerAction.ALL_IN:
+            player.is_all_in = True
+            game.current_player_idx = self._get_next_player_idx(game)
+        else:
+            logger.warning(f"Unknown decision action: {decision.action}")
+    
+    def _get_next_player_idx(self, game: PokerState) -> int:
+        """Get the index of the next active player."""
+        current_idx = game.current_player_idx
+        next_idx = (current_idx + 1) % len(game.players)
+        while game.players[next_idx].has_folded:
+            next_idx = (next_idx + 1) % len(game.players)
+        return next_idx
+    
+    def _format_legal_actions(self, legal_actions: List[Dict[str, Any]]) -> str:
+        """Format legal actions as a readable string."""
+        return ", ".join([f"{la['action'].upper()} ${la['amount']}" for la in legal_actions])
+    
+    def _update_player_stats(self, player_id: str, action: PlayerAction, amount: int):
+        """Update player statistics based on their decision."""
         if player_id not in self.player_stats:
+            logger.warning(f"Cannot update stats for unknown player: {player_id}")
             return
         
         stats = self.player_stats[player_id]
+        player_name = stats['name']
         
         # Update action counts
-        if decision.action == PlayerAction.FOLD:
+        if action == PlayerAction.FOLD:
             stats['folds'] += 1
-        elif decision.action == PlayerAction.CHECK:
+            logger.debug(f"Recorded FOLD for {player_name}")
+        elif action == PlayerAction.CHECK:
             stats['checks'] += 1
-        elif decision.action == PlayerAction.CALL:
+            logger.debug(f"Recorded CHECK for {player_name}")
+        elif action == PlayerAction.CALL:
             stats['calls'] += 1
-            stats['total_bets'] += decision.amount
-        elif decision.action == PlayerAction.BET:
+            stats['total_bets'] += amount
+            logger.debug(f"Recorded CALL for {player_name}: ${amount}")
+        elif action == PlayerAction.BET:
             stats['bets'] += 1
-            stats['total_bets'] += decision.amount
-        elif decision.action == PlayerAction.RAISE:
+            stats['total_bets'] += amount
+            logger.debug(f"Recorded BET for {player_name}: ${amount}")
+        elif action == PlayerAction.RAISE:
             stats['raises'] += 1
-            stats['total_bets'] += decision.amount
-        elif decision.action == PlayerAction.ALL_IN:
+            stats['total_bets'] += amount
+            logger.debug(f"Recorded RAISE for {player_name}: ${amount}")
+        elif action == PlayerAction.ALL_IN:
             stats['all_ins'] += 1
-            stats['total_bets'] += decision.amount
+            stats['total_bets'] += amount
+            logger.debug(f"Recorded ALL_IN for {player_name}: ${amount}")
     
     def update_game_phase(self, state: PokerState) -> PokerState:
-        """Update the game phase and handle phase transitions.
-
-        Manages transitions between game phases (preflop -> flop -> turn -> river),
-        including dealing community cards and resetting betting rounds.
-
-        Args:
-            state (PokerState): Current game state.
-
-        Returns:
-            PokerState: Updated game state in the new phase.
-
-        Side Effects:
-            - Deals community cards
-            - Resets betting amounts
-            - Updates game phase
-            - Logs phase transition
-
-        Example:
-            >>> state = agent.update_game_phase(state)
-            >>> print(f"New phase: {state.game.phase}")
-        """
-        # Move to the next phase
-        state.advance_game_phase()
+        """Update the game phase and handle phase transitions."""
+        logger.info(f"Updating game phase from {state.game.phase.value}")
         
-        # Log the phase transition
-        phase_str = state.game.phase.value.upper()
-        if state.game.phase != GamePhase.PREFLOP:
-            community_cards = [str(card) for card in state.game.community_cards]
-            state.log_event(f"{phase_str}: {', '.join(community_cards)}")
-        else:
-            state.log_event(f"{phase_str}")
-        
-        return state
-    
-    # Fix for the end_hand method
+        try:
+            # Move to the next phase
+            state.advance_game_phase()
+            
+            # Log the phase transition
+            phase_str = state.game.phase.value.upper()
+            if state.game.phase not in [GamePhase.PREFLOP, GamePhase.GAME_OVER]:
+                community_cards = [str(card) for card in state.game.community_cards]
+                logger.info(f"New phase: {phase_str} with cards: {', '.join(community_cards)}")
+                state.log_event(f"{phase_str}: {', '.join(community_cards)}")
+            else:
+                logger.info(f"New phase: {phase_str}")
+                state.log_event(f"{phase_str}")
+            
+            # Debug log current game state after phase change
+            logger.debug(f"Current game state after phase change:")
+            logger.debug(f"  Phase: {state.game.phase.value}")
+            logger.debug(f"  Community cards: {[str(c) for c in state.game.community_cards]}")
+            logger.debug(f"  Pot sizes: {[pot.amount for pot in state.game.pots]}")
+            logger.debug(f"  Current bet: {state.game.current_bet}")
+            logger.debug(f"  Active players: {len(state.game.active_players)}")
+            
+            return state
+            
+        except Exception as e:
+            logger.error(f"Error updating game phase: {e}")
+            logger.error(traceback.format_exc())
+            state.error = f"Phase update error: {str(e)}"
+            return state
 
     def end_hand(self, state: PokerState) -> PokerState:
-        """Handle the end of a hand - determine winner(s) and update stats"""
-        # If the game is not in GAME_OVER phase, handle showdown
-        if state.game.phase != GamePhase.GAME_OVER:
-            state.game.phase = GamePhase.SHOWDOWN
-            state._handle_showdown()  # This method exists and should work correctly
+        """Handle the end of a hand - determine winner(s) and update stats."""
+        logger.info("Ending current hand")
         
-        # Log the end of the hand
-        state.log_event(f"Hand #{self.hands_played} completed")
-        
-        # Update player stats for winners
-        for winner_id in state.game.winners:
-            if winner_id in self.player_stats:
-                winner = next((p for p in state.game.players if p.id == winner_id), None)
-                if winner:
-                    self.player_stats[winner_id]['hands_won'] += 1
-                    
-                    # Calculate chips won (current chips - starting chips)
-                    initial_chips = self.config.starting_chips
-                    chips_diff = winner.chips - initial_chips
-                    
-                    if chips_diff > 0:
-                        self.player_stats[winner_id]['chips_won'] += chips_diff
-                    elif chips_diff < 0:
-                        self.player_stats[winner_id]['chips_lost'] += abs(chips_diff)
-                    
-                    # Calculate biggest pot
-                    total_pot = sum(pot.amount for pot in state.game.pots)
-                    if total_pot > self.player_stats[winner_id]['biggest_pot_won']:
-                        self.player_stats[winner_id]['biggest_pot_won'] = total_pot
-        
-        # Clear waiting_for_player
-        state.waiting_for_player = None
-        
-        # Mark the end of the hand in the log
-        state.log_event("-" * 40)
-        
-        return state
+        try:
+            # If the game is not in GAME_OVER phase, handle showdown
+            if state.game.phase != GamePhase.GAME_OVER:
+                logger.info("Processing showdown")
+                state.game.phase = GamePhase.SHOWDOWN
+                state._handle_showdown()
+            
+            # Log the end of the hand
+            state.log_event(f"Hand #{self.hands_played} completed")
+            
+            # Debug log all player hands and rankings
+            logger.debug("Final hand results:")
+            for player in state.game.players:
+                hand_str = str(player.hand) if player.hand and player.hand.cards else "Folded"
+                ranking = state.game.hand_rankings.get(player.id, None)
+                ranking_str = ranking.description if ranking else "N/A"
+                logger.debug(f"  {player.name}: {hand_str} - {ranking_str}")
+            
+            # Update player stats for winners
+            logger.info(f"Winners: {[self._get_player_name(w) for w in state.game.winners]}")
+            for winner_id in state.game.winners:
+                if winner_id in self.player_stats:
+                    winner = next((p for p in state.game.players if p.id == winner_id), None)
+                    if winner:
+                        self.player_stats[winner_id]['hands_won'] += 1
+                        
+                        # Calculate chips won (current chips - starting chips)
+                        initial_chips = self.config.starting_chips
+                        chips_diff = winner.chips - initial_chips
+                        
+                        if chips_diff > 0:
+                            self.player_stats[winner_id]['chips_won'] += chips_diff
+                            logger.debug(f"{winner.name} won {chips_diff} chips total")
+                        elif chips_diff < 0:
+                            self.player_stats[winner_id]['chips_lost'] += abs(chips_diff)
+                            logger.debug(f"{winner.name} lost {abs(chips_diff)} chips total")
+                        
+                        # Calculate biggest pot
+                        total_pot = sum(pot.amount for pot in state.game.pots)
+                        if total_pot > self.player_stats[winner_id]['biggest_pot_won']:
+                            self.player_stats[winner_id]['biggest_pot_won'] = total_pot
+                            logger.debug(f"New biggest pot for {winner.name}: ${total_pot}")
+            
+            # Clear waiting_for_player
+            state.waiting_for_player = None
+            
+            # Mark the end of the hand in the log
+            state.log_event("-" * 40)
+            
+            logger.info("Hand completion processed successfully")
+            return state
+            
+        except Exception as e:
+            logger.error(f"Error ending hand: {e}")
+            logger.error(traceback.format_exc())
+            state.error = f"Hand completion error: {str(e)}"
+            return state
     
     def end_game(self, state: PokerState) -> PokerState:
-        """End the poker game and determine final results.
-
-        Calculates final standings, generates game summary, and handles
-        cleanup tasks like saving game history.
-
-        Args:
-            state (PokerState): Current game state.
-
-        Returns:
-            PokerState: Final game state with results.
-
-        Side Effects:
-            - Calculates final chip counts
-            - Determines winner(s)
-            - Generates game summary
-            - Saves final game history
-            - Logs game results
-
-        Example:
-            >>> state = agent.end_game(state)
-            >>> print(f"Game winner: {state.game.winner}")
-            >>> print(f"Final chips: {state.game.chips}")
-        """
-        # Determine final standings
-        players = sorted(state.game.players, key=lambda p: p.chips, reverse=True)
-        winner = players[0]
-        state.game.winner = winner.name
+        """End the poker game and determine final results."""
+        logger.info("Ending game")
         
-        # Log final results
-        state.log_event("\n=== GAME OVER ===")
-        state.log_event(f"Winner: {winner.name} with ${winner.chips}")
-        
-        # Log final standings
-        state.log_event("\nFinal Standings:")
-        for i, player in enumerate(players, 1):
-            state.log_event(f"{i}. {player.name}: ${player.chips}")
-        
-        # Log player statistics
-        state.log_event("\nPlayer Statistics:")
-        for player in players:
-            stats = self.player_stats[player.id]
-            state.log_event(f"\n{player.name}:")
-            state.log_event(f"Hands Played: {stats['hands_played']}")
-            state.log_event(f"Hands Won: {stats['hands_won']}")
-            state.log_event(f"Biggest Pot: ${stats['biggest_pot_won']}")
-            state.log_event(f"Total Bets: ${stats['total_bets']}")
-            state.log_event(f"Actions: Fold({stats['folds']}) Check({stats['checks']}) "
+        try:
+            # Determine final standings
+            players = sorted(state.game.players, key=lambda p: p.chips, reverse=True)
+            winner = players[0]
+            state.game.winner = winner.name
+            
+            # Log final results
+            state.log_event("\n=== GAME OVER ===")
+            state.log_event(f"Winner: {winner.name} with ${winner.chips}")
+            logger.info(f"Game winner: {winner.name} with ${winner.chips}")
+            
+            # Log final standings
+            logger.info("Final Standings:")
+            state.log_event("\nFinal Standings:")
+            for i, player in enumerate(players, 1):
+                state.log_event(f"{i}. {player.name}: ${player.chips}")
+                logger.info(f"{i}. {player.name}: ${player.chips}")
+            
+            # Log player statistics
+            state.log_event("\nPlayer Statistics:")
+            logger.info("Player Statistics:")
+            for player in players:
+                stats = self.player_stats[player.id]
+                state.log_event(f"\n{player.name}:")
+                state.log_event(f"Hands Played: {stats['hands_played']}")
+                state.log_event(f"Hands Won: {stats['hands_won']}")
+                state.log_event(f"Biggest Pot: ${stats['biggest_pot_won']}")
+                state.log_event(f"Total Bets: ${stats['total_bets']}")
+                state.log_event(f"Actions: Fold({stats['folds']}) Check({stats['checks']}) "
+                              f"Call({stats['calls']}) Bet({stats['bets']}) "
+                              f"Raise({stats['raises']}) All-in({stats['all_ins']})")
+                state.log_event(f"Decision Errors: {stats['decision_errors']}")
+                state.log_event(f"Retries: {stats['retries']}")
+                
+                # Log to console too
+                logger.info(f"{player.name}: {stats['hands_won']}/{stats['hands_played']} hands won")
+                logger.info(f"  Actions: Fold({stats['folds']}) Check({stats['checks']}) "
                           f"Call({stats['calls']}) Bet({stats['bets']}) "
                           f"Raise({stats['raises']}) All-in({stats['all_ins']})")
-        
-        # Save final game history
-        if self.config.save_game_history:
-            self._save_game_history(state)
-        
-        return state
+            
+            # Log error and retry statistics
+            total_errors = sum(stats['decision_errors'] for stats in self.player_stats.values())
+            total_retries = sum(stats['retries'] for stats in self.player_stats.values())
+            logger.info(f"Total decision errors: {total_errors}")
+            logger.info(f"Total retries: {total_retries}")
+            
+            # Save final game history
+            if self.config.save_game_history:
+                self._save_game_history(state)
+            
+            return state
+            
+        except Exception as e:
+            logger.error(f"Error ending game: {e}")
+            logger.error(traceback.format_exc())
+            state.error = f"Game end error: {str(e)}"
+            return state
     
     def _save_game_history(self, state: PokerState):
-        """Save the current game state and history to disk.
-
-        Creates a timestamped file containing game state, player actions,
-        and statistics for analysis and replay.
-
-        Args:
-            state (PokerState): Current game state to save.
-
-        Side Effects:
-            - Creates a game history file
-            - Writes game state and events
-            - Saves player statistics
-
-        Example:
-            >>> agent._save_game_history(state)
-            >>> print("Game history saved to logs/poker_game_TIMESTAMP.log")
-        """
+        """Save the current game state and history to disk."""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"poker_game_{timestamp}.log"
         
         try:
+            # Create logs directory if it doesn't exist
+            if not os.path.exists("logs"):
+                os.makedirs("logs")
+            
             with open(f"logs/{filename}", "w") as f:
                 # Write game configuration
                 f.write("=== GAME CONFIGURATION ===\n")
                 f.write(f"Players: {len(state.game.players)}\n")
                 f.write(f"Starting Chips: ${self.config.starting_chips}\n")
                 f.write(f"Small Blind: ${self.config.small_blind}\n")
-                f.write(f"Big Blind: ${self.config.big_blind}\n\n")
+                f.write(f"Big Blind: ${self.config.big_blind}\n")
+                f.write(f"Hands Played: {self.hands_played}\n\n")
                 
                 # Write game events
                 f.write("=== GAME HISTORY ===\n")
-                for event in state.game.event_log:
+                for event in state.game_log:
                     f.write(f"{event}\n")
                 
                 # Write final statistics
@@ -810,78 +924,75 @@ class PokerAgent(Agent[PokerAgentConfig]):
                     for key, value in stats.items():
                         if key != 'name':
                             f.write(f"{key}: {value}\n")
+                
+                # Write error statistics
+                f.write("\n=== ERROR STATISTICS ===\n")
+                total_errors = sum(stats['decision_errors'] for stats in self.player_stats.values())
+                total_retries = sum(stats['retries'] for stats in self.player_stats.values())
+                f.write(f"Total decision errors: {total_errors}\n")
+                f.write(f"Total retries: {total_retries}\n")
+                
+                # Write retry history
+                f.write("\n=== RETRY HISTORY ===\n")
+                for key, count in self.retry_history.items():
+                    if count > 0:
+                        f.write(f"{key}: {count} retries\n")
             
             logger.info(f"Game history saved to logs/{filename}")
             
         except Exception as e:
-            logger.error(f"Error saving game history: {str(e)}")
+            logger.error(f"Error saving game history: {e}")
+            logger.error(traceback.format_exc())
     
-    # Fix for the should_continue_round method
-
     def should_continue_round(self, state: PokerState) -> str:
-        """Determine if we should continue the current betting round"""
+        """Determine if we should continue the current betting round."""
+        logger.debug("Checking if betting round should continue")
+        
+        # If an error occurred, log and end the hand
+        if state.error:
+            logger.error(f"Error state detected: {state.error}")
+            return "end_hand"
+        
         # If the hand is over (only one player left), end the hand
         if len(state.game.active_players) <= 1:
+            logger.info(f"Only one player remains active: {state.game.active_players}")
             return "end_hand"
-        
-        # If an error occurred, end the hand
-        if state.error:
-            logger.error(f"Error occurred: {state.error}")
-            return "end_hand"
-        
+            
         # If the round is complete, advance to the next phase
-        # Instead of calling is_betting_round_complete(), directly check the round_complete flag
         if state.game.round_complete:
+            logger.info("Betting round is complete, advancing to next phase")
             return "advance_phase"
-        
+            
         # Otherwise, continue the round
+        logger.debug("Continuing betting round")
         return "continue_round"
     
     def should_continue_to_next_phase(self, state: PokerState) -> str:
-        """Determine if the game should advance to the next phase.
-
-        Checks if the current phase is complete and whether to move to
-        showdown or the next betting round.
-
-        Args:
-            state (PokerState): Current game state.
-
-        Returns:
-            str: Decision string:
-                - "next_phase": Advance to next betting round
-                - "showdown": Proceed to showdown
-
-        Example:
-            >>> decision = agent.should_continue_to_next_phase(state)
-            >>> if decision == "showdown":
-            ...     print("Time for showdown!")
-        """
+        """Determine if the game should advance to the next phase."""
+        logger.debug(f"Checking if game should continue after {state.game.phase.value}")
+        
         if state.game.phase == GamePhase.RIVER:
+            logger.info("River complete, moving to showdown")
             return "showdown"
+            
+        logger.info(f"Moving to next phase after {state.game.phase.value}")
         return "next_phase"
     
     def should_play_another_hand(self, state: PokerState) -> bool:
-        """Determine if another hand should be played.
-
-        Checks if the maximum number of hands has been reached or if
-        only one player has chips remaining.
-
-        Args:
-            state (PokerState): Current game state.
-
-        Returns:
-            bool: True if another hand should be played, False otherwise.
-
-        Example:
-            >>> if agent.should_play_another_hand(state):
-            ...     print("Dealing next hand...")
-            ... else:
-            ...     print("Game complete!")
-        """
+        """Determine if another hand should be played."""
+        logger.debug("Checking if another hand should be played")
+        
         # Check if we've reached the maximum number of hands
         if self.hands_played >= self.config.max_hands:
+            logger.info(f"Reached maximum hands ({self.config.max_hands}), ending game")
             return False
         
         # Check if only one player has chips
         players_with_chips = sum(1 for p in state.game.players if p.chips > 0)
-        return players_with_chips > 1
+        
+        if players_with_chips <= 1:
+            logger.info(f"Only {players_with_chips} player(s) have chips remaining, ending game")
+            return False
+            
+        logger.info("Game will continue with another hand")
+        return True

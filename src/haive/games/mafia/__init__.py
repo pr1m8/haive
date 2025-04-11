@@ -16,7 +16,7 @@ Example:
     ...     num_mafia=2
     ... )
     >>> agent = MafiaAgent(config)
-"""
+
 
 from .agent import MafiaAgent
 from .config import MafiaAgentConfig
@@ -49,3 +49,4 @@ __all__ = [
     "generate_mafia_vote_prompt",
     "generate_mafia_analysis_prompt",
 ]
+"""

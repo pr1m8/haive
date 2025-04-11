@@ -1,5 +1,5 @@
 #https://github.com/NirDiamant/GenAI_Agents/blob/main/all_agents_tutorials/taskifier.ipynb
-from haive.prebuilt.misc.taskifier.state import ApproachState
+from src.haive.prebuilt.misc.taskifier.state import ApproachState
 class TaskifierAgent(Agent):
     def __init__(self):
         super().__init__()

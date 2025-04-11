@@ -18,51 +18,60 @@ Typical usage:
 
 from typing import Any, List, Optional
 from pydantic import BaseModel, Field
+from abc import ABC, abstractmethod
 
-class GameState(BaseModel):
+class GameState(BaseModel, ABC):
     """Base game state that all game states should inherit from.
     
     This class defines the core state attributes that all games need to track,
     including the current turn, game status, move history, and error handling.
     
     Attributes:
+        players (List[str]): List of players in the game.
         turn (str): Current player's turn.
         game_status (str): Status of the game (e.g., "ongoing", "finished").
         move_history (List[Any]): History of moves made in the game.
         error_message (Optional[str]): Error message if any error occurred.
-    
-    Example:
-        >>> class ChessState(GameState):
-        ...     board: ChessBoard
-        ...     captured_pieces: List[ChessPiece]
-        ...     
-        ...     def is_checkmate(self) -> bool:
-        ...         return self.game_status == "checkmate"
     """
+
     players: List[str] = Field(
-        default_factory=list, 
+        default_factory=list,
         description="List of players"
-    )   
+    )
+    
     turn: str = Field(
-        default_factory=str, 
+        default_factory=str,
         description="Current player's turn"
     )
     
     game_status: str = Field(
-        default="ongoing", 
+        default="ongoing",
         description="Status of the game"
     )
     
     move_history: List[Any] = Field(
-        default_factory=list, 
+        default_factory=list,
         description="History of moves"
     )
     
     error_message: Optional[str] = Field(
-        default=None, 
+        default=None,
         description="Error message if any"
     )
-    
+
     class Config:
-        """Pydantic configuration."""
         arbitrary_types_allowed = True
+
+    @classmethod
+    @abstractmethod
+    def initialize(cls, **kwargs) -> "GameState":
+        """
+        Abstract method that all subclasses must implement to initialize the game state.
+        
+        Returns:
+            GameState: A fully initialized game state object.
+        
+        Example:
+            >>> return Connect4State.initialize(first_player="red")
+        """
+        pass

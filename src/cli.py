@@ -5,11 +5,11 @@ import sys
 import subprocess
 from pathlib import Path
 
-# Import paths dynamically from haive's settings
+# Import paths dynamically from src.haive's settings
 try:
-    from haive.config.settings import AGENTS_DIR
+    from src.haive.config.settings import AGENTS_DIR
 except ImportError:
-    print("Error: Could not import settings from haive.config. Ensure `haive` is in your PYTHONPATH.")
+    print("Error: Could not import settings from src.haive.config. Ensure `haive` is in your PYTHONPATH.")
     sys.exit(1)
 
 # Ensure `agents/` exists
