@@ -1,0 +1,12 @@
+2025-04-08 14:09:47,702 - kyc_bitfinex_test - INFO - Starting KYC report test for Bitfinex - Log file: logs/kyc_bitfinex_test_20250408_140947.log
+2025-04-08 14:09:47,703 - kyc_bitfinex_test - INFO - System resource monitoring started
+2025-04-08 14:09:47,703 - kyc_bitfinex_test - INFO - Importing required modules
+2025-04-08 14:09:47,704 - kyc_bitfinex_test - CRITICAL - Module import error: cannot import name 'KYCReportConfig' from 'src.haive.prebuilt.priv.kyc.config' (/home/will/Projects/haive/backend/haive/src/haive/prebuilt/priv/kyc/config.py)
+2025-04-08 14:09:47,704 - kyc_bitfinex_test - CRITICAL - This may indicate the Haive framework is not properly installed or set up
+2025-04-08 14:09:47,704 - kyc_bitfinex_test - CRITICAL - Traceback: Traceback (most recent call last):
+  File "/home/will/Projects/haive/backend/haive/src/haive/prebuilt/priv/kyc/test.py", line 80, in <module>
+    from src.haive.prebuilt.priv.kyc.config import KYCReportConfig
+ImportError: cannot import name 'KYCReportConfig' from 'src.haive.prebuilt.priv.kyc.config' (/home/will/Projects/haive/backend/haive/src/haive/prebuilt/priv/kyc/config.py)
+
+2025-04-08 14:09:47,704 - kyc_bitfinex_test - INFO - Test script execution finished. See log file for details: logs/kyc_bitfinex_test_20250408_140947.log
+2025-04-08 14:09:47,704 - kyc_bitfinex_test - INFO - Analyzing log file for test metrics

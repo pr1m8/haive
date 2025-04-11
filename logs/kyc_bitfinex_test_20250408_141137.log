@@ -1,0 +1,44 @@
+2025-04-08 14:11:37,820 - kyc_bitfinex_test - INFO - Starting KYC report test for Bitfinex - Log file: logs/kyc_bitfinex_test_20250408_141137.log
+2025-04-08 14:11:37,820 - kyc_bitfinex_test - INFO - System resource monitoring started
+2025-04-08 14:11:37,820 - kyc_bitfinex_test - INFO - Importing required modules
+2025-04-08 14:11:38,741 - graphviz._tools - DEBUG - deprecate positional args: graphviz.backend.piping.pipe(['renderer', 'formatter', 'neato_no_op', 'quiet'])
+2025-04-08 14:11:38,742 - graphviz._tools - DEBUG - deprecate positional args: graphviz.backend.rendering.render(['renderer', 'formatter', 'neato_no_op', 'quiet'])
+2025-04-08 14:11:38,742 - graphviz._tools - DEBUG - deprecate positional args: graphviz.backend.unflattening.unflatten(['stagger', 'fanout', 'chain', 'encoding'])
+2025-04-08 14:11:38,742 - graphviz._tools - DEBUG - deprecate positional args: graphviz.backend.viewing.view(['quiet'])
+2025-04-08 14:11:38,744 - graphviz._tools - DEBUG - deprecate positional args: graphviz.quoting.quote(['is_html_string', 'is_valid_id', 'dot_keywords', 'endswith_odd_number_of_backslashes', 'escape_unescaped_quotes'])
+2025-04-08 14:11:38,744 - graphviz._tools - DEBUG - deprecate positional args: graphviz.quoting.a_list(['kwargs', 'attributes'])
+2025-04-08 14:11:38,744 - graphviz._tools - DEBUG - deprecate positional args: graphviz.quoting.attr_list(['kwargs', 'attributes'])
+2025-04-08 14:11:38,744 - graphviz._tools - DEBUG - deprecate positional args: graphviz.dot.Dot.clear(['keep_attrs'])
+2025-04-08 14:11:38,745 - graphviz._tools - DEBUG - deprecate positional args: graphviz.dot.Dot.__iter__(['subgraph'])
+2025-04-08 14:11:38,745 - graphviz._tools - DEBUG - deprecate positional args: graphviz.dot.Dot.node(['_attributes'])
+2025-04-08 14:11:38,745 - graphviz._tools - DEBUG - deprecate positional args: graphviz.dot.Dot.edge(['_attributes'])
+2025-04-08 14:11:38,745 - graphviz._tools - DEBUG - deprecate positional args: graphviz.dot.Dot.attr(['_attributes'])
+2025-04-08 14:11:38,745 - graphviz._tools - DEBUG - deprecate positional args: graphviz.dot.Dot.subgraph(['name', 'comment', 'graph_attr', 'node_attr', 'edge_attr', 'body'])
+2025-04-08 14:11:38,746 - graphviz._tools - DEBUG - deprecate positional args: graphviz.piping.Pipe._pipe_legacy(['renderer', 'formatter', 'neato_no_op', 'quiet'])
+2025-04-08 14:11:38,746 - graphviz._tools - DEBUG - deprecate positional args: graphviz.saving.Save.save(['directory'])
+2025-04-08 14:11:38,747 - graphviz._tools - DEBUG - deprecate positional args: graphviz.rendering.Render.render(['directory', 'view', 'cleanup', 'format', 'renderer', 'formatter', 'neato_no_op', 'quiet', 'quiet_view'])
+2025-04-08 14:11:38,747 - graphviz._tools - DEBUG - deprecate positional args: graphviz.rendering.Render.view(['directory', 'cleanup', 'quiet', 'quiet_view'])
+2025-04-08 14:11:38,747 - graphviz._tools - DEBUG - deprecate positional args: graphviz.unflattening.Unflatten.unflatten(['stagger', 'fanout', 'chain'])
+2025-04-08 14:11:38,747 - graphviz._tools - DEBUG - deprecate positional args: graphviz.graphs.BaseGraph.__init__(['comment', 'filename', 'directory', 'format', 'engine', 'encoding', 'graph_attr', 'node_attr', 'edge_attr', 'body', 'strict'])
+2025-04-08 14:11:38,748 - graphviz._tools - DEBUG - deprecate positional args: graphviz.sources.Source.from_file(['directory', 'format', 'engine', 'encoding', 'renderer', 'formatter'])
+2025-04-08 14:11:38,748 - graphviz._tools - DEBUG - deprecate positional args: graphviz.sources.Source.__init__(['filename', 'directory', 'format', 'engine', 'encoding'])
+2025-04-08 14:11:38,748 - graphviz._tools - DEBUG - deprecate positional args: graphviz.sources.Source.save(['directory'])
+2025-04-08 14:11:38,796 - matplotlib - DEBUG - matplotlib data path: /home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/matplotlib/mpl-data
+2025-04-08 14:11:38,800 - matplotlib - DEBUG - CONFIGDIR=/home/will/.config/matplotlib
+2025-04-08 14:11:38,801 - matplotlib - DEBUG - interactive is False
+2025-04-08 14:11:38,801 - matplotlib - DEBUG - platform is linux
+2025-04-08 14:11:38,847 - matplotlib - DEBUG - CACHEDIR=/home/will/.cache/matplotlib
+2025-04-08 14:11:38,848 - matplotlib.font_manager - DEBUG - Using fontManager instance from /home/will/.cache/matplotlib/fontlist-v390.json
+2025-04-08 14:11:41,474 - kyc_bitfinex_test - CRITICAL - Module import error: No module named 'src.haive.agents.kyc'
+2025-04-08 14:11:41,474 - kyc_bitfinex_test - CRITICAL - This may indicate the Haive framework is not properly installed or set up
+2025-04-08 14:11:41,475 - kyc_bitfinex_test - CRITICAL - Traceback: Traceback (most recent call last):
+  File "/home/will/Projects/haive/backend/haive/src/haive/prebuilt/priv/kyc/test.py", line 80, in <module>
+    from src.haive.prebuilt.priv.kyc.config import KYCReportConfig
+  File "/home/will/Projects/haive/backend/haive/src/haive/prebuilt/priv/kyc/config.py", line 17, in <module>
+    from src.haive.prebuilt.priv.kyc.state import KYCReportState
+  File "/home/will/Projects/haive/backend/haive/src/haive/prebuilt/priv/kyc/state.py", line 25, in <module>
+    from src.haive.agents.kyc.models import RiskCategory, BusinessActivity, ProhibitedActivity, CustomerRiskAssessmentModel, KYCDecisionModel
+ModuleNotFoundError: No module named 'src.haive.agents.kyc'
+
+2025-04-08 14:11:41,475 - kyc_bitfinex_test - INFO - Test script execution finished. See log file for details: logs/kyc_bitfinex_test_20250408_141137.log
+2025-04-08 14:11:41,475 - kyc_bitfinex_test - INFO - Analyzing log file for test metrics

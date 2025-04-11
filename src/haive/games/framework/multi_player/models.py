@@ -5,7 +5,7 @@ multi-player games. These models serve as building blocks for creating
 game-specific implementations.
 
 Example:
-    >>> from haive.agents.agent_games.framework.multi_player.models import GamePhase
+    >>> from src.haive.agents.agent_games.framework.multi_player.models import GamePhase
     >>> 
     >>> # Use game phases in your game state
     >>> current_phase = GamePhase.SETUP

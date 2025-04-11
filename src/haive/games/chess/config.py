@@ -1,33 +1,24 @@
-"""Chess agent configuration module.
+"""
+Chess agent configuration module.
 
 This module provides configuration classes for the chess game agent, including:
-    - Base configuration for chess agents
+    - Base configuration
     - LLM configuration for players and analyzers
     - Game settings and visualization options
-
-Example:
-    >>> from src.haive.games.chess import ChessAgentConfig
-    >>> 
-    >>> # Create a config with analysis enabled
-    >>> config = ChessAgentConfig(
-    ...     enable_analysis=True,
-    ...     should_visualize_graph=True,
-    ...     max_moves=100
-    ... )
 """
 
-from typing import Dict, Optional, List
+from typing import Dict, Optional
 from pydantic import BaseModel, Field
 
 from src.haive.core.engine.agent.agent import AgentConfig
-from src.haive.core.engine.aug_llm import AugLLMConfig
-from src.haive.core.models.llm.base import AzureLLMConfig
+from src.haive.core.aug_llm.base import AugLLMConfig
 
-from .aug_llms import build_chess_aug_llms_per_color
 from .state import ChessState
+from .engines import build_chess_aug_llms
 
 class ChessAgentConfig(AgentConfig):
-    """Configuration class for chess game agents.
+    """
+    Configuration class for chess game agents.
     
     This class defines the configuration parameters for chess agents, including:
         - Game settings (max moves, analysis options)
@@ -35,51 +26,43 @@ class ChessAgentConfig(AgentConfig):
         - Visualization settings
     
     Attributes:
-        enable_analysis (bool): Whether to enable position analysis.
-        should_visualize_graph (bool): Whether to visualize the game workflow graph.
-        max_moves (int): Maximum number of moves before forcing a draw.
-        aug_llm_configs (Dict[str, AugLLMConfig]): LLM configurations for players and analyzers.
-    
-    Example:
-        >>> config = ChessAgentConfig(
-        ...     enable_analysis=True,
-        ...     should_visualize_graph=True,
-        ...     max_moves=100,
-        ...     aug_llm_configs={
-        ...         "white_player": white_player_config,
-        ...         "black_player": black_player_config,
-        ...         "white_analyzer": white_analyzer_config,
-        ...         "black_analyzer": black_analyzer_config,
-        ...     }
-        ... )
+        state_schema (BaseModel): The state schema for the game
+        enable_analysis (bool): Whether to enable position analysis
+        should_visualize_graph (bool): Whether to visualize the workflow graph
+        max_moves (int): Maximum number of moves before forcing a draw
+        engines (Dict[str, AugLLMConfig]): LLM configurations for players and analyzers
     """
-    state_schema: BaseModel = Field(
+    
+    # State schema
+    state_schema: type = Field(
         default=ChessState,
-        description="The state schema for the game."
+        description="The state schema for the game"
     )
+    
+    # Analysis settings
     enable_analysis: bool = Field(
-        default=False,
-        description="Whether to enable position analysis during gameplay."
+        default=True,
+        description="Whether to enable position analysis during gameplay"
     )
     
+    # Visualization settings
     should_visualize_graph: bool = Field(
-        default=False,
-        description="Whether to visualize the game workflow graph."
+        default=True,
+        description="Whether to visualize the game workflow graph"
     )
     
+    # Game settings
     max_moves: int = Field(
         default=200,
-        description="Maximum number of moves before forcing a draw."
+        description="Maximum number of moves before forcing a draw"
     )
     
+    # LLM engines
     engines: Dict[str, AugLLMConfig] = Field(
-        default_factory=build_chess_aug_llms_per_color,
-        description="LLM configurations for players and analyzers."
+        default_factory=build_chess_aug_llms,
+        description="LLM configurations for players and analyzers"
     )
-    
+    #runnable_config: Dict['configurable]
     class Config:
-        """Pydantic configuration class.
-        
-        This inner class configures Pydantic behavior for the ChessAgentConfig.
-        """
+        """Pydantic configuration class."""
         arbitrary_types_allowed = True

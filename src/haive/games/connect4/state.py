@@ -73,3 +73,14 @@ class Connect4State(GameState):
         if any(len(row) != 7 for row in board):
             raise ValueError("Each row must have 7 columns")
         return board
+    
+    @classmethod
+    def initialize(cls):
+        """Initialize a new Connect 4 game."""
+        board = [[None for _ in range(7)] for _ in range(6)]
+        return cls(
+            board=board,
+            turn="red",
+            game_status="ongoing",
+            move_history=[]
+        )

@@ -22,7 +22,7 @@ from .models import (
     ChessPlayerDecision,        
     ChessAnalysis,
 )
-from .state import ChessGameState
+from .state import ChessState
 from .state_manager import ChessGameStateManager
 
 __all__ = [
@@ -31,7 +31,7 @@ __all__ = [
     "ChessMoveModel",
     "ChessPlayerDecision",
     "ChessAnalysis",
-    "ChessGameState",
+    "ChessState",
     "ChessGameStateManager",
 ]
 

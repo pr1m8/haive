@@ -96,3 +96,5 @@ class BattleshipState(BaseModel):
             "row": None,  # Add this to match prompt template expectations
             "col": None
         }
+    
+    

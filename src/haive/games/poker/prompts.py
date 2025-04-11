@@ -1,6 +1,15 @@
+"""Enhanced prompt templates for poker agent with structured output.
+
+This module provides improved prompt templates for the poker agent that:
+1. Clearly instruct models to use structured output format
+2. Include more detailed game context and examples
+3. Provide clear instruction on legal moves
+4. Have better formatting for readability by LLMs
+"""
+
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder, HumanMessagePromptTemplate, SystemMessagePromptTemplate
 
-# System prompts - define agent personalities and strategies
+# System prompts - define agent personalities and strategies with clear output format instructions
 
 CONSERVATIVE_SYSTEM_PROMPT = """
 You are a conservative poker player in a Texas Hold'em game. You:
@@ -11,6 +20,13 @@ You are a conservative poker player in a Texas Hold'em game. You:
 - Make careful, calculated decisions
 
 Your goal is consistent profitability, not flashy plays. Prioritize survival and good hand selection.
+
+IMPORTANT: You must respond with a structured JSON object matching this format:
+{
+  "action": "fold|check|call|bet|raise|all-in",
+  "amount": <integer amount of chips for bet/raise/call>,
+  "reasoning": "<your explanation for this decision>"
+}
 """
 
 AGGRESSIVE_SYSTEM_PROMPT = """
@@ -22,6 +38,13 @@ You are an aggressive poker player in a Texas Hold'em game. You:
 - Use your image to get paid off when you have premium hands
 
 Your goal is to accumulate chips quickly by applying maximum pressure and exploiting weak players.
+
+IMPORTANT: You must respond with a structured JSON object matching this format:
+{
+  "action": "fold|check|call|bet|raise|all-in",
+  "amount": <integer amount of chips for bet/raise/call>,
+  "reasoning": "<your explanation for this decision>"
+}
 """
 
 BALANCED_SYSTEM_PROMPT = """
@@ -33,6 +56,13 @@ You are a balanced poker player in a Texas Hold'em game. You:
 - Pay close attention to opponents' tendencies
 
 Your goal is to play optimally by adapting to the table conditions and exploiting opponents' weaknesses.
+
+IMPORTANT: You must respond with a structured JSON object matching this format:
+{
+  "action": "fold|check|call|bet|raise|all-in",
+  "amount": <integer amount of chips for bet/raise/call>,
+  "reasoning": "<your explanation for this decision>"
+}
 """
 
 LOOSE_SYSTEM_PROMPT = """
@@ -44,12 +74,18 @@ You are a loose, action-oriented poker player in a Texas Hold'em game. You:
 - Have a high risk tolerance
 
 Your goal is to create action, have fun, and potentially hit big hands that get paid off when opponents don't expect your holdings.
+
+IMPORTANT: You must respond with a structured JSON object matching this format:
+{
+  "action": "fold|check|call|bet|raise|all-in",
+  "amount": <integer amount of chips for bet/raise/call>,
+  "reasoning": "<your explanation for this decision>"
+}
 """
 
-# Decision prompt for all agents
-DECISION_PROMPT_TEMPLATE = """
-You are playing Texas Hold'em Poker. It's your turn to act.
+# Decision prompt with clearer structure and examples
 
+DECISION_PROMPT_TEMPLATE = """
 GAME STATE:
 - Your position: {position_name}
 - Current phase: {phase}
@@ -67,17 +103,46 @@ RECENT ACTIONS:
 OTHER PLAYERS:
 {player_states}
 
-Based on the above information, decide what action to take.
-You must choose ONE of the following actions:
-1. FOLD - Give up your hand and forfeit any chance of winning
-2. CHECK - Pass the action (only valid if there's no bet to call)
-3. CALL - Match the current bet
-4. BET - Place the first bet in this round (only valid if no one has bet)
-5. RAISE - Increase the current bet (must specify amount)
-6. ALL-IN - Bet all your remaining chips
+LEGAL MOVES: {legal_moves}
 
-Respond with a structured decision including your action, amount (if applicable), and reasoning.
-Think step by step about pot odds, hand strength, position, and opponent tendencies before deciding.
+Based on the above information, make your poker decision. Choose one of the legal moves and provide your reasoning.
+
+Think step by step about:
+1. Your hand strength
+2. Pot odds
+3. Position
+4. Opponent tendencies
+5. Risk vs. reward
+
+EXAMPLES OF VALID RESPONSES:
+For folding:
+```json
+{
+  "action": "fold",
+  "amount": 0,
+  "reasoning": "My 7-2 offsuit is the worst starting hand. The UTG player raised, indicating strength."
+}
+```
+
+For calling:
+```json
+{
+  "action": "call",
+  "amount": 50,
+  "reasoning": "I have top pair with a good kicker. The pot odds justify a call to see the river card."
+}
+```
+
+For raising:
+```json
+{
+  "action": "raise",
+  "amount": 200,
+  "reasoning": "I have a strong draw and want to build the pot. This also gives me fold equity."
+}
+```
+
+YOUR RESPONSE: (provide a single JSON object with action, amount, and reasoning)
 """
 
 decision_prompt = ChatPromptTemplate.from_messages([
@@ -85,7 +150,8 @@ decision_prompt = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate.from_template(DECISION_PROMPT_TEMPLATE)
 ])
 
-# Hand analysis prompt
+# Hand analysis prompt with structured output format
+
 HAND_ANALYSIS_PROMPT = """
 Analyze the current Texas Hold'em hand:
 
@@ -102,6 +168,19 @@ Provide an objective analysis of:
 4. Strategic considerations based on position and betting patterns
 
 Be precise about hand rankings and probabilities. Identify key cards that could help or hurt your hand.
+
+Respond with a structured analysis in this format:
+```json
+{
+  "current_hand": "<description of current made hand>",
+  "hand_strength": "<numeric rating from 1-10>",
+  "outs": <number of cards that improve your hand>,
+  "key_draws": "<description of potential draws>",
+  "win_probability": "<estimated win probability percentage>",
+  "recommendation": "<fold|check|call|bet|raise|all-in>",
+  "reasoning": "<detailed explanation of your analysis>"
+}
+```
 """
 
 hand_analysis_prompt = ChatPromptTemplate.from_messages([
@@ -109,7 +188,8 @@ hand_analysis_prompt = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate.from_template(HAND_ANALYSIS_PROMPT)
 ])
 
-# Opponent modeling prompt
+# Opponent modeling prompt with structured output
+
 OPPONENT_MODELING_PROMPT = """
 Analyze the betting patterns and playing style of your opponents based on their actions in this session:
 
@@ -121,7 +201,21 @@ For each opponent, provide:
 3. Tendencies (bluffing frequency, folding to pressure, etc.)
 4. Exploitable weaknesses
 
-Use this information to inform your strategy against them.
+Respond with a structured analysis in this format:
+```json
+{
+  "opponents": [
+    {
+      "name": "<player name>",
+      "style": "<tight-passive|tight-aggressive|loose-passive|loose-aggressive>",
+      "hand_range": "<description of likely hands>",
+      "tendencies": "<key behavioral patterns>",
+      "weaknesses": "<exploitable traits>",
+      "adjustment": "<how you should adjust your play against them>"
+    }
+  ]
+}
+```
 """
 
 opponent_modeling_prompt = ChatPromptTemplate.from_messages([
@@ -129,7 +223,8 @@ opponent_modeling_prompt = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate.from_template(OPPONENT_MODELING_PROMPT)
 ])
 
-# Game summary prompt
+# Game summary prompt for structured analysis
+
 GAME_SUMMARY_PROMPT = """
 Provide a summary of the completed poker hand:
 
@@ -141,6 +236,18 @@ HAND HISTORY:
 {hand_history}
 
 Analyze the key decision points, strategic elements, and whether players made optimal choices.
+
+Respond with a structured analysis in this format:
+```json
+{
+  "key_moments": [
+    {"phase": "<game phase>", "action": "<significant action>", "impact": "<how it affected the hand>"}
+  ],
+  "optimal_plays": ["<description of good decisions made>"],
+  "mistakes": ["<description of errors or suboptimal plays>"],
+  "lessons": ["<key takeaways from this hand>"]
+}
+```
 """
 
 game_summary_prompt = ChatPromptTemplate.from_messages([
@@ -158,3 +265,40 @@ def get_system_prompt(player_style: str) -> str:
         "loose": LOOSE_SYSTEM_PROMPT
     }
     return style_prompts.get(player_style.lower(), BALANCED_SYSTEM_PROMPT)
+
+# Function to get example decisions for a given style
+def get_example_decisions(player_style: str) -> list:
+    """Get example decisions appropriate for the playing style."""
+    
+    conservative_examples = [
+        {"action": "fold", "amount": 0, "reasoning": "My 8-3 offsuit is weak and out of position against a raise."},
+        {"action": "call", "amount": 50, "reasoning": "I have AK suited. Worth seeing a flop in position."},
+        {"action": "raise", "amount": 150, "reasoning": "Pocket kings are the second strongest starting hand. Building value."}
+    ]
+    
+    aggressive_examples = [
+        {"action": "raise", "amount": 200, "reasoning": "Applying pressure with position even with marginal holdings."},
+        {"action": "all-in", "amount": 850, "reasoning": "Semi-bluff with the flush draw. Maximizing fold equity."},
+        {"action": "bet", "amount": 150, "reasoning": "C-betting the flop to take down the pot now."}
+    ]
+    
+    balanced_examples = [
+        {"action": "fold", "amount": 0, "reasoning": "Weak hand facing multiple raises. Saving chips for better spots."},
+        {"action": "call", "amount": 100, "reasoning": "Pot odds justify continuing with my draw."},
+        {"action": "raise", "amount": 250, "reasoning": "Value betting my top pair top kicker."}
+    ]
+    
+    loose_examples = [
+        {"action": "call", "amount": 75, "reasoning": "Speculative hand with suited connectors. Worth seeing a flop."},
+        {"action": "raise", "amount": 300, "reasoning": "Representing strength to take down the pot now."},
+        {"action": "all-in", "amount": 650, "reasoning": "Going for the big bluff against the tight player."}
+    ]
+    
+    style_examples = {
+        "conservative": conservative_examples,
+        "aggressive": aggressive_examples,
+        "balanced": balanced_examples,
+        "loose": loose_examples
+    }
+    
+    return style_examples.get(player_style.lower(), balanced_examples)

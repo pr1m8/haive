@@ -2,7 +2,8 @@ import subprocess
 import shlex
 from pydantic import BaseModel, Field
 from typing import Dict, Any
-from src.haive.core.toolkits.dev.permission import PermissionsManager
+from src.haive.tak.toolkits.dev.permission import PermissionsManager
+from pathlib import Path
 class CommandExecutionResult(BaseModel):
     """Represents the result of a shell command execution."""
     

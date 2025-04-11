@@ -76,7 +76,7 @@ class AmongUsAgent(AmongUsStateManagerMixin, MultiPlayerGameAgent[AmongUsAgentCo
             print(f"Invalid role: {role}")
             return None
         
-        # Get engines from config
+        # Get engines from src.config
         if not hasattr(self.config, "engines") or not self.config.engines:
             print("No engines found in config")
             return None

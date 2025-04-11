@@ -1,85 +1,85 @@
-from src.haive.games.framework.base.config import GameConfig
-from src.haive.games.debate.state import DebateState
-from src.haive.core.engine.aug_llm import AugLLMConfig
-from src.haive.core.models.llm.base import AzureLLMConfig
+# src/haive/games/debate/config.py
+from typing import Dict, List, Optional, Type
 from pydantic import BaseModel, Field
-from typing import Dict, Type, List
+from src.haive.core.engine.agent.agent import AgentConfig
+from src.haive.games.debate.state import DebateState
+from src.haive.core.aug_llm.base import AugLLMConfig
+from src.haive.games.debate.engines import build_debate_engines
 
-class DebateConfig(GameConfig):
-    """Configuration for multi-agent debate framework.
+class DebateAgentConfig(AgentConfig):
+    """Configuration for debate agents."""
     
-    This configuration extends GameConfig to add debate-specific settings.
-    """
-    # Debate structure
-    topic: str = Field(default="Discuss the benefits and drawbacks of AI", description="Topic of the debate")
-    description: str = Field(default="", description="Description of the debate scenario")
-    max_rounds: int = Field(default=3, description="Maximum number of argument rounds")
-    state_schema: Type[BaseModel] = Field(default_factory=DebateState, description="State schema for the debate")
-    # Phase configuration
-    phases: List[str] = Field(
-        default=[
-            "setup",
-            "opening_statements",
-            "arguments",
-            "closing_statements",
-            "voting",
-            "results",
-            "completed"
-        ],
-        description="Sequence of phases in the debate"
-    )
+    debate_format: str = Field(default="standard", description="Format of the debate")
+    time_limit: Optional[int] = Field(default=None, description="Time limit in seconds per phase")
+    max_statements: Optional[int] = Field(default=None, description="Max statements per participant")
+    allow_interruptions: bool = Field(default=False, description="Allow participants to interrupt")
+    voting_enabled: bool = Field(default=True, description="Enable voting at the end")
     
-    # Participant configuration
-    num_debaters: int = Field(default=2, description="Number of debaters")
-    num_judges: int = Field(default=3, description="Number of judges")
+    # Role configurations
+    moderator_role: Optional[str] = Field(default=None, description="Specific role for moderator")
+    participant_roles: Dict[str, str] = Field(default_factory=dict, description="Role assignments")
     
-    # LLM configurations
-    participant_generator_llm: AugLLMConfig = Field(
-        default=AugLLMConfig(
-            name="participant_generator_llm",
-            llm_config=AzureLLMConfig(model="gpt-4o", parameters={"temperature": 0.9})
-        ),
-        description="LLM for generating debate participants"
-    )
-    
-    debater_llm: AugLLMConfig = Field(
-        default=AugLLMConfig(
-            name="debater_llm",
-            llm_config=AzureLLMConfig(model="gpt-4o", parameters={"temperature": 0.7})
-        ),
-        description="Default LLM for debaters"
-    )
-    
-    judge_llm: AugLLMConfig = Field(
-        default=AugLLMConfig(
-            name="judge_llm",
-            llm_config=AzureLLMConfig(model="gpt-4o", parameters={"temperature": 0.4})
-        ),
-        description="Default LLM for judges"
-    )
-    
-    # Specific participant LLMs (optional)
-    participant_llms: Dict[str, AugLLMConfig] = Field(
-        default_factory=dict,
-        description="LLM configurations for specific participants (by ID)"
-    )
-    
-    # State schema - will use DebateState by default
+    # State schema
     state_schema: Type[BaseModel] = Field(default=DebateState, description="State schema for the debate")
     
+    # Engine configurations
+    engines: Dict[str, AugLLMConfig] = Field(
+        default_factory=build_debate_engines, 
+        description="LLM engines for debate roles"
+    )
+    
     @classmethod
-    def create_default(cls, topic: str, max_rounds: int = 3):
-        """Create a default debate configuration.
-        
-        Args:
-            topic: Topic of the debate
-            max_rounds: Maximum number of rounds
-            
-        Returns:
-            Default DebateConfig
-        """
+    def default(cls):
+        """Create a default configuration for standard debate."""
         return cls(
-            topic=topic,
-            max_rounds=max_rounds,
-            #state_schema=DebateState
+            name="standard_debate",
+            debate_format="standard",
+            time_limit=120,
+            max_statements=3,
+            allow_interruptions=False,
+            voting_enabled=True
+        )
+    
+    @classmethod
+    def presidential(cls):
+        """Create a configuration for presidential debate."""
+        return cls(
+            name="presidential_debate",
+            debate_format="presidential",
+            time_limit=120,
+            max_statements=None,
+            allow_interruptions=True,
+            voting_enabled=False,
+            moderator_role="moderator"
+        )
+    
+    @classmethod
+    def trial(cls):
+        """Create a configuration for a trial format."""
+        return cls(
+            name="trial_debate",
+            debate_format="trial",
+            time_limit=300,
+            max_statements=None,
+            allow_interruptions=False,
+            voting_enabled=True,
+            participant_roles={
+                "judge": "JUDGE",
+                "prosecution": "PROSECUTOR",
+                "defense": "DEFENSE",
+                "jury": "JURY"
+            }
+        )
+    
+    @classmethod
+    def panel_discussion(cls):
+        """Create a configuration for a panel discussion."""
+        return cls(
+            name="panel_discussion",
+            debate_format="panel",
+            time_limit=180,
+            max_statements=None,
+            allow_interruptions=True,
+            voting_enabled=False,
+            moderator_role="moderator"
         )

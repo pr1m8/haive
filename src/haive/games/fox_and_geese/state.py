@@ -1,10 +1,24 @@
+"""
+State for the Fox and Geese game.
+
+This module defines the state for the Fox and Geese game,
+which includes the fox's position, the geese's positions,
+the current player's turn, the game status, the move history,
+the winner, and the number of geese remaining.
+"""
 from src.haive.games.framework.base.state import GameState
 from pydantic import Field
 from typing import Literal, List, Optional, Set
 from src.haive.games.fox_and_geese.models import FoxAndGeesePosition, FoxAndGeeseMove   
 
 class FoxAndGeeseState(GameState):
-    """State for a Fox and Geese game."""
+    """State for a Fox and Geese game.
+
+    This class defines the structure of the Fox and Geese game state,
+    which includes the fox's position, the geese's positions,
+    the current player's turn, the game status, the move history,
+    the winner, and the number of geese remaining.
+    """
     fox_position: FoxAndGeesePosition = Field(..., description="Position of the fox")
     geese_positions: Set[FoxAndGeesePosition] = Field(..., description="Positions of geese")
     turn: Literal["fox", "geese"] = Field(..., description="Current player's turn")
@@ -38,3 +52,4 @@ class FoxAndGeeseState(GameState):
             result += f"{i} {' '.join(row)}\n"
         
         return result
+    

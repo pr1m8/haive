@@ -1,0 +1,378 @@
+2025-04-08 14:51:41,499 - kyc_bitfinex_test - INFO - Starting KYC report test for Bitfinex - Log file: logs/kyc_bitfinex_test_20250408_145141.log
+2025-04-08 14:51:41,500 - kyc_bitfinex_test - INFO - System resource monitoring started
+2025-04-08 14:51:41,500 - kyc_bitfinex_test - INFO - Importing required modules
+2025-04-08 14:51:42,278 - graphviz._tools - DEBUG - deprecate positional args: graphviz.backend.piping.pipe(['renderer', 'formatter', 'neato_no_op', 'quiet'])
+2025-04-08 14:51:42,279 - graphviz._tools - DEBUG - deprecate positional args: graphviz.backend.rendering.render(['renderer', 'formatter', 'neato_no_op', 'quiet'])
+2025-04-08 14:51:42,279 - graphviz._tools - DEBUG - deprecate positional args: graphviz.backend.unflattening.unflatten(['stagger', 'fanout', 'chain', 'encoding'])
+2025-04-08 14:51:42,279 - graphviz._tools - DEBUG - deprecate positional args: graphviz.backend.viewing.view(['quiet'])
+2025-04-08 14:51:42,281 - graphviz._tools - DEBUG - deprecate positional args: graphviz.quoting.quote(['is_html_string', 'is_valid_id', 'dot_keywords', 'endswith_odd_number_of_backslashes', 'escape_unescaped_quotes'])
+2025-04-08 14:51:42,281 - graphviz._tools - DEBUG - deprecate positional args: graphviz.quoting.a_list(['kwargs', 'attributes'])
+2025-04-08 14:51:42,281 - graphviz._tools - DEBUG - deprecate positional args: graphviz.quoting.attr_list(['kwargs', 'attributes'])
+2025-04-08 14:51:42,281 - graphviz._tools - DEBUG - deprecate positional args: graphviz.dot.Dot.clear(['keep_attrs'])
+2025-04-08 14:51:42,282 - graphviz._tools - DEBUG - deprecate positional args: graphviz.dot.Dot.__iter__(['subgraph'])
+2025-04-08 14:51:42,282 - graphviz._tools - DEBUG - deprecate positional args: graphviz.dot.Dot.node(['_attributes'])
+2025-04-08 14:51:42,282 - graphviz._tools - DEBUG - deprecate positional args: graphviz.dot.Dot.edge(['_attributes'])
+2025-04-08 14:51:42,282 - graphviz._tools - DEBUG - deprecate positional args: graphviz.dot.Dot.attr(['_attributes'])
+2025-04-08 14:51:42,282 - graphviz._tools - DEBUG - deprecate positional args: graphviz.dot.Dot.subgraph(['name', 'comment', 'graph_attr', 'node_attr', 'edge_attr', 'body'])
+2025-04-08 14:51:42,283 - graphviz._tools - DEBUG - deprecate positional args: graphviz.piping.Pipe._pipe_legacy(['renderer', 'formatter', 'neato_no_op', 'quiet'])
+2025-04-08 14:51:42,283 - graphviz._tools - DEBUG - deprecate positional args: graphviz.saving.Save.save(['directory'])
+2025-04-08 14:51:42,283 - graphviz._tools - DEBUG - deprecate positional args: graphviz.rendering.Render.render(['directory', 'view', 'cleanup', 'format', 'renderer', 'formatter', 'neato_no_op', 'quiet', 'quiet_view'])
+2025-04-08 14:51:42,284 - graphviz._tools - DEBUG - deprecate positional args: graphviz.rendering.Render.view(['directory', 'cleanup', 'quiet', 'quiet_view'])
+2025-04-08 14:51:42,284 - graphviz._tools - DEBUG - deprecate positional args: graphviz.unflattening.Unflatten.unflatten(['stagger', 'fanout', 'chain'])
+2025-04-08 14:51:42,284 - graphviz._tools - DEBUG - deprecate positional args: graphviz.graphs.BaseGraph.__init__(['comment', 'filename', 'directory', 'format', 'engine', 'encoding', 'graph_attr', 'node_attr', 'edge_attr', 'body', 'strict'])
+2025-04-08 14:51:42,285 - graphviz._tools - DEBUG - deprecate positional args: graphviz.sources.Source.from_file(['directory', 'format', 'engine', 'encoding', 'renderer', 'formatter'])
+2025-04-08 14:51:42,285 - graphviz._tools - DEBUG - deprecate positional args: graphviz.sources.Source.__init__(['filename', 'directory', 'format', 'engine', 'encoding'])
+2025-04-08 14:51:42,285 - graphviz._tools - DEBUG - deprecate positional args: graphviz.sources.Source.save(['directory'])
+2025-04-08 14:51:42,331 - matplotlib - DEBUG - matplotlib data path: /home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/matplotlib/mpl-data
+2025-04-08 14:51:42,335 - matplotlib - DEBUG - CONFIGDIR=/home/will/.config/matplotlib
+2025-04-08 14:51:42,336 - matplotlib - DEBUG - interactive is False
+2025-04-08 14:51:42,336 - matplotlib - DEBUG - platform is linux
+2025-04-08 14:51:42,380 - matplotlib - DEBUG - CACHEDIR=/home/will/.cache/matplotlib
+2025-04-08 14:51:42,381 - matplotlib.font_manager - DEBUG - Using fontManager instance from /home/will/.cache/matplotlib/fontlist-v390.json
+2025-04-08 14:51:45,070 - langchain_community.utils.user_agent - WARNING - USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-04-08 14:51:45,534 - kyc_bitfinex_test - INFO - Agent registry contents: [<class 'src.haive.prebuilt.priv.kyc.config.KYCReportConfig'>]
+2025-04-08 14:51:45,534 - kyc_bitfinex_test - INFO - Setting up embedding and vector store configurations
+2025-04-08 14:51:45,535 - kyc_bitfinex_test - INFO - Creating KYC agent configuration
+2025-04-08 14:51:45,536 - kyc_bitfinex_test - INFO - KYCReportConfig registration status: True
+2025-04-08 14:51:45,536 - kyc_bitfinex_test - INFO - Registered agent class: <class 'src.haive.prebuilt.priv.kyc.agent.KYCReportAgent'>
+2025-04-08 14:51:45,536 - kyc_bitfinex_test - INFO - Building KYC agent
+2025-04-08 14:51:45,536 - src.haive.core.engine.agent.persistence.postgres_config - INFO - Creating new PostgreSQL connection pool
+2025-04-08 14:51:45,550 - src.haive.core.engine.agent.agent - INFO - Using PostgreSQL checkpointer for bitfinex_kyc_agent
+2025-04-08 14:51:45,551 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:45,552 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:45,576 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:45,576 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:45,600 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:45,600 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:45,623 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:45,624 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:45,647 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:45,648 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:45,670 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:45,670 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:45,697 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:45,698 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:45,725 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:45,725 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:45,756 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:45,756 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:45,785 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:45,786 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:45,812 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:45,812 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:45,835 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:45,836 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:45,871 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:45,872 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:45,895 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:45,895 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:45,923 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:45,923 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:45,946 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:45,947 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:45,970 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:45,971 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:45,995 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:45,995 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:46,018 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:46,019 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:46,042 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:46,043 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:46,066 - src.haive.prebuilt.priv.kyc.agent - INFO - Setting up workflow for KYCReportAgent bitfinex_kyc_agent
+2025-04-08 14:51:46,070 - src.haive.prebuilt.priv.kyc.agent - INFO - Workflow setup complete for bitfinex_kyc_agent
+2025-04-08 14:51:46,085 - src.haive.core.engine.agent.agent - INFO - Workflow compiled successfully for bitfinex_kyc_agent
+2025-04-08 14:51:46,096 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): mermaid.ink:443
+2025-04-08 14:51:46,213 - urllib3.connectionpool - DEBUG - https://mermaid.ink:443 "GET /img/LS0tCmNvbmZpZzoKICBmbG93Y2hhcnQ6CiAgICBjdXJ2ZTogbGluZWFyCi0tLQpncmFwaCBURDsKCV9fc3RhcnRfXyhbPHA+X19zdGFydF9fPC9wPl0pOjo6Zmlyc3QKCXByb2Nlc3NfaW5wdXQocHJvY2Vzc19pbnB1dCkKCWluaXRpYWxfYnVzaW5lc3NfY2hlY2soaW5pdGlhbF9idXNpbmVzc19jaGVjaykKCWdlbmVyYXRlX3JlcG9ydF9wbGFuKGdlbmVyYXRlX3JlcG9ydF9wbGFuKQoJaHVtYW5fZmVlZGJhY2soaHVtYW5fZmVlZGJhY2spCglnZW5lcmF0ZV9xdWVyaWVzKGdlbmVyYXRlX3F1ZXJpZXMpCglzZWFyY2hfd2ViKHNlYXJjaF93ZWIpCgl3cml0ZV9zZWN0aW9uKHdyaXRlX3NlY3Rpb24pCglnYXRoZXJfY29tcGxldGVkX3NlY3Rpb25zKGdhdGhlcl9jb21wbGV0ZWRfc2VjdGlvbnMpCglhbmFseXplX3Jpc2soYW5hbHl6ZV9yaXNrKQoJd3JpdGVfZmluYWxfc2VjdGlvbnMod3JpdGVfZmluYWxfc2VjdGlvbnMpCgljb21waWxlX2ZpbmFsX3JlcG9ydChjb21waWxlX2ZpbmFsX3JlcG9ydCkKCV9fZW5kX18oWzxwPl9fZW5kX188L3A+XSk6OjpsYXN0CglfX3N0YXJ0X18gLS0+IHByb2Nlc3NfaW5wdXQ7CglhbmFseXplX3Jpc2sgLS0+IHdyaXRlX2ZpbmFsX3NlY3Rpb25zOwoJY29tcGlsZV9maW5hbF9yZXBvcnQgLS0+IF9fZW5kX187CglnYXRoZXJfY29tcGxldGVkX3NlY3Rpb25zIC0tPiBhbmFseXplX3Jpc2s7CglnZW5lcmF0ZV9xdWVyaWVzIC0tPiBzZWFyY2hfd2ViOwoJZ2VuZXJhdGVfcmVwb3J0X3BsYW4gLS0+IGh1bWFuX2ZlZWRiYWNrOwoJcHJvY2Vzc19pbnB1dCAtLT4gaW5pdGlhbF9idXNpbmVzc19jaGVjazsKCXNlYXJjaF93ZWIgLS0+IHdyaXRlX3NlY3Rpb247Cgl3cml0ZV9maW5hbF9zZWN0aW9ucyAtLT4gY29tcGlsZV9maW5hbF9yZXBvcnQ7Cglpbml0aWFsX2J1c2luZXNzX2NoZWNrIC0uICZuYnNwO2ltbWVkaWF0ZV9yZWplY3Rpb24mbmJzcDsgLi0+IGNvbXBpbGVfZmluYWxfcmVwb3J0OwoJaW5pdGlhbF9idXNpbmVzc19jaGVjayAtLiAmbmJzcDtjb250aW51ZV9hc3Nlc3NtZW50Jm5ic3A7IC4tPiBnZW5lcmF0ZV9yZXBvcnRfcGxhbjsKCWh1bWFuX2ZlZWRiYWNrIC0uICZuYnNwO2NvbnRpbnVlX3Jlc2VhcmNoJm5ic3A7IC4tPiBnZW5lcmF0ZV9xdWVyaWVzOwoJaHVtYW5fZmVlZGJhY2sgLS4gJm5ic3A7c2tpcF9yZXNlYXJjaCZuYnNwOyAuLT4gZ2F0aGVyX2NvbXBsZXRlZF9zZWN0aW9uczsKCXdyaXRlX3NlY3Rpb24gLS4gJm5ic3A7bmVlZF9tb3JlX3NlYXJjaCZuYnNwOyAuLT4gc2VhcmNoX3dlYjsKCXdyaXRlX3NlY3Rpb24gLS4gJm5ic3A7c2VjdGlvbl9jb21wbGV0ZSZuYnNwOyAuLT4gZ2VuZXJhdGVfcXVlcmllczsKCXdyaXRlX3NlY3Rpb24gLS4gJm5ic3A7YWxsX3NlY3Rpb25zX2NvbXBsZXRlJm5ic3A7IC4tPiBnYXRoZXJfY29tcGxldGVkX3NlY3Rpb25zOwoJY2xhc3NEZWYgZGVmYXVsdCBmaWxsOiNmMmYwZmYsbGluZS1oZWlnaHQ6MS4yCgljbGFzc0RlZiBmaXJzdCBmaWxsLW9wYWNpdHk6MAoJY2xhc3NEZWYgbGFzdCBmaWxsOiNiZmI2ZmMK?type=png&bgColor=!white HTTP/1.1" 200 73744
+2025-04-08 14:51:46,241 - src.haive.core.engine.agent.agent - INFO - Graph visualization saved to /home/will/Projects/haive/backend/haive/resources/Graphs/bitfinex_kyc_agent_20250408_145146.png
+2025-04-08 14:51:46,242 - kyc_bitfinex_test - INFO - Agent built in 0.71 seconds
+2025-04-08 14:51:46,242 - kyc_bitfinex_test - INFO - Input message length: 698 characters
+2025-04-08 14:51:46,242 - kyc_bitfinex_test - INFO - Additional context length: 262 characters
+2025-04-08 14:51:46,242 - kyc_bitfinex_test - INFO - Running KYC report generation
+2025-04-08 14:51:46,242 - kyc_bitfinex_test - INFO - Starting agent execution
+2025-04-08 14:51:46,242 - src.haive.core.engine.agent.agent - INFO - Using thread_id: feeacd76-e0ca-482f-b465-7bc7f464c61f
+2025-04-08 14:51:46,242 - src.haive.core.engine.agent.agent - INFO - Explicitly registering thread feeacd76-e0ca-482f-b465-7bc7f464c61f in PostgreSQL database
+2025-04-08 14:51:46,243 - src.haive.core.engine.agent.agent - DEBUG - PostgreSQL connection pool is open
+2025-04-08 14:51:46,245 - src.haive.core.engine.agent.agent - INFO - Thread feeacd76-e0ca-482f-b465-7bc7f464c61f successfully registered in PostgreSQL
+2025-04-08 14:51:46,261 - src.haive.prebuilt.priv.kyc.agent - INFO - Processing input for KYC report
+2025-04-08 14:51:46,261 - src.haive.prebuilt.priv.kyc.agent - INFO - Input context: 
+        Pay special attention to anti-money laundering (AML) compliance, know-your-customer (KYC) practices, 
+        and any past regulatory actions or concerns. Cryptocurrency exchanges are considered high-risk entities
+        in our risk framework.
+        
+2025-04-08 14:51:46,264 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:46,264 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:46,287 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:46,288 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:46,320 - src.haive.prebuilt.priv.kyc.agent - INFO - Generated report topic: KYC Risk Assessment Report for Bitfinex
+2025-04-08 14:51:46,324 - src.haive.prebuilt.priv.kyc.agent - INFO - Performing initial business check for: Bitfinex
+2025-04-08 14:51:46,326 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): api.tavily.com:443
+2025-04-08 14:51:47,472 - urllib3.connectionpool - DEBUG - https://api.tavily.com:443 "POST /search HTTP/1.1" 200 1708
+2025-04-08 14:51:47,602 - src.haive.prebuilt.priv.kyc.agent - INFO - Initial search returned 1227 chars
+2025-04-08 14:51:47,609 - src.haive.prebuilt.priv.kyc.agent - INFO - Generating report plan for KYC Risk Assessment Report for Bitfinex
+2025-04-08 14:51:47,610 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:47,610 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:47,635 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:47,636 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:47,664 - src.haive.prebuilt.priv.kyc.agent - INFO - Processing human feedback on report plan
+2025-04-08 14:51:47,673 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:47,677 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:47,701 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:47,701 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:47,734 - src.haive.prebuilt.priv.kyc.agent - INFO - Searching web for: Bitfinex company history and founders
+2025-04-08 14:51:47,746 - src.haive.prebuilt.priv.kyc.agent - INFO - Checking ReactAgentConfig registration, found: True
+2025-04-08 14:51:47,746 - src.haive.agents.v2.config - WARNING - No tools provided for ReactAgent
+2025-04-08 14:51:47,746 - src.haive.agents.v2.agent - INFO - Prepared 0 tools across 0 nodes
+2025-04-08 14:51:47,746 - src.haive.agents.v2.agent - WARNING - No tools available to create ToolNodes
+2025-04-08 14:51:47,747 - src.haive.core.engine.agent.persistence.postgres_config - INFO - Creating new PostgreSQL connection pool
+2025-04-08 14:51:47,758 - src.haive.core.engine.agent.agent - INFO - Using PostgreSQL checkpointer for agent_dbad5b58
+2025-04-08 14:51:47,759 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:47,759 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:47,783 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:47,783 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:47,806 - src.haive.agents.v2.agent - DEBUG - Setting up workflow for ReactAgent agent_dbad5b58
+2025-04-08 14:51:47,807 - src.haive.core.graph.StateSchemaManager - DEBUG - DEBUG: state_model.model_fields: {'messages': (typing.Sequence[langchain_core.messages.base.BaseMessage], FieldInfo(annotation=Sequence[BaseMessage], required=False, default_factory=list, description='Messages in the conversation', metadata=[<function _add_messages_wrapper.<locals>._add_messages at 0x7f8a3490eb60>])), 'tool_results': (typing.List[typing.Dict[str, typing.Any]], FieldInfo(annotation=List[Dict[str, Any]], required=False, default_factory=list, description='Results from tool executions')), 'iteration': (<class 'int'>, FieldInfo(annotation=int, required=False, default=0, description='Current iteration count')), 'structured_output': (typing.Optional[typing.Dict[str, typing.Any]], FieldInfo(annotation=Union[Dict[str, Any], NoneType], required=False, default=None, description='Structured output from the agent')), 'intermediate_steps': (typing.List[typing.Dict[str, typing.Any]], FieldInfo(annotation=List[Dict[str, Any]], required=False, default_factory=list, description='Intermediate reasoning steps')), 'requires_human_input': (<class 'bool'>, FieldInfo(annotation=bool, required=False, default=False, description='Flag to indicate if human input is required')), 'human_request': (typing.Optional[str], FieldInfo(annotation=Union[str, NoneType], required=False, default=None, description='Request for human assistance'))}
+2025-04-08 14:51:47,810 - src.haive.core.graph.GraphBuilder - DEBUG - Using input_mapping: {}
+2025-04-08 14:51:47,810 - src.haive.core.graph.GraphBuilder - DEBUG - Using output_mapping: None
+2025-04-08 14:51:47,810 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:47,811 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:47,833 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:47,834 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:47,856 - src.haive.core.graph.NodeFactory - DEBUG - Initialized empty input_mapping: {}
+2025-04-08 14:51:47,856 - src.haive.core.graph.NodeFactory - DEBUG - Using input_mapping: {}
+2025-04-08 14:51:47,857 - src.haive.core.graph.NodeFactory - DEBUG - Using output_mapping: {'output': 'output'}
+2025-04-08 14:51:47,857 - src.haive.agents.v2.agent - INFO - Set up ReactAgent workflow for agent_dbad5b58 with 0 tool nodes
+2025-04-08 14:51:47,859 - src.haive.core.engine.agent.agent - INFO - Workflow compiled successfully for agent_dbad5b58
+2025-04-08 14:51:47,860 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): mermaid.ink:443
+2025-04-08 14:51:48,561 - urllib3.connectionpool - DEBUG - https://mermaid.ink:443 "GET /img/LS0tCmNvbmZpZzoKICBmbG93Y2hhcnQ6CiAgICBjdXJ2ZTogbGluZWFyCi0tLQpncmFwaCBURDsKCV9fc3RhcnRfXyhbPHA+X19zdGFydF9fPC9wPl0pOjo6Zmlyc3QKCWFnZW50KGFnZW50KQoJX19lbmRfXyhbPHA+X19lbmRfXzwvcD5dKTo6Omxhc3QKCV9fc3RhcnRfXyAtLT4gYWdlbnQ7CglhZ2VudCAtLT4gX19lbmRfXzsKCWNsYXNzRGVmIGRlZmF1bHQgZmlsbDojZjJmMGZmLGxpbmUtaGVpZ2h0OjEuMgoJY2xhc3NEZWYgZmlyc3QgZmlsbC1vcGFjaXR5OjAKCWNsYXNzRGVmIGxhc3QgZmlsbDojYmZiNmZjCg==?type=png&bgColor=!white HTTP/1.1" 200 5794
+2025-04-08 14:51:48,562 - src.haive.core.engine.agent.agent - INFO - Graph visualization saved to /home/will/Projects/haive/backend/haive/resources/Graphs/agent_dbad5b58_20250408_145147.png
+2025-04-08 14:51:48,562 - src.haive.prebuilt.priv.kyc.agent - INFO - Successfully built ReactAgent
+2025-04-08 14:51:48,562 - src.haive.prebuilt.priv.kyc.agent - INFO - Running ReactAgent with query: Bitfinex company history and founders
+2025-04-08 14:51:48,562 - src.haive.prebuilt.priv.kyc.agent - INFO - Sending research instructions to ReactAgent: Research the following information for a KYC report: Bitfinex company history and founders. Focus on...
+2025-04-08 14:51:48,562 - src.haive.core.engine.agent.agent - INFO - Using thread_id: 94829615-8939-4d45-8e5e-5135c34e80fa
+2025-04-08 14:51:48,562 - src.haive.core.engine.agent.agent - INFO - Explicitly registering thread 94829615-8939-4d45-8e5e-5135c34e80fa in PostgreSQL database
+2025-04-08 14:51:48,563 - src.haive.core.engine.agent.agent - DEBUG - PostgreSQL connection pool is open
+2025-04-08 14:51:48,565 - src.haive.core.engine.agent.agent - INFO - Thread 94829615-8939-4d45-8e5e-5135c34e80fa successfully registered in PostgreSQL
+2025-04-08 14:51:48,577 - src.haive.core.engine.agent.agent - ERROR - Error running agent: 1 validation error for ReactAgentState
+messages.0
+  Input should be a valid dictionary or instance of BaseMessage [type=model_type, input_value=('human', 'Research the f...factors that you find.'), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.10/v/model_type
+2025-04-08 14:51:48,577 - src.haive.prebuilt.priv.kyc.agent - ERROR - Error using ReactAgent: 1 validation error for ReactAgentState
+messages.0
+  Input should be a valid dictionary or instance of BaseMessage [type=model_type, input_value=('human', 'Research the f...factors that you find.'), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.10/v/model_type
+2025-04-08 14:51:48,577 - src.haive.prebuilt.priv.kyc.agent - INFO - Falling back to direct tool use
+2025-04-08 14:51:48,577 - src.haive.prebuilt.priv.kyc.agent - INFO - Using fallback search for query: Bitfinex company history and founders
+2025-04-08 14:51:48,578 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): api.tavily.com:443
+2025-04-08 14:51:50,872 - urllib3.connectionpool - DEBUG - https://api.tavily.com:443 "POST /search HTTP/1.1" 200 3999
+2025-04-08 14:51:50,873 - src.haive.prebuilt.priv.kyc.agent - INFO - Fallback search complete, got 3413 chars
+2025-04-08 14:51:50,878 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:50,879 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:50,903 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:50,903 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:50,934 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:50,935 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:50,958 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:50,959 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:50,991 - src.haive.prebuilt.priv.kyc.agent - INFO - Searching web for: Bitfinex cryptocurrency services offerings and business model
+2025-04-08 14:51:50,992 - src.haive.prebuilt.priv.kyc.agent - INFO - Running ReactAgent with query: Bitfinex cryptocurrency services offerings and business model
+2025-04-08 14:51:50,992 - src.haive.prebuilt.priv.kyc.agent - INFO - Sending research instructions to ReactAgent: Research the following information for a KYC report: Bitfinex cryptocurrency services offerings and ...
+2025-04-08 14:51:50,992 - src.haive.core.engine.agent.agent - INFO - Using thread_id: 94829615-8939-4d45-8e5e-5135c34e80fa
+2025-04-08 14:51:50,992 - src.haive.core.engine.agent.agent - INFO - Explicitly registering thread 94829615-8939-4d45-8e5e-5135c34e80fa in PostgreSQL database
+2025-04-08 14:51:50,993 - src.haive.core.engine.agent.agent - DEBUG - PostgreSQL connection pool is open
+2025-04-08 14:51:50,994 - src.haive.core.engine.agent.agent - INFO - Thread 94829615-8939-4d45-8e5e-5135c34e80fa successfully registered in PostgreSQL
+2025-04-08 14:51:51,002 - src.haive.core.engine.agent.agent - ERROR - Error running agent: 1 validation error for ReactAgentState
+messages.0
+  Input should be a valid dictionary or instance of BaseMessage [type=model_type, input_value=('human', 'Research the f...factors that you find.'), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.10/v/model_type
+2025-04-08 14:51:51,003 - src.haive.prebuilt.priv.kyc.agent - ERROR - Error using ReactAgent: 1 validation error for ReactAgentState
+messages.0
+  Input should be a valid dictionary or instance of BaseMessage [type=model_type, input_value=('human', 'Research the f...factors that you find.'), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.10/v/model_type
+2025-04-08 14:51:51,003 - src.haive.prebuilt.priv.kyc.agent - INFO - Falling back to direct tool use
+2025-04-08 14:51:51,003 - src.haive.prebuilt.priv.kyc.agent - INFO - Using fallback search for query: Bitfinex cryptocurrency services offerings and business model
+2025-04-08 14:51:51,003 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): api.tavily.com:443
+2025-04-08 14:51:52,726 - urllib3.connectionpool - DEBUG - https://api.tavily.com:443 "POST /search HTTP/1.1" 200 5042
+2025-04-08 14:51:52,728 - src.haive.prebuilt.priv.kyc.agent - INFO - Fallback search complete, got 4436 chars
+2025-04-08 14:51:52,736 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:52,736 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:52,763 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:52,763 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:52,805 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:52,806 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:52,831 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:52,831 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:52,866 - src.haive.prebuilt.priv.kyc.agent - INFO - Searching web for: Bitfinex regulatory compliance 2023
+2025-04-08 14:51:52,866 - src.haive.prebuilt.priv.kyc.agent - INFO - Running ReactAgent with query: Bitfinex regulatory compliance 2023
+2025-04-08 14:51:52,866 - src.haive.prebuilt.priv.kyc.agent - INFO - Sending research instructions to ReactAgent: Research the following information for a KYC report: Bitfinex regulatory compliance 2023. Focus on a...
+2025-04-08 14:51:52,866 - src.haive.core.engine.agent.agent - INFO - Using thread_id: 94829615-8939-4d45-8e5e-5135c34e80fa
+2025-04-08 14:51:52,866 - src.haive.core.engine.agent.agent - INFO - Explicitly registering thread 94829615-8939-4d45-8e5e-5135c34e80fa in PostgreSQL database
+2025-04-08 14:51:52,867 - src.haive.core.engine.agent.agent - DEBUG - PostgreSQL connection pool is open
+2025-04-08 14:51:52,868 - src.haive.core.engine.agent.agent - INFO - Thread 94829615-8939-4d45-8e5e-5135c34e80fa successfully registered in PostgreSQL
+2025-04-08 14:51:52,876 - src.haive.core.engine.agent.agent - ERROR - Error running agent: 1 validation error for ReactAgentState
+messages.0
+  Input should be a valid dictionary or instance of BaseMessage [type=model_type, input_value=('human', 'Research the f...factors that you find.'), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.10/v/model_type
+2025-04-08 14:51:52,876 - src.haive.prebuilt.priv.kyc.agent - ERROR - Error using ReactAgent: 1 validation error for ReactAgentState
+messages.0
+  Input should be a valid dictionary or instance of BaseMessage [type=model_type, input_value=('human', 'Research the f...factors that you find.'), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.10/v/model_type
+2025-04-08 14:51:52,876 - src.haive.prebuilt.priv.kyc.agent - INFO - Falling back to direct tool use
+2025-04-08 14:51:52,876 - src.haive.prebuilt.priv.kyc.agent - INFO - Using fallback search for query: Bitfinex regulatory compliance 2023
+2025-04-08 14:51:52,877 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): api.tavily.com:443
+2025-04-08 14:51:53,841 - urllib3.connectionpool - DEBUG - https://api.tavily.com:443 "POST /search HTTP/1.1" 200 2837
+2025-04-08 14:51:53,842 - src.haive.prebuilt.priv.kyc.agent - INFO - Fallback search complete, got 2294 chars
+2025-04-08 14:51:53,947 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:53,948 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:53,973 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:53,973 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:54,036 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:54,036 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:54,060 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:54,060 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:54,130 - src.haive.prebuilt.priv.kyc.agent - INFO - Searching web for: Bitfinex AML programs and KYC practices 2023
+2025-04-08 14:51:54,130 - src.haive.prebuilt.priv.kyc.agent - INFO - Running ReactAgent with query: Bitfinex AML programs and KYC practices 2023
+2025-04-08 14:51:54,130 - src.haive.prebuilt.priv.kyc.agent - INFO - Sending research instructions to ReactAgent: Research the following information for a KYC report: Bitfinex AML programs and KYC practices 2023. F...
+2025-04-08 14:51:54,130 - src.haive.core.engine.agent.agent - INFO - Using thread_id: 94829615-8939-4d45-8e5e-5135c34e80fa
+2025-04-08 14:51:54,130 - src.haive.core.engine.agent.agent - INFO - Explicitly registering thread 94829615-8939-4d45-8e5e-5135c34e80fa in PostgreSQL database
+2025-04-08 14:51:54,131 - src.haive.core.engine.agent.agent - DEBUG - PostgreSQL connection pool is open
+2025-04-08 14:51:54,132 - src.haive.core.engine.agent.agent - INFO - Thread 94829615-8939-4d45-8e5e-5135c34e80fa successfully registered in PostgreSQL
+2025-04-08 14:51:54,139 - src.haive.core.engine.agent.agent - ERROR - Error running agent: 1 validation error for ReactAgentState
+messages.0
+  Input should be a valid dictionary or instance of BaseMessage [type=model_type, input_value=('human', 'Research the f...factors that you find.'), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.10/v/model_type
+2025-04-08 14:51:54,139 - src.haive.prebuilt.priv.kyc.agent - ERROR - Error using ReactAgent: 1 validation error for ReactAgentState
+messages.0
+  Input should be a valid dictionary or instance of BaseMessage [type=model_type, input_value=('human', 'Research the f...factors that you find.'), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.10/v/model_type
+2025-04-08 14:51:54,139 - src.haive.prebuilt.priv.kyc.agent - INFO - Falling back to direct tool use
+2025-04-08 14:51:54,139 - src.haive.prebuilt.priv.kyc.agent - INFO - Using fallback search for query: Bitfinex AML programs and KYC practices 2023
+2025-04-08 14:51:54,140 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): api.tavily.com:443
+2025-04-08 14:51:55,500 - urllib3.connectionpool - DEBUG - https://api.tavily.com:443 "POST /search HTTP/1.1" 200 1999
+2025-04-08 14:51:55,500 - src.haive.prebuilt.priv.kyc.agent - INFO - Fallback search complete, got 1684 chars
+2025-04-08 14:51:55,546 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:55,546 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:55,569 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:55,570 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:55,662 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:55,663 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:55,692 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:55,693 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:55,757 - src.haive.prebuilt.priv.kyc.agent - INFO - Searching web for: Bitfinex controversy or scandal
+2025-04-08 14:51:55,757 - src.haive.prebuilt.priv.kyc.agent - INFO - Running ReactAgent with query: Bitfinex controversy or scandal
+2025-04-08 14:51:55,757 - src.haive.prebuilt.priv.kyc.agent - INFO - Sending research instructions to ReactAgent: Research the following information for a KYC report: Bitfinex controversy or scandal. Focus on accur...
+2025-04-08 14:51:55,758 - src.haive.core.engine.agent.agent - INFO - Using thread_id: 94829615-8939-4d45-8e5e-5135c34e80fa
+2025-04-08 14:51:55,758 - src.haive.core.engine.agent.agent - INFO - Explicitly registering thread 94829615-8939-4d45-8e5e-5135c34e80fa in PostgreSQL database
+2025-04-08 14:51:55,758 - src.haive.core.engine.agent.agent - DEBUG - PostgreSQL connection pool is open
+2025-04-08 14:51:55,759 - src.haive.core.engine.agent.agent - INFO - Thread 94829615-8939-4d45-8e5e-5135c34e80fa successfully registered in PostgreSQL
+2025-04-08 14:51:55,767 - src.haive.core.engine.agent.agent - ERROR - Error running agent: 1 validation error for ReactAgentState
+messages.0
+  Input should be a valid dictionary or instance of BaseMessage [type=model_type, input_value=('human', 'Research the f...factors that you find.'), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.10/v/model_type
+2025-04-08 14:51:55,768 - src.haive.prebuilt.priv.kyc.agent - ERROR - Error using ReactAgent: 1 validation error for ReactAgentState
+messages.0
+  Input should be a valid dictionary or instance of BaseMessage [type=model_type, input_value=('human', 'Research the f...factors that you find.'), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.10/v/model_type
+2025-04-08 14:51:55,768 - src.haive.prebuilt.priv.kyc.agent - INFO - Falling back to direct tool use
+2025-04-08 14:51:55,768 - src.haive.prebuilt.priv.kyc.agent - INFO - Using fallback search for query: Bitfinex controversy or scandal
+2025-04-08 14:51:55,769 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): api.tavily.com:443
+2025-04-08 14:51:57,661 - urllib3.connectionpool - DEBUG - https://api.tavily.com:443 "POST /search HTTP/1.1" 200 3592
+2025-04-08 14:51:57,662 - src.haive.prebuilt.priv.kyc.agent - INFO - Fallback search complete, got 3215 chars
+2025-04-08 14:51:57,727 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:57,728 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:57,751 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:57,751 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:57,826 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:57,827 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:57,852 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:51:57,853 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:51:57,928 - src.haive.prebuilt.priv.kyc.agent - INFO - Searching web for: Bitfinex cybersecurity measures 2023
+2025-04-08 14:51:57,928 - src.haive.prebuilt.priv.kyc.agent - INFO - Running ReactAgent with query: Bitfinex cybersecurity measures 2023
+2025-04-08 14:51:57,928 - src.haive.prebuilt.priv.kyc.agent - INFO - Sending research instructions to ReactAgent: Research the following information for a KYC report: Bitfinex cybersecurity measures 2023. Focus on ...
+2025-04-08 14:51:57,929 - src.haive.core.engine.agent.agent - INFO - Using thread_id: 94829615-8939-4d45-8e5e-5135c34e80fa
+2025-04-08 14:51:57,929 - src.haive.core.engine.agent.agent - INFO - Explicitly registering thread 94829615-8939-4d45-8e5e-5135c34e80fa in PostgreSQL database
+2025-04-08 14:51:57,929 - src.haive.core.engine.agent.agent - DEBUG - PostgreSQL connection pool is open
+2025-04-08 14:51:57,930 - src.haive.core.engine.agent.agent - INFO - Thread 94829615-8939-4d45-8e5e-5135c34e80fa successfully registered in PostgreSQL
+2025-04-08 14:51:57,936 - src.haive.core.engine.agent.agent - ERROR - Error running agent: 1 validation error for ReactAgentState
+messages.0
+  Input should be a valid dictionary or instance of BaseMessage [type=model_type, input_value=('human', 'Research the f...factors that you find.'), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.10/v/model_type
+2025-04-08 14:51:57,937 - src.haive.prebuilt.priv.kyc.agent - ERROR - Error using ReactAgent: 1 validation error for ReactAgentState
+messages.0
+  Input should be a valid dictionary or instance of BaseMessage [type=model_type, input_value=('human', 'Research the f...factors that you find.'), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.10/v/model_type
+2025-04-08 14:51:57,937 - src.haive.prebuilt.priv.kyc.agent - INFO - Falling back to direct tool use
+2025-04-08 14:51:57,937 - src.haive.prebuilt.priv.kyc.agent - INFO - Using fallback search for query: Bitfinex cybersecurity measures 2023
+2025-04-08 14:51:57,937 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): api.tavily.com:443
+2025-04-08 14:52:00,543 - urllib3.connectionpool - DEBUG - https://api.tavily.com:443 "POST /search HTTP/1.1" 200 5388
+2025-04-08 14:52:00,544 - src.haive.prebuilt.priv.kyc.agent - INFO - Fallback search complete, got 4756 chars
+2025-04-08 14:52:00,622 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:52:00,624 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:52:00,648 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:52:00,648 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:52:00,766 - src.haive.prebuilt.priv.kyc.agent - INFO - Detected prohibited activity: anonymous_accounts
+2025-04-08 14:52:00,766 - src.haive.prebuilt.priv.kyc.agent - INFO - Detected high-risk business type: cryptocurrency_exchange
+2025-04-08 14:52:00,767 - src.haive.prebuilt.priv.kyc.agent - INFO - Detected high-risk business type: money_services_business
+2025-04-08 14:52:00,767 - src.haive.prebuilt.priv.kyc.agent - INFO - Detected regulatory issues in content
+2025-04-08 14:52:00,834 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:52:00,834 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:52:00,859 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:52:00,859 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:52:00,885 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:52:00,885 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:52:00,909 - httpx - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-08 14:52:00,909 - httpx - DEBUG - load_verify_locations cafile='/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/certifi/cacert.pem'
+2025-04-08 14:52:00,997 - src.haive.prebuilt.priv.kyc.agent - INFO - KYC report saved to reports/kyc_report_Bitfinex_20250408_145200.md
+2025-04-08 14:52:01,079 - src.haive.core.engine.agent.agent - ERROR - Error running agent: Pregel.get_state_history() missing 1 required positional argument: 'config'
+2025-04-08 14:52:01,080 - kyc_bitfinex_test - ERROR - Error during agent execution: Pregel.get_state_history() missing 1 required positional argument: 'config'
+2025-04-08 14:52:01,080 - kyc_bitfinex_test - ERROR - Traceback: Traceback (most recent call last):
+  File "/home/will/Projects/haive/backend/haive/src/haive/prebuilt/priv/kyc/test.py", line 179, in run_with_logging
+    result = original_run(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/Projects/haive/backend/haive/src/haive/core/engine/agent/agent.py", line 591, in run
+    raise e
+  File "/home/will/Projects/haive/backend/haive/src/haive/core/engine/agent/agent.py", line 585, in run
+    self.save_state_history(runtime_config)
+  File "/home/will/Projects/haive/backend/haive/src/haive/prebuilt/priv/kyc/agent.py", line 2255, in save_state_history
+    state_history = self.app.get_state_history()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Pregel.get_state_history() missing 1 required positional argument: 'config'
+
+2025-04-08 14:52:01,081 - kyc_bitfinex_test - CRITICAL - KYC report generation failed: Pregel.get_state_history() missing 1 required positional argument: 'config'
+2025-04-08 14:52:01,081 - kyc_bitfinex_test - CRITICAL - Detailed traceback: Traceback (most recent call last):
+  File "/home/will/Projects/haive/backend/haive/src/haive/prebuilt/priv/kyc/test.py", line 213, in run_kyc_test_for_bitfinex
+    result = kyc_agent.run(
+             ^^^^^^^^^^^^^^
+  File "/home/will/Projects/haive/backend/haive/src/haive/prebuilt/priv/kyc/test.py", line 179, in run_with_logging
+    result = original_run(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/Projects/haive/backend/haive/src/haive/core/engine/agent/agent.py", line 591, in run
+    raise e
+  File "/home/will/Projects/haive/backend/haive/src/haive/core/engine/agent/agent.py", line 585, in run
+    self.save_state_history(runtime_config)
+  File "/home/will/Projects/haive/backend/haive/src/haive/prebuilt/priv/kyc/agent.py", line 2255, in save_state_history
+    state_history = self.app.get_state_history()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Pregel.get_state_history() missing 1 required positional argument: 'config'
+
+2025-04-08 14:52:01,081 - kyc_bitfinex_test - CRITICAL - Unexpected error in test script: Pregel.get_state_history() missing 1 required positional argument: 'config'
+2025-04-08 14:52:01,081 - kyc_bitfinex_test - CRITICAL - Traceback: Traceback (most recent call last):
+  File "/home/will/Projects/haive/backend/haive/src/haive/prebuilt/priv/kyc/test.py", line 263, in <module>
+    result = run_kyc_test_for_bitfinex()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/Projects/haive/backend/haive/src/haive/prebuilt/priv/kyc/test.py", line 213, in run_kyc_test_for_bitfinex
+    result = kyc_agent.run(
+             ^^^^^^^^^^^^^^
+  File "/home/will/Projects/haive/backend/haive/src/haive/prebuilt/priv/kyc/test.py", line 179, in run_with_logging
+    result = original_run(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/Projects/haive/backend/haive/src/haive/core/engine/agent/agent.py", line 591, in run
+    raise e
+  File "/home/will/Projects/haive/backend/haive/src/haive/core/engine/agent/agent.py", line 585, in run
+    self.save_state_history(runtime_config)
+  File "/home/will/Projects/haive/backend/haive/src/haive/prebuilt/priv/kyc/agent.py", line 2255, in save_state_history
+    state_history = self.app.get_state_history()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Pregel.get_state_history() missing 1 required positional argument: 'config'
+
+2025-04-08 14:52:01,082 - kyc_bitfinex_test - INFO - Test script execution finished. See log file for details: logs/kyc_bitfinex_test_20250408_145141.log
+2025-04-08 14:52:01,082 - kyc_bitfinex_test - INFO - Analyzing log file for test metrics
