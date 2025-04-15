@@ -230,7 +230,6 @@ def test_memory_persistence():
         print(f"❌ Test failed: {e}")
         traceback.print_exc()
         assert False, f"Test failed: {e}"
-
 def test_postgres_persistence():
     """Test SimpleAgent with PostgreSQL persistence."""
     print_step("Testing SimpleAgent with PostgreSQL persistence")
@@ -240,6 +239,9 @@ def test_postgres_persistence():
         test_name = f"postgres_test_{uuid.uuid4().hex[:8]}"
         thread_id = f"postgres_thread_{uuid.uuid4().hex[:8]}"
         print(f"Using test name: {test_name}, thread_id: {thread_id}")
+        
+        # Create LangGraph style config
+        config = {"configurable": {"thread_id": thread_id}}
         
         # First create and set up the pool outside the agent
         print("Creating and opening PostgreSQL connection pool...")
@@ -290,12 +292,12 @@ def test_postgres_persistence():
         print("Recompiling agent with PostgreSQL saver...")
         agent.app = agent.graph.compile(checkpointer=postgres_saver)
         
-        # Update the agent's runnable_config to use our thread_id
-        agent.config.runnable_config["configurable"] = {"thread_id": thread_id}
-        
-        # First message - use LangGraph format directly
+        # First message using proper HumanMessage format
         print("Sending first message...")
-        response1 = agent.run({"messages": [("human", "Hello, my name is PostgresUser.")]}, thread_id=thread_id)
+        from langchain_core.messages import HumanMessage
+        
+        input_message = HumanMessage(content="Hello, my name is PostgresUser.")
+        response1 = agent.run({"messages": [input_message]}, config=config)
         
         # Print response info
         print(f"First response type: {type(response1)}")
@@ -308,12 +310,22 @@ def test_postgres_persistence():
             content = extract_message_content(last_message)
             print(f"First response content: {content}")
         
+        # Verify state was saved
+        try:
+            saved_state = agent.app.get_state(config)
+            print(f"Saved state exists: {saved_state is not None}")
+            if saved_state and hasattr(saved_state, 'values'):
+                print(f"Saved state messages count: {len(saved_state.values.get('messages', []))}")
+        except Exception as e:
+            print(f"Error checking saved state: {e}")
+        
         # Wait briefly between messages
         time.sleep(1)
         
-        # Second message - use the same thread_id
+        # Second message - using the same config
         print("Sending second message...")
-        response2 = agent.run({"messages": [("human", "What's my name?")]}, thread_id=thread_id)
+        input_message2 = HumanMessage(content="What's my name?")
+        response2 = agent.run({"messages": [input_message2]}, config=config)
         
         # Print response info
         print(f"Second response type: {type(response2)}")
@@ -384,9 +396,17 @@ def test_memory_persistence():
         print("Recompiling agent with MemorySaver...")
         agent.app = agent.graph.compile(checkpointer=memory_saver)
         
-        # First message to establish fact
+        # Create LangGraph config format with thread_id
+        config = {"configurable": {"thread_id": thread_id}}
+        print(f"Using config: {config}")
+        
+        # First message using proper HumanMessage format
         print("Sending first message...")
-        response1 = agent.run("Hello, my name is TestUser.", thread_id=thread_id)
+        from langchain_core.messages import HumanMessage
+        
+        # Use proper LangGraph message format for input
+        input_message = HumanMessage(content="Hello, my name is TestUser.")
+        response1 = agent.run({"messages": [input_message]}, config=config)
         
         # Print response info for debugging
         print(f"Response type: {type(response1)}")
@@ -398,9 +418,21 @@ def test_memory_persistence():
         # Wait briefly between messages
         time.sleep(1)
         
-        # Second message to test memory
+        # Verify state was saved
+        try:
+            saved_state = agent.app.get_state(config)
+            print(f"Saved state exists: {saved_state is not None}")
+            if saved_state and hasattr(saved_state, 'values'):
+                print(f"Saved state messages count: {len(saved_state.values.get('messages', []))}")
+        except Exception as e:
+            print(f"Error checking saved state: {e}")
+        
+        # Second message to test memory - using the SAME config
         print("Sending second message...")
-        response2 = agent.run("What's my name?", thread_id=thread_id)
+        input_message2 = HumanMessage(content="What's my name?")
+        response2 = agent.run({"messages": [input_message2]}, config=config)
+        
+        # (rest of the test remains the same)
         print(f"Second response type: {type(response2)}")
         
         # Extract messages from second response
