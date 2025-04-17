@@ -1,0 +1,23 @@
+name: Trunk Code Quality
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: trunk-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  trunk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Trunk Check
+        uses: trunk-io/trunk-action@v5
+        with:
+          arguments: check --all
+          token: ${{ secrets.GITHUB_TOKEN }}
