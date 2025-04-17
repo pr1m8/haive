@@ -138,6 +138,7 @@ uvicorn = "^0.34.0"
 fastapi = "^0.115.12"
 websockets = {version = "15.0.1", python = "<3.12"}
 supabase = "^2.15.0"
+simsimd = "^6.2.1"
 
 [tool.poetry.group.dev.dependencies]
 furo = "^2024.8.6"
@@ -164,6 +165,12 @@ torchvision = { version = "0.21.0+cu118", source = "pytorch_cuda" }
 torchaudio = { version = "2.6.0+cu118", source = "pytorch_cuda" }
 twine = "^6.1.0"
 langgraph-sdk = "^0.1.61"
+mermaid = "^0.3.2"
+mermaid-python = "^0.1"
+ipykernel = "^6.29.5"
+langchain-huggingface = "^0.1.2"
+pytest-rich = "^0.2.0"
+pytest-asyncio = "^0.26.0"
 
 
 [tool.poetry.extras]
