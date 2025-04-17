@@ -1,0 +1,78 @@
+# === Python artifacts ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# === Virtual environments ===
+.venv/
+env/
+venv/
+ENV/
+*.env
+
+# === Logs and local output ===
+*.log
+*.out
+*.err
+*.pid
+*.sqlite3
+*.db
+
+# === Byte-compiled files ===
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+
+# === IDEs ===
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# === Jupyter Notebooks ===
+.ipynb_checkpoints/
+*.ipynb~
+
+# === Test-related ===
+.coverage
+.cache/
+.tox/
+pytest_cache/
+.nox/
+htmlcov/
+*.cover
+
+# === MyPy / typing / lint ===
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+
+# === Build / distribution ===
+build/
+dist/
+*.egg-info/
+.eggs/
+*.manifest
+*.spec
+
+# === Environment and secrets ===
+.env
+.env.*
+*.secrets
+*.key
+*.pem
+
+# === Lock and dependency files ===
+poetry.lock
+Pipfile.lock
+
+# === Mac and OS-specific ===
+.DS_Store
+Thumbs.db
+
+# === Haive-style generated vault logs ===
+haive_vault_*.log
