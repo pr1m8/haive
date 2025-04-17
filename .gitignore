@@ -46,6 +46,8 @@ resources/embeddings_cache/
 resources/graph_images/
 resources/Graphs/
 notebooks/**
+notebooks/
+
 # === Game history / graph renderings ===
 game_history/
 graphs/
