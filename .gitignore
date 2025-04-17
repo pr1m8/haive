@@ -45,6 +45,7 @@ resources/state_history/
 resources/embeddings_cache/
 resources/graph_images/
 resources/Graphs/
+notebooks/**
 # === Game history / graph renderings ===
 game_history/
 graphs/
@@ -88,3 +89,7 @@ build/
 *.pid
 *.bak
 *.swp
+*.ipynb
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
