@@ -95,3 +95,8 @@ build/
 **/.ipynb_checkpoints/
 
 .history/
+# Secrets
+.secrets/
+*.pem
+credentials.json
+token.json
