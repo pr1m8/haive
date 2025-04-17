@@ -44,7 +44,7 @@ resources/*test_*/
 resources/state_history/
 resources/embeddings_cache/
 resources/graph_images/
-
+resources/Graphs/
 # === Game history / graph renderings ===
 game_history/
 graphs/
