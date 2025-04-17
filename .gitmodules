@@ -7,3 +7,6 @@
 [submodule "src/haive/flstaesr"]
 	path = src/haive/flstaesr
 	url = https://github.com/0rac130fD31phi/flstaesr.git
+[submodule "packages/haive-agents"]
+	path = packages/haive-agents
+	url = ./packages/haive-agents
