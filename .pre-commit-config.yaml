@@ -1,0 +1,148 @@
+# .pre-commit-config.yaml
+default_language_version:
+  python: python3.11
+
+repos:
+  # Basic file hygiene and security hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
+      - id: debug-statements
+      - id: detect-private-key
+      - id: check-case-conflict
+      - id: check-docstring-first
+      - id: check-executables-have-shebangs
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+
+  # Ruff for fast linting and formatting
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.9
+    hooks:
+      - id: ruff
+        args:
+          [
+            "--fix",
+            "--exit-non-zero-on-fix",
+            "--line-length=100",
+            "--target-version=py311",
+          ]
+        types_or: [python, pyi, jupyter]
+      - id: ruff-format
+        args: ["--line-length=100"]
+        types_or: [python, pyi, jupyter]
+
+  # MyPy type checking for each package
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.7.1
+    hooks:
+      - id: mypy
+        name: mypy-core
+        files: ^packages/haive-core/src/
+        args:
+          [
+            "--ignore-missing-imports",
+            "--disallow-untyped-defs",
+            "--disallow-incomplete-defs",
+            "--check-untyped-defs",
+            "--warn-redundant-casts",
+            "--warn-return-any",
+            "--warn-unused-ignores",
+          ]
+        additional_dependencies:
+          - pydantic>=2.4.2
+          - types-requests
+          - types-PyYAML
+          - langchain-core>=0.1.0
+          - numpy>=1.24.0
+          - pytest>=7.0.0
+
+      - id: mypy
+        name: mypy-agents
+        files: ^packages/haive-agents/src/
+        args: ["--ignore-missing-imports"]
+        additional_dependencies:
+          - pydantic>=2.4.2
+          - types-requests
+          - haive-core
+
+      - id: mypy
+        name: mypy-games
+        files: ^packages/haive-games/src/
+        args: ["--ignore-missing-imports"]
+        additional_dependencies:
+          - pydantic>=2.4.2
+          - haive-core
+          - haive-agents
+
+  # Docstring style enforcement
+  - repo: https://github.com/pycqa/pydocstyle
+    rev: 6.3.0
+    hooks:
+      - id: pydocstyle
+        args: ["--convention=google", "--add-ignore=D100,D104,D107,D203,D213"]
+        exclude: ^(tests/|docs/|scripts/)
+
+  # Spell checking for documentation and docstrings
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.6
+    hooks:
+      - id: codespell
+        args: ["--ignore-words=.codespellignore", "--skip=*.lock,*.json,*.svg"]
+
+  # Poetry lock file checks
+  - repo: local
+    hooks:
+      - id: check-poetry-lock
+        name: Check Poetry lock files are in sync
+        entry: python scripts/dev/check_poetry_locks.py
+        language: python
+        pass_filenames: false
+        always_run: true
+
+      # Test file name validation
+      - id: validate-test-filenames
+        name: Validate test file names
+        entry: bash -c 'find packages/*/tests -name "*.py" | grep -v "test_.*\.py\|conftest\.py" && exit 1 || exit 0'
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      # Check for debug print statements
+      - id: no-print-statements
+        name: No print() statements
+        entry: bash -c 'grep -n "print(" packages/*/src/*/**/*.py && exit 1 || exit 0'
+        language: system
+        exclude: ^(tests/|scripts/|examples/)
+        types: [python]
+
+      # Check for dependency version constraints
+      - id: check-dependency-pins
+        name: Check dependency version pins
+        entry: python scripts/dev/check_dependency_pins.py
+        language: python
+        pass_filenames: false
+        always_run: true
+
+  # Jupyter notebook cleaning
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.6.1
+    hooks:
+      - id: nbstripout
+        files: ".ipynb$"
+
+  # Security scanning
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.5
+    hooks:
+      - id: bandit
+        args: ["-c", "pyproject.toml"]
+        additional_dependencies: ["bandit[toml]"]
