@@ -1,4 +1,4 @@
-# === Python artifacts ===
+# === Python standard ===
 __pycache__/
 *.py[cod]
 *.pyo
@@ -11,68 +11,80 @@ env/
 venv/
 ENV/
 *.env
+*.venv
 
-# === Logs and local output ===
-*.log
-*.out
-*.err
-*.pid
-*.sqlite3
-*.db
-
-# === Byte-compiled files ===
-*.pyc
-*.pyo
-*.pyd
-*.pkl
-
-# === IDEs ===
+# === IDEs and editors ===
 .vscode/
 .idea/
-*.sublime-project
 *.sublime-workspace
+*.sublime-project
 
-# === Jupyter Notebooks ===
-.ipynb_checkpoints/
-*.ipynb~
-
-# === Test-related ===
-.coverage
-.cache/
-.tox/
-pytest_cache/
-.nox/
-htmlcov/
-*.cover
-
-# === MyPy / typing / lint ===
-.mypy_cache/
-.dmypy.json
-.pyre/
-.pytype/
-
-# === Build / distribution ===
-build/
-dist/
-*.egg-info/
-.eggs/
-*.manifest
-*.spec
-
-# === Environment and secrets ===
-.env
-.env.*
-*.secrets
-*.key
-*.pem
-
-# === Lock and dependency files ===
-poetry.lock
-Pipfile.lock
-
-# === Mac and OS-specific ===
+# === OS junk ===
 .DS_Store
 Thumbs.db
 
-# === Haive-style generated vault logs ===
+# === Logs, outputs, scratch data ===
+*.log
+*.out
+*.err
+logs/
+scratches/
+reports/
+notebooks/
+lc_cache/
 haive_vault_*.log
+
+# === Sphinx / documentation ===
+docs/build/
+docs/scratch/
+
+# === Auto-generated agent run folders ===
+resources/*_agent_*/
+resources/*test_*/
+resources/state_history/
+resources/embeddings_cache/
+resources/graph_images/
+
+# === Game history / graph renderings ===
+game_history/
+graphs/
+
+# === Temporary dev output ===
+examples/outputs/
+loader_analysis/
+certs/
+external/
+
+# === Cache / experiment outputs ===
+memory_test_*/
+postgres_test_*/
+simple_agent_*/
+summary_agent/
+test_simple_agent/
+
+# === Test logs and aux resources ===
+tests/**/logs/
+tests/**/resources/
+
+# === Mypy, Pytest, etc ===
+.mypy_cache/
+pytest_cache/
+.cache/
+htmlcov/
+.tox/
+.nox/
+
+# === Lock and build files ===
+poetry.lock
+Pipfile.lock
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# === Misc ===
+*.sqlite3
+*.db
+*.pid
+*.bak
+*.swp
