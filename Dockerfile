@@ -34,7 +34,7 @@ COPY packages/haive-tools/pyproject.toml packages/haive-tools/README.md ./packag
 RUN pip install "poetry==$POETRY_VERSION"
 
 # Install Python dependencies (main only)
-RUN poetry install --only main --without-dev \
+RUN poetry install --only main --without dev \
     && pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cpu
 
 # Now copy the rest of your source code and package sources
