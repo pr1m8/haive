@@ -12,7 +12,7 @@ for pkg in packages/*; do
 name = "${pkg_name}"
 version = "0.1.0"
 description = "${pkg_name} for Haive framework"
-authors = ["0rac130fD31phi <william.astley@algebraicwealth.com>"]
+authors = ["pr1m8 <william.astley@algebraicwealth.com>"]
 license = "MIT"
 readme = "README.md"
 

@@ -2,7 +2,7 @@
 name = "haive"
 version = "0.1.0"
 description = "Package for langgraph agents"
-authors = ["0rac130fD31phi <william.astley@algebraicwealth.com>"]
+authors = ["pr1m8 <william.astley@algebraicwealth.com>"]
 license = "MIT"
 readme = "README.md"
 classifiers = [
@@ -17,7 +17,7 @@ repository = "https://github.com/prim8/haive"
 homepage = "https://haive.readthedocs.io"
 documentation = "https://haive.readthedocs.io"
 keywords = ["ai", "agents", "llm", "language models", "langgraph"]
-
+packages = [{include = "haive", from = "src"}]
 # Scripts 
 [tool.poetry.scripts]
 haive = "haive.cli:main"

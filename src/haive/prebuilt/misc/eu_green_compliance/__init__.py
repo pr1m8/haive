@@ -1,1 +1,0 @@
-https://github.com/NirDiamant/GenAI_Agents/blob/main/all_agents_tutorials/EU_Green_Compliance_FAQ_Bot.ipynb
