@@ -96,7 +96,7 @@ def generate_package_pyproject(package_name, toolkits, root_deps, sources):
                 "name": package_name,
                 "version": "0.1.0",
                 "description": f"{package_name.split('-')[1].title()} components for the Haive framework",
-                "authors": ["0rac130fD31phi <william.astley@algebraicwealth.com>"],
+                "authors": ["pr1m8 <william.astley@algebraicwealth.com>"],
                 "license": "MIT",
                 "readme": "README.md",
                 "packages": [

@@ -10,6 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: trunk-io/trunk-action@v5
+      - uses: trunk-io/trunk-action@v1
         with:
           check-mode: populate_cache_only

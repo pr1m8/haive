@@ -79,7 +79,7 @@ cat >"packages/pyproject.toml" <<EOF
 name = "haive-workspace"
 version = "0.1.0"
 description = "Workspace for Haive packages"
-authors = ["0rac130fD31phi <william.astley@algebraicwealth.com>"]
+authors = ["pr1m8 <william.astley@algebraicwealth.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
