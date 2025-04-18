@@ -51,7 +51,7 @@ mv debug_simple_agent.log logs/ 2>/dev/null || true
 mv poker_debug.log logs/ 2>/dev/null || true
 mv poker_test.log logs/ 2>/dev/null || true
 
-# Clean registry scripts 
+# Clean registry scripts
 echo "Organizing scripts..."
 mkdir -p scripts/tools
 mv check_registry_data.py scripts/tools/

@@ -1,0 +1,221 @@
+.
+├── Dockerfile
+├── LICENSE
+├── README.md
+├── backup
+│   └── archives
+│       └── haive-full.tar.gz
+├── config
+│   └── certs
+│       ├── local-cert.pem
+│       ├── local-key.pem
+│       ├── localhost-cert.pem
+│       └── localhost-key.pem
+├── data
+│   ├── Chinook.db
+│   ├── agent_analysis.json
+│   └── output_file.json
+├── docs
+│   ├── Makefile
+│   ├── reports
+│   │   ├──
+│   ├── scratch
+│   │   └── todo.md
+│   └── source
+│       ├── _static
+│       ├── _templates
+│       ├── api.rst
+│       ├── conf.py
+│       └── index.rst
+├── examples
+│   └── notebooks
+│       ├── BaseAgent.ipynb
+│    
+├── logs
+│   ├── benchmark.log
+│   ├── debug_simple_agent.log
+│   ├── 
+│   ├── kyc_example_run.log
+│   ├── monopoly_test.log
+│   ├── poker.log
+│   ├── poker_debug.log
+│   ├── poker_game.log
+│   ├── poker_test.log
+│   ├── react_agent_test.log
+│   ├── registry
+│   │   ├── discovery
+│   │   └── registry.log
+│   └── tests
+│       ├── core
+│       └── tests
+├── notebooks
+├── packages
+│   ├── haive-agents
+│   │   ├── README.md
+│   │   ├── poetry.lock
+│   │   ├── pyproject.toml
+│   │   ├── pytest.ini
+│   │   ├── src
+│   │   ├── system_requirements.txt
+│   │   └── tests
+│   ├── haive-core
+│   │   ├── README.md
+│   │   ├── allure-results
+│   │   ├── logs
+│   │   ├── poetry.lock
+│   │   ├── pyproject.toml
+│   │   ├── pytest.ini
+│   │   ├── pytest.log
+│   │   ├── report.html
+│   │   ├── src
+│   │   ├── system_requirements.txt
+│   │   └── tests
+│   ├── haive-dataflow
+│   │   ├── README.md
+│   │   ├── pyproject.toml
+│   │   ├── pytest.ini
+│   │   ├── src
+│   │   ├── system_requirements.txt
+│   │   └── tests
+│   ├── haive-games
+│   │   ├── README.md
+│   │   ├── poetry.lock
+│   │   ├── pyproject.toml
+│   │   ├── pytest.ini
+│   │   ├── src
+│   │   └── tests
+│   ├── haive-prebuilt
+│   │   ├── README.md
+│   │   ├── pyproject.toml
+│   │   ├── pytest.ini
+│   │   ├── src
+│   │   └── tests
+│   └── haive-tools
+│       ├── LICENSE
+│       ├── README.md
+│       ├── pyproject.toml
+│       ├── pytest.ini
+│       ├── src
+│       └── tests
+├── poetry.lock
+├── pretty.md
+├── pyproject.toml
+├── pytest.ini
+├── resources
+│   ├── Graphs
+│   │   ├── 
+│   ├── summary_agent
+│   │   └── State_History
+│   └── test_simple_agent
+│       ├── graphs
+│       └── state_history
+├── scratches
+│   ├── agent_structure.py
+│   ├── all_document_loader_metadata.json
+│   ├── all_document_loaders_metadata.json
+│   ├── all_document_loaders_parsers_metadata.json
+│   ├── c_retrievers.py
+│   ├── c_retrievers2.py
+│   ├── clean
+│   │   ├── clear_env_values.py
+│   │   └── move_logs.py
+│   ├── decentralized_exchanges.csv
+│   ├── derivatives_exchanges.csv
+│   ├── document_loader_metadata.json
+│   ├── dynamiic_module_config.py
+│   ├── get_db_info.py
+│   ├── import_inspect.py
+│   ├── langgraph.json
+│   ├── marie_curie_graph.png
+│   ├── output_file.txt
+│   ├── postgres_info.py
+│   ├── pydantic_model_making.py
+│   ├── read_file_to_sys_message.py
+│   ├── retriever_fetch.py
+│   ├── spot_exchanges.csv
+│   ├── state_graph.png
+│   └── transformer_test.py
+├── scripts
+│   ├── ci
+│   │   └── run_type_checks.py
+│   ├── dev
+│   │   ├── check_dependency_pins.py
+│   │   └── check_poetry_locks.py
+│   ├── migration
+│   │   ├── adv_dep_analyzer.py
+│   │   ├── agent_tests.py
+│   │   ├── auto_migrate.sh
+│   │   ├── backup_codebase.sh
+│   │   ├── check_imports.py
+│   │   ├── clean_pyproject.sh
+│   │   ├── cleanup_parent_repo.sh
+│   │   ├── deep_import_refactor.py
+│   │   ├── detect_system_deps.sh
+│   │   ├── export_poetry_deps.py
+│   │   ├── fix_pyproject.sh
+│   │   ├── generate_setup.py
+│   │   ├── migrate_all.sh
+│   │   ├── poetry_export.py
+│   │   ├── reorganize.sh
+│   │   ├── setup_submodules.sh
+│   │   └── toml_analysis.py
+│   └── tools
+│       ├── check_registry_data.py
+│       └── store_registry_data.py
+├── src
+│   ├── __init__.py
+│   ├── cli.py
+│   ├── config
+│   │   ├── __init__.py
+│   │   ├── config.py
+│   │   ├── constants.py
+│   │   ├── env.py
+│   │   └── settings.py
+│   ├── haive
+│   │   ├── __init__.py
+│   │   ├── agents_backup
+│   │   ├── cli
+│   │   ├── dataflow
+│   │   ├── exp
+│   │   ├── flstaesr_backup
+│   │   ├── games
+│   │   ├── prebuilt
+│   │   └── tak
+│   ├── lc_cache
+│   ├── test_dl_load.py
+│   ├── test_retriever_test.py
+│   ├── tool_load_test.py
+│   └── utils
+│       ├── __init__.py
+│       ├── introspection
+│       └── serialization.py
+├── structure.txt
+└── tests
+    ├── agents
+    │   ├── base
+    │   ├── rag
+    │   ├── react
+    │   ├── research
+    │   ├── simple
+    │   └── test_react_agent.py
+    ├── conftest.py
+    ├── core
+    │   ├── config
+    │   ├── engine
+    │   ├── graph
+    │   └── schema
+    ├── logs
+    │   └── test_postgres.log
+    ├── test_abstract_registry.py
+    ├── test_general.py
+    ├── test_introspection.py
+    ├── test_monopoly.py
+    ├── test_monopoly_config.py
+    ├── test_react_agent.py
+    ├── test_tool_manager.py
+    ├── toolkits
+    │   └── test_chucknorris_toolkit.py
+    └── tools
+        └── test_corporate_bs_tool.py
+
+120 directories, 2422 files
