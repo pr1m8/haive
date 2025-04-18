@@ -5,6 +5,23 @@ description = "Package for langgraph agents"
 authors = ["0rac130fD31phi <william.astley@algebraicwealth.com>"]
 license = "MIT"
 readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+repository = "https://github.com/prim8/haive"
+homepage = "https://haive.readthedocs.io"
+documentation = "https://haive.readthedocs.io"
+keywords = ["ai", "agents", "llm", "language models", "langgraph"]
+
+# Scripts 
+[tool.poetry.scripts]
+haive = "haive.cli:main"
+
 
 # CUDA TORCH 
 # Define multiple sources correctly
@@ -23,8 +40,17 @@ name = "nvidia"
 url = "https://pypi.ngc.nvidia.com"
 priority = "supplemental"
 
+
+
+
 [tool.poetry.dependencies]
 python = ">=3.12,<3.13"
+haive-core = {path = "./packages/haive-core", develop = true}
+haive-agents = {path = "./packages/haive-agents", develop = true}
+haive-games = {path = "./packages/haive-games", develop = true}
+haive-tools = {path = "./packages/haive-tools", develop = true}
+haive-prebuilt = {path = "./packages/haive-prebuilt", develop = true}
+haive-dataflow = {path = "./packages/haive-dataflow", develop = true}
 langchain-core = "^0.3.44"
 langchain = "^0.3.20"
 langchain-community = "^0.3.20"
@@ -139,6 +165,15 @@ fastapi = "^0.115.12"
 websockets = {version = "15.0.1", python = "<3.12"}
 supabase = "^2.15.0"
 simsimd = "^6.2.1"
+toml = "^0.10.2"
+astor = "^0.8.1"
+prometheus-client = "^0.21.1"
+bandit = "^1.8.3"
+pre-commit = "^4.2.0"
+tomli = "^2.2.1"
+
+
+
 
 [tool.poetry.group.dev.dependencies]
 furo = "^2024.8.6"
@@ -165,17 +200,106 @@ torchvision = { version = "0.21.0+cu118", source = "pytorch_cuda" }
 torchaudio = { version = "2.6.0+cu118", source = "pytorch_cuda" }
 twine = "^6.1.0"
 langgraph-sdk = "^0.1.61"
-mermaid = "^0.3.2"
 mermaid-python = "^0.1"
 ipykernel = "^6.29.5"
 langchain-huggingface = "^0.1.2"
 pytest-rich = "^0.2.0"
 pytest-asyncio = "^0.26.0"
+types-requests = "^2.32.0.20250328"
+doc8 = "^1.1.2"
+codespell = "^2.4.1"
+
+
+[tool.bandit]
+exclude_dirs = ["tests", "examples", "scripts"]
+skips = ["B101", "B311"]
 
 
 [tool.poetry.extras]
 cpu = ["torch", "torchvision", "torchaudio"]
 cuda = ["torch", "torchvision", "torchaudio"]
+
+[tool.mypy]
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+select = [
+    "E",    # pycodestyle errors
+    "F",    # pyflakes
+    "W",    # pycodestyle warnings
+    "C90",  # mccabe complexity
+    "I",    # isort
+    "N",    # pep8-naming
+    "D",    # pydocstyle
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "A",    # flake8-builtins
+    "C4",   # flake8-comprehensions
+    "DTZ",  # flake8-datetimez
+    "T10",  # flake8-debugger
+    "ISC",  # flake8-implicit-str-concat
+    "G",    # flake8-logging-format
+    "PIE",  # flake8-pie
+    "T20",  # flake8-print
+    "PT",   # flake8-pytest-style
+    "Q",    # flake8-quotes
+    "RSE",  # flake8-raise
+    "RET",  # flake8-return
+    "SIM",  # flake8-simplify
+    "ARG",  # flake8-unused-arguments
+    "ERA",  # eradicate commented-out code
+    "PL",   # pylint
+    "TRY",  # tryceratops
+    "RUF",  # ruff-specific rules
+]
+ignore = [
+    "E501",   # line too long
+    "D100",   # Missing docstring in public module
+    "D104",   # Missing docstring in public package
+    "D107",   # Missing docstring in __init__
+    "D203",   # 1 blank line required before class docstring
+    "D213",   # Multi-line docstring summary should start at the second line
+    "RET504", # Unnecessary variable assignment before return
+    "TRY003", # Long messages outside exception class
+]
+
+[tool.ruff.per-file-ignores]
+"tests/**/*.py" = [
+    "D",      # No docstring requirements in tests
+    "S101",   # Allow assert in tests
+    "PLR2004", # Allow magic numbers in tests
+]
+"examples/**/*.py" = [
+    "D",      # Relaxed docstring requirements in examples
+    "T20",    # Allow print in examples
+]
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+[tool.ruff.mccabe]
+max-complexity = 12
+
+[tool.ruff.isort]
+known-first-party = ["haive_core", "haive_agents", "haive_games","haive_prebuilt","haive_tools"]
+
 
 
 
