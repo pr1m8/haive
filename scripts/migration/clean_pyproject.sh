@@ -2,16 +2,16 @@
 # Clean all pyproject.toml files
 
 for pkg in packages/*; do
-  if [ -d "$pkg" ]; then
-    pkg_name=$(basename "$pkg")
-    echo "Cleaning $pkg/pyproject.toml"
-    
-    # Create a clean pyproject.toml
-    cat > "$pkg/pyproject.toml" << EOT
+	if [[ -d ${pkg} ]]; then
+		pkg_name=$(basename "${pkg}")
+		echo "Cleaning ${pkg}/pyproject.toml"
+
+		# Create a clean pyproject.toml
+		cat >"${pkg}/pyproject.toml" <<EOT
 [tool.poetry]
-name = "$pkg_name"
+name = "${pkg_name}"
 version = "0.1.0"
-description = "$pkg_name for Haive framework"
+description = "${pkg_name} for Haive framework"
 authors = ["0rac130fD31phi <william.astley@algebraicwealth.com>"]
 license = "MIT"
 readme = "README.md"
@@ -33,9 +33,9 @@ mypy = "^1.15.0"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 EOT
-    
-    echo "Created clean pyproject.toml for $pkg_name"
-  fi
+
+		echo "Created clean pyproject.toml for ${pkg_name}"
+	fi
 done
 
 # Now update the internal dependencies

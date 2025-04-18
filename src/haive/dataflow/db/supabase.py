@@ -1,14 +1,19 @@
 # src/haive/dataflow/db/supabase.py
 import os
-from supabase import create_client, Client, ClientOptions
+from typing import Any, Optional, Tuple
+
 from dotenv import load_dotenv
-from typing import Dict, Any, Optional, Union, Tuple
+from supabase import Client, ClientOptions, create_client
 
 load_dotenv()
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 # Use SERVICE_KEY primarily, only fall back to ANON_KEY if necessary
-SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_KEY") if os.getenv("SUPABASE_SERVICE_KEY") else os.getenv("SUPABASE_ANON_KEY")
+SUPABASE_KEY = (
+    os.getenv("SUPABASE_SERVICE_KEY")
+    if os.getenv("SUPABASE_SERVICE_KEY")
+    else os.getenv("SUPABASE_ANON_KEY")
+)
 
 # Map of table names to their schemas for common tables
 DEFAULT_SCHEMA_MAP = {
@@ -25,7 +30,6 @@ DEFAULT_SCHEMA_MAP = {
     "retriever_types": "models",
     "retriever_configurations": "models",
     "schemas": "models",
-    
     # Engines schema
     "engine_types": "engines",
     "engines": "engines",
@@ -36,45 +40,40 @@ DEFAULT_SCHEMA_MAP = {
     "node_middlewares": "engines",
     "engine_tools": "engines",
     "engine_schemas": "engines",
-    
     # Agents schema
     "types": "agents",
     "agents": "agents",
     "agent_engines": "agents",
     "agent_tools": "agents",
-    
     # Tools schema
     "categories": "tools",
     "tools": "tools",
     "toolkits": "tools",
     "toolkit_tools": "tools",
-    
     # Config schema
     "component_types": "config",
     "components": "config",
     "environment_variables": "config",
     "component_env_mappings": "config",
     "env_var_detection_patterns": "config",
-    
     # Registry schema (kept for backward compatibility)
     "items": "registry",
     "configurations": "registry",
     "dependencies": "registry",
     "environment_vars": "registry",
-    
     # Audit schema
     "import_logs": "audit",
     "audit_logs": "audit",
     "runtime_logs": "audit",
-    
     # Public schema (default)
     "threads": "public",
     "user_profiles": "public",
     "teams": "public",
     "team_members": "public",
     "api_keys": "public",
-    "vault_secrets": "vault"
+    "vault_secrets": "vault",
 }
+
 
 def get_supabase_client(schema: Optional[str] = None) -> Client:
     """
@@ -87,16 +86,17 @@ def get_supabase_client(schema: Optional[str] = None) -> Client:
         schema=schema or "public",
         headers={"X-Client-Info": "haive-framework"},
     )
-    
+
     return create_client(SUPABASE_URL, SUPABASE_KEY, options=options)
+
 
 def parse_table_reference(table_ref: str) -> Tuple[str, Optional[str]]:
     """
     Parse a table reference to get table name and schema.
-    
+
     Args:
         table_ref: Table reference (e.g., "items", "registry.items", "models.providers")
-        
+
     Returns:
         Tuple of (table_name, schema)
     """
@@ -113,42 +113,43 @@ def parse_table_reference(table_ref: str) -> Tuple[str, Optional[str]]:
     else:
         raise ValueError(f"Invalid table reference: {table_ref}")
 
-def table(
-    client: Client, 
-    table_ref: str, 
-    schema_override: Optional[str] = None
-) -> Any:
+
+def table(client: Client, table_ref: str, schema_override: Optional[str] = None) -> Any:
     """
     Get a table reference with appropriate schema handling.
-    
+
     Args:
         client: Supabase client
         table_ref: Table reference (can include schema)
         schema_override: Optional schema to override detected schema
-        
+
     Returns:
         Table reference for queries
     """
     # Parse the table reference
     table_name, schema = parse_table_reference(table_ref)
-    
+
     # Use override if provided
     if schema_override:
         schema = schema_override
-    
+
     # If we have a schema that's different from the client's schema,
     # create a new client with the right schema
     if schema and schema != getattr(client, "_schema", None):
         temp_client = get_supabase_client(schema)
         return temp_client.table(table_name)
-    
+
     # Otherwise use the provided client
     return client.table(table_name)
+
+
 def sanitize_sql(sql: str) -> str:
     """
     Remove trailing semicolons and whitespace for safe RPC use.
     """
     return sql.strip().rstrip(";").strip()
+
+
 def fetch_all_schemas_and_tables(client: Client) -> list[dict]:
     """
     Return all non-system tables grouped by schema using raw SQL.
@@ -167,6 +168,8 @@ def fetch_all_schemas_and_tables(client: Client) -> list[dict]:
     """
     sql = sanitize_sql(sql)
     return client.rpc("execute_sql", {"sql": sql}).execute().data
+
+
 def fetch_foreign_key_relations(client: Client) -> list[dict]:
     """
     Return foreign key relationships between tables using raw SQL.
@@ -192,6 +195,8 @@ def fetch_foreign_key_relations(client: Client) -> list[dict]:
     """
     sql = sanitize_sql(sql)
     return client.rpc("execute_sql", {"sql": sql}).execute().data
+
+
 def fetch_table_columns(client: Client) -> list[dict]:
     """
     Get all columns, types, and constraints from information_schema.columns.

@@ -13,7 +13,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: [haive-core, haive-agents, haive-games, haive-tools, haive-prebuilt, haive-dataflow]
+        package:
+          [
+            haive-core,
+            haive-agents,
+            haive-games,
+            haive-tools,
+            haive-prebuilt,
+            haive-dataflow,
+          ]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -21,8 +29,8 @@ jobs:
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-          cache: 'poetry'
+          python-version: "3.12"
+          cache: "poetry"
 
       - name: Install Poetry
         run: pipx install poetry==1.8.0
