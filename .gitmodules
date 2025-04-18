@@ -1,6 +1,7 @@
 [submodule "packages/haive-agents"]
 	path = packages/haive-agents
 	url = https://github.com/pr1m8/haive-agents.git
+	branch = main
 [submodule "packages/haive-core"]
 	path = packages/haive-core
 	url = https://github.com/pr1m8/haive-core.git
