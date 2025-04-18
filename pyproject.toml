@@ -191,9 +191,15 @@ sphinx-rtd-theme = "^3.0.2"
 sphinx-press-theme = "^0.9.1"
 myst-parser = "^4.0.1"
 sphinx-tabs = "^3.4.7"
-torch = { version = "2.6.0+cu118", source = "pytorch_cuda" }
-torchvision = { version = "0.21.0+cu118", source = "pytorch_cuda" }
-torchaudio = { version = "2.6.0+cu118", source = "pytorch_cuda" }
+torch-cpu = { version = "2.6.0+cpu", source = "pytorch_cpu", optional = true }
+torchvision-cpu = { version = "0.21.0+cpu", source = "pytorch_cpu", optional = true }
+torchaudio-cpu = { version = "2.6.0+cpu", source = "pytorch_cpu", optional = true }
+
+torch-cuda = { version = "2.6.0+cu118", source = "pytorch_cuda", optional = true, package = "torch" }
+torchvision-cuda = { version = "0.21.0+cu118", source = "pytorch_cuda", optional = true, package = "torchvision" }
+torchaudio-cuda = { version = "2.6.0+cu118", source = "pytorch_cuda", optional = true, package = "torchaudio" }
+
+
 twine = "^6.1.0"
 langgraph-sdk = "^0.1.61"
 mermaid-python = "^0.1"
@@ -210,10 +216,9 @@ codespell = "^2.4.1"
 exclude_dirs = ["tests", "examples", "scripts"]
 skips = ["B101", "B311"]
 
-
 [tool.poetry.extras]
-cpu = ["torch", "torchvision", "torchaudio"]
-cuda = ["torch", "torchvision", "torchaudio"]
+cpu = ["torch-cpu", "torchvision-cpu", "torchaudio-cpu"]
+cuda = ["torch-cuda", "torchvision-cuda", "torchaudio-cuda"]
 
 [tool.mypy]
 warn_return_any = true
