@@ -15,7 +15,6 @@ Commands:
 
 import argparse
 import logging
-import os
 import sys
 from datetime import datetime
 
@@ -26,7 +25,6 @@ try:
     TQDM_AVAILABLE = True
 except ImportError:
     TQDM_AVAILABLE = False
-    print("tqdm not available. Install with 'pip install tqdm' for progress bars.")
 
 # Set up logging
 logging.basicConfig(
@@ -78,12 +76,12 @@ def run_migrate():
         logger.info("Migration completed successfully")
 
     except ImportError:
-        logger.error(
+        logger.exception(
             "Could not import vault migration script. Make sure it's in the current directory."
         )
         return 1
     except Exception as e:
-        logger.error(f"Error during migration: {e}")
+        logger.exception(f"Error during migration: {e}")
         return 1
 
     return 0
@@ -136,12 +134,12 @@ def run_import(
             TQDM_AVAILABLE = orig_value
 
     except ImportError:
-        logger.error(
+        logger.exception(
             "Could not import unified importer script. Make sure it's in the current directory."
         )
         return 1
     except Exception as e:
-        logger.error(f"Error during import: {e}")
+        logger.exception(f"Error during import: {e}")
         return 1
 
     return 0
@@ -159,12 +157,12 @@ def run_verify():
         logger.info("Verification complete")
 
     except ImportError:
-        logger.error(
+        logger.exception(
             "Could not import verification script. Make sure it's in the current directory."
         )
         return 1
     except Exception as e:
-        logger.error(f"Error during verification: {e}")
+        logger.exception(f"Error during verification: {e}")
         return 1
 
     return 0
@@ -175,9 +173,7 @@ def main():
     subparsers = parser.add_subparsers(dest="command", help="Command to execute")
 
     # Migrate command
-    migrate_parser = subparsers.add_parser(
-        "migrate", help="Migrate API keys and secrets to the vault"
-    )
+    subparsers.add_parser("migrate", help="Migrate API keys and secrets to the vault")
 
     # Import command
     import_parser = subparsers.add_parser(
@@ -199,9 +195,7 @@ def main():
     )
 
     # Verify command
-    verify_parser = subparsers.add_parser(
-        "verify", help="Verify vault secret references"
-    )
+    subparsers.add_parser("verify", help="Verify vault secret references")
 
     # Parse arguments
     args = parser.parse_args()
@@ -214,19 +208,18 @@ def main():
     # Execute the appropriate command
     if args.command == "migrate":
         return run_migrate()
-    elif args.command == "import":
+    if args.command == "import":
         return run_import(
             args.model_type, args.skip_llm, args.skip_embeddings, args.no_progress
         )
-    elif args.command == "verify":
+    if args.command == "verify":
         return run_verify()
-    elif args.command == "help":
+    if args.command == "help":
         parser.print_help()
         return 0
-    else:
-        logger.error(f"Unknown command: {args.command}")
-        parser.print_help()
-        return 1
+    logger.error(f"Unknown command: {args.command}")
+    parser.print_help()
+    return 1
 
 
 if __name__ == "__main__":

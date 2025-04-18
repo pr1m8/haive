@@ -115,3 +115,4 @@ certs/local-cert.pem
 certs/local-key.pem
 certs/localhost-cert.pem
 certs/localhost-key.pem
+__pycache__/
