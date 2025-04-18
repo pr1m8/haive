@@ -1,6 +1,6 @@
 # .pre-commit-config.yaml
 default_language_version:
-  python: python3.11
+  python: python3.12
 
 repos:
   # Basic file hygiene and security hooks
