@@ -1,21 +1,10 @@
 #!/bin/bash
-# Script to update all haive packages and repositories with PyTorch dependency fixes
+# Script to update all haive packages and repositories
 
 set -e  # Exit on error
 
 MAIN_DIR="$HOME/Projects/haive/backend/haive"
 cd "$MAIN_DIR"
-
-# Fix main pyproject.toml manually
-echo "==== Fixing PyTorch dependencies in main pyproject.toml ===="
-echo "Please manually edit pyproject.toml and fix the PyTorch dependencies:"
-echo "1. Open pyproject.toml in your editor"
-echo "2. Find the torch-cpu, torch-cuda dependencies"
-echo "3. Make sure all have the package attribute, like this:"
-echo "   torch-cpu = { version = \"2.6.0+cpu\", source = \"pytorch_cpu\", optional = true, package = \"torch\" }"
-echo "4. Save the file"
-echo "Press Enter when ready to continue..."
-read
 
 # List of all packages
 PACKAGES=(
@@ -69,7 +58,7 @@ poetry install --extras cpu || echo "Install failed, continuing anyway"
 
 echo "Committing changes in main repo..."
 git add .
-git commit -m "Update all dependencies and fix PyTorch dependencies" || echo "No changes to commit"
+git commit -m "Update all dependencies and submodule references" || echo "No changes to commit"
 
 echo "Pushing main repo to origin/main..."
 git push origin main || echo "Push failed, continuing anyway"
