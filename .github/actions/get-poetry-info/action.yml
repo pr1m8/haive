@@ -38,6 +38,7 @@ runs:
       run: |
         python <<EOF > poetry-info.env
         import tomllib
+        import re
 
         data = tomllib.load(open("pyproject.toml", "rb"))["tool"]["poetry"]
         deps = data["dependencies"]
@@ -48,9 +49,14 @@ runs:
         def extract_list(key):
             return "|".join(data.get(key, []))
 
+        # Normalize python version
+        constraint = deps.get("python", "")
+        match = re.search(r"(\\d+\\.\\d+)", constraint)
+        python_version = match.group(1) if match else "3.12"
+
         print(f"name={get('name')}")
         print(f"version={get('version')}")
-        print(f"python={deps['python'].strip('^')}")
+        print(f"python={python_version}")
         print(f"authors={extract_list('authors')}")
         print(f"license={get('license', 'unspecified')}")
         print(f"description={get('description')}")
