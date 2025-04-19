@@ -1,4 +1,4 @@
-name: Cache Trunk
+name: "📦 Cache Trunk – ${{ github.ref_name }}"
 
 on:
   push:
@@ -6,10 +6,16 @@ on:
     paths: [.trunk/trunk.yaml]
 
 jobs:
-  cache:
+  trunk-cache:
+    name: "Trunk Cache Population"
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}  # Optional toggle via repo secret
     steps:
-      - uses: actions/checkout@v4
-      - uses: trunk-io/trunk-action@v1
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🧠 Populate Trunk Cache
+        uses: trunk-io/trunk-action@v1
         with:
           check-mode: populate_cache_only

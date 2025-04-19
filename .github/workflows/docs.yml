@@ -1,4 +1,4 @@
-name: Build Docs
+name: "📚 Docs Build – ${{ github.ref_name }}"
 
 on:
   push:
@@ -8,23 +8,30 @@ on:
 
 jobs:
   docs:
+    name: "Build Sphinx Docs on ${{ github.ref_name }}"
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    env:
+      ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}
 
-      - name: Get Poetry Metadata
+    steps:
+      - name: 📥 Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: 📦 Get Poetry Metadata
         id: poetry
         uses: ./.github/actions/get-poetry-info
 
-      - name: Set up Python
+      - name: 🐍 Set up Python ${{ steps.poetry.outputs.python }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ steps.poetry.outputs.python }}
 
-      - name: Install Poetry and Nox
+      - name: 🔧 Install Poetry and Nox
         run: |
           pipx install poetry==1.8.0
           pip install nox
 
-      - name: Build Docs via Nox
-        run: nox -s docs
+      - name: 🏗️ Build Docs via Nox
+        run: |
+          echo "🧾 Building docs for ${{ steps.poetry.outputs.name }} v${{ steps.poetry.outputs.version }}"
+          nox -s docs
