@@ -1,4 +1,4 @@
-name: "📚 Docs Build – ${{ github.ref_name }}"
+name: "📚 Docs Build"
 
 on:
   push:

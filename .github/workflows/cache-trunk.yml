@@ -1,4 +1,4 @@
-name: "📦 Cache Trunk – ${{ github.ref_name }}"
+name: "📦 Cache Trunk"
 
 on:
   push:
