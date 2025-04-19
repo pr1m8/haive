@@ -1,4 +1,4 @@
-name: Test Coverage
+name: "📊 Coverage – ${{ github.ref_name }}"
 
 on:
   push:
@@ -8,38 +8,43 @@ on:
 
 jobs:
   coverage:
+    name: "Coverage for ${{ matrix.package }} on ${{ github.ref_name }}"
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}
     strategy:
       matrix:
         package: [haive-core, haive-agents, haive-games, haive-dataflow, haive-tools, haive-prebuilt]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
 
-      - name: Get Poetry Metadata
+      - name: 📦 Get Poetry Metadata
         id: poetry
         uses: ./.github/actions/get-poetry-info
 
-      - name: Set up Python
+      - name: 🐍 Set up Python ${{ steps.poetry.outputs.python }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ steps.poetry.outputs.python }}
 
-      - name: Install Poetry
+      - name: 🛠 Install Poetry
         run: pipx install poetry==1.8.0
 
-      - name: Install dependencies and pytest-cov
+      - name: 📚 Install dependencies and pytest-cov
         run: |
           cd packages/${{ matrix.package }}
           poetry install
           poetry run pip install pytest-cov
 
-      - name: Run tests with coverage
+      - name: 🧪 Run tests with coverage
         run: |
+          echo "🔍 Running coverage for: ${{ matrix.package }}"
           cd packages/${{ matrix.package }}
           poetry run pytest --cov=src --cov-report=xml
 
-      - name: Upload to Codecov
+      - name: ☁️ Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
