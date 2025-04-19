@@ -1,4 +1,4 @@
-name: "🚀 Publish Release – ${{ github.ref_name }}"
+name: "🚀 Publish Release"
 
 on:
   release:

@@ -1,4 +1,4 @@
-name: "📊 Coverage – ${{ github.ref_name }}"
+name: "📊 Coverage"
 
 on:
   push:
