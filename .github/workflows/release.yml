@@ -1,4 +1,4 @@
-name: Publish Packages
+name: "🚀 Publish Release – ${{ github.ref_name }}"
 
 on:
   release:
@@ -10,7 +10,10 @@ concurrency:
 
 jobs:
   publish:
+    name: "📦 Publish ${{ matrix.package }}"
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}
     strategy:
       matrix:
         package:
@@ -24,36 +27,40 @@ jobs:
           ]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
 
-      - name: Get Poetry Metadata
+      - name: 📦 Get Poetry Metadata
         id: poetry
         uses: ./.github/actions/get-poetry-info
 
-      - name: Echo Metadata
+      - name: 🧾 Echo Package Metadata
         run: |
-          echo "📦 ${{ steps.poetry.outputs.name }}"
-          echo "🔖 Version: ${{ steps.poetry.outputs.version }}"
-          echo "🧑 Authors: ${{ steps.poetry.outputs.authors }}"
-          echo "📄 License: ${{ steps.poetry.outputs.license }}"
+          echo "📦 Name:        ${{ steps.poetry.outputs.name }}"
+          echo "🔖 Version:     ${{ steps.poetry.outputs.version }}"
+          echo "🧑 Authors:     ${{ steps.poetry.outputs.authors }}"
+          echo "📄 License:     ${{ steps.poetry.outputs.license }}"
           echo "📝 Description: ${{ steps.poetry.outputs.description }}"
-          echo "🌐 Homepage: ${{ steps.poetry.outputs.homepage }}"
-          echo "🔗 Repository: ${{ steps.poetry.outputs.repository }}"
-          echo "📚 Docs: ${{ steps.poetry.outputs.documentation }}"
+          echo "🌐 Homepage:    ${{ steps.poetry.outputs.homepage }}"
+          echo "🔗 Repository:  ${{ steps.poetry.outputs.repository }}"
+          echo "📚 Docs:        ${{ steps.poetry.outputs.documentation }}"
           echo "🏷 Classifiers:"
           echo "${{ steps.poetry.outputs.classifiers }}"
 
-      - name: Set up Python
+      - name: 🐍 Set up Python ${{ steps.poetry.outputs.python }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ steps.poetry.outputs.python }}
-          cache: "poetry"
+          cache: poetry
 
-      - name: Install Poetry
+      - name: 🛠 Install Poetry
         run: pipx install poetry==1.8.0
 
-      - name: Configure credentials
+      - name: 🔐 Configure PyPI Credentials
         run: poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
 
-      - name: Build and publish ${{ matrix.package }}
+      - name: 📦 Build and Publish ${{ matrix.package }}
         run: |
+          cd packages/${{ matrix.package }}
+          poetry build --format wheel
+          poetry publish --skip-existing
