@@ -1,0 +1,53 @@
+name: Security Scan
+
+on:
+  schedule:
+    - cron: "0 3 * * 1"  # Weekly
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  safety:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get Poetry Metadata
+        id: poetry
+        uses: ./.github/actions/get-poetry-info
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ steps.poetry.outputs.python }}
+
+      - name: Install Poetry + Safety
+        run: |
+          pipx install poetry==1.8.0
+          pip install safety
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Run Safety Check
+        run: safety check --full-report
+
+  codeql:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: python,javascript
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
