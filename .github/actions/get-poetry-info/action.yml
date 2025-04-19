@@ -1,0 +1,69 @@
+name: "Get Poetry Metadata"
+description: "Parses key metadata from pyproject.toml"
+outputs:
+  name:
+    description: "Package name"
+    value: ${{ steps.extract.outputs.name }}
+  version:
+    description: "Package version"
+    value: ${{ steps.extract.outputs.version }}
+  python:
+    description: "Python version requirement"
+    value: ${{ steps.extract.outputs.python }}
+  authors:
+    description: "Author(s) listed"
+    value: ${{ steps.extract.outputs.authors }}
+  license:
+    description: "License string"
+    value: ${{ steps.extract.outputs.license }}
+  description:
+    description: "Package description"
+    value: ${{ steps.extract.outputs.description }}
+  homepage:
+    description: "Homepage URL"
+    value: ${{ steps.extract.outputs.homepage }}
+  repository:
+    description: "Source repository"
+    value: ${{ steps.extract.outputs.repository }}
+  documentation:
+    description: "Documentation URL"
+    value: ${{ steps.extract.outputs.documentation }}
+  classifiers:
+    description: "Classifiers list"
+    value: ${{ steps.extract.outputs.classifiers }}
+runs:
+  using: "composite"
+  steps:
+    - id: extract
+      run: |
+        python <<EOF > poetry-info.env
+        import tomllib
+
+        data = tomllib.load(open("pyproject.toml", "rb"))["tool"]["poetry"]
+        deps = data["dependencies"]
+
+        def get(key, default=""):
+            return data.get(key, default)
+
+        def extract_list(key):
+            return "|".join(data.get(key, []))
+
+        print(f"name={get('name')}")
+        print(f"version={get('version')}")
+        print(f"python={deps['python'].strip('^')}")
+        print(f"authors={extract_list('authors')}")
+        print(f"license={get('license', 'unspecified')}")
+        print(f"description={get('description')}")
+        print(f"homepage={get('homepage')}")
+        print(f"repository={get('repository')}")
+        print(f"documentation={get('documentation')}")
+        print(f"classifiers={'⏎'.join(data.get('classifiers', []))}")
+        EOF
+
+        while read line; do
+          echo "$line" >> $GITHUB_ENV
+          key=$(echo "$line" | cut -d= -f1)
+          val=$(echo "$line" | cut -d= -f2-)
+          echo "$key=$val" >> "$GITHUB_OUTPUT"
+        done < poetry-info.env
+      shell: bash

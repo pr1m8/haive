@@ -1,0 +1,15 @@
+# .github/actions/get-python-version/action.yml
+name: "Get Python Version from pyproject.toml"
+description: "Parses the Python version from the [tool.poetry.dependencies] section"
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        PYTHON_VERSION=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['tool']['poetry']['dependencies']['python'].strip('^'))")
+        echo "version=$PYTHON_VERSION" >> $GITHUB_OUTPUT
+      shell: bash
+      id: extract-python-version
+outputs:
+  version:
+    description: "Python version from pyproject.toml"
+    value: ${{ steps.extract-python-version.outputs.version }}

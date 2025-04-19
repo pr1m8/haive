@@ -1,0 +1,30 @@
+name: Build Docs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get Poetry Metadata
+        id: poetry
+        uses: ./.github/actions/get-poetry-info
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ steps.poetry.outputs.python }}
+
+      - name: Install Poetry and Nox
+        run: |
+          pipx install poetry==1.8.0
+          pip install nox
+
+      - name: Build Docs via Nox
+        run: nox -s docs
