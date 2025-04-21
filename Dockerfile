@@ -32,12 +32,13 @@ WORKDIR /app
 # 4. Copy only dependency declarations (enables Docker layer caching)
 # ----------------------------
 COPY pyproject.toml poetry.lock* ./
-COPY packages/haive-core/pyproject.toml     packages/haive-core/pyproject.toml
-COPY packages/haive-agents/pyproject.toml   packages/haive-agents/pyproject.toml
-COPY packages/haive-games/pyproject.toml    packages/haive-games/pyproject.toml
-COPY packages/haive-dataflow/pyproject.toml packages/haive-dataflow/pyproject.toml
-COPY packages/haive-prebuilt/pyproject.toml packages/haive-prebuilt/pyproject.toml
-COPY packages/haive-tools/pyproject.toml    packages/haive-tools/pyproject.toml
+COPY packages/haive-core     packages/haive-core
+COPY packages/haive-agents   packages/haive-agents
+COPY packages/haive-games    packages/haive-games
+COPY packages/haive-tools    packages/haive-tools
+COPY packages/haive-prebuilt packages/haive-prebuilt
+COPY packages/haive-dataflow packages/haive-dataflow
+
 
 # ----------------------------
 # 5. Install dependencies (cached unless pyproject.toml changes)
