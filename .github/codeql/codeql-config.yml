@@ -4,6 +4,6 @@ paths:
   - packages/*/src
   - packages/*/tests
 paths-ignore:
-  - '**/resources/**'
-  - '**/venv/**'
-  - '**/.venv/**'
+  - "**/resources/**"
+  - "**/venv/**"
+  - "**/.venv/**"

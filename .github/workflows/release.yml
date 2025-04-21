@@ -1,8 +1,12 @@
-name: "🚀 Publish Release"
+name: 🚀 Publish Release
 
 on:
   release:
     types: [published]
+
+permissions:
+  contents: read
+  id-token: write # Needed for PyPI trusted publishing
 
 concurrency:
   group: release-${{ github.ref }}
@@ -10,7 +14,7 @@ concurrency:
 
 jobs:
   publish:
-    name: "📦 Publish ${{ matrix.package }}"
+    name: 📦 Publish ${{ matrix.package }}
     runs-on: ubuntu-latest
     env:
       ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}

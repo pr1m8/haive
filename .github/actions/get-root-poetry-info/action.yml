@@ -1,14 +1,14 @@
-name: "Get Root Poetry Info"
-description: "Extracts Poetry information from root project"
+name: Get Root Poetry Info
+description: Extracts Poetry information from root project
 outputs:
   python:
-    description: "Python version from root Poetry config"
+    description: Python version from root Poetry config
     value: ${{ steps.extract.outputs.python }}
   poetry_version:
-    description: "Poetry version from root Poetry config"
+    description: Poetry version from root Poetry config
     value: ${{ steps.extract.outputs.poetry_version }}
 runs:
-  using: "composite"
+  using: composite
   steps:
     - id: extract
       shell: bash
@@ -59,7 +59,7 @@ runs:
           echo "python=3.12" > root-poetry-info.env
           echo "poetry_version=1.8.0" >> root-poetry-info.env
         fi
-        
+
         while read line; do
           echo "$line" >> $GITHUB_ENV
           key=$(echo "$line" | cut -d= -f1)
