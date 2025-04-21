@@ -120,6 +120,7 @@ poetry.lock
 postgres_test_*/
 pytest_cache/
 reports/
+resources/
 resources/**
 resources/*_agent_*/
 resources/*test_*/
