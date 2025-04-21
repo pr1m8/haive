@@ -1,0 +1,63 @@
+[
+    {
+        "__shared_fields__": [],
+        "__reducer_fields__": {
+            "messages": {
+                "__function__": true,
+                "name": "_add_messages",
+                "module": "langgraph.graph.message"
+            }
+        },
+        "__name__": "Memory_Test_F78E9Cc0State",
+        "content": null,
+        "question": null,
+        "messages": [
+            {
+                "content": "Hello, my name is TestUser.",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": "a431004f-906b-489f-9dd7-641e9dc020a4",
+                "example": false
+            },
+            {
+                "content": "What's my name?",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": "250cff4b-f5b7-46eb-9e93-4280b553bd80",
+                "example": false
+            }
+        ],
+        "runnable_config": {}
+    },
+    [],
+    {
+        "configurable": {
+            "thread_id": "memory_thread_f8c00efc",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1f01c3c9-cebc-63dd-8004-5e32b91681eb"
+        }
+    },
+    {
+        "source": "loop",
+        "writes": {
+            "simple_agent_node": null
+        },
+        "step": 4,
+        "parents": {},
+        "thread_id": "memory_thread_f8c00efc",
+        "recursion_limit": 200
+    },
+    "2025-04-18T10:05:10.479754+00:00",
+    {
+        "configurable": {
+            "thread_id": "memory_thread_f8c00efc",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1f01c3c9-ceb6-6543-8003-b13296840519"
+        }
+    },
+    []
+]

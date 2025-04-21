@@ -21,7 +21,7 @@ load_dotenv('.env')
 async def apply_transformers(documents):
     """Apply every document transformer and save results for comparison."""
     results = {"Original": [doc.page_content for doc in documents]}
-    
+
     transformers = {
         "Html2Text": Html2TextTransformer(),
         "Markdownify": MarkdownifyTransformer(),
@@ -48,7 +48,7 @@ async def apply_transformers(documents):
 
 def clean_and_format_text(text: str) -> str:
     """Cleans and formats text by replacing artifacts and ensuring proper newlines."""
-    
+
     # Replace non-breaking spaces with regular spaces
     text = text.replace("\xa0", " ")
 
@@ -74,16 +74,16 @@ async def main():
     # Step 1: Load documents
     loader = WebBaseLoader("https://en.wikipedia.org/wiki/Differential_geometry")
     documents = loader.load()
-    
+
     # Step 2: Apply text cleanup first
     documents = [Document(page_content=clean_and_format_text(d.page_content), metadata=d.metadata) for d in documents]
-    
+
     # Step 3: Apply all transformers
     transformed_results = await apply_transformers(documents)
-    
+
     # Step 4: Save results in a Pandas DataFrame
     df = pd.DataFrame(transformed_results)
-    
+
     # Display the formatted results
     import ace_tools as tools
     tools.display_dataframe_to_user(name="Transformed Documents Comparison", dataframe=df)

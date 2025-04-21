@@ -1,0 +1,15 @@
+[
+  {},
+  [],
+  {
+    "configurable": {
+      "thread_id": "test-memory-123",
+      "recursion_limit": 200,
+      "engine_configs": {}
+    }
+  },
+  null,
+  null,
+  null,
+  []
+]

@@ -1,0 +1,61 @@
+[
+    {
+        "__shared_fields__": [],
+        "__reducer_fields__": {
+            "messages": {
+                "__function__": true,
+                "name": "_add_messages",
+                "module": "langgraph.graph.message"
+            }
+        },
+        "__name__": "Tuple_Test_37Edd1F3State",
+        "messages": [
+            {
+                "content": "Hello, I'm a normal message",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": "b64a4607-3e48-4ba0-b214-86dd75fa6cbd",
+                "example": false
+            },
+            {
+                "content": "Hello, I'm a tuple message",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": "b8adf78f-c810-4834-84d0-f0dbd444d9aa",
+                "example": false
+            }
+        ],
+        "runnable_config": {}
+    },
+    [],
+    {
+        "configurable": {
+            "thread_id": "tuple_thread_b55bb7df",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1f01c3c5-c32f-62d1-8004-f65298c6dfe1"
+        }
+    },
+    {
+        "source": "loop",
+        "writes": {
+            "simple_agent_node": null
+        },
+        "step": 4,
+        "parents": {},
+        "thread_id": "tuple_thread_b55bb7df",
+        "recursion_limit": 200
+    },
+    "2025-04-18T10:03:21.894357+00:00",
+    {
+        "configurable": {
+            "thread_id": "tuple_thread_b55bb7df",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1f01c3c5-c329-6ccd-8003-f2c1c3fc332d"
+        }
+    },
+    []
+]

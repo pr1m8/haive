@@ -1,0 +1,52 @@
+[
+    {
+        "__shared_fields__": [],
+        "__reducer_fields__": {
+            "messages": {
+                "__function__": true,
+                "name": "_add_messages",
+                "module": "langgraph.graph.message"
+            }
+        },
+        "__name__": "Memory_Test_Cc8D4228State",
+        "messages": [
+            {
+                "content": "Hello, my name is TestUser.",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": "8cd4dcc9-129f-4b07-ac7e-1a9a1b02fbed",
+                "example": false
+            }
+        ],
+        "runnable_config": {}
+    },
+    [],
+    {
+        "configurable": {
+            "thread_id": "memory_thread_0216a30e",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1f01c3b2-ed9f-62d0-8001-aabebd6e37fe"
+        }
+    },
+    {
+        "source": "loop",
+        "writes": {
+            "simple_agent_node": null
+        },
+        "step": 1,
+        "parents": {},
+        "thread_id": "memory_thread_0216a30e",
+        "recursion_limit": 200
+    },
+    "2025-04-18T09:54:56.316887+00:00",
+    {
+        "configurable": {
+            "thread_id": "memory_thread_0216a30e",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1f01c3b2-ed97-6a55-8000-6669194363b4"
+        }
+    },
+    []
+]

@@ -70,17 +70,17 @@ def main():
 
     for table in tables:
         print(f"🔹 Table: {table}")
-        
+
         print("  📐 Columns:")
         for column_name, data_type, is_nullable in get_table_columns(conn, table):
             nullability = "NULL" if is_nullable == "YES" else "NOT NULL"
             print(f"    - {column_name} ({data_type}) {nullability}")
-        
+
         print(f"  📊 Sample rows (max {SAMPLE_ROW_LIMIT}):")
         rows = get_sample_rows(conn, table)
         for row in rows:
             print(f"    {row}")
-        
+
         print("-" * 50)
 
     print("\n🔗 Foreign Key Relationships:")

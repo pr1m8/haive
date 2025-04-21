@@ -1,0 +1,44 @@
+[
+    {
+        "__shared_fields__": [],
+        "__serializable_reducers__": {},
+        "messages": [
+            {
+                "content": "Do you remember our previous conversation?",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null,
+                "example": false
+            }
+        ]
+    },
+    [],
+    {
+        "configurable": {
+            "thread_id": "conversation-123",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1f01d6c2-08b5-6def-8031-0bda64553b3a"
+        }
+    },
+    {
+        "step": 49,
+        "source": "loop",
+        "writes": {
+            "process": null
+        },
+        "parents": {},
+        "thread_id": "conversation-123",
+        "recursion_limit": 200
+    },
+    "2025-04-19T22:17:48.816314+00:00",
+    {
+        "configurable": {
+            "thread_id": "conversation-123",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1f01d6c2-08b2-69a1-8030-37368326e957"
+        }
+    },
+    []
+]

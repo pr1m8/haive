@@ -6,14 +6,14 @@ from typing import Union
 def read_file_content(file_path: Union[str, Path]) -> str:
     """
     Reads a file (.md, .txt, .yml) and returns its content as a string.
-    
+
     :param file_path: Path to the file.
     :return: Content of the file as a string.
     """
     file_path = Path(file_path)
     if not file_path.exists():
         raise FileNotFoundError(f"File not found: {file_path}")
-    
+
     if file_path.suffix in {'.txt', '.md'}:
         with open(file_path, 'r', encoding='utf-8') as file:
             return file.read()
@@ -30,7 +30,7 @@ def read_file_content(file_path: Union[str, Path]) -> str:
 def read_system_message(file_path: Union[str, Path]) -> SystemMessage:
     """
     Reads a file and converts its content into a LangChain SystemMessage.
-    
+
     :param file_path: Path to the file.
     :return: SystemMessage containing the file content.
     """

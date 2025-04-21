@@ -1,0 +1,63 @@
+[
+    {
+        "__shared_fields__": [],
+        "__reducer_fields__": {
+            "messages": {
+                "__function__": true,
+                "name": "_add_messages",
+                "module": "langgraph.graph.message"
+            }
+        },
+        "__name__": "Postgres_Test_6D5F2A92State",
+        "content": null,
+        "question": null,
+        "messages": [
+            {
+                "content": "Hello, my name is PostgresUser.",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": "f962ae46-c50c-4466-9442-8a4273e6816b",
+                "example": false
+            },
+            {
+                "content": "What's my name?",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": "a4ba9952-a889-4295-9fe8-7b11a500a653",
+                "example": false
+            }
+        ],
+        "runnable_config": {}
+    },
+    [],
+    {
+        "configurable": {
+            "thread_id": "postgres_thread_3ef9f3a1",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1f01c3c9-ddfd-6293-8004-7120f74c14ff"
+        }
+    },
+    {
+        "step": 4,
+        "source": "loop",
+        "writes": {
+            "simple_agent_node": null
+        },
+        "parents": {},
+        "thread_id": "postgres_thread_3ef9f3a1",
+        "recursion_limit": 200
+    },
+    "2025-04-18T10:05:12.079211+00:00",
+    {
+        "configurable": {
+            "thread_id": "postgres_thread_3ef9f3a1",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1f01c3c9-ddf9-6e5b-8003-3688a8f96464"
+        }
+    },
+    []
+]

@@ -38,9 +38,9 @@ git bundle create "${BACKUP_DIR}/git_bundles/haive_complete.bundle" --all
 
 # 3. Back up submodules individually
 echo "Backing up submodules individually..."
-git submodule foreach --recursive 'echo "Backing up submodule $name"; 
-  mkdir -p '"${BACKUP_DIR}/submodules/"'$name; 
-  rsync -a '"${EXCLUDE_PATTERN}"' --exclude ".git/objects" . '"${BACKUP_DIR}/submodules/"'$name/; 
+git submodule foreach --recursive 'echo "Backing up submodule $name";
+  mkdir -p '"${BACKUP_DIR}/submodules/"'$name;
+  rsync -a '"${EXCLUDE_PATTERN}"' --exclude ".git/objects" . '"${BACKUP_DIR}/submodules/"'$name/;
   git bundle create '"${BACKUP_DIR}/submodules/"'$name/bundle.bundle --all'
 
 # 4. Create a complete repository mirror

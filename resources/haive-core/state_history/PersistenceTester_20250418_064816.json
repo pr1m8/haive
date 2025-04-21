@@ -1,0 +1,52 @@
+[
+    {
+        "__shared_fields__": [],
+        "__reducer_fields__": {
+            "messages": {
+                "__function__": true,
+                "name": "_add_messages",
+                "module": "langgraph.graph.message"
+            }
+        },
+        "__name__": "PersistencetesterState",
+        "messages": [
+            {
+                "content": "What is my name?",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": "a153d242-a209-45ac-a712-f626a73356ad",
+                "example": false
+            }
+        ],
+        "runnable_config": {}
+    },
+    [],
+    {
+        "configurable": {
+            "thread_id": "fixed-thread-for-persistence-test",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1f01c42a-2ad3-6068-8001-a4dbce963e5b"
+        }
+    },
+    {
+        "source": "loop",
+        "writes": {
+            "simple_agent_node": null
+        },
+        "step": 1,
+        "parents": {},
+        "thread_id": "fixed-thread-for-persistence-test",
+        "recursion_limit": 200
+    },
+    "2025-04-18T10:48:17.116366+00:00",
+    {
+        "configurable": {
+            "thread_id": "fixed-thread-for-persistence-test",
+            "checkpoint_ns": "",
+            "checkpoint_id": "1f01c42a-2acd-6a22-8000-9380f5ee24e7"
+        }
+    },
+    []
+]

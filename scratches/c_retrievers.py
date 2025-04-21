@@ -151,12 +151,12 @@ class DynamicModuleConfig(BaseModel):
         """
         Validate that the class type exists in the specified module.
         """
-        
+
         module_name = v
         if not module_name:
             raise ValueError("Module name must be provided ")
         return module_name
-    
+
     @field_validator("class_type")
     @classmethod
     def validate_class_type(cls, v: Union[str, None], values) -> str:
