@@ -73,6 +73,30 @@ resources/Graphs/
 resources/graph_images/
 **/graph_images/
 resources/**
+# Testing
+.coverage
+htmlcov/
+**/__pycache__/
+**/.pytest_cache/
+**/.ruff_cache/
+
+# Test output
+test_outputs/
+**/test_outputs/
+**/test_output/
+allure-results/
+**/allure-results/
+logs/
+# Ignore resource directories
+resources/State_History/
+resources/embeddings_cache/
+resources/Graphs/
+**/resources/State_History/
+**/resources/embeddings_cache/
+**/resources/Graphs/
+.langchain.db
+**/logs
+EOF
 # Logs and outputs
 logs/
 **/logs/
