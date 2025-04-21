@@ -10,7 +10,7 @@ except ImportError:
     pass
 
 try:
-    from haive_agents import *
+    from haive_agents_dep import *
 except ImportError:
     pass
 
@@ -20,7 +20,7 @@ except ImportError:
     pass
 
 try:
-    from haive_dataflow import *
+    from haive_dataflow_dep import *
 except ImportError:
     pass
 

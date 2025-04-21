@@ -1,10 +1,34 @@
-# src/haive/main.py
-"""Main entry point for the Haive application."""
+"""Haive - Agent Framework and Ecosystem."""
 
-def main():
-    """Run the Haive application."""
-    print("Haive framework initialized")
-    # Add your application logic here
+__version__ = "0.1.0"
 
-if __name__ == "__main__":
-    main()
+# Import from submodules
+try:
+    from haive.core import *
+except ImportError:
+    pass
+
+try:
+    from haive.agents import *
+except ImportError:
+    pass
+
+try:
+    from haive.games import *
+except ImportError:
+    pass
+
+try:
+    from haive.dataflow import *
+except ImportError:
+    pass
+
+try:
+    from haive.prebuilt import *
+except ImportError:
+    pass
+
+try:
+    from haive.tools import *
+except ImportError:
+    pass
