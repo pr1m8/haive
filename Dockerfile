@@ -11,29 +11,31 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxml2-dev libxslt1-dev git \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Set up Poetry
 ENV POETRY_VERSION=2.1.2
 ENV POETRY_HOME="/opt/poetry"
-ENV POETRY_VIRTUALENVS_CREATE=false
 ENV PATH="$POETRY_HOME/bin:$PATH"
+ENV POETRY_VIRTUALENVS_CREATE=false
 
 WORKDIR /app
 
-# Copy dependency files first
+# Copy core dependency files
 COPY pyproject.toml poetry.lock* ./
 
-# Copy entire package directories including source code
-COPY packages/haive-core/ ./packages/haive-core/
-COPY packages/haive-agents/ ./packages/haive-agents/
-COPY packages/haive-games/ ./packages/haive-games/
-COPY packages/haive-dataflow/ ./packages/haive-dataflow/
-COPY packages/haive-prebuilt/ ./packages/haive-prebuilt/
-COPY packages/haive-tools/ ./packages/haive-tools/
+# Copy packages (assumes they may be referenced via path dependencies or used in dev group)
+COPY packages/haive-core ./packages/haive-core
+COPY packages/haive-agents ./packages/haive-agents
+COPY packages/haive-games ./packages/haive-games
+COPY packages/haive-dataflow ./packages/haive-dataflow
+COPY packages/haive-prebuilt ./packages/haive-prebuilt
+COPY packages/haive-tools ./packages/haive-tools
 
 # Install Poetry
 RUN pip install "poetry==$POETRY_VERSION"
 
-# Install main dependencies including local packages
-RUN poetry install --only main --without dev --no-root && \
+# Install main dependencies and local dev packages
+RUN poetry config virtualenvs.create false && \
+    poetry install --with dev --no-root && \
     poetry install --only-root
 
 # Install PyTorch based on CUDA availability
@@ -45,4 +47,5 @@ RUN pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 \
 COPY src ./src
 
 EXPOSE 8000
+
 CMD ["python", "-m", "haive.main"]
