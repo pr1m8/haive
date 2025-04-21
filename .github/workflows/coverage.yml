@@ -76,8 +76,7 @@ jobs:
       - name: 📚 Install dependencies and pytest-cov
         run: |
           cd packages/${{ matrix.package }}
-          poetry add pytest pytest-cov
-          poetry install --no-interaction
+          poetry install --with dev --no-interaction
 
       - name: 🧪 Run tests with coverage
         run: |
