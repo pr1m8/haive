@@ -152,4 +152,4 @@ output_file.json
 certs/local-cert.pem
 certs/local-key.pem
 certs/localhost-cert.pem
-certs/localhost-key.pem
+certs/localhost-key.pempackages/resources/embeddings_cache/
