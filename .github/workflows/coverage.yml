@@ -78,6 +78,10 @@ jobs:
       - name: 📚 Install dependencies and pytest-cov
         run: |
           cd packages/${{ matrix.package }}
+
+
+
+          
           poetry install --with dev --no-interaction
       - name: 🚫 Disable Poetry keyring (CI workaround)
         run: poetry config keyring.enabled false
