@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.12-slim as base
+FROM python:3.12-slim AS base
 
 # System dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -19,10 +19,10 @@ ENV POETRY_VIRTUALENVS_CREATE=false
 
 WORKDIR /app
 
-# Copy core dependency files
+# Copy root dependency files
 COPY pyproject.toml poetry.lock* ./
 
-# Copy packages (assumes they may be referenced via path dependencies or used in dev group)
+# Copy local package sources (assumes they are declared as [tool.poetry.dependencies] or dev dependencies)
 COPY packages/haive-core ./packages/haive-core
 COPY packages/haive-agents ./packages/haive-agents
 COPY packages/haive-games ./packages/haive-games
@@ -33,17 +33,15 @@ COPY packages/haive-tools ./packages/haive-tools
 # Install Poetry
 RUN pip install "poetry==$POETRY_VERSION"
 
-# Install main dependencies and local dev packages
-RUN poetry config virtualenvs.create false && \
-    poetry install --with dev --no-root && \
-    poetry install --only-root
+# Install dependencies (assumes packages above are declared as path deps or dev group)
+RUN poetry install --with dev --no-root && poetry install --only-root
 
-# Install PyTorch based on CUDA availability
+# Install PyTorch (CPU variant by default)
 ARG TORCH_INDEX_URL=https://download.pytorch.org/whl/cpu
 RUN pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 \
     --index-url $TORCH_INDEX_URL
 
-# Copy remaining application code
+# Copy application code
 COPY src ./src
 
 EXPOSE 8000
