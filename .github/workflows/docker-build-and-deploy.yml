@@ -1,4 +1,4 @@
-name: Docker Build & Deploy
+name: 🐳 Docker Build & Deploy
 
 on:
   push:
@@ -10,34 +10,33 @@ permissions:
   packages: write
 
 env:
-  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-  DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
   IMAGE_NAME: your-image-name
   COMPOSE_FILE: docker-compose.prod.yml
 
 jobs:
   build-and-push:
+    name: 🏗️ Build and Push Image
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: 📥 Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
+      - name: 🛠️ Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Login to Docker Hub
+      - name: 🔐 Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ env.DOCKERHUB_USERNAME }}
-          password: ${{ env.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Extract metadata
+      - name: 🏷️ Extract Docker Metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}
 
-      - name: Build and push
+      - name: 🐳 Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -49,13 +48,15 @@ jobs:
           cache-to: type=gha,mode=max
 
   deploy:
+    name: 🚀 Deploy Stack
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: 📥 Checkout Code
         uses: actions/checkout@v4
 
-      - name: Deploy stack
+      - name: 🚀 Deploy Using Compose
         run: |
+          set -e
           docker compose -f ${{ env.COMPOSE_FILE }} pull
           docker compose -f ${{ env.COMPOSE_FILE }} up -d
