@@ -1,4 +1,4 @@
-name: Security Scan
+name: "🔒 Security Scan"
 
 on:
   schedule:
@@ -6,35 +6,83 @@ on:
   push:
     branches: [main]
   pull_request:
+    branches: [main]
 
 jobs:
-  safety:
+  setup:
+    name: "⚙️ Setup"
     runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.find-packages.outputs.packages }}
+      package_count: ${{ steps.find-packages.outputs.package_count }}
+      resource-paths: ${{ steps.gitignore.outputs.resource-paths }}
+      paths-ignore: ${{ steps.gitignore.outputs.paths-ignore }}
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: 🔍 Parse Gitignore
+        id: gitignore
+        uses: ./.github/actions/parse-gitignore
+
+      - name: 🔍 Find Packages
+        id: find-packages
+        uses: ./.github/actions/find-packages
+
+      - name: 📊 Show Setup Info
+        run: |
+          echo "Found ${{ steps.find-packages.outputs.package_count }} packages:"
+          echo "${{ steps.find-packages.outputs.packages }}"
+          echo "Paths to ignore: ${{ steps.gitignore.outputs.paths-ignore }}"
+          echo "Resource paths: ${{ steps.gitignore.outputs.resource-paths }}"
+
+  safety:
+    name: "🛡️ Safety Check for ${{ matrix.package }}"
+    needs: setup
+    if: ${{ needs.setup.outputs.package_count > 0 }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: ${{ fromJson(needs.setup.outputs.packages) }}
+      fail-fast: false
 
     steps:
-      - uses: actions/checkout@v4
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
-      - name: Get Poetry Metadata
-        id: poetry
-        uses: ./.github/actions/get-poetry-info
+      - name: 📦 Get Package Poetry Info
+        id: package-info
+        uses: ./.github/actions/get-package-poetry-info
+        with:
+          package: ${{ matrix.package }}
 
-      - name: Set up Python
+      - name: 🐍 Set up Python ${{ steps.package-info.outputs.python }}
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ steps.poetry.outputs.python }}
+          python-version: ${{ steps.package-info.outputs.python }}
 
-      - name: Install Poetry + Safety
+      - name: 🛠 Install Poetry + Safety
         run: |
-          pipx install poetry==${{ steps.poetry.outputs.poetry_version }}
-          pip install safety
+          python -m pip install --upgrade pip
+          pip install poetry==${{ steps.package-info.outputs.poetry_version }} safety
 
-      - name: Install dependencies
-        run: poetry install
-
-      - name: Run Safety Check
-        run: safety check --full-report
+      - name: 📦 Install Dependencies
+        run: |
+          cd packages/${{ matrix.package }}
+          poetry export -f requirements.txt --without-hashes > requirements.txt
+          
+      - name: 🔒 Run Safety Check
+        run: |
+          cd packages/${{ matrix.package }}
+          safety check -r requirements.txt --full-report
 
   codeql:
+    name: "🕵️ CodeQL Analysis"
+    needs: setup
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -42,12 +90,58 @@ jobs:
       security-events: write
 
     steps:
-      - uses: actions/checkout@v4
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          # We need to fetch all branches and tags
+          fetch-depth: 0
 
-      - name: Initialize CodeQL
+      - name: 📦 Get Root Poetry Info
+        id: poetry
+        uses: ./.github/actions/get-root-poetry-info
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ steps.poetry.outputs.python }}
+
+      - name: 🛠 Install Poetry
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry==${{ steps.poetry.outputs.poetry_version }}
+
+      - name: 📦 Initialize package directories
+        run: |
+          # Create a simple __init__.py in each package's src directory
+          # This helps CodeQL properly recognize the Python modules
+          for pkg_dir in packages/*/; do
+            if [ -d "${pkg_dir}src" ]; then
+              echo "Initializing ${pkg_dir}src"
+              find "${pkg_dir}src" -type d -exec touch {}/__init__.py \; 2>/dev/null || true
+            fi
+          done
+
+      - name: 🔍 Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
-          languages: python,javascript
+          languages: python
+          # Additional configuration to help CodeQL find your Python code
+          # Specify paths to analyze
+          paths: |
+            packages/*/src
+            packages/*/tests
+          # Exclude paths from gitignore
+          paths-ignore: |
+            ${{ needs.setup.outputs.resource-paths }}
+            **/venv/**
+            **/.venv/**
 
-      - name: Perform CodeQL Analysis
+      # Autobuild attempts to build any compiled languages
+      - name: 🏗️ Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: 🔎 Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:python"

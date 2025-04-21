@@ -1,94 +1,209 @@
-name: "Get Package Poetry Info"
-description: "Extracts Poetry information from a specific package"
-inputs:
-  package:
-    description: "Package name to analyze (relative to packages/)"
-    required: true
-outputs:
-  name:
-    description: "Package name"
-    value: ${{ steps.extract.outputs.name }}
-  version:
-    description: "Package version"
-    value: ${{ steps.extract.outputs.version }}
-  python:
-    description: "Python version requirement"
-    value: ${{ steps.extract.outputs.python }}
-  poetry_version:
-    description: "Poetry version requirement"
-    value: ${{ steps.extract.outputs.poetry_version }}
-runs:
-  using: "composite"
-  steps:
-    - id: extract
-      shell: bash
-      run: |
-        PACKAGE_DIR="packages/${{ inputs.package }}"
-        PYPROJECT_PATH="${PACKAGE_DIR}/pyproject.toml"
-        
-        # Check if package directory and pyproject.toml exist
-        if [ ! -d "$PACKAGE_DIR" ]; then
-          echo "::error::Package directory '$PACKAGE_DIR' not found"
-          exit 1
-        fi
-        
-        if [ ! -f "$PYPROJECT_PATH" ]; then
-          echo "::error::pyproject.toml not found at '$PYPROJECT_PATH'"
-          exit 1
-        fi
-        
-        echo "Extracting Poetry info from: $PYPROJECT_PATH"
-        
-        python - <<EOF > package-poetry-info.env
-        import tomllib
-        import re
-        import sys
-        
-        try:
-            with open("$PYPROJECT_PATH", "rb") as f:
-                data = tomllib.load(f)
-        except FileNotFoundError:
-            print("::error::Could not open pyproject.toml")
-            sys.exit(1)
-            
-        # Get Poetry data
-        try:
-            poetry_data = data["tool"]["poetry"]
-            deps = poetry_data["dependencies"]
-        except KeyError:
-            print("::error::Invalid pyproject.toml format")
-            sys.exit(1)
-        
-        # Try to extract Poetry version from build-system
-        try:
-            build_system = data.get("build-system", {})
-            requires = build_system.get("requires", [])
-            poetry_version = "1.8.0"  # Default fallback
-            
-            for req in requires:
-                if req.startswith("poetry"):
-                    match = re.search(r"poetry(>=|==|~=)?([\d\.]+)", req)
-                    if match:
-                        poetry_version = match.group(2)
-                        break
-        except Exception:
-            poetry_version = "1.8.0"  # Default fallback
-        
-        # Normalize python version
-        constraint = deps.get("python", "")
-        # Handle different version specifiers: ^3.12, >=3.12,<3.13, etc.
-        match = re.search(r"(\d+\.\d+)", constraint)
-        python_version = match.group(1) if match else "3.12"
-        
-        print(f"name={poetry_data.get('name', '${{ inputs.package }}')}")
-        print(f"version={poetry_data.get('version', '0.1.0')}")
-        print(f"python={python_version}")
-        print(f"poetry_version={poetry_version}")
-        EOF
-        
-        while read line; do
-          echo "$line" >> $GITHUB_ENV
-          key=$(echo "$line" | cut -d= -f1)
-          val=$(echo "$line" | cut -d= -f2-)
-          echo "$key=$val" >> "$GITHUB_OUTPUT"
-        done < package-poetry-info.env
+name: "🧪 Test"
+
+on:
+  push:
+    branches: [main]
+    # We'll use parse-gitignore action to determine paths-ignore
+  pull_request:
+    branches: [main]
+    # We'll use parse-gitignore action to determine paths-ignore
+
+jobs:
+  setup:
+    name: "⚙️ Setup"
+    runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.find-packages.outputs.packages }}
+      package_count: ${{ steps.find-packages.outputs.package_count }}
+      resource-paths: ${{ steps.gitignore.outputs.resource-paths }}
+      paths-ignore: ${{ steps.gitignore.outputs.paths-ignore }}
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: 🔍 Parse Gitignore
+        id: gitignore
+        uses: ./.github/actions/parse-gitignore
+
+      - name: 🔍 Find Packages
+        id: find-packages
+        uses: ./.github/actions/find-packages
+
+      - name: 📊 Show Setup Info
+        run: |
+          echo "Found ${{ steps.find-packages.outputs.package_count }} packages:"
+          echo "${{ steps.find-packages.outputs.packages }}"
+          echo "Paths to ignore: ${{ steps.gitignore.outputs.paths-ignore }}"
+          echo "Resource paths: ${{ steps.gitignore.outputs.resource-paths }}"
+
+  lint:
+    name: "🧹 Pre-commit Lint"
+    runs-on: ubuntu-latest
+    needs: setup
+    if: ${{ needs.setup.outputs.package_count > 0 }}
+    env:
+      ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}
+      RESOURCE_PATHS: ${{ needs.setup.outputs.resource-paths }}
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: 📦 Get Root Poetry Info
+        id: poetry
+        uses: ./.github/actions/get-root-poetry-info
+
+      - name: 🐍 Set up Python ${{ steps.poetry.outputs.python }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ steps.poetry.outputs.python }}
+
+      - name: 📦 Install Pre-commit
+        run: |
+          python -m pip install --upgrade pip
+          pip install pre-commit
+
+      - name: ✅ Run Pre-commit
+        run: |
+          # Skip resource files based on patterns from gitignore
+          if [ -n "$RESOURCE_PATHS" ]; then
+            echo "Skipping resource paths: $RESOURCE_PATHS"
+            FILES=$(git ls-files | grep -v -E "$RESOURCE_PATHS")
+            pre-commit run --files $FILES
+          else
+            pre-commit run --all-files
+          fi
+
+  test-packages:
+    name: "🧪 Test ${{ matrix.package }}"
+    needs: setup
+    if: ${{ needs.setup.outputs.package_count > 0 }}
+    runs-on: ubuntu-latest
+    env:
+      ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}
+    strategy:
+      matrix:
+        package: ${{ fromJson(needs.setup.outputs.packages) }}
+      fail-fast: false
+
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: 📦 Get Package Poetry Info
+        id: package-info
+        uses: ./.github/actions/get-package-poetry-info
+        with:
+          package: ${{ matrix.package }}
+
+      - name: 🐍 Set up Python ${{ steps.package-info.outputs.python }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ steps.package-info.outputs.python }}
+
+      - name: 🛠 Install Poetry
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry==${{ steps.package-info.outputs.poetry_version }}
+
+      - name: 🌱 Install Dependencies
+        run: |
+          cd packages/${{ matrix.package }}
+          poetry install --no-interaction
+
+      - name: ✅ Run Tests
+        run: |
+          cd packages/${{ matrix.package }}
+          RESOURCE_PATHS="${{ needs.setup.outputs.resource-paths }}"
+          if [ -d "tests" ] || [ -d "src/haive/tests" ] || [ -d "src/haive/*/tests" ]; then
+            if [ -n "$RESOURCE_PATHS" ]; then
+              echo "Skipping resource paths in tests: $RESOURCE_PATHS"
+              poetry run pytest -xvs --ignore-glob="$RESOURCE_PATHS"
+            else
+              poetry run pytest -xvs
+            fi
+          else
+            echo "No tests found for ${{ matrix.package }}, skipping"
+          fi
+
+  type-check:
+    name: "🔎 Type Check ${{ matrix.package }}"
+    needs: setup
+    if: ${{ needs.setup.outputs.package_count > 0 }}
+    runs-on: ubuntu-latest
+    env:
+      ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}
+    strategy:
+      matrix:
+        package: ${{ fromJson(needs.setup.outputs.packages) }}
+      fail-fast: false
+
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: 📦 Get Package Poetry Info
+        id: package-info
+        uses: ./.github/actions/get-package-poetry-info
+        with:
+          package: ${{ matrix.package }}
+
+      - name: 🐍 Set up Python ${{ steps.package-info.outputs.python }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ steps.package-info.outputs.python }}
+
+      - name: 🛠 Install Poetry
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry==${{ steps.package-info.outputs.poetry_version }}
+
+      - name: 🌱 Install Dependencies & Mypy
+        run: |
+          cd packages/${{ matrix.package }}
+          poetry install --no-interaction
+          poetry run pip install mypy
+
+      - name: 🔍 Run Mypy
+        run: |
+          cd packages/${{ matrix.package }}
+          RESOURCE_PATHS="${{ needs.setup.outputs.resource-paths }}"
+          
+          if [ -d "src" ]; then
+            if [ -n "$RESOURCE_PATHS" ]; then
+              echo "Type checking src directory (excluding resources)"
+              # Create a list of directories to exclude
+              EXCLUDE_ARGS=""
+              for pattern in $(echo "$RESOURCE_PATHS" | tr ',' '\n'); do
+                if [ -d "src/$pattern" ]; then
+                  EXCLUDE_ARGS="$EXCLUDE_ARGS --exclude src/$pattern"
+                fi
+              done
+              poetry run mypy src $EXCLUDE_ARGS --ignore-missing-imports
+            else
+              poetry run mypy src --ignore-missing-imports
+            fi
+          fi
+          
+          if [ -d "tests" ]; then
+            if [ -n "$RESOURCE_PATHS" ]; then
+              echo "Type checking tests directory (excluding resources)"
+              # Create a list of directories to exclude
+              EXCLUDE_ARGS=""
+              for pattern in $(echo "$RESOURCE_PATHS" | tr ',' '\n'); do
+                if [ -d "tests/$pattern" ]; then
+                  EXCLUDE_ARGS="$EXCLUDE_ARGS --exclude tests/$pattern"
+                fi
+              done
+              poetry run mypy tests $EXCLUDE_ARGS --ignore-missing-imports
+            else
+              poetry run mypy tests --ignore-missing-imports
+            fi
+          fi
