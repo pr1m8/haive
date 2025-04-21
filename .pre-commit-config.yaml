@@ -72,7 +72,6 @@ repos:
         additional_dependencies:
           - pydantic>=2.4.2
           - types-requests
-          - haive-core
 
       - id: mypy
         name: mypy-games
@@ -80,8 +79,6 @@ repos:
         args: ["--ignore-missing-imports"]
         additional_dependencies:
           - pydantic>=2.4.2
-          - haive-core
-          - haive-agents
 
   # Docstring style enforcement
   - repo: https://github.com/pycqa/pydocstyle
