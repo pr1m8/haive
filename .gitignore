@@ -129,6 +129,7 @@ resources/State_History/*.json
 resources/embeddings_cache/
 resources/graph_images/
 resources/state_history/
+.resources/
 scratches/
 simple_agent_*/
 summary_agent/
