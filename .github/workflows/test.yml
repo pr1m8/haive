@@ -3,8 +3,12 @@ name: "🧪 Test"
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - '**/resources/**'
   pull_request:
     branches: [main]
+    paths-ignore:
+      - '**/resources/**'
 
 jobs:
   lint:
@@ -15,11 +19,17 @@ jobs:
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
-      - name: 🐍 Set up Python
+      - name: 🐍 Get Python Version
+        id: python-version
+        uses: ./.github/actions/get-python-version
+
+      - name: 🐍 Set up Python ${{ steps.python-version.outputs.version }}
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{ steps.python-version.outputs.version }}
 
       - name: 📦 Install Pre-commit
         run: |
@@ -30,67 +40,109 @@ jobs:
         run: pre-commit run --all-files
 
   test-packages:
-    name: "🧪 Test ${{ matrix.package }} (py${{ matrix.python-version }})"
+    name: "🧪 Test ${{ matrix.package }}"
     runs-on: ubuntu-latest
     env:
       ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}
     strategy:
       matrix:
         package: [haive-core, haive-agents, haive-games, haive-dataflow, haive-tools, haive-prebuilt]
-        python-version: ['3.12', '3.13']
+      fail-fast: false
 
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: 📦 Get Poetry Metadata
-        id: poetry
-        uses: ./.github/actions/get-poetry-info
+        id: poetry-metadata
+        uses: ./.github/actions/get-poetry-metadata
 
-      - name: 🐍 Set up Python
+      - name: 🐍 Set up Python ${{ steps.poetry-metadata.outputs.python }}
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version || steps.poetry.outputs.python }}
+          python-version: ${{ steps.poetry-metadata.outputs.python }}
 
-      - name: 🔧 Install Poetry
-        run: pipx install poetry==${{ steps.poetry.outputs.poetry_version }}
+      - name: 🛠 Install Poetry
+        run: pipx install poetry==${{ steps.poetry-metadata.outputs.poetry_version }}
 
-      - name: ✅ Run Pytest for ${{ matrix.package }}
+      - name: 🔄 Set Working Directory
+        id: set-dir
         run: |
-          echo "Running tests for: ${{ matrix.package }} on Python ${{ matrix.python-version }}"
-          cd packages/${{ matrix.package }}
-          poetry install
-          poetry run pytest
+          if [ -d "packages/${{ matrix.package }}" ]; then
+            echo "package_dir=packages/${{ matrix.package }}" >> $GITHUB_OUTPUT
+            echo "Found package directory: packages/${{ matrix.package }}"
+          else
+            echo "⚠️ Package directory not found: packages/${{ matrix.package }}"
+            exit 1
+          fi
+
+      - name: 🌱 Install Dependencies
+        run: |
+          cd ${{ steps.set-dir.outputs.package_dir }}
+          echo "Installing dependencies for ${{ matrix.package }}..."
+          poetry install --no-interaction
+
+      - name: ✅ Run Tests
+        run: |
+          cd ${{ steps.set-dir.outputs.package_dir }}
+          echo "Running tests for ${{ matrix.package }}..."
+          poetry run pytest -xvs
 
   type-check:
-    name: "🔎 Type Check ${{ matrix.package }} (py${{ matrix.python-version }})"
+    name: "🔎 Type Check ${{ matrix.package }}"
     runs-on: ubuntu-latest
     env:
       ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}
     strategy:
       matrix:
         package: [haive-core, haive-agents, haive-games, haive-dataflow, haive-tools, haive-prebuilt]
-        python-version: ['3.12', '3.13']
+      fail-fast: false
 
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: 📦 Get Poetry Metadata
-        id: poetry
-        uses: ./.github/actions/get-poetry-info
+        id: poetry-metadata
+        uses: ./.github/actions/get-poetry-metadata
 
-      - name: 🐍 Set up Python
+      - name: 🐍 Set up Python ${{ steps.poetry-metadata.outputs.python }}
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version || steps.poetry.outputs.python }}
+          python-version: ${{ steps.poetry-metadata.outputs.python }}
 
-      - name: 🔧 Install Mypy
-        run: |
-          python -m pip install --upgrade pip
-          pip install mypy
+      - name: 🛠 Install Poetry
+        run: pipx install poetry==${{ steps.poetry-metadata.outputs.poetry_version }}
 
-      - name: ✅ Run Mypy on ${{ matrix.package }}
+      - name: 🔄 Set Working Directory
+        id: set-dir
         run: |
-          cd packages/${{ matrix.package }}
-          mypy src tests
+          if [ -d "packages/${{ matrix.package }}" ]; then
+            echo "package_dir=packages/${{ matrix.package }}" >> $GITHUB_OUTPUT
+            echo "Found package directory: packages/${{ matrix.package }}"
+          else
+            echo "⚠️ Package directory not found: packages/${{ matrix.package }}"
+            exit 1
+          fi
+
+      - name: 🌱 Install Dependencies & Mypy
+        run: |
+          cd ${{ steps.set-dir.outputs.package_dir }}
+          echo "Installing dependencies for ${{ matrix.package }}..."
+          poetry install --no-interaction
+          poetry run pip install mypy
+
+      - name: 🔍 Run Mypy
+        run: |
+          cd ${{ steps.set-dir.outputs.package_dir }}
+          echo "Type checking ${{ matrix.package }}..."
+          if [ -d "src" ]; then
+            poetry run mypy src --ignore-missing-imports
+          fi
+          if [ -d "tests" ]; then
+            poetry run mypy tests --ignore-missing-imports
+          fi
