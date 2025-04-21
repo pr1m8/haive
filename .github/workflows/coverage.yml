@@ -1,4 +1,4 @@
-name: "📊 Coverage"
+name: 📊 Coverage
 
 on:
   push:
@@ -6,9 +6,12 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   setup:
-    name: "⚙️ Setup"
+    name: ⚙️ Setup
     runs-on: ubuntu-latest
     outputs:
       packages: ${{ steps.find-packages.outputs.packages }}
@@ -19,50 +22,7 @@ jobs:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
         with:
-          submodules: false  # Don't fetch submodules
-
-      - name: 📦 Create Package Structure
-        run: |
-          # Create package directories for each expected package
-          for pkg in haive-core haive-agents haive-dataflow haive-games haive-prebuilt haive-tools; do
-            mkdir -p "packages/$pkg/src/haive/${pkg#haive-}"
-            mkdir -p "packages/$pkg/src/haive"
-            
-            # Only create pyproject.toml if it doesn't exist
-            if [ ! -f "packages/$pkg/pyproject.toml" ]; then
-              echo "Creating minimal pyproject.toml for $pkg"
-              cat > "packages/$pkg/pyproject.toml" << EOF
-[tool.poetry]
-name = "$pkg"
-version = "0.1.0"
-description = "Package for $pkg"
-packages = [
-    { include = "haive", from = "src" }
-]
-
-[tool.poetry.dependencies]
-python = "^3.12"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-EOF
-            fi
-            
-            # Create necessary __init__.py files
-            touch "packages/$pkg/src/haive/__init__.py"
-            touch "packages/$pkg/src/haive/${pkg#haive-}/__init__.py"
-            
-            # Create a minimal test file
-            mkdir -p "packages/$pkg/tests"
-            if [ ! -f "packages/$pkg/tests/test_basic.py" ]; then
-              cat > "packages/$pkg/tests/test_basic.py" << EOF
-def test_true():
-    """A simple test that always passes."""
-    assert True
-EOF
-            fi
-          done
+          submodules: false
 
       - name: 🔍 Parse Gitignore
         id: gitignore
@@ -80,7 +40,7 @@ EOF
           echo "Resource paths: ${{ steps.gitignore.outputs.resource-paths }}"
 
   coverage:
-    name: "📊 Coverage for ${{ matrix.package }}"
+    name: 📊 Coverage for ${{ matrix.package }}
     needs: setup
     if: ${{ needs.setup.outputs.package_count > 0 }}
     runs-on: ubuntu-latest
@@ -95,65 +55,7 @@ EOF
       - name: 📥 Checkout
         uses: actions/checkout@v4
         with:
-          submodules: false  # Don't fetch submodules
-
-      - name: 📦 Create Package Structure
-        run: |
-          # Ensure package directory exists with correct structure
-          mkdir -p "packages/${{ matrix.package }}/src/haive/${matrix.package#haive-}"
-          mkdir -p "packages/${{ matrix.package }}/src/haive"
-          
-          # Create necessary __init__.py files
-          touch "packages/${{ matrix.package }}/src/haive/__init__.py"
-          touch "packages/${{ matrix.package }}/src/haive/${matrix.package#haive-}/__init__.py"
-          
-          # Create a minimal package file if it doesn't exist
-          PKG_FILE="packages/${{ matrix.package }}/src/haive/${matrix.package#haive-}/main.py"
-          if [ ! -f "$PKG_FILE" ]; then
-            cat > "$PKG_FILE" << EOF
-"""Main module for ${{ matrix.package }}."""
-
-def example_function():
-    """Example function for coverage testing."""
-    return True
-EOF
-          fi
-          
-          # Create a minimal test file
-          mkdir -p "packages/${{ matrix.package }}/tests"
-          if [ ! -f "packages/${{ matrix.package }}/tests/test_main.py" ]; then
-            cat > "packages/${{ matrix.package }}/tests/test_main.py" << EOF
-"""Tests for the main module."""
-
-from haive.${matrix.package#haive-}.main import example_function
-
-def test_example_function():
-    """Test the example function."""
-    assert example_function() is True
-EOF
-          fi
-          
-          # Create minimal pyproject.toml if it doesn't exist
-          if [ ! -f "packages/${{ matrix.package }}/pyproject.toml" ]; then
-            cat > "packages/${{ matrix.package }}/pyproject.toml" << EOF
-[tool.poetry]
-name = "${{ matrix.package }}"
-version = "0.1.0"
-description = "Package for ${{ matrix.package }}"
-packages = [
-    { include = "haive", from = "src" }
-]
-
-[tool.poetry.dependencies]
-python = "^3.12"
-pytest = "^7.0.0"
-pytest-cov = "^4.0.0"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-EOF
-          fi
+          submodules: false
 
       - name: 📦 Get Package Poetry Info
         id: package-info
@@ -174,7 +76,7 @@ EOF
       - name: 📚 Install dependencies and pytest-cov
         run: |
           cd packages/${{ matrix.package }}
-          poetry add pytest pytest-cov  # Ensure test dependencies are available
+          poetry add pytest pytest-cov
           poetry install --no-interaction
 
       - name: 🧪 Run tests with coverage
