@@ -169,29 +169,6 @@ pre-commit = "^4.2.0"
 tomli = "^2.2.1"
 tomli-w = "^1.2.0"
 
-[tool.poetry.dependencies.haive-core]
-path = "./packages/haive-core"
-develop = true
-
-[tool.poetry.dependencies.haive-agents]
-path = "./packages/haive-agents"
-develop = true
-
-[tool.poetry.dependencies.haive-games]
-path = "./packages/haive-games"
-develop = true
-
-[tool.poetry.dependencies.haive-tools]
-path = "./packages/haive-tools"
-develop = true
-
-[tool.poetry.dependencies.haive-prebuilt]
-path = "./packages/haive-prebuilt"
-develop = true
-
-[tool.poetry.dependencies.haive-dataflow]
-path = "./packages/haive-dataflow"
-develop = true
 
 [tool.poetry.dependencies.graphviz]
 version = "^0.20.3"
