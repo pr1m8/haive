@@ -8,7 +8,6 @@ data/
 tests/
 .git
 **/*.log
-**/*.md
 **/tests/
 *.sqlite3
 *.pyo
