@@ -68,7 +68,21 @@ postgres_test_*/
 simple_agent_*/
 summary_agent/
 test_simple_agent/
-
+# Graph images
+resources/Graphs/
+resources/graph_images/
+**/graph_images/
+resources/**
+# Logs and outputs
+logs/
+**/logs/
+test_output/
+test_outputs/
+**/test_output/
+**/test_outputs/
+**/allure-results/
+# Allure test results
+allure-results/
 # === Test logs and aux resources ===
 
 # === Mypy, Pytest, etc ===
