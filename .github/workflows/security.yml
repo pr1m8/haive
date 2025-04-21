@@ -1,4 +1,4 @@
-name: "🔒 Security Scan"
+name: 🔒 Security Scan
 
 on:
   schedule:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   setup:
-    name: "⚙️ Setup"
+    name: ⚙️ Setup
     runs-on: ubuntu-latest
     outputs:
       packages: ${{ steps.find-packages.outputs.packages }}
@@ -21,7 +21,7 @@ jobs:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
         with:
-          submodules: false  # Don't fetch submodules
+          submodules: false
 
       - name: 📦 Create Package Structure
         run: |
@@ -72,7 +72,7 @@ EOF
           echo "Resource paths: ${{ steps.gitignore.outputs.resource-paths }}"
 
   safety:
-    name: "🛡️ Safety Check for ${{ matrix.package }}"
+    name: 🛡️ Safety Check for ${{ matrix.package }}
     needs: setup
     if: ${{ needs.setup.outputs.package_count > 0 }}
     runs-on: ubuntu-latest
@@ -85,7 +85,7 @@ EOF
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
         with:
-          submodules: false  # Don't fetch submodules
+          submodules: false
 
       - name: 📦 Create Package Structure
         run: |
@@ -145,7 +145,7 @@ EOF
           safety check -r requirements.txt --full-report
 
   codeql:
-    name: "🕵️ CodeQL Analysis"
+    name: 🕵️ CodeQL Analysis
     needs: setup
     runs-on: ubuntu-latest
     permissions:
@@ -157,9 +157,25 @@ EOF
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
         with:
-          submodules: false  # Don't fetch submodules
+          submodules: false
           # We need to fetch all branches and tags
           fetch-depth: 0
+
+      # Create dedicated CodeQL config file
+      - name: 📝 Create CodeQL Config
+        run: |
+          mkdir -p .github/codeql
+          cat > .github/codeql/codeql-config.yml << EOF
+name: "CodeQL Configuration"
+
+paths:
+  - packages/*/src
+  - packages/*/tests
+paths-ignore:
+  - '**/resources/**'
+  - '**/venv/**'
+  - '**/.venv/**'
+EOF
 
       - name: 📦 Create Package Structure
         run: |
@@ -208,16 +224,7 @@ EOF
         uses: github/codeql-action/init@v3
         with:
           languages: python
-          # Additional configuration to help CodeQL find your Python code
-          # Specify paths to analyze
-          paths: |
-            packages/*/src
-            packages/*/tests
-          # Exclude paths from gitignore
-          paths-ignore: |
-            ${{ needs.setup.outputs.resource-paths }}
-            **/venv/**
-            **/.venv/**
+          config-file: .github/codeql/codeql-config.yml
 
       # Autobuild attempts to build any compiled languages
       - name: 🏗️ Autobuild
