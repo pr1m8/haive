@@ -95,6 +95,9 @@ resources/Graphs/
 **/resources/embeddings_cache/
 **/resources/Graphs/
 .langchain.db
+
+**/.pytest_cache/
+**/.ruff_cache/
 **/logs
 EOF
 # Logs and outputs
