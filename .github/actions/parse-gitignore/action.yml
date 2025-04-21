@@ -1,0 +1,61 @@
+name: "Parse Gitignore"
+description: "Extracts patterns from .gitignore for CI workflow filtering"
+outputs:
+  paths-ignore:
+    description: "Formatted list of paths to ignore from .gitignore"
+    value: ${{ steps.extract.outputs.paths-ignore }}
+  resource-paths:
+    description: "Formatted list of resource paths from .gitignore"
+    value: ${{ steps.extract.outputs.resource-paths }}
+runs:
+  using: "composite"
+  steps:
+    - id: extract
+      shell: bash
+      run: |
+        # Check if .gitignore exists
+        if [ ! -f ".gitignore" ]; then
+          echo "No .gitignore file found, using defaults"
+          echo "paths-ignore=**/resources/**" >> $GITHUB_OUTPUT
+          echo "resource-paths=**/resources/**" >> $GITHUB_OUTPUT
+          exit 0
+        fi
+        
+        # Extract patterns from .gitignore and format for GitHub Actions
+        echo "Extracting patterns from .gitignore..."
+        
+        # Process .gitignore file to extract paths
+        # Keep only non-comment lines that don't start with ! (negation)
+        IGNORE_PATTERNS=$(grep -v "^#" .gitignore | grep -v "^!" | grep -v "^$" | sort -u)
+        
+        # Extract resource patterns (containing "resource" keyword)
+        RESOURCE_PATTERNS=$(echo "$IGNORE_PATTERNS" | grep -i "resource" || echo "**/resources/**")
+        
+        # Format for GitHub Actions
+        FORMATTED_IGNORE=""
+        for pattern in $IGNORE_PATTERNS; do
+          # Remove leading and trailing slashes for compatibility
+          pattern=$(echo "$pattern" | sed 's|^/||' | sed 's|/$||')
+          FORMATTED_IGNORE="$FORMATTED_IGNORE$pattern,"
+        done
+        FORMATTED_IGNORE=$(echo "$FORMATTED_IGNORE" | sed 's/,$//')
+        
+        # Format resource patterns
+        FORMATTED_RESOURCES=""
+        for pattern in $RESOURCE_PATTERNS; do
+          # Remove leading and trailing slashes for compatibility
+          pattern=$(echo "$pattern" | sed 's|^/||' | sed 's|/$||')
+          FORMATTED_RESOURCES="$FORMATTED_RESOURCES$pattern,"
+        done
+        FORMATTED_RESOURCES=$(echo "$FORMATTED_RESOURCES" | sed 's/,$//')
+        
+        # Add default if empty
+        if [ -z "$FORMATTED_RESOURCES" ]; then
+          FORMATTED_RESOURCES="**/resources/**"
+        fi
+        
+        echo "paths-ignore=$FORMATTED_IGNORE" >> $GITHUB_OUTPUT
+        echo "resource-paths=$FORMATTED_RESOURCES" >> $GITHUB_OUTPUT
+        
+        echo "Extracted ignore patterns: $FORMATTED_IGNORE"
+        echo "Extracted resource patterns: $FORMATTED_RESOURCES"
