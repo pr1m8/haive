@@ -49,6 +49,13 @@ priority = "supplemental"
 
 [tool.poetry.dependencies]
 python = ">=3.12,<3.13"
+
+haive-core = {path = "packages/haive-core", develop = true}
+haive-agents = {path = "packages/haive-agents", develop = true}
+haive-games = {path = "packages/haive-games", develop = true}
+haive-prebuilt = {path = "packages/haive-prebuilt", develop = true}
+haive-tools = {path = "packages/haive-tools", develop = true}
+haive-dataflow={path = "packages/haive-dataflow", develop = true}
 langchain-core = "^0.3.44"
 langchain = "^0.3.20"
 langchain-community = "^0.3.20"
