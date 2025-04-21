@@ -98,6 +98,18 @@ htmlcov/
 lc_cache/
 loader_analysis/
 logs/
+
+# Notebooks & Logs
+*.ipynb
+*.ipynb_checkpoints
+*.log
+
+# JSON dumps
+retrievers_output.json
+scratches/*.json
+
+# LangChain/LLM cache
+src/lc_cache/
 memory_test_*/
 notebooks/
 notebooks/**
