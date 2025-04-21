@@ -28,7 +28,7 @@ jobs:
 
       - name: 🔧 Install Poetry and Nox
         run: |
-          pipx install poetry==1.8.0
+          pipx install poetry==${{ steps.poetry.outputs.poetry_version }}
           pip install nox
 
       - name: 🏗️ Build Docs via Nox
