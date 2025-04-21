@@ -34,7 +34,8 @@ COPY packages/haive-tools ./packages/haive-tools
 RUN pip install "poetry==$POETRY_VERSION"
 
 # Install dependencies (assumes packages above are declared as path deps or dev group)
-RUN poetry install --with dev --no-root && poetry install --only-root
+RUN poetry install --with dev
+
 
 # Install PyTorch (CPU variant by default)
 ARG TORCH_INDEX_URL=https://download.pytorch.org/whl/cpu
