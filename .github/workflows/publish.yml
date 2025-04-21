@@ -1,4 +1,4 @@
-name: "🚀 Publish Release"
+name: 🚀 Publish Release
 
 on:
   release:
@@ -9,73 +9,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  setup:
-    name: "⚙️ Setup"
-    runs-on: ubuntu-latest
-    outputs:
-      packages: ${{ steps.find-packages.outputs.packages }}
-    steps:
-      - name: 📥 Checkout Code
-        uses: actions/checkout@v4
-        with:
-          submodules: false  # Don't fetch submodules
-          
-      - name: 📦 Create Package Structure
-        run: |
-          # Create package directories for each expected package
-          for pkg in haive-core haive-agents haive-dataflow haive-games haive-prebuilt haive-tools; do
-            mkdir -p "packages/$pkg/src/haive/${pkg#haive-}"
-            mkdir -p "packages/$pkg/src/haive"
-            
-            # Only create pyproject.toml if it doesn't exist
-            if [ ! -f "packages/$pkg/pyproject.toml" ]; then
-              echo "Creating minimal pyproject.toml for $pkg"
-              cat > "packages/$pkg/pyproject.toml" << EOF
-[tool.poetry]
-name = "$pkg"
-version = "0.1.0"
-description = "Package for $pkg"
-packages = [
-    { include = "haive", from = "src" }
-]
-
-[tool.poetry.dependencies]
-python = "^3.12"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-EOF
-            fi
-            
-            # Create necessary __init__.py files
-            touch "packages/$pkg/src/haive/__init__.py"
-            touch "packages/$pkg/src/haive/${pkg#haive-}/__init__.py"
-          done
-          
-      - name: 🔍 Find Packages
-        id: find-packages
-        uses: ./.github/actions/find-packages
-        
-      - name: 📊 Show Found Packages
-        run: echo "Found packages: ${{ steps.find-packages.outputs.packages }}"
-  
   publish:
-    name: "📦 Publish ${{ matrix.package }}"
+    name: 📦 Publish ${{ matrix.package }}
     runs-on: ubuntu-latest
-    needs: setup
     env:
       ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}
     strategy:
       matrix:
-        package: ${{ fromJson(needs.setup.outputs.packages) }}
-      fail-fast: false
+        package:
+          - haive-core
+          - haive-agents
+          - haive-games
+          - haive-tools
+          - haive-prebuilt
+          - haive-dataflow
 
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
         with:
-          submodules: false  # Don't fetch submodules
+          submodules: false
 
       - name: 📦 Create Package Structure
         run: |
@@ -87,10 +40,11 @@ EOF
           touch "packages/${{ matrix.package }}/src/haive/__init__.py"
           touch "packages/${{ matrix.package }}/src/haive/${matrix.package#haive-}/__init__.py"
           
-          # Create minimal source files if they don't exist
-          if [ ! -f "packages/${{ matrix.package }}/src/haive/${matrix.package#haive-}/__init__.py" ]; then
-            echo "Creating minimal source files for ${{ matrix.package }}"
-            cat > "packages/${{ matrix.package }}/src/haive/${matrix.package#haive-}/__init__.py" << EOF
+          # Create minimal package file if it doesn't exist
+          PKG_INIT="packages/${{ matrix.package }}/src/haive/${matrix.package#haive-}/__init__.py"
+          if [ ! -f "$PKG_INIT" ] || [ ! -s "$PKG_INIT" ]; then
+            echo "Creating minimal __init__.py file"
+            cat > "$PKG_INIT" << EOF
 """${{ matrix.package }} package."""
 
 __version__ = "0.1.0"
@@ -118,49 +72,42 @@ EOF
           fi
 
       - name: 📦 Get Package Poetry Info
-        id: package-info
+        id: poetry
         uses: ./.github/actions/get-package-poetry-info
         with:
           package: ${{ matrix.package }}
 
       - name: 🧾 Echo Package Metadata
         run: |
-          echo "📦 Name:        ${{ steps.package-info.outputs.name }}"
-          echo "🔖 Version:     ${{ steps.package-info.outputs.version }}"
-          echo "🐍 Python:      ${{ steps.package-info.outputs.python }}"
+          echo "📦 Name:        ${{ steps.poetry.outputs.name }}"
+          echo "🔖 Version:     ${{ steps.poetry.outputs.version }}"
+          echo "🧑 Authors:     ${{ steps.poetry.outputs.authors || 'N/A' }}"
+          echo "📄 License:     ${{ steps.poetry.outputs.license || 'N/A' }}"
+          echo "📝 Description: ${{ steps.poetry.outputs.description || 'N/A' }}"
+          echo "🌐 Homepage:    ${{ steps.poetry.outputs.homepage || 'N/A' }}"
+          echo "🔗 Repository:  ${{ steps.poetry.outputs.repository || 'N/A' }}"
+          echo "📚 Docs:        ${{ steps.poetry.outputs.documentation || 'N/A' }}"
+          echo "🏷 Classifiers: ${{ steps.poetry.outputs.classifiers || 'N/A' }}"
 
-      - name: 🐍 Set up Python ${{ steps.package-info.outputs.python }}
+      - name: 🐍 Set up Python ${{ steps.poetry.outputs.python }}
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ steps.package-info.outputs.python }}
+          python-version: ${{ steps.poetry.outputs.python }}
           cache: poetry
 
       - name: 🛠 Install Poetry
-        run: |
-          python -m pip install --upgrade pip
-          pip install poetry==${{ steps.package-info.outputs.poetry_version }}
+        run: pipx install poetry==1.8.0
 
       - name: 🔐 Configure PyPI Credentials
         run: poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
 
-      - name: 📦 Build and Publish ${{ matrix.package }}
+      - name: 📦 Build Package (No Publish)
         run: |
           cd packages/${{ matrix.package }}
-          # Ensure package structure is correct for distribution
-          mkdir -p src/haive/${matrix.package#haive-}
-          
-          # Make sure package has a valid __init__.py
-          touch src/haive/__init__.py
-          
-          if [ ! -f "src/haive/${matrix.package#haive-}/__init__.py" ]; then
-            echo "Creating __init__.py file"
-            cat > "src/haive/${matrix.package#haive-}/__init__.py" << EOF
-"""${{ matrix.package }} package."""
-
-__version__ = "${{ steps.package-info.outputs.version }}"
-EOF
-          fi
-          
-          # Build and publish
           poetry build --format wheel
-          poetry publish --skip-existing
+          
+      - name: 📤 Upload Package as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.package }}-dist
+          path: packages/${{ matrix.package }}/dist/
