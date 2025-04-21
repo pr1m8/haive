@@ -1,0 +1,68 @@
+name: "Get Root Poetry Info"
+description: "Extracts Poetry information from root project"
+outputs:
+  python:
+    description: "Python version from root Poetry config"
+    value: ${{ steps.extract.outputs.python }}
+  poetry_version:
+    description: "Poetry version from root Poetry config"
+    value: ${{ steps.extract.outputs.poetry_version }}
+runs:
+  using: "composite"
+  steps:
+    - id: extract
+      shell: bash
+      run: |
+        # Look for root pyproject.toml
+        if [ -f "pyproject.toml" ]; then
+          python - <<EOF > root-poetry-info.env
+          import tomllib
+          import re
+          import sys
+          
+          try:
+              with open("pyproject.toml", "rb") as f:
+                  data = tomllib.load(f)
+          except FileNotFoundError:
+              print("python=3.12")
+              print("poetry_version=1.8.0")
+              sys.exit(0)
+              
+          # Get Poetry data
+          poetry_data = data.get("tool", {}).get("poetry", {})
+          deps = poetry_data.get("dependencies", {})
+          
+          # Try to extract Poetry version from build-system
+          try:
+              build_system = data.get("build-system", {})
+              requires = build_system.get("requires", [])
+              poetry_version = "1.8.0"  # Default fallback
+              
+              for req in requires:
+                  if req.startswith("poetry"):
+                      match = re.search(r"poetry(>=|==|~=)?([\d\.]+)", req)
+                      if match:
+                          poetry_version = match.group(2)
+                          break
+          except Exception:
+              poetry_version = "1.8.0"  # Default fallback
+          
+          # Normalize python version
+          constraint = deps.get("python", "")
+          match = re.search(r"(\d+\.\d+)", constraint)
+          python_version = match.group(1) if match else "3.12"
+          
+          print(f"python={python_version}")
+          print(f"poetry_version={poetry_version}")
+          EOF
+        else
+          echo "python=3.12" > root-poetry-info.env
+          echo "poetry_version=1.8.0" >> root-poetry-info.env
+        fi
+        
+        while read line; do
+          echo "$line" >> $GITHUB_ENV
+          key=$(echo "$line" | cut -d= -f1)
+          val=$(echo "$line" | cut -d= -f2-)
+          echo "$key=$val" >> "$GITHUB_OUTPUT"
+        done < root-poetry-info.env
