@@ -2,11 +2,15 @@ name: 🔒 Security Scan
 
 on:
   schedule:
-    - cron: "0 3 * * 1"  # Weekly
+    - cron: 0 3 * * 1 # Weekly
   push:
     branches: [main]
   pull_request:
     branches: [main]
+
+permissions:
+  contents: read
+  security-events: write
 
 jobs:
   setup:
@@ -22,39 +26,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: false
-
-      - name: 📦 Create Package Structure
-        run: |
-          # Create package directories for each expected package
-          for pkg in haive-core haive-agents haive-dataflow haive-games haive-prebuilt haive-tools; do
-            mkdir -p "packages/$pkg/src/haive/${pkg#haive-}"
-            mkdir -p "packages/$pkg/src/haive"
-            
-            # Only create pyproject.toml if it doesn't exist
-            if [ ! -f "packages/$pkg/pyproject.toml" ]; then
-              echo "Creating minimal pyproject.toml for $pkg"
-              cat > "packages/$pkg/pyproject.toml" << EOF
-[tool.poetry]
-name = "$pkg"
-version = "0.1.0"
-description = "Package for $pkg"
-packages = [
-    { include = "haive", from = "src" }
-]
-
-[tool.poetry.dependencies]
-python = "^3.12"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-EOF
-            fi
-            
-            # Create necessary __init__.py files
-            touch "packages/$pkg/src/haive/__init__.py"
-            touch "packages/$pkg/src/haive/${pkg#haive-}/__init__.py"
-          done
 
       - name: 🔍 Parse Gitignore
         id: gitignore
@@ -87,36 +58,6 @@ EOF
         with:
           submodules: false
 
-      - name: 📦 Create Package Structure
-        run: |
-          # Ensure package directory exists with correct structure
-          mkdir -p "packages/${{ matrix.package }}/src/haive/${matrix.package#haive-}"
-          mkdir -p "packages/${{ matrix.package }}/src/haive"
-          
-          # Create necessary __init__.py files
-          touch "packages/${{ matrix.package }}/src/haive/__init__.py"
-          touch "packages/${{ matrix.package }}/src/haive/${matrix.package#haive-}/__init__.py"
-          
-          # Create minimal pyproject.toml if it doesn't exist
-          if [ ! -f "packages/${{ matrix.package }}/pyproject.toml" ]; then
-            cat > "packages/${{ matrix.package }}/pyproject.toml" << EOF
-[tool.poetry]
-name = "${{ matrix.package }}"
-version = "0.1.0"
-description = "Package for ${{ matrix.package }}"
-packages = [
-    { include = "haive", from = "src" }
-]
-
-[tool.poetry.dependencies]
-python = "^3.12"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-EOF
-          fi
-
       - name: 📦 Get Package Poetry Info
         id: package-info
         uses: ./.github/actions/get-package-poetry-info
@@ -138,7 +79,7 @@ EOF
           cd packages/${{ matrix.package }}
           # Create a minimal requirements.txt if exporting fails
           poetry export -f requirements.txt --without-hashes > requirements.txt || echo "pytest>=7.0.0" > requirements.txt
-          
+
       - name: 🔒 Run Safety Check
         run: |
           cd packages/${{ matrix.package }}
@@ -165,35 +106,15 @@ EOF
       - name: 📝 Create CodeQL Config
         run: |
           mkdir -p .github/codeql
-          cat > .github/codeql/codeql-config.yml << EOF
-name: "CodeQL Configuration"
-
-paths:
-  - packages/*/src
-  - packages/*/tests
-paths-ignore:
-  - '**/resources/**'
-  - '**/venv/**'
-  - '**/.venv/**'
-EOF
-
-      - name: 📦 Create Package Structure
-        run: |
-          # Create package directories for each expected package
-          for pkg in haive-core haive-agents haive-dataflow haive-games haive-prebuilt haive-tools; do
-            mkdir -p "packages/$pkg/src/haive/${pkg#haive-}"
-            mkdir -p "packages/$pkg/src/haive"
-            
-            # Create minimal Python files to ensure CodeQL has something to analyze
-            touch "packages/$pkg/src/haive/__init__.py"
-            touch "packages/$pkg/src/haive/${pkg#haive-}/__init__.py"
-            
-            cat > "packages/$pkg/src/haive/${pkg#haive-}/main.py" << EOF
-def main():
-    """Main entry point."""
-    return "Hello from ${pkg}!"
-EOF
-          done
+          echo "name: CodeQL Configuration" > .github/codeql/codeql-config.yml
+          echo "" >> .github/codeql/codeql-config.yml
+          echo "paths:" >> .github/codeql/codeql-config.yml
+          echo "  - packages/*/src" >> .github/codeql/codeql-config.yml
+          echo "  - packages/*/tests" >> .github/codeql/codeql-config.yml
+          echo "paths-ignore:" >> .github/codeql/codeql-config.yml
+          echo "  - '**/resources/**'" >> .github/codeql/codeql-config.yml
+          echo "  - '**/venv/**'" >> .github/codeql/codeql-config.yml
+          echo "  - '**/.venv/**'" >> .github/codeql/codeql-config.yml
 
       - name: 📦 Get Root Poetry Info
         id: poetry
@@ -209,17 +130,6 @@ EOF
           python -m pip install --upgrade pip
           pip install poetry==${{ steps.poetry.outputs.poetry_version }}
 
-      - name: 📦 Initialize package directories
-        run: |
-          # Create a simple __init__.py in each package's src directory
-          # This helps CodeQL properly recognize the Python modules
-          for pkg_dir in packages/*/; do
-            if [ -d "${pkg_dir}src" ]; then
-              echo "Initializing ${pkg_dir}src"
-              find "${pkg_dir}src" -type d -exec touch {}/__init__.py \; 2>/dev/null || true
-            fi
-          done
-
       - name: 🔍 Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
@@ -233,4 +143,4 @@ EOF
       - name: 🔎 Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
-          category: "/language:python"
+          category: /language:python

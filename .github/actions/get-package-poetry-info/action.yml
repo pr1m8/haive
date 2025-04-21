@@ -1,49 +1,71 @@
-name: "Get Package Poetry Info"
-description: "Extracts Poetry information from a specific package"
+name: Get Package Poetry Info
+description: Extracts Poetry information from a specific package
 inputs:
   package:
-    description: "Package name to analyze (relative to packages/)"
+    description: Package name to analyze (relative to packages/)
     required: true
 outputs:
   name:
-    description: "Package name"
+    description: Package name
     value: ${{ steps.extract.outputs.name }}
   version:
-    description: "Package version"
+    description: Package version
     value: ${{ steps.extract.outputs.version }}
   python:
-    description: "Python version requirement"
+    description: Python version requirement
     value: ${{ steps.extract.outputs.python }}
   poetry_version:
-    description: "Poetry version requirement"
+    description: Poetry version requirement
     value: ${{ steps.extract.outputs.poetry_version }}
+  authors:
+    description: Package authors
+    value: ${{ steps.extract.outputs.authors }}
+  license:
+    description: Package license
+    value: ${{ steps.extract.outputs.license }}
+  description:
+    description: Package description
+    value: ${{ steps.extract.outputs.description }}
+  homepage:
+    description: Package homepage URL
+    value: ${{ steps.extract.outputs.homepage }}
+  repository:
+    description: Package repository URL
+    value: ${{ steps.extract.outputs.repository }}
+  documentation:
+    description: Package documentation URL
+    value: ${{ steps.extract.outputs.documentation }}
+  classifiers:
+    description: Package classifiers
+    value: ${{ steps.extract.outputs.classifiers }}
 runs:
-  using: "composite"
+  using: composite
   steps:
     - id: extract
       shell: bash
       run: |
         PACKAGE_DIR="packages/${{ inputs.package }}"
         PYPROJECT_PATH="${PACKAGE_DIR}/pyproject.toml"
-        
+
         # Check if package directory and pyproject.toml exist
         if [ ! -d "$PACKAGE_DIR" ]; then
           echo "::error::Package directory '$PACKAGE_DIR' not found"
           exit 1
         fi
-        
+
         if [ ! -f "$PYPROJECT_PATH" ]; then
           echo "::error::pyproject.toml not found at '$PYPROJECT_PATH'"
           exit 1
         fi
-        
+
         echo "Extracting Poetry info from: $PYPROJECT_PATH"
-        
+
         python - <<EOF > package-poetry-info.env
         import tomllib
         import re
         import sys
-        
+        import json
+
         try:
             with open("$PYPROJECT_PATH", "rb") as f:
                 data = tomllib.load(f)
@@ -58,7 +80,7 @@ runs:
         except KeyError:
             print("::error::Invalid pyproject.toml format")
             sys.exit(1)
-        
+
         # Try to extract Poetry version from build-system
         try:
             build_system = data.get("build-system", {})
@@ -73,19 +95,40 @@ runs:
                         break
         except Exception:
             poetry_version = "1.8.0"  # Default fallback
-        
+
         # Normalize python version
         constraint = deps.get("python", "")
         # Handle different version specifiers: ^3.12, >=3.12,<3.13, etc.
         match = re.search(r"(\d+\.\d+)", constraint)
         python_version = match.group(1) if match else "3.12"
-        
+
+        # Extract outputs
         print(f"name={poetry_data.get('name', '${{ inputs.package }}')}")
         print(f"version={poetry_data.get('version', '0.1.0')}")
         print(f"python={python_version}")
         print(f"poetry_version={poetry_version}")
+
+        # Extract additional metadata
+        print(f"authors={json.dumps(poetry_data.get('authors', []))}")
+        print(f"license={poetry_data.get('license', '')}")
+        print(f"description={poetry_data.get('description', '')}")
+
+        # Extract URLs
+        urls = {}
+        if "urls" in poetry_data:
+            urls = poetry_data["urls"]
+        elif "url" in poetry_data:
+            urls = poetry_data["url"]
+
+        print(f"homepage={urls.get('homepage', '')}")
+        print(f"repository={urls.get('repository', '')}")
+        print(f"documentation={urls.get('documentation', '')}")
+
+        # Extract classifiers
+        classifiers = poetry_data.get("classifiers", [])
+        print(f"classifiers={json.dumps(classifiers)}")
         EOF
-        
+
         while read line; do
           echo "$line" >> $GITHUB_ENV
           key=$(echo "$line" | cut -d= -f1)

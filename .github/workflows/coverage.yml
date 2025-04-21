@@ -83,7 +83,7 @@ jobs:
         run: |
           echo "🔍 Running coverage for: ${{ matrix.package }}"
           cd packages/${{ matrix.package }}
-          
+
           RESOURCE_PATHS="${{ needs.setup.outputs.resource-paths }}"
           if [ -n "$RESOURCE_PATHS" ]; then
             echo "Excluding resource paths: $RESOURCE_PATHS"

@@ -4,6 +4,10 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: read
+  id-token: write # Needed for PyPI trusted publishing
+
 concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: true
@@ -29,47 +33,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: false
-
-      - name: 📦 Create Package Structure
-        run: |
-          # Ensure package directory exists with correct structure
-          mkdir -p "packages/${{ matrix.package }}/src/haive/${matrix.package#haive-}"
-          mkdir -p "packages/${{ matrix.package }}/src/haive"
-          
-          # Create necessary __init__.py files
-          touch "packages/${{ matrix.package }}/src/haive/__init__.py"
-          touch "packages/${{ matrix.package }}/src/haive/${matrix.package#haive-}/__init__.py"
-          
-          # Create minimal package file if it doesn't exist
-          PKG_INIT="packages/${{ matrix.package }}/src/haive/${matrix.package#haive-}/__init__.py"
-          if [ ! -f "$PKG_INIT" ] || [ ! -s "$PKG_INIT" ]; then
-            echo "Creating minimal __init__.py file"
-            cat > "$PKG_INIT" << EOF
-"""${{ matrix.package }} package."""
-
-__version__ = "0.1.0"
-EOF
-          fi
-          
-          # Create minimal pyproject.toml if it doesn't exist
-          if [ ! -f "packages/${{ matrix.package }}/pyproject.toml" ]; then
-            cat > "packages/${{ matrix.package }}/pyproject.toml" << EOF
-[tool.poetry]
-name = "${{ matrix.package }}"
-version = "0.1.0"
-description = "Package for ${{ matrix.package }}"
-packages = [
-    { include = "haive", from = "src" }
-]
-
-[tool.poetry.dependencies]
-python = "^3.12"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-EOF
-          fi
 
       - name: 📦 Get Package Poetry Info
         id: poetry
@@ -105,9 +68,9 @@ EOF
         run: |
           cd packages/${{ matrix.package }}
           poetry build --format wheel
-          
+
       - name: 📤 Upload Package as Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.package }}-dist
           path: packages/${{ matrix.package }}/dist/

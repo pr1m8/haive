@@ -10,7 +10,7 @@ jobs:
     name: "Trunk Cache Population"
     runs-on: ubuntu-latest
     env:
-      ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}  # Optional toggle via repo secret
+      ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }} # Optional toggle via repo secret
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v4
