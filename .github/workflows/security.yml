@@ -77,7 +77,9 @@ jobs:
       - name: 📦 Install Dependencies
         run: |
           cd packages/${{ matrix.package }}
-          # Create a minimal requirements.txt if exporting fails
+          # Install with dev dependencies
+          poetry install --with dev --no-interaction
+          # Export dependencies for safety check
           poetry export -f requirements.txt --without-hashes > requirements.txt || echo "pytest>=7.0.0" > requirements.txt
 
       - name: 🔒 Run Safety Check

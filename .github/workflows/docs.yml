@@ -33,6 +33,7 @@ jobs:
         run: |
           pipx install poetry==${{ steps.poetry.outputs.poetry_version }}
           pip install nox
+          poetry install --with dev --no-interaction
 
       - name: 🏗️ Build Docs via Nox
         run: |

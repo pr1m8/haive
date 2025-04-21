@@ -115,8 +115,7 @@ jobs:
       - name: 🌱 Install Dependencies
         run: |
           cd packages/${{ matrix.package }}
-          poetry add pytest  # Ensure pytest is available
-          poetry install --no-interaction
+          poetry install --with dev --no-interaction
 
       - name: ✅ Run Tests
         run: |
@@ -170,8 +169,7 @@ jobs:
       - name: 🌱 Install Dependencies & Mypy
         run: |
           cd packages/${{ matrix.package }}
-          poetry add mypy  # Ensure mypy is available
-          poetry install --no-interaction
+          poetry install --with dev --no-interaction
 
       - name: 🔍 Run Mypy
         run: |
