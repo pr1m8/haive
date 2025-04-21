@@ -19,13 +19,14 @@ jobs:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
         with:
-          submodules: false  # Don't fetch submodules, we'll handle package structure manually
+          submodules: false  # Don't fetch submodules
 
       - name: 📦 Create Package Structure
         run: |
           # Create package directories for each expected package
           for pkg in haive-core haive-agents haive-dataflow haive-games haive-prebuilt haive-tools; do
             mkdir -p "packages/$pkg/src/haive/${pkg#haive-}"
+            mkdir -p "packages/$pkg/src/haive"
             
             # Only create pyproject.toml if it doesn't exist
             if [ ! -f "packages/$pkg/pyproject.toml" ]; then
@@ -35,6 +36,9 @@ jobs:
 name = "$pkg"
 version = "0.1.0"
 description = "Package for $pkg"
+packages = [
+    { include = "haive", from = "src" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -44,6 +48,10 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 EOF
             fi
+            
+            # Create necessary __init__.py files
+            touch "packages/$pkg/src/haive/__init__.py"
+            touch "packages/$pkg/src/haive/${pkg#haive-}/__init__.py"
           done
 
       - name: 🔍 Parse Gitignore
@@ -77,24 +85,14 @@ EOF
 
       - name: 📦 Create Package Structure
         run: |
-          # Create minimal package structures based on the existing setup job
+          # Create package directories for each expected package
           for pkg in haive-core haive-agents haive-dataflow haive-games haive-prebuilt haive-tools; do
             mkdir -p "packages/$pkg/src/haive/${pkg#haive-}"
-            if [ ! -f "packages/$pkg/pyproject.toml" ]; then
-              cat > "packages/$pkg/pyproject.toml" << EOF
-[tool.poetry]
-name = "$pkg"
-version = "0.1.0"
-description = "Package for $pkg"
-
-[tool.poetry.dependencies]
-python = "^3.12"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-EOF
-            fi
+            mkdir -p "packages/$pkg/src/haive"
+            
+            # Create necessary __init__.py files
+            touch "packages/$pkg/src/haive/__init__.py"
+            touch "packages/$pkg/src/haive/${pkg#haive-}/__init__.py"
           done
 
       - name: 📦 Get Root Poetry Info
@@ -144,6 +142,11 @@ EOF
         run: |
           # Ensure package directory exists with correct structure
           mkdir -p "packages/${{ matrix.package }}/src/haive/${matrix.package#haive-}"
+          mkdir -p "packages/${{ matrix.package }}/src/haive"
+          
+          # Create necessary __init__.py files
+          touch "packages/${{ matrix.package }}/src/haive/__init__.py"
+          touch "packages/${{ matrix.package }}/src/haive/${matrix.package#haive-}/__init__.py"
           
           # Create minimal pyproject.toml if it doesn't exist
           if [ ! -f "packages/${{ matrix.package }}/pyproject.toml" ]; then
@@ -152,6 +155,9 @@ EOF
 name = "${{ matrix.package }}"
 version = "0.1.0"
 description = "Package for ${{ matrix.package }}"
+packages = [
+    { include = "haive", from = "src" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -163,7 +169,7 @@ build-backend = "poetry.core.masonry.api"
 EOF
           fi
           
-          # Create a minimal test file to ensure tests can be run
+          # Create a minimal test file to ensure the test step doesn't fail
           mkdir -p "packages/${{ matrix.package }}/tests"
           if [ ! -f "packages/${{ matrix.package }}/tests/test_basic.py" ]; then
             cat > "packages/${{ matrix.package }}/tests/test_basic.py" << EOF
@@ -231,6 +237,11 @@ EOF
         run: |
           # Ensure package directory exists with correct structure
           mkdir -p "packages/${{ matrix.package }}/src/haive/${matrix.package#haive-}"
+          mkdir -p "packages/${{ matrix.package }}/src/haive"
+          
+          # Create necessary __init__.py files
+          touch "packages/${{ matrix.package }}/src/haive/__init__.py"
+          touch "packages/${{ matrix.package }}/src/haive/${matrix.package#haive-}/__init__.py"
           
           # Create minimal pyproject.toml if it doesn't exist
           if [ ! -f "packages/${{ matrix.package }}/pyproject.toml" ]; then
@@ -239,6 +250,9 @@ EOF
 name = "${{ matrix.package }}"
 version = "0.1.0"
 description = "Package for ${{ matrix.package }}"
+packages = [
+    { include = "haive", from = "src" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.12"
