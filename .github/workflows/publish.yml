@@ -59,7 +59,7 @@ jobs:
           cache: poetry
 
       - name: 🛠 Install Poetry
-        run: pipx install poetry==1.8.0
+        run: pipx install poetry==2.1.0
 
       - name: 🔐 Configure PyPI Credentials
         run: poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}

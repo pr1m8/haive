@@ -1,13 +1,16 @@
-name: "📦 Cache Trunk"
+name: Cache Trunk
 
 on:
   push:
     branches: [main]
     paths: [.trunk/trunk.yaml]
 
+permissions:
+  contents: read
+
 jobs:
   trunk-cache:
-    name: "Trunk Cache Population"
+    name: Trunk Cache Population
     runs-on: ubuntu-latest
     env:
       ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }} # Optional toggle via repo secret

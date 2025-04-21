@@ -1,4 +1,4 @@
-name: "📚 Docs Build"
+name: Docs Build
 
 on:
   push:
@@ -6,9 +6,12 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   docs:
-    name: "Build Sphinx Docs on ${{ github.ref_name }}"
+    name: Build Sphinx Docs on ${{ github.ref_name }}
     runs-on: ubuntu-latest
     env:
       ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}
