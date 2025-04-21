@@ -2,7 +2,7 @@ name: 🔒 Security Scan
 
 on:
   schedule:
-    - cron: 0 3 * * 1  # Weekly
+    - cron: 0 3 * * 1 # Weekly
   push:
     branches: [main]
   pull_request:
