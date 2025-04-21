@@ -53,7 +53,7 @@ jobs:
           python-version: ${{ matrix.python-version || steps.poetry.outputs.python }}
 
       - name: 🔧 Install Poetry
-        run: curl -sSL https://install.python-poetry.org | python3 -
+        run: pipx install poetry==${{ steps.poetry.outputs.poetry_version }}
 
       - name: ✅ Run Pytest for ${{ matrix.package }}
         run: |
