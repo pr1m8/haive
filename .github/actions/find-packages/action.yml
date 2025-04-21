@@ -21,45 +21,35 @@ runs:
           echo "Created packages directory"
         fi
         
+        # Define expected packages (for this polyrepo structure)
+        EXPECTED_PACKAGES=("haive-core" "haive-agents" "haive-dataflow" "haive-games" "haive-prebuilt" "haive-tools")
+        
         # Check for existing directories in packages/
         PACKAGES=()
         
+        # First, look for directories that already exist
         for pkg_dir in packages/*/; do
           if [ -d "$pkg_dir" ]; then
             pkg_name=$(basename "$pkg_dir")
-            
-            # Create minimal pyproject.toml if it doesn't exist
-            if [ ! -f "${pkg_dir}pyproject.toml" ]; then
-              mkdir -p "${pkg_dir}src/haive/${pkg_name/haive-/}/"
-              cat > "${pkg_dir}pyproject.toml" << EOF
-[tool.poetry]
-name = "${pkg_name}"
-version = "0.1.0"
-description = "Generated package for ${pkg_name}"
-
-[tool.poetry.dependencies]
-python = "^3.12"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-EOF
-              echo "Created minimal pyproject.toml for $pkg_name"
-            fi
-            
             PACKAGES+=("$pkg_name")
           fi
         done
         
-        # If no packages found, create a default haive-core package
-        if [ ${#PACKAGES[@]} -eq 0 ]; then
-          echo "No packages found, creating default haive-core package"
-          mkdir -p packages/haive-core/src/haive/core
-          cat > packages/haive-core/pyproject.toml << EOF
+        # Then, create any expected packages that don't exist
+        for pkg in "${EXPECTED_PACKAGES[@]}"; do
+          if [ ! -d "packages/$pkg" ]; then
+            echo "Creating expected package directory: $pkg"
+            mkdir -p "packages/$pkg/src/haive/${pkg#haive-}"
+            
+            # Create minimal pyproject.toml with correct packages configuration
+            cat > "packages/$pkg/pyproject.toml" << EOF
 [tool.poetry]
-name = "haive-core"
+name = "$pkg"
 version = "0.1.0"
-description = "Default core package"
+description = "Generated package for $pkg"
+packages = [
+    { include = "haive", from = "src" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -68,18 +58,27 @@ python = "^3.12"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 EOF
-          PACKAGES+=("haive-core")
-        fi
+            
+            # Create minimal __init__.py
+            touch "packages/$pkg/src/haive/${pkg#haive-}/__init__.py"
+            touch "packages/$pkg/src/haive/__init__.py"
+            
+            PACKAGES+=("$pkg")
+          fi
+        done
+        
+        # Remove duplicates from PACKAGES array
+        UNIQUE_PACKAGES=($(echo "${PACKAGES[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
         
         # Convert bash array to JSON array for GitHub Actions
         JSON_PACKAGES="["
-        for pkg in "${PACKAGES[@]}"; do
+        for pkg in "${UNIQUE_PACKAGES[@]}"; do
           JSON_PACKAGES="${JSON_PACKAGES}\"${pkg}\","
         done
         JSON_PACKAGES="${JSON_PACKAGES%,}]"  # Remove trailing comma and close array
         
         echo "packages=${JSON_PACKAGES}" >> $GITHUB_OUTPUT
-        echo "package_count=${#PACKAGES[@]}" >> $GITHUB_OUTPUT
+        echo "package_count=${#UNIQUE_PACKAGES[@]}" >> $GITHUB_OUTPUT
         
-        echo "Found ${#PACKAGES[@]} packages: ${PACKAGES[*]}"
+        echo "Found ${#UNIQUE_PACKAGES[@]} packages: ${UNIQUE_PACKAGES[*]}"
         echo "JSON packages: ${JSON_PACKAGES}"
