@@ -47,6 +47,18 @@ runs:
         PACKAGE_DIR="packages/${{ inputs.package }}"
         PYPROJECT_PATH="${PACKAGE_DIR}/pyproject.toml"
 
+        # Debug information
+        echo "Current directory: $(pwd)"
+        echo "Looking for: $PYPROJECT_PATH"
+        echo "Directory exists: $([ -d "$PACKAGE_DIR" ] && echo 'Yes' || echo 'No')"
+        ls -la "$PACKAGE_DIR" || true
+        echo "File exists: $([ -f "$PYPROJECT_PATH" ] && echo 'Yes' || echo 'No')"
+        
+        # Try with absolute path too
+        ABSOLUTE_PATH="$(pwd)/$PYPROJECT_PATH"
+        echo "Absolute path: $ABSOLUTE_PATH"
+        echo "Absolute file exists: $([ -f "$ABSOLUTE_PATH" ] && echo 'Yes' || echo 'No')"
+
         # Check if package directory and pyproject.toml exist
         if [ ! -d "$PACKAGE_DIR" ]; then
           echo "::error::Package directory '$PACKAGE_DIR' not found"
@@ -54,6 +66,10 @@ runs:
         fi
 
         if [ ! -f "$PYPROJECT_PATH" ]; then
+          # Try finding by pattern
+          echo "Searching for pyproject.toml in package directory:"
+          find "$PACKAGE_DIR" -name "pyproject.toml" -type f
+          
           echo "::error::pyproject.toml not found at '$PYPROJECT_PATH'"
           exit 1
         fi
