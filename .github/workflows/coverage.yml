@@ -3,8 +3,12 @@ name: "📊 Coverage"
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - '**/resources/**'  # Ignore resources folders
   pull_request:
     branches: [main]
+    paths-ignore:
+      - '**/resources/**'  # Ignore resources folders
 
 jobs:
   coverage:
@@ -19,6 +23,12 @@ jobs:
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v4
+        with:
+          # Use sparse checkout to exclude resources folders
+          sparse-checkout: |
+            .github
+            packages/${{ matrix.package }}
+          sparse-checkout-cone-mode: false
 
       - name: 📦 Get Poetry Metadata
         id: poetry
@@ -42,7 +52,7 @@ jobs:
         run: |
           echo "🔍 Running coverage for: ${{ matrix.package }}"
           cd packages/${{ matrix.package }}
-          poetry run pytest --cov=src --cov-report=xml
+          poetry run pytest --cov=src --cov-report=xml --ignore=src/**/resources
 
       - name: ☁️ Upload coverage to Codecov
         uses: codecov/codecov-action@v4
