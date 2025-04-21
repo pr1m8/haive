@@ -17,27 +17,6 @@ outputs:
   poetry_version:
     description: Poetry version requirement
     value: ${{ steps.extract.outputs.poetry_version }}
-  authors:
-    description: Package authors
-    value: ${{ steps.extract.outputs.authors }}
-  license:
-    description: Package license
-    value: ${{ steps.extract.outputs.license }}
-  description:
-    description: Package description
-    value: ${{ steps.extract.outputs.description }}
-  homepage:
-    description: Package homepage URL
-    value: ${{ steps.extract.outputs.homepage }}
-  repository:
-    description: Package repository URL
-    value: ${{ steps.extract.outputs.repository }}
-  documentation:
-    description: Package documentation URL
-    value: ${{ steps.extract.outputs.documentation }}
-  classifiers:
-    description: Package classifiers
-    value: ${{ steps.extract.outputs.classifiers }}
 runs:
   using: composite
   steps:
@@ -53,7 +32,7 @@ runs:
         echo "Directory exists: $([ -d "$PACKAGE_DIR" ] && echo 'Yes' || echo 'No')"
         ls -la "$PACKAGE_DIR" || true
         echo "File exists: $([ -f "$PYPROJECT_PATH" ] && echo 'Yes' || echo 'No')"
-        
+
         # Try with absolute path too
         ABSOLUTE_PATH="$(pwd)/$PYPROJECT_PATH"
         echo "Absolute path: $ABSOLUTE_PATH"

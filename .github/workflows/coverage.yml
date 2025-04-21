@@ -22,7 +22,8 @@ jobs:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
         with:
-          submodules: false
+          submodules: true
+          token: ${{ secrets.GH_TOKEN }}
 
       - name: 🔍 Parse Gitignore
         id: gitignore
@@ -55,7 +56,8 @@ jobs:
       - name: 📥 Checkout
         uses: actions/checkout@v4
         with:
-          submodules: false
+          submodules: true
+          token: ${{ secrets.GH_TOKEN }}
 
       - name: 📦 Get Package Poetry Info
         id: package-info

@@ -1,0 +1,71 @@
+name: Get Poetry Info
+description: Extracts Poetry information from root project
+outputs:
+  name:
+    description: Package name
+    value: ${{ steps.extract.outputs.name }}
+  version:
+    description: Package version
+    value: ${{ steps.extract.outputs.version }}
+  python:
+    description: Python version requirement
+    value: ${{ steps.extract.outputs.python }}
+  poetry_version:
+    description: Poetry version requirement
+    value: ${{ steps.extract.outputs.poetry_version }}
+runs:
+  using: composite
+  steps:
+    - id: extract
+      shell: bash
+      run: |
+        # Default values
+        NAME="haive"
+        VERSION="0.1.0"
+        PYTHON_VERSION="3.12"
+        POETRY_VERSION="1.8.0"
+
+        # Debug information
+        echo "Current directory: $(pwd)"
+        echo "Looking for: pyproject.toml"
+        echo "File exists: $([ -f "pyproject.toml" ] && echo 'Yes' || echo 'No')"
+
+        if [ -f "pyproject.toml" ]; then
+          # Extract name and version using grep
+          if grep -q "name =" "pyproject.toml"; then
+            NAME=$(grep "name =" "pyproject.toml" | head -n 1 | cut -d '"' -f2 || echo "haive")
+          fi
+          
+          if grep -q "version =" "pyproject.toml"; then
+            VERSION=$(grep "version =" "pyproject.toml" | head -n 1 | cut -d '"' -f2 || echo "0.1.0")
+          fi
+          
+          # Extract Python version
+          if grep -q "python =" "pyproject.toml"; then
+            PY_CONSTRAINT=$(grep "python =" "pyproject.toml" | head -n 1)
+            if [[ "$PY_CONSTRAINT" =~ ([0-9]+\.[0-9]+) ]]; then
+              PYTHON_VERSION="${BASH_REMATCH[1]}"
+            fi
+          fi
+          
+          # Extract Poetry version from build-system
+          if grep -q "poetry-core" "pyproject.toml"; then
+            if [[ $(grep "poetry-core" "pyproject.toml") =~ poetry-core([><=~]+)([0-9]+\.[0-9]+\.[0-9]+) ]]; then
+              POETRY_VERSION="${BASH_REMATCH[2]}"
+            fi
+          fi
+        else
+          echo "Warning: No pyproject.toml found, using default values"
+        fi
+
+        # Set outputs
+        echo "name=$NAME" >> $GITHUB_OUTPUT
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "python=$PYTHON_VERSION" >> $GITHUB_OUTPUT
+        echo "poetry_version=$POETRY_VERSION" >> $GITHUB_OUTPUT
+
+        # Set environment variables
+        echo "name=$NAME" >> $GITHUB_ENV
+        echo "version=$VERSION" >> $GITHUB_ENV
+        echo "python=$PYTHON_VERSION" >> $GITHUB_ENV
+        echo "poetry_version=$POETRY_VERSION" >> $GITHUB_ENV
