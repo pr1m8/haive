@@ -5,7 +5,9 @@ version: 0.1
 
 cli:
   version: 1.22.12
-
+ignore:
+    - scratches/**
+    - scripts/**
 plugins:
   sources:
     - id: trunk
