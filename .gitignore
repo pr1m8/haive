@@ -57,7 +57,11 @@ examples/outputs/
 loader_analysis/
 certs/
 external/
-
+# Add to your .gitignore file
+resources/State_History/*.json
+resources/embeddings_cache/
+packages/resources/State_History/*.json
+packages/resources/embeddings_cache/
 # === Cache / experiment outputs ===
 memory_test_*/
 postgres_test_*/
