@@ -1,155 +1,127 @@
-# === Python standard ===
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-*.so
-
-# === Virtual environments ===
-.venv/
-env/
-venv/
-ENV/
-*.env
-*.venv
-
-# === IDEs and editors ===
-.vscode/
-.idea/
-*.sublime-workspace
-*.sublime-project
-
-# === OS junk ===
-.DS_Store
-Thumbs.db
-
-# === Logs, outputs, scratch data ===
-*.log
-*.out
-*.err
-logs/
-scratches/
-reports/
-notebooks/
-lc_cache/
-haive_vault_*.log
-
-# === Sphinx / documentation ===
-docs/build/
-docs/scratch/
 
 # === Auto-generated agent run folders ===
-resources/*_agent_*/
-resources/*test_*/
-resources/state_history/
-resources/embeddings_cache/
-resources/graph_images/
-resources/Graphs/
-notebooks/**
-notebooks/
-
-# === Game history / graph renderings ===
-game_history/
-graphs/
-
-# === Temporary dev output ===
-examples/outputs/
-loader_analysis/
-certs/
-external/
-# Add to your .gitignore file
-resources/State_History/*.json
-resources/embeddings_cache/
-packages/resources/State_History/*.json
-packages/resources/embeddings_cache/
 # === Cache / experiment outputs ===
-memory_test_*/
-postgres_test_*/
-simple_agent_*/
-summary_agent/
-test_simple_agent/
+# === Game history / graph renderings ===
+# === IDEs and editors ===
+# === Lock and build files ===
+# === Logs, outputs, scratch data ===
+# === Misc ===
+# === Mypy, Pytest, etc ===
+# === OS junk ===
+# === Python standard ===
+# === Sphinx / documentation ===
+# === Temporary dev output ===
+# === Test logs and aux resources ===
+# === Virtual environments ===
+# Add to your .gitignore file
+# Allure test results
 # Graph images
-resources/Graphs/
-resources/graph_images/
-**/graph_images/
-resources/**
+# Ignore resource directories
+# Logs and outputs
+# Secrets
+# Test output
 # Testing
-.coverage
-htmlcov/
-**/__pycache__/
+**/.ipynb_checkpoints/
 **/.pytest_cache/
 **/.ruff_cache/
-
-# Test output
-test_outputs/
-**/test_outputs/
-**/test_output/
-allure-results/
+**/__pycache__/
 **/allure-results/
-logs/
-# Ignore resource directories
-resources/State_History/
-resources/embeddings_cache/
-resources/Graphs/
+**/graph_images/
+**/logs
+**/logs/
+**/resources/Graphs/
 **/resources/State_History/
 **/resources/embeddings_cache/
-**/resources/Graphs/
-.langchain.db
-
-**/.pytest_cache/
-**/.ruff_cache/
-**/logs
-EOF
-# Logs and outputs
-logs/
-**/logs/
-test_output/
-test_outputs/
 **/test_output/
 **/test_outputs/
-**/allure-results/
-# Allure test results
-allure-results/
-# === Test logs and aux resources ===
-
-# === Mypy, Pytest, etc ===
-.mypy_cache/
-pytest_cache/
-.cache/
-htmlcov/
-.tox/
-.nox/
-
-# === Lock and build files ===
-poetry.lock
-Pipfile.lock
-*.egg-info/
-.eggs/
-dist/
-build/
-
-# === Misc ===
-*.sqlite3
-*.db
-*.pid
 *.bak
-*.swp
+*.db
+*.egg-info/
+*.env
+*.err
 *.ipynb
-.ipynb_checkpoints/
-**/.ipynb_checkpoints/
-
-.history/
-# Secrets
-.secrets/
+*.log
+*.out
 *.pem
-credentials.json
-token.json
-all_document_loaders_parsers_metadata.json
+*.pid
+*.py[cod]
+*.pyd
+*.pyo
+*.so
+*.sqlite3
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.venv
+.DS_Store
+.cache/
+.coverage
+.eggs/
+.history/
+.idea/
+.ipynb_checkpoints/
+.langchain.db
+.mypy_cache/
+.nox/
+.pytest_cache/
+.secrets/
+.tox/
+.venv/
+.vscode/
 BaseAgent.ipynb
-check_registry_data.py
 Chinook.db
-output_file.json
+ENV/
+EOF
+Pipfile.lock
+Thumbs.db
+__pycache__/
+all_document_loaders_parsers_metadata.json
+allure-results/
+build/
+certs/
 certs/local-cert.pem
 certs/local-key.pem
 certs/localhost-cert.pem
 certs/localhost-key.pempackages/resources/embeddings_cache/
+check_registry_data.py
+credentials.json
+dist/
+docs/build/
+docs/scratch/
+env/
+examples/outputs/
+external/
+game_history/
+graphs/
+haive_vault_*.log
+htmlcov/
+lc_cache/
+loader_analysis/
+logs/
+memory_test_*/
+notebooks/
+notebooks/**
+output_file.json
+packages/resources/State_History/*.json
+packages/resources/embeddings_cache/
+poetry.lock
+postgres_test_*/
+pytest_cache/
+reports/
+resources/**
+resources/*_agent_*/
+resources/*test_*/
+resources/Graphs/
+resources/State_History/
+resources/State_History/*.json
+resources/embeddings_cache/
+resources/graph_images/
+resources/state_history/
+scratches/
+simple_agent_*/
+summary_agent/
+test_output/
+test_outputs/
+test_simple_agent/
+token.json
+venv/
