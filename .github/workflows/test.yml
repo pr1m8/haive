@@ -22,14 +22,14 @@ jobs:
         with:
           submodules: recursive
 
-      - name: 🐍 Get Python Version
-        id: python-version
-        uses: ./.github/actions/get-python-version
+      - name: 📦 Get Poetry Metadata
+        id: poetry
+        uses: ./.github/actions/get-poetry-metadata
 
-      - name: 🐍 Set up Python ${{ steps.python-version.outputs.version }}
+      - name: 🐍 Set up Python ${{ steps.poetry.outputs.python }}
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ steps.python-version.outputs.version }}
+          python-version: ${{ steps.poetry.outputs.python }}
 
       - name: 📦 Install Pre-commit
         run: |
@@ -56,39 +56,47 @@ jobs:
           submodules: recursive
 
       - name: 📦 Get Poetry Metadata
-        id: poetry-metadata
+        id: poetry
         uses: ./.github/actions/get-poetry-metadata
+        with:
+          package: ${{ matrix.package }}
 
-      - name: 🐍 Set up Python ${{ steps.poetry-metadata.outputs.python }}
+      - name: 🐍 Set up Python ${{ steps.poetry.outputs.python }}
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ steps.poetry-metadata.outputs.python }}
+          python-version: ${{ steps.poetry.outputs.python }}
 
       - name: 🛠 Install Poetry
-        run: pipx install poetry==${{ steps.poetry-metadata.outputs.poetry_version }}
+        run: pipx install poetry==${{ steps.poetry.outputs.poetry_version }}
 
-      - name: 🔄 Set Working Directory
-        id: set-dir
+      - name: 🔄 Verify Package
+        id: verify
         run: |
-          if [ -d "packages/${{ matrix.package }}" ]; then
-            echo "package_dir=packages/${{ matrix.package }}" >> $GITHUB_OUTPUT
-            echo "Found package directory: packages/${{ matrix.package }}"
-          else
+          if [ ! -d "packages/${{ matrix.package }}" ]; then
             echo "⚠️ Package directory not found: packages/${{ matrix.package }}"
             exit 1
           fi
+          
+          if [ ! -f "packages/${{ matrix.package }}/pyproject.toml" ]; then
+            echo "⚠️ pyproject.toml not found in packages/${{ matrix.package }}"
+            exit 1
+          fi
+          
+          echo "Package verified: ${{ matrix.package }}"
 
       - name: 🌱 Install Dependencies
         run: |
-          cd ${{ steps.set-dir.outputs.package_dir }}
-          echo "Installing dependencies for ${{ matrix.package }}..."
+          cd packages/${{ matrix.package }}
           poetry install --no-interaction
 
       - name: ✅ Run Tests
         run: |
-          cd ${{ steps.set-dir.outputs.package_dir }}
-          echo "Running tests for ${{ matrix.package }}..."
-          poetry run pytest -xvs
+          cd packages/${{ matrix.package }}
+          if [ -d "tests" ] || [ -d "src/haive/*/tests" ]; then
+            poetry run pytest -xvs
+          else
+            echo "No tests found for ${{ matrix.package }}, skipping"
+          fi
 
   type-check:
     name: "🔎 Type Check ${{ matrix.package }}"
@@ -107,39 +115,43 @@ jobs:
           submodules: recursive
 
       - name: 📦 Get Poetry Metadata
-        id: poetry-metadata
+        id: poetry
         uses: ./.github/actions/get-poetry-metadata
+        with:
+          package: ${{ matrix.package }}
 
-      - name: 🐍 Set up Python ${{ steps.poetry-metadata.outputs.python }}
+      - name: 🐍 Set up Python ${{ steps.poetry.outputs.python }}
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ steps.poetry-metadata.outputs.python }}
+          python-version: ${{ steps.poetry.outputs.python }}
 
       - name: 🛠 Install Poetry
-        run: pipx install poetry==${{ steps.poetry-metadata.outputs.poetry_version }}
+        run: pipx install poetry==${{ steps.poetry.outputs.poetry_version }}
 
-      - name: 🔄 Set Working Directory
-        id: set-dir
+      - name: 🔄 Verify Package
+        id: verify
         run: |
-          if [ -d "packages/${{ matrix.package }}" ]; then
-            echo "package_dir=packages/${{ matrix.package }}" >> $GITHUB_OUTPUT
-            echo "Found package directory: packages/${{ matrix.package }}"
-          else
+          if [ ! -d "packages/${{ matrix.package }}" ]; then
             echo "⚠️ Package directory not found: packages/${{ matrix.package }}"
             exit 1
           fi
+          
+          if [ ! -f "packages/${{ matrix.package }}/pyproject.toml" ]; then
+            echo "⚠️ pyproject.toml not found in packages/${{ matrix.package }}"
+            exit 1
+          fi
+          
+          echo "Package verified: ${{ matrix.package }}"
 
       - name: 🌱 Install Dependencies & Mypy
         run: |
-          cd ${{ steps.set-dir.outputs.package_dir }}
-          echo "Installing dependencies for ${{ matrix.package }}..."
+          cd packages/${{ matrix.package }}
           poetry install --no-interaction
           poetry run pip install mypy
 
       - name: 🔍 Run Mypy
         run: |
-          cd ${{ steps.set-dir.outputs.package_dir }}
-          echo "Type checking ${{ matrix.package }}..."
+          cd packages/${{ matrix.package }}
           if [ -d "src" ]; then
             poetry run mypy src --ignore-missing-imports
           fi

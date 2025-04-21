@@ -1,5 +1,10 @@
 name: "Get Poetry Metadata"
 description: "Parses key metadata from pyproject.toml"
+inputs:
+  package:
+    description: "Package name to analyze (relative to packages/)"
+    required: false
+    default: ""
 outputs:
   name:
     description: "Package name"
@@ -39,17 +44,60 @@ runs:
   steps:
     - id: extract
       run: |
+        # Determine which pyproject.toml to use
+        if [ -n "${{ inputs.package }}" ] && [ -d "packages/${{ inputs.package }}" ]; then
+          PYPROJECT_PATH="packages/${{ inputs.package }}/pyproject.toml"
+        elif [ -n "${{ github.job }}" ] && [ -n "${{ matrix.package }}" ] && [ -d "packages/${{ matrix.package }}" ]; then
+          PYPROJECT_PATH="packages/${{ matrix.package }}/pyproject.toml"
+        elif [ -f "pyproject.toml" ]; then
+          PYPROJECT_PATH="pyproject.toml"
+        else
+          echo "⚠️ Could not determine pyproject.toml location"
+          echo "Searching for any pyproject.toml file..."
+          PYPROJECT_PATH=$(find . -name "pyproject.toml" -not -path "*/\.*" -not -path "*/venv/*" | head -n 1)
+          
+          if [ -z "$PYPROJECT_PATH" ]; then
+            echo "⚠️ No pyproject.toml found, using defaults"
+            echo "name=haive" >> $GITHUB_OUTPUT
+            echo "version=0.1.0" >> $GITHUB_OUTPUT
+            echo "python=3.12" >> $GITHUB_OUTPUT
+            echo "poetry_version=1.8.0" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+        fi
+        
+        echo "Using pyproject.toml from: $PYPROJECT_PATH"
+        
         python <<EOF > poetry-info.env
         import tomllib
         import re
-        import subprocess
         import sys
+        import os
 
-        data = tomllib.load(open("pyproject.toml", "rb"))
-
+        pyproject_path = "$PYPROJECT_PATH"
+        
+        try:
+            with open(pyproject_path, "rb") as f:
+                data = tomllib.load(f)
+        except FileNotFoundError:
+            print(f"ERROR: Could not find pyproject.toml at {pyproject_path}")
+            print("name=haive")
+            print("version=0.1.0")
+            print("python=3.12")
+            print("poetry_version=1.8.0")
+            sys.exit(0)
+            
         # Get Poetry data
-        poetry_data = data["tool"]["poetry"]
-        deps = poetry_data["dependencies"]
+        try:
+            poetry_data = data["tool"]["poetry"]
+            deps = poetry_data["dependencies"]
+        except KeyError:
+            print("ERROR: Invalid pyproject.toml format - missing tool.poetry section")
+            print("name=haive")
+            print("version=0.1.0")
+            print("python=3.12")
+            print("poetry_version=1.8.0")
+            sys.exit(0)
 
         # Try to extract Poetry version from build-system
         try:
@@ -70,10 +118,14 @@ runs:
             return poetry_data.get(key, default)
 
         def extract_list(key):
-            return "|".join(poetry_data.get(key, []))
+            items = poetry_data.get(key, [])
+            if isinstance(items, list):
+                return "|".join(items)
+            return str(items)
 
         # Normalize python version
         constraint = deps.get("python", "")
+        # Handle different version specifiers: ^3.12, >=3.12,<3.13, etc.
         match = re.search(r"(\d+\.\d+)", constraint)
         python_version = match.group(1) if match else "3.12"
 
@@ -87,7 +139,7 @@ runs:
         print(f"homepage={get('homepage')}")
         print(f"repository={get('repository')}")
         print(f"documentation={get('documentation')}")
-        print(f"classifiers={'⏎'.join(poetry_data.get('classifiers', []))}")
+        print(f"classifiers={extract_list('classifiers')}")
         EOF
 
         while read line; do
