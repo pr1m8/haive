@@ -48,7 +48,7 @@ name = "$pkg"
 version = "0.1.0"
 description = "Generated package for $pkg"
 packages = [
-    { include = "haive", from = "src" },
+    { include = "haive", from = "src" }
 ]
 
 [tool.poetry.dependencies]
@@ -59,9 +59,10 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 EOF
             
-            # Create minimal __init__.py
-            touch "packages/$pkg/src/haive/${pkg#haive-}/__init__.py"
+            # Create minimal __init__.py files
+            mkdir -p "packages/$pkg/src/haive"
             touch "packages/$pkg/src/haive/__init__.py"
+            touch "packages/$pkg/src/haive/${pkg#haive-}/__init__.py"
             
             PACKAGES+=("$pkg")
           fi
