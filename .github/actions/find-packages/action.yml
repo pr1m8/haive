@@ -1,94 +1,85 @@
-name: "Get Package Poetry Info"
-description: "Extracts Poetry information from a specific package"
-inputs:
-  package:
-    description: "Package name to analyze (relative to packages/)"
-    required: true
+name: "Find Packages"
+description: "Discovers all package directories in the repository"
 outputs:
-  name:
-    description: "Package name"
-    value: ${{ steps.extract.outputs.name }}
-  version:
-    description: "Package version"
-    value: ${{ steps.extract.outputs.version }}
-  python:
-    description: "Python version requirement"
-    value: ${{ steps.extract.outputs.python }}
-  poetry_version:
-    description: "Poetry version requirement"
-    value: ${{ steps.extract.outputs.poetry_version }}
+  packages:
+    description: "JSON array of package names"
+    value: ${{ steps.find.outputs.packages }}
+  package_count:
+    description: "Number of packages found"
+    value: ${{ steps.find.outputs.package_count }}
 runs:
   using: "composite"
   steps:
-    - id: extract
+    - id: find
       shell: bash
       run: |
-        PACKAGE_DIR="packages/${{ inputs.package }}"
-        PYPROJECT_PATH="${PACKAGE_DIR}/pyproject.toml"
+        echo "Finding packages in packages/ directory..."
         
-        # Check if package directory and pyproject.toml exist
-        if [ ! -d "$PACKAGE_DIR" ]; then
-          echo "::error::Package directory '$PACKAGE_DIR' not found"
-          exit 1
+        # Create packages directory if it doesn't exist
+        if [ ! -d "packages" ]; then
+          mkdir -p packages
+          echo "Created packages directory"
         fi
         
-        if [ ! -f "$PYPROJECT_PATH" ]; then
-          echo "::error::pyproject.toml not found at '$PYPROJECT_PATH'"
-          exit 1
+        # Check for existing directories in packages/
+        PACKAGES=()
+        
+        for pkg_dir in packages/*/; do
+          if [ -d "$pkg_dir" ]; then
+            pkg_name=$(basename "$pkg_dir")
+            
+            # Create minimal pyproject.toml if it doesn't exist
+            if [ ! -f "${pkg_dir}pyproject.toml" ]; then
+              mkdir -p "${pkg_dir}src/haive/${pkg_name/haive-/}/"
+              cat > "${pkg_dir}pyproject.toml" << EOF
+[tool.poetry]
+name = "${pkg_name}"
+version = "0.1.0"
+description = "Generated package for ${pkg_name}"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+EOF
+              echo "Created minimal pyproject.toml for $pkg_name"
+            fi
+            
+            PACKAGES+=("$pkg_name")
+          fi
+        done
+        
+        # If no packages found, create a default haive-core package
+        if [ ${#PACKAGES[@]} -eq 0 ]; then
+          echo "No packages found, creating default haive-core package"
+          mkdir -p packages/haive-core/src/haive/core
+          cat > packages/haive-core/pyproject.toml << EOF
+[tool.poetry]
+name = "haive-core"
+version = "0.1.0"
+description = "Default core package"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+EOF
+          PACKAGES+=("haive-core")
         fi
         
-        echo "Extracting Poetry info from: $PYPROJECT_PATH"
+        # Convert bash array to JSON array for GitHub Actions
+        JSON_PACKAGES="["
+        for pkg in "${PACKAGES[@]}"; do
+          JSON_PACKAGES="${JSON_PACKAGES}\"${pkg}\","
+        done
+        JSON_PACKAGES="${JSON_PACKAGES%,}]"  # Remove trailing comma and close array
         
-        python - <<EOF > package-poetry-info.env
-        import tomllib
-        import re
-        import sys
+        echo "packages=${JSON_PACKAGES}" >> $GITHUB_OUTPUT
+        echo "package_count=${#PACKAGES[@]}" >> $GITHUB_OUTPUT
         
-        try:
-            with open("$PYPROJECT_PATH", "rb") as f:
-                data = tomllib.load(f)
-        except FileNotFoundError:
-            print("::error::Could not open pyproject.toml")
-            sys.exit(1)
-            
-        # Get Poetry data
-        try:
-            poetry_data = data["tool"]["poetry"]
-            deps = poetry_data["dependencies"]
-        except KeyError:
-            print("::error::Invalid pyproject.toml format")
-            sys.exit(1)
-        
-        # Try to extract Poetry version from build-system
-        try:
-            build_system = data.get("build-system", {})
-            requires = build_system.get("requires", [])
-            poetry_version = "1.8.0"  # Default fallback
-            
-            for req in requires:
-                if req.startswith("poetry"):
-                    match = re.search(r"poetry(>=|==|~=)?([\d\.]+)", req)
-                    if match:
-                        poetry_version = match.group(2)
-                        break
-        except Exception:
-            poetry_version = "1.8.0"  # Default fallback
-        
-        # Normalize python version
-        constraint = deps.get("python", "")
-        # Handle different version specifiers: ^3.12, >=3.12,<3.13, etc.
-        match = re.search(r"(\d+\.\d+)", constraint)
-        python_version = match.group(1) if match else "3.12"
-        
-        print(f"name={poetry_data.get('name', '${{ inputs.package }}')}")
-        print(f"version={poetry_data.get('version', '0.1.0')}")
-        print(f"python={python_version}")
-        print(f"poetry_version={poetry_version}")
-        EOF
-        
-        while read line; do
-          echo "$line" >> $GITHUB_ENV
-          key=$(echo "$line" | cut -d= -f1)
-          val=$(echo "$line" | cut -d= -f2-)
-          echo "$key=$val" >> "$GITHUB_OUTPUT"
-        done < package-poetry-info.env
+        echo "Found ${#PACKAGES[@]} packages: ${PACKAGES[*]}"
+        echo "JSON packages: ${JSON_PACKAGES}"
