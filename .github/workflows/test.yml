@@ -1,160 +1,94 @@
-name: "🧪 Test"
-
-on:
-  push:
-    branches: [main]
-    paths-ignore:
-      - '**/resources/**'
-  pull_request:
-    branches: [main]
-    paths-ignore:
-      - '**/resources/**'
-
-jobs:
-  lint:
-    name: "🧹 Pre-commit Lint"
-    runs-on: ubuntu-latest
-    env:
-      ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}
-    steps:
-      - name: 📥 Checkout Code
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: 📦 Get Poetry Metadata
-        id: poetry
-        uses: ./.github/actions/get-poetry-metadata
-
-      - name: 🐍 Set up Python ${{ steps.poetry.outputs.python }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ steps.poetry.outputs.python }}
-
-      - name: 📦 Install Pre-commit
-        run: |
-          python -m pip install --upgrade pip
-          pip install pre-commit
-
-      - name: ✅ Run Pre-commit
-        run: pre-commit run --all-files
-
-  test-packages:
-    name: "🧪 Test ${{ matrix.package }}"
-    runs-on: ubuntu-latest
-    env:
-      ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}
-    strategy:
-      matrix:
-        package: [haive-core, haive-agents, haive-games, haive-dataflow, haive-tools, haive-prebuilt]
-      fail-fast: false
-
-    steps:
-      - name: 📥 Checkout Code
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: 📦 Get Poetry Metadata
-        id: poetry
-        uses: ./.github/actions/get-poetry-metadata
-        with:
-          package: ${{ matrix.package }}
-
-      - name: 🐍 Set up Python ${{ steps.poetry.outputs.python }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ steps.poetry.outputs.python }}
-
-      - name: 🛠 Install Poetry
-        run: pipx install poetry==${{ steps.poetry.outputs.poetry_version }}
-
-      - name: 🔄 Verify Package
-        id: verify
-        run: |
-          if [ ! -d "packages/${{ matrix.package }}" ]; then
-            echo "⚠️ Package directory not found: packages/${{ matrix.package }}"
-            exit 1
-          fi
-          
-          if [ ! -f "packages/${{ matrix.package }}/pyproject.toml" ]; then
-            echo "⚠️ pyproject.toml not found in packages/${{ matrix.package }}"
-            exit 1
-          fi
-          
-          echo "Package verified: ${{ matrix.package }}"
-
-      - name: 🌱 Install Dependencies
-        run: |
-          cd packages/${{ matrix.package }}
-          poetry install --no-interaction
-
-      - name: ✅ Run Tests
-        run: |
-          cd packages/${{ matrix.package }}
-          if [ -d "tests" ] || [ -d "src/haive/*/tests" ]; then
-            poetry run pytest -xvs
-          else
-            echo "No tests found for ${{ matrix.package }}, skipping"
-          fi
-
-  type-check:
-    name: "🔎 Type Check ${{ matrix.package }}"
-    runs-on: ubuntu-latest
-    env:
-      ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}
-    strategy:
-      matrix:
-        package: [haive-core, haive-agents, haive-games, haive-dataflow, haive-tools, haive-prebuilt]
-      fail-fast: false
-
-    steps:
-      - name: 📥 Checkout Code
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: 📦 Get Poetry Metadata
-        id: poetry
-        uses: ./.github/actions/get-poetry-metadata
-        with:
-          package: ${{ matrix.package }}
-
-      - name: 🐍 Set up Python ${{ steps.poetry.outputs.python }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ steps.poetry.outputs.python }}
-
-      - name: 🛠 Install Poetry
-        run: pipx install poetry==${{ steps.poetry.outputs.poetry_version }}
-
-      - name: 🔄 Verify Package
-        id: verify
-        run: |
-          if [ ! -d "packages/${{ matrix.package }}" ]; then
-            echo "⚠️ Package directory not found: packages/${{ matrix.package }}"
-            exit 1
-          fi
-          
-          if [ ! -f "packages/${{ matrix.package }}/pyproject.toml" ]; then
-            echo "⚠️ pyproject.toml not found in packages/${{ matrix.package }}"
-            exit 1
-          fi
-          
-          echo "Package verified: ${{ matrix.package }}"
-
-      - name: 🌱 Install Dependencies & Mypy
-        run: |
-          cd packages/${{ matrix.package }}
-          poetry install --no-interaction
-          poetry run pip install mypy
-
-      - name: 🔍 Run Mypy
-        run: |
-          cd packages/${{ matrix.package }}
-          if [ -d "src" ]; then
-            poetry run mypy src --ignore-missing-imports
-          fi
-          if [ -d "tests" ]; then
-            poetry run mypy tests --ignore-missing-imports
-          fi
+name: "Get Package Poetry Info"
+description: "Extracts Poetry information from a specific package"
+inputs:
+  package:
+    description: "Package name to analyze (relative to packages/)"
+    required: true
+outputs:
+  name:
+    description: "Package name"
+    value: ${{ steps.extract.outputs.name }}
+  version:
+    description: "Package version"
+    value: ${{ steps.extract.outputs.version }}
+  python:
+    description: "Python version requirement"
+    value: ${{ steps.extract.outputs.python }}
+  poetry_version:
+    description: "Poetry version requirement"
+    value: ${{ steps.extract.outputs.poetry_version }}
+runs:
+  using: "composite"
+  steps:
+    - id: extract
+      shell: bash
+      run: |
+        PACKAGE_DIR="packages/${{ inputs.package }}"
+        PYPROJECT_PATH="${PACKAGE_DIR}/pyproject.toml"
+        
+        # Check if package directory and pyproject.toml exist
+        if [ ! -d "$PACKAGE_DIR" ]; then
+          echo "::error::Package directory '$PACKAGE_DIR' not found"
+          exit 1
+        fi
+        
+        if [ ! -f "$PYPROJECT_PATH" ]; then
+          echo "::error::pyproject.toml not found at '$PYPROJECT_PATH'"
+          exit 1
+        fi
+        
+        echo "Extracting Poetry info from: $PYPROJECT_PATH"
+        
+        python - <<EOF > package-poetry-info.env
+        import tomllib
+        import re
+        import sys
+        
+        try:
+            with open("$PYPROJECT_PATH", "rb") as f:
+                data = tomllib.load(f)
+        except FileNotFoundError:
+            print("::error::Could not open pyproject.toml")
+            sys.exit(1)
+            
+        # Get Poetry data
+        try:
+            poetry_data = data["tool"]["poetry"]
+            deps = poetry_data["dependencies"]
+        except KeyError:
+            print("::error::Invalid pyproject.toml format")
+            sys.exit(1)
+        
+        # Try to extract Poetry version from build-system
+        try:
+            build_system = data.get("build-system", {})
+            requires = build_system.get("requires", [])
+            poetry_version = "1.8.0"  # Default fallback
+            
+            for req in requires:
+                if req.startswith("poetry"):
+                    match = re.search(r"poetry(>=|==|~=)?([\d\.]+)", req)
+                    if match:
+                        poetry_version = match.group(2)
+                        break
+        except Exception:
+            poetry_version = "1.8.0"  # Default fallback
+        
+        # Normalize python version
+        constraint = deps.get("python", "")
+        # Handle different version specifiers: ^3.12, >=3.12,<3.13, etc.
+        match = re.search(r"(\d+\.\d+)", constraint)
+        python_version = match.group(1) if match else "3.12"
+        
+        print(f"name={poetry_data.get('name', '${{ inputs.package }}')}")
+        print(f"version={poetry_data.get('version', '0.1.0')}")
+        print(f"python={python_version}")
+        print(f"poetry_version={poetry_version}")
+        EOF
+        
+        while read line; do
+          echo "$line" >> $GITHUB_ENV
+          key=$(echo "$line" | cut -d= -f1)
+          val=$(echo "$line" | cut -d= -f2-)
+          echo "$key=$val" >> "$GITHUB_OUTPUT"
+        done < package-poetry-info.env
