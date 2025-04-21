@@ -9,7 +9,7 @@ import os
 import sys
 import time
 import uuid
-from typing import Any, List
+from typing import Any
 
 import pytest
 
@@ -73,7 +73,7 @@ CONNECTION_KWARGS = {
 }
 
 
-def extract_messages_from_state(state: Any) -> List[Any]:
+def extract_messages_from_state(state: Any) -> list[Any]:
     """
     Extract messages from a state object, regardless of its type.
     Handles various state object formats.

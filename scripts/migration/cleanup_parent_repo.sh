@@ -44,9 +44,9 @@ git bundle create "${BACKUP_DIR}/git_bundles/haive_complete.bundle" --all || {
 
 # 3. Back up submodules individually, but don't fail if one fails
 echo "Backing up submodules individually..."
-git submodule foreach 'echo "Backing up submodule $name"; 
-  mkdir -p '"${BACKUP_DIR}/submodules/"'$name; 
-  rsync -a '"${EXCLUDE_PATTERN}"' --exclude ".git/objects" . '"${BACKUP_DIR}/submodules/"'$name/ || echo "Warning: rsync failed for $name"; 
+git submodule foreach 'echo "Backing up submodule $name";
+  mkdir -p '"${BACKUP_DIR}/submodules/"'$name;
+  rsync -a '"${EXCLUDE_PATTERN}"' --exclude ".git/objects" . '"${BACKUP_DIR}/submodules/"'$name/ || echo "Warning: rsync failed for $name";
   git bundle create '"${BACKUP_DIR}/submodules/"'$name/bundle.bundle --all || echo "Warning: Failed to create bundle for $name"'
 
 # 4. Create a complete repository mirror, but don't include submodules

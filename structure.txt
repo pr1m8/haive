@@ -30,11 +30,11 @@
 ├── examples
 │   └── notebooks
 │       ├── BaseAgent.ipynb
-│    
+│  
 ├── logs
 │   ├── benchmark.log
 │   ├── debug_simple_agent.log
-│   ├── 
+│   ├──
 │   ├── kyc_example_run.log
 │   ├── monopoly_test.log
 │   ├── poker.log
@@ -103,7 +103,7 @@
 ├── pytest.ini
 ├── resources
 │   ├── Graphs
-│   │   ├── 
+│   │   ├──
 │   ├── summary_agent
 │   │   └── State_History
 │   └── test_simple_agent

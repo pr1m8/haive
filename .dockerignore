@@ -7,3 +7,10 @@ data/
 *.sqlite
 tests/
 .git
+**/*.log
+**/*.md
+**/tests/
+*.sqlite3
+*.pyo
+*.pyd
+.DS_Store

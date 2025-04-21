@@ -1,4 +1,3 @@
-import pytest
 from src.haive.tak.tools.corporate_bs_tool import get_random_corporate_bs
 
 

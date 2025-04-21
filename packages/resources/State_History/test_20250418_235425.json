@@ -1,0 +1,46 @@
+[
+  {
+    "__shared_fields__": [],
+    "__serializable_reducers__": {
+      "messages": "_add_messages"
+    },
+    "messages": [
+      {
+        "content": "Hello, world!",
+        "additional_kwargs": {},
+        "response_metadata": {},
+        "type": "human",
+        "name": null,
+        "id": "9b10b27b-b3e7-48ac-b1d9-c3311d3ef58a",
+        "example": false
+      }
+    ]
+  },
+  [],
+  {
+    "configurable": {
+      "thread_id": "2c506f23-8dde-4493-8d3a-6e9e87d8dec4",
+      "checkpoint_ns": "",
+      "checkpoint_id": "1f01cd1f-c435-65f8-8001-de1aaf923af4"
+    }
+  },
+  {
+    "step": 1,
+    "source": "loop",
+    "writes": {
+      "process": null
+    },
+    "parents": {},
+    "thread_id": "2c506f23-8dde-4493-8d3a-6e9e87d8dec4",
+    "recursion_limit": 200
+  },
+  "2025-04-19T03:54:25.449917+00:00",
+  {
+    "configurable": {
+      "thread_id": "2c506f23-8dde-4493-8d3a-6e9e87d8dec4",
+      "checkpoint_ns": "",
+      "checkpoint_id": "1f01cd1f-c42f-670c-8000-50c82b64eac1"
+    }
+  },
+  []
+]

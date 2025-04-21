@@ -1,35 +1,34 @@
-# src/haive/__init__.py
 """Haive - Agent Framework and Ecosystem."""
 
 __version__ = "0.1.0"
 
 # Import from submodules
 try:
-    from haive_core import *
+    from haive.core import *
 except ImportError:
     pass
 
 try:
-    from haive_agents_dep import *
+    from haive.agents import *
 except ImportError:
     pass
 
 try:
-    from haive_games import *
+    from haive.games import *
 except ImportError:
     pass
 
 try:
-    from haive_dataflow_dep import *
+    from haive.dataflow import *
 except ImportError:
     pass
 
 try:
-    from haive_prebuilt import *
+    from haive.prebuilt import *
 except ImportError:
     pass
 
 try:
-    from haive_tools import *
+    from haive.tools import *
 except ImportError:
     pass

@@ -207,7 +207,7 @@ def refactor_imports(file_path):
     """Refactor imports in a Python file."""
     with open(file_path, 'r') as f:
         content = f.read()
-    
+
     # Replace imports
     replacements = [
         (r'from src\\.haive\\.core', r'from haive_core'),
@@ -223,17 +223,17 @@ def refactor_imports(file_path):
         (r'from src\\.haive\\.dataflow', r'from haive_dataflow'),
         (r'import src\\.haive\\.dataflow', r'import haive_dataflow')
     ]
-    
+
     for pattern, replacement in replacements:
         content = re.sub(pattern, replacement, content)
-    
+
     # For the specific package being migrated, handle relative imports
     target_pkg = "${TARGET_PACKAGE}".replace("-", "_")
     component = "${COMPONENT}".replace("/", ".")
     if component != "core" and component != "agents" and component != "games" and component != "tak" and component != "prebuilt" and component != "dataflow":
         content = re.sub(f'from src\\.haive\\.{component}', f'from {target_pkg}', content)
         content = re.sub(f'import src\\.haive\\.{component}', f'import {target_pkg}', content)
-    
+
     with open(file_path, 'w') as f:
         f.write(content)
 

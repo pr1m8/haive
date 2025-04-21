@@ -100,7 +100,7 @@ def _check_required_env_vars(cls) -> List[str]:
 
 
 if __name__ == "__main__":
-    module_name = "langchain_community.retrdievers"
+    module_name = "langchain_community.retrievers"
     metadata = get_available_classes(module_name)
 
     root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))

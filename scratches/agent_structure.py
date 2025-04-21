@@ -14,10 +14,10 @@ def aggregate_counts(base_dir):
     """
     file_counter = Counter()
     subdir_counter = Counter()
-    
+
     if not os.path.exists(base_dir):
         return {"error": f"Directory '{base_dir}' does not exist."}
-    
+
     for module in os.listdir(base_dir):
         module_path = os.path.join(base_dir, module)
         if os.path.isdir(module_path) and module not in IGNORED_DIRS:
@@ -45,14 +45,14 @@ def main():
     output = {}
     for label, path in targets.items():
         output[label] = aggregate_counts(path)
-    
+
     # Save the aggregate summary to resources/aggregate_structure.json
     output_dir = "resources"
     os.makedirs(output_dir, exist_ok=True)
     output_path = os.path.join(output_dir, "aggregate_structure.json")
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2)
-    
+
     print(f"Aggregated structure summary saved to {output_path}")
 
 if __name__ == "__main__":

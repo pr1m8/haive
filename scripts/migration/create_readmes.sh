@@ -5,27 +5,27 @@
 
 # Define packages within packages/ directory
 PACKAGES=(
-    "haive-core"
-    "haive-agents"
-    "haive-dataflow"
-    "haive-games"
-    "haive-prebuilt"
-    "haive-tools"
+	"haive-core"
+	"haive-agents"
+	"haive-dataflow"
+	"haive-games"
+	"haive-prebuilt"
+	"haive-tools"
 )
 
 # Function to create a README file
 create_readme() {
-    local path=$1
-    local name=$2
-    
-    # Check if README already exists
-    if [ -f "$path" ]; then
-        echo "README.md already exists at $path"
-    else
-        echo "Creating README.md at $path"
-        
-        # Create README with package-specific content
-        cat > "$path" << EOF_INNER
+	local path=$1
+	local name=$2
+
+	# Check if README already exists
+	if [ -f "$path" ]; then
+		echo "README.md already exists at $path"
+	else
+		echo "Creating README.md at $path"
+
+		# Create README with package-specific content
+		cat >"$path" <<EOF_INNER
 # ${name^}
 
 Part of the Haive AI Framework.
@@ -51,15 +51,15 @@ from ${name//-/_} import ...
 
 Proprietary
 EOF_INNER
-        
-        echo "Created README.md at $path"
-    fi
+
+		echo "Created README.md at $path"
+	fi
 }
 
 # Check for README.md in project root
 if [ ! -f "README.md" ]; then
-    echo "Creating README.md in project root"
-    cat > "README.md" << EOF_INNER
+	echo "Creating README.md in project root"
+	cat >"README.md" <<EOF_INNER
 # Haive AI Framework
 
 A modular, composable framework for building AI agents and workflows.
@@ -85,13 +85,13 @@ Haive provides a sophisticated architecture for creating dynamic AI systems with
 
 Proprietary
 EOF_INNER
-    echo "Created README.md in project root"
+	echo "Created README.md in project root"
 fi
 
 # Check for packages in packages/ directory
 for package in "${PACKAGES[@]}"; do
-    readme_path="packages/$package/README.md"
-    create_readme "$readme_path" "$package"
+	readme_path="packages/$package/README.md"
+	create_readme "$readme_path" "$package"
 done
 
 echo "All README.md files have been created or already exist"
