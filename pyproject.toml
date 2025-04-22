@@ -2,35 +2,36 @@
 name = "haive"
 version = "0.1.0"
 description = "Package for langgraph agents"
-authors = [
-    "pr1m8 <william.astley@algebraicwealth.com>",
-]
+authors = ["pr1m8 <william.astley@algebraicwealth.com>"]
 license = "MIT"
 readme = "README.md"
 classifiers = [
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.12",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Intended Audience :: Developers",
-    "Topic :: Software Development :: Libraries :: Python Modules",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 repository = "https://github.com/prim8/haive"
 homepage = "https://haive.readthedocs.io"
 documentation = "https://haive.readthedocs.io"
-keywords = [
-    "ai",
-    "agents",
-    "llm",
-    "language models",
-    "langgraph",
-]
-packages = [
-    { include = "haive", from = "src" },
+keywords = ["ai", "agents", "llm", "language models", "langgraph"]
+
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "packages/haive-core/src",
+  "packages/haive-agents/src",
+  "packages/haive-tools/src",
+  "packages/haive-games/src",
+  "packages/haive-dataflow/src",
+  "packages/haive-prebuilt/src",
 ]
 
+
 [tool.poetry.scripts]
-haive = "haive.cli:main"
+haive = "haive.main:main" # only if you want CLI support
 
 [[tool.poetry.source]]
 name = "pytorch_cpu"
@@ -49,12 +50,6 @@ priority = "supplemental"
 
 [tool.poetry.dependencies]
 python = ">=3.12,<3.13"
-haive-core = {path = "./packages/haive-core", develop = true}
-haive-agents = {path = "./packages/haive-agents", develop = true}
-haive-games = {path = "./packages/haive-games", develop = true}
-haive-prebuilt = {path = "./packages/haive-prebuilt", develop = true}
-haive-tools = {path = "./packages/haive-tools", develop = true}
-haive-dataflow={path = "./packages/haive-dataflow", develop = true}
 langchain-core = "^0.3.44"
 langchain = "^0.3.20"
 langchain-community = "^0.3.20"
@@ -167,6 +162,12 @@ bandit = "^1.8.3"
 pre-commit = "^4.2.0"
 tomli = "^2.2.1"
 tomli-w = "^1.2.0"
+haive-agents = { path = "packages/haive-agents" }
+haive-core = { path = "packages/haive-core" }
+haive-dataflow = { path = "packages/haive-dataflow" }
+haive-games = { path = "packages/haive-games" }
+haive-prebuilt = { path = "packages/haive-prebuilt" }
+haive-tools = { path = "packages/haive-tools" }
 
 
 [tool.poetry.dependencies.graphviz]
@@ -175,14 +176,10 @@ source = "pypi"
 
 [tool.poetry.dependencies.faiss-gpu-cu12]
 version = "^1.10.0"
-extras = [
-    "fix-cuda",
-]
+extras = ["fix-cuda"]
 
 [tool.poetry.dependencies.unstructured]
-extras = [
-    "all",
-]
+extras = ["all"]
 version = "^0.17.2"
 
 [tool.poetry.dependencies.secure-smtplib]
@@ -228,6 +225,9 @@ types-requests = "^2.32.0.20250328"
 doc8 = "^1.1.2"
 codespell = "^2.4.1"
 pytest-clarity = "^1.0.1"
+pytest = "^8.3.5"
+pytest-html = "^4.1.1"
+pytest-sugar = "^1.0.0"
 
 [tool.poetry.group.dev.dependencies.torch]
 version = "2.6.0+cu118"
@@ -248,9 +248,7 @@ google-auth-oauthlib = "^1.2.1"
 
 [tool.poetry.group.gmail_toolkit.dependencies.langchain-google-community]
 version = "^2.0.7"
-extras = [
-    "gmail",
-]
+extras = ["gmail"]
 
 [tool.poetry.group.github_toolkit.dependencies]
 pygithub = "^2.6.1"
@@ -355,27 +353,12 @@ yt-dlp = "^2025.2.19"
 whisper = "^1.1.10"
 
 [tool.poetry.extras]
-cpu = [
-    "torch",
-    "torchvision",
-    "torchaudio",
-]
-cuda = [
-    "torch",
-    "torchvision",
-    "torchaudio",
-]
+cpu = ["torch", "torchvision", "torchaudio"]
+cuda = ["torch", "torchvision", "torchaudio"]
 
 [tool.bandit]
-exclude_dirs = [
-    "tests",
-    "examples",
-    "scripts",
-]
-skips = [
-    "B101",
-    "B311",
-]
+exclude_dirs = ["tests", "examples", "scripts"]
+skips = ["B101", "B311"]
 
 [tool.mypy]
 warn_return_any = true
@@ -391,62 +374,46 @@ warn_unused_ignores = true
 warn_no_return = true
 warn_unreachable = true
 overrides = [
-    { module = "tests.*", disallow_untyped_defs = false, disallow_incomplete_defs = false },
+  { module = "tests.*", disallow_untyped_defs = false, disallow_incomplete_defs = false },
 ]
 
 [tool.ruff]
 line-length = 100
 target-version = "py311"
 select = [
-    "E",
-    "F",
-    "W",
-    "C90",
-    "I",
-    "N",
-    "D",
-    "UP",
-    "B",
-    "A",
-    "C4",
-    "DTZ",
-    "T10",
-    "ISC",
-    "G",
-    "PIE",
-    "T20",
-    "PT",
-    "Q",
-    "RSE",
-    "RET",
-    "SIM",
-    "ARG",
-    "ERA",
-    "PL",
-    "TRY",
-    "RUF",
+  "E",
+  "F",
+  "W",
+  "C90",
+  "I",
+  "N",
+  "D",
+  "UP",
+  "B",
+  "A",
+  "C4",
+  "DTZ",
+  "T10",
+  "ISC",
+  "G",
+  "PIE",
+  "T20",
+  "PT",
+  "Q",
+  "RSE",
+  "RET",
+  "SIM",
+  "ARG",
+  "ERA",
+  "PL",
+  "TRY",
+  "RUF",
 ]
-ignore = [
-    "E501",
-    "D100",
-    "D104",
-    "D107",
-    "D203",
-    "D213",
-    "RET504",
-    "TRY003",
-]
+ignore = ["E501", "D100", "D104", "D107", "D203", "D213", "RET504", "TRY003"]
 
 [tool.ruff.per-file-ignores]
-"tests/**/*.py" = [
-    "D",
-    "S101",
-    "PLR2004",
-]
-"examples/**/*.py" = [
-    "D",
-    "T20",
-]
+"tests/**/*.py" = ["D", "S101", "PLR2004"]
+"examples/**/*.py" = ["D", "T20"]
 
 [tool.ruff.pydocstyle]
 convention = "google"
@@ -454,17 +421,14 @@ convention = "google"
 [tool.ruff.mccabe]
 max-complexity = 12
 
+
 [tool.ruff.isort]
-known-first-party = [
-    "haive_core",
-    "haive_agents",
-    "haive_games",
-    "haive_prebuilt",
-    "haive_tools",
-]
+known-first-party = ["haive"]
+combine-as-imports = true
+force-sort-within-sections = true
+lines-after-imports = 2
+
 
 [build-system]
-requires = [
-    "poetry-core",
-]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
