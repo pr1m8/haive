@@ -8,7 +8,10 @@ build:
 python:
   install:
     - method: poetry
-      path: .  # This assumes your root pyproject.toml defines all deps
+      path: "."  # Ensure this is the directory with your pyproject.toml
+  system_packages: false
+  extra_requirements:
+    - docs  # Only if you defined `docs` extras in poetry
 
 sphinx:
-  configuration: docs/source/conf.py
+  configuration: docs/source/conf.py  # Not docs/source
