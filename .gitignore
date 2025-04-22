@@ -1,141 +1,141 @@
+# =============================================================================
+# 🧠 Haive AI – Master .gitignore
+# =============================================================================
 
-# === Auto-generated agent run folders ===
-# === Cache / experiment outputs ===
-# === Game history / graph renderings ===
-# === IDEs and editors ===
-# === Lock and build files ===
-# === Logs, outputs, scratch data ===
-# === Misc ===
-# === Mypy, Pytest, etc ===
-# === OS junk ===
-# === Python standard ===
-# === Sphinx / documentation ===
-# === Temporary dev output ===
-# === Test logs and aux resources ===
-# === Virtual environments ===
-# Add to your .gitignore file
-# Allure test results
-# Graph images
-# Ignore resource directories
-# Logs and outputs
-# Secrets
-# Test output
-# Testing
-**/.ipynb_checkpoints/
-**/.pytest_cache/
-**/.ruff_cache/
-**/__pycache__/
-**/allure-results/
-**/graph_images/
-**/logs
-**/logs/
-**/resources/Graphs/
-**/resources/State_History/
-**/resources/embeddings_cache/
-**/test_output/
-**/test_outputs/
-*.bak
-*.db
-*.egg-info/
-*.env
-*.err
-*.ipynb
-*.log
-*.out
-*.pem
-*.pid
-*.py[cod]
-*.pyd
-*.pyo
-*.so
-*.sqlite3
-*.sublime-project
-*.sublime-workspace
-*.swp
-*.venv
-.DS_Store
+# === 🧪 Auto-generated agent run folders ===
+simple_agent_*/
+memory_test_*/
+postgres_test_*/
+summary_agent/
+test_simple_agent/
+output_file.json
+retrievers_output.json
+
+# === 🔬 Cache / experiment outputs ===
 .cache/
-.coverage
-.eggs/
-.history/
-.idea/
-.ipynb_checkpoints/
-.langchain.db
+.lc_cache/
+src/lc_cache/
+pytest_cache/
+.pytest_cache/
 .mypy_cache/
 .nox/
-.pytest_cache/
-.secrets/
-.tox/
-.venv/
-.vscode/
-BaseAgent.ipynb
-Chinook.db
-ENV/
-EOF
-Pipfile.lock
-Thumbs.db
-__pycache__/
-all_document_loaders_parsers_metadata.json
-allure-results/
-build/
-certs/
-certs/local-cert.pem
-certs/local-key.pem
-certs/localhost-cert.pem
-certs/localhost-key.pempackages/resources/embeddings_cache/
-check_registry_data.py
-credentials.json
-dist/
-docs/build/
-docs/scratch/
-env/
-examples/outputs/
-external/
-game_history/
-graphs/
-haive_vault_*.log
 htmlcov/
-lc_cache/
-loader_analysis/
-logs/
+coverage.xml
+dist/
+build/
+.eggs/
 
-# Notebooks & Logs
-*.ipynb
-*.ipynb_checkpoints
-*.log
-
-# JSON dumps
-retrievers_output.json
-scratches/*.json
-
-# LangChain/LLM cache
-src/lc_cache/
-memory_test_*/
-notebooks/
-notebooks/**
-output_file.json
-packages/resources/State_History/*.json
-packages/resources/embeddings_cache/
-poetry.lock
-postgres_test_*/
-pytest_cache/
-reports/
-resources/**
-resources/*_agent_*/
-resources/*test_*/
+# === 🎮 Game history / graph renderings ===
+graphs/
+game_history/
+resources/graph_images/
+resources/state_history/
 resources/Graphs/
 resources/State_History/
 resources/State_History/*.json
-resources/embeddings_cache/
-resources/graph_images/
-resources/state_history/
+
+# === 🧰 IDEs and editors ===
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# === 🔒 Lock, secret, and build files ===
+poetry.lock
+Pipfile.lock
+*.egg-info/
+*.db
+*.sqlite3
+*.pid
+*.pem
+*.key
+*.cert
+token.json
+credentials.json
+.env
+.env.*
+.secrets/
+.secrets/
+
+# === 📜 Logs, outputs, scratch data ===
+*.log
+*.err
+logs/
+logs/**
 scratches/
-simple_agent_*/
-summary_agent/
+scratches/*.json
+examples/outputs/
+loader_analysis/
+reports/
+out.json
+haive_vault_*.log
+
+# === 🧬 Misc ===
+*.bak
+*.out
+*.so
+*.pyd
+*.pyo
+*.py[cod]
+Thumbs.db
+.DS_Store
+check_registry_data.py
+BaseAgent.ipynb
+Chinook.db
+EOF
+
+# === 🧪 Mypy, Pytest, Profiler, etc ===
+.pytest_cache/
+.mypy_cache/
+.nox/
+.ipynb_checkpoints/
+.pytest_html/
+viztracer_*.json
+*.prof
+*.profraw
+
+# === 🍃 OS junk ===
+.DS_Store
+*.swp
+
+# === 🐍 Python standard ===
+__pycache__/
+*.py[cod]
+*.pyo
+
+# === 📘 Sphinx / documentation ===
+docs/build/
+docs/scratch/
+*.pdf
+*.tex
+sphinx*
+readthedocs-sphinx-search/
+*.rst~
+
+# === 🔧 Temporary dev output ===
+packages/resources/State_History/
+packages/resources/embeddings_cache/
+resources/**/_agent_*/
+resources/**/test_*/
+
+# === 🧪 Test logs and aux resources ===
 test_output/
 test_outputs/
-test_simple_agent/
-token.json
+allure-results/
+*.svg
+*.drawio
+*.png
+
+# === 🧪 Notebooks & dev outputs ===
+*.ipynb
+notebooks/
+notebooks/**
+
+# === 🧠 Virtual environments ===
+.venv/
 venv/
-.secrets/
-.secrets/
+ENV/
+
+# === 🐍 Python Poetry extras ===
+poetry.lock
+.cache/pypoetry/
