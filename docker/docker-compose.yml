@@ -1,0 +1,49 @@
+version: "3.12"
+
+services:
+  haive:
+    container_name: haive-dev
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/haive
+      SUPABASE_URL: http://localhost:54321
+      SUPABASE_ANON_KEY: local-dev-key
+      SUPABASE_SERVICE_ROLE_KEY: local-dev-key
+    volumes:
+      - ../src:/app/src
+      - ../packages:/app/packages
+      - ../pyproject.toml:/app/pyproject.toml
+      - ../poetry.lock:/app/poetry.lock
+    command: python -m haive.main
+
+  db:
+    container_name: haive-db
+    image: postgres:15
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: haive
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  studio:
+    container_name: supabase-studio
+    image: supabase/studio:latest
+    depends_on:
+      - db
+    ports:
+      - "54323:3000"
+    environment:
+      SUPABASE_DB_URL: postgresql://postgres:postgres@db:5432/haive
+
+volumes:
+  pgdata:
