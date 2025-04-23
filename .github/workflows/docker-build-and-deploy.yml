@@ -10,7 +10,7 @@ permissions:
   packages: write
 
 env:
-  IMAGE_NAME: haive
+  IMAGE_NAME: your-image-name
   COMPOSE_FILE: docker/docker-compose.yml
 
 jobs:
