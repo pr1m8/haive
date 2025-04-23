@@ -43,6 +43,7 @@ lint:
       paths:
         - "**/migrations/**"
         - "**/__pycache__/**"
+        - ".history/**"
 
 actions:
   disabled:
