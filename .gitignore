@@ -130,6 +130,7 @@ allure-results/
 *.ipynb
 notebooks/
 notebooks/**
+resources/
 
 # === 🧠 Virtual environments ===
 .venv/
@@ -142,3 +143,4 @@ poetry.lock
 
 # === 📦 Extra files ===
 .history/
+
