@@ -139,3 +139,6 @@ ENV/
 # === 🐍 Python Poetry extras ===
 poetry.lock
 .cache/pypoetry/
+
+# === 📦 Extra files ===
+.history/
