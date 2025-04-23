@@ -45,3 +45,49 @@
 # Postghres checkpointer
 
 auth
+
+# Docker
+
+- Fix Cuda issues, check whats installing twice.
+
+### NEeed to add in the .precommit sutff back in.
+
+# COnsolidate graph visualizers
+
+# Look intpo poetry .venv issues
+
+# Look into docker issues.
+
+# HEAVY GRAPH IMPLEMENTAITON
+
+# REFINED NODE CLASS
+
+# REGISTRY (Abstract)
+
+# ENGINE WITH RUNNABLE REFERENCVE ?
+
+# mEMEaid check
+
+# Pattern Intergation
+
+# Agent Conversion .
+
+# Agent / Repo apprach .
+
+# SEnd command // control
+
+# PG Vector (SUPA)
+
+# Provider Types
+
+# finish the fucking schema get docs going as well
+
+# REGIUSTYR!!!
+
+# NGINIX
+
+# ORGANIZE POETRY
+
+# DOC HOSTING
+
+# Cenmtalized poly repo ???
