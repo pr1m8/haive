@@ -22,7 +22,7 @@ lint:
     - actionlint@1.7.7
     - bandit@1.8.3
     - black@25.1.0
-    - checkov@3.2.405
+    - checkov@3.2.407
     - dotenv-linter@3.3.0
     - git-diff-check
     - hadolint@2.12.1-beta
@@ -32,11 +32,11 @@ lint:
     - osv-scanner@2.0.1
     - oxipng@9.1.4
     - prettier@3.5.3
-    - ruff@0.11.5
+    - ruff@0.11.6
     - shellcheck@0.10.0
     - shfmt@3.6.0
     - taplo@0.9.3
-    - trufflehog@3.88.24
+    - trufflehog@3.88.25
     - yamllint@1.37.0
   ignore:
     - linters: [ALL]
