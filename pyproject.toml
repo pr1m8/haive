@@ -144,12 +144,12 @@ simsimd = "^6.2.1"
 toml = "^0.10.2"
 astor = "^0.8.1"
 prometheus-client = "^0.21.1"
-haive-agents = { path = "packages/haive-agents" }
-haive-core = { path = "packages/haive-core" }
-haive-dataflow = { path = "packages/haive-dataflow" }
-haive-games = { path = "packages/haive-games" }
-haive-prebuilt = { path = "packages/haive-prebuilt" }
-haive-tools = { path = "packages/haive-tools" }
+haive-agents = { path = "packages/haive-agents",develop=true }
+haive-core = { path = "packages/haive-core",develop=true }
+haive-dataflow = { path = "packages/haive-dataflow",develop=true }
+haive-games = { path = "packages/haive-games",develop=true }
+haive-prebuilt = { path = "packages/haive-prebuilt",develop=true }
+haive-tools = { path = "packages/haive-tools",develop=true }
 websocket = "^0.2.1"
 
 
@@ -212,6 +212,7 @@ tomlkit = "^0.13.2"
 bandit = "^1.8.3"
 tomli = "^2.2.1"
 tomli-w = "^1.2.0"
+tox = "^4.25.0"
 
 
 [tool.poetry.group.docs.dependencies]
