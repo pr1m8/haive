@@ -1,0 +1,47 @@
+{
+    "folders": [
+      {
+        "path": "."
+      },
+      {
+        "path": "packages/haive-core"
+      },
+      {
+        "path": "packages/haive-agents"
+      },
+      {
+        "path": "packages/haive-games"
+      },
+      {
+        "path": "packages/haive-prebuilt"
+      },
+      {
+        "path": "packages/haive-tools"
+      }
+    ],
+    "settings": {
+      "python.pythonPath": ".venv/bin/python",
+      "python.analysis.extraPaths": [
+        "./src",
+        "./packages/haive-core/src",
+        "./packages/haive-agents/src",
+        "./packages/haive-games/src",
+        "./packages/haive-prebuilt/src",
+        "./packages/haive-tools/src"
+      ],
+      "python.envFile": "${workspaceFolder}/.env",
+      "python.testing.pytestEnabled": true,
+      "python.testing.pytestArgs": [
+        "packages/"
+      ],
+      "editor.formatOnSave": true,
+      "files.exclude": {
+        "**/__pycache__": true,
+        "**/*.pyc": true,
+        "**/*.pyo": true,
+        "**/.mypy_cache": true,
+        "**/.pytest_cache": true
+      }
+    }
+  }
+  
