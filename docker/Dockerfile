@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1
+# syntax=docker/dockerfile:1.7
 
 ###########################################
 # === Base Stage: Python + System Deps ===
@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     graphviz pkg-config libcairo2-dev libgirepository1.0-dev \
     libjpeg-dev libopenjp2-7-dev libssl-dev libffi-dev \
     libreoffice poppler-utils tesseract-ocr ffmpeg libsm6 libxext6 \
-    libxml2-dev libxslt1-dev git \
+    libxml2-dev libxslt1-dev git curl \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # 🛡️ Add non-root user
@@ -23,7 +23,6 @@ RUN useradd -m haiveuser
 ###########################################
 FROM base AS builder
 
-# Set up Poetry environment
 ENV POETRY_VERSION=2.1.2 \
     POETRY_HOME="/opt/poetry" \
     POETRY_VIRTUALENVS_CREATE=false \
@@ -33,35 +32,53 @@ RUN pip install "poetry==$POETRY_VERSION"
 
 WORKDIR /app
 
-# Copy core project metadata and packages
-COPY pyproject.toml poetry.lock* README.md ./  
+# Copy root files for context/debug
+COPY pyproject.toml poetry.lock README.md ./
+
+# Copy all packages — needed before per-package install
 COPY packages ./packages
 
-RUN poetry install --with dev --no-root --no-interaction
+# ✅ DEBUG: Show package structure
+RUN echo "📂 Contents of packages/:" && tree -L 2 packages || true
+
+# 🔁 Loop install per package (safe)
+RUN set -ex && for d in packages/haive-*; do \
+    echo "🔧 Installing $d" && \
+    if [ -d "$d" ]; then \
+    cd "$d" && \
+    poetry install --no-root --only main --no-interaction && \
+    cd -; \
+    else \
+    echo "⚠️  Skipping $d (not a directory)"; \
+    fi; \
+    done
 
 ###############################################
-# === Final Runtime: Clean, Lean App Layer ===
+# === Final Runtime Stage: Clean & Minimal ===
 ###############################################
 FROM base AS runtime
 
 WORKDIR /app
 
+# Copy Python site-packages
 COPY --from=builder /usr/local/lib/python3.12 /usr/local/lib/python3.12
-COPY pyproject.toml poetry.lock* README.md ./  
+
+# Copy source
+COPY pyproject.toml poetry.lock README.md ./
 COPY packages ./packages
 COPY src ./src
 
-# Install torch (optionally skip if included in pyproject already)
+# ⚡ Optional: Torch (skip if bundled in Poetry deps)
 ARG TORCH_INDEX_URL=https://download.pytorch.org/whl/cpu
 RUN pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 \
     --index-url $TORCH_INDEX_URL
 
-# 🛡️ Switch to non-root user
+# 🛡️ Non-root user
 USER haiveuser
 
 EXPOSE 8000
 
-# ✅ Add HEALTHCHECK to validate the app is alive
+# ✅ Healthcheck
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
     CMD curl --fail http://localhost:8000/health || exit 1
 
