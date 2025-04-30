@@ -17,8 +17,8 @@ print(f"sys.path: {sys.path}")
 from langchain_core.tools import tool
 
 # Import agent
-from src.haive.agents.react_agent2.agent2 import create_react_agent
-from src.haive.core.models.llm.base import AzureLLMConfig
+from haive.haive.agents.react_agent2.agent2 import create_react_agent
+from haive.haive.core.models.llm.base import AzureLLMConfig
 
 
 # Simple tools for testing

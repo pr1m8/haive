@@ -3,25 +3,25 @@ from typing import Any, Optional
 
 from pydantic import Field, create_model
 
-from src.haive.agents.simple.agent import SimpleAgent
+from haive.haive.agents.simple.agent import SimpleAgent
 
 # Import SimpleAgentConfig and SimpleAgent
-from src.haive.agents.simple.config import SimpleAgentConfig
-from src.haive.core.config.runnable import RunnableConfigManager
+from haive.haive.agents.simple.config import SimpleAgentConfig
+from haive.haive.core.config.runnable import RunnableConfigManager
 
 # Import agent components
-from src.haive.core.engine.aug_llm import AugLLMConfig
+from haive.haive.core.engine.aug_llm import AugLLMConfig
 
 # Import core engine classes
-from src.haive.core.engine.embeddings import EmbeddingsEngineConfig
-from src.haive.core.engine.retriever import RetrieverConfig, RetrieverType
-from src.haive.core.engine.vectorstore import VectorStoreConfig
+from haive.haive.core.engine.embeddings import EmbeddingsEngineConfig
+from haive.haive.core.engine.retriever import RetrieverConfig, RetrieverType
+from haive.haive.core.engine.vectorstore import VectorStoreConfig
 
 # Import graph building components
-from src.haive.core.graph.GraphBuilder import DynamicGraph
-from src.haive.core.graph.schema.SchemaComposer import SchemaComposer
-from src.haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig
-from src.haive.core.models.llm.base import AzureLLMConfig
+from haive.haive.core.graph.GraphBuilder import DynamicGraph
+from haive.haive.core.graph.schema.SchemaComposer import SchemaComposer
+from haive.haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig
+from haive.haive.core.models.llm.base import AzureLLMConfig
 
 # Sample schema model for testing - using create_model to avoid constructor issues
 TestStateModel = create_model(

@@ -1,6 +1,6 @@
-from src.haive.games.monopoly.agent import MonopolyAgent
-from src.haive.games.monopoly.models import MoveAction, PropertyAction, TurnDecision
-from src.haive.games.monopoly.state import MonopolyState
+from haive.haive.games.monopoly.agent import MonopolyAgent
+from haive.haive.games.monopoly.models import MoveAction, PropertyAction, TurnDecision
+from haive.haive.games.monopoly.state import MonopolyState
 
 
 def test_init():

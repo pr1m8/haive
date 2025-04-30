@@ -73,7 +73,7 @@ def main():
 
     # Default import mappings
     import_map = {
-        "src.haive.core": "haive_core",
+        "src.haive.core": "haive.core",
         "src.haive.agents": "haive_agents",
         "src.haive.games": "haive_games",
         "src.haive.tak": "haive_tools",

@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 # Load environment variables from .env
 load_dotenv(".env")
 
-from src.haive.dataflow.registry import (
+from haive.haive.dataflow.registry import (
     ComponentRegistry,
     extract_agent_graph,
     extract_agent_schema,
@@ -31,10 +31,10 @@ from src.haive.dataflow.registry import (
 
 # Import registry components
 # Import AgentTypeRegistry directly
-from src.haive.dataflow.registry.agent import AgentTypeRegistry
+from haive.haive.dataflow.registry.agent import AgentTypeRegistry
 
 # Import database models and client
-from src.haive.dataflow.registry.db import (
+from haive.haive.dataflow.registry.db import (
     AgentGraph,
     RegistrySchema,
     SchemaDefinition,

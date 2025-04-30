@@ -1,0 +1,48 @@
+[
+  {
+    "__shared_fields__": [],
+    "__serializable_reducers__": {},
+    "__engine_io_mappings__": {},
+    "__input_fields__": {},
+    "__output_fields__": {},
+    "messages": [
+      {
+        "content": "What causes the Aurora Borealis?",
+        "additional_kwargs": {},
+        "response_metadata": {},
+        "type": "human",
+        "name": null,
+        "id": null,
+        "example": false
+      }
+    ],
+    "input": "",
+    "output": ""
+  },
+  [],
+  {
+    "configurable": {
+      "thread_id": "e75733b1-9415-4e23-8433-de8dfa6992b6",
+      "checkpoint_ns": "",
+      "checkpoint_id": "1f021680-29d4-642e-8001-2e3a2b4e3392"
+    }
+  },
+  {
+    "step": 1,
+    "source": "loop",
+    "writes": {
+      "simple_agent_node": null
+    },
+    "parents": {},
+    "thread_id": "e75733b1-9415-4e23-8433-de8dfa6992b6"
+  },
+  "2025-04-24T23:58:25.266168+00:00",
+  {
+    "configurable": {
+      "thread_id": "e75733b1-9415-4e23-8433-de8dfa6992b6",
+      "checkpoint_ns": "",
+      "checkpoint_id": "1f021680-29cf-6683-8000-6e4df4c998d1"
+    }
+  },
+  []
+]

@@ -17,7 +17,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 # Import LangGraph components for testing
 
 # Import the tool manager components
-from src.haive.core.graph.ToolManager import (
+from haive.haive.core.graph.ToolManager import (
     ToolConfig,
     ToolManager,
     state_tool,
