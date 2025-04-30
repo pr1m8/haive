@@ -373,6 +373,14 @@ youtube-search = "^2.1.2"
 yt-dlp = "^2025.2.19"
 whisper = "^1.1.10"
 
+
+[tool.poetry.group.engine-retrievers.dependencies]
+wiki = "^0.11.2"
+
+
+[tool.poetry.group."engine.persistence".dependencies]
+redis = "^5.2.1"
+
 [tool.poetry.extras]
 cpu = ["torch", "torchvision", "torchaudio"]
 cuda = ["torch", "torchvision", "torchaudio"]
