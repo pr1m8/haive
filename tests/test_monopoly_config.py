@@ -9,7 +9,7 @@ from pathlib import Path
 # Add the project root to the path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from src.haive.games.monopoly.config import MonopolyAgentConfig
+from haive.haive.games.monopoly.config import MonopolyAgentConfig
 
 
 def main():
@@ -18,7 +18,7 @@ def main():
         config = MonopolyAgentConfig()
 
         # Test MonopolyAgent creation
-        from src.haive.games.monopoly.agent import MonopolyAgent
+        from haive.haive.games.monopoly.agent import MonopolyAgent
 
         MonopolyAgent(config=config)
 

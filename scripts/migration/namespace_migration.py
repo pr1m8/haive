@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Haive Namespace Migration Script.
 
-This script migrates the Haive framework from package-style imports (haive_core)
+This script migrates the Haive framework from package-style imports (haive.core)
 to namespace package imports (haive.core). It handles both directory structure
 reorganization and import statement updates across multiple submodules.
 
@@ -49,7 +49,7 @@ logger = logging.getLogger("migration")
 
 # Mapping of old to new module paths
 MODULE_MAPPING = {
-    "haive_core": "haive.core",
+    "haive.core": "haive.core",
     "haive_agents": "haive.agents",
     "haive_games": "haive.games",
     "haive_dataflow": "haive.dataflow",

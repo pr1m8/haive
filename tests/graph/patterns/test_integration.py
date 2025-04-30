@@ -1,7 +1,7 @@
     def test_pattern_enhanced_workflow(self, pattern_agent_config, test_pattern):
         """Test enhanced workflow with patterns."""
         # Create a standalone graph
-        from haive_core.graph.dynamic_graph_builder import DynamicGraph
+        from haive.core.graph.dynamic_graph_builder import DynamicGraph
         graph = DynamicGraph(name="test_graph")
         logger.info(f"Created DynamicGraph: {graph}")
         logger.info(f"Graph type: {type(graph).__name__}")

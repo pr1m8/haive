@@ -91,11 +91,11 @@ auth
 # DOC HOSTING
 
 # Cenmtalized poly repo ???
-# instantiate vs create runnable consistnecy. 
 
-
+# instantiate vs create runnable consistnecy.
 
 # RAG VS - CHECK TO DO IN RETREIVER engien
+
 # ADD QUANTUM (HYBRID/Non-Hybrid REtreiver - http://chatgpt.com/c/680e9c8b-c850-8010-b400-a773b37f087a?model=o3)
 
 # Consistiency of gb vs grapoh uilde.

@@ -33,7 +33,7 @@ sys.path.append(
 from pydantic import BaseModel, ConfigDict, Field
 
 # Now we can safely import the component we're testing
-from src.haive.core.graph.schema.StateSchemaManager import StateSchemaManager
+from haive.haive.core.graph.schema.StateSchemaManager import StateSchemaManager
 
 
 # Test models

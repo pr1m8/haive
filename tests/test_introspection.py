@@ -8,8 +8,8 @@ from dotenv import dotenv_values
 # Dynamically support local modules like haive.tak or langchain_textsplitters
 sys.path.insert(0, os.getcwd())
 
-from src.haive.introspection.metadata import extract_metadata
-from src.haive.introspection.scanner import discover_classes
+from haive.haive.introspection.metadata import extract_metadata
+from haive.haive.introspection.scanner import discover_classes
 
 actual_env = dotenv_values(".env")
 EXPORT_DIR = "introspection_outputs"

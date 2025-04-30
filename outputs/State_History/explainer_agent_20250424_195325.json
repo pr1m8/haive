@@ -1,0 +1,31 @@
+[
+  {
+    "input": "Explain quantum computing to me like I'm 10 years old."
+  },
+  [],
+  {
+    "configurable": {
+      "thread_id": "60336315-d38f-4991-bf45-c58b6a09d666",
+      "checkpoint_ns": "",
+      "checkpoint_id": "1f021674-ff91-6904-8001-3f89ce6d2e42"
+    }
+  },
+  {
+    "step": 1,
+    "source": "loop",
+    "writes": {
+      "simple_agent_node": null
+    },
+    "parents": {},
+    "thread_id": "60336315-d38f-4991-bf45-c58b6a09d666"
+  },
+  "2025-04-24T23:53:25.555830+00:00",
+  {
+    "configurable": {
+      "thread_id": "60336315-d38f-4991-bf45-c58b6a09d666",
+      "checkpoint_ns": "",
+      "checkpoint_id": "1f021674-ff8c-69fc-8000-8e5d10ad6f7c"
+    }
+  },
+  []
+]

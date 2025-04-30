@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 # Import the registry components
-from src.haive.core.registry.registy import (
+from haive.haive.core.registry.registy import (
     AbstractRegistry,
     register_graph,
     register_node,

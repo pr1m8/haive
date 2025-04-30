@@ -1,0 +1,179 @@
+[
+  {
+    "messages": [
+      {
+        "content": "I want to change my wireless network name and password. How can I do that?",
+        "additional_kwargs": {
+          "refusal": null
+        },
+        "response_metadata": {
+          "token_usage": {
+            "completion_tokens": 18,
+            "prompt_tokens": 13,
+            "total_tokens": 31,
+            "completion_tokens_details": {
+              "accepted_prediction_tokens": 0,
+              "audio_tokens": 0,
+              "reasoning_tokens": 0,
+              "rejected_prediction_tokens": 0
+            },
+            "prompt_tokens_details": {
+              "audio_tokens": 0,
+              "cached_tokens": 0
+            }
+          },
+          "model_name": "gpt-4o-2024-08-06",
+          "system_fingerprint": "fp_ee1d74bde0",
+          "prompt_filter_results": [
+            {
+              "prompt_index": 0,
+              "content_filter_results": {}
+            }
+          ],
+          "finish_reason": "stop",
+          "logprobs": null,
+          "content_filter_results": {
+            "hate": {
+              "filtered": false,
+              "severity": "safe"
+            },
+            "self_harm": {
+              "filtered": false,
+              "severity": "safe"
+            },
+            "sexual": {
+              "filtered": false,
+              "severity": "safe"
+            },
+            "violence": {
+              "filtered": false,
+              "severity": "safe"
+            }
+          }
+        },
+        "type": "ai",
+        "name": null,
+        "id": "run-fa8c2316-5a9e-4ea0-aeca-4ba7eea519ab-0",
+        "example": false,
+        "tool_calls": [],
+        "invalid_tool_calls": [],
+        "usage_metadata": {
+          "input_tokens": 13,
+          "output_tokens": 18,
+          "total_tokens": 31,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        }
+      }
+    ],
+    "input": "Explain quantum computing to me like I'm 10 years old.",
+    "output": ""
+  },
+  [],
+  {
+    "configurable": {
+      "thread_id": "47b29021-5f24-4c44-b93c-d616ae8f0e76",
+      "checkpoint_ns": "",
+      "checkpoint_id": "1f0216a0-55d5-6ed1-8001-b790a230ff46"
+    }
+  },
+  {
+    "step": 1,
+    "source": "loop",
+    "writes": {
+      "simple_agent_node": {
+        "input": "Explain quantum computing to me like I'm 10 years old.",
+        "output": "",
+        "messages": [
+          {
+            "content": "I want to change my wireless network name and password. How can I do that?",
+            "additional_kwargs": {
+              "refusal": null
+            },
+            "response_metadata": {
+              "logprobs": null,
+              "model_name": "gpt-4o-2024-08-06",
+              "token_usage": {
+                "total_tokens": 31,
+                "prompt_tokens": 13,
+                "completion_tokens": 18,
+                "prompt_tokens_details": {
+                  "audio_tokens": 0,
+                  "cached_tokens": 0
+                },
+                "completion_tokens_details": {
+                  "audio_tokens": 0,
+                  "reasoning_tokens": 0,
+                  "accepted_prediction_tokens": 0,
+                  "rejected_prediction_tokens": 0
+                }
+              },
+              "finish_reason": "stop",
+              "system_fingerprint": "fp_ee1d74bde0",
+              "prompt_filter_results": [
+                {
+                  "prompt_index": 0,
+                  "content_filter_results": {}
+                }
+              ],
+              "content_filter_results": {
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                }
+              }
+            },
+            "type": "ai",
+            "name": null,
+            "id": "run-fa8c2316-5a9e-4ea0-aeca-4ba7eea519ab-0",
+            "example": false,
+            "tool_calls": [],
+            "invalid_tool_calls": [],
+            "usage_metadata": {
+              "input_tokens": 13,
+              "output_tokens": 18,
+              "total_tokens": 31,
+              "input_token_details": {
+                "audio": 0,
+                "cache_read": 0
+              },
+              "output_token_details": {
+                "audio": 0,
+                "reasoning": 0
+              }
+            }
+          }
+        ]
+      }
+    },
+    "parents": {},
+    "thread_id": "47b29021-5f24-4c44-b93c-d616ae8f0e76"
+  },
+  "2025-04-25T00:12:48.874024+00:00",
+  {
+    "configurable": {
+      "thread_id": "47b29021-5f24-4c44-b93c-d616ae8f0e76",
+      "checkpoint_ns": "",
+      "checkpoint_id": "1f0216a0-5554-60b8-8000-e9a1bab523ef"
+    }
+  },
+  []
+]

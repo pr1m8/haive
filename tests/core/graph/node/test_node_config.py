@@ -2,8 +2,8 @@ import logging
 
 from langgraph.graph import END
 
-from src.haive.core.engine.base import EngineType
-from src.haive.core.graph.node.config import NodeConfig
+from haive.haive.core.engine.base import EngineType
+from haive.haive.core.graph.node.config import NodeConfig
 
 # Configure logging for this test file
 logger = logging.getLogger(__name__)
@@ -112,7 +112,7 @@ def test_node_config_resolve_engine(real_llm_engine, monkeypatch):
 
     # Test with string (mock the registry lookup)
     logger.debug("Testing resolve_engine with string reference (mocking registry)")
-    from src.haive.core.engine.base import EngineRegistry
+    from haive.haive.core.engine.base import EngineRegistry
 
     # Create a mock registry class for testing
     class MockRegistry:
@@ -200,7 +200,7 @@ def test_node_config_serialization(real_llm_engine, monkeypatch):
 
     # Mock the registry for deserialization
     logger.debug("Setting up mock registry for deserialization")
-    from src.haive.core.engine.base import EngineRegistry
+    from haive.haive.core.engine.base import EngineRegistry
 
     class MockRegistry:
         def find(self, name_or_id):

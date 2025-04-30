@@ -210,8 +210,8 @@ def refactor_imports(file_path):
 
     # Replace imports
     replacements = [
-        (r'from src\\.haive\\.core', r'from haive_core'),
-        (r'import src\\.haive\\.core', r'import haive_core'),
+        (r'from src\\.haive\\.core', r'from haive.core'),
+        (r'import src\\.haive\\.core', r'import haive.core'),
         (r'from src\\.haive\\.agents', r'from haive_agents'),
         (r'import src\\.haive\\.agents', r'import haive_agents'),
         (r'from src\\.haive\\.games', r'from haive_games'),
