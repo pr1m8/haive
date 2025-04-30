@@ -33,7 +33,7 @@
 
 ### Seperation of su
 
-### SET TESTING MODE: /home/will/Projects/haive/backend/haive/packages/haive-core/src/haive_core/engine/agent/config.py
+### SET TESTING MODE: /home/will/Projects/haive/backend/haive/packages/haive-core/src/haive.core/engine/agent/config.py
 
 # Testing
 
@@ -91,3 +91,11 @@ auth
 # DOC HOSTING
 
 # Cenmtalized poly repo ???
+# instantiate vs create runnable consistnecy. 
+
+
+
+# RAG VS - CHECK TO DO IN RETREIVER engien
+# ADD QUANTUM (HYBRID/Non-Hybrid REtreiver - http://chatgpt.com/c/680e9c8b-c850-8010-b400-a773b37f087a?model=o3)
+
+# Consistiency of gb vs grapoh uilde.
