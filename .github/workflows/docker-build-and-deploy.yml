@@ -39,8 +39,8 @@ jobs:
       - name: 🐳 Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: .  # Keep context as root if Dockerfile uses ../src etc.
-          file: docker/Dockerfile  # ✅ Correct Dockerfile path
+          context: . # Keep context as root if Dockerfile uses ../src etc.
+          file: docker/Dockerfile # ✅ Correct Dockerfile path
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
