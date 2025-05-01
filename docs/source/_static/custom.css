@@ -1,101 +1,108 @@
 /* 🌟 Custom Styling for a Modern, Elegant Look */
 :root {
-    --main-accent-color: #4a8fff;
-    --secondary-accent-color: #357edd;
-    --code-background-color: #f5f7f9;
-    --background-color: #ffffff;
-    --text-color: #333;
-    --shadow-light: 0 2px 5px rgba(0, 0, 0, 0.08);
-    --shadow-hover: 0 4px 10px rgba(0, 0, 0, 0.15);
-    --border-radius: 8px;
-    --sidebar-width: 300px;
-    --transition-speed: 0.2s ease-in-out;
+  --main-accent-color: #4a8fff;
+  --secondary-accent-color: #357edd;
+  --code-background-color: #f5f7f9;
+  --background-color: #ffffff;
+  --text-color: #333;
+  --shadow-light: 0 2px 5px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 4px 10px rgba(0, 0, 0, 0.15);
+  --border-radius: 8px;
+  --sidebar-width: 300px;
+  --transition-speed: 0.2s ease-in-out;
 }
 
 /* 🌟 Smooth Typography for Readability */
 body {
-    font-family: "Inter", Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--background-color);
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--background-color);
 }
 
 /* 🌟 Modern Rounded Code Blocks */
 .highlight {
-    border-radius: var(--border-radius);
-    padding: 1rem;
-    background: var(--code-background-color);
-    overflow: auto;
-    box-shadow: var(--shadow-light);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  background: var(--code-background-color);
+  overflow: auto;
+  box-shadow: var(--shadow-light);
 }
 
 /* 🌟 Card-Style Elements */
-.class, .function {
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-light);
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-    border-left: 4px solid var(--main-accent-color);
-    background: #fff;
-    transition: box-shadow var(--transition-speed);
+.class,
+.function {
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid var(--main-accent-color);
+  background: #fff;
+  transition: box-shadow var(--transition-speed);
 }
 
-.class:hover, .function:hover {
-    box-shadow: var(--shadow-hover);
+.class:hover,
+.function:hover {
+  box-shadow: var(--shadow-hover);
 }
 
 /* 🌟 Improved Method Signature Display */
-dl.method, dl.attribute {
-    padding-left: 1rem;
-    border-left: 2px solid var(--secondary-accent-color);
-    margin-left: 1rem;
-    font-weight: 500;
+dl.method,
+dl.attribute {
+  padding-left: 1rem;
+  border-left: 2px solid var(--secondary-accent-color);
+  margin-left: 1rem;
+  font-weight: 500;
 }
 
 /* 🌟 Animated Link Effects */
 a {
-    color: var(--main-accent-color);
-    text-decoration: none;
-    transition: color var(--transition-speed), text-shadow var(--transition-speed);
+  color: var(--main-accent-color);
+  text-decoration: none;
+  transition:
+    color var(--transition-speed),
+    text-shadow var(--transition-speed);
 }
 
 a:hover {
-    color: var(--secondary-accent-color);
-    text-shadow: 0 0 8px rgba(74, 143, 255, 0.3);
+  color: var(--secondary-accent-color);
+  text-shadow: 0 0 8px rgba(74, 143, 255, 0.3);
 }
 
 /* 🌟 Sidebar Styling */
 .sidebar {
-    width: var(--sidebar-width);
-    background: var(--code-background-color);
-    padding: 1rem;
-    border-right: 1px solid #eaecef;
-    position: fixed;
-    height: 100vh;
-    overflow-y: auto;
+  width: var(--sidebar-width);
+  background: var(--code-background-color);
+  padding: 1rem;
+  border-right: 1px solid #eaecef;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 /* 🌟 Button Styling */
 button {
-    background: var(--main-accent-color);
-    color: white;
-    border: none;
-    padding: 0.7rem 1.2rem;
-    border-radius: var(--border-radius);
-    font-weight: 600;
-    cursor: pointer;
-    transition: background var(--transition-speed), box-shadow var(--transition-speed);
+  background: var(--main-accent-color);
+  color: white;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background var(--transition-speed),
+    box-shadow var(--transition-speed);
 }
 
 button:hover {
-    background: var(--secondary-accent-color);
-    box-shadow: var(--shadow-hover);
+  background: var(--secondary-accent-color);
+  box-shadow: var(--shadow-hover);
 }
 
 /* 🌟 Responsive Improvements */
 @media (max-width: 768px) {
-    .sidebar {
-        width: 250px;
-    }
+  .sidebar {
+    width: 250px;
+  }
 }

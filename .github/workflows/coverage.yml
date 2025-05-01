@@ -81,11 +81,11 @@ jobs:
 
 
 
-          
+
           poetry install --with dev --no-interaction
       - name: 🚫 Disable Poetry keyring (CI workaround)
         run: poetry config keyring.enabled false
-        
+
       - name: 🧪 Run tests with coverage
         run: |
           echo "🔍 Running coverage for: ${{ matrix.package }}"

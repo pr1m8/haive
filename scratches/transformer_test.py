@@ -29,7 +29,7 @@ async def apply_transformers(documents):
         "DoctranQA": DoctranQATransformer(),
         "DoctranPropertyExtractor": DoctranPropertyExtractor(),
         "OpenAIMetadataTagger": OpenAIMetadataTagger(
-            #llm=summarizer.config.engines["reduce_chain"].llm_config.instantiate_llm(model="gpt-4o")
+            #llm=summarizer.config.engines["reduce_chain"].llm_config.instantiate(model="gpt-4o")
         ),
         "LongContextReorder": LongContextReorder(),
         "NucliaText": NucliaTextTransformer()
