@@ -51,7 +51,7 @@ def test_basic_node_decorator():
     @node()
     def simple_node(state: State) -> State:
         return state
-    
+
     state = {"input": "test"}
     result = simple_node(state)
     assert result == state
@@ -77,6 +77,7 @@ Two main documentation files were created:
 ## References
 
 - **LangGraph Documentation**:
+
   - langgraph-branching-interrupts.md
   - langgraph-toolnode.md
   - langgraph-retry.md
@@ -88,4 +89,4 @@ Two main documentation files were created:
   - Schema system
   - Registry system
 
-*This implementation was developed with assistance from Claude 3.7 Sonnet.*
+_This implementation was developed with assistance from Claude 3.7 Sonnet._

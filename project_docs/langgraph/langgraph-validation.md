@@ -39,12 +39,12 @@ validation_node = ValidationNode(schemas=[UserQuery])
 
 ValidationNode offers granular control through its initialization parameters:
 
-| Parameter       | Type                          | Default      | Description                                                                 |
-|-----------------|-------------------------------|--------------|-----------------------------------------------------------------------------|
-| `schemas`       | Sequence[Union[...]]          | Required     | Validation targets (BaseModel, BaseTool, or callable)                      |
-| `format_error`  | Callable[[Exception], str]    | Default func | Custom error formatting function                                            |
-| `retry_policy`  | RetryPolicy                   | 3 attempts   | Controls validation retry behavior                                          |
-| `strict_mode`   | bool                          | False        | Enforces exact schema matches when True                                     |
+| Parameter      | Type                       | Default      | Description                                           |
+| -------------- | -------------------------- | ------------ | ----------------------------------------------------- |
+| `schemas`      | Sequence[Union[...]]       | Required     | Validation targets (BaseModel, BaseTool, or callable) |
+| `format_error` | Callable[[Exception], str] | Default func | Custom error formatting function                      |
+| `retry_policy` | RetryPolicy                | 3 attempts   | Controls validation retry behavior                    |
+| `strict_mode`  | bool                       | False        | Enforces exact schema matches when True               |
 
 ## Implementation Patterns
 
@@ -121,30 +121,30 @@ def create_validation_node(
     command_goto: Optional[str] = None
 ) -> Callable:
     """Create a validation node function."""
-    
+
     # Normalize schemas to list
     schema_list = [schemas] if not isinstance(schemas, list) else schemas
-    
+
     # Default error formatter
     if format_error is None:
         format_error = lambda exc, _: f"Validation error: {exc}"
-    
+
     def validation_node(state: Dict[str, Any]) -> Union[Dict[str, Any], Command]:
         # Extract messages
         messages = state.get("messages", [])
         if not messages:
             # No messages to validate
             return Command(goto=command_goto) if command_goto else {}
-        
+
         # Get last message
         last_message = messages[-1]
-        
+
         # Extract tool calls
         tool_calls = getattr(last_message, "tool_calls", [])
         if not tool_calls:
             # No tool calls to validate
             return Command(goto=command_goto) if command_goto else {}
-        
+
         # Validate tool calls
         validation_errors = []
         for tool_call in tool_calls:
@@ -157,7 +157,7 @@ def create_validation_node(
                     "tool_name": tool_call.name,
                     "errors": formatted_errors
                 })
-        
+
         # Update state with validation results
         updates = {}
         if validation_errors:
@@ -165,16 +165,16 @@ def create_validation_node(
             updates["validation_failed"] = True
         else:
             updates["validation_passed"] = True
-        
+
         # Return with command routing if specified
         if command_goto:
             return Command(update=updates, goto=command_goto)
         return updates
-    
+
     # Apply retry policy if specified
     if retry_policy:
         validation_node = apply_retry_policy(validation_node, retry_policy)
-    
+
     return validation_node
 ```
 
@@ -188,22 +188,22 @@ class ToolSchema(StateSchema):
     messages: List[BaseMessage] = Field(default_factory=list)
     validation_errors: List[Dict[str, Any]] = Field(default_factory=list)
     validation_passed: bool = Field(default=False)
-    
+
     # Define validation schemas for specific tools
     class Config:
         tool_schemas = {
             "search": SearchToolSchema,
             "calculator": CalculatorToolSchema
         }
-    
+
     def validate_tool_calls(self) -> bool:
         """Validate tool calls in the last message."""
         if not self.messages:
             return True
-        
+
         last_message = self.messages[-1]
         tool_calls = getattr(last_message, "tool_calls", [])
-        
+
         validation_errors = []
         for tool_call in tool_calls:
             if tool_call.name in self.Config.tool_schemas:
@@ -217,11 +217,11 @@ class ToolSchema(StateSchema):
                         "tool_name": tool_call.name,
                         "errors": str(e)
                     })
-        
+
         # Update state
         self.validation_errors = validation_errors
         self.validation_passed = len(validation_errors) == 0
-        
+
         return self.validation_passed
 ```
 
@@ -235,22 +235,22 @@ def create_dynamic_validation_node(
     command_goto: Optional[str] = None
 ) -> Callable:
     """Create a validation node with custom validation logic."""
-    
+
     def validation_node(state: Dict[str, Any]) -> Union[Dict[str, Any], Command]:
         # Call custom validation function
         passed, errors = validate_func(state)
-        
+
         # Update state with validation results
         updates = {
             "validation_passed": passed,
             "validation_errors": errors
         }
-        
+
         # Return with command routing if specified
         if command_goto:
             return Command(update=updates, goto=command_goto)
         return updates
-    
+
     return validation_node
 ```
 
@@ -263,7 +263,7 @@ class ValidationAgentState(StateSchema):
     messages: List[BaseMessage] = Field(default_factory=list)
     validation_errors: List[Dict[str, Any]] = Field(default_factory=list)
     validation_passed: bool = Field(default=False)
-    
+
     def should_retry(self) -> Dict[str, str]:
         """Determine routing based on validation state."""
         if not self.validation_passed and self.validation_errors:

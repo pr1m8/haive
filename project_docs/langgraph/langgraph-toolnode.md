@@ -68,11 +68,11 @@ def tools_condition(state: State) -> Literal["tools", "__end__"]:
 
 ### 2. Configuration Strategies
 
-| Parameter          | Effect on Routing                     | Use Case                          |
-|--------------------|---------------------------------------|-----------------------------------|
-| `message_key`      | Custom state field for message access | Multi-modal agent architectures   |
-| `error_threshold`  | Automatic retry attempts              | Fault-tolerant workflows          |
-| `tool_call_filter`  | Selective tool execution              | Permission-based tool access      |
+| Parameter          | Effect on Routing                     | Use Case                        |
+| ------------------ | ------------------------------------- | ------------------------------- |
+| `message_key`      | Custom state field for message access | Multi-modal agent architectures |
+| `error_threshold`  | Automatic retry attempts              | Fault-tolerant workflows        |
+| `tool_call_filter` | Selective tool execution              | Permission-based tool access    |
 
 ## Advanced Implementation Patterns
 
@@ -85,7 +85,7 @@ from langgraph.prebuilt import InjectedState
 
 @tool
 def contextual_search(
-    query: str, 
+    query: str,
     state: Annotated[dict, InjectedState(field="session_context")]
 ):
     """Search with session-specific filters"""
@@ -122,41 +122,41 @@ def create_tool_node(
     command_goto: Optional[str] = None
 ) -> Callable:
     """Create a node function for tool execution."""
-    
+
     # Create tool map
     tool_map = {tool.name: tool for tool in tools}
-    
+
     def tool_node(state: Dict[str, Any]) -> Any:
         # Extract messages
         messages = state.get("messages", [])
         if not messages:
             return Command(goto=command_goto) if command_goto else {}
-        
+
         # Extract tool calls from last message
         last_message = messages[-1]
         tool_calls = get_tool_calls(last_message, tool_call_parser)
-        
+
         if not tool_calls:
             return Command(goto=command_goto) if command_goto else {}
-        
+
         # Execute tools (parallel or sequential)
         results = execute_tools(
-            tool_calls, 
-            tool_map, 
-            parallel=parallel, 
+            tool_calls,
+            tool_map,
+            parallel=parallel,
             max_workers=max_workers,
             handle_errors=handle_errors
         )
-        
+
         # Create tool messages
         tool_messages = create_tool_messages(results)
-        
+
         # Return updated state with tool messages
         return Command(
             update={"messages": messages + tool_messages},
             goto=command_goto
         ) if command_goto else {"messages": messages + tool_messages}
-    
+
     return tool_node
 ```
 
@@ -171,23 +171,23 @@ def create_tools_condition(
     routes: Dict[str, str] = None
 ) -> Callable:
     """Create a tools condition function for routing."""
-    
+
     routes = routes or {"has_tools": "tools", "no_tools": "continue"}
-    
+
     def condition_func(state: Dict[str, Any]) -> str:
         # Extract messages
         messages = state.get(message_key, [])
         if not messages:
             return routes.get("no_tools")
-        
+
         # Check last message for tool calls
         last_message = messages[-1]
         tool_calls = get_tool_calls(last_message, tool_call_parser)
-        
+
         if tool_calls:
             return routes.get("has_tools")
         return routes.get("no_tools")
-    
+
     return condition_func
 ```
 
@@ -204,20 +204,20 @@ def create_state_injected_tool(
     schema: Optional[Type[BaseModel]] = None
 ) -> BaseTool:
     """Create a tool with state injection support."""
-    
+
     # Create a wrapped function that injects state fields
     def wrapped_func(*args, **kwargs):
         # Get injected state from context
         state = kwargs.pop("__state__", {})
-        
+
         # Inject requested state fields
         for field in state_fields:
             if field in state and field not in kwargs:
                 kwargs[field] = state[field]
-        
+
         # Call original function
         return func(*args, **kwargs)
-    
+
     # Create and return tool
     return BaseTool(
         name=name,
@@ -240,9 +240,9 @@ def execute_tools(
     handle_errors: bool = True
 ) -> List[Dict[str, Any]]:
     """Execute tools in parallel or sequentially."""
-    
+
     results = []
-    
+
     if parallel and len(tool_calls) > 1:
         # Execute tools in parallel
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
@@ -258,7 +258,7 @@ def execute_tools(
                             handle_errors
                         )
                     )
-            
+
             # Gather results
             for future in as_completed(futures):
                 results.append(future.result())
@@ -269,7 +269,7 @@ def execute_tools(
                 tool = tool_map[tool_call.name]
                 result = _safe_execute_tool(tool, tool_call.args, handle_errors)
                 results.append(result)
-    
+
     return results
 ```
 
@@ -282,12 +282,12 @@ class AgentState(StateSchema):
     """Agent state with tools support."""
     messages: List[BaseMessage] = Field(default_factory=list)
     tools_used: List[str] = Field(default_factory=list)
-    
+
     # Reducer for tools_used field
     __reducer_fields__ = {
         "tools_used": operator.add
     }
-    
+
     # Tool tracking method
     def add_tool_usage(self, tool_name: str) -> None:
         """Add a tool usage to the state."""
@@ -301,19 +301,19 @@ def create_enhanced_tool_node(
     command_goto: Optional[str] = None
 ) -> Callable:
     """Create an enhanced tool node that integrates with schema system."""
-    
+
     # Implementation details...
-    
+
     def tool_node(state: Dict[str, Any]) -> Any:
         # Tool execution logic...
-        
+
         # Update tools_used field if tracking is enabled
         updates = {"messages": messages + tool_messages}
         if track_usage and state_schema and hasattr(state_schema, "tools_used"):
             updates["tools_used"] = [tool["name"] for tool in results]
-        
+
         return Command(update=updates, goto=command_goto) if command_goto else updates
-    
+
     return tool_node
 ```
 
@@ -322,6 +322,7 @@ def create_enhanced_tool_node(
 LangGraph's `ToolNode` and `tools_condition` provide a robust framework for implementing complex tool-execution workflows in AI agent systems. For Haive's node system redesign, we should adopt these patterns with enhanced schema integration and configuration support to create a more powerful and maintainable tool execution system.
 
 Key elements to implement include:
+
 1. Specialized tool node function creators
 2. Standard routing condition functions
 3. Parallel tool execution support

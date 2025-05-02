@@ -24,11 +24,13 @@ def basic_node(state: State) -> State:
 ```
 
 #### Key Features:
+
 - Simple function signature
 - Processes state directly
 - Can return updated state or Command
 
 #### Best For:
+
 - Simple transformations
 - Decision points
 - State preparation
@@ -48,11 +50,13 @@ async def async_node(state: State) -> State:
 ```
 
 #### Key Features:
+
 - Asynchronous execution
 - Non-blocking operations
 - Same interface as basic nodes
 
 #### Best For:
+
 - API calls
 - Database operations
 - File I/O
@@ -91,11 +95,13 @@ retriever = retriever_node(
 ```
 
 #### Key Features:
+
 - Wraps engines with a node interface
 - Handles input/output mapping
 - Default mappings for specific engine types
 
 #### Best For:
+
 - LLM integration
 - Retrieval operations
 - Vector store queries
@@ -130,12 +136,14 @@ workflow.add_conditional_edges(
 ```
 
 #### Key Features:
+
 - Executes tools from messages
 - Parallel execution support
 - Standardized tool message format
 - Automatic tool error handling
 
 #### Best For:
+
 - Agent workflows
 - Tool execution
 - Parallel processing of multiple tool calls
@@ -161,11 +169,13 @@ validator = validation_node(
 ```
 
 #### Key Features:
+
 - Schema-based validation
 - Error reporting
 - Conditional routing based on validation result
 
 #### Best For:
+
 - Input validation
 - Schema enforcement
 - Data quality checks
@@ -192,12 +202,14 @@ def api_call(state: State) -> State:
 ```
 
 #### Key Features:
+
 - Automatic retries on failure
 - Exponential backoff
 - Jitter support
 - Failure routing
 
 #### Best For:
+
 - API calls
 - Database operations
 - Network requests
@@ -214,25 +226,27 @@ from haive.core.graph.node import interruptible_node, interrupt
 def content_generator(state: State) -> State:
     # Generate content
     content = generate(state.prompt)
-    
+
     # If content needs human review
     if needs_review(content):
         interrupt({
             "content": content,
             "action": "review"
         })
-    
+
     state.content = content
     return state
 ```
 
 #### Key Features:
+
 - Interruption with payload
 - Automatic state preservation
 - Resume capability
 - Human-in-the-loop support
 
 #### Best For:
+
 - Approval workflows
 - Human review steps
 - Long-running processes
@@ -360,13 +374,13 @@ Implement workflows that require human approval.
 @interruptible_node(resume_node="reviewer")
 def generate_content(state: State) -> State:
     content = generate(state.prompt)
-    
+
     # Always interrupt for review
     interrupt({
         "content": content,
         "id": state.task_id
     })
-    
+
     return state  # Never reached directly
 
 # Human review node
@@ -375,7 +389,7 @@ def reviewer(state: State) -> Command:
     # Get the decision from resume_data
     decision = state.resume_data.get("decision")
     content = state.resume_data.get("content")
-    
+
     if decision == "approve":
         # Use approved content
         state.content = content
@@ -471,11 +485,11 @@ Create nodes dynamically based on configuration.
 def create_processing_pipeline(config: Dict[str, Any]):
     """Create a pipeline of nodes based on configuration."""
     nodes = {}
-    
+
     for i, step in enumerate(config["steps"]):
         step_name = f"step_{i}"
         next_step = f"step_{i+1}" if i < len(config["steps"])-1 else "END"
-        
+
         # Create node based on step type
         if step["type"] == "llm":
             nodes[step_name] = llm_node(
@@ -493,20 +507,20 @@ def create_processing_pipeline(config: Dict[str, Any]):
                 success_node=next_step,
                 failure_node="error_handler"
             )
-    
+
     # Create graph
     graph = StateGraph(...)
-    
+
     # Add nodes
     for name, node_func in nodes.items():
         graph.add_node(name, node_func)
-    
+
     # Add error handler
     graph.add_node("error_handler", error_handler)
-    
+
     # Add edges
     graph.add_edge("START", "step_0")
-    
+
     return graph
 ```
 
@@ -521,56 +535,61 @@ def create_validator_with_retry(
     max_attempts: int = 3
 ):
     """Create a validation+processing+retry pattern."""
-    
+
     # Create validator
     validator = validation_node(
         validation_schema=schema,
         success_node="process",
         failure_node="handle_error"
     )
-    
+
     # Create processor with retry
     processor = retry_node(
         max_attempts=max_attempts,
         failure_node="handle_error"
     )(process_func)
-    
+
     # Create error handler
     @node(command_goto="END")
     def error_handler(state: State) -> State:
         state.error = "Validation or processing failed"
         return state
-    
+
     # Create graph
     graph = StateGraph(...)
     graph.add_node("validate", validator)
     graph.add_node("process", processor)
     graph.add_node("handle_error", error_handler)
     graph.add_edge("START", "validate")
-    
+
     return graph
 ```
 
 ## Best Practices
 
 1. **Use the Right Node Type**:
+
    - Choose the appropriate node type for each task
    - Match node type to functionality (async for I/O, retry for external calls, etc.)
 
 2. **Keep Nodes Focused**:
+
    - Each node should do one thing well
    - Avoid complex logic in a single node
 
 3. **Explicit State Handling**:
+
    - Use StateSchema for type safety
    - Document state requirements for each node
 
 4. **Error Management**:
+
    - Use validation nodes for input verification
    - Add retry for unreliable operations
    - Include explicit error handlers
 
 5. **Testing**:
+
    - Test nodes individually
    - Create test cases for edge conditions
    - Use NodeTester for isolated testing

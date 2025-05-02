@@ -28,6 +28,7 @@ async def my_async_node(state: State) -> Any:
 ```
 
 The return type can be:
+
 - A modified state (dict, StateSchema, or BaseModel)
 - A Command (for routing to another node)
 - A Send object (for parallel workflows)
@@ -47,7 +48,7 @@ The `NodeConfig` class provides configuration for nodes, handling:
 The `NodeFactory` creates node functions from different sources:
 
 - Engine instances
-- Callable functions 
+- Callable functions
 - NodeConfig objects
 
 It handles input/output processing, command routing, and schema preservation.
@@ -108,7 +109,7 @@ def retrieval(state: StateSchema) -> StateSchema:
 
 # Specialized LLM node
 llm = llm_node(
-    engine="claude_3", 
+    engine="claude_3",
     input_mapping={"messages": "messages"},
     output_mapping={"response": "answer"}
 )
@@ -184,14 +185,14 @@ from haive.core.graph.node import interruptible_node, interrupt
 def generate_content(state: StateSchema) -> StateSchema:
     # Generate content
     content = generate(state.prompt)
-    
+
     # If content needs human review
     if needs_review(content):
         interrupt(payload={
             "content": content,
             "action": "review"
         })
-    
+
     state.content = content
     return state
 
@@ -199,7 +200,7 @@ def generate_content(state: StateSchema) -> StateSchema:
 def approval_handler(state: StateSchema) -> StateSchema:
     # Get approval decision
     decision = state.resume_data.get("decision")
-    
+
     if decision == "approved":
         return Command(goto="continue_workflow")
     else:
@@ -217,7 +218,7 @@ from haive.core.graph.node import node
 class ChatState(StateSchema):
     messages: List[Dict[str, Any]] = Field(default_factory=list)
     context: List[Dict[str, Any]] = Field(default_factory=list)
-    
+
     def add_message(self, role: str, content: str) -> None:
         self.messages.append({"role": role, "content": content})
 
@@ -293,17 +294,17 @@ def custom_node_type(
     def decorator(func: Callable) -> Callable:
         # Create node with custom logic
         node_name = name or func.__name__
-        
+
         # Create node config
         config = NodeConfig(
             name=node_name,
             engine=func,
             **kwargs
         )
-        
+
         # Create and return node
         return NodeFactory.create_node(config)
-    
+
     return decorator
 ```
 
