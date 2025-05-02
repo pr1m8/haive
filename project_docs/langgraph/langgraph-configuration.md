@@ -10,81 +10,84 @@ LangGraph's configuration system enables flexible runtime customization of agent
 
 During graph creation, LangGraph allows developers to define a configuration schema:
 
-```python  
-class ConfigSchema(TypedDict):  
-    model: Optional[str]  
-    system_message: Optional[str]  
+```python
+class ConfigSchema(TypedDict):
+    model: Optional[str]
+    system_message: Optional[str]
 
-workflow = StateGraph(  
-    AgentState,  
-    config_schema=ConfigSchema  # Schema declaration  
-)  
+workflow = StateGraph(
+    AgentState,
+    config_schema=ConfigSchema  # Schema declaration
+)
 ```
 
-Key characteristics:  
-- **Type Safety**: Enforces structural validation of runtime configs  
-- **Discoverability**: Exposes available parameters via `graph.config_specs`  
-- **Documentation**: Serves as machine-readable API contract  
-- **Default Management**: Optional field definitions enable fallback values  
+Key characteristics:
+
+- **Type Safety**: Enforces structural validation of runtime configs
+- **Discoverability**: Exposes available parameters via `graph.config_specs`
+- **Documentation**: Serves as machine-readable API contract
+- **Default Management**: Optional field definitions enable fallback values
 
 ### 2. Runtime Configuration (Invocation Phase)
 
 During graph invocation, specific configuration values are provided:
 
-```python  
-graph.invoke(  
-    {"messages": [...]},  
-    {"configurable": {"model": "gpt-4", "system_message": "..."}}  # Value injection  
-)  
+```python
+graph.invoke(
+    {"messages": [...]},
+    {"configurable": {"model": "gpt-4", "system_message": "..."}}  # Value injection
+)
 ```
 
-Execution features:  
-- **Dynamic Overrides**: Swap components without graph recompilation  
-- **Contextual Adaptation**: Adjust behavior per-invocation basis  
-- **Multi-Tenancy**: Maintain isolated configurations for different users/sessions  
-- **Hot Reloading**: Modify operational parameters during runtime  
+Execution features:
+
+- **Dynamic Overrides**: Swap components without graph recompilation
+- **Contextual Adaptation**: Adjust behavior per-invocation basis
+- **Multi-Tenancy**: Maintain isolated configurations for different users/sessions
+- **Hot Reloading**: Modify operational parameters during runtime
 
 ## Architectural Comparison
 
-| Aspect                | Creation Phase ConfigSchema          | Invocation Phase Configurable         |  
-|-----------------------|---------------------------------------|----------------------------------------|  
-| **Purpose**           | Define configurable interface        | Provide runtime values                 |  
-| **Validation**        | Structural type checking             | Value compatibility checks             |  
-| **Persistence**       | Baked into graph artifact            | Ephemeral per-execution context        |  
-| **Access Pattern**    | Centralized schema definition        | Distributed value injection            |  
-| **Modifiability**     | Requires graph recompilation         | Dynamic at invocation time             |  
+| Aspect             | Creation Phase ConfigSchema   | Invocation Phase Configurable   |
+| ------------------ | ----------------------------- | ------------------------------- |
+| **Purpose**        | Define configurable interface | Provide runtime values          |
+| **Validation**     | Structural type checking      | Value compatibility checks      |
+| **Persistence**    | Baked into graph artifact     | Ephemeral per-execution context |
+| **Access Pattern** | Centralized schema definition | Distributed value injection     |
+| **Modifiability**  | Requires graph recompilation  | Dynamic at invocation time      |
 
 ## Implementation Patterns
 
 ### 1. Schema-Driven Development
 
-```python  
-class AgentConfig(TypedDict):  
-    llm: Literal["claude3", "gpt-4"]  
-    temperature: Annotated[float, Field(ge=0, le=1)]  
-    retries: Annotated[int, Field(ge=0)]  
+```python
+class AgentConfig(TypedDict):
+    llm: Literal["claude3", "gpt-4"]
+    temperature: Annotated[float, Field(ge=0, le=1)]
+    retries: Annotated[int, Field(ge=0)]
 
-builder = StateGraph(AgentState, config_schema=AgentConfig)  
+builder = StateGraph(AgentState, config_schema=AgentConfig)
 ```
 
-Benefits:  
-- Enables IDE autocompletion for config fields  
-- Generates OpenAPI-compatible documentation  
-- Facilitates configuration versioning  
+Benefits:
+
+- Enables IDE autocompletion for config fields
+- Generates OpenAPI-compatible documentation
+- Facilitates configuration versioning
 
 ### 2. Runtime Configuration Strategies
 
-```python  
-# Multi-configuration manager  
-config_store = {  
-    "basic": {"model": "claude3", "temperature": 0.5},  
-    "premium": {"model": "gpt-4", "temperature": 0.2}  
-}  
+```python
+# Multi-configuration manager
+config_store = {
+    "basic": {"model": "claude3", "temperature": 0.5},
+    "premium": {"model": "gpt-4", "temperature": 0.2}
+}
 
-def route_config(user_tier: str):  
-    return {"configurable": config_store[user_tier]}  
+def route_config(user_tier: str):
+    return {"configurable": config_store[user_tier]}
 
-graph.invoke(inputs, route_config("premium"))  
+graph.invoke(inputs, route_config("premium"))
 ```
 
 ## Application to Haive Node System
@@ -102,11 +105,11 @@ def create_engine_node(
     command_goto: Optional[str] = None
 ) -> Callable:
     """Create a node function with configuration targeting."""
-    
+
     def engine_node(state: Dict[str, Any]) -> Any:
         # Extract runtime config
         runtime_config = state.get("__runnable_config__")
-        
+
         # Apply engine-specific configuration targeting
         if runtime_config and "configurable" in runtime_config:
             # Apply direct engine targeting by ID
@@ -117,10 +120,10 @@ def create_engine_node(
                     engine_specific_config = engine_configs[engine.id]
                     # Use config with engine
                     # ...
-        
+
         # Execute engine with configuration
         # ...
-    
+
     return engine_node
 ```
 
@@ -158,18 +161,18 @@ def create_subgraph_node(
     command_goto: Optional[str] = None
 ) -> Callable:
     """Create a subgraph node with configuration inheritance."""
-    
+
     def subgraph_node(state: Dict[str, Any]) -> Any:
         # Extract runtime config
         runtime_config = state.get("__runnable_config__")
-        
+
         # Create subgraph state with shared fields
         subgraph_state = {}
         if shared_fields:
             for field in shared_fields:
                 if field in state:
                     subgraph_state[field] = state[field]
-        
+
         # Pass configuration to subgraph if enabled
         if inherit_config and runtime_config:
             # Execute subgraph with parent config
@@ -177,10 +180,10 @@ def create_subgraph_node(
         else:
             # Execute without config inheritance
             result = subgraph.invoke(subgraph_state)
-        
+
         # Process result
         # ...
-    
+
     return subgraph_node
 ```
 
@@ -191,7 +194,7 @@ Provide default configuration with override capabilities:
 ```python
 class DynamicGraph:
     """Enhanced graph builder with default configuration."""
-    
+
     def __init__(
         self,
         state_schema: Optional[Type[StateSchema]] = None,
@@ -201,13 +204,13 @@ class DynamicGraph:
         self.state_schema = state_schema
         self.components = components or []
         self.default_config = default_config or {}
-        
+
         # Setup continues...
-    
+
     def set_default_config(self, config: Dict[str, Any]) -> None:
         """Set default configuration for graph invocation."""
         self.default_config = config
-    
+
     def invoke(self, input_data: Any, runtime_config: Optional[Dict[str, Any]] = None) -> Any:
         """Invoke graph with merged configuration."""
         # Merge default and runtime configs
@@ -215,7 +218,7 @@ class DynamicGraph:
             config = self._merge_configs(self.default_config, runtime_config)
         else:
             config = self.default_config
-        
+
         # Invoke graph with merged config
         return self.graph.invoke(input_data, config)
 ```

@@ -16,6 +16,7 @@ retry_policy = RetryPolicy()
 ```
 
 The default `RetryPolicy` configuration is:
+
 ```python
 RetryPolicy(initial_interval=0.5, backoff_factor=2.0, max_interval=128.0, max_attempts=3, jitter=True, retry_on=)
 ```

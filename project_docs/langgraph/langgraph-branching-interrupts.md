@@ -55,7 +55,7 @@ This enables recursive routing logic without graph modification.
 
 LangGraph's interrupt system uses exception propagation with state preservation:
 
-1. **Interrupt Initiation**: `raise NodeInterrupt(payload)` 
+1. **Interrupt Initiation**: `raise NodeInterrupt(payload)`
 2. **State Checkpointing**: Automatic persistence via configured checkpointer
 3. **Resumption Protocol**: `Command(resume=value)` injection
 
@@ -79,6 +79,7 @@ def human_review_node(state):
 ```
 
 Resumption occurs through explicit command passing:
+
 ```python
 graph.stream(Command(resume={"decision": "approve", "notes": "LGTM"}))
 ```
@@ -86,6 +87,7 @@ graph.stream(Command(resume={"decision": "approve", "notes": "LGTM"}))
 ### Error State Management
 
 Interrupted nodes show distinct tracing characteristics:
+
 - **Status Tracking**: `INTERRUPTED` vs traditional `SUCCESS`/`ERROR`
 - **State Versioning**: Checkpoint history maintains pre/post interrupt states
 - **Retry Policies**: Configurable attempts for automatic recovery
@@ -97,10 +99,12 @@ Interrupted nodes show distinct tracing characteristics:
 To implement advanced branching in Haive's node system:
 
 1. **Clean Conditional Functions**:
+
    - Make routing functions pure, accepting only state and returning routing decisions
    - Support both single string and list returns for dynamic routing
 
 2. **Function-Based Approach**:
+
    - Move from complex class hierarchies to function-based routing
    - Ensure routing functions are easily composable
 
@@ -113,10 +117,12 @@ To implement advanced branching in Haive's node system:
 For effective interrupt handling:
 
 1. **Command Pattern Integration**:
+
    - Fully implement the Command pattern for state updates and routing
    - Support Command.resume for interrupt resumption
 
 2. **State Preservation**:
+
    - Ensure state is properly preserved during interrupts
    - Implement checkpointing for interrupt recovery
 
@@ -135,7 +141,7 @@ def create_approval_node(
     command_goto: Optional[str] = None
 ) -> Callable:
     """Create a node that may interrupt for human approval."""
-    
+
     def approval_node(state: Dict[str, Any]) -> Any:
         # Check for auto-approval
         if auto_approve_condition and auto_approve_condition(state):
@@ -143,7 +149,7 @@ def create_approval_node(
                 update={"approval_status": "auto_approved"},
                 goto=command_goto
             )
-        
+
         # Otherwise, interrupt for human approval
         try:
             response = interrupt({
@@ -151,7 +157,7 @@ def create_approval_node(
                 "action": "approval_request",
                 "options": ["approve", "reject", "modify"]
             })
-            
+
             return Command(
                 update={"approval_status": response},
                 goto=command_goto
@@ -161,7 +167,7 @@ def create_approval_node(
                 update={"error": str(e)},
                 goto="error_handler"
             )
-    
+
     return approval_node
 ```
 
