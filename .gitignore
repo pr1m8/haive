@@ -144,3 +144,5 @@ poetry.lock
 # === 📦 Extra files ===
 .history/
 
+
+**/.claude/settings.local.json
