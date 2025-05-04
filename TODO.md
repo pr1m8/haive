@@ -99,3 +99,15 @@ auth
 # ADD QUANTUM (HYBRID/Non-Hybrid REtreiver - http://chatgpt.com/c/680e9c8b-c850-8010-b400-a773b37f087a?model=o3)
 
 # Consistiency of gb vs grapoh uilde.
+
+
+## ADD TO  DOCKER!!!
+
+- ```bash
+ sudo apt-get install -y locales
+sudo locale-gen en_US.UTF-8
+sudo update-locale LC_ALL=en_US.UTF-8
+```
+
+- trunk
+optional promtp varsw
