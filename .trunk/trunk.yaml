@@ -4,7 +4,7 @@
 version: 0.1
 
 cli:
-  version: 1.22.12
+  version: 1.22.15
 plugins:
   sources:
     - id: trunk
@@ -22,7 +22,7 @@ lint:
     - actionlint@1.7.7
     - bandit@1.8.3
     - black@25.1.0
-    - checkov@3.2.413
+    - checkov@3.2.416
     - dotenv-linter@3.3.0
     - git-diff-check
     - hadolint@2.12.1-beta
@@ -32,12 +32,12 @@ lint:
     - osv-scanner@2.0.2
     - oxipng@9.1.5
     - prettier@3.5.3
-    - ruff@0.11.7
+    - ruff@0.11.8
     - shellcheck@0.10.0
     - shfmt@3.6.0
     - taplo@0.9.3
-    - trufflehog@3.88.26
-    - yamllint@1.37.0
+    - trufflehog@3.88.29
+    - yamllint@1.37.1
   ignore:
     - linters: [ALL]
       paths:
