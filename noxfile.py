@@ -7,7 +7,7 @@ def build_docs(session: nox.Session) -> None:
     session.install("poetry")
 
     # Install doc dependencies
-    session.run("poetry", "install", "--no-root", "--with", "docs")
+    session.run("poetry", "install", "--no-root", "--with", "docs,dev")
 
     # Optional: Specify conf.py location if it's not in 'docs/'
     # Use `-c` to point to the folder containing conf.py
