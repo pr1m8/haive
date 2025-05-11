@@ -216,7 +216,6 @@ tomli = "^2.2.1"
 tomli-w = "^1.2.0"
 tox = "^4.25.0"
 watchdog = "^6.0.0"
-sphinx-press-theme = "^0.9.1"
 
 
 [tool.poetry.group.docs.dependencies]

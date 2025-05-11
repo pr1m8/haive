@@ -100,14 +100,17 @@ auth
 
 # Consistiency of gb vs grapoh uilde.
 
-
-## ADD TO  DOCKER!!!
+## ADD TO DOCKER!!!
 
 - ```bash
- sudo apt-get install -y locales
-sudo locale-gen en_US.UTF-8
-sudo update-locale LC_ALL=en_US.UTF-8
+   sudo apt-get install -y locales
+  sudo locale-gen en_US.UTF-8
+  sudo update-locale LC_ALL=en_US.UTF-8
+  protobuf-compiler
+  ```
+
 ```
 
 - trunk
 optional promtp varsw
+```

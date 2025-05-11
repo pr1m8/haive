@@ -32,6 +32,7 @@ extensions = [
     "myst_parser",  # Markdown support
     "sphinx_copybutton",  # Add copy button to code blocks
     "sphinx_tabs.tabs",  # Add tabbed content
+    "sphinx_press_theme",  # Press theme
     "sphinx_design",  # Grid layout, cards, dropdowns, and more
 ]
 
