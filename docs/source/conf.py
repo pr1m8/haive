@@ -58,7 +58,7 @@ napoleon_use_admonition_for_notes = True
 napoleon_use_admonition_for_references = True
 
 # HTML theme configuration
-html_theme = "sphinx_press_theme"  # Modern VuePress-like theme
+html_theme = "furo"  # Modern VuePress-like theme
 # Alternative modern themes: 'furo', 'pydata_sphinx_theme', 'sphinx_rtd_theme'
 
 # HTML theme options
