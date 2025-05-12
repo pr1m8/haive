@@ -1,34 +1,56 @@
 import nox
+import webbrowser
+from pathlib import Path
+
+DOCS_SOURCE = "docs/source"
+DOCS_BUILD = "docs/_build"
+CONF_DIR = DOCS_SOURCE
 
 
 @nox.session(name="docs")
 def build_docs(session: nox.Session) -> None:
-    """Build the Sphinx documentation using Poetry."""
+    """Build the Sphinx documentation (static HTML only)."""
     session.install("poetry")
-
-    # Install doc dependencies
-    session.run("poetry", "install", "--no-root", "--with", "docs,dev")
-
-    # Optional: Specify conf.py location if it's not in 'docs/'
-    # Use `-c` to point to the folder containing conf.py
-    sphinx_source_dir = "docs/source"  # ← your restructured source folder
-    sphinx_build_dir = "docs/_build"  # ← output directory
-    conf_dir = sphinx_source_dir  # ← where conf.py lives
+    session.run("poetry", "install", "--no-root", "--with", "docs")
 
     session.run(
         "poetry",
         "run",
         "sphinx-build",
-        "-c",
-        conf_dir,
-        sphinx_source_dir,
-        sphinx_build_dir,
+        "-b", "html",
+        "-c", CONF_DIR,
+        DOCS_SOURCE,
+        DOCS_BUILD,
+    )
+
+    session.log(f"📚 Docs built to: {DOCS_BUILD}/index.html")
+
+
+@nox.session(name="docs-live")
+def live_docs(session: nox.Session) -> None:
+    """Start live-reloading Sphinx server with sphinx-autobuild."""
+    session.install("poetry")
+    session.run("poetry", "install", "--no-root", "--with", "docs")
+
+    session.run(
+        "poetry",
+        "run",
+        "sphinx-autobuild",
+        DOCS_SOURCE,
+        DOCS_BUILD,
+        "--host", "0.0.0.0",
+        "--port", "8001",
+        "--open-browser",
+        "--watch", "README.md",
+        "--ignore", DOCS_BUILD,
     )
 
 
-@nox.session(name="tests", python=["3.12"])
-def run_tests(session: nox.Session) -> None:
-    """Run pytest via poetry."""
-    session.install("poetry")
-    session.run("poetry", "install")
-    session.run("poetry", "run", "pytest")
+@nox.session(name="view-docs")
+def view_docs(session: nox.Session) -> None:
+    """Open the built documentation in the default web browser."""
+    index_path = Path(DOCS_BUILD) / "index.html"
+    if not index_path.exists():
+        session.error(f"{index_path} not found. Run `nox -s docs` first.")
+    webbrowser.open(index_path.resolve().as_uri())
+    session.log(f"📖 Opened docs at: {index_path}")
