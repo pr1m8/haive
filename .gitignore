@@ -150,3 +150,8 @@ docs/source/*.rst
 docs/source/*.rst
 !docs/source/index.rst
 docs/_build/
+# Ignore all .rst files in docs/source and its subdirectories
+docs/source/**/*.rst
+
+# Except for index.rst in the root of docs/source
+#!docs/source/index.rst
