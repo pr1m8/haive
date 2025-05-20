@@ -146,3 +146,7 @@ poetry.lock
 
 
 **/.claude/settings.local.json
+docs/source/*.rst   
+docs/source/*.rst
+!docs/source/index.rst
+docs/_build/
