@@ -50,7 +50,7 @@ priority = "supplemental"
 
 [tool.poetry.dependencies]
 python = ">=3.12,<3.13"
-langchain-core = "^0.3.58"
+langchain-core = "^0.3.59"
 langchain = "^0.3.20"
 langchain-community = "^0.3.20"
 langchain-experimental = "^0.3.4"
@@ -216,15 +216,16 @@ tomli = "^2.2.1"
 tomli-w = "^1.2.0"
 tox = "^4.25.0"
 watchdog = "^6.0.0"
+grandalf = "^0.8"
 
 
 [tool.poetry.group.docs.dependencies]
-sphinx = "^8.2.0"
+sphinx = "^8.0.0"
 sphinxcontrib-jquery = "^4.1"
 sphinx-sitemap = "^2.6.0"
 sphinxcontrib-mermaid = "^1.0.0"
 sphinxcontrib-youtube = "^1.4.1"
-sphinx-press-theme = "^0.9.1"
+#sphinx-press-theme = "^0.9.1"
 sphinx-autoapi = "^3.6.0"
 sphinx-copybutton = "^0.5.2"
 sphinx-togglebutton = "^0.3.2"
