@@ -1,0 +1,1705 @@
+{
+  "AcreomLoader": {
+    "description": "Load `acreom` vault from a directory.",
+    "source_types": ["DIRECTORY"],
+    "file_extensions": [],
+    "env_vars": ["FRONT_MATTER_REGEX"],
+    "required_params": ["path"],
+    "external_packages": []
+  },
+  "AirbyteCDKLoader": {
+    "description": "Load with an `Airbyte` source connector implemented using the `CDK`.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["config", "source_class", "stream_name"],
+    "external_packages": []
+  },
+  "AirbyteGongLoader": {
+    "description": "Load from `Gong` using an `Airbyte` source connector.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["config", "stream_name"],
+    "external_packages": []
+  },
+  "AirbyteHubspotLoader": {
+    "description": "Load from `Hubspot` using an `Airbyte` source connector.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["config", "stream_name"],
+    "external_packages": []
+  },
+  "AirbyteSalesforceLoader": {
+    "description": "Load from `Salesforce` using an `Airbyte` source connector.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["config", "stream_name"],
+    "external_packages": []
+  },
+  "AirbyteShopifyLoader": {
+    "description": "Load from `Shopify` using an `Airbyte` source connector.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["config", "stream_name"],
+    "external_packages": []
+  },
+  "AirbyteStripeLoader": {
+    "description": "Load from `Stripe` using an `Airbyte` source connector.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["config", "stream_name"],
+    "external_packages": []
+  },
+  "AirbyteTypeformLoader": {
+    "description": "Load from `Typeform` using an `Airbyte` source connector.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["config", "stream_name"],
+    "external_packages": []
+  },
+  "AirbyteZendeskSupportLoader": {
+    "description": "Load from `Zendesk Support` using an `Airbyte` source connector.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["config", "stream_name"],
+    "external_packages": []
+  },
+  "AirbyteJSONLoader": {
+    "description": "Load local `Airbyte` json files.",
+    "source_types": ["FILE", "JSON"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "AirtableLoader": {
+    "description": "Load the `Airtable` tables.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["api_token", "table_id", "base_id"],
+    "external_packages": []
+  },
+  "ApifyDatasetLoader": {
+    "description": ".. deprecated:: 0.3.18 This class is deprecated and will be removed in a future version. You can swap to using the `ApifyDatasetLoader` implementation in `langchain_apify` package. See <https://github.com/apify/langchain-apify> Use ``:class:`~langchain_apify.ApifyDatasetLoader``` instead.",
+    "source_types": ["GITHUB", "API"],
+    "file_extensions": [".18", ".documents"],
+    "env_vars": [],
+    "required_params": ["dataset_id", "dataset_mapping_function"],
+    "external_packages": []
+  },
+  "ArcGISLoader": {
+    "description": "Load records from an ArcGIS FeatureLayer.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["layer"],
+    "external_packages": []
+  },
+  "ArxivLoader": {
+    "description": "Load a query result from `Arxiv`. The loader converts the original PDF format into the text.",
+    "source_types": ["PDF"],
+    "file_extensions": [".org"],
+    "env_vars": [],
+    "required_params": ["query"],
+    "external_packages": []
+  },
+  "AssemblyAIAudioTranscriptLoader": {
+    "description": "Load AssemblyAI audio transcripts.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": ["ASSEMBLYAI_API_KEY", "SUBTITLES_SRT", "SUBTITLES_VTT"],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "AstraDBLoader": {
+    "description": ".. deprecated:: 0.0.29 Use ``:class:`~langchain_astradb.AstraDBLoader``` instead. It will not be removed until langchain-community==1.0.",
+    "source_types": ["DATABASE"],
+    "file_extensions": [".29"],
+    "env_vars": [],
+    "required_params": ["collection_name"],
+    "external_packages": []
+  },
+  "AsyncHtmlLoader": {
+    "description": "Load `HTML` asynchronously.",
+    "source_types": ["HTML"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["web_path"],
+    "external_packages": []
+  },
+  "AthenaLoader": {
+    "description": "Load documents from `AWS Athena`.",
+    "source_types": ["S3"],
+    "file_extensions": [".html"],
+    "env_vars": [],
+    "required_params": ["query", "database", "s3_output_uri"],
+    "external_packages": ["boto3", "pandas"]
+  },
+  "AZLyricsLoader": {
+    "description": "Load `AZLyrics` webpages.",
+    "source_types": ["URL"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": [],
+    "external_packages": []
+  },
+  "WebBaseLoader": {
+    "description": "WebBaseLoader document loader integration",
+    "source_types": ["URL"],
+    "file_extensions": [".parser", ".14"],
+    "env_vars": [],
+    "required_params": [],
+    "external_packages": []
+  },
+  "AzureAIDataLoader": {
+    "description": "Load from Azure AI Data.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["url"],
+    "external_packages": []
+  },
+  "UnstructuredFileIOLoader": {
+    "description": ".. deprecated:: 0.2.8 Use ``:class:`~langchain_unstructured.UnstructuredLoader``` instead. It will not be removed until langchain-community==1.0.",
+    "source_types": ["FILE"],
+    "file_extensions": [".8", ".pdf"],
+    "env_vars": [],
+    "required_params": ["file", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "AzureBlobStorageContainerLoader": {
+    "description": "Load from `Azure Blob Storage` container.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["conn_str", "container"],
+    "external_packages": []
+  },
+  "AzureBlobStorageFileLoader": {
+    "description": "Load from `Azure Blob Storage` files.",
+    "source_types": ["FILE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["conn_str", "container", "blob_name"],
+    "external_packages": []
+  },
+  "UnstructuredFileLoader": {
+    "description": ".. deprecated:: 0.2.8 Use ``:class:`~langchain_unstructured.UnstructuredLoader``` instead. It will not be removed until langchain-community==1.0.",
+    "source_types": ["FILE"],
+    "file_extensions": [".8", ".pdf"],
+    "env_vars": [],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "BaiduBOSDirectoryLoader": {
+    "description": "Load from `Baidu BOS directory`.",
+    "source_types": ["DIRECTORY"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["conf", "bucket"],
+    "external_packages": []
+  },
+  "BaiduBOSFileLoader": {
+    "description": "Load from `Baidu Cloud BOS` file.",
+    "source_types": ["FILE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["conf", "bucket", "key"],
+    "external_packages": []
+  },
+  "O365BaseLoader": {
+    "description": "Base class for all loaders that uses O365 Package",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": ["CHUNK_SIZE"],
+    "required_params": [],
+    "external_packages": []
+  },
+  "BibtexLoader": {
+    "description": "Load a `bibtex` file.",
+    "source_types": ["FILE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "BigQueryLoader": {
+    "description": ".. deprecated:: 0.0.32 Use ``:class:`~langchain_google_community.BigQueryLoader``` instead. It will not be removed until langchain-community==1.0.",
+    "source_types": ["FILE"],
+    "file_extensions": [".32"],
+    "env_vars": [],
+    "required_params": ["query"],
+    "external_packages": ["google"]
+  },
+  "BiliBiliLoader": {
+    "description": "Load fetching transcripts from BiliBili videos.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": ["AV_PATTERN", "BILI_JCT", "BV_PATTERN", "PAGE_INDEX_PATTERN"],
+    "required_params": ["video_urls"],
+    "external_packages": []
+  },
+  "BlackboardLoader": {
+    "description": "Load a `Blackboard` course.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["blackboard_course_url", "bbrouter"],
+    "external_packages": []
+  },
+  "DirectoryLoader": {
+    "description": "Load from a directory.",
+    "source_types": ["DIRECTORY"],
+    "file_extensions": [],
+    "env_vars": ["FILE_LOADER_TYPE"],
+    "required_params": ["path"],
+    "external_packages": []
+  },
+  "PyPDFLoader": {
+    "description": "Load and parse a PDF file using 'pypdf' library.",
+    "source_types": ["FILE", "PDF"],
+    "file_extensions": [".pdf"],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "BlockchainDocumentLoader": {
+    "description": "Load elements from a blockchain smart contract.",
+    "source_types": ["FILE"],
+    "file_extensions": [".html"],
+    "env_vars": ["ALCHEMY_API_KEY", "ETH_MAINNET"],
+    "required_params": ["contract_address"],
+    "external_packages": []
+  },
+  "BraveSearchLoader": {
+    "description": "Load with `Brave Search` engine.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["query", "api_key"],
+    "external_packages": []
+  },
+  "BrowserbaseLoader": {
+    "description": "Load pre-rendered web pages using a headless browser hosted on Browserbase.",
+    "source_types": ["URL"],
+    "file_extensions": [".com"],
+    "env_vars": [],
+    "required_params": ["urls"],
+    "external_packages": []
+  },
+  "BrowserlessLoader": {
+    "description": "Load webpages with `Browserless` /content endpoint.",
+    "source_types": ["URL"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["api_token", "urls"],
+    "external_packages": []
+  },
+  "CassandraLoader": {
+    "description": "Interface for Document Loader.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": [],
+    "external_packages": []
+  },
+  "ChatGPTLoader": {
+    "description": "Load conversations from exported `ChatGPT` data.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["log_file"],
+    "external_packages": []
+  },
+  "UnstructuredCHMLoader": {
+    "description": "Load `CHM` files using `Unstructured`.",
+    "source_types": ["FILE"],
+    "file_extensions": [".chm"],
+    "env_vars": [],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "AsyncChromiumLoader": {
+    "description": "Scrape HTML pages from URLs using a headless instance of the Chromium.",
+    "source_types": ["URL", "HTML"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["urls"],
+    "external_packages": []
+  },
+  "CollegeConfidentialLoader": {
+    "description": "Load `College Confidential` webpages.",
+    "source_types": ["URL"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": [],
+    "external_packages": []
+  },
+  "ConcurrentLoader": {
+    "description": "Load and pars Documents concurrently.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["blob_loader", "blob_parser"],
+    "external_packages": []
+  },
+  "GenericLoader": {
+    "description": "Generic Document Loader.",
+    "source_types": ["FILE"],
+    "file_extensions": [".pdf", ".pdf", ".pdf", ".txt", ".pdf", ".pdf"],
+    "env_vars": [],
+    "required_params": ["blob_loader", "blob_parser"],
+    "external_packages": []
+  },
+  "ConfluenceLoader": {
+    "description": "Load `Confluence` pages.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": ["ANONYMOUS_EXPORT_VIEW", "EXPORT_VIEW"],
+    "required_params": ["url"],
+    "external_packages": ["docx", "pandas", "markdown"]
+  },
+  "CoNLLULoader": {
+    "description": "Load `CoNLL-U` files.",
+    "source_types": ["FILE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "CouchbaseLoader": {
+    "description": "Load documents from `Couchbase`.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": [
+      "connection_string",
+      "db_username",
+      "db_password",
+      "query"
+    ],
+    "external_packages": []
+  },
+  "CSVLoader": {
+    "description": "Load a `CSV` file into a list of Documents.",
+    "source_types": ["FILE", "CSV"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "UnstructuredCSVLoader": {
+    "description": "Load `CSV` files using `Unstructured`.",
+    "source_types": ["FILE", "CSV"],
+    "file_extensions": [".csv"],
+    "env_vars": [],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "CubeSemanticLoader": {
+    "description": "Load `Cube semantic layer` metadata.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["cube_api_url", "cube_api_token"],
+    "external_packages": []
+  },
+  "DatadogLogsLoader": {
+    "description": "Load `Datadog` logs.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": ["TIMESTAMP_ASCENDING"],
+    "required_params": ["query", "api_key", "app_key"],
+    "external_packages": []
+  },
+  "BaseDataFrameLoader": {
+    "description": "Interface for Document Loader.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["data_frame"],
+    "external_packages": []
+  },
+  "DataFrameLoader": {
+    "description": "Load `Pandas` DataFrame.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["data_frame"],
+    "external_packages": ["pandas"]
+  },
+  "DedocAPIFileLoader": {
+    "description": "Load files using `dedoc` API. The file loader automatically detects the file type (even with the wrong extension). By default, the loader makes a call to the locally hosted `dedoc` API. More information about `dedoc` API can be found in `dedoc` documentation:     https://dedoc.readthedocs.io/en/latest/dedoc_api_usage/api.html",
+    "source_types": ["FILE", "HTML", "API"],
+    "file_extensions": [".html", ".pdf"],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": ["requests"]
+  },
+  "DedocBaseLoader": {
+    "description": "Base Loader that uses `dedoc` (https://dedoc.readthedocs.io).",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "DedocFileLoader": {
+    "description": "DedocFileLoader document loader integration to load files using `dedoc`.",
+    "source_types": ["FILE"],
+    "file_extensions": [".pdf"],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "DiffbotLoader": {
+    "description": "Load `Diffbot` json file.",
+    "source_types": ["FILE", "JSON"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["api_token", "urls"],
+    "external_packages": []
+  },
+  "BSHTMLLoader": {
+    "description": "__ModuleName__ document loader integration",
+    "source_types": ["HTML"],
+    "file_extensions": [".html"],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "TextLoader": {
+    "description": "Load text file.",
+    "source_types": ["FILE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "DiscordChatLoader": {
+    "description": "Load `Discord` chat logs.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["chat_log"],
+    "external_packages": []
+  },
+  "AzureAIDocumentIntelligenceLoader": {
+    "description": "Load a PDF with Azure Document Intelligence.",
+    "source_types": ["PDF"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["api_endpoint"],
+    "external_packages": []
+  },
+  "DocugamiLoader": {
+    "description": ".. deprecated:: 0.0.24 Use ``:class:`~docugami_langchain.DocugamiLoader``` instead. It will not be removed until langchain-community==1.0.",
+    "source_types": ["FILE"],
+    "file_extensions": [".24"],
+    "env_vars": [
+      "DEFAULT_API_ENDPOINT",
+      "DOCUGAMI_API_KEY",
+      "DOCUMENT_NAME_KEY",
+      "DOCUMENT_SOURCE_KEY",
+      "ID_KEY",
+      "STRUCTURE_KEY",
+      "TAG_KEY",
+      "XPATH_KEY"
+    ],
+    "required_params": ["data"],
+    "external_packages": []
+  },
+  "DocusaurusLoader": {
+    "description": "Load from Docusaurus Documentation.",
+    "source_types": ["FILE"],
+    "file_extensions": [".main"],
+    "env_vars": [],
+    "required_params": ["url"],
+    "external_packages": []
+  },
+  "SitemapLoader": {
+    "description": "Load a sitemap and its URLs.",
+    "source_types": ["URL"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["web_path"],
+    "external_packages": []
+  },
+  "DropboxLoader": {
+    "description": "Load files from `Dropbox`.",
+    "source_types": ["FILE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["data"],
+    "external_packages": []
+  },
+  "DuckDBLoader": {
+    "description": "Load from `DuckDB`.",
+    "source_types": ["DATABASE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["query"],
+    "external_packages": []
+  },
+  "OutlookMessageLoader": {
+    "description": "Loads Outlook Message files using extract_msg.",
+    "source_types": ["FILE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "UnstructuredEmailLoader": {
+    "description": "Load email files using `Unstructured`.",
+    "source_types": ["FILE"],
+    "file_extensions": [".eml", ".msg", ".eml", ".eml"],
+    "env_vars": [],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "UnstructuredEPubLoader": {
+    "description": "Load `EPub` files using `Unstructured`.",
+    "source_types": ["FILE"],
+    "file_extensions": [".epub"],
+    "env_vars": [],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "EtherscanLoader": {
+    "description": "Load transactions from `Ethereum` mainnet.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": ["ETHERSCAN_API_KEY"],
+    "required_params": ["account_address"],
+    "external_packages": []
+  },
+  "EverNoteLoader": {
+    "description": "Load from `EverNote`.",
+    "source_types": ["FILE"],
+    "file_extensions": [".enex", ".enex"],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "UnstructuredExcelLoader": {
+    "description": "Load Microsoft Excel files using `Unstructured`.",
+    "source_types": ["FILE", "EXCEL"],
+    "file_extensions": [".excel", ".xlsx"],
+    "env_vars": [],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "FacebookChatLoader": {
+    "description": "Load `Facebook Chat` messages directory dump.",
+    "source_types": ["DIRECTORY"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["path"],
+    "external_packages": []
+  },
+  "FaunaLoader": {
+    "description": "Load from `FaunaDB`.",
+    "source_types": ["DATABASE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["query", "page_content_field", "secret"],
+    "external_packages": []
+  },
+  "FigmaFileLoader": {
+    "description": "Load `Figma` file.",
+    "source_types": ["FILE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["access_token", "ids", "key"],
+    "external_packages": []
+  },
+  "FireCrawlLoader": {
+    "description": "FireCrawlLoader document loader integration",
+    "source_types": ["FILE"],
+    "file_extensions": [".dev"],
+    "env_vars": ["FIRECRAWL_API_KEY", "FIRECRAWL_API_URL"],
+    "required_params": ["url"],
+    "external_packages": []
+  },
+  "GCSDirectoryLoader": {
+    "description": ".. deprecated:: 0.0.32 Use ``:class:`~langchain_google_community.GCSDirectoryLoader``` instead. It will not be removed until langchain-community==1.0.",
+    "source_types": ["GCS", "DIRECTORY"],
+    "file_extensions": [".32"],
+    "env_vars": [],
+    "required_params": ["project_name", "bucket"],
+    "external_packages": ["google"]
+  },
+  "GCSFileLoader": {
+    "description": ".. deprecated:: 0.0.32 Use ``:class:`~langchain_google_community.GCSFileLoader``` instead. It will not be removed until langchain-community==1.0.",
+    "source_types": ["FILE", "GCS"],
+    "file_extensions": [".32"],
+    "env_vars": [],
+    "required_params": ["project_name", "bucket", "blob"],
+    "external_packages": ["google"]
+  },
+  "GeoDataFrameLoader": {
+    "description": "Load `geopandas` Dataframe.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["data_frame"],
+    "external_packages": ["pandas"]
+  },
+  "GitLoader": {
+    "description": "Load `Git` repository files.",
+    "source_types": ["FILE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["repo_path"],
+    "external_packages": []
+  },
+  "GitbookLoader": {
+    "description": "Load `GitBook` data.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["web_page"],
+    "external_packages": []
+  },
+  "BaseGitHubLoader": {
+    "description": "Load `GitHub` repository Issues.",
+    "source_types": ["GITHUB"],
+    "file_extensions": [],
+    "env_vars": ["GITHUB_PERSONAL_ACCESS_TOKEN"],
+    "required_params": ["data"],
+    "external_packages": []
+  },
+  "GitHubIssuesLoader": {
+    "description": "Load issues of a GitHub repository.",
+    "source_types": ["GITHUB"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["data"],
+    "external_packages": []
+  },
+  "GithubFileLoader": {
+    "description": "Load GitHub File",
+    "source_types": ["FILE", "GITHUB"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["data"],
+    "external_packages": []
+  },
+  "GlueCatalogLoader": {
+    "description": "Load table schemas from AWS Glue.",
+    "source_types": ["S3"],
+    "file_extensions": [".html"],
+    "env_vars": [],
+    "required_params": ["database"],
+    "external_packages": ["boto3"]
+  },
+  "GoogleSpeechToTextLoader": {
+    "description": ".. deprecated:: 0.0.32 Use ``:class:`~langchain_google_community.SpeechToTextLoader``` instead. It will not be removed until langchain-community==1.0.",
+    "source_types": ["FILE"],
+    "file_extensions": [".32"],
+    "env_vars": [],
+    "required_params": ["project_id", "file_path"],
+    "external_packages": ["google"]
+  },
+  "GoogleDriveLoader": {
+    "description": ".. deprecated:: 0.0.32 Use ``:class:`~langchain_google_community.GoogleDriveLoader``` instead. It will not be removed until langchain-community==1.0.",
+    "source_types": ["FILE"],
+    "file_extensions": [".32"],
+    "env_vars": [],
+    "required_params": ["data"],
+    "external_packages": ["google", "requests", "pypdf"]
+  },
+  "GutenbergLoader": {
+    "description": "Load from `Gutenberg.org`.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "HNLoader": {
+    "description": "Load `Hacker News` data.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": [],
+    "external_packages": []
+  },
+  "UnstructuredHTMLLoader": {
+    "description": "Load `HTML` files using `Unstructured`.",
+    "source_types": ["FILE", "HTML"],
+    "file_extensions": [".html"],
+    "env_vars": [],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "HuggingFaceDatasetLoader": {
+    "description": "Load from `Hugging Face Hub` datasets.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["path"],
+    "external_packages": []
+  },
+  "HuggingFaceModelLoader": {
+    "description": "Load model information from `Hugging Face Hub`, including README content.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": ["BASE_URL", "README_BASE_URL"],
+    "required_params": [],
+    "external_packages": []
+  },
+  "IFixitLoader": {
+    "description": "Load `iFixit` repair guides, device wikis and answers.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": ["IFIXIT_BASE_URL"],
+    "required_params": ["web_path"],
+    "external_packages": []
+  },
+  "UnstructuredImageLoader": {
+    "description": "Load `PNG` and `JPG` files using `Unstructured`.",
+    "source_types": ["FILE"],
+    "file_extensions": [".png"],
+    "env_vars": [],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "ImageCaptionLoader": {
+    "description": "Load image captions.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["images"],
+    "external_packages": []
+  },
+  "IMSDbLoader": {
+    "description": "Load `IMSDb` webpages.",
+    "source_types": ["URL", "DATABASE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": [],
+    "external_packages": []
+  },
+  "IuguLoader": {
+    "description": "Load from `IUGU`.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": ["IUGU_API_TOKEN", "IUGU_ENDPOINTS"],
+    "required_params": ["resource"],
+    "external_packages": []
+  },
+  "JoplinLoader": {
+    "description": "Load notes from `Joplin`.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": ["JOPLIN_ACCESS_TOKEN", "LINK_NOTE_TEMPLATE"],
+    "required_params": [],
+    "external_packages": []
+  },
+  "JSONLoader": {
+    "description": "Load a `JSON` file using a `jq` schema.",
+    "source_types": ["FILE", "JSON"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path", "jq_schema"],
+    "external_packages": []
+  },
+  "KineticaLoader": {
+    "description": "Load from `Kinetica` API.",
+    "source_types": ["API"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["query", "host", "username", "password"],
+    "external_packages": []
+  },
+  "LakeFSLoader": {
+    "description": "Load from `lakeFS`.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": [
+      "lakefs_access_key",
+      "lakefs_secret_key",
+      "lakefs_endpoint"
+    ],
+    "external_packages": []
+  },
+  "UnstructuredBaseLoader": {
+    "description": "Base Loader that uses `Unstructured`.",
+    "source_types": ["DATABASE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["unstructured_kwargs"],
+    "external_packages": []
+  },
+  "UnstructuredLakeFSLoader": {
+    "description": "Load from `lakeFS` as unstructured data.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["url", "repo", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "LarkSuiteDocLoader": {
+    "description": "Load from `LarkSuite` (`FeiShu`).",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["domain", "access_token", "document_id"],
+    "external_packages": []
+  },
+  "LarkSuiteWikiLoader": {
+    "description": "Load from `LarkSuite` (`FeiShu`) wiki.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["domain", "access_token", "wiki_id"],
+    "external_packages": []
+  },
+  "LLMSherpaFileLoader": {
+    "description": "Load Documents using `LLMSherpa`.",
+    "source_types": ["FILE"],
+    "file_extensions": [".llmsherpa", ".pdf"],
+    "env_vars": ["DEFAULT_API"],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "UnstructuredMarkdownLoader": {
+    "description": "Load `Markdown` files using `Unstructured`.",
+    "source_types": ["FILE", "MARKDOWN"],
+    "file_extensions": [".md"],
+    "env_vars": [],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "MastodonTootsLoader": {
+    "description": "Load the `Mastodon` 'toots'.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": ["MASTODON_ACCESS_TOKEN"],
+    "required_params": ["mastodon_accounts"],
+    "external_packages": []
+  },
+  "MaxComputeLoader": {
+    "description": "Load from `Alibaba Cloud MaxCompute` table.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": ["MAX_COMPUTE_ACCESS_ID", "MAX_COMPUTE_SECRET_ACCESS_KEY"],
+    "required_params": ["query", "api_wrapper"],
+    "external_packages": []
+  },
+  "MWDumpLoader": {
+    "description": "Load `MediaWiki` dump from an `XML` file.",
+    "source_types": ["FILE", "XML"],
+    "file_extensions": [".xml"],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "MergedDataLoader": {
+    "description": "Merge documents from a list of loaders",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["loaders"],
+    "external_packages": []
+  },
+  "MHTMLLoader": {
+    "description": "Parse `MHTML` files with `BeautifulSoup`.",
+    "source_types": ["FILE", "HTML"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "MintbaseDocumentLoader": {
+    "description": "Load elements from a blockchain smart contract.",
+    "source_types": ["FILE"],
+    "file_extensions": [".near"],
+    "env_vars": ["MB_API_KEY"],
+    "required_params": ["contract_address", "blockchain_type"],
+    "external_packages": []
+  },
+  "ModernTreasuryLoader": {
+    "description": "Load from `Modern Treasury`.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [
+      "MODERN_TREASURY_API_KEY",
+      "MODERN_TREASURY_ENDPOINTS",
+      "MODERN_TREASURY_ORGANIZATION_ID"
+    ],
+    "required_params": ["resource"],
+    "external_packages": []
+  },
+  "MongodbLoader": {
+    "description": "Load MongoDB documents.",
+    "source_types": ["DATABASE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["connection_string", "db_name", "collection_name"],
+    "external_packages": []
+  },
+  "NeedleLoader": {
+    "description": "NeedleLoader is a document loader for managing documents stored in a collection.",
+    "source_types": ["FILE"],
+    "file_extensions": [".needle"],
+    "env_vars": ["NEEDLE_API_KEY"],
+    "required_params": [],
+    "external_packages": []
+  },
+  "NewsURLLoader": {
+    "description": "Load news articles from URLs using `Unstructured`.",
+    "source_types": ["URL"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["urls", "newspaper_kwargs"],
+    "external_packages": []
+  },
+  "NotebookLoader": {
+    "description": "Load `Jupyter notebook` (.ipynb) files.",
+    "source_types": ["FILE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["path"],
+    "external_packages": []
+  },
+  "NotionDirectoryLoader": {
+    "description": "Load `Notion directory` dump.",
+    "source_types": ["NOTION", "DIRECTORY"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["path"],
+    "external_packages": []
+  },
+  "NotionDBLoader": {
+    "description": "Load from `Notion DB`.",
+    "source_types": ["NOTION", "DATABASE"],
+    "file_extensions": [],
+    "env_vars": ["BLOCK_URL", "DATABASE_URL"],
+    "required_params": ["integration_token", "database_id"],
+    "external_packages": []
+  },
+  "NucliaLoader": {
+    "description": "Load from any file type using `Nuclia Understanding API`.",
+    "source_types": ["FILE", "API"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["path", "nuclia_tool"],
+    "external_packages": []
+  },
+  "OBSDirectoryLoader": {
+    "description": "Load from `Huawei OBS directory`.",
+    "source_types": ["DIRECTORY"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["bucket", "endpoint"],
+    "external_packages": []
+  },
+  "OBSFileLoader": {
+    "description": "Load from the `Huawei OBS file`.",
+    "source_types": ["FILE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["bucket", "key"],
+    "external_packages": []
+  },
+  "ObsidianLoader": {
+    "description": "Load `Obsidian` files from directory.",
+    "source_types": ["FILE", "DIRECTORY"],
+    "file_extensions": [],
+    "env_vars": [
+      "DATAVIEW_INLINE_BRACKET_REGEX",
+      "DATAVIEW_INLINE_PAREN_REGEX",
+      "DATAVIEW_LINE_REGEX",
+      "FRONT_MATTER_REGEX",
+      "TAG_REGEX",
+      "TEMPLATE_VARIABLE_REGEX"
+    ],
+    "required_params": ["path"],
+    "external_packages": []
+  },
+  "UnstructuredODTLoader": {
+    "description": "Load `OpenOffice ODT` files using `Unstructured`.",
+    "source_types": ["FILE"],
+    "file_extensions": [".odt"],
+    "env_vars": [],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "OneDriveLoader": {
+    "description": "Load documents from Microsoft OneDrive. Uses `SharePointLoader` under the hood.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": [],
+    "external_packages": []
+  },
+  "SharePointLoader": {
+    "description": "Load  from `SharePoint`.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": [],
+    "external_packages": []
+  },
+  "OneDriveFileLoader": {
+    "description": "Load a file from `Microsoft OneDrive`.",
+    "source_types": ["FILE"],
+    "file_extensions": [],
+    "env_vars": ["CHUNK_SIZE"],
+    "required_params": ["data"],
+    "external_packages": []
+  },
+  "OneNoteLoader": {
+    "description": "Load pages from OneNote notebooks.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["data"],
+    "external_packages": []
+  },
+  "OpenCityDataLoader": {
+    "description": "Load from `Open City`.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["city_id", "dataset_id", "limit"],
+    "external_packages": []
+  },
+  "OracleAutonomousDatabaseLoader": {
+    "description": "Load from oracle adb",
+    "source_types": ["DATABASE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["query", "user", "password"],
+    "external_packages": []
+  },
+  "OracleDocLoader": {
+    "description": "Read documents using OracleDocLoader Args:     conn: Oracle Connection,     params: Loader parameters.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": ["BINARY_DOUBLE", "BINARY_FLOAT"],
+    "required_params": ["conn", "params"],
+    "external_packages": []
+  },
+  "UnstructuredOrgModeLoader": {
+    "description": "Load `Org-Mode` files using `Unstructured`.",
+    "source_types": ["FILE"],
+    "file_extensions": [".org"],
+    "env_vars": [],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "AmazonTextractPDFLoader": {
+    "description": "Load `PDF` files from a local file system, HTTP or S3.",
+    "source_types": ["FILE", "PDF", "S3"],
+    "file_extensions": [".html", ".pdf"],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": ["pypdf", "boto3"]
+  },
+  "BasePDFLoader": {
+    "description": "Base Loader class for `PDF` files.",
+    "source_types": ["FILE", "PDF"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "DedocPDFLoader": {
+    "description": "DedocPDFLoader document loader integration to load PDF files using `dedoc`. The file loader can automatically detect the correctness of a textual layer in the     PDF document. Note that `__init__` method supports parameters that differ from ones of     DedocBaseLoader.",
+    "source_types": ["FILE", "PDF"],
+    "file_extensions": [".pdf", ".html"],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "DocumentIntelligenceLoader": {
+    "description": "Load a PDF with Azure Document Intelligence",
+    "source_types": ["PDF"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path", "client"],
+    "external_packages": []
+  },
+  "MathpixPDFLoader": {
+    "description": "Load `PDF` files using `Mathpix` service.",
+    "source_types": ["FILE", "PDF"],
+    "file_extensions": [],
+    "env_vars": ["MATHPIX_API_ID", "MATHPIX_API_KEY"],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "OnlinePDFLoader": {
+    "description": "Load online `PDF`.",
+    "source_types": ["PDF"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "PDFMinerLoader": {
+    "description": "Load and parse a PDF file using 'pdfminer.six' library.",
+    "source_types": ["FILE", "PDF"],
+    "file_extensions": [".six", ".pdf"],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "PDFMinerPDFasHTMLLoader": {
+    "description": "Load `PDF` files as HTML content using `PDFMiner`.",
+    "source_types": ["FILE", "PDF", "HTML"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": ["pdfminer"]
+  },
+  "PDFPlumberLoader": {
+    "description": "Load `PDF` files using `pdfplumber`.",
+    "source_types": ["FILE", "PDF"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "PyMuPDFLoader": {
+    "description": "Load and parse a PDF file using 'PyMuPDF' library.",
+    "source_types": ["FILE", "PDF"],
+    "file_extensions": [".pdf"],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "PyPDFDirectoryLoader": {
+    "description": "Load and parse a directory of PDF files using 'pypdf' library.",
+    "source_types": ["FILE", "PDF", "DIRECTORY"],
+    "file_extensions": [".pdf"],
+    "env_vars": [],
+    "required_params": ["path"],
+    "external_packages": []
+  },
+  "PyPDFium2Loader": {
+    "description": "Load and parse a PDF file using the `pypdfium2` library.",
+    "source_types": ["FILE", "PDF"],
+    "file_extensions": [".pdf"],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "UnstructuredPDFLoader": {
+    "description": "Load `PDF` files using `Unstructured`.",
+    "source_types": ["FILE", "PDF"],
+    "file_extensions": [".pdf"],
+    "env_vars": [],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "ZeroxPDFLoader": {
+    "description": "Document loader utilizing Zerox library: https://github.com/getomni-ai/zerox",
+    "source_types": ["PDF", "GITHUB"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path", "zerox_kwargs"],
+    "external_packages": []
+  },
+  "PebbloSafeLoader": {
+    "description": "Pebblo Safe Loader class is a wrapper around document loaders enabling the data to be scrutinized.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": ["BATCH_SIZE_BYTES", "PEBBLO_LOAD_SEMANTIC", "PLUGIN_VERSION"],
+    "required_params": ["langchain_loader", "name"],
+    "external_packages": []
+  },
+  "PebbloTextLoader": {
+    "description": "Loader for text data.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["texts"],
+    "external_packages": []
+  },
+  "PolarsDataFrameLoader": {
+    "description": "Load `Polars` DataFrame.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["data_frame"],
+    "external_packages": []
+  },
+  "UnstructuredPowerPointLoader": {
+    "description": "Load `Microsoft PowerPoint` files using `Unstructured`.",
+    "source_types": ["FILE"],
+    "file_extensions": [".ppt", ".pptx", ".pptx"],
+    "env_vars": [],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "PsychicLoader": {
+    "description": "Load from `Psychic.dev`.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["api_key", "account_id"],
+    "external_packages": []
+  },
+  "PubMedLoader": {
+    "description": "Load from the `PubMed` biomedical library.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["query"],
+    "external_packages": []
+  },
+  "PySparkDataFrameLoader": {
+    "description": "Load `PySpark` DataFrames.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": [],
+    "external_packages": []
+  },
+  "PythonLoader": {
+    "description": "Load `Python` files, respecting any non-default encoding if specified.",
+    "source_types": ["FILE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "QuipLoader": {
+    "description": "Load `Quip` pages.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["api_url", "access_token"],
+    "external_packages": []
+  },
+  "ReadTheDocsLoader": {
+    "description": "Load `ReadTheDocs` documentation directory.",
+    "source_types": ["DIRECTORY"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["path"],
+    "external_packages": []
+  },
+  "RecursiveUrlLoader": {
+    "description": "Recursively load all child links from a root URL.",
+    "source_types": ["URL"],
+    "file_extensions": [
+      ".19",
+      ".19",
+      ".19",
+      ".13",
+      ".12",
+      ".11",
+      ".10",
+      ".9",
+      ".metadata",
+      ".org"
+    ],
+    "env_vars": [],
+    "required_params": ["url"],
+    "external_packages": []
+  },
+  "RedditPostsLoader": {
+    "description": "Load `Reddit` posts.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": [
+      "client_id",
+      "client_secret",
+      "user_agent",
+      "search_queries",
+      "mode"
+    ],
+    "external_packages": []
+  },
+  "RoamLoader": {
+    "description": "Load `Roam` files from a directory.",
+    "source_types": ["FILE", "DIRECTORY"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["path"],
+    "external_packages": []
+  },
+  "RocksetLoader": {
+    "description": "Load from a `Rockset` database.",
+    "source_types": ["DATABASE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["client", "query", "content_keys"],
+    "external_packages": []
+  },
+  "RSpaceLoader": {
+    "description": "Load content from RSpace notebooks, folders, documents or PDF Gallery files.",
+    "source_types": ["FILE", "PDF", "DIRECTORY"],
+    "file_extensions": [],
+    "env_vars": ["RSPACE_API_KEY", "RSPACE_URL"],
+    "required_params": ["global_id"],
+    "external_packages": []
+  },
+  "RSSFeedLoader": {
+    "description": "Load news articles from `RSS` feeds using `Unstructured`.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["newsloader_kwargs"],
+    "external_packages": []
+  },
+  "UnstructuredRSTLoader": {
+    "description": "Load `RST` files using `Unstructured`.",
+    "source_types": ["FILE"],
+    "file_extensions": [".rst"],
+    "env_vars": [],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "UnstructuredRTFLoader": {
+    "description": "Load `RTF` files using `Unstructured`.",
+    "source_types": ["FILE"],
+    "file_extensions": [".rtf"],
+    "env_vars": [],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "S3DirectoryLoader": {
+    "description": "Load from `Amazon AWS S3` directory.",
+    "source_types": ["S3", "DIRECTORY"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["bucket"],
+    "external_packages": ["boto3"]
+  },
+  "S3FileLoader": {
+    "description": "Load from `Amazon AWS S3` file.",
+    "source_types": ["FILE", "S3"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["bucket", "key", "unstructured_kwargs"],
+    "external_packages": ["boto3"]
+  },
+  "ScrapflyLoader": {
+    "description": "Turn a url to llm accessible markdown with `Scrapfly.io`.",
+    "source_types": ["URL", "MARKDOWN"],
+    "file_extensions": [],
+    "env_vars": ["SCRAPFLY_API_KEY"],
+    "required_params": ["urls"],
+    "external_packages": []
+  },
+  "ScrapingAntLoader": {
+    "description": "Turn an url to LLM accessible markdown with `ScrapingAnt`.",
+    "source_types": ["URL", "MARKDOWN", "API"],
+    "file_extensions": [],
+    "env_vars": ["SCRAPINGANT_API_KEY"],
+    "required_params": ["urls"],
+    "external_packages": []
+  },
+  "SlackDirectoryLoader": {
+    "description": "Load from a `Slack` directory dump.",
+    "source_types": ["SLACK", "DIRECTORY"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["zip_path"],
+    "external_packages": []
+  },
+  "SnowflakeLoader": {
+    "description": "Load from `Snowflake` API.",
+    "source_types": ["API"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": [
+      "query",
+      "user",
+      "password",
+      "account",
+      "warehouse",
+      "role",
+      "database",
+      "schema"
+    ],
+    "external_packages": []
+  },
+  "SpiderLoader": {
+    "description": "Load web pages as Documents using Spider AI.",
+    "source_types": ["URL"],
+    "file_extensions": [".cloud"],
+    "env_vars": ["SPIDER_API_KEY"],
+    "required_params": ["url"],
+    "external_packages": []
+  },
+  "SpreedlyLoader": {
+    "description": "Load from `Spreedly` API.",
+    "source_types": ["API"],
+    "file_extensions": [],
+    "env_vars": ["SPREEDLY_ENDPOINTS"],
+    "required_params": ["access_token", "resource"],
+    "external_packages": []
+  },
+  "SQLDatabaseLoader": {
+    "description": "Load documents by querying database tables supported by SQLAlchemy.",
+    "source_types": ["DATABASE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["query", "db"],
+    "external_packages": []
+  },
+  "SRTLoader": {
+    "description": "Load `.srt` (subtitle) files.",
+    "source_types": ["FILE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "StripeLoader": {
+    "description": "Load from `Stripe` API.",
+    "source_types": ["API"],
+    "file_extensions": [],
+    "env_vars": ["STRIPE_ACCESS_TOKEN", "STRIPE_ENDPOINTS"],
+    "required_params": ["resource"],
+    "external_packages": []
+  },
+  "SurrealDBLoader": {
+    "description": "Load SurrealDB documents.",
+    "source_types": ["DATABASE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": [],
+    "external_packages": []
+  },
+  "TelegramChatApiLoader": {
+    "description": "Load `Telegram` chat json directory dump.",
+    "source_types": ["JSON", "DIRECTORY", "API"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": [],
+    "external_packages": ["pandas"]
+  },
+  "TelegramChatFileLoader": {
+    "description": "Load from `Telegram chat` dump.",
+    "source_types": ["FILE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["path"],
+    "external_packages": []
+  },
+  "TelegramChatLoader": {
+    "description": "Load from `Telegram chat` dump.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["path"],
+    "external_packages": []
+  },
+  "TencentCOSDirectoryLoader": {
+    "description": "Load from `Tencent Cloud COS` directory.",
+    "source_types": ["DIRECTORY"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["conf", "bucket"],
+    "external_packages": []
+  },
+  "TencentCOSFileLoader": {
+    "description": "Load from `Tencent Cloud COS` file.",
+    "source_types": ["FILE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["conf", "bucket", "key"],
+    "external_packages": []
+  },
+  "TensorflowDatasetLoader": {
+    "description": "Load from `TensorFlow Dataset`.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["dataset_name", "split_name"],
+    "external_packages": []
+  },
+  "TiDBLoader": {
+    "description": "Load documents from TiDB.",
+    "source_types": ["DATABASE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["connection_string", "query"],
+    "external_packages": []
+  },
+  "ToMarkdownLoader": {
+    "description": "Load `HTML` using `2markdown API`.",
+    "source_types": ["HTML", "MARKDOWN", "API"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["url", "api_key"],
+    "external_packages": []
+  },
+  "TomlLoader": {
+    "description": "Load `TOML` files.",
+    "source_types": ["FILE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["source"],
+    "external_packages": []
+  },
+  "TrelloLoader": {
+    "description": "Load cards from a `Trello` board.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": ["TRELLO_API_KEY", "TRELLO_TOKEN"],
+    "required_params": ["client", "board_name"],
+    "external_packages": []
+  },
+  "UnstructuredTSVLoader": {
+    "description": "Load `TSV` files using `Unstructured`.",
+    "source_types": ["FILE"],
+    "file_extensions": [".tsv", ".tsv"],
+    "env_vars": [],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "TwitterTweetLoader": {
+    "description": "Load `Twitter` tweets.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["auth_handler", "twitter_users"],
+    "external_packages": []
+  },
+  "UnstructuredAPIFileIOLoader": {
+    "description": ".. deprecated:: 0.2.8 Use ``:class:`~langchain_unstructured.UnstructuredLoader``` instead. It will not be removed until langchain-community==1.0.",
+    "source_types": ["FILE", "API"],
+    "file_extensions": [".8", ".pdf"],
+    "env_vars": ["MY_API_KEY", "UNSTRUCTURED_API_KEY"],
+    "required_params": ["file", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "UnstructuredAPIFileLoader": {
+    "description": ".. deprecated:: 0.2.8 Use ``:class:`~langchain_unstructured.UnstructuredLoader``` instead. It will not be removed until langchain-community==1.0.",
+    "source_types": ["FILE", "API"],
+    "file_extensions": [".8", ".pdf"],
+    "env_vars": ["MY_API_KEY", "UNSTRUCTURED_API_KEY"],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "UnstructuredURLLoader": {
+    "description": "Load files from remote URLs using `Unstructured`.",
+    "source_types": ["FILE", "URL"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["urls", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "PlaywrightURLLoader": {
+    "description": "Load `HTML` pages with `Playwright` and parse with `Unstructured`.",
+    "source_types": ["URL", "HTML"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["urls"],
+    "external_packages": []
+  },
+  "SeleniumURLLoader": {
+    "description": "Load `HTML` pages with `Selenium` and parse with `Unstructured`.",
+    "source_types": ["URL", "HTML"],
+    "file_extensions": [],
+    "env_vars": ["TAG_NAME"],
+    "required_params": ["urls"],
+    "external_packages": ["selenium"]
+  },
+  "VsdxLoader": {
+    "description": "Interface for Document Loader.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": []
+  },
+  "WeatherDataLoader": {
+    "description": "Load weather data with `Open Weather Map` API.",
+    "source_types": ["API"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["client", "places"],
+    "external_packages": []
+  },
+  "WhatsAppChatLoader": {
+    "description": "Load `WhatsApp` messages text file.",
+    "source_types": ["FILE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["path"],
+    "external_packages": []
+  },
+  "WikipediaLoader": {
+    "description": "Load from `Wikipedia`.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["query"],
+    "external_packages": []
+  },
+  "Docx2txtLoader": {
+    "description": "Load `DOCX` file using `docx2txt` and chunks at character level.",
+    "source_types": ["FILE", "WORD"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["file_path"],
+    "external_packages": ["docx"]
+  },
+  "UnstructuredWordDocumentLoader": {
+    "description": "Load `Microsoft Word` file using `Unstructured`.",
+    "source_types": ["FILE", "WORD"],
+    "file_extensions": [".docx", ".doc", ".docx"],
+    "env_vars": [],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": ["docx"]
+  },
+  "UnstructuredXMLLoader": {
+    "description": "Load `XML` file using `Unstructured`.",
+    "source_types": ["FILE", "XML"],
+    "file_extensions": [".xml"],
+    "env_vars": [],
+    "required_params": ["file_path", "unstructured_kwargs"],
+    "external_packages": []
+  },
+  "XorbitsLoader": {
+    "description": "Load `Xorbits` DataFrame.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["data_frame"],
+    "external_packages": ["pandas"]
+  },
+  "GoogleApiYoutubeLoader": {
+    "description": "Load all Videos from a `YouTube` Channel.",
+    "source_types": ["YOUTUBE", "API"],
+    "file_extensions": [".json"],
+    "env_vars": [],
+    "required_params": ["__dataclass_self__"],
+    "external_packages": ["youtube_transcript", "google"]
+  },
+  "YoutubeLoader": {
+    "description": "Load `YouTube` video transcripts.",
+    "source_types": ["YOUTUBE"],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["video_id"],
+    "external_packages": ["youtube_transcript"]
+  },
+  "YuqueLoader": {
+    "description": "Load documents from `Yuque`.",
+    "source_types": [],
+    "file_extensions": [],
+    "env_vars": [],
+    "required_params": ["access_token"],
+    "external_packages": []
+  }
+}
