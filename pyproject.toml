@@ -50,7 +50,7 @@ priority = "supplemental"
 
 [tool.poetry.dependencies]
 python = ">=3.12,<3.13"
-langchain-core = "^0.3.59"
+langchain-core = "^0.3.63"
 langchain = "^0.3.20"
 langchain-community = "^0.3.20"
 langchain-experimental = "^0.3.4"
@@ -217,6 +217,8 @@ tomli-w = "^1.2.0"
 tox = "^4.25.0"
 watchdog = "^6.0.0"
 grandalf = "^0.8"
+prompt-toolkit = "^3.0.51"
+readchar = "^4.2.1"
 
 
 [tool.poetry.group.docs.dependencies]
@@ -381,6 +383,16 @@ wiki = "^0.11.2"
 
 [tool.poetry.group."engine.persistence".dependencies]
 redis = "^5.2.1"
+
+
+[tool.poetry.group.games-chess.dependencies]
+chess = "^1.11.2"
+
+
+[tool.poetry.group.chat-models.dependencies]
+mistralai = "^1.8.0"
+deepseek = "^1.0.0"
+google-genai = "^1.16.1"
 
 [tool.poetry.extras]
 cpu = ["torch", "torchvision", "torchaudio"]

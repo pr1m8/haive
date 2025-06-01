@@ -86,15 +86,14 @@ def get_retrievers(module_name: str, serialize: bool = True) -> Dict[str, Any]:
                                 k: {"type": str(v["type"]), "default": str(v["default"])}
                                 for k, v in meta["properties"].items()
                             },
-                            
-                            "methods": {
-                                method: {
-                                    "parameters": {k: str(v) for k, v in meta["methods"][method]["parameters"].items()},
-                                    "return_type": str(meta["methods"][method]["return_type"])
-                                }
-                                
-                                for method in meta["methods"]
-                            }
+                              "methods": {
+                                  method: {
+                                      "parameters": {k: str(v) for k, v in meta["methods"][method]["parameters"].items()},
+                                      "return_type": str(meta["methods"][method]["return_type"])
+                                  }
+                                  
+                                for method in meta["methods"] 
+                              }
                         }
                         for wrapper, meta in wrapper_details.items()
                     },
@@ -160,8 +159,8 @@ def extract_methods(cls: Type) -> Dict[str, Dict[str, Any]]:
 
     return methods
 
-
-def extract_init_info(cls: Type) -> (Dict[str, Any], Optional[str]):
+from typing import Tuple
+def extract_init_info(cls: Type) -> Tuple[Dict[str, Any], Optional[str]]:
     """Extracts __init__ method parameters and docstring, including inherited ones."""
     init_args = {}
     init_docstring = None
@@ -240,7 +239,7 @@ def extract_wrapper_details(cls: Type) -> Dict[str, Any]:
 
 
 
-def extract_validate_environment(cls: Type) -> (bool, Optional[str]):
+def extract_validate_environment(cls: Type) -> Tuple[bool, Optional[str]]:
     """Checks if a class or any of its wrapper classes have `validate_environment` and detects ImportError."""
     for base in inspect.getmro(cls):
         if base is object:
@@ -256,7 +255,7 @@ def extract_validate_environment(cls: Type) -> (bool, Optional[str]):
 
 
 # Example usage
-retrievers = get_retrievers("langchain_community.retrievers")
+retrievers = get_retrievers("langchain_community.document_loaders")
 
 # Print dynamically found retrievers with inheritance details
 for name, meta in retrievers.items():

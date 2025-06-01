@@ -1,6 +1,7 @@
-import nox
 import webbrowser
 from pathlib import Path
+
+import nox
 
 DOCS_SOURCE = "docs/source"
 DOCS_BUILD = "docs/_build"
@@ -17,8 +18,10 @@ def build_docs(session: nox.Session) -> None:
         "poetry",
         "run",
         "sphinx-build",
-        "-b", "html",
-        "-c", CONF_DIR,
+        "-b",
+        "html",
+        "-c",
+        CONF_DIR,
         DOCS_SOURCE,
         DOCS_BUILD,
     )
@@ -38,11 +41,15 @@ def live_docs(session: nox.Session) -> None:
         "sphinx-autobuild",
         DOCS_SOURCE,
         DOCS_BUILD,
-        "--host", "0.0.0.0",
-        "--port", "8001",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8001",
         "--open-browser",
-        "--watch", "README.md",
-        "--ignore", DOCS_BUILD,
+        "--watch",
+        "README.md",
+        "--ignore",
+        DOCS_BUILD,
     )
 
 

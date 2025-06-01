@@ -2,9 +2,7 @@
   "BooleanOutputParser": {
     "name": "BooleanOutputParser",
     "module": "langchain.output_parsers.boolean",
-    "base_classes": [
-      "BaseOutputParser[bool]"
-    ],
+    "base_classes": ["BaseOutputParser[bool]"],
     "methods": [
       "__init__",
       "abatch",
@@ -64,9 +62,7 @@
   "CombiningOutputParser": {
     "name": "CombiningOutputParser",
     "module": "langchain.output_parsers.combining",
-    "base_classes": [
-      "BaseOutputParser[Dict[str, Any]]"
-    ],
+    "base_classes": ["BaseOutputParser[Dict[str, Any]]"],
     "methods": [
       "__init__",
       "abatch",
@@ -126,9 +122,7 @@
   "CommaSeparatedListOutputParser": {
     "name": "CommaSeparatedListOutputParser",
     "module": "langchain_core.output_parsers.list",
-    "base_classes": [
-      "ListOutputParser"
-    ],
+    "base_classes": ["ListOutputParser"],
     "methods": [
       "__init__",
       "abatch",
@@ -189,9 +183,7 @@
   "DatetimeOutputParser": {
     "name": "DatetimeOutputParser",
     "module": "langchain.output_parsers.datetime",
-    "base_classes": [
-      "BaseOutputParser[datetime]"
-    ],
+    "base_classes": ["BaseOutputParser[datetime]"],
     "methods": [
       "__init__",
       "abatch",
@@ -251,9 +243,7 @@
   "EnumOutputParser": {
     "name": "EnumOutputParser",
     "module": "langchain.output_parsers.enum",
-    "base_classes": [
-      "BaseOutputParser[Enum]"
-    ],
+    "base_classes": ["BaseOutputParser[Enum]"],
     "methods": [
       "__init__",
       "abatch",
@@ -313,9 +303,7 @@
   "JsonOutputKeyToolsParser": {
     "name": "JsonOutputKeyToolsParser",
     "module": "langchain_core.output_parsers.openai_tools",
-    "base_classes": [
-      "JsonOutputToolsParser"
-    ],
+    "base_classes": ["JsonOutputToolsParser"],
     "methods": [
       "__init__",
       "abatch",
@@ -375,9 +363,7 @@
   "JsonOutputToolsParser": {
     "name": "JsonOutputToolsParser",
     "module": "langchain_core.output_parsers.openai_tools",
-    "base_classes": [
-      "BaseCumulativeTransformOutputParser[Any]"
-    ],
+    "base_classes": ["BaseCumulativeTransformOutputParser[Any]"],
     "methods": [
       "__init__",
       "abatch",
@@ -437,9 +423,7 @@
   "ListOutputParser": {
     "name": "ListOutputParser",
     "module": "langchain_core.output_parsers.list",
-    "base_classes": [
-      "BaseTransformOutputParser[list[str]]"
-    ],
+    "base_classes": ["BaseTransformOutputParser[list[str]]"],
     "methods": [
       "__init__",
       "abatch",
@@ -500,9 +484,7 @@
   "MarkdownListOutputParser": {
     "name": "MarkdownListOutputParser",
     "module": "langchain_core.output_parsers.list",
-    "base_classes": [
-      "ListOutputParser"
-    ],
+    "base_classes": ["ListOutputParser"],
     "methods": [
       "__init__",
       "abatch",
@@ -563,9 +545,7 @@
   "NumberedListOutputParser": {
     "name": "NumberedListOutputParser",
     "module": "langchain_core.output_parsers.list",
-    "base_classes": [
-      "ListOutputParser"
-    ],
+    "base_classes": ["ListOutputParser"],
     "methods": [
       "__init__",
       "abatch",
@@ -626,9 +606,7 @@
   "OutputFixingParser": {
     "name": "OutputFixingParser",
     "module": "langchain.output_parsers.fix",
-    "base_classes": [
-      "BaseOutputParser[TypeVar]"
-    ],
+    "base_classes": ["BaseOutputParser[TypeVar]"],
     "methods": [
       "__init__",
       "abatch",
@@ -688,9 +666,7 @@
   "PandasDataFrameOutputParser": {
     "name": "PandasDataFrameOutputParser",
     "module": "langchain.output_parsers.pandas_dataframe",
-    "base_classes": [
-      "BaseOutputParser[Dict[str, Any]]"
-    ],
+    "base_classes": ["BaseOutputParser[Dict[str, Any]]"],
     "methods": [
       "__init__",
       "abatch",
@@ -751,10 +727,7 @@
   "PydanticOutputParser": {
     "name": "PydanticOutputParser",
     "module": "langchain_core.output_parsers.pydantic",
-    "base_classes": [
-      "JsonOutputParser",
-      "Generic"
-    ],
+    "base_classes": ["JsonOutputParser", "Generic"],
     "methods": [
       "__init__",
       "abatch",
@@ -814,9 +787,7 @@
   "PydanticToolsParser": {
     "name": "PydanticToolsParser",
     "module": "langchain_core.output_parsers.openai_tools",
-    "base_classes": [
-      "JsonOutputToolsParser"
-    ],
+    "base_classes": ["JsonOutputToolsParser"],
     "methods": [
       "__init__",
       "abatch",
@@ -876,9 +847,7 @@
   "RegexDictParser": {
     "name": "RegexDictParser",
     "module": "langchain.output_parsers.regex_dict",
-    "base_classes": [
-      "BaseOutputParser[Dict[str, str]]"
-    ],
+    "base_classes": ["BaseOutputParser[Dict[str, str]]"],
     "methods": [
       "__init__",
       "abatch",
@@ -938,9 +907,7 @@
   "RegexParser": {
     "name": "RegexParser",
     "module": "langchain.output_parsers.regex",
-    "base_classes": [
-      "BaseOutputParser[Dict[str, str]]"
-    ],
+    "base_classes": ["BaseOutputParser[Dict[str, str]]"],
     "methods": [
       "__init__",
       "abatch",
@@ -1000,9 +967,7 @@
   "RetryOutputParser": {
     "name": "RetryOutputParser",
     "module": "langchain.output_parsers.retry",
-    "base_classes": [
-      "BaseOutputParser[TypeVar]"
-    ],
+    "base_classes": ["BaseOutputParser[TypeVar]"],
     "methods": [
       "__init__",
       "abatch",
@@ -1063,9 +1028,7 @@
   "RetryWithErrorOutputParser": {
     "name": "RetryWithErrorOutputParser",
     "module": "langchain.output_parsers.retry",
-    "base_classes": [
-      "BaseOutputParser[TypeVar]"
-    ],
+    "base_classes": ["BaseOutputParser[TypeVar]"],
     "methods": [
       "__init__",
       "abatch",
@@ -1126,9 +1089,7 @@
   "StructuredOutputParser": {
     "name": "StructuredOutputParser",
     "module": "langchain.output_parsers.structured",
-    "base_classes": [
-      "BaseOutputParser[Dict[str, Any]]"
-    ],
+    "base_classes": ["BaseOutputParser[Dict[str, Any]]"],
     "methods": [
       "__init__",
       "abatch",
@@ -1188,9 +1149,7 @@
   "XMLOutputParser": {
     "name": "XMLOutputParser",
     "module": "langchain_core.output_parsers.xml",
-    "base_classes": [
-      "BaseTransformOutputParser"
-    ],
+    "base_classes": ["BaseTransformOutputParser"],
     "methods": [
       "__init__",
       "abatch",
@@ -1250,9 +1209,7 @@
   "YamlOutputParser": {
     "name": "YamlOutputParser",
     "module": "langchain.output_parsers.yaml",
-    "base_classes": [
-      "BaseOutputParser[TypeVar]"
-    ],
+    "base_classes": ["BaseOutputParser[TypeVar]"],
     "methods": [
       "__init__",
       "abatch",
