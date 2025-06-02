@@ -3,13 +3,18 @@ import sys
 from pathlib import Path
 
 # Adjust the path to import base.py from haive-core
-sys.path.append(str(Path(__file__).resolve().parent.parent / "packages/haive-core/src/haive/core/models/llm"))
+sys.path.append(
+    str(
+        Path(__file__).resolve().parent.parent
+        / "packages/haive-core/src/haive/core/models/llm"
+    )
+)
 
 from base import (
     AnthropicLLMConfig,
-    OpenAILLMConfig,
-    MistralLLMConfig,
     DeepSeekLLMConfig,
+    MistralLLMConfig,
+    OpenAILLMConfig,
 )
 
 # List of (class, provider_name, filename)
@@ -56,5 +61,6 @@ def main():
     for line in summary:
         print(line)
 
+
 if __name__ == "__main__":
-    main() 
+    main()
