@@ -23,6 +23,10 @@
     {
       "name": "haive-tools",
       "path": "./packages/haive-tools"
+    },
+    {
+      "name": "haive-dataflow",
+      "path": "./packages/haive-dataflow"
     }
   ],
   "settings": {
@@ -33,7 +37,8 @@
       "${workspaceFolder:root}/packages/haive-agents/src",
       "${workspaceFolder:root}/packages/haive-games/src",
       "${workspaceFolder:root}/packages/haive-prebuilt/src",
-      "${workspaceFolder:root}/packages/haive-tools/src"
+      "${workspaceFolder:root}/packages/haive-tools/src",
+      "${workspaceFolder:root}/packages/haive-dataflow/src"
     ],
     "python.envFile": "${workspaceFolder:root}/.env",
     "python.testing.pytestEnabled": true,
