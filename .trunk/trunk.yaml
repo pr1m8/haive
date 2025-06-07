@@ -21,7 +21,7 @@ lint:
     - actionlint@1.7.7
     - bandit@1.8.3
     - black@25.1.0
-    - checkov@3.2.435
+    - checkov@3.2.436
     - dotenv-linter@3.3.0
     - git-diff-check
     - hadolint@2.12.1-beta
