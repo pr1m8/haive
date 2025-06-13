@@ -7,6 +7,11 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 import os
 import sys
+from pathlib import Path
+
+# Resolve from workspace root, no matter where Sphinx is run
+# workspace_root = Path(__file__).resolve().parents[2]
+
 
 sys.path.insert(0, os.path.abspath("../../src"))
 

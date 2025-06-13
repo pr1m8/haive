@@ -13,8 +13,15 @@ DEPS = {
     "haive-agents": ["haive-core", "haive-tools"],
     "haive-games": ["haive-core", "haive-agents"],
     "haive-prebuilt": ["haive-core", "haive-agents", "haive-tools"],
-    "haive-dataflow": ["haive-core", "haive-agents", "haive-games", "haive-prebuilt", "haive-tools"],
+    "haive-dataflow": [
+        "haive-core",
+        "haive-agents",
+        "haive-games",
+        "haive-prebuilt",
+        "haive-tools",
+    ],
 }
+
 
 def generate_workspace(name, dependencies):
     # Compose list of folder paths relative to ROOT
@@ -41,8 +48,8 @@ def generate_workspace(name, dependencies):
             "**/*.pyc": True,
             "**/*.pyo": True,
             "**/.mypy_cache": True,
-            "**/.pytest_cache": True
-        }
+            "**/.pytest_cache": True,
+        },
     }
 
     workspace_data = {
@@ -50,20 +57,19 @@ def generate_workspace(name, dependencies):
         "settings": settings,
         "launch": {"configurations": [], "compounds": []},
         "extensions": {
-            "recommendations": [
-                "ms-python.python",
-                "ms-python.vscode-pylance"
-            ]
-        }
+            "recommendations": ["ms-python.python", "ms-python.vscode-pylance"]
+        },
     }
 
     out_file = WORKSPACE_DIR / f"{name}.code-workspace"
     out_file.write_text(json.dumps(workspace_data, indent=2))
     print(f"✅ Generated: {out_file.relative_to(ROOT)}")
 
+
 def main():
     for name, deps in DEPS.items():
         generate_workspace(name, deps)
+
 
 if __name__ == "__main__":
     main()
