@@ -27,3 +27,8 @@
     path = packages/haive-tools
     url = https://github.com/pr1m8/haive-tools.git
     branch = main
+
+[submodule "packages/haive-mcp"]
+    path = packages/haive-mcp
+    url = https://github.com/pr1m8/haive-mcp.git
+    branch = main
