@@ -105,12 +105,25 @@ __pycache__/
 
 # === 📘 Sphinx / documentation ===
 docs/build/
+docs/_build/
+docs/source/_build/
+docs/source/_static/
+docs/source/_templates/
+docs/source/api/
 docs/scratch/
 *.pdf
 *.tex
 sphinx*
 readthedocs-sphinx-search/
 *.rst~
+personal_notes/**/rendered/
+personal_notes/**/*.html
+**/rendered/
+**/*.html
+**/_build/
+**/_static/
+**/_templates/
+**/api/
 
 # === 🔧 Temporary dev output ===
 packages/resources/State_History/
