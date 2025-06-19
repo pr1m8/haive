@@ -53,18 +53,11 @@ version = '1.0'
 # -- General configuration ---------------------------------------------------
 extensions = [
     # Sphinx built-in
-    'sphinx.ext.autodoc',
-    'sphinx.ext.autosummary',
-    'sphinx.ext.napoleon',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
-    'sphinx.ext.coverage',
     'sphinx.ext.graphviz',
     'sphinx.ext.ifconfig',
     
     # Third-party extensions
-    'sphinx_autodoc_typehints',
     'sphinx_copybutton',
     'sphinx_tabs.tabs',
     'sphinx_design',
@@ -76,66 +69,72 @@ extensions = [
 # Template path
 templates_path = ['_templates']
 
-# -- Autodoc configuration ---------------------------------------------------
+# -- Autodoc configuration ------------------------------------------------------
+extensions.extend([
+    'sphinx.ext.autodoc',
+    'sphinx.ext.autosummary',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.inheritance_diagram',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.napoleon',
+])
+
+# Autodoc settings
 autodoc_default_options = {
     'members': True,
-    'member-order': 'bysource',
-    'special-members': '__init__',
     'undoc-members': True,
-    'exclude-members': '__weakref__, __dict__, __module__, __annotations__',
     'show-inheritance': True,
-    'inherited-members': False,
-    'ignore-module-all': True,  # Important for ignoring __all__
+    'special-members': '__init__',
+    'member-order': 'bysource',
+    'exclude-members': '__weakref__,__dict__,__module__',
 }
-
-# More comprehensive mock imports
-autodoc_mock_imports = [
-    # ML/AI frameworks
-    'torch', 'tensorflow', 'transformers', 'jax', 'flax',
-    
-    # Data science
-    'numpy', 'pandas', 'scipy', 'sklearn', 'scikit-learn',
-    
-    # Visualization
-    'matplotlib', 'seaborn', 'plotly', 'bokeh',
-    
-    # UI frameworks
-    'streamlit', 'gradio', 'pygame', 'tkinter',
-    
-    # Game libraries
-    'chess', 'python-chess',
-    
-    # Web/API
-    'requests', 'httpx', 'aiohttp', 'fastapi', 'flask',
-    
-    # Database
-    'sqlalchemy', 'pymongo', 'redis', 'psycopg2',
-    
-    # Testing/Development
-    'pytest', 'hypothesis',
-    
-    # Other
-    'opencv-cv2', 'cv2', 'PIL', 'Pillow',
-]
-
-# Type hints configuration
 autodoc_typehints = 'description'
 autodoc_typehints_format = 'short'
-typehints_fully_qualified = False
-always_document_param_types = True
-typehints_document_rtype = True
+autodoc_inherit_docstrings = True
+autodoc_mock_imports = [
+    # LangChain
+    'langchain', 'langchain_core', 'langchain_community', 'langchain_openai',
+    
+    # Databases
+    'neo4j', 'sqlalchemy', 'psycopg2', 'sqlite3', 'chromadb', 'faiss', 'pinecone',
+    
+    # Data science
+    'networkx', 'numpy', 'pandas', 'matplotlib', 'scipy', 'torch', 'transformers',
+    
+    # LLM providers
+    'openai', 'anthropic', 'deepseek', 'mistral', 'deepinfra', 'together',
+    
+    # Monitoring and logging
+    'wandb', 'mlflow', 'ray', 'prometheus_client', 
+    
+    # Google services
+    'google', 'google_auth_oauthlib', 'googleapiclient', 'google.cloud',
+    
+    # Web and parsing
+    'beautifulsoup4', 'bs4', 'requests', 'httpx', 'aiohttp', 'PIL', 'pillow',
+    
+    # Development tools
+    'jira', 'github', 'gitlab', 'boto3', 'botocore', 'slack_sdk', 
+    
+    # UI
+    'textual', 'rich', 'tkinter', 'gradio', 'streamlit',
+    
+    # Core dependencies that might cause type issues
+    'pydantic', 'pydantic_core', 'typing_extensions',
+    
+    # Framework and architecture
+    'fastapi', 'flask', 'asyncio', 'grpc', 'uvicorn',
+    
+    # Specific Haive modules
+    'haive.core.persistence', 'haive.agents.sequential',
+    'haive.games.chess', 'haive.games.checkers', 'haive.games.poker', 'haive.games.hold_em',
+    'haive.games.tic_tac_toe', 'haive.games.mancala', 'haive.games.dominoes'
+]
 
-# -- Autosummary configuration -----------------------------------------------
-autosummary_generate = True
-autosummary_imported_members = False
-autosummary_ignore_module_all = True
-autosummary_filename_map = {}
-
-# IMPORTANT: Prevent autosummary from importing modules
-autosummary_mock_imports = autodoc_mock_imports
-
-# Don't generate for problematic modules
-autosummary_generate_overwrite = False
+# -- Autosummary configuration ---------------------------------------------------
+autosummary_generate = True  # Generate API docs automatically
+autosummary_imported_members = True  # Include imported members
+autosummary_ignore_module_all = False  # Use __all__ to control what's documented
 
 # -- MyST configuration ------------------------------------------------------
 myst_enable_extensions = [
@@ -195,6 +194,18 @@ html_theme_options = {
     },
     "sidebar_hide_name": False,
     "navigation_with_keys": True,
+    "announcement": "📚 This documentation is under active development",
+    "footer_icons": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/will-astley/haive",
+            "html": "",
+            "class": "fa fa-github",
+        },
+    ],
+    "source_repository": "https://github.com/will-astley/haive/",
+    "source_branch": "main",
+    "source_directory": "docs/",
 }
 
 # -- Copy button configuration -----------------------------------------------
@@ -212,7 +223,10 @@ graphviz_output_format = 'svg'
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None),
     'pydantic': ('https://docs.pydantic.dev/latest/', None),
-    'langchain': ('https://python.langchain.com/', None),
+    'langchain_core': ('https://api.python.langchain.com/en/latest/langchain_core/', None),
+    'langchain_community': ('https://api.python.langchain.com/en/latest/langchain_community/', None),
+    'numpy': ('https://numpy.org/doc/stable/', None),
+    'pandas': ('https://pandas.pydata.org/docs/', None),
 }
 
 # -- Napoleon settings (Google docstrings) -----------------------------------
@@ -278,7 +292,7 @@ exclude_patterns = [
     '**/demos/**',
     '**/*.ipynb',
     '**/*.egg-info/**',
-    '**/generated/**',  # Exclude autogenerated files
+    # '**/generated/**',  # Don't exclude autogenerated files, we need these for API docs
 ]
 
 # -- Custom error handling ---------------------------------------------------
@@ -350,39 +364,7 @@ def is_valid_module(module_name):
     
     return True
 
-# -- Custom autosummary handling ---------------------------------------------
-
-class ErrorHandlingAutosummary:
-    """Custom autosummary handling to catch import errors."""
-    
-    @staticmethod
-    def get_documenter(app, obj, parent):
-        """Get documenter with error handling."""
-        try:
-            from sphinx.ext.autodoc import get_documenter as orig_get_documenter
-            return orig_get_documenter(app, obj, parent)
-        except Exception as e:
-            logging.warning(f"Failed to get documenter for {obj}: {e}")
-            return None
-
-# Monkey patch autosummary to handle errors better
-try:
-    from sphinx.ext import autosummary
-    original_get_documenter = autosummary.get_documenter
-    
-    def safe_get_documenter(app, obj, parent):
-        """Safely get documenter with error handling."""
-        try:
-            return original_get_documenter(app, obj, parent)
-        except Exception as e:
-            module_name = getattr(obj, '__module__', str(obj))
-            logging.warning(f"Skipping {module_name}: {e}")
-            SKIP_MODULES.add(module_name)
-            return None
-    
-    autosummary.get_documenter = safe_get_documenter
-except Exception:
-    pass
+# -- No custom autosummary handling
 
 # -- Sphinx setup and event handlers -----------------------------------------
 
@@ -397,6 +379,20 @@ def setup(app):
     
     autosummary_dir = templates_dir / 'autosummary'
     autosummary_dir.mkdir(exist_ok=True)
+    
+    # Create generated directories for API docs
+    api_dir = Path(app.srcdir) / 'api'
+    if api_dir.exists():
+        generated_dirs = [
+            api_dir / 'core' / 'generated',
+            api_dir / 'agents' / 'generated',
+            api_dir / 'tools' / 'generated',
+            api_dir / 'games' / 'generated'
+        ]
+        for gen_dir in generated_dirs:
+            gen_dir.mkdir(parents=True, exist_ok=True)
+            
+    # No custom autosummary handler needed now
     
     # Create CSS file if it doesn't exist
     css_file = static_dir / 'custom.css'
@@ -417,9 +413,6 @@ console.log('Haive documentation loaded!');
         js_file.write_text(js_content)
     
     # Connect event handlers
-    app.connect('autodoc-process-docstring', process_docstring)
-    app.connect('autodoc-skip-member', skip_member)
-    app.connect('autodoc-before-process-signature', before_process_signature)
     app.connect('source-read', source_read_handler)
     app.connect('build-finished', build_finished_handler)
     
@@ -432,16 +425,7 @@ console.log('Haive documentation loaded!');
         'parallel_write_safe': True,
     }
 
-def before_process_signature(app, what, name, obj, options, signature, return_annotation):
-    """Handle signature processing errors."""
-    try:
-        # Check if we should skip this
-        if not is_valid_module(name):
-            return '(*args, **kwargs)', None
-    except Exception as e:
-        logging.error(f"Error processing signature for {name}: {e}")
-        SKIP_MODULES.add(name)
-        return '(*args, **kwargs)', None
+# No signature processor
 
 def source_read_handler(app, docname, source):
     """Process source files before parsing."""
@@ -455,71 +439,7 @@ def source_read_handler(app, docname, source):
    File: ``{docname}``
 """
 
-def process_docstring(app, what, name, obj, options, lines):
-    """Process docstrings with comprehensive error handling."""
-    try:
-        # Skip if module is invalid
-        if not is_valid_module(name):
-            if what == "module":
-                lines[:] = [
-                    f"Module excluded from documentation.",
-                    "",
-                    f"This module ({name}) has been excluded due to import errors or because it matches exclusion patterns.",
-                    "",
-                    "Common reasons for exclusion:",
-                    "- Test files (test_*, *_test.py)",
-                    "- Example files (example.py, examples/)",
-                    "- UI files (ui.py, ui/)",
-                    "- Demo files (demo.py, demos/)",
-                ]
-            else:
-                lines[:] = [f"Member of excluded module {name}."]
-            return
-        
-        # Track that we processed this successfully
-        PROCESSED_MODULES.add(name)
-        
-    except Exception as e:
-        logging.error(f"Error processing docstring for {name}: {e}")
-        SKIP_MODULES.add(name)
-        lines[:] = [f"Documentation unavailable due to processing error."]
-
-def skip_member(app, what, name, obj, skip, options):
-    """Determine whether member should be skipped."""
-    try:
-        # Skip private members (but not special methods)
-        if name.startswith('_') and not name.startswith('__'):
-            return True
-        
-        # Skip test/example/demo members
-        skip_patterns = ['test', 'example', 'demo', 'ui', '_test']
-        if any(pattern in name.lower() for pattern in skip_patterns):
-            return True
-        
-        # Skip Pydantic internals
-        pydantic_internals = [
-            'model_config', 'model_fields', 'model_computed_fields',
-            'model_extra', 'model_fields_set', 'model_post_init',
-            '__pydantic_validator__', '__pydantic_fields__',
-            '__pydantic_config__', '__pydantic_core_schema__',
-            '__pydantic_decorators__', '__pydantic_generic_metadata__',
-            '__pydantic_serializer__', '__pydantic_complete__',
-        ]
-        if name in pydantic_internals:
-            return True
-        
-        # Skip if parent module is problematic
-        if hasattr(obj, '__module__'):
-            if obj.__module__ in SKIP_MODULES:
-                return True
-            if not is_valid_module(obj.__module__):
-                return True
-                
-    except Exception as e:
-        logging.error(f"Error checking skip for {name}: {e}")
-        return True
-    
-    return skip
+# No docstring processor
 
 def build_finished_handler(app, exception):
     """Handle build completion."""
