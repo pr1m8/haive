@@ -1,9 +1,10 @@
 """Nox sessions for documentation building and serving."""
+
 import os
 import shutil
 import sys
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 import nox
 
@@ -27,6 +28,7 @@ def check_sphinx_installed():
     """Check if Sphinx is installed in the current environment."""
     try:
         import sphinx
+
         return True
     except ImportError:
         return False
@@ -36,6 +38,7 @@ def check_sphinx_autobuild_installed():
     """Check if sphinx-autobuild is installed."""
     try:
         import sphinx_autobuild
+
         return True
     except ImportError:
         return False
@@ -48,7 +51,7 @@ def build_docs(session: nox.Session) -> None:
     if not check_sphinx_installed():
         session.log("📦 Installing documentation dependencies...")
         session.run("poetry", "install", "--with", "docs", external=True)
-    
+
     # Handle clean build
     if "--clean" in session.posargs:
         session.log("🧹 Cleaning previous build...")
@@ -58,37 +61,38 @@ def build_docs(session: nox.Session) -> None:
         api_generated = DOCS_SOURCE / "api" / "generated"
         if api_generated.exists():
             shutil.rmtree(api_generated)
-    
+
     session.log("📚 Building documentation...")
-    
+
     # Build command
     cmd = [
         "sphinx-build",
-        "-b", "html",
+        "-b",
+        "html",
         str(DOCS_SOURCE),
         str(DOCS_HTML),
         "--keep-going",  # Continue despite errors
     ]
-    
+
     # Add options from command line
     if "--fresh" in session.posargs or "-E" in session.posargs:
         cmd.append("-E")  # Don't use saved environment
         session.log("🔄 Performing fresh build...")
-    
+
     if "--verbose" in session.posargs or "-v" in session.posargs:
         cmd.append("-v")  # Verbose output
-    
+
     # Log warnings to file
     log_file = LOG_DIR / f"build_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
     cmd.extend(["-w", str(log_file)])
-    
+
     # Run build
     try:
         session.run(*cmd, external=True)
-        session.log(f"✅ Documentation built successfully!")
+        session.log("✅ Documentation built successfully!")
         session.log(f"📄 View at: file://{DOCS_HTML.absolute()}/index.html")
         session.log(f"📝 Build log: {log_file}")
-    except Exception as e:
+    except Exception:
         session.error(f"❌ Build failed! Check {log_file} for details")
 
 
@@ -99,35 +103,46 @@ def docs_live(session: nox.Session) -> None:
     if not check_sphinx_autobuild_installed():
         session.log("📦 Installing sphinx-autobuild...")
         session.run("poetry", "install", "--with", "docs", external=True)
-    
+
     session.log("🔄 Starting live documentation server...")
     session.log("📝 Changes will auto-rebuild")
     session.log("🌐 Server: http://localhost:8000")
     session.log("🛑 Press Ctrl+C to stop")
-    
+
     cmd = [
         "sphinx-autobuild",
         str(DOCS_SOURCE),
         str(DOCS_HTML),
-        "--host", "0.0.0.0",
-        "--port", "8000",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000",
         # Watch additional directories
-        "--watch", "packages/haive-core/src",
-        "--watch", "packages/haive-agents/src",
-        "--watch", "packages/haive-tools/src",
+        "--watch",
+        "packages/haive-core/src",
+        "--watch",
+        "packages/haive-agents/src",
+        "--watch",
+        "packages/haive-tools/src",
         # Ignore patterns
-        "--ignore", "*.pyc",
-        "--ignore", "*.pyo",
-        "--ignore", "*~",
-        "--ignore", ".#*",
-        "--ignore", "*.swp",
-        "--ignore", "*__pycache__*",
+        "--ignore",
+        "*.pyc",
+        "--ignore",
+        "*.pyo",
+        "--ignore",
+        "*~",
+        "--ignore",
+        ".#*",
+        "--ignore",
+        "*.swp",
+        "--ignore",
+        "*__pycache__*",
     ]
-    
+
     # Add --open to auto-open browser
     if "--open" in session.posargs:
         cmd.append("--open-browser")
-    
+
     try:
         session.run(*cmd, external=True)
     except KeyboardInterrupt:
@@ -140,26 +155,22 @@ def serve_docs(session: nox.Session) -> None:
     if not is_docs_built():
         session.log("📚 Documentation not found. Building first...")
         build_docs(session)
-    
+
     port = "8000"
     # Allow custom port
     for arg in session.posargs:
         if arg.isdigit():
             port = arg
             break
-    
+
     session.log(f"🌐 Serving documentation at http://localhost:{port}")
     session.log("🛑 Press Ctrl+C to stop")
-    
+
     # Change to HTML directory and serve
     original_dir = Path.cwd()
     try:
         os.chdir(DOCS_HTML)
-        session.run(
-            sys.executable,
-            "-m", "http.server", port,
-            external=True
-        )
+        session.run(sys.executable, "-m", "http.server", port, external=True)
     except KeyboardInterrupt:
         session.log("\n✋ Server stopped")
     finally:
@@ -170,28 +181,29 @@ def serve_docs(session: nox.Session) -> None:
 def clean_docs(session: nox.Session) -> None:
     """Remove all built documentation."""
     session.log("🧹 Cleaning documentation...")
-    
+
     # Remove build directory
     if DOCS_BUILD.exists():
         shutil.rmtree(DOCS_BUILD)
         session.log(f"✓ Removed {DOCS_BUILD}")
-    
+
     # Remove autosummary generated files
     api_generated = DOCS_SOURCE / "api" / "generated"
     if api_generated.exists():
         shutil.rmtree(api_generated)
         session.log(f"✓ Removed {api_generated}")
-    
+
     # Clean old log files (older than 7 days)
     if LOG_DIR.exists():
         import time
+
         current_time = time.time()
         for log_file in LOG_DIR.glob("*.log"):
             file_age = current_time - log_file.stat().st_mtime
             if file_age > (7 * 24 * 60 * 60):  # 7 days in seconds
                 log_file.unlink()
                 session.log(f"✓ Removed old log: {log_file.name}")
-    
+
     session.log("✅ Cleanup complete!")
 
 
@@ -201,38 +213,40 @@ def check_docs(session: nox.Session) -> None:
     if not check_sphinx_installed():
         session.log("📦 Installing documentation dependencies...")
         session.run("poetry", "install", "--with", "docs", external=True)
-    
+
     session.log("🔍 Checking documentation for errors...")
-    
+
     # Use linkcheck builder to check for broken links
     cmd = [
         "sphinx-build",
-        "-b", "linkcheck",
+        "-b",
+        "linkcheck",
         str(DOCS_SOURCE),
         str(DOCS_BUILD / "linkcheck"),
         "-q",  # Quiet mode
     ]
-    
+
     try:
         session.run(*cmd, external=True)
         session.log("✅ Link check passed!")
     except:
         session.warn("⚠️  Some links may be broken")
-    
+
     # Also do a dummy build to check for other errors
     session.log("🔍 Checking for build errors...")
     cmd = [
         "sphinx-build",
-        "-b", "dummy",
+        "-b",
+        "dummy",
         "-W",  # Treat warnings as errors
         "--keep-going",
         str(DOCS_SOURCE),
         str(DOCS_BUILD / "dummy"),
     ]
-    
+
     log_file = LOG_DIR / f"check_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
     cmd.extend(["-w", str(log_file)])
-    
+
     try:
         session.run(*cmd, external=True)
         session.log("✅ Documentation check passed!")
@@ -259,7 +273,7 @@ def serve_alias(session: nox.Session) -> None:
     serve_docs(session)
 
 
-# Example Usage: 
+# Example Usage:
 """
 # Build docs (incremental)
 nox -s docs
