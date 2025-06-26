@@ -1,0 +1,16 @@
+{Game Name} {game type} implementation.
+
+This module provides a complete implementation of {Game Name} for the Haive 
+games framework, including game state management, rules enforcement, move validation,
+and agent integration.
+
+Example:
+    >>> from haive.games.{module_name} import {Game Name}Agent
+    >>> agent = {Game Name}Agent()
+    >>> final_state = agent.run_game(visualize=True)
+
+Typical usage:
+    - Create a game agent
+    - Configure game parameters
+    - Run a full game or analyze specific positions
+    - Inspect game state and results
