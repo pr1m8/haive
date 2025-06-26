@@ -5,6 +5,7 @@ The loaders subsystem provides a comprehensive strategy-based system for loading
 ## Overview
 
 The loader subsystem consists of:
+
 - **Strategy Registry**: Central registry of 97+ loader strategies
 - **Auto-Selection**: Intelligent loader selection based on source characteristics
 - **Capability System**: Filter loaders by specific capabilities (OCR, async, etc.)
@@ -41,37 +42,44 @@ The loader subsystem consists of:
 ## Loader Categories
 
 ### 📄 Document Loaders (15+)
+
 - **PDF**: PyMuPDF, PDFPlumber, PyPDF, PDFMiner, PyPDFium2, MathpixPDF
 - **Office**: DOCX, XLSX, PPTX, ODT, RTF
 - **Text**: Plain text, Markdown, ReStructuredText
 
 ### 🌐 Web Loaders (10+)
+
 - **Basic**: URLLoader, WebBaseLoader
 - **Advanced**: PlaywrightLoader, SeleniumLoader
 - **Specific**: Wikipedia, ArXiv, YouTube, Reddit, HackerNews
 
 ### ☁️ Cloud Storage (15+)
+
 - **AWS**: S3 files and directories
 - **Google**: GCS, Google Drive, BigQuery
 - **Azure**: Blob Storage, Document Intelligence
 - **Others**: Dropbox, OneDrive, SharePoint
 
 ### 🗄️ Database Loaders (10+)
+
 - **SQL**: Generic SQL, PostgreSQL, MySQL
 - **NoSQL**: MongoDB, Elasticsearch, Cassandra, Couchbase
 - **Analytics**: BigQuery, Snowflake, DuckDB
 
 ### 💬 Chat/Messaging (10+)
+
 - **Business**: Slack, Microsoft Teams
 - **Social**: Discord, WhatsApp, Telegram, Facebook
 - **Forums**: Reddit, Mastodon
 
 ### 📝 Knowledge Management (10+)
+
 - **Note-taking**: Notion, Obsidian, Roam, Evernote
 - **Collaboration**: Confluence, Jira, Asana, Trello
 - **Documentation**: GitBook, Docusaurus
 
 ### 🔧 Specialized Loaders (20+)
+
 - **Data**: CSV, JSON, YAML, TOML, XML
 - **Code**: Python, Jupyter Notebooks, Git
 - **Media**: Images (OCR), EPub, Subtitles
@@ -116,7 +124,7 @@ high_quality = [s for s in strategies if s.quality == "high"]
 
 ```python
 from haive.core.engine.document.loaders.strategy import (
-    LoaderStrategy, 
+    LoaderStrategy,
     LoaderPriority,
     LoaderCapability
 )
@@ -146,12 +154,14 @@ strategy_registry.register(custom_strategy)
 ## Loader Capabilities
 
 ### Core Capabilities
+
 - **ASYNC**: Supports asynchronous loading
 - **METADATA**: Extracts document metadata
 - **TEXT_EXTRACTION**: Basic text extraction
 - **CONTENT_EXTRACTION**: Advanced content extraction
 
 ### Advanced Capabilities
+
 - **IMAGE_EXTRACTION**: Extract images from documents
 - **TABLE_EXTRACTION**: Extract structured tables
 - **STRUCTURE_PRESERVATION**: Maintains document structure
@@ -164,16 +174,19 @@ strategy_registry.register(custom_strategy)
 ## Performance Considerations
 
 ### Speed Profiles
+
 - **Fast**: Minimal processing, basic extraction
 - **Medium**: Balanced performance and quality
 - **Slow**: Comprehensive extraction, high quality
 
 ### Quality Levels
+
 - **Low**: Basic text extraction only
 - **Medium**: Text + basic formatting
 - **High**: Full fidelity with structure, formatting, metadata
 
 ### Resource Usage
+
 - **Low**: Minimal memory and CPU usage
 - **Medium**: Moderate resource consumption
 - **High**: Resource-intensive (OCR, complex parsing)

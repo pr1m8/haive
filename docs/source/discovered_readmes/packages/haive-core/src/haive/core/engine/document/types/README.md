@@ -5,6 +5,7 @@ The types subsystem provides type definitions, enumerations, and constants used 
 ## Overview
 
 The types subsystem includes:
+
 - **Enumerations**: Type-safe constants for strategies, formats, and options
 - **Type Aliases**: Common type definitions for document processing
 - **Constants**: System-wide constants and limits
@@ -73,7 +74,7 @@ chunking = ChunkingStrategy.SEMANTIC
 print(f"Requires model: {chunking.requires_model}")
 print(f"Preserves context: {chunking.preserves_context}")
 
-# Loading strategies  
+# Loading strategies
 loading = LoadingStrategy.LAZY
 print(f"Memory efficient: {loading.is_memory_efficient}")
 ```
@@ -291,11 +292,11 @@ from haive.core.engine.document.types import DocumentEnum
 
 class CustomProcessingMode(DocumentEnum):
     """Custom processing modes."""
-    
+
     FAST = "fast"
     BALANCED = "balanced"
     THOROUGH = "thorough"
-    
+
     @property
     def quality_score(self) -> int:
         """Get quality score for mode."""
@@ -412,16 +413,16 @@ from haive.core.engine.document.types import (
     ProcessingStrategy,
     ChunkingStrategy,
     LoaderCapability,
-    
+
     # Type aliases
     DocumentContent,
     DocumentMetadata,
     DocumentID,
-    
+
     # Constants
     MAX_CHUNK_SIZE,
     DEFAULT_ENCODING,
-    
+
     # Utilities
     is_valid_format,
     to_source_type

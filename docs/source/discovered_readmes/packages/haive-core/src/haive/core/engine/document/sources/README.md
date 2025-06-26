@@ -5,6 +5,7 @@ The sources subsystem provides legacy source type implementations and utilities 
 ## Overview
 
 The sources subsystem includes:
+
 - **Base Source Classes**: Abstract interfaces for different source types
 - **Local Sources**: File system-based document sources
 - **Web Sources**: URL and web-based document sources
@@ -67,16 +68,16 @@ from typing import Dict, Any, Optional
 
 class CustomSource(BaseSource):
     """Custom source implementation."""
-    
+
     def __init__(self, identifier: str, **kwargs):
         self.identifier = identifier
         self.options = kwargs
-    
+
     def exists(self) -> bool:
         """Check if source exists/is accessible."""
         # Implementation
         return True
-    
+
     def get_metadata(self) -> Dict[str, Any]:
         """Get source metadata."""
         return {
@@ -84,7 +85,7 @@ class CustomSource(BaseSource):
             "identifier": self.identifier,
             # Additional metadata
         }
-    
+
     def get_loader_hints(self) -> Dict[str, Any]:
         """Provide hints for loader selection."""
         return {
@@ -92,7 +93,7 @@ class CustomSource(BaseSource):
             "encoding": "utf-8",
             "format": "custom"
         }
-    
+
     @property
     def source_type(self) -> str:
         """Return the source type identifier."""
@@ -194,11 +195,11 @@ import requests
 
 class APISource(BaseSource):
     """Source for API endpoints."""
-    
+
     def __init__(self, endpoint: str, api_key: str = None):
         self.endpoint = endpoint
         self.api_key = api_key
-    
+
     def exists(self) -> bool:
         """Check if API endpoint is accessible."""
         try:
@@ -210,7 +211,7 @@ class APISource(BaseSource):
             return response.status_code < 400
         except:
             return False
-    
+
     def get_metadata(self) -> Dict[str, Any]:
         """Get API metadata."""
         return {
@@ -219,7 +220,7 @@ class APISource(BaseSource):
             "requires_auth": bool(self.api_key),
             "protocol": "https" if self.endpoint.startswith("https") else "http"
         }
-    
+
     def _get_headers(self) -> Dict[str, str]:
         """Get request headers."""
         headers = {"User-Agent": "DocumentLoader/1.0"}

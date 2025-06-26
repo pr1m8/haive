@@ -5,6 +5,7 @@ The base subsystem provides foundational classes, schemas, and interfaces that d
 ## Overview
 
 The base subsystem includes:
+
 - **Document Schemas**: Core data structures for documents
 - **Base Classes**: Abstract interfaces for loaders, splitters, and transformers
 - **Type Definitions**: Type hints and protocols for document processing
@@ -87,18 +88,18 @@ from typing import List, Iterator
 
 class CustomLoader(BaseLoader):
     """Custom document loader implementation."""
-    
+
     def load(self) -> List[Document]:
         """Load and return all documents."""
         documents = []
         # Implementation
         return documents
-    
+
     def lazy_load(self) -> Iterator[Document]:
         """Load documents lazily (one at a time)."""
         # Implementation
         yield document
-    
+
     @property
     def source_type(self) -> str:
         """Return the type of source this loader handles."""
@@ -115,13 +116,13 @@ from typing import List
 
 class CustomSplitter(BaseTextSplitter):
     """Custom text splitting implementation."""
-    
+
     def split_text(self, text: str) -> List[str]:
         """Split text into chunks."""
         chunks = []
         # Implementation
         return chunks
-    
+
     def split_documents(self, documents: List[Document]) -> List[Document]:
         """Split documents preserving metadata."""
         split_docs = []
@@ -148,12 +149,12 @@ from haive.core.engine.document.base import BaseTransformer
 
 class CustomTransformer(BaseTransformer):
     """Custom document transformer."""
-    
+
     def transform_document(self, document: Document) -> Document:
         """Transform a single document."""
         # Process content
         transformed_content = self.process(document.page_content)
-        
+
         return Document(
             page_content=transformed_content,
             metadata={
@@ -161,7 +162,7 @@ class CustomTransformer(BaseTransformer):
                 "transformed": True
             }
         )
-    
+
     def transform_documents(self, documents: List[Document]) -> List[Document]:
         """Transform multiple documents."""
         return [self.transform_document(doc) for doc in documents]
@@ -210,7 +211,7 @@ from haive.core.engine.document.base.protocols import (
 class MyLoader:
     def load(self) -> List[Document]:
         return []
-    
+
     def lazy_load(self) -> Iterator[Document]:
         yield Document(page_content="", metadata={})
 
@@ -276,17 +277,17 @@ from pydantic import Field
 
 class ResearchDocument(Document):
     """Document with research-specific metadata."""
-    
+
     # Additional fields
     citations: List[str] = Field(default_factory=list)
     abstract: Optional[str] = None
     keywords: List[str] = Field(default_factory=list)
     doi: Optional[str] = None
-    
+
     def add_citation(self, citation: str):
         """Add a citation to the document."""
         self.citations.append(citation)
-    
+
     @property
     def has_citations(self) -> bool:
         """Check if document has citations."""
@@ -301,12 +302,12 @@ from typing import Dict, Any
 
 class AnalysisResult(DocumentResult):
     """Result with analysis information."""
-    
+
     # Analysis results
     statistics: Dict[str, Any] = Field(default_factory=dict)
     insights: List[str] = Field(default_factory=list)
     confidence_scores: Dict[str, float] = Field(default_factory=dict)
-    
+
     def add_insight(self, insight: str, confidence: float = 1.0):
         """Add an analysis insight."""
         self.insights.append(insight)
@@ -370,7 +371,7 @@ class TypedLoader(BaseLoader):
     def __init__(self, source: str, encoding: str = "utf-8"):
         self.source: str = source
         self.encoding: str = encoding
-    
+
     def load(self) -> List[Document]:
         # Implementation with guaranteed return type
         return []
@@ -384,13 +385,13 @@ Preserve and extend metadata appropriately:
 def process_document(doc: Document) -> Document:
     # Preserve original metadata
     new_metadata = doc.metadata.copy()
-    
+
     # Add processing information
     new_metadata.update({
         "processed_at": datetime.now().isoformat(),
         "processor_version": "1.0.0"
     })
-    
+
     return Document(
         page_content=processed_content,
         metadata=new_metadata

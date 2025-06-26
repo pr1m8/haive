@@ -152,26 +152,22 @@ is_game_over, winner = state_manager.check_game_over(new_state)
 An Among Us game follows this structure:
 
 1. **Setup**:
-
    - Assign roles (crew or impostor) to players
    - Distribute tasks to crew members
    - Place players in starting locations
 
 2. **Task Phase Loop**:
-
    - Players move around the map
    - Crew members complete tasks
    - Impostors can kill crew members
    - Players can report dead bodies or call emergency meetings
 
 3. **Discussion Phase**:
-
    - Players share observations and suspicions
    - Impostors try to deflect suspicion
    - Crew members try to identify impostors
 
 4. **Voting Phase**:
-
    - Players vote to eject someone
    - Player with most votes is ejected
    - Check for win conditions
