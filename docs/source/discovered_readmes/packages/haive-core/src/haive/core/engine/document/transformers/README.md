@@ -5,6 +5,7 @@ The transformers subsystem provides utilities for transforming and processing do
 ## Overview
 
 Document transformers are applied after loading and before/after chunking to:
+
 - **Normalize**: Standardize text format and encoding
 - **Clean**: Remove unwanted content or formatting
 - **Enrich**: Add metadata or extracted information
@@ -14,9 +15,11 @@ Document transformers are applied after loading and before/after chunking to:
 ## Core Transformers
 
 ### Text Normalization
+
 Standardizes text formatting across different sources.
 
 **Features:**
+
 - Unicode normalization
 - Whitespace standardization
 - Line ending normalization
@@ -24,6 +27,7 @@ Standardizes text formatting across different sources.
 - Smart quote conversion
 
 **Usage:**
+
 ```python
 from haive.core.engine.document.transformers import TextNormalizer
 
@@ -38,9 +42,11 @@ cleaned_text = normalizer.transform(raw_text)
 ```
 
 ### Metadata Enrichment
+
 Adds computed metadata to documents.
 
 **Features:**
+
 - Word/character count
 - Language detection
 - Reading time estimation
@@ -48,6 +54,7 @@ Adds computed metadata to documents.
 - Keyword extraction
 
 **Usage:**
+
 ```python
 from haive.core.engine.document.transformers import MetadataEnricher
 
@@ -61,9 +68,11 @@ enriched_doc = enricher.transform(document)
 ```
 
 ### Content Cleaning
+
 Removes unwanted content from documents.
 
 **Features:**
+
 - HTML tag removal
 - Header/footer removal
 - Advertisement filtering
@@ -71,6 +80,7 @@ Removes unwanted content from documents.
 - Format artifact cleaning
 
 **Usage:**
+
 ```python
 from haive.core.engine.document.transformers import ContentCleaner
 
@@ -85,9 +95,11 @@ clean_doc = cleaner.transform(document)
 ```
 
 ### Format Conversion
+
 Converts between document formats.
 
 **Features:**
+
 - Markdown to plain text
 - HTML to Markdown
 - Plain text to structured format
@@ -95,6 +107,7 @@ Converts between document formats.
 - Code block preservation
 
 **Usage:**
+
 ```python
 from haive.core.engine.document.transformers import FormatConverter
 
@@ -205,11 +218,11 @@ class CustomTransformer(BaseTransformer):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         # Initialize your transformer
-    
+
     def transform_document(self, document: Document) -> Document:
         # Transform single document
         transformed_content = self.process(document.page_content)
-        
+
         return Document(
             page_content=transformed_content,
             metadata={
@@ -217,7 +230,7 @@ class CustomTransformer(BaseTransformer):
                 "transformed_by": self.__class__.__name__
             }
         )
-    
+
     def transform_documents(self, documents: List[Document]) -> List[Document]:
         # Transform multiple documents
         return [self.transform_document(doc) for doc in documents]
@@ -237,7 +250,7 @@ class AsyncCustomTransformer(AsyncTransformer):
             page_content=transformed_content,
             metadata=document.metadata
         )
-    
+
     async def transform_documents_async(self, documents: List[Document]) -> List[Document]:
         # Process in parallel
         tasks = [self.transform_document_async(doc) for doc in documents]
@@ -352,13 +365,13 @@ pipeline = TransformerPipeline([
 
 ### 2. Choose Appropriate Transformers
 
-| Document Type | Recommended Transformers |
-|---------------|-------------------------|
-| Web Pages | ContentCleaner, HTMLToMarkdown, AdRemover |
-| PDFs | TextNormalizer, TableExtractor, MetadataEnricher |
-| Code Files | CodeProcessor, SyntaxHighlighter |
-| Chat Logs | MessageParser, TimestampNormalizer |
-| Academic Papers | CitationExtractor, AbstractExtractor |
+| Document Type   | Recommended Transformers                         |
+| --------------- | ------------------------------------------------ |
+| Web Pages       | ContentCleaner, HTMLToMarkdown, AdRemover        |
+| PDFs            | TextNormalizer, TableExtractor, MetadataEnricher |
+| Code Files      | CodeProcessor, SyntaxHighlighter                 |
+| Chat Logs       | MessageParser, TimestampNormalizer               |
+| Academic Papers | CitationExtractor, AbstractExtractor             |
 
 ### 3. Handle Errors Gracefully
 
@@ -378,6 +391,7 @@ safe_transformer = SafeTransformer(
 ### Common Issues
 
 1. **Encoding Errors**
+
    ```python
    # Use TextNormalizer with aggressive settings
    normalizer = TextNormalizer(
@@ -388,6 +402,7 @@ safe_transformer = SafeTransformer(
    ```
 
 2. **Performance Issues**
+
    ```python
    # Enable parallel processing
    transformer = BatchTransformer(
@@ -398,10 +413,11 @@ safe_transformer = SafeTransformer(
    ```
 
 3. **Memory Usage**
+
    ```python
    # Use streaming transformer for large documents
    from haive.core.engine.document.transformers import StreamingTransformer
-   
+
    streaming = StreamingTransformer(
        transformer=memory_intensive_transformer,
        chunk_size=1000
@@ -432,30 +448,35 @@ result = debug.transform(document)
 ## Available Transformers
 
 ### Text Processing
+
 - TextNormalizer
 - WhitespaceNormalizer
 - EncodingFixer
 - SmartQuoteConverter
 
 ### Content Cleaning
+
 - HTMLCleaner
 - AdvertisementRemover
 - BoilerplateRemover
 - HeaderFooterRemover
 
 ### Format Conversion
+
 - MarkdownConverter
 - HTMLToMarkdown
 - PlainTextConverter
 - TableFormatter
 
 ### Metadata Enrichment
+
 - LanguageDetector
 - KeywordExtractor
 - StatisticsComputer
 - ReadabilityAnalyzer
 
 ### Specialized
+
 - CodeProcessor
 - CitationExtractor
 - EmailParser

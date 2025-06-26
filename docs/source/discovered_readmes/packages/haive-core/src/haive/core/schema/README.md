@@ -602,7 +602,6 @@ state.merge_engine_output("llm", engine_output)
    ```
 
 4. **Use Appropriate Reducers** for different field types:
-
    - `add_messages` for message lists
    - `operator.add` for regular lists and numbers
    - Custom reducers for complex types

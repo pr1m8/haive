@@ -68,7 +68,7 @@ result = await agent.ainvoke({"messages": [{"role": "user", "content": "What inf
 ### Other RAG Agents
 
 - **Agentic RAG**: Makes intelligent decisions about when and how to retrieve
-- **Dynamic RAG**: Adapts retrieval strategy based on query complexity  
+- **Dynamic RAG**: Adapts retrieval strategy based on query complexity
 - **Self-Correcting RAG**: Validates retrieved info and self-corrects errors
 - **Multi-Strategy RAG**: Combines multiple retrieval approaches
 - **HYDE RAG**: Generates hypothetical documents to improve retrieval
@@ -97,10 +97,10 @@ from haive.agents.base.agent import Agent
 
 class MyCustomRAGAgent(RetrieverMixin, Agent):
     """Custom RAG agent with retriever capabilities."""
-    
+
     name: str = "My Custom RAG Agent"
     engine: Union[BaseRetrieverConfig, VectorStoreConfig] = Field(...)
-    
+
     def build_graph(self) -> BaseGraph:
         # Your custom graph implementation
         pass
@@ -143,6 +143,7 @@ agent = SimpleRAGAgent.from_vectorstore(
 ## Testing
 
 See the test files in the `tests/` directory for comprehensive examples:
+
 - `test_base_rag_agent.py`: Basic SimpleRAGAgent tests
 - `test_llm_rag_agent.py`: LLM-enhanced RAG tests
 - Various other agent-specific test files
@@ -150,6 +151,7 @@ See the test files in the `tests/` directory for comprehensive examples:
 ## Examples
 
 Example implementations can be found in:
+
 - `llm_rag/example.py`: LLM RAG agent examples
 - `db_rag/graph_db/example.py`: Graph database RAG examples
 - `db_rag/sql_rag/example.py`: SQL database RAG examples

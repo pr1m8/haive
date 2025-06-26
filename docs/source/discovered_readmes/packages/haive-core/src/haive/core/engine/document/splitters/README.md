@@ -5,6 +5,7 @@ The splitters subsystem provides various strategies for chunking documents into 
 ## Overview
 
 Document splitting (chunking) is crucial for:
+
 - **LLM Processing**: Keeping chunks within token limits
 - **Retrieval**: Creating searchable document segments
 - **Analysis**: Processing documents in parallel
@@ -13,15 +14,18 @@ Document splitting (chunking) is crucial for:
 ## Splitting Strategies
 
 ### Fixed Size Chunking
+
 Splits documents into chunks of a specified character count.
 
 **Characteristics:**
+
 - Predictable chunk sizes
 - Fast performance
 - May break mid-sentence or mid-word
 - Best for: General text processing, when exact size matters
 
 **Configuration:**
+
 ```python
 config = {
     "chunking_strategy": "fixed_size",
@@ -31,15 +35,18 @@ config = {
 ```
 
 ### Paragraph Chunking
+
 Splits documents at paragraph boundaries.
 
 **Characteristics:**
+
 - Preserves paragraph integrity
 - Variable chunk sizes
 - Natural content boundaries
 - Best for: Articles, reports, narrative text
 
 **Configuration:**
+
 ```python
 config = {
     "chunking_strategy": "paragraph",
@@ -49,15 +56,18 @@ config = {
 ```
 
 ### Sentence Chunking
+
 Splits documents at sentence boundaries.
 
 **Characteristics:**
+
 - Preserves complete sentences
 - Fine-grained control
 - Good for NLP tasks
 - Best for: Q&A systems, summarization
 
 **Configuration:**
+
 ```python
 config = {
     "chunking_strategy": "sentence",
@@ -67,15 +77,18 @@ config = {
 ```
 
 ### Recursive Character Splitting
+
 Intelligently splits using multiple separators in order of preference.
 
 **Characteristics:**
+
 - Tries paragraph breaks first, then sentences, then words
 - Adaptive to content structure
 - Balanced chunk sizes
 - Best for: Mixed content, general purpose
 
 **Configuration:**
+
 ```python
 config = {
     "chunking_strategy": "recursive",
@@ -86,15 +99,18 @@ config = {
 ```
 
 ### Semantic Chunking (Experimental)
+
 Splits based on semantic similarity and topic boundaries.
 
 **Characteristics:**
+
 - Context-aware splitting
 - Preserves semantic coherence
 - Requires embeddings model
 - Best for: Technical documents, knowledge bases
 
 **Configuration:**
+
 ```python
 config = {
     "chunking_strategy": "semantic",
@@ -169,32 +185,37 @@ def get_splitter_for_document(doc_type: str):
 
 ### Common Parameters
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| chunk_size | int | 1000 | Target size for each chunk |
-| chunk_overlap | int | 200 | Number of characters to overlap between chunks |
-| length_function | callable | len | Function to measure chunk size |
-| keep_separator | bool | True | Include separators in chunks |
-| strip_whitespace | bool | True | Remove leading/trailing whitespace |
+| Parameter        | Type     | Default | Description                                    |
+| ---------------- | -------- | ------- | ---------------------------------------------- |
+| chunk_size       | int      | 1000    | Target size for each chunk                     |
+| chunk_overlap    | int      | 200     | Number of characters to overlap between chunks |
+| length_function  | callable | len     | Function to measure chunk size                 |
+| keep_separator   | bool     | True    | Include separators in chunks                   |
+| strip_whitespace | bool     | True    | Remove leading/trailing whitespace             |
 
 ### Strategy-Specific Parameters
 
 **Fixed Size:**
+
 - `encoding`: Token encoding for precise sizing
 
 **Paragraph:**
+
 - `min_paragraph_size`: Minimum size to consider as paragraph
 - `combine_small`: Combine small paragraphs
 
 **Sentence:**
+
 - `sentences_per_chunk`: Number of sentences per chunk
 - `language`: Language for sentence detection
 
 **Recursive:**
+
 - `separators`: List of separators to try in order
 - `is_separator_regex`: Treat separators as regex
 
 **Semantic:**
+
 - `embedding_model`: Model for semantic similarity
 - `similarity_threshold`: Threshold for splitting
 
@@ -242,27 +263,30 @@ engine = DocumentEngine(config={
 
 ### 1. Choose Strategy by Content Type
 
-| Content Type | Recommended Strategy | Chunk Size |
-|--------------|---------------------|------------|
-| Articles | Paragraph | 1000-2000 |
-| Code | Recursive | 2000-4000 |
-| Chat/Dialog | Sentence | 500-1000 |
-| Technical Docs | Semantic | 1000-1500 |
-| Mixed Content | Recursive | 1000-2000 |
+| Content Type   | Recommended Strategy | Chunk Size |
+| -------------- | -------------------- | ---------- |
+| Articles       | Paragraph            | 1000-2000  |
+| Code           | Recursive            | 2000-4000  |
+| Chat/Dialog    | Sentence             | 500-1000   |
+| Technical Docs | Semantic             | 1000-1500  |
+| Mixed Content  | Recursive            | 1000-2000  |
 
 ### 2. Consider Downstream Tasks
 
 **For Retrieval:**
+
 - Smaller chunks (500-1000 chars)
 - Higher overlap (20%)
 - Semantic or paragraph splitting
 
 **For Summarization:**
+
 - Larger chunks (2000-4000 chars)
 - Lower overlap (10%)
 - Paragraph or recursive splitting
 
 **For Q&A:**
+
 - Medium chunks (1000-1500 chars)
 - Medium overlap (15%)
 - Sentence or semantic splitting
@@ -296,7 +320,7 @@ class CustomSplitter(BaseTextSplitter):
         chunks = []
         # ... your implementation
         return chunks
-    
+
     def split_documents(self, documents: List[Document]) -> List[Document]:
         # Split and preserve metadata
         split_docs = []

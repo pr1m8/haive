@@ -5,6 +5,7 @@ The Document Engine is a comprehensive document processing system that provides 
 ## Overview
 
 The Document Engine provides:
+
 - **Universal Document Loading**: Support for 97+ document sources
 - **Intelligent Auto-Selection**: Automatically chooses the best loader based on source type
 - **Advanced Processing**: Chunking, metadata extraction, parallel processing
@@ -14,6 +15,7 @@ The Document Engine provides:
 ## Key Features
 
 ### 🚀 Comprehensive Loader Support
+
 - **File Formats**: PDF, DOCX, TXT, CSV, JSON, XML, YAML, and 50+ more
 - **Web Sources**: Web pages, APIs, Wikipedia, ArXiv, YouTube
 - **Cloud Storage**: S3, GCS, Azure, Dropbox, Google Drive
@@ -22,12 +24,14 @@ The Document Engine provides:
 - **Knowledge Bases**: Notion, Confluence, Obsidian, Roam
 
 ### 🧠 Intelligent Processing
+
 - **Auto-Detection**: Automatically identifies source types
 - **Smart Selection**: Chooses optimal loader based on capabilities
 - **Fallback Mechanisms**: Gracefully handles missing dependencies
 - **Performance Options**: Balance between speed and quality
 
 ### ⚡ Advanced Capabilities
+
 - **Parallel Processing**: Process multiple documents concurrently
 - **Chunking Strategies**: Fixed size, paragraph, sentence, semantic
 - **Metadata Extraction**: Preserve document structure and metadata
@@ -193,6 +197,7 @@ results = [engine.invoke(source) for source in sources]
 The Document Engine supports 97+ document sources, including:
 
 ### File Formats
+
 - **Documents**: PDF (6 loaders), DOCX, ODT, RTF, TXT
 - **Data**: CSV, TSV, JSON, YAML, TOML, XML
 - **Code**: Python, Jupyter Notebooks
@@ -200,23 +205,27 @@ The Document Engine supports 97+ document sources, including:
 - **Media**: Images (with OCR), EPub, Subtitles
 
 ### Web Sources
+
 - Web pages (standard and JavaScript-enabled)
 - Wikipedia, ArXiv, YouTube
 - Reddit, Hacker News, Mastodon
 - RSS feeds, Sitemaps
 
 ### Cloud Storage
+
 - AWS S3
 - Google Cloud Storage
 - Azure Blob Storage
 - Dropbox, OneDrive, SharePoint
 
 ### Databases
+
 - SQL databases (PostgreSQL, MySQL, etc.)
 - MongoDB, Elasticsearch, Cassandra
 - BigQuery, Snowflake, DuckDB
 
 ### Collaboration Tools
+
 - Notion, Confluence, Obsidian, Roam
 - Slack, Discord, WhatsApp, Telegram
 - GitHub, GitLab, Jira, Asana
@@ -225,6 +234,7 @@ The Document Engine supports 97+ document sources, including:
 ## Performance Optimization
 
 ### Parallel Processing
+
 ```python
 engine = DocumentEngine(config={
     "parallel_processing": True,
@@ -233,6 +243,7 @@ engine = DocumentEngine(config={
 ```
 
 ### Chunking Strategies
+
 - **Fixed Size**: Fast, predictable chunks
 - **Paragraph**: Preserves natural boundaries
 - **Sentence**: Good for NLP tasks
@@ -240,6 +251,7 @@ engine = DocumentEngine(config={
 - **Semantic**: Context-aware (experimental)
 
 ### Loader Selection
+
 ```python
 # Prefer speed over quality
 loader = create_document_loader(path, preferences={"prefer_speed": True})
@@ -251,6 +263,7 @@ loader = create_document_loader(path, preferences={"prefer_quality": True})
 ## Extending the System
 
 ### Adding Custom Loaders
+
 ```python
 from haive.core.engine.document.loaders.strategy import (
     LoaderStrategy,
