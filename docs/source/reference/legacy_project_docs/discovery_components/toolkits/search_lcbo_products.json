@@ -1,0 +1,71 @@
+{
+  "component_info": {
+    "name": "search_lcbo_products",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.lcbo_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Search for LCBO products by keyword, name, etc.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T12:31:28.357249",
+    "schema": {
+      "description": "Input schema for searching LCBO products.\n\nArgs:\n    query: The search terms to find matching products\n    page: Page number for paginated results\n    per_page: Number of results to return per page",
+      "properties": {
+        "query": {
+          "description": "Search query string",
+          "title": "Query",
+          "type": "string"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 1,
+          "description": "Page number of results",
+          "title": "Page"
+        },
+        "per_page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 10,
+          "description": "Number of results per page",
+          "title": "Per Page"
+        }
+      },
+      "required": ["query"],
+      "title": "SearchLCBOProductsInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "search_lcbo_products",
+    "tool_description": "Search for LCBO products by keyword, name, etc."
+  },
+  "document": {
+    "page_content": "# search_lcbo_products\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.lcbo_toolkit\n**Class:** StructuredTool\n\n## Description\nSearch for LCBO products by keyword, name, etc.\n\n## Schema\n```json\n{\n  \"description\": \"Input schema for searching LCBO products.\\n\\nArgs:\\n    query: The search terms to find matching products\\n    page: Page number for paginated results\\n    per_page: Number of results to return per page\",\n  \"properties\": {\n    \"query\": {\n      \"description\": \"Search query string\",\n      \"title\": \"Query\",\n      \"type\": \"string\"\n    },\n    \"page\": {\n      \"anyOf\": [\n        {\n          \"type\": \"integer\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": 1,\n      \"description\": \"Page number of results\",\n      \"title\": \"Page\"\n    },\n    \"per_page\": {\n      \"anyOf\": [\n        {\n          \"type\": \"integer\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": 10,\n      \"description\": \"Number of results per page\",\n      \"title\": \"Per Page\"\n    }\n  },\n  \"required\": [\n    \"query\"\n  ],\n  \"title\": \"SearchLCBOProductsInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `search_lcbo_products`\n**Description:** Search for LCBO products by keyword, name, etc.\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "search_lcbo_products",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.lcbo_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-06-19T12:31:28.357249",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

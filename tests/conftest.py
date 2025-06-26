@@ -1,14 +1,15 @@
 """Base configuration and fixtures for pytest with modern rich integration."""
 
-import logging
-import uuid
 from datetime import UTC, datetime
+import logging
 from pathlib import Path
+import uuid
 
 import pytest
 from rich.console import Console
 from rich.logging import RichHandler
 from rich.traceback import install as install_rich_traceback
+
 
 # Install rich traceback handler
 install_rich_traceback(show_locals=True)

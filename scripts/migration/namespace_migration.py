@@ -30,14 +30,15 @@ Options:
 import argparse
 import logging
 import os
+from pathlib import Path
 import re
 import shutil
 import subprocess
 import sys
-from pathlib import Path
 
 import tomli
 import tomli_w
+
 
 # Set up logging
 logging.basicConfig(

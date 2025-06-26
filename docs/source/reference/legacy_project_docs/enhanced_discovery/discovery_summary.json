@@ -1,0 +1,57 @@
+{
+  "total_components": 133,
+  "components_by_type": {
+    "tools": 92,
+    "engines": 41
+  },
+  "total_tools_created": 103,
+  "total_engine_configs": 41,
+  "failed_modules": 200,
+  "failure_analysis": {
+    "sys_exit": 2,
+    "import_errors": 168,
+    "other_errors": 30
+  },
+  "sample_failures": [
+    [
+      "packages.haive-tools.src.haive.tools.tools.pokebase_tool",
+      "ImportError: No module named 'pokebase'"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.dataforseo_tool",
+      "ImportError: No module named 'haive.config'"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.hinge_tools",
+      "ImportError: No module named 'squeaky_hinge'"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.stack_exchange",
+      "ImportError: No module named 'haive.config'"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.wolfram_alpha_tool",
+      "ImportError: No module named 'haive.config'"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.bing_search_tool_INC",
+      "ImportError: No module named 'haive.config'"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.asknews_tool",
+      "ImportError: No module named 'haive.config'"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.discord_tools",
+      "ImportError: No module named 'haive.config'"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.ionic_tool",
+      "ImportError: No module named 'ionic_langchain'"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.brave_search",
+      "Unexpected error: 'module' object is not callable"
+    ]
+  ]
+}

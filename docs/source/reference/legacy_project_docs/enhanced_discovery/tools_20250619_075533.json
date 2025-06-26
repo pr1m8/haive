@@ -1,0 +1,3468 @@
+[
+  {
+    "name": "get_all_report_of_the_week_reviews",
+    "description": "Retrieve all food and drink reviews from The Report Of The Week.",
+    "schema": {
+      "description": "Input model for retrieving all reports from The Report Of The Week API.\n\nThis empty model is used as a placeholder for the get_all_reports function\nto maintain a consistent API pattern across tools.",
+      "properties": {},
+      "title": "GetAllReportsInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_report_of_the_week_by_category",
+    "description": "Get reviews by category, such as 'Energy Crisis' for energy drinks or 'Running On Empty' for food.",
+    "schema": {
+      "description": "Input model for retrieving reports filtered by category.\n\nThis model defines the parameters needed to filter reviews by their\ncategory designation.\n\nAttributes:\n    category (str): The category to filter reviews by, such as 'Energy Crisis'\n        for energy drinks or 'Running On Empty' for food reviews.",
+      "properties": {
+        "category": {
+          "description": "The category to filter by, such as 'Energy Crisis' or 'Running On Empty'.",
+          "title": "Category",
+          "type": "string"
+        }
+      },
+      "required": ["category"],
+      "title": "GetReportsByCategoryInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_report_of_the_week_by_date_range",
+    "description": "Get reviews posted between two dates (format: YYYY-M-D).",
+    "schema": {
+      "description": "Input model for retrieving reports within a specific date range.\n\nThis model defines the parameters needed to filter reviews by their\npublication date.\n\nAttributes:\n    start_date (str): The beginning date of the range in YYYY-M-D format.\n    end_date (str): The ending date of the range in YYYY-M-D format.",
+      "properties": {
+        "start_date": {
+          "description": "Start date in YYYY-M-D format.",
+          "title": "Start Date",
+          "type": "string"
+        },
+        "end_date": {
+          "description": "End date in YYYY-M-D format.",
+          "title": "End Date",
+          "type": "string"
+        }
+      },
+      "required": ["start_date", "end_date"],
+      "title": "GetReportsByDateRangeInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "predict_gender",
+    "description": "Predict gender from a single first name, with optional country scope.",
+    "schema": {
+      "description": "Predict gender from a first name using the Genderize.io API.\n\nArgs:\n    name: The first name to predict gender for\n    country_id: Optional two-letter country code (ISO 3166-1 alpha-2)\n        to scope the search to a specific country\n\nReturns:\n    GenderizeResponse: An object containing the predicted gender, probability,\n        and other metadata from the API\n\nRaises:\n    requests.exceptions.HTTPError: If the API request fails",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "country_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Country Id"
+        }
+      },
+      "required": ["name"],
+      "title": "predict_gender",
+      "type": "object"
+    }
+  },
+  {
+    "name": "lookup_card_bin_info",
+    "description": "Look up card information based on the first 6 to 8 digits (BIN/IIN) using Binlist.net API",
+    "schema": {
+      "$defs": {
+        "BinLookupInput": {
+          "description": "Input model for the BIN lookup tool.\n\nAttributes:\n    bin_number: The first 6 to 8 digits of a payment card number, also known as\n                the Bank Identification Number (BIN) or Issuer Identification Number (IIN).\n                This identifies the issuing bank or financial institution.",
+          "properties": {
+            "bin_number": {
+              "description": "The first 6 to 8 digits of a card number",
+              "title": "Bin Number",
+              "type": "string"
+            }
+          },
+          "required": ["bin_number"],
+          "title": "BinLookupInput",
+          "type": "object"
+        }
+      },
+      "description": "Look up information about a payment card based on its BIN/IIN using the Binlist.net API.\n\nArgs:\n    input: A BinLookupInput object containing the bin_number to look up.\n\nReturns:\n    dict: A dictionary containing information about the card, including:\n        - scheme (e.g., visa, mastercard)\n        - type (e.g., debit, credit)\n        - brand\n        - country information\n        - bank information\n        - Or an error message if the BIN is not found\n\nRaises:\n    requests.exceptions.HTTPError: If the API request fails for any reason other than a 404.",
+      "properties": {
+        "input": {
+          "$ref": "#/$defs/BinLookupInput"
+        }
+      },
+      "required": ["input"],
+      "title": "lookup_card_bin_info",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_geek_joke",
+    "description": "Fetch a random geek or programming-related joke from the Geek Jokes API",
+    "schema": {
+      "description": "Input model for the get_geek_joke function.\n\nThis is an empty input model that exists for compatibility with the LangChain\nstructured tool interface. The Geek Jokes API doesn't require any parameters.\n\nAttributes:\n    dummy (Optional[str]): An unused field that maintains compatibility with\n        LangChain's requirement for an input schema.",
+      "properties": {
+        "dummy": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Unused input; the joke requires no input.",
+          "title": "Dummy"
+        }
+      },
+      "title": "GetGeekJokeInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_random_corporate_bs",
+    "description": "Generate a random corporate buzzword phrase for satirical purposes",
+    "schema": {
+      "description": "Fetch a random corporate buzzword phrase from the Corporate BS Generator API.\n\nReturns:\n    CorporateBS: An object containing the randomly generated corporate phrase.\n\nRaises:\n    requests.RequestException: If the API request fails.",
+      "properties": {},
+      "title": "get_random_corporate_bs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "load_documents_webbaseloader",
+    "description": "Load documents using WebBaseLoader: WebBaseLoader document loader integration\n\nSetup:\n    Install ``langchain_community``.\n\n    .. code-",
+    "schema": {
+      "properties": {
+        "web_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "default": "",
+          "title": "Web Path"
+        },
+        "header_template": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Header Template"
+        },
+        "verify_ssl": {
+          "default": true,
+          "title": "Verify Ssl",
+          "type": "boolean"
+        },
+        "proxies": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Proxies"
+        },
+        "continue_on_failure": {
+          "default": false,
+          "title": "Continue On Failure",
+          "type": "boolean"
+        },
+        "autoset_encoding": {
+          "default": true,
+          "title": "Autoset Encoding",
+          "type": "boolean"
+        },
+        "encoding": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Encoding"
+        },
+        "web_paths": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Web Paths",
+          "type": "array"
+        },
+        "requests_per_second": {
+          "default": 2,
+          "title": "Requests Per Second",
+          "type": "integer"
+        },
+        "default_parser": {
+          "default": "html.parser",
+          "title": "Default Parser",
+          "type": "string"
+        },
+        "requests_kwargs": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Requests Kwargs"
+        },
+        "raise_for_status": {
+          "default": false,
+          "title": "Raise For Status",
+          "type": "boolean"
+        },
+        "bs_get_text_kwargs": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bs Get Text Kwargs"
+        },
+        "bs_kwargs": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bs Kwargs"
+        },
+        "session": {
+          "default": null,
+          "title": "Session"
+        },
+        "show_progress": {
+          "default": true,
+          "title": "Show Progress",
+          "type": "boolean"
+        },
+        "trust_env": {
+          "default": false,
+          "title": "Trust Env",
+          "type": "boolean"
+        }
+      },
+      "title": "WebBaseLoaderArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "scrape_webpages",
+    "description": "Scrape web pages using WebBaseLoader to extract detailed content information.\n\nThis tool uses langchain's WebBaseLoader to fetch and parse content from specified URLs,\nreturning the extracted content in a formatted document structure.\n\nArgs:\n    urls (List[str]): The list of URLs to scrape for content.\n\nReturns:\n    str: The scraped content from all URLs in a structured format with document titles.\n\nRaises:\n    Exception: If URL scraping fails due to network issues, invalid URLs, or access restrictions.",
+    "schema": {
+      "description": "Scrape web pages using WebBaseLoader to extract detailed content information.\n\nThis tool uses langchain's WebBaseLoader to fetch and parse content from specified URLs,\nreturning the extracted content in a formatted document structure.\n\nArgs:\n    urls (List[str]): The list of URLs to scrape for content.\n\nReturns:\n    str: The scraped content from all URLs in a structured format with document titles.\n\nRaises:\n    Exception: If URL scraping fails due to network issues, invalid URLs, or access restrictions.",
+      "properties": {
+        "urls": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Urls",
+          "type": "array"
+        }
+      },
+      "required": ["urls"],
+      "title": "scrape_webpages",
+      "type": "object"
+    }
+  },
+  {
+    "name": "tavily_extract",
+    "description": "Extract raw content from a list of websites using the Tavily Extract API.\n\nThis tool retrieves the content from specified URLs, which is useful for data collection,\ncontent analysis, and research. It can be combined with search methods to first find\nrelevant documents and then extract detailed information from them.\n\nArgs:\n    urls (List[str]): The list of URLs to extract content from.\n    **kwargs: Additional arguments to pass to the Tavily Extract API.\n\nReturns:\n    Dict: The extracted content from the specified URLs in a structured format.\n\nRaises:\n    Exception: If the URL extraction fails or if the API request encounters an error.",
+    "schema": {
+      "description": "Extract raw content from a list of websites using the Tavily Extract API.\n\nThis tool retrieves the content from specified URLs, which is useful for data collection,\ncontent analysis, and research. It can be combined with search methods to first find\nrelevant documents and then extract detailed information from them.\n\nArgs:\n    urls (List[str]): The list of URLs to extract content from.\n    **kwargs: Additional arguments to pass to the Tavily Extract API.\n\nReturns:\n    Dict: The extracted content from the specified URLs in a structured format.\n\nRaises:\n    Exception: If the URL extraction fails or if the API request encounters an error.",
+      "properties": {
+        "urls": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Urls",
+          "type": "array"
+        },
+        "kwargs": {
+          "additionalProperties": true,
+          "default": null,
+          "title": "Kwargs",
+          "type": "object"
+        }
+      },
+      "required": ["urls"],
+      "title": "tavily_extract",
+      "type": "object"
+    }
+  },
+  {
+    "name": "tavily_qna",
+    "description": "Search tool for getting a quick answer to a specific question using Tavily's QnA search.\n\nThis tool queries the Tavily API with a question and returns a direct answer along\nwith supporting information from web search results.\n\nArgs:\n    query (str): The search query or question to be answered.\n    max_results (int): Maximum number of results to return. Default is 5.\n    include_answer (bool): Include short answer in response. Default is True.\n    search_depth (Literal[\"basic\", \"advanced\"]): Search depth, either 'basic' or 'advanced'. \n        Default is 'advanced'.\n    verbose (bool): Log the tool's progress. Default is False.\n    topic (Literal[\"general\", \"news\", \"finance\"]): Topic category for search context. \n        Default is 'general'.\n    days (int): How recent the information should be in days. Default is 3.\n    include_domains (Sequence[str]): Specific domains to include in search. Default is empty list.\n    exclude_domains (Sequence[str]): Specific domains to exclude from search. Default is empty list.\n\nReturns:\n    str: The search results with a direct answer to the question.\n\nRaises:\n    Exception: If the Tavily API request fails.",
+    "schema": {
+      "description": "Search tool for getting a quick answer to a specific question using Tavily's QnA search.\n\nThis tool queries the Tavily API with a question and returns a direct answer along\nwith supporting information from web search results.\n\nArgs:\n    query (str): The search query or question to be answered.\n    max_results (int): Maximum number of results to return. Default is 5.\n    include_answer (bool): Include short answer in response. Default is True.\n    search_depth (Literal[\"basic\", \"advanced\"]): Search depth, either 'basic' or 'advanced'. \n        Default is 'advanced'.\n    verbose (bool): Log the tool's progress. Default is False.\n    topic (Literal[\"general\", \"news\", \"finance\"]): Topic category for search context. \n        Default is 'general'.\n    days (int): How recent the information should be in days. Default is 3.\n    include_domains (Sequence[str]): Specific domains to include in search. Default is empty list.\n    exclude_domains (Sequence[str]): Specific domains to exclude from search. Default is empty list.\n\nReturns:\n    str: The search results with a direct answer to the question.\n\nRaises:\n    Exception: If the Tavily API request fails.",
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "max_results": {
+          "default": 5,
+          "title": "Max Results",
+          "type": "integer"
+        },
+        "include_answer": {
+          "default": true,
+          "title": "Include Answer",
+          "type": "boolean"
+        },
+        "search_depth": {
+          "default": "advanced",
+          "enum": ["basic", "advanced"],
+          "title": "Search Depth",
+          "type": "string"
+        },
+        "verbose": {
+          "default": false,
+          "title": "Verbose",
+          "type": "boolean"
+        },
+        "topic": {
+          "default": "general",
+          "enum": ["general", "news", "finance"],
+          "title": "Topic",
+          "type": "string"
+        },
+        "days": {
+          "default": 3,
+          "title": "Days",
+          "type": "integer"
+        },
+        "include_domains": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Include Domains",
+          "type": "array"
+        },
+        "exclude_domains": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Exclude Domains",
+          "type": "array"
+        }
+      },
+      "required": ["query"],
+      "title": "tavily_qna",
+      "type": "object"
+    }
+  },
+  {
+    "name": "tavily_search_context",
+    "description": "Generate search context for Retrieval Augmented Generation (RAG) applications.\n\nThis tool retrieves relevant context information from the web based on a search query,\nspecifically formatted for use in RAG applications. It provides more comprehensive\ncontext than standard search responses.\n\nArgs:\n    query (str): The search query string.\n    search_depth (Literal[\"basic\", \"advanced\"]): Search depth, either 'basic' or 'advanced'. \n        Default is 'basic'.\n    topic (Literal[\"general\", \"news\"]): The topic category for search context. \n        Default is 'general'.\n    days (int): How recent the information should be in days. Default is 3.\n    max_results (int): Maximum number of results to return. Default is 5.\n    include_domains (Sequence[str]): Specific domains to include in search. \n        Default is empty list.\n    exclude_domains (Sequence[str]): Specific domains to exclude from search. \n        Default is empty list.\n    max_tokens (int): Maximum number of tokens to return in the context. Default is 4000.\n    **kwargs: Additional arguments to pass to the Tavily API.\n\nReturns:\n    str: The search context formatted for RAG applications.\n\nRaises:\n    Exception: If the API request fails.",
+    "schema": {
+      "description": "Generate search context for Retrieval Augmented Generation (RAG) applications.\n\nThis tool retrieves relevant context information from the web based on a search query,\nspecifically formatted for use in RAG applications. It provides more comprehensive\ncontext than standard search responses.\n\nArgs:\n    query (str): The search query string.\n    search_depth (Literal[\"basic\", \"advanced\"]): Search depth, either 'basic' or 'advanced'. \n        Default is 'basic'.\n    topic (Literal[\"general\", \"news\"]): The topic category for search context. \n        Default is 'general'.\n    days (int): How recent the information should be in days. Default is 3.\n    max_results (int): Maximum number of results to return. Default is 5.\n    include_domains (Sequence[str]): Specific domains to include in search. \n        Default is empty list.\n    exclude_domains (Sequence[str]): Specific domains to exclude from search. \n        Default is empty list.\n    max_tokens (int): Maximum number of tokens to return in the context. Default is 4000.\n    **kwargs: Additional arguments to pass to the Tavily API.\n\nReturns:\n    str: The search context formatted for RAG applications.\n\nRaises:\n    Exception: If the API request fails.",
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "search_depth": {
+          "default": "basic",
+          "enum": ["basic", "advanced"],
+          "title": "Search Depth",
+          "type": "string"
+        },
+        "topic": {
+          "default": "general",
+          "enum": ["general", "news"],
+          "title": "Topic",
+          "type": "string"
+        },
+        "days": {
+          "default": 3,
+          "title": "Days",
+          "type": "integer"
+        },
+        "max_results": {
+          "default": 5,
+          "title": "Max Results",
+          "type": "integer"
+        },
+        "include_domains": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Include Domains",
+          "type": "array"
+        },
+        "exclude_domains": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Exclude Domains",
+          "type": "array"
+        },
+        "max_tokens": {
+          "default": 4000,
+          "title": "Max Tokens",
+          "type": "integer"
+        },
+        "kwargs": {
+          "additionalProperties": true,
+          "default": null,
+          "title": "Kwargs",
+          "type": "object"
+        }
+      },
+      "required": ["query"],
+      "title": "tavily_search_context",
+      "type": "object"
+    }
+  },
+  {
+    "name": "tavily_search_tool",
+    "description": "Query Tavily Search API with full configurability for comprehensive search results.\n\nThis tool provides complete access to all Tavily search options and returns structured\nsearch results with customizable content types and filtering options.\n\nArgs:\n    query (str): The search query string.\n    max_results (Optional[int]): Maximum number of results to return. Default is 5.\n    include_answer (Optional[bool]): Include short answer in response. Default is True.\n    include_raw_content (Optional[bool]): Include raw content of the search results. \n        Default is False.\n    include_images (Optional[bool]): Include images in the response. Default is False.\n    search_depth (Optional[str]): Search depth, either 'basic' or 'advanced'. \n        Default is 'advanced'.\n    include_domains (Optional[List[str]]): Specific domains to include in search. \n        Default is empty list.\n    exclude_domains (Optional[List[str]]): Specific domains to exclude in search. \n        Default is empty list.\n    verbose (Optional[bool]): Log the tool's progress. Default is False.\n\nReturns:\n    Dict: The search results in a structured format including titles, URLs, and optionally\n        raw content, images, and direct answers.\n\nRaises:\n    Exception: If the API request fails or if invalid parameters are provided.",
+    "schema": {
+      "description": "Query Tavily Search API with full configurability for comprehensive search results.\n\nThis tool provides complete access to all Tavily search options and returns structured\nsearch results with customizable content types and filtering options.\n\nArgs:\n    query (str): The search query string.\n    max_results (Optional[int]): Maximum number of results to return. Default is 5.\n    include_answer (Optional[bool]): Include short answer in response. Default is True.\n    include_raw_content (Optional[bool]): Include raw content of the search results. \n        Default is False.\n    include_images (Optional[bool]): Include images in the response. Default is False.\n    search_depth (Optional[str]): Search depth, either 'basic' or 'advanced'. \n        Default is 'advanced'.\n    include_domains (Optional[List[str]]): Specific domains to include in search. \n        Default is empty list.\n    exclude_domains (Optional[List[str]]): Specific domains to exclude in search. \n        Default is empty list.\n    verbose (Optional[bool]): Log the tool's progress. Default is False.\n\nReturns:\n    Dict: The search results in a structured format including titles, URLs, and optionally\n        raw content, images, and direct answers.\n\nRaises:\n    Exception: If the API request fails or if invalid parameters are provided.",
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "max_results": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 5,
+          "title": "Max Results"
+        },
+        "include_answer": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": true,
+          "title": "Include Answer"
+        },
+        "include_raw_content": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "title": "Include Raw Content"
+        },
+        "include_images": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "title": "Include Images"
+        },
+        "search_depth": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "advanced",
+          "title": "Search Depth"
+        },
+        "include_domains": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": [],
+          "title": "Include Domains"
+        },
+        "exclude_domains": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": [],
+          "title": "Exclude Domains"
+        },
+        "verbose": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "title": "Verbose"
+        }
+      },
+      "required": ["query"],
+      "title": "tavily_search_tool",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_openaq_location_by_id",
+    "description": "Fetch air quality station details from OpenAQ by location ID. Requires an API key.",
+    "schema": {
+      "description": "Fetch detailed information about an air quality monitoring location from OpenAQ.\n\nThis function retrieves comprehensive metadata about a specific air quality \nmonitoring station identified by its location ID, including its coordinates,\navailable parameters, and other attributes.\n\nArgs:\n    location_id (int): The OpenAQ location ID to fetch data for.\n    api_key (Optional[str]): The OpenAQ API key. If not provided, will look for\n        OPENAQ_API_KEY in environment variables.\n\nReturns:\n    dict: A dictionary containing detailed information about the location,\n        including geographical coordinates, available parameters, and metadata.\n\nRaises:\n    ValueError: If no API key is provided or found in environment variables.\n    requests.RequestException: If the API request fails.",
+      "properties": {
+        "location_id": {
+          "title": "Location Id",
+          "type": "integer"
+        },
+        "api_key": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Api Key"
+        }
+      },
+      "required": ["location_id"],
+      "title": "get_openaq_location_by_id",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_open_food_facts_product",
+    "description": "Use this tool to retrieve product data using a barcode from Open Food Facts.",
+    "schema": {
+      "description": "Input schema for the Open Food Facts product lookup.\n\nAttributes:\n    barcode: The barcode of the product to look up",
+      "properties": {
+        "barcode": {
+          "description": "The barcode of the product to look up.",
+          "title": "Barcode",
+          "type": "string"
+        }
+      },
+      "required": ["barcode"],
+      "title": "GetProductInfoInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "estimate_age",
+    "description": "Estimate the average age of a person based on their first name, with optional country filtering.",
+    "schema": {
+      "description": "Estimate the average age of a person based on their first name.\n\nThis function queries the Agify.io API to get an age estimation based on the provided\nfirst name. The estimation can be optionally filtered by country.\n\nArgs:\n    name (str): The first name to estimate age for.\n    country_id (Optional[str], optional): Two-letter country code (ISO 3166-1 alpha-2)\n        to filter results by country. Defaults to None (worldwide data).\n\nReturns:\n    AgifyResponse: Object containing the age estimation and related metadata.\n\nRaises:\n    requests.RequestException: If the API request fails.",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "country_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Country Id"
+        }
+      },
+      "required": ["name"],
+      "title": "estimate_age",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_registered_domains",
+    "description": "Search for registered domain names using a keyword",
+    "schema": {
+      "description": "Input model for the domain search tool.\n\nAttributes:\n    domain: A domain keyword to search for. This can be any term that might appear\n           in registered domain names, such as a brand name, generic term, or \n           specific word of interest.",
+      "properties": {
+        "domain": {
+          "description": "A keyword to search for, e.g., 'facebook', 'ai', 'nasa', etc.",
+          "format": "uri",
+          "minLength": 1,
+          "title": "Domain",
+          "type": "string"
+        }
+      },
+      "required": ["domain"],
+      "title": "DomainSearchInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "python_repl_tool",
+    "description": "Use this to execute python code. If you want to see the output of a value,\n    you should print it out with `print(...)`. This is visible to the user.",
+    "schema": {
+      "description": "Use this to execute python code. If you want to see the output of a value,\nyou should print it out with `print(...)`. This is visible to the user.",
+      "properties": {
+        "code": {
+          "description": "The python code to execute to generate your chart.",
+          "title": "Code",
+          "type": "string"
+        }
+      },
+      "required": ["code"],
+      "title": "python_repl_tool",
+      "type": "object"
+    }
+  },
+  {
+    "name": "reddit_search",
+    "description": "Search posts on Reddit using subreddit, time filter, and query.",
+    "schema": {
+      "description": "Search for posts on Reddit with specified parameters.\n\nArgs:\n    query: Query string to search post titles for\n    sort: Sort method: 'relevance', 'hot', 'top', 'new', or 'comments'\n    time_filter: Time period: 'all', 'day', 'hour', 'month', 'week', or 'year'\n    subreddit: Subreddit name like 'python' or 'all'\n    limit: Max number of results to return\n\nReturns:\n    str: Formatted results from Reddit posts matching the query parameters\n\nRaises:\n    ValueError: If the Reddit API returns an error",
+      "properties": {
+        "query": {
+          "description": "Query string to search post titles for",
+          "title": "Query",
+          "type": "string"
+        },
+        "sort": {
+          "description": "Sort method: 'relevance', 'hot', 'top', 'new', or 'comments'",
+          "title": "Sort",
+          "type": "string"
+        },
+        "time_filter": {
+          "description": "Time period: 'all', 'day', 'hour', 'month', 'week', or 'year'",
+          "title": "Time Filter",
+          "type": "string"
+        },
+        "subreddit": {
+          "description": "Subreddit name like 'python' or 'all'",
+          "title": "Subreddit",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Max number of results to return",
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": ["query", "sort", "time_filter", "subreddit", "limit"],
+      "title": "reddit_search",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_fruit_info",
+    "description": "Fetch nutrition and detailed information about a specific fruit using its name from the Fruityvice API",
+    "schema": {
+      "$defs": {
+        "FruitNameInput": {
+          "description": "Input model for fruit lookup requests.\n\nAttributes:\n    name (str): The name of the fruit to retrieve data for.",
+          "properties": {
+            "name": {
+              "description": "Name of the fruit to retrieve data for",
+              "title": "Name",
+              "type": "string"
+            }
+          },
+          "required": ["name"],
+          "title": "FruitNameInput",
+          "type": "object"
+        }
+      },
+      "description": "Fetch detailed information about a specific fruit from the Fruityvice API.\n\nThe information returned typically includes nutritional data (calories, fat, sugar, etc.),\nfamily, genus, and other taxonomic details.\n\nArgs:\n    input (FruitNameInput): Object containing the name of the fruit to look up.\n\nReturns:\n    Dict[str, Any]: A dictionary containing the fruit's details and nutritional information.\n    If the fruit is not found, returns a dictionary with an error message.\n\nRaises:\n    requests.HTTPError: If the API request fails for reasons other than a 404.",
+      "properties": {
+        "input": {
+          "$ref": "#/$defs/FruitNameInput"
+        }
+      },
+      "required": ["input"],
+      "title": "get_fruit_info",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_fruit_info",
+    "description": "Fetch nutrition and detailed information about a specific fruit using its name from the Fruityvice API",
+    "schema": {
+      "$defs": {
+        "FruitNameInput": {
+          "description": "Input model for fruit lookup requests.\n\nAttributes:\n    name (str): The name of the fruit to retrieve data for.",
+          "properties": {
+            "name": {
+              "description": "Name of the fruit to retrieve data for",
+              "title": "Name",
+              "type": "string"
+            }
+          },
+          "required": ["name"],
+          "title": "FruitNameInput",
+          "type": "object"
+        }
+      },
+      "description": "Fetch detailed information about a specific fruit from the Fruityvice API.\n\nThe information returned typically includes nutritional data (calories, fat, sugar, etc.),\nfamily, genus, and other taxonomic details.\n\nArgs:\n    input (FruitNameInput): Object containing the name of the fruit to look up.\n\nReturns:\n    Dict[str, Any]: A dictionary containing the fruit's details and nutritional information.\n    If the fruit is not found, returns a dictionary with an error message.\n\nRaises:\n    requests.HTTPError: If the API request fails for reasons other than a 404.",
+      "properties": {
+        "input": {
+          "$ref": "#/$defs/FruitNameInput"
+        }
+      },
+      "required": ["input"],
+      "title": "get_fruit_info",
+      "type": "object"
+    }
+  },
+  {
+    "name": "filter_rick_and_morty_characters",
+    "description": "Filter Rick and Morty characters using the REST API with optional parameters.",
+    "schema": {
+      "description": "Input schema for filtering Rick and Morty characters.\n\nThis model defines optional parameters that can be used to filter\nthe characters returned by the Rick and Morty API.\n\nAttributes:\n    name (Optional[str]): Filter by character name (case-insensitive, partial matches).\n    status (Optional[str]): Filter by character status (\"alive\", \"dead\", or \"unknown\").\n    species (Optional[str]): Filter by character species (e.g., \"Human\", \"Alien\").\n    gender (Optional[str]): Filter by character gender (\"male\", \"female\", \"genderless\", \"unknown\").",
+      "properties": {
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter characters by name.",
+          "title": "Name"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "alive, dead, or unknown",
+          "title": "Status"
+        },
+        "species": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter characters by species.",
+          "title": "Species"
+        },
+        "gender": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "male, female, genderless, unknown",
+          "title": "Gender"
+        }
+      },
+      "title": "FilterCharactersInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_rick_and_morty_character_by_id",
+    "description": "Get Rick and Morty character by ID using the REST API.",
+    "schema": {
+      "description": "Input schema for getting a Rick and Morty character by ID.\n\nAttributes:\n    id (int): The unique identifier of the character to retrieve.",
+      "properties": {
+        "id": {
+          "description": "The ID of the character.",
+          "title": "Id",
+          "type": "integer"
+        }
+      },
+      "required": ["id"],
+      "title": "GetCharacterByIDInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "graphql_query_rick_and_morty_characters",
+    "description": "Query Rick and Morty characters using GraphQL endpoint with optional page and name filter.",
+    "schema": {
+      "description": "Input schema for the GraphQL character query.\n\nThis model defines the parameters that can be passed to the GraphQL API\nwhen querying for Rick and Morty characters.\n\nAttributes:\n    name (Optional[str]): Character name to filter results by.\n    page (Optional[int]): Page number for paginated results.",
+      "properties": {
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Character name to filter",
+          "title": "Name"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Page number",
+          "title": "Page"
+        }
+      },
+      "title": "GraphQLCharactersQueryInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "graphql_query_rick_and_morty_location",
+    "description": "Query a specific location by ID from the Rick and Morty GraphQL API.",
+    "schema": {
+      "description": "Input schema for the GraphQL location query by ID.\n\nAttributes:\n    id (int): The unique identifier of the location to retrieve.",
+      "properties": {
+        "id": {
+          "description": "Location ID",
+          "title": "Id",
+          "type": "integer"
+        }
+      },
+      "required": ["id"],
+      "title": "GraphQLLocationByIDInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_yugioh_card_info",
+    "description": "Retrieve detailed Yu-Gi-Oh! card info using name, archetype, attribute, level, etc.",
+    "schema": {
+      "title": "GetCardInfoInput",
+      "description": "Input model for querying Yu-Gi-Oh! card information with various filters.\n\nAttributes:\n    name (Optional[str]): Filter by exact card name.\n    fname (Optional[str]): Fuzzy search by name fragment.\n    archetype (Optional[str]): Filter by card archetype.\n    attribute (Optional[str]): Filter by card attribute (DARK, LIGHT, etc).\n    race (Optional[str]): Filter by card race/type (Warrior, Dragon, etc).\n    level (Optional[int]): Filter by card level or rank.\n    cardset (Optional[str]): Filter by card set name.\n    format (Optional[str]): Filter by card format (TCG, OCG, Speed Duel, etc).\n    misc (Optional[bool]): Include additional metadata in the response.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "description": "Exact card name",
+          "type": "string"
+        },
+        "fname": {
+          "title": "Fname",
+          "description": "Fuzzy search by name fragment",
+          "type": "string"
+        },
+        "archetype": {
+          "title": "Archetype",
+          "description": "Card archetype, e.g. Blue-Eyes",
+          "type": "string"
+        },
+        "attribute": {
+          "title": "Attribute",
+          "description": "Card attribute, e.g. DARK, LIGHT",
+          "type": "string"
+        },
+        "race": {
+          "title": "Race",
+          "description": "Card race/type, e.g. Warrior, Dragon",
+          "type": "string"
+        },
+        "level": {
+          "title": "Level",
+          "description": "Level or rank of the card",
+          "type": "integer"
+        },
+        "cardset": {
+          "title": "Cardset",
+          "description": "Card set, e.g. Metal Raiders",
+          "type": "string"
+        },
+        "format": {
+          "title": "Format",
+          "description": "Card format, e.g. TCG, Speed Duel",
+          "type": "string"
+        },
+        "misc": {
+          "title": "Misc",
+          "description": "Whether to include additional metadata",
+          "default": false,
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  {
+    "name": "get_yugioh_card_info",
+    "description": "Retrieve detailed Yu-Gi-Oh! card info using name, archetype, attribute, level, etc.",
+    "schema": {
+      "title": "GetCardInfoInput",
+      "description": "Input model for querying Yu-Gi-Oh! card information with various filters.\n\nAttributes:\n    name (Optional[str]): Filter by exact card name.\n    fname (Optional[str]): Fuzzy search by name fragment.\n    archetype (Optional[str]): Filter by card archetype.\n    attribute (Optional[str]): Filter by card attribute (DARK, LIGHT, etc).\n    race (Optional[str]): Filter by card race/type (Warrior, Dragon, etc).\n    level (Optional[int]): Filter by card level or rank.\n    cardset (Optional[str]): Filter by card set name.\n    format (Optional[str]): Filter by card format (TCG, OCG, Speed Duel, etc).\n    misc (Optional[bool]): Include additional metadata in the response.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "description": "Exact card name",
+          "type": "string"
+        },
+        "fname": {
+          "title": "Fname",
+          "description": "Fuzzy search by name fragment",
+          "type": "string"
+        },
+        "archetype": {
+          "title": "Archetype",
+          "description": "Card archetype, e.g. Blue-Eyes",
+          "type": "string"
+        },
+        "attribute": {
+          "title": "Attribute",
+          "description": "Card attribute, e.g. DARK, LIGHT",
+          "type": "string"
+        },
+        "race": {
+          "title": "Race",
+          "description": "Card race/type, e.g. Warrior, Dragon",
+          "type": "string"
+        },
+        "level": {
+          "title": "Level",
+          "description": "Level or rank of the card",
+          "type": "integer"
+        },
+        "cardset": {
+          "title": "Cardset",
+          "description": "Card set, e.g. Metal Raiders",
+          "type": "string"
+        },
+        "format": {
+          "title": "Format",
+          "description": "Card format, e.g. TCG, Speed Duel",
+          "type": "string"
+        },
+        "misc": {
+          "title": "Misc",
+          "description": "Whether to include additional metadata",
+          "default": false,
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  {
+    "name": "citysdk_linked_data_query",
+    "description": "Send a SPARQL query to the CitySDK Linked Data API to retrieve structured city information.",
+    "schema": {
+      "description": "Input schema for the CitySDK Linked Data SPARQL query tool.\n\nArgs:\n    query: SPARQL query to execute against the CitySDK Linked Data endpoint",
+      "properties": {
+        "query": {
+          "description": "SPARQL query to send to the CitySDK Linked Data endpoint.",
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"],
+      "title": "CitySDKLinkedDataQueryInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "citysdk_tourism_poi_query",
+    "description": "Retrieve Points of Interest from the CitySDK Tourism API using a bounding box or city filter.",
+    "schema": {
+      "description": "Input schema for querying Points of Interest from the CitySDK Tourism API.\n\nArgs:\n    bbox: Bounding box coordinates to filter POIs geographically\n    city: City name to filter POIs by location",
+      "properties": {
+        "bbox": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Bounding box (e.g., '24.9384,60.1695,24.9500,60.1750') to filter POIs geographically.",
+          "title": "Bbox"
+        },
+        "city": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional city to filter POIs.",
+          "title": "City"
+        }
+      },
+      "title": "CitySDKTourismPOIInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_random_poems",
+    "description": "Get a number of random poems",
+    "schema": {
+      "description": "Input schema for fetching random poems.\n\nArgs:\n    count: Number of random poems to retrieve",
+      "properties": {
+        "count": {
+          "description": "Number of random poems to fetch",
+          "title": "Count",
+          "type": "integer"
+        }
+      },
+      "required": ["count"],
+      "title": "RandomPoemInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_poems_by_line",
+    "description": "Search for poems that contain a specific line or phrase",
+    "schema": {
+      "description": "Input schema for searching poems containing a specific phrase or line.\n\nArgs:\n    phrase: Line or text fragment to search for in poems",
+      "properties": {
+        "phrase": {
+          "description": "Line or phrase to search for in poems",
+          "title": "Phrase",
+          "type": "string"
+        }
+      },
+      "required": ["phrase"],
+      "title": "LineSearchInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_poem_by_title",
+    "description": "Search for a poem using its title",
+    "schema": {
+      "description": "Input schema for searching a poem by its title.\n\nArgs:\n    title: Title of the poem to search for",
+      "properties": {
+        "title": {
+          "description": "Title of the poem",
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": ["title"],
+      "title": "TitleSearchInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_poems_by_author",
+    "description": "Search for poems by a specific poet",
+    "schema": {
+      "description": "Input schema for searching poems by author name.\n\nArgs:\n    author: Name of the poet to search for",
+      "properties": {
+        "author": {
+          "description": "Name of the poet to search for",
+          "title": "Author",
+          "type": "string"
+        }
+      },
+      "required": ["author"],
+      "title": "AuthorSearchInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_lcbo_product_by_id",
+    "description": "Fetch detailed info for a product using its LCBO product ID",
+    "schema": {
+      "description": "Input schema for fetching a product by ID from the LCBO API.\n\nArgs:\n    product_id: The unique LCBO product identifier",
+      "properties": {
+        "product_id": {
+          "description": "LCBO product ID",
+          "title": "Product Id",
+          "type": "integer"
+        }
+      },
+      "required": ["product_id"],
+      "title": "GetLCBOProductInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_lcbo_products",
+    "description": "Search for LCBO products by keyword, name, etc.",
+    "schema": {
+      "description": "Input schema for searching LCBO products.\n\nArgs:\n    query: The search terms to find matching products\n    page: Page number for paginated results\n    per_page: Number of results to return per page",
+      "properties": {
+        "query": {
+          "description": "Search query string",
+          "title": "Query",
+          "type": "string"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 1,
+          "description": "Page number of results",
+          "title": "Page"
+        },
+        "per_page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 10,
+          "description": "Number of results per page",
+          "title": "Per Page"
+        }
+      },
+      "required": ["query"],
+      "title": "SearchLCBOProductsInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_location_details",
+    "description": "Get details about a location by ID.\n\nRetrieves comprehensive information about a specific TripAdvisor location\nsuch as a hotel, restaurant, or attraction.\n\nArgs:\n    location_id: The unique identifier for a TripAdvisor location.\n    language: The language code for the response content (ISO 639-1).\n    currency: The currency code for price values (ISO 4217).\n\nReturns:\n    dict: Location details including name, address, rating, etc.",
+    "schema": {
+      "description": "Input parameters for retrieving location details.",
+      "properties": {
+        "location_id": {
+          "description": "The unique identifier for a TripAdvisor location.",
+          "title": "Location Id",
+          "type": "integer"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "The language code for the response content (ISO 639-1).",
+          "title": "Language"
+        },
+        "currency": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "USD",
+          "description": "The currency code for price values (ISO 4217).",
+          "title": "Currency"
+        }
+      },
+      "required": ["location_id"],
+      "title": "LocationDetailsInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_location_photos",
+    "description": "Get high-quality photos for a location.\n\nRetrieves photos from TripAdvisor for a specific location.\n\nArgs:\n    location_id: The unique identifier for a TripAdvisor location.\n    language: The language code for the response content (ISO 639-1).\n    limit: Maximum number of photos to return (1-100).\n    offset: Number of photos to skip for pagination.\n    source: Filter photos by source (tripadvisor, management).\n\nReturns:\n    dict: Collection of photo objects with URLs and metadata.",
+    "schema": {
+      "description": "Input parameters for retrieving location photos.",
+      "properties": {
+        "location_id": {
+          "description": "The unique identifier for a TripAdvisor location.",
+          "title": "Location Id",
+          "type": "integer"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "The language code for the response content (ISO 639-1).",
+          "title": "Language"
+        },
+        "limit": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 5,
+          "description": "Maximum number of photos to return (1-100).",
+          "title": "Limit"
+        },
+        "offset": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Number of photos to skip for pagination.",
+          "title": "Offset"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter photos by source (tripadvisor, management).",
+          "title": "Source"
+        }
+      },
+      "required": ["location_id"],
+      "title": "LocationPhotosInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_location_reviews",
+    "description": "Get recent reviews for a location.\n\nRetrieves user reviews for a specific TripAdvisor location.\n\nArgs:\n    location_id: The unique identifier for a TripAdvisor location.\n    language: The language code for the response content (ISO 639-1).\n    limit: Maximum number of reviews to return (1-50).\n    offset: Number of reviews to skip for pagination.\n\nReturns:\n    dict: Collection of review objects with ratings, text, and metadata.",
+    "schema": {
+      "description": "Input parameters for retrieving location reviews.",
+      "properties": {
+        "location_id": {
+          "description": "The unique identifier for a TripAdvisor location.",
+          "title": "Location Id",
+          "type": "integer"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "The language code for the response content (ISO 639-1).",
+          "title": "Language"
+        },
+        "limit": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 5,
+          "description": "Maximum number of reviews to return (1-50).",
+          "title": "Limit"
+        },
+        "offset": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Number of reviews to skip for pagination.",
+          "title": "Offset"
+        }
+      },
+      "required": ["location_id"],
+      "title": "LocationReviewsInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "nearby_search",
+    "description": "Search for nearby locations using a lat/long pair.\n\nFinds TripAdvisor locations near a specific geographical point.\n\nArgs:\n    **kwargs: Keyword arguments matching the NearbySearchInput model.\n        latLong: Latitude,longitude pair (e.g., '42.3455,-71.0983').\n        category: Filter by category (hotels, attractions, restaurants).\n        phone: Filter by phone number.\n        address: Filter by street address.\n        radius: Search radius from the specified coordinates.\n        radius_unit: Unit for radius (km, mi, m).\n        language: The language code for the response content (ISO 639-1).\n\nReturns:\n    dict: Search results with nearby location data.",
+    "schema": {
+      "description": "Input parameters for searching nearby locations.",
+      "properties": {
+        "latLong": {
+          "description": "Latitude,longitude pair (e.g., '42.3455,-71.0983').",
+          "title": "Latlong",
+          "type": "string"
+        },
+        "category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter by category (hotels, attractions, restaurants).",
+          "title": "Category"
+        },
+        "phone": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter by phone number.",
+          "title": "Phone"
+        },
+        "address": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter by street address.",
+          "title": "Address"
+        },
+        "radius": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search radius from the specified coordinates.",
+          "title": "Radius"
+        },
+        "radius_unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Unit for radius (km, mi, m).",
+          "title": "Radius Unit"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "The language code for the response content (ISO 639-1).",
+          "title": "Language"
+        }
+      },
+      "required": ["latLong"],
+      "title": "NearbySearchInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_locations",
+    "description": "Search for TripAdvisor locations by name, address, lat/long, etc.\n\nPerforms a general search for TripAdvisor locations using various filters.\n\nArgs:\n    **kwargs: Keyword arguments matching the LocationSearchInput model.\n        searchQuery: Text to search for (e.g., hotel name, restaurant name).\n        category: Filter by category (hotels, attractions, restaurants).\n        phone: Search by phone number.\n        address: Search by street address.\n        latLong: Latitude,longitude pair (e.g., '42.3455,-71.0983').\n        radius: Search radius from the specified coordinates.\n        radius_unit: Unit for radius (km, mi, m).\n        language: The language code for the response content (ISO 639-1).\n\nReturns:\n    dict: Search results with location data.",
+    "schema": {
+      "description": "Input parameters for searching locations.",
+      "properties": {
+        "searchQuery": {
+          "description": "Text to search for (e.g., hotel name, restaurant name).",
+          "title": "Searchquery",
+          "type": "string"
+        },
+        "category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter by category (hotels, attractions, restaurants).",
+          "title": "Category"
+        },
+        "phone": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search by phone number.",
+          "title": "Phone"
+        },
+        "address": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search by street address.",
+          "title": "Address"
+        },
+        "latLong": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Latitude,longitude pair (e.g., '42.3455,-71.0983').",
+          "title": "Latlong"
+        },
+        "radius": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search radius from the specified coordinates.",
+          "title": "Radius"
+        },
+        "radius_unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Unit for radius (km, mi, m).",
+          "title": "Radius Unit"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "The language code for the response content (ISO 639-1).",
+          "title": "Language"
+        }
+      },
+      "required": ["searchQuery"],
+      "title": "LocationSearchInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_fred_category",
+    "description": "Get a FRED category by ID",
+    "schema": {
+      "description": "Input schema for FRED category queries.",
+      "properties": {
+        "category_id": {
+          "description": "The FRED category ID to fetch (e.g., 0 for root)",
+          "title": "Category Id",
+          "type": "integer"
+        }
+      },
+      "required": ["category_id"],
+      "title": "CategoryInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_fred_category_children",
+    "description": "Get child categories for a FRED category",
+    "schema": {
+      "description": "Input schema for FRED category queries.",
+      "properties": {
+        "category_id": {
+          "description": "The FRED category ID to fetch (e.g., 0 for root)",
+          "title": "Category Id",
+          "type": "integer"
+        }
+      },
+      "required": ["category_id"],
+      "title": "CategoryInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_fred_category_series",
+    "description": "List economic data series in a FRED category",
+    "schema": {
+      "description": "Input schema for FRED category queries.",
+      "properties": {
+        "category_id": {
+          "description": "The FRED category ID to fetch (e.g., 0 for root)",
+          "title": "Category Id",
+          "type": "integer"
+        }
+      },
+      "required": ["category_id"],
+      "title": "CategoryInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_fred_series",
+    "description": "Retrieve metadata for a FRED economic data series",
+    "schema": {
+      "description": "Input schema for FRED series queries.",
+      "properties": {
+        "series_id": {
+          "description": "The FRED series ID to fetch (e.g., 'GDP', 'UNRATE')",
+          "title": "Series Id",
+          "type": "string"
+        }
+      },
+      "required": ["series_id"],
+      "title": "SeriesInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_fred_series_observations",
+    "description": "Get FRED series observations (actual data values) with optional date range filtering",
+    "schema": {
+      "description": "Input schema for FRED series observations queries.",
+      "properties": {
+        "series_id": {
+          "description": "The FRED series ID to fetch observations for",
+          "title": "Series Id",
+          "type": "string"
+        },
+        "start_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Start date in YYYY-MM-DD format",
+          "title": "Start Date"
+        },
+        "end_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "End date in YYYY-MM-DD format",
+          "title": "End Date"
+        }
+      },
+      "required": ["series_id"],
+      "title": "SeriesObservationsInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_all_rps101_objects",
+    "description": "Get a list of all RPS-101 objects (e.g. Rock, Paper, Scissors, Nuke, etc).",
+    "schema": {
+      "description": "Get a list of all 101 objects in the RPS-101 game.\n\nReturns:\n    List[str]: A list of all object names in the RPS-101 game.\n\nRaises:\n    requests.RequestException: If the API request fails.",
+      "properties": {},
+      "title": "get_all_rps101_objects",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_rps101_match_result",
+    "description": "Get the result of a match between two RPS-101 objects.",
+    "schema": {
+      "description": "Input model for simulating a match between two RPS-101 objects.\n\nAttributes:\n    object_one (str): The name of the first object in the match.\n    object_two (str): The name of the second object in the match.",
+      "properties": {
+        "object_one": {
+          "description": "The first object in the match (e.g. 'nuke')",
+          "title": "Object One",
+          "type": "string"
+        },
+        "object_two": {
+          "description": "The second object in the match (e.g. 'tank')",
+          "title": "Object Two",
+          "type": "string"
+        }
+      },
+      "required": ["object_one", "object_two"],
+      "title": "RPSMatchInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_rps101_object_outcomes",
+    "description": "Get the winning outcomes for a given RPS-101 object. Returns what that object defeats and how.",
+    "schema": {
+      "description": "Input model for retrieving outcome information about a specific RPS-101 object.\n\nAttributes:\n    object_name (str): The name of the RPS-101 object to get information about.",
+      "properties": {
+        "object_name": {
+          "description": "The name of the RPS-101 object to get winning outcomes for (e.g. 'nuke')",
+          "title": "Object Name",
+          "type": "string"
+        }
+      },
+      "required": ["object_name"],
+      "title": "ObjectNameInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_random_chuck_joke",
+    "description": "Get a random Chuck Norris joke",
+    "schema": {
+      "description": "Fetch a random Chuck Norris joke from the API.\n\nReturns:\n    Joke: A random Chuck Norris joke object.\n\nRaises:\n    requests.RequestException: If the API request fails.",
+      "properties": {},
+      "title": "get_random_chuck_joke",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_chuck_joke_by_category",
+    "description": "Get a random Chuck Norris joke from a specified category",
+    "schema": {
+      "description": "Fetch a random Chuck Norris joke from a specific category.\n\nArgs:\n    category (str): The joke category to filter by (use get_available_categories\n        to see available options).\n\nReturns:\n    Joke: A random Chuck Norris joke from the specified category.\n\nRaises:\n    requests.RequestException: If the API request fails or the category is invalid.",
+      "properties": {
+        "category": {
+          "title": "Category",
+          "type": "string"
+        }
+      },
+      "required": ["category"],
+      "title": "get_chuck_joke_by_category",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_chuck_joke_categories",
+    "description": "Get a list of all available joke categories",
+    "schema": {
+      "description": "Get a list of all available joke categories from the Chuck Norris API.\n\nReturns:\n    List[str]: A list of category names as strings.\n\nRaises:\n    requests.RequestException: If the API request fails.",
+      "properties": {},
+      "title": "get_chuck_joke_categories",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_chuck_jokes",
+    "description": "Search for Chuck Norris jokes matching a text query",
+    "schema": {
+      "description": "Search for Chuck Norris jokes containing the specified query string.\n\nArgs:\n    query (str): The search term to look for in jokes.\n\nReturns:\n    List[Joke]: A list of joke objects matching the search query.\n\nRaises:\n    requests.RequestException: If the API request fails.",
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"],
+      "title": "search_chuck_jokes",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_random_useless_fact",
+    "description": "Get a random useless fact. Optionally specify the language ('en' or 'de').",
+    "schema": {
+      "description": "Input schema for the useless facts tools.\n\nAttributes:\n    language: Language code for the fact (en or de)",
+      "properties": {
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "Language of the fact. Supports 'en' or 'de'.",
+          "title": "Language"
+        }
+      },
+      "title": "FactInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_todays_useless_fact",
+    "description": "Get today's useless fact. Optionally specify the language ('en' or 'de').",
+    "schema": {
+      "description": "Input schema for the useless facts tools.\n\nAttributes:\n    language: Language code for the fact (en or de)",
+      "properties": {
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "Language of the fact. Supports 'en' or 'de'.",
+          "title": "Language"
+        }
+      },
+      "title": "FactInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_random_useless_fact",
+    "description": "Get a random useless fact. Optionally specify the language ('en' or 'de').",
+    "schema": {
+      "description": "Input schema for the useless facts tools.\n\nAttributes:\n    language: Language code for the fact (en or de)",
+      "properties": {
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "Language of the fact. Supports 'en' or 'de'.",
+          "title": "Language"
+        }
+      },
+      "title": "FactInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_todays_useless_fact",
+    "description": "Get today's useless fact. Optionally specify the language ('en' or 'de').",
+    "schema": {
+      "description": "Input schema for the useless facts tools.\n\nAttributes:\n    language: Language code for the fact (en or de)",
+      "properties": {
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "Language of the fact. Supports 'en' or 'de'.",
+          "title": "Language"
+        }
+      },
+      "title": "FactInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_openlibrary_cover_image",
+    "description": "Get the cover image URL from an OpenLibrary ID (for book or author)",
+    "schema": {
+      "description": "Input schema for the cover image retrieval tool.\n\nAttributes:\n    olid: The OpenLibrary ID for a book or author.\n    is_author: Boolean flag indicating if the OLID is for an author.",
+      "properties": {
+        "olid": {
+          "description": "The OpenLibrary ID for a book or author",
+          "title": "Olid",
+          "type": "string"
+        },
+        "is_author": {
+          "default": false,
+          "description": "Set to true if the OLID is for an author",
+          "title": "Is Author",
+          "type": "boolean"
+        }
+      },
+      "required": ["olid"],
+      "title": "CoverInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_books_openlibrary",
+    "description": "Search for books by title, keyword, or subject using OpenLibrary",
+    "schema": {
+      "description": "Input schema for the book search tool.\n\nAttributes:\n    query: The book title, keywords, or search query to use.\n    page: Page number of results to retrieve, starting from 1.",
+      "properties": {
+        "query": {
+          "description": "The book title, keywords, or search query",
+          "title": "Query",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "description": "Page number of results",
+          "title": "Page",
+          "type": "integer"
+        }
+      },
+      "required": ["query"],
+      "title": "BookSearchInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_authors_openlibrary",
+    "description": "Search for authors by name using OpenLibrary",
+    "schema": {
+      "description": "Input schema for the author search tool.\n\nAttributes:\n    name: Name of the author to search for.",
+      "properties": {
+        "name": {
+          "description": "Name of the author to search for",
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": ["name"],
+      "title": "AuthorSearchInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "get_openlibrary_cover_image",
+    "description": "Get the cover image URL from an OpenLibrary ID (for book or author)",
+    "schema": {
+      "description": "Input schema for the cover image retrieval tool.\n\nAttributes:\n    olid: The OpenLibrary ID for a book or author.\n    is_author: Boolean flag indicating if the OLID is for an author.",
+      "properties": {
+        "olid": {
+          "description": "The OpenLibrary ID for a book or author",
+          "title": "Olid",
+          "type": "string"
+        },
+        "is_author": {
+          "default": false,
+          "description": "Set to true if the OLID is for an author",
+          "title": "Is Author",
+          "type": "boolean"
+        }
+      },
+      "required": ["olid"],
+      "title": "CoverInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_authors_openlibrary",
+    "description": "Search for authors by name using OpenLibrary",
+    "schema": {
+      "description": "Input schema for the author search tool.\n\nAttributes:\n    name: Name of the author to search for.",
+      "properties": {
+        "name": {
+          "description": "Name of the author to search for",
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": ["name"],
+      "title": "AuthorSearchInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_books_openlibrary",
+    "description": "Search for books by title, keyword, or subject using OpenLibrary",
+    "schema": {
+      "description": "Input schema for the book search tool.\n\nAttributes:\n    query: The book title, keywords, or search query to use.\n    page: Page number of results to retrieve, starting from 1.",
+      "properties": {
+        "query": {
+          "description": "The book title, keywords, or search query",
+          "title": "Query",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "description": "Page number of results",
+          "title": "Page",
+          "type": "integer"
+        }
+      },
+      "required": ["query"],
+      "title": "BookSearchInput",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretriever",
+    "description": "Retrieve documents using BaseRetriever: Abstract base class for a Document retrieval system.\n\nA retrieval system is defined as something that can take string queries and return\nthe most 'relevant' Documents from some source.\n\nUsage:\n\nA retriever follows the standard Runnable interface, and should be used\nvia the standard Runnable methods of `invoke`, `ainvoke`, `batch`, `abatch`.\n\nImplementation:\n\nWhen implementing a custom retriever, the class should implement\nthe `_get_relevant_documents` method to define the logic for retrieving documents.\n\nOptionally, an async native implementations can be provided by overriding the\n`_aget_relevant_documents` method.\n\nExample: A retriever that returns the first 5 documents from a list of documents\n\n    .. code-block:: python\n\n        from langchain_core.documents import Document\n        from langchain_core.retrievers import BaseRetriever\n\n        class SimpleRetriever(BaseRetriever):\n            docs: list[Document]\n            k: int = 5\n\n            def _get_relevant_documents(self, query: str) -> list[Document]:\n                \"\"\"Return the first k documents from the list of documents\"\"\"\n                return self.docs[:self.k]\n\n            async def _aget_relevant_documents(self, query: str) -> list[Document]:\n                \"\"\"(Optional) async native implementation.\"\"\"\n                return self.docs[:self.k]\n\nExample: A simple retriever based on a scikit-learn vectorizer\n\n    .. code-block:: python\n\n        from sklearn.metrics.pairwise import cosine_similarity\n\n        class TFIDFRetriever(BaseRetriever, BaseModel):\n            vectorizer: Any\n            docs: list[Document]\n            tfidf_array: Any\n            k: int = 4\n\n            class Config:\n                arbitrary_types_allowed = True\n\n            def _get_relevant_documents(self, query: str) -> list[Document]:\n                # Ip -- (n_docs,x), Op -- (n_docs,n_Feats)\n                query_vec = self.vectorizer.transform([query])\n                # Op -- (n_docs,1) -- Cosine Sim with each doc\n                results = cosine_similarity(self.tfidf_array, query_vec).reshape((-1,))\n                return [self.docs[i] for i in results.argsort()[-self.k :][::-1]]",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwargs": {
+          "title": "Kwargs"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwargs", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstore",
+    "description": "Search documents using VectorStore: Interface for vector store.",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig: Configuration model for a vector store engine.\n\nVectorStoreConfig provides a consistent interface for creating and using\nvector stores with embeddings. It encapsulates all the configuration needed\nto create and interact with various vector store backends, abstracting away\nprovider-specific implementation details.\n\nThis class enables:\n1. Creating vector stores with various providers (FAISS, Chroma, Pinecone, etc.)\n2. Managing documents and embeddings for vector storage\n3. Performing similarity searches with configurable parameters\n4. Creating retrievers that can be used in retrieval chains\n\nAttributes:\n    engine_type (EngineType): The type of engine (always VECTOR_STORE).\n    embedding_model (BaseEmbeddingConfig): Configuration for the embedding model.\n    vector_store_provider (VectorStoreProvider): The vector store provider to use.\n    documents (List[Document]): Documents to store in the vector store.\n    vector_store_path (str): Path for storing vector indices on disk.\n    docstore_path (str): Path for storing document data.\n    k (int): Default number of documents to retrieve in searches.\n    score_threshold (Optional[float]): Minimum similarity score for results.\n    search_type (str): Search algorithm to use (e.g., \"similarity\", \"mmr\").\n    vector_store_kwargs (Dict[str, Any]): Additional provider-specific parameters.\n\nExamples:\n    >>> from haive.core.engine.vectorstore import VectorStoreConfig, VectorStoreProvider\n    >>> from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig\n    >>> from langchain_core.documents import Document\n    >>>\n    >>> # Create configuration\n    >>> config = VectorStoreConfig(\n    ...     name=\"product_search\",\n    ...     documents=[Document(page_content=\"iPhone 13: The latest smartphone from Apple\")],\n    ...     vector_store_provider=VectorStoreProvider.FAISS,\n    ...     embedding_model=HuggingFaceEmbeddingConfig(\n    ...         model=\"sentence-transformers/all-MiniLM-L6-v2\"\n    ...     ),\n    ...     k=5\n    ... )\n    >>>\n    >>> # Create vector store\n    >>> vectorstore = config.create_vectorstore()\n    >>>\n    >>> # Perform similarity search\n    >>> results = config.similarity_search(\"smartphone\", k=3)\n    >>>\n    >>> # Create a retriever\n    >>> retriever = config.create_retriever(search_type=\"mmr\")",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreprovider",
+    "description": "Search documents using VectorStoreProvider: Enumeration of supported vector store providers.\n\nThis enum defines the built-in vector store providers supported by the Haive framework.\nEach provider corresponds to a specific vector database implementation with its own\nfeatures, capabilities, and requirements.\n\nThe enum can be dynamically extended at runtime using the extend() method\nor through the VectorStoreProviderRegistry, allowing for custom providers\nwithout modifying the core code.\n\nAttributes:\n    CHROMA (str): Chroma vector database\n    FAISS (str): Facebook AI Similarity Search\n    PINECONE (str): Pinecone managed vector database\n    WEAVIATE (str): Weaviate vector database\n    ZILLIZ (str): Zilliz cloud vector database\n    MILVUS (str): Milvus vector database\n    QDRANT (str): Qdrant vector database\n    IN_MEMORY (str): In-memory vector store (for testing/development)\n\nExamples:\n    >>> from haive.core.engine.vectorstore import VectorStoreProvider\n    >>> # Using an enum value\n    >>> provider = VectorStoreProvider.FAISS\n    >>> str(provider)\n    'FAISS'\n    >>> # Checking if a value is in the enum\n    >>> \"Chroma\" in [p.value for p in VectorStoreProvider]\n    True",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreproviderregistry",
+    "description": "Search documents using VectorStoreProviderRegistry: Registry for custom vector store providers.\n\nThis registry allows adding custom vector store providers without modifying\nthe core VectorStoreProvider enum. It provides a flexible extension mechanism\nthat supports both direct class registration and lazy-loading through factory\nfunctions, enabling integration with third-party vector store implementations.\n\nThe registry maintains:\n1. A mapping of provider names to vector store classes\n2. A mapping of provider names to factory functions that return vector store classes\n3. Methods to dynamically extend the VectorStoreProvider enum\n\nThis approach allows for runtime extension of the vector store system without\nmodifying core code, supporting both built-in and custom provider implementations.\n\nClass Attributes:\n    providers (Dict[Union[str, VectorStoreProvider], Type[VectorStore]]):\n        Direct mapping of provider names to vector store classes.\n    provider_factories (Dict[Union[str, VectorStoreProvider], Callable[..., Type[VectorStore]]]):\n        Mapping of provider names to factory functions.\n\nExamples:\n    >>> from haive.core.engine.vectorstore import VectorStoreProviderRegistry\n    >>> from langchain_community.vectorstores import Chroma\n    >>>\n    >>> # Register a custom vector store class directly\n    >>> class MyCustomVectorStore(VectorStore):\n    ...     # Implementation...\n    ...     pass\n    >>>\n    >>> VectorStoreProviderRegistry.register_provider(\"MyCustomStore\", MyCustomVectorStore)\n    >>>\n    >>> # Register a factory function for lazy loading\n    >>> def get_special_vector_store():\n    ...     # Import and return the class only when needed\n    ...     from my_package.vectorstores import SpecialVectorStore\n    ...     return SpecialVectorStore\n    >>>\n    >>> VectorStoreProviderRegistry.register_provider_factory(\"SpecialStore\", get_special_vector_store)\n    >>>\n    >>> # Use the registered providers\n    >>> providers = VectorStoreProviderRegistry.list_providers()\n    >>> \"MyCustomStore\" in providers\n    True",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType: Enumeration of supported retriever types in the Haive framework.\n\nThis enum defines all available retriever implementations that can be used for document\nretrieval. The retrievers are categorized into different groups based on their\nfunctionality and approach to document retrieval.\n\nCategories:\n    Base Vector Store Retrievers:\n        Simple retrievers that directly use vector stores for similarity search.\n\n    Advanced Retrieval Strategies:\n        Sophisticated retrieval methods that enhance basic vector similarity search:\n        - TIME_WEIGHTED: Considers document recency in retrieval\n        - MULTI_QUERY: Generates multiple queries for better coverage\n        - MULTI_VECTOR: Uses multiple vector representations per document\n        - PARENT_DOCUMENT: Retrieves parent documents based on child matches\n        - SELF_QUERY: Automatically generates structured queries\n        - CONTEXTUAL_COMPRESSION: Compresses retrieved documents contextually\n        - REPHRASE_QUERY: Reformulates queries for better results\n\n    Ensemble Methods:\n        Combine multiple retrievers for improved performance:\n        - MERGER: Combines results from multiple retrievers\n        - ENSEMBLE: Weighted combination of multiple retrievers\n\n    Sparse Retrievers:\n        Traditional information retrieval methods:\n        - SPARSE: Generic sparse retrieval\n        - KNN: K-Nearest Neighbors\n        - TFIDF: Term Frequency-Inverse Document Frequency\n        - BM25: Best Match 25 algorithm\n        - SVM: Support Vector Machine based retrieval\n\n    Specific Implementations:\n        Retrievers for specific vector store backends:\n        - ELASTICSEARCH: Elasticsearch-based retrieval\n        - FAISS: Facebook AI Similarity Search\n        - IN_MEMORY: In-memory vector store\n        - PINECONE: Pinecone vector database\n        - QDRANT: Qdrant vector database\n\nExample:\n    ```python\n    from haive.core.engine.retriever.types import RetrieverType\n    from haive.core.engine.retriever import create_retriever_config\n\n    # Create a vector store retriever config\n    config = create_retriever_config(\n        retriever_type=RetrieverType.VECTOR_STORE,\n        name=\"my_retriever\",\n        vector_store_config=vs_config\n    )\n\n    # Create an ensemble retriever config\n    ensemble_config = create_retriever_config(\n        retriever_type=RetrieverType.ENSEMBLE,\n        name=\"ensemble_retriever\",\n        retrievers=[config1, config2]\n    )\n    ```",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretriever",
+    "description": "Retrieve documents using BaseRetriever: Abstract base class for a Document retrieval system.\n\nA retrieval system is defined as something that can take string queries and return\nthe most 'relevant' Documents from some source.\n\nUsage:\n\nA retriever follows the standard Runnable interface, and should be used\nvia the standard Runnable methods of `invoke`, `ainvoke`, `batch`, `abatch`.\n\nImplementation:\n\nWhen implementing a custom retriever, the class should implement\nthe `_get_relevant_documents` method to define the logic for retrieving documents.\n\nOptionally, an async native implementations can be provided by overriding the\n`_aget_relevant_documents` method.\n\nExample: A retriever that returns the first 5 documents from a list of documents\n\n    .. code-block:: python\n\n        from langchain_core.documents import Document\n        from langchain_core.retrievers import BaseRetriever\n\n        class SimpleRetriever(BaseRetriever):\n            docs: list[Document]\n            k: int = 5\n\n            def _get_relevant_documents(self, query: str) -> list[Document]:\n                \"\"\"Return the first k documents from the list of documents\"\"\"\n                return self.docs[:self.k]\n\n            async def _aget_relevant_documents(self, query: str) -> list[Document]:\n                \"\"\"(Optional) async native implementation.\"\"\"\n                return self.docs[:self.k]\n\nExample: A simple retriever based on a scikit-learn vectorizer\n\n    .. code-block:: python\n\n        from sklearn.metrics.pairwise import cosine_similarity\n\n        class TFIDFRetriever(BaseRetriever, BaseModel):\n            vectorizer: Any\n            docs: list[Document]\n            tfidf_array: Any\n            k: int = 4\n\n            class Config:\n                arbitrary_types_allowed = True\n\n            def _get_relevant_documents(self, query: str) -> list[Document]:\n                # Ip -- (n_docs,x), Op -- (n_docs,n_Feats)\n                query_vec = self.vectorizer.transform([query])\n                # Op -- (n_docs,1) -- Cosine Sim with each doc\n                results = cosine_similarity(self.tfidf_array, query_vec).reshape((-1,))\n                return [self.docs[i] for i in results.argsort()[-self.k :][::-1]]",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwargs": {
+          "title": "Kwargs"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwargs", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig: Base configuration for all retriever engines in the Haive framework.\n\nThis class serves as the foundation for all retriever configurations, providing a consistent\ninterface for document retrieval operations. It supports automatic discovery and registration\nof retriever implementations through a plugin architecture.\n\nThe registry system allows new retriever types to be created simply by adding a new module\nwith a properly decorated class, without having to manually update central registries.\n\nAttributes:\n    engine_type (EngineType): The type of engine (always RETRIEVER).\n    retriever_type (RetrieverType): The specific type of retriever to use.\n    search_type (str): The type of search to perform ('similarity', 'mmr', etc.).\n    search_kwargs (Dict[str, Any]): Additional search parameters.\n    k (int): Number of documents to retrieve.\n    filter (Optional[Dict[str, Any]]): Optional filter to apply to vector store search.\n    _registry (ClassVar[Dict[RetrieverType, Type['RetrieverConfig']]]): Registry for retriever types.\n\nExample:\n    ```python\n    from haive.core.engine.retriever import RetrieverConfig, RetrieverType\n    from haive.core.engine.vectorstore import VectorStoreConfig\n\n    # Create a basic retriever config\n    config = RetrieverConfig(\n        name=\"my_retriever\",\n        retriever_type=RetrieverType.VECTOR_STORE,\n        k=4,\n        search_type=\"similarity\"\n    )\n\n    # Create and use the retriever\n    retriever = config.instantiate()\n    docs = retriever.get_relevant_documents(\"query\")\n    ```",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrieverinput",
+    "description": "Retrieve documents using RetrieverInput: Schema for retriever input.",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrieveroutput",
+    "description": "Retrieve documents using RetrieverOutput: Schema for retriever output.",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType: Enumeration of supported retriever types in the Haive framework.\n\nThis enum defines all available retriever implementations that can be used for document\nretrieval. The retrievers are categorized into different groups based on their\nfunctionality and approach to document retrieval.\n\nCategories:\n    Base Vector Store Retrievers:\n        Simple retrievers that directly use vector stores for similarity search.\n\n    Advanced Retrieval Strategies:\n        Sophisticated retrieval methods that enhance basic vector similarity search:\n        - TIME_WEIGHTED: Considers document recency in retrieval\n        - MULTI_QUERY: Generates multiple queries for better coverage\n        - MULTI_VECTOR: Uses multiple vector representations per document\n        - PARENT_DOCUMENT: Retrieves parent documents based on child matches\n        - SELF_QUERY: Automatically generates structured queries\n        - CONTEXTUAL_COMPRESSION: Compresses retrieved documents contextually\n        - REPHRASE_QUERY: Reformulates queries for better results\n\n    Ensemble Methods:\n        Combine multiple retrievers for improved performance:\n        - MERGER: Combines results from multiple retrievers\n        - ENSEMBLE: Weighted combination of multiple retrievers\n\n    Sparse Retrievers:\n        Traditional information retrieval methods:\n        - SPARSE: Generic sparse retrieval\n        - KNN: K-Nearest Neighbors\n        - TFIDF: Term Frequency-Inverse Document Frequency\n        - BM25: Best Match 25 algorithm\n        - SVM: Support Vector Machine based retrieval\n\n    Specific Implementations:\n        Retrievers for specific vector store backends:\n        - ELASTICSEARCH: Elasticsearch-based retrieval\n        - FAISS: Facebook AI Similarity Search\n        - IN_MEMORY: In-memory vector store\n        - PINECONE: Pinecone vector database\n        - QDRANT: Qdrant vector database\n\nExample:\n    ```python\n    from haive.core.engine.retriever.types import RetrieverType\n    from haive.core.engine.retriever import create_retriever_config\n\n    # Create a vector store retriever config\n    config = create_retriever_config(\n        retriever_type=RetrieverType.VECTOR_STORE,\n        name=\"my_retriever\",\n        vector_store_config=vs_config\n    )\n\n    # Create an ensemble retriever config\n    ensemble_config = create_retriever_config(\n        retriever_type=RetrieverType.ENSEMBLE,\n        name=\"ensemble_retriever\",\n        retrievers=[config1, config2]\n    )\n    ```",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig: Configuration model for a vector store engine.\n\nVectorStoreConfig provides a consistent interface for creating and using\nvector stores with embeddings. It encapsulates all the configuration needed\nto create and interact with various vector store backends, abstracting away\nprovider-specific implementation details.\n\nThis class enables:\n1. Creating vector stores with various providers (FAISS, Chroma, Pinecone, etc.)\n2. Managing documents and embeddings for vector storage\n3. Performing similarity searches with configurable parameters\n4. Creating retrievers that can be used in retrieval chains\n\nAttributes:\n    engine_type (EngineType): The type of engine (always VECTOR_STORE).\n    embedding_model (BaseEmbeddingConfig): Configuration for the embedding model.\n    vector_store_provider (VectorStoreProvider): The vector store provider to use.\n    documents (List[Document]): Documents to store in the vector store.\n    vector_store_path (str): Path for storing vector indices on disk.\n    docstore_path (str): Path for storing document data.\n    k (int): Default number of documents to retrieve in searches.\n    score_threshold (Optional[float]): Minimum similarity score for results.\n    search_type (str): Search algorithm to use (e.g., \"similarity\", \"mmr\").\n    vector_store_kwargs (Dict[str, Any]): Additional provider-specific parameters.\n\nExamples:\n    >>> from haive.core.engine.vectorstore import VectorStoreConfig, VectorStoreProvider\n    >>> from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig\n    >>> from langchain_core.documents import Document\n    >>>\n    >>> # Create configuration\n    >>> config = VectorStoreConfig(\n    ...     name=\"product_search\",\n    ...     documents=[Document(page_content=\"iPhone 13: The latest smartphone from Apple\")],\n    ...     vector_store_provider=VectorStoreProvider.FAISS,\n    ...     embedding_model=HuggingFaceEmbeddingConfig(\n    ...         model=\"sentence-transformers/all-MiniLM-L6-v2\"\n    ...     ),\n    ...     k=5\n    ... )\n    >>>\n    >>> # Create vector store\n    >>> vectorstore = config.create_vectorstore()\n    >>>\n    >>> # Perform similarity search\n    >>> results = config.similarity_search(\"smartphone\", k=3)\n    >>>\n    >>> # Create a retriever\n    >>> retriever = config.create_retriever(search_type=\"mmr\")",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_vectorstoreretrieverconfig",
+    "description": "Retrieve documents using VectorStoreRetrieverConfig: Configuration for a vector store-based retriever in the Haive framework.\n\nThis class extends RetrieverConfig to provide specific configuration for vector store-based\ndocument retrieval. It integrates with various vector stores and supports customizable\nsearch parameters for efficient document retrieval.\n\nAttributes:\n    vector_store_config (VectorStoreConfig): Configuration for the underlying vector store.\n    k (int): Number of documents to retrieve (default: 4).\n    search_type (str): Type of search to perform, e.g., 'similarity' or 'mmr' (default: 'similarity').\n    search_kwargs (Dict[str, Any]): Additional parameters for the search operation.\n    filter (Optional[Dict[str, Any]]): Optional metadata filter for the search.\n\nExample:\n    ```python\n    from haive.core.engine.retriever import VectorStoreRetrieverConfig\n    from haive.core.engine.vectorstore import VectorStoreConfig\n\n    # Create a vector store config\n    vector_store_config = VectorStoreConfig(\n        name=\"my_vectorstore\",\n        store_type=\"chroma\",\n        embedding_config={\"model\": \"sentence-transformers/all-mpnet-base-v2\"}\n    )\n\n    # Create a vector store retriever config\n    retriever_config = VectorStoreRetrieverConfig(\n        name=\"my_retriever\",\n        vector_store_config=vector_store_config,\n        k=4,\n        search_type=\"mmr\",\n        search_kwargs={\"fetch_k\": 20, \"lambda_mult\": 0.5}\n    )\n\n    # Create and use the retriever\n    retriever = retriever_config.instantiate()\n    docs = retriever.get_relevant_documents(\"query\")\n    ```",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig: Base configuration for all retriever engines in the Haive framework.\n\nThis class serves as the foundation for all retriever configurations, providing a consistent\ninterface for document retrieval operations. It supports automatic discovery and registration\nof retriever implementations through a plugin architecture.\n\nThe registry system allows new retriever types to be created simply by adding a new module\nwith a properly decorated class, without having to manually update central registries.\n\nAttributes:\n    engine_type (EngineType): The type of engine (always RETRIEVER).\n    retriever_type (RetrieverType): The specific type of retriever to use.\n    search_type (str): The type of search to perform ('similarity', 'mmr', etc.).\n    search_kwargs (Dict[str, Any]): Additional search parameters.\n    k (int): Number of documents to retrieve.\n    filter (Optional[Dict[str, Any]]): Optional filter to apply to vector store search.\n    _registry (ClassVar[Dict[RetrieverType, Type['RetrieverConfig']]]): Registry for retriever types.\n\nExample:\n    ```python\n    from haive.core.engine.retriever import RetrieverConfig, RetrieverType\n    from haive.core.engine.vectorstore import VectorStoreConfig\n\n    # Create a basic retriever config\n    config = RetrieverConfig(\n        name=\"my_retriever\",\n        retriever_type=RetrieverType.VECTOR_STORE,\n        k=4,\n        search_type=\"similarity\"\n    )\n\n    # Create and use the retriever\n    retriever = config.instantiate()\n    docs = retriever.get_relevant_documents(\"query\")\n    ```",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_knnretrieverconfig",
+    "description": "Retrieve documents using KNNRetrieverConfig: Configuration for KNN retriever.\n\nThis retriever uses K-Nearest Neighbors for document retrieval based on embeddings.\nIt calculates similarity using Euclidean distance (L2 norm) and returns the most\nsimilar documents. Unlike more complex vector stores, KNN doesn't require building\nspecialized indices, making it a good choice for smaller document collections or\nwhen simplicity is preferred over maximum performance.\n\nThe KNN retriever is particularly useful when:\n- You have a small to medium-sized document collection\n- You want a simple semantic search without a vector database\n- You need a pure-Python solution with minimal dependencies\n- You're prototyping before implementing a more scalable solution\n\nAttributes:\n    embeddings_config (BaseEmbeddingConfig): Configuration for the embedding model\n        that will be used to generate vector representations of documents and queries.\n        This is a required field.\n    documents (List[Document]): List of Document objects to build the retrieval index\n        from. These documents will be embedded and used for KNN search.\n    k (int): Number of nearest neighbor documents to retrieve for each query. Default is 4.\n    relevancy_threshold (Optional[float]): If provided, only documents with a\n        similarity score above this threshold will be returned. This allows filtering\n        out less relevant documents even if they are in the top k.\n\nExample:\n    ```python\n    from haive.core.engine.retriever.knn import KNNRetrieverConfig\n    from haive.core.models.embeddings.base import OpenAIEmbeddingConfig\n    from langchain_core.documents import Document\n\n    # Create sample documents\n    documents = [\n        Document(page_content=\"Neural networks are used for deep learning\"),\n        Document(page_content=\"K-nearest neighbors is a simple algorithm\"),\n        Document(page_content=\"Embeddings represent text as vectors\"),\n        Document(page_content=\"Vector similarity enables semantic search\"),\n        Document(page_content=\"Machine learning uses statistical models\")\n    ]\n\n    # Create KNN retriever configuration\n    config = KNNRetrieverConfig(\n        name=\"ml_docs_retriever\",\n        embeddings_config=OpenAIEmbeddingConfig(\n            model=\"text-embedding-3-small\"\n        ),\n        documents=documents,\n        k=2,\n        relevancy_threshold=0.7  # Only return documents above this similarity score\n    )\n\n    # Instantiate the retriever\n    retriever = config.instantiate()\n\n    # Retrieve documents related to vectors\n    results = retriever.get_relevant_documents(\"How do vector embeddings work?\")\n    # Should return documents about embeddings and vector similarity\n    ```",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType: Enumeration of supported retriever types in the Haive framework.\n\nThis enum defines all available retriever implementations that can be used for document\nretrieval. The retrievers are categorized into different groups based on their\nfunctionality and approach to document retrieval.\n\nCategories:\n    Base Vector Store Retrievers:\n        Simple retrievers that directly use vector stores for similarity search.\n\n    Advanced Retrieval Strategies:\n        Sophisticated retrieval methods that enhance basic vector similarity search:\n        - TIME_WEIGHTED: Considers document recency in retrieval\n        - MULTI_QUERY: Generates multiple queries for better coverage\n        - MULTI_VECTOR: Uses multiple vector representations per document\n        - PARENT_DOCUMENT: Retrieves parent documents based on child matches\n        - SELF_QUERY: Automatically generates structured queries\n        - CONTEXTUAL_COMPRESSION: Compresses retrieved documents contextually\n        - REPHRASE_QUERY: Reformulates queries for better results\n\n    Ensemble Methods:\n        Combine multiple retrievers for improved performance:\n        - MERGER: Combines results from multiple retrievers\n        - ENSEMBLE: Weighted combination of multiple retrievers\n\n    Sparse Retrievers:\n        Traditional information retrieval methods:\n        - SPARSE: Generic sparse retrieval\n        - KNN: K-Nearest Neighbors\n        - TFIDF: Term Frequency-Inverse Document Frequency\n        - BM25: Best Match 25 algorithm\n        - SVM: Support Vector Machine based retrieval\n\n    Specific Implementations:\n        Retrievers for specific vector store backends:\n        - ELASTICSEARCH: Elasticsearch-based retrieval\n        - FAISS: Facebook AI Similarity Search\n        - IN_MEMORY: In-memory vector store\n        - PINECONE: Pinecone vector database\n        - QDRANT: Qdrant vector database\n\nExample:\n    ```python\n    from haive.core.engine.retriever.types import RetrieverType\n    from haive.core.engine.retriever import create_retriever_config\n\n    # Create a vector store retriever config\n    config = create_retriever_config(\n        retriever_type=RetrieverType.VECTOR_STORE,\n        name=\"my_retriever\",\n        vector_store_config=vs_config\n    )\n\n    # Create an ensemble retriever config\n    ensemble_config = create_retriever_config(\n        retriever_type=RetrieverType.ENSEMBLE,\n        name=\"ensemble_retriever\",\n        retrievers=[config1, config2]\n    )\n    ```",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig: Base configuration for all retriever engines in the Haive framework.\n\nThis class serves as the foundation for all retriever configurations, providing a consistent\ninterface for document retrieval operations. It supports automatic discovery and registration\nof retriever implementations through a plugin architecture.\n\nThe registry system allows new retriever types to be created simply by adding a new module\nwith a properly decorated class, without having to manually update central registries.\n\nAttributes:\n    engine_type (EngineType): The type of engine (always RETRIEVER).\n    retriever_type (RetrieverType): The specific type of retriever to use.\n    search_type (str): The type of search to perform ('similarity', 'mmr', etc.).\n    search_kwargs (Dict[str, Any]): Additional search parameters.\n    k (int): Number of documents to retrieve.\n    filter (Optional[Dict[str, Any]]): Optional filter to apply to vector store search.\n    _registry (ClassVar[Dict[RetrieverType, Type['RetrieverConfig']]]): Registry for retriever types.\n\nExample:\n    ```python\n    from haive.core.engine.retriever import RetrieverConfig, RetrieverType\n    from haive.core.engine.vectorstore import VectorStoreConfig\n\n    # Create a basic retriever config\n    config = RetrieverConfig(\n        name=\"my_retriever\",\n        retriever_type=RetrieverType.VECTOR_STORE,\n        k=4,\n        search_type=\"similarity\"\n    )\n\n    # Create and use the retriever\n    retriever = config.instantiate()\n    docs = retriever.get_relevant_documents(\"query\")\n    ```",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType: Enumeration of supported retriever types in the Haive framework.\n\nThis enum defines all available retriever implementations that can be used for document\nretrieval. The retrievers are categorized into different groups based on their\nfunctionality and approach to document retrieval.\n\nCategories:\n    Base Vector Store Retrievers:\n        Simple retrievers that directly use vector stores for similarity search.\n\n    Advanced Retrieval Strategies:\n        Sophisticated retrieval methods that enhance basic vector similarity search:\n        - TIME_WEIGHTED: Considers document recency in retrieval\n        - MULTI_QUERY: Generates multiple queries for better coverage\n        - MULTI_VECTOR: Uses multiple vector representations per document\n        - PARENT_DOCUMENT: Retrieves parent documents based on child matches\n        - SELF_QUERY: Automatically generates structured queries\n        - CONTEXTUAL_COMPRESSION: Compresses retrieved documents contextually\n        - REPHRASE_QUERY: Reformulates queries for better results\n\n    Ensemble Methods:\n        Combine multiple retrievers for improved performance:\n        - MERGER: Combines results from multiple retrievers\n        - ENSEMBLE: Weighted combination of multiple retrievers\n\n    Sparse Retrievers:\n        Traditional information retrieval methods:\n        - SPARSE: Generic sparse retrieval\n        - KNN: K-Nearest Neighbors\n        - TFIDF: Term Frequency-Inverse Document Frequency\n        - BM25: Best Match 25 algorithm\n        - SVM: Support Vector Machine based retrieval\n\n    Specific Implementations:\n        Retrievers for specific vector store backends:\n        - ELASTICSEARCH: Elasticsearch-based retrieval\n        - FAISS: Facebook AI Similarity Search\n        - IN_MEMORY: In-memory vector store\n        - PINECONE: Pinecone vector database\n        - QDRANT: Qdrant vector database\n\nExample:\n    ```python\n    from haive.core.engine.retriever.types import RetrieverType\n    from haive.core.engine.retriever import create_retriever_config\n\n    # Create a vector store retriever config\n    config = create_retriever_config(\n        retriever_type=RetrieverType.VECTOR_STORE,\n        name=\"my_retriever\",\n        vector_store_config=vs_config\n    )\n\n    # Create an ensemble retriever config\n    ensemble_config = create_retriever_config(\n        retriever_type=RetrieverType.ENSEMBLE,\n        name=\"ensemble_retriever\",\n        retrievers=[config1, config2]\n    )\n    ```",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_timeweightedretrieverconfig",
+    "description": "Retrieve documents using TimeWeightedRetrieverConfig: Configuration for TimeWeighted retriever.\n\nThis retriever combines embedding similarity with recency in retrieving documents.\nIt's particularly useful for scenarios where document freshness matters,\nsuch as news retrieval or conversation history. Documents are scored based on\nboth their vector similarity to the query and how recently they were created,\nwith newer documents receiving higher scores.\n\nThe time-weighted scoring uses document creation timestamps stored in metadata.\nFor each document, an exponential decay is applied based on the time elapsed\nsince creation, and this is multiplied by the similarity score to produce a\nfinal ranking.\n\nAttributes:\n    vector_store_config (VectorStoreConfig): Configuration for the vector store backend\n        that will be used for embedding-based similarity search.\n    memory_stream (List[Document]): List of Document objects to search through.\n        These documents should have timestamps in their metadata.\n    decay_rate (float): Exponential decay factor used in the formula:\n        (1.0 - decay_rate) ** hours_passed. Higher values make the retriever\n        prioritize recency more strongly. Default is 0.01.\n    k (int): Number of documents to retrieve in the final result. Default is 4.\n    search_kwargs (Dict[str, Any]): Additional keyword arguments to pass to the\n        vectorstore similarity search. By default, requests 100 candidates before\n        applying time weighting.\n    other_score_keys (List[str]): Other keys in the document metadata to factor\n        into the final score calculation.\n    default_salience (Optional[float]): Salience score to assign to documents\n        not retrieved from the vector store. If None, these documents won't be\n        considered.\n\nExample:\n    ```python\n    from haive.core.engine.retriever.time_weighted import TimeWeightedRetrieverConfig\n    from haive.core.engine.vectorstore import VectorStoreConfig\n    from datetime import datetime\n    from langchain_core.documents import Document\n\n    # Create vector store config\n    vs_config = VectorStoreConfig(\n        name=\"example_vectorstore\",\n        provider=\"FAISS\",\n        embedding_model=\"text-embedding-ada-002\"\n    )\n\n    # Create documents with timestamps\n    docs = [\n        Document(\n            page_content=\"Recent information about AI\",\n            metadata={\"created_at\": datetime.now().isoformat()}\n        ),\n        Document(\n            page_content=\"Older information about AI\",\n            metadata={\"created_at\": \"2023-01-01T00:00:00\"}\n        )\n    ]\n\n    # Create time-weighted retriever config\n    config = TimeWeightedRetrieverConfig(\n        name=\"time_weighted_retriever\",\n        vector_store_config=vs_config,\n        memory_stream=docs,\n        decay_rate=0.05,  # Stronger recency bias\n        k=2\n    )\n\n    # Instantiate the retriever and use it\n    retriever = config.instantiate()\n    results = retriever.get_relevant_documents(\"latest AI developments\")\n    # Results will prioritize the more recent document if both are relevant\n    ```",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig: Configuration model for a vector store engine.\n\nVectorStoreConfig provides a consistent interface for creating and using\nvector stores with embeddings. It encapsulates all the configuration needed\nto create and interact with various vector store backends, abstracting away\nprovider-specific implementation details.\n\nThis class enables:\n1. Creating vector stores with various providers (FAISS, Chroma, Pinecone, etc.)\n2. Managing documents and embeddings for vector storage\n3. Performing similarity searches with configurable parameters\n4. Creating retrievers that can be used in retrieval chains\n\nAttributes:\n    engine_type (EngineType): The type of engine (always VECTOR_STORE).\n    embedding_model (BaseEmbeddingConfig): Configuration for the embedding model.\n    vector_store_provider (VectorStoreProvider): The vector store provider to use.\n    documents (List[Document]): Documents to store in the vector store.\n    vector_store_path (str): Path for storing vector indices on disk.\n    docstore_path (str): Path for storing document data.\n    k (int): Default number of documents to retrieve in searches.\n    score_threshold (Optional[float]): Minimum similarity score for results.\n    search_type (str): Search algorithm to use (e.g., \"similarity\", \"mmr\").\n    vector_store_kwargs (Dict[str, Any]): Additional provider-specific parameters.\n\nExamples:\n    >>> from haive.core.engine.vectorstore import VectorStoreConfig, VectorStoreProvider\n    >>> from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig\n    >>> from langchain_core.documents import Document\n    >>>\n    >>> # Create configuration\n    >>> config = VectorStoreConfig(\n    ...     name=\"product_search\",\n    ...     documents=[Document(page_content=\"iPhone 13: The latest smartphone from Apple\")],\n    ...     vector_store_provider=VectorStoreProvider.FAISS,\n    ...     embedding_model=HuggingFaceEmbeddingConfig(\n    ...         model=\"sentence-transformers/all-MiniLM-L6-v2\"\n    ...     ),\n    ...     k=5\n    ... )\n    >>>\n    >>> # Create vector store\n    >>> vectorstore = config.create_vectorstore()\n    >>>\n    >>> # Perform similarity search\n    >>> results = config.similarity_search(\"smartphone\", k=3)\n    >>>\n    >>> # Create a retriever\n    >>> retriever = config.create_retriever(search_type=\"mmr\")",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig: Base configuration for all retriever engines in the Haive framework.\n\nThis class serves as the foundation for all retriever configurations, providing a consistent\ninterface for document retrieval operations. It supports automatic discovery and registration\nof retriever implementations through a plugin architecture.\n\nThe registry system allows new retriever types to be created simply by adding a new module\nwith a properly decorated class, without having to manually update central registries.\n\nAttributes:\n    engine_type (EngineType): The type of engine (always RETRIEVER).\n    retriever_type (RetrieverType): The specific type of retriever to use.\n    search_type (str): The type of search to perform ('similarity', 'mmr', etc.).\n    search_kwargs (Dict[str, Any]): Additional search parameters.\n    k (int): Number of documents to retrieve.\n    filter (Optional[Dict[str, Any]]): Optional filter to apply to vector store search.\n    _registry (ClassVar[Dict[RetrieverType, Type['RetrieverConfig']]]): Registry for retriever types.\n\nExample:\n    ```python\n    from haive.core.engine.retriever import RetrieverConfig, RetrieverType\n    from haive.core.engine.vectorstore import VectorStoreConfig\n\n    # Create a basic retriever config\n    config = RetrieverConfig(\n        name=\"my_retriever\",\n        retriever_type=RetrieverType.VECTOR_STORE,\n        k=4,\n        search_type=\"similarity\"\n    )\n\n    # Create and use the retriever\n    retriever = config.instantiate()\n    docs = retriever.get_relevant_documents(\"query\")\n    ```",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType: Enumeration of supported retriever types in the Haive framework.\n\nThis enum defines all available retriever implementations that can be used for document\nretrieval. The retrievers are categorized into different groups based on their\nfunctionality and approach to document retrieval.\n\nCategories:\n    Base Vector Store Retrievers:\n        Simple retrievers that directly use vector stores for similarity search.\n\n    Advanced Retrieval Strategies:\n        Sophisticated retrieval methods that enhance basic vector similarity search:\n        - TIME_WEIGHTED: Considers document recency in retrieval\n        - MULTI_QUERY: Generates multiple queries for better coverage\n        - MULTI_VECTOR: Uses multiple vector representations per document\n        - PARENT_DOCUMENT: Retrieves parent documents based on child matches\n        - SELF_QUERY: Automatically generates structured queries\n        - CONTEXTUAL_COMPRESSION: Compresses retrieved documents contextually\n        - REPHRASE_QUERY: Reformulates queries for better results\n\n    Ensemble Methods:\n        Combine multiple retrievers for improved performance:\n        - MERGER: Combines results from multiple retrievers\n        - ENSEMBLE: Weighted combination of multiple retrievers\n\n    Sparse Retrievers:\n        Traditional information retrieval methods:\n        - SPARSE: Generic sparse retrieval\n        - KNN: K-Nearest Neighbors\n        - TFIDF: Term Frequency-Inverse Document Frequency\n        - BM25: Best Match 25 algorithm\n        - SVM: Support Vector Machine based retrieval\n\n    Specific Implementations:\n        Retrievers for specific vector store backends:\n        - ELASTICSEARCH: Elasticsearch-based retrieval\n        - FAISS: Facebook AI Similarity Search\n        - IN_MEMORY: In-memory vector store\n        - PINECONE: Pinecone vector database\n        - QDRANT: Qdrant vector database\n\nExample:\n    ```python\n    from haive.core.engine.retriever.types import RetrieverType\n    from haive.core.engine.retriever import create_retriever_config\n\n    # Create a vector store retriever config\n    config = create_retriever_config(\n        retriever_type=RetrieverType.VECTOR_STORE,\n        name=\"my_retriever\",\n        vector_store_config=vs_config\n    )\n\n    # Create an ensemble retriever config\n    ensemble_config = create_retriever_config(\n        retriever_type=RetrieverType.ENSEMBLE,\n        name=\"ensemble_retriever\",\n        retrievers=[config1, config2]\n    )\n    ```",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_tfidfretrieverconfig",
+    "description": "Retrieve documents using TFIDFRetrieverConfig: Configuration for TF-IDF retriever.\n\nThis retriever uses Term Frequency-Inverse Document Frequency for document retrieval,\nwhich is effective for text-based similarity search and traditional information retrieval.\nTF-IDF calculates a numerical score that represents how relevant each document is to a\nquery based on the terms they share, weighted by how unique those terms are across\nthe entire document collection.\n\nThe TF-IDF retriever is particularly useful when:\n- You don't need semantic understanding (just keyword matching)\n- You want a lightweight solution without dependencies on embedding models\n- You need interpretable search results (clear why documents match)\n- Processing a relatively small to medium collection of documents\n\nAttributes:\n    documents (List[Document]): List of Document objects to build the TF-IDF index from\n        and retrieve from during queries.\n    k (int): Default number of documents to retrieve for each query. Default is 4.\n    tfidf_params (Optional[Dict[str, Any]]): Optional parameters to configure the\n        scikit-learn TfidfVectorizer. Common parameters include:\n        - max_features: Maximum number of features to consider\n        - min_df: Minimum document frequency for terms\n        - max_df: Maximum document frequency for terms\n        - stop_words: Language for stopword filtering or custom list\n        - ngram_range: Range of n-values for n-grams to extract\n\nExample:\n    ```python\n    from haive.core.engine.retriever.tfidf import TFIDFRetrieverConfig\n    from langchain_core.documents import Document\n\n    # Create a list of documents\n    documents = [\n        Document(page_content=\"Python is a popular programming language\"),\n        Document(page_content=\"TF-IDF is used in information retrieval\"),\n        Document(page_content=\"Machine learning algorithms often use TF-IDF features\"),\n        Document(page_content=\"Python has libraries for natural language processing\")\n    ]\n\n    # Create a TF-IDF retriever with custom parameters\n    config = TFIDFRetrieverConfig(\n        name=\"tfidf_retriever\",\n        documents=documents,\n        k=2,  # Return top 2 matches\n        tfidf_params={\n            \"max_features\": 1000,  # Limit vocabulary size\n            \"stop_words\": \"english\",  # Filter common English words\n            \"ngram_range\": (1, 2)  # Include both unigrams and bigrams\n        }\n    )\n\n    # Instantiate and use the retriever\n    retriever = config.instantiate()\n    results = retriever.get_relevant_documents(\"Python programming\")\n    # Would return the documents about Python, ranked by relevance\n    ```",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_bm25retrieverconfig",
+    "description": "Retrieve documents using BM25RetrieverConfig: Configuration for BM25 retriever.\n\nThis retriever uses the BM25 algorithm for document retrieval,\nwhich is effective for keyword-based search and traditional information retrieval.\nBM25 is a bag-of-words retrieval function that ranks documents based on the\nfrequency of query terms appearing in each document, with adjustments for\ndocument length and term saturation.\n\nBM25 is particularly well-suited for scenarios where:\n- Exact keyword matching is more important than semantic similarity\n- Query terms have specific technical meanings that should be preserved\n- You need an algorithm with transparent, interpretable scoring\n- You want a computationally efficient retrieval approach without embeddings\n\nAttributes:\n    documents (List[Document]): List of Document objects to index and retrieve from.\n        Each document's content will be tokenized according to the preprocess_func.\n    k (int): Number of documents to retrieve for each query. Default is 4.\n    bm25_params (Optional[Dict[str, Any]]): Parameters for fine-tuning the BM25 algorithm.\n        The two main parameters are:\n        - k1: Controls term frequency saturation (how much additional occurrences of a\n             term contribute to relevance). Default is 1.5, higher values increase the\n             impact of term frequency.\n        - b: Controls document length normalization. Default is 0.75, with 0 disabling\n             length normalization and 1 fully normalizing for document length.\n    preprocess_func (Callable[[str], List[str]]): Function to preprocess and tokenize\n        text before BM25 indexing. The default simply splits on whitespace, but more\n        sophisticated preprocessing can significantly improve retrieval quality.\n\nExample:\n    ```python\n    from haive.core.engine.retriever.bm25 import BM25RetrieverConfig\n    from langchain_core.documents import Document\n    import re\n    import nltk\n    from nltk.corpus import stopwords\n\n    # Define a custom preprocessing function\n    def preprocess_text(text: str) -> List[str]:\n        # Convert to lowercase and tokenize\n        tokens = re.findall(r'\b\\w+\b', text.lower())\n        # Remove stopwords\n        stop_words = set(stopwords.words('english'))\n        tokens = [t for t in tokens if t not in stop_words]\n        return tokens\n\n    # Create documents\n    documents = [\n        Document(page_content=\"BM25 is a ranking function used by search engines\"),\n        Document(page_content=\"Information retrieval systems often use BM25\"),\n        Document(page_content=\"The algorithm was developed as an improvement over TF-IDF\")\n    ]\n\n    # Create BM25 retriever with custom parameters\n    config = BM25RetrieverConfig(\n        name=\"bm25_search\",\n        documents=documents,\n        k=2,\n        bm25_params={\"k1\": 1.2, \"b\": 0.75},  # Fine-tune BM25 parameters\n        preprocess_func=preprocess_text  # Use custom preprocessing\n    )\n\n    # Instantiate and use the retriever\n    retriever = config.instantiate()\n    results = retriever.get_relevant_documents(\"ranking algorithm search engines\")\n    ```",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig: Base configuration for all retriever engines in the Haive framework.\n\nThis class serves as the foundation for all retriever configurations, providing a consistent\ninterface for document retrieval operations. It supports automatic discovery and registration\nof retriever implementations through a plugin architecture.\n\nThe registry system allows new retriever types to be created simply by adding a new module\nwith a properly decorated class, without having to manually update central registries.\n\nAttributes:\n    engine_type (EngineType): The type of engine (always RETRIEVER).\n    retriever_type (RetrieverType): The specific type of retriever to use.\n    search_type (str): The type of search to perform ('similarity', 'mmr', etc.).\n    search_kwargs (Dict[str, Any]): Additional search parameters.\n    k (int): Number of documents to retrieve.\n    filter (Optional[Dict[str, Any]]): Optional filter to apply to vector store search.\n    _registry (ClassVar[Dict[RetrieverType, Type['RetrieverConfig']]]): Registry for retriever types.\n\nExample:\n    ```python\n    from haive.core.engine.retriever import RetrieverConfig, RetrieverType\n    from haive.core.engine.vectorstore import VectorStoreConfig\n\n    # Create a basic retriever config\n    config = RetrieverConfig(\n        name=\"my_retriever\",\n        retriever_type=RetrieverType.VECTOR_STORE,\n        k=4,\n        search_type=\"similarity\"\n    )\n\n    # Create and use the retriever\n    retriever = config.instantiate()\n    docs = retriever.get_relevant_documents(\"query\")\n    ```",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType: Enumeration of supported retriever types in the Haive framework.\n\nThis enum defines all available retriever implementations that can be used for document\nretrieval. The retrievers are categorized into different groups based on their\nfunctionality and approach to document retrieval.\n\nCategories:\n    Base Vector Store Retrievers:\n        Simple retrievers that directly use vector stores for similarity search.\n\n    Advanced Retrieval Strategies:\n        Sophisticated retrieval methods that enhance basic vector similarity search:\n        - TIME_WEIGHTED: Considers document recency in retrieval\n        - MULTI_QUERY: Generates multiple queries for better coverage\n        - MULTI_VECTOR: Uses multiple vector representations per document\n        - PARENT_DOCUMENT: Retrieves parent documents based on child matches\n        - SELF_QUERY: Automatically generates structured queries\n        - CONTEXTUAL_COMPRESSION: Compresses retrieved documents contextually\n        - REPHRASE_QUERY: Reformulates queries for better results\n\n    Ensemble Methods:\n        Combine multiple retrievers for improved performance:\n        - MERGER: Combines results from multiple retrievers\n        - ENSEMBLE: Weighted combination of multiple retrievers\n\n    Sparse Retrievers:\n        Traditional information retrieval methods:\n        - SPARSE: Generic sparse retrieval\n        - KNN: K-Nearest Neighbors\n        - TFIDF: Term Frequency-Inverse Document Frequency\n        - BM25: Best Match 25 algorithm\n        - SVM: Support Vector Machine based retrieval\n\n    Specific Implementations:\n        Retrievers for specific vector store backends:\n        - ELASTICSEARCH: Elasticsearch-based retrieval\n        - FAISS: Facebook AI Similarity Search\n        - IN_MEMORY: In-memory vector store\n        - PINECONE: Pinecone vector database\n        - QDRANT: Qdrant vector database\n\nExample:\n    ```python\n    from haive.core.engine.retriever.types import RetrieverType\n    from haive.core.engine.retriever import create_retriever_config\n\n    # Create a vector store retriever config\n    config = create_retriever_config(\n        retriever_type=RetrieverType.VECTOR_STORE,\n        name=\"my_retriever\",\n        vector_store_config=vs_config\n    )\n\n    # Create an ensemble retriever config\n    ensemble_config = create_retriever_config(\n        retriever_type=RetrieverType.ENSEMBLE,\n        name=\"ensemble_retriever\",\n        retrievers=[config1, config2]\n    )\n    ```",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig: Base configuration for all retriever engines in the Haive framework.\n\nThis class serves as the foundation for all retriever configurations, providing a consistent\ninterface for document retrieval operations. It supports automatic discovery and registration\nof retriever implementations through a plugin architecture.\n\nThe registry system allows new retriever types to be created simply by adding a new module\nwith a properly decorated class, without having to manually update central registries.\n\nAttributes:\n    engine_type (EngineType): The type of engine (always RETRIEVER).\n    retriever_type (RetrieverType): The specific type of retriever to use.\n    search_type (str): The type of search to perform ('similarity', 'mmr', etc.).\n    search_kwargs (Dict[str, Any]): Additional search parameters.\n    k (int): Number of documents to retrieve.\n    filter (Optional[Dict[str, Any]]): Optional filter to apply to vector store search.\n    _registry (ClassVar[Dict[RetrieverType, Type['RetrieverConfig']]]): Registry for retriever types.\n\nExample:\n    ```python\n    from haive.core.engine.retriever import RetrieverConfig, RetrieverType\n    from haive.core.engine.vectorstore import VectorStoreConfig\n\n    # Create a basic retriever config\n    config = RetrieverConfig(\n        name=\"my_retriever\",\n        retriever_type=RetrieverType.VECTOR_STORE,\n        k=4,\n        search_type=\"similarity\"\n    )\n\n    # Create and use the retriever\n    retriever = config.instantiate()\n    docs = retriever.get_relevant_documents(\"query\")\n    ```",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_multiqueryretrieverconfig",
+    "description": "Retrieve documents using MultiQueryRetrieverConfig: Configuration for MultiQuery retriever in the Haive framework.\n\nThis retriever generates multiple query variations using an LLM and combines the results.\nIt's particularly useful for improving recall by rephrasing queries to capture\ndifferent aspects of the user's information need, addressing the vocabulary\nmismatch problem in information retrieval.\n\nThe MultiQueryRetriever can work with any base retriever or directly with a\nvector store, providing flexibility in how it's integrated into your retrieval pipeline.\n\nAttributes:\n    retriever_type (RetrieverType): The type of retriever (always MULTI_QUERY).\n    retriever_config (Optional[BaseRetrieverConfig]): Base retriever configuration.\n        Either this or vector_store_config must be provided.\n    vector_store_config (Optional[VectorStoreConfig]): Vector store configuration.\n        Alternative to retriever_config for creating the base retriever.\n    llm_config (AugLLMConfig): LLM configuration for generating query variations.\n        This LLM will be used to create multiple versions of the original query.\n    prompt (PromptTemplate): Prompt template for generating query variations.\n        The prompt should instruct the LLM to generate multiple alternative\n        phrasings of the original query.\n    include_original (bool): Whether to include the original query in the search.\n        If True, both the original query and the generated variations will be used.\n\nExamples:\n    >>> from haive.core.engine.retriever import MultiQueryRetrieverConfig\n    >>> from haive.core.engine.aug_llm import AugLLMConfig\n    >>> from haive.core.engine.vectorstore import VectorStoreConfig\n    >>>\n    >>> # Create an LLM config for query generation\n    >>> llm_config = AugLLMConfig(\n    ...     name=\"query_generator\",\n    ...     system_message=\"You are an expert at rephrasing search queries.\"\n    ... )\n    >>>\n    >>> # Create a vector store config\n    >>> vs_config = VectorStoreConfig(\n    ...     name=\"document_store\",\n    ...     documents=[Document(page_content=\"Content...\")]\n    ... )\n    >>>\n    >>> # Create the multi-query retriever config\n    >>> config = MultiQueryRetrieverConfig(\n    ...     name=\"multi_query_retriever\",\n    ...     vector_store_config=vs_config,\n    ...     llm_config=llm_config,\n    ...     include_original=True\n    ... )\n    >>>\n    >>> # Instantiate and use the retriever\n    >>> retriever = config.instantiate()\n    >>> docs = retriever.get_relevant_documents(\"What are the benefits of quantum computing?\")",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType: Enumeration of supported retriever types in the Haive framework.\n\nThis enum defines all available retriever implementations that can be used for document\nretrieval. The retrievers are categorized into different groups based on their\nfunctionality and approach to document retrieval.\n\nCategories:\n    Base Vector Store Retrievers:\n        Simple retrievers that directly use vector stores for similarity search.\n\n    Advanced Retrieval Strategies:\n        Sophisticated retrieval methods that enhance basic vector similarity search:\n        - TIME_WEIGHTED: Considers document recency in retrieval\n        - MULTI_QUERY: Generates multiple queries for better coverage\n        - MULTI_VECTOR: Uses multiple vector representations per document\n        - PARENT_DOCUMENT: Retrieves parent documents based on child matches\n        - SELF_QUERY: Automatically generates structured queries\n        - CONTEXTUAL_COMPRESSION: Compresses retrieved documents contextually\n        - REPHRASE_QUERY: Reformulates queries for better results\n\n    Ensemble Methods:\n        Combine multiple retrievers for improved performance:\n        - MERGER: Combines results from multiple retrievers\n        - ENSEMBLE: Weighted combination of multiple retrievers\n\n    Sparse Retrievers:\n        Traditional information retrieval methods:\n        - SPARSE: Generic sparse retrieval\n        - KNN: K-Nearest Neighbors\n        - TFIDF: Term Frequency-Inverse Document Frequency\n        - BM25: Best Match 25 algorithm\n        - SVM: Support Vector Machine based retrieval\n\n    Specific Implementations:\n        Retrievers for specific vector store backends:\n        - ELASTICSEARCH: Elasticsearch-based retrieval\n        - FAISS: Facebook AI Similarity Search\n        - IN_MEMORY: In-memory vector store\n        - PINECONE: Pinecone vector database\n        - QDRANT: Qdrant vector database\n\nExample:\n    ```python\n    from haive.core.engine.retriever.types import RetrieverType\n    from haive.core.engine.retriever import create_retriever_config\n\n    # Create a vector store retriever config\n    config = create_retriever_config(\n        retriever_type=RetrieverType.VECTOR_STORE,\n        name=\"my_retriever\",\n        vector_store_config=vs_config\n    )\n\n    # Create an ensemble retriever config\n    ensemble_config = create_retriever_config(\n        retriever_type=RetrieverType.ENSEMBLE,\n        name=\"ensemble_retriever\",\n        retrievers=[config1, config2]\n    )\n    ```",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig: Configuration model for a vector store engine.\n\nVectorStoreConfig provides a consistent interface for creating and using\nvector stores with embeddings. It encapsulates all the configuration needed\nto create and interact with various vector store backends, abstracting away\nprovider-specific implementation details.\n\nThis class enables:\n1. Creating vector stores with various providers (FAISS, Chroma, Pinecone, etc.)\n2. Managing documents and embeddings for vector storage\n3. Performing similarity searches with configurable parameters\n4. Creating retrievers that can be used in retrieval chains\n\nAttributes:\n    engine_type (EngineType): The type of engine (always VECTOR_STORE).\n    embedding_model (BaseEmbeddingConfig): Configuration for the embedding model.\n    vector_store_provider (VectorStoreProvider): The vector store provider to use.\n    documents (List[Document]): Documents to store in the vector store.\n    vector_store_path (str): Path for storing vector indices on disk.\n    docstore_path (str): Path for storing document data.\n    k (int): Default number of documents to retrieve in searches.\n    score_threshold (Optional[float]): Minimum similarity score for results.\n    search_type (str): Search algorithm to use (e.g., \"similarity\", \"mmr\").\n    vector_store_kwargs (Dict[str, Any]): Additional provider-specific parameters.\n\nExamples:\n    >>> from haive.core.engine.vectorstore import VectorStoreConfig, VectorStoreProvider\n    >>> from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig\n    >>> from langchain_core.documents import Document\n    >>>\n    >>> # Create configuration\n    >>> config = VectorStoreConfig(\n    ...     name=\"product_search\",\n    ...     documents=[Document(page_content=\"iPhone 13: The latest smartphone from Apple\")],\n    ...     vector_store_provider=VectorStoreProvider.FAISS,\n    ...     embedding_model=HuggingFaceEmbeddingConfig(\n    ...         model=\"sentence-transformers/all-MiniLM-L6-v2\"\n    ...     ),\n    ...     k=5\n    ... )\n    >>>\n    >>> # Create vector store\n    >>> vectorstore = config.create_vectorstore()\n    >>>\n    >>> # Perform similarity search\n    >>> results = config.similarity_search(\"smartphone\", k=3)\n    >>>\n    >>> # Create a retriever\n    >>> retriever = config.create_retriever(search_type=\"mmr\")",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig: Base configuration for all retriever engines in the Haive framework.\n\nThis class serves as the foundation for all retriever configurations, providing a consistent\ninterface for document retrieval operations. It supports automatic discovery and registration\nof retriever implementations through a plugin architecture.\n\nThe registry system allows new retriever types to be created simply by adding a new module\nwith a properly decorated class, without having to manually update central registries.\n\nAttributes:\n    engine_type (EngineType): The type of engine (always RETRIEVER).\n    retriever_type (RetrieverType): The specific type of retriever to use.\n    search_type (str): The type of search to perform ('similarity', 'mmr', etc.).\n    search_kwargs (Dict[str, Any]): Additional search parameters.\n    k (int): Number of documents to retrieve.\n    filter (Optional[Dict[str, Any]]): Optional filter to apply to vector store search.\n    _registry (ClassVar[Dict[RetrieverType, Type['RetrieverConfig']]]): Registry for retriever types.\n\nExample:\n    ```python\n    from haive.core.engine.retriever import RetrieverConfig, RetrieverType\n    from haive.core.engine.vectorstore import VectorStoreConfig\n\n    # Create a basic retriever config\n    config = RetrieverConfig(\n        name=\"my_retriever\",\n        retriever_type=RetrieverType.VECTOR_STORE,\n        k=4,\n        search_type=\"similarity\"\n    )\n\n    # Create and use the retriever\n    retriever = config.instantiate()\n    docs = retriever.get_relevant_documents(\"query\")\n    ```",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType: Enumeration of supported retriever types in the Haive framework.\n\nThis enum defines all available retriever implementations that can be used for document\nretrieval. The retrievers are categorized into different groups based on their\nfunctionality and approach to document retrieval.\n\nCategories:\n    Base Vector Store Retrievers:\n        Simple retrievers that directly use vector stores for similarity search.\n\n    Advanced Retrieval Strategies:\n        Sophisticated retrieval methods that enhance basic vector similarity search:\n        - TIME_WEIGHTED: Considers document recency in retrieval\n        - MULTI_QUERY: Generates multiple queries for better coverage\n        - MULTI_VECTOR: Uses multiple vector representations per document\n        - PARENT_DOCUMENT: Retrieves parent documents based on child matches\n        - SELF_QUERY: Automatically generates structured queries\n        - CONTEXTUAL_COMPRESSION: Compresses retrieved documents contextually\n        - REPHRASE_QUERY: Reformulates queries for better results\n\n    Ensemble Methods:\n        Combine multiple retrievers for improved performance:\n        - MERGER: Combines results from multiple retrievers\n        - ENSEMBLE: Weighted combination of multiple retrievers\n\n    Sparse Retrievers:\n        Traditional information retrieval methods:\n        - SPARSE: Generic sparse retrieval\n        - KNN: K-Nearest Neighbors\n        - TFIDF: Term Frequency-Inverse Document Frequency\n        - BM25: Best Match 25 algorithm\n        - SVM: Support Vector Machine based retrieval\n\n    Specific Implementations:\n        Retrievers for specific vector store backends:\n        - ELASTICSEARCH: Elasticsearch-based retrieval\n        - FAISS: Facebook AI Similarity Search\n        - IN_MEMORY: In-memory vector store\n        - PINECONE: Pinecone vector database\n        - QDRANT: Qdrant vector database\n\nExample:\n    ```python\n    from haive.core.engine.retriever.types import RetrieverType\n    from haive.core.engine.retriever import create_retriever_config\n\n    # Create a vector store retriever config\n    config = create_retriever_config(\n        retriever_type=RetrieverType.VECTOR_STORE,\n        name=\"my_retriever\",\n        vector_store_config=vs_config\n    )\n\n    # Create an ensemble retriever config\n    ensemble_config = create_retriever_config(\n        retriever_type=RetrieverType.ENSEMBLE,\n        name=\"ensemble_retriever\",\n        retrievers=[config1, config2]\n    )\n    ```",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_svmretrieverconfig",
+    "description": "Retrieve documents using SVMRetrieverConfig: Configuration for SVM retriever.\n\nThis retriever uses Support Vector Machine for document retrieval based on embeddings.\nIt's particularly useful for finding documents that are most similar to a query using\nSVM decision boundaries. Unlike simple vector similarity methods, the SVM approach can\nlearn more complex relationships between queries and documents.\n\nThe SVM retriever works by treating the query embedding as a positive example and\ngenerating synthetic negative examples. It then trains an SVM classifier that separates\nthe positive from the negative examples. Documents are then ranked by their distance\nfrom the SVM decision boundary.\n\nAttributes:\n    embeddings_config (BaseEmbeddingConfig): Configuration for the embedding model\n        that will be used to generate vector representations of documents and queries.\n        This is a required field.\n    documents (List[Document]): List of Document objects to build the retrieval index\n        from. These documents will be embedded and used to train the SVM classifier\n        during query time.\n    k (int): Number of documents to retrieve for each query. Default is 4.\n    relevancy_threshold (Optional[float]): If provided, only documents with a\n        relevancy score above this threshold will be returned. This allows filtering\n        out less relevant documents even if they are in the top k.\n\nExample:\n    ```python\n    from haive.core.engine.retriever.svm import SVMRetrieverConfig\n    from haive.core.models.embeddings.base import OpenAIEmbeddingConfig\n    from langchain_core.documents import Document\n\n    # Create sample documents\n    documents = [\n        Document(page_content=\"Machine learning algorithms require data preprocessing\"),\n        Document(page_content=\"Support vector machines can be used for classification\"),\n        Document(page_content=\"Neural networks are effective for image recognition\"),\n        Document(page_content=\"Natural language processing uses text embeddings\"),\n        Document(page_content=\"Decision trees are simple but powerful algorithms\")\n    ]\n\n    # Create SVM retriever configuration\n    config = SVMRetrieverConfig(\n        name=\"ml_document_retriever\",\n        embeddings_config=OpenAIEmbeddingConfig(\n            model=\"text-embedding-3-small\"\n        ),\n        documents=documents,\n        k=2,\n        relevancy_threshold=0.6  # Only return documents above this relevance score\n    )\n\n    # Instantiate the retriever\n    retriever = config.instantiate()\n\n    # Retrieve documents related to SVM\n    results = retriever.get_relevant_documents(\"How do support vector machines work?\")\n    # Should return documents about SVMs ranked by relevance\n    ```",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig: Base configuration for all retriever engines in the Haive framework.\n\nThis class serves as the foundation for all retriever configurations, providing a consistent\ninterface for document retrieval operations. It supports automatic discovery and registration\nof retriever implementations through a plugin architecture.\n\nThe registry system allows new retriever types to be created simply by adding a new module\nwith a properly decorated class, without having to manually update central registries.\n\nAttributes:\n    engine_type (EngineType): The type of engine (always RETRIEVER).\n    retriever_type (RetrieverType): The specific type of retriever to use.\n    search_type (str): The type of search to perform ('similarity', 'mmr', etc.).\n    search_kwargs (Dict[str, Any]): Additional search parameters.\n    k (int): Number of documents to retrieve.\n    filter (Optional[Dict[str, Any]]): Optional filter to apply to vector store search.\n    _registry (ClassVar[Dict[RetrieverType, Type['RetrieverConfig']]]): Registry for retriever types.\n\nExample:\n    ```python\n    from haive.core.engine.retriever import RetrieverConfig, RetrieverType\n    from haive.core.engine.vectorstore import VectorStoreConfig\n\n    # Create a basic retriever config\n    config = RetrieverConfig(\n        name=\"my_retriever\",\n        retriever_type=RetrieverType.VECTOR_STORE,\n        k=4,\n        search_type=\"similarity\"\n    )\n\n    # Create and use the retriever\n    retriever = config.instantiate()\n    docs = retriever.get_relevant_documents(\"query\")\n    ```",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_rephrasequeryretriever",
+    "description": "Retrieve documents using RePhraseQueryRetriever: Given a query, use an LLM to re-phrase it.\nThen, retrieve docs for the re-phrased query.",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwargs": {
+          "title": "Kwargs"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwargs", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_rephrasequeryretrieverconfig",
+    "description": "Retrieve documents using RePhraseQueryRetrieverConfig: Configuration for RePhraseQuery retriever.\n\nThis retriever uses an LLM to rephrase queries before retrieving documents.\nIt can significantly improve retrieval performance by transforming natural language\nqueries into more effective search queries that better match the terminology and\nstructure of the documents in the knowledge base.\n\nThe retriever works by:\n1. Taking the original user query\n2. Sending it to an LLM with a prompt that asks the LLM to rephrase it\n3. Using the rephrased query with the underlying retriever\n4. Returning the documents retrieved by the underlying retriever\n\nThis approach is particularly valuable when:\n- Users ask questions in colloquial language different from document terminology\n- Queries need expansion with related terms to improve recall\n- Domain-specific knowledge is required to formulate effective queries\n- Documents use technical terminology that users might not know\n\nAttributes:\n    retriever_config (Optional[BaseRetrieverConfig]): Configuration for the base\n        retriever to use. Either this or vector_store_config must be provided.\n    vector_store_config (Optional[VectorStoreConfig]): Alternative to retriever_config,\n        specifies a vector store to create a retriever from.\n    llm_config (AugLLMConfig): Configuration for the LLM that will rephrase queries.\n        This is a required field.\n    prompt (PromptTemplate): Prompt template used to instruct the LLM how to rephrase\n        the query. Defaults to a standard template focused on vectorstore retrieval.\n\nExample:\n    ```python\n    from haive.core.engine.retriever.rephrase import RePhraseQueryRetrieverConfig\n    from haive.core.engine.vectorstore import VectorStoreConfig\n    from haive.core.engine.aug_llm import AugLLMConfig\n    from langchain_core.prompts import PromptTemplate\n\n    # Create a custom prompt template for medical domain\n    medical_prompt = PromptTemplate.from_template(\n        \"You are a medical terminology expert. Rephrase this patient question \"\n        \"using proper medical terminology to improve retrieval from medical documents: \"\n        \"{question}\"\n    )\n\n    # Create configuration for vector store\n    vs_config = VectorStoreConfig(\n        name=\"medical_docs\",\n        provider=\"FAISS\",\n        embedding_model=\"text-embedding-3-small\"\n    )\n\n    # Create configuration for LLM\n    llm_config = AugLLMConfig(\n        name=\"query_rephraser\",\n        model=\"gpt-4-turbo\"\n    )\n\n    # Create the RePhraseQuery retriever configuration\n    config = RePhraseQueryRetrieverConfig(\n        name=\"medical_query_enhancer\",\n        vector_store_config=vs_config,\n        llm_config=llm_config,\n        prompt=medical_prompt\n    )\n\n    # Instantiate the retriever\n    retriever = config.instantiate()\n\n    # Use the retriever with natural language query\n    results = retriever.get_relevant_documents(\n        \"Why does my stomach hurt after eating?\"\n    )\n    # LLM might rephrase to: \"What are the potential causes of postprandial\n    # abdominal pain or gastric discomfort?\"\n    ```",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType: Enumeration of supported retriever types in the Haive framework.\n\nThis enum defines all available retriever implementations that can be used for document\nretrieval. The retrievers are categorized into different groups based on their\nfunctionality and approach to document retrieval.\n\nCategories:\n    Base Vector Store Retrievers:\n        Simple retrievers that directly use vector stores for similarity search.\n\n    Advanced Retrieval Strategies:\n        Sophisticated retrieval methods that enhance basic vector similarity search:\n        - TIME_WEIGHTED: Considers document recency in retrieval\n        - MULTI_QUERY: Generates multiple queries for better coverage\n        - MULTI_VECTOR: Uses multiple vector representations per document\n        - PARENT_DOCUMENT: Retrieves parent documents based on child matches\n        - SELF_QUERY: Automatically generates structured queries\n        - CONTEXTUAL_COMPRESSION: Compresses retrieved documents contextually\n        - REPHRASE_QUERY: Reformulates queries for better results\n\n    Ensemble Methods:\n        Combine multiple retrievers for improved performance:\n        - MERGER: Combines results from multiple retrievers\n        - ENSEMBLE: Weighted combination of multiple retrievers\n\n    Sparse Retrievers:\n        Traditional information retrieval methods:\n        - SPARSE: Generic sparse retrieval\n        - KNN: K-Nearest Neighbors\n        - TFIDF: Term Frequency-Inverse Document Frequency\n        - BM25: Best Match 25 algorithm\n        - SVM: Support Vector Machine based retrieval\n\n    Specific Implementations:\n        Retrievers for specific vector store backends:\n        - ELASTICSEARCH: Elasticsearch-based retrieval\n        - FAISS: Facebook AI Similarity Search\n        - IN_MEMORY: In-memory vector store\n        - PINECONE: Pinecone vector database\n        - QDRANT: Qdrant vector database\n\nExample:\n    ```python\n    from haive.core.engine.retriever.types import RetrieverType\n    from haive.core.engine.retriever import create_retriever_config\n\n    # Create a vector store retriever config\n    config = create_retriever_config(\n        retriever_type=RetrieverType.VECTOR_STORE,\n        name=\"my_retriever\",\n        vector_store_config=vs_config\n    )\n\n    # Create an ensemble retriever config\n    ensemble_config = create_retriever_config(\n        retriever_type=RetrieverType.ENSEMBLE,\n        name=\"ensemble_retriever\",\n        retrievers=[config1, config2]\n    )\n    ```",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig: Configuration model for a vector store engine.\n\nVectorStoreConfig provides a consistent interface for creating and using\nvector stores with embeddings. It encapsulates all the configuration needed\nto create and interact with various vector store backends, abstracting away\nprovider-specific implementation details.\n\nThis class enables:\n1. Creating vector stores with various providers (FAISS, Chroma, Pinecone, etc.)\n2. Managing documents and embeddings for vector storage\n3. Performing similarity searches with configurable parameters\n4. Creating retrievers that can be used in retrieval chains\n\nAttributes:\n    engine_type (EngineType): The type of engine (always VECTOR_STORE).\n    embedding_model (BaseEmbeddingConfig): Configuration for the embedding model.\n    vector_store_provider (VectorStoreProvider): The vector store provider to use.\n    documents (List[Document]): Documents to store in the vector store.\n    vector_store_path (str): Path for storing vector indices on disk.\n    docstore_path (str): Path for storing document data.\n    k (int): Default number of documents to retrieve in searches.\n    score_threshold (Optional[float]): Minimum similarity score for results.\n    search_type (str): Search algorithm to use (e.g., \"similarity\", \"mmr\").\n    vector_store_kwargs (Dict[str, Any]): Additional provider-specific parameters.\n\nExamples:\n    >>> from haive.core.engine.vectorstore import VectorStoreConfig, VectorStoreProvider\n    >>> from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig\n    >>> from langchain_core.documents import Document\n    >>>\n    >>> # Create configuration\n    >>> config = VectorStoreConfig(\n    ...     name=\"product_search\",\n    ...     documents=[Document(page_content=\"iPhone 13: The latest smartphone from Apple\")],\n    ...     vector_store_provider=VectorStoreProvider.FAISS,\n    ...     embedding_model=HuggingFaceEmbeddingConfig(\n    ...         model=\"sentence-transformers/all-MiniLM-L6-v2\"\n    ...     ),\n    ...     k=5\n    ... )\n    >>>\n    >>> # Create vector store\n    >>> vectorstore = config.create_vectorstore()\n    >>>\n    >>> # Perform similarity search\n    >>> results = config.similarity_search(\"smartphone\", k=3)\n    >>>\n    >>> # Create a retriever\n    >>> retriever = config.create_retriever(search_type=\"mmr\")",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig: Base configuration for all retriever engines in the Haive framework.\n\nThis class serves as the foundation for all retriever configurations, providing a consistent\ninterface for document retrieval operations. It supports automatic discovery and registration\nof retriever implementations through a plugin architecture.\n\nThe registry system allows new retriever types to be created simply by adding a new module\nwith a properly decorated class, without having to manually update central registries.\n\nAttributes:\n    engine_type (EngineType): The type of engine (always RETRIEVER).\n    retriever_type (RetrieverType): The specific type of retriever to use.\n    search_type (str): The type of search to perform ('similarity', 'mmr', etc.).\n    search_kwargs (Dict[str, Any]): Additional search parameters.\n    k (int): Number of documents to retrieve.\n    filter (Optional[Dict[str, Any]]): Optional filter to apply to vector store search.\n    _registry (ClassVar[Dict[RetrieverType, Type['RetrieverConfig']]]): Registry for retriever types.\n\nExample:\n    ```python\n    from haive.core.engine.retriever import RetrieverConfig, RetrieverType\n    from haive.core.engine.vectorstore import VectorStoreConfig\n\n    # Create a basic retriever config\n    config = RetrieverConfig(\n        name=\"my_retriever\",\n        retriever_type=RetrieverType.VECTOR_STORE,\n        k=4,\n        search_type=\"similarity\"\n    )\n\n    # Create and use the retriever\n    retriever = config.instantiate()\n    docs = retriever.get_relevant_documents(\"query\")\n    ```",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_ensembleretrieverconfig",
+    "description": "Retrieve documents using EnsembleRetrieverConfig: Configuration for Ensemble retriever.\n\nThis retriever combines results from multiple retrievers using weighted\nReciprocal Rank Fusion (RRF). It's useful for combining different retrieval\nstrategies to improve overall recall and precision. The ensemble approach\nleverages the strengths of different retrieval methods while mitigating\ntheir individual weaknesses.\n\nCommon ensemble combinations include:\n- Vector store + BM25/TF-IDF (semantic + keyword matching)\n- Multiple vector stores with different embedding models\n- Specialized retrievers for different document types or domains\n- Time-weighted + similarity-based retrievers\n\nAttributes:\n    retrievers (List[BaseRetrieverConfig]): List of retriever configurations to\n        ensemble. Each retriever will be instantiated and used in the ensemble.\n    weights (Optional[List[float]]): Weight to assign to each retriever's results.\n        If not provided, equal weights will be assigned to all retrievers.\n        Weights do not need to sum to 1 as they will be used proportionally.\n    c (int): Constant added to the rank in the RRF formula: 1/(rank + c).\n        Higher values of c reduce the influence of high-ranked documents.\n        Default is 60.\n    id_key (Optional[str]): Key in document metadata used to determine unique\n        documents when merging results. If not provided, documents will be\n        treated as unique based on their content and metadata.\n\nExample:\n    ```python\n    from haive.core.engine.retriever.ensemble import EnsembleRetrieverConfig\n    from haive.core.engine.retriever.tfidf import TFIDFRetrieverConfig\n    from haive.core.engine.retriever.vectorstore import VectorStoreRetrieverConfig\n    from haive.core.engine.vectorstore import VectorStoreConfig\n    from haive.core.models.embeddings.base import OpenAIEmbeddingConfig\n\n    # Create a vector store retriever config\n    vector_config = VectorStoreRetrieverConfig(\n        name=\"vector_retriever\",\n        vector_store_config=VectorStoreConfig(\n            name=\"main_vectorstore\",\n            provider=\"FAISS\",\n            embedding_model=\"text-embedding-3-small\"\n        ),\n        search_type=\"similarity\",\n        k=10\n    )\n\n    # Create a TF-IDF retriever config with the same documents\n    tfidf_config = TFIDFRetrieverConfig(\n        name=\"tfidf_retriever\",\n        documents=documents,  # Same documents as in vector store\n        k=10\n    )\n\n    # Create an ensemble retriever that combines both approaches\n    ensemble_config = EnsembleRetrieverConfig(\n        name=\"hybrid_retriever\",\n        retrievers=[vector_config, tfidf_config],\n        weights=[0.7, 0.3],  # Give more weight to vector similarity\n        c=40  # Lower c value gives more influence to top-ranked documents\n    )\n\n    # Instantiate the retriever\n    hybrid_retriever = ensemble_config.instantiate()\n\n    # Use the ensemble retriever for queries that benefit from both\n    # semantic similarity and keyword matching\n    results = hybrid_retriever.get_relevant_documents(\n        \"What are the environmental impacts of renewable energy?\"\n    )\n    ```",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType: Enumeration of supported retriever types in the Haive framework.\n\nThis enum defines all available retriever implementations that can be used for document\nretrieval. The retrievers are categorized into different groups based on their\nfunctionality and approach to document retrieval.\n\nCategories:\n    Base Vector Store Retrievers:\n        Simple retrievers that directly use vector stores for similarity search.\n\n    Advanced Retrieval Strategies:\n        Sophisticated retrieval methods that enhance basic vector similarity search:\n        - TIME_WEIGHTED: Considers document recency in retrieval\n        - MULTI_QUERY: Generates multiple queries for better coverage\n        - MULTI_VECTOR: Uses multiple vector representations per document\n        - PARENT_DOCUMENT: Retrieves parent documents based on child matches\n        - SELF_QUERY: Automatically generates structured queries\n        - CONTEXTUAL_COMPRESSION: Compresses retrieved documents contextually\n        - REPHRASE_QUERY: Reformulates queries for better results\n\n    Ensemble Methods:\n        Combine multiple retrievers for improved performance:\n        - MERGER: Combines results from multiple retrievers\n        - ENSEMBLE: Weighted combination of multiple retrievers\n\n    Sparse Retrievers:\n        Traditional information retrieval methods:\n        - SPARSE: Generic sparse retrieval\n        - KNN: K-Nearest Neighbors\n        - TFIDF: Term Frequency-Inverse Document Frequency\n        - BM25: Best Match 25 algorithm\n        - SVM: Support Vector Machine based retrieval\n\n    Specific Implementations:\n        Retrievers for specific vector store backends:\n        - ELASTICSEARCH: Elasticsearch-based retrieval\n        - FAISS: Facebook AI Similarity Search\n        - IN_MEMORY: In-memory vector store\n        - PINECONE: Pinecone vector database\n        - QDRANT: Qdrant vector database\n\nExample:\n    ```python\n    from haive.core.engine.retriever.types import RetrieverType\n    from haive.core.engine.retriever import create_retriever_config\n\n    # Create a vector store retriever config\n    config = create_retriever_config(\n        retriever_type=RetrieverType.VECTOR_STORE,\n        name=\"my_retriever\",\n        vector_store_config=vs_config\n    )\n\n    # Create an ensemble retriever config\n    ensemble_config = create_retriever_config(\n        retriever_type=RetrieverType.ENSEMBLE,\n        name=\"ensemble_retriever\",\n        retrievers=[config1, config2]\n    )\n    ```",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  }
+]

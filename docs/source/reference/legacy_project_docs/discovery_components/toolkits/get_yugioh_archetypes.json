@@ -1,0 +1,52 @@
+{
+  "component_info": {
+    "name": "get_yugioh_archetypes",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.yugiioh_toolkit",
+    "class_name": "Tool",
+    "description": "Get all Yu-Gi-Oh! archetypes",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T12:31:28.348303",
+    "schema": {
+      "properties": {
+        "name": {
+          "type": "str",
+          "default": null
+        },
+        "func": {
+          "type": "Optional[Callable]",
+          "default": null
+        },
+        "description": {
+          "type": "str",
+          "default": null
+        },
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_yugioh_archetypes",
+    "tool_description": "Get all Yu-Gi-Oh! archetypes"
+  },
+  "document": {
+    "page_content": "# get_yugioh_archetypes\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.yugiioh_toolkit\n**Class:** Tool\n\n## Description\nGet all Yu-Gi-Oh! archetypes\n\n## Schema\n```json\n{\n  \"properties\": {\n    \"name\": {\n      \"type\": \"str\",\n      \"default\": null\n    },\n    \"func\": {\n      \"type\": \"Optional[Callable]\",\n      \"default\": null\n    },\n    \"description\": {\n      \"type\": \"str\",\n      \"default\": null\n    },\n    \"kwargs\": {\n      \"type\": \"Any\",\n      \"default\": null\n    }\n  }\n}\n```\n\n## Usage as Tool\n**Tool Name:** `get_yugioh_archetypes`\n**Description:** Get all Yu-Gi-Oh! archetypes\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "get_yugioh_archetypes",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.yugiioh_toolkit",
+      "class_name": "Tool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-06-19T12:31:28.348303",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

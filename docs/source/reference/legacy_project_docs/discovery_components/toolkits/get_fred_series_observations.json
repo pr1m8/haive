@@ -1,0 +1,71 @@
+{
+  "component_info": {
+    "name": "get_fred_series_observations",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.fred_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get FRED series observations (actual data values) with optional date range filtering",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T12:31:28.361651",
+    "schema": {
+      "description": "Input schema for FRED series observations queries.",
+      "properties": {
+        "series_id": {
+          "description": "The FRED series ID to fetch observations for",
+          "title": "Series Id",
+          "type": "string"
+        },
+        "start_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Start date in YYYY-MM-DD format",
+          "title": "Start Date"
+        },
+        "end_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "End date in YYYY-MM-DD format",
+          "title": "End Date"
+        }
+      },
+      "required": ["series_id"],
+      "title": "SeriesObservationsInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_fred_series_observations",
+    "tool_description": "Get FRED series observations (actual data values) with optional date range filtering"
+  },
+  "document": {
+    "page_content": "# get_fred_series_observations\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.fred_toolkit\n**Class:** StructuredTool\n\n## Description\nGet FRED series observations (actual data values) with optional date range filtering\n\n## Schema\n```json\n{\n  \"description\": \"Input schema for FRED series observations queries.\",\n  \"properties\": {\n    \"series_id\": {\n      \"description\": \"The FRED series ID to fetch observations for\",\n      \"title\": \"Series Id\",\n      \"type\": \"string\"\n    },\n    \"start_date\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": null,\n      \"description\": \"Start date in YYYY-MM-DD format\",\n      \"title\": \"Start Date\"\n    },\n    \"end_date\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": null,\n      \"description\": \"End date in YYYY-MM-DD format\",\n      \"title\": \"End Date\"\n    }\n  },\n  \"required\": [\n    \"series_id\"\n  ],\n  \"title\": \"SeriesObservationsInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `get_fred_series_observations`\n**Description:** Get FRED series observations (actual data values) with optional date range filtering\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "get_fred_series_observations",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.fred_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-06-19T12:31:28.361651",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

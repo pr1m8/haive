@@ -1,0 +1,4446 @@
+{
+  "metadata": {
+    "total_agents": 234,
+    "total_categories": 18,
+    "packages": [
+      "haive-prebuilt",
+      "haive-games",
+      "haive-agents"
+    ],
+    "errors_count": 18
+  },
+  "categories": {
+    "Specialized Agents": {
+      "count": 21,
+      "agents": [
+        "DocumentAgentConfig",
+        "DocumentAgent",
+        "WebNavAgentConfig",
+        "WebNavAgent",
+        "RoutingAgentSchema",
+        "RoutingAgentConfig",
+        "RoutingAgent",
+        "ChainAgentSchema",
+        "ChainAgentConfig",
+        "ChainAgent",
+        "AgentDebugger",
+        "Agent",
+        "Agent",
+        "TaskAnalysisAgent",
+        "SequentialAgentConfig",
+        "SequentialAgent",
+        "WikiWriterAgentConfig",
+        "WikiWriterAgent",
+        "Agent",
+        "InterviewAgentConfig",
+        "InterviewAgent"
+      ],
+      "packages": [
+        "haive-agents"
+      ],
+      "complexity_breakdown": {
+        "simple": 12,
+        "medium": 3,
+        "complex": 6
+      }
+    },
+    "Foundation Agents": {
+      "count": 5,
+      "agents": [
+        "SimpleAgentState",
+        "SimpleAgentConfig",
+        "SimpleAgent",
+        "StructuredOutputAgentConfig",
+        "SimpleAgent"
+      ],
+      "packages": [
+        "haive-agents"
+      ],
+      "complexity_breakdown": {
+        "simple": 3,
+        "medium": 0,
+        "complex": 2
+      }
+    },
+    "Memory & Persistence": {
+      "count": 5,
+      "agents": [
+        "LongTermMemoryState",
+        "LongTermMemoryAgentConfig",
+        "LongTermMemoryAgent",
+        "MemoryAgentState",
+        "MemoryAgent"
+      ],
+      "packages": [
+        "haive-agents"
+      ],
+      "complexity_breakdown": {
+        "simple": 4,
+        "medium": 0,
+        "complex": 1
+      }
+    },
+    "ReAct & Tool Use": {
+      "count": 32,
+      "agents": [
+        "ReactAgentConfig",
+        "ReactAgent",
+        "ReactAgentConfig",
+        "ReactAgent",
+        "ReactAgentState",
+        "ReactAgentConfig",
+        "ReactAgent",
+        "ReactAgentConfig",
+        "ReactAgentConfig",
+        "AdvancedReactAgentConfig",
+        "AdvancedReactAgent",
+        "DynamicReactAgentState",
+        "DynamicReactAgentConfig",
+        "DynamicReactAgent",
+        "ReactAgentState",
+        "ReactAgentSchema",
+        "ReactAgentSchemaWithStructuredResponse",
+        "ReactAgentConfig",
+        "ReactAgent",
+        "ReactAgent",
+        "ReactAgentState",
+        "ReactAgentConfig",
+        "ReactAgent",
+        "ReactManyToolsState",
+        "ReactManyToolsConfig",
+        "ReactManyToolsAgent",
+        "ReactAgentState",
+        "ReactAgentConfig",
+        "ReactAgent",
+        "ReactAgentState",
+        "ReactAgentConfig",
+        "ReactAgent"
+      ],
+      "packages": [
+        "haive-agents"
+      ],
+      "complexity_breakdown": {
+        "simple": 15,
+        "medium": 3,
+        "complex": 14
+      }
+    },
+    "Multi-Agent Systems": {
+      "count": 11,
+      "agents": [
+        "MultiAgent",
+        "SequentialAgent",
+        "ParallelAgent",
+        "ConditionalAgent",
+        "MultiAgent",
+        "CompatibilityEnhancedMultiAgent",
+        "CompatibilityEnhancedSequentialAgent",
+        "CompatibilityEnhancedConditionalAgent",
+        "CompatibilityEnhancedParallelAgent",
+        "MultiAgent",
+        "SequentialMultiAgent"
+      ],
+      "packages": [
+        "haive-agents"
+      ],
+      "complexity_breakdown": {
+        "simple": 3,
+        "medium": 0,
+        "complex": 8
+      }
+    },
+    "Research & Information": {
+      "count": 6,
+      "agents": [
+        "STORMAgentConfig",
+        "PersonResearchAgentConfig",
+        "PersonResearchAgentConfig",
+        "PersonResearchAgent",
+        "ResearchAgentConfig",
+        "ResearchAgent"
+      ],
+      "packages": [
+        "haive-agents"
+      ],
+      "complexity_breakdown": {
+        "simple": 3,
+        "medium": 1,
+        "complex": 2
+      }
+    },
+    "Planning & Strategy": {
+      "count": 6,
+      "agents": [
+        "PlanAndExecuteConfig",
+        "PlanAndExecuteAgent",
+        "RewooAgentConfig",
+        "RewooAgent",
+        "LLMCompilerAgentConfig",
+        "LLMCompilerAgent"
+      ],
+      "packages": [
+        "haive-agents"
+      ],
+      "complexity_breakdown": {
+        "simple": 3,
+        "medium": 0,
+        "complex": 3
+      }
+    },
+    "RAG & Retrieval": {
+      "count": 28,
+      "agents": [
+        "MultiStrategyRAGAgent",
+        "BaseRAGAgent",
+        "BaseRAGConfig",
+        "SimpleRAGAgent",
+        "MultiAgentRAGState",
+        "AgentCompatibilityReport",
+        "MultiAgentCompatibilityReport",
+        "BaseRAGMultiAgent",
+        "ConditionalRAGMultiAgent",
+        "IterativeRAGMultiAgent",
+        "ParallelRAGMultiAgent",
+        "AdaptiveRAGMultiAgent",
+        "EnhancedRAGSequentialAgent",
+        "EnhancedRAGConditionalAgent",
+        "EnhancedRAGParallelAgent",
+        "SimpleRAGAgent",
+        "SimpleRAGAnswerAgent",
+        "DocumentGradingAgent",
+        "IterativeDocumentGradingAgent",
+        "DynamicRAGAgent",
+        "TypedRAGAgent",
+        "FilteredRAGAgent",
+        "SelfCorrectiveRAGAgent",
+        "LLMRAGAgent",
+        "SQLRAGConfig",
+        "SQLRAGAgent",
+        "GraphDBRAGConfig",
+        "GraphDBRAGAgent"
+      ],
+      "packages": [
+        "haive-agents"
+      ],
+      "complexity_breakdown": {
+        "simple": 12,
+        "medium": 3,
+        "complex": 13
+      }
+    },
+    "Document Processing": {
+      "count": 18,
+      "agents": [
+        "DirectoryLoaderAgent",
+        "DocumentLoaderAgent",
+        "WebLoaderAgent",
+        "FileLoaderAgent",
+        "TaxonomyAgentConfig",
+        "TaxonomyAgent",
+        "ComplexExtractionAgentConfig",
+        "ComplexExtractionAgent",
+        "IterativeSummarizerConfig",
+        "IterativeSummarizer",
+        "SummarizerAgentConfig",
+        "SummarizerAgent",
+        "ParallelKGTransformerConfig",
+        "ParallelKGTransformerConfig",
+        "ParallelKGTransformer",
+        "StructuredKGAgent",
+        "IterativeGraphTransformerConfig",
+        "IterativeGraphTransformer"
+      ],
+      "packages": [
+        "haive-agents"
+      ],
+      "complexity_breakdown": {
+        "simple": 9,
+        "medium": 1,
+        "complex": 8
+      }
+    },
+    "Reasoning & Critique": {
+      "count": 20,
+      "agents": [
+        "ReflectionAgentState",
+        "ReflectionAgentConfig",
+        "ReflectionAgent",
+        "LATSAgentConfig",
+        "LATSAgentConfig",
+        "LATSAgent",
+        "ReflexionState",
+        "ReflexionConfig",
+        "ReflexionAgent",
+        "SelfDiscoverAgentConfig",
+        "SelfDiscoverAgentConfig",
+        "SelfDiscoverAgent",
+        "SelfDiscoverAgent",
+        "ReasoningSystem",
+        "TOTAgentConfig",
+        "ToTAgent",
+        "MCTSAgentConfig",
+        "MCTSAgent",
+        "ToTAgentConfig",
+        "ToTAgent"
+      ],
+      "packages": [
+        "haive-agents"
+      ],
+      "complexity_breakdown": {
+        "simple": 8,
+        "medium": 1,
+        "complex": 11
+      }
+    },
+    "Conversation & Multi-Agent": {
+      "count": 5,
+      "agents": [
+        "CollaborativeConversation",
+        "BaseConversationAgent",
+        "RoundRobinConversation",
+        "DebateConversation",
+        "DirectedConversation"
+      ],
+      "packages": [
+        "haive-agents"
+      ],
+      "complexity_breakdown": {
+        "simple": 0,
+        "medium": 0,
+        "complex": 5
+      }
+    },
+    "Prebuilt Solutions": {
+      "count": 11,
+      "agents": [
+        "ProjectManagerAgentConfig",
+        "ProjectManagerAgent",
+        "TaskifierAgent",
+        "TLDRAgentConfig",
+        "PodcastGeneratorAgent",
+        "AgentAction",
+        "AgentOutput",
+        "WeatherDisasterManagerConfig",
+        "WeatherDisasterManagementAgent",
+        "EssayGradingAgent",
+        "AgentMetadata"
+      ],
+      "packages": [
+        "haive-prebuilt"
+      ],
+      "complexity_breakdown": {
+        "simple": 8,
+        "medium": 1,
+        "complex": 2
+      }
+    },
+    "Legal & Business": {
+      "count": 2,
+      "agents": [
+        "ContractAnalysisAgentConfig",
+        "ContractAnalysisAgent"
+      ],
+      "packages": [
+        "haive-prebuilt"
+      ],
+      "complexity_breakdown": {
+        "simple": 2,
+        "medium": 0,
+        "complex": 0
+      }
+    },
+    "Academic & Research": {
+      "count": 6,
+      "agents": [
+        "AgentState",
+        "SystemicReviewOfScientificArticlesAgent",
+        "ScientificPaperAgentState",
+        "ScientificPaperAgent",
+        "KYCAgentConfiguration",
+        "EnhancedKYCAgent"
+      ],
+      "packages": [
+        "haive-prebuilt"
+      ],
+      "complexity_breakdown": {
+        "simple": 4,
+        "medium": 0,
+        "complex": 2
+      }
+    },
+    "Games": {
+      "count": 40,
+      "agents": [
+        "ClueAgent",
+        "MastermindAgent",
+        "DominoesAgentConfig",
+        "DominoesAgent",
+        "GameConfig",
+        "GameAgentFactory",
+        "GameAgent",
+        "MonopolyPlayerAgentConfig",
+        "MonopolyGameAgentConfig",
+        "MonopolyPlayerAgent",
+        "MonopolyPlayerAgentConfig",
+        "MonopolyGameAgentConfig",
+        "HoldemPlayerAgentConfig",
+        "HoldemPlayerAgent",
+        "NimAgent",
+        "MultiPlayerGameConfig",
+        "MultiPlayerGameAgent",
+        "TicTacToeAgent",
+        "MancalaAgent",
+        "Connect4AgentConfig",
+        "Connect4Agent",
+        "DebateAgentConfig",
+        "DebateAgent",
+        "FoxAndGeeseAgent",
+        "FixedFoxAndGeeseAgent",
+        "ReversiAgent",
+        "SinglePlayerGameAgent",
+        "BattleshipAgentConfig",
+        "BattleshipAgent",
+        "GameConfig",
+        "GameAgentFactory",
+        "GameAgent",
+        "MultiPlayerGameConfig",
+        "MultiPlayerGameAgent",
+        "BasePlayerAgent",
+        "BasePlayerAgent",
+        "GameAgentConfig",
+        "RubiksCubeAgent",
+        "WordConnectionsAgentConfig",
+        "FlowFreeAgent"
+      ],
+      "packages": [
+        "haive-games"
+      ],
+      "complexity_breakdown": {
+        "simple": 19,
+        "medium": 5,
+        "complex": 16
+      }
+    },
+    "Classic Games": {
+      "count": 9,
+      "agents": [
+        "CheckersAgentConfig",
+        "CheckersAgent",
+        "PokerAgentConfig",
+        "AgentDecision",
+        "AgentDecisionSchema",
+        "PokerAgent",
+        "PokerAgentTester",
+        "GoAgentConfig",
+        "GoAgent"
+      ],
+      "packages": [
+        "haive-games"
+      ],
+      "complexity_breakdown": {
+        "simple": 3,
+        "medium": 0,
+        "complex": 6
+      }
+    },
+    "Strategy Games": {
+      "count": 5,
+      "agents": [
+        "MafiaAgentConfig",
+        "MafiaAgent",
+        "AmongUsAgentConfig",
+        "AmongUsAgent",
+        "RiskAgent"
+      ],
+      "packages": [
+        "haive-games"
+      ],
+      "complexity_breakdown": {
+        "simple": 1,
+        "medium": 0,
+        "complex": 4
+      }
+    },
+    "Card Games": {
+      "count": 4,
+      "agents": [
+        "BullshitAgentConfig",
+        "BullshitAgent",
+        "BlackjackAgentConfig",
+        "BlackjackAgent"
+      ],
+      "packages": [
+        "haive-games"
+      ],
+      "complexity_breakdown": {
+        "simple": 1,
+        "medium": 0,
+        "complex": 3
+      }
+    }
+  },
+  "agents": [
+    {
+      "name": "DocumentAgentConfig",
+      "module_path": "haive.agents.base",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "The configuration for the document agent.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "DocumentAgent",
+      "module_path": "haive.agents.base",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "No description available",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "WebNavAgentConfig",
+      "module_path": "haive.agents.agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Configuration for the Web Navigator Agent.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "WebNavAgent",
+      "module_path": "haive.agents.agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "An interactive web navigation agent using Playwright & LangGraph with integrated tools.",
+      "features": [
+        "tools"
+      ],
+      "complexity": "medium",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "RoutingAgentSchema",
+      "module_path": "haive.agents.routing_agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Schema for routing agents.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgentSchema"
+      ]
+    },
+    {
+      "name": "RoutingAgentConfig",
+      "module_path": "haive.agents.routing_agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Configuration for a routing agent.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgentConfig"
+      ]
+    },
+    {
+      "name": "RoutingAgent",
+      "module_path": "haive.agents.routing_agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Simple agent with conditional routing capabilities.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgent"
+      ]
+    },
+    {
+      "name": "ChainAgentSchema",
+      "module_path": "haive.agents.chain_agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Schema for chain agents with intermediate results, extending SimpleAgentSchema.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgentStateSchema"
+      ]
+    },
+    {
+      "name": "ChainAgentConfig",
+      "module_path": "haive.agents.chain_agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Configuration for a chain agent that processes input through multiple engines in sequence.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgentConfig"
+      ]
+    },
+    {
+      "name": "ChainAgent",
+      "module_path": "haive.agents.chain_agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "An agent that chains multiple engines together, passing output from one to the next.",
+      "features": [
+        "tools",
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgent"
+      ]
+    },
+    {
+      "name": "AgentDebugger",
+      "module_path": "haive.agents.base.debug_utils",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Rich UI debugger for agent execution.",
+      "features": [],
+      "complexity": "medium",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": []
+    },
+    {
+      "name": "Agent",
+      "module_path": "haive.agents.base.agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Abstract base agent class that extends InvokableEngine with execution and state management.",
+      "features": [
+        "structured_output",
+        "memory"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": true,
+      "is_abstract": true,
+      "base_classes": [
+        "InvokableEngine",
+        "ExecutionMixin",
+        "StateMixin",
+        "SerializationMixin",
+        "ABC"
+      ]
+    },
+    {
+      "name": "Agent",
+      "module_path": "haive.agents.base.types",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Complete agent protocol combining all capabilities.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "GraphProvider",
+        "StateProvider",
+        "Invokable",
+        "EngineProvider",
+        "Protocol"
+      ]
+    },
+    {
+      "name": "TaskAnalysisAgent",
+      "module_path": "haive.agents.task_analysis.agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Comprehensive task analysis agent that orchestrates multiple analysis engines.",
+      "features": [
+        "planning"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "SequentialAgentConfig",
+      "module_path": "haive.agents.sequential.config",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Configuration for a SequentialAgent that connects components linearly.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "medium",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "SequentialAgent",
+      "module_path": "haive.agents.sequential.agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Sequential agent that executes multiple agents in sequence.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "SimpleAgentState",
+      "module_path": "haive.agents.simple.state",
+      "category": "Foundation Agents",
+      "package": "haive-agents",
+      "description": "Base state for simple agents.",
+      "features": [
+        "conversation",
+        "memory"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": true,
+      "is_abstract": false,
+      "base_classes": [
+        "StateSchema"
+      ]
+    },
+    {
+      "name": "SimpleAgentConfig",
+      "module_path": "haive.agents.simple.config",
+      "category": "Foundation Agents",
+      "package": "haive-agents",
+      "description": "Configuration for a simple single-node agent with comprehensive schema handling.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "SimpleAgent",
+      "module_path": "haive.agents.simple.agent",
+      "category": "Foundation Agents",
+      "package": "haive-agents",
+      "description": "Simple agent that modifies its engine to include structured output schema.",
+      "features": [
+        "tools",
+        "structured_output",
+        "conversation"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "LongTermMemoryState",
+      "module_path": "haive.agents.long_term_memory.state",
+      "category": "Memory & Persistence",
+      "package": "haive-agents",
+      "description": "State for the long term memory agent.",
+      "features": [
+        "memory"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": true,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentState"
+      ]
+    },
+    {
+      "name": "LongTermMemoryAgentConfig",
+      "module_path": "haive.agents.long_term_memory.agent",
+      "category": "Memory & Persistence",
+      "package": "haive-agents",
+      "description": "Config for the long term memory agent.",
+      "features": [
+        "memory"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": true,
+      "is_abstract": false,
+      "base_classes": [
+        "ReactAgentConfig"
+      ]
+    },
+    {
+      "name": "LongTermMemoryAgent",
+      "module_path": "haive.agents.long_term_memory.agent",
+      "category": "Memory & Persistence",
+      "package": "haive-agents",
+      "description": "Agent for the long term memory.",
+      "features": [
+        "memory"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": true,
+      "is_abstract": false,
+      "base_classes": [
+        "ReactAgent"
+      ]
+    },
+    {
+      "name": "ReactAgentConfig",
+      "module_path": "haive.agents.react.config",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "Configuration for the React Agent.",
+      "features": [
+        "tools"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgentConfig"
+      ]
+    },
+    {
+      "name": "ReactAgent",
+      "module_path": "haive.agents.react.agent",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "ReAct agent with looping behavior.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgent"
+      ]
+    },
+    {
+      "name": "MultiAgent",
+      "module_path": "haive.agents.multi.base",
+      "category": "Multi-Agent Systems",
+      "package": "haive-agents",
+      "description": "Abstract base class for sophisticated multi-agent systems.",
+      "features": [
+        "planning",
+        "tools",
+        "structured_output",
+        "retrieval",
+        "conversation"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": true,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "SequentialAgent",
+      "module_path": "haive.agents.multi.base",
+      "category": "Multi-Agent Systems",
+      "package": "haive-agents",
+      "description": "Multi-agent system with sequential execution.",
+      "features": [
+        "structured_output",
+        "conversation"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "MultiAgent"
+      ]
+    },
+    {
+      "name": "ParallelAgent",
+      "module_path": "haive.agents.multi.base",
+      "category": "Multi-Agent Systems",
+      "package": "haive-agents",
+      "description": "Pre-configured parallel multi-agent.",
+      "features": [
+        "conversation"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "MultiAgent"
+      ]
+    },
+    {
+      "name": "ConditionalAgent",
+      "module_path": "haive.agents.multi.base",
+      "category": "Multi-Agent Systems",
+      "package": "haive-agents",
+      "description": "Pre-configured conditional multi-agent with branching.",
+      "features": [
+        "conversation"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "MultiAgent"
+      ]
+    },
+    {
+      "name": "MultiAgent",
+      "module_path": "haive.agents.multi.multi_agent_base (1)",
+      "category": "Multi-Agent Systems",
+      "package": "haive-agents",
+      "description": "Abstract base class for multi-agent systems.",
+      "features": [
+        "conversation"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": true,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "CompatibilityEnhancedMultiAgent",
+      "module_path": "haive.agents.multi.compatibility_enhanced_base",
+      "category": "Multi-Agent Systems",
+      "package": "haive-agents",
+      "description": "Multi-agent system with built-in compatibility checking and automatic adaptation.",
+      "features": [
+        "conversation",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "MultiAgent"
+      ]
+    },
+    {
+      "name": "CompatibilityEnhancedSequentialAgent",
+      "module_path": "haive.agents.multi.compatibility_enhanced_base",
+      "category": "Multi-Agent Systems",
+      "package": "haive-agents",
+      "description": "Sequential agent with built-in compatibility checking.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "CompatibilityEnhancedMultiAgent"
+      ]
+    },
+    {
+      "name": "CompatibilityEnhancedConditionalAgent",
+      "module_path": "haive.agents.multi.compatibility_enhanced_base",
+      "category": "Multi-Agent Systems",
+      "package": "haive-agents",
+      "description": "Conditional agent with built-in compatibility checking.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "CompatibilityEnhancedMultiAgent"
+      ]
+    },
+    {
+      "name": "CompatibilityEnhancedParallelAgent",
+      "module_path": "haive.agents.multi.compatibility_enhanced_base",
+      "category": "Multi-Agent Systems",
+      "package": "haive-agents",
+      "description": "Parallel agent with built-in compatibility checking.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "CompatibilityEnhancedMultiAgent"
+      ]
+    },
+    {
+      "name": "MultiAgent",
+      "module_path": "haive.agents.multi.agent",
+      "category": "Multi-Agent Systems",
+      "package": "haive-agents",
+      "description": "Advanced multi-agent system with flexible coordination patterns.",
+      "features": [
+        "structured_output",
+        "conversation",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "MemoryAgentState",
+      "module_path": "haive.agents.memory.state",
+      "category": "Memory & Persistence",
+      "package": "haive-agents",
+      "description": "State for Memory Agent, extending ReactAgentState.",
+      "features": [
+        "memory"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": true,
+      "is_abstract": false,
+      "base_classes": [
+        "ReactAgentState"
+      ]
+    },
+    {
+      "name": "MemoryAgent",
+      "module_path": "haive.agents.memory.agent",
+      "category": "Memory & Persistence",
+      "package": "haive-agents",
+      "description": "Memory Agent implementation that extends ReactAgent.",
+      "features": [
+        "conversation",
+        "memory"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": true,
+      "is_abstract": false,
+      "base_classes": [
+        "ReactAgent"
+      ]
+    },
+    {
+      "name": "WikiWriterAgentConfig",
+      "module_path": "haive.agents.wiki_writer.agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Configuration for the Wiki Writer Agent.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentArchitectureConfig"
+      ]
+    },
+    {
+      "name": "WikiWriterAgent",
+      "module_path": "haive.agents.wiki_writer.agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "An agent that writes a wiki page.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentArchitecture"
+      ]
+    },
+    {
+      "name": "STORMAgentConfig",
+      "module_path": "haive.agents.research.storm.config",
+      "category": "Research & Information",
+      "package": "haive-agents",
+      "description": "Configuration for the STORM agent - an orchestrator that coordinates research,",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "medium",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SequenceAgentConfig"
+      ]
+    },
+    {
+      "name": "PersonResearchAgentConfig",
+      "module_path": "haive.agents.research.person.state",
+      "category": "Research & Information",
+      "package": "haive-agents",
+      "description": "Configuration settings for person research agent.",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "PersonResearchAgentConfig",
+      "module_path": "haive.agents.research.person.config",
+      "category": "Research & Information",
+      "package": "haive-agents",
+      "description": "Configuration for the Person Research Agent.",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "PersonResearchAgent",
+      "module_path": "haive.agents.research.person.agent",
+      "category": "Research & Information",
+      "package": "haive-agents",
+      "description": "Advanced person research agent with iterative information gathering capabilities.",
+      "features": [
+        "reasoning",
+        "structured_output",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "ResearchAgentConfig",
+      "module_path": "haive.agents.research.open_perplexity.config",
+      "category": "Research & Information",
+      "package": "haive-agents",
+      "description": "Configuration for open_perplexity research agent.",
+      "features": [
+        "tools",
+        "structured_output",
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "ResearchAgent",
+      "module_path": "haive.agents.research.open_perplexity.agent",
+      "category": "Research & Information",
+      "package": "haive-agents",
+      "description": "Agent for performing deep research on any topic with dynamic document loader selection",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "Agent",
+      "module_path": "haive.agents.base..ipynb_checkpoints.__init__-checkpoint",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Abstract base agent class with automatic graph building and proper inheritance.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": true,
+      "base_classes": [
+        "AgentConfig",
+        "ABC"
+      ]
+    },
+    {
+      "name": "PlanAndExecuteConfig",
+      "module_path": "haive.agents.planning.plan_and_execute.config",
+      "category": "Planning & Strategy",
+      "package": "haive-agents",
+      "description": "No description available",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "PlanAndExecuteAgent",
+      "module_path": "haive.agents.planning.plan_and_execute.agent",
+      "category": "Planning & Strategy",
+      "package": "haive-agents",
+      "description": "No description available",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "RewooAgentConfig",
+      "module_path": "haive.agents.planning.rewoo.agent",
+      "category": "Planning & Strategy",
+      "package": "haive-agents",
+      "description": "Configuration for the ReWOO Agent with automatic prompt formatting.",
+      "features": [
+        "tools",
+        "planning"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "RewooAgent",
+      "module_path": "haive.agents.planning.rewoo.agent",
+      "category": "Planning & Strategy",
+      "package": "haive-agents",
+      "description": "ReWOO (Reasoning Without Observation) Agent implementation.",
+      "features": [
+        "reasoning",
+        "tools",
+        "structured_output",
+        "planning"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentArchitecture"
+      ]
+    },
+    {
+      "name": "LLMCompilerAgentConfig",
+      "module_path": "haive.agents.planning.llm_compiler.config",
+      "category": "Planning & Strategy",
+      "package": "haive-agents",
+      "description": "Configuration for the LLM Compiler Agent using AugLLMConfig system.",
+      "features": [
+        "tools"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentArchitectureConfig"
+      ]
+    },
+    {
+      "name": "LLMCompilerAgent",
+      "module_path": "haive.agents.planning.llm_compiler.agent",
+      "category": "Planning & Strategy",
+      "package": "haive-agents",
+      "description": "LLM Compiler Agent implementation.",
+      "features": [
+        "planning",
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentArchitecture"
+      ]
+    },
+    {
+      "name": "StructuredOutputAgentConfig",
+      "module_path": "haive.agents.simple.structured.config",
+      "category": "Foundation Agents",
+      "package": "haive-agents",
+      "description": "Configuration for a structured output agent.",
+      "features": [
+        "tools",
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgentConfig"
+      ]
+    },
+    {
+      "name": "SimpleAgent",
+      "module_path": "haive.agents.simple.v2.config",
+      "category": "Foundation Agents",
+      "package": "haive-agents",
+      "description": "A simple agent with a single node workflow and comprehensive schema handling.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "MultiStrategyRAGAgent",
+      "module_path": "haive.agents.rag.multi_strategy.agent",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "RAG agent with multiple retrieval strategies.",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SelfCorrectiveRAGAgent"
+      ]
+    },
+    {
+      "name": "BaseRAGAgent",
+      "module_path": "haive.agents.rag.base.base_agent",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Simple base RAG agent with retrieve and generate functionality.",
+      "features": [
+        "tools",
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "BaseRAGConfig",
+      "module_path": "haive.agents.rag.base.config",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Configuration for a basic RAG agent.",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "SimpleRAGAgent",
+      "module_path": "haive.agents.rag.base.agent",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Simple RAG agent that performs retrieval.",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "RetrieverMixin",
+        "Agent"
+      ]
+    },
+    {
+      "name": "MultiAgentRAGState",
+      "module_path": "haive.agents.rag.multi_agent_rag.state",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Comprehensive state schema for multi-agent RAG systems.",
+      "features": [
+        "structured_output",
+        "conversation",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "StateSchema"
+      ]
+    },
+    {
+      "name": "AgentCompatibilityReport",
+      "module_path": "haive.agents.rag.multi_agent_rag.compatibility",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Comprehensive compatibility report for agent pairs.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": []
+    },
+    {
+      "name": "MultiAgentCompatibilityReport",
+      "module_path": "haive.agents.rag.multi_agent_rag.compatibility",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Compatibility report for multiple agents in a workflow.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": []
+    },
+    {
+      "name": "BaseRAGMultiAgent",
+      "module_path": "haive.agents.rag.multi_agent_rag.multi_rag",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Base multi-agent RAG system with retrieve -> grade -> generate workflow.",
+      "features": [
+        "conversation",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SequentialAgent"
+      ]
+    },
+    {
+      "name": "ConditionalRAGMultiAgent",
+      "module_path": "haive.agents.rag.multi_agent_rag.multi_rag",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Conditional multi-agent RAG system with smart routing based on document quality.",
+      "features": [
+        "conversation",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "ConditionalAgent"
+      ]
+    },
+    {
+      "name": "IterativeRAGMultiAgent",
+      "module_path": "haive.agents.rag.multi_agent_rag.multi_rag",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Multi-agent RAG system with iterative document processing.",
+      "features": [
+        "conversation",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SequentialAgent"
+      ]
+    },
+    {
+      "name": "ParallelRAGMultiAgent",
+      "module_path": "haive.agents.rag.multi_agent_rag.multi_rag",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Parallel multi-agent RAG system for consensus-based processing.",
+      "features": [
+        "conversation",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "ParallelAgent"
+      ]
+    },
+    {
+      "name": "AdaptiveRAGMultiAgent",
+      "module_path": "haive.agents.rag.multi_agent_rag.multi_rag",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Advanced RAG system that adapts its strategy based on query complexity and results.",
+      "features": [
+        "planning",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "ConditionalAgent"
+      ]
+    },
+    {
+      "name": "EnhancedRAGSequentialAgent",
+      "module_path": "haive.agents.rag.multi_agent_rag.enhanced_multi_rag",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "RAG sequential agent with built-in compatibility checking.",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "CompatibilityEnhancedSequentialAgent"
+      ]
+    },
+    {
+      "name": "EnhancedRAGConditionalAgent",
+      "module_path": "haive.agents.rag.multi_agent_rag.enhanced_multi_rag",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "RAG conditional agent with built-in compatibility checking and smart routing.",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "CompatibilityEnhancedConditionalAgent"
+      ]
+    },
+    {
+      "name": "EnhancedRAGParallelAgent",
+      "module_path": "haive.agents.rag.multi_agent_rag.enhanced_multi_rag",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "RAG parallel agent with built-in compatibility checking for consensus building.",
+      "features": [
+        "structured_output",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "CompatibilityEnhancedParallelAgent"
+      ]
+    },
+    {
+      "name": "SimpleRAGAgent",
+      "module_path": "haive.agents.rag.multi_agent_rag.agents",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Simple RAG agent that retrieves documents and provides basic answers.",
+      "features": [
+        "tools",
+        "conversation",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgent"
+      ]
+    },
+    {
+      "name": "SimpleRAGAnswerAgent",
+      "module_path": "haive.agents.rag.multi_agent_rag.agents",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "RAG answer generation agent that creates responses from retrieved documents.",
+      "features": [
+        "structured_output",
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgent"
+      ]
+    },
+    {
+      "name": "DocumentGradingAgent",
+      "module_path": "haive.agents.rag.multi_agent_rag.agents",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Document grading agent that evaluates document relevance.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgent"
+      ]
+    },
+    {
+      "name": "IterativeDocumentGradingAgent",
+      "module_path": "haive.agents.rag.multi_agent_rag.agents",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Specialized grading agent that processes documents one by one.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "DocumentGradingAgent"
+      ]
+    },
+    {
+      "name": "DynamicRAGAgent",
+      "module_path": "haive.agents.rag.dynamic.agent",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Implements a dynamic RAG pipeline that routes queries to appropriate data sources.",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "medium",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseRAGAgent"
+      ]
+    },
+    {
+      "name": "TypedRAGAgent",
+      "module_path": "haive.agents.rag.typed.agent",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Implements Typed-RAG that classifies queries and routes to specialized handlers.",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "medium",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseRAGAgent"
+      ]
+    },
+    {
+      "name": "FilteredRAGAgent",
+      "module_path": "haive.agents.rag.filtered.agent",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "RAG agent with document filtering capabilities.",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "medium",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "SelfCorrectiveRAGAgent",
+      "module_path": "haive.agents.rag.self_corr.agent",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "RAG agent with self-correction capabilities.",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "LLMRAGAgent",
+      "module_path": "haive.agents.rag.llm_rag.agent",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "LLM-enhanced RAG agent that retrieves documents and generates answers.",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseRAGAgent"
+      ]
+    },
+    {
+      "name": "SQLRAGConfig",
+      "module_path": "haive.agents.rag.db_rag.sql_rag.config",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Configuration for the SQL RAG Agent.",
+      "features": [
+        "structured_output",
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "SQLRAGAgent",
+      "module_path": "haive.agents.rag.db_rag.sql_rag.agent",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "SQL RAG Agent for querying SQL databases with natural language.",
+      "features": [
+        "tools",
+        "structured_output",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "GraphDBRAGConfig",
+      "module_path": "haive.agents.rag.db_rag.graph_db.config",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Main configuration for the Graph Database RAG Agent.",
+      "features": [
+        "structured_output",
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "GraphDBRAGAgent",
+      "module_path": "haive.agents.rag.db_rag.graph_db.agent",
+      "category": "RAG & Retrieval",
+      "package": "haive-agents",
+      "description": "Graph Database RAG Agent for natural language querying of Neo4j databases.",
+      "features": [
+        "tools",
+        "structured_output",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "DirectoryLoaderAgent",
+      "module_path": "haive.agents.document_loader.directory.agent",
+      "category": "Document Processing",
+      "package": "haive-agents",
+      "description": "Specialized document loader agent for loading documents from directories.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "DocumentLoaderAgent"
+      ]
+    },
+    {
+      "name": "DocumentLoaderAgent",
+      "module_path": "haive.agents.document_loader.base.agent",
+      "category": "Document Processing",
+      "package": "haive-agents",
+      "description": "Document Loader Agent that integrates the document loader engine with the agent framework.",
+      "features": [
+        "structured_output",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "WebLoaderAgent",
+      "module_path": "haive.agents.document_loader.web.agent",
+      "category": "Document Processing",
+      "package": "haive-agents",
+      "description": "Specialized document loader agent for loading documents from web URLs.",
+      "features": [
+        "planning"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "DocumentLoaderAgent"
+      ]
+    },
+    {
+      "name": "FileLoaderAgent",
+      "module_path": "haive.agents.document_loader.file.agent",
+      "category": "Document Processing",
+      "package": "haive-agents",
+      "description": "Specialized document loader agent for loading documents from files.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "DocumentLoaderAgent"
+      ]
+    },
+    {
+      "name": "ReflectionAgentState",
+      "module_path": "haive.agents.reasoning_and_critique.reflection.state",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "State schema for the Reflection agent.",
+      "features": [
+        "reasoning",
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgentState"
+      ]
+    },
+    {
+      "name": "ReflectionAgentConfig",
+      "module_path": "haive.agents.reasoning_and_critique.reflection.config",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "Configuration for an agent that uses reflection to improve responses.",
+      "features": [
+        "reasoning"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgentConfig"
+      ]
+    },
+    {
+      "name": "ReflectionAgent",
+      "module_path": "haive.agents.reasoning_and_critique.reflection.agent",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "An agent with self-reflection capabilities that can improve its responses.",
+      "features": [
+        "reasoning"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgent"
+      ]
+    },
+    {
+      "name": "LATSAgentConfig",
+      "module_path": "haive.agents.reasoning_and_critique.lats.config",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "Configuration for Language Agent Tree Search (LATS) agent.",
+      "features": [
+        "tools",
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "LATSAgentConfig",
+      "module_path": "haive.agents.reasoning_and_critique.lats.agent",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "Configuration for a Look-Ahead Tree Search (LATS) agent.",
+      "features": [
+        "reasoning",
+        "tools",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "LATSAgent",
+      "module_path": "haive.agents.reasoning_and_critique.lats.agent",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "A Look-Ahead Tree Search (LATS) agent that uses tree search to",
+      "features": [
+        "reasoning",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "ReflexionState",
+      "module_path": "haive.agents.reasoning_and_critique.reflexion.state",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "State for the Reflexion agent.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgentState"
+      ]
+    },
+    {
+      "name": "ReflexionConfig",
+      "module_path": "haive.agents.reasoning_and_critique.reflexion.config",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "Configuration for the Reflexion agent.",
+      "features": [
+        "tools"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "ReflexionAgent",
+      "module_path": "haive.agents.reasoning_and_critique.reflexion.agent",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "Agent that uses Reflexion to answer questions.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "SelfDiscoverAgentConfig",
+      "module_path": "haive.agents.reasoning_and_critique.self_discover.config",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "Configuration for a SelfDiscover agent.",
+      "features": [
+        "reasoning",
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "SelfDiscoverAgentConfig",
+      "module_path": "haive.agents.reasoning_and_critique.self_discover.agent",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "Configuration for the Self Discover Agent",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentArchitectureConfig"
+      ]
+    },
+    {
+      "name": "SelfDiscoverAgent",
+      "module_path": "haive.agents.reasoning_and_critique.self_discover.agent",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "Self Discover Agent",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentArchitecture"
+      ]
+    },
+    {
+      "name": "SelfDiscoverAgent",
+      "module_path": "haive.agents.reasoning_and_critique.self_discover.agent2",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "An agent that implements the SelfDiscover methodology with structured output models.",
+      "features": [
+        "reasoning",
+        "planning",
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "ReasoningSystem",
+      "module_path": "haive.agents.reasoning_and_critique.logic.agent",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "Orchestrator agent for comprehensive reasoning analysis.",
+      "features": [
+        "reasoning"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "TOTAgentConfig",
+      "module_path": "haive.agents.reasoning_and_critique.tot.config",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "Configuration for the Tree of Thoughts agent.",
+      "features": [
+        "reasoning",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "ToTAgent",
+      "module_path": "haive.agents.reasoning_and_critique.tot.agent",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "Tree of Thoughts agent implementation.",
+      "features": [
+        "reasoning",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent",
+        "Generic"
+      ]
+    },
+    {
+      "name": "MCTSAgentConfig",
+      "module_path": "haive.agents.reasoning_and_critique.mcts.config",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "Configuration for MCTS Agent.",
+      "features": [
+        "tools"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "MCTSAgent",
+      "module_path": "haive.agents.reasoning_and_critique.mcts.agent",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "Monte Carlo Tree Search Agent implementation.",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "ToTAgentConfig",
+      "module_path": "haive.agents.reasoning_and_critique.tot.modular.config",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "Configuration for a Tree of Thoughts agent.",
+      "features": [
+        "reasoning",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "ToTAgent",
+      "module_path": "haive.agents.reasoning_and_critique.tot.modular.agent",
+      "category": "Reasoning & Critique",
+      "package": "haive-agents",
+      "description": "No description available",
+      "features": [],
+      "complexity": "medium",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "ReactAgentConfig",
+      "module_path": "haive.agents.react_class.react_v3.config",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "Configuration for a ReAct agent with tool integration.",
+      "features": [
+        "reasoning",
+        "tools"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "ReactAgent",
+      "module_path": "haive.agents.react_class.react_v3.agent",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "A tool-using agent implementing the ReAct pattern.",
+      "features": [
+        "reasoning",
+        "tools",
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "ReactAgentState",
+      "module_path": "haive.agents.react_class.react_agent2.agent3",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "State schema for ReAct agent.",
+      "features": [
+        "tools",
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "ReactAgentConfig",
+      "module_path": "haive.agents.react_class.react_agent2.agent3",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "Configuration for the ReAct agent.",
+      "features": [
+        "tools"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "ReactAgent",
+      "module_path": "haive.agents.react_class.react_agent2.agent3",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "ReAct agent implementation with tool usage and routing capabilities.",
+      "features": [
+        "tools"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "ReactAgentConfig",
+      "module_path": "haive.agents.react_class.react_agent2.config",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "Configuration for a React agent that follows the ReAct pattern:",
+      "features": [
+        "tools"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "ReactAgentConfig",
+      "module_path": "haive.agents.react_class.react_agent2.config2",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "Configuration for a React agent that can use tools.",
+      "features": [
+        "reasoning",
+        "tools",
+        "memory"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": true,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "AdvancedReactAgentConfig",
+      "module_path": "haive.agents.react_class.react_agent2.advanced_agent3",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "Extended configuration for the Advanced React Agent.",
+      "features": [
+        "tools"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "ReactAgentConfig"
+      ]
+    },
+    {
+      "name": "AdvancedReactAgent",
+      "module_path": "haive.agents.react_class.react_agent2.advanced_agent3",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "Advanced React agent with specialized tool routing.",
+      "features": [
+        "tools"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "DynamicReactAgentState",
+      "module_path": "haive.agents.react_class.react_agent2.dynamic_agent",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "Extended schema for dynamic tool selection.",
+      "features": [
+        "tools",
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "ReactAgentState"
+      ]
+    },
+    {
+      "name": "DynamicReactAgentConfig",
+      "module_path": "haive.agents.react_class.react_agent2.dynamic_agent",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "Configuration for a React agent with dynamic tool selection.",
+      "features": [
+        "tools"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "ReactAgentConfig"
+      ]
+    },
+    {
+      "name": "DynamicReactAgent",
+      "module_path": "haive.agents.react_class.react_agent2.dynamic_agent",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "A React agent with dynamic tool selection.",
+      "features": [
+        "tools"
+      ],
+      "complexity": "medium",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "ReactAgent"
+      ]
+    },
+    {
+      "name": "ReactAgentState",
+      "module_path": "haive.agents.react_class.react_agent2.state2",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "State for React agents with tool usage.",
+      "features": [
+        "tools",
+        "structured_output",
+        "memory"
+      ],
+      "complexity": "medium",
+      "has_tools": true,
+      "has_memory": true,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "ReactAgentSchema",
+      "module_path": "haive.agents.react_class.react_agent2.agent",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "Schema for React Agent State, extending SimpleAgentSchema.",
+      "features": [
+        "tools",
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgentState"
+      ]
+    },
+    {
+      "name": "ReactAgentSchemaWithStructuredResponse",
+      "module_path": "haive.agents.react_class.react_agent2.agent",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "Schema for React Agent with structured response.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "ReactAgentSchema"
+      ]
+    },
+    {
+      "name": "ReactAgentConfig",
+      "module_path": "haive.agents.react_class.react_agent2.agent",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "Configuration for a React agent, extending SimpleAgentConfig.",
+      "features": [
+        "reasoning",
+        "tools"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgentConfig"
+      ]
+    },
+    {
+      "name": "ReactAgent",
+      "module_path": "haive.agents.react_class.react_agent2.agent",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "A React agent implementing the Reasoning-Action-Observation pattern.",
+      "features": [
+        "reasoning",
+        "tools",
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgent"
+      ]
+    },
+    {
+      "name": "ReactAgent",
+      "module_path": "haive.agents.react_class.react_agent2.agent2",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "A React agent implementation using LangGraph.",
+      "features": [
+        "reasoning",
+        "tools"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "ReactAgentState",
+      "module_path": "haive.agents.react_class.react.state",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "State for React Agent, extending SimpleAgentState.",
+      "features": [
+        "reasoning",
+        "tools",
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgentState"
+      ]
+    },
+    {
+      "name": "ReactAgentConfig",
+      "module_path": "haive.agents.react_class.react.config",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "Configuration for React Agent, extending SimpleAgentConfig.",
+      "features": [
+        "reasoning",
+        "tools"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgentConfig"
+      ]
+    },
+    {
+      "name": "ReactAgent",
+      "module_path": "haive.agents.react_class.react.agent",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "React Agent implementation that extends SimpleAgent.",
+      "features": [
+        "reasoning",
+        "tools"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "ReactManyToolsState",
+      "module_path": "haive.agents.react_class.react_many_tools.state",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "State for React Agent with many tools.",
+      "features": [
+        "tools",
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "ReactAgentState"
+      ]
+    },
+    {
+      "name": "ReactManyToolsConfig",
+      "module_path": "haive.agents.react_class.react_many_tools.config",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "Configuration for React Agent with many tools.",
+      "features": [
+        "tools",
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "ReactAgentConfig"
+      ]
+    },
+    {
+      "name": "ReactManyToolsAgent",
+      "module_path": "haive.agents.react_class.react_many_tools.agent",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "React Agent implementation that can handle many tools efficiently.",
+      "features": [
+        "tools",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "ReactAgent"
+      ]
+    },
+    {
+      "name": "ReactAgentState",
+      "module_path": "haive.agents.react_class.react_agent.state",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "The state of the agent.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "TypedDict"
+      ]
+    },
+    {
+      "name": "ReactAgentConfig",
+      "module_path": "haive.agents.react_class.react_agent.agent",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "No description available",
+      "features": [
+        "tools"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "ReactAgent",
+      "module_path": "haive.agents.react_class.react_agent.agent",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "No description available",
+      "features": [],
+      "complexity": "medium",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "ReactAgentState",
+      "module_path": "haive.agents.react_class.react_v2.state",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "State schema for React agent.",
+      "features": [
+        "tools",
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "ReactAgentConfig",
+      "module_path": "haive.agents.react_class.react_v2.config",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "Configuration for a React agent that can use tools and follow ReAct reasoning pattern.",
+      "features": [
+        "reasoning",
+        "tools"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgentConfig"
+      ]
+    },
+    {
+      "name": "ReactAgent",
+      "module_path": "haive.agents.react_class.react_v2.agent",
+      "category": "ReAct & Tool Use",
+      "package": "haive-agents",
+      "description": "A React agent that enhances SimpleAgent with tool-using capabilities.",
+      "features": [
+        "reasoning",
+        "tools"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "TaxonomyAgentConfig",
+      "module_path": "haive.agents.document_modifiers.tnt.agent",
+      "category": "Document Processing",
+      "package": "haive-agents",
+      "description": "Agent configuration for generating a taxonomy from conversation history.",
+      "features": [
+        "conversation",
+        "memory"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": true,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "TaxonomyAgent",
+      "module_path": "haive.agents.document_modifiers.tnt.agent",
+      "category": "Document Processing",
+      "package": "haive-agents",
+      "description": "Agent that generates a taxonomy from a conversation history.",
+      "features": [
+        "conversation",
+        "memory"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": true,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "ComplexExtractionAgentConfig",
+      "module_path": "haive.agents.document_modifiers.complex_extraction.config",
+      "category": "Document Processing",
+      "package": "haive-agents",
+      "description": "Configuration for the complex extraction agent.",
+      "features": [
+        "tools",
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "ComplexExtractionAgent",
+      "module_path": "haive.agents.document_modifiers.complex_extraction.agent",
+      "category": "Document Processing",
+      "package": "haive-agents",
+      "description": "Agent that extracts complex structured information from text.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "IterativeSummarizerConfig",
+      "module_path": "haive.agents.document_modifiers.summarizer.iterative_refinement.config",
+      "category": "Document Processing",
+      "package": "haive-agents",
+      "description": "The configuration for the iterative summarizer.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "IterativeSummarizer",
+      "module_path": "haive.agents.document_modifiers.summarizer.iterative_refinement.agent",
+      "category": "Document Processing",
+      "package": "haive-agents",
+      "description": "An agent that summarizes a document iteratively.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "SummarizerAgentConfig",
+      "module_path": "haive.agents.document_modifiers.summarizer.map_branch.config",
+      "category": "Document Processing",
+      "package": "haive-agents",
+      "description": "No description available",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "SummarizerAgent",
+      "module_path": "haive.agents.document_modifiers.summarizer.map_branch.agent",
+      "category": "Document Processing",
+      "package": "haive-agents",
+      "description": "SummarizerAgent is a class that summarizes a list of documents.",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "medium",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "ParallelKGTransformerConfig",
+      "module_path": "haive.agents.document_modifiers.kg.kg_map_merge.config",
+      "category": "Document Processing",
+      "package": "haive-agents",
+      "description": "Configuration for the Parallel Knowledge Graph Transformer.",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "ParallelKGTransformerConfig",
+      "module_path": "haive.agents.document_modifiers.kg.kg_map_merge.agent",
+      "category": "Document Processing",
+      "package": "haive-agents",
+      "description": "Configuration for the Parallel Knowledge Graph Transformer.",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "ParallelKGTransformer",
+      "module_path": "haive.agents.document_modifiers.kg.kg_map_merge.agent",
+      "category": "Document Processing",
+      "package": "haive-agents",
+      "description": "An agent that builds a knowledge graph by extracting",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "StructuredKGAgent",
+      "module_path": "haive.agents.document_modifiers.kg.kg_map_merge.agent2",
+      "category": "Document Processing",
+      "package": "haive-agents",
+      "description": "An agent that builds a knowledge graph using structured output models.",
+      "features": [
+        "structured_output",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "IterativeGraphTransformerConfig",
+      "module_path": "haive.agents.document_modifiers.kg.kg_iterative_refinement.config",
+      "category": "Document Processing",
+      "package": "haive-agents",
+      "description": "The configuration for the iterative graph transformer.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "IterativeGraphTransformer",
+      "module_path": "haive.agents.document_modifiers.kg.kg_iterative_refinement.agent",
+      "category": "Document Processing",
+      "package": "haive-agents",
+      "description": "An agent that transforms a graph document iteratively.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "SequentialMultiAgent",
+      "module_path": "haive.agents.multi.sequential.agent",
+      "category": "Multi-Agent Systems",
+      "package": "haive-agents",
+      "description": "Multi-agent system that executes agents sequentially.",
+      "features": [
+        "structured_output",
+        "conversation"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "MultiAgent"
+      ]
+    },
+    {
+      "name": "CollaborativeConversation",
+      "module_path": "haive.agents.conversation.collaberative.agent",
+      "category": "Conversation & Multi-Agent",
+      "package": "haive-agents",
+      "description": "Collaborative conversation for building shared content.",
+      "features": [
+        "structured_output",
+        "conversation"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseConversationAgent"
+      ]
+    },
+    {
+      "name": "BaseConversationAgent",
+      "module_path": "haive.agents.conversation.base.agent",
+      "category": "Conversation & Multi-Agent",
+      "package": "haive-agents",
+      "description": "Base conversation agent that orchestrates multi-agent conversations.",
+      "features": [
+        "tools",
+        "conversation"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": true,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "RoundRobinConversation",
+      "module_path": "haive.agents.conversation.round_robin.agent",
+      "category": "Conversation & Multi-Agent",
+      "package": "haive-agents",
+      "description": "Round-robin conversation where each agent speaks in a fixed order.",
+      "features": [
+        "conversation"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseConversationAgent"
+      ]
+    },
+    {
+      "name": "DebateConversation",
+      "module_path": "haive.agents.conversation.debate.agent",
+      "category": "Conversation & Multi-Agent",
+      "package": "haive-agents",
+      "description": "Structured debate conversation with positions and formal argumentation.",
+      "features": [
+        "structured_output",
+        "conversation"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseConversationAgent"
+      ]
+    },
+    {
+      "name": "DirectedConversation",
+      "module_path": "haive.agents.conversation.directed.agent",
+      "category": "Conversation & Multi-Agent",
+      "package": "haive-agents",
+      "description": "Directed conversation where agents respond to mentions and questions.",
+      "features": [
+        "structured_output",
+        "conversation"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseConversationAgent"
+      ]
+    },
+    {
+      "name": "InterviewAgentConfig",
+      "module_path": "haive.agents.wiki_writer.interview.agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Configuration for the Interview Agent.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentArchitectureConfig"
+      ]
+    },
+    {
+      "name": "InterviewAgent",
+      "module_path": "haive.agents.wiki_writer.interview.agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "An agent that conducts an interview with a Subject Matter Expert.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentArchitecture"
+      ]
+    },
+    {
+      "name": "ProjectManagerAgentConfig",
+      "module_path": "haive.prebuilt.project_manager.agent",
+      "category": "Prebuilt Solutions",
+      "package": "haive-prebuilt",
+      "description": "No description available",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentArchitectureConfig"
+      ]
+    },
+    {
+      "name": "ProjectManagerAgent",
+      "module_path": "haive.prebuilt.project_manager.agent",
+      "category": "Prebuilt Solutions",
+      "package": "haive-prebuilt",
+      "description": "No description available",
+      "features": [],
+      "complexity": "medium",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentArchitecture"
+      ]
+    },
+    {
+      "name": "TaskifierAgent",
+      "module_path": "haive.prebuilt.taskifier.agent",
+      "category": "Prebuilt Solutions",
+      "package": "haive-prebuilt",
+      "description": "No description available",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "TLDRAgentConfig",
+      "module_path": "haive.prebuilt.tldr2.agent",
+      "category": "Prebuilt Solutions",
+      "package": "haive-prebuilt",
+      "description": "No description available",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "ContractAnalysisAgentConfig",
+      "module_path": "haive.prebuilt.contract_analysis.agent",
+      "category": "Legal & Business",
+      "package": "haive-prebuilt",
+      "description": "No description available",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentArchitectureConfig"
+      ]
+    },
+    {
+      "name": "ContractAnalysisAgent",
+      "module_path": "haive.prebuilt.contract_analysis.agent",
+      "category": "Legal & Business",
+      "package": "haive-prebuilt",
+      "description": "No description available",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentArchitecture"
+      ]
+    },
+    {
+      "name": "AgentState",
+      "module_path": "haive.prebuilt.systemic_review_of_scientific_articles.state",
+      "category": "Academic & Research",
+      "package": "haive-prebuilt",
+      "description": "No description available",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "SystemicReviewOfScientificArticlesAgent",
+      "module_path": "haive.prebuilt.systemic_review_of_scientific_articles.agent",
+      "category": "Academic & Research",
+      "package": "haive-prebuilt",
+      "description": "No description available",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "PodcastGeneratorAgent",
+      "module_path": "haive.prebuilt.podcast_generator.agent",
+      "category": "Prebuilt Solutions",
+      "package": "haive-prebuilt",
+      "description": "No description available",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "ScientificPaperAgentState",
+      "module_path": "haive.prebuilt.scientific_paper_agent.state",
+      "category": "Academic & Research",
+      "package": "haive-prebuilt",
+      "description": "The state of the agent during the paper research process.",
+      "features": [
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "ScientificPaperAgent",
+      "module_path": "haive.prebuilt.scientific_paper_agent.agent",
+      "category": "Academic & Research",
+      "package": "haive-prebuilt",
+      "description": "No description available",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "AgentAction",
+      "module_path": "haive.prebuilt.gtla.models",
+      "category": "Prebuilt Solutions",
+      "package": "haive-prebuilt",
+      "description": "Model representing an agent's action decision.",
+      "features": [
+        "reasoning",
+        "tools",
+        "retrieval"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "AgentOutput",
+      "module_path": "haive.prebuilt.gtla.models",
+      "category": "Prebuilt Solutions",
+      "package": "haive-prebuilt",
+      "description": "Model representing the output from an agent's action.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "KYCAgentConfiguration",
+      "module_path": "haive.prebuilt.company_researcher.config",
+      "category": "Academic & Research",
+      "package": "haive-prebuilt",
+      "description": "Advanced configuration for KYC Agent with granular control",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "EnhancedKYCAgent",
+      "module_path": "haive.prebuilt.company_researcher.agent",
+      "category": "Academic & Research",
+      "package": "haive-prebuilt",
+      "description": "Advanced KYC Agent with comprehensive risk assessment workflow",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "WeatherDisasterManagerConfig",
+      "module_path": "haive.prebuilt.weather_disaster_management.config",
+      "category": "Prebuilt Solutions",
+      "package": "haive-prebuilt",
+      "description": "No description available",
+      "features": [
+        "tools"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "WeatherDisasterManagementAgent",
+      "module_path": "haive.prebuilt.weather_disaster_management.agent",
+      "category": "Prebuilt Solutions",
+      "package": "haive-prebuilt",
+      "description": "No description available",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "EssayGradingAgent",
+      "module_path": "haive.prebuilt.essay_grading.agent",
+      "category": "Prebuilt Solutions",
+      "package": "haive-prebuilt",
+      "description": "No description available",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "AgentMetadata",
+      "module_path": "haive.prebuilt.startup.pitchdeck.models",
+      "category": "Prebuilt Solutions",
+      "package": "haive-prebuilt",
+      "description": "Metadata about agent contributions to content generation.",
+      "features": [
+        "tools"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "ClueAgent",
+      "module_path": "haive.games.clue.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Agent for playing Clue.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "GameAgent"
+      ]
+    },
+    {
+      "name": "CheckersAgentConfig",
+      "module_path": "haive.games.checkers.config",
+      "category": "Classic Games",
+      "package": "haive-games",
+      "description": "Configuration for checkers game agent.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "CheckersAgent",
+      "module_path": "haive.games.checkers.agent",
+      "category": "Classic Games",
+      "package": "haive-games",
+      "description": "Agent for playing checkers with LLM-based players and rich UI.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "GameAgent"
+      ]
+    },
+    {
+      "name": "MastermindAgent",
+      "module_path": "haive.games.mastermind.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Agent for playing Mastermind.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "GameAgent"
+      ]
+    },
+    {
+      "name": "MafiaAgentConfig",
+      "module_path": "haive.games.mafia.config",
+      "category": "Strategy Games",
+      "package": "haive-games",
+      "description": "Configuration for the Mafia game agent.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "MultiPlayerGameConfig"
+      ]
+    },
+    {
+      "name": "MafiaAgent",
+      "module_path": "haive.games.mafia.agent",
+      "category": "Strategy Games",
+      "package": "haive-games",
+      "description": "Agent for playing Mafia.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "MultiPlayerGameAgent"
+      ]
+    },
+    {
+      "name": "DominoesAgentConfig",
+      "module_path": "haive.games.dominoes.config",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Configuration for the dominoes agent.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "GameConfig"
+      ]
+    },
+    {
+      "name": "DominoesAgent",
+      "module_path": "haive.games.dominoes.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Agent for playing dominoes.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "GameAgent"
+      ]
+    },
+    {
+      "name": "GameConfig",
+      "module_path": "haive.games.base.config",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Base configuration for game agents.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "GameAgentFactory",
+      "module_path": "haive.games.base.factory",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Factory for creating game agents using a flexible, composable pattern.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": []
+    },
+    {
+      "name": "GameAgent",
+      "module_path": "haive.games.base.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Base game agent that implements common workflow patterns.",
+      "features": [
+        "tools"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent",
+        "Generic"
+      ]
+    },
+    {
+      "name": "MonopolyPlayerAgentConfig",
+      "module_path": "haive.games.monopoly.player_agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Configuration for monopoly player decision agent.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "MonopolyGameAgentConfig",
+      "module_path": "haive.games.monopoly.player_agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Configuration class for monopoly game agents.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "MonopolyPlayerAgent",
+      "module_path": "haive.games.monopoly.player_agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Player agent for making individual decisions in Monopoly.",
+      "features": [],
+      "complexity": "medium",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "MonopolyPlayerAgentConfig",
+      "module_path": "haive.games.monopoly.config",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Configuration for monopoly player decision agent.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "MonopolyGameAgentConfig",
+      "module_path": "haive.games.monopoly.config",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Configuration class for monopoly game agents.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "HoldemPlayerAgentConfig",
+      "module_path": "haive.games.hold_em.player_agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Configuration for Hold'em player agent.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "HoldemPlayerAgent",
+      "module_path": "haive.games.hold_em.player_agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Player agent for Texas Hold'em poker games.",
+      "features": [
+        "planning"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "NimAgent",
+      "module_path": "haive.games.nim.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Agent for playing Nim.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "GameAgent"
+      ]
+    },
+    {
+      "name": "MultiPlayerGameConfig",
+      "module_path": "haive.games.multi_player.config",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Configuration for multi-player game agents.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "MultiPlayerGameAgent",
+      "module_path": "haive.games.multi_player.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Base game agent for multi-player games.",
+      "features": [
+        "tools",
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent",
+        "Generic"
+      ]
+    },
+    {
+      "name": "TicTacToeAgent",
+      "module_path": "haive.games.tic_tac_toe.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Agent for playing Tic Tac Toe using structured game flow and LLM inference.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "medium",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "GameAgent"
+      ]
+    },
+    {
+      "name": "MancalaAgent",
+      "module_path": "haive.games.mancala.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Agent for playing Mancala.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "GameAgent"
+      ]
+    },
+    {
+      "name": "Connect4AgentConfig",
+      "module_path": "haive.games.connect4.config",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Configuration class for Connect4 game agents.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "Connect4Agent",
+      "module_path": "haive.games.connect4.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Agent for playing Connect 4.",
+      "features": [],
+      "complexity": "medium",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "GameAgent"
+      ]
+    },
+    {
+      "name": "AmongUsAgentConfig",
+      "module_path": "haive.games.among_us.config",
+      "category": "Strategy Games",
+      "package": "haive-games",
+      "description": "Configuration for Among Us game agent.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "GameConfig"
+      ]
+    },
+    {
+      "name": "AmongUsAgent",
+      "module_path": "haive.games.among_us.agent",
+      "category": "Strategy Games",
+      "package": "haive-games",
+      "description": "Agent implementation for the Among Us game.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AmongUsStateManagerMixin",
+        "MultiPlayerGameAgent"
+      ]
+    },
+    {
+      "name": "PokerAgentConfig",
+      "module_path": "haive.games.poker.config",
+      "category": "Classic Games",
+      "package": "haive-games",
+      "description": "Configuration class for the poker agent.",
+      "features": [
+        "structured_output",
+        "memory",
+        "retrieval"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": true,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "AgentDecision",
+      "module_path": "haive.games.poker.models",
+      "category": "Classic Games",
+      "package": "haive-games",
+      "description": "Agent's decision in the game.",
+      "features": [
+        "reasoning",
+        "planning"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "AgentDecisionSchema",
+      "module_path": "haive.games.poker.models",
+      "category": "Classic Games",
+      "package": "haive-games",
+      "description": "Schema for LLM decision output.",
+      "features": [
+        "reasoning",
+        "planning",
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "PokerAgent",
+      "module_path": "haive.games.poker.agent",
+      "category": "Classic Games",
+      "package": "haive-games",
+      "description": "Enhanced agent class for managing a multi-player Texas Hold'em poker game.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "PokerAgentTester",
+      "module_path": "haive.games.poker.test",
+      "category": "Classic Games",
+      "package": "haive-games",
+      "description": "Test suite for the Poker agent.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": []
+    },
+    {
+      "name": "DebateAgentConfig",
+      "module_path": "haive.games.debate.config",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Configuration for debate agents.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "DebateAgent",
+      "module_path": "haive.games.debate.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Agent for facilitating debates and structured discussions.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "MultiPlayerGameAgent"
+      ]
+    },
+    {
+      "name": "FoxAndGeeseAgent",
+      "module_path": "haive.games.fox_and_geese.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Agent for playing Fox and Geese.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "GameAgent"
+      ]
+    },
+    {
+      "name": "FixedFoxAndGeeseAgent",
+      "module_path": "haive.games.fox_and_geese.fixed_runner",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Fixed Fox and Geese agent that handles state directly.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "FoxAndGeeseAgent"
+      ]
+    },
+    {
+      "name": "GoAgentConfig",
+      "module_path": "haive.games.go.config",
+      "category": "Classic Games",
+      "package": "haive-games",
+      "description": "Configuration for the Go game agent.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "GoAgent",
+      "module_path": "haive.games.go.agent",
+      "category": "Classic Games",
+      "package": "haive-games",
+      "description": "Go game agent implementation.",
+      "features": [
+        "tools"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "ReversiAgent",
+      "module_path": "haive.games.reversi.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Agent for playing Reversi/Othello.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "GameAgent"
+      ]
+    },
+    {
+      "name": "RiskAgent",
+      "module_path": "haive.games.risk.agent",
+      "category": "Strategy Games",
+      "package": "haive-games",
+      "description": "Agent for playing the Risk game.",
+      "features": [
+        "reasoning",
+        "planning",
+        "memory"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": true,
+      "is_abstract": false,
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "SinglePlayerGameAgent",
+      "module_path": "haive.games.single_player.base",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Base agent for single-player games.",
+      "features": [
+        "tools"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": []
+    },
+    {
+      "name": "BattleshipAgentConfig",
+      "module_path": "haive.games.battleship.config",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Configuration class for Battleship game agents.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "BattleshipAgent",
+      "module_path": "haive.games.battleship.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Battleship game agent with LLM-powered players.",
+      "features": [
+        "planning",
+        "memory"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": true,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "GameConfig",
+      "module_path": "haive.games.framework.base.config",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Base configuration for game agents.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "GameAgentFactory",
+      "module_path": "haive.games.framework.base.factory",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Factory for creating game agents using a flexible, composable pattern.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": []
+    },
+    {
+      "name": "GameAgent",
+      "module_path": "haive.games.framework.base.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Base game agent that implements common workflow patterns.",
+      "features": [
+        "tools"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent",
+        "Generic"
+      ]
+    },
+    {
+      "name": "MultiPlayerGameConfig",
+      "module_path": "haive.games.framework.multi_player.config",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Configuration for multi-player game agents.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "MultiPlayerGameAgent",
+      "module_path": "haive.games.framework.multi_player.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Base game agent for multi-player games.",
+      "features": [
+        "tools",
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent",
+        "Generic"
+      ]
+    },
+    {
+      "name": "BasePlayerAgent",
+      "module_path": "haive.games.framework.core.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "No description available",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "BullshitAgentConfig",
+      "module_path": "haive.games.cards.standard.bs.config",
+      "category": "Card Games",
+      "package": "haive-games",
+      "description": "Configuration for a Bullshit (BS) card game agent.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "BullshitAgent",
+      "module_path": "haive.games.cards.standard.bs.agent",
+      "category": "Card Games",
+      "package": "haive-games",
+      "description": "Multi-player Bullshit (BS) card game agent.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "GameAgent"
+      ]
+    },
+    {
+      "name": "BlackjackAgentConfig",
+      "module_path": "haive.games.cards.standard.blackjack.config",
+      "category": "Card Games",
+      "package": "haive-games",
+      "description": "Configuration for a multi-player Blackjack game agent.",
+      "features": [
+        "structured_output"
+      ],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "BlackjackAgent",
+      "module_path": "haive.games.cards.standard.blackjack.agent",
+      "category": "Card Games",
+      "package": "haive-games",
+      "description": "Multi-player Blackjack game agent.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "GameAgent"
+      ]
+    },
+    {
+      "name": "BasePlayerAgent",
+      "module_path": "haive.games.core.players.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Base class for player agents.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SimpleAgentConfig",
+        "ABC"
+      ]
+    },
+    {
+      "name": "GameAgentConfig",
+      "module_path": "haive.games.core.base.config",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Base configuration for game agents.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig",
+        "ABC"
+      ]
+    },
+    {
+      "name": "RubiksCubeAgent",
+      "module_path": "haive.games.single_player.rubiks.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Rubik's Cube game agent.",
+      "features": [],
+      "complexity": "medium",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "WordConnectionsAgentConfig",
+      "module_path": "haive.games.single_player.wordle.config",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Configuration for Word Connections agent.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "GameConfig"
+      ]
+    },
+    {
+      "name": "FlowFreeAgent",
+      "module_path": "haive.games.single_player.flow_free.agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Agent for playing Flow Free puzzle game.",
+      "features": [],
+      "complexity": "medium",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "SinglePlayerGameAgent"
+      ]
+    }
+  ],
+  "stats": {
+    "by_package": {
+      "haive-agents": 157,
+      "haive-prebuilt": 19,
+      "haive-games": 58
+    },
+    "by_category": {
+      "Specialized Agents": 21,
+      "Foundation Agents": 5,
+      "Memory & Persistence": 5,
+      "ReAct & Tool Use": 32,
+      "Multi-Agent Systems": 11,
+      "Research & Information": 6,
+      "Planning & Strategy": 6,
+      "RAG & Retrieval": 28,
+      "Document Processing": 18,
+      "Reasoning & Critique": 20,
+      "Conversation & Multi-Agent": 5,
+      "Prebuilt Solutions": 11,
+      "Legal & Business": 2,
+      "Academic & Research": 6,
+      "Games": 40,
+      "Classic Games": 9,
+      "Strategy Games": 5,
+      "Card Games": 4
+    },
+    "by_complexity": {
+      "simple": 110,
+      "medium": 18,
+      "complex": 106
+    },
+    "features": {
+      "tools": 56,
+      "structured_output": 66,
+      "memory": 14,
+      "planning": 13,
+      "conversation": 24,
+      "retrieval": 52,
+      "reasoning": 28
+    }
+  }
+}

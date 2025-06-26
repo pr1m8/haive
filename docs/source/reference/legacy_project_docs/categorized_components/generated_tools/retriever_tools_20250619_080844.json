@@ -1,0 +1,3584 @@
+[
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.types",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretriever",
+    "description": "Retrieve documents using BaseRetriever",
+    "source_component": "BaseRetriever",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwargs": {
+          "title": "Kwargs"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwargs", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrieverinput",
+    "description": "Retrieve documents using RetrieverInput",
+    "source_component": "RetrieverInput",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrieveroutput",
+    "description": "Retrieve documents using RetrieverOutput",
+    "source_component": "RetrieverOutput",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_vectorstoreretrieverconfig",
+    "description": "Retrieve documents using VectorStoreRetrieverConfig",
+    "source_component": "VectorStoreRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.KNN",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_knnretrieverconfig",
+    "description": "Retrieve documents using KNNRetrieverConfig",
+    "source_component": "KNNRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.KNN",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.KNN",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TimeWeightedRetriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TimeWeightedRetriever",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_timeweightedretrieverconfig",
+    "description": "Retrieve documents using TimeWeightedRetrieverConfig",
+    "source_component": "TimeWeightedRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TimeWeightedRetriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TFIDFRetriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TFIDFRetriever",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_tfidfretrieverconfig",
+    "description": "Retrieve documents using TFIDFRetrieverConfig",
+    "source_component": "TFIDFRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TFIDFRetriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_bm25retrieverconfig",
+    "description": "Retrieve documents using BM25RetrieverConfig",
+    "source_component": "BM25RetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.BM25",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.BM25",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.BM25",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.MultiQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_multiqueryretrieverconfig",
+    "description": "Retrieve documents using MultiQueryRetrieverConfig",
+    "source_component": "MultiQueryRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.MultiQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.MultiQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.SVM",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.SVM",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_svmretrieverconfig",
+    "description": "Retrieve documents using SVMRetrieverConfig",
+    "source_component": "SVMRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.SVM",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.RePhraseQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_rephrasequeryretriever",
+    "description": "Retrieve documents using RePhraseQueryRetriever",
+    "source_component": "RePhraseQueryRetriever",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.RePhraseQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwargs": {
+          "title": "Kwargs"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwargs", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_rephrasequeryretrieverconfig",
+    "description": "Retrieve documents using RePhraseQueryRetrieverConfig",
+    "source_component": "RePhraseQueryRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.RePhraseQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.RePhraseQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.EnsembleRetriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_ensembleretrieverconfig",
+    "description": "Retrieve documents using EnsembleRetrieverConfig",
+    "source_component": "EnsembleRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.EnsembleRetriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.EnsembleRetriever",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretriever",
+    "description": "Retrieve documents using BaseRetriever",
+    "source_component": "BaseRetriever",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.vectorstore.vectorstore",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwargs": {
+          "title": "Kwargs"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwargs", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.types",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretriever",
+    "description": "Retrieve documents using BaseRetriever",
+    "source_component": "BaseRetriever",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwargs": {
+          "title": "Kwargs"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwargs", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrieverinput",
+    "description": "Retrieve documents using RetrieverInput",
+    "source_component": "RetrieverInput",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrieveroutput",
+    "description": "Retrieve documents using RetrieverOutput",
+    "source_component": "RetrieverOutput",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_vectorstoreretrieverconfig",
+    "description": "Retrieve documents using VectorStoreRetrieverConfig",
+    "source_component": "VectorStoreRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.KNN",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_knnretrieverconfig",
+    "description": "Retrieve documents using KNNRetrieverConfig",
+    "source_component": "KNNRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.KNN",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.KNN",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TimeWeightedRetriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TimeWeightedRetriever",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_timeweightedretrieverconfig",
+    "description": "Retrieve documents using TimeWeightedRetrieverConfig",
+    "source_component": "TimeWeightedRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TimeWeightedRetriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TFIDFRetriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TFIDFRetriever",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_tfidfretrieverconfig",
+    "description": "Retrieve documents using TFIDFRetrieverConfig",
+    "source_component": "TFIDFRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TFIDFRetriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_bm25retrieverconfig",
+    "description": "Retrieve documents using BM25RetrieverConfig",
+    "source_component": "BM25RetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.BM25",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.BM25",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.BM25",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.MultiQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_multiqueryretrieverconfig",
+    "description": "Retrieve documents using MultiQueryRetrieverConfig",
+    "source_component": "MultiQueryRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.MultiQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.MultiQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.SVM",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.SVM",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_svmretrieverconfig",
+    "description": "Retrieve documents using SVMRetrieverConfig",
+    "source_component": "SVMRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.SVM",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.RePhraseQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_rephrasequeryretriever",
+    "description": "Retrieve documents using RePhraseQueryRetriever",
+    "source_component": "RePhraseQueryRetriever",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.RePhraseQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwargs": {
+          "title": "Kwargs"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwargs", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_rephrasequeryretrieverconfig",
+    "description": "Retrieve documents using RePhraseQueryRetrieverConfig",
+    "source_component": "RePhraseQueryRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.RePhraseQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.RePhraseQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.EnsembleRetriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_ensembleretrieverconfig",
+    "description": "Retrieve documents using EnsembleRetrieverConfig",
+    "source_component": "EnsembleRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.EnsembleRetriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.EnsembleRetriever",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretriever",
+    "description": "Retrieve documents using BaseRetriever",
+    "source_component": "BaseRetriever",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.vectorstore.vectorstore",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwargs": {
+          "title": "Kwargs"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwargs", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretriever",
+    "description": "Retrieve documents using BaseRetriever",
+    "source_component": "BaseRetriever",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.vectorstore.vectorstore",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwargs": {
+          "title": "Kwargs"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwargs", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.types",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretriever",
+    "description": "Retrieve documents using BaseRetriever",
+    "source_component": "BaseRetriever",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwargs": {
+          "title": "Kwargs"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwargs", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrieverinput",
+    "description": "Retrieve documents using RetrieverInput",
+    "source_component": "RetrieverInput",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrieveroutput",
+    "description": "Retrieve documents using RetrieverOutput",
+    "source_component": "RetrieverOutput",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_vectorstoreretrieverconfig",
+    "description": "Retrieve documents using VectorStoreRetrieverConfig",
+    "source_component": "VectorStoreRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.KNN",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_knnretrieverconfig",
+    "description": "Retrieve documents using KNNRetrieverConfig",
+    "source_component": "KNNRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.KNN",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.KNN",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TimeWeightedRetriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TimeWeightedRetriever",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_timeweightedretrieverconfig",
+    "description": "Retrieve documents using TimeWeightedRetrieverConfig",
+    "source_component": "TimeWeightedRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TimeWeightedRetriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TFIDFRetriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TFIDFRetriever",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_tfidfretrieverconfig",
+    "description": "Retrieve documents using TFIDFRetrieverConfig",
+    "source_component": "TFIDFRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TFIDFRetriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_bm25retrieverconfig",
+    "description": "Retrieve documents using BM25RetrieverConfig",
+    "source_component": "BM25RetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.BM25",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.BM25",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.BM25",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.MultiQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_multiqueryretrieverconfig",
+    "description": "Retrieve documents using MultiQueryRetrieverConfig",
+    "source_component": "MultiQueryRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.MultiQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.MultiQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.SVM",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.SVM",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_svmretrieverconfig",
+    "description": "Retrieve documents using SVMRetrieverConfig",
+    "source_component": "SVMRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.SVM",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.RePhraseQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_rephrasequeryretriever",
+    "description": "Retrieve documents using RePhraseQueryRetriever",
+    "source_component": "RePhraseQueryRetriever",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.RePhraseQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwargs": {
+          "title": "Kwargs"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwargs", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_rephrasequeryretrieverconfig",
+    "description": "Retrieve documents using RePhraseQueryRetrieverConfig",
+    "source_component": "RePhraseQueryRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.RePhraseQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.RePhraseQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_baseretrieverconfig",
+    "description": "Retrieve documents using BaseRetrieverConfig",
+    "source_component": "BaseRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.EnsembleRetriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_ensembleretrieverconfig",
+    "description": "Retrieve documents using EnsembleRetrieverConfig",
+    "source_component": "EnsembleRetrieverConfig",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.EnsembleRetriever",
+    "schema": {
+      "properties": {
+        "data": {
+          "title": "Data"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["data", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "retrieve_retrievertype",
+    "description": "Retrieve documents using RetrieverType",
+    "source_component": "RetrieverType",
+    "source_type": "retriever",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.EnsembleRetriever",
+    "schema": {
+      "properties": {
+        "args": {
+          "title": "Args"
+        },
+        "kwds": {
+          "title": "Kwds"
+        },
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        }
+      },
+      "required": ["args", "kwds", "query"],
+      "title": "RetrieverArgs",
+      "type": "object"
+    }
+  }
+]

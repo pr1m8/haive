@@ -1,0 +1,3368 @@
+[
+  {
+    "name": "get_all_report_of_the_week_reviews",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.report_of_the_week_tool",
+    "class_name": "StructuredTool",
+    "description": "Retrieve all food and drink reviews from The Report Of The Week.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.505252",
+    "schema": {
+      "description": "Input model for retrieving all reports from The Report Of The Week API.\n\nThis empty model is used as a placeholder for the get_all_reports function\nto maintain a consistent API pattern across tools.",
+      "properties": {},
+      "title": "GetAllReportsInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_all_report_of_the_week_reviews",
+    "tool_description": "Retrieve all food and drink reviews from The Report Of The Week."
+  },
+  {
+    "name": "get_report_of_the_week_by_category",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.report_of_the_week_tool",
+    "class_name": "StructuredTool",
+    "description": "Get reviews by category, such as 'Energy Crisis' for energy drinks or 'Running On Empty' for food.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.505500",
+    "schema": {
+      "description": "Input model for retrieving reports filtered by category.\n\nThis model defines the parameters needed to filter reviews by their\ncategory designation.\n\nAttributes:\n    category (str): The category to filter reviews by, such as 'Energy Crisis'\n        for energy drinks or 'Running On Empty' for food reviews.",
+      "properties": {
+        "category": {
+          "description": "The category to filter by, such as 'Energy Crisis' or 'Running On Empty'.",
+          "title": "Category",
+          "type": "string"
+        }
+      },
+      "required": ["category"],
+      "title": "GetReportsByCategoryInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_report_of_the_week_by_category",
+    "tool_description": "Get reviews by category, such as 'Energy Crisis' for energy drinks or 'Running On Empty' for food."
+  },
+  {
+    "name": "get_report_of_the_week_by_date_range",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.report_of_the_week_tool",
+    "class_name": "StructuredTool",
+    "description": "Get reviews posted between two dates (format: YYYY-M-D).",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.505701",
+    "schema": {
+      "description": "Input model for retrieving reports within a specific date range.\n\nThis model defines the parameters needed to filter reviews by their\npublication date.\n\nAttributes:\n    start_date (str): The beginning date of the range in YYYY-M-D format.\n    end_date (str): The ending date of the range in YYYY-M-D format.",
+      "properties": {
+        "start_date": {
+          "description": "Start date in YYYY-M-D format.",
+          "title": "Start Date",
+          "type": "string"
+        },
+        "end_date": {
+          "description": "End date in YYYY-M-D format.",
+          "title": "End Date",
+          "type": "string"
+        }
+      },
+      "required": ["start_date", "end_date"],
+      "title": "GetReportsByDateRangeInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_report_of_the_week_by_date_range",
+    "tool_description": "Get reviews posted between two dates (format: YYYY-M-D)."
+  },
+  {
+    "name": "arxiv",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.arxiv",
+    "class_name": "ArxivQueryRun",
+    "description": "A wrapper around Arxiv.org Useful for when you need to answer questions about Physics, Mathematics, Computer Science, Quantitative Biology, Quantitative Finance, Statistics, Electrical Engineering, and Economics from scientific articles on arxiv.org. Input should be a search query.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.506032",
+    "schema": {
+      "description": "Input for the Arxiv tool.",
+      "properties": {
+        "query": {
+          "description": "search query to look up",
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"],
+      "title": "ArxivInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "arxiv",
+    "tool_description": "A wrapper around Arxiv.org Useful for when you need to answer questions about Physics, Mathematics, Computer Science, Quantitative Biology, Quantitative Finance, Statistics, Electrical Engineering, and Economics from scientific articles on arxiv.org. Input should be a search query."
+  },
+  {
+    "name": "predict_gender",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.genderize_tool",
+    "class_name": "StructuredTool",
+    "description": "Predict gender from a single first name, with optional country scope.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.506551",
+    "schema": {
+      "description": "Predict gender from a first name using the Genderize.io API.\n\nArgs:\n    name: The first name to predict gender for\n    country_id: Optional two-letter country code (ISO 3166-1 alpha-2)\n        to scope the search to a specific country\n\nReturns:\n    GenderizeResponse: An object containing the predicted gender, probability,\n        and other metadata from the API\n\nRaises:\n    requests.exceptions.HTTPError: If the API request fails",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "country_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Country Id"
+        }
+      },
+      "required": ["name"],
+      "title": "predict_gender",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "predict_gender",
+    "tool_description": "Predict gender from a single first name, with optional country scope."
+  },
+  {
+    "name": "techy_phrase_json",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.techy_phrase_tool",
+    "class_name": "Tool",
+    "description": "Get a random tech phrase in structured JSON format",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.507549",
+    "schema": {
+      "properties": {
+        "name": {
+          "type": "str",
+          "default": null
+        },
+        "func": {
+          "type": "Optional[Callable]",
+          "default": null
+        },
+        "description": {
+          "type": "str",
+          "default": null
+        },
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "techy_phrase_json",
+    "tool_description": "Get a random tech phrase in structured JSON format"
+  },
+  {
+    "name": "techy_phrase_text",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.techy_phrase_tool",
+    "class_name": "Tool",
+    "description": "Get a random tech phrase in plain text",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.507598",
+    "schema": {
+      "properties": {
+        "name": {
+          "type": "str",
+          "default": null
+        },
+        "func": {
+          "type": "Optional[Callable]",
+          "default": null
+        },
+        "description": {
+          "type": "str",
+          "default": null
+        },
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "techy_phrase_text",
+    "tool_description": "Get a random tech phrase in plain text"
+  },
+  {
+    "name": "duckduckgo_search_results",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.duckduckgo_search",
+    "class_name": "DuckDuckGoSearchResults",
+    "description": "Search the web using DuckDuckGo and get structured results with URLs, titles, and snippets.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.507925",
+    "schema": {
+      "description": "Input for the DuckDuckGo search tool.",
+      "properties": {
+        "query": {
+          "description": "search query to look up",
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"],
+      "title": "DDGInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "duckduckgo_search_results",
+    "tool_description": "Search the web using DuckDuckGo and get structured results with URLs, titles, and snippets."
+  },
+  {
+    "name": "duckduckgo_search",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.duckduckgo_search",
+    "class_name": "DuckDuckGoSearchRun",
+    "description": "Search the web using DuckDuckGo and get summarized results as text.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.508090",
+    "schema": {
+      "description": "Input for the DuckDuckGo search tool.",
+      "properties": {
+        "query": {
+          "description": "search query to look up",
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"],
+      "title": "DDGInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "duckduckgo_search",
+    "tool_description": "Search the web using DuckDuckGo and get summarized results as text."
+  },
+  {
+    "name": "duckduckgo_search",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.duckduckgo_search",
+    "class_name": "DuckDuckGoSearchRun",
+    "description": "Search the web using DuckDuckGo and get summarized results as text.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.508419",
+    "schema": {
+      "description": "Input for the DuckDuckGo search tool.",
+      "properties": {
+        "query": {
+          "description": "search query to look up",
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"],
+      "title": "DDGInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "duckduckgo_search",
+    "tool_description": "Search the web using DuckDuckGo and get summarized results as text."
+  },
+  {
+    "name": "duckduckgo_search_results",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.duckduckgo_search",
+    "class_name": "DuckDuckGoSearchResults",
+    "description": "Search the web using DuckDuckGo and get structured results with URLs, titles, and snippets.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.508573",
+    "schema": {
+      "description": "Input for the DuckDuckGo search tool.",
+      "properties": {
+        "query": {
+          "description": "search query to look up",
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"],
+      "title": "DDGInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "duckduckgo_search_results",
+    "tool_description": "Search the web using DuckDuckGo and get structured results with URLs, titles, and snippets."
+  },
+  {
+    "name": "eleven_labs_text2speech",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.eleven_labs",
+    "class_name": "ElevenLabsText2SpeechTool",
+    "description": "A wrapper around Eleven Labs Text2Speech. Useful for when you need to convert text to speech. It supports more than 30 languages, including English, German, Polish, Spanish, Italian, French, Portuguese, and Hindi. ",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.508741",
+    "schema": {
+      "properties": {
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "eleven_labs_text2speech",
+    "tool_description": "A wrapper around Eleven Labs Text2Speech. Useful for when you need to convert text to speech. It supports more than 30 languages, including English, German, Polish, Spanish, Italian, French, Portuguese, and Hindi. "
+  },
+  {
+    "name": "youtube_search",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.youtube_search_tool",
+    "class_name": "YouTubeSearchTool",
+    "description": "search for youtube videos associated with a person. the input to this tool should be a comma separated list, the first part contains a person name and the second a number that is the maximum number of video results to return aka num_results. the second part is optional",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.509394",
+    "schema": {
+      "properties": {
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "youtube_search",
+    "tool_description": "search for youtube videos associated with a person. the input to this tool should be a comma separated list, the first part contains a person name and the second a number that is the maximum number of video results to return aka num_results. the second part is optional"
+  },
+  {
+    "name": "lookup_card_bin_info",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.binlist_lookup",
+    "class_name": "StructuredTool",
+    "description": "Look up card information based on the first 6 to 8 digits (BIN/IIN) using Binlist.net API",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.510149",
+    "schema": {
+      "$defs": {
+        "BinLookupInput": {
+          "description": "Input model for the BIN lookup tool.\n\nAttributes:\n    bin_number: The first 6 to 8 digits of a payment card number, also known as\n                the Bank Identification Number (BIN) or Issuer Identification Number (IIN).\n                This identifies the issuing bank or financial institution.",
+          "properties": {
+            "bin_number": {
+              "description": "The first 6 to 8 digits of a card number",
+              "title": "Bin Number",
+              "type": "string"
+            }
+          },
+          "required": ["bin_number"],
+          "title": "BinLookupInput",
+          "type": "object"
+        }
+      },
+      "description": "Look up information about a payment card based on its BIN/IIN using the Binlist.net API.\n\nArgs:\n    input: A BinLookupInput object containing the bin_number to look up.\n\nReturns:\n    dict: A dictionary containing information about the card, including:\n        - scheme (e.g., visa, mastercard)\n        - type (e.g., debit, credit)\n        - brand\n        - country information\n        - bank information\n        - Or an error message if the BIN is not found\n\nRaises:\n    requests.exceptions.HTTPError: If the API request fails for any reason other than a 404.",
+      "properties": {
+        "input": {
+          "$ref": "#/$defs/BinLookupInput"
+        }
+      },
+      "required": ["input"],
+      "title": "lookup_card_bin_info",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "lookup_card_bin_info",
+    "tool_description": "Look up card information based on the first 6 to 8 digits (BIN/IIN) using Binlist.net API"
+  },
+  {
+    "name": "get_geek_joke",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.geek_jokes_tool",
+    "class_name": "StructuredTool",
+    "description": "Fetch a random geek or programming-related joke from the Geek Jokes API",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.510604",
+    "schema": {
+      "description": "Input model for the get_geek_joke function.\n\nThis is an empty input model that exists for compatibility with the LangChain\nstructured tool interface. The Geek Jokes API doesn't require any parameters.\n\nAttributes:\n    dummy (Optional[str]): An unused field that maintains compatibility with\n        LangChain's requirement for an input schema.",
+      "properties": {
+        "dummy": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Unused input; the joke requires no input.",
+          "title": "Dummy"
+        }
+      },
+      "title": "GetGeekJokeInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_geek_joke",
+    "tool_description": "Fetch a random geek or programming-related joke from the Geek Jokes API"
+  },
+  {
+    "name": "get_random_corporate_bs",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.corporate_bs_tool",
+    "class_name": "StructuredTool",
+    "description": "Generate a random corporate buzzword phrase for satirical purposes",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.510883",
+    "schema": {
+      "description": "Fetch a random corporate buzzword phrase from the Corporate BS Generator API.\n\nReturns:\n    CorporateBS: An object containing the randomly generated corporate phrase.\n\nRaises:\n    requests.RequestException: If the API request fails.",
+      "properties": {},
+      "title": "get_random_corporate_bs",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_random_corporate_bs",
+    "tool_description": "Generate a random corporate buzzword phrase for satirical purposes"
+  },
+  {
+    "name": "image_explainer",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.scene_explain_tool",
+    "class_name": "SceneXplainTool",
+    "description": "An Image Captioning Tool: Use this tool to generate a detailed caption for an image. The input can be an image file of any format, and the output will be a text description that covers every detail of the image.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.511640",
+    "schema": {
+      "properties": {
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "image_explainer",
+    "tool_description": "An Image Captioning Tool: Use this tool to generate a detailed caption for an image. The input can be an image file of any format, and the output will be a text description that covers every detail of the image."
+  },
+  {
+    "name": "scrape_webpages",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.search_tools",
+    "class_name": "StructuredTool",
+    "description": "Scrape web pages using WebBaseLoader to extract detailed content information.\n\nThis tool uses langchain's WebBaseLoader to fetch and parse content from specified URLs,\nreturning the extracted content in a formatted document structure.\n\nArgs:\n    urls (List[str]): The list of URLs to scrape for content.\n\nReturns:\n    str: The scraped content from all URLs in a structured format with document titles.\n\nRaises:\n    Exception: If URL scraping fails due to network issues, invalid URLs, or access restrictions.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.521936",
+    "schema": {
+      "description": "Scrape web pages using WebBaseLoader to extract detailed content information.\n\nThis tool uses langchain's WebBaseLoader to fetch and parse content from specified URLs,\nreturning the extracted content in a formatted document structure.\n\nArgs:\n    urls (List[str]): The list of URLs to scrape for content.\n\nReturns:\n    str: The scraped content from all URLs in a structured format with document titles.\n\nRaises:\n    Exception: If URL scraping fails due to network issues, invalid URLs, or access restrictions.",
+      "properties": {
+        "urls": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Urls",
+          "type": "array"
+        }
+      },
+      "required": ["urls"],
+      "title": "scrape_webpages",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "scrape_webpages",
+    "tool_description": "Scrape web pages using WebBaseLoader to extract detailed content information.\n\nThis tool uses langchain's WebBaseLoader to fetch and parse content from specified URLs,\nreturning the extracted content in a formatted document structure.\n\nArgs:\n    urls (List[str]): The list of URLs to scrape for content.\n\nReturns:\n    str: The scraped content from all URLs in a structured format with document titles.\n\nRaises:\n    Exception: If URL scraping fails due to network issues, invalid URLs, or access restrictions."
+  },
+  {
+    "name": "tavily_extract",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.search_tools",
+    "class_name": "StructuredTool",
+    "description": "Extract raw content from a list of websites using the Tavily Extract API.\n\nThis tool retrieves the content from specified URLs, which is useful for data collection,\ncontent analysis, and research. It can be combined with search methods to first find\nrelevant documents and then extract detailed information from them.\n\nArgs:\n    urls (List[str]): The list of URLs to extract content from.\n    **kwargs: Additional arguments to pass to the Tavily Extract API.\n\nReturns:\n    Dict: The extracted content from the specified URLs in a structured format.\n\nRaises:\n    Exception: If the URL extraction fails or if the API request encounters an error.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.522222",
+    "schema": {
+      "description": "Extract raw content from a list of websites using the Tavily Extract API.\n\nThis tool retrieves the content from specified URLs, which is useful for data collection,\ncontent analysis, and research. It can be combined with search methods to first find\nrelevant documents and then extract detailed information from them.\n\nArgs:\n    urls (List[str]): The list of URLs to extract content from.\n    **kwargs: Additional arguments to pass to the Tavily Extract API.\n\nReturns:\n    Dict: The extracted content from the specified URLs in a structured format.\n\nRaises:\n    Exception: If the URL extraction fails or if the API request encounters an error.",
+      "properties": {
+        "urls": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Urls",
+          "type": "array"
+        },
+        "kwargs": {
+          "additionalProperties": true,
+          "default": null,
+          "title": "Kwargs",
+          "type": "object"
+        }
+      },
+      "required": ["urls"],
+      "title": "tavily_extract",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "tavily_extract",
+    "tool_description": "Extract raw content from a list of websites using the Tavily Extract API.\n\nThis tool retrieves the content from specified URLs, which is useful for data collection,\ncontent analysis, and research. It can be combined with search methods to first find\nrelevant documents and then extract detailed information from them.\n\nArgs:\n    urls (List[str]): The list of URLs to extract content from.\n    **kwargs: Additional arguments to pass to the Tavily Extract API.\n\nReturns:\n    Dict: The extracted content from the specified URLs in a structured format.\n\nRaises:\n    Exception: If the URL extraction fails or if the API request encounters an error."
+  },
+  {
+    "name": "tavily_qna",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.search_tools",
+    "class_name": "StructuredTool",
+    "description": "Search tool for getting a quick answer to a specific question using Tavily's QnA search.\n\nThis tool queries the Tavily API with a question and returns a direct answer along\nwith supporting information from web search results.\n\nArgs:\n    query (str): The search query or question to be answered.\n    max_results (int): Maximum number of results to return. Default is 5.\n    include_answer (bool): Include short answer in response. Default is True.\n    search_depth (Literal[\"basic\", \"advanced\"]): Search depth, either 'basic' or 'advanced'. \n        Default is 'advanced'.\n    verbose (bool): Log the tool's progress. Default is False.\n    topic (Literal[\"general\", \"news\", \"finance\"]): Topic category for search context. \n        Default is 'general'.\n    days (int): How recent the information should be in days. Default is 3.\n    include_domains (Sequence[str]): Specific domains to include in search. Default is empty list.\n    exclude_domains (Sequence[str]): Specific domains to exclude from search. Default is empty list.\n\nReturns:\n    str: The search results with a direct answer to the question.\n\nRaises:\n    Exception: If the Tavily API request fails.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.522905",
+    "schema": {
+      "description": "Search tool for getting a quick answer to a specific question using Tavily's QnA search.\n\nThis tool queries the Tavily API with a question and returns a direct answer along\nwith supporting information from web search results.\n\nArgs:\n    query (str): The search query or question to be answered.\n    max_results (int): Maximum number of results to return. Default is 5.\n    include_answer (bool): Include short answer in response. Default is True.\n    search_depth (Literal[\"basic\", \"advanced\"]): Search depth, either 'basic' or 'advanced'. \n        Default is 'advanced'.\n    verbose (bool): Log the tool's progress. Default is False.\n    topic (Literal[\"general\", \"news\", \"finance\"]): Topic category for search context. \n        Default is 'general'.\n    days (int): How recent the information should be in days. Default is 3.\n    include_domains (Sequence[str]): Specific domains to include in search. Default is empty list.\n    exclude_domains (Sequence[str]): Specific domains to exclude from search. Default is empty list.\n\nReturns:\n    str: The search results with a direct answer to the question.\n\nRaises:\n    Exception: If the Tavily API request fails.",
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "max_results": {
+          "default": 5,
+          "title": "Max Results",
+          "type": "integer"
+        },
+        "include_answer": {
+          "default": true,
+          "title": "Include Answer",
+          "type": "boolean"
+        },
+        "search_depth": {
+          "default": "advanced",
+          "enum": ["basic", "advanced"],
+          "title": "Search Depth",
+          "type": "string"
+        },
+        "verbose": {
+          "default": false,
+          "title": "Verbose",
+          "type": "boolean"
+        },
+        "topic": {
+          "default": "general",
+          "enum": ["general", "news", "finance"],
+          "title": "Topic",
+          "type": "string"
+        },
+        "days": {
+          "default": 3,
+          "title": "Days",
+          "type": "integer"
+        },
+        "include_domains": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Include Domains",
+          "type": "array"
+        },
+        "exclude_domains": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Exclude Domains",
+          "type": "array"
+        }
+      },
+      "required": ["query"],
+      "title": "tavily_qna",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "tavily_qna",
+    "tool_description": "Search tool for getting a quick answer to a specific question using Tavily's QnA search.\n\nThis tool queries the Tavily API with a question and returns a direct answer along\nwith supporting information from web search results.\n\nArgs:\n    query (str): The search query or question to be answered.\n    max_results (int): Maximum number of results to return. Default is 5.\n    include_answer (bool): Include short answer in response. Default is True.\n    search_depth (Literal[\"basic\", \"advanced\"]): Search depth, either 'basic' or 'advanced'. \n        Default is 'advanced'.\n    verbose (bool): Log the tool's progress. Default is False.\n    topic (Literal[\"general\", \"news\", \"finance\"]): Topic category for search context. \n        Default is 'general'.\n    days (int): How recent the information should be in days. Default is 3.\n    include_domains (Sequence[str]): Specific domains to include in search. Default is empty list.\n    exclude_domains (Sequence[str]): Specific domains to exclude from search. Default is empty list.\n\nReturns:\n    str: The search results with a direct answer to the question.\n\nRaises:\n    Exception: If the Tavily API request fails."
+  },
+  {
+    "name": "tavily_search_context",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.search_tools",
+    "class_name": "StructuredTool",
+    "description": "Generate search context for Retrieval Augmented Generation (RAG) applications.\n\nThis tool retrieves relevant context information from the web based on a search query,\nspecifically formatted for use in RAG applications. It provides more comprehensive\ncontext than standard search responses.\n\nArgs:\n    query (str): The search query string.\n    search_depth (Literal[\"basic\", \"advanced\"]): Search depth, either 'basic' or 'advanced'. \n        Default is 'basic'.\n    topic (Literal[\"general\", \"news\"]): The topic category for search context. \n        Default is 'general'.\n    days (int): How recent the information should be in days. Default is 3.\n    max_results (int): Maximum number of results to return. Default is 5.\n    include_domains (Sequence[str]): Specific domains to include in search. \n        Default is empty list.\n    exclude_domains (Sequence[str]): Specific domains to exclude from search. \n        Default is empty list.\n    max_tokens (int): Maximum number of tokens to return in the context. Default is 4000.\n    **kwargs: Additional arguments to pass to the Tavily API.\n\nReturns:\n    str: The search context formatted for RAG applications.\n\nRaises:\n    Exception: If the API request fails.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.523532",
+    "schema": {
+      "description": "Generate search context for Retrieval Augmented Generation (RAG) applications.\n\nThis tool retrieves relevant context information from the web based on a search query,\nspecifically formatted for use in RAG applications. It provides more comprehensive\ncontext than standard search responses.\n\nArgs:\n    query (str): The search query string.\n    search_depth (Literal[\"basic\", \"advanced\"]): Search depth, either 'basic' or 'advanced'. \n        Default is 'basic'.\n    topic (Literal[\"general\", \"news\"]): The topic category for search context. \n        Default is 'general'.\n    days (int): How recent the information should be in days. Default is 3.\n    max_results (int): Maximum number of results to return. Default is 5.\n    include_domains (Sequence[str]): Specific domains to include in search. \n        Default is empty list.\n    exclude_domains (Sequence[str]): Specific domains to exclude from search. \n        Default is empty list.\n    max_tokens (int): Maximum number of tokens to return in the context. Default is 4000.\n    **kwargs: Additional arguments to pass to the Tavily API.\n\nReturns:\n    str: The search context formatted for RAG applications.\n\nRaises:\n    Exception: If the API request fails.",
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "search_depth": {
+          "default": "basic",
+          "enum": ["basic", "advanced"],
+          "title": "Search Depth",
+          "type": "string"
+        },
+        "topic": {
+          "default": "general",
+          "enum": ["general", "news"],
+          "title": "Topic",
+          "type": "string"
+        },
+        "days": {
+          "default": 3,
+          "title": "Days",
+          "type": "integer"
+        },
+        "max_results": {
+          "default": 5,
+          "title": "Max Results",
+          "type": "integer"
+        },
+        "include_domains": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Include Domains",
+          "type": "array"
+        },
+        "exclude_domains": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Exclude Domains",
+          "type": "array"
+        },
+        "max_tokens": {
+          "default": 4000,
+          "title": "Max Tokens",
+          "type": "integer"
+        },
+        "kwargs": {
+          "additionalProperties": true,
+          "default": null,
+          "title": "Kwargs",
+          "type": "object"
+        }
+      },
+      "required": ["query"],
+      "title": "tavily_search_context",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "tavily_search_context",
+    "tool_description": "Generate search context for Retrieval Augmented Generation (RAG) applications.\n\nThis tool retrieves relevant context information from the web based on a search query,\nspecifically formatted for use in RAG applications. It provides more comprehensive\ncontext than standard search responses.\n\nArgs:\n    query (str): The search query string.\n    search_depth (Literal[\"basic\", \"advanced\"]): Search depth, either 'basic' or 'advanced'. \n        Default is 'basic'.\n    topic (Literal[\"general\", \"news\"]): The topic category for search context. \n        Default is 'general'.\n    days (int): How recent the information should be in days. Default is 3.\n    max_results (int): Maximum number of results to return. Default is 5.\n    include_domains (Sequence[str]): Specific domains to include in search. \n        Default is empty list.\n    exclude_domains (Sequence[str]): Specific domains to exclude from search. \n        Default is empty list.\n    max_tokens (int): Maximum number of tokens to return in the context. Default is 4000.\n    **kwargs: Additional arguments to pass to the Tavily API.\n\nReturns:\n    str: The search context formatted for RAG applications.\n\nRaises:\n    Exception: If the API request fails."
+  },
+  {
+    "name": "tavily_search_tool",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.search_tools",
+    "class_name": "StructuredTool",
+    "description": "Query Tavily Search API with full configurability for comprehensive search results.\n\nThis tool provides complete access to all Tavily search options and returns structured\nsearch results with customizable content types and filtering options.\n\nArgs:\n    query (str): The search query string.\n    max_results (Optional[int]): Maximum number of results to return. Default is 5.\n    include_answer (Optional[bool]): Include short answer in response. Default is True.\n    include_raw_content (Optional[bool]): Include raw content of the search results. \n        Default is False.\n    include_images (Optional[bool]): Include images in the response. Default is False.\n    search_depth (Optional[str]): Search depth, either 'basic' or 'advanced'. \n        Default is 'advanced'.\n    include_domains (Optional[List[str]]): Specific domains to include in search. \n        Default is empty list.\n    exclude_domains (Optional[List[str]]): Specific domains to exclude in search. \n        Default is empty list.\n    verbose (Optional[bool]): Log the tool's progress. Default is False.\n\nReturns:\n    Dict: The search results in a structured format including titles, URLs, and optionally\n        raw content, images, and direct answers.\n\nRaises:\n    Exception: If the API request fails or if invalid parameters are provided.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.524339",
+    "schema": {
+      "description": "Query Tavily Search API with full configurability for comprehensive search results.\n\nThis tool provides complete access to all Tavily search options and returns structured\nsearch results with customizable content types and filtering options.\n\nArgs:\n    query (str): The search query string.\n    max_results (Optional[int]): Maximum number of results to return. Default is 5.\n    include_answer (Optional[bool]): Include short answer in response. Default is True.\n    include_raw_content (Optional[bool]): Include raw content of the search results. \n        Default is False.\n    include_images (Optional[bool]): Include images in the response. Default is False.\n    search_depth (Optional[str]): Search depth, either 'basic' or 'advanced'. \n        Default is 'advanced'.\n    include_domains (Optional[List[str]]): Specific domains to include in search. \n        Default is empty list.\n    exclude_domains (Optional[List[str]]): Specific domains to exclude in search. \n        Default is empty list.\n    verbose (Optional[bool]): Log the tool's progress. Default is False.\n\nReturns:\n    Dict: The search results in a structured format including titles, URLs, and optionally\n        raw content, images, and direct answers.\n\nRaises:\n    Exception: If the API request fails or if invalid parameters are provided.",
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "max_results": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 5,
+          "title": "Max Results"
+        },
+        "include_answer": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": true,
+          "title": "Include Answer"
+        },
+        "include_raw_content": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "title": "Include Raw Content"
+        },
+        "include_images": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "title": "Include Images"
+        },
+        "search_depth": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "advanced",
+          "title": "Search Depth"
+        },
+        "include_domains": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "<Max depth 5 reached>"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": [],
+          "title": "Include Domains"
+        },
+        "exclude_domains": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "<Max depth 5 reached>"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": [],
+          "title": "Exclude Domains"
+        },
+        "verbose": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "title": "Verbose"
+        }
+      },
+      "required": ["query"],
+      "title": "tavily_search_tool",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "tavily_search_tool",
+    "tool_description": "Query Tavily Search API with full configurability for comprehensive search results.\n\nThis tool provides complete access to all Tavily search options and returns structured\nsearch results with customizable content types and filtering options.\n\nArgs:\n    query (str): The search query string.\n    max_results (Optional[int]): Maximum number of results to return. Default is 5.\n    include_answer (Optional[bool]): Include short answer in response. Default is True.\n    include_raw_content (Optional[bool]): Include raw content of the search results. \n        Default is False.\n    include_images (Optional[bool]): Include images in the response. Default is False.\n    search_depth (Optional[str]): Search depth, either 'basic' or 'advanced'. \n        Default is 'advanced'.\n    include_domains (Optional[List[str]]): Specific domains to include in search. \n        Default is empty list.\n    exclude_domains (Optional[List[str]]): Specific domains to exclude in search. \n        Default is empty list.\n    verbose (Optional[bool]): Log the tool's progress. Default is False.\n\nReturns:\n    Dict: The search results in a structured format including titles, URLs, and optionally\n        raw content, images, and direct answers.\n\nRaises:\n    Exception: If the API request fails or if invalid parameters are provided."
+  },
+  {
+    "name": "get_openaq_location_by_id",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.openaq_tool",
+    "class_name": "StructuredTool",
+    "description": "Fetch air quality station details from OpenAQ by location ID. Requires an API key.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.524796",
+    "schema": {
+      "description": "Fetch detailed information about an air quality monitoring location from OpenAQ.\n\nThis function retrieves comprehensive metadata about a specific air quality \nmonitoring station identified by its location ID, including its coordinates,\navailable parameters, and other attributes.\n\nArgs:\n    location_id (int): The OpenAQ location ID to fetch data for.\n    api_key (Optional[str]): The OpenAQ API key. If not provided, will look for\n        OPENAQ_API_KEY in environment variables.\n\nReturns:\n    dict: A dictionary containing detailed information about the location,\n        including geographical coordinates, available parameters, and metadata.\n\nRaises:\n    ValueError: If no API key is provided or found in environment variables.\n    requests.RequestException: If the API request fails.",
+      "properties": {
+        "location_id": {
+          "title": "Location Id",
+          "type": "integer"
+        },
+        "api_key": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Api Key"
+        }
+      },
+      "required": ["location_id"],
+      "title": "get_openaq_location_by_id",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_openaq_location_by_id",
+    "tool_description": "Fetch air quality station details from OpenAQ by location ID. Requires an API key."
+  },
+  {
+    "name": "yahoo_finance_news",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.yfinance_tool",
+    "class_name": "YahooFinanceNewsTool",
+    "description": "Useful for when you need to find financial news about a public company. Input should be a company ticker. For example, AAPL for Apple, MSFT for Microsoft.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.525078",
+    "schema": {
+      "description": "Input for the YahooFinanceNews tool.",
+      "properties": {
+        "query": {
+          "description": "company ticker query to look up",
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"],
+      "title": "YahooFinanceNewsInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "yahoo_finance_news",
+    "tool_description": "Useful for when you need to find financial news about a public company. Input should be a company ticker. For example, AAPL for Apple, MSFT for Microsoft."
+  },
+  {
+    "name": "Dall-E-Image-Generator",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.dalle_image_generator_tool",
+    "class_name": "Tool",
+    "description": "A wrapper around OpenAI DALL-E API. Useful for when you need to generate images from a text description. Input should be an image description.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.525258",
+    "schema": {
+      "properties": {
+        "name": {
+          "type": "str",
+          "default": null
+        },
+        "func": {
+          "type": "Optional[Callable]",
+          "default": null
+        },
+        "description": {
+          "type": "str",
+          "default": null
+        },
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "Dall-E-Image-Generator",
+    "tool_description": "A wrapper around OpenAI DALL-E API. Useful for when you need to generate images from a text description. Input should be an image description."
+  },
+  {
+    "name": "get_open_food_facts_product",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.open_food_tool",
+    "class_name": "StructuredTool",
+    "description": "Use this tool to retrieve product data using a barcode from Open Food Facts.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.525539",
+    "schema": {
+      "description": "Input schema for the Open Food Facts product lookup.\n\nAttributes:\n    barcode: The barcode of the product to look up",
+      "properties": {
+        "barcode": {
+          "description": "The barcode of the product to look up.",
+          "title": "Barcode",
+          "type": "string"
+        }
+      },
+      "required": ["barcode"],
+      "title": "GetProductInfoInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_open_food_facts_product",
+    "tool_description": "Use this tool to retrieve product data using a barcode from Open Food Facts."
+  },
+  {
+    "name": "estimate_age",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.agify_tool",
+    "class_name": "StructuredTool",
+    "description": "Estimate the average age of a person based on their first name, with optional country filtering.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.526097",
+    "schema": {
+      "description": "Estimate the average age of a person based on their first name.\n\nThis function queries the Agify.io API to get an age estimation based on the provided\nfirst name. The estimation can be optionally filtered by country.\n\nArgs:\n    name (str): The first name to estimate age for.\n    country_id (Optional[str], optional): Two-letter country code (ISO 3166-1 alpha-2)\n        to filter results by country. Defaults to None (worldwide data).\n\nReturns:\n    AgifyResponse: Object containing the age estimation and related metadata.\n\nRaises:\n    requests.RequestException: If the API request fails.",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "country_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Country Id"
+        }
+      },
+      "required": ["name"],
+      "title": "estimate_age",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "estimate_age",
+    "tool_description": "Estimate the average age of a person based on their first name, with optional country filtering."
+  },
+  {
+    "name": "search_registered_domains",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.domain_search_tool",
+    "class_name": "StructuredTool",
+    "description": "Search for registered domain names using a keyword",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.526426",
+    "schema": {
+      "description": "Input model for the domain search tool.\n\nAttributes:\n    domain: A domain keyword to search for. This can be any term that might appear\n           in registered domain names, such as a brand name, generic term, or \n           specific word of interest.",
+      "properties": {
+        "domain": {
+          "description": "A keyword to search for, e.g., 'facebook', 'ai', 'nasa', etc.",
+          "format": "uri",
+          "minLength": 1,
+          "title": "Domain",
+          "type": "string"
+        }
+      },
+      "required": ["domain"],
+      "title": "DomainSearchInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "search_registered_domains",
+    "tool_description": "Search for registered domain names using a keyword"
+  },
+  {
+    "name": "python_repl_tool",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.dev_tools",
+    "class_name": "StructuredTool",
+    "description": "Use this to execute python code. If you want to see the output of a value,\n    you should print it out with `print(...)`. This is visible to the user.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.527136",
+    "schema": {
+      "description": "Use this to execute python code. If you want to see the output of a value,\nyou should print it out with `print(...)`. This is visible to the user.",
+      "properties": {
+        "code": {
+          "description": "The python code to execute to generate your chart.",
+          "title": "Code",
+          "type": "string"
+        }
+      },
+      "required": ["code"],
+      "title": "python_repl_tool",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "python_repl_tool",
+    "tool_description": "Use this to execute python code. If you want to see the output of a value,\n    you should print it out with `print(...)`. This is visible to the user."
+  },
+  {
+    "name": "terminal",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.dev_tools",
+    "class_name": "ShellTool",
+    "description": "Run shell commands on this Linux machine.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.527321",
+    "schema": {
+      "description": "Commands for the Bash Shell tool.",
+      "properties": {
+        "commands": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "<Max depth 5 reached>"
+              },
+              "type": "array"
+            }
+          ],
+          "description": "List of shell commands to run. Deserialized using json.loads",
+          "title": "Commands"
+        }
+      },
+      "required": ["commands"],
+      "title": "ShellInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "terminal",
+    "tool_description": "Run shell commands on this Linux machine."
+  },
+  {
+    "name": "pub_med",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.pubmed",
+    "class_name": "PubmedQueryRun",
+    "description": "A wrapper around PubMed. Useful for when you need to answer questions about medicine, health, and biomedical topics from biomedical literature, MEDLINE, life science journals, and online books. Input should be a search query.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.528977",
+    "schema": {
+      "properties": {
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "pub_med",
+    "tool_description": "A wrapper around PubMed. Useful for when you need to answer questions about medicine, health, and biomedical topics from biomedical literature, MEDLINE, life science journals, and online books. Input should be a search query."
+  },
+  {
+    "name": "reddit_search",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.reddit_search",
+    "class_name": "StructuredTool",
+    "description": "Search posts on Reddit using subreddit, time filter, and query.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.529451",
+    "schema": {
+      "description": "Search for posts on Reddit with specified parameters.\n\nArgs:\n    query: Query string to search post titles for\n    sort: Sort method: 'relevance', 'hot', 'top', 'new', or 'comments'\n    time_filter: Time period: 'all', 'day', 'hour', 'month', 'week', or 'year'\n    subreddit: Subreddit name like 'python' or 'all'\n    limit: Max number of results to return\n\nReturns:\n    str: Formatted results from Reddit posts matching the query parameters\n\nRaises:\n    ValueError: If the Reddit API returns an error",
+      "properties": {
+        "query": {
+          "description": "Query string to search post titles for",
+          "title": "Query",
+          "type": "string"
+        },
+        "sort": {
+          "description": "Sort method: 'relevance', 'hot', 'top', 'new', or 'comments'",
+          "title": "Sort",
+          "type": "string"
+        },
+        "time_filter": {
+          "description": "Time period: 'all', 'day', 'hour', 'month', 'week', or 'year'",
+          "title": "Time Filter",
+          "type": "string"
+        },
+        "subreddit": {
+          "description": "Subreddit name like 'python' or 'all'",
+          "title": "Subreddit",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Max number of results to return",
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": ["query", "sort", "time_filter", "subreddit", "limit"],
+      "title": "reddit_search",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "reddit_search",
+    "tool_description": "Search posts on Reddit using subreddit, time filter, and query."
+  },
+  {
+    "name": "get_fruit_info",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.fruityvice_tool",
+    "class_name": "StructuredTool",
+    "description": "Fetch nutrition and detailed information about a specific fruit using its name from the Fruityvice API",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.529916",
+    "schema": {
+      "$defs": {
+        "FruitNameInput": {
+          "description": "Input model for fruit lookup requests.\n\nAttributes:\n    name (str): The name of the fruit to retrieve data for.",
+          "properties": {
+            "name": {
+              "description": "Name of the fruit to retrieve data for",
+              "title": "Name",
+              "type": "string"
+            }
+          },
+          "required": ["name"],
+          "title": "FruitNameInput",
+          "type": "object"
+        }
+      },
+      "description": "Fetch detailed information about a specific fruit from the Fruityvice API.\n\nThe information returned typically includes nutritional data (calories, fat, sugar, etc.),\nfamily, genus, and other taxonomic details.\n\nArgs:\n    input (FruitNameInput): Object containing the name of the fruit to look up.\n\nReturns:\n    Dict[str, Any]: A dictionary containing the fruit's details and nutritional information.\n    If the fruit is not found, returns a dictionary with an error message.\n\nRaises:\n    requests.HTTPError: If the API request fails for reasons other than a 404.",
+      "properties": {
+        "input": {
+          "$ref": "#/$defs/FruitNameInput"
+        }
+      },
+      "required": ["input"],
+      "title": "get_fruit_info",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_fruit_info",
+    "tool_description": "Fetch nutrition and detailed information about a specific fruit using its name from the Fruityvice API"
+  },
+  {
+    "name": "get_fruit_info",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.fruityvice_tool",
+    "class_name": "StructuredTool",
+    "description": "Fetch nutrition and detailed information about a specific fruit using its name from the Fruityvice API",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.530219",
+    "schema": {
+      "$defs": {
+        "FruitNameInput": {
+          "description": "Input model for fruit lookup requests.\n\nAttributes:\n    name (str): The name of the fruit to retrieve data for.",
+          "properties": {
+            "name": {
+              "description": "Name of the fruit to retrieve data for",
+              "title": "Name",
+              "type": "string"
+            }
+          },
+          "required": ["name"],
+          "title": "FruitNameInput",
+          "type": "object"
+        }
+      },
+      "description": "Fetch detailed information about a specific fruit from the Fruityvice API.\n\nThe information returned typically includes nutritional data (calories, fat, sugar, etc.),\nfamily, genus, and other taxonomic details.\n\nArgs:\n    input (FruitNameInput): Object containing the name of the fruit to look up.\n\nReturns:\n    Dict[str, Any]: A dictionary containing the fruit's details and nutritional information.\n    If the fruit is not found, returns a dictionary with an error message.\n\nRaises:\n    requests.HTTPError: If the API request fails for reasons other than a 404.",
+      "properties": {
+        "input": {
+          "$ref": "#/$defs/FruitNameInput"
+        }
+      },
+      "required": ["input"],
+      "title": "get_fruit_info",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_fruit_info",
+    "tool_description": "Fetch nutrition and detailed information about a specific fruit using its name from the Fruityvice API"
+  },
+  {
+    "name": "google_places",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.google.google_places",
+    "class_name": "GooglePlacesTool",
+    "description": "A wrapper around Google Places. Useful for when you need to validate or discover addressed from ambiguous text. Input should be a search query.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.531094",
+    "schema": {
+      "description": "Input for GooglePlacesTool.",
+      "properties": {
+        "query": {
+          "description": "Query for google maps",
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"],
+      "title": "GooglePlacesSchema",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "google_places",
+    "tool_description": "A wrapper around Google Places. Useful for when you need to validate or discover addressed from ambiguous text. Input should be a search query."
+  },
+  {
+    "name": "google_search",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.google.google_search",
+    "class_name": "GoogleSearchRun",
+    "description": "A wrapper around Google Search. Useful for when you need to answer questions about current events. Input should be a search query.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.534521",
+    "schema": {
+      "properties": {
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "google_search",
+    "tool_description": "A wrapper around Google Search. Useful for when you need to answer questions about current events. Input should be a search query."
+  },
+  {
+    "name": "GoogleBooks",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.google.google_books",
+    "class_name": "GoogleBooksQueryRun",
+    "description": "A wrapper around Google Books. Useful for when you need to answer general inquiries about books of certain topics and generate recommendation based off of key wordsInput should be a query string",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.536476",
+    "schema": {
+      "description": "Input for the GoogleBooksQuery tool.",
+      "properties": {
+        "query": {
+          "description": "query to look up on google books",
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"],
+      "title": "GoogleBooksQueryInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "GoogleBooks",
+    "tool_description": "A wrapper around Google Books. Useful for when you need to answer general inquiries about books of certain topics and generate recommendation based off of key wordsInput should be a query string"
+  },
+  {
+    "name": "google_lens",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.google.google_lens",
+    "class_name": "GoogleLensQueryRun",
+    "description": "A wrapper around Google Lens Search. Useful for when you need to get information relatedto an image from Google LensInput should be a url to an image.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.536722",
+    "schema": {
+      "properties": {
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "google_lens",
+    "tool_description": "A wrapper around Google Lens Search. Useful for when you need to get information relatedto an image from Google LensInput should be a url to an image."
+  },
+  {
+    "name": "filter_rick_and_morty_characters",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.rick_and_morty_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Filter Rick and Morty characters using the REST API with optional parameters.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.544593",
+    "schema": {
+      "description": "Input schema for filtering Rick and Morty characters.\n\nThis model defines optional parameters that can be used to filter\nthe characters returned by the Rick and Morty API.\n\nAttributes:\n    name (Optional[str]): Filter by character name (case-insensitive, partial matches).\n    status (Optional[str]): Filter by character status (\"alive\", \"dead\", or \"unknown\").\n    species (Optional[str]): Filter by character species (e.g., \"Human\", \"Alien\").\n    gender (Optional[str]): Filter by character gender (\"male\", \"female\", \"genderless\", \"unknown\").",
+      "properties": {
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter characters by name.",
+          "title": "Name"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "alive, dead, or unknown",
+          "title": "Status"
+        },
+        "species": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter characters by species.",
+          "title": "Species"
+        },
+        "gender": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "male, female, genderless, unknown",
+          "title": "Gender"
+        }
+      },
+      "title": "FilterCharactersInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "filter_rick_and_morty_characters",
+    "tool_description": "Filter Rick and Morty characters using the REST API with optional parameters."
+  },
+  {
+    "name": "get_rick_and_morty_character_by_id",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.rick_and_morty_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get Rick and Morty character by ID using the REST API.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.544783",
+    "schema": {
+      "description": "Input schema for getting a Rick and Morty character by ID.\n\nAttributes:\n    id (int): The unique identifier of the character to retrieve.",
+      "properties": {
+        "id": {
+          "description": "The ID of the character.",
+          "title": "Id",
+          "type": "integer"
+        }
+      },
+      "required": ["id"],
+      "title": "GetCharacterByIDInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_rick_and_morty_character_by_id",
+    "tool_description": "Get Rick and Morty character by ID using the REST API."
+  },
+  {
+    "name": "graphql_query_rick_and_morty_characters",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.rick_and_morty_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Query Rick and Morty characters using GraphQL endpoint with optional page and name filter.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.545086",
+    "schema": {
+      "description": "Input schema for the GraphQL character query.\n\nThis model defines the parameters that can be passed to the GraphQL API\nwhen querying for Rick and Morty characters.\n\nAttributes:\n    name (Optional[str]): Character name to filter results by.\n    page (Optional[int]): Page number for paginated results.",
+      "properties": {
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Character name to filter",
+          "title": "Name"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Page number",
+          "title": "Page"
+        }
+      },
+      "title": "GraphQLCharactersQueryInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "graphql_query_rick_and_morty_characters",
+    "tool_description": "Query Rick and Morty characters using GraphQL endpoint with optional page and name filter."
+  },
+  {
+    "name": "graphql_query_rick_and_morty_location",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.rick_and_morty_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Query a specific location by ID from the Rick and Morty GraphQL API.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.545249",
+    "schema": {
+      "description": "Input schema for the GraphQL location query by ID.\n\nAttributes:\n    id (int): The unique identifier of the location to retrieve.",
+      "properties": {
+        "id": {
+          "description": "Location ID",
+          "title": "Id",
+          "type": "integer"
+        }
+      },
+      "required": ["id"],
+      "title": "GraphQLLocationByIDInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "graphql_query_rick_and_morty_location",
+    "tool_description": "Query a specific location by ID from the Rick and Morty GraphQL API."
+  },
+  {
+    "name": "get_yugioh_card_info",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.yugiioh_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Retrieve detailed Yu-Gi-Oh! card info using name, archetype, attribute, level, etc.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.545449",
+    "schema": {
+      "title": "GetCardInfoInput",
+      "description": "Input model for querying Yu-Gi-Oh! card information with various filters.\n\nAttributes:\n    name (Optional[str]): Filter by exact card name.\n    fname (Optional[str]): Fuzzy search by name fragment.\n    archetype (Optional[str]): Filter by card archetype.\n    attribute (Optional[str]): Filter by card attribute (DARK, LIGHT, etc).\n    race (Optional[str]): Filter by card race/type (Warrior, Dragon, etc).\n    level (Optional[int]): Filter by card level or rank.\n    cardset (Optional[str]): Filter by card set name.\n    format (Optional[str]): Filter by card format (TCG, OCG, Speed Duel, etc).\n    misc (Optional[bool]): Include additional metadata in the response.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "description": "Exact card name",
+          "type": "string"
+        },
+        "fname": {
+          "title": "Fname",
+          "description": "Fuzzy search by name fragment",
+          "type": "string"
+        },
+        "archetype": {
+          "title": "Archetype",
+          "description": "Card archetype, e.g. Blue-Eyes",
+          "type": "string"
+        },
+        "attribute": {
+          "title": "Attribute",
+          "description": "Card attribute, e.g. DARK, LIGHT",
+          "type": "string"
+        },
+        "race": {
+          "title": "Race",
+          "description": "Card race/type, e.g. Warrior, Dragon",
+          "type": "string"
+        },
+        "level": {
+          "title": "Level",
+          "description": "Level or rank of the card",
+          "type": "integer"
+        },
+        "cardset": {
+          "title": "Cardset",
+          "description": "Card set, e.g. Metal Raiders",
+          "type": "string"
+        },
+        "format": {
+          "title": "Format",
+          "description": "Card format, e.g. TCG, Speed Duel",
+          "type": "string"
+        },
+        "misc": {
+          "title": "Misc",
+          "description": "Whether to include additional metadata",
+          "default": false,
+          "type": "boolean"
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_yugioh_card_info",
+    "tool_description": "Retrieve detailed Yu-Gi-Oh! card info using name, archetype, attribute, level, etc."
+  },
+  {
+    "name": "get_yugioh_card_info",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.yugiioh_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Retrieve detailed Yu-Gi-Oh! card info using name, archetype, attribute, level, etc.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.545479",
+    "schema": {
+      "title": "GetCardInfoInput",
+      "description": "Input model for querying Yu-Gi-Oh! card information with various filters.\n\nAttributes:\n    name (Optional[str]): Filter by exact card name.\n    fname (Optional[str]): Fuzzy search by name fragment.\n    archetype (Optional[str]): Filter by card archetype.\n    attribute (Optional[str]): Filter by card attribute (DARK, LIGHT, etc).\n    race (Optional[str]): Filter by card race/type (Warrior, Dragon, etc).\n    level (Optional[int]): Filter by card level or rank.\n    cardset (Optional[str]): Filter by card set name.\n    format (Optional[str]): Filter by card format (TCG, OCG, Speed Duel, etc).\n    misc (Optional[bool]): Include additional metadata in the response.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "description": "Exact card name",
+          "type": "string"
+        },
+        "fname": {
+          "title": "Fname",
+          "description": "Fuzzy search by name fragment",
+          "type": "string"
+        },
+        "archetype": {
+          "title": "Archetype",
+          "description": "Card archetype, e.g. Blue-Eyes",
+          "type": "string"
+        },
+        "attribute": {
+          "title": "Attribute",
+          "description": "Card attribute, e.g. DARK, LIGHT",
+          "type": "string"
+        },
+        "race": {
+          "title": "Race",
+          "description": "Card race/type, e.g. Warrior, Dragon",
+          "type": "string"
+        },
+        "level": {
+          "title": "Level",
+          "description": "Level or rank of the card",
+          "type": "integer"
+        },
+        "cardset": {
+          "title": "Cardset",
+          "description": "Card set, e.g. Metal Raiders",
+          "type": "string"
+        },
+        "format": {
+          "title": "Format",
+          "description": "Card format, e.g. TCG, Speed Duel",
+          "type": "string"
+        },
+        "misc": {
+          "title": "Misc",
+          "description": "Whether to include additional metadata",
+          "default": false,
+          "type": "boolean"
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_yugioh_card_info",
+    "tool_description": "Retrieve detailed Yu-Gi-Oh! card info using name, archetype, attribute, level, etc."
+  },
+  {
+    "name": "get_yugioh_card_sets",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.yugiioh_toolkit",
+    "class_name": "Tool",
+    "description": "Get all Yu-Gi-Oh! card sets",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.545547",
+    "schema": {
+      "properties": {
+        "name": {
+          "type": "str",
+          "default": null
+        },
+        "func": {
+          "type": "Optional[Callable]",
+          "default": null
+        },
+        "description": {
+          "type": "str",
+          "default": null
+        },
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_yugioh_card_sets",
+    "tool_description": "Get all Yu-Gi-Oh! card sets"
+  },
+  {
+    "name": "get_yugioh_archetypes",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.yugiioh_toolkit",
+    "class_name": "Tool",
+    "description": "Get all Yu-Gi-Oh! archetypes",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.545590",
+    "schema": {
+      "properties": {
+        "name": {
+          "type": "str",
+          "default": null
+        },
+        "func": {
+          "type": "Optional[Callable]",
+          "default": null
+        },
+        "description": {
+          "type": "str",
+          "default": null
+        },
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_yugioh_archetypes",
+    "tool_description": "Get all Yu-Gi-Oh! archetypes"
+  },
+  {
+    "name": "get_random_yugioh_card",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.yugiioh_toolkit",
+    "class_name": "Tool",
+    "description": "Get a random Yu-Gi-Oh! card",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.545627",
+    "schema": {
+      "properties": {
+        "name": {
+          "type": "str",
+          "default": null
+        },
+        "func": {
+          "type": "Optional[Callable]",
+          "default": null
+        },
+        "description": {
+          "type": "str",
+          "default": null
+        },
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_random_yugioh_card",
+    "tool_description": "Get a random Yu-Gi-Oh! card"
+  },
+  {
+    "name": "get_yugioh_database_version",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.yugiioh_toolkit",
+    "class_name": "Tool",
+    "description": "Check the Yu-Gi-Oh! database version",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.545665",
+    "schema": {
+      "properties": {
+        "name": {
+          "type": "str",
+          "default": null
+        },
+        "func": {
+          "type": "Optional[Callable]",
+          "default": null
+        },
+        "description": {
+          "type": "str",
+          "default": null
+        },
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_yugioh_database_version",
+    "tool_description": "Check the Yu-Gi-Oh! database version"
+  },
+  {
+    "name": "citysdk_linked_data_query",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.citydsk_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Send a SPARQL query to the CitySDK Linked Data API to retrieve structured city information.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.545998",
+    "schema": {
+      "description": "Input schema for the CitySDK Linked Data SPARQL query tool.\n\nArgs:\n    query: SPARQL query to execute against the CitySDK Linked Data endpoint",
+      "properties": {
+        "query": {
+          "description": "SPARQL query to send to the CitySDK Linked Data endpoint.",
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"],
+      "title": "CitySDKLinkedDataQueryInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "citysdk_linked_data_query",
+    "tool_description": "Send a SPARQL query to the CitySDK Linked Data API to retrieve structured city information."
+  },
+  {
+    "name": "citysdk_tourism_poi_query",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.citydsk_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Retrieve Points of Interest from the CitySDK Tourism API using a bounding box or city filter.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.546302",
+    "schema": {
+      "description": "Input schema for querying Points of Interest from the CitySDK Tourism API.\n\nArgs:\n    bbox: Bounding box coordinates to filter POIs geographically\n    city: City name to filter POIs by location",
+      "properties": {
+        "bbox": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Bounding box (e.g., '24.9384,60.1695,24.9500,60.1750') to filter POIs geographically.",
+          "title": "Bbox"
+        },
+        "city": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional city to filter POIs.",
+          "title": "City"
+        }
+      },
+      "title": "CitySDKTourismPOIInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "citysdk_tourism_poi_query",
+    "tool_description": "Retrieve Points of Interest from the CitySDK Tourism API using a bounding box or city filter."
+  },
+  {
+    "name": "get_random_poems",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.poetry_db_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get a number of random poems",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.546697",
+    "schema": {
+      "description": "Input schema for fetching random poems.\n\nArgs:\n    count: Number of random poems to retrieve",
+      "properties": {
+        "count": {
+          "description": "Number of random poems to fetch",
+          "title": "Count",
+          "type": "integer"
+        }
+      },
+      "required": ["count"],
+      "title": "RandomPoemInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_random_poems",
+    "tool_description": "Get a number of random poems"
+  },
+  {
+    "name": "search_poems_by_line",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.poetry_db_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Search for poems that contain a specific line or phrase",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.546936",
+    "schema": {
+      "description": "Input schema for searching poems containing a specific phrase or line.\n\nArgs:\n    phrase: Line or text fragment to search for in poems",
+      "properties": {
+        "phrase": {
+          "description": "Line or phrase to search for in poems",
+          "title": "Phrase",
+          "type": "string"
+        }
+      },
+      "required": ["phrase"],
+      "title": "LineSearchInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "search_poems_by_line",
+    "tool_description": "Search for poems that contain a specific line or phrase"
+  },
+  {
+    "name": "search_poem_by_title",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.poetry_db_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Search for a poem using its title",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.547108",
+    "schema": {
+      "description": "Input schema for searching a poem by its title.\n\nArgs:\n    title: Title of the poem to search for",
+      "properties": {
+        "title": {
+          "description": "Title of the poem",
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": ["title"],
+      "title": "TitleSearchInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "search_poem_by_title",
+    "tool_description": "Search for a poem using its title"
+  },
+  {
+    "name": "search_poems_by_author",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.poetry_db_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Search for poems by a specific poet",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.547419",
+    "schema": {
+      "description": "Input schema for searching poems by author name.\n\nArgs:\n    author: Name of the poet to search for",
+      "properties": {
+        "author": {
+          "description": "Name of the poet to search for",
+          "title": "Author",
+          "type": "string"
+        }
+      },
+      "required": ["author"],
+      "title": "AuthorSearchInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "search_poems_by_author",
+    "tool_description": "Search for poems by a specific poet"
+  },
+  {
+    "name": "alpha_vantage_exchange_rate",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.alpha_vantage",
+    "class_name": "Tool",
+    "description": "Get real-time currency exchange rate from one currency to another. Input is a string: 'USD,JPY'.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.552531",
+    "schema": {
+      "properties": {
+        "name": {
+          "type": "str",
+          "default": null
+        },
+        "func": {
+          "type": "Optional[Callable]",
+          "default": null
+        },
+        "description": {
+          "type": "str",
+          "default": null
+        },
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "alpha_vantage_exchange_rate",
+    "tool_description": "Get real-time currency exchange rate from one currency to another. Input is a string: 'USD,JPY'."
+  },
+  {
+    "name": "alpha_vantage_daily_stock_data",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.alpha_vantage",
+    "class_name": "Tool",
+    "description": "Get daily stock time series data for a given symbol. Input is a string symbol (e.g., 'IBM').",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.552581",
+    "schema": {
+      "properties": {
+        "name": {
+          "type": "str",
+          "default": null
+        },
+        "func": {
+          "type": "Optional[Callable]",
+          "default": null
+        },
+        "description": {
+          "type": "str",
+          "default": null
+        },
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "alpha_vantage_daily_stock_data",
+    "tool_description": "Get daily stock time series data for a given symbol. Input is a string symbol (e.g., 'IBM')."
+  },
+  {
+    "name": "alpha_vantage_weekly_stock_data",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.alpha_vantage",
+    "class_name": "Tool",
+    "description": "Get weekly stock time series data for a given symbol. Input is a string symbol (e.g., 'IBM').",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.552621",
+    "schema": {
+      "properties": {
+        "name": {
+          "type": "str",
+          "default": null
+        },
+        "func": {
+          "type": "Optional[Callable]",
+          "default": null
+        },
+        "description": {
+          "type": "str",
+          "default": null
+        },
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "alpha_vantage_weekly_stock_data",
+    "tool_description": "Get weekly stock time series data for a given symbol. Input is a string symbol (e.g., 'IBM')."
+  },
+  {
+    "name": "alpha_vantage_quote",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.alpha_vantage",
+    "class_name": "Tool",
+    "description": "Get real-time quote data (price, volume) for a given symbol. Input is a string symbol (e.g., 'IBM').",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.552675",
+    "schema": {
+      "properties": {
+        "name": {
+          "type": "str",
+          "default": null
+        },
+        "func": {
+          "type": "Optional[Callable]",
+          "default": null
+        },
+        "description": {
+          "type": "str",
+          "default": null
+        },
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "alpha_vantage_quote",
+    "tool_description": "Get real-time quote data (price, volume) for a given symbol. Input is a string symbol (e.g., 'IBM')."
+  },
+  {
+    "name": "alpha_vantage_search_symbol",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.alpha_vantage",
+    "class_name": "Tool",
+    "description": "Search for matching company symbols by input string (e.g., 'Tesla', 'IBM').",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.552729",
+    "schema": {
+      "properties": {
+        "name": {
+          "type": "str",
+          "default": null
+        },
+        "func": {
+          "type": "Optional[Callable]",
+          "default": null
+        },
+        "description": {
+          "type": "str",
+          "default": null
+        },
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "alpha_vantage_search_symbol",
+    "tool_description": "Search for matching company symbols by input string (e.g., 'Tesla', 'IBM')."
+  },
+  {
+    "name": "alpha_vantage_market_sentiment",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.alpha_vantage",
+    "class_name": "Tool",
+    "description": "Get market news sentiment for a given symbol.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.552770",
+    "schema": {
+      "properties": {
+        "name": {
+          "type": "str",
+          "default": null
+        },
+        "func": {
+          "type": "Optional[Callable]",
+          "default": null
+        },
+        "description": {
+          "type": "str",
+          "default": null
+        },
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "alpha_vantage_market_sentiment",
+    "tool_description": "Get market news sentiment for a given symbol."
+  },
+  {
+    "name": "alpha_vantage_market_movers",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.alpha_vantage",
+    "class_name": "Tool",
+    "description": "Get top 20 gainers, losers, and most active stocks in the US market.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.552808",
+    "schema": {
+      "properties": {
+        "name": {
+          "type": "str",
+          "default": null
+        },
+        "func": {
+          "type": "Optional[Callable]",
+          "default": null
+        },
+        "description": {
+          "type": "str",
+          "default": null
+        },
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "alpha_vantage_market_movers",
+    "tool_description": "Get top 20 gainers, losers, and most active stocks in the US market."
+  },
+  {
+    "name": "get_lcbo_product_by_id",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.lcbo_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Fetch detailed info for a product using its LCBO product ID",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.553257",
+    "schema": {
+      "description": "Input schema for fetching a product by ID from the LCBO API.\n\nArgs:\n    product_id: The unique LCBO product identifier",
+      "properties": {
+        "product_id": {
+          "description": "LCBO product ID",
+          "title": "Product Id",
+          "type": "integer"
+        }
+      },
+      "required": ["product_id"],
+      "title": "GetLCBOProductInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_lcbo_product_by_id",
+    "tool_description": "Fetch detailed info for a product using its LCBO product ID"
+  },
+  {
+    "name": "search_lcbo_products",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.lcbo_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Search for LCBO products by keyword, name, etc.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.553653",
+    "schema": {
+      "description": "Input schema for searching LCBO products.\n\nArgs:\n    query: The search terms to find matching products\n    page: Page number for paginated results\n    per_page: Number of results to return per page",
+      "properties": {
+        "query": {
+          "description": "Search query string",
+          "title": "Query",
+          "type": "string"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 1,
+          "description": "Page number of results",
+          "title": "Page"
+        },
+        "per_page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 10,
+          "description": "Number of results per page",
+          "title": "Per Page"
+        }
+      },
+      "required": ["query"],
+      "title": "SearchLCBOProductsInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "search_lcbo_products",
+    "tool_description": "Search for LCBO products by keyword, name, etc."
+  },
+  {
+    "name": "get_location_details",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.trip_advisor_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get details about a location by ID.\n\nRetrieves comprehensive information about a specific TripAdvisor location\nsuch as a hotel, restaurant, or attraction.\n\nArgs:\n    location_id: The unique identifier for a TripAdvisor location.\n    language: The language code for the response content (ISO 639-1).\n    currency: The currency code for price values (ISO 4217).\n\nReturns:\n    dict: Location details including name, address, rating, etc.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.554154",
+    "schema": {
+      "description": "Input parameters for retrieving location details.",
+      "properties": {
+        "location_id": {
+          "description": "The unique identifier for a TripAdvisor location.",
+          "title": "Location Id",
+          "type": "integer"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "The language code for the response content (ISO 639-1).",
+          "title": "Language"
+        },
+        "currency": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "USD",
+          "description": "The currency code for price values (ISO 4217).",
+          "title": "Currency"
+        }
+      },
+      "required": ["location_id"],
+      "title": "LocationDetailsInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_location_details",
+    "tool_description": "Get details about a location by ID.\n\nRetrieves comprehensive information about a specific TripAdvisor location\nsuch as a hotel, restaurant, or attraction.\n\nArgs:\n    location_id: The unique identifier for a TripAdvisor location.\n    language: The language code for the response content (ISO 639-1).\n    currency: The currency code for price values (ISO 4217).\n\nReturns:\n    dict: Location details including name, address, rating, etc."
+  },
+  {
+    "name": "get_location_photos",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.trip_advisor_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get high-quality photos for a location.\n\nRetrieves photos from TripAdvisor for a specific location.\n\nArgs:\n    location_id: The unique identifier for a TripAdvisor location.\n    language: The language code for the response content (ISO 639-1).\n    limit: Maximum number of photos to return (1-100).\n    offset: Number of photos to skip for pagination.\n    source: Filter photos by source (tripadvisor, management).\n\nReturns:\n    dict: Collection of photo objects with URLs and metadata.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.554591",
+    "schema": {
+      "description": "Input parameters for retrieving location photos.",
+      "properties": {
+        "location_id": {
+          "description": "The unique identifier for a TripAdvisor location.",
+          "title": "Location Id",
+          "type": "integer"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "The language code for the response content (ISO 639-1).",
+          "title": "Language"
+        },
+        "limit": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 5,
+          "description": "Maximum number of photos to return (1-100).",
+          "title": "Limit"
+        },
+        "offset": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Number of photos to skip for pagination.",
+          "title": "Offset"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter photos by source (tripadvisor, management).",
+          "title": "Source"
+        }
+      },
+      "required": ["location_id"],
+      "title": "LocationPhotosInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_location_photos",
+    "tool_description": "Get high-quality photos for a location.\n\nRetrieves photos from TripAdvisor for a specific location.\n\nArgs:\n    location_id: The unique identifier for a TripAdvisor location.\n    language: The language code for the response content (ISO 639-1).\n    limit: Maximum number of photos to return (1-100).\n    offset: Number of photos to skip for pagination.\n    source: Filter photos by source (tripadvisor, management).\n\nReturns:\n    dict: Collection of photo objects with URLs and metadata."
+  },
+  {
+    "name": "get_location_reviews",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.trip_advisor_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get recent reviews for a location.\n\nRetrieves user reviews for a specific TripAdvisor location.\n\nArgs:\n    location_id: The unique identifier for a TripAdvisor location.\n    language: The language code for the response content (ISO 639-1).\n    limit: Maximum number of reviews to return (1-50).\n    offset: Number of reviews to skip for pagination.\n\nReturns:\n    dict: Collection of review objects with ratings, text, and metadata.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.555029",
+    "schema": {
+      "description": "Input parameters for retrieving location reviews.",
+      "properties": {
+        "location_id": {
+          "description": "The unique identifier for a TripAdvisor location.",
+          "title": "Location Id",
+          "type": "integer"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "The language code for the response content (ISO 639-1).",
+          "title": "Language"
+        },
+        "limit": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 5,
+          "description": "Maximum number of reviews to return (1-50).",
+          "title": "Limit"
+        },
+        "offset": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Number of reviews to skip for pagination.",
+          "title": "Offset"
+        }
+      },
+      "required": ["location_id"],
+      "title": "LocationReviewsInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_location_reviews",
+    "tool_description": "Get recent reviews for a location.\n\nRetrieves user reviews for a specific TripAdvisor location.\n\nArgs:\n    location_id: The unique identifier for a TripAdvisor location.\n    language: The language code for the response content (ISO 639-1).\n    limit: Maximum number of reviews to return (1-50).\n    offset: Number of reviews to skip for pagination.\n\nReturns:\n    dict: Collection of review objects with ratings, text, and metadata."
+  },
+  {
+    "name": "nearby_search",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.trip_advisor_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Search for nearby locations using a lat/long pair.\n\nFinds TripAdvisor locations near a specific geographical point.\n\nArgs:\n    **kwargs: Keyword arguments matching the NearbySearchInput model.\n        latLong: Latitude,longitude pair (e.g., '42.3455,-71.0983').\n        category: Filter by category (hotels, attractions, restaurants).\n        phone: Filter by phone number.\n        address: Filter by street address.\n        radius: Search radius from the specified coordinates.\n        radius_unit: Unit for radius (km, mi, m).\n        language: The language code for the response content (ISO 639-1).\n\nReturns:\n    dict: Search results with nearby location data.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.556455",
+    "schema": {
+      "description": "Input parameters for searching nearby locations.",
+      "properties": {
+        "latLong": {
+          "description": "Latitude,longitude pair (e.g., '42.3455,-71.0983').",
+          "title": "Latlong",
+          "type": "string"
+        },
+        "category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter by category (hotels, attractions, restaurants).",
+          "title": "Category"
+        },
+        "phone": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter by phone number.",
+          "title": "Phone"
+        },
+        "address": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter by street address.",
+          "title": "Address"
+        },
+        "radius": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search radius from the specified coordinates.",
+          "title": "Radius"
+        },
+        "radius_unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Unit for radius (km, mi, m).",
+          "title": "Radius Unit"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "The language code for the response content (ISO 639-1).",
+          "title": "Language"
+        }
+      },
+      "required": ["latLong"],
+      "title": "NearbySearchInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "nearby_search",
+    "tool_description": "Search for nearby locations using a lat/long pair.\n\nFinds TripAdvisor locations near a specific geographical point.\n\nArgs:\n    **kwargs: Keyword arguments matching the NearbySearchInput model.\n        latLong: Latitude,longitude pair (e.g., '42.3455,-71.0983').\n        category: Filter by category (hotels, attractions, restaurants).\n        phone: Filter by phone number.\n        address: Filter by street address.\n        radius: Search radius from the specified coordinates.\n        radius_unit: Unit for radius (km, mi, m).\n        language: The language code for the response content (ISO 639-1).\n\nReturns:\n    dict: Search results with nearby location data."
+  },
+  {
+    "name": "search_locations",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.trip_advisor_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Search for TripAdvisor locations by name, address, lat/long, etc.\n\nPerforms a general search for TripAdvisor locations using various filters.\n\nArgs:\n    **kwargs: Keyword arguments matching the LocationSearchInput model.\n        searchQuery: Text to search for (e.g., hotel name, restaurant name).\n        category: Filter by category (hotels, attractions, restaurants).\n        phone: Search by phone number.\n        address: Search by street address.\n        latLong: Latitude,longitude pair (e.g., '42.3455,-71.0983').\n        radius: Search radius from the specified coordinates.\n        radius_unit: Unit for radius (km, mi, m).\n        language: The language code for the response content (ISO 639-1).\n\nReturns:\n    dict: Search results with location data.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.557057",
+    "schema": {
+      "description": "Input parameters for searching locations.",
+      "properties": {
+        "searchQuery": {
+          "description": "Text to search for (e.g., hotel name, restaurant name).",
+          "title": "Searchquery",
+          "type": "string"
+        },
+        "category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter by category (hotels, attractions, restaurants).",
+          "title": "Category"
+        },
+        "phone": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search by phone number.",
+          "title": "Phone"
+        },
+        "address": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search by street address.",
+          "title": "Address"
+        },
+        "latLong": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Latitude,longitude pair (e.g., '42.3455,-71.0983').",
+          "title": "Latlong"
+        },
+        "radius": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search radius from the specified coordinates.",
+          "title": "Radius"
+        },
+        "radius_unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Unit for radius (km, mi, m).",
+          "title": "Radius Unit"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "The language code for the response content (ISO 639-1).",
+          "title": "Language"
+        }
+      },
+      "required": ["searchQuery"],
+      "title": "LocationSearchInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "search_locations",
+    "tool_description": "Search for TripAdvisor locations by name, address, lat/long, etc.\n\nPerforms a general search for TripAdvisor locations using various filters.\n\nArgs:\n    **kwargs: Keyword arguments matching the LocationSearchInput model.\n        searchQuery: Text to search for (e.g., hotel name, restaurant name).\n        category: Filter by category (hotels, attractions, restaurants).\n        phone: Search by phone number.\n        address: Search by street address.\n        latLong: Latitude,longitude pair (e.g., '42.3455,-71.0983').\n        radius: Search radius from the specified coordinates.\n        radius_unit: Unit for radius (km, mi, m).\n        language: The language code for the response content (ISO 639-1).\n\nReturns:\n    dict: Search results with location data."
+  },
+  {
+    "name": "get_fred_category",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.fred_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get a FRED category by ID",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.557549",
+    "schema": {
+      "description": "Input schema for FRED category queries.",
+      "properties": {
+        "category_id": {
+          "description": "The FRED category ID to fetch (e.g., 0 for root)",
+          "title": "Category Id",
+          "type": "integer"
+        }
+      },
+      "required": ["category_id"],
+      "title": "CategoryInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_fred_category",
+    "tool_description": "Get a FRED category by ID"
+  },
+  {
+    "name": "get_fred_category_children",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.fred_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get child categories for a FRED category",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.557697",
+    "schema": {
+      "description": "Input schema for FRED category queries.",
+      "properties": {
+        "category_id": {
+          "description": "The FRED category ID to fetch (e.g., 0 for root)",
+          "title": "Category Id",
+          "type": "integer"
+        }
+      },
+      "required": ["category_id"],
+      "title": "CategoryInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_fred_category_children",
+    "tool_description": "Get child categories for a FRED category"
+  },
+  {
+    "name": "get_fred_category_series",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.fred_toolkit",
+    "class_name": "StructuredTool",
+    "description": "List economic data series in a FRED category",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.557865",
+    "schema": {
+      "description": "Input schema for FRED category queries.",
+      "properties": {
+        "category_id": {
+          "description": "The FRED category ID to fetch (e.g., 0 for root)",
+          "title": "Category Id",
+          "type": "integer"
+        }
+      },
+      "required": ["category_id"],
+      "title": "CategoryInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_fred_category_series",
+    "tool_description": "List economic data series in a FRED category"
+  },
+  {
+    "name": "get_fred_series",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.fred_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Retrieve metadata for a FRED economic data series",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.558006",
+    "schema": {
+      "description": "Input schema for FRED series queries.",
+      "properties": {
+        "series_id": {
+          "description": "The FRED series ID to fetch (e.g., 'GDP', 'UNRATE')",
+          "title": "Series Id",
+          "type": "string"
+        }
+      },
+      "required": ["series_id"],
+      "title": "SeriesInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_fred_series",
+    "tool_description": "Retrieve metadata for a FRED economic data series"
+  },
+  {
+    "name": "get_fred_series_observations",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.fred_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get FRED series observations (actual data values) with optional date range filtering",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.558321",
+    "schema": {
+      "description": "Input schema for FRED series observations queries.",
+      "properties": {
+        "series_id": {
+          "description": "The FRED series ID to fetch observations for",
+          "title": "Series Id",
+          "type": "string"
+        },
+        "start_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Start date in YYYY-MM-DD format",
+          "title": "Start Date"
+        },
+        "end_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "End date in YYYY-MM-DD format",
+          "title": "End Date"
+        }
+      },
+      "required": ["series_id"],
+      "title": "SeriesObservationsInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_fred_series_observations",
+    "tool_description": "Get FRED series observations (actual data values) with optional date range filtering"
+  },
+  {
+    "name": "get_all_rps101_objects",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.rps_101_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get a list of all RPS-101 objects (e.g. Rock, Paper, Scissors, Nuke, etc).",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.559699",
+    "schema": {
+      "description": "Get a list of all 101 objects in the RPS-101 game.\n\nReturns:\n    List[str]: A list of all object names in the RPS-101 game.\n\nRaises:\n    requests.RequestException: If the API request fails.",
+      "properties": {},
+      "title": "get_all_rps101_objects",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_all_rps101_objects",
+    "tool_description": "Get a list of all RPS-101 objects (e.g. Rock, Paper, Scissors, Nuke, etc)."
+  },
+  {
+    "name": "get_rps101_match_result",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.rps_101_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get the result of a match between two RPS-101 objects.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.559877",
+    "schema": {
+      "description": "Input model for simulating a match between two RPS-101 objects.\n\nAttributes:\n    object_one (str): The name of the first object in the match.\n    object_two (str): The name of the second object in the match.",
+      "properties": {
+        "object_one": {
+          "description": "The first object in the match (e.g. 'nuke')",
+          "title": "Object One",
+          "type": "string"
+        },
+        "object_two": {
+          "description": "The second object in the match (e.g. 'tank')",
+          "title": "Object Two",
+          "type": "string"
+        }
+      },
+      "required": ["object_one", "object_two"],
+      "title": "RPSMatchInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_rps101_match_result",
+    "tool_description": "Get the result of a match between two RPS-101 objects."
+  },
+  {
+    "name": "get_rps101_object_outcomes",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.rps_101_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get the winning outcomes for a given RPS-101 object. Returns what that object defeats and how.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.560178",
+    "schema": {
+      "description": "Input model for retrieving outcome information about a specific RPS-101 object.\n\nAttributes:\n    object_name (str): The name of the RPS-101 object to get information about.",
+      "properties": {
+        "object_name": {
+          "description": "The name of the RPS-101 object to get winning outcomes for (e.g. 'nuke')",
+          "title": "Object Name",
+          "type": "string"
+        }
+      },
+      "required": ["object_name"],
+      "title": "ObjectNameInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_rps101_object_outcomes",
+    "tool_description": "Get the winning outcomes for a given RPS-101 object. Returns what that object defeats and how."
+  },
+  {
+    "name": "stack_exchange",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.stack_exchange_toolkit",
+    "class_name": "StackExchangeTool",
+    "description": "A wrapper around StackExchange. Useful for when you need to answer specific programming questionscode excerpts, code examples and solutionsInput should be a fully formed question.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.560729",
+    "schema": {
+      "properties": {
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "stack_exchange",
+    "tool_description": "A wrapper around StackExchange. Useful for when you need to answer specific programming questionscode excerpts, code examples and solutionsInput should be a fully formed question."
+  },
+  {
+    "name": "get_random_chuck_joke",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.chuck_norris_jokes_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get a random Chuck Norris joke",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.560992",
+    "schema": {
+      "description": "Fetch a random Chuck Norris joke from the API.\n\nReturns:\n    Joke: A random Chuck Norris joke object.\n\nRaises:\n    requests.RequestException: If the API request fails.",
+      "properties": {},
+      "title": "get_random_chuck_joke",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_random_chuck_joke",
+    "tool_description": "Get a random Chuck Norris joke"
+  },
+  {
+    "name": "get_chuck_joke_by_category",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.chuck_norris_jokes_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get a random Chuck Norris joke from a specified category",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.561145",
+    "schema": {
+      "description": "Fetch a random Chuck Norris joke from a specific category.\n\nArgs:\n    category (str): The joke category to filter by (use get_available_categories\n        to see available options).\n\nReturns:\n    Joke: A random Chuck Norris joke from the specified category.\n\nRaises:\n    requests.RequestException: If the API request fails or the category is invalid.",
+      "properties": {
+        "category": {
+          "title": "Category",
+          "type": "string"
+        }
+      },
+      "required": ["category"],
+      "title": "get_chuck_joke_by_category",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_chuck_joke_by_category",
+    "tool_description": "Get a random Chuck Norris joke from a specified category"
+  },
+  {
+    "name": "get_chuck_joke_categories",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.chuck_norris_jokes_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get a list of all available joke categories",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.561273",
+    "schema": {
+      "description": "Get a list of all available joke categories from the Chuck Norris API.\n\nReturns:\n    List[str]: A list of category names as strings.\n\nRaises:\n    requests.RequestException: If the API request fails.",
+      "properties": {},
+      "title": "get_chuck_joke_categories",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_chuck_joke_categories",
+    "tool_description": "Get a list of all available joke categories"
+  },
+  {
+    "name": "search_chuck_jokes",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.chuck_norris_jokes_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Search for Chuck Norris jokes matching a text query",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.561438",
+    "schema": {
+      "description": "Search for Chuck Norris jokes containing the specified query string.\n\nArgs:\n    query (str): The search term to look for in jokes.\n\nReturns:\n    List[Joke]: A list of joke objects matching the search query.\n\nRaises:\n    requests.RequestException: If the API request fails.",
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"],
+      "title": "search_chuck_jokes",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "search_chuck_jokes",
+    "tool_description": "Search for Chuck Norris jokes matching a text query"
+  },
+  {
+    "name": "get_random_useless_fact",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.useless_facts_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get a random useless fact. Optionally specify the language ('en' or 'de').",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.565948",
+    "schema": {
+      "description": "Input schema for the useless facts tools.\n\nAttributes:\n    language: Language code for the fact (en or de)",
+      "properties": {
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "Language of the fact. Supports 'en' or 'de'.",
+          "title": "Language"
+        }
+      },
+      "title": "FactInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_random_useless_fact",
+    "tool_description": "Get a random useless fact. Optionally specify the language ('en' or 'de')."
+  },
+  {
+    "name": "get_todays_useless_fact",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.useless_facts_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get today's useless fact. Optionally specify the language ('en' or 'de').",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.566217",
+    "schema": {
+      "description": "Input schema for the useless facts tools.\n\nAttributes:\n    language: Language code for the fact (en or de)",
+      "properties": {
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "Language of the fact. Supports 'en' or 'de'.",
+          "title": "Language"
+        }
+      },
+      "title": "FactInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_todays_useless_fact",
+    "tool_description": "Get today's useless fact. Optionally specify the language ('en' or 'de')."
+  },
+  {
+    "name": "get_random_useless_fact",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.useless_facts_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get a random useless fact. Optionally specify the language ('en' or 'de').",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.566581",
+    "schema": {
+      "description": "Input schema for the useless facts tools.\n\nAttributes:\n    language: Language code for the fact (en or de)",
+      "properties": {
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "Language of the fact. Supports 'en' or 'de'.",
+          "title": "Language"
+        }
+      },
+      "title": "FactInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_random_useless_fact",
+    "tool_description": "Get a random useless fact. Optionally specify the language ('en' or 'de')."
+  },
+  {
+    "name": "get_todays_useless_fact",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.useless_facts_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get today's useless fact. Optionally specify the language ('en' or 'de').",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.566822",
+    "schema": {
+      "description": "Input schema for the useless facts tools.\n\nAttributes:\n    language: Language code for the fact (en or de)",
+      "properties": {
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "Language of the fact. Supports 'en' or 'de'.",
+          "title": "Language"
+        }
+      },
+      "title": "FactInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_todays_useless_fact",
+    "tool_description": "Get today's useless fact. Optionally specify the language ('en' or 'de')."
+  },
+  {
+    "name": "get_openlibrary_cover_image",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.openlibrary_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get the cover image URL from an OpenLibrary ID (for book or author)",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.570846",
+    "schema": {
+      "description": "Input schema for the cover image retrieval tool.\n\nAttributes:\n    olid: The OpenLibrary ID for a book or author.\n    is_author: Boolean flag indicating if the OLID is for an author.",
+      "properties": {
+        "olid": {
+          "description": "The OpenLibrary ID for a book or author",
+          "title": "Olid",
+          "type": "string"
+        },
+        "is_author": {
+          "default": false,
+          "description": "Set to true if the OLID is for an author",
+          "title": "Is Author",
+          "type": "boolean"
+        }
+      },
+      "required": ["olid"],
+      "title": "CoverInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_openlibrary_cover_image",
+    "tool_description": "Get the cover image URL from an OpenLibrary ID (for book or author)"
+  },
+  {
+    "name": "search_books_openlibrary",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.openlibrary_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Search for books by title, keyword, or subject using OpenLibrary",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.571101",
+    "schema": {
+      "description": "Input schema for the book search tool.\n\nAttributes:\n    query: The book title, keywords, or search query to use.\n    page: Page number of results to retrieve, starting from 1.",
+      "properties": {
+        "query": {
+          "description": "The book title, keywords, or search query",
+          "title": "Query",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "description": "Page number of results",
+          "title": "Page",
+          "type": "integer"
+        }
+      },
+      "required": ["query"],
+      "title": "BookSearchInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "search_books_openlibrary",
+    "tool_description": "Search for books by title, keyword, or subject using OpenLibrary"
+  },
+  {
+    "name": "search_authors_openlibrary",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.openlibrary_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Search for authors by name using OpenLibrary",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.571254",
+    "schema": {
+      "description": "Input schema for the author search tool.\n\nAttributes:\n    name: Name of the author to search for.",
+      "properties": {
+        "name": {
+          "description": "Name of the author to search for",
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": ["name"],
+      "title": "AuthorSearchInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "search_authors_openlibrary",
+    "tool_description": "Search for authors by name using OpenLibrary"
+  },
+  {
+    "name": "get_openlibrary_cover_image",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.openlibrary_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get the cover image URL from an OpenLibrary ID (for book or author)",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.571465",
+    "schema": {
+      "description": "Input schema for the cover image retrieval tool.\n\nAttributes:\n    olid: The OpenLibrary ID for a book or author.\n    is_author: Boolean flag indicating if the OLID is for an author.",
+      "properties": {
+        "olid": {
+          "description": "The OpenLibrary ID for a book or author",
+          "title": "Olid",
+          "type": "string"
+        },
+        "is_author": {
+          "default": false,
+          "description": "Set to true if the OLID is for an author",
+          "title": "Is Author",
+          "type": "boolean"
+        }
+      },
+      "required": ["olid"],
+      "title": "CoverInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_openlibrary_cover_image",
+    "tool_description": "Get the cover image URL from an OpenLibrary ID (for book or author)"
+  },
+  {
+    "name": "search_authors_openlibrary",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.openlibrary_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Search for authors by name using OpenLibrary",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.571628",
+    "schema": {
+      "description": "Input schema for the author search tool.\n\nAttributes:\n    name: Name of the author to search for.",
+      "properties": {
+        "name": {
+          "description": "Name of the author to search for",
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": ["name"],
+      "title": "AuthorSearchInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "search_authors_openlibrary",
+    "tool_description": "Search for authors by name using OpenLibrary"
+  },
+  {
+    "name": "search_books_openlibrary",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.openlibrary_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Search for books by title, keyword, or subject using OpenLibrary",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T08:08:40.571833",
+    "schema": {
+      "description": "Input schema for the book search tool.\n\nAttributes:\n    query: The book title, keywords, or search query to use.\n    page: Page number of results to retrieve, starting from 1.",
+      "properties": {
+        "query": {
+          "description": "The book title, keywords, or search query",
+          "title": "Query",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "description": "Page number of results",
+          "title": "Page",
+          "type": "integer"
+        }
+      },
+      "required": ["query"],
+      "title": "BookSearchInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "search_books_openlibrary",
+    "tool_description": "Search for books by title, keyword, or subject using OpenLibrary"
+  }
+]

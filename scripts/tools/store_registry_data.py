@@ -7,11 +7,12 @@ This script demonstrates:
 3. How to retrieve the stored information
 """
 
+from datetime import datetime
 import logging
 import os
-from datetime import datetime
 
 from dotenv import load_dotenv
+
 
 # Configure logging
 logging.basicConfig(

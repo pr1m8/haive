@@ -1,0 +1,49 @@
+haive-core/src/haive/core/schema/prebuilt/documents/
+├── __init__.py
+├── base.py
+├── metadata.py
+├── collection.py
+├── state.py
+└── converters.py
+
+haive-prebuilt/src/haive/prebuilt/content/
+├── __init__.py
+├── document_models.py
+├── document_agent.py
+├── document_processors.py
+├── factories.py
+├── loaders/
+│   ├── __init__.py
+│   ├── base.py
+│   ├── file_loaders.py
+│   ├── web_loaders.py
+│   ├── pdf_loaders.py
+│   ├── text_loaders.py
+│   └── database_loaders.py
+└── examples/
+    ├── basic_usage.py
+    ├── web_document_processing.py
+    ├── pdf_document_processing.py
+    └── langchain_integration.py
+
+haive-core/src/haive/core/engine/document/loaders/
+├── __init__.py
+├── config.py
+├── engine.py
+├── registry.py
+└── factory.py
+
+haive-core/tests/schema/prebuilt/documents/
+├── test_base.py
+├── test_metadata.py
+├── test_collection.py
+└── test_state.py
+
+haive-prebuilt/tests/content/
+├── test_document_models.py
+├── test_document_agent.py
+├── test_document_processors.py
+└── loaders/
+    ├── test_file_loaders.py
+    ├── test_web_loaders.py
+    └── test_pdf_loaders.py

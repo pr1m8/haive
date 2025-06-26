@@ -1,5 +1,4 @@
-"""
-Utilities for generating standardized documentation visualizations from agent outputs.
+"""Utilities for generating standardized documentation visualizations from agent outputs.
 
 This module provides functions for converting agent state histories, graphs, and
 outputs into standardized formats for documentation.
@@ -9,20 +8,20 @@ import datetime
 import json
 import logging
 import os
-import uuid
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
+import uuid
 
-import markdown
 from graphviz import Digraph
+import markdown
+
 
 # Set up logging
 logger = logging.getLogger(__name__)
 
 
 class AgentVisualizer:
-    """
-    Standardized visualization of agent outputs and graphs for documentation.
+    """Standardized visualization of agent outputs and graphs for documentation.
 
     This class provides methods to:
     1. Convert agent state history to markdown
@@ -35,12 +34,11 @@ class AgentVisualizer:
 
     def __init__(
         self,
-        output_dir: Optional[str] = None,
-        state_history_dir: Optional[str] = None,
-        graph_dir: Optional[str] = None,
+        output_dir: str | None = None,
+        state_history_dir: str | None = None,
+        graph_dir: str | None = None,
     ):
-        """
-        Initialize the visualizer with output directories.
+        """Initialize the visualizer with output directories.
 
         Args:
             output_dir: Base directory for all outputs
@@ -72,11 +70,10 @@ class AgentVisualizer:
     def save_agent_state_history(
         self,
         agent_name: str,
-        state_history: List[Dict[str, Any]],
-        metadata: Optional[Dict[str, Any]] = None,
+        state_history: list[dict[str, Any]],
+        metadata: dict[str, Any] | None = None,
     ) -> str:
-        """
-        Save agent state history to a standardized format for documentation.
+        """Save agent state history to a standardized format for documentation.
 
         Args:
             agent_name: Name of the agent
@@ -116,12 +113,11 @@ class AgentVisualizer:
 
     def state_history_to_markdown(
         self,
-        state_history_path: Union[str, Path],
+        state_history_path: str | Path,
         include_metadata: bool = True,
-        max_states: Optional[int] = None,
+        max_states: int | None = None,
     ) -> str:
-        """
-        Convert a state history file to markdown for documentation.
+        """Convert a state history file to markdown for documentation.
 
         Args:
             state_history_path: Path to state history JSON file
@@ -133,7 +129,7 @@ class AgentVisualizer:
         """
         # Load state history
         try:
-            with open(state_history_path, "r") as f:
+            with open(state_history_path) as f:
                 data = json.load(f)
         except Exception as e:
             logger.error(f"Failed to load state history from {state_history_path}: {e}")
@@ -196,10 +192,9 @@ class AgentVisualizer:
         agent_name: str,
         graph: Any,
         format: str = "svg",
-        metadata: Optional[Dict[str, Any]] = None,
+        metadata: dict[str, Any] | None = None,
     ) -> str:
-        """
-        Save agent graph visualization for documentation.
+        """Save agent graph visualization for documentation.
 
         Works with both langgraph Graph objects and custom Digraph objects.
 
@@ -259,12 +254,11 @@ class AgentVisualizer:
         self,
         agent_name: str,
         agent_description: str,
-        state_history_path: Optional[Union[str, Path]] = None,
-        graph_path: Optional[Union[str, Path]] = None,
-        additional_content: Optional[str] = None,
+        state_history_path: str | Path | None = None,
+        graph_path: str | Path | None = None,
+        additional_content: str | None = None,
     ) -> str:
-        """
-        Generate a complete documentation page for an agent with visualizations.
+        """Generate a complete documentation page for an agent with visualizations.
 
         Args:
             agent_name: Name of the agent
@@ -353,13 +347,12 @@ class AgentVisualizer:
 
 def visualize_agent_run(
     agent_name: str,
-    state_history: List[Dict[str, Any]],
-    graph: Optional[Any] = None,
-    description: Optional[str] = None,
-    metadata: Optional[Dict[str, Any]] = None,
-) -> Dict[str, str]:
-    """
-    Convenience function to visualize an agent run and save to documentation.
+    state_history: list[dict[str, Any]],
+    graph: Any | None = None,
+    description: str | None = None,
+    metadata: dict[str, Any] | None = None,
+) -> dict[str, str]:
+    """Convenience function to visualize an agent run and save to documentation.
 
     Args:
         agent_name: Name of the agent
@@ -396,9 +389,8 @@ def visualize_agent_run(
     return {"state_history": state_path, "graph": graph_path, "documentation": doc_path}
 
 
-def create_agent_example_index(examples_dir: Optional[Union[str, Path]] = None) -> str:
-    """
-    Create an index page for all agent examples.
+def create_agent_example_index(examples_dir: str | Path | None = None) -> str:
+    """Create an index page for all agent examples.
 
     Args:
         examples_dir: Directory containing agent example RST files
