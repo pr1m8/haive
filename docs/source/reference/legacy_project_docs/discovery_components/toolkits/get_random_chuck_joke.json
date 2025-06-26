@@ -1,0 +1,38 @@
+{
+  "component_info": {
+    "name": "get_random_chuck_joke",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.chuck_norris_jokes_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get a random Chuck Norris joke",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T12:31:28.364298",
+    "schema": {
+      "description": "Fetch a random Chuck Norris joke from the API.\n\nReturns:\n    Joke: A random Chuck Norris joke object.\n\nRaises:\n    requests.RequestException: If the API request fails.",
+      "properties": {},
+      "title": "get_random_chuck_joke",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_random_chuck_joke",
+    "tool_description": "Get a random Chuck Norris joke"
+  },
+  "document": {
+    "page_content": "# get_random_chuck_joke\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.chuck_norris_jokes_toolkit\n**Class:** StructuredTool\n\n## Description\nGet a random Chuck Norris joke\n\n## Schema\n```json\n{\n  \"description\": \"Fetch a random Chuck Norris joke from the API.\\n\\nReturns:\\n    Joke: A random Chuck Norris joke object.\\n\\nRaises:\\n    requests.RequestException: If the API request fails.\",\n  \"properties\": {},\n  \"title\": \"get_random_chuck_joke\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `get_random_chuck_joke`\n**Description:** Get a random Chuck Norris joke\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "get_random_chuck_joke",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.chuck_norris_jokes_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-06-19T12:31:28.364298",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

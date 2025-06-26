@@ -1,21 +1,19 @@
 #!/usr/bin/env python3
-"""
-Documentation System Summary
+"""Documentation System Summary
 
 This script summarizes the comprehensive documentation system fixes and enhancements
 that have been implemented for the Haive project.
 """
 
-import json
 from datetime import datetime
+import json
 from pathlib import Path
 
 
 def create_documentation_summary():
     """Create a summary of the documentation system improvements."""
-    
     workspace_root = Path(__file__).resolve().parents[2]
-    
+
     summary = {
         "timestamp": datetime.now().isoformat(),
         "title": "Haive Documentation System - Complete Fixes and Enhancements",
@@ -25,7 +23,7 @@ def create_documentation_summary():
                 "category": "Core Configuration",
                 "items": [
                     "Fixed conf.py for Poetry monorepo paths",
-                    "Corrected sys.path configuration for all haive packages", 
+                    "Corrected sys.path configuration for all haive packages",
                     "Enhanced mock imports for external dependencies",
                     "Improved autosummary configuration with proper error handling",
                     "Fixed docstring processing and beta notice integration"
@@ -91,7 +89,7 @@ def create_documentation_summary():
                 "location": "scripts/doc_tools/agent_run_capture.py"
             },
             {
-                "name": "README Auto-Discovery", 
+                "name": "README Auto-Discovery",
                 "description": "Automatically find and integrate README files throughout the codebase",
                 "location": "scripts/doc_tools/readme_integrator.py"
             },
@@ -136,47 +134,47 @@ def create_documentation_summary():
             "Add support for interactive agent demonstrations"
         ]
     }
-    
+
     # Save summary
     output_path = workspace_root / "docs" / "DOCUMENTATION_FIXES_SUMMARY.json"
-    with open(output_path, 'w') as f:
+    with open(output_path, "w") as f:
         json.dump(summary, f, indent=2)
-    
+
     print("📚 Haive Documentation System - Complete Implementation Summary")
     print("=" * 80)
     print()
     print("✅ ALL MAJOR ISSUES RESOLVED:")
     print()
-    
+
     for fix_category in summary["fixes_implemented"]:
         print(f"🔧 {fix_category['category']}:")
         for item in fix_category["items"]:
             print(f"   • {item}")
         print()
-    
+
     print("🚀 NEW FEATURES ADDED:")
     print()
-    
+
     for feature in summary["new_features"]:
         print(f"   📦 {feature['name']}")
         print(f"      {feature['description']}")
         print(f"      Location: {feature['location']}")
         print()
-    
+
     print("📊 DOCUMENTATION STATS:")
     print(f"   • {summary['stats']['total_source_files']} source files processed")
     print(f"   • {summary['stats']['discovered_readmes']} README files integrated")
     print(f"   • {summary['stats']['packages_documented']} packages documented")
     print(f"   • Build status: {summary['stats']['build_status']}")
     print()
-    
+
     print("🎯 USAGE:")
     print("   • Build docs: nox -s docs")
     print("   • Serve docs: nox -s serve")
     print("   • Live editing: nox -s docs-live")
     print("   • View at: http://localhost:8000")
     print()
-    
+
     print("🎉 DOCUMENTATION SYSTEM IS NOW FULLY FUNCTIONAL!")
     print(f"📄 Full summary saved to: {output_path}")
     print()

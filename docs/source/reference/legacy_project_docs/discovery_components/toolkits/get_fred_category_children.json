@@ -1,0 +1,45 @@
+{
+  "component_info": {
+    "name": "get_fred_category_children",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.fred_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get child categories for a FRED category",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T12:31:28.360604",
+    "schema": {
+      "description": "Input schema for FRED category queries.",
+      "properties": {
+        "category_id": {
+          "description": "The FRED category ID to fetch (e.g., 0 for root)",
+          "title": "Category Id",
+          "type": "integer"
+        }
+      },
+      "required": ["category_id"],
+      "title": "CategoryInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_fred_category_children",
+    "tool_description": "Get child categories for a FRED category"
+  },
+  "document": {
+    "page_content": "# get_fred_category_children\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.fred_toolkit\n**Class:** StructuredTool\n\n## Description\nGet child categories for a FRED category\n\n## Schema\n```json\n{\n  \"description\": \"Input schema for FRED category queries.\",\n  \"properties\": {\n    \"category_id\": {\n      \"description\": \"The FRED category ID to fetch (e.g., 0 for root)\",\n      \"title\": \"Category Id\",\n      \"type\": \"integer\"\n    }\n  },\n  \"required\": [\n    \"category_id\"\n  ],\n  \"title\": \"CategoryInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `get_fred_category_children`\n**Description:** Get child categories for a FRED category\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "get_fred_category_children",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.fred_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-06-19T12:31:28.360604",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

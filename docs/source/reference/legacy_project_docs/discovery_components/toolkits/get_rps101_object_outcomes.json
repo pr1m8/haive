@@ -1,0 +1,45 @@
+{
+  "component_info": {
+    "name": "get_rps101_object_outcomes",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.rps_101_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get the winning outcomes for a given RPS-101 object. Returns what that object defeats and how.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T12:31:28.363592",
+    "schema": {
+      "description": "Input model for retrieving outcome information about a specific RPS-101 object.\n\nAttributes:\n    object_name (str): The name of the RPS-101 object to get information about.",
+      "properties": {
+        "object_name": {
+          "description": "The name of the RPS-101 object to get winning outcomes for (e.g. 'nuke')",
+          "title": "Object Name",
+          "type": "string"
+        }
+      },
+      "required": ["object_name"],
+      "title": "ObjectNameInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_rps101_object_outcomes",
+    "tool_description": "Get the winning outcomes for a given RPS-101 object. Returns what that object defeats and how."
+  },
+  "document": {
+    "page_content": "# get_rps101_object_outcomes\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.rps_101_toolkit\n**Class:** StructuredTool\n\n## Description\nGet the winning outcomes for a given RPS-101 object. Returns what that object defeats and how.\n\n## Schema\n```json\n{\n  \"description\": \"Input model for retrieving outcome information about a specific RPS-101 object.\\n\\nAttributes:\\n    object_name (str): The name of the RPS-101 object to get information about.\",\n  \"properties\": {\n    \"object_name\": {\n      \"description\": \"The name of the RPS-101 object to get winning outcomes for (e.g. 'nuke')\",\n      \"title\": \"Object Name\",\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"object_name\"\n  ],\n  \"title\": \"ObjectNameInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `get_rps101_object_outcomes`\n**Description:** Get the winning outcomes for a given RPS-101 object. Returns what that object defeats and how.\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "get_rps101_object_outcomes",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.rps_101_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-06-19T12:31:28.363592",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

@@ -1,0 +1,316 @@
+[
+  {
+    "name": "load_documents_webbaseloader",
+    "description": "Load documents using WebBaseLoader: WebBaseLoader document loader integration\n\nSetup:\n    Install ``langchain_community``.\n\n    .. code-",
+    "source_component": "WebBaseLoader",
+    "source_type": "document_loader",
+    "source_module": "packages.haive-tools.src.haive.tools.tools.search_tools",
+    "schema": {
+      "properties": {
+        "web_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "default": "",
+          "title": "Web Path"
+        },
+        "header_template": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Header Template"
+        },
+        "verify_ssl": {
+          "default": true,
+          "title": "Verify Ssl",
+          "type": "boolean"
+        },
+        "proxies": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Proxies"
+        },
+        "continue_on_failure": {
+          "default": false,
+          "title": "Continue On Failure",
+          "type": "boolean"
+        },
+        "autoset_encoding": {
+          "default": true,
+          "title": "Autoset Encoding",
+          "type": "boolean"
+        },
+        "encoding": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Encoding"
+        },
+        "web_paths": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Web Paths",
+          "type": "array"
+        },
+        "requests_per_second": {
+          "default": 2,
+          "title": "Requests Per Second",
+          "type": "integer"
+        },
+        "default_parser": {
+          "default": "html.parser",
+          "title": "Default Parser",
+          "type": "string"
+        },
+        "requests_kwargs": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Requests Kwargs"
+        },
+        "raise_for_status": {
+          "default": false,
+          "title": "Raise For Status",
+          "type": "boolean"
+        },
+        "bs_get_text_kwargs": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bs Get Text Kwargs"
+        },
+        "bs_kwargs": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bs Kwargs"
+        },
+        "session": {
+          "default": null,
+          "title": "Session"
+        },
+        "show_progress": {
+          "default": true,
+          "title": "Show Progress",
+          "type": "boolean"
+        },
+        "trust_env": {
+          "default": false,
+          "title": "Trust Env",
+          "type": "boolean"
+        }
+      },
+      "title": "WebBaseLoaderArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "load_documents_webbaseloader",
+    "description": "Load documents using WebBaseLoader: WebBaseLoader document loader integration\n\nSetup:\n    Install ``langchain_community``.\n\n    .. code-",
+    "source_component": "WebBaseLoader",
+    "source_type": "document_loader",
+    "source_module": "packages.haive-tools.src.haive.tools.tools.search_tools",
+    "schema": {
+      "properties": {
+        "web_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "default": "",
+          "title": "Web Path"
+        },
+        "header_template": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Header Template"
+        },
+        "verify_ssl": {
+          "default": true,
+          "title": "Verify Ssl",
+          "type": "boolean"
+        },
+        "proxies": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Proxies"
+        },
+        "continue_on_failure": {
+          "default": false,
+          "title": "Continue On Failure",
+          "type": "boolean"
+        },
+        "autoset_encoding": {
+          "default": true,
+          "title": "Autoset Encoding",
+          "type": "boolean"
+        },
+        "encoding": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Encoding"
+        },
+        "web_paths": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Web Paths",
+          "type": "array"
+        },
+        "requests_per_second": {
+          "default": 2,
+          "title": "Requests Per Second",
+          "type": "integer"
+        },
+        "default_parser": {
+          "default": "html.parser",
+          "title": "Default Parser",
+          "type": "string"
+        },
+        "requests_kwargs": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Requests Kwargs"
+        },
+        "raise_for_status": {
+          "default": false,
+          "title": "Raise For Status",
+          "type": "boolean"
+        },
+        "bs_get_text_kwargs": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bs Get Text Kwargs"
+        },
+        "bs_kwargs": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bs Kwargs"
+        },
+        "session": {
+          "default": null,
+          "title": "Session"
+        },
+        "show_progress": {
+          "default": true,
+          "title": "Show Progress",
+          "type": "boolean"
+        },
+        "trust_env": {
+          "default": false,
+          "title": "Trust Env",
+          "type": "boolean"
+        }
+      },
+      "title": "WebBaseLoaderArgs",
+      "type": "object"
+    }
+  }
+]

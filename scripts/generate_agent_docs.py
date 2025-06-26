@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-"""
-Script to generate standardized documentation for agents.
+"""Script to generate standardized documentation for agents.
 
 This script can be used in two ways:
 1. Process existing state history files to generate documentation
@@ -19,8 +18,9 @@ import glob
 import importlib
 import json
 import os
-import sys
 from pathlib import Path
+import sys
+
 
 # Add project root to path
 project_root = Path(__file__).parents[1]
@@ -46,7 +46,7 @@ def process_state_history_files(state_dir: str, output_dir: str = None):
     for state_file in state_files:
         try:
             # Load state history file
-            with open(state_file, "r") as f:
+            with open(state_file) as f:
                 data = json.load(f)
 
             # Extract metadata and state history
@@ -118,7 +118,7 @@ def run_agent_and_document(
                         # Try src paths
                         f"src.haive.agents.{agent_name.lower()}",
                         f"src.haive.agents.simple.{agent_name.lower()}",
-                        f"src.haive.core.engine.agent",
+                        "src.haive.core.engine.agent",
                         # Try direct import
                         "haive.agents",
                         "haive.core.engine",

@@ -1,0 +1,47 @@
+{
+  "component_info": {
+    "name": "search_registered_domains",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.domain_search_tool",
+    "class_name": "StructuredTool",
+    "description": "Search for registered domain names using a keyword",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T12:31:28.319984",
+    "schema": {
+      "description": "Input model for the domain search tool.\n\nAttributes:\n    domain: A domain keyword to search for. This can be any term that might appear\n           in registered domain names, such as a brand name, generic term, or\n           specific word of interest.",
+      "properties": {
+        "domain": {
+          "description": "A keyword to search for, e.g., 'facebook', 'ai', 'nasa', etc.",
+          "format": "uri",
+          "minLength": 1,
+          "title": "Domain",
+          "type": "string"
+        }
+      },
+      "required": ["domain"],
+      "title": "DomainSearchInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "search_registered_domains",
+    "tool_description": "Search for registered domain names using a keyword"
+  },
+  "document": {
+    "page_content": "# search_registered_domains\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.tools.domain_search_tool\n**Class:** StructuredTool\n\n## Description\nSearch for registered domain names using a keyword\n\n## Schema\n```json\n{\n  \"description\": \"Input model for the domain search tool.\\n\\nAttributes:\\n    domain: A domain keyword to search for. This can be any term that might appear\\n           in registered domain names, such as a brand name, generic term, or\\n           specific word of interest.\",\n  \"properties\": {\n    \"domain\": {\n      \"description\": \"A keyword to search for, e.g., 'facebook', 'ai', 'nasa', etc.\",\n      \"format\": \"uri\",\n      \"minLength\": 1,\n      \"title\": \"Domain\",\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"domain\"\n  ],\n  \"title\": \"DomainSearchInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `search_registered_domains`\n**Description:** Search for registered domain names using a keyword\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "search_registered_domains",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.tools.domain_search_tool",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-06-19T12:31:28.319984",
+      "category": "individual_tools"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

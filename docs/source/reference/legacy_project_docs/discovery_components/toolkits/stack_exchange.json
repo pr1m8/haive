@@ -1,0 +1,40 @@
+{
+  "component_info": {
+    "name": "stack_exchange",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.stack_exchange_toolkit",
+    "class_name": "StackExchangeTool",
+    "description": "A wrapper around StackExchange. Useful for when you need to answer specific programming questionscode excerpts, code examples and solutionsInput should be a fully formed question.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T12:31:28.364057",
+    "schema": {
+      "properties": {
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "stack_exchange",
+    "tool_description": "A wrapper around StackExchange. Useful for when you need to answer specific programming questionscode excerpts, code examples and solutionsInput should be a fully formed question."
+  },
+  "document": {
+    "page_content": "# stack_exchange\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.stack_exchange_toolkit\n**Class:** StackExchangeTool\n\n## Description\nA wrapper around StackExchange. Useful for when you need to answer specific programming questionscode excerpts, code examples and solutionsInput should be a fully formed question.\n\n## Schema\n```json\n{\n  \"properties\": {\n    \"kwargs\": {\n      \"type\": \"Any\",\n      \"default\": null\n    }\n  }\n}\n```\n\n## Usage as Tool\n**Tool Name:** `stack_exchange`\n**Description:** A wrapper around StackExchange. Useful for when you need to answer specific programming questionscode excerpts, code examples and solutionsInput should be a fully formed question.\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "stack_exchange",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.stack_exchange_toolkit",
+      "class_name": "StackExchangeTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-06-19T12:31:28.364057",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

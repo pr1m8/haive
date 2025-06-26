@@ -1,0 +1,1106 @@
+[
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig",
+    "source_component": "VectorStoreConfig",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig",
+    "source_component": "VectorStoreConfig",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TimeWeightedRetriever",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig",
+    "source_component": "VectorStoreConfig",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.MultiQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig",
+    "source_component": "VectorStoreConfig",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.RePhraseQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstore",
+    "description": "Search documents using VectorStore",
+    "source_component": "VectorStore",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.vectorstore.vectorstore",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig",
+    "source_component": "VectorStoreConfig",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.vectorstore.vectorstore",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreprovider",
+    "description": "Search documents using VectorStoreProvider",
+    "source_component": "VectorStoreProvider",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.vectorstore.vectorstore",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreproviderregistry",
+    "description": "Search documents using VectorStoreProviderRegistry",
+    "source_component": "VectorStoreProviderRegistry",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.vectorstore.vectorstore",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstore",
+    "description": "Search documents using VectorStore",
+    "source_component": "VectorStore",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.vectorstore.vectorstore",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig",
+    "source_component": "VectorStoreConfig",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.vectorstore.vectorstore",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreprovider",
+    "description": "Search documents using VectorStoreProvider",
+    "source_component": "VectorStoreProvider",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.vectorstore.vectorstore",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreproviderregistry",
+    "description": "Search documents using VectorStoreProviderRegistry",
+    "source_component": "VectorStoreProviderRegistry",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.vectorstore.vectorstore",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig",
+    "source_component": "VectorStoreConfig",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig",
+    "source_component": "VectorStoreConfig",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TimeWeightedRetriever",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig",
+    "source_component": "VectorStoreConfig",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.MultiQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig",
+    "source_component": "VectorStoreConfig",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.RePhraseQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstore",
+    "description": "Search documents using VectorStore",
+    "source_component": "VectorStore",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.vectorstore.vectorstore",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig",
+    "source_component": "VectorStoreConfig",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.vectorstore.vectorstore",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreprovider",
+    "description": "Search documents using VectorStoreProvider",
+    "source_component": "VectorStoreProvider",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.vectorstore.vectorstore",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreproviderregistry",
+    "description": "Search documents using VectorStoreProviderRegistry",
+    "source_component": "VectorStoreProviderRegistry",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.vectorstore.vectorstore",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig",
+    "source_component": "VectorStoreConfig",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig",
+    "source_component": "VectorStoreConfig",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.TimeWeightedRetriever",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig",
+    "source_component": "VectorStoreConfig",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.MultiQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_vectorstoreconfig",
+    "description": "Search documents using VectorStoreConfig",
+    "source_component": "VectorStoreConfig",
+    "source_type": "vector_store",
+    "source_module": "packages.haive-core.src.haive.core.engine.retriever.providers.RePhraseQueryRetrieverConfig",
+    "schema": {
+      "properties": {
+        "query": {
+          "description": "Query to search for",
+          "title": "Query",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 4,
+          "description": "Number of documents to retrieve",
+          "title": "K"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Metadata filter",
+          "title": "Filter"
+        }
+      },
+      "required": ["query"],
+      "title": "VectorStoreArgs",
+      "type": "object"
+    }
+  }
+]

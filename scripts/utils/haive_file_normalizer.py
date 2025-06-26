@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Haive File Normalizer and Import Fixer
+"""Haive File Normalizer and Import Fixer
 
 A comprehensive utility for the Haive polyrepo framework:
 1. Normalizing file names in directories
@@ -21,16 +20,10 @@ Usage:
 """
 
 import argparse
-import glob
-import os
+from pathlib import Path
 import re
 import shutil
 import sys
-from datetime import datetime
-from pathlib import Path
-from typing import Dict, List, Optional, Set, Tuple, Union
-
-from rich import box
 
 # Rich imports for beautiful CLI
 from rich.console import Console
@@ -42,11 +35,8 @@ from rich.progress import (
     TaskProgressColumn,
     TextColumn,
 )
-from rich.prompt import Confirm, Prompt
-from rich.syntax import Syntax
 from rich.table import Table
-from rich.text import Text
-from rich.tree import Tree
+
 
 # Import fixing dependencies
 try:
@@ -64,7 +54,7 @@ class HaivePathResolver:
     """Resolves Haive polyrepo paths and import statements."""
 
     @staticmethod
-    def detect_haive_root(current_path: Path) -> Optional[Path]:
+    def detect_haive_root(current_path: Path) -> Path | None:
         """Find the Haive polyrepo root by looking for packages/ directory."""
         path = Path(current_path).resolve()
 
@@ -80,7 +70,7 @@ class HaivePathResolver:
         return None
 
     @staticmethod
-    def resolve_import_path(file_path: Path) -> Optional[str]:
+    def resolve_import_path(file_path: Path) -> str | None:
         """Convert file path to proper Haive import path."""
         path = Path(file_path).resolve()
 
@@ -113,7 +103,7 @@ class HaivePathResolver:
         return None
 
     @staticmethod
-    def get_package_name(file_path: Path) -> Optional[str]:
+    def get_package_name(file_path: Path) -> str | None:
         """Get the Haive package name (e.g., 'haive-games') from file path."""
         path = Path(file_path).resolve()
         parts = path.parts
@@ -225,7 +215,7 @@ class FileNormalizer:
         self.directory = Path(directory)
         self.console = console
 
-    def find_common_prefix(self, files: List[str]) -> str:
+    def find_common_prefix(self, files: list[str]) -> str:
         """Find common prefix among files, considering the directory name."""
         if not files:
             return ""
@@ -261,7 +251,7 @@ class FileNormalizer:
         # Only return meaningful prefixes (at least 3 chars)
         return prefix if len(prefix) >= 3 else ""
 
-    def extract_number_suffix(self, filename: str) -> Tuple[str, Optional[int]]:
+    def extract_number_suffix(self, filename: str) -> tuple[str, int | None]:
         """Extract number suffix from filename (e.g., 'file (1).py' -> ('file.py', 1))."""
         # Pattern for files with numbers: "name (n)", "name_n", "name-n", etc.
         patterns = [
@@ -279,7 +269,7 @@ class FileNormalizer:
 
         return filename, None
 
-    def group_duplicate_files(self, files: List[Path]) -> Dict[str, List[Path]]:
+    def group_duplicate_files(self, files: list[Path]) -> dict[str, list[Path]]:
         """Group files that are likely duplicates."""
         groups = {}
 
@@ -293,7 +283,7 @@ class FileNormalizer:
 
         return groups
 
-    def get_newest_file(self, files: List[Path]) -> Path:
+    def get_newest_file(self, files: list[Path]) -> Path:
         """Get the newest file from a list based on modification time."""
         return max(files, key=lambda f: f.stat().st_mtime)
 
@@ -331,7 +321,7 @@ class FileNormalizer:
 
         return name_part + extension
 
-    def normalize_directory(self, dry_run: bool = True) -> Dict[str, any]:
+    def normalize_directory(self, dry_run: bool = True) -> dict[str, any]:
         """Normalize all files in the directory."""
         if not self.directory.exists():
             self.console.print(f"[red]Directory {self.directory} does not exist[/red]")
@@ -450,7 +440,7 @@ class FileNormalizer:
         }
 
     def _display_results(
-        self, changes: List[Dict], duplicates: List[Dict], dry_run: bool
+        self, changes: list[dict], duplicates: list[dict], dry_run: bool
     ):
         """Display the results of normalization."""
         if not changes and not duplicates:
@@ -490,7 +480,7 @@ class DownloadNormalizer:
         self.downloads_dir = downloads_dir or Path.home() / "Downloads"
         self.console = console
 
-    def find_matching_downloads(self, pattern: str, limit: int = 10) -> List[Path]:
+    def find_matching_downloads(self, pattern: str, limit: int = 10) -> list[Path]:
         """Find recent downloads matching pattern."""
         if not self.downloads_dir.exists():
             return []
@@ -508,7 +498,7 @@ class DownloadNormalizer:
 
     def normalize_downloads(
         self, pattern: str, destination: Path, limit: int = 10, dry_run: bool = True
-    ) -> Dict[str, any]:
+    ) -> dict[str, any]:
         """Find, normalize, and move matching downloads."""
         matching_files = self.find_matching_downloads(pattern, limit)
 
@@ -648,7 +638,7 @@ Examples:
 
     if not args.command:
         parser.print_help()
-        return
+        return None
 
     # Show Haive banner
     console.print(
@@ -679,14 +669,14 @@ Examples:
             python_files = list(directory.glob("**/*.py"))
             if not python_files:
                 console.print("[yellow]No Python files found[/yellow]")
-                return
+                return None
 
             with Progress(console=console) as progress:
                 task = progress.add_task("Fixing imports...", total=len(python_files))
 
                 for py_file in python_files:
                     try:
-                        with open(py_file, "r", encoding="utf-8") as f:
+                        with open(py_file, encoding="utf-8") as f:
                             original_content = f.read()
 
                         fixed_content = import_fixer.fix_relative_imports(

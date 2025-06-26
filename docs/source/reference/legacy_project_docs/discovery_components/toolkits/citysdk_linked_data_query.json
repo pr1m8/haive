@@ -1,0 +1,45 @@
+{
+  "component_info": {
+    "name": "citysdk_linked_data_query",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.citydsk_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Send a SPARQL query to the CitySDK Linked Data API to retrieve structured city information.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T12:31:28.348716",
+    "schema": {
+      "description": "Input schema for the CitySDK Linked Data SPARQL query tool.\n\nArgs:\n    query: SPARQL query to execute against the CitySDK Linked Data endpoint",
+      "properties": {
+        "query": {
+          "description": "SPARQL query to send to the CitySDK Linked Data endpoint.",
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"],
+      "title": "CitySDKLinkedDataQueryInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "citysdk_linked_data_query",
+    "tool_description": "Send a SPARQL query to the CitySDK Linked Data API to retrieve structured city information."
+  },
+  "document": {
+    "page_content": "# citysdk_linked_data_query\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.citydsk_toolkit\n**Class:** StructuredTool\n\n## Description\nSend a SPARQL query to the CitySDK Linked Data API to retrieve structured city information.\n\n## Schema\n```json\n{\n  \"description\": \"Input schema for the CitySDK Linked Data SPARQL query tool.\\n\\nArgs:\\n    query: SPARQL query to execute against the CitySDK Linked Data endpoint\",\n  \"properties\": {\n    \"query\": {\n      \"description\": \"SPARQL query to send to the CitySDK Linked Data endpoint.\",\n      \"title\": \"Query\",\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"query\"\n  ],\n  \"title\": \"CitySDKLinkedDataQueryInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `citysdk_linked_data_query`\n**Description:** Send a SPARQL query to the CitySDK Linked Data API to retrieve structured city information.\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "citysdk_linked_data_query",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.citydsk_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-06-19T12:31:28.348716",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

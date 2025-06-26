@@ -1,0 +1,50 @@
+{
+  "component_info": {
+    "name": "get_rps101_match_result",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.rps_101_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get the result of a match between two RPS-101 objects.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-06-19T12:31:28.363417",
+    "schema": {
+      "description": "Input model for simulating a match between two RPS-101 objects.\n\nAttributes:\n    object_one (str): The name of the first object in the match.\n    object_two (str): The name of the second object in the match.",
+      "properties": {
+        "object_one": {
+          "description": "The first object in the match (e.g. 'nuke')",
+          "title": "Object One",
+          "type": "string"
+        },
+        "object_two": {
+          "description": "The second object in the match (e.g. 'tank')",
+          "title": "Object Two",
+          "type": "string"
+        }
+      },
+      "required": ["object_one", "object_two"],
+      "title": "RPSMatchInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_rps101_match_result",
+    "tool_description": "Get the result of a match between two RPS-101 objects."
+  },
+  "document": {
+    "page_content": "# get_rps101_match_result\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.rps_101_toolkit\n**Class:** StructuredTool\n\n## Description\nGet the result of a match between two RPS-101 objects.\n\n## Schema\n```json\n{\n  \"description\": \"Input model for simulating a match between two RPS-101 objects.\\n\\nAttributes:\\n    object_one (str): The name of the first object in the match.\\n    object_two (str): The name of the second object in the match.\",\n  \"properties\": {\n    \"object_one\": {\n      \"description\": \"The first object in the match (e.g. 'nuke')\",\n      \"title\": \"Object One\",\n      \"type\": \"string\"\n    },\n    \"object_two\": {\n      \"description\": \"The second object in the match (e.g. 'tank')\",\n      \"title\": \"Object Two\",\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"object_one\",\n    \"object_two\"\n  ],\n  \"title\": \"RPSMatchInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `get_rps101_match_result`\n**Description:** Get the result of a match between two RPS-101 objects.\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "get_rps101_match_result",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.rps_101_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-06-19T12:31:28.363417",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

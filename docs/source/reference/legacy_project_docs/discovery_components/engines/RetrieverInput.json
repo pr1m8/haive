@@ -1,0 +1,55 @@
+{
+  "component_info": {
+    "name": "RetrieverInput",
+    "component_type": "retriever",
+    "module_path": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "class_name": "RetrieverInput",
+    "description": "Schema for retriever input.",
+    "source_code": "class RetrieverInput(BaseModel):\n    \"\"\"Schema for retriever input.\"\"\"\n\n    query: str = Field(description=\"Query string for retrieval\")\n    k: Optional[int] = Field(\n        default=None, description=\"Number of documents to retrieve\"\n    )\n    filter: Optional[Dict[str, Any]] = Field(\n        default=None, description=\"Filter criteria for retrieval\"\n    )\n    search_type: Optional[str] = Field(\n        default=None, description=\"Type of search to perform\"\n    )\n    score_threshold: Optional[float] = Field(\n        default=None, description=\"Minimum similarity score threshold\"\n    )\n\n    model_config = ConfigDict(extra=\"allow\")\n",
+    "env_vars": [],
+    "timestamp": "2025-06-19T12:31:29.765019",
+    "schema": {
+      "properties": {
+        "data": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "retrieve_retrieverinput",
+    "tool_description": "Retrieve documents using RetrieverInput",
+    "engine_config": {
+      "engine_type": "retriever",
+      "retriever_class": "RetrieverInput",
+      "module_path": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+      "description": "Schema for retriever input.",
+      "env_vars": [],
+      "schema": {
+        "properties": {
+          "data": {
+            "type": "Any",
+            "default": null
+          }
+        }
+      }
+    }
+  },
+  "document": {
+    "page_content": "# RetrieverInput\n**Type:** retriever\n**Module:** packages.haive-core.src.haive.core.engine.retriever.retriever\n**Class:** RetrieverInput\n\n## Description\nSchema for retriever input.\n\n## Schema\n```json\n{\n  \"properties\": {\n    \"data\": {\n      \"type\": \"Any\",\n      \"default\": null\n    }\n  }\n}\n```\n\n## Usage as Tool\n**Tool Name:** `retrieve_retrieverinput`\n**Description:** Retrieve documents using RetrieverInput\n\n## Engine Configuration\nThis component can be used as a Haive engine:\n```python\n# Example engine usage\nengine = RetrieverInputEngine(name='RetrieverInput')\n```\n\n## Source Code\n```python\nclass RetrieverInput(BaseModel):\n    \"\"\"Schema for retriever input.\"\"\"\n\n    query: str = Field(description=\"Query string for retrieval\")\n    k: Optional[int] = Field(\n        default=None, description=\"Number of documents to retrieve\"\n    )\n    filter: Optional[Dict[str, Any]] = Field(\n        default=None, description=\"Filter criteria for retrieval\"\n    )\n    search_type: Optional[str] = Field(\n        default=None, description=\"Type of search to perform\"\n    )\n    score_threshold: Optional[float] = Field(\n        default=None, description=\"Minimum similarity score threshold\"\n    )\n\n    model_config = ConfigDict(extra=\"allow\")\n\n```",
+    "metadata": {
+      "name": "RetrieverInput",
+      "component_type": "retriever",
+      "module_path": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+      "class_name": "RetrieverInput",
+      "has_tool": true,
+      "has_engine_config": true,
+      "env_vars": [],
+      "timestamp": "2025-06-19T12:31:29.765019",
+      "category": "engines"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": true
+}
