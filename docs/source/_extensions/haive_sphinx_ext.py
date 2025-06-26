@@ -44,14 +44,16 @@ class AgentInfo:
     complexity: str = "medium"  # simple, medium, complex
 
 
-class AgentRunDirective(SphinxDirective):
-    """Directive to display captured agent runs.
+class AgentRunCaptureDirective(SphinxDirective):
+    """Directive to display captured agent runs with interactive replay.
 
     Usage:
-        .. agent-run:: path/to/capture.yaml
-           :paginated: true
-           :page-size: 50
-           :show-graph: true
+        .. agent-run-capture:: path/to/capture.json
+           :paginated:
+           :page-size: 10
+           :show-graph:
+           :show-logs:
+           :show-metrics:
     """
 
     has_content = False
@@ -79,25 +81,210 @@ class AgentRunDirective(SphinxDirective):
 
         # Load capture data
         try:
-            if capture_path.suffix == ".yaml":
-                with open(capture_path) as f:
-                    capture_data = yaml.safe_load(f)
-            else:
-                with open(capture_path) as f:
-                    capture_data = json.load(f)
+            with open(capture_path) as f:
+                capture_data = json.load(f)
         except Exception as e:
-            logger.exception(f"Failed to load capture: {e}")
+            logger.exception(f"Failed to load capture")
             return []
 
         # Extract options
         paginated = "paginated" in self.options
-        page_size = self.options.get("page-size", 50)
+        page_size = self.options.get("page-size", 10)
         show_graph = "show-graph" in self.options
-        show_logs = self.options.get("show-logs", True)
+        show_logs = "show-logs" in self.options
         show_metrics = "show-metrics" in self.options
 
-        # Create container
-        container = nodes.container()
+        # Create main container
+        container = nodes.container(classes=["agent-run-capture"])
+        
+        # Add capture metadata section
+        self._add_capture_metadata(container, capture_data)
+        
+        # Add graph visualization if requested and available
+        if show_graph and capture_data.get("graph_visualization_path"):
+            self._add_graph_section(container, capture_data)
+        
+        # Add execution steps
+        self._add_execution_steps(container, capture_data, paginated, page_size)
+        
+        # Add metrics if requested
+        if show_metrics:
+            self._add_metrics_section(container, capture_data)
+            
+        return [container]
+    
+    def _add_capture_metadata(self, container, capture_data):
+        """Add capture metadata section."""
+        metadata_section = nodes.section()
+        metadata_title = nodes.title(text="Execution Overview")
+        metadata_section += metadata_title
+        
+        # Create summary table
+        table = nodes.table()
+        tgroup = nodes.tgroup(cols=2)
+        table += tgroup
+        
+        # Add column specifications
+        tgroup += nodes.colspec(colwidth=30)
+        tgroup += nodes.colspec(colwidth=70)
+        
+        # Add table body
+        tbody = nodes.tbody()
+        tgroup += tbody
+        
+        # Add metadata rows
+        metadata_items = [
+            ("Agent Name", capture_data.get("agent_name", "Unknown")),
+            ("Agent Type", capture_data.get("agent_type", "Unknown")),
+            ("Run ID", capture_data.get("run_id", "Unknown")[:8] + "..."),
+            ("Status", "✅ Success" if capture_data.get("error") is None else "❌ Failed"),
+            ("Duration", f"{capture_data.get('duration', 0):.2f}s" if capture_data.get('end_time') else "Running..."),
+            ("Steps", str(len(capture_data.get("steps", [])))),
+        ]
+        
+        for key, value in metadata_items:
+            row = nodes.row()
+            row += nodes.entry("", nodes.paragraph(text=key))
+            row += nodes.entry("", nodes.paragraph(text=str(value)))
+            tbody += row
+        
+        metadata_section += table
+        container += metadata_section
+    
+    def _add_graph_section(self, container, capture_data):
+        """Add graph visualization section."""
+        graph_section = nodes.section()
+        graph_title = nodes.title(text="Agent Architecture")
+        graph_section += graph_title
+        
+        graph_path = capture_data.get("graph_visualization_path")
+        if graph_path:
+            # Create figure node
+            figure = nodes.figure()
+            image = nodes.image()
+            image["uri"] = str(Path(graph_path).relative_to(Path.cwd()))
+            image["alt"] = f"{capture_data.get('agent_name', 'Agent')} Graph"
+            image["align"] = "center"
+            figure += image
+            
+            # Add caption
+            caption = nodes.caption(text="Agent workflow graph showing the execution flow")
+            figure += caption
+            
+            graph_section += figure
+        
+        container += graph_section
+    
+    def _add_execution_steps(self, container, capture_data, paginated, page_size):
+        """Add execution steps section."""
+        steps_section = nodes.section()
+        steps_title = nodes.title(text="Execution Steps")
+        steps_section += steps_title
+        
+        steps = capture_data.get("steps", [])
+        
+        if not steps:
+            steps_section += nodes.paragraph(text="No execution steps recorded.")
+            container += steps_section
+            return
+        
+        # Determine which steps to show
+        display_steps = steps
+        if paginated and len(steps) > page_size:
+            display_steps = steps[:page_size]
+            remaining = len(steps) - page_size
+            
+            # Add pagination info
+            pagination_info = nodes.paragraph(
+                text=f"Showing first {page_size} of {len(steps)} steps. "
+                     f"{remaining} more steps available in full capture."
+            )
+            pagination_info["classes"] = ["pagination-info"]
+            steps_section += pagination_info
+        
+        # Create steps as numbered list
+        step_list = nodes.enumerated_list()
+        
+        for i, step in enumerate(display_steps):
+            list_item = nodes.list_item()
+            
+            # Step header with type and timestamp
+            step_type = step.get("step_type", "unknown")
+            timestamp = step.get("timestamp", "")
+            node_name = step.get("node_name", "")
+            
+            header_text = f"**{step_type.title()}**"
+            if node_name:
+                header_text += f" - {node_name}"
+            if timestamp:
+                header_text += f" ({timestamp})"
+            
+            header = nodes.paragraph()
+            header += nodes.raw("", header_text, format="rst")
+            list_item += header
+            
+            # Step content
+            content = step.get("content", {})
+            if content:
+                # Create collapsible content section
+                content_container = nodes.container(classes=["step-content"])
+                
+                # Add content as code block
+                content_text = json.dumps(content, indent=2)
+                code_block = nodes.literal_block(content_text, content_text)
+                code_block["language"] = "json"
+                content_container += code_block
+                
+                list_item += content_container
+            
+            step_list += list_item
+        
+        steps_section += step_list
+        container += steps_section
+    
+    def _add_metrics_section(self, container, capture_data):
+        """Add metrics section."""
+        metrics_section = nodes.section()
+        metrics_title = nodes.title(text="Performance Metrics")
+        metrics_section += metrics_title
+        
+        steps = capture_data.get("steps", [])
+        
+        # Calculate step type distribution
+        step_types = {}
+        for step in steps:
+            step_type = step.get("step_type", "unknown")
+            step_types[step_type] = step_types.get(step_type, 0) + 1
+        
+        # Create metrics table
+        table = nodes.table()
+        tgroup = nodes.tgroup(cols=2)
+        table += tgroup
+        
+        tgroup += nodes.colspec(colwidth=50)
+        tgroup += nodes.colspec(colwidth=50)
+        
+        # Add header
+        thead = nodes.thead()
+        header_row = nodes.row()
+        header_row += nodes.entry("", nodes.paragraph(text="Metric"))
+        header_row += nodes.entry("", nodes.paragraph(text="Value"))
+        thead += header_row
+        tgroup += thead
+        
+        # Add body
+        tbody = nodes.tbody()
+        tgroup += tbody
+        
+        # Add step type breakdown
+        for step_type, count in step_types.items():
+            row = nodes.row()
+            row += nodes.entry("", nodes.paragraph(text=f"{step_type.title()} Steps"))
+            row += nodes.entry("", nodes.paragraph(text=str(count)))
+            tbody += row
+        
+        metrics_section += table
+        container += metrics_section
         container["classes"].append("agent-run-output")
         if paginated:
             container["data-paginated"] = "true"
@@ -996,7 +1183,7 @@ def generate_agent_showcase_hook(app: Sphinx, config: Any) -> None:
 def setup(app: Sphinx) -> dict[str, Any]:
     """Setup the extension."""
     # Add directives
-    app.add_directive("agent-run", AgentRunDirective)
+    app.add_directive("agent-run-capture", AgentRunCaptureDirective)
     app.add_directive("readme-discovery", ReadmeDiscoveryDirective)
 
     # Add event handlers
