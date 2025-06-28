@@ -5,8 +5,8 @@ This script summarizes the comprehensive documentation system fixes and enhancem
 that have been implemented for the Haive project.
 """
 
-from datetime import datetime
 import json
+from datetime import datetime
 from pathlib import Path
 
 
@@ -26,8 +26,8 @@ def create_documentation_summary():
                     "Corrected sys.path configuration for all haive packages",
                     "Enhanced mock imports for external dependencies",
                     "Improved autosummary configuration with proper error handling",
-                    "Fixed docstring processing and beta notice integration"
-                ]
+                    "Fixed docstring processing and beta notice integration",
+                ],
             },
             {
                 "category": "Agent Run Capture System",
@@ -38,8 +38,8 @@ def create_documentation_summary():
                     "Built state transition and message extraction",
                     "Created graph visualization integration",
                     "Added performance metrics calculation",
-                    "Generated RST snippets for documentation embedding"
-                ]
+                    "Generated RST snippets for documentation embedding",
+                ],
             },
             {
                 "category": "Custom Sphinx Extensions",
@@ -48,8 +48,8 @@ def create_documentation_summary():
                     "Created agent-run directive for displaying captured runs",
                     "Added readme-discovery directive for automatic README integration",
                     "Implemented pagination controls and UI enhancements",
-                    "Added custom CSS and JavaScript for interactive features"
-                ]
+                    "Added custom CSS and JavaScript for interactive features",
+                ],
             },
             {
                 "category": "README Discovery and Integration",
@@ -59,8 +59,8 @@ def create_documentation_summary():
                     "Built categorization system (agents, tools, games, core, etc.)",
                     "Added markdown link conversion for relative paths",
                     "Created hierarchical index generation",
-                    "Processed 71 README files across the codebase"
-                ]
+                    "Processed 71 README files across the codebase",
+                ],
             },
             {
                 "category": "Template Improvements",
@@ -68,8 +68,8 @@ def create_documentation_summary():
                     "Enhanced autosummary templates for modules, classes, and functions",
                     "Added proper inheritance and member documentation",
                     "Improved formatting with rubrics and sections",
-                    "Created better cross-references and navigation"
-                ]
+                    "Created better cross-references and navigation",
+                ],
             },
             {
                 "category": "Build System Fixes",
@@ -78,31 +78,31 @@ def create_documentation_summary():
                     "Fixed autosummary generation conflicts",
                     "Corrected Poetry workspace integration",
                     "Enhanced error handling and logging",
-                    "Implemented graceful degradation for problematic modules"
-                ]
-            }
+                    "Implemented graceful degradation for problematic modules",
+                ],
+            },
         ],
         "new_features": [
             {
                 "name": "Agent Run Documentation",
                 "description": "Capture and display agent execution outputs with pagination and visualization",
-                "location": "scripts/doc_tools/agent_run_capture.py"
+                "location": "scripts/doc_tools/agent_run_capture.py",
             },
             {
                 "name": "README Auto-Discovery",
                 "description": "Automatically find and integrate README files throughout the codebase",
-                "location": "scripts/doc_tools/readme_integrator.py"
+                "location": "scripts/doc_tools/readme_integrator.py",
             },
             {
                 "name": "Custom Sphinx Extension",
                 "description": "Haive-specific directives for agent runs and documentation discovery",
-                "location": "docs/source/_extensions/haive_sphinx_ext.py"
+                "location": "docs/source/_extensions/haive_sphinx_ext.py",
             },
             {
                 "name": "Interactive Documentation",
                 "description": "Pagination controls, graph visualization, and enhanced UI",
-                "location": "docs/source/_static/custom.css and custom.js"
-            }
+                "location": "docs/source/_static/custom.css and custom.js",
+            },
         ],
         "usage_instructions": {
             "build_docs": "nox -s docs",
@@ -110,29 +110,37 @@ def create_documentation_summary():
             "serve_docs": "nox -s serve",
             "live_docs": "nox -s docs-live",
             "capture_agent_runs": "poetry run python scripts/doc_tools/agent_run_capture.py",
-            "integrate_readmes": "poetry run python scripts/doc_tools/readme_integrator.py"
+            "integrate_readmes": "poetry run python scripts/doc_tools/readme_integrator.py",
         },
         "documentation_structure": {
             "discovered_readmes": "71 README files organized by category",
             "packages": "7 haive packages with comprehensive documentation",
             "guides": "User guides and tutorials",
             "api_reference": "Auto-generated API documentation",
-            "galleries": "Agent, game, and tool showcases"
+            "galleries": "Agent, game, and tool showcases",
         },
         "stats": {
             "total_source_files": 315,
             "discovered_readmes": 71,
             "packages_documented": 7,
-            "categories": ["agents", "core", "dataflow", "games", "mcp", "prebuilt", "tools"],
-            "build_status": "✅ Successful"
+            "categories": [
+                "agents",
+                "core",
+                "dataflow",
+                "games",
+                "mcp",
+                "prebuilt",
+                "tools",
+            ],
+            "build_status": "✅ Successful",
         },
         "next_steps": [
             "Re-enable autosummary generation once module import issues are resolved",
             "Add example agent run captures for documentation",
             "Create tutorial documentation using the new system",
             "Expand the agent run capture to include more metadata",
-            "Add support for interactive agent demonstrations"
-        ]
+            "Add support for interactive agent demonstrations",
+        ],
     }
 
     # Save summary

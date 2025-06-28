@@ -1,0 +1,622 @@
+# Backend WebSocket API Integration Guide
+
+## Overview
+
+This guide provides comprehensive documentation for integrating with the Staidium Assistant UI backend WebSocket API. The system supports multiple agent types, real-time streaming, tool calling, and artifact generation using both Socket.io and native WebSocket protocols.
+
+## Architecture
+
+### Core Components
+
+1. **Socket Server** (`socket-server/server.ts`) - Socket.io server for real-time communication
+2. **Agent Handler** (`socket-server/agent-handler.ts`) - Manages agent interactions and message routing
+3. **Assistant UI Frontend** - React components with assistant-ui library integration
+4. **WebSocket Proxy** - Bridges Socket.io and native WebSocket interfaces
+
+### Technology Stack
+
+- **Backend**: Node.js + Express + Socket.io + TypeScript
+- **Frontend**: Next.js 14 + React + TypeScript + assistant-ui
+- **Package Manager**: pnpm
+- **WebSocket**: Socket.io for real-time bidirectional communication
+
+## Installation & Setup
+
+### Backend Setup
+
+```bash
+# Navigate to socket server directory
+cd socket-server
+
+# Install dependencies
+pnpm install
+
+# Development mode
+pnpm dev
+
+# Production build and start
+pnpm build
+pnpm start
+```
+
+### Environment Configuration
+
+Create `.env` file in `socket-server/` directory:
+
+```env
+PORT=8001
+CLIENT_URL=http://192.168.2.13:3000
+API_BASE_URL=http://192.168.2.13:8000/api
+```
+
+### Frontend Configuration
+
+The frontend connects to the WebSocket server at:
+- **Socket.io**: `http://192.168.2.13:8001`
+- **WebSocket**: `ws://192.168.2.13:8000/ws/chat/{thread_id}`
+
+## API Reference
+
+### Connection Endpoints
+
+#### Socket.io Connection
+```javascript
+const socket = io('http://192.168.2.13:8001', {
+  path: '/socket.io',
+  transports: ['websocket', 'polling']
+});
+```
+
+#### Native WebSocket Connection
+```javascript
+const ws = new WebSocket('ws://192.168.2.13:8000/ws/chat/thread-123');
+```
+
+### Agent Types
+
+The system supports four specialized agent types:
+
+- `chat_agent` - General conversation and assistance
+- `summarizer_agent` - Content summarization and analysis  
+- `code_agent` - Code generation and programming assistance
+- `data_agent` - Data analysis and visualization
+
+### Message Protocol
+
+#### Client → Server Messages
+
+##### Agent Request (Socket.io)
+```json
+{
+  "type": "agent_request",
+  "agent_id": "chat_agent",
+  "content": "User's message here",
+  "thread_id": "thread-uuid",
+  "timestamp": "2024-01-01T00:00:00Z",
+  "token": "auth-token-optional"
+}
+```
+
+##### Agent Request (WebSocket)
+```json
+{
+  "type": "agent_request", 
+  "agent_id": "code_agent",
+  "content": "Write a Python function to calculate fibonacci",
+  "thread_id": "thread-uuid",
+  "timestamp": "2024-01-01T00:00:00Z"
+}
+```
+
+##### Stop Processing
+```json
+{
+  "type": "stop",
+  "thread_id": "thread-uuid"
+}
+```
+
+##### Reload/Regenerate
+```json
+{
+  "type": "reload",
+  "agent_id": "data_agent", 
+  "content": "Regenerate the last response",
+  "thread_id": "thread-uuid"
+}
+```
+
+#### Server → Client Responses
+
+The server streams responses in the following sequence:
+
+##### 1. Message Start
+```json
+{
+  "type": "message_start",
+  "thread_id": "thread-uuid"
+}
+```
+
+##### 2. Thinking Process (Optional)
+```json
+{
+  "type": "thinking",
+  "content": "Analyzing the request and determining approach...",
+  "thread_id": "thread-uuid"
+}
+```
+
+##### 3. Tool Calls (Optional)
+```json
+{
+  "type": "tool_call",
+  "tool_call_id": "call-123",
+  "field": "web_search",
+  "writes": {
+    "query": "latest AI developments"
+  },
+  "thread_id": "thread-uuid"
+}
+```
+
+##### 4. Tool Results (Optional)
+```json
+{
+  "type": "tool_result", 
+  "tool_call_id": "call-123",
+  "result": {
+    "results": [
+      {
+        "title": "AI News Article",
+        "url": "https://example.com",
+        "snippet": "Latest developments in AI..."
+      }
+    ]
+  },
+  "thread_id": "thread-uuid"
+}
+```
+
+##### 5. Content Streaming
+```json
+{
+  "type": "content",
+  "content": "Here's what I found about AI developments...",
+  "thread_id": "thread-uuid"
+}
+```
+
+##### 6. Artifacts (Optional)
+```json
+{
+  "type": "artifact",
+  "field": "generated_code",
+  "content": {
+    "type": "code",
+    "language": "python", 
+    "title": "Fibonacci Calculator",
+    "content": "def fibonacci(n):\n    if n <= 1:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)"
+  },
+  "thread_id": "thread-uuid"
+}
+```
+
+##### 7. Final Message
+```json
+{
+  "type": "message",
+  "message": {
+    "id": "msg-uuid",
+    "role": "assistant", 
+    "content": "Complete response with the code above...",
+    "thread_id": "thread-uuid",
+    "created_at": "2024-01-01T00:00:00Z"
+  }
+}
+```
+
+### Supported Tools
+
+#### Web Search
+```json
+{
+  "type": "tool_call",
+  "field": "web_search",
+  "writes": {
+    "query": "search terms"
+  }
+}
+```
+
+**Result Format:**
+```json
+{
+  "type": "tool_result",
+  "result": {
+    "results": [
+      {
+        "title": "Page Title",
+        "url": "https://example.com",
+        "snippet": "Description...",
+        "favicon": "https://example.com/favicon.ico"
+      }
+    ]
+  }
+}
+```
+
+#### Code Execution
+```json
+{
+  "type": "tool_call",
+  "field": "code_execution", 
+  "writes": {
+    "code": "print('Hello World')",
+    "language": "python",
+    "filename": "script.py"
+  }
+}
+```
+
+**Result Format:**
+```json
+{
+  "type": "tool_result",
+  "result": {
+    "output": "Hello World\n",
+    "error": null,
+    "exitCode": 0,
+    "executionTime": 125,
+    "logs": ["Execution started"]
+  }
+}
+```
+
+#### Data Analysis
+```json
+{
+  "type": "tool_call",
+  "field": "data_analysis",
+  "writes": {
+    "query": "analyze sales data by region",
+    "data_source": "sales_db",
+    "analysis_type": "summary"
+  }
+}
+```
+
+**Result Format:**
+```json
+{
+  "type": "tool_result", 
+  "result": {
+    "summary": "Overall sales increased by 15%...",
+    "insights": ["North region shows strongest growth"],
+    "charts": [{
+      "type": "bar",
+      "title": "Sales by Region", 
+      "data": {...}
+    }],
+    "tables": [{
+      "columns": ["Region", "Sales", "Growth"],
+      "rows": [["North", "$1.2M", "+23%"]]
+    }],
+    "metrics": {
+      "total_sales": 2100000,
+      "growth_rate": 0.15
+    }
+  }
+}
+```
+
+### Artifact Types
+
+#### Code Artifact
+```json
+{
+  "type": "artifact",
+  "field": "unique_key",
+  "content": {
+    "type": "code",
+    "language": "python",
+    "title": "Data Processing Script", 
+    "content": "def process_data():\n    pass"
+  }
+}
+```
+
+#### Text/Document Artifact
+```json
+{
+  "type": "artifact",
+  "field": "report",
+  "content": {
+    "type": "text",
+    "title": "Analysis Report",
+    "content": "# Report\n\nDetailed findings..."
+  }
+}
+```
+
+#### Image Artifact
+```json
+{
+  "type": "artifact",
+  "field": "chart_image",
+  "content": {
+    "type": "image",
+    "title": "Sales Chart",
+    "content": "data:image/png;base64,..." 
+  }
+}
+```
+
+#### Sheet/Table Artifact
+```json
+{
+  "type": "artifact",
+  "field": "data_table",
+  "content": {
+    "type": "sheet",
+    "title": "Sales Data",
+    "columns": ["Date", "Product", "Revenue"],
+    "data": [
+      {"Date": "2024-01-01", "Product": "A", "Revenue": 1000}
+    ]
+  }
+}
+```
+
+## Socket.io Event Reference
+
+### Client Events (Emitted by Frontend)
+
+- `agentRequest` - Send agent request message
+- `agentMessage` - Send generic agent message
+- `stop` - Stop current processing
+- `getProviders` - Request LLM provider list
+- `getModels` - Request available models
+- `disconnect` - Client disconnection
+
+### Server Events (Emitted by Backend)
+
+- `agentResponse` - Stream agent response data
+- `providers` - Send LLM provider data
+- `models` - Send model data
+
+## Frontend Integration
+
+### Using with assistant-ui
+
+```tsx
+import { AssistantRuntimeProvider } from "@assistant-ui/react";
+import { createLangGraphRuntime } from "@/lib/assistant-ui/langgraph-runtime";
+
+const runtime = createLangGraphRuntime({
+  threadId: "thread-123",
+  agentId: "chat_agent", 
+  onThinking: (thought) => console.log(thought),
+  onArtifact: (key, artifact) => setArtifacts(prev => ({...prev, [key]: artifact}))
+});
+
+// Use with provider
+<AssistantRuntimeProvider runtime={runtime}>
+  <Thread />
+</AssistantRuntimeProvider>
+```
+
+### Socket.io Client Usage
+
+```javascript
+import { io } from 'socket.io-client';
+
+const socket = io('http://192.168.2.13:8001');
+
+// Send agent request
+socket.emit('agentRequest', {
+  type: 'agent_request',
+  agent_id: 'chat_agent',
+  content: 'Hello, how can you help me?',
+  thread_id: 'thread-123'
+});
+
+// Listen for responses
+socket.on('agentResponse', (data) => {
+  console.log('Agent response:', data);
+});
+```
+
+## Error Handling
+
+### Connection Errors
+```json
+{
+  "type": "error",
+  "content": "Connection failed",
+  "error_code": "CONNECTION_ERROR",
+  "thread_id": "thread-uuid"
+}
+```
+
+### Agent Processing Errors
+```json
+{
+  "type": "error", 
+  "content": "Agent processing failed",
+  "error_code": "AGENT_ERROR",
+  "details": "Detailed error message",
+  "thread_id": "thread-uuid"
+}
+```
+
+### Tool Execution Errors
+```json
+{
+  "type": "tool_result",
+  "tool_call_id": "call-123",
+  "result": {
+    "error": "Tool execution failed",
+    "error_type": "EXECUTION_ERROR",
+    "details": "Specific error details"
+  }
+}
+```
+
+## Performance Considerations
+
+### Connection Management
+- **Socket.io**: Automatic reconnection with exponential backoff
+- **WebSocket**: Manual reconnection handling required
+- **Connection Pool**: Reuse connections per thread
+
+### Message Batching
+- Content chunks can be sent rapidly for smooth streaming
+- Batch non-critical updates to reduce overhead
+- Buffer tool results for complex processing
+
+### Resource Cleanup
+- Close connections when threads are inactive
+- Clean up event listeners on component unmount
+- Cancel ongoing requests when switching agents
+
+## Testing
+
+### Backend Testing
+```bash
+# Test WebSocket server
+node socket-server/test-client.js
+
+# Test with curl for HTTP endpoints
+curl http://192.168.2.13:8001/health
+```
+
+### Frontend Testing
+1. Open browser DevTools → Network tab
+2. Connect to assistant UI
+3. Monitor WebSocket/Socket.io connections
+4. Verify message flow in console
+
+## Security
+
+### Authentication
+- Pass authentication tokens in message payloads
+- Validate tokens on server side
+- Implement rate limiting per connection
+
+### CORS Configuration
+```javascript
+const io = new Server(server, {
+  cors: {
+    origin: process.env.CLIENT_URL || "http://192.168.2.13:3000",
+    methods: ["GET", "POST"],
+    credentials: true
+  }
+});
+```
+
+### Input Validation
+- Sanitize all user inputs
+- Validate message structure
+- Limit message size and frequency
+
+## Deployment
+
+### Docker Configuration
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN pnpm install --frozen-lockfile
+COPY . .
+RUN pnpm build
+EXPOSE 8001
+CMD ["pnpm", "start"]
+```
+
+### Environment Variables
+```env
+NODE_ENV=production
+PORT=8001
+CLIENT_URL=https://your-frontend-domain.com
+API_BASE_URL=https://your-api-domain.com/api
+```
+
+### Health Checks
+```javascript
+app.get('/health', (req, res) => {
+  res.json({ status: 'healthy', timestamp: new Date().toISOString() });
+});
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Connection Refused**
+   - Check if server is running on correct port
+   - Verify CORS configuration
+   - Ensure firewall allows connections
+
+2. **Message Not Streaming**
+   - Check network connectivity
+   - Verify message format
+   - Monitor server logs for errors
+
+3. **Agent Not Responding**
+   - Validate agent_id parameter
+   - Check agent handler configuration
+   - Verify backend API connectivity
+
+### Debug Logging
+```javascript
+// Enable Socket.io debug logs
+localStorage.debug = 'socket.io-client:socket';
+
+// Server-side logging
+const debug = require('debug')('socket-server');
+debug('Agent request received:', message);
+```
+
+## Migration from WebSocket to Socket.io
+
+### Code Changes Required
+```javascript
+// Old WebSocket code
+const ws = new WebSocket('ws://192.168.2.13:8000/ws/chat/123');
+ws.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+};
+ws.send(JSON.stringify(message));
+
+// New Socket.io code  
+const socket = io('http://192.168.2.13:8001');
+socket.on('agentResponse', (data) => {
+  // data is already parsed
+});
+socket.emit('agentRequest', message);
+```
+
+### Benefits of Socket.io
+- Automatic reconnection
+- Fallback to HTTP polling
+- Built-in heartbeat mechanism
+- Event-based messaging
+- Better error handling
+
+## Contributing
+
+### Development Setup
+1. Fork the repository
+2. Install dependencies: `pnpm install`
+3. Start development server: `pnpm dev`
+4. Make changes and test
+5. Submit pull request
+
+### Code Standards
+- Use TypeScript for type safety
+- Follow ESLint configuration
+- Add tests for new features
+- Document API changes
+
+For additional support, refer to the integration guides in the `/docs` directory or contact the development team.

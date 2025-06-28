@@ -5,7 +5,7 @@ The Haive Agent Capture & Documentation System provides comprehensive tools for 
 ## Features
 
 - 🎯 **Live Agent Execution Capture** - Record real agent runs with full step-by-step traces
-- 📊 **Graph Visualization** - Automatic generation of agent workflow diagrams  
+- 📊 **Graph Visualization** - Automatic generation of agent workflow diagrams
 - 🔍 **Interactive Replay** - Browse through execution steps with detailed content
 - 📚 **Auto-Documentation** - Generate comprehensive documentation pages automatically
 - 🎨 **Unified Interface** - Works with both `haive.agents.base.Agent` and `haive.core.engine.agent.Agent`

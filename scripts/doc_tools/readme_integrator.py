@@ -5,9 +5,9 @@ This script discovers README files throughout the codebase and integrates
 them into the Sphinx documentation.
 """
 
-from pathlib import Path
 import re
 import shutil
+from pathlib import Path
 
 import yaml
 
@@ -27,10 +27,20 @@ class ReadmeIntegrator:
 
         # Patterns to exclude
         exclude_patterns = [
-            "node_modules", "build", "dist", "__pycache__",
-            ".git", ".tox", ".pytest_cache", "egg-info",
-            ".venv", "venv", ".nox", "site-packages",
-            ".cache", "resources/embeddings_cache"
+            "node_modules",
+            "build",
+            "dist",
+            "__pycache__",
+            ".git",
+            ".tox",
+            ".pytest_cache",
+            "egg-info",
+            ".venv",
+            "venv",
+            ".nox",
+            "site-packages",
+            ".cache",
+            "resources/embeddings_cache",
         ]
 
         # Find READMEs in packages directory only
@@ -119,7 +129,9 @@ class ReadmeIntegrator:
 
         return metadata
 
-    def convert_markdown_links(self, content: str, source_path: Path, dest_path: Path) -> str:
+    def convert_markdown_links(
+        self, content: str, source_path: Path, dest_path: Path
+    ) -> str:
         """Convert relative markdown links to work in new location."""
         # Pattern for markdown links: [text](url)
         link_pattern = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
@@ -181,7 +193,9 @@ class ReadmeIntegrator:
 
         return output_path
 
-    def create_index_files(self, processed_files: list[tuple[Path, dict[str, str]]]) -> None:
+    def create_index_files(
+        self, processed_files: list[tuple[Path, dict[str, str]]]
+    ) -> None:
         """Create index files for discovered READMEs."""
         # Group by category
         by_category = {}
@@ -226,7 +240,9 @@ the Haive codebase, organized by category.
 """
 
             # Add files to category index
-            for output_path, metadata in sorted(by_category[category], key=lambda x: x[0]):
+            for output_path, metadata in sorted(
+                by_category[category], key=lambda x: x[0]
+            ):
                 # Get relative path from output directory
                 rel_path_from_output = output_path.relative_to(self.output_dir)
 
@@ -272,7 +288,7 @@ the Haive codebase, organized by category.
         summary_data = {
             "total_files": len(processed_files),
             "categories": {},
-            "files": []
+            "files": [],
         }
 
         for output_path, metadata in processed_files:
@@ -281,12 +297,14 @@ the Haive codebase, organized by category.
                 summary_data["categories"][category] = 0
             summary_data["categories"][category] += 1
 
-            summary_data["files"].append({
-                "path": str(output_path.relative_to(self.output_dir)),
-                "title": metadata["title"],
-                "category": category,
-                "description": metadata["description"]
-            })
+            summary_data["files"].append(
+                {
+                    "path": str(output_path.relative_to(self.output_dir)),
+                    "title": metadata["title"],
+                    "category": category,
+                    "description": metadata["description"],
+                }
+            )
 
         with open(summary_path, "w") as f:
             yaml.dump(summary_data, f, default_flow_style=False)

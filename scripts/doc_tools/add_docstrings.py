@@ -827,9 +827,7 @@ def create_module_readme(module_path: str, dry_run: bool = False) -> bool:
                         if base_name == "models":
                             # Try to identify model classes in the file
                             try:
-                                with open(
-                                    os.path.join(module_path, filename)
-                                ) as f:
+                                with open(os.path.join(module_path, filename)) as f:
                                     content = f.read()
                                     model_classes = re.findall(
                                         r"class\s+(\w+)\(BaseModel", content

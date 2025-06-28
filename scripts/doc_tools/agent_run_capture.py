@@ -6,18 +6,17 @@ including logs, state transitions, and graph visualizations for documentation.
 """
 
 import asyncio
-from datetime import datetime
 import json
 import logging
-from pathlib import Path
 import sys
 import time
+from datetime import datetime
+from pathlib import Path
 from typing import Any
 from uuid import uuid4
 
-from pydantic import BaseModel, Field
 import yaml
-
+from pydantic import BaseModel, Field
 
 # Ensure haive packages are in path
 workspace_root = Path(__file__).resolve().parents[2]
@@ -60,21 +59,23 @@ class LogCapture(logging.Handler):
     def __init__(self):
         super().__init__()
         self.logs = []
-        self.setFormatter(logging.Formatter(
-            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-        ))
+        self.setFormatter(
+            logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+        )
 
     def emit(self, record):
         """Capture log record."""
-        self.logs.append({
-            "timestamp": datetime.fromtimestamp(record.created).isoformat(),
-            "level": record.levelname,
-            "logger": record.name,
-            "message": self.format(record),
-            "module": record.module,
-            "function": record.funcName,
-            "line": record.lineno,
-        })
+        self.logs.append(
+            {
+                "timestamp": datetime.fromtimestamp(record.created).isoformat(),
+                "level": record.levelname,
+                "logger": record.name,
+                "message": self.format(record),
+                "module": record.module,
+                "function": record.funcName,
+                "line": record.lineno,
+            }
+        )
 
     def clear(self):
         """Clear captured logs."""
@@ -87,7 +88,7 @@ class LogCapture(logging.Handler):
 
 class AgentRunner:
     """Runner for capturing agent execution for documentation.
-    
+
     This class handles:
     - Setting up logging capture
     - Running agents with monitoring
@@ -169,7 +170,9 @@ class AgentRunner:
 
             # Record success
             metadata.success = True
-            metadata.output_data = result if isinstance(result, dict) else {"result": result}
+            metadata.output_data = (
+                result if isinstance(result, dict) else {"result": result}
+            )
 
         except Exception as e:
             # Record failure
@@ -263,15 +266,25 @@ class AgentRunner:
             message = log.get("message", "")
 
             # Look for state transition patterns
-            if any(pattern in message for pattern in [
-                "State update", "STATE UPDATE", "Transitioning to",
-                "state:", "State:", "New state:", "Updated state:"
-            ]):
-                transitions.append({
-                    "timestamp": log["timestamp"],
-                    "message": message,
-                    "type": "state_change"
-                })
+            if any(
+                pattern in message
+                for pattern in [
+                    "State update",
+                    "STATE UPDATE",
+                    "Transitioning to",
+                    "state:",
+                    "State:",
+                    "New state:",
+                    "Updated state:",
+                ]
+            ):
+                transitions.append(
+                    {
+                        "timestamp": log["timestamp"],
+                        "message": message,
+                        "type": "state_change",
+                    }
+                )
 
         return transitions
 
@@ -283,15 +296,24 @@ class AgentRunner:
             message = log.get("message", "")
 
             # Look for message patterns
-            if any(pattern in message for pattern in [
-                "Message:", "message:", "AIMessage", "HumanMessage",
-                "ToolMessage", "SystemMessage"
-            ]):
-                messages.append({
-                    "timestamp": log["timestamp"],
-                    "content": message,
-                    "type": "message"
-                })
+            if any(
+                pattern in message
+                for pattern in [
+                    "Message:",
+                    "message:",
+                    "AIMessage",
+                    "HumanMessage",
+                    "ToolMessage",
+                    "SystemMessage",
+                ]
+            ):
+                messages.append(
+                    {
+                        "timestamp": log["timestamp"],
+                        "content": message,
+                        "type": "message",
+                    }
+                )
 
         return messages
 

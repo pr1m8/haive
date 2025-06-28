@@ -98,17 +98,14 @@ def _route_agent_output(self, state: Any) -> Union[str, List[Send]]:
 ## Key Improvements
 
 1. **Early Termination Detection**
-
    - Recognizes completion markers in message content
    - Prevents unnecessary processing when tasks are already complete
 
 2. **Smart Fallback Handling**
-
    - Better handles cases where a message has content but no tool calls
    - Properly routes to structured output when appropriate
 
 3. **Optimized Flow Control**
-
    - Removes redundant code
    - Provides clear decision paths for different scenarios
 

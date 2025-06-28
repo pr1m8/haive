@@ -4,17 +4,24 @@
 A simplified version that quickly identifies problematic modules for documentation.
 """
 
-from datetime import datetime
 import importlib
 import json
-from pathlib import Path
 import sys
-
+from datetime import datetime
+from pathlib import Path
 
 # Setup paths
 workspace_root = Path(__file__).resolve().parents[2]
 packages_dir = workspace_root / "packages"
-for package_name in ["haive-core", "haive-agents", "haive-tools", "haive-games", "haive-dataflow", "haive-prebuilt", "haive-mcp"]:
+for package_name in [
+    "haive-core",
+    "haive-agents",
+    "haive-tools",
+    "haive-games",
+    "haive-dataflow",
+    "haive-prebuilt",
+    "haive-mcp",
+]:
     package_path = packages_dir / package_name / "src"
     if package_path.exists():
         sys.path.insert(0, str(package_path))
@@ -32,7 +39,6 @@ def test_key_modules():
         "haive.agents.conversation.round_robin",
         "haive.agents.conversation.social_media",
         "haive.agents.conversation.collaberative",
-
         # RAG modules
         "haive.agents.rag",
         "haive.agents.rag.base",
@@ -42,13 +48,11 @@ def test_key_modules():
         "haive.agents.rag.self_corr",
         "haive.agents.rag.llm_rag",
         "haive.agents.rag.multi_strategy",
-
         # Core modules
         "haive.core.engine",
         "haive.core.engine.base",
         "haive.core.registry",
         "haive.core.persistence",
-
         # Tools modules
         "haive.tools.base",
         "haive.tools.general",
@@ -56,7 +60,6 @@ def test_key_modules():
         "haive.tools.search",
         "haive.tools.content",
         "haive.tools.utility",
-
         # Games modules
         "haive.games.base",
         "haive.games.framework",
@@ -73,7 +76,7 @@ def test_key_modules():
         "missing_dependencies": [],
         "syntax_errors": [],
         "type_errors": [],
-        "other_errors": []
+        "other_errors": [],
     }
 
     print("🔍 Testing key modules for documentation issues...")
@@ -93,7 +96,7 @@ def test_key_modules():
 
             results["failed"][module_name] = {
                 "error_type": error_type,
-                "error_message": error_msg
+                "error_message": error_msg,
             }
 
             # Categorize errors
@@ -120,7 +123,9 @@ def generate_quick_fixes(results):
     print("=" * 80)
 
     if results["missing_dependencies"]:
-        print(f"\n🔧 MISSING DEPENDENCIES ({len(results['missing_dependencies'])} modules)")
+        print(
+            f"\n🔧 MISSING DEPENDENCIES ({len(results['missing_dependencies'])} modules)"
+        )
         print("Add these to autodoc_mock_imports in conf.py:")
 
         # Extract unique missing dependencies
@@ -151,7 +156,9 @@ def generate_quick_fixes(results):
         print(f"\n🔧 OTHER ERRORS ({len(results['other_errors'])} modules)")
         for module in results["other_errors"]:
             error_info = results["failed"][module]
-            print(f"    - {module}: {error_info['error_type']} - {error_info['error_message'][:100]}...")
+            print(
+                f"    - {module}: {error_info['error_type']} - {error_info['error_message'][:100]}..."
+            )
 
     # Success rate
     total = len(results["successful"]) + len(results["failed"])
@@ -163,7 +170,9 @@ def generate_quick_fixes(results):
 
     # Recommendation
     if success_rate < 50:
-        print("\n💡 RECOMMENDATION: Keep autosummary disabled until more modules are fixed")
+        print(
+            "\n💡 RECOMMENDATION: Keep autosummary disabled until more modules are fixed"
+        )
     elif success_rate < 80:
         print("\n💡 RECOMMENDATION: Enable autosummary but exclude problematic modules")
     else:

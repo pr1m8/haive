@@ -51,11 +51,11 @@ class TestDocumentAdapters(unittest.TestCase):
         """Test converting a Document to a LangChain Document."""
         lc_doc = document_to_langchain(self.document)
 
-        self.assertEqual(lc_doc.page_content, self.document.content)
-        self.assertEqual(lc_doc.metadata["source"], self.document.source_path)
-        self.assertEqual(lc_doc.metadata["document_id"], self.document.document_id)
-        self.assertEqual(lc_doc.metadata["author"], "Test Author")
-        self.assertEqual(lc_doc.metadata["keywords"], ["test", "document"])
+        assert lc_doc.page_content == self.document.content
+        assert lc_doc.metadata["source"] == self.document.source_path
+        assert lc_doc.metadata["document_id"] == self.document.document_id
+        assert lc_doc.metadata["author"] == "Test Author"
+        assert lc_doc.metadata["keywords"] == ["test", "document"]
 
     def test_langchain_to_document(self):
         """Test updating a Document with content from a LangChain Document."""
@@ -74,15 +74,15 @@ class TestDocumentAdapters(unittest.TestCase):
         updated_doc = langchain_to_document(lc_doc, self.document)
 
         # Check that the content was updated
-        self.assertEqual(updated_doc.content, "Updated content for the document.")
+        assert updated_doc.content == "Updated content for the document."
 
         # Check that metadata was updated correctly
-        self.assertEqual(updated_doc.metadata["author"], "New Author")
-        self.assertEqual(updated_doc.metadata["new_field"], "New Value")
+        assert updated_doc.metadata["author"] == "New Author"
+        assert updated_doc.metadata["new_field"] == "New Value"
 
         # Check that source and document_id were not overwritten
-        self.assertEqual(updated_doc.source_path, "/path/to/test.txt")
-        self.assertEqual(updated_doc.document_id, "test-doc-1")
+        assert updated_doc.source_path == "/path/to/test.txt"
+        assert updated_doc.document_id == "test-doc-1"
 
     def test_langchain_to_document_chunk(self):
         """Test converting a LangChain Document to a DocumentChunk."""
@@ -97,15 +97,15 @@ class TestDocumentAdapters(unittest.TestCase):
 
         chunk = langchain_to_document_chunk(lc_doc, self.document, 3)
 
-        self.assertEqual(chunk.content, "This is chunk content.")
-        self.assertEqual(chunk.document_id, "test-doc-1")
-        self.assertEqual(chunk.chunk_index, 3)
-        self.assertEqual(chunk.metadata["chunk_specific"], "Chunk metadata")
-        self.assertEqual(chunk.metadata["chunk_index"], 3)
+        assert chunk.content == "This is chunk content."
+        assert chunk.document_id == "test-doc-1"
+        assert chunk.chunk_index == 3
+        assert chunk.metadata["chunk_specific"] == "Chunk metadata"
+        assert chunk.metadata["chunk_index"] == 3
 
         # Check that source and document_id were not duplicated in metadata
-        self.assertNotIn("source", chunk.metadata)
-        self.assertNotIn("document_id", chunk.metadata)
+        assert "source" not in chunk.metadata
+        assert "document_id" not in chunk.metadata
 
     def test_documents_to_langchain_list(self):
         """Test converting a list of Documents to a list of LangChain Documents."""
@@ -120,13 +120,11 @@ class TestDocumentAdapters(unittest.TestCase):
         documents = [self.document, doc2]
         lc_docs = documents_to_langchain_list(documents)
 
-        self.assertEqual(len(lc_docs), 2)
-        self.assertEqual(
-            lc_docs[0].page_content, "This is a test document with some content."
-        )
-        self.assertEqual(lc_docs[1].page_content, "Another test document.")
-        self.assertEqual(lc_docs[0].metadata["document_id"], "test-doc-1")
-        self.assertEqual(lc_docs[1].metadata["document_id"], "test-doc-2")
+        assert len(lc_docs) == 2
+        assert lc_docs[0].page_content == "This is a test document with some content."
+        assert lc_docs[1].page_content == "Another test document."
+        assert lc_docs[0].metadata["document_id"] == "test-doc-1"
+        assert lc_docs[1].metadata["document_id"] == "test-doc-2"
 
 
 class TestSplitterFactory(unittest.TestCase):
@@ -139,29 +137,25 @@ class TestSplitterFactory(unittest.TestCase):
             self.skipTest("Core splitters not available")
 
         # Test strategy-based splitter types
-        self.assertIsNotNone(
-            SplitterFactory.get_splitter_type(ChunkingStrategy.FIXED_SIZE)
+        assert (
+            SplitterFactory.get_splitter_type(ChunkingStrategy.FIXED_SIZE) is not None
         )
-        self.assertIsNotNone(
-            SplitterFactory.get_splitter_type(ChunkingStrategy.RECURSIVE)
-        )
-        self.assertIsNotNone(
-            SplitterFactory.get_splitter_type(ChunkingStrategy.PARAGRAPH)
-        )
-        self.assertIsNotNone(
-            SplitterFactory.get_splitter_type(ChunkingStrategy.SENTENCE)
-        )
+        assert SplitterFactory.get_splitter_type(ChunkingStrategy.RECURSIVE) is not None
+        assert SplitterFactory.get_splitter_type(ChunkingStrategy.PARAGRAPH) is not None
+        assert SplitterFactory.get_splitter_type(ChunkingStrategy.SENTENCE) is not None
 
         # Test format-specific splitter types
-        self.assertIsNotNone(
+        assert (
             SplitterFactory.get_splitter_type(
                 ChunkingStrategy.FIXED_SIZE, DocumentFormat.MARKDOWN
             )
+            is not None
         )
-        self.assertIsNotNone(
+        assert (
             SplitterFactory.get_splitter_type(
                 ChunkingStrategy.FIXED_SIZE, DocumentFormat.HTML
             )
+            is not None
         )
 
     def test_create_splitter(self):
@@ -186,9 +180,9 @@ class TestSplitterFactory(unittest.TestCase):
             ChunkingStrategy.PARAGRAPH, options
         )
 
-        self.assertIsNotNone(fixed_splitter)
-        self.assertIsNotNone(recursive_splitter)
-        self.assertIsNotNone(paragraph_splitter)
+        assert fixed_splitter is not None
+        assert recursive_splitter is not None
+        assert paragraph_splitter is not None
 
 
 class TestTransformerFactory(unittest.TestCase):
@@ -204,13 +198,13 @@ class TestTransformerFactory(unittest.TestCase):
         html_transformer_type = TransformerFactory.get_transformer_type(
             DocumentFormat.HTML
         )
-        self.assertIsNotNone(html_transformer_type)
+        assert html_transformer_type is not None
 
         # Markdown doesn't need transformation
         md_transformer_type = TransformerFactory.get_transformer_type(
             DocumentFormat.MARKDOWN
         )
-        self.assertIsNone(md_transformer_type)
+        assert md_transformer_type is None
 
     def test_create_transformer(self):
         """Test creating transformers for different formats."""
@@ -220,11 +214,11 @@ class TestTransformerFactory(unittest.TestCase):
 
         # HTML should have a transformer
         html_transformer = TransformerFactory.create_transformer(DocumentFormat.HTML)
-        self.assertIsNotNone(html_transformer)
+        assert html_transformer is not None
 
         # Markdown doesn't need transformation
         md_transformer = TransformerFactory.create_transformer(DocumentFormat.MARKDOWN)
-        self.assertIsNone(md_transformer)
+        assert md_transformer is None
 
 
 class TestProcessingFunctions(unittest.TestCase):
@@ -266,10 +260,10 @@ class TestProcessingFunctions(unittest.TestCase):
         if TRANSFORMERS_AVAILABLE:
             # The transformation might not actually happen if the transformer isn't available
             # but the function should still return the document
-            self.assertIsNotNone(transformed_doc)
+            assert transformed_doc is not None
         else:
             # If transformers aren't available, the document should be returned as is
-            self.assertEqual(transformed_doc.content, self.html_doc.content)
+            assert transformed_doc.content == self.html_doc.content
 
     def test_split_document(self):
         """Test splitting a document into chunks."""
@@ -279,16 +273,16 @@ class TestProcessingFunctions(unittest.TestCase):
         )
 
         # Check that we have the expected number of chunks
-        self.assertEqual(len(chunks), 3)
+        assert len(chunks) == 3
 
         # Check that the chunks have the expected content
-        self.assertEqual(chunks[0].content, "This is a test document.")
-        self.assertEqual(chunks[1].content, "It has multiple paragraphs.")
-        self.assertEqual(chunks[2].content, "Each paragraph can be a separate chunk.")
+        assert chunks[0].content == "This is a test document."
+        assert chunks[1].content == "It has multiple paragraphs."
+        assert chunks[2].content == "Each paragraph can be a separate chunk."
 
         # Check that the chunks have the correct document_id
         for chunk in chunks:
-            self.assertEqual(chunk.document_id, "test-text")
+            assert chunk.document_id == "test-text"
 
     def test_process_document(self):
         """Test processing a document (transform and split)."""
@@ -308,16 +302,12 @@ class TestProcessingFunctions(unittest.TestCase):
         processed_doc = process_document(doc)
 
         # Check that we have the expected number of chunks
-        self.assertEqual(len(processed_doc.chunks), 3)
+        assert len(processed_doc.chunks) == 3
 
         # Check that the chunks have the expected content
-        self.assertEqual(
-            processed_doc.chunks[0].content, "This is a document to process."
-        )
-        self.assertEqual(processed_doc.chunks[1].content, "It has multiple paragraphs.")
-        self.assertEqual(
-            processed_doc.chunks[2].content, "Let's see how it's processed."
-        )
+        assert processed_doc.chunks[0].content == "This is a document to process."
+        assert processed_doc.chunks[1].content == "It has multiple paragraphs."
+        assert processed_doc.chunks[2].content == "Let's see how it's processed."
 
 
 class TestSimplifiedSplitting(unittest.TestCase):
@@ -352,18 +342,18 @@ class TestSimplifiedSplitting(unittest.TestCase):
             chunks = split_document(self.doc, ChunkingStrategy.FIXED_SIZE, options)
 
             # Check that we have chunks
-            self.assertTrue(len(chunks) > 0)
+            assert len(chunks) > 0
 
             # Check that chunks are the right size
             for chunk in chunks:
-                self.assertLessEqual(len(chunk.content), options.chunk_size)
+                assert len(chunk.content) <= options.chunk_size
 
             # Check that chunks overlap
             if len(chunks) > 1:
                 for i in range(len(chunks) - 1):
                     end_of_first = chunks[i].content[-options.chunk_overlap :]
                     start_of_second = chunks[i + 1].content[: options.chunk_overlap]
-                    self.assertTrue(
+                    assert (
                         end_of_first == start_of_second
                         or end_of_first in start_of_second
                         or start_of_second in end_of_first
@@ -389,15 +379,15 @@ class TestSimplifiedSplitting(unittest.TestCase):
             chunks = split_document(self.doc, ChunkingStrategy.PARAGRAPH, options)
 
             # Check that we have the expected number of chunks
-            self.assertEqual(len(chunks), 3)
+            assert len(chunks) == 3
 
             # Check that chunks have the expected content
-            self.assertEqual(
-                chunks[0].content,
-                "This is a test document with multiple sentences. It has several sentences. And even more sentences here.",
+            assert (
+                chunks[0].content
+                == "This is a test document with multiple sentences. It has several sentences. And even more sentences here."
             )
-            self.assertEqual(chunks[1].content, "It also has multiple paragraphs.")
-            self.assertEqual(chunks[2].content, "And even more paragraphs.")
+            assert chunks[1].content == "It also has multiple paragraphs."
+            assert chunks[2].content == "And even more paragraphs."
         finally:
             # Restore original value
             document_processors.SPLITTERS_AVAILABLE = original_value
@@ -419,12 +409,12 @@ class TestSimplifiedSplitting(unittest.TestCase):
             chunks = split_document(self.doc, ChunkingStrategy.SENTENCE, options)
 
             # Check that we have multiple chunks
-            self.assertTrue(len(chunks) >= 3)
+            assert len(chunks) >= 3
 
             # Check that each chunk is a sentence
             for chunk in chunks:
                 # Check that each chunk ends with a period or is a complete sentence
-                self.assertTrue(
+                assert (
                     chunk.content.endswith(".")
                     or chunk.content.endswith("!")
                     or chunk.content.endswith("?")

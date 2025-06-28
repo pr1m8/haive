@@ -6,20 +6,27 @@ tracks failures, and generates reports to help fix documentation issues.
 """
 
 import ast
-from datetime import datetime
 import importlib
 import json
-from pathlib import Path
 import sys
 import traceback
+from datetime import datetime
+from pathlib import Path
 
 import yaml
-
 
 # Setup paths
 workspace_root = Path(__file__).resolve().parents[2]
 packages_dir = workspace_root / "packages"
-for package_name in ["haive-core", "haive-agents", "haive-tools", "haive-games", "haive-dataflow", "haive-prebuilt", "haive-mcp"]:
+for package_name in [
+    "haive-core",
+    "haive-agents",
+    "haive-tools",
+    "haive-games",
+    "haive-dataflow",
+    "haive-prebuilt",
+    "haive-mcp",
+]:
     package_path = packages_dir / package_name / "src"
     if package_path.exists():
         sys.path.insert(0, str(package_path))
@@ -50,14 +57,22 @@ class ImportIssueTracker:
             "type_errors": [],
             "pydantic_issues": [],
             "langchain_issues": [],
-            "other_errors": []
+            "other_errors": [],
         }
 
     def discover_modules(self) -> list[str]:
         """Discover all Python modules in the haive packages."""
         modules = []
 
-        for package_name in ["haive-core", "haive-agents", "haive-tools", "haive-games", "haive-dataflow", "haive-prebuilt", "haive-mcp"]:
+        for package_name in [
+            "haive-core",
+            "haive-agents",
+            "haive-tools",
+            "haive-games",
+            "haive-dataflow",
+            "haive-prebuilt",
+            "haive-mcp",
+        ]:
             package_path = packages_dir / package_name / "src"
             if not package_path.exists():
                 continue
@@ -66,7 +81,10 @@ class ImportIssueTracker:
             for py_file in package_path.rglob("*.py"):
                 if py_file.name == "__init__.py":
                     continue
-                if any(skip in str(py_file) for skip in ["test", "example", "demo", "__pycache__"]):
+                if any(
+                    skip in str(py_file)
+                    for skip in ["test", "example", "demo", "__pycache__"]
+                ):
                     continue
 
                 # Convert path to module name
@@ -77,7 +95,9 @@ class ImportIssueTracker:
 
         return sorted(modules)
 
-    def test_import(self, module_name: str) -> tuple[bool, str | None, Exception | None]:
+    def test_import(
+        self, module_name: str
+    ) -> tuple[bool, str | None, Exception | None]:
         """Test importing a specific module."""
         try:
             importlib.import_module(module_name)
@@ -87,7 +107,9 @@ class ImportIssueTracker:
             error_msg = str(e)
             return False, error_type, e
 
-    def analyze_import_error(self, module_name: str, error_type: str, error: Exception) -> dict:
+    def analyze_import_error(
+        self, module_name: str, error_type: str, error: Exception
+    ) -> dict:
         """Analyze an import error and categorize it."""
         error_info = {
             "module": module_name,
@@ -95,7 +117,7 @@ class ImportIssueTracker:
             "error_message": str(error),
             "traceback": traceback.format_exc(),
             "category": "other_errors",
-            "suggestions": []
+            "suggestions": [],
         }
 
         error_msg = str(error).lower()
@@ -107,11 +129,15 @@ class ImportIssueTracker:
             if "'" in error_msg:
                 missing_module = error_msg.split("'")[1]
                 error_info["missing_module"] = missing_module
-                error_info["suggestions"].append(f"Add '{missing_module}' to autodoc_mock_imports")
+                error_info["suggestions"].append(
+                    f"Add '{missing_module}' to autodoc_mock_imports"
+                )
 
         elif "circular import" in error_msg or "cannot import name" in error_msg:
             error_info["category"] = "circular_imports"
-            error_info["suggestions"].append("Refactor imports to avoid circular dependencies")
+            error_info["suggestions"].append(
+                "Refactor imports to avoid circular dependencies"
+            )
 
         elif "invalid syntax" in error_msg:
             error_info["category"] = "syntax_errors"
@@ -119,17 +145,23 @@ class ImportIssueTracker:
 
         elif "attributeerror" in error_type.lower():
             error_info["category"] = "attribute_errors"
-            error_info["suggestions"].append("Check for missing attributes or incorrect imports")
+            error_info["suggestions"].append(
+                "Check for missing attributes or incorrect imports"
+            )
 
         elif "typeerror" in error_type.lower():
             error_info["category"] = "type_errors"
             if "pydantic" in error_msg or "basemodel" in error_msg:
                 error_info["category"] = "pydantic_issues"
-                error_info["suggestions"].append("Check Pydantic model definitions and generics")
+                error_info["suggestions"].append(
+                    "Check Pydantic model definitions and generics"
+                )
 
         elif "langchain" in error_msg or "langgraph" in error_msg:
             error_info["category"] = "langchain_issues"
-            error_info["suggestions"].append("Mock LangChain dependencies or check versions")
+            error_info["suggestions"].append(
+                "Mock LangChain dependencies or check versions"
+            )
 
         return error_info
 
@@ -138,7 +170,15 @@ class ImportIssueTracker:
         try:
             # Find the module file
             module_path = None
-            for package_name in ["haive-core", "haive-agents", "haive-tools", "haive-games", "haive-dataflow", "haive-prebuilt", "haive-mcp"]:
+            for package_name in [
+                "haive-core",
+                "haive-agents",
+                "haive-tools",
+                "haive-games",
+                "haive-dataflow",
+                "haive-prebuilt",
+                "haive-mcp",
+            ]:
                 package_path = packages_dir / package_name / "src"
                 if not package_path.exists():
                     continue
@@ -168,7 +208,7 @@ class ImportIssueTracker:
                 "functions": [],
                 "constants": [],
                 "has_all": False,
-                "all_items": []
+                "all_items": [],
             }
 
             for node in ast.walk(tree):
@@ -190,7 +230,8 @@ class ImportIssueTracker:
                                 structure["has_all"] = True
                                 if isinstance(node.value, ast.List):
                                     structure["all_items"] = [
-                                        elt.s for elt in node.value.elts
+                                        elt.s
+                                        for elt in node.value.elts
                                         if isinstance(elt, ast.Str)
                                     ]
                             elif target.id.isupper():
@@ -244,10 +285,14 @@ class ImportIssueTracker:
             "total_modules": len(self.successful_imports) + len(self.failed_imports),
             "successful_imports": len(self.successful_imports),
             "failed_imports": len(self.failed_imports),
-            "success_rate": len(self.successful_imports) / (len(self.successful_imports) + len(self.failed_imports)) * 100,
-            "error_categories": {cat: len(modules) for cat, modules in self.import_categories.items()},
+            "success_rate": len(self.successful_imports)
+            / (len(self.successful_imports) + len(self.failed_imports))
+            * 100,
+            "error_categories": {
+                cat: len(modules) for cat, modules in self.import_categories.items()
+            },
             "top_error_types": self._get_top_error_types(),
-            "recommendations": self._generate_recommendations()
+            "recommendations": self._generate_recommendations(),
         }
 
         # 2. Detailed failure report
@@ -256,15 +301,21 @@ class ImportIssueTracker:
             "failed_imports": self.failed_imports,
             "categorized_failures": self.import_categories,
             "missing_dependencies": self._extract_missing_dependencies(),
-            "suggested_mocks": self._generate_mock_suggestions()
+            "suggested_mocks": self._generate_mock_suggestions(),
         }
 
         # 3. Module structure report
         structure_report = {
             "timestamp": datetime.now().isoformat(),
             "module_structures": self.module_structure,
-            "modules_with_all": [m for m, s in self.module_structure.items() if s.get("has_all", False)],
-            "modules_without_all": [m for m, s in self.module_structure.items() if not s.get("has_all", False)]
+            "modules_with_all": [
+                m for m, s in self.module_structure.items() if s.get("has_all", False)
+            ],
+            "modules_without_all": [
+                m
+                for m, s in self.module_structure.items()
+                if not s.get("has_all", False)
+            ],
         }
 
         # 4. Sphinx configuration suggestions
@@ -275,7 +326,7 @@ class ImportIssueTracker:
             f"import_analysis_summary_{timestamp}.json": summary_report,
             f"import_failures_detailed_{timestamp}.json": failures_report,
             f"module_structures_{timestamp}.json": structure_report,
-            f"sphinx_config_suggestions_{timestamp}.yaml": sphinx_suggestions
+            f"sphinx_config_suggestions_{timestamp}.yaml": sphinx_suggestions,
         }
 
         for filename, content in reports.items():
@@ -304,19 +355,37 @@ class ImportIssueTracker:
         """Extract all missing dependencies."""
         missing = set()
         for failure in self.failed_imports.values():
-            if failure["category"] == "missing_dependencies" and "missing_module" in failure:
+            if (
+                failure["category"] == "missing_dependencies"
+                and "missing_module" in failure
+            ):
                 missing.add(failure["missing_module"])
         return sorted(missing)
 
     def _generate_mock_suggestions(self) -> list[str]:
         """Generate mock import suggestions for sphinx conf.py."""
         missing_deps = self._extract_missing_dependencies()
-        current_mocks = set([
-            "langchain", "langchain_core", "langchain_community", "langchain_openai",
-            "langgraph", "langsmith", "neo4j", "sqlalchemy", "psycopg2", "chromadb",
-            "faiss", "pinecone", "weaviate", "qdrant_client", "elasticsearch", "supabase",
-            # ... (existing mocks from conf.py)
-        ])
+        current_mocks = set(
+            [
+                "langchain",
+                "langchain_core",
+                "langchain_community",
+                "langchain_openai",
+                "langgraph",
+                "langsmith",
+                "neo4j",
+                "sqlalchemy",
+                "psycopg2",
+                "chromadb",
+                "faiss",
+                "pinecone",
+                "weaviate",
+                "qdrant_client",
+                "elasticsearch",
+                "supabase",
+                # ... (existing mocks from conf.py)
+            ]
+        )
 
         new_mocks = []
         for dep in missing_deps:
@@ -330,20 +399,34 @@ class ImportIssueTracker:
         recs = []
 
         if self.import_categories["missing_dependencies"]:
-            recs.append(f"Add {len(self.import_categories['missing_dependencies'])} missing dependencies to autodoc_mock_imports")
+            recs.append(
+                f"Add {len(self.import_categories['missing_dependencies'])} missing dependencies to autodoc_mock_imports"
+            )
 
         if self.import_categories["pydantic_issues"]:
-            recs.append(f"Fix {len(self.import_categories['pydantic_issues'])} Pydantic model issues (generics, inheritance)")
+            recs.append(
+                f"Fix {len(self.import_categories['pydantic_issues'])} Pydantic model issues (generics, inheritance)"
+            )
 
         if self.import_categories["circular_imports"]:
-            recs.append(f"Resolve {len(self.import_categories['circular_imports'])} circular import issues")
+            recs.append(
+                f"Resolve {len(self.import_categories['circular_imports'])} circular import issues"
+            )
 
         if self.import_categories["syntax_errors"]:
-            recs.append(f"Fix {len(self.import_categories['syntax_errors'])} syntax errors")
+            recs.append(
+                f"Fix {len(self.import_categories['syntax_errors'])} syntax errors"
+            )
 
-        success_rate = len(self.successful_imports) / (len(self.successful_imports) + len(self.failed_imports)) * 100
+        success_rate = (
+            len(self.successful_imports)
+            / (len(self.successful_imports) + len(self.failed_imports))
+            * 100
+        )
         if success_rate < 80:
-            recs.append("Consider disabling autosummary for problematic modules until issues are resolved")
+            recs.append(
+                "Consider disabling autosummary for problematic modules until issues are resolved"
+            )
 
         return recs
 
@@ -361,14 +444,14 @@ class ImportIssueTracker:
                     "members": True,
                     "undoc-members": False,  # Disable for problematic modules
                     "show-inheritance": True,
-                    "ignore-module-all": True
+                    "ignore-module-all": True,
                 },
                 "autosummary_generate": False,  # Disable until issues resolved
                 "suppress_warnings": [
                     "autodoc.import_object",
-                    "autosummary.import_cycle"
-                ]
-            }
+                    "autosummary.import_cycle",
+                ],
+            },
         }
 
     def _generate_markdown_summary(self, timestamp: str) -> None:

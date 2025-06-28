@@ -1,0 +1,94 @@
+{
+  "run_id": "c9e09adb-29f0-4662-b877-f45abcdd97c9",
+  "agent_name": "TextSummarizerAgent",
+  "agent_type": "custom.SimpleAgent",
+  "start_time": "2025-06-26 11:35:23.164524",
+  "end_time": "2025-06-26 11:35:23.164764",
+  "input_data": {
+    "text": "Lorem ipsum dolor sit amet...",
+    "task": "summarize"
+  },
+  "final_output": {
+    "messages": [
+      {
+        "content": "Processed: {'text': 'Lorem ipsum dolor sit amet...', 'task': 'summarize'}",
+        "type": "result"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "step_id": "e1af88dd-8602-4609-8f3d-4905ab6a5b48",
+      "timestamp": "2025-06-26 11:35:23.164726",
+      "step_type": "input",
+      "node_name": null,
+      "content": {
+        "data": {
+          "text": "Lorem ipsum dolor sit amet...",
+          "task": "summarize"
+        }
+      },
+      "metadata": {}
+    },
+    {
+      "step_id": "c59b18bb-b99d-4863-861c-e3b8d7ed1783",
+      "timestamp": "2025-06-26 11:35:23.164744",
+      "step_type": "message",
+      "node_name": null,
+      "content": {
+        "messages": [
+          {
+            "content": "Starting processing",
+            "type": "system"
+          }
+        ]
+      },
+      "metadata": {}
+    },
+    {
+      "step_id": "9bbef0b3-12e1-417c-8ff0-b439ce600fba",
+      "timestamp": "2025-06-26 11:35:23.164750",
+      "step_type": "node",
+      "node_name": "input_processor",
+      "content": {
+        "node": "input_processor",
+        "content": {
+          "text": "Lorem ipsum dolor sit amet...",
+          "task": "summarize"
+        }
+      },
+      "metadata": {}
+    },
+    {
+      "step_id": "e729732d-c8e5-47af-9818-d9f0955f76c3",
+      "timestamp": "2025-06-26 11:35:23.164756",
+      "step_type": "node",
+      "node_name": "main_logic",
+      "content": {
+        "node": "main_logic",
+        "content": {
+          "processing": true
+        }
+      },
+      "metadata": {}
+    },
+    {
+      "step_id": "2d07d941-2aef-40da-b51b-aedc20623768",
+      "timestamp": "2025-06-26 11:35:23.164762",
+      "step_type": "message",
+      "node_name": null,
+      "content": {
+        "messages": [
+          {
+            "content": "Processed: {'text': 'Lorem ipsum dolor sit amet...', 'task': 'summarize'}",
+            "type": "result"
+          }
+        ]
+      },
+      "metadata": {}
+    }
+  ],
+  "graph_visualization_path": "docs/captures/c9e09adb-29f0-4662-b877-f45abcdd97c9_graph.png",
+  "error": null,
+  "metadata": {}
+}

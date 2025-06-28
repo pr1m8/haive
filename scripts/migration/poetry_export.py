@@ -5,14 +5,13 @@ This script provides intelligent dependency management across multiple packages,
 with a focus on monorepo dependency distribution and standardization.
 """
 
-from collections import defaultdict
 import logging
-from pathlib import Path
 import sys
+from collections import defaultdict
+from pathlib import Path
 from typing import Any
 
 import toml
-
 
 # Configure logging
 logging.basicConfig(

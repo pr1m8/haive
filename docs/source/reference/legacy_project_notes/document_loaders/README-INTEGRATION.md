@@ -42,6 +42,7 @@ To properly integrate these components into the Haive framework, we should:
    ```bash
    mkdir -p haive-core/src/haive/core/schema/prebuilt/documents/
    ```
+
    - Implement base.py with enums and base models
    - Implement state.py with DocumentState extending StateSchema
    - Add conversion utilities for LangChain integration
@@ -51,6 +52,7 @@ To properly integrate these components into the Haive framework, we should:
    ```bash
    mkdir -p haive-prebuilt/src/haive/prebuilt/content/loaders/
    ```
+
    - Implement document_agent.py with the agent implementation
    - Implement document_processors.py with transformer and splitter integration
    - Add specialized loaders for different document types
@@ -61,6 +63,7 @@ To properly integrate these components into the Haive framework, we should:
    mkdir -p haive-core/tests/schema/prebuilt/documents/
    mkdir -p haive-prebuilt/tests/content/loaders/
    ```
+
    - Implement test_base.py, test_state.py, etc.
    - Add tests for document agent and processors
    - Add tests for specialized loaders

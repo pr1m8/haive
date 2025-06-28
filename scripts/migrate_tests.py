@@ -5,9 +5,8 @@ This script helps reorganize test files from scattered locations to the proper
 packages/haive-*/tests/ structure.
 """
 
-from pathlib import Path
 import shutil
-
+from pathlib import Path
 
 # Define test file patterns
 TEST_PATTERNS = ["test_*.py", "*_test.py", "tests.py"]
@@ -23,12 +22,10 @@ TEST_MIGRATIONS = {
     "tests/test_semantic_scholar_loader.py": "packages/haive-core/tests/unit/engine/document/test_semantic_scholar_loader.py",
     "tests/test_storm_wiki_runner.py": "packages/haive-agents/tests/integration/research/test_storm_wiki_runner.py",
     "tests/test_tokenization.py": "packages/haive-core/tests/unit/test_tokenization.py",
-
     # Source directory tests -> package tests
     "packages/haive-games/src/haive/games/poker/test_poker_actions.py": "packages/haive-games/tests/unit/poker/test_poker_actions.py",
     "packages/haive-games/src/haive/games/mafia/test.py": "packages/haive-games/tests/unit/mafia/test_mafia.py",
     "packages/haive-dataflow/src/haive/dataflow/db/api/test_api.py": "packages/haive-dataflow/tests/unit/db/api/test_api.py",
-
     # Scattered test files
     "test_improved_subgraph_visualization.py": "packages/haive-core/tests/unit/visualization/test_improved_subgraph_visualization.py",
     "test_schema_optional.py": "packages/haive-core/tests/unit/test_schema_optional.py",
@@ -72,14 +69,27 @@ def find_test_files() -> list[Path]:
             path_str = str(relative_path)
 
             # Skip if already in correct location
-            if path_str.startswith("packages/") and "/tests/" in path_str and "/src/" not in path_str:
+            if (
+                path_str.startswith("packages/")
+                and "/tests/" in path_str
+                and "/src/" not in path_str
+            ):
                 continue
 
             # Skip unwanted directories
             skip_patterns = [
-                "build/", "__pycache__", ".tox", ".pytest_cache",
-                ".venv/", "venv/", ".git/", "node_modules/",
-                ".history/", "temp/", "tmp/", ".eggs/"
+                "build/",
+                "__pycache__",
+                ".tox",
+                ".pytest_cache",
+                ".venv/",
+                "venv/",
+                ".git/",
+                "node_modules/",
+                ".history/",
+                "temp/",
+                "tmp/",
+                ".eggs/",
             ]
             if any(skip in path_str for skip in skip_patterns):
                 continue
@@ -120,9 +130,17 @@ def get_package_for_test(test_file: Path) -> str:
     path_str = str(test_file)
 
     # Check path first for better accuracy
-    if "/agents/" in path_str or "test_react" in path_str or "test_simple_agent" in path_str:
+    if (
+        "/agents/" in path_str
+        or "test_react" in path_str
+        or "test_simple_agent" in path_str
+    ):
         return "haive-agents"
-    if "/tools/" in path_str or "test_corporate_bs" in path_str or "/toolkits/" in path_str:
+    if (
+        "/tools/" in path_str
+        or "test_corporate_bs" in path_str
+        or "/toolkits/" in path_str
+    ):
         return "haive-tools"
     if "/games/" in path_str:
         return "haive-games"
@@ -146,8 +164,15 @@ def get_package_for_test(test_file: Path) -> str:
 
 def create_test_directories():
     """Create necessary test directory structure."""
-    packages = ["haive-core", "haive-agents", "haive-tools", "haive-games",
-                "haive-dataflow", "haive-prebuilt", "haive-mcp"]
+    packages = [
+        "haive-core",
+        "haive-agents",
+        "haive-tools",
+        "haive-games",
+        "haive-dataflow",
+        "haive-prebuilt",
+        "haive-mcp",
+    ]
 
     subdirs = ["unit", "integration", "fixtures", "conftest.py"]
 
@@ -162,7 +187,9 @@ def create_test_directories():
         # Create conftest.py if it doesn't exist
         conftest_file = package_test_dir / "conftest.py"
         if not conftest_file.exists():
-            conftest_file.write_text(f'"""Pytest configuration for {package} tests."""\n')
+            conftest_file.write_text(
+                f'"""Pytest configuration for {package} tests."""\n'
+            )
 
         # Create __init__.py files
         (package_test_dir / "__init__.py").touch(exist_ok=True)
@@ -173,34 +200,27 @@ def create_test_directories():
 def migrate_test_file(source: Path, target: Path, dry_run: bool = True):
     """Migrate a single test file."""
     if dry_run:
-        print(f"Would move: {source} -> {target}")
+        pass
     else:
         # Create target directory
         target.parent.mkdir(parents=True, exist_ok=True)
 
         # Move file
         shutil.move(str(source), str(target))
-        print(f"Moved: {source} -> {target}")
 
 
 def main(dry_run: bool = True):
     """Main migration function."""
-    print("Haive Test Migration Script")
-    print("=" * 50)
 
     if dry_run:
-        print("DRY RUN MODE - No files will be moved")
+        pass
     else:
-        print("LIVE MODE - Files will be moved")
+        pass
 
-    print("\n1. Creating test directory structure...")
     create_test_directories()
 
-    print("\n2. Finding test files to migrate...")
     test_files = find_test_files()
-    print(f"Found {len(test_files)} test files to analyze")
 
-    print("\n3. Processing predefined migrations...")
     for source_str, target_str in TEST_MIGRATIONS.items():
         source = ROOT_DIR / source_str
         target = ROOT_DIR / target_str
@@ -208,7 +228,6 @@ def main(dry_run: bool = True):
         if source.exists():
             migrate_test_file(source, target, dry_run)
 
-    print("\n4. Processing remaining test files...")
     for test_file in test_files:
         relative_path = test_file.relative_to(ROOT_DIR)
 
@@ -227,23 +246,19 @@ def main(dry_run: bool = True):
 
         migrate_test_file(test_file, target, dry_run)
 
-    print("\n5. Cleanup empty directories...")
     if not dry_run:
         # Remove empty test directories
         for empty_dir in ["tests", "test", "testing"]:
             dir_path = ROOT_DIR / empty_dir
             if dir_path.exists() and not any(dir_path.iterdir()):
                 dir_path.rmdir()
-                print(f"Removed empty directory: {dir_path}")
 
-    print("\nMigration complete!")
 
     if dry_run:
-        print("\nTo perform the actual migration, run:")
-        print("python scripts/migrate_tests.py --no-dry-run")
 
 
 if __name__ == "__main__":
     import sys
+
     dry_run = "--no-dry-run" not in sys.argv
     main(dry_run)

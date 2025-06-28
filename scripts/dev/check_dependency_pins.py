@@ -3,8 +3,8 @@
 """Check that dependencies have appropriate version constraints."""
 
 import os
-from pathlib import Path
 import sys
+from pathlib import Path
 
 import tomli
 
