@@ -8,13 +8,12 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Submodules
+
 - **tnt**: TODO: Add description
 - **base**: TODO: Add description
 - **summarizer**: TODO: Add description
 - **complex_extraction**: TODO: Add description
-
 
 ## Installation
 

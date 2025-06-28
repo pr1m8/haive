@@ -8,8 +8,8 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Submodules
+
 - **rubiks**: TODO: Add description
 - **wordle**: TODO: Add description
 - **flow_free**: TODO: Add description
@@ -17,7 +17,6 @@ TODO: Add detailed overview of this module's functionality
 - **twenty_fourty_eight**: TODO: Add description
 - **testing**: TODO: Add description
 - **mine_sweeper**: TODO: Add description
-
 
 ## Installation
 

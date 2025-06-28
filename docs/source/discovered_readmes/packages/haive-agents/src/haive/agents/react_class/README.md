@@ -8,14 +8,13 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Submodules
+
 - **react_v3**: TODO: Add description
 - **react_agent2**: TODO: Add description
 - **react_many_tools**: TODO: Add description
 - **react_agent**: TODO: Add description
 - **react_v2**: TODO: Add description
-
 
 ## Installation
 

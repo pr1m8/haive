@@ -8,10 +8,9 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Submodules
-- **many_tools**: TODO: Add description
 
+- **many_tools**: TODO: Add description
 
 ## Installation
 

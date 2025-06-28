@@ -9,9 +9,11 @@ TODO: Add detailed overview of this module's functionality
 ## Key Components
 
 ### Classes
+
 - **Agent**: TODO: Add description
 
 ### Functions
+
 - **setup_name_and_engines()**: TODO: Add description
 - **setup_schemas_and_build_graph()**: TODO: Add description
 - **main_engine()**: TODO: Add description
@@ -19,8 +21,8 @@ TODO: Add detailed overview of this module's functionality
 - **rebuild_graph()**: TODO: Add description
 
 ### Submodules
-- **mixins**: TODO: Add description
 
+- **mixins**: TODO: Add description
 
 ## Installation
 

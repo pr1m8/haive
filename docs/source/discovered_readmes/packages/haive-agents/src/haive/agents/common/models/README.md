@@ -8,11 +8,10 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Submodules
+
 - **task_analysis**: TODO: Add description
 - **grade**: TODO: Add description
-
 
 ## Installation
 

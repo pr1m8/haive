@@ -9,12 +9,13 @@ TODO: Add detailed overview of this module's functionality
 ## Key Components
 
 ### Classes
+
 - **BaseGraph**: TODO: Add description
 
 ### Functions
+
 - **number_of_nodes()**: TODO: Add description
 - **number_of_edges()**: TODO: Add description
-
 
 ## Installation
 

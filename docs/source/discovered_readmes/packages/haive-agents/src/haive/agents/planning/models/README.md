@@ -9,6 +9,7 @@ TODO: Add detailed overview of this module's functionality
 ## Key Components
 
 ### Classes
+
 - **NodeStatus**: TODO: Add description
 - **ResourceType**: TODO: Add description
 - **CompletionCriteria**: TODO: Add description
@@ -16,12 +17,12 @@ TODO: Add detailed overview of this module's functionality
 - **ResourceAllocation**: TODO: Add description
 
 ### Functions
+
 - **validate_minimum()**: TODO: Add description
 - **duration_seconds()**: TODO: Add description
 - **success_rate()**: TODO: Add description
 - **validate_node_refs()**: TODO: Add description
 - **validate_unique_resources()**: TODO: Add description
-
 
 ## Installation
 

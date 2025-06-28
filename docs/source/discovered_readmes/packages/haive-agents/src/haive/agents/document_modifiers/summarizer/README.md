@@ -8,11 +8,10 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Submodules
+
 - **iterative_refinement**: TODO: Add description
 - **map_branch**: TODO: Add description
-
 
 ## Installation
 

@@ -8,10 +8,9 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Submodules
-- **binary_grader**: TODO: Add description
 
+- **binary_grader**: TODO: Add description
 
 ## Installation
 

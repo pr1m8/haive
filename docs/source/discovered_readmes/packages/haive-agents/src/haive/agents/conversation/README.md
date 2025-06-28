@@ -8,15 +8,14 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Submodules
+
 - **collaberative**: TODO: Add description
 - **base**: TODO: Add description
 - **round_robin**: TODO: Add description
 - **debate**: TODO: Add description
 - **directed**: TODO: Add description
 - **social_media**: TODO: Add description
-
 
 ## Installation
 

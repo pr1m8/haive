@@ -8,12 +8,11 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Submodules
+
 - **sql_rag**: TODO: Add description
 - **graph_db**: TODO: Add description
 - **base**: TODO: Add description
-
 
 ## Installation
 

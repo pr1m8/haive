@@ -94,7 +94,7 @@ from haive.core.schema.compatibility import CompatibilityChecker
 
 checker = CompatibilityChecker()
 result = checker.check_schema_compatibility(
-    source_schema, 
+    source_schema,
     target_schema,
     mode="subset"  # or "strict", "partial"
 )
@@ -110,7 +110,7 @@ from haive.core.schema.compatibility import ConverterRegistry, TypeConverter
 class CustomConverter(TypeConverter):
     def can_convert(self, source_type, target_type):
         return source_type == MyType and target_type == OtherType
-    
+
     def convert(self, value, context):
         return OtherType(value.data)
 
@@ -132,7 +132,7 @@ mapper.add_mapping("source_field", "target_field")
 
 # With transformation
 mapper.add_mapping(
-    "price", 
+    "price",
     "formatted_price",
     transformer=lambda x: f"${x:.2f}"
 )
@@ -237,29 +237,29 @@ from haive.core.graph import GraphBuilder
 def build_agent_pipeline(agents: List[Agent]):
     """Validate agent chain compatibility before building."""
     builder = GraphBuilder()
-    
+
     # Check each connection
     for i in range(len(agents) - 1):
         source, target = agents[i], agents[i + 1]
-        
+
         # Check compatibility
         result = check_compatibility(
             source.output_schema,
             target.input_schema
         )
-        
+
         if not result.is_compatible:
             # Create adapter if possible
             mapper = FieldMapper()
             for suggestion in result.suggested_mappings.items():
                 mapper.add_mapping(suggestion[0], suggestion[1])
-            
+
             # Add adapter node
             builder.add_adapter_node(f"adapter_{i}", mapper)
-        
+
         # Add connection
         builder.add_edge(source.name, target.name)
-    
+
     return builder.build()
 ```
 
@@ -274,11 +274,11 @@ from haive.core.schema import StateSchema
 class AgentBuilder:
     def add_engine(self, engine: Engine, state_schema: Type[StateSchema]):
         """Validate engine compatibility with state schema."""
-        
+
         # Get engine I/O requirements
         engine_inputs = engine.get_input_schema()
         engine_outputs = engine.get_output_schema()
-        
+
         # Check if state has required fields
         input_compat = check_compatibility(state_schema, engine_inputs)
         if not input_compat.is_compatible:
@@ -286,7 +286,7 @@ class AgentBuilder:
                 f"State missing fields for engine: "
                 f"{input_compat.missing_required_fields}"
             )
-        
+
         # Check if engine outputs can be merged back
         output_compat = check_compatibility(engine_outputs, state_schema)
         if output_compat.requires_mapping:
@@ -303,20 +303,20 @@ from haive.agents.team import TeamAgent
 
 def create_agent_team(agents: List[Agent], shared_state: Type[StateSchema]):
     """Create a team with compatible agents."""
-    
+
     # Analyze what each agent needs/provides
     agent_schemas = [agent.state_schema for agent in agents]
-    
+
     # Find common ground
     merger = SchemaMerger(strategy="union")
     unified_schema = merger.merge_schemas(agent_schemas)
-    
+
     # Validate each agent can work with unified schema
     for agent in agents:
         result = check_compatibility(unified_schema, agent.state_schema)
         if not result.is_compatible:
             print(f"Agent {agent.name} incompatible: {result.issues}")
-    
+
     return TeamAgent(agents=agents, state_schema=unified_schema)
 ```
 
@@ -331,21 +331,21 @@ from haive.core.schema.schema_composer import SchemaComposer
 class SmartGraphBuilder:
     def connect_nodes(self, source_node, target_node):
         """Connect nodes with automatic adaptation."""
-        
+
         # Get schemas
         source_schema = source_node.output_schema
         target_schema = target_node.input_schema
-        
+
         # Check compatibility
         compat = check_compatibility(source_schema, target_schema)
-        
+
         if compat.is_compatible:
             # Direct connection
             self.add_edge(source_node, target_node)
         else:
             # Need adapter
             report = generate_report(source_schema, target_schema)
-            
+
             # Create adapter based on report recommendations
             adapter = self._create_adapter_from_report(report)
             self.add_node(adapter)
@@ -362,18 +362,18 @@ from haive.core.schema.compatibility import SchemaEvolution
 
 class VersionedAgent(Agent):
     """Agent with schema versioning support."""
-    
+
     schema_version = "2.0"
     schema_migrations = {
         "1.0": "2.0": migrate_v1_to_v2,
         "2.0": "3.0": migrate_v2_to_v3,
     }
-    
+
     @classmethod
     def load_from_checkpoint(cls, checkpoint_data: dict):
         """Load agent from checkpoint with schema migration."""
         saved_version = checkpoint_data.get("schema_version", "1.0")
-        
+
         if saved_version != cls.schema_version:
             # Migrate data
             migrator = SchemaEvolution()
@@ -382,7 +382,7 @@ class VersionedAgent(Agent):
                 from_version=saved_version,
                 to_version=cls.schema_version
             )
-        
+
         return cls(**checkpoint_data)
 ```
 
@@ -396,25 +396,25 @@ from haive.core.tools import ToolEngine
 
 def validate_tool_compatibility(tool: BaseTool, agent_state: Type[StateSchema]):
     """Check if tool can be used with agent state."""
-    
+
     # Get tool input schema
     tool_schema = tool.args_schema
-    
+
     # Check if agent state has required fields
     result = check_compatibility(agent_state, tool_schema)
-    
+
     if not result.is_compatible:
         # Create wrapper to adapt
         mapper = FieldMapper()
-        
+
         # Map agent fields to tool inputs
         for tool_field in result.missing_required_fields:
             agent_field = find_similar_field(tool_field, agent_state.model_fields)
             if agent_field:
                 mapper.add_mapping(agent_field, tool_field)
-        
+
         return create_tool_wrapper(tool, mapper)
-    
+
     return tool
 ```
 
@@ -428,13 +428,13 @@ from haive.games import GameEnvironment
 class GameValidator:
     def validate_player(self, agent: Agent, game: GameEnvironment):
         """Check if agent can play the game."""
-        
+
         # Get game's required interface
         game_schema = game.get_player_schema()
-        
+
         # Check agent compatibility
         result = check_compatibility(agent.output_schema, game_schema)
-        
+
         if not result.is_compatible:
             report = generate_report(agent.output_schema, game_schema)
             raise ValueError(
@@ -452,19 +452,19 @@ from haive.core.schema import SchemaComposer
 
 def create_dynamic_agent(engines: List[Engine], tools: List[BaseTool]):
     """Create agent with dynamically composed schema."""
-    
+
     composer = SchemaComposer()
-    
+
     # Analyze each component
     for engine in engines:
         analyzer = TypeAnalyzer()
-        
+
         # Extract fields from engine
         if hasattr(engine, 'input_schema'):
             input_info = analyzer.analyze_schema(engine.input_schema)
             for field_name, field_info in input_info.fields.items():
                 composer.add_field_from_info(field_info)
-    
+
     # Check compatibility between components
     compatibility_matrix = {}
     for i, engine1 in enumerate(engines):
@@ -474,7 +474,7 @@ def create_dynamic_agent(engines: List[Engine], tools: List[BaseTool]):
                 engine2.input_schema
             )
             compatibility_matrix[(i, j)] = compat
-    
+
     # Build optimal schema
     final_schema = composer.build()
     return Agent(state_schema=final_schema, engines=engines)
@@ -489,21 +489,21 @@ from haive.prebuilt import PrebuiltRegistry
 
 def validate_prebuilt_agent(agent_class: Type[Agent], requirements: dict):
     """Validate prebuilt agent meets requirements."""
-    
+
     analyzer = TypeAnalyzer()
     schema_info = analyzer.analyze_schema(agent_class.state_schema)
-    
+
     # Check required capabilities
     missing_capabilities = []
-    
+
     if requirements.get("needs_memory"):
         if "memory" not in schema_info.fields:
             missing_capabilities.append("memory field")
-    
+
     if requirements.get("needs_tools"):
         if "tools" not in schema_info.fields:
             missing_capabilities.append("tools support")
-    
+
     if missing_capabilities:
         # Try to extend schema
         merger = SchemaMerger()
@@ -511,9 +511,9 @@ def validate_prebuilt_agent(agent_class: Type[Agent], requirements: dict):
             agent_class.state_schema,
             create_requirements_schema(requirements)
         ])
-        
+
         return create_extended_agent(agent_class, extended_schema)
-    
+
     return agent_class
 ```
 
@@ -527,14 +527,14 @@ from haive.core.schema.compatibility import check_compatibility
 
 def create_langgraph_workflow(nodes: Dict[str, callable], edges: List[tuple]):
     """Create LangGraph with compatibility validation."""
-    
+
     # Infer schemas from nodes
     node_schemas = {}
     for name, node in nodes.items():
         if hasattr(node, "__annotations__"):
             # Extract input/output schemas
             node_schemas[name] = analyze_node_schema(node)
-    
+
     # Validate all edges
     for source, target in edges:
         if source in node_schemas and target in node_schemas:
@@ -542,13 +542,13 @@ def create_langgraph_workflow(nodes: Dict[str, callable], edges: List[tuple]):
                 node_schemas[source]["output"],
                 node_schemas[target]["input"]
             )
-            
+
             if not compat.is_compatible:
                 logger.warning(
                     f"Edge {source} -> {target} has compatibility issues: "
                     f"{compat.issues}"
                 )
-    
+
     # Build graph with confidence
     graph = StateGraph(state_schema)
     # ... add nodes and edges
@@ -564,7 +564,7 @@ Full support for Haive StateSchema features:
 ```python
 class MyState(StateSchema):
     messages: List[BaseMessage] = Field(default_factory=list)
-    
+
     __shared_fields__ = ["messages"]
     __reducer_fields__ = {"messages": add_messages}
     __engine_io_mappings__ = {
@@ -608,7 +608,7 @@ class UserV1(BaseModel):
     name: str
     email: str
 
-# Version 2 
+# Version 2
 class UserV2(BaseModel):
     name: str
     email: str
@@ -628,7 +628,7 @@ class SchemaAdapter:
     def __init__(self, source_schema, target_schema):
         self.mapper = FieldMapper()
         # Configure mappings
-    
+
     def adapt(self, data):
         return self.mapper.map_data(data)
 ```
@@ -638,7 +638,7 @@ class SchemaAdapter:
 See individual module documentation:
 
 - `analyzer.py` - Type analysis
-- `compatibility.py` - Compatibility checking  
+- `compatibility.py` - Compatibility checking
 - `converters.py` - Type conversion
 - `field_mapping.py` - Field mapping
 - `validators.py` - Validation

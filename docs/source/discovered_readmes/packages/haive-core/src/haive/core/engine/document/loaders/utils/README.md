@@ -9,8 +9,8 @@ TODO: Add detailed overview of this module's functionality
 ## Key Components
 
 ### Classes
-- **SourceType**: TODO: Add description
 
+- **SourceType**: TODO: Add description
 
 ## Installation
 

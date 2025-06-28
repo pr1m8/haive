@@ -8,8 +8,8 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Submodules
+
 - **reflection**: TODO: Add description
 - **lats**: TODO: Add description
 - **reflexion**: TODO: Add description
@@ -17,7 +17,6 @@ TODO: Add detailed overview of this module's functionality
 - **logic**: TODO: Add description
 - **tot**: TODO: Add description
 - **mcts**: TODO: Add description
-
 
 ## Installation
 
