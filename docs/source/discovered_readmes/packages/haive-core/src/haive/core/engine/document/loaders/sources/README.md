@@ -8,14 +8,13 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Submodules
+
 - **remote**: TODO: Add description
 - **base**: TODO: Add description
 - **chat**: TODO: Add description
 - **database**: TODO: Add description
 - **local**: TODO: Add description
-
 
 ## Installation
 

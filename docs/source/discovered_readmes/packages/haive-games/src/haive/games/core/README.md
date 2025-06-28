@@ -8,15 +8,14 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Submodules
+
 - **game**: TODO: Add description
 - **move**: TODO: Add description
 - **agent**: TODO: Add description
 - **position**: TODO: Add description
 - **components**: TODO: Add description
 - **board**: TODO: Add description
-
 
 ## Installation
 

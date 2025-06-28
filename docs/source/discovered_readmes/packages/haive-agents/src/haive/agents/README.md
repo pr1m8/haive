@@ -8,8 +8,8 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Submodules
+
 - **base**: TODO: Add description
 - **task_analysis**: TODO: Add description
 - **sequential**: TODO: Add description
@@ -28,7 +28,6 @@ TODO: Add detailed overview of this module's functionality
 - **conversation**: TODO: Add description
 - **wiki_writer**: TODO: Add description
 - **self_healing_code**: TODO: Add description
-
 
 ## Installation
 

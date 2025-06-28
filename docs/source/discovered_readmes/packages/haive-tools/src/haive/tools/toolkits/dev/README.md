@@ -8,11 +8,10 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Submodules
+
 - **python**: TODO: Add description
 - **project_creation**: TODO: Add description
-
 
 ## Installation
 

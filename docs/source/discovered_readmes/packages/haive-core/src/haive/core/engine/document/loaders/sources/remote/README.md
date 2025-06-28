@@ -9,13 +9,14 @@ TODO: Add detailed overview of this module's functionality
 ## Key Components
 
 ### Classes
+
 - **RemoteSource**: TODO: Add description
 
 ### Functions
+
 - **validate_url()**: TODO: Add description
 - **source()**: TODO: Add description
 - **from_url()**: TODO: Add description
-
 
 ## Installation
 

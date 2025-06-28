@@ -8,10 +8,9 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Submodules
-- **programming_languages**: TODO: Add description
 
+- **programming_languages**: TODO: Add description
 
 ## Installation
 

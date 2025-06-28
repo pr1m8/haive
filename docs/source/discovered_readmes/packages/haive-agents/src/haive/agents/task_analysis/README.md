@@ -8,15 +8,14 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Submodules
+
 - **base**: TODO: Add description
 - **decomposer**: TODO: Add description
 - **tree**: TODO: Add description
 - **analysis**: TODO: Add description
 - **execution**: TODO: Add description
 - **context**: TODO: Add description
-
 
 ## Installation
 

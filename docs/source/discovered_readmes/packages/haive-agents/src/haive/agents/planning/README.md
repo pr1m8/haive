@@ -8,13 +8,12 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Submodules
+
 - **plan_and_execute**: TODO: Add description
 - **rewoo**: TODO: Add description
 - **models**: TODO: Add description
 - **llm_compiler**: TODO: Add description
-
 
 ## Installation
 

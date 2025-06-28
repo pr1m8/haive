@@ -8,14 +8,13 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Functions
+
 - **key_equals()**: TODO: Add description
 - **key_exists()**: TODO: Add description
 - **from_function()**: TODO: Add description
 - **chain()**: TODO: Add description
 - **conditional()**: TODO: Add description
-
 
 ## Installation
 

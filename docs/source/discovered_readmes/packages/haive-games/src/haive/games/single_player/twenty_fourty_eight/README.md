@@ -8,10 +8,9 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-
 ### Submodules
-- **game**: TODO: Add description
 
+- **game**: TODO: Add description
 
 ## Installation
 
