@@ -3,9 +3,9 @@
 """Run type checking across all packages."""
 
 import os
-from pathlib import Path
 import subprocess
 import sys
+from pathlib import Path
 
 
 def find_packages():

@@ -2,8 +2,8 @@
 """Check if packages can be imported and identify major issues."""
 
 import importlib
-from pathlib import Path
 import sys
+from pathlib import Path
 
 
 def check_package(package_path):

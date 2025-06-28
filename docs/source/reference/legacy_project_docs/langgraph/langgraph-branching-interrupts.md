@@ -99,12 +99,10 @@ Interrupted nodes show distinct tracing characteristics:
 To implement advanced branching in Haive's node system:
 
 1. **Clean Conditional Functions**:
-
    - Make routing functions pure, accepting only state and returning routing decisions
    - Support both single string and list returns for dynamic routing
 
 2. **Function-Based Approach**:
-
    - Move from complex class hierarchies to function-based routing
    - Ensure routing functions are easily composable
 
@@ -117,12 +115,10 @@ To implement advanced branching in Haive's node system:
 For effective interrupt handling:
 
 1. **Command Pattern Integration**:
-
    - Fully implement the Command pattern for state updates and routing
    - Support Command.resume for interrupt resumption
 
 2. **State Preservation**:
-
    - Ensure state is properly preserved during interrupts
    - Implement checkpointing for interrupt recovery
 

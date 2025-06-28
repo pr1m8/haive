@@ -568,28 +568,23 @@ def create_validator_with_retry(
 ## Best Practices
 
 1. **Use the Right Node Type**:
-
    - Choose the appropriate node type for each task
    - Match node type to functionality (async for I/O, retry for external calls, etc.)
 
 2. **Keep Nodes Focused**:
-
    - Each node should do one thing well
    - Avoid complex logic in a single node
 
 3. **Explicit State Handling**:
-
    - Use StateSchema for type safety
    - Document state requirements for each node
 
 4. **Error Management**:
-
    - Use validation nodes for input verification
    - Add retry for unreliable operations
    - Include explicit error handlers
 
 5. **Testing**:
-
    - Test nodes individually
    - Create test cases for edge conditions
    - Use NodeTester for isolated testing

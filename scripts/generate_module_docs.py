@@ -7,7 +7,6 @@ This script helps create consistent documentation for all modules in the Haive p
 import ast
 from pathlib import Path
 
-
 # Root directory
 ROOT_DIR = Path(__file__).parent.parent
 
@@ -75,7 +74,7 @@ def get_module_info(module_path: Path) -> dict[str, any]:
         "submodules": [],
         "has_init": False,
         "init_docstring": None,
-        "description": ""
+        "description": "",
     }
 
     # Determine package
@@ -112,9 +111,12 @@ def get_module_info(module_path: Path) -> dict[str, any]:
 
     # Find submodules
     for item in module_path.iterdir():
-        if item.is_dir() and not item.name.startswith(("_", ".")) and item.name != "__pycache__":
-            if (item / "__init__.py").exists():
-                info["submodules"].append(item.name)
+        if (
+            item.is_dir()
+            and not item.name.startswith(("_", "."))
+            and item.name != "__pycache__"
+        ) and (item / "__init__.py").exists():
+            info["submodules"].append(item.name)
 
     return info
 
@@ -140,7 +142,9 @@ def generate_module_readme(info: dict[str, any]) -> str:
         for submod in info["submodules"]:
             components_parts.append(f"- **{submod}**: TODO: Add description\n")
 
-    components = "".join(components_parts) if components_parts else "TODO: Document components"
+    components = (
+        "".join(components_parts) if components_parts else "TODO: Document components"
+    )
 
     # Generate basic example
     if info["classes"]:
@@ -160,9 +164,13 @@ instance = {main_class}()
     see_also_parts = []
     if info["submodules"]:
         for submod in info["submodules"][:3]:
-            see_also_parts.append(f"- [`{info['name']}.{submod}`](./{submod}/): TODO: Add description")
+            see_also_parts.append(
+                f"- [`{info['name']}.{submod}`](./{submod}/): TODO: Add description"
+            )
 
-    see_also = "\n".join(see_also_parts) if see_also_parts else "- TODO: Add related modules"
+    see_also = (
+        "\n".join(see_also_parts) if see_also_parts else "- TODO: Add related modules"
+    )
 
     # Fill template
     return MODULE_README_TEMPLATE.format(
@@ -173,7 +181,7 @@ instance = {main_class}()
         package_name=info["package"] or "haive",
         basic_example=basic_example,
         module_path=info["name"],
-        see_also=see_also
+        see_also=see_also,
     )
 
 
@@ -197,22 +205,26 @@ def generate_init_docstring(info: dict[str, any]) -> str:
         example = f"""Basic usage::
 
         from haive.{info['name']} import {info['classes'][0]}
-        
+
         instance = {info['classes'][0]}()
         # TODO: Complete example"""
     else:
         example = """Basic usage::
 
         from haive.{} import module_function
-        
-        # TODO: Add example""".format(info["name"])
+
+        # TODO: Add example""".format(
+            info["name"]
+        )
 
     # Build see also section
     see_also = ""
     if info["submodules"]:
         see_also = "\nSee Also:\n"
         for submod in info["submodules"][:3]:
-            see_also += f"    :mod:`haive.{info['name']}.{submod}`: TODO: Add description\n"
+            see_also += (
+                f"    :mod:`haive.{info['name']}.{submod}`: TODO: Add description\n"
+            )
 
     return INIT_DOCSTRING_TEMPLATE.format(
         module_name=module_name,
@@ -220,7 +232,7 @@ def generate_init_docstring(info: dict[str, any]) -> str:
         detailed_description="TODO: Add detailed description of module functionality",
         features=features,
         example=example,
-        see_also=see_also
+        see_also=see_also,
     )
 
 
@@ -233,52 +245,52 @@ def process_module(module_path: Path, dry_run: bool = True):
     if not readme_path.exists():
         readme_content = generate_module_readme(info)
         if dry_run:
-            print(f"Would create README: {readme_path}")
-            print(f"  First line: {readme_content.split(chr(10))[0]}")
         else:
             readme_path.write_text(readme_content)
-            print(f"Created README: {readme_path}")
 
     # Update __init__.py if needed
     init_path = module_path / "__init__.py"
-    if init_path.exists():
-        if not info["init_docstring"] or len(info["init_docstring"]) < 50:
-            docstring = generate_init_docstring(info)
+    if init_path.exists() and (not info["init_docstring"] or len(info["init_docstring"]) < 50):
+        docstring = generate_init_docstring(info)
 
-            if dry_run:
-                print(f"Would update __init__.py: {init_path}")
-                print(f"  New docstring first line: {docstring.split(chr(10))[0]}")
+        if dry_run:
+            print(f"Would update __init__.py: {init_path}")
+            print(f"  New docstring first line: {docstring.split(chr(10))[0]}")
+        else:
+            # Read current content
+            content = init_path.read_text()
+
+            # If no docstring, add at beginning
+            if not info["init_docstring"]:
+                new_content = docstring + "\n" + content
             else:
-                # Read current content
-                content = init_path.read_text()
+                # Replace existing docstring
+                tree = ast.parse(content)
+                if (
+                    tree.body
+                    and isinstance(tree.body[0], ast.Expr)
+                    and isinstance(tree.body[0].value, ast.Str)
+                ):
+                    # Find end of docstring
+                    lines = content.split("\n")
+                    in_docstring = False
+                    end_line = 0
+                    for i, line in enumerate(lines):
+                        if line.strip().startswith('"""'):
+                            if not in_docstring:
+                                in_docstring = True
+                            else:
+                                end_line = i
+                                break
 
-                # If no docstring, add at beginning
-                if not info["init_docstring"]:
-                    new_content = docstring + "\n" + content
+                    # Replace docstring
+                    new_lines = [docstring] + lines[end_line + 1 :]
+                    new_content = "\n".join(new_lines)
                 else:
-                    # Replace existing docstring
-                    tree = ast.parse(content)
-                    if tree.body and isinstance(tree.body[0], ast.Expr) and isinstance(tree.body[0].value, ast.Str):
-                        # Find end of docstring
-                        lines = content.split("\n")
-                        in_docstring = False
-                        end_line = 0
-                        for i, line in enumerate(lines):
-                            if line.strip().startswith('"""'):
-                                if not in_docstring:
-                                    in_docstring = True
-                                else:
-                                    end_line = i
-                                    break
+                    new_content = docstring + "\n" + content
 
-                        # Replace docstring
-                        new_lines = [docstring] + lines[end_line + 1:]
-                        new_content = "\n".join(new_lines)
-                    else:
-                        new_content = docstring + "\n" + content
-
-                init_path.write_text(new_content)
-                print(f"Updated __init__.py: {init_path}")
+            init_path.write_text(new_content)
+            print(f"Updated __init__.py: {init_path}")
 
 
 def find_modules() -> list[Path]:
@@ -298,7 +310,10 @@ def find_modules() -> list[Path]:
                     # Also process submodules
                     for submodule in module_dir.rglob("*"):
                         if submodule.is_dir() and (submodule / "__init__.py").exists():
-                            if not any(skip in str(submodule) for skip in ["__pycache__", "test", ".pyc"]):
+                            if not any(
+                                skip in str(submodule)
+                                for skip in ["__pycache__", "test", ".pyc"]
+                            ):
                                 modules.append(submodule)
 
     return sorted(set(modules))
@@ -306,31 +321,23 @@ def find_modules() -> list[Path]:
 
 def main(dry_run: bool = True):
     """Main function."""
-    print("Haive Module Documentation Generator")
-    print("=" * 50)
 
     if dry_run:
-        print("DRY RUN MODE - No files will be created/modified")
+        pass
     else:
-        print("LIVE MODE - Files will be created/modified")
+        pass
 
-    print("\nFinding modules...")
     modules = find_modules()
-    print(f"Found {len(modules)} modules to process")
 
-    print("\nProcessing modules...")
     for module in modules:
-        print(f"\nProcessing: {module.relative_to(ROOT_DIR)}")
         process_module(module, dry_run)
 
-    print("\n\nGeneration complete!")
 
     if dry_run:
-        print("\nTo perform the actual generation, run:")
-        print("python scripts/generate_module_docs.py --no-dry-run")
 
 
 if __name__ == "__main__":
     import sys
+
     dry_run = "--no-dry-run" not in sys.argv
     main(dry_run)

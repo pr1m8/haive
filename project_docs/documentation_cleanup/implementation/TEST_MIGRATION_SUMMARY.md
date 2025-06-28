@@ -1,6 +1,7 @@
 # Test File Migration Summary for Haive Project
 
 ## Overview
+
 This document provides a comprehensive analysis of test files in the haive project and identifies which tests need to be moved to the proper `packages/haive-*/tests/` structure.
 
 ## 1. Tests Already in Correct Location
@@ -8,6 +9,7 @@ This document provides a comprehensive analysis of test files in the haive proje
 These tests are already properly organized in their respective package test directories:
 
 ### haive-agents (packages/haive-agents/tests/)
+
 - ✅ base/checkpointer/test_postgres.py
 - ✅ base/checkpointer/test_postgres_persistent_agent.py
 - ✅ base/checkpointer/test_utils.py
@@ -53,6 +55,7 @@ These tests are already properly organized in their respective package test dire
 - ✅ test_single_vs_multi.py
 
 ### haive-core (packages/haive-core/tests/)
+
 - ✅ config/test_runnable_config_manager.py
 - ✅ conftest.py
 - ✅ engine/agent/persistence/test_persistence.py
@@ -108,6 +111,7 @@ These tests are already properly organized in their respective package test dire
 - ✅ test_v1_structured_output.py
 
 ### haive-dataflow (packages/haive-dataflow/tests/)
+
 - ✅ conftest.py
 - ✅ test_basic.py
 - ✅ test_debug_jwt.py
@@ -118,19 +122,23 @@ These tests are already properly organized in their respective package test dire
 - ✅ test_supabase_schema.py
 
 ### haive-games (packages/haive-games/tests/)
+
 - ✅ conftest.py
 - ✅ test_basic.py
 - ✅ test_monopoly.py
 - ✅ test_monopoly_config.py
 
 ### haive-mcp (packages/haive-mcp/tests/)
+
 - ✅ test_mcp.py
 
 ### haive-prebuilt (packages/haive-prebuilt/tests/)
+
 - ✅ conftest.py
 - ✅ test_basic.py
 
 ### haive-tools (packages/haive-tools/tests/)
+
 - ✅ conftest.py
 - ✅ test_chucknorris_toolkit.py
 - ✅ test_corporate_bs_tool.py
@@ -143,6 +151,7 @@ These tests are already properly organized in their respective package test dire
 ### From /tests/ (root tests directory) → Target Package
 
 #### Agent-related tests → packages/haive-agents/tests/
+
 - **tests/agents/test_react_agent.py** → packages/haive-agents/tests/test_react_agent.py (duplicate?)
 - **tests/agents/react/test_react_agent.py** → packages/haive-agents/tests/react/test_react_agent.py (merge with existing)
 - **tests/agents/react/test_react_human.py** → packages/haive-agents/tests/react/test_react_human.py (merge with existing)
@@ -154,6 +163,7 @@ These tests are already properly organized in their respective package test dire
 - **tests/test_react_agent.py** → packages/haive-agents/tests/test_react_agent.py (merge with existing)
 
 #### Core-related tests → packages/haive-core/tests/
+
 - **tests/core/graph/schema/test_schema_composer.py** → packages/haive-core/tests/graph/schema/test_schema_composer.py
 - **tests/core/graph/schema/test_schema_manager.py** → packages/haive-core/tests/graph/schema/test_schema_manager.py
 - **tests/core/graph/test_graph_builder.py** → packages/haive-core/tests/graph/test_graph_builder.py (merge with existing)
@@ -165,17 +175,20 @@ These tests are already properly organized in their respective package test dire
 - **tests/test_introspection.py** → packages/haive-core/tests/test_introspection.py (merge with existing)
 
 #### Tools-related tests → packages/haive-tools/tests/
+
 - **tests/test_tool_manager.py** → packages/haive-tools/tests/test_tool_manager.py (merge with existing)
 - **tests/tools/test_corporate_bs_tool.py** → packages/haive-tools/tests/tools/test_corporate_bs_tool.py (merge with existing)
 - **tests/toolkits/test_chucknorris_toolkit.py** → packages/haive-tools/tests/toolkits/test_chucknorris_toolkit.py (merge with existing)
 
 #### Games-related tests → packages/haive-games/tests/
+
 - **tests/test_monopoly.py** → packages/haive-games/tests/test_monopoly.py (merge with existing)
 - **tests/test_monopoly_config.py** → packages/haive-games/tests/test_monopoly_config.py (merge with existing)
 
 ### From src directories (these should be moved out of src)
 
 #### haive-dataflow src tests → packages/haive-dataflow/tests/
+
 - **packages/haive-dataflow/src/haive/dataflow/api/test_api.py** → packages/haive-dataflow/tests/api/test_api.py
 - **packages/haive-dataflow/src/haive/dataflow/test_api.py** → packages/haive-dataflow/tests/test_api.py
 - **packages/haive-dataflow/src/haive/dataflow/test_supabase.py** → packages/haive-dataflow/tests/test_supabase.py
@@ -183,6 +196,7 @@ These tests are already properly organized in their respective package test dire
 - **packages/haive-dataflow/src/haive/dataflow/api/test_integration.py** → packages/haive-dataflow/tests/api/test_integration.py
 
 #### haive-agents src tests → packages/haive-agents/tests/
+
 - **packages/haive-agents/src/haive/agents/rag/llm_rag/test.py** → packages/haive-agents/tests/rag/llm_rag/test_llm_rag.py
 - **packages/haive-agents/src/haive/agents/react_class/react_agent2/test2.py** → packages/haive-agents/tests/react_class/test_react_agent2.py
 - **packages/haive-agents/src/haive/agents/simple/test2.py** → packages/haive-agents/tests/simple/test_simple2.py
@@ -192,6 +206,7 @@ These tests are already properly organized in their respective package test dire
 - **packages/haive-agents/src/haive/agents/document_loader/tests/test_document_loader_agent.py** → packages/haive-agents/tests/document_loader/test_document_loader_agent.py
 
 #### haive-games src tests → packages/haive-games/tests/
+
 - **packages/haive-games/src/haive/games/poker/test.py** → packages/haive-games/tests/poker/test_poker.py
 - **packages/haive-games/src/haive/games/fox_and_geese/standalone_test.py** → packages/haive-games/tests/fox_and_geese/test_standalone.py
 - **packages/haive-games/src/haive/games/fox_and_geese/test_fixes.py** → packages/haive-games/tests/fox_and_geese/test_fixes.py
@@ -211,12 +226,14 @@ These tests are already properly organized in their respective package test dire
 - **packages/haive-games/src/haive/games/nim/standalone_test.py** → packages/haive-games/tests/nim/test_standalone.py
 
 #### haive-core src tests → packages/haive-core/tests/
+
 - **packages/haive-core/src/haive/core/graph/node/test.py** → packages/haive-core/tests/graph/node/test_node.py
 - **packages/haive-core/src/haive/core/graph/routers/test.py** → packages/haive-core/tests/graph/routers/test_routers.py
 
 ### Miscellaneous test files to review/move
 
 #### Script and example tests
+
 - **scripts/migration/agent_tests.py** → Likely a migration script, not a test file
 - **packages/haive-agents/examples/debug_test.py** → Example file, not a test
 - **scratches/transformer_test.py** → Scratch file, should be removed or moved to proper test location
@@ -228,17 +245,21 @@ These tests are already properly organized in their respective package test dire
 Based on the tests that need to be moved, the following test subdirectories should be created:
 
 ### packages/haive-core/tests/
+
 - graph/schema/ (for schema-related tests)
 - graph/patterns/ (for pattern integration tests)
 
 ### packages/haive-dataflow/tests/
+
 - api/ (for API-related tests)
 
 ### packages/haive-agents/tests/
+
 - document_loader/ (for document loader tests)
 - rag/llm_rag/ (if not exists)
 
 ### packages/haive-games/tests/
+
 - poker/
 - fox_and_geese/
 - hold_em/
@@ -249,6 +270,7 @@ Based on the tests that need to be moved, the following test subdirectories shou
 - nim/
 
 ### packages/haive-core/tests/
+
 - graph/routers/
 
 ## 4. Duplicate Test Files

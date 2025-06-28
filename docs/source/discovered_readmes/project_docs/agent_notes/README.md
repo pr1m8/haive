@@ -1,4 +1,3 @@
-
 ```{note}
 **Original Location:** `project_docs/agent_notes/README.md`
 

@@ -1,0 +1,357 @@
+# Complete Integration Guide: Assistant-UI + FastAPI WebSocket
+
+## Overview
+
+This guide shows exactly what your FastAPI WebSocket needs to send for the assistant-ui frontend to work properly. The frontend is already set up with tool renderers and artifact displays.
+
+## WebSocket Connection
+
+Frontend connects to: `ws://192.168.2.13:8000/ws/chat/{thread_id}`
+
+## Message Flow
+
+### 1. Frontend → Backend (User Message)
+```json
+{
+  "type": "agent_request",
+  "agent_id": "chat_agent",  // or "code_agent", "data_agent", etc.
+  "content": "User's message here",
+  "thread_id": "thread-uuid",
+  "timestamp": "2024-01-01T00:00:00Z"
+}
+```
+
+### 2. Backend → Frontend (Agent Response)
+
+Your agent should send messages in this order:
+
+#### Step 1: Start Message
+```json
+{"type": "message_start"}
+```
+
+#### Step 2: (Optional) Show Thinking
+```json
+{
+  "type": "thinking",
+  "content": "Analyzing the request and determining the best approach..."
+}
+```
+
+#### Step 3: (Optional) Tool Calls
+```json
+{
+  "type": "tool_call",
+  "tool_call_id": "call-123",  // unique ID for this tool call
+  "field": "web_search",       // tool name (web_search, code_execution, data_analysis)
+  "writes": {                  // tool arguments
+    "query": "latest AI news"
+  }
+}
+```
+
+#### Step 4: (Optional) Tool Results
+```json
+{
+  "type": "tool_result",
+  "tool_call_id": "call-123",  // matches the tool_call_id above
+  "result": {
+    // For web_search:
+    "results": [
+      {
+        "title": "Article Title",
+        "url": "https://example.com",
+        "snippet": "Brief description..."
+      }
+    ],
+    
+    // For code_execution:
+    "output": "Hello World\n",
+    "exitCode": 0,
+    "executionTime": 125,
+    
+    // For data_analysis:
+    "summary": "Analysis complete",
+    "insights": ["Key finding 1", "Key finding 2"],
+    "charts": [...],
+    "metrics": {"accuracy": 0.95}
+  }
+}
+```
+
+#### Step 5: Stream Content
+```json
+{
+  "type": "content",
+  "content": "Here's what I found... "
+}
+```
+
+You can send multiple content chunks for streaming effect.
+
+#### Step 6: (Optional) Artifacts
+```json
+{
+  "type": "artifact",
+  "field": "generated_code",  // unique key for this artifact
+  "content": {
+    "type": "code",          // code, text, image, sheet, chart
+    "language": "python",    // for code artifacts
+    "title": "Data Processing Script",
+    "content": "import pandas as pd\n\ndef process_data(df):\n    return df.groupby('category').sum()"
+  }
+}
+```
+
+#### Step 7: Complete Message
+```json
+{
+  "type": "message",
+  "message": {
+    "id": "msg-uuid",
+    "role": "assistant",
+    "content": "Here's the complete analysis with the code above...",
+    "thread_id": "thread-uuid",
+    "created_at": "2024-01-01T00:00:00Z"
+  }
+}
+```
+
+## Supported Tools
+
+### 1. Web Search
+```json
+{
+  "type": "tool_call",
+  "field": "web_search",
+  "writes": {
+    "query": "search query"
+  }
+}
+
+// Result format:
+{
+  "type": "tool_result",
+  "tool_call_id": "...",
+  "result": {
+    "results": [
+      {
+        "title": "Page Title",
+        "url": "https://...",
+        "snippet": "Description...",
+        "favicon": "https://..."  // optional
+      }
+    ]
+  }
+}
+```
+
+### 2. Code Execution
+```json
+{
+  "type": "tool_call",
+  "field": "code_execution",
+  "writes": {
+    "code": "print('Hello World')",
+    "language": "python",      // optional
+    "filename": "script.py"    // optional
+  }
+}
+
+// Result format:
+{
+  "type": "tool_result",
+  "tool_call_id": "...",
+  "result": {
+    "output": "Hello World\n",
+    "error": null,             // or error message
+    "exitCode": 0,
+    "executionTime": 125,      // milliseconds
+    "logs": ["Log line 1"]     // optional
+  }
+}
+```
+
+### 3. Data Analysis
+```json
+{
+  "type": "tool_call",
+  "field": "data_analysis",
+  "writes": {
+    "query": "analyze sales by region",
+    "data_source": "sales_db",     // optional
+    "analysis_type": "summary"     // optional
+  }
+}
+
+// Result format:
+{
+  "type": "tool_result",
+  "tool_call_id": "...",
+  "result": {
+    "summary": "Overall sales increased by 15%...",
+    "insights": [
+      "North region shows strongest growth",
+      "Product A is outperforming expectations"
+    ],
+    "charts": [{
+      "type": "bar",  // bar, line, pie, scatter
+      "title": "Sales by Region",
+      "data": {...}
+    }],
+    "tables": [{
+      "columns": ["Region", "Sales", "Growth"],
+      "rows": [
+        ["North", "$1.2M", "+23%"],
+        ["South", "$0.9M", "+12%"]
+      ]
+    }],
+    "metrics": {
+      "total_sales": 2100000,
+      "growth_rate": 0.15,
+      "top_region": "North"
+    },
+    "warnings": ["Missing data for Q4"]  // optional
+  }
+}
+```
+
+## Artifact Types
+
+### Code Artifact
+```json
+{
+  "type": "artifact",
+  "field": "unique_key",
+  "content": {
+    "type": "code",
+    "language": "python",
+    "title": "Data Processing Script",
+    "content": "def process():\n    pass"
+  }
+}
+```
+
+### Text Artifact
+```json
+{
+  "type": "artifact",
+  "field": "report",
+  "content": {
+    "type": "text",
+    "title": "Analysis Report",
+    "content": "# Report\n\nDetailed findings..."
+  }
+}
+```
+
+### Image Artifact
+```json
+{
+  "type": "artifact",
+  "field": "chart_img",
+  "content": {
+    "type": "image",
+    "title": "Sales Chart",
+    "content": "data:image/png;base64,..."  // or URL
+  }
+}
+```
+
+### Sheet/Table Artifact
+```json
+{
+  "type": "artifact",
+  "field": "data_table",
+  "content": {
+    "type": "sheet",
+    "title": "Sales Data",
+    "columns": ["Date", "Product", "Revenue"],
+    "data": [
+      {"Date": "2024-01-01", "Product": "A", "Revenue": 1000},
+      {"Date": "2024-01-02", "Product": "B", "Revenue": 1500}
+    ]
+  }
+}
+```
+
+## Complete Example Flow
+
+Here's a full example of an agent that searches the web, analyzes data, and generates code:
+
+```python
+# 1. Start
+await ws.send_json({"type": "message_start"})
+
+# 2. Show thinking
+await ws.send_json({
+    "type": "thinking",
+    "content": "Let me search for the latest data..."
+})
+
+# 3. Web search
+await ws.send_json({
+    "type": "tool_call",
+    "tool_call_id": "search-1",
+    "field": "web_search",
+    "writes": {"query": "python pandas tutorial 2024"}
+})
+
+# 4. Search results
+await ws.send_json({
+    "type": "tool_result",
+    "tool_call_id": "search-1",
+    "result": {
+        "results": [{
+            "title": "Pandas 2.0 Guide",
+            "url": "https://example.com",
+            "snippet": "Complete guide to Pandas 2.0..."
+        }]
+    }
+})
+
+# 5. Stream content
+await ws.send_json({
+    "type": "content",
+    "content": "Based on my search, here's a data processing script:\n\n"
+})
+
+# 6. Code artifact
+await ws.send_json({
+    "type": "artifact",
+    "field": "pandas_script",
+    "content": {
+        "type": "code",
+        "language": "python",
+        "title": "Data Processing with Pandas",
+        "content": "import pandas as pd\n\ndf = pd.read_csv('data.csv')\nresult = df.groupby('category').agg({'value': 'sum'})"
+    }
+})
+
+# 7. Complete
+await ws.send_json({
+    "type": "message",
+    "message": {
+        "id": "msg-123",
+        "role": "assistant",
+        "content": "I've created a Pandas script that processes your data by grouping and aggregating values. The script is shown above."
+    }
+})
+```
+
+## Testing Your Integration
+
+1. **Basic Test**: Send a simple message flow (start → content → complete)
+2. **Tool Test**: Add a tool call and result
+3. **Artifact Test**: Include an artifact in your response
+4. **Full Test**: Combine all features
+
+The frontend will automatically render everything with the appropriate UI components!
+
+## Notes
+
+- Tool call IDs should be unique per conversation
+- Artifacts can have any key, but should be unique within a message
+- All timestamps should be ISO 8601 format
+- Content can be streamed in multiple chunks for better UX
+- The frontend handles all the UI rendering - you just send the data!

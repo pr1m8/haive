@@ -1,7 +1,6 @@
 import json
 from pathlib import Path
 
-
 # === Config ===
 ROOT = Path("/home/will/Projects/haive/backend/haive")
 WORKSPACE_DIR = ROOT / "workspaces"

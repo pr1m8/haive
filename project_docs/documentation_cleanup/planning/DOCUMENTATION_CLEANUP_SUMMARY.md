@@ -3,12 +3,14 @@
 ## Completed Tasks
 
 ### 1. Analysis and Planning
+
 - ✅ Analyzed current documentation structure in `/docs` directory
 - ✅ Reviewed `noxfile.py` to understand documentation build process (uses `poetry run`)
 - ✅ Identified and cataloged all scattered documentation files across the project
 - ✅ Created comprehensive consolidation plan (`DOCUMENTATION_CONSOLIDATION_PLAN.md`)
 
 ### 2. Infrastructure Setup
+
 - ✅ Created new documentation directory structure:
   - `/docs/source/reference/` - Technical reference documentation
   - `/docs/source/development/` - Developer documentation
@@ -18,10 +20,12 @@
   - `init_docstring_template.py` - Template for `__init__.py` docstrings (Google style)
 
 ### 3. Scripts Created
+
 - ✅ `scripts/migrate_tests.py` - Migrates test files to `packages/haive-*/tests/` structure
 - ✅ `scripts/generate_module_docs.py` - Generates module READMEs and updates `__init__.py` docstrings
 
 ### 4. Fixed Issues
+
 - ✅ Fixed syntax error in Sphinx extension (`haive_sphinx_ext.py`)
 
 ## Next Steps
@@ -29,16 +33,19 @@
 ### Immediate Actions (Run these commands):
 
 1. **Dry run test migration** (to see what will be moved):
+
    ```bash
    poetry run python scripts/migrate_tests.py
    ```
 
 2. **Actually migrate tests** (when ready):
+
    ```bash
    poetry run python scripts/migrate_tests.py --no-dry-run
    ```
 
 3. **Dry run module documentation generation**:
+
    ```bash
    poetry run python scripts/generate_module_docs.py
    ```
@@ -65,7 +72,9 @@
    - Move to `/docs/source/examples/notebooks/` with descriptive names
 
 ### Documentation Build Commands:
+
 All commands use `poetry run`:
+
 - Build: `poetry run nox -s docs`
 - Live reload: `poetry run nox -s docs-live`
 - Clean: `poetry run nox -s docs-clean`
@@ -80,6 +89,7 @@ All commands use `poetry run`:
 5. **Duplicate documentation** exists in multiple locations
 
 ## Success Criteria
+
 - ✅ All documentation accessible from main index
 - ✅ No scattered .md files outside of docs/
 - ✅ All tests in `packages/haive-*/tests/`

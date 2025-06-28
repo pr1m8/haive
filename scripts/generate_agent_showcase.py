@@ -13,21 +13,24 @@ Features:
 """
 
 import ast
-from collections import defaultdict
-from dataclasses import dataclass, field
 import json
 import logging
+from collections import defaultdict
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-
 # Configure logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
+
 
 @dataclass
 class AgentInfo:
     """Information about a discovered agent."""
+
     name: str
     module_path: str
     file_path: str
@@ -41,6 +44,7 @@ class AgentInfo:
     has_tools: bool = False
     has_memory: bool = False
     complexity: str = "medium"  # simple, medium, complex
+
 
 class AgentDiscovery:
     """Discovers and analyzes agents across haive packages."""
@@ -115,7 +119,9 @@ class AgentDiscovery:
             # Find agent classes
             for node in ast.walk(tree):
                 if isinstance(node, ast.ClassDef):
-                    agent_info = self.analyze_class_node(node, file_path, module_docstring)
+                    agent_info = self.analyze_class_node(
+                        node, file_path, module_docstring
+                    )
                     if agent_info:
                         agents.append(agent_info)
 
@@ -128,7 +134,9 @@ class AgentDiscovery:
 
         return agents
 
-    def analyze_class_node(self, node: ast.ClassDef, file_path: Path, module_docstring: str) -> AgentInfo | None:
+    def analyze_class_node(
+        self, node: ast.ClassDef, file_path: Path, module_docstring: str
+    ) -> AgentInfo | None:
         """Analyze a class AST node to determine if it's an agent."""
         class_name = node.name
 
@@ -140,8 +148,11 @@ class AgentDiscovery:
         base_classes = [self.get_base_class_name(base) for base in node.bases]
         docstring = ast.get_docstring(node) or ""
         is_abstract = any(
-            isinstance(item, ast.FunctionDef) and
-            any(isinstance(dec, ast.Name) and dec.id == "abstractmethod" for dec in item.decorator_list)
+            isinstance(item, ast.FunctionDef)
+            and any(
+                isinstance(dec, ast.Name) and dec.id == "abstractmethod"
+                for dec in item.decorator_list
+            )
             for item in node.body
         )
 
@@ -171,7 +182,7 @@ class AgentDiscovery:
             is_abstract=is_abstract,
             has_tools="tools" in features,
             has_memory="memory" in features,
-            complexity=complexity
+            complexity=complexity,
         )
 
     def looks_like_agent(self, class_name: str, node: ast.ClassDef) -> bool:
@@ -204,17 +215,19 @@ class AgentDiscovery:
         parts = file_path.parts
         try:
             src_index = parts.index("src")
-            module_parts = parts[src_index + 1:-1]  # Exclude 'src' and file extension
-            module_parts = list(module_parts) + [file_path.stem]  # Add filename without extension
+            module_parts = parts[src_index + 1 : -1]  # Exclude 'src' and file extension
+            module_parts = list(module_parts) + [
+                file_path.stem
+            ]  # Add filename without extension
             return ".".join(module_parts)
         except ValueError:
             # Fallback: use relative path from packages
             try:
                 packages_index = parts.index("packages")
-                module_parts = parts[packages_index + 1:]
+                module_parts = parts[packages_index + 1 :]
                 if "src" in module_parts:
                     src_index = module_parts.index("src")
-                    module_parts = module_parts[src_index + 1:]
+                    module_parts = module_parts[src_index + 1 :]
                 # Remove file extension
                 module_parts = list(module_parts[:-1]) + [file_path.stem]
                 return ".".join(module_parts)
@@ -312,7 +325,9 @@ class AgentDiscovery:
 
         return list(set(features))  # Remove duplicates
 
-    def determine_complexity(self, node: ast.ClassDef, docstring: str, features: list[str]) -> str:
+    def determine_complexity(
+        self, node: ast.ClassDef, docstring: str, features: list[str]
+    ) -> str:
         """Determine the complexity level of an agent."""
         # Count methods
         method_count = sum(1 for item in node.body if isinstance(item, ast.FunctionDef))
@@ -322,7 +337,13 @@ class AgentDiscovery:
         has_complex_features = any(feature in features for feature in complex_features)
 
         doc_lower = docstring.lower()
-        complex_keywords = ["multi", "complex", "advanced", "sophisticated", "framework"]
+        complex_keywords = [
+            "multi",
+            "complex",
+            "advanced",
+            "sophisticated",
+            "framework",
+        ]
         has_complex_keywords = any(keyword in doc_lower for keyword in complex_keywords)
 
         if method_count > 10 or has_complex_features or has_complex_keywords:
@@ -337,7 +358,9 @@ class AgentDiscovery:
         if docstring:
             lines = docstring.strip().split("\n")
             first_line = lines[0].strip()
-            if first_line and not first_line.startswith(("Args:", "Parameters:", "Returns:")):
+            if first_line and not first_line.startswith(
+                ("Args:", "Parameters:", "Returns:")
+            ):
                 return first_line
 
         # Fallback to module docstring
@@ -369,7 +392,9 @@ class AgentDiscovery:
         for agent in self.agents:
             self.categories[agent.category].append(agent)
 
-        logger.info(f"Discovery complete! Found {len(self.agents)} agents across {len(self.categories)} categories")
+        logger.info(
+            f"Discovery complete! Found {len(self.agents)} agents across {len(self.categories)} categories"
+        )
 
         if self.errors:
             logger.warning(f"Encountered {len(self.errors)} errors during discovery")
@@ -405,12 +430,14 @@ class AgentDiscovery:
                 "total_agents": len(self.agents),
                 "total_categories": len(self.categories),
                 "packages": list(set(agent.package for agent in self.agents)),
-                "generation_timestamp": str(pd.Timestamp.now()) if "pd" in globals() else "unknown",
-                "errors_count": len(self.errors)
+                "generation_timestamp": (
+                    str(pd.Timestamp.now()) if "pd" in globals() else "unknown"
+                ),
+                "errors_count": len(self.errors),
             },
             "categories": {},
             "agents": [],
-            "stats": self.generate_stats()
+            "stats": self.generate_stats(),
         }
 
         # Organize by categories
@@ -422,25 +449,27 @@ class AgentDiscovery:
                 "complexity_breakdown": {
                     "simple": len([a for a in agents if a.complexity == "simple"]),
                     "medium": len([a for a in agents if a.complexity == "medium"]),
-                    "complex": len([a for a in agents if a.complexity == "complex"])
-                }
+                    "complex": len([a for a in agents if a.complexity == "complex"]),
+                },
             }
 
         # Add detailed agent information
         for agent in self.agents:
-            showcase_data["agents"].append({
-                "name": agent.name,
-                "module_path": agent.module_path,
-                "category": agent.category,
-                "package": agent.package,
-                "description": agent.description,
-                "features": agent.features,
-                "complexity": agent.complexity,
-                "has_tools": agent.has_tools,
-                "has_memory": agent.has_memory,
-                "is_abstract": agent.is_abstract,
-                "base_classes": agent.base_classes
-            })
+            showcase_data["agents"].append(
+                {
+                    "name": agent.name,
+                    "module_path": agent.module_path,
+                    "category": agent.category,
+                    "package": agent.package,
+                    "description": agent.description,
+                    "features": agent.features,
+                    "complexity": agent.complexity,
+                    "has_tools": agent.has_tools,
+                    "has_memory": agent.has_memory,
+                    "is_abstract": agent.is_abstract,
+                    "base_classes": agent.base_classes,
+                }
+            )
 
         return showcase_data
 
@@ -462,7 +491,10 @@ class AgentDiscovery:
                 stats["features"][feature] += 1
 
         # Convert defaultdicts to regular dicts
-        return {k: dict(v) if isinstance(v, defaultdict) else v for k, v in stats.items()}
+        return {
+            k: dict(v) if isinstance(v, defaultdict) else v for k, v in stats.items()
+        }
+
 
 def main():
     """Main function to run agent discovery and generate showcase."""
@@ -510,6 +542,7 @@ def main():
             print(f"  {error}")
         if len(discovery.errors) > 5:
             print(f"  ... and {len(discovery.errors) - 5} more errors")
+
 
 if __name__ == "__main__":
     main()

@@ -20,10 +20,10 @@ Usage:
 """
 
 import argparse
-from pathlib import Path
 import re
 import shutil
 import sys
+from pathlib import Path
 
 # Rich imports for beautiful CLI
 from rich.console import Console
@@ -36,7 +36,6 @@ from rich.progress import (
     TextColumn,
 )
 from rich.table import Table
-
 
 # Import fixing dependencies
 try:

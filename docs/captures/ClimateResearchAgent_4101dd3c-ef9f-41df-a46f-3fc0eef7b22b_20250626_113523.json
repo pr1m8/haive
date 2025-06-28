@@ -1,0 +1,94 @@
+{
+  "run_id": "4101dd3c-ef9f-41df-a46f-3fc0eef7b22b",
+  "agent_name": "ClimateResearchAgent",
+  "agent_type": "custom.SimpleAgent",
+  "start_time": "2025-06-26 11:35:23.160653",
+  "end_time": "2025-06-26 11:35:23.160868",
+  "input_data": {
+    "research_topic": "climate change solutions",
+    "depth": "comprehensive"
+  },
+  "final_output": {
+    "messages": [
+      {
+        "content": "Processed: {'research_topic': 'climate change solutions', 'depth': 'comprehensive'}",
+        "type": "result"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "step_id": "b1cf3628-1d40-45be-b5ea-1ace31e2bfbe",
+      "timestamp": "2025-06-26 11:35:23.160831",
+      "step_type": "input",
+      "node_name": null,
+      "content": {
+        "data": {
+          "research_topic": "climate change solutions",
+          "depth": "comprehensive"
+        }
+      },
+      "metadata": {}
+    },
+    {
+      "step_id": "c8dca46b-7fa9-4185-bfe5-e9eac2db7f0f",
+      "timestamp": "2025-06-26 11:35:23.160847",
+      "step_type": "message",
+      "node_name": null,
+      "content": {
+        "messages": [
+          {
+            "content": "Starting processing",
+            "type": "system"
+          }
+        ]
+      },
+      "metadata": {}
+    },
+    {
+      "step_id": "abd17592-503d-4b3c-aa28-066cd4aa412f",
+      "timestamp": "2025-06-26 11:35:23.160854",
+      "step_type": "node",
+      "node_name": "input_processor",
+      "content": {
+        "node": "input_processor",
+        "content": {
+          "research_topic": "climate change solutions",
+          "depth": "comprehensive"
+        }
+      },
+      "metadata": {}
+    },
+    {
+      "step_id": "29a693f6-4233-4b29-b42a-89e94bba06bd",
+      "timestamp": "2025-06-26 11:35:23.160860",
+      "step_type": "node",
+      "node_name": "main_logic",
+      "content": {
+        "node": "main_logic",
+        "content": {
+          "processing": true
+        }
+      },
+      "metadata": {}
+    },
+    {
+      "step_id": "b154eb48-c3f4-4844-89a2-91d4dd074a13",
+      "timestamp": "2025-06-26 11:35:23.160866",
+      "step_type": "message",
+      "node_name": null,
+      "content": {
+        "messages": [
+          {
+            "content": "Processed: {'research_topic': 'climate change solutions', 'depth': 'comprehensive'}",
+            "type": "result"
+          }
+        ]
+      },
+      "metadata": {}
+    }
+  ],
+  "graph_visualization_path": "docs/captures/4101dd3c-ef9f-41df-a46f-3fc0eef7b22b_graph.png",
+  "error": null,
+  "metadata": {}
+}

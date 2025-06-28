@@ -30,8 +30,8 @@ lint:
     - mypy@1.16.1
     - osv-scanner@2.0.3
     - oxipng@9.1.5
-    - prettier@3.6.1
-    - ruff@0.12.0
+    - prettier@3.6.2
+    - ruff@0.12.1
     - shellcheck@0.10.0
     - shfmt@3.6.0
     - taplo@0.9.3

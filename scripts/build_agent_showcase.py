@@ -11,8 +11,8 @@ import logging
 from pathlib import Path
 from typing import Any
 
-
 logger = logging.getLogger(__name__)
+
 
 class AgentShowcaseBuilder:
     """Generates comprehensive documentation for the agent showcase."""
@@ -68,17 +68,27 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 """
 
         # Add category overview
-        sorted_categories = sorted(categories.items(), key=lambda x: x[1]["count"], reverse=True)
+        sorted_categories = sorted(
+            categories.items(), key=lambda x: x[1]["count"], reverse=True
+        )
 
         content += "| Category | Agents | Primary Package |\n"
         content += "|----------|--------|----------------|\n"
 
         for category, cat_data in sorted_categories[:10]:  # Top 10 categories
-            primary_package = max(cat_data["packages"], key=lambda x: x.count(x)) if cat_data["packages"] else "unknown"
-            content += f"| **{category}** | {cat_data['count']} | `{primary_package}` |\n"
+            primary_package = (
+                max(cat_data["packages"], key=lambda x: x.count(x))
+                if cat_data["packages"]
+                else "unknown"
+            )
+            content += (
+                f"| **{category}** | {cat_data['count']} | `{primary_package}` |\n"
+            )
 
         if len(sorted_categories) > 10:
-            content += f"| *...and {len(sorted_categories) - 10} more categories* | | |\n"
+            content += (
+                f"| *...and {len(sorted_categories) - 10} more categories* | | |\n"
+            )
 
         # Add featured agents section
         content += "\n## ⭐ Featured Agents\n\n"
@@ -102,7 +112,11 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
             featured.extend(foundation_agents[:2])
 
         # Popular complex agents
-        complex_agents = [a for a in agents if a["complexity"] == "complex" and len(a["features"]) >= 2]
+        complex_agents = [
+            a
+            for a in agents
+            if a["complexity"] == "complex" and len(a["features"]) >= 2
+        ]
         featured.extend(complex_agents[:3])
 
         # Game agents
@@ -127,7 +141,11 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 
         for agent in featured:
             complexity_badge = self._get_complexity_badge(agent["complexity"])
-            features_str = ", ".join(agent["features"][:3]) if agent["features"] else "Basic functionality"
+            features_str = (
+                ", ".join(agent["features"][:3])
+                if agent["features"]
+                else "Basic functionality"
+            )
             if len(agent["features"]) > 3:
                 features_str += f" +{len(agent['features']) - 3} more"
 
@@ -160,11 +178,7 @@ result = agent.invoke({{"query": "Your task here"}})
 
     def _get_complexity_badge(self, complexity: str) -> str:
         """Get a badge for complexity level."""
-        badges = {
-            "simple": "🟢 Simple",
-            "medium": "🟡 Medium",
-            "complex": "🔴 Complex"
-        }
+        badges = {"simple": "🟢 Simple", "medium": "🟡 Medium", "complex": "🔴 Complex"}
         return badges.get(complexity, "❓ Unknown")
 
     def _generate_getting_started_section(self) -> str:
@@ -236,7 +250,9 @@ result = agent.invoke({{"query": "Your task here"}})
         content = ""
 
         # Sort categories by count
-        sorted_categories = sorted(categories.items(), key=lambda x: x[1]["count"], reverse=True)
+        sorted_categories = sorted(
+            categories.items(), key=lambda x: x[1]["count"], reverse=True
+        )
 
         for category, cat_data in sorted_categories:
             content += f"### {category}\n\n"
@@ -253,11 +269,17 @@ result = agent.invoke({{"query": "Your task here"}})
 
             for agent in category_agents:
                 complexity_badge = self._get_complexity_badge(agent["complexity"])
-                features_str = ", ".join(agent["features"][:2]) if agent["features"] else "Basic"
+                features_str = (
+                    ", ".join(agent["features"][:2]) if agent["features"] else "Basic"
+                )
                 if len(agent["features"]) > 2:
                     features_str += f" +{len(agent['features']) - 2}"
 
-                description = agent["description"][:80] + "..." if len(agent["description"]) > 80 else agent["description"]
+                description = (
+                    agent["description"][:80] + "..."
+                    if len(agent["description"]) > 80
+                    else agent["description"]
+                )
 
                 content += f"| **{agent['name']}** | {complexity_badge} | {features_str} | {description} |\n"
 
@@ -289,7 +311,9 @@ Alphabetical listing of all agents in the Haive ecosystem.
 
             for agent in by_letter[letter]:
                 complexity_badge = self._get_complexity_badge(agent["complexity"])
-                features_str = ", ".join(agent["features"][:3]) if agent["features"] else "Basic"
+                features_str = (
+                    ", ".join(agent["features"][:3]) if agent["features"] else "Basic"
+                )
                 if len(agent["features"]) > 3:
                     features_str += f", +{len(agent['features']) - 3} more"
 
@@ -327,10 +351,13 @@ Alphabetical listing of all agents in the Haive ecosystem.
         with open(self.agents_dir / "complete_index.md", "w", encoding="utf-8") as f:
             f.write(index_content)
 
-        logger.info(f"✅ Generated showcase documentation for {data['metadata']['total_agents']} agents!")
+        logger.info(
+            f"✅ Generated showcase documentation for {data['metadata']['total_agents']} agents!"
+        )
         logger.info("📄 Files created:")
         logger.info(f"  - {self.agents_dir / 'showcase.md'}")
         logger.info(f"  - {self.agents_dir / 'complete_index.md'}")
+
 
 def main():
     """Main function to generate agent documentation."""
@@ -346,6 +373,9 @@ def main():
     # Generate all documentation
     builder.generate_all_documentation()
 
+
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()

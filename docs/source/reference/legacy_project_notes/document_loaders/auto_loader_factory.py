@@ -1,4 +1,4 @@
-"""Auto Loader Factory for Document Sources
+"""Auto Loader Factory for Document Sources.
 
 This module provides a comprehensive factory interface that can analyze any path or URL
 and automatically select the appropriate document source and loader.

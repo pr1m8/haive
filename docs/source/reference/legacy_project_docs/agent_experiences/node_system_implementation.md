@@ -77,7 +77,6 @@ Two main documentation files were created:
 ## References
 
 - **LangGraph Documentation**:
-
   - langgraph-branching-interrupts.md
   - langgraph-toolnode.md
   - langgraph-retry.md

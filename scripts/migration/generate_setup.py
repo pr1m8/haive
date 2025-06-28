@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # Generate setup.py from pyproject.toml
 
-from pathlib import Path
 import re
 import sys
+from pathlib import Path
 
 import toml
 

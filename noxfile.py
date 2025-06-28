@@ -1,13 +1,12 @@
 """Nox sessions for documentation building and serving."""
 
-from datetime import datetime
 import os
-from pathlib import Path
 import shutil
 import sys
+from datetime import datetime
+from pathlib import Path
 
 import nox
-
 
 # Configuration
 DOCS_DIR = Path("docs")

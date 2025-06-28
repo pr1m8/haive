@@ -1,9 +1,11 @@
 # Haive Documentation Consolidation Plan
 
 ## Overview
+
 This plan outlines the steps to consolidate and organize the scattered documentation in the Haive project following Sphinx and Google documentation conventions.
 
 ## Current State Analysis
+
 - Documentation is scattered across 12+ different directory patterns
 - Mixed formats: .md, .rst, .py (examples), .ipynb
 - No consistent structure or indexing
@@ -12,6 +14,7 @@ This plan outlines the steps to consolidate and organize the scattered documenta
 ## Proposed Structure
 
 ### 1. Main Documentation Directory (`/docs`)
+
 ```
 docs/
 ├── source/
@@ -56,7 +59,9 @@ docs/
 ```
 
 ### 2. Package Structure
+
 Each package should follow this structure:
+
 ```
 packages/haive-{package}/
 ├── src/
@@ -78,38 +83,41 @@ packages/haive-{package}/
 ## Action Items
 
 ### Phase 1: Setup and Structure (Immediate)
+
 1. Create the proposed directory structure in `/docs/source`
 2. Move all test files to `packages/haive-*/tests/`
 3. Create template README.md for modules and submodules
-4. Create template __init__.py with proper Google-style docstrings
+4. Create template **init**.py with proper Google-style docstrings
 
 ### Phase 2: Content Migration (Week 1)
+
 1. **Root Level Docs → Appropriate Locations**
    - TODO.md → `/docs/source/development/todo.rst`
    - AGENT_SCHEMA_COMPOSER_FIXES.md → `/docs/source/reference/technical/`
-   - multi_agent_*.md → `/docs/source/reference/architecture/`
-   
+   - multi*agent*\*.md → `/docs/source/reference/architecture/`
 2. **Project Docs → Documentation**
    - `/project_docs/*` → `/docs/source/reference/` or `/docs/source/guides/`
    - `/personal_notes/*` → Remove or move to private location
-   
 3. **Notebooks → Examples**
    - Clean up untitled notebooks
    - Move to `/docs/source/examples/notebooks/` with descriptive names
 
 ### Phase 3: API Documentation (Week 2)
+
 1. Generate module and submodule READMEs using templates
-2. Update all __init__.py files with comprehensive docstrings
+2. Update all **init**.py files with comprehensive docstrings
 3. Configure Sphinx autodoc to generate API documentation
 4. Create module overview pages linking to READMEs
 
 ### Phase 4: Content Enhancement (Week 3)
+
 1. Convert key .md files to .rst for better Sphinx integration
 2. Add cross-references between related documentation
 3. Create comprehensive index and navigation
 4. Add code examples from example.py files
 
 ### Phase 5: Cleanup and Validation (Week 4)
+
 1. Remove duplicate documentation
 2. Delete outdated content
 3. Validate all internal links
@@ -119,30 +127,38 @@ packages/haive-{package}/
 ## Documentation Standards
 
 ### Module README Template
-```markdown
+
+````markdown
 # Module Name
 
 Brief description of the module's purpose.
 
 ## Overview
+
 Detailed explanation of what this module provides.
 
 ## Key Components
+
 - Component 1: Description
 - Component 2: Description
 
 ## Usage Examples
+
 ```python
 # Example code
 ```
+````
 
 ## API Reference
+
 See the [API documentation](link) for detailed reference.
 
 ## See Also
+
 - Related module 1
 - Related module 2
-```
+
+````
 
 ### __init__.py Docstring Template
 ```python
@@ -160,7 +176,7 @@ Example:
     Basic usage example::
 
         from haive.module import Component
-        
+
         component = Component()
         result = component.process(data)
 
@@ -170,19 +186,22 @@ Note:
 See Also:
     :mod:`haive.related_module`: Description of relationship
 """
-```
+````
 
 ## Build Commands
+
 All documentation commands should use poetry:
+
 - Build: `poetry run nox -s docs`
 - Live reload: `poetry run nox -s docs-live`
 - Clean: `poetry run nox -s docs-clean`
 - Check: `poetry run nox -s docs-check`
 
 ## Success Metrics
+
 - All documentation accessible from main index
 - No scattered .md files outside of docs/
 - All tests in `packages/haive-*/tests/`
-- All modules have README.md and proper __init__.py docstrings
+- All modules have README.md and proper **init**.py docstrings
 - Documentation builds without warnings
 - Cross-references work correctly
