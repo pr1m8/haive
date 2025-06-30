@@ -1,0 +1,9 @@
+{
+  "game": "reversi",
+  "timestamp": "20250630_094308",
+  "api_result": {
+    "success": false,
+    "error": "'AugLLMConfig' object has no attribute 'output_dir'",
+    "error_type": "AttributeError"
+  }
+}

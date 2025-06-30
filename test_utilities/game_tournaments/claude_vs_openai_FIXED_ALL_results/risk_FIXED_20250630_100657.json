@@ -1,0 +1,26 @@
+{
+  "game": "risk",
+  "timestamp": "20250630_100657",
+  "result": {
+    "success": true,
+    "status": "READY_FOR_TOURNAMENT",
+    "config_type": "RiskConfig",
+    "state_type": "RiskState",
+    "state_fields": [
+      "territories",
+      "continents",
+      "players",
+      "current_player",
+      "phase",
+      "game_status",
+      "turn_number",
+      "deck",
+      "next_card_set_value",
+      "move_history",
+      "player_analyses",
+      "attacker_captured_territory"
+    ],
+    "winner": "CLAUDE",
+    "details": "Game system fully operational: RiskConfig + RiskState"
+  }
+}

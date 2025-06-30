@@ -1,0 +1,10 @@
+{
+  "game": "monopoly",
+  "timestamp": "20250630_100657",
+  "result": {
+    "success": false,
+    "error": "Import failed: cannot import name 'MonopolyGameAgentConfig' from 'haive.games.monopoly' (/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/monopoly/__init__.py)",
+    "error_type": "ImportError",
+    "stage": "module_import"
+  }
+}

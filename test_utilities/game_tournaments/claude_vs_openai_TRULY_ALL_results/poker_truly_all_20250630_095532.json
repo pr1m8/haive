@@ -1,0 +1,10 @@
+{
+  "game": "poker",
+  "timestamp": "20250630_095532",
+  "result": {
+    "success": false,
+    "error": "Config creation failed: 'list' object has no attribute 'engines'",
+    "error_type": "ConfigurationError",
+    "stage": "config_creation"
+  }
+}

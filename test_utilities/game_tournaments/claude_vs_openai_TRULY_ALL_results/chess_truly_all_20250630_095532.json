@@ -1,0 +1,28 @@
+{
+  "game": "chess",
+  "timestamp": "20250630_095532",
+  "result": {
+    "success": true,
+    "status": "READY_FOR_TOURNAMENT",
+    "config_type": "ChessConfig",
+    "state_type": "ChessState",
+    "state_fields": [
+      "board_fens",
+      "move_history",
+      "current_player",
+      "turn",
+      "game_status",
+      "game_result",
+      "white_analysis",
+      "black_analysis",
+      "captured_pieces",
+      "error_message",
+      "legal_moves",
+      "recent_moves",
+      "board_fen",
+      "current_board_fen"
+    ],
+    "winner": "CLAUDE",
+    "details": "Game system fully operational: ChessConfig + ChessState"
+  }
+}

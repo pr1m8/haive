@@ -1,0 +1,10 @@
+{
+  "game": "multi_player",
+  "timestamp": "20250630_100657",
+  "result": {
+    "success": false,
+    "error": "Config creation failed: 2 validation errors for MultiPlayerGameConfig\nengines\n  Field required [type=missing, input_value={}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/missing\nstate_schema\n  Field required [type=missing, input_value={}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/missing",
+    "error_type": "ConfigurationError",
+    "stage": "config_creation"
+  }
+}
