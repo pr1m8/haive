@@ -51,110 +51,150 @@ priority = "supplemental"
 
 [tool.poetry.dependencies]
 python = ">=3.12,<3.13"
+
+# Core framework dependencies (always installed)
 langchain-core = "^0.3.63"
 langchain = "^0.3.20"
-langchain-community = "^0.3.20"
-langchain-experimental = "^0.3.4"
-tavily-python = "^0.5.1"
-langgraph-checkpoint-postgres = "^2.0.15"
-matplotlib = "^3.10.0"
-ipython = "^8.32.0"
-langchain-openai = "<=0.3.6"
-wikipedia = "^1.4.0"
-arxiv = "^2.1.3"
-boto3 = "^1.36.22"
-telethon = "^1.38.1"
-neo4j = "^5.28.1"
-langchain-neo4j = "^0.3.0"
-nest-asyncio = "^1.6.0"
-chess = "^1.11.1"
-setuptools = "^75.8.0"
-numexpr = "^2.10.2"
-json-repair = "^0.39.0"
-lxml = "^5.3.1"
-playwright = "^1.50.0"
-networkx = "^3.4.2"
-dill = "0.3.8"
-langgraph = "^0.3.5"
-jsonpatch = "^1.33"
 pydantic = "^2.10.6"
-pytest = "^8.3.5"
-playwright-stealth = "^1.0.6"
-google-api-python-client = "^2.163.0"
-google-auth-httplib2 = "^0.2.0"
-google-auth-oauthlib = "^1.2.1"
-duckduckgo-search = "^7.5.2"
-html2text = "^2024.2.26"
-markdownify = "^1.1.0"
-pandas = "^2.2.3"
-rich = "^13.9.4"
-psycopg2 = "^2.9.10"
-langchain-anthropic = "^0.3.10"
-langchain-deepseek = "^0.1.2"
-langchain-google-genai = "^2.1.0"
-xmltodict = "^0.14.2"
-langchain-mistralai = "^0.2.8"
-langchain-nvidia-ai-endpoints = "^0.3.9"
-python-steam-api = "^2.1.1"
-python-decouple = "^3.8"
-twilio = "^9.5.1"
-langchain-discord-shikenso = "^1.1.1"
-langchain-discord = "^1.0.2"
-langchain-groq = "^0.3.1"
-langchain-together = "^0.3.0"
-langchain-fireworks = "^0.2.8"
-discord = "^2.3.2"
-langchain-mongodb = "^0.5.0"
-langchain-ollama = "^0.3.0"
-rank-bm25 = "^0.2.2"
-scikit-learn = "^1.6.1"
-zep-python = "^2.0.2"
-flashrank = "^0.2.10"
-qdrant-client = "^1.13.3"
-googletrans = "^4.0.2"
-deepl = "^1.21.1"
-ragatouille = "^0.0.9"
-youtube-search = "^2.1.2"
-ujson = "^5.10.0"
-stripe-agent-toolkit = "^0.6.1"
-google-search-results = "^2.4.2"
-serpapi = "^0.1.5"
-langchain-salesforce = "^0.1.2"
-mwparserfromhell = "^0.6.6"
-esprima = "^4.0.1"
-tree-sitter = "^0.24.0"
-tree-sitter-languages = "^1.10.2"
-youtube-transcript-api = "^1.0.3"
-pytube = "^15.0.0"
-openpyxl = "^3.1.5"
-gradio = "^5.23.1"
-langchain-docling = "^0.2.0"
-sqlparse = "^0.5.3"
-pdfplumber = "^0.11.6"
-pdfminer-six = "^20250327"
-ipykernel = "^6.29.5"
-pdfminer = "^20191125"
-langgraph-checkpoint-mongodb = "^0.1.3"
-pymupdf = "^1.25.5"
-psycopg = "^3.2.6"
-psycopg-pool = "^3.2.6"
-uvicorn = "^0.34.0"
-fastapi = "^0.115.12"
-supabase = "^2.15.0"
-simsimd = "^6.2.1"
-toml = "^0.10.2"
-astor = "^0.8.1"
-prometheus-client = "^0.21.1"
-haive-agents = { path = "packages/haive-agents", develop = true }
+langgraph = "^0.3.5"
+
+# Haive packages
 haive-core = { path = "packages/haive-core", develop = true }
-haive-dataflow = { path = "packages/haive-dataflow", develop = true }
-haive-games = { path = "packages/haive-games", develop = true }
-haive-prebuilt = { path = "packages/haive-prebuilt", develop = true }
-haive-tools = { path = "packages/haive-tools", develop = true }
-websocket = "^0.2.1"
-mcp = "^1.6.0"
-langchain-mcp-adapters = "^0.0.9"
-asyncpg = "^0.30.0"
+haive-agents = { path = "packages/haive-agents", develop = true, optional = true }
+haive-dataflow = { path = "packages/haive-dataflow", develop = true, optional = true }
+haive-games = { path = "packages/haive-games", develop = true, optional = true }
+haive-prebuilt = { path = "packages/haive-prebuilt", develop = true, optional = true }
+haive-tools = { path = "packages/haive-tools", develop = true, optional = true }
+
+# Core utilities (optional)
+langchain-community = { version = "^0.3.20", optional = true }
+langchain-experimental = { version = "^0.3.4", optional = true }
+jsonpatch = { version = "^1.33", optional = true }
+dill = { version = "0.3.8", optional = true }
+nest-asyncio = { version = "^1.6.0", optional = true }
+setuptools = { version = "^75.8.0", optional = true }
+numexpr = { version = "^2.10.2", optional = true }
+json-repair = { version = "^0.39.0", optional = true }
+networkx = { version = "^3.4.2", optional = true }
+ujson = { version = "^5.10.0", optional = true }
+toml = { version = "^0.10.2", optional = true }
+astor = { version = "^0.8.1", optional = true }
+
+# LLM providers (optional)
+langchain-openai = { version = "<=0.3.6", optional = true }
+langchain-anthropic = { version = "^0.3.10", optional = true }
+langchain-deepseek = { version = "^0.1.2", optional = true }
+langchain-google-genai = { version = "^2.1.0", optional = true }
+langchain-mistralai = { version = "^0.2.8", optional = true }
+langchain-nvidia-ai-endpoints = { version = "^0.3.9", optional = true }
+langchain-groq = { version = "^0.3.1", optional = true }
+langchain-together = { version = "^0.3.0", optional = true }
+langchain-fireworks = { version = "^0.2.8", optional = true }
+langchain-ollama = { version = "^0.3.0", optional = true }
+
+# Database and persistence (optional)
+langgraph-checkpoint-postgres = { version = "^2.0.15", optional = true }
+langgraph-checkpoint-mongodb = { version = "^0.1.3", optional = true }
+langchain-mongodb = { version = "^0.5.0", optional = true }
+neo4j = { version = "^5.28.1", optional = true }
+langchain-neo4j = { version = "^0.3.0", optional = true }
+psycopg2 = { version = "^2.9.10", optional = true }
+psycopg = { version = "^3.2.6", optional = true }
+psycopg-pool = { version = "^3.2.6", optional = true }
+asyncpg = { version = "^0.30.0", optional = true }
+supabase = { version = "^2.15.0", optional = true }
+
+# Web and API frameworks (optional)
+fastapi = { version = "^0.115.12", optional = true }
+uvicorn = { version = "^0.34.0", optional = true }
+websocket = { version = "^0.2.1", optional = true }
+
+# Search and retrieval (optional)
+tavily-python = { version = "^0.5.1", optional = true }
+arxiv = { version = "^2.1.3", optional = true }
+wikipedia = { version = "^1.4.0", optional = true }
+duckduckgo-search = { version = "^7.5.2", optional = true }
+google-search-results = { version = "^2.4.2", optional = true }
+serpapi = { version = "^0.1.5", optional = true }
+youtube-search = { version = "^2.1.2", optional = true }
+youtube-transcript-api = { version = "^1.0.3", optional = true }
+pytube = { version = "^15.0.0", optional = true }
+rank-bm25 = { version = "^0.2.2", optional = true }
+flashrank = { version = "^0.2.10", optional = true }
+ragatouille = { version = "^0.0.9", optional = true }
+
+# Vector stores (optional)
+qdrant-client = { version = "^1.13.3", optional = true }
+simsimd = { version = "^6.2.1", optional = true }
+
+# Document processing (optional)
+lxml = { version = "^5.3.1", optional = true }
+html2text = { version = "^2024.2.26", optional = true }
+markdownify = { version = "^1.1.0", optional = true }
+langchain-docling = { version = "^0.2.0", optional = true }
+pdfplumber = { version = "^0.11.6", optional = true }
+pdfminer-six = { version = "^20250327", optional = true }
+pdfminer = { version = "^20191125", optional = true }
+pymupdf = { version = "^1.25.5", optional = true }
+openpyxl = { version = "^3.1.5", optional = true }
+mwparserfromhell = { version = "^0.6.6", optional = true }
+sqlparse = { version = "^0.5.3", optional = true }
+xmltodict = { version = "^0.14.2", optional = true }
+
+# Data science and visualization (optional)
+pandas = { version = "^2.2.3", optional = true }
+matplotlib = { version = "^3.10.0", optional = true }
+scikit-learn = { version = "^1.6.1", optional = true }
+ipython = { version = "^8.32.0", optional = true }
+ipykernel = { version = "^6.29.5", optional = true }
+
+# Web scraping and automation (optional)
+playwright = { version = "^1.50.0", optional = true }
+playwright-stealth = { version = "^1.0.6", optional = true }
+
+# Communication platforms (optional)
+discord = { version = "^2.3.2", optional = true }
+langchain-discord = { version = "^1.0.2", optional = true }
+langchain-discord-shikenso = { version = "^1.1.1", optional = true }
+twilio = { version = "^9.5.1", optional = true }
+telethon = { version = "^1.38.1", optional = true }
+
+# Third-party integrations (optional)
+boto3 = { version = "^1.36.22", optional = true }
+google-api-python-client = { version = "^2.163.0", optional = true }
+google-auth-httplib2 = { version = "^0.2.0", optional = true }
+google-auth-oauthlib = { version = "^1.2.1", optional = true }
+stripe-agent-toolkit = { version = "^0.6.1", optional = true }
+langchain-salesforce = { version = "^0.1.2", optional = true }
+python-steam-api = { version = "^2.1.1", optional = true }
+python-decouple = { version = "^3.8", optional = true }
+
+# Translation services (optional)
+googletrans = { version = "^4.0.2", optional = true }
+deepl = { version = "^1.21.1", optional = true }
+
+# Code parsing (optional)
+esprima = { version = "^4.0.1", optional = true }
+tree-sitter = { version = "^0.24.0", optional = true }
+tree-sitter-languages = { version = "^1.10.2", optional = true }
+
+# Memory and analytics (optional)
+zep-python = { version = "^2.0.2", optional = true }
+prometheus-client = { version = "^0.21.1", optional = true }
+
+# UI frameworks (optional)
+gradio = { version = "^5.23.1", optional = true }
+
+# Game specific (optional)
+chess = { version = "^1.11.1", optional = true }
+
+# Testing and development (optional)
+pytest = { version = "^8.3.5", optional = true }
+rich = { version = "^13.9.4", optional = true }
+
+# MCP support (optional)
+mcp = { version = "^1.9.4", optional = true }
+langchain-mcp-adapters = { version = "^0.1.7", optional = true }
 
 
 [tool.poetry.dependencies.graphviz]
@@ -397,6 +437,125 @@ deepseek = "^1.0.0"
 google-genai = "^1.16.1"
 
 [tool.poetry.extras]
+# Package groups
+agents = ["haive-agents"]
+tools = ["haive-tools"]
+games = ["haive-games"]
+dataflow = ["haive-dataflow"]
+prebuilt = ["haive-prebuilt"]
+all-packages = ["haive-agents", "haive-tools", "haive-games", "haive-dataflow", "haive-prebuilt"]
+
+# Core utilities
+core-utils = [
+    "langchain-community", "langchain-experimental", "jsonpatch", "dill", 
+    "nest-asyncio", "setuptools", "numexpr", "json-repair", "networkx", 
+    "ujson", "toml", "astor"
+]
+
+# LLM providers
+llm-openai = ["langchain-openai"]
+llm-anthropic = ["langchain-anthropic"]
+llm-google = ["langchain-google-genai"]
+llm-opensource = ["langchain-ollama", "langchain-groq", "langchain-together", "langchain-fireworks"]
+llm-all = [
+    "langchain-openai", "langchain-anthropic", "langchain-deepseek", "langchain-google-genai",
+    "langchain-mistralai", "langchain-nvidia-ai-endpoints", "langchain-groq", "langchain-together",
+    "langchain-fireworks", "langchain-ollama"
+]
+
+# Database options
+db-postgres = ["langgraph-checkpoint-postgres", "psycopg2", "psycopg", "psycopg-pool", "asyncpg"]
+db-mongodb = ["langgraph-checkpoint-mongodb", "langchain-mongodb"]
+db-neo4j = ["neo4j", "langchain-neo4j"]
+db-supabase = ["supabase"]
+db-all = [
+    "langgraph-checkpoint-postgres", "langgraph-checkpoint-mongodb", "langchain-mongodb",
+    "neo4j", "langchain-neo4j", "psycopg2", "psycopg", "psycopg-pool", "asyncpg", "supabase"
+]
+
+# Web framework options
+web = ["fastapi", "uvicorn", "websocket"]
+
+# Search and retrieval
+search-basic = ["tavily-python", "duckduckgo-search", "wikipedia", "arxiv"]
+search-advanced = ["google-search-results", "serpapi", "youtube-search", "youtube-transcript-api", "pytube"]
+search-ml = ["rank-bm25", "flashrank", "ragatouille"]
+search-all = [
+    "tavily-python", "arxiv", "wikipedia", "duckduckgo-search", "google-search-results",
+    "serpapi", "youtube-search", "youtube-transcript-api", "pytube", "rank-bm25",
+    "flashrank", "ragatouille"
+]
+
+# Vector stores
+vectorstores = ["qdrant-client", "simsimd"]
+
+# Document processing
+docs-basic = ["lxml", "html2text", "markdownify", "xmltodict"]
+docs-pdf = ["pdfplumber", "pdfminer-six", "pdfminer", "pymupdf"]
+docs-advanced = ["langchain-docling", "openpyxl", "mwparserfromhell", "sqlparse"]
+docs-all = [
+    "lxml", "html2text", "markdownify", "langchain-docling", "pdfplumber",
+    "pdfminer-six", "pdfminer", "pymupdf", "openpyxl", "mwparserfromhell",
+    "sqlparse", "xmltodict"
+]
+
+# Data science
+data-science = ["pandas", "matplotlib", "scikit-learn", "ipython", "ipykernel"]
+
+# Web automation
+automation = ["playwright", "playwright-stealth"]
+
+# Communication platforms
+comms-discord = ["discord", "langchain-discord", "langchain-discord-shikenso"]
+comms-other = ["twilio", "telethon"]
+comms-all = ["discord", "langchain-discord", "langchain-discord-shikenso", "twilio", "telethon"]
+
+# Third-party integrations
+integrations-google = ["google-api-python-client", "google-auth-httplib2", "google-auth-oauthlib"]
+integrations-aws = ["boto3"]
+integrations-business = ["stripe-agent-toolkit", "langchain-salesforce"]
+integrations-gaming = ["python-steam-api", "python-decouple"]
+integrations-all = [
+    "boto3", "google-api-python-client", "google-auth-httplib2", "google-auth-oauthlib",
+    "stripe-agent-toolkit", "langchain-salesforce", "python-steam-api", "python-decouple"
+]
+
+# Translation
+translation = ["googletrans", "deepl"]
+
+# Code parsing
+code-parsing = ["esprima", "tree-sitter", "tree-sitter-languages"]
+
+# Memory and analytics
+analytics = ["zep-python", "prometheus-client"]
+
+# UI
+ui = ["gradio"]
+
+# Games
+games-chess = ["chess"]
+
+# Testing
+testing = ["pytest", "rich"]
+
+# MCP
+mcp = ["mcp", "langchain-mcp-adapters"]
+
+# Common development setup
+dev = [
+    "haive-agents", "haive-tools", "core-utils", "llm-openai", "llm-anthropic",
+    "search-basic", "docs-basic", "testing", "web"
+]
+
+# Full installation
+full = [
+    "all-packages", "core-utils", "llm-all", "db-all", "web", "search-all",
+    "vectorstores", "docs-all", "data-science", "automation", "comms-all",
+    "integrations-all", "translation", "code-parsing", "analytics", "ui",
+    "games-chess", "testing", "mcp"
+]
+
+# Torch extras (kept for compatibility)
 cpu = ["torch", "torchvision", "torchaudio"]
 cuda = ["torch", "torchvision", "torchaudio"]
 
