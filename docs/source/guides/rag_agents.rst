@@ -503,7 +503,7 @@ Multi-Modal RAG
 See Also
 --------
 
-- :doc:`/api/agents/rag` - RAG API Reference
-- :doc:`/guides/vector_stores` - Vector Store Configuration
-- :doc:`/guides/embeddings` - Embedding Models Guide
-- :doc:`/examples/rag` - RAG Examples
+- **RAG API Reference**: ``/docs/source/api/agents/rag.rst``
+- **Vector Store Configuration**: ``/docs/source/guides/vector_stores.rst``
+- **Embedding Models Guide**: ``/docs/source/guides/embeddings.rst``
+- **RAG Examples**: ``/examples/rag/``

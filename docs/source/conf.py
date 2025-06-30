@@ -80,11 +80,12 @@ extensions = [
 ]
 
 # Try to load custom extension if it exists
-try:
-    import haive_sphinx_ext  # noqa: F401
-    extensions.append("haive_sphinx_ext")
-except ImportError:
-    pass
+# Temporarily disabled for faster builds
+# try:
+#     import haive_sphinx_ext  # noqa: F401
+#     extensions.append("haive_sphinx_ext")
+# except ImportError:
+#     pass
 
 # ==============================================================================
 # Source File Configuration
@@ -207,9 +208,9 @@ autodoc_typehints = "description"
 autodoc_typehints_format = "short"
 autodoc_class_signature = "separated"
 
-# Autosummary
+# Autosummary - disabled for faster builds
 autosummary_generate = False  # Disable temporarily due to import issues
-autosummary_generate_overwrite = True
+autosummary_generate_overwrite = False
 autosummary_imported_members = False
 
 # Napoleon (Google docstrings) - optimized settings

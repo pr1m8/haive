@@ -425,7 +425,7 @@ Common Issues
 Additional Resources
 --------------------
 
-- Agent Documentation: :doc:`/agents/index`
-- API Reference: :doc:`/api/index`
-- Example Applications: ``/examples/frontend/``
-- WebSocket Testing: ``/tests/integration/websocket/``
+- **Agent Documentation**: ``/docs/source/agents/index.rst``
+- **API Reference**: ``/docs/source/api/index.rst``
+- **Example Applications**: ``/examples/frontend/``
+- **WebSocket Testing**: ``/tests/integration/websocket/``
