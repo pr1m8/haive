@@ -195,6 +195,8 @@ rich = { version = "^13.9.4", optional = true }
 # MCP support (optional)
 mcp = { version = "^1.9.4", optional = true }
 langchain-mcp-adapters = { version = "^0.1.7", optional = true }
+langmem = "^0.0.27"
+langgraph-supervisor = "^0.0.27"
 
 
 [tool.poetry.dependencies.graphviz]

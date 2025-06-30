@@ -1,0 +1,7 @@
+{
+  "game": "mancala",
+  "timestamp": "20250630_091627",
+  "success": false,
+  "error": "Error in mancala: 'MancalaConfig' object has no attribute 'aug_llm_configs'",
+  "result": {}
+}

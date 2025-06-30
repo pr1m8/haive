@@ -1,0 +1,16 @@
+{
+  "game": "connect4",
+  "matchup": "claude_vs_openai",
+  "timestamp": "20250630_092452",
+  "winner": "Failed",
+  "claude_player": "red_player",
+  "openai_player": "yellow_player",
+  "final_status": "error",
+  "moves_played": 0,
+  "game_details": {
+    "claude_player": "red_player",
+    "openai_player": "yellow_player",
+    "final_status": "error",
+    "error": "2 validation errors for columns_usage\nboard\n  Input should be a valid string [type=string_type, input_value=[[None, None, None, None,...None, None, None, None]], input_type=list]\n    For further information visit https://errors.pydantic.dev/2.11/v/string_type\nmove_history\n  Input should be a valid string [type=string_type, input_value=[], input_type=list]\n    For further information visit https://errors.pydantic.dev/2.11/v/string_type"
+  }
+}
