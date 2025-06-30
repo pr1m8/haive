@@ -1,0 +1,16 @@
+{
+  "game": "nim",
+  "matchup": "claude_vs_openai",
+  "timestamp": "20250630_092030",
+  "winner": "Failed",
+  "claude_player": "player1",
+  "openai_player": "player2",
+  "final_status": "error",
+  "moves_played": 0,
+  "game_details": {
+    "claude_player": "player1",
+    "openai_player": "player2",
+    "final_status": "error",
+    "error": "'NoneType' object is not iterable"
+  }
+}

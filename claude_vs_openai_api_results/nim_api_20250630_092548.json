@@ -1,0 +1,9 @@
+{
+  "game": "nim",
+  "timestamp": "20250630_092548",
+  "api_result": {
+    "success": false,
+    "error": "'AugLLMConfig' object has no attribute 'output_dir'",
+    "error_type": "AttributeError"
+  }
+}

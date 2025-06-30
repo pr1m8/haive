@@ -1,0 +1,17 @@
+{
+  "game": "tic_tac_toe",
+  "matchup": "claude_vs_openai",
+  "timestamp": "20250630_092030",
+  "winner": "Completed with Limit",
+  "claude_player": "X_player",
+  "openai_player": "O_player",
+  "final_status": "recursion_limit",
+  "moves_played": 0,
+  "game_details": {
+    "claude_player": "X_player",
+    "openai_player": "O_player",
+    "final_status": "recursion_limit",
+    "moves": 0,
+    "error": "Recursion limit of 25 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.\nFor troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/GRAPH_RECURSION_LIMIT"
+  }
+}

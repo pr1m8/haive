@@ -1,0 +1,43 @@
+{
+  "game": "tic_tac_toe_config",
+  "timestamp": "20250630_091625",
+  "success": true,
+  "error": null,
+  "result": {
+    "method": "config_only",
+    "config_created": true,
+    "has_engines": true,
+    "engines_count": 4,
+    "config_fields": [
+      "id",
+      "name",
+      "engine_type",
+      "description",
+      "input_schema",
+      "output_schema",
+      "version",
+      "metadata",
+      "engine",
+      "engines",
+      "state_schema",
+      "node_configs",
+      "patterns",
+      "pattern_parameters",
+      "default_patterns",
+      "visualize",
+      "output_dir",
+      "debug",
+      "save_history",
+      "runnable_config",
+      "add_store",
+      "agent_settings",
+      "subagents",
+      "persistence",
+      "checkpoint_mode",
+      "enable_analysis",
+      "first_player",
+      "player_X",
+      "player_O"
+    ]
+  }
+}
