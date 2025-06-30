@@ -16,7 +16,7 @@ services:
       SUPABASE_ANON_KEY: local-dev-key
       SUPABASE_SERVICE_ROLE_KEY: local-dev-key
     volumes:
-      - ../src:/app/src
+      - ../haive:/app/haive
       - ../packages:/app/packages
       - ../pyproject.toml:/app/pyproject.toml
       - ../poetry.lock:/app/poetry.lock

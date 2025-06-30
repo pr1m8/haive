@@ -1,157 +1,196 @@
-# RAG (Retrieval Augmented Generation) Agents
+# RAG Agents Module
 
-This directory contains various RAG agent implementations that combine document retrieval with generation for accurate, grounded responses.
+This module provides a comprehensive collection of Retrieval-Augmented Generation (RAG) agents for the Haive framework. It includes 12+ different RAG patterns and strategies, each optimized for specific use cases and query types.
 
-## Available RAG Agents
+## Overview
 
-### SimpleRAGAgent
+RAG (Retrieval-Augmented Generation) combines information retrieval with language generation to provide accurate, contextual responses based on specific document collections. This module implements various RAG patterns using the ChainAgent framework for consistency and composability.
 
-The base RAG agent that performs simple retrieval operations. It now includes enhanced functionality through the `RetrieverMixin`:
+## Available RAG Strategies
 
-- **Automatic VectorStoreConfig conversion**: Accepts both `BaseRetrieverConfig` and `VectorStoreConfig`
-- **Multiple initialization methods**: Create from documents, vector stores, or retriever configs
-- **Field validation**: Automatically converts configurations as needed
+### Core RAG Patterns
+- **Simple RAG** (`simple/`) - Basic retrieve-and-generate pattern
+- **Multi-Query RAG** (`multi_query/`) - Multiple query perspectives for comprehensive retrieval
+- **HyDE RAG** (`hyde/`) - Hypothetical document generation for enhanced retrieval
+- **Fusion RAG** (`fusion/`) - Multi-query retrieval with reciprocal rank fusion
 
-#### Usage Examples
+### Advanced RAG Patterns
+- **FLARE RAG** (`flare/`) - Forward-looking active retrieval with iterative refinement
+- **Speculative RAG** (`speculative/`) - Hypothesis generation and verification
+- **Step-Back RAG** (`step_back/`) - Abstract reasoning before specific answers
+- **Memory-Aware RAG** (`memory_aware/`) - Conversation context integration
+
+### Agentic RAG Systems
+- **Self-Route RAG** (`self_route/`) - Dynamic routing based on query analysis
+- **Adaptive RAG** (`adaptive_tools/`) - Tool integration for enhanced capabilities
+- **Agentic Router** (`agentic_router/`) - Intelligent strategy selection
+- **Query Planning** (`query_planning/`) - Complex query decomposition
+
+### Extended RAG Systems
+- **Modular RAG** (`modular_chain.py`) - Configurable pipeline components
+- **Branched RAG** (`branched_chain.py`) - Multi-path retrieval strategies
+- **Enhanced Memory ReAct** (`enhanced_memory_react.py`) - Full ReAct pattern with memory
+
+## Architecture
+
+### Implementation Styles
+
+Each RAG type can be created in three different styles:
+
+1. **Traditional Style** - Direct agent instantiation with full control
+2. **Chain Style** - Simplified sequential workflows using ChainAgent
+3. **Multi Style** - Parallel and conditional execution using MultiAgent
+
+### Key Components
+
+- **Chain Collection** (`chain_collection.py`) - ChainAgent implementations
+- **Unified Factory** (`unified_factory.py`) - Single interface for all RAG types
+- **State Schemas** - Pydantic models for type safety and validation
+
+## Quick Start
+
+### Using the Collection
 
 ```python
-from haive.agents.rag.base.agent import SimpleRAGAgent
-from haive.core.engine.vectorstore import VectorStoreConfig
-from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig
+from haive.agents.rag.chain_collection import RAGChainCollection
 from langchain_core.documents import Document
+from haive.core.models.llm.base import AzureLLMConfig
 
-# Method 1: Simplest - just documents (uses default embedding model and FAISS)
-SIMPLE_RAG_AGENT = SimpleRAGAgent.from_documents([conversation_documents])
+# Prepare documents
+docs = [
+    Document(page_content="Machine learning uses algorithms to learn from data..."),
+    Document(page_content="Neural networks are inspired by biological neurons...")
+]
 
-# Method 2: Direct initialization with VectorStoreConfig
-vector_store_config = VectorStoreConfig(
-    name="my_knowledge_base",
-    documents=[Document(page_content="Important information...")],
-    vector_store_provider="FAISS"
-)
-agent = SimpleRAGAgent(engine=vector_store_config)
+# Configure LLM
+llm_config = AzureLLMConfig(deployment_name="gpt-4")
 
-# Method 3: Create from documents with custom embedding
-agent = SimpleRAGAgent.from_documents(
-    documents=[
-        Document(page_content="Document 1 content"),
-        Document(page_content="Document 2 content")
-    ],
-    embedding_model=HuggingFaceEmbeddingConfig(
-        model="sentence-transformers/all-MiniLM-L6-v2"
-    ),
-    name="document_rag_agent"
-)
-
-# Method 4: Create from existing vector store
-agent = SimpleRAGAgent.from_vectorstore(
-    vector_store_config=vector_store_config,
-    retriever_kwargs={"k": 5, "search_type": "mmr"},
-    name="custom_rag_agent"
-)
-
-# Method 5: Use with BaseRetrieverConfig
-from haive.core.engine.retriever import VectorStoreRetrieverConfig
-
-retriever_config = VectorStoreRetrieverConfig(
-    name="my_retriever",
-    vector_store_config=vector_store_config,
-    k=4,
-    search_type="similarity"
-)
-agent = SimpleRAGAgent(engine=retriever_config)
+# Create RAG agent
+collection = RAGChainCollection()
+agent = collection.create_fusion_rag(docs, llm_config)
 
 # Use the agent
-result = await agent.ainvoke({"messages": [{"role": "user", "content": "What information do you have?"}]})
+response = agent.invoke({"query": "What is machine learning?"})
 ```
 
-### Other RAG Agents
-
-- **Agentic RAG**: Makes intelligent decisions about when and how to retrieve
-- **Dynamic RAG**: Adapts retrieval strategy based on query complexity
-- **Self-Correcting RAG**: Validates retrieved info and self-corrects errors
-- **Multi-Strategy RAG**: Combines multiple retrieval approaches
-- **HYDE RAG**: Generates hypothetical documents to improve retrieval
-- **Filtered RAG**: Advanced filtering based on metadata and relevance
-- **DB RAG**: Specialized for structured data (SQL, GraphDB)
-- **Typed RAG**: Enforces type safety on inputs and outputs
-- **LLM RAG**: Enhanced RAG with LLM-powered retrieval strategies
-
-## RetrieverMixin
-
-The `RetrieverMixin` (located in `haive.core.engine.retriever.mixins`) provides shared functionality for RAG agents:
-
-### Features
-
-1. **Field Validation**: Automatically converts `VectorStoreConfig` to `VectorStoreRetrieverConfig`
-2. **Class Methods**:
-   - `from_vectorstore()`: Create agent from vector store configuration
-   - `from_documents()`: Create agent from raw documents
-   - `from_retriever()`: Create agent from retriever configuration
-
-### Using RetrieverMixin in Custom Agents
+### Using the Factory
 
 ```python
-from haive.core.engine.retriever.mixins import RetrieverMixin
-from haive.agents.base.agent import Agent
+from haive.agents.rag.unified_factory import create_rag
 
-class MyCustomRAGAgent(RetrieverMixin, Agent):
-    """Custom RAG agent with retriever capabilities."""
+# Create any RAG type with unified interface
+simple_rag = create_rag("simple", docs, style="chain")
+fusion_rag = create_rag("fusion", docs, style="chain")
+hyde_rag = create_rag("hyde", docs, style="traditional")
 
-    name: str = "My Custom RAG Agent"
-    engine: Union[BaseRetrieverConfig, VectorStoreConfig] = Field(...)
-
-    def build_graph(self) -> BaseGraph:
-        # Your custom graph implementation
-        pass
+# Create multi-agent version
+multi_rag = create_rag("speculative", docs, style="multi")
 ```
 
-## Common Patterns
-
-### Creating Vector Stores
+### Building Pipelines
 
 ```python
-from haive.core.engine.vectorstore import VectorStoreConfig, VectorStoreProvider
+from haive.agents.rag.unified_factory import create_rag_pipeline
 
-# Using different providers
-config = VectorStoreConfig(
-    name="my_store",
-    documents=documents,
-    vector_store_provider=VectorStoreProvider.CHROMA,  # or FAISS, PINECONE, etc.
-    embedding_model=embedding_config
+# Combine multiple RAG strategies
+pipeline = create_rag_pipeline(
+    ["simple", "fusion", "flare"],
+    docs,
+    style="chain"
 )
 ```
 
-### Configuring Retrievers
+## Module Structure
 
-```python
-# Configure search parameters
-retriever_kwargs = {
-    "k": 5,                    # Number of documents to retrieve
-    "search_type": "mmr",      # or "similarity"
-    "score_threshold": 0.7,    # Minimum similarity score
-    "fetch_k": 20,            # For MMR: number of docs to fetch before reranking
-    "lambda_mult": 0.5        # For MMR: diversity vs relevance trade-off
-}
-
-agent = SimpleRAGAgent.from_vectorstore(
-    vector_store_config=vs_config,
-    retriever_kwargs=retriever_kwargs
-)
 ```
+rag/
+├── README.md                    # This file
+├── __init__.py                  # Package initialization
+├── chain_collection.py          # ChainAgent RAG implementations
+├── unified_factory.py           # Unified factory interface
+├── modular_chain.py            # Modular RAG components
+├── branched_chain.py           # Branched retrieval strategies
+├── enhanced_memory_react.py    # Memory + ReAct integration
+├── simple/                     # Simple RAG implementation
+├── multi_query/               # Multi-query RAG
+├── hyde/                      # HyDE RAG
+├── fusion/                    # Fusion RAG
+├── flare/                     # FLARE RAG
+├── speculative/               # Speculative RAG
+├── step_back/                 # Step-Back RAG
+├── memory_aware/              # Memory-Aware RAG
+├── self_route/                # Self-Route RAG
+├── adaptive_tools/            # Adaptive RAG with tools
+├── agentic_router/            # Agentic routing
+├── query_planning/            # Query planning
+├── self_reflective/           # Self-reflective RAG
+└── corrective/                # Corrective RAG
+```
+
+## Best Practices
+
+### Choosing the Right RAG Strategy
+
+- **Simple RAG**: Use for straightforward Q&A over documents
+- **Fusion RAG**: Use when you need high-quality, comprehensive answers
+- **HyDE RAG**: Use for abstract or conceptual queries
+- **FLARE RAG**: Use when iterative refinement is beneficial
+- **Agentic Router**: Use when query types vary significantly
+
+### Performance Considerations
+
+- **Document Size**: Larger document sets benefit from advanced retrieval strategies
+- **Query Complexity**: Complex queries benefit from planning and decomposition
+- **Response Quality**: Fusion and speculative approaches provide higher quality
+- **Speed Requirements**: Simple RAG is fastest, agentic approaches are more thorough
+
+### Integration Tips
+
+- Use the unified factory for consistent interfaces
+- Combine RAG agents with other Haive agents using ChainAgent
+- Leverage state schemas for type safety
+- Monitor performance with built-in logging
 
 ## Testing
 
-See the test files in the `tests/` directory for comprehensive examples:
+Run the comprehensive test suite:
 
-- `test_base_rag_agent.py`: Basic SimpleRAGAgent tests
-- `test_llm_rag_agent.py`: LLM-enhanced RAG tests
-- Various other agent-specific test files
+```bash
+poetry run python -m pytest tests/test_rag_comprehensive.py -v
+```
+
+Test specific RAG types:
+
+```bash
+poetry run python -c "
+from haive.agents.rag.unified_factory import create_rag
+agent = create_rag('fusion', docs)
+print(f'Created {agent.name} with {len(agent.nodes)} nodes')
+"
+```
 
 ## Examples
 
-Example implementations can be found in:
+See the `examples/` directory for detailed usage examples:
+- Basic RAG usage patterns
+- Advanced configuration options
+- Integration with other agents
+- Custom RAG pattern development
 
-- `llm_rag/example.py`: LLM RAG agent examples
-- `db_rag/graph_db/example.py`: Graph database RAG examples
-- `db_rag/sql_rag/example.py`: SQL database RAG examples
+## Contributing
+
+When adding new RAG patterns:
+
+1. Create a new subdirectory with descriptive name
+2. Implement both traditional and chain versions
+3. Add comprehensive docstrings following Google style
+4. Include proper type hints and Pydantic models
+5. Add tests and usage examples
+6. Update this README with the new pattern
+
+## Related Modules
+
+- `haive.agents.chain` - ChainAgent framework
+- `haive.agents.multi` - Multi-agent orchestration  
+- `haive.core.engine` - Engine system for LLM integration
+- `haive.tools` - Tool integration for adaptive RAG

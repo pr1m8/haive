@@ -7,3 +7,36 @@ plugins
 user_trunk.yaml
 user.yaml
 tmp
+
+# Large database dumps and exports (Docker build optimization)
+data_dump.sql
+local_postgres_export.json
+supabase_import_threads.sql
+*.dump
+*.backup
+
+# Large data directories
+vectorstore/
+lc_cache/
+outputs/
+debug_visualizations/
+workspaces/
+documents/
+projects/
+notebooks/
+scratches/
+examples/
+data/
+
+# Cache directories
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+
+# Documentation build
+docs/_build/
+docs/build/

@@ -17,4 +17,4 @@ poetry run pytest
 # Format code
 poetry run black .
 poetry run isort .
-```
+``` 

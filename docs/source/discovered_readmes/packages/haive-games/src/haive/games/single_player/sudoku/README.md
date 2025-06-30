@@ -9,12 +9,10 @@ TODO: Add detailed overview of this module's functionality
 ## Key Components
 
 ### Classes
-
 - **Difficulty**: TODO: Add description
 - **SudokuGame**: TODO: Add description
 
 ### Functions
-
 - **validate_game()**: TODO: Add description
 - **new_game()**: TODO: Add description
 - **make_move()**: TODO: Add description
@@ -22,8 +20,8 @@ TODO: Add detailed overview of this module's functionality
 - **toggle_candidates()**: TODO: Add description
 
 ### Submodules
-
 - **game**: TODO: Add description
+
 
 ## Installation
 
