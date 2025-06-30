@@ -44,6 +44,7 @@ Every Haive agent is built on a graph architecture where:
 - **Conditions** enable dynamic routing based on results
 
 This allows complex workflows like:
+
 - Multi-stage reasoning with checkpoints
 - Parallel processing with synchronization points
 - Conditional flows based on intermediate results
@@ -117,23 +118,27 @@ haive.run_workflow([
 ## Why Use Haive?
 
 ### 1. **Flexibility Without Complexity**
+
 - Build simple agents quickly
 - Scale to complex multi-agent systems when needed
 - No need to rebuild when requirements change
 
 ### 2. **Production-Ready Features**
+
 - Built-in persistence and state management
 - Comprehensive logging and monitoring
 - Error handling and retry mechanisms
 - Resource management and cleanup
 
 ### 3. **Extensible Architecture**
+
 - Add custom engines for new LLM providers
 - Create domain-specific tools
 - Build custom agent types
 - Implement new graph patterns
 
 ### 4. **Developer Experience**
+
 - Type-safe with Pydantic v2
 - Rich debugging capabilities
 - Clear error messages
@@ -144,6 +149,7 @@ haive.run_workflow([
 Haive includes 50+ pre-built agent architectures organized by capability:
 
 ### RAG (Retrieval Augmented Generation) Agents
+
 - **Agentic RAG**: Advanced RAG with agent-based decision making
 - **Dynamic RAG**: Adapts retrieval strategy based on query complexity
 - **Self-Correcting RAG**: Validates and refines retrieved information
@@ -154,6 +160,7 @@ Haive includes 50+ pre-built agent architectures organized by capability:
 - **Filtered RAG**: Advanced filtering and ranking capabilities
 
 ### Reasoning & Critique Agents
+
 - **LATS (Language Agent Tree Search)**: Tree-based reasoning
 - **MCTS (Monte Carlo Tree Search)**: Probabilistic decision making
 - **Reflection Agent**: Self-evaluates and improves responses
@@ -162,12 +169,14 @@ Haive includes 50+ pre-built agent architectures organized by capability:
 - **Tree of Thoughts**: Explores multiple reasoning paths
 
 ### Planning & Execution Agents
+
 - **Plan and Execute**: Decomposes and executes complex tasks
 - **LLM Compiler**: Optimizes task execution plans
 - **ReWoo**: Reduces API calls through smart planning
 - **Task Analysis**: Analyzes task complexity and dependencies
 
 ### Conversation & Collaboration Agents
+
 - **Collaborative Agents**: Multiple agents working together
 - **Debate Agents**: Agents that debate to reach conclusions
 - **Directed Conversation**: Goal-oriented dialogues
@@ -175,6 +184,7 @@ Haive includes 50+ pre-built agent architectures organized by capability:
 - **Social Media**: Specialized for social platform interactions
 
 ### Document Processing Agents
+
 - **Knowledge Graph Extractors**: Build KGs from documents
 - **Iterative Refinement**: Progressively improves document analysis
 - **Map-Merge**: Parallel document processing with merging
@@ -182,6 +192,7 @@ Haive includes 50+ pre-built agent architectures organized by capability:
 - **Summarizers**: Multi-strategy summarization
 
 ### Research & Analysis Agents
+
 - **Storm**: Systematic research agent
 - **Open Perplexity**: Open-source research assistant
 - **Person Researcher**: Deep research on individuals
@@ -189,6 +200,7 @@ Haive includes 50+ pre-built agent architectures organized by capability:
 - **Interview Agent**: Conducts and analyzes interviews
 
 ### Specialized Agents
+
 - **ReAct**: Multiple implementations (v1, v2, v3) with tool use
 - **Long-Term Memory**: Persistent memory across sessions
 - **Dynamic Supervisor**: Orchestrates other agents
@@ -200,6 +212,7 @@ Haive includes 50+ pre-built agent architectures organized by capability:
 Haive includes 40+ game environments for agent testing and development:
 
 ### Classic Board Games
+
 - **Chess**: Full chess implementation with analysis
 - **Checkers**: Traditional and variant rules
 - **Go**: The ancient strategy game
@@ -208,23 +221,27 @@ Haive includes 40+ game environments for agent testing and development:
 - **Mancala**: Ancient counting game
 
 ### Card Games
+
 - **Poker**: Texas Hold'em and variants
 - **Blackjack**: Casino-style with strategies
 - **BS (Bluff)**: Deception and detection game
 - **UNO**: Popular card matching game
 
 ### Strategy Games
+
 - **Risk**: Territory conquest and diplomacy
 - **Battleship**: Naval strategy
 - **Clue**: Deduction and reasoning
 - **Dominoes**: Pattern matching strategy
 
 ### Social Deduction Games
+
 - **Among Us**: Find the impostor
 - **Mafia**: Classic social deduction
 - **Debate**: Structured argumentation
 
 ### Single-Player Puzzles
+
 - **Sudoku**: Logic puzzle solver
 - **Crossword**: Language and knowledge
 - **Wordle**: Word guessing optimization
@@ -238,6 +255,7 @@ Haive includes 40+ game environments for agent testing and development:
 - **Word Search**: Pattern recognition
 
 ### Complex Simulations
+
 - **Monopoly**: Full economic simulation
 - **Nim**: Mathematical strategy
 - **Mastermind**: Code breaking
@@ -246,6 +264,7 @@ Haive includes 40+ game environments for agent testing and development:
 ## Tool Ecosystem
 
 ### 110+ Curated Toolkits
+
 - **Web Tools**: Search, scraping, API interactions
 - **Data Tools**: Analysis, transformation, visualization
 - **Document Tools**: PDFs, Office files, parsing
@@ -257,6 +276,7 @@ Haive includes 40+ game environments for agent testing and development:
 - **Geographic**: Maps, location services
 
 ### MCP (Model Context Protocol) Integration
+
 - **100+ MCP Servers**: Direct integration with MCP ecosystem
 - **Seamless Tool Discovery**: Automatic tool detection
 - **Standard Protocols**: Consistent tool interfaces
@@ -264,23 +284,27 @@ Haive includes 40+ game environments for agent testing and development:
 ## Advanced Capabilities
 
 ### Dynamic Architectures
+
 - **Dynamic Supervisor**: Runtime agent orchestration
 - **Swarm Intelligence**: Coordinated multi-agent systems
 - **Meta Agents**: Agents that manage other agents
 - **Agents in State**: Agents as part of the state machine
 
 ### Memory Systems
+
 - **Long-Term Memory**: Persistent across sessions
 - **Graph Memory**: Relationship-based memory
 - **Episodic Memory**: Event-based recall
 - **Working Memory**: Short-term task focus
 
 ### Planning & Parallelization
+
 - **Parallelizable Planning**: Concurrent execution paths
 - **Adaptive Planning**: Runtime plan modification
 - **Hierarchical Planning**: Multi-level task decomposition
 
 ### Dataflow & Integration
+
 - **Persistence Layer**: Full state serialization
 - **MCP Integration**: Model Context Protocol support
 - **APIs/WebSockets**: Real-time communication
@@ -291,6 +315,7 @@ Haive includes 40+ game environments for agent testing and development:
 Haive includes 40+ specialized agents for specific domains:
 
 ### Business & Startup
+
 - **Company Researcher**: Deep company analysis
 - **Startup Suite**: Ideation, market research, pitch decks
 - **Business Model Canvas**: Strategic planning
@@ -298,6 +323,7 @@ Haive includes 40+ specialized agents for specific domains:
 - **Shop Genie**: E-commerce optimization
 
 ### Content & Media
+
 - **Blog Writer**: SEO-optimized content
 - **Podcast Generator**: Full podcast production
 - **GIF Generator**: Animated content creation
@@ -305,6 +331,7 @@ Haive includes 40+ specialized agents for specific domains:
 - **Content Intelligence**: Content strategy
 
 ### Professional Services
+
 - **Contract Analysis**: Legal document review
 - **EU Green Compliance**: Regulatory compliance
 - **Project Manager**: Task coordination
@@ -312,6 +339,7 @@ Haive includes 40+ specialized agents for specific domains:
 - **Customer Support**: Automated assistance
 
 ### Academic & Research
+
 - **Academic Task Learning**: Educational support
 - **Essay Grading**: Automated assessment
 - **Scientific Paper Agent**: Research writing
@@ -319,6 +347,7 @@ Haive includes 40+ specialized agents for specific domains:
 - **Open Researcher**: General research
 
 ### Specialized Applications
+
 - **Car Buyer Agent**: Vehicle purchase assistance
 - **Travel Planner**: Itinerary optimization
 - **Weather Disaster Management**: Emergency response
@@ -327,7 +356,7 @@ Haive includes 40+ specialized agents for specific domains:
 
 ## Getting Started
 
-*Note: Comprehensive documentation is coming soon. For now, here's a quick start guide.*
+_Note: Comprehensive documentation is coming soon. For now, here's a quick start guide._
 
 ### Installation
 

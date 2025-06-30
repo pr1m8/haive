@@ -1,10 +1,12 @@
 # Haive LLM Module
 
-This module provides a comprehensive framework for working with Large Language Models (LLMs) from various providers. It includes configuration classes, metadata handling, and provider-specific implementations.
+This module provides a comprehensive framework for working with Large Language Models (LLMs) from various providers. It includes configuration classes, a factory system with canonical model naming, metadata handling, and provider-specific implementations.
 
 ## Core Components
 
 - **Base Classes**: Abstract base classes and interfaces for LLM configurations
+- **Factory System**: Create configs from simple model strings (e.g., `"gpt-4"`, `"claude-3-opus"`)
+- **Model Registry**: Centralized catalog with aliases and metadata
 - **Provider Support**: Implementations for 15+ LLM providers
 - **Metadata System**: Comprehensive model capability and context window tracking
 - **Security Features**: Secure handling of API keys and credentials
@@ -30,9 +32,79 @@ The module supports a wide range of LLM providers:
 - **Aleph Alpha**: Luminous models
 - **Others**: GooseAI, MosaicML, NLP Cloud, OpenLM, Petals, Replicate, and Vertex AI
 
+## Quick Start - Direct LLM Creation (Simplest)
+
+The simplest way to create LLMs is using the helper functions:
+
+```python
+from haive.core.models.llm import create_llm, llm
+
+# Direct LLM creation - one step
+chat = create_llm("gpt-4")
+chat = create_llm("claude-3-opus", temperature=0.7)
+
+# Ultra-short syntax
+chat = llm("gpt-4")
+
+# Named convenience functions
+from haive.core.models.llm import gpt4, claude3_opus
+chat = gpt4(temperature=0.7)
+chat = claude3_opus(max_tokens=1000)
+```
+
+## Configuration Pattern (When You Need Configs)
+
+When you need serializable configurations:
+
+```python
+from haive.core.models.llm import create_llm_config
+
+# Create config first
+config = create_llm_config("gpt-4", temperature=0.7)
+
+# Config is serializable
+saved_config = config.model_dump_json()
+
+# Create LLM when needed
+llm = config.create()  # or config.instantiate()
+```
+
 ## Usage Examples
 
-### Creating an OpenAI LLM
+### All Creation Patterns
+
+```python
+from haive.core.models.llm import (
+    # Direct creation
+    create_llm, llm, gpt4,
+    # Config creation
+    create_llm_config,
+    # Traditional configs
+    OpenAILLMConfig
+)
+
+# 1. Direct creation (simplest)
+chat = create_llm("gpt-4")
+chat = llm("gpt-4")  # Even shorter
+chat = gpt4()        # Named function
+
+# 2. Factory config pattern
+config = create_llm_config("gpt-4", temperature=0.7)
+llm = config.create()
+
+# 3. Traditional pattern (still supported)
+config = OpenAILLMConfig(model="gpt-4")
+llm = config.instantiate()
+
+# 4. Fluent one-liner
+llm = OpenAILLMConfig(model="gpt-4").create()
+
+# 5. Class method factory
+config = LLMConfig.from_model("gpt-4")
+llm = config.create()
+```
+
+### Model Discovery
 
 ```python
 from haive.core.models.llm.base import OpenAILLMConfig
@@ -83,6 +155,17 @@ supports_function_calling = config.supports_function_calling
 # Get pricing information
 input_cost, output_cost = config.get_token_pricing()
 ```
+
+## Model String Formats
+
+The factory system supports multiple model string formats:
+
+- **Simple names**: `"gpt-4"`, `"claude-3-opus"`, `"gemini-pro"`
+- **Canonical format**: `"openai:gpt-4"`, `"anthropic:claude-3-sonnet"`
+- **Aliases**: `"gpt4"`, `"claude-opus"`, `"chatgpt"`
+- **Bedrock format**: `"anthropic.claude-3-5-sonnet-20240620-v1:0"`
+
+Provider detection is automatic based on model name patterns.
 
 ## Model Metadata
 

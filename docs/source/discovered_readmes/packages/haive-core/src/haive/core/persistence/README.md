@@ -1,183 +1,259 @@
-# Agent Persistence System
+# Haive Core Persistence Module
 
-## Overview
+The `haive.core.persistence` module provides comprehensive state persistence capabilities for Haive AI agents. It offers multiple backend implementations for storing and retrieving agent state, enabling stateful conversations and long-term memory across sessions.
 
-The Haive agent persistence system provides a flexible and extensible framework for storing agent state, including checkpoints, messages, and metadata. This module supports multiple backend options, including in-memory storage, SQLite, and PostgreSQL databases.
+## 🎯 **Overview**
 
-## Key Components
+This module integrates seamlessly with LangGraph's checkpointing system while adding Haive-specific enhancements such as:
 
-The persistence system consists of these core components:
+- **Multiple Backend Support**: Memory, PostgreSQL, SQLite, and Supabase
+- **Async/Sync Operations**: Full support for both synchronous and asynchronous workflows
+- **Connection Pooling**: Optimized database connections for production use
+- **Automatic Schema Management**: Tables and indexes created automatically
+- **Long-term Memory**: Store integration for cross-thread persistent data
+- **Error Handling**: Robust fallback mechanisms and retry logic
 
-- **CheckpointerConfig**: Abstract base class defining the interface for all checkpointers
-- **MemoryCheckpointerConfig**: In-memory implementation suitable for testing and development
-- **SQLiteCheckpointerConfig**: SQLite-based implementation for local persistence
-- **PostgresCheckpointerConfig**: PostgreSQL-based implementation for production use
-- **Utility functions**: For handling state operations and compatibility with LangGraph
+## 📦 **Available Backends**
 
-## Usage
-
-### Creating a Checkpointer
-
-The module provides factory functions for creating checkpointers:
-
+### 🧠 **Memory Backend**
 ```python
-from src.haive.core.engine.agent.persistence import (
-    create_memory_checkpointer,
-    create_sqlite_checkpointer,
-    create_postgres_checkpointer,
-    create_checkpointer,
-    CheckpointerType
+from haive.core.persistence import MemoryCheckpointerConfig
+
+config = MemoryCheckpointerConfig()
+checkpointer = config.create_checkpointer()
+```
+- **Use Case**: Development, testing, temporary state
+- **Persistence**: In-memory only (lost on restart)
+- **Dependencies**: None (built-in)
+
+### 🐘 **PostgreSQL Backend**
+```python
+from haive.core.persistence import PostgresCheckpointerConfig
+
+config = PostgresCheckpointerConfig(
+    connection_string="postgresql://user:pass@host:port/db"
 )
+checkpointer = config.create_checkpointer()
+```
+- **Use Case**: Production deployments, on-premise databases
+- **Persistence**: Durable PostgreSQL storage
+- **Dependencies**: `psycopg2-binary`, `psycopg-pool`
 
-# Create in-memory checkpointer
-memory_config = create_memory_checkpointer()
+### ☁️ **Supabase Backend**
+```python
+from haive.core.persistence import SupabaseCheckpointerConfig
 
-# Create SQLite checkpointer
-sqlite_config = create_sqlite_checkpointer(db_path="./checkpoints.db")
-
-# Create PostgreSQL checkpointer
-postgres_config = create_postgres_checkpointer(
-    db_host="localhost",
-    db_port=5432,
-    db_name="postgres",
-    db_user="postgres",
-    db_pass="postgres"
+config = SupabaseCheckpointerConfig(
+    connection_string=os.getenv("POSTGRES_CONNECTION_STRING"),
+    user_id="user-123"
 )
+checkpointer, store = config.create_checkpointer_and_store()
+```
+- **Use Case**: Cloud deployments, managed PostgreSQL, multi-tenant apps
+- **Persistence**: Cloud-hosted PostgreSQL via Supabase
+- **Dependencies**: `psycopg2-binary`, `psycopg-pool`
 
-# Or use the generic factory function
-config = create_checkpointer(
-    CheckpointerType.postgres,
-    db_host="localhost",
-    db_port=5432
+## 🚀 **Quick Start Guide**
+
+### 1. **Choose Your Backend**
+```python
+from haive.core.persistence import get_available_backends
+
+# Check what's available
+backends = get_available_backends()
+print(f"Available backends: {backends}")
+# Output: ['memory', 'postgres', 'supabase']
+```
+
+### 2. **Create Configuration**
+```python
+from haive.core.persistence import create_checkpointer_config
+
+# Factory function approach
+config = create_checkpointer_config(
+    'postgres',
+    connection_string="postgresql://user:pass@host:port/db"
 )
 ```
 
-### Using with Agent Configuration
-
-The checkpointer configuration can be added to agent config:
-
+### 3. **Create Checkpointer**
 ```python
-from src.haive.core.engine.agent.agent import AgentConfig
-from src.haive.core.engine.agent.persistence import create_sqlite_checkpointer
-
-agent_config = AgentConfig(
-    name="my_agent",
-    persistence=create_sqlite_checkpointer(db_path="./agent_state.db")
-)
-```
-
-### Manually Working with Checkpointers
-
-You can also use checkpointers directly:
-
-```python
-from src.haive.core.engine.agent.persistence import create_memory_checkpointer
-
-# Create checkpointer config
-config = create_memory_checkpointer()
-
-# Get the actual checkpointer implementation
+# Synchronous
 checkpointer = config.create_checkpointer()
 
-# Register a thread
-thread_id = "conversation-123"
-config.register_thread(thread_id, metadata={"user": "user-456"})
+# Asynchronous
+async_checkpointer = await config.create_async_checkpointer()
 
-# Create a checkpoint
-checkpoint_config = {"configurable": {"thread_id": thread_id}}
-data = {"messages": [...], "context": {...}}
-updated_config = config.put_checkpoint(checkpoint_config, data)
-
-# Retrieve a checkpoint
-checkpoint_id = updated_config["configurable"]["checkpoint_id"]
-retrieval_config = {"configurable": {"thread_id": thread_id, "checkpoint_id": checkpoint_id}}
-result = config.get_checkpoint(retrieval_config)
+# With long-term memory store
+checkpointer, store = config.create_checkpointer_and_store()
 ```
 
-## Setting Up PostgreSQL
-
-To use the PostgreSQL backend:
-
-1. Install dependencies: `pip install psycopg[binary] langgraph[postgres]`
-2. Ensure PostgreSQL server is running
-3. Create database and user with appropriate permissions
-4. Configure the connection parameters
-
-## Integrating with LangGraph
-
-This system is designed to work with LangGraph checkpointers:
-
+### 4. **Use with LangGraph**
 ```python
-from langgraph.checkpoint.base import BaseCheckpointSaver
-from src.haive.core.engine.agent.persistence import create_sqlite_checkpointer
-from src.haive.core.persistencehandlers import setup_checkpointer
-
-# Create agent config with persistence
-agent_config = AgentConfig(
-    name="my_agent",
-    persistence=create_sqlite_checkpointer(db_path="./agent_state.db")
-)
-
-# Get LangGraph-compatible checkpointer
-checkpointer: BaseCheckpointSaver = setup_checkpointer(agent_config)
-
-# Use with StateGraph
 from langgraph.graph import StateGraph
-graph = StateGraph(state_schema, checkpointer=checkpointer)
+
+# Define your agent workflow
+workflow = StateGraph(YourAgentState)
+# ... define workflow ...
+
+# Compile with persistence
+app = workflow.compile(checkpointer=checkpointer)
+
+# Run with thread configuration
+thread_config = {"configurable": {"thread_id": "user-123-session-1"}}
+result = app.invoke(initial_state, config=thread_config)
 ```
 
-## Thread and Checkpoint Management
+## 🏗️ **Database Schema**
 
-The system maintains both threads (conversations) and checkpoints:
+The persistence module automatically creates the following tables:
 
-- **Threads**: Represent conversations or interaction sessions
-- **Checkpoints**: Specific states within a thread, typically created after each step
+### **Standard LangGraph Tables**
+```sql
+-- Main checkpoint storage
+CREATE TABLE checkpoints (
+    thread_id TEXT NOT NULL,
+    checkpoint_ns TEXT NOT NULL DEFAULT '',
+    checkpoint_id TEXT NOT NULL,
+    parent_checkpoint_id TEXT,
+    type TEXT,
+    checkpoint JSONB NOT NULL,
+    metadata JSONB NOT NULL DEFAULT '{}',
+    PRIMARY KEY (thread_id, checkpoint_ns, checkpoint_id)
+);
 
-The `handlers.py` module provides utility functions for working with thread state:
+-- Large binary data storage  
+CREATE TABLE checkpoint_blobs (
+    thread_id TEXT NOT NULL,
+    checkpoint_ns TEXT NOT NULL DEFAULT '',
+    channel TEXT NOT NULL,
+    version TEXT NOT NULL,
+    type TEXT NOT NULL,
+    blob BYTEA,
+    PRIMARY KEY (thread_id, checkpoint_ns, channel, version)
+);
+
+-- Pending write operations
+CREATE TABLE checkpoint_writes (
+    thread_id TEXT NOT NULL,
+    checkpoint_ns TEXT NOT NULL DEFAULT '',
+    checkpoint_id TEXT NOT NULL,
+    task_id TEXT NOT NULL,
+    idx INTEGER NOT NULL,
+    channel TEXT NOT NULL,
+    type TEXT,
+    blob BYTEA NOT NULL,
+    PRIMARY KEY (thread_id, checkpoint_ns, checkpoint_id, task_id, idx)
+);
+```
+
+### **Store Tables** (for long-term memory)
+```sql
+-- Key-value store for cross-thread data
+CREATE TABLE store (
+    prefix TEXT[] NOT NULL,
+    key TEXT NOT NULL,
+    value JSONB NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    PRIMARY KEY (prefix, key)
+);
+```
+
+## 🔌 **Installation Requirements**
+
+### **Core Dependencies** (always required)
+```bash
+pip install langgraph pydantic
+```
+
+### **PostgreSQL Backend**
+```bash
+pip install psycopg2-binary psycopg-pool
+```
+
+### **Supabase Backend**
+```bash
+pip install psycopg2-binary psycopg-pool
+# Optional: For REST API features
+pip install supabase
+```
+
+## 🎯 **Connection String Formats**
+
+### **PostgreSQL**
+```
+postgresql://username:password@host:port/database
+postgresql://user:pass@localhost:5432/haive
+```
+
+### **Supabase PostgreSQL**
+```
+postgresql://postgres.PROJECT:PASSWORD@aws-0-us-east-1.pooler.supabase.com:6543/postgres
+```
+
+### **SQLite**
+```
+sqlite:///path/to/database.db
+sqlite:///:memory:
+```
+
+## 🏛️ **Architecture**
+
+```
+haive.core.persistence/
+├── __init__.py              # Main module exports and factory functions
+├── base.py                  # Abstract base classes
+├── types.py                 # Type definitions and enums
+├── memory_config.py         # In-memory implementation
+├── postgres_config.py       # PostgreSQL implementation
+├── supabase_config.py       # Supabase cloud implementation
+└── README.md               # This documentation
+```
+
+## 🧪 **Testing Your Setup**
 
 ```python
-from src.haive.core.persistencehandlers import (
-    prepare_merged_input,
-    process_input,
-    register_thread_if_needed
-)
+def test_persistence_setup():
+    from haive.core.persistence import PostgresCheckpointerConfig
+    
+    config = PostgresCheckpointerConfig(
+        connection_string="your-connection-string"
+    )
+    
+    checkpointer = config.create_checkpointer()
+    print(f"✅ Checkpointer: {type(checkpointer).__name__}")
+    
+    return True
 
-# Register a thread if needed
-register_thread_if_needed(checkpointer, "thread-123")
-
-# Process user input into appropriate format
-processed_input = process_input("Hello agent", input_schema=MyInputSchema)
-
-# Merge new input with previous state
-merged_state = prepare_merged_input(
-    "New message",
-    previous_state=previous_checkpoint,
-    state_schema=MyStateSchema
-)
+test_persistence_setup()
 ```
 
-## Extending the System
+## 📚 **API Reference**
 
-The system is designed to be extensible. To add a new backend type:
+### **Factory Functions**
+- `get_available_backends()` → `list[str]`: List available backends
+- `create_checkpointer_config(backend, **kwargs)` → `CheckpointerConfig`: Create config
 
-1. Add a new type to `CheckpointerType` enum in `types.py`
-2. Create a new implementation class that extends `CheckpointerConfig`
-3. Implement the required methods: `create_checkpointer()`, `register_thread()`, etc.
-4. Add a factory function in `__init__.py`
-5. Update the `create_checkpointer()` function to handle the new type
+### **Configuration Classes**
+- `MemoryCheckpointerConfig`: In-memory persistence
+- `PostgresCheckpointerConfig`: PostgreSQL persistence  
+- `SupabaseCheckpointerConfig`: Supabase cloud persistence
 
-## Error Handling
+### **Key Methods**
+- `create_checkpointer()` → `Checkpointer`: Create sync checkpointer
+- `create_async_checkpointer()` → `AsyncCheckpointer`: Create async checkpointer
+- `create_store()` → `Store`: Create sync store
+- `create_checkpointer_and_store()` → `tuple`: Create both components
 
-The persistence system is designed to be resilient:
+## 💡 **Best Practices**
 
-- If PostgreSQL dependencies are missing, it falls back to other backends
-- If database connection fails, it falls back to in-memory storage
-- All operations are wrapped in exception handling to prevent crashes
+1. **Production Setup**: Use PostgreSQL or Supabase for production
+2. **Connection Pooling**: Configure appropriate pool sizes
+3. **Error Handling**: Implement retry logic and fallbacks
+4. **Security**: Use environment variables for connection strings
+5. **Testing**: Always test persistence setup before deploying
 
-## Compatibility
+---
 
-The system is designed to work with both older and newer versions of LangGraph by adapting to the available API methods:
-
-- It supports the newer LangGraph checkpointer API that requires metadata and versioning
-- It falls back to older APIs when needed
-- It provides a consistent interface regardless of the underlying implementation
+*For more information, see the [Haive Documentation](https://github.com/pr1m8/haive) or individual module docs.*
