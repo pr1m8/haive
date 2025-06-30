@@ -1,0 +1,10 @@
+{
+  "game": "checkers",
+  "timestamp": "20250630_094544",
+  "result": {
+    "success": false,
+    "error": "Import failed: cannot import name 'CheckersConfig' from 'haive.games.checkers' (/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/checkers/__init__.py)",
+    "error_type": "ImportError",
+    "stage": "module_import"
+  }
+}

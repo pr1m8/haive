@@ -1,0 +1,10 @@
+{
+  "game": "among_us",
+  "timestamp": "20250630_100657",
+  "result": {
+    "success": false,
+    "error": "Import failed: cannot import name 'AmongUsAgentConfig' from 'haive.games.among_us' (/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/among_us/__init__.py)",
+    "error_type": "ImportError",
+    "stage": "module_import"
+  }
+}

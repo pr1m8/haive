@@ -1,0 +1,10 @@
+{
+  "game": "single_player",
+  "timestamp": "20250630_095532",
+  "result": {
+    "success": false,
+    "error": "No config class found. Tried: ['SingleplayerConfig', 'SingleplayerAgentConfig', 'SinglePlayerConfig', 'SinglePlayerAgentConfig', 'Config', 'GameConfig', 'AgentConfig']",
+    "error_type": "ConfigClassNotFound",
+    "stage": "config_discovery"
+  }
+}

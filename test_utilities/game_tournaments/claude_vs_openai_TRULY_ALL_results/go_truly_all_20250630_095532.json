@@ -1,0 +1,10 @@
+{
+  "game": "go",
+  "timestamp": "20250630_095532",
+  "result": {
+    "success": false,
+    "error": "Module import failed: No module named 'sente'",
+    "error_type": "ModuleImportError",
+    "stage": "module_import"
+  }
+}

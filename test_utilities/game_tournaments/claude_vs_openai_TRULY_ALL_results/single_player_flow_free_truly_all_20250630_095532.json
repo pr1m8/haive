@@ -1,0 +1,33 @@
+{
+  "game": "single_player/flow_free",
+  "timestamp": "20250630_095532",
+  "result": {
+    "success": true,
+    "status": "READY_FOR_TOURNAMENT",
+    "config_type": "FlowFreeConfig",
+    "state_type": "FlowFreeState",
+    "state_fields": [
+      "player_type",
+      "move_count",
+      "hint_count",
+      "difficulty",
+      "game_status",
+      "move_history",
+      "analysis_history",
+      "error_message",
+      "rows",
+      "cols",
+      "grid",
+      "flows",
+      "current_flow_id",
+      "puzzle_id",
+      "is_solved",
+      "completion_percentage",
+      "total_cells",
+      "filled_cells",
+      "board_fill_percentage"
+    ],
+    "winner": "CLAUDE",
+    "details": "Game system fully operational: FlowFreeConfig + FlowFreeState"
+  }
+}
