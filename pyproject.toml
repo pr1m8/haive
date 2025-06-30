@@ -51,135 +51,43 @@ priority = "supplemental"
 
 [tool.poetry.dependencies]
 python = ">=3.12,<3.13"
-langchain-core = "^0.3.63"
-langchain = "^0.3.20"
-langchain-community = "^0.3.20"
-langchain-experimental = "^0.3.4"
-tavily-python = "^0.5.1"
-langgraph-checkpoint-postgres = "^2.0.15"
-matplotlib = "^3.10.0"
-ipython = "^8.32.0"
-langchain-openai = "<=0.3.6"
-wikipedia = "^1.4.0"
-arxiv = "^2.1.3"
-boto3 = "^1.36.22"
-telethon = "^1.38.1"
-neo4j = "^5.28.1"
-langchain-neo4j = "^0.3.0"
-nest-asyncio = "^1.6.0"
-chess = "^1.11.1"
-setuptools = "^75.8.0"
-numexpr = "^2.10.2"
-json-repair = "^0.39.0"
-lxml = "^5.3.1"
-playwright = "^1.50.0"
-networkx = "^3.4.2"
-dill = "0.3.8"
-langgraph = "^0.3.5"
-jsonpatch = "^1.33"
-pydantic = "^2.10.6"
-pytest = "^8.3.5"
-playwright-stealth = "^1.0.6"
-google-api-python-client = "^2.163.0"
-google-auth-httplib2 = "^0.2.0"
-google-auth-oauthlib = "^1.2.1"
-duckduckgo-search = "^7.5.2"
-html2text = "^2024.2.26"
-markdownify = "^1.1.0"
-pandas = "^2.2.3"
-rich = "^13.9.4"
-psycopg2 = "^2.9.10"
-langchain-anthropic = "^0.3.10"
-langchain-deepseek = "^0.1.2"
-langchain-google-genai = "^2.1.0"
-xmltodict = "^0.14.2"
-langchain-mistralai = "^0.2.8"
-langchain-nvidia-ai-endpoints = "^0.3.9"
-python-steam-api = "^2.1.1"
-python-decouple = "^3.8"
-twilio = "^9.5.1"
-langchain-discord-shikenso = "^1.1.1"
-langchain-discord = "^1.0.2"
-langchain-groq = "^0.3.1"
-langchain-together = "^0.3.0"
-langchain-fireworks = "^0.2.8"
-discord = "^2.3.2"
-langchain-mongodb = "^0.5.0"
-langchain-ollama = "^0.3.0"
-rank-bm25 = "^0.2.2"
-scikit-learn = "^1.6.1"
-zep-python = "^2.0.2"
-flashrank = "^0.2.10"
-qdrant-client = "^1.13.3"
-googletrans = "^4.0.2"
-deepl = "^1.21.1"
-ragatouille = "^0.0.9"
-youtube-search = "^2.1.2"
-ujson = "^5.10.0"
-stripe-agent-toolkit = "^0.6.1"
-google-search-results = "^2.4.2"
-serpapi = "^0.1.5"
-langchain-salesforce = "^0.1.2"
-mwparserfromhell = "^0.6.6"
-esprima = "^4.0.1"
-tree-sitter = "^0.24.0"
-tree-sitter-languages = "^1.10.2"
-youtube-transcript-api = "^1.0.3"
-pytube = "^15.0.0"
-openpyxl = "^3.1.5"
-gradio = "^5.23.1"
-langchain-docling = "^0.2.0"
-sqlparse = "^0.5.3"
-pdfplumber = "^0.11.6"
-pdfminer-six = "^20250327"
-ipykernel = "^6.29.5"
-pdfminer = "^20191125"
-langgraph-checkpoint-mongodb = "^0.1.3"
-pymupdf = "^1.25.5"
-psycopg = "^3.2.6"
-psycopg-pool = "^3.2.6"
-uvicorn = "^0.34.0"
-fastapi = "^0.115.12"
-supabase = "^2.15.0"
-simsimd = "^6.2.1"
-toml = "^0.10.2"
-astor = "^0.8.1"
-prometheus-client = "^0.21.1"
-haive-agents = { path = "packages/haive-agents", develop = true }
+
+# Core packages - minimal dependencies for basic functionality
 haive-core = { path = "packages/haive-core", develop = true }
-haive-dataflow = { path = "packages/haive-dataflow", develop = true }
-haive-games = { path = "packages/haive-games", develop = true }
-haive-prebuilt = { path = "packages/haive-prebuilt", develop = true }
-haive-tools = { path = "packages/haive-tools", develop = true }
-websocket = "^0.2.1"
-mcp = "^1.6.0"
-langchain-mcp-adapters = "^0.0.9"
-asyncpg = "^0.30.0"
+
+# Optional package dependencies
+haive-agents = { path = "packages/haive-agents", develop = true, optional = true }
+haive-tools = { path = "packages/haive-tools", develop = true, optional = true }
+haive-games = { path = "packages/haive-games", develop = true, optional = true }
+haive-dataflow = { path = "packages/haive-dataflow", develop = true, optional = true }
+haive-prebuilt = { path = "packages/haive-prebuilt", develop = true, optional = true }
+haive-mcp = { path = "packages/haive-mcp", develop = true, optional = true }
+
+# Core shared dependencies
+pydantic = "^2.10.6"
+langchain = "^0.3.20"
+langchain-core = "^0.3.63"
+langgraph = "^0.3.5"
 
 
-[tool.poetry.dependencies.graphviz]
-version = "^0.20.3"
-source = "pypi"
+# Granular installation options
+[tool.poetry.extras]
+# Package-specific extras
+agents = ["haive-agents"]
+tools = ["haive-tools"] 
+games = ["haive-games"]
+dataflow = ["haive-dataflow"]
+prebuilt = ["haive-prebuilt"]
+mcp = ["haive-mcp"]
 
-[tool.poetry.dependencies.faiss-gpu-cu12]
-version = "^1.10.0"
-extras = ["fix-cuda"]
+# Combination options
+basic = ["haive-agents", "haive-tools"]
+full = ["haive-agents", "haive-tools", "haive-games", "haive-dataflow", "haive-prebuilt", "haive-mcp"]
+dev = ["haive-agents", "haive-tools", "haive-games", "haive-dataflow"]
 
-[tool.poetry.dependencies.unstructured]
-extras = ["all"]
-version = "^0.17.2"
-
-[tool.poetry.dependencies.secure-smtplib]
-version = "^0.1.1"
-optional = true
-
-[tool.poetry.dependencies.yagmail]
-version = "^0.15.293"
-optional = true
-
-[tool.poetry.dependencies.websockets]
-version = "15.0.1"
-python = "<3.12"
+# Hardware options (from original config)
+cpu = ["torch", "torchvision", "torchaudio"]
+cuda = ["torch", "torchvision", "torchaudio"]
 
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.1.1"
@@ -221,6 +129,8 @@ watchdog = "^6.0.0"
 grandalf = "^0.8"
 prompt-toolkit = "^3.0.51"
 readchar = "^4.2.1"
+claude-code-sdk = "^0.0.13"
+dev-tools = "^0.0.3"
 
 
 [tool.poetry.group.docs.dependencies]
@@ -396,9 +306,6 @@ mistralai = "^1.8.0"
 deepseek = "^1.0.0"
 google-genai = "^1.16.1"
 
-[tool.poetry.extras]
-cpu = ["torch", "torchvision", "torchaudio"]
-cuda = ["torch", "torchvision", "torchaudio"]
 
 [tool.bandit]
 exclude_dirs = ["tests", "examples", "scripts"]
