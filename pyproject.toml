@@ -27,6 +27,7 @@ pythonpath = [
   "packages/haive-games/src",
   "packages/haive-dataflow/src",
   "packages/haive-prebuilt/src",
+  "packages/haive-mcp/src",
 ]
 
 
