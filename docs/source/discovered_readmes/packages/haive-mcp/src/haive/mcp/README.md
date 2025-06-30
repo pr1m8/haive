@@ -8,11 +8,12 @@ TODO: Add detailed overview of this module's functionality
 
 ## Key Components
 
-### Submodules
 
+### Submodules
 - **discovery**: TODO: Add description
 - **mixins**: TODO: Add description
 - **utils**: TODO: Add description
+
 
 ## Installation
 

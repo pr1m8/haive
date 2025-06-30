@@ -6,32 +6,31 @@
     },
     {
       "name": "haive-core",
-      "path": "packages/haive-core"
+      "path": "./packages/haive-core"
     },
     {
       "name": "haive-agents",
-      "path": "packages/haive-agents"
+      "path": "./packages/haive-agents"
     },
     {
       "name": "haive-games",
-      "path": "packages/haive-games"
+      "path": "./packages/haive-games"
     },
     {
       "name": "haive-prebuilt",
-      "path": "packages/haive-prebuilt"
+      "path": "./packages/haive-prebuilt"
     },
     {
       "name": "haive-tools",
-      "path": "packages/haive-tools"
+      "path": "./packages/haive-tools"
     },
     {
       "name": "haive-dataflow",
-      "path": "packages/haive-dataflow"
+      "path": "./packages/haive-dataflow"
     }
   ],
   "settings": {
     "python.defaultInterpreterPath": "${workspaceFolder:root}/.venv/bin/python",
-    "python.envFile": "${workspaceFolder:root}/.env",
     "python.analysis.extraPaths": [
       "${workspaceFolder:root}/src",
       "${workspaceFolder:root}/packages/haive-core/src",
@@ -41,28 +40,22 @@
       "${workspaceFolder:root}/packages/haive-tools/src",
       "${workspaceFolder:root}/packages/haive-dataflow/src"
     ],
-    "python.analysis.typeCheckingMode": "basic",
-    "python.linting.enabled": true,
-    "python.linting.pylintEnabled": true,
+    "python.envFile": "${workspaceFolder:root}/.env",
     "python.testing.pytestEnabled": true,
     "python.testing.pytestArgs": [
       "packages/"
     ],
     "editor.formatOnSave": true,
+    "python.analysis.typeCheckingMode": "basic",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
     "terminal.integrated.cwd": "${workspaceFolder:root}",
     "files.exclude": {
       "**/__pycache__": true,
       "**/*.pyc": true,
       "**/*.pyo": true,
       "**/.mypy_cache": true,
-      "**/.pytest_cache": true,
-      "**/.history": true
-    },
-    "search.exclude": {
-      "**/.history": true
-    },
-    "files.watcherExclude": {
-      "**/.history/**": true
+      "**/.pytest_cache": true
     }
   },
   "launch": {

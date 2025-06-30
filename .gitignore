@@ -2,6 +2,13 @@
 # 🧠 Haive AI – Master .gitignore
 # =============================================================================
 
+# === 💾 Large database dumps and exports (Docker build optimization) ===
+data_dump.sql
+local_postgres_export.json
+supabase_import_threads.sql
+*.dump
+*.backup
+
 # === 🧪 Auto-generated agent run folders ===
 simple_agent_*/
 memory_test_*/
