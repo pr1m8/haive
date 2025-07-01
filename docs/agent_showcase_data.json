@@ -1,17 +1,17 @@
 {
   "metadata": {
-    "total_agents": 363,
+    "total_agents": 373,
     "total_categories": 18,
     "packages": [
+      "haive-prebuilt",
       "haive-agents",
-      "haive-games",
-      "haive-prebuilt"
+      "haive-games"
     ],
-    "errors_count": 29
+    "errors_count": 23
   },
   "categories": {
     "Specialized Agents": {
-      "count": 30,
+      "count": 36,
       "agents": [
         "DocumentAgentConfig",
         "DocumentAgent",
@@ -29,15 +29,21 @@
         "GenericAgent",
         "TypedAgent",
         "AutoTypedAgent",
+        "Agent",
         "AgentDebugger",
+        "CompiledAgent",
         "Agent",
         "Agent",
         "AgentInput",
         "AgentOutput",
         "AgentState",
         "TaskAnalysisAgent",
+        "AgentRegistry",
+        "SupervisorAgent",
+        "SupervisorAgent",
         "SequentialAgentConfig",
         "SequentialAgent",
+        "LTMAgent",
         "WikiWriterAgentConfig",
         "WikiWriterAgent",
         "Agent",
@@ -50,7 +56,27 @@
       "complexity_breakdown": {
         "simple": 20,
         "medium": 3,
-        "complex": 7
+        "complex": 13
+      }
+    },
+    "Foundation Agents": {
+      "count": 7,
+      "agents": [
+        "Agent",
+        "ChainAgent",
+        "SimpleAgentState",
+        "SimpleAgentConfig",
+        "SimpleAgent",
+        "StructuredOutputAgentConfig",
+        "SimpleAgent"
+      ],
+      "packages": [
+        "haive-agents"
+      ],
+      "complexity_breakdown": {
+        "simple": 3,
+        "medium": 1,
+        "complex": 3
       }
     },
     "Document Processing": {
@@ -109,25 +135,6 @@
         "simple": 3,
         "medium": 0,
         "complex": 10
-      }
-    },
-    "Foundation Agents": {
-      "count": 6,
-      "agents": [
-        "ChainAgent",
-        "SimpleAgentState",
-        "SimpleAgentConfig",
-        "SimpleAgent",
-        "StructuredOutputAgentConfig",
-        "SimpleAgent"
-      ],
-      "packages": [
-        "haive-agents"
-      ],
-      "complexity_breakdown": {
-        "simple": 3,
-        "medium": 1,
-        "complex": 2
       }
     },
     "Memory & Persistence": {
@@ -486,7 +493,7 @@
       }
     },
     "Games": {
-      "count": 50,
+      "count": 54,
       "agents": [
         "ClueAgent",
         "MastermindAgent",
@@ -502,9 +509,13 @@
         "MonopolyPlayerAgentConfig",
         "MonopolyGameAgentConfig",
         "ConfigurableMonopolyConfig",
+        "MonopolyGameAgentConfig",
+        "MonopolyGameAgent",
         "HoldemPlayerAgentConfig",
         "HoldemPlayerAgent",
         "ConfigurableHoldemConfig",
+        "HoldemGameAgentConfig",
+        "HoldemGameAgent",
         "NimAgent",
         "MultiPlayerGameConfig",
         "MultiPlayerGameAgent",
@@ -543,13 +554,13 @@
         "haive-games"
       ],
       "complexity_breakdown": {
-        "simple": 27,
+        "simple": 29,
         "medium": 6,
-        "complex": 17
+        "complex": 19
       }
     },
     "Classic Games": {
-      "count": 11,
+      "count": 10,
       "agents": [
         "CheckersAgentConfig",
         "ConfigurableCheckersConfig",
@@ -559,7 +570,6 @@
         "AgentDecisionSchema",
         "ConfigurablePokerConfig",
         "PokerAgent",
-        "PokerAgentTester",
         "GoAgentConfig",
         "GoAgent"
       ],
@@ -569,7 +579,7 @@
       "complexity_breakdown": {
         "simple": 5,
         "medium": 0,
-        "complex": 6
+        "complex": 5
       }
     },
     "Strategy Games": {
@@ -869,6 +879,45 @@
       ]
     },
     {
+      "name": "Agent",
+      "module_path": "haive.agents.base.universal_agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Universal base class for all agent types in the Haive framework.",
+      "features": [
+        "reasoning",
+        "tools"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": true,
+      "base_classes": [
+        "BaseModel",
+        "ABC"
+      ]
+    },
+    {
+      "name": "Agent",
+      "module_path": "haive.agents.base.simple_agent_base",
+      "category": "Foundation Agents",
+      "package": "haive-agents",
+      "description": "Base class for LLM-based reasoning agents.",
+      "features": [
+        "reasoning",
+        "tools",
+        "memory",
+        "conversation"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": true,
+      "is_abstract": true,
+      "base_classes": [
+        "GraphNode"
+      ]
+    },
+    {
       "name": "AgentDebugger",
       "module_path": "haive.agents.base.debug_utils",
       "category": "Specialized Agents",
@@ -882,14 +931,38 @@
       "base_classes": []
     },
     {
+      "name": "CompiledAgent",
+      "module_path": "haive.agents.base.compiled_agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Agent class based on CompiledStateGraph architecture.",
+      "features": [
+        "reasoning",
+        "tools",
+        "memory",
+        "conversation"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": true,
+      "is_abstract": true,
+      "base_classes": [
+        "CompiledStateGraph",
+        "ExecutionMixin",
+        "StateMixin",
+        "PersistenceMixin",
+        "SerializationMixin"
+      ]
+    },
+    {
       "name": "Agent",
       "module_path": "haive.agents.base.agent",
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "Abstract base agent class that extends InvokableEngine with execution and state management.",
       "features": [
-        "structured_output",
-        "memory"
+        "memory",
+        "structured_output"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -981,10 +1054,10 @@
       "package": "haive-agents",
       "description": "Comprehensive Document Processing Agent.",
       "features": [
-        "conversation",
         "planning",
         "retrieval",
-        "memory"
+        "memory",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -1009,6 +1082,51 @@
       "is_abstract": false,
       "base_classes": [
         "Agent"
+      ]
+    },
+    {
+      "name": "AgentRegistry",
+      "module_path": "haive.agents.supervisor.registry",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Manages agent lifecycle and routing model synchronization.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": []
+    },
+    {
+      "name": "SupervisorAgent",
+      "module_path": "haive.agents.supervisor.agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Supervisor agent that manages multiple specialized agents.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "ReactAgent"
+      ]
+    },
+    {
+      "name": "SupervisorAgent",
+      "module_path": "haive.agents.supervisor.agent_v2",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "ReactAgent-based supervisor with dynamic routing and agent registry.",
+      "features": [
+        "tools"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "ReactAgent"
       ]
     },
     {
@@ -1099,8 +1217,8 @@
       "package": "haive-agents",
       "description": "Base state for simple agents.",
       "features": [
-        "conversation",
-        "memory"
+        "memory",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -1134,13 +1252,34 @@
       "package": "haive-agents",
       "description": "Simple agent that modifies its engine to include structured output schema.",
       "features": [
-        "conversation",
         "tools",
-        "structured_output"
+        "structured_output",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
+      "name": "LTMAgent",
+      "module_path": "haive.agents.ltm.agent",
+      "category": "Specialized Agents",
+      "package": "haive-agents",
+      "description": "Long-Term Memory Agent with LangMem integration.",
+      "features": [
+        "retrieval",
+        "tools",
+        "reasoning",
+        "memory",
+        "conversation"
+      ],
+      "complexity": "complex",
+      "has_tools": true,
+      "has_memory": true,
       "is_abstract": false,
       "base_classes": [
         "Agent"
@@ -1236,11 +1375,11 @@
       "package": "haive-agents",
       "description": "Abstract base class for sophisticated multi-agent systems.",
       "features": [
-        "structured_output",
-        "tools",
         "retrieval",
-        "conversation",
-        "planning"
+        "tools",
+        "structured_output",
+        "planning",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": true,
@@ -1257,8 +1396,8 @@
       "package": "haive-agents",
       "description": "Multi-agent system with sequential execution.",
       "features": [
-        "conversation",
-        "structured_output"
+        "structured_output",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -1326,8 +1465,8 @@
       "package": "haive-agents",
       "description": "Multi-agent system with built-in compatibility checking and automatic adaptation.",
       "features": [
-        "conversation",
-        "retrieval"
+        "retrieval",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -1389,9 +1528,9 @@
       "package": "haive-agents",
       "description": "Advanced multi-agent system with flexible coordination patterns.",
       "features": [
-        "conversation",
         "retrieval",
-        "structured_output"
+        "structured_output",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -1425,8 +1564,8 @@
       "package": "haive-agents",
       "description": "Memory Agent implementation that extends ReactAgent.",
       "features": [
-        "conversation",
-        "memory"
+        "memory",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -1543,8 +1682,8 @@
       "package": "haive-agents",
       "description": "Configuration for open_perplexity research agent.",
       "features": [
-        "tools",
         "retrieval",
+        "tools",
         "structured_output"
       ],
       "complexity": "simple",
@@ -1643,9 +1782,9 @@
       "package": "haive-agents",
       "description": "ReWOO (Reasoning Without Observation) Agent implementation.",
       "features": [
+        "reasoning",
         "planning",
         "tools",
-        "reasoning",
         "structured_output"
       ],
       "complexity": "complex",
@@ -1854,8 +1993,8 @@
       "package": "haive-agents",
       "description": "Simple base RAG agent with retrieve and generate functionality.",
       "features": [
-        "tools",
-        "retrieval"
+        "retrieval",
+        "tools"
       ],
       "complexity": "simple",
       "has_tools": true,
@@ -2335,8 +2474,8 @@
       "package": "haive-agents",
       "description": "Enhanced HyDE RAG Agent using the structured output enhancement pattern.",
       "features": [
-        "tools",
         "retrieval",
+        "tools",
         "structured_output"
       ],
       "complexity": "simple",
@@ -2422,9 +2561,9 @@
       "package": "haive-agents",
       "description": "Comprehensive state schema for multi-agent RAG systems.",
       "features": [
-        "conversation",
         "retrieval",
-        "structured_output"
+        "structured_output",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -2441,9 +2580,9 @@
       "package": "haive-agents",
       "description": "Simple RAG with Memory - incorporates conversation history and previous queries",
       "features": [
-        "conversation",
         "retrieval",
-        "memory"
+        "memory",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -2899,8 +3038,8 @@
       "package": "haive-agents",
       "description": "Agentic Graph RAG - combines graph reasoning with agentic routing",
       "features": [
-        "planning",
         "reasoning",
+        "planning",
         "retrieval"
       ],
       "complexity": "complex",
@@ -2935,8 +3074,8 @@
       "package": "haive-agents",
       "description": "Query Planning Agentic RAG - creates detailed execution plans",
       "features": [
-        "planning",
         "reasoning",
+        "planning",
         "retrieval"
       ],
       "complexity": "complex",
@@ -3063,8 +3202,8 @@
       "package": "haive-agents",
       "description": "Base multi-agent RAG system with retrieve -> grade -> generate workflow.",
       "features": [
-        "conversation",
-        "retrieval"
+        "retrieval",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -3081,8 +3220,8 @@
       "package": "haive-agents",
       "description": "Conditional multi-agent RAG system with smart routing based on document quality.",
       "features": [
-        "conversation",
-        "retrieval"
+        "retrieval",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -3099,8 +3238,8 @@
       "package": "haive-agents",
       "description": "Multi-agent RAG system with iterative document processing.",
       "features": [
-        "conversation",
-        "retrieval"
+        "retrieval",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -3117,8 +3256,8 @@
       "package": "haive-agents",
       "description": "Parallel multi-agent RAG system for consensus-based processing.",
       "features": [
-        "conversation",
-        "retrieval"
+        "retrieval",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -3320,8 +3459,8 @@
       "package": "haive-agents",
       "description": "Reflexive Graded RAG - uses grading feedback to improve its own performance",
       "features": [
-        "planning",
         "reasoning",
+        "planning",
         "retrieval"
       ],
       "complexity": "complex",
@@ -3339,9 +3478,9 @@
       "package": "haive-agents",
       "description": "Simple RAG agent that retrieves documents and provides basic answers.",
       "features": [
-        "conversation",
+        "retrieval",
         "tools",
-        "retrieval"
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": true,
@@ -3538,8 +3677,8 @@
       "package": "haive-agents",
       "description": "Agent that integrates external search tools.",
       "features": [
-        "tools",
-        "retrieval"
+        "retrieval",
+        "tools"
       ],
       "complexity": "simple",
       "has_tools": true,
@@ -3556,8 +3695,8 @@
       "package": "haive-agents",
       "description": "Complete Adaptive RAG agent with tools integration and ReAct patterns.",
       "features": [
-        "tools",
-        "retrieval"
+        "retrieval",
+        "tools"
       ],
       "complexity": "simple",
       "has_tools": true,
@@ -3784,9 +3923,9 @@
       "package": "haive-agents",
       "description": "Agentic RAG agent combining ReAct reasoning with intelligent retrieval.",
       "features": [
-        "tools",
-        "retrieval",
         "reasoning",
+        "retrieval",
+        "tools",
         "structured_output"
       ],
       "complexity": "complex",
@@ -3925,8 +4064,8 @@
       "package": "haive-agents",
       "description": "SQL RAG Agent for querying SQL databases with natural language.",
       "features": [
-        "tools",
         "retrieval",
+        "tools",
         "structured_output"
       ],
       "complexity": "complex",
@@ -3962,8 +4101,8 @@
       "package": "haive-agents",
       "description": "Graph Database RAG Agent for natural language querying of Neo4j databases.",
       "features": [
-        "tools",
         "retrieval",
+        "tools",
         "structured_output"
       ],
       "complexity": "complex",
@@ -4098,8 +4237,8 @@
       "package": "haive-agents",
       "description": "Configuration for Language Agent Tree Search (LATS) agent.",
       "features": [
-        "tools",
-        "retrieval"
+        "retrieval",
+        "tools"
       ],
       "complexity": "simple",
       "has_tools": true,
@@ -4116,9 +4255,9 @@
       "package": "haive-agents",
       "description": "Configuration for a Look-Ahead Tree Search (LATS) agent.",
       "features": [
-        "tools",
         "reasoning",
-        "retrieval"
+        "retrieval",
+        "tools"
       ],
       "complexity": "complex",
       "has_tools": true,
@@ -4248,8 +4387,8 @@
       "package": "haive-agents",
       "description": "An agent that implements the SelfDiscover methodology with structured output models.",
       "features": [
-        "planning",
         "reasoning",
+        "planning",
         "structured_output"
       ],
       "complexity": "complex",
@@ -4388,8 +4527,8 @@
       "package": "haive-agents",
       "description": "Configuration for a ReAct agent with tool integration.",
       "features": [
-        "tools",
-        "reasoning"
+        "reasoning",
+        "tools"
       ],
       "complexity": "complex",
       "has_tools": true,
@@ -4406,8 +4545,8 @@
       "package": "haive-agents",
       "description": "A tool-using agent implementing the ReAct pattern.",
       "features": [
-        "tools",
         "reasoning",
+        "tools",
         "structured_output"
       ],
       "complexity": "complex",
@@ -4494,8 +4633,8 @@
       "package": "haive-agents",
       "description": "Configuration for a React agent that can use tools.",
       "features": [
-        "tools",
         "reasoning",
+        "tools",
         "memory"
       ],
       "complexity": "complex",
@@ -4653,8 +4792,8 @@
       "package": "haive-agents",
       "description": "Configuration for a React agent, extending SimpleAgentConfig.",
       "features": [
-        "tools",
-        "reasoning"
+        "reasoning",
+        "tools"
       ],
       "complexity": "complex",
       "has_tools": true,
@@ -4671,8 +4810,8 @@
       "package": "haive-agents",
       "description": "A React agent implementing the Reasoning-Action-Observation pattern.",
       "features": [
-        "tools",
         "reasoning",
+        "tools",
         "structured_output"
       ],
       "complexity": "complex",
@@ -4690,8 +4829,8 @@
       "package": "haive-agents",
       "description": "A React agent implementation using LangGraph.",
       "features": [
-        "tools",
-        "reasoning"
+        "reasoning",
+        "tools"
       ],
       "complexity": "complex",
       "has_tools": true,
@@ -4708,8 +4847,8 @@
       "package": "haive-agents",
       "description": "State for React Agent, extending SimpleAgentState.",
       "features": [
-        "tools",
         "reasoning",
+        "tools",
         "structured_output"
       ],
       "complexity": "complex",
@@ -4727,8 +4866,8 @@
       "package": "haive-agents",
       "description": "Configuration for React Agent, extending SimpleAgentConfig.",
       "features": [
-        "tools",
-        "reasoning"
+        "reasoning",
+        "tools"
       ],
       "complexity": "complex",
       "has_tools": true,
@@ -4745,8 +4884,8 @@
       "package": "haive-agents",
       "description": "React Agent implementation that extends SimpleAgent.",
       "features": [
-        "tools",
-        "reasoning"
+        "reasoning",
+        "tools"
       ],
       "complexity": "complex",
       "has_tools": true,
@@ -4763,8 +4902,8 @@
       "package": "haive-agents",
       "description": "State for React Agent with many tools.",
       "features": [
-        "tools",
-        "retrieval"
+        "retrieval",
+        "tools"
       ],
       "complexity": "simple",
       "has_tools": true,
@@ -4781,8 +4920,8 @@
       "package": "haive-agents",
       "description": "Configuration for React Agent with many tools.",
       "features": [
-        "tools",
-        "retrieval"
+        "retrieval",
+        "tools"
       ],
       "complexity": "simple",
       "has_tools": true,
@@ -4799,8 +4938,8 @@
       "package": "haive-agents",
       "description": "React Agent implementation that can handle many tools efficiently.",
       "features": [
-        "tools",
-        "retrieval"
+        "retrieval",
+        "tools"
       ],
       "complexity": "complex",
       "has_tools": true,
@@ -4882,8 +5021,8 @@
       "package": "haive-agents",
       "description": "Configuration for a React agent that can use tools and follow ReAct reasoning pattern.",
       "features": [
-        "tools",
-        "reasoning"
+        "reasoning",
+        "tools"
       ],
       "complexity": "complex",
       "has_tools": true,
@@ -4900,8 +5039,8 @@
       "package": "haive-agents",
       "description": "A React agent that enhances SimpleAgent with tool-using capabilities.",
       "features": [
-        "tools",
-        "reasoning"
+        "reasoning",
+        "tools"
       ],
       "complexity": "complex",
       "has_tools": true,
@@ -4918,8 +5057,8 @@
       "package": "haive-agents",
       "description": "Agent configuration for generating a taxonomy from conversation history.",
       "features": [
-        "conversation",
-        "memory"
+        "memory",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -4936,8 +5075,8 @@
       "package": "haive-agents",
       "description": "Agent that generates a taxonomy from a conversation history.",
       "features": [
-        "conversation",
-        "memory"
+        "memory",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -5150,8 +5289,8 @@
       "package": "haive-agents",
       "description": "Multi-agent system that executes agents sequentially.",
       "features": [
-        "conversation",
-        "structured_output"
+        "structured_output",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -5168,8 +5307,8 @@
       "package": "haive-agents",
       "description": "Collaborative conversation for building shared content.",
       "features": [
-        "conversation",
-        "structured_output"
+        "structured_output",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -5186,8 +5325,8 @@
       "package": "haive-agents",
       "description": "Base conversation agent that orchestrates multi-agent conversations.",
       "features": [
-        "conversation",
-        "tools"
+        "tools",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": true,
@@ -5221,8 +5360,8 @@
       "package": "haive-agents",
       "description": "Structured debate conversation with positions and formal argumentation.",
       "features": [
-        "conversation",
-        "structured_output"
+        "structured_output",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -5239,8 +5378,8 @@
       "package": "haive-agents",
       "description": "Directed conversation where agents respond to mentions and questions.",
       "features": [
-        "conversation",
-        "structured_output"
+        "structured_output",
+        "conversation"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -5454,9 +5593,9 @@
       "package": "haive-prebuilt",
       "description": "Model representing an agent's action decision.",
       "features": [
-        "tools",
+        "reasoning",
         "retrieval",
-        "reasoning"
+        "tools"
       ],
       "complexity": "complex",
       "has_tools": true,
@@ -5878,6 +6017,36 @@
       ]
     },
     {
+      "name": "MonopolyGameAgentConfig",
+      "module_path": "haive.games.monopoly.game_agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Configuration for monopoly game agent.",
+      "features": [],
+      "complexity": "simple",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "MonopolyGameAgent",
+      "module_path": "haive.games.monopoly.game_agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Main game agent for orchestrating Monopoly.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
+      ]
+    },
+    {
       "name": "HoldemPlayerAgentConfig",
       "module_path": "haive.games.hold_em.player_agent",
       "category": "Games",
@@ -5922,6 +6091,38 @@
       "is_abstract": false,
       "base_classes": [
         "HoldemGameAgentConfig"
+      ]
+    },
+    {
+      "name": "HoldemGameAgentConfig",
+      "module_path": "haive.games.hold_em.game_agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Configuration for the main Hold'em game agent.",
+      "features": [
+        "tools"
+      ],
+      "complexity": "simple",
+      "has_tools": true,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "AgentConfig"
+      ]
+    },
+    {
+      "name": "HoldemGameAgent",
+      "module_path": "haive.games.hold_em.game_agent",
+      "category": "Games",
+      "package": "haive-games",
+      "description": "Main Texas Hold'em game agent that coordinates the complete poker game.",
+      "features": [],
+      "complexity": "complex",
+      "has_tools": false,
+      "has_memory": false,
+      "is_abstract": false,
+      "base_classes": [
+        "Agent"
       ]
     },
     {
@@ -6092,9 +6293,9 @@
       "package": "haive-games",
       "description": "Configuration class for the poker agent.",
       "features": [
-        "structured_output",
         "retrieval",
-        "memory"
+        "memory",
+        "structured_output"
       ],
       "complexity": "simple",
       "has_tools": false,
@@ -6111,8 +6312,8 @@
       "package": "haive-games",
       "description": "Agent's decision in the game.",
       "features": [
-        "planning",
-        "reasoning"
+        "reasoning",
+        "planning"
       ],
       "complexity": "complex",
       "has_tools": false,
@@ -6129,8 +6330,8 @@
       "package": "haive-games",
       "description": "Schema for LLM decision output.",
       "features": [
-        "planning",
         "reasoning",
+        "planning",
         "structured_output"
       ],
       "complexity": "complex",
@@ -6172,19 +6373,6 @@
       "base_classes": [
         "Agent"
       ]
-    },
-    {
-      "name": "PokerAgentTester",
-      "module_path": "haive.games.poker.test",
-      "category": "Classic Games",
-      "package": "haive-games",
-      "description": "Test suite for the Poker agent.",
-      "features": [],
-      "complexity": "complex",
-      "has_tools": false,
-      "has_memory": false,
-      "is_abstract": false,
-      "base_classes": []
     },
     {
       "name": "DebateAgentConfig",
@@ -6319,8 +6507,8 @@
       "package": "haive-games",
       "description": "Agent for playing the Risk game.",
       "features": [
-        "planning",
         "reasoning",
+        "planning",
         "memory"
       ],
       "complexity": "complex",
@@ -6702,15 +6890,15 @@
   ],
   "stats": {
     "by_package": {
-      "haive-agents": 274,
+      "haive-agents": 281,
       "haive-prebuilt": 19,
-      "haive-games": 70
+      "haive-games": 73
     },
     "by_category": {
-      "Specialized Agents": 30,
+      "Specialized Agents": 36,
+      "Foundation Agents": 7,
       "Document Processing": 19,
       "Multi-Agent Systems": 13,
-      "Foundation Agents": 6,
       "Memory & Persistence": 5,
       "ReAct & Tool Use": 32,
       "Research & Information": 6,
@@ -6721,24 +6909,24 @@
       "Prebuilt Solutions": 11,
       "Legal & Business": 2,
       "Academic & Research": 6,
-      "Games": 50,
-      "Classic Games": 11,
+      "Games": 54,
+      "Classic Games": 10,
       "Strategy Games": 5,
       "Card Games": 4
     },
     "by_complexity": {
-      "simple": 186,
+      "simple": 188,
       "medium": 21,
-      "complex": 156
+      "complex": 164
     },
     "features": {
-      "tools": 62,
+      "tools": 68,
       "structured_output": 86,
-      "memory": 17,
-      "conversation": 28,
+      "reasoning": 47,
+      "memory": 20,
+      "conversation": 31,
       "planning": 26,
-      "retrieval": 124,
-      "reasoning": 43
+      "retrieval": 125
     }
   }
 }

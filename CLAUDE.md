@@ -20,6 +20,7 @@ poetry run pytest packages/your_package/tests/
 
 ## 🔗 Quick Links to Key Resources
 - **Quick Reference**: [CLAUDE_QUICKREF.md](./project_docs/claude_documentation/CLAUDE_QUICKREF.md) ⭐ Start here!
+- **Supabase Integration**: [SUPABASE_INTEGRATION.md](./project_docs/SUPABASE_INTEGRATION.md) ⚡ New! Auto-persistence
 - **Project Notes**: `/project_docs/` - Development notes and analysis
 - **Documentation Standards**: [DOCUMENTATION_STANDARDS.md](./project_docs/claude_documentation/DOCUMENTATION_STANDARDS.md)
 - **Agent Hub**: [CLAUDE_AGENTS.md](./project_docs/claude_documentation/CLAUDE_AGENTS.md)
