@@ -1,6 +1,6 @@
 # 🤖 Haive Agent Showcase
 
-Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! This showcase presents **363 agents** across **18 categories**, demonstrating the full breadth and power of the Haive framework.
+Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! This showcase presents **373 agents** across **18 categories**, demonstrating the full breadth and power of the Haive framework.
 
 ## 📊 Agent Ecosystem Overview
 
@@ -8,25 +8,25 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 
 | Metric | Value |
 |--------|-------|
-| **Total Agents** | 363 |
+| **Total Agents** | 373 |
 | **Categories** | 18 |
 | **Packages** | 3 |
-| **Complex Agents** | 156 |
+| **Complex Agents** | 164 |
 
 ### 🏷️ Top Agent Categories
 
 | Category | Agents | Primary Package |
 |----------|--------|----------------|
 | **RAG & Retrieval** | 132 | `haive-agents` |
-| **Games** | 50 | `haive-games` |
+| **Games** | 54 | `haive-games` |
+| **Specialized Agents** | 36 | `haive-agents` |
 | **ReAct & Tool Use** | 32 | `haive-agents` |
-| **Specialized Agents** | 30 | `haive-agents` |
 | **Reasoning & Critique** | 20 | `haive-agents` |
 | **Document Processing** | 19 | `haive-agents` |
 | **Multi-Agent Systems** | 13 | `haive-agents` |
 | **Prebuilt Solutions** | 11 | `haive-prebuilt` |
-| **Classic Games** | 11 | `haive-games` |
-| **Foundation Agents** | 6 | `haive-agents` |
+| **Classic Games** | 10 | `haive-games` |
+| **Foundation Agents** | 7 | `haive-agents` |
 | *...and 8 more categories* | | |
 
 
@@ -76,14 +76,14 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 | **AdaptiveRAGAgent** | 🔴 Complex | retrieval | Adaptive RAG with complexity-based routing. |
 | **AdaptiveRAGMultiAgent** | 🔴 Complex | planning, retrieval | Advanced RAG system that adapts its strategy based on query complexity and resul... |
 | **AdvancedHallucinationGraderAgent** | 🔴 Complex | Basic | Advanced hallucination grading with detailed analysis. |
-| **AgenticGraphRAGAgent** | 🔴 Complex | planning, reasoning +1 | Agentic Graph RAG - combines graph reasoning with agentic routing |
-| **AgenticRAGAgent** | 🔴 Complex | tools, retrieval +2 | Agentic RAG agent combining ReAct reasoning with intelligent retrieval. |
+| **AgenticGraphRAGAgent** | 🔴 Complex | reasoning, planning +1 | Agentic Graph RAG - combines graph reasoning with agentic routing |
+| **AgenticRAGAgent** | 🔴 Complex | reasoning, retrieval +2 | Agentic RAG agent combining ReAct reasoning with intelligent retrieval. |
 | **AgenticRAGRouterAgent** | 🔴 Complex | planning, retrieval | Complete Agentic RAG Router with ReAct patterns and autonomous decision-making. |
 | **AgenticRAGRouterAgent** | 🔴 Complex | retrieval | Agentic RAG Router - intelligently routes queries to different RAG strategies |
 | **AgenticRAGState** | 🔴 Complex | planning, retrieval | RAG state for agentic routing and planning |
-| **BaseRAGMultiAgent** | 🔴 Complex | conversation, retrieval | Base multi-agent RAG system with retrieve -> grade -> generate workflow. |
+| **BaseRAGMultiAgent** | 🔴 Complex | retrieval, conversation | Base multi-agent RAG system with retrieve -> grade -> generate workflow. |
 | **CompositeGradingAgent** | 🔴 Complex | Basic | Combines multiple grading components for comprehensive evaluation |
-| **ConditionalRAGMultiAgent** | 🔴 Complex | conversation, retrieval | Conditional multi-agent RAG system with smart routing based on document quality. |
+| **ConditionalRAGMultiAgent** | 🔴 Complex | retrieval, conversation | Conditional multi-agent RAG system with smart routing based on document quality. |
 | **DebateRAGAgent** | 🔴 Complex | reasoning, retrieval | Debate RAG - multiple agents with different perspectives debate |
 | **DomainAnalysisAgent** | 🔴 Complex | Basic | Analyzes queries to determine relevant domains for multi-domain generation. |
 | **DynamicRAGAgent** | 🔴 Complex | planning, retrieval | Dynamic RAG with add/remove retrievers - adapts retrieval strategy |
@@ -91,13 +91,13 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 | **EnhancedRAGParallelAgent** | 🔴 Complex | retrieval, structured_output | RAG parallel agent with built-in compatibility checking for consensus building. |
 | **EnsembleHyDERetriever** | 🔴 Complex | retrieval | Retriever that handles multiple documents for ensemble retrieval. |
 | **FLAREPlannerAgent** | 🔴 Complex | planning, retrieval | Agent that creates FLARE plans for iterative generation and active retrieval. |
-| **GraphDBRAGAgent** | 🔴 Complex | tools, retrieval +1 | Graph Database RAG Agent for natural language querying of Neo4j databases. |
+| **GraphDBRAGAgent** | 🔴 Complex | retrieval, tools +1 | Graph Database RAG Agent for natural language querying of Neo4j databases. |
 | **GraphRAGAgent** | 🔴 Complex | reasoning, retrieval | Graph RAG - uses knowledge graph construction and traversal |
 | **HypothesisGeneratorAgent** | 🔴 Complex | reasoning | Agent that generates multiple hypotheses for speculative reasoning. |
 | **IterativePlannerAgent** | 🔴 Complex | planning | Agent that creates iterative processing plans. |
-| **IterativeRAGMultiAgent** | 🔴 Complex | conversation, retrieval | Multi-agent RAG system with iterative document processing. |
+| **IterativeRAGMultiAgent** | 🔴 Complex | retrieval, conversation | Multi-agent RAG system with iterative document processing. |
 | **MultiAgentCompatibilityReport** | 🔴 Complex | Basic | Compatibility report for multiple agents in a workflow. |
-| **MultiAgentRAGState** | 🔴 Complex | conversation, retrieval +1 | Comprehensive state schema for multi-agent RAG systems. |
+| **MultiAgentRAGState** | 🔴 Complex | retrieval, structured_output +1 | Comprehensive state schema for multi-agent RAG systems. |
 | **MultiCriteriaGradedRAGAgent** | 🔴 Complex | retrieval | Multi-Criteria Graded RAG - uses multiple grading criteria and perspectives |
 | **MultiCriteriaGradedRAGAgentV2** | 🔴 Complex | retrieval, structured_output | Multi-Criteria Graded RAG V2 - Configuration stored in state schema. |
 | **MultiDomainHyDERetriever** | 🔴 Complex | Basic | Retriever that handles documents from multiple domains. |
@@ -106,14 +106,14 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 | **MultiQueryRetrievalAgent** | 🔴 Complex | retrieval, structured_output | Agent that uses a callable node for multi-query retrieval - proper Pydantic appr... |
 | **MultiRetrievalAgent** | 🔴 Complex | retrieval | Agent that performs parallel retrieval with multiple queries. |
 | **MultiStrategyRAGAgent** | 🔴 Complex | retrieval | RAG agent with multiple retrieval strategies. |
-| **ParallelRAGMultiAgent** | 🔴 Complex | conversation, retrieval | Parallel multi-agent RAG system for consensus-based processing. |
+| **ParallelRAGMultiAgent** | 🔴 Complex | retrieval, conversation | Parallel multi-agent RAG system for consensus-based processing. |
 | **QueryDecompositionRAGAgent** | 🔴 Complex | retrieval | Query Decomposition RAG - breaks complex queries into simpler sub-questions, |
-| **QueryPlanningAgenticRAGAgent** | 🔴 Complex | planning, reasoning +1 | Query Planning Agentic RAG - creates detailed execution plans |
+| **QueryPlanningAgenticRAGAgent** | 🔴 Complex | reasoning, planning +1 | Query Planning Agentic RAG - creates detailed execution plans |
 | **QueryPlanningRAGAgent** | 🔴 Complex | planning, retrieval +1 | Query Planning RAG agent with structured decomposition and execution. |
 | **RAGFusionAgent** | 🔴 Complex | retrieval | RAG Fusion - combines multiple retrieval strategies and fuses results |
 | **ReciprocalRankFusionAgent** | 🔴 Complex | retrieval | Agent that performs reciprocal rank fusion on multiple retrieval results. |
-| **ReflexiveGradedRAGAgent** | 🔴 Complex | planning, reasoning +1 | Reflexive Graded RAG - uses grading feedback to improve its own performance |
-| **SQLRAGAgent** | 🔴 Complex | tools, retrieval +1 | SQL RAG Agent for querying SQL databases with natural language. |
+| **ReflexiveGradedRAGAgent** | 🔴 Complex | reasoning, planning +1 | Reflexive Graded RAG - uses grading feedback to improve its own performance |
+| **SQLRAGAgent** | 🔴 Complex | retrieval, tools +1 | SQL RAG Agent for querying SQL databases with natural language. |
 | **SelfCorrectiveRAGAgent** | 🔴 Complex | retrieval | RAG agent with self-correction capabilities. |
 | **SelfRAGAgent** | 🔴 Complex | reasoning, retrieval | Self-RAG with reflection tokens - determines whether retrieval is needed |
 | **SelfRAGAgent** | 🔴 Complex | reasoning, retrieval | Self-RAG with reflection tokens and adaptive retrieval. |
@@ -122,8 +122,8 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 | **SelfReflectiveRAGAgent** | 🔴 Complex | reasoning, retrieval | Self-Reflective RAG agent with iterative improvement capabilities. |
 | **SelfRouteRAGAgent** | 🔴 Complex | reasoning, retrieval | Self-Route RAG - dynamically routes itself to different reasoning |
 | **SelfRouteRAGAgent** | 🔴 Complex | planning, retrieval +1 | Complete Self-Route RAG agent with structured analysis and iterative planning. |
-| **SimpleRAGAgent** | 🔴 Complex | conversation, tools +1 | Simple RAG agent that retrieves documents and provides basic answers. |
-| **SimpleRAGWithMemoryAgent** | 🔴 Complex | conversation, retrieval +1 | Simple RAG with Memory - incorporates conversation history and previous queries |
+| **SimpleRAGAgent** | 🔴 Complex | retrieval, tools +1 | Simple RAG agent that retrieves documents and provides basic answers. |
+| **SimpleRAGWithMemoryAgent** | 🔴 Complex | retrieval, memory +1 | Simple RAG with Memory - incorporates conversation history and previous queries |
 | **SpeculativeRAGAgent** | 🔴 Complex | retrieval | Speculative RAG - generates multiple possible answer hypotheses |
 | **StepBackQueryGeneratorAgent** | 🔴 Complex | reasoning | Agent that generates step-back queries for abstract reasoning. |
 | **StepBackRAGAgent** | 🔴 Complex | reasoning, retrieval | Complete Step-Back RAG agent with abstract reasoning. |
@@ -135,12 +135,12 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 | **AdaptiveRAGAgent** | 🟢 Simple | Basic | RAG Workflow Factory |
 | **AdaptiveThresholdRAGAgent** | 🟢 Simple | retrieval | Adaptive Threshold RAG - dynamically adjusts retrieval thresholds |
 | **AdaptiveThresholdRAGAgentV2** | 🟢 Simple | retrieval | Adaptive Threshold RAG V2 - Configuration in AdaptiveThresholdRAGState |
-| **AdaptiveToolsRAGAgent** | 🟢 Simple | tools, retrieval | Complete Adaptive RAG agent with tools integration and ReAct patterns. |
+| **AdaptiveToolsRAGAgent** | 🟢 Simple | retrieval, tools | Complete Adaptive RAG agent with tools integration and ReAct patterns. |
 | **AgentCompatibilityReport** | 🟢 Simple | Basic | Comprehensive compatibility report for agent pairs. |
 | **AgenticRAGRouterV2** | 🟢 Simple | retrieval | Agentic RAG Router using proper conditional routing. |
 | **AgenticRAGState** | 🟢 Simple | retrieval, structured_output | State schema for agentic RAG with retrieval metadata. |
 | **AgenticRouterResult** | 🟢 Simple | retrieval | Complete result from agentic RAG routing. |
-| **BaseRAGAgent** | 🟢 Simple | tools, retrieval | Simple base RAG agent with retrieve and generate functionality. |
+| **BaseRAGAgent** | 🟢 Simple | retrieval, tools | Simple base RAG agent with retrieve and generate functionality. |
 | **BaseRAGAgent** | 🟢 Simple | retrieval | Base RAG agent that performs retrieval. |
 | **BaseRAGConfig** | 🟢 Simple | retrieval | Configuration for a basic RAG agent. |
 | **CompatibleAdaptiveRAG** | 🟢 Simple | Basic | Compatible RAG Workflow Factory |
@@ -157,7 +157,7 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 | **DocumentGradingRAGAgent** | 🟢 Simple | retrieval | RAG with document grading and filtering. |
 | **DualRetrievalAgent** | 🟢 Simple | retrieval | Agent that performs both original and step-back retrieval. |
 | **DynamicRAGAgentV2** | 🟢 Simple | retrieval | Dynamic RAG V2 - Configuration in DynamicRAGState |
-| **EnhancedHyDERAGAgent** | 🟢 Simple | tools, retrieval +1 | Enhanced HyDE RAG Agent using the structured output enhancement pattern. |
+| **EnhancedHyDERAGAgent** | 🟢 Simple | retrieval, tools +1 | Enhanced HyDE RAG Agent using the structured output enhancement pattern. |
 | **EnhancedHyDERetriever** | 🟢 Simple | structured_output | Enhanced retriever that handles both enhancement pattern and traditional outputs... |
 | **EnhancedHyDERetrieverV2** | 🟢 Simple | Basic | Enhanced retriever with better state handling and fallback mechanisms. |
 | **EnhancedRAGConditionalAgent** | 🟢 Simple | retrieval | RAG conditional agent with built-in compatibility checking and smart routing. |
@@ -193,7 +193,7 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 | **RequeryDecisionAgent** | 🟢 Simple | Basic | Agent that decides if requerying is needed based on document grades. |
 | **RoutingDecisionAgent** | 🟢 Simple | Basic | Agent that makes final routing decisions. |
 | **SQLRAGConfig** | 🟢 Simple | retrieval, structured_output | Configuration for the SQL RAG Agent. |
-| **SearchIntegrationAgent** | 🟢 Simple | tools, retrieval | Agent that integrates external search tools. |
+| **SearchIntegrationAgent** | 🟢 Simple | retrieval, tools | Agent that integrates external search tools. |
 | **SimpleCorrectiveRAGAgent** | 🟢 Simple | retrieval | Simple Corrective RAG implementation using sequential processing. |
 | **SimpleHYDERAGAgent** | 🟢 Simple | retrieval | Simple HYDE RAG agent that generates hypothetical documents before retrieval. |
 | **SimpleRAGAgent** | 🟢 Simple | retrieval | Simple RAG workflow: Retrieval → Answer Generation |
@@ -204,7 +204,7 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 
 ### Games
 
-**50 agents** | **Packages:** haive-games
+**54 agents** | **Packages:** haive-games
 
 | Agent | Complexity | Features | Description |
 |-------|------------|----------|-------------|
@@ -215,9 +215,11 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 | **FoxAndGeeseAgent** | 🔴 Complex | Basic | Agent for playing Fox and Geese. |
 | **GameAgent** | 🔴 Complex | tools | Base game agent that implements common workflow patterns. |
 | **GameAgent** | 🔴 Complex | tools | Base game agent that implements common workflow patterns. |
+| **HoldemGameAgent** | 🔴 Complex | Basic | Main Texas Hold'em game agent that coordinates the complete poker game. |
 | **HoldemPlayerAgent** | 🔴 Complex | planning | Player agent for Texas Hold'em poker games. |
 | **MancalaAgent** | 🔴 Complex | Basic | Agent for playing Mancala. |
 | **MastermindAgent** | 🔴 Complex | Basic | Agent for playing Mastermind. |
+| **MonopolyGameAgent** | 🔴 Complex | Basic | Main game agent for orchestrating Monopoly. |
 | **MultiPlayerGameAgent** | 🔴 Complex | tools, structured_output | Base game agent for multi-player games. |
 | **MultiPlayerGameAgent** | 🔴 Complex | tools, structured_output | Base game agent for multi-player games. |
 | **MultiPlayerGameConfig** | 🔴 Complex | structured_output | Configuration for multi-player game agents. |
@@ -250,66 +252,35 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 | **GameAgentFactory** | 🟢 Simple | structured_output | Factory for creating game agents using a flexible, composable pattern. |
 | **GameConfig** | 🟢 Simple | structured_output | Base configuration for game agents. |
 | **GameConfig** | 🟢 Simple | structured_output | Base configuration for game agents. |
+| **HoldemGameAgentConfig** | 🟢 Simple | tools | Configuration for the main Hold'em game agent. |
 | **HoldemPlayerAgentConfig** | 🟢 Simple | Basic | Configuration for Hold'em player agent. |
 | **MonopolyGameAgentConfig** | 🟢 Simple | structured_output | Configuration class for monopoly game agents. |
 | **MonopolyGameAgentConfig** | 🟢 Simple | structured_output | Configuration class for monopoly game agents. |
+| **MonopolyGameAgentConfig** | 🟢 Simple | Basic | Configuration for monopoly game agent. |
 | **MonopolyPlayerAgentConfig** | 🟢 Simple | Basic | Configuration for monopoly player decision agent. |
 | **MonopolyPlayerAgentConfig** | 🟢 Simple | Basic | Configuration for monopoly player decision agent. |
 | **PlayerAgentConfig** | 🟢 Simple | Basic | Configuration for a player agent. |
 | **PlayerAgentFactory** | 🟢 Simple | Basic | Factory for creating configurable player agents. |
 | **WordConnectionsAgentConfig** | 🟢 Simple | Basic | Configuration for Word Connections agent. |
 
-### ReAct & Tool Use
-
-**32 agents** | **Packages:** haive-agents
-
-| Agent | Complexity | Features | Description |
-|-------|------------|----------|-------------|
-| **AdvancedReactAgent** | 🔴 Complex | tools | Advanced React agent with specialized tool routing. |
-| **AdvancedReactAgentConfig** | 🔴 Complex | tools | Extended configuration for the Advanced React Agent. |
-| **ReactAgent** | 🔴 Complex | tools, reasoning +1 | A tool-using agent implementing the ReAct pattern. |
-| **ReactAgent** | 🔴 Complex | tools, reasoning +1 | A React agent implementing the Reasoning-Action-Observation pattern. |
-| **ReactAgent** | 🔴 Complex | tools, reasoning | A React agent implementation using LangGraph. |
-| **ReactAgent** | 🔴 Complex | tools, reasoning | React Agent implementation that extends SimpleAgent. |
-| **ReactAgent** | 🔴 Complex | tools, reasoning | A React agent that enhances SimpleAgent with tool-using capabilities. |
-| **ReactAgentConfig** | 🔴 Complex | tools, reasoning | Configuration for a ReAct agent with tool integration. |
-| **ReactAgentConfig** | 🔴 Complex | tools, reasoning +1 | Configuration for a React agent that can use tools. |
-| **ReactAgentConfig** | 🔴 Complex | tools, reasoning | Configuration for a React agent, extending SimpleAgentConfig. |
-| **ReactAgentConfig** | 🔴 Complex | tools, reasoning | Configuration for React Agent, extending SimpleAgentConfig. |
-| **ReactAgentConfig** | 🔴 Complex | tools, reasoning | Configuration for a React agent that can use tools and follow ReAct reasoning pa... |
-| **ReactAgentState** | 🔴 Complex | tools, reasoning +1 | State for React Agent, extending SimpleAgentState. |
-| **ReactManyToolsAgent** | 🔴 Complex | tools, retrieval | React Agent implementation that can handle many tools efficiently. |
-| **DynamicReactAgent** | 🟡 Medium | tools | A React agent with dynamic tool selection. |
-| **ReactAgent** | 🟡 Medium | Basic | No description available |
-| **ReactAgentState** | 🟡 Medium | memory, tools +1 | State for React agents with tool usage. |
-| **DynamicReactAgentConfig** | 🟢 Simple | tools | Configuration for a React agent with dynamic tool selection. |
-| **DynamicReactAgentState** | 🟢 Simple | tools, structured_output | Extended schema for dynamic tool selection. |
-| **ReactAgent** | 🟢 Simple | Basic | ReAct agent with looping behavior. |
-| **ReactAgent** | 🟢 Simple | tools | ReAct agent implementation with tool usage and routing capabilities. |
-| **ReactAgentConfig** | 🟢 Simple | tools | Configuration for the React Agent. |
-| **ReactAgentConfig** | 🟢 Simple | tools | Configuration for the ReAct agent. |
-| **ReactAgentConfig** | 🟢 Simple | tools | Configuration for a React agent that follows the ReAct pattern: |
-| **ReactAgentConfig** | 🟢 Simple | tools | No description available |
-| **ReactAgentSchema** | 🟢 Simple | tools, structured_output | Schema for React Agent State, extending SimpleAgentSchema. |
-| **ReactAgentSchemaWithStructuredResponse** | 🟢 Simple | structured_output | Schema for React Agent with structured response. |
-| **ReactAgentState** | 🟢 Simple | tools, structured_output | State schema for ReAct agent. |
-| **ReactAgentState** | 🟢 Simple | Basic | The state of the agent. |
-| **ReactAgentState** | 🟢 Simple | tools, structured_output | State schema for React agent. |
-| **ReactManyToolsConfig** | 🟢 Simple | tools, retrieval | Configuration for React Agent with many tools. |
-| **ReactManyToolsState** | 🟢 Simple | tools, retrieval | State for React Agent with many tools. |
-
 ### Specialized Agents
 
-**30 agents** | **Packages:** haive-agents
+**36 agents** | **Packages:** haive-agents
 
 | Agent | Complexity | Features | Description |
 |-------|------------|----------|-------------|
-| **Agent** | 🔴 Complex | structured_output, memory | Abstract base agent class that extends InvokableEngine with execution and state ... |
+| **Agent** | 🔴 Complex | reasoning, tools | Universal base class for all agent types in the Haive framework. |
+| **Agent** | 🔴 Complex | memory, structured_output | Abstract base agent class that extends InvokableEngine with execution and state ... |
 | **Agent** | 🔴 Complex | Basic | Abstract base agent class with automatic graph building and proper inheritance. |
+| **AgentRegistry** | 🔴 Complex | Basic | Manages agent lifecycle and routing model synchronization. |
 | **ChainAgent** | 🔴 Complex | tools, structured_output | An agent that chains multiple engines together, passing output from one to the n... |
 | **ChainAgentConfig** | 🔴 Complex | Basic | Configuration for a chain agent that processes input through multiple engines in... |
+| **CompiledAgent** | 🔴 Complex | reasoning, tools +2 | Agent class based on CompiledStateGraph architecture. |
 | **GenericAgent** | 🔴 Complex | structured_output | Generic agent base class with enhanced typing and auto-configuration. |
+| **LTMAgent** | 🔴 Complex | retrieval, tools +3 | Long-Term Memory Agent with LangMem integration. |
 | **SequentialAgent** | 🔴 Complex | Basic | Sequential agent that executes multiple agents in sequence. |
+| **SupervisorAgent** | 🔴 Complex | Basic | Supervisor agent that manages multiple specialized agents. |
+| **SupervisorAgent** | 🔴 Complex | tools | ReactAgent-based supervisor with dynamic routing and agent registry. |
 | **TaskAnalysisAgent** | 🔴 Complex | planning | Comprehensive task analysis agent that orchestrates multiple analysis engines. |
 | **AgentDebugger** | 🟡 Medium | Basic | Rich UI debugger for agent execution. |
 | **SequentialAgentConfig** | 🟡 Medium | structured_output | Configuration for a SequentialAgent that connects components linearly. |
@@ -335,6 +306,45 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 | **WikiWriterAgent** | 🟢 Simple | Basic | An agent that writes a wiki page. |
 | **WikiWriterAgentConfig** | 🟢 Simple | Basic | Configuration for the Wiki Writer Agent. |
 
+### ReAct & Tool Use
+
+**32 agents** | **Packages:** haive-agents
+
+| Agent | Complexity | Features | Description |
+|-------|------------|----------|-------------|
+| **AdvancedReactAgent** | 🔴 Complex | tools | Advanced React agent with specialized tool routing. |
+| **AdvancedReactAgentConfig** | 🔴 Complex | tools | Extended configuration for the Advanced React Agent. |
+| **ReactAgent** | 🔴 Complex | reasoning, tools +1 | A tool-using agent implementing the ReAct pattern. |
+| **ReactAgent** | 🔴 Complex | reasoning, tools +1 | A React agent implementing the Reasoning-Action-Observation pattern. |
+| **ReactAgent** | 🔴 Complex | reasoning, tools | A React agent implementation using LangGraph. |
+| **ReactAgent** | 🔴 Complex | reasoning, tools | React Agent implementation that extends SimpleAgent. |
+| **ReactAgent** | 🔴 Complex | reasoning, tools | A React agent that enhances SimpleAgent with tool-using capabilities. |
+| **ReactAgentConfig** | 🔴 Complex | reasoning, tools | Configuration for a ReAct agent with tool integration. |
+| **ReactAgentConfig** | 🔴 Complex | reasoning, tools +1 | Configuration for a React agent that can use tools. |
+| **ReactAgentConfig** | 🔴 Complex | reasoning, tools | Configuration for a React agent, extending SimpleAgentConfig. |
+| **ReactAgentConfig** | 🔴 Complex | reasoning, tools | Configuration for React Agent, extending SimpleAgentConfig. |
+| **ReactAgentConfig** | 🔴 Complex | reasoning, tools | Configuration for a React agent that can use tools and follow ReAct reasoning pa... |
+| **ReactAgentState** | 🔴 Complex | reasoning, tools +1 | State for React Agent, extending SimpleAgentState. |
+| **ReactManyToolsAgent** | 🔴 Complex | retrieval, tools | React Agent implementation that can handle many tools efficiently. |
+| **DynamicReactAgent** | 🟡 Medium | tools | A React agent with dynamic tool selection. |
+| **ReactAgent** | 🟡 Medium | Basic | No description available |
+| **ReactAgentState** | 🟡 Medium | memory, tools +1 | State for React agents with tool usage. |
+| **DynamicReactAgentConfig** | 🟢 Simple | tools | Configuration for a React agent with dynamic tool selection. |
+| **DynamicReactAgentState** | 🟢 Simple | tools, structured_output | Extended schema for dynamic tool selection. |
+| **ReactAgent** | 🟢 Simple | Basic | ReAct agent with looping behavior. |
+| **ReactAgent** | 🟢 Simple | tools | ReAct agent implementation with tool usage and routing capabilities. |
+| **ReactAgentConfig** | 🟢 Simple | tools | Configuration for the React Agent. |
+| **ReactAgentConfig** | 🟢 Simple | tools | Configuration for the ReAct agent. |
+| **ReactAgentConfig** | 🟢 Simple | tools | Configuration for a React agent that follows the ReAct pattern: |
+| **ReactAgentConfig** | 🟢 Simple | tools | No description available |
+| **ReactAgentSchema** | 🟢 Simple | tools, structured_output | Schema for React Agent State, extending SimpleAgentSchema. |
+| **ReactAgentSchemaWithStructuredResponse** | 🟢 Simple | structured_output | Schema for React Agent with structured response. |
+| **ReactAgentState** | 🟢 Simple | tools, structured_output | State schema for ReAct agent. |
+| **ReactAgentState** | 🟢 Simple | Basic | The state of the agent. |
+| **ReactAgentState** | 🟢 Simple | tools, structured_output | State schema for React agent. |
+| **ReactManyToolsConfig** | 🟢 Simple | retrieval, tools | Configuration for React Agent with many tools. |
+| **ReactManyToolsState** | 🟢 Simple | retrieval, tools | State for React Agent with many tools. |
+
 ### Reasoning & Critique
 
 **20 agents** | **Packages:** haive-agents
@@ -342,18 +352,18 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 | Agent | Complexity | Features | Description |
 |-------|------------|----------|-------------|
 | **LATSAgent** | 🔴 Complex | reasoning, retrieval | A Look-Ahead Tree Search (LATS) agent that uses tree search to |
-| **LATSAgentConfig** | 🔴 Complex | tools, reasoning +1 | Configuration for a Look-Ahead Tree Search (LATS) agent. |
+| **LATSAgentConfig** | 🔴 Complex | reasoning, retrieval +1 | Configuration for a Look-Ahead Tree Search (LATS) agent. |
 | **ReasoningSystem** | 🔴 Complex | reasoning | Orchestrator agent for comprehensive reasoning analysis. |
 | **ReflectionAgent** | 🔴 Complex | reasoning | An agent with self-reflection capabilities that can improve its responses. |
 | **ReflectionAgentConfig** | 🔴 Complex | reasoning | Configuration for an agent that uses reflection to improve responses. |
 | **ReflectionAgentState** | 🔴 Complex | reasoning, structured_output | State schema for the Reflection agent. |
-| **SelfDiscoverAgent** | 🔴 Complex | planning, reasoning +1 | An agent that implements the SelfDiscover methodology with structured output mod... |
+| **SelfDiscoverAgent** | 🔴 Complex | reasoning, planning +1 | An agent that implements the SelfDiscover methodology with structured output mod... |
 | **SelfDiscoverAgentConfig** | 🔴 Complex | reasoning, structured_output | Configuration for a SelfDiscover agent. |
 | **TOTAgentConfig** | 🔴 Complex | reasoning, retrieval | Configuration for the Tree of Thoughts agent. |
 | **ToTAgent** | 🔴 Complex | reasoning, retrieval | Tree of Thoughts agent implementation. |
 | **ToTAgentConfig** | 🔴 Complex | reasoning, retrieval | Configuration for a Tree of Thoughts agent. |
 | **ToTAgent** | 🟡 Medium | Basic | No description available |
-| **LATSAgentConfig** | 🟢 Simple | tools, retrieval | Configuration for Language Agent Tree Search (LATS) agent. |
+| **LATSAgentConfig** | 🟢 Simple | retrieval, tools | Configuration for Language Agent Tree Search (LATS) agent. |
 | **MCTSAgent** | 🟢 Simple | retrieval | Monte Carlo Tree Search Agent implementation. |
 | **MCTSAgentConfig** | 🟢 Simple | tools | Configuration for MCTS Agent. |
 | **ReflexionAgent** | 🟢 Simple | Basic | Agent that uses Reflexion to answer questions. |
@@ -370,12 +380,12 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 |-------|------------|----------|-------------|
 | **ComplexExtractionAgent** | 🔴 Complex | structured_output | Agent that extracts complex structured information from text. |
 | **ComplexExtractionAgentConfig** | 🔴 Complex | tools, structured_output | Configuration for the complex extraction agent. |
-| **DocumentAgent** | 🔴 Complex | conversation, planning +2 | Comprehensive Document Processing Agent. |
+| **DocumentAgent** | 🔴 Complex | planning, retrieval +2 | Comprehensive Document Processing Agent. |
 | **DocumentLoaderAgent** | 🔴 Complex | retrieval, structured_output | Document Loader Agent that integrates the document loader engine with the agent ... |
 | **ParallelKGTransformer** | 🔴 Complex | retrieval | An agent that builds a knowledge graph by extracting |
 | **StructuredKGAgent** | 🔴 Complex | retrieval, structured_output | An agent that builds a knowledge graph using structured output models. |
-| **TaxonomyAgent** | 🔴 Complex | conversation, memory | Agent that generates a taxonomy from a conversation history. |
-| **TaxonomyAgentConfig** | 🔴 Complex | conversation, memory | Agent configuration for generating a taxonomy from conversation history. |
+| **TaxonomyAgent** | 🔴 Complex | memory, conversation | Agent that generates a taxonomy from a conversation history. |
+| **TaxonomyAgentConfig** | 🔴 Complex | memory, conversation | Agent configuration for generating a taxonomy from conversation history. |
 | **WebLoaderAgent** | 🔴 Complex | planning | Specialized document loader agent for loading documents from web URLs. |
 | **SummarizerAgent** | 🟡 Medium | retrieval | SummarizerAgent is a class that summarizes a list of documents. |
 | **DirectoryLoaderAgent** | 🟢 Simple | Basic | Specialized document loader agent for loading documents from directories. |
@@ -396,14 +406,14 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 |-------|------------|----------|-------------|
 | **ChainMultiAgent** | 🔴 Complex | conversation | ChainAgent that works with the multi-agent framework. |
 | **ChainNodeWrapper** | 🔴 Complex | conversation | Wrapper to make non-agent nodes work in multi-agent framework. |
-| **CompatibilityEnhancedMultiAgent** | 🔴 Complex | conversation, retrieval | Multi-agent system with built-in compatibility checking and automatic adaptation... |
+| **CompatibilityEnhancedMultiAgent** | 🔴 Complex | retrieval, conversation | Multi-agent system with built-in compatibility checking and automatic adaptation... |
 | **ConditionalAgent** | 🔴 Complex | conversation | Pre-configured conditional multi-agent with branching. |
-| **MultiAgent** | 🔴 Complex | structured_output, tools +3 | Abstract base class for sophisticated multi-agent systems. |
+| **MultiAgent** | 🔴 Complex | retrieval, tools +3 | Abstract base class for sophisticated multi-agent systems. |
 | **MultiAgent** | 🔴 Complex | conversation | Abstract base class for multi-agent systems. |
-| **MultiAgent** | 🔴 Complex | conversation, retrieval +1 | Advanced multi-agent system with flexible coordination patterns. |
+| **MultiAgent** | 🔴 Complex | retrieval, structured_output +1 | Advanced multi-agent system with flexible coordination patterns. |
 | **ParallelAgent** | 🔴 Complex | conversation | Pre-configured parallel multi-agent. |
-| **SequentialAgent** | 🔴 Complex | conversation, structured_output | Multi-agent system with sequential execution. |
-| **SequentialMultiAgent** | 🔴 Complex | conversation, structured_output | Multi-agent system that executes agents sequentially. |
+| **SequentialAgent** | 🔴 Complex | structured_output, conversation | Multi-agent system with sequential execution. |
+| **SequentialMultiAgent** | 🔴 Complex | structured_output, conversation | Multi-agent system that executes agents sequentially. |
 | **CompatibilityEnhancedConditionalAgent** | 🟢 Simple | Basic | Conditional agent with built-in compatibility checking. |
 | **CompatibilityEnhancedParallelAgent** | 🟢 Simple | Basic | Parallel agent with built-in compatibility checking. |
 | **CompatibilityEnhancedSequentialAgent** | 🟢 Simple | Basic | Sequential agent with built-in compatibility checking. |
@@ -414,7 +424,7 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 
 | Agent | Complexity | Features | Description |
 |-------|------------|----------|-------------|
-| **AgentAction** | 🔴 Complex | tools, retrieval +1 | Model representing an agent's action decision. |
+| **AgentAction** | 🔴 Complex | reasoning, retrieval +1 | Model representing an agent's action decision. |
 | **WeatherDisasterManagementAgent** | 🔴 Complex | Basic | No description available |
 | **ProjectManagerAgent** | 🟡 Medium | Basic | No description available |
 | **AgentMetadata** | 🟢 Simple | tools | Metadata about agent contributions to content generation. |
@@ -428,30 +438,30 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 
 ### Classic Games
 
-**11 agents** | **Packages:** haive-games
+**10 agents** | **Packages:** haive-games
 
 | Agent | Complexity | Features | Description |
 |-------|------------|----------|-------------|
-| **AgentDecision** | 🔴 Complex | planning, reasoning | Agent's decision in the game. |
-| **AgentDecisionSchema** | 🔴 Complex | planning, reasoning +1 | Schema for LLM decision output. |
+| **AgentDecision** | 🔴 Complex | reasoning, planning | Agent's decision in the game. |
+| **AgentDecisionSchema** | 🔴 Complex | reasoning, planning +1 | Schema for LLM decision output. |
 | **CheckersAgent** | 🔴 Complex | structured_output | Agent for playing checkers with LLM-based players and rich UI. |
 | **GoAgent** | 🔴 Complex | tools | Go game agent implementation. |
 | **PokerAgent** | 🔴 Complex | structured_output | Enhanced agent class for managing a multi-player Texas Hold'em poker game. |
-| **PokerAgentTester** | 🔴 Complex | Basic | Test suite for the Poker agent. |
 | **CheckersAgentConfig** | 🟢 Simple | structured_output | Configuration for checkers game agent. |
 | **ConfigurableCheckersConfig** | 🟢 Simple | Basic | Configurable Checkers configuration with dynamic LLM selection. |
 | **ConfigurablePokerConfig** | 🟢 Simple | Basic | Configurable Poker configuration with dynamic LLM selection. |
 | **GoAgentConfig** | 🟢 Simple | structured_output | Configuration for the Go game agent. |
-| **PokerAgentConfig** | 🟢 Simple | structured_output, retrieval +1 | Configuration class for the poker agent. |
+| **PokerAgentConfig** | 🟢 Simple | retrieval, memory +1 | Configuration class for the poker agent. |
 
 ### Foundation Agents
 
-**6 agents** | **Packages:** haive-agents
+**7 agents** | **Packages:** haive-agents
 
 | Agent | Complexity | Features | Description |
 |-------|------------|----------|-------------|
-| **SimpleAgent** | 🔴 Complex | conversation, tools +1 | Simple agent that modifies its engine to include structured output schema. |
-| **SimpleAgentState** | 🔴 Complex | conversation, memory | Base state for simple agents. |
+| **Agent** | 🔴 Complex | reasoning, tools +2 | Base class for LLM-based reasoning agents. |
+| **SimpleAgent** | 🔴 Complex | tools, structured_output +1 | Simple agent that modifies its engine to include structured output schema. |
+| **SimpleAgentState** | 🔴 Complex | memory, conversation | Base state for simple agents. |
 | **ChainAgent** | 🟡 Medium | Basic | The simplest way to build chains - just list nodes and edges. |
 | **SimpleAgent** | 🟢 Simple | structured_output | A simple agent with a single node workflow and comprehensive schema handling. |
 | **SimpleAgentConfig** | 🟢 Simple | structured_output | Configuration for a simple single-node agent with comprehensive schema handling. |
@@ -468,7 +478,7 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 | **STORMAgentConfig** | 🟡 Medium | retrieval | Configuration for the STORM agent - an orchestrator that coordinates research, |
 | **PersonResearchAgentConfig** | 🟢 Simple | retrieval | Configuration settings for person research agent. |
 | **PersonResearchAgentConfig** | 🟢 Simple | retrieval | Configuration for the Person Research Agent. |
-| **ResearchAgentConfig** | 🟢 Simple | tools, retrieval +1 | Configuration for open_perplexity research agent. |
+| **ResearchAgentConfig** | 🟢 Simple | retrieval, tools +1 | Configuration for open_perplexity research agent. |
 
 ### Planning & Strategy
 
@@ -477,7 +487,7 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 | Agent | Complexity | Features | Description |
 |-------|------------|----------|-------------|
 | **LLMCompilerAgent** | 🔴 Complex | planning, structured_output | LLM Compiler Agent implementation. |
-| **RewooAgent** | 🔴 Complex | planning, tools +2 | ReWOO (Reasoning Without Observation) Agent implementation. |
+| **RewooAgent** | 🔴 Complex | reasoning, planning +2 | ReWOO (Reasoning Without Observation) Agent implementation. |
 | **RewooAgentConfig** | 🔴 Complex | planning, tools | Configuration for the ReWOO Agent with automatic prompt formatting. |
 | **LLMCompilerAgentConfig** | 🟢 Simple | tools | Configuration for the LLM Compiler Agent using AugLLMConfig system. |
 | **PlanAndExecuteAgent** | 🟢 Simple | Basic | No description available |
@@ -502,7 +512,7 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 
 | Agent | Complexity | Features | Description |
 |-------|------------|----------|-------------|
-| **MemoryAgent** | 🔴 Complex | conversation, memory | Memory Agent implementation that extends ReactAgent. |
+| **MemoryAgent** | 🔴 Complex | memory, conversation | Memory Agent implementation that extends ReactAgent. |
 | **LongTermMemoryAgent** | 🟢 Simple | memory | Agent for the long term memory. |
 | **LongTermMemoryAgentConfig** | 🟢 Simple | memory | Config for the long term memory agent. |
 | **LongTermMemoryState** | 🟢 Simple | memory | State for the long term memory agent. |
@@ -514,10 +524,10 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 
 | Agent | Complexity | Features | Description |
 |-------|------------|----------|-------------|
-| **BaseConversationAgent** | 🔴 Complex | conversation, tools | Base conversation agent that orchestrates multi-agent conversations. |
-| **CollaborativeConversation** | 🔴 Complex | conversation, structured_output | Collaborative conversation for building shared content. |
-| **DebateConversation** | 🔴 Complex | conversation, structured_output | Structured debate conversation with positions and formal argumentation. |
-| **DirectedConversation** | 🔴 Complex | conversation, structured_output | Directed conversation where agents respond to mentions and questions. |
+| **BaseConversationAgent** | 🔴 Complex | tools, conversation | Base conversation agent that orchestrates multi-agent conversations. |
+| **CollaborativeConversation** | 🔴 Complex | structured_output, conversation | Collaborative conversation for building shared content. |
+| **DebateConversation** | 🔴 Complex | structured_output, conversation | Structured debate conversation with positions and formal argumentation. |
+| **DirectedConversation** | 🔴 Complex | structured_output, conversation | Directed conversation where agents respond to mentions and questions. |
 | **RoundRobinConversation** | 🔴 Complex | conversation | Round-robin conversation where each agent speaks in a fixed order. |
 
 ### Strategy Games
@@ -529,7 +539,7 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 | **AmongUsAgent** | 🔴 Complex | Basic | Agent implementation for the Among Us game. |
 | **MafiaAgent** | 🔴 Complex | Basic | Agent for playing Mafia. |
 | **MafiaAgentConfig** | 🔴 Complex | structured_output | Configuration for the Mafia game agent. |
-| **RiskAgent** | 🔴 Complex | planning, reasoning +1 | Agent for playing the Risk game. |
+| **RiskAgent** | 🔴 Complex | reasoning, planning +1 | Agent for playing the Risk game. |
 | **AmongUsAgentConfig** | 🟢 Simple | Basic | Configuration for Among Us game agent. |
 
 ### Card Games

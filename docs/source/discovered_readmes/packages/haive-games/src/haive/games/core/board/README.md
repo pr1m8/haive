@@ -9,6 +9,7 @@ TODO: Add detailed overview of this module's functionality
 ## Key Components
 
 ### Classes
+
 - **Space**: TODO: Add description
 - **GridSpace**: TODO: Add description
 - **HexSpace**: TODO: Add description
@@ -16,12 +17,12 @@ TODO: Add detailed overview of this module's functionality
 - **Board**: TODO: Add description
 
 ### Functions
+
 - **is_occupied()**: TODO: Add description
 - **place_piece()**: TODO: Add description
 - **remove_piece()**: TODO: Add description
 - **has_property()**: TODO: Add description
 - **get_property()**: TODO: Add description
-
 
 ## Installation
 

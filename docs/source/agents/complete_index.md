@@ -78,7 +78,7 @@ Adaptive Threshold RAG V2 - Configuration in AdaptiveThresholdRAGState
 **AdaptiveToolsRAGAgent** (🟢 Simple)
 *RAG & Retrieval | haive-agents*
 Complete Adaptive RAG agent with tools integration and ReAct patterns.
-**Features:** tools, retrieval
+**Features:** retrieval, tools
 **Module:** `haive.agents.rag.adaptive_tools.agent`
 
 
@@ -105,8 +105,22 @@ Extended configuration for the Advanced React Agent.
 
 **Agent** (🔴 Complex)
 *Specialized Agents | haive-agents*
+Universal base class for all agent types in the Haive framework.
+**Features:** reasoning, tools
+**Module:** `haive.agents.base.universal_agent`
+
+
+**Agent** (🔴 Complex)
+*Foundation Agents | haive-agents*
+Base class for LLM-based reasoning agents.
+**Features:** reasoning, tools, memory, +1 more
+**Module:** `haive.agents.base.simple_agent_base`
+
+
+**Agent** (🔴 Complex)
+*Specialized Agents | haive-agents*
 Abstract base agent class that extends InvokableEngine with execution and state management.
-**Features:** structured_output, memory
+**Features:** memory, structured_output
 **Module:** `haive.agents.base.agent`
 
 
@@ -127,7 +141,7 @@ Abstract base agent class with automatic graph building and proper inheritance.
 **AgentAction** (🔴 Complex)
 *Prebuilt Solutions | haive-prebuilt*
 Model representing an agent's action decision.
-**Features:** tools, retrieval, reasoning
+**Features:** reasoning, retrieval, tools
 **Module:** `haive.prebuilt.gtla.models`
 
 
@@ -148,14 +162,14 @@ Rich UI debugger for agent execution.
 **AgentDecision** (🔴 Complex)
 *Classic Games | haive-games*
 Agent's decision in the game.
-**Features:** planning, reasoning
+**Features:** reasoning, planning
 **Module:** `haive.games.poker.models`
 
 
 **AgentDecisionSchema** (🔴 Complex)
 *Classic Games | haive-games*
 Schema for LLM decision output.
-**Features:** planning, reasoning, structured_output
+**Features:** reasoning, planning, structured_output
 **Module:** `haive.games.poker.models`
 
 
@@ -187,6 +201,13 @@ Model representing the output from an agent's action.
 **Module:** `haive.prebuilt.gtla.models`
 
 
+**AgentRegistry** (🔴 Complex)
+*Specialized Agents | haive-agents*
+Manages agent lifecycle and routing model synchronization.
+**Features:** Basic
+**Module:** `haive.agents.supervisor.registry`
+
+
 **AgentState** (🟢 Simple)
 *Specialized Agents | haive-agents*
 Default state schema for agents.
@@ -204,14 +225,14 @@ No description available
 **AgenticGraphRAGAgent** (🔴 Complex)
 *RAG & Retrieval | haive-agents*
 Agentic Graph RAG - combines graph reasoning with agentic routing
-**Features:** planning, reasoning, retrieval
+**Features:** reasoning, planning, retrieval
 **Module:** `haive.agents.rag.multi_agent_rag.advanced_workflows`
 
 
 **AgenticRAGAgent** (🔴 Complex)
 *RAG & Retrieval | haive-agents*
 Agentic RAG agent combining ReAct reasoning with intelligent retrieval.
-**Features:** tools, retrieval, reasoning, +1 more
+**Features:** reasoning, retrieval, tools, +1 more
 **Module:** `haive.agents.rag.agentic.agent`
 
 
@@ -283,7 +304,7 @@ Generic Agent Base Class with Enhanced Typing and Auto-Configuration
 **BaseConversationAgent** (🔴 Complex)
 *Conversation & Multi-Agent | haive-agents*
 Base conversation agent that orchestrates multi-agent conversations.
-**Features:** conversation, tools
+**Features:** tools, conversation
 **Module:** `haive.agents.conversation.base.agent`
 
 
@@ -311,7 +332,7 @@ Base class for player agents.
 **BaseRAGAgent** (🟢 Simple)
 *RAG & Retrieval | haive-agents*
 Simple base RAG agent with retrieve and generate functionality.
-**Features:** tools, retrieval
+**Features:** retrieval, tools
 **Module:** `haive.agents.rag.base.base_agent`
 
 
@@ -332,7 +353,7 @@ Configuration for a basic RAG agent.
 **BaseRAGMultiAgent** (🔴 Complex)
 *RAG & Retrieval | haive-agents*
 Base multi-agent RAG system with retrieve -> grade -> generate workflow.
-**Features:** conversation, retrieval
+**Features:** retrieval, conversation
 **Module:** `haive.agents.rag.multi_agent_rag.multi_rag`
 
 
@@ -446,7 +467,7 @@ Agent for playing Clue.
 **CollaborativeConversation** (🔴 Complex)
 *Conversation & Multi-Agent | haive-agents*
 Collaborative conversation for building shared content.
-**Features:** conversation, structured_output
+**Features:** structured_output, conversation
 **Module:** `haive.agents.conversation.collaberative.agent`
 
 
@@ -460,7 +481,7 @@ Conditional agent with built-in compatibility checking.
 **CompatibilityEnhancedMultiAgent** (🔴 Complex)
 *Multi-Agent Systems | haive-agents*
 Multi-agent system with built-in compatibility checking and automatic adaptation.
-**Features:** conversation, retrieval
+**Features:** retrieval, conversation
 **Module:** `haive.agents.multi.compatibility_enhanced_base`
 
 
@@ -483,6 +504,13 @@ Sequential agent with built-in compatibility checking.
 Compatible RAG Workflow Factory
 **Features:** Basic
 **Module:** `haive.agents.rag.factories.compatible_rag_factory`
+
+
+**CompiledAgent** (🔴 Complex)
+*Specialized Agents | haive-agents*
+Agent class based on CompiledStateGraph architecture.
+**Features:** reasoning, tools, memory, +1 more
+**Module:** `haive.agents.base.compiled_agent`
 
 
 **ComplexExtractionAgent** (🔴 Complex)
@@ -523,7 +551,7 @@ Agent with conditional routing based on callable results.
 **ConditionalRAGMultiAgent** (🔴 Complex)
 *RAG & Retrieval | haive-agents*
 Conditional multi-agent RAG system with smart routing based on document quality.
-**Features:** conversation, retrieval
+**Features:** retrieval, conversation
 **Module:** `haive.agents.rag.multi_agent_rag.multi_rag`
 
 
@@ -672,7 +700,7 @@ Configuration for debate agents.
 **DebateConversation** (🔴 Complex)
 *Conversation & Multi-Agent | haive-agents*
 Structured debate conversation with positions and formal argumentation.
-**Features:** conversation, structured_output
+**Features:** structured_output, conversation
 **Module:** `haive.agents.conversation.debate.agent`
 
 
@@ -714,7 +742,7 @@ Default state schema for generic agents.
 **DirectedConversation** (🔴 Complex)
 *Conversation & Multi-Agent | haive-agents*
 Directed conversation where agents respond to mentions and questions.
-**Features:** conversation, structured_output
+**Features:** structured_output, conversation
 **Module:** `haive.agents.conversation.directed.agent`
 
 
@@ -735,7 +763,7 @@ No description available
 **DocumentAgent** (🔴 Complex)
 *Document Processing | haive-agents*
 Comprehensive Document Processing Agent.
-**Features:** conversation, planning, retrieval, +1 more
+**Features:** planning, retrieval, memory, +1 more
 **Module:** `haive.agents.document.agent`
 
 
@@ -863,7 +891,7 @@ Extended schema for dynamic tool selection.
 **EnhancedHyDERAGAgent** (🟢 Simple)
 *RAG & Retrieval | haive-agents*
 Enhanced HyDE RAG Agent using the structured output enhancement pattern.
-**Features:** tools, retrieval, structured_output
+**Features:** retrieval, tools, structured_output
 **Module:** `haive.agents.rag.hyde.enhanced_agent`
 
 
@@ -1105,7 +1133,7 @@ Configuration for the Go game agent.
 **GraphDBRAGAgent** (🔴 Complex)
 *RAG & Retrieval | haive-agents*
 Graph Database RAG Agent for natural language querying of Neo4j databases.
-**Features:** tools, retrieval, structured_output
+**Features:** retrieval, tools, structured_output
 **Module:** `haive.agents.rag.db_rag.graph_db.agent`
 
 
@@ -1151,6 +1179,20 @@ Basic hallucination grading agent.
 Hierarchical query decomposition agent.
 **Features:** Basic
 **Module:** `haive.agents.rag.query_decomposition.agent`
+
+
+**HoldemGameAgent** (🔴 Complex)
+*Games | haive-games*
+Main Texas Hold'em game agent that coordinates the complete poker game.
+**Features:** Basic
+**Module:** `haive.games.hold_em.game_agent`
+
+
+**HoldemGameAgentConfig** (🟢 Simple)
+*Games | haive-games*
+Configuration for the main Hold'em game agent.
+**Features:** tools
+**Module:** `haive.games.hold_em.game_agent`
 
 
 **HoldemPlayerAgent** (🔴 Complex)
@@ -1249,7 +1291,7 @@ Agent that creates iterative processing plans.
 **IterativeRAGMultiAgent** (🔴 Complex)
 *RAG & Retrieval | haive-agents*
 Multi-agent RAG system with iterative document processing.
-**Features:** conversation, retrieval
+**Features:** retrieval, conversation
 **Module:** `haive.agents.rag.multi_agent_rag.multi_rag`
 
 
@@ -1288,14 +1330,14 @@ A Look-Ahead Tree Search (LATS) agent that uses tree search to
 **LATSAgentConfig** (🟢 Simple)
 *Reasoning & Critique | haive-agents*
 Configuration for Language Agent Tree Search (LATS) agent.
-**Features:** tools, retrieval
+**Features:** retrieval, tools
 **Module:** `haive.agents.reasoning_and_critique.lats.config`
 
 
 **LATSAgentConfig** (🔴 Complex)
 *Reasoning & Critique | haive-agents*
 Configuration for a Look-Ahead Tree Search (LATS) agent.
-**Features:** tools, reasoning, retrieval
+**Features:** reasoning, retrieval, tools
 **Module:** `haive.agents.reasoning_and_critique.lats.agent`
 
 
@@ -1318,6 +1360,13 @@ Configuration for the LLM Compiler Agent using AugLLMConfig system.
 LLM-enhanced RAG agent that retrieves documents and generates answers.
 **Features:** retrieval
 **Module:** `haive.agents.rag.llm_rag.agent`
+
+
+**LTMAgent** (🔴 Complex)
+*Specialized Agents | haive-agents*
+Long-Term Memory Agent with LangMem integration.
+**Features:** retrieval, tools, reasoning, +2 more
+**Module:** `haive.agents.ltm.agent`
 
 
 **LongTermMemoryAgent** (🟢 Simple)
@@ -1388,7 +1437,7 @@ Agent for playing Mastermind.
 **MemoryAgent** (🔴 Complex)
 *Memory & Persistence | haive-agents*
 Memory Agent implementation that extends ReactAgent.
-**Features:** conversation, memory
+**Features:** memory, conversation
 **Module:** `haive.agents.memory.agent`
 
 
@@ -1413,6 +1462,13 @@ Agent that retrieves relevant memories for context enhancement.
 **Module:** `haive.agents.rag.memory_aware.agent`
 
 
+**MonopolyGameAgent** (🔴 Complex)
+*Games | haive-games*
+Main game agent for orchestrating Monopoly.
+**Features:** Basic
+**Module:** `haive.games.monopoly.game_agent`
+
+
 **MonopolyGameAgentConfig** (🟢 Simple)
 *Games | haive-games*
 Configuration class for monopoly game agents.
@@ -1425,6 +1481,13 @@ Configuration class for monopoly game agents.
 Configuration class for monopoly game agents.
 **Features:** structured_output
 **Module:** `haive.games.monopoly.config`
+
+
+**MonopolyGameAgentConfig** (🟢 Simple)
+*Games | haive-games*
+Configuration for monopoly game agent.
+**Features:** Basic
+**Module:** `haive.games.monopoly.game_agent`
 
 
 **MonopolyPlayerAgent** (🟡 Medium)
@@ -1451,7 +1514,7 @@ Configuration for monopoly player decision agent.
 **MultiAgent** (🔴 Complex)
 *Multi-Agent Systems | haive-agents*
 Abstract base class for sophisticated multi-agent systems.
-**Features:** structured_output, tools, retrieval, +2 more
+**Features:** retrieval, tools, structured_output, +2 more
 **Module:** `haive.agents.multi.base`
 
 
@@ -1465,7 +1528,7 @@ Abstract base class for multi-agent systems.
 **MultiAgent** (🔴 Complex)
 *Multi-Agent Systems | haive-agents*
 Advanced multi-agent system with flexible coordination patterns.
-**Features:** conversation, retrieval, structured_output
+**Features:** retrieval, structured_output, conversation
 **Module:** `haive.agents.multi.agent`
 
 
@@ -1479,7 +1542,7 @@ Compatibility report for multiple agents in a workflow.
 **MultiAgentRAGState** (🔴 Complex)
 *RAG & Retrieval | haive-agents*
 Comprehensive state schema for multi-agent RAG systems.
-**Features:** conversation, retrieval, structured_output
+**Features:** retrieval, structured_output, conversation
 **Module:** `haive.agents.rag.multi_agent_rag.state`
 
 
@@ -1609,7 +1672,7 @@ Configuration for the Parallel Knowledge Graph Transformer.
 **ParallelRAGMultiAgent** (🔴 Complex)
 *RAG & Retrieval | haive-agents*
 Parallel multi-agent RAG system for consensus-based processing.
-**Features:** conversation, retrieval
+**Features:** retrieval, conversation
 **Module:** `haive.agents.rag.multi_agent_rag.multi_rag`
 
 
@@ -1686,15 +1749,8 @@ Enhanced agent class for managing a multi-player Texas Hold'em poker game.
 **PokerAgentConfig** (🟢 Simple)
 *Classic Games | haive-games*
 Configuration class for the poker agent.
-**Features:** structured_output, retrieval, memory
+**Features:** retrieval, memory, structured_output
 **Module:** `haive.games.poker.config`
-
-
-**PokerAgentTester** (🔴 Complex)
-*Classic Games | haive-games*
-Test suite for the Poker agent.
-**Features:** Basic
-**Module:** `haive.games.poker.test`
 
 
 **ProjectManagerAgent** (🟡 Medium)
@@ -1744,7 +1800,7 @@ Query Decomposition RAG - breaks complex queries into simpler sub-questions,
 **QueryPlanningAgenticRAGAgent** (🔴 Complex)
 *RAG & Retrieval | haive-agents*
 Query Planning Agentic RAG - creates detailed execution plans
-**Features:** planning, reasoning, retrieval
+**Features:** reasoning, planning, retrieval
 **Module:** `haive.agents.rag.multi_agent_rag.advanced_workflows`
 
 
@@ -1781,7 +1837,7 @@ ReAct agent with looping behavior.
 **ReactAgent** (🔴 Complex)
 *ReAct & Tool Use | haive-agents*
 A tool-using agent implementing the ReAct pattern.
-**Features:** tools, reasoning, structured_output
+**Features:** reasoning, tools, structured_output
 **Module:** `haive.agents.react_class.react_v3.agent`
 
 
@@ -1795,21 +1851,21 @@ ReAct agent implementation with tool usage and routing capabilities.
 **ReactAgent** (🔴 Complex)
 *ReAct & Tool Use | haive-agents*
 A React agent implementing the Reasoning-Action-Observation pattern.
-**Features:** tools, reasoning, structured_output
+**Features:** reasoning, tools, structured_output
 **Module:** `haive.agents.react_class.react_agent2.agent`
 
 
 **ReactAgent** (🔴 Complex)
 *ReAct & Tool Use | haive-agents*
 A React agent implementation using LangGraph.
-**Features:** tools, reasoning
+**Features:** reasoning, tools
 **Module:** `haive.agents.react_class.react_agent2.agent2`
 
 
 **ReactAgent** (🔴 Complex)
 *ReAct & Tool Use | haive-agents*
 React Agent implementation that extends SimpleAgent.
-**Features:** tools, reasoning
+**Features:** reasoning, tools
 **Module:** `haive.agents.react_class.react.agent`
 
 
@@ -1823,7 +1879,7 @@ No description available
 **ReactAgent** (🔴 Complex)
 *ReAct & Tool Use | haive-agents*
 A React agent that enhances SimpleAgent with tool-using capabilities.
-**Features:** tools, reasoning
+**Features:** reasoning, tools
 **Module:** `haive.agents.react_class.react_v2.agent`
 
 
@@ -1837,7 +1893,7 @@ Configuration for the React Agent.
 **ReactAgentConfig** (🔴 Complex)
 *ReAct & Tool Use | haive-agents*
 Configuration for a ReAct agent with tool integration.
-**Features:** tools, reasoning
+**Features:** reasoning, tools
 **Module:** `haive.agents.react_class.react_v3.config`
 
 
@@ -1858,21 +1914,21 @@ Configuration for a React agent that follows the ReAct pattern:
 **ReactAgentConfig** (🔴 Complex)
 *ReAct & Tool Use | haive-agents*
 Configuration for a React agent that can use tools.
-**Features:** tools, reasoning, memory
+**Features:** reasoning, tools, memory
 **Module:** `haive.agents.react_class.react_agent2.config2`
 
 
 **ReactAgentConfig** (🔴 Complex)
 *ReAct & Tool Use | haive-agents*
 Configuration for a React agent, extending SimpleAgentConfig.
-**Features:** tools, reasoning
+**Features:** reasoning, tools
 **Module:** `haive.agents.react_class.react_agent2.agent`
 
 
 **ReactAgentConfig** (🔴 Complex)
 *ReAct & Tool Use | haive-agents*
 Configuration for React Agent, extending SimpleAgentConfig.
-**Features:** tools, reasoning
+**Features:** reasoning, tools
 **Module:** `haive.agents.react_class.react.config`
 
 
@@ -1886,7 +1942,7 @@ No description available
 **ReactAgentConfig** (🔴 Complex)
 *ReAct & Tool Use | haive-agents*
 Configuration for a React agent that can use tools and follow ReAct reasoning pattern.
-**Features:** tools, reasoning
+**Features:** reasoning, tools
 **Module:** `haive.agents.react_class.react_v2.config`
 
 
@@ -1921,7 +1977,7 @@ State for React agents with tool usage.
 **ReactAgentState** (🔴 Complex)
 *ReAct & Tool Use | haive-agents*
 State for React Agent, extending SimpleAgentState.
-**Features:** tools, reasoning, structured_output
+**Features:** reasoning, tools, structured_output
 **Module:** `haive.agents.react_class.react.state`
 
 
@@ -1942,21 +1998,21 @@ State schema for React agent.
 **ReactManyToolsAgent** (🔴 Complex)
 *ReAct & Tool Use | haive-agents*
 React Agent implementation that can handle many tools efficiently.
-**Features:** tools, retrieval
+**Features:** retrieval, tools
 **Module:** `haive.agents.react_class.react_many_tools.agent`
 
 
 **ReactManyToolsConfig** (🟢 Simple)
 *ReAct & Tool Use | haive-agents*
 Configuration for React Agent with many tools.
-**Features:** tools, retrieval
+**Features:** retrieval, tools
 **Module:** `haive.agents.react_class.react_many_tools.config`
 
 
 **ReactManyToolsState** (🟢 Simple)
 *ReAct & Tool Use | haive-agents*
 State for React Agent with many tools.
-**Features:** tools, retrieval
+**Features:** retrieval, tools
 **Module:** `haive.agents.react_class.react_many_tools.state`
 
 
@@ -2026,7 +2082,7 @@ State for the Reflexion agent.
 **ReflexiveGradedRAGAgent** (🔴 Complex)
 *RAG & Retrieval | haive-agents*
 Reflexive Graded RAG - uses grading feedback to improve its own performance
-**Features:** planning, reasoning, retrieval
+**Features:** reasoning, planning, retrieval
 **Module:** `haive.agents.rag.multi_agent_rag.graded_rag_workflows`
 
 
@@ -2054,7 +2110,7 @@ Agent for performing deep research on any topic with dynamic document loader sel
 **ResearchAgentConfig** (🟢 Simple)
 *Research & Information | haive-agents*
 Configuration for open_perplexity research agent.
-**Features:** tools, retrieval, structured_output
+**Features:** retrieval, tools, structured_output
 **Module:** `haive.agents.research.open_perplexity.config`
 
 
@@ -2068,7 +2124,7 @@ Agent for playing Reversi/Othello.
 **RewooAgent** (🔴 Complex)
 *Planning & Strategy | haive-agents*
 ReWOO (Reasoning Without Observation) Agent implementation.
-**Features:** planning, tools, reasoning, +1 more
+**Features:** reasoning, planning, tools, +1 more
 **Module:** `haive.agents.planning.rewoo.agent`
 
 
@@ -2082,7 +2138,7 @@ Configuration for the ReWOO Agent with automatic prompt formatting.
 **RiskAgent** (🔴 Complex)
 *Strategy Games | haive-games*
 Agent for playing the Risk game.
-**Features:** planning, reasoning, memory
+**Features:** reasoning, planning, memory
 **Module:** `haive.games.risk.agent`
 
 
@@ -2133,7 +2189,7 @@ Rubik's Cube game agent.
 **SQLRAGAgent** (🔴 Complex)
 *RAG & Retrieval | haive-agents*
 SQL RAG Agent for querying SQL databases with natural language.
-**Features:** tools, retrieval, structured_output
+**Features:** retrieval, tools, structured_output
 **Module:** `haive.agents.rag.db_rag.sql_rag.agent`
 
 
@@ -2168,7 +2224,7 @@ The state of the agent during the paper research process.
 **SearchIntegrationAgent** (🟢 Simple)
 *RAG & Retrieval | haive-agents*
 Agent that integrates external search tools.
-**Features:** tools, retrieval
+**Features:** retrieval, tools
 **Module:** `haive.agents.rag.adaptive_tools.agent`
 
 
@@ -2189,7 +2245,7 @@ Self Discover Agent
 **SelfDiscoverAgent** (🔴 Complex)
 *Reasoning & Critique | haive-agents*
 An agent that implements the SelfDiscover methodology with structured output models.
-**Features:** planning, reasoning, structured_output
+**Features:** reasoning, planning, structured_output
 **Module:** `haive.agents.reasoning_and_critique.self_discover.agent2`
 
 
@@ -2266,7 +2322,7 @@ Sequential agent that executes multiple agents in sequence.
 **SequentialAgent** (🔴 Complex)
 *Multi-Agent Systems | haive-agents*
 Multi-agent system with sequential execution.
-**Features:** conversation, structured_output
+**Features:** structured_output, conversation
 **Module:** `haive.agents.multi.base`
 
 
@@ -2280,14 +2336,14 @@ Configuration for a SequentialAgent that connects components linearly.
 **SequentialMultiAgent** (🔴 Complex)
 *Multi-Agent Systems | haive-agents*
 Multi-agent system that executes agents sequentially.
-**Features:** conversation, structured_output
+**Features:** structured_output, conversation
 **Module:** `haive.agents.multi.sequential.agent`
 
 
 **SimpleAgent** (🔴 Complex)
 *Foundation Agents | haive-agents*
 Simple agent that modifies its engine to include structured output schema.
-**Features:** conversation, tools, structured_output
+**Features:** tools, structured_output, conversation
 **Module:** `haive.agents.simple.agent`
 
 
@@ -2308,7 +2364,7 @@ Configuration for a simple single-node agent with comprehensive schema handling.
 **SimpleAgentState** (🔴 Complex)
 *Foundation Agents | haive-agents*
 Base state for simple agents.
-**Features:** conversation, memory
+**Features:** memory, conversation
 **Module:** `haive.agents.simple.state`
 
 
@@ -2336,7 +2392,7 @@ Simple RAG workflow: Retrieval → Answer Generation
 **SimpleRAGAgent** (🔴 Complex)
 *RAG & Retrieval | haive-agents*
 Simple RAG agent that retrieves documents and provides basic answers.
-**Features:** conversation, tools, retrieval
+**Features:** retrieval, tools, conversation
 **Module:** `haive.agents.rag.multi_agent_rag.agents`
 
 
@@ -2350,7 +2406,7 @@ RAG answer generation agent that creates responses from retrieved documents.
 **SimpleRAGWithMemoryAgent** (🔴 Complex)
 *RAG & Retrieval | haive-agents*
 Simple RAG with Memory - incorporates conversation history and previous queries
-**Features:** conversation, retrieval, memory
+**Features:** retrieval, memory, conversation
 **Module:** `haive.agents.rag.multi_agent_rag.additional_workflows`
 
 
@@ -2424,6 +2480,20 @@ No description available
 **Module:** `haive.agents.document_modifiers.summarizer.map_branch.config`
 
 
+**SupervisorAgent** (🔴 Complex)
+*Specialized Agents | haive-agents*
+Supervisor agent that manages multiple specialized agents.
+**Features:** Basic
+**Module:** `haive.agents.supervisor.agent`
+
+
+**SupervisorAgent** (🔴 Complex)
+*Specialized Agents | haive-agents*
+ReactAgent-based supervisor with dynamic routing and agent registry.
+**Features:** tools
+**Module:** `haive.agents.supervisor.agent_v2`
+
+
 **SystemicReviewOfScientificArticlesAgent** (🟢 Simple)
 *Academic & Research | haive-prebuilt*
 No description available
@@ -2464,14 +2534,14 @@ No description available
 **TaxonomyAgent** (🔴 Complex)
 *Document Processing | haive-agents*
 Agent that generates a taxonomy from a conversation history.
-**Features:** conversation, memory
+**Features:** memory, conversation
 **Module:** `haive.agents.document_modifiers.tnt.agent`
 
 
 **TaxonomyAgentConfig** (🔴 Complex)
 *Document Processing | haive-agents*
 Agent configuration for generating a taxonomy from conversation history.
-**Features:** conversation, memory
+**Features:** memory, conversation
 **Module:** `haive.agents.document_modifiers.tnt.agent`
 
 
