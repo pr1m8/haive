@@ -10,7 +10,7 @@ The Haive documentation follows a three-tier hierarchy designed to serve differe
 Haive Documentation Ecosystem
 ├── 📖 User Documentation (/docs/source/)
 │   ├── Getting Started
-│   ├── User Guides  
+│   ├── User Guides
 │   ├── API References
 │   └── Agent Showcase
 ├── 🔧 Developer Documentation (/project_docs/)
@@ -27,6 +27,7 @@ Haive Documentation Ecosystem
 ## 📖 User Documentation Structure
 
 ### Primary Hierarchy
+
 ```
 docs/source/
 ├── index.rst                    # Main landing page
@@ -57,6 +58,7 @@ docs/source/
 ### Content Organization Principles
 
 #### **By User Journey**
+
 ```
 1. Getting Started → Quick success
 2. User Guides → Common tasks
@@ -65,11 +67,13 @@ docs/source/
 ```
 
 #### **By Complexity**
+
 ```
 Basic → Intermediate → Advanced → Expert
 ```
 
 #### **By Domain**
+
 ```
 Core Concepts → Agents → Tools → Games → Deployment
 ```
@@ -77,6 +81,7 @@ Core Concepts → Agents → Tools → Games → Deployment
 ## 🔧 Developer Documentation Structure
 
 ### Project Documentation
+
 ```
 project_docs/
 ├── README.md                    # Navigation hub
@@ -88,10 +93,11 @@ project_docs/
 ```
 
 ### Technical Documentation
+
 ```
 project_docs/docs/
 ├── writing-guidelines/         # How to write
-├── organization-standards/     # How to organize  
+├── organization-standards/     # How to organize
 ├── content-types/             # What to write
 ├── tools-and-automation/      # Documentation tooling
 ├── quality-assurance/         # Review processes
@@ -101,6 +107,7 @@ project_docs/docs/
 ## 📦 Package Documentation Structure
 
 ### Individual Package Structure
+
 ```
 packages/haive-{name}/
 ├── README.md                   # Package overview
@@ -115,32 +122,39 @@ packages/haive-{name}/
 ```
 
 ### README Template Structure
+
 ```markdown
 # Package Name
 
 Brief description and primary use case.
 
 ## Installation
+
 Package-specific installation instructions.
 
 ## Quick Start
+
 Minimal working example.
 
 ## Key Features
+
 - Feature 1
 - Feature 2
 - Feature 3
 
 ## Documentation
+
 Links to detailed documentation.
 
 ## Examples
+
 Links to examples and tutorials.
 ```
 
 ## 🎯 Hierarchy Principles
 
 ### 1. **Progressive Disclosure**
+
 Information should be layered from general to specific:
 
 ```
@@ -152,6 +166,7 @@ Topic Overview
 ```
 
 ### 2. **Multiple Entry Points**
+
 Users should be able to enter the documentation at different levels:
 
 - **Task-oriented**: "How do I...?"
@@ -160,16 +175,19 @@ Users should be able to enter the documentation at different levels:
 - **Problem-oriented**: "Fix this issue..."
 
 ### 3. **Clear Relationships**
+
 Related content should be connected:
 
 ```markdown
 ## See Also
+
 - [Related Concept](../concepts/related.md)
 - [Similar Tool](../tools/similar.md)
 - [Advanced Usage](../advanced/usage.md)
 ```
 
 ### 4. **Consistent Depth**
+
 Similar types of content should have similar depth:
 
 ```
@@ -186,6 +204,7 @@ All User Guides:
 ### Naming Patterns
 
 #### **By Function**
+
 ```
 getting-started/     # Functional grouping
 user-guides/        # User-oriented
@@ -193,6 +212,7 @@ api-reference/      # Type-based
 ```
 
 #### **By Domain**
+
 ```
 agents/             # Domain-specific
 tools/              # Feature-specific
@@ -200,6 +220,7 @@ games/              # Module-specific
 ```
 
 #### **By Audience**
+
 ```
 beginners/          # Skill-level based
 developers/         # Role-based
@@ -209,6 +230,7 @@ contributors/       # Activity-based
 ### Depth Guidelines
 
 #### **Maximum Depth: 4 Levels**
+
 ```
 docs/
 ├── guides/                     # Level 1
@@ -221,6 +243,7 @@ docs/
 ```
 
 #### **Folder Size Guidelines**
+
 - **5-15 items per folder** - Optimal for navigation
 - **Max 20 items** - Before considering reorganization
 - **Min 3 items** - Before considering consolidation
@@ -230,39 +253,50 @@ docs/
 ### Linking Patterns
 
 #### **Hierarchical Links**
+
 ```markdown
 <!-- Parent to child -->
+
 For details, see [Agent Configuration](agents/configuration.md)
 
 <!-- Child to parent -->
+
 This extends the concepts in [Agent Overview](../overview.md)
 
 <!-- Sibling links -->
+
 See also [Tool Configuration](../tools/configuration.md)
 ```
 
 #### **Contextual Links**
+
 ```markdown
 <!-- Prerequisite -->
+
 Before proceeding, complete [Installation](../getting-started/installation.md)
 
 <!-- Follow-up -->
+
 Next, try [Creating Your First Agent](../tutorials/first-agent.md)
 
 <!-- Alternative -->
+
 For a different approach, see [Configuration Files](./config-files.md)
 ```
 
 ### Navigation Aids
 
 #### **Breadcrumbs**
+
 ```markdown
 [Home](../../index.md) > [Guides](../index.md) > [Agents](./index.md) > Configuration
 ```
 
 #### **Table of Contents**
+
 ```markdown
 ## On This Page
+
 - [Basic Configuration](#basic-configuration)
 - [Advanced Options](#advanced-options)
 - [Examples](#examples)
@@ -270,8 +304,10 @@ For a different approach, see [Configuration Files](./config-files.md)
 ```
 
 #### **Related Content**
+
 ```markdown
 ## Related Pages
+
 - [Agent Types](./types.md) - Different types of agents
 - [Tool Integration](../tools/integration.md) - Adding tools to agents
 - [Deployment Guide](../deployment/overview.md) - Production deployment
@@ -280,6 +316,7 @@ For a different approach, see [Configuration Files](./config-files.md)
 ## ✅ Quality Standards
 
 ### Consistency Checks
+
 - [ ] Naming conventions followed
 - [ ] Depth limits respected
 - [ ] Cross-references work
@@ -287,6 +324,7 @@ For a different approach, see [Configuration Files](./config-files.md)
 - [ ] Content is in logical location
 
 ### Usability Tests
+
 - [ ] New users can find getting started
 - [ ] Existing users can find reference material
 - [ ] Developers can find technical details
@@ -294,6 +332,7 @@ For a different approach, see [Configuration Files](./config-files.md)
 - [ ] Mobile navigation works
 
 ### Maintenance Requirements
+
 - [ ] Clear ownership defined
 - [ ] Update procedures documented
 - [ ] Review schedule established

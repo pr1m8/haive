@@ -22,6 +22,7 @@ class Agent:
 ### Agent Registration System
 
 Agents are registered using decorators:
+
 ```python
 @register_agent(ConfigClass)
 class MyAgent(Agent[ConfigClass]):
@@ -33,11 +34,13 @@ class MyAgent(Agent[ConfigClass]):
 ### 1. Base Level Agents
 
 **Agent** (Abstract Base)
+
 - Core agent functionality
 - State management
 - Workflow orchestration
 
 **SimpleAgent**
+
 - Single-task execution
 - Direct LLM integration
 - Minimal state management
@@ -45,21 +48,25 @@ class MyAgent(Agent[ConfigClass]):
 ### 2. Composition Patterns
 
 **SequentialAgent**
+
 - Execute agents in sequence
 - Pass state between agents
 - Pipeline workflows
 
 **ParallelAgent**
+
 - Execute agents concurrently
 - Merge results
 - Performance optimization
 
 **ConditionalAgent**
+
 - Conditional execution paths
 - Dynamic routing
 - Decision trees
 
 **MultiAgent**
+
 - Combines sequential, parallel, and conditional
 - Complex workflows
 - Advanced orchestration
@@ -67,16 +74,19 @@ class MyAgent(Agent[ConfigClass]):
 ### 3. Specialized Agents
 
 **ChainAgent**
+
 - Simplified sequential workflows
 - Reduced boilerplate
 - Quick prototyping
 
 **RAG Agents**
+
 - Retrieval-augmented generation
 - Multiple strategies
 - Document processing
 
 **Document Agents**
+
 - Document pipeline processing
 - Format handling
 - Metadata extraction
@@ -96,6 +106,7 @@ class RAGState(BaseModel):
 ```
 
 ### State Flow
+
 1. Initial state creation
 2. State updates through nodes
 3. State persistence
@@ -106,6 +117,7 @@ class RAGState(BaseModel):
 ### 1. Graph-Based Workflows
 
 Using LangGraph's StateGraph:
+
 ```python
 def setup_workflow(self):
     gb = DynamicGraph(state_schema=self.state_schema)
@@ -120,16 +132,19 @@ def setup_workflow(self):
 ### 2. Node Types
 
 **Engine Nodes**
+
 - Integrate with haive engines
 - Document processing
 - LLM operations
 
 **Function Nodes**
+
 - Custom logic
 - State transformations
 - External integrations
 
 **Conditional Nodes**
+
 - Routing decisions
 - Branch selection
 - Dynamic paths
@@ -137,14 +152,17 @@ def setup_workflow(self):
 ### 3. Edge Types
 
 **Direct Edges**
+
 - Simple transitions
 - Linear flow
 
 **Conditional Edges**
+
 - Based on state
 - Dynamic routing
 
 **Parallel Edges**
+
 - Fan-out patterns
 - Concurrent execution
 
@@ -164,6 +182,7 @@ class BaseRAGConfig(BaseModel):
 ### Engine Integration
 
 Agents integrate with haive engines:
+
 - **LLM Engine**: Language model operations
 - **Document Engine**: Document processing
 - **Retriever Engine**: Vector search
@@ -172,11 +191,13 @@ Agents integrate with haive engines:
 ## Multi-Agent Patterns
 
 ### Sequential Execution
+
 ```
 Agent1 → Agent2 → Agent3
 ```
 
 ### Parallel Execution
+
 ```
      → Agent1 →
     ↗          ↘
@@ -186,6 +207,7 @@ Start            → Merge → End
 ```
 
 ### Conditional Routing
+
 ```
          → Agent1 (if condition A)
         ↗
@@ -195,12 +217,15 @@ Start → Router
 ```
 
 ### Complex Workflows
+
 Combination of all patterns with nested structures
 
 ## Factory Patterns
 
 ### Unified Factory
+
 Single interface for creating agents:
+
 ```python
 agent = create_agent(
     agent_type="rag",
@@ -211,7 +236,9 @@ agent = create_agent(
 ```
 
 ### Collection Pattern
+
 Grouped agent creation:
+
 ```python
 collection = RAGChainCollection()
 agent = collection.create_fusion_rag(docs, llm_config)
@@ -220,21 +247,25 @@ agent = collection.create_fusion_rag(docs, llm_config)
 ## Extension Points
 
 ### 1. Custom Agents
+
 - Inherit from base Agent
 - Implement required methods
 - Register with decorator
 
 ### 2. Custom Nodes
+
 - Define node functions
 - Add to workflow
 - Handle state updates
 
 ### 3. Custom State
+
 - Extend base state models
 - Add domain-specific fields
 - Maintain compatibility
 
 ### 4. Custom Engines
+
 - Implement engine interface
 - Integrate with agents
 - Extend capabilities
@@ -242,24 +273,28 @@ agent = collection.create_fusion_rag(docs, llm_config)
 ## Best Practices
 
 ### 1. State Design
+
 - Keep state minimal
 - Use structured types
 - Document fields
 - Version state schemas
 
 ### 2. Error Handling
+
 - Implement retry logic
 - Graceful degradation
 - Comprehensive logging
 - State recovery
 
 ### 3. Performance
+
 - Use parallel execution
 - Optimize state updates
 - Cache when possible
 - Profile workflows
 
 ### 4. Testing
+
 - Unit test nodes
 - Integration test workflows
 - Mock external services
@@ -268,21 +303,25 @@ agent = collection.create_fusion_rag(docs, llm_config)
 ## Common Patterns
 
 ### 1. Retrieval Pattern
+
 ```
 Query → Retrieve → Filter → Rank → Return
 ```
 
 ### 2. Generation Pattern
+
 ```
 Context → Prompt → Generate → Validate → Return
 ```
 
 ### 3. Processing Pattern
+
 ```
 Load → Transform → Chunk → Embed → Store
 ```
 
 ### 4. Routing Pattern
+
 ```
 Analyze → Classify → Route → Execute → Merge
 ```
@@ -290,18 +329,22 @@ Analyze → Classify → Route → Execute → Merge
 ## Integration with LangGraph
 
 ### StateGraph Usage
+
 - Define state schema
 - Add nodes and edges
 - Compile to runnable
 - Execute with invoke/stream
 
 ### Command Pattern
+
 Updates state through Command objects:
+
 ```python
 return Command(update={"field": value})
 ```
 
 ### Checkpoint Support
+
 - State persistence
 - Resume capabilities
 - History tracking
@@ -309,21 +352,25 @@ return Command(update={"field": value})
 ## Debugging and Monitoring
 
 ### 1. State Inspection
+
 - Print state at nodes
 - Log transitions
 - Track updates
 
 ### 2. Graph Visualization
+
 - Export graph structure
 - Visualize flow
 - Identify bottlenecks
 
 ### 3. Performance Metrics
+
 - Node execution time
 - State update cost
 - Memory usage
 
 ### 4. Error Tracking
+
 - Exception handling
 - Error state capture
 - Recovery mechanisms

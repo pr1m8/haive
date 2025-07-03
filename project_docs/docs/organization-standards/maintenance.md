@@ -5,30 +5,36 @@ Guidelines for keeping Haive documentation current, accurate, and useful over ti
 ## 🎯 Maintenance Philosophy
 
 ### 1. **Living Documentation**
+
 Documentation should evolve with the codebase and user needs. Stale documentation is worse than no documentation.
 
 ### 2. **Ownership and Accountability**
+
 Every piece of documentation should have a clear owner responsible for keeping it current.
 
 ### 3. **Automated Where Possible**
+
 Use automation to reduce manual maintenance burden and catch issues early.
 
 ### 4. **User-Driven Updates**
+
 Prioritize maintenance based on user feedback and usage patterns.
 
 ## 📅 Maintenance Schedule
 
 ### Daily Automated Checks
+
 ```bash
 # Automated daily tasks
 - Link validation across all documentation
-- Spell check on new/modified content  
+- Spell check on new/modified content
 - Code example syntax validation
 - Image reference verification
 - Search index updates
 ```
 
 ### Weekly Reviews
+
 ```
 Monday: Review user feedback and issues
 Wednesday: Check analytics for usage patterns
@@ -36,6 +42,7 @@ Friday: Update priority maintenance queue
 ```
 
 ### Monthly Deep Reviews
+
 ```
 Week 1: Getting Started documentation
 Week 2: User Guides and tutorials
@@ -44,6 +51,7 @@ Week 4: Examples and code samples
 ```
 
 ### Quarterly Comprehensive Audits
+
 ```
 Q1: Content accuracy and completeness
 Q2: Information architecture review
@@ -54,9 +62,11 @@ Q4: Performance and accessibility
 ## 🔧 Maintenance Triggers
 
 ### Code Changes
+
 Documentation updates required for:
 
 #### **API Changes**
+
 ```markdown
 Trigger: Function signatures change
 Action: Update API reference and examples
@@ -65,6 +75,7 @@ Timeline: Same PR as code change
 ```
 
 #### **Feature Additions**
+
 ```markdown
 Trigger: New features merged
 Action: Add user guides and examples
@@ -73,6 +84,7 @@ Timeline: Within 1 week of feature release
 ```
 
 #### **Deprecations**
+
 ```markdown
 Trigger: Features marked deprecated
 Action: Update docs with deprecation notices
@@ -81,9 +93,11 @@ Timeline: Immediate with deprecation
 ```
 
 ### User Feedback
+
 Documentation updates triggered by:
 
 #### **Support Questions**
+
 ```markdown
 Trigger: Repeated questions on same topic
 Action: Clarify or expand documentation
@@ -92,6 +106,7 @@ Timeline: Within 2 weeks of pattern identification
 ```
 
 #### **GitHub Issues**
+
 ```markdown
 Trigger: Documentation-related issues
 Action: Address reported problems
@@ -100,6 +115,7 @@ Timeline: Based on issue priority
 ```
 
 #### **User Surveys**
+
 ```markdown
 Trigger: Quarterly user feedback
 Action: Strategic documentation improvements
@@ -112,6 +128,7 @@ Timeline: Quarterly planning cycle
 ### Content Review Process
 
 #### **Regular Content Audit**
+
 ```markdown
 1. **Identify content to review**
    - Oldest content first
@@ -138,6 +155,7 @@ Timeline: Quarterly planning cycle
 ```
 
 #### **Link Maintenance**
+
 ```bash
 # Weekly link checking
 find docs/ -name "*.md" -exec markdown-link-check {} \;
@@ -147,20 +165,23 @@ markdown-link-check docs/**/*.md --reporter json > link-report.json
 
 # Fix broken links
 # - Update URLs that have moved
-# - Remove links to deleted content  
+# - Remove links to deleted content
 # - Archive or replace dead external links
 ```
 
 ### Version Management
 
 #### **Version-Specific Content**
-```markdown
+
+````markdown
 <!-- Version annotations -->
+
 > **Note**: This feature requires Haive v2.0 or later.
 
 > **Deprecated**: This API is deprecated as of v1.5. Use [NewAPI](../new-api.md) instead.
 
 <!-- Version-specific examples -->
+
 ```python
 # Haive v2.0+
 agent = SimpleAgent(name="helper", version="v2")
@@ -168,7 +189,9 @@ agent = SimpleAgent(name="helper", version="v2")
 # Haive v1.x (deprecated)
 agent = Agent.create(name="helper")
 ```
-```
+````
+
+````
 
 #### **Migration Guides**
 For major version changes:
@@ -181,20 +204,21 @@ For major version changes:
 
 ## Update Steps
 1. [Update dependencies](./update-deps.md)
-2. [Migrate configuration](./migrate-config.md)  
+2. [Migrate configuration](./migrate-config.md)
 3. [Update code](./update-code.md)
 4. [Test changes](./test-migration.md)
 
 ## Compatibility
 - [Backward compatibility](./compatibility.md)
 - [Timeline for deprecations](./deprecation-timeline.md)
-```
+````
 
 ## 🤖 Automation Tools
 
 ### Automated Validation
 
 #### **Content Validation**
+
 ```yaml
 # .github/workflows/docs-validation.yml
 name: Documentation Validation
@@ -205,22 +229,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Check links
         run: markdown-link-check docs/**/*.md
-        
-      - name: Spell check  
+
+      - name: Spell check
         run: cspell "docs/**/*.md"
-        
+
       - name: Validate code examples
         run: python scripts/validate-examples.py
-        
+
       - name: Check formatting
         run: prettier --check "docs/**/*.md"
 ```
 
 #### **Example Testing**
-```python
+
+````python
 # scripts/validate-examples.py
 """Validate all code examples in documentation."""
 
@@ -260,11 +285,12 @@ if __name__ == "__main__":
     else:
         print("❌ Some examples have issues")
         exit(1)
-```
+````
 
 ### Monitoring and Alerts
 
 #### **Content Freshness**
+
 ```python
 # scripts/content-freshness.py
 """Monitor documentation freshness."""
@@ -277,19 +303,19 @@ def check_freshness(max_age_days=90):
     """Check for documentation older than max_age_days."""
     cutoff = datetime.now() - timedelta(days=max_age_days)
     stale_files = []
-    
+
     for md_file in Path("docs").rglob("*.md"):
         modified = datetime.fromtimestamp(md_file.stat().st_mtime)
         if modified < cutoff:
             age_days = (datetime.now() - modified).days
             stale_files.append((md_file, age_days))
-    
+
     return stale_files
 
 def generate_freshness_report():
     """Generate report of stale documentation."""
     stale_files = check_freshness()
-    
+
     if stale_files:
         print("📅 Stale Documentation Report")
         print("=" * 40)
@@ -303,31 +329,32 @@ if __name__ == "__main__":
 ```
 
 #### **Usage Analytics**
+
 ```javascript
 // Track documentation usage
 function trackPageView(page, section) {
-    analytics.track('Documentation Page View', {
-        page: page,
-        section: section,
-        timestamp: new Date().toISOString()
-    });
+  analytics.track("Documentation Page View", {
+    page: page,
+    section: section,
+    timestamp: new Date().toISOString(),
+  });
 }
 
 // Track search queries
 function trackSearch(query, results_count) {
-    analytics.track('Documentation Search', {
-        query: query,
-        results_count: results_count,
-        timestamp: new Date().toISOString()
-    });
+  analytics.track("Documentation Search", {
+    query: query,
+    results_count: results_count,
+    timestamp: new Date().toISOString(),
+  });
 }
 
 // Generate monthly reports
 function generateUsageReport() {
-    // Top viewed pages
-    // Common search queries  
-    // User journey analysis
-    // Exit points identification
+  // Top viewed pages
+  // Common search queries
+  // User journey analysis
+  // Exit points identification
 }
 ```
 
@@ -336,6 +363,7 @@ function generateUsageReport() {
 ### Measurement Standards
 
 #### **Content Quality Metrics**
+
 ```
 - Link health rate (target: >99%)
 - Content freshness (target: <90 days average age)
@@ -345,6 +373,7 @@ function generateUsageReport() {
 ```
 
 #### **Usage Metrics**
+
 ```
 - Page views per section
 - Search success rate
@@ -356,25 +385,30 @@ function generateUsageReport() {
 ### Reporting Dashboard
 
 #### **Weekly Status Report**
+
 ```markdown
 # Documentation Health Report - Week of [Date]
 
 ## 📊 Key Metrics
+
 - Link health: 99.2% (↑ 0.3%)
 - Content freshness: 45 days average (↓ 5 days)
 - User satisfaction: 4.2/5 (→ no change)
 
 ## 🔧 Maintenance Activities
+
 - Updated 12 code examples
 - Fixed 3 broken links
 - Refreshed 5 outdated guides
 
 ## 🎯 Focus Areas
+
 - Getting started user journey optimization
 - API reference completeness review
 - Mobile navigation improvements
 
 ## 📈 Usage Highlights
+
 - Most viewed: Agent Configuration Guide (1,247 views)
 - Top search: "agent tools configuration" (89 searches)
 - Support ticket reduction: 15% (↓ from doc improvements)
@@ -385,21 +419,25 @@ function generateUsageReport() {
 ### Role Definitions
 
 #### **Documentation Owner**
+
 - **Responsibility**: Overall documentation strategy and quality
 - **Activities**: Planning, coordination, standards enforcement
 - **Frequency**: Daily oversight, weekly planning
 
 #### **Technical Writers**
+
 - **Responsibility**: Content creation and major updates
 - **Activities**: Writing, editing, user research
 - **Frequency**: Daily writing, weekly reviews
 
 #### **Developers**
+
 - **Responsibility**: Code-related documentation updates
 - **Activities**: API docs, code examples, technical accuracy
 - **Frequency**: With each code change
 
 #### **Community Managers**
+
 - **Responsibility**: User feedback integration
 - **Activities**: Issue triage, feedback collection, community input
 - **Frequency**: Daily monitoring, weekly reports
@@ -407,9 +445,10 @@ function generateUsageReport() {
 ### Escalation Process
 
 #### **Issue Severity Levels**
+
 ```
 Critical (1-4 hours): Broken getting started guide, major security info
-High (1-2 days): Broken API references, incorrect examples  
+High (1-2 days): Broken API references, incorrect examples
 Medium (1 week): Minor inaccuracies, style inconsistencies
 Low (1 month): Enhancement requests, nice-to-have improvements
 ```
@@ -417,24 +456,28 @@ Low (1 month): Enhancement requests, nice-to-have improvements
 ## ✅ Maintenance Checklist
 
 ### Daily Tasks
+
 - [ ] Review automated health checks
 - [ ] Address critical documentation issues
 - [ ] Monitor user feedback channels
 - [ ] Update any code-dependent documentation
 
-### Weekly Tasks  
+### Weekly Tasks
+
 - [ ] Run comprehensive link validation
 - [ ] Review and triage documentation issues
 - [ ] Update content freshness report
 - [ ] Plan upcoming maintenance activities
 
 ### Monthly Tasks
+
 - [ ] Deep review of assigned content sections
 - [ ] Analyze usage metrics and trends
 - [ ] Update maintenance priorities
 - [ ] Coordinate with development teams on upcoming changes
 
 ### Quarterly Tasks
+
 - [ ] Comprehensive documentation audit
 - [ ] User experience review and testing
 - [ ] Information architecture assessment

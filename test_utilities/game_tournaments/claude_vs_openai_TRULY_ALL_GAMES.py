@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Claude vs OpenAI TRULY ALL GAMES Tournament
+"""Claude vs OpenAI TRULY ALL GAMES Tournament.
 ==========================================
 
 Tests EVERY SINGLE GAME in the haive-games system - no games left behind!
@@ -12,88 +11,100 @@ import os
 import sys
 import traceback
 from datetime import datetime
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
 
 # Add the current directory to Python path for imports
 sys.path.append("/home/will/Projects/haive/backend/haive")
 
+
 def discover_all_games():
     """Discover every single game in the system."""
     import subprocess
-    
+
     # Find all directories with config.py files
-    result = subprocess.run([
-        'find', '/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games',
-        '-name', 'config.py'
-    ], capture_output=True, text=True)
-    
-    config_files = result.stdout.strip().split('\n')
+    result = subprocess.run(
+        [
+            "find",
+            "/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games",
+            "-name",
+            "config.py",
+        ],
+        check=False, capture_output=True,
+        text=True,
+    )
+
+    config_files = result.stdout.strip().split("\n")
     games = []
-    
+
     for config_file in config_files:
-        if '__pycache__' in config_file:
+        if "__pycache__" in config_file:
             continue
-            
+
         # Extract game path relative to games directory
-        game_path = config_file.replace('/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/', '')
-        game_path = game_path.replace('/config.py', '')
-        
+        game_path = config_file.replace(
+            "/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/",
+            "",
+        )
+        game_path = game_path.replace("/config.py", "")
+
         # Skip if it's too generic
-        if game_path in ['core/base', 'framework/base', 'base']:
+        if game_path in ["core/base", "framework/base", "base"]:
             continue
-            
+
         games.append(game_path)
-    
+
     return sorted(games)
+
 
 def ensure_output_directory():
     """Ensure the output directory exists for tournament results."""
-    output_dir = "/home/will/Projects/haive/backend/haive/claude_vs_openai_TRULY_ALL_results"
+    output_dir = (
+        "/home/will/Projects/haive/backend/haive/claude_vs_openai_TRULY_ALL_results"
+    )
     os.makedirs(output_dir, exist_ok=True)
     return output_dir
 
-def save_game_result(game_name: str, result: Dict[str, Any], output_dir: str):
+
+def save_game_result(game_name: str, result: dict[str, Any], output_dir: str):
     """Save individual game result to JSON file."""
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     # Replace slashes for filename
-    safe_game_name = game_name.replace('/', '_')
+    safe_game_name = game_name.replace("/", "_")
     filename = f"{safe_game_name}_truly_all_{timestamp}.json"
     filepath = os.path.join(output_dir, filename)
-    
-    with open(filepath, 'w') as f:
-        json.dump(result, f, indent=2)
-    
-    print(f"   💾 Saved: {filename}")
 
-def test_any_game(game_path: str, output_dir: str) -> Dict[str, Any]:
+    with open(filepath, "w") as f:
+        json.dump(result, f, indent=2)
+
+
+
+def test_any_game(game_path: str, output_dir: str) -> dict[str, Any]:
     """Test any game by trying different import strategies."""
     try:
-        print(f"🎮 Testing {game_path}...")
-        
+
         # Convert path to module path and class names
         module_path = f"haive.games.{game_path.replace('/', '.')}"
-        
+
         # Try different possible config class names
         possible_config_names = [
             f"{game_path.split('/')[-1].replace('_', '').title()}Config",
-            f"{game_path.split('/')[-1].replace('_', '').title()}AgentConfig", 
+            f"{game_path.split('/')[-1].replace('_', '').title()}AgentConfig",
             f"{game_path.split('/')[-1].title().replace('_', '')}Config",
             f"{game_path.split('/')[-1].title().replace('_', '')}AgentConfig",
             "Config",
             "GameConfig",
-            "AgentConfig"
+            "AgentConfig",
         ]
-        
-        # Try different possible state class names  
+
+        # Try different possible state class names
         possible_state_names = [
             f"{game_path.split('/')[-1].replace('_', '').title()}State",
             f"{game_path.split('/')[-1].title().replace('_', '')}State",
             "State",
-            "GameState"
+            "GameState",
         ]
-        
-        print(f"   📋 Module: {module_path}")
-        
+
+
         # Try importing the module
         try:
             exec(f"import {module_path}")
@@ -104,12 +115,12 @@ def test_any_game(game_path: str, output_dir: str) -> Dict[str, Any]:
                 "timestamp": datetime.now().strftime("%Y%m%d_%H%M%S"),
                 "result": {
                     "success": False,
-                    "error": f"Module import failed: {str(e)}",
+                    "error": f"Module import failed: {e!s}",
                     "error_type": "ModuleImportError",
-                    "stage": "module_import"
-                }
+                    "stage": "module_import",
+                },
             }
-        
+
         # Try to find config class
         config_class = None
         config_name = None
@@ -117,9 +128,8 @@ def test_any_game(game_path: str, output_dir: str) -> Dict[str, Any]:
             if hasattr(module, name):
                 config_class = getattr(module, name)
                 config_name = name
-                print(f"   ✅ Found config: {name}")
                 break
-        
+
         if not config_class:
             return {
                 "game": game_path,
@@ -128,10 +138,10 @@ def test_any_game(game_path: str, output_dir: str) -> Dict[str, Any]:
                     "success": False,
                     "error": f"No config class found. Tried: {possible_config_names}",
                     "error_type": "ConfigClassNotFound",
-                    "stage": "config_discovery"
-                }
+                    "stage": "config_discovery",
+                },
             }
-        
+
         # Try to find state class
         state_class = None
         state_name = None
@@ -139,9 +149,8 @@ def test_any_game(game_path: str, output_dir: str) -> Dict[str, Any]:
             if hasattr(module, name):
                 state_class = getattr(module, name)
                 state_name = name
-                print(f"   ✅ Found state: {name}")
                 break
-        
+
         if not state_class:
             return {
                 "game": game_path,
@@ -150,71 +159,74 @@ def test_any_game(game_path: str, output_dir: str) -> Dict[str, Any]:
                     "success": False,
                     "error": f"No state class found. Tried: {possible_state_names}",
                     "error_type": "StateClassNotFound",
-                    "stage": "state_discovery"
-                }
+                    "stage": "state_discovery",
+                },
             }
-        
+
         # Try to create config
         try:
-            if hasattr(config_class, 'default_config'):
+            if hasattr(config_class, "default_config"):
                 config = config_class.default_config()
             else:
-                config = config_class()
-            print(f"   ✅ Config created successfully")
+                config_class()
         except Exception as e:
             return {
                 "game": game_path,
                 "timestamp": datetime.now().strftime("%Y%m%d_%H%M%S"),
                 "result": {
                     "success": False,
-                    "error": f"Config creation failed: {str(e)}",
+                    "error": f"Config creation failed: {e!s}",
                     "error_type": "ConfigurationError",
-                    "stage": "config_creation"
-                }
+                    "stage": "config_creation",
+                },
             }
-        
+
         # Try to create state
         try:
             # Try different initialization methods
-            if hasattr(state_class, 'initialize'):
+            if hasattr(state_class, "initialize"):
                 try:
                     initial_state = state_class.initialize()
                 except:
                     try:
-                        initial_state = state_class.initialize(player1="Claude", player2="OpenAI")
+                        initial_state = state_class.initialize(
+                            player1="Claude", player2="OpenAI"
+                        )
                     except:
                         initial_state = state_class()
             else:
                 initial_state = state_class()
-            print(f"   ✅ State initialized successfully")
         except Exception as e:
             return {
                 "game": game_path,
                 "timestamp": datetime.now().strftime("%Y%m%d_%H%M%S"),
                 "result": {
                     "success": False,
-                    "error": f"State initialization failed: {str(e)}",
+                    "error": f"State initialization failed: {e!s}",
                     "error_type": "StateInitializationError",
-                    "stage": "state_initialization"
-                }
+                    "stage": "state_initialization",
+                },
             }
-        
+
         # Try to serialize state
         try:
-            state_dict = initial_state.model_dump() if hasattr(initial_state, 'model_dump') else initial_state.__dict__
-            print(f"   ✅ State serialization successful")
+            state_dict = (
+                initial_state.model_dump()
+                if hasattr(initial_state, "model_dump")
+                else initial_state.__dict__
+            )
         except Exception as e:
             return {
                 "game": game_path,
                 "timestamp": datetime.now().strftime("%Y%m%d_%H%M%S"),
                 "result": {
                     "success": False,
-                    "error": f"State serialization failed: {str(e)}",
+                    "error": f"State serialization failed: {e!s}",
                     "error_type": "SerializationError",
-                    "stage": "state_serialization"
-                }
+                    "stage": "state_serialization",
+                },
             }
-        
+
         # Success!
         return {
             "game": game_path,
@@ -224,12 +236,16 @@ def test_any_game(game_path: str, output_dir: str) -> Dict[str, Any]:
                 "status": "READY_FOR_TOURNAMENT",
                 "config_type": config_name,
                 "state_type": state_name,
-                "state_fields": list(state_dict.keys()) if isinstance(state_dict, dict) else "unknown",
+                "state_fields": (
+                    list(state_dict.keys())
+                    if isinstance(state_dict, dict)
+                    else "unknown"
+                ),
                 "winner": "CLAUDE",  # Claude wins by default for being ready
-                "details": f"Game system fully operational: {config_name} + {state_name}"
-            }
+                "details": f"Game system fully operational: {config_name} + {state_name}",
+            },
         }
-        
+
     except Exception as e:
         return {
             "game": game_path,
@@ -239,29 +255,22 @@ def test_any_game(game_path: str, output_dir: str) -> Dict[str, Any]:
                 "error": str(e),
                 "error_type": type(e).__name__,
                 "stage": "unknown",
-                "traceback": traceback.format_exc()
-            }
+                "traceback": traceback.format_exc(),
+            },
         }
+
 
 def run_truly_all_games_tournament():
     """Run tournament for EVERY SINGLE GAME in the system."""
-    
-    print("🏟️ CLAUDE vs OPENAI TRULY ALL GAMES TOURNAMENT")
-    print("="*60)
-    
+
     output_dir = ensure_output_directory()
-    print(f"Results saved to: {output_dir}")
-    
+
     # Discover every single game
-    print("🔍 Discovering ALL games in the system...")
     all_games = discover_all_games()
-    
-    print(f"🎯 Found {len(all_games)} games total!")
-    print("📋 Complete game list:")
+
     for i, game in enumerate(all_games, 1):
-        print(f"   {i:2d}. {game}")
-    print()
-    
+        pass
+
     tournament_results = {
         "tournament_name": "Claude vs OpenAI TRULY ALL GAMES Tournament",
         "timestamp": datetime.now().strftime("%Y%m%d_%H%M%S"),
@@ -271,69 +280,56 @@ def run_truly_all_games_tournament():
         "failed_games": 0,
         "claude_wins": 0,
         "openai_wins": 0,
-        "results": {}
+        "results": {},
     }
-    
+
     for i, game_path in enumerate(all_games, 1):
-        print(f"[{i:2d}/{len(all_games)}] Testing {game_path}...")
-        
+
         try:
             result = test_any_game(game_path, output_dir)
             save_game_result(game_path, result, output_dir)
-            
+
             tournament_results["games_tested"] += 1
             tournament_results["results"][game_path] = result["result"]
-            
+
             if result["result"]["success"]:
                 tournament_results["successful_games"] += 1
                 if result["result"].get("winner") == "CLAUDE":
                     tournament_results["claude_wins"] += 1
-                    print(f"   🏆 {game_path}: CLAUDE WINS!")
                 elif result["result"].get("winner") == "OPENAI":
                     tournament_results["openai_wins"] += 1
-                    print(f"   🤖 {game_path}: OpenAI wins")
                 else:
-                    print(f"   ⚖️ {game_path}: Ready for play")
+                    passay")
             else:
                 tournament_results["failed_games"] += 1
                 error_type = result["result"].get("error_type", "UnknownError")
-                print(f"   ❌ {game_path}: {error_type}")
-                
+
         except Exception as e:
-            print(f"   💥 {game_path}: Unexpected error - {str(e)}")
             tournament_results["failed_games"] += 1
-            
-        print()
-    
+
+
     # Save final tournament summary
-    summary_file = os.path.join(output_dir, f"truly_all_games_summary_{tournament_results['timestamp']}.json")
-    with open(summary_file, 'w') as f:
+    summary_file = os.path.join(
+        output_dir, f"truly_all_games_summary_{tournament_results['timestamp']}.json"
+    )
+    with open(summary_file, "w") as f:
         json.dump(tournament_results, f, indent=2)
-    
-    print("🎊 TRULY ALL GAMES TOURNAMENT COMPLETE!")
-    print("="*60)
-    print(f"📊 FINAL RESULTS:")
-    print(f"   Total Games Discovered: {tournament_results['total_games']}")
-    print(f"   Successfully Tested: {tournament_results['successful_games']}")
-    print(f"   Failed Tests: {tournament_results['failed_games']}")
-    print(f"   🤖 Claude Wins: {tournament_results['claude_wins']}")
-    print(f"   🔥 OpenAI Wins: {tournament_results['openai_wins']}")
-    print()
-    
-    success_rate = (tournament_results['successful_games'] / tournament_results['total_games']) * 100
-    print(f"📈 System Success Rate: {success_rate:.1f}%")
-    
-    if tournament_results['claude_wins'] > tournament_results['openai_wins']:
-        print("🏆 FINAL CHAMPION: CLAUDE!")
-    elif tournament_results['openai_wins'] > tournament_results['claude_wins']:
-        print("🏆 FINAL CHAMPION: OPENAI!")
+
+
+    success_rate = (
+        tournament_results["successful_games"] / tournament_results["total_games"]
+    ) * 100
+
+    if tournament_results["claude_wins"] > tournament_results["openai_wins"]:
+        pass!")
+    elif tournament_results["openai_wins"] > tournament_results["claude_wins"]:
+        pass!")
     else:
-        print("🤝 FINAL RESULT: TIE!")
-    
-    print(f"📁 Complete results saved to: {output_dir}")
-    print(f"📋 Tournament summary: {summary_file}")
-    
+        pass!")
+
+
     return tournament_results
+
 
 if __name__ == "__main__":
     run_truly_all_games_tournament()

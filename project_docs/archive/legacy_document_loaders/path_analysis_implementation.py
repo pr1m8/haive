@@ -7,18 +7,17 @@ The path analysis system is a critical foundation for the document loader engine
 as it enables automatic detection of source types based on the input path.
 """
 
-from abc import ABC, abstractmethod
-from enum import Enum
 import logging
 import mimetypes
 import os
-from pathlib import Path
 import re
+from abc import ABC, abstractmethod
+from enum import Enum
+from pathlib import Path
 from typing import ClassVar
 from urllib.parse import parse_qs, urlparse
 
 from pydantic import BaseModel, Field
-
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -405,10 +404,7 @@ class LocalPathAnalyzer(BasePathAnalyzer):
             return False
 
         # Check for database URIs
-        if re.match(r"^[a-zA-Z0-9]+://.*$", path) and ":" in path and "@" in path:
-            return False
-
-        return True
+        return not (re.match(r"^[a-zA-Z0-9]+://.*$", path) and ":" in path and "@" in path)
 
     def analyze(self, path: str, result: PathAnalysisResult) -> None:
         """Analyze a local path and update the result object."""
@@ -714,10 +710,7 @@ class DatabaseURIAnalyzer(BasePathAnalyzer):
                 return True
 
         # Check for SQLite file paths
-        if path.endswith((".db", ".sqlite", ".sqlite3")) and not path.startswith(("http://", "https://")):
-            return True
-
-        return False
+        return bool(path.endswith((".db", ".sqlite", ".sqlite3")) and not path.startswith(("http://", "https://")))
 
     def analyze(self, path: str, result: PathAnalysisResult) -> None:
         """Analyze a database URI and update the result object."""
@@ -885,7 +878,6 @@ class CloudStorageAnalyzer(BasePathAnalyzer):
 
                     # Try to extract bucket and key from URL
                     if provider == CloudProvider.AWS_S3:
-                        # Format: bucket.s3.amazonaws.com/key or s3.amazonaws.com/bucket/key
                         if parsed_url.netloc.endswith("s3.amazonaws.com"):
                             # Bucket is in path
                             path_parts = parsed_url.path.lstrip("/").split("/")
@@ -899,15 +891,6 @@ class CloudStorageAnalyzer(BasePathAnalyzer):
                             result.object_key = parsed_url.path.lstrip("/")
 
                     elif provider == CloudProvider.GOOGLE_CLOUD:
-                        # Format: storage.googleapis.com/bucket/key
-                        path_parts = parsed_url.path.lstrip("/").split("/")
-                        if path_parts:
-                            result.bucket_name = path_parts[0]
-                            if len(path_parts) > 1:
-                                result.object_key = "/".join(path_parts[1:])
-
-                    elif provider == CloudProvider.AZURE_BLOB:
-                        # Format: account.blob.core.windows.net/container/blob
                         path_parts = parsed_url.path.lstrip("/").split("/")
                         if path_parts:
                             result.bucket_name = path_parts[0]
@@ -965,11 +948,7 @@ class SpecialPathAnalyzer(BasePathAnalyzer):
     def can_analyze(self, path: str) -> bool:
         """Check if this analyzer can handle the given path."""
         # Check for special path patterns
-        for pattern in self.SPECIAL_PATTERNS.values():
-            if re.match(pattern, path):
-                return True
-
-        return False
+        return any(re.match(pattern, path) for pattern in self.SPECIAL_PATTERNS.values())
 
     def analyze(self, path: str, result: PathAnalysisResult) -> None:
         """Analyze a special path and update the result object."""
@@ -1094,13 +1073,13 @@ class SpecialPathAnalyzer(BasePathAnalyzer):
 
 def analyze_path_comprehensive(path_input: str | Path) -> PathAnalysisResult:
     """Comprehensively analyze a path or URL to determine its nature, type, and properties.
-    
+
     This function is the primary entry point for path analysis, utilizing various
     specialized analyzers to determine the path's characteristics.
-    
+
     Args:
         path_input: The path or URL to analyze
-        
+
     Returns:
         PathAnalysisResult: Comprehensive analysis result
     """
@@ -1143,21 +1122,21 @@ def analyze_path_comprehensive(path_input: str | Path) -> PathAnalysisResult:
 
 def analyze_path(path: str | Path) -> PathAnalysisResult:
     """Analyze a path to determine its type, properties, and metadata.
-    
+
     This function is a simplified wrapper around analyze_path_comprehensive that
     provides a convenient interface for the document loader engine.
-    
+
     Args:
         path: The path, URL, or source identifier to analyze
-    
+
     Returns:
         PathAnalysisResult containing the analysis results
-        
+
     Examples:
         >>> result = analyze_path("/path/to/document.pdf")
         >>> print(result.path_type)  # PathType.LOCAL_FILE
         >>> print(result.mime_type)  # "application/pdf"
-        
+
         >>> result = analyze_path("https://example.com/page.html")
         >>> print(result.path_type)  # PathType.URL_HTTPS
         >>> print(result.is_remote)  # True
@@ -1167,10 +1146,10 @@ def analyze_path(path: str | Path) -> PathAnalysisResult:
 
 def detect_mime_type(file_path: str) -> str | None:
     """Detect the MIME type of a file.
-    
+
     Args:
         file_path: Path to the file
-        
+
     Returns:
         Optional[str]: MIME type or None if it can't be determined
     """
@@ -1190,10 +1169,10 @@ def detect_mime_type(file_path: str) -> str | None:
 
 def is_binary_file(file_path: str) -> bool:
     """Check if a file is binary.
-    
+
     Args:
         file_path: Path to the file
-        
+
     Returns:
         bool: True if the file is binary, False otherwise
     """
@@ -1221,10 +1200,10 @@ def is_binary_file(file_path: str) -> bool:
 
 def get_file_encoding(file_path: str) -> str:
     """Guess the encoding of a text file.
-    
+
     Args:
         file_path: Path to the file
-        
+
     Returns:
         str: Detected encoding or 'utf-8' as fallback
     """

@@ -16,17 +16,20 @@ This module integrates seamlessly with LangGraph's checkpointing system while ad
 ## 📦 **Available Backends**
 
 ### 🧠 **Memory Backend**
+
 ```python
 from haive.core.persistence import MemoryCheckpointerConfig
 
 config = MemoryCheckpointerConfig()
 checkpointer = config.create_checkpointer()
 ```
+
 - **Use Case**: Development, testing, temporary state
 - **Persistence**: In-memory only (lost on restart)
 - **Dependencies**: None (built-in)
 
 ### 🐘 **PostgreSQL Backend**
+
 ```python
 from haive.core.persistence import PostgresCheckpointerConfig
 
@@ -35,11 +38,13 @@ config = PostgresCheckpointerConfig(
 )
 checkpointer = config.create_checkpointer()
 ```
+
 - **Use Case**: Production deployments, on-premise databases
 - **Persistence**: Durable PostgreSQL storage
 - **Dependencies**: `psycopg2-binary`, `psycopg-pool`
 
 ### ☁️ **Supabase Backend**
+
 ```python
 from haive.core.persistence import SupabaseCheckpointerConfig
 
@@ -49,6 +54,7 @@ config = SupabaseCheckpointerConfig(
 )
 checkpointer, store = config.create_checkpointer_and_store()
 ```
+
 - **Use Case**: Cloud deployments, managed PostgreSQL, multi-tenant apps
 - **Persistence**: Cloud-hosted PostgreSQL via Supabase
 - **Dependencies**: `psycopg2-binary`, `psycopg-pool`
@@ -56,6 +62,7 @@ checkpointer, store = config.create_checkpointer_and_store()
 ## 🚀 **Quick Start Guide**
 
 ### 1. **Choose Your Backend**
+
 ```python
 from haive.core.persistence import get_available_backends
 
@@ -66,6 +73,7 @@ print(f"Available backends: {backends}")
 ```
 
 ### 2. **Create Configuration**
+
 ```python
 from haive.core.persistence import create_checkpointer_config
 
@@ -77,6 +85,7 @@ config = create_checkpointer_config(
 ```
 
 ### 3. **Create Checkpointer**
+
 ```python
 # Synchronous
 checkpointer = config.create_checkpointer()
@@ -89,6 +98,7 @@ checkpointer, store = config.create_checkpointer_and_store()
 ```
 
 ### 4. **Use with LangGraph**
+
 ```python
 from langgraph.graph import StateGraph
 
@@ -109,6 +119,7 @@ result = app.invoke(initial_state, config=thread_config)
 The persistence module automatically creates the following tables:
 
 ### **Standard LangGraph Tables**
+
 ```sql
 -- Main checkpoint storage
 CREATE TABLE checkpoints (
@@ -122,7 +133,7 @@ CREATE TABLE checkpoints (
     PRIMARY KEY (thread_id, checkpoint_ns, checkpoint_id)
 );
 
--- Large binary data storage  
+-- Large binary data storage
 CREATE TABLE checkpoint_blobs (
     thread_id TEXT NOT NULL,
     checkpoint_ns TEXT NOT NULL DEFAULT '',
@@ -148,6 +159,7 @@ CREATE TABLE checkpoint_writes (
 ```
 
 ### **Store Tables** (for long-term memory)
+
 ```sql
 -- Key-value store for cross-thread data
 CREATE TABLE store (
@@ -163,16 +175,19 @@ CREATE TABLE store (
 ## 🔌 **Installation Requirements**
 
 ### **Core Dependencies** (always required)
+
 ```bash
 pip install langgraph pydantic
 ```
 
 ### **PostgreSQL Backend**
+
 ```bash
 pip install psycopg2-binary psycopg-pool
 ```
 
 ### **Supabase Backend**
+
 ```bash
 pip install psycopg2-binary psycopg-pool
 # Optional: For REST API features
@@ -182,17 +197,20 @@ pip install supabase
 ## 🎯 **Connection String Formats**
 
 ### **PostgreSQL**
+
 ```
 postgresql://username:password@host:port/database
 postgresql://user:pass@localhost:5432/haive
 ```
 
 ### **Supabase PostgreSQL**
+
 ```
 postgresql://postgres.PROJECT:PASSWORD@aws-0-us-east-1.pooler.supabase.com:6543/postgres
 ```
 
 ### **SQLite**
+
 ```
 sqlite:///path/to/database.db
 sqlite:///:memory:
@@ -216,14 +234,14 @@ haive.core.persistence/
 ```python
 def test_persistence_setup():
     from haive.core.persistence import PostgresCheckpointerConfig
-    
+
     config = PostgresCheckpointerConfig(
         connection_string="your-connection-string"
     )
-    
+
     checkpointer = config.create_checkpointer()
     print(f"✅ Checkpointer: {type(checkpointer).__name__}")
-    
+
     return True
 
 test_persistence_setup()
@@ -232,15 +250,18 @@ test_persistence_setup()
 ## 📚 **API Reference**
 
 ### **Factory Functions**
+
 - `get_available_backends()` → `list[str]`: List available backends
 - `create_checkpointer_config(backend, **kwargs)` → `CheckpointerConfig`: Create config
 
 ### **Configuration Classes**
+
 - `MemoryCheckpointerConfig`: In-memory persistence
-- `PostgresCheckpointerConfig`: PostgreSQL persistence  
+- `PostgresCheckpointerConfig`: PostgreSQL persistence
 - `SupabaseCheckpointerConfig`: Supabase cloud persistence
 
 ### **Key Methods**
+
 - `create_checkpointer()` → `Checkpointer`: Create sync checkpointer
 - `create_async_checkpointer()` → `AsyncCheckpointer`: Create async checkpointer
 - `create_store()` → `Store`: Create sync store
@@ -256,4 +277,4 @@ test_persistence_setup()
 
 ---
 
-*For more information, see the [Haive Documentation](https://github.com/pr1m8/haive) or individual module docs.*
+_For more information, see the [Haive Documentation](https://github.com/pr1m8/haive) or individual module docs._

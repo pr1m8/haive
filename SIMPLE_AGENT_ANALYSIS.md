@@ -26,11 +26,13 @@ self.engine.output_schema = enhanced_schema  # Direct modification!
 AugLLMConfig has two versions of structured output handling:
 
 ### Version 1 (Parser-based)
+
 - Uses output parsers (e.g., PydanticOutputParser) to parse text output
 - The output schema includes fields for the parsed model
 - Requires format instructions in the prompt
 
 ### Version 2 (Tool-based) - DEFAULT
+
 - Uses function/tool calling mechanism
 - Returns raw AIMessage with tool_calls
 - NO parser is applied - the structured model is treated as a tool
@@ -50,7 +52,7 @@ AugLLMConfig has two versions of structured output handling:
 
 1. **The modification is NOT necessary**: AugLLMConfig already handles structured output internally through its validation and configuration system.
 
-2. **The modification is potentially dangerous**: 
+2. **The modification is potentially dangerous**:
    - It mutates what should be immutable configuration
    - It breaks the separation between configuration and runtime
    - It could cause issues if the engine is reused
@@ -78,7 +80,7 @@ class SimpleAgent(Agent):
             # Just sync the structured_output_model to engine
             if self.structured_output_model:
                 self.engine.structured_output_model = self.structured_output_model
-            
+
             # The engine will handle everything internally
             self.engines["main"] = self.engine
 ```
@@ -86,6 +88,7 @@ class SimpleAgent(Agent):
 ## Conclusion
 
 SimpleAgent's modification of `engine.output_schema` is:
+
 - **Unnecessary**: AugLLMConfig already handles structured output properly
 - **Potentially harmful**: It mutates configuration that should be immutable
 - **Based on misunderstanding**: V2 structured output uses tool calls, not output fields

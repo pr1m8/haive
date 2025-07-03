@@ -42,11 +42,12 @@ You can verify that data persistence works despite the errors:
    - Verify recent entries exist
 
 2. **Query Database Directly**:
+
    ```python
    import os
    import asyncio
    import psycopg
-   
+
    async def check_data():
        conn_string = os.getenv("POSTGRES_CONNECTION_STRING")
        async with await psycopg.AsyncConnection.connect(conn_string) as conn:
@@ -54,7 +55,7 @@ You can verify that data persistence works despite the errors:
                await cur.execute("SELECT COUNT(*) FROM checkpoint_writes")
                count = (await cur.fetchone())[0]
                print(f"Total checkpoint writes: {count}")
-   
+
    asyncio.run(check_data())
    ```
 
@@ -137,12 +138,14 @@ agent = SimpleAgent(engine=AugLLMConfig())
 ## When to Take Action
 
 ### Ignore These Cases
+
 - ✅ Error contains "prepared statement" and "_pg3_"
 - ✅ Data is still being written to database
 - ✅ Agent execution completes successfully
 - ✅ Only warnings/errors during setup phase
 
 ### Investigate These Cases
+
 - ❌ Data is NOT being written to database
 - ❌ Agent execution fails completely
 - ❌ Connection timeouts or authentication errors
@@ -155,11 +158,12 @@ agent = SimpleAgent(engine=AugLLMConfig())
 For production deployments, monitor these metrics:
 
 1. **Data Write Success Rate**:
+
    ```sql
-   SELECT 
+   SELECT
        DATE(created_at) as date,
        COUNT(*) as writes_per_day
-   FROM checkpoint_writes 
+   FROM checkpoint_writes
    WHERE created_at > NOW() - INTERVAL '7 days'
    GROUP BY DATE(created_at)
    ORDER BY date;
@@ -186,11 +190,11 @@ from datetime import datetime, timedelta
 
 async def health_check():
     """Check if persistence is working."""
-    
+
     conn_string = os.getenv("POSTGRES_CONNECTION_STRING")
     if not conn_string:
         return False, "No connection string"
-    
+
     try:
         async with await psycopg.AsyncConnection.connect(conn_string) as conn:
             async with conn.cursor() as cur:
@@ -201,23 +205,23 @@ async def health_check():
                     (test_id, b'health check')
                 )
                 await conn.commit()
-                
+
                 # Verify write
                 await cur.execute(
                     "SELECT COUNT(*) FROM checkpoint_writes WHERE thread_id = %s",
                     (test_id,)
                 )
                 count = (await cur.fetchone())[0]
-                
+
                 # Clean up
                 await cur.execute(
                     "DELETE FROM checkpoint_writes WHERE thread_id = %s",
                     (test_id,)
                 )
                 await conn.commit()
-                
+
                 return count > 0, "Persistence working"
-                
+
     except Exception as e:
         return False, f"Error: {e}"
 
@@ -230,6 +234,7 @@ if __name__ == "__main__":
 ## Summary
 
 **Key Points**:
+
 1. **Prepared statement errors are cosmetic** - they don't prevent data persistence
 2. **Data is still being saved** to Supabase/PostgreSQL correctly
 3. **Safe to ignore** these specific error messages

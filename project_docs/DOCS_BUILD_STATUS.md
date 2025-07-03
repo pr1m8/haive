@@ -2,7 +2,7 @@
 
 **Last Updated**: January 2, 2025  
 **Status**: ✅ WORKING  
-**Autosummary**: ✅ ENABLED  
+**Autosummary**: ✅ ENABLED
 
 ## Quick Build Test
 
@@ -56,7 +56,7 @@ docs/
 packages/
 ├── haive-core/src/haive/          # No __init__.py (PEP 420)
 │   └── core/                      # Has __init__.py (regular)
-├── haive-agents/src/haive/        # No __init__.py (PEP 420)  
+├── haive-agents/src/haive/        # No __init__.py (PEP 420)
 │   └── agents/                    # Has __init__.py (regular)
 └── ...
 ```
@@ -71,6 +71,7 @@ packages/
 ## Troubleshooting
 
 If build fails:
+
 1. Check `docs/build/sphinx-import-errors.log`
 2. Verify namespace package discovery: `poetry run python -c "import haive; print(haive.__path__)"`
 3. Test specific imports: `poetry run python -c "from haive.core import engine"`

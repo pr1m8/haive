@@ -212,16 +212,18 @@ All Haive agents automatically integrate with Supabase for conversation persiste
 **Quick Setup:**
 
 1. Set your Supabase connection string:
+
    ```bash
    export POSTGRES_CONNECTION_STRING="postgresql://postgres.{project}:{password}@aws-0-{region}.pooler.supabase.com:6543/postgres"
    ```
 
 2. Agents automatically detect and use Supabase:
+
    ```python
    from haive.agents.simple.agent import SimpleAgent
-   
+
    agent = SimpleAgent(name="My Agent")
-   
+
    # Conversations are automatically persisted to Supabase
    result = agent.run(
        {'messages': [HumanMessage(content="Hello!")]},
@@ -230,6 +232,7 @@ All Haive agents automatically integrate with Supabase for conversation persiste
    ```
 
 **Features:**
+
 - ✅ **Automatic Configuration**: Detects Supabase connection from environment
 - ✅ **Conversation Persistence**: All agent interactions saved automatically
 - ✅ **Resume Conversations**: Continue from any point using thread IDs
@@ -237,6 +240,7 @@ All Haive agents automatically integrate with Supabase for conversation persiste
 - ✅ **Recursion Limits**: Configurable limits (default: 100) for agent safety
 
 **Verification:**
+
 ```python
 # Check if agent is using Supabase
 if hasattr(agent, 'persistence') and agent.persistence:
@@ -247,10 +251,12 @@ if hasattr(agent, 'persistence') and agent.persistence:
 ### Configuration Options
 
 **Environment Variables:**
+
 - `POSTGRES_CONNECTION_STRING`: Supabase connection string (auto-detected)
 - `HAIVE_RECURSION_LIMIT`: Override default recursion limit
 
 **Runtime Configuration:**
+
 ```python
 # Custom thread IDs for conversation management
 config = {
@@ -277,11 +283,13 @@ result = agent.run(messages, config=config)
 ### Common Issues
 
 **Prepared Statement Errors:**
+
 - Error: `prepared statement "_pg3_X" already exists`
 - **Impact**: ⚠️ Does NOT prevent data persistence
 - **Solution**: These errors can be safely ignored - conversations are still saved
 
 **Missing Persistence:**
+
 - **Cause**: `POSTGRES_CONNECTION_STRING` not set
 - **Solution**: Set environment variable with your Supabase connection string
 

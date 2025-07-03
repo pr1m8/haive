@@ -15,12 +15,14 @@
 ## 🏗️ Technical Architecture
 
 ### Core Components
+
 - **conf.py**: Enhanced Sphinx configuration with namespace package support
 - **conf_namespace.py**: Automatic discovery of distributed namespace packages
 - **mock_handler.py**: Comprehensive mocking of 50+ external dependencies
 - **API structure**: Auto-generated documentation with autosummary
 
 ### Namespace Package Structure (Correct & Unchanged)
+
 ```
 packages/
 ├── haive-core/src/haive/          # No __init__.py (PEP 420)
@@ -32,6 +34,7 @@ packages/
 ## 🔧 What Was Fixed
 
 ### Before
+
 - `autosummary_generate = False` (disabled)
 - Import errors breaking builds
 - No auto-generated API documentation
@@ -39,6 +42,7 @@ packages/
 - Complex manual RST files
 
 ### After
+
 - `autosummary_generate = True` (enabled)
 - Graceful handling of all import issues
 - Complete auto-generated API documentation
@@ -72,7 +76,7 @@ packages/
 # Quick test build
 poetry run nox -s docs_fast
 
-# Full production build  
+# Full production build
 poetry run nox -s docs
 
 # Clean previous build
@@ -96,12 +100,14 @@ poetry run nox -s docs_view
 ## 🎨 User Experience
 
 ### For Developers
+
 - **Simple builds**: `poetry run nox -s docs_fast`
 - **Auto-reload**: Live updates during development
 - **Clear navigation**: Auto-generated API structure
 - **Type safety**: Proper type hints in documentation
 
 ### For Documentation Maintainers
+
 - **Minimal maintenance**: Autosummary handles API docs
 - **Easy additions**: New modules auto-discovered
 - **Robust builds**: Graceful error handling

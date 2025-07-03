@@ -2,11 +2,7 @@
   "metadata": {
     "total_agents": 373,
     "total_categories": 18,
-    "packages": [
-      "haive-prebuilt",
-      "haive-agents",
-      "haive-games"
-    ],
+    "packages": ["haive-prebuilt", "haive-agents", "haive-games"],
     "errors_count": 23
   },
   "categories": {
@@ -50,9 +46,7 @@
         "InterviewAgentConfig",
         "InterviewAgent"
       ],
-      "packages": [
-        "haive-agents"
-      ],
+      "packages": ["haive-agents"],
       "complexity_breakdown": {
         "simple": 20,
         "medium": 3,
@@ -70,9 +64,7 @@
         "StructuredOutputAgentConfig",
         "SimpleAgent"
       ],
-      "packages": [
-        "haive-agents"
-      ],
+      "packages": ["haive-agents"],
       "complexity_breakdown": {
         "simple": 3,
         "medium": 1,
@@ -102,9 +94,7 @@
         "IterativeGraphTransformerConfig",
         "IterativeGraphTransformer"
       ],
-      "packages": [
-        "haive-agents"
-      ],
+      "packages": ["haive-agents"],
       "complexity_breakdown": {
         "simple": 9,
         "medium": 1,
@@ -128,9 +118,7 @@
         "MultiAgent",
         "SequentialMultiAgent"
       ],
-      "packages": [
-        "haive-agents"
-      ],
+      "packages": ["haive-agents"],
       "complexity_breakdown": {
         "simple": 3,
         "medium": 0,
@@ -146,9 +134,7 @@
         "MemoryAgentState",
         "MemoryAgent"
       ],
-      "packages": [
-        "haive-agents"
-      ],
+      "packages": ["haive-agents"],
       "complexity_breakdown": {
         "simple": 4,
         "medium": 0,
@@ -191,9 +177,7 @@
         "ReactAgentConfig",
         "ReactAgent"
       ],
-      "packages": [
-        "haive-agents"
-      ],
+      "packages": ["haive-agents"],
       "complexity_breakdown": {
         "simple": 15,
         "medium": 3,
@@ -210,9 +194,7 @@
         "ResearchAgentConfig",
         "ResearchAgent"
       ],
-      "packages": [
-        "haive-agents"
-      ],
+      "packages": ["haive-agents"],
       "complexity_breakdown": {
         "simple": 3,
         "medium": 1,
@@ -229,9 +211,7 @@
         "LLMCompilerAgentConfig",
         "LLMCompilerAgent"
       ],
-      "packages": [
-        "haive-agents"
-      ],
+      "packages": ["haive-agents"],
       "complexity_breakdown": {
         "simple": 3,
         "medium": 0,
@@ -374,9 +354,7 @@
         "GraphDBRAGConfig",
         "GraphDBRAGAgent"
       ],
-      "packages": [
-        "haive-agents"
-      ],
+      "packages": ["haive-agents"],
       "complexity_breakdown": {
         "simple": 70,
         "medium": 4,
@@ -407,9 +385,7 @@
         "ToTAgentConfig",
         "ToTAgent"
       ],
-      "packages": [
-        "haive-agents"
-      ],
+      "packages": ["haive-agents"],
       "complexity_breakdown": {
         "simple": 8,
         "medium": 1,
@@ -425,9 +401,7 @@
         "DebateConversation",
         "DirectedConversation"
       ],
-      "packages": [
-        "haive-agents"
-      ],
+      "packages": ["haive-agents"],
       "complexity_breakdown": {
         "simple": 0,
         "medium": 0,
@@ -449,9 +423,7 @@
         "EssayGradingAgent",
         "AgentMetadata"
       ],
-      "packages": [
-        "haive-prebuilt"
-      ],
+      "packages": ["haive-prebuilt"],
       "complexity_breakdown": {
         "simple": 8,
         "medium": 1,
@@ -460,13 +432,8 @@
     },
     "Legal & Business": {
       "count": 2,
-      "agents": [
-        "ContractAnalysisAgentConfig",
-        "ContractAnalysisAgent"
-      ],
-      "packages": [
-        "haive-prebuilt"
-      ],
+      "agents": ["ContractAnalysisAgentConfig", "ContractAnalysisAgent"],
+      "packages": ["haive-prebuilt"],
       "complexity_breakdown": {
         "simple": 2,
         "medium": 0,
@@ -483,9 +450,7 @@
         "KYCAgentConfiguration",
         "EnhancedKYCAgent"
       ],
-      "packages": [
-        "haive-prebuilt"
-      ],
+      "packages": ["haive-prebuilt"],
       "complexity_breakdown": {
         "simple": 4,
         "medium": 0,
@@ -550,9 +515,7 @@
         "WordConnectionsAgentConfig",
         "FlowFreeAgent"
       ],
-      "packages": [
-        "haive-games"
-      ],
+      "packages": ["haive-games"],
       "complexity_breakdown": {
         "simple": 29,
         "medium": 6,
@@ -573,9 +536,7 @@
         "GoAgentConfig",
         "GoAgent"
       ],
-      "packages": [
-        "haive-games"
-      ],
+      "packages": ["haive-games"],
       "complexity_breakdown": {
         "simple": 5,
         "medium": 0,
@@ -591,9 +552,7 @@
         "AmongUsAgent",
         "RiskAgent"
       ],
-      "packages": [
-        "haive-games"
-      ],
+      "packages": ["haive-games"],
       "complexity_breakdown": {
         "simple": 1,
         "medium": 0,
@@ -608,9 +567,7 @@
         "BlackjackAgentConfig",
         "BlackjackAgent"
       ],
-      "packages": [
-        "haive-games"
-      ],
+      "packages": ["haive-games"],
       "complexity_breakdown": {
         "simple": 1,
         "medium": 0,
@@ -630,9 +587,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "DocumentAgent",
@@ -645,9 +600,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "WebNavAgentConfig",
@@ -660,9 +613,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "WebNavAgent",
@@ -670,16 +621,12 @@
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "An interactive web navigation agent using Playwright & LangGraph with integrated tools.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "medium",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "RoutingAgentSchema",
@@ -687,16 +634,12 @@
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "Schema for routing agents.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgentSchema"
-      ]
+      "base_classes": ["SimpleAgentSchema"]
     },
     {
       "name": "RoutingAgentConfig",
@@ -709,9 +652,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgentConfig"
-      ]
+      "base_classes": ["SimpleAgentConfig"]
     },
     {
       "name": "RoutingAgent",
@@ -724,9 +665,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgent"
-      ]
+      "base_classes": ["SimpleAgent"]
     },
     {
       "name": "ChainAgentSchema",
@@ -734,16 +673,12 @@
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "Schema for chain agents with intermediate results, extending SimpleAgentSchema.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgentStateSchema"
-      ]
+      "base_classes": ["SimpleAgentStateSchema"]
     },
     {
       "name": "ChainAgentConfig",
@@ -756,9 +691,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgentConfig"
-      ]
+      "base_classes": ["SimpleAgentConfig"]
     },
     {
       "name": "ChainAgent",
@@ -766,17 +699,12 @@
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "An agent that chains multiple engines together, passing output from one to the next.",
-      "features": [
-        "tools",
-        "structured_output"
-      ],
+      "features": ["tools", "structured_output"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgent"
-      ]
+      "base_classes": ["SimpleAgent"]
     },
     {
       "name": "DefaultAgentInput",
@@ -784,16 +712,12 @@
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "Default input schema for generic agents.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "DefaultAgentOutput",
@@ -801,16 +725,12 @@
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "Default output schema for generic agents.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "DefaultAgentState",
@@ -818,16 +738,12 @@
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "Default state schema for generic agents.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "GenericAgent",
@@ -835,17 +751,12 @@
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "Generic agent base class with enhanced typing and auto-configuration.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent",
-        "Generic"
-      ]
+      "base_classes": ["Agent", "Generic"]
     },
     {
       "name": "TypedAgent",
@@ -858,9 +769,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "GenericAgent"
-      ]
+      "base_classes": ["GenericAgent"]
     },
     {
       "name": "AutoTypedAgent",
@@ -873,10 +782,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "GenericAgent",
-        "agent_class"
-      ]
+      "base_classes": ["GenericAgent", "agent_class"]
     },
     {
       "name": "Agent",
@@ -884,18 +790,12 @@
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "Universal base class for all agent types in the Haive framework.",
-      "features": [
-        "reasoning",
-        "tools"
-      ],
+      "features": ["reasoning", "tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": true,
-      "base_classes": [
-        "BaseModel",
-        "ABC"
-      ]
+      "base_classes": ["BaseModel", "ABC"]
     },
     {
       "name": "Agent",
@@ -903,19 +803,12 @@
       "category": "Foundation Agents",
       "package": "haive-agents",
       "description": "Base class for LLM-based reasoning agents.",
-      "features": [
-        "reasoning",
-        "tools",
-        "memory",
-        "conversation"
-      ],
+      "features": ["reasoning", "tools", "memory", "conversation"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": true,
       "is_abstract": true,
-      "base_classes": [
-        "GraphNode"
-      ]
+      "base_classes": ["GraphNode"]
     },
     {
       "name": "AgentDebugger",
@@ -936,12 +829,7 @@
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "Agent class based on CompiledStateGraph architecture.",
-      "features": [
-        "reasoning",
-        "tools",
-        "memory",
-        "conversation"
-      ],
+      "features": ["reasoning", "tools", "memory", "conversation"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": true,
@@ -960,10 +848,7 @@
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "Abstract base agent class that extends InvokableEngine with execution and state management.",
-      "features": [
-        "memory",
-        "structured_output"
-      ],
+      "features": ["memory", "structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": true,
@@ -1002,16 +887,12 @@
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "Default input schema for agents.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "AgentOutput",
@@ -1019,16 +900,12 @@
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "Default output schema for agents.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "AgentState",
@@ -1036,16 +913,12 @@
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "Default state schema for agents.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "DocumentAgent",
@@ -1053,19 +926,12 @@
       "category": "Document Processing",
       "package": "haive-agents",
       "description": "Comprehensive Document Processing Agent.",
-      "features": [
-        "planning",
-        "retrieval",
-        "memory",
-        "conversation"
-      ],
+      "features": ["planning", "retrieval", "memory", "conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": true,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "TaskAnalysisAgent",
@@ -1073,16 +939,12 @@
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "Comprehensive task analysis agent that orchestrates multiple analysis engines.",
-      "features": [
-        "planning"
-      ],
+      "features": ["planning"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "AgentRegistry",
@@ -1108,9 +970,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ReactAgent"
-      ]
+      "base_classes": ["ReactAgent"]
     },
     {
       "name": "SupervisorAgent",
@@ -1118,16 +978,12 @@
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "ReactAgent-based supervisor with dynamic routing and agent registry.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ReactAgent"
-      ]
+      "base_classes": ["ReactAgent"]
     },
     {
       "name": "ChainMultiAgent",
@@ -1135,16 +991,12 @@
       "category": "Multi-Agent Systems",
       "package": "haive-agents",
       "description": "ChainAgent that works with the multi-agent framework.",
-      "features": [
-        "conversation"
-      ],
+      "features": ["conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "ChainNodeWrapper",
@@ -1152,16 +1004,12 @@
       "category": "Multi-Agent Systems",
       "package": "haive-agents",
       "description": "Wrapper to make non-agent nodes work in multi-agent framework.",
-      "features": [
-        "conversation"
-      ],
+      "features": ["conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ChainAgent",
@@ -1174,9 +1022,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "SequentialAgentConfig",
@@ -1184,16 +1030,12 @@
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "Configuration for a SequentialAgent that connects components linearly.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "medium",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "SequentialAgent",
@@ -1206,9 +1048,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "SimpleAgentState",
@@ -1216,17 +1056,12 @@
       "category": "Foundation Agents",
       "package": "haive-agents",
       "description": "Base state for simple agents.",
-      "features": [
-        "memory",
-        "conversation"
-      ],
+      "features": ["memory", "conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": true,
       "is_abstract": false,
-      "base_classes": [
-        "StateSchema"
-      ]
+      "base_classes": ["StateSchema"]
     },
     {
       "name": "SimpleAgentConfig",
@@ -1234,16 +1069,12 @@
       "category": "Foundation Agents",
       "package": "haive-agents",
       "description": "Configuration for a simple single-node agent with comprehensive schema handling.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "SimpleAgent",
@@ -1251,18 +1082,12 @@
       "category": "Foundation Agents",
       "package": "haive-agents",
       "description": "Simple agent that modifies its engine to include structured output schema.",
-      "features": [
-        "tools",
-        "structured_output",
-        "conversation"
-      ],
+      "features": ["tools", "structured_output", "conversation"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "LTMAgent",
@@ -1270,20 +1095,12 @@
       "category": "Specialized Agents",
       "package": "haive-agents",
       "description": "Long-Term Memory Agent with LangMem integration.",
-      "features": [
-        "retrieval",
-        "tools",
-        "reasoning",
-        "memory",
-        "conversation"
-      ],
+      "features": ["retrieval", "tools", "reasoning", "memory", "conversation"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": true,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "LongTermMemoryState",
@@ -1291,16 +1108,12 @@
       "category": "Memory & Persistence",
       "package": "haive-agents",
       "description": "State for the long term memory agent.",
-      "features": [
-        "memory"
-      ],
+      "features": ["memory"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": true,
       "is_abstract": false,
-      "base_classes": [
-        "AgentState"
-      ]
+      "base_classes": ["AgentState"]
     },
     {
       "name": "LongTermMemoryAgentConfig",
@@ -1308,16 +1121,12 @@
       "category": "Memory & Persistence",
       "package": "haive-agents",
       "description": "Config for the long term memory agent.",
-      "features": [
-        "memory"
-      ],
+      "features": ["memory"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": true,
       "is_abstract": false,
-      "base_classes": [
-        "ReactAgentConfig"
-      ]
+      "base_classes": ["ReactAgentConfig"]
     },
     {
       "name": "LongTermMemoryAgent",
@@ -1325,16 +1134,12 @@
       "category": "Memory & Persistence",
       "package": "haive-agents",
       "description": "Agent for the long term memory.",
-      "features": [
-        "memory"
-      ],
+      "features": ["memory"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": true,
       "is_abstract": false,
-      "base_classes": [
-        "ReactAgent"
-      ]
+      "base_classes": ["ReactAgent"]
     },
     {
       "name": "ReactAgentConfig",
@@ -1342,16 +1147,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "Configuration for the React Agent.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgentConfig"
-      ]
+      "base_classes": ["SimpleAgentConfig"]
     },
     {
       "name": "ReactAgent",
@@ -1364,9 +1165,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgent"
-      ]
+      "base_classes": ["SimpleAgent"]
     },
     {
       "name": "MultiAgent",
@@ -1385,9 +1184,7 @@
       "has_tools": true,
       "has_memory": false,
       "is_abstract": true,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "SequentialAgent",
@@ -1395,17 +1192,12 @@
       "category": "Multi-Agent Systems",
       "package": "haive-agents",
       "description": "Multi-agent system with sequential execution.",
-      "features": [
-        "structured_output",
-        "conversation"
-      ],
+      "features": ["structured_output", "conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "ParallelAgent",
@@ -1413,16 +1205,12 @@
       "category": "Multi-Agent Systems",
       "package": "haive-agents",
       "description": "Pre-configured parallel multi-agent.",
-      "features": [
-        "conversation"
-      ],
+      "features": ["conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "ConditionalAgent",
@@ -1430,16 +1218,12 @@
       "category": "Multi-Agent Systems",
       "package": "haive-agents",
       "description": "Pre-configured conditional multi-agent with branching.",
-      "features": [
-        "conversation"
-      ],
+      "features": ["conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "MultiAgent",
@@ -1447,16 +1231,12 @@
       "category": "Multi-Agent Systems",
       "package": "haive-agents",
       "description": "Abstract base class for multi-agent systems.",
-      "features": [
-        "conversation"
-      ],
+      "features": ["conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": true,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "CompatibilityEnhancedMultiAgent",
@@ -1464,17 +1244,12 @@
       "category": "Multi-Agent Systems",
       "package": "haive-agents",
       "description": "Multi-agent system with built-in compatibility checking and automatic adaptation.",
-      "features": [
-        "retrieval",
-        "conversation"
-      ],
+      "features": ["retrieval", "conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "CompatibilityEnhancedSequentialAgent",
@@ -1487,9 +1262,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "CompatibilityEnhancedMultiAgent"
-      ]
+      "base_classes": ["CompatibilityEnhancedMultiAgent"]
     },
     {
       "name": "CompatibilityEnhancedConditionalAgent",
@@ -1502,9 +1275,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "CompatibilityEnhancedMultiAgent"
-      ]
+      "base_classes": ["CompatibilityEnhancedMultiAgent"]
     },
     {
       "name": "CompatibilityEnhancedParallelAgent",
@@ -1517,9 +1288,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "CompatibilityEnhancedMultiAgent"
-      ]
+      "base_classes": ["CompatibilityEnhancedMultiAgent"]
     },
     {
       "name": "MultiAgent",
@@ -1527,18 +1296,12 @@
       "category": "Multi-Agent Systems",
       "package": "haive-agents",
       "description": "Advanced multi-agent system with flexible coordination patterns.",
-      "features": [
-        "retrieval",
-        "structured_output",
-        "conversation"
-      ],
+      "features": ["retrieval", "structured_output", "conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "MemoryAgentState",
@@ -1546,16 +1309,12 @@
       "category": "Memory & Persistence",
       "package": "haive-agents",
       "description": "State for Memory Agent, extending ReactAgentState.",
-      "features": [
-        "memory"
-      ],
+      "features": ["memory"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": true,
       "is_abstract": false,
-      "base_classes": [
-        "ReactAgentState"
-      ]
+      "base_classes": ["ReactAgentState"]
     },
     {
       "name": "MemoryAgent",
@@ -1563,17 +1322,12 @@
       "category": "Memory & Persistence",
       "package": "haive-agents",
       "description": "Memory Agent implementation that extends ReactAgent.",
-      "features": [
-        "memory",
-        "conversation"
-      ],
+      "features": ["memory", "conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": true,
       "is_abstract": false,
-      "base_classes": [
-        "ReactAgent"
-      ]
+      "base_classes": ["ReactAgent"]
     },
     {
       "name": "WikiWriterAgentConfig",
@@ -1586,9 +1340,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentArchitectureConfig"
-      ]
+      "base_classes": ["AgentArchitectureConfig"]
     },
     {
       "name": "WikiWriterAgent",
@@ -1601,9 +1353,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentArchitecture"
-      ]
+      "base_classes": ["AgentArchitecture"]
     },
     {
       "name": "STORMAgentConfig",
@@ -1611,16 +1361,12 @@
       "category": "Research & Information",
       "package": "haive-agents",
       "description": "Configuration for the STORM agent - an orchestrator that coordinates research,",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "medium",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequenceAgentConfig"
-      ]
+      "base_classes": ["SequenceAgentConfig"]
     },
     {
       "name": "PersonResearchAgentConfig",
@@ -1628,16 +1374,12 @@
       "category": "Research & Information",
       "package": "haive-agents",
       "description": "Configuration settings for person research agent.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "PersonResearchAgentConfig",
@@ -1645,16 +1387,12 @@
       "category": "Research & Information",
       "package": "haive-agents",
       "description": "Configuration for the Person Research Agent.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "PersonResearchAgent",
@@ -1662,18 +1400,12 @@
       "category": "Research & Information",
       "package": "haive-agents",
       "description": "Advanced person research agent with iterative information gathering capabilities.",
-      "features": [
-        "reasoning",
-        "retrieval",
-        "structured_output"
-      ],
+      "features": ["reasoning", "retrieval", "structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ResearchAgentConfig",
@@ -1681,18 +1413,12 @@
       "category": "Research & Information",
       "package": "haive-agents",
       "description": "Configuration for open_perplexity research agent.",
-      "features": [
-        "retrieval",
-        "tools",
-        "structured_output"
-      ],
+      "features": ["retrieval", "tools", "structured_output"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "ResearchAgent",
@@ -1700,16 +1426,12 @@
       "category": "Research & Information",
       "package": "haive-agents",
       "description": "Agent for performing deep research on any topic with dynamic document loader selection",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "Agent",
@@ -1722,10 +1444,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": true,
-      "base_classes": [
-        "AgentConfig",
-        "ABC"
-      ]
+      "base_classes": ["AgentConfig", "ABC"]
     },
     {
       "name": "PlanAndExecuteConfig",
@@ -1738,9 +1457,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "PlanAndExecuteAgent",
@@ -1753,9 +1470,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "RewooAgentConfig",
@@ -1763,17 +1478,12 @@
       "category": "Planning & Strategy",
       "package": "haive-agents",
       "description": "Configuration for the ReWOO Agent with automatic prompt formatting.",
-      "features": [
-        "planning",
-        "tools"
-      ],
+      "features": ["planning", "tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "RewooAgent",
@@ -1781,19 +1491,12 @@
       "category": "Planning & Strategy",
       "package": "haive-agents",
       "description": "ReWOO (Reasoning Without Observation) Agent implementation.",
-      "features": [
-        "reasoning",
-        "planning",
-        "tools",
-        "structured_output"
-      ],
+      "features": ["reasoning", "planning", "tools", "structured_output"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentArchitecture"
-      ]
+      "base_classes": ["AgentArchitecture"]
     },
     {
       "name": "LLMCompilerAgentConfig",
@@ -1801,16 +1504,12 @@
       "category": "Planning & Strategy",
       "package": "haive-agents",
       "description": "Configuration for the LLM Compiler Agent using AugLLMConfig system.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentArchitectureConfig"
-      ]
+      "base_classes": ["AgentArchitectureConfig"]
     },
     {
       "name": "LLMCompilerAgent",
@@ -1818,17 +1517,12 @@
       "category": "Planning & Strategy",
       "package": "haive-agents",
       "description": "LLM Compiler Agent implementation.",
-      "features": [
-        "planning",
-        "structured_output"
-      ],
+      "features": ["planning", "structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentArchitecture"
-      ]
+      "base_classes": ["AgentArchitecture"]
     },
     {
       "name": "StructuredOutputAgentConfig",
@@ -1836,17 +1530,12 @@
       "category": "Foundation Agents",
       "package": "haive-agents",
       "description": "Configuration for a structured output agent.",
-      "features": [
-        "tools",
-        "structured_output"
-      ],
+      "features": ["tools", "structured_output"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgentConfig"
-      ]
+      "base_classes": ["SimpleAgentConfig"]
     },
     {
       "name": "SimpleAgent",
@@ -1854,16 +1543,12 @@
       "category": "Foundation Agents",
       "package": "haive-agents",
       "description": "A simple agent with a single node workflow and comprehensive schema handling.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "AgenticRouterResult",
@@ -1871,16 +1556,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Complete result from agentic RAG routing.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "AgenticRAGRouterAgent",
@@ -1888,17 +1569,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Complete Agentic RAG Router with ReAct patterns and autonomous decision-making.",
-      "features": [
-        "planning",
-        "retrieval"
-      ],
+      "features": ["planning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "AgenticRAGRouterV2",
@@ -1906,16 +1582,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Agentic RAG Router using proper conditional routing.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ReciprocalRankFusionAgent",
@@ -1923,16 +1595,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Agent that performs reciprocal rank fusion on multiple retrieval results.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "RAGFusionAgent",
@@ -1940,16 +1608,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Complete RAG Fusion agent with query expansion and RRF.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent"
-      ]
+      "base_classes": ["SequentialAgent"]
     },
     {
       "name": "MultiQueryRetrievalAgent",
@@ -1957,17 +1621,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Agent that uses a callable node for multi-query retrieval - proper Pydantic approach.",
-      "features": [
-        "retrieval",
-        "structured_output"
-      ],
+      "features": ["retrieval", "structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "MultiStrategyRAGAgent",
@@ -1975,16 +1634,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "RAG agent with multiple retrieval strategies.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SelfCorrectiveRAGAgent"
-      ]
+      "base_classes": ["SelfCorrectiveRAGAgent"]
     },
     {
       "name": "BaseRAGAgent",
@@ -1992,17 +1647,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Simple base RAG agent with retrieve and generate functionality.",
-      "features": [
-        "retrieval",
-        "tools"
-      ],
+      "features": ["retrieval", "tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "BaseRAGConfig",
@@ -2010,16 +1660,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Configuration for a basic RAG agent.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "BaseRAGAgent",
@@ -2027,17 +1673,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Base RAG agent that performs retrieval.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "RetrieverMixin",
-        "Agent"
-      ]
+      "base_classes": ["RetrieverMixin", "Agent"]
     },
     {
       "name": "SelfReflectiveRAGAgent",
@@ -2045,17 +1686,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Self-Reflective RAG agent with iterative improvement capabilities.",
-      "features": [
-        "reasoning",
-        "retrieval"
-      ],
+      "features": ["reasoning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "FLAREPlannerAgent",
@@ -2063,17 +1699,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Agent that creates FLARE plans for iterative generation and active retrieval.",
-      "features": [
-        "planning",
-        "retrieval"
-      ],
+      "features": ["planning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ActiveRetrievalAgent",
@@ -2081,17 +1712,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Agent that performs active retrieval based on FLARE plans.",
-      "features": [
-        "planning",
-        "retrieval"
-      ],
+      "features": ["planning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "FLARERAGAgent",
@@ -2099,16 +1725,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Complete FLARE RAG agent with forward-looking active retrieval.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent"
-      ]
+      "base_classes": ["SequentialAgent"]
     },
     {
       "name": "DocumentGradingAgent",
@@ -2121,9 +1743,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "DocumentGradingRAGAgent",
@@ -2131,16 +1751,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "RAG with document grading and filtering.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent"
-      ]
+      "base_classes": ["SequentialAgent"]
     },
     {
       "name": "GenericCallableAgent",
@@ -2148,16 +1764,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Generic agent that executes a sequence of callable functions.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ConditionalCallableAgent",
@@ -2170,9 +1782,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "AdaptiveRAGAgent",
@@ -2185,9 +1795,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ConditionalAgent"
-      ]
+      "base_classes": ["ConditionalAgent"]
     },
     {
       "name": "CompatibleAdaptiveRAG",
@@ -2200,9 +1808,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ConditionalAgent"
-      ]
+      "base_classes": ["ConditionalAgent"]
     },
     {
       "name": "AdaptiveRAGAgent",
@@ -2210,16 +1816,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Adaptive RAG that routes queries based on complexity.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ConditionalAgent"
-      ]
+      "base_classes": ["ConditionalAgent"]
     },
     {
       "name": "StepBackQueryGeneratorAgent",
@@ -2227,16 +1829,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Agent that generates step-back queries for abstract reasoning.",
-      "features": [
-        "reasoning"
-      ],
+      "features": ["reasoning"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "DualRetrievalAgent",
@@ -2244,16 +1842,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Agent that performs both original and step-back retrieval.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "StepBackRAGAgent",
@@ -2261,17 +1855,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Complete Step-Back RAG agent with abstract reasoning.",
-      "features": [
-        "reasoning",
-        "retrieval"
-      ],
+      "features": ["reasoning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent"
-      ]
+      "base_classes": ["SequentialAgent"]
     },
     {
       "name": "MemoryRetrievalAgent",
@@ -2284,9 +1873,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "MemoryAwareRAGAgent",
@@ -2294,17 +1881,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Complete Memory-Aware RAG agent with persistent learning.",
-      "features": [
-        "retrieval",
-        "memory"
-      ],
+      "features": ["retrieval", "memory"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": true,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent"
-      ]
+      "base_classes": ["SequentialAgent"]
     },
     {
       "name": "HyDEAgentConfig",
@@ -2312,16 +1894,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Configuration for Enhanced HyDE RAG Agent.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "EnhancedHyDERAGAgentV2",
@@ -2329,17 +1907,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Enhanced HyDE RAG Agent with advanced prompt selection and multi-document generation.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent",
-        "ToolRouteMixin"
-      ]
+      "base_classes": ["SequentialAgent", "ToolRouteMixin"]
     },
     {
       "name": "QueryAnalysisAgent",
@@ -2352,9 +1925,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgent"
-      ]
+      "base_classes": ["SimpleAgent"]
     },
     {
       "name": "AdaptiveHyDEGenerator",
@@ -2367,9 +1938,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgent"
-      ]
+      "base_classes": ["SimpleAgent"]
     },
     {
       "name": "HyDEDocumentAnalyzer",
@@ -2377,16 +1946,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Analyzes generated hypothetical documents and extracts structured information.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgent"
-      ]
+      "base_classes": ["SimpleAgent"]
     },
     {
       "name": "DomainAnalysisAgent",
@@ -2399,9 +1964,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgent"
-      ]
+      "base_classes": ["SimpleAgent"]
     },
     {
       "name": "EnsembleDocumentParser",
@@ -2409,16 +1972,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Parses ensemble document output into individual documents.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgent"
-      ]
+      "base_classes": ["SimpleAgent"]
     },
     {
       "name": "EnhancedHyDERetrieverV2",
@@ -2431,9 +1990,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "EnsembleHyDERetriever",
@@ -2441,16 +1998,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Retriever that handles multiple documents for ensemble retrieval.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "MultiDomainHyDERetriever",
@@ -2463,9 +2016,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "EnhancedHyDERAGAgent",
@@ -2473,18 +2024,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Enhanced HyDE RAG Agent using the structured output enhancement pattern.",
-      "features": [
-        "retrieval",
-        "tools",
-        "structured_output"
-      ],
+      "features": ["retrieval", "tools", "structured_output"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent"
-      ]
+      "base_classes": ["SequentialAgent"]
     },
     {
       "name": "EnhancedHyDERetriever",
@@ -2492,16 +2037,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Enhanced retriever that handles both enhancement pattern and traditional outputs.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "HyDERetrieverAgent",
@@ -2509,16 +2050,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Custom retriever that uses hypothetical document for enhanced retrieval.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "HyDERAGAgentV2",
@@ -2526,16 +2063,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "HyDE RAG using hypothetical document generation for better retrieval.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent"
-      ]
+      "base_classes": ["SequentialAgent"]
     },
     {
       "name": "SimpleRAGAgent",
@@ -2543,16 +2076,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Simple RAG workflow: Retrieval → Answer Generation",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent"
-      ]
+      "base_classes": ["SequentialAgent"]
     },
     {
       "name": "MultiAgentRAGState",
@@ -2560,18 +2089,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Comprehensive state schema for multi-agent RAG systems.",
-      "features": [
-        "retrieval",
-        "structured_output",
-        "conversation"
-      ],
+      "features": ["retrieval", "structured_output", "conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "StateSchema"
-      ]
+      "base_classes": ["StateSchema"]
     },
     {
       "name": "SimpleRAGWithMemoryAgent",
@@ -2579,18 +2102,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Simple RAG with Memory - incorporates conversation history and previous queries",
-      "features": [
-        "retrieval",
-        "memory",
-        "conversation"
-      ],
+      "features": ["retrieval", "memory", "conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": true,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "SelfRAGAgent",
@@ -2598,17 +2115,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Self-RAG with reflection tokens - determines whether retrieval is needed",
-      "features": [
-        "reasoning",
-        "retrieval"
-      ],
+      "features": ["reasoning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "MultiQueryRAGAgent",
@@ -2616,16 +2128,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Multi-Query RAG - generates multiple diverse queries and retrieves documents",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "RAGFusionAgent",
@@ -2633,16 +2141,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "RAG Fusion - combines multiple retrieval strategies and fuses results",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "StepBackPromptingRAGAgent",
@@ -2650,16 +2154,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Step-Back Prompting RAG - asks broader conceptual questions before",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "QueryDecompositionRAGAgent",
@@ -2667,16 +2167,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Query Decomposition RAG - breaks complex queries into simpler sub-questions,",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "CorrectiveRAGAgent",
@@ -2684,16 +2180,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Full Corrective RAG implementation with web search fallback.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ConditionalAgent"
-      ]
+      "base_classes": ["ConditionalAgent"]
     },
     {
       "name": "SelfRAGAgent",
@@ -2701,17 +2193,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Self-RAG with reflection tokens and adaptive retrieval.",
-      "features": [
-        "reasoning",
-        "retrieval"
-      ],
+      "features": ["reasoning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ConditionalAgent"
-      ]
+      "base_classes": ["ConditionalAgent"]
     },
     {
       "name": "AdaptiveRAGAgent",
@@ -2719,16 +2206,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Adaptive RAG with complexity-based routing.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ConditionalAgent"
-      ]
+      "base_classes": ["ConditionalAgent"]
     },
     {
       "name": "HYDERAGAgent",
@@ -2736,16 +2219,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Enhanced HYDE RAG with hypothesis generation.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent"
-      ]
+      "base_classes": ["SequentialAgent"]
     },
     {
       "name": "DocumentGradingAgent",
@@ -2758,9 +2237,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "RequeryDecisionAgent",
@@ -2773,9 +2250,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "CorrectiveRAGAgent",
@@ -2783,16 +2258,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Corrective RAG (CRAG) with automatic requerying and web search fallback.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ConditionalAgent"
-      ]
+      "base_classes": ["ConditionalAgent"]
     },
     {
       "name": "HYDERAGAgent",
@@ -2800,16 +2271,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "HYDE RAG agent that generates hypothetical documents before retrieval.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent"
-      ]
+      "base_classes": ["SequentialAgent"]
     },
     {
       "name": "SelfRAGAgent",
@@ -2817,17 +2284,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Self-RAG agent with reflection tokens and adaptive retrieval.",
-      "features": [
-        "reasoning",
-        "retrieval"
-      ],
+      "features": ["reasoning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ConditionalAgent"
-      ]
+      "base_classes": ["ConditionalAgent"]
     },
     {
       "name": "AgentCompatibilityReport",
@@ -2866,10 +2328,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent",
-        "StateConfigMixin"
-      ]
+      "base_classes": ["MultiAgent", "StateConfigMixin"]
     },
     {
       "name": "DynamicRAGAgentV2",
@@ -2877,17 +2336,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Dynamic RAG V2 - Configuration in DynamicRAGState",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent",
-        "StateConfigMixin"
-      ]
+      "base_classes": ["MultiAgent", "StateConfigMixin"]
     },
     {
       "name": "DebateRAGAgentV2",
@@ -2895,17 +2349,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Debate RAG V2 - Configuration in DebateRAGState",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent",
-        "StateConfigMixin"
-      ]
+      "base_classes": ["MultiAgent", "StateConfigMixin"]
     },
     {
       "name": "AdaptiveThresholdRAGAgentV2",
@@ -2913,17 +2362,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Adaptive Threshold RAG V2 - Configuration in AdaptiveThresholdRAGState",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent",
-        "StateConfigMixin"
-      ]
+      "base_classes": ["MultiAgent", "StateConfigMixin"]
     },
     {
       "name": "FLAREAgent",
@@ -2931,16 +2375,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Forward-Looking Active REtrieval (FLARE) - generates text while actively",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "DynamicRAGAgent",
@@ -2948,17 +2388,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Dynamic RAG with add/remove retrievers - adapts retrieval strategy",
-      "features": [
-        "planning",
-        "retrieval"
-      ],
+      "features": ["planning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "DebateRAGAgent",
@@ -2966,17 +2401,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Debate RAG - multiple agents with different perspectives debate",
-      "features": [
-        "reasoning",
-        "retrieval"
-      ],
+      "features": ["reasoning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "AdaptiveThresholdRAGAgent",
@@ -2984,16 +2414,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Adaptive Threshold RAG - dynamically adjusts retrieval thresholds",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "AgenticRAGState",
@@ -3001,17 +2427,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "RAG state for agentic routing and planning",
-      "features": [
-        "planning",
-        "retrieval"
-      ],
+      "features": ["planning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "RAGState"
-      ]
+      "base_classes": ["RAGState"]
     },
     {
       "name": "GraphRAGAgent",
@@ -3019,17 +2440,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Graph RAG - uses knowledge graph construction and traversal",
-      "features": [
-        "reasoning",
-        "retrieval"
-      ],
+      "features": ["reasoning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "AgenticGraphRAGAgent",
@@ -3037,18 +2453,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Agentic Graph RAG - combines graph reasoning with agentic routing",
-      "features": [
-        "reasoning",
-        "planning",
-        "retrieval"
-      ],
+      "features": ["reasoning", "planning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "AgenticRAGRouterAgent",
@@ -3056,16 +2466,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Agentic RAG Router - intelligently routes queries to different RAG strategies",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "QueryPlanningAgenticRAGAgent",
@@ -3073,18 +2479,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Query Planning Agentic RAG - creates detailed execution plans",
-      "features": [
-        "reasoning",
-        "planning",
-        "retrieval"
-      ],
+      "features": ["reasoning", "planning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "SelfReflectiveAgenticRAGAgent",
@@ -3092,17 +2492,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Self-Reflective Agentic RAG - continuously reflects on and improves",
-      "features": [
-        "reasoning",
-        "retrieval"
-      ],
+      "features": ["reasoning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "SpeculativeRAGAgent",
@@ -3110,16 +2505,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Speculative RAG - generates multiple possible answer hypotheses",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "SelfRouteRAGAgent",
@@ -3127,17 +2518,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Self-Route RAG - dynamically routes itself to different reasoning",
-      "features": [
-        "reasoning",
-        "retrieval"
-      ],
+      "features": ["reasoning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "FullyGradedRAGAgentV2",
@@ -3145,18 +2531,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Fully Graded RAG V2 - Uses enhanced state schema with configuration support.",
-      "features": [
-        "retrieval",
-        "structured_output"
-      ],
+      "features": ["retrieval", "structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent",
-        "StateConfigMixin"
-      ]
+      "base_classes": ["MultiAgent", "StateConfigMixin"]
     },
     {
       "name": "MultiCriteriaGradedRAGAgentV2",
@@ -3164,18 +2544,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Multi-Criteria Graded RAG V2 - Configuration stored in state schema.",
-      "features": [
-        "retrieval",
-        "structured_output"
-      ],
+      "features": ["retrieval", "structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent",
-        "StateConfigMixin"
-      ]
+      "base_classes": ["MultiAgent", "StateConfigMixin"]
     },
     {
       "name": "FLAREAgentV2Example",
@@ -3183,17 +2557,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "FLARE Agent V2 example using enhanced state schema",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent",
-        "StateConfigMixin"
-      ]
+      "base_classes": ["MultiAgent", "StateConfigMixin"]
     },
     {
       "name": "BaseRAGMultiAgent",
@@ -3201,17 +2570,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Base multi-agent RAG system with retrieve -> grade -> generate workflow.",
-      "features": [
-        "retrieval",
-        "conversation"
-      ],
+      "features": ["retrieval", "conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent"
-      ]
+      "base_classes": ["SequentialAgent"]
     },
     {
       "name": "ConditionalRAGMultiAgent",
@@ -3219,17 +2583,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Conditional multi-agent RAG system with smart routing based on document quality.",
-      "features": [
-        "retrieval",
-        "conversation"
-      ],
+      "features": ["retrieval", "conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ConditionalAgent"
-      ]
+      "base_classes": ["ConditionalAgent"]
     },
     {
       "name": "IterativeRAGMultiAgent",
@@ -3237,17 +2596,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Multi-agent RAG system with iterative document processing.",
-      "features": [
-        "retrieval",
-        "conversation"
-      ],
+      "features": ["retrieval", "conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent"
-      ]
+      "base_classes": ["SequentialAgent"]
     },
     {
       "name": "ParallelRAGMultiAgent",
@@ -3255,17 +2609,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Parallel multi-agent RAG system for consensus-based processing.",
-      "features": [
-        "retrieval",
-        "conversation"
-      ],
+      "features": ["retrieval", "conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ParallelAgent"
-      ]
+      "base_classes": ["ParallelAgent"]
     },
     {
       "name": "AdaptiveRAGMultiAgent",
@@ -3273,17 +2622,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Advanced RAG system that adapts its strategy based on query complexity and results.",
-      "features": [
-        "planning",
-        "retrieval"
-      ],
+      "features": ["planning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ConditionalAgent"
-      ]
+      "base_classes": ["ConditionalAgent"]
     },
     {
       "name": "DocumentGradingAgent",
@@ -3296,9 +2640,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "RequeryDecisionAgent",
@@ -3311,9 +2653,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "SimpleCorrectiveRAGAgent",
@@ -3321,16 +2661,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Simple Corrective RAG implementation using sequential processing.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent"
-      ]
+      "base_classes": ["SequentialAgent"]
     },
     {
       "name": "SimpleHYDERAGAgent",
@@ -3338,16 +2674,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Simple HYDE RAG agent that generates hypothetical documents before retrieval.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent"
-      ]
+      "base_classes": ["SequentialAgent"]
     },
     {
       "name": "EnhancedRAGSequentialAgent",
@@ -3355,16 +2687,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "RAG sequential agent with built-in compatibility checking.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "CompatibilityEnhancedSequentialAgent"
-      ]
+      "base_classes": ["CompatibilityEnhancedSequentialAgent"]
     },
     {
       "name": "EnhancedRAGConditionalAgent",
@@ -3372,16 +2700,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "RAG conditional agent with built-in compatibility checking and smart routing.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "CompatibilityEnhancedConditionalAgent"
-      ]
+      "base_classes": ["CompatibilityEnhancedConditionalAgent"]
     },
     {
       "name": "EnhancedRAGParallelAgent",
@@ -3389,17 +2713,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "RAG parallel agent with built-in compatibility checking for consensus building.",
-      "features": [
-        "retrieval",
-        "structured_output"
-      ],
+      "features": ["retrieval", "structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "CompatibilityEnhancedParallelAgent"
-      ]
+      "base_classes": ["CompatibilityEnhancedParallelAgent"]
     },
     {
       "name": "FullyGradedRAGAgent",
@@ -3407,16 +2726,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Fully Graded RAG - comprehensive grading at every step of the RAG pipeline.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "AdaptiveGradedRAGAgent",
@@ -3424,16 +2739,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Adaptive Graded RAG - adjusts grading thresholds based on query complexity",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "MultiCriteriaGradedRAGAgent",
@@ -3441,16 +2752,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Multi-Criteria Graded RAG - uses multiple grading criteria and perspectives",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "ReflexiveGradedRAGAgent",
@@ -3458,18 +2765,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Reflexive Graded RAG - uses grading feedback to improve its own performance",
-      "features": [
-        "reasoning",
-        "planning",
-        "retrieval"
-      ],
+      "features": ["reasoning", "planning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "SimpleRAGAgent",
@@ -3477,18 +2778,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Simple RAG agent that retrieves documents and provides basic answers.",
-      "features": [
-        "retrieval",
-        "tools",
-        "conversation"
-      ],
+      "features": ["retrieval", "tools", "conversation"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgent"
-      ]
+      "base_classes": ["SimpleAgent"]
     },
     {
       "name": "SimpleRAGAnswerAgent",
@@ -3496,17 +2791,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "RAG answer generation agent that creates responses from retrieved documents.",
-      "features": [
-        "retrieval",
-        "structured_output"
-      ],
+      "features": ["retrieval", "structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgent"
-      ]
+      "base_classes": ["SimpleAgent"]
     },
     {
       "name": "DocumentGradingAgent",
@@ -3519,9 +2809,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgent"
-      ]
+      "base_classes": ["SimpleAgent"]
     },
     {
       "name": "IterativeDocumentGradingAgent",
@@ -3534,9 +2822,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "DocumentGradingAgent"
-      ]
+      "base_classes": ["DocumentGradingAgent"]
     },
     {
       "name": "CompositeGradingAgent",
@@ -3557,16 +2843,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Implements a dynamic RAG pipeline that routes queries to appropriate data sources.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "medium",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseRAGAgent"
-      ]
+      "base_classes": ["BaseRAGAgent"]
     },
     {
       "name": "QueryAnalyzerAgent",
@@ -3574,16 +2856,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Agent that performs structured query analysis for routing.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "IterativePlannerAgent",
@@ -3591,16 +2869,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Agent that creates iterative processing plans.",
-      "features": [
-        "planning"
-      ],
+      "features": ["planning"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "RoutingDecisionAgent",
@@ -3613,9 +2887,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "SelfRouteRAGAgent",
@@ -3623,18 +2895,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Complete Self-Route RAG agent with structured analysis and iterative planning.",
-      "features": [
-        "planning",
-        "retrieval",
-        "structured_output"
-      ],
+      "features": ["planning", "retrieval", "structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent"
-      ]
+      "base_classes": ["SequentialAgent"]
     },
     {
       "name": "TypedRAGAgent",
@@ -3642,16 +2908,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Implements Typed-RAG that classifies queries and routes to specialized handlers.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "medium",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseRAGAgent"
-      ]
+      "base_classes": ["BaseRAGAgent"]
     },
     {
       "name": "ToolSelectionAgent",
@@ -3659,16 +2921,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Agent that selects optimal tools based on query analysis.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "SearchIntegrationAgent",
@@ -3676,17 +2934,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Agent that integrates external search tools.",
-      "features": [
-        "retrieval",
-        "tools"
-      ],
+      "features": ["retrieval", "tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "AdaptiveToolsRAGAgent",
@@ -3694,17 +2947,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Complete Adaptive RAG agent with tools integration and ReAct patterns.",
-      "features": [
-        "retrieval",
-        "tools"
-      ],
+      "features": ["retrieval", "tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent"
-      ]
+      "base_classes": ["SequentialAgent"]
     },
     {
       "name": "QueryDecomposerAgent",
@@ -3717,9 +2965,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "HierarchicalQueryDecomposerAgent",
@@ -3732,9 +2978,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ContextualQueryDecomposerAgent",
@@ -3747,9 +2991,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "AdaptiveQueryDecomposerAgent",
@@ -3757,16 +2999,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Adaptive query decomposition that selects best strategy.",
-      "features": [
-        "planning"
-      ],
+      "features": ["planning"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "FilteredRAGAgent",
@@ -3774,16 +3012,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "RAG agent with document filtering capabilities.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "medium",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "HypothesisGeneratorAgent",
@@ -3791,16 +3025,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Agent that generates multiple hypotheses for speculative reasoning.",
-      "features": [
-        "reasoning"
-      ],
+      "features": ["reasoning"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ParallelVerificationAgent",
@@ -3813,9 +3043,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "SpeculativeRAGAgent",
@@ -3823,16 +3051,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Complete Speculative RAG agent with parallel hypothesis processing.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent"
-      ]
+      "base_classes": ["SequentialAgent"]
     },
     {
       "name": "HallucinationGraderAgent",
@@ -3845,9 +3069,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "AdvancedHallucinationGraderAgent",
@@ -3860,9 +3082,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "RealtimeHallucinationGraderAgent",
@@ -3875,9 +3095,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "QueryPlanningRAGAgent",
@@ -3885,18 +3103,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Query Planning RAG agent with structured decomposition and execution.",
-      "features": [
-        "planning",
-        "retrieval",
-        "structured_output"
-      ],
+      "features": ["planning", "retrieval", "structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "AgenticRAGState",
@@ -3904,17 +3116,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "State schema for agentic RAG with retrieval metadata.",
-      "features": [
-        "retrieval",
-        "structured_output"
-      ],
+      "features": ["retrieval", "structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "AgenticRAGAgent",
@@ -3922,20 +3129,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Agentic RAG agent combining ReAct reasoning with intelligent retrieval.",
-      "features": [
-        "reasoning",
-        "retrieval",
-        "tools",
-        "structured_output"
-      ],
+      "features": ["reasoning", "retrieval", "tools", "structured_output"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ReactAgent",
-        "ToolRouteMixin"
-      ]
+      "base_classes": ["ReactAgent", "ToolRouteMixin"]
     },
     {
       "name": "SelfCorrectiveRAGAgent",
@@ -3943,16 +3142,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "RAG agent with self-correction capabilities.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "CorrectiveRAGAgent",
@@ -3960,16 +3155,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Corrective RAG with self-correcting retrieval.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ConditionalAgent"
-      ]
+      "base_classes": ["ConditionalAgent"]
     },
     {
       "name": "CorrectiveRAGAgentV2",
@@ -3977,16 +3168,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Corrective RAG with proper self-correcting retrieval.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ConditionalAgent"
-      ]
+      "base_classes": ["ConditionalAgent"]
     },
     {
       "name": "LLMRAGAgent",
@@ -3994,16 +3181,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "LLM-enhanced RAG agent that retrieves documents and generates answers.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseRAGAgent"
-      ]
+      "base_classes": ["BaseRAGAgent"]
     },
     {
       "name": "MultiRetrievalAgent",
@@ -4011,16 +3194,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Agent that performs parallel retrieval with multiple queries.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "MultiQueryRAGAgent",
@@ -4028,16 +3207,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Multi-Query RAG with query expansion for improved recall.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SequentialAgent"
-      ]
+      "base_classes": ["SequentialAgent"]
     },
     {
       "name": "SQLRAGConfig",
@@ -4045,17 +3220,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Configuration for the SQL RAG Agent.",
-      "features": [
-        "retrieval",
-        "structured_output"
-      ],
+      "features": ["retrieval", "structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "SQLRAGAgent",
@@ -4063,18 +3233,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "SQL RAG Agent for querying SQL databases with natural language.",
-      "features": [
-        "retrieval",
-        "tools",
-        "structured_output"
-      ],
+      "features": ["retrieval", "tools", "structured_output"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "GraphDBRAGConfig",
@@ -4082,17 +3246,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Main configuration for the Graph Database RAG Agent.",
-      "features": [
-        "retrieval",
-        "structured_output"
-      ],
+      "features": ["retrieval", "structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "GraphDBRAGAgent",
@@ -4100,18 +3259,12 @@
       "category": "RAG & Retrieval",
       "package": "haive-agents",
       "description": "Graph Database RAG Agent for natural language querying of Neo4j databases.",
-      "features": [
-        "retrieval",
-        "tools",
-        "structured_output"
-      ],
+      "features": ["retrieval", "tools", "structured_output"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "DirectoryLoaderAgent",
@@ -4124,9 +3277,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "DocumentLoaderAgent"
-      ]
+      "base_classes": ["DocumentLoaderAgent"]
     },
     {
       "name": "DocumentLoaderAgent",
@@ -4134,17 +3285,12 @@
       "category": "Document Processing",
       "package": "haive-agents",
       "description": "Document Loader Agent that integrates the document loader engine with the agent framework.",
-      "features": [
-        "retrieval",
-        "structured_output"
-      ],
+      "features": ["retrieval", "structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "WebLoaderAgent",
@@ -4152,16 +3298,12 @@
       "category": "Document Processing",
       "package": "haive-agents",
       "description": "Specialized document loader agent for loading documents from web URLs.",
-      "features": [
-        "planning"
-      ],
+      "features": ["planning"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "DocumentLoaderAgent"
-      ]
+      "base_classes": ["DocumentLoaderAgent"]
     },
     {
       "name": "FileLoaderAgent",
@@ -4174,9 +3316,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "DocumentLoaderAgent"
-      ]
+      "base_classes": ["DocumentLoaderAgent"]
     },
     {
       "name": "ReflectionAgentState",
@@ -4184,17 +3324,12 @@
       "category": "Reasoning & Critique",
       "package": "haive-agents",
       "description": "State schema for the Reflection agent.",
-      "features": [
-        "reasoning",
-        "structured_output"
-      ],
+      "features": ["reasoning", "structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgentState"
-      ]
+      "base_classes": ["SimpleAgentState"]
     },
     {
       "name": "ReflectionAgentConfig",
@@ -4202,16 +3337,12 @@
       "category": "Reasoning & Critique",
       "package": "haive-agents",
       "description": "Configuration for an agent that uses reflection to improve responses.",
-      "features": [
-        "reasoning"
-      ],
+      "features": ["reasoning"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgentConfig"
-      ]
+      "base_classes": ["SimpleAgentConfig"]
     },
     {
       "name": "ReflectionAgent",
@@ -4219,16 +3350,12 @@
       "category": "Reasoning & Critique",
       "package": "haive-agents",
       "description": "An agent with self-reflection capabilities that can improve its responses.",
-      "features": [
-        "reasoning"
-      ],
+      "features": ["reasoning"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgent"
-      ]
+      "base_classes": ["SimpleAgent"]
     },
     {
       "name": "LATSAgentConfig",
@@ -4236,17 +3363,12 @@
       "category": "Reasoning & Critique",
       "package": "haive-agents",
       "description": "Configuration for Language Agent Tree Search (LATS) agent.",
-      "features": [
-        "retrieval",
-        "tools"
-      ],
+      "features": ["retrieval", "tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "LATSAgentConfig",
@@ -4254,18 +3376,12 @@
       "category": "Reasoning & Critique",
       "package": "haive-agents",
       "description": "Configuration for a Look-Ahead Tree Search (LATS) agent.",
-      "features": [
-        "reasoning",
-        "retrieval",
-        "tools"
-      ],
+      "features": ["reasoning", "retrieval", "tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "LATSAgent",
@@ -4273,17 +3389,12 @@
       "category": "Reasoning & Critique",
       "package": "haive-agents",
       "description": "A Look-Ahead Tree Search (LATS) agent that uses tree search to",
-      "features": [
-        "reasoning",
-        "retrieval"
-      ],
+      "features": ["reasoning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ReflexionState",
@@ -4296,9 +3407,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgentState"
-      ]
+      "base_classes": ["SimpleAgentState"]
     },
     {
       "name": "ReflexionConfig",
@@ -4306,16 +3415,12 @@
       "category": "Reasoning & Critique",
       "package": "haive-agents",
       "description": "Configuration for the Reflexion agent.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "ReflexionAgent",
@@ -4328,9 +3433,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "SelfDiscoverAgentConfig",
@@ -4338,17 +3441,12 @@
       "category": "Reasoning & Critique",
       "package": "haive-agents",
       "description": "Configuration for a SelfDiscover agent.",
-      "features": [
-        "reasoning",
-        "structured_output"
-      ],
+      "features": ["reasoning", "structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "SelfDiscoverAgentConfig",
@@ -4361,9 +3459,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentArchitectureConfig"
-      ]
+      "base_classes": ["AgentArchitectureConfig"]
     },
     {
       "name": "SelfDiscoverAgent",
@@ -4376,9 +3472,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentArchitecture"
-      ]
+      "base_classes": ["AgentArchitecture"]
     },
     {
       "name": "SelfDiscoverAgent",
@@ -4386,18 +3480,12 @@
       "category": "Reasoning & Critique",
       "package": "haive-agents",
       "description": "An agent that implements the SelfDiscover methodology with structured output models.",
-      "features": [
-        "reasoning",
-        "planning",
-        "structured_output"
-      ],
+      "features": ["reasoning", "planning", "structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ReasoningSystem",
@@ -4405,16 +3493,12 @@
       "category": "Reasoning & Critique",
       "package": "haive-agents",
       "description": "Orchestrator agent for comprehensive reasoning analysis.",
-      "features": [
-        "reasoning"
-      ],
+      "features": ["reasoning"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "TOTAgentConfig",
@@ -4422,17 +3506,12 @@
       "category": "Reasoning & Critique",
       "package": "haive-agents",
       "description": "Configuration for the Tree of Thoughts agent.",
-      "features": [
-        "reasoning",
-        "retrieval"
-      ],
+      "features": ["reasoning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "ToTAgent",
@@ -4440,18 +3519,12 @@
       "category": "Reasoning & Critique",
       "package": "haive-agents",
       "description": "Tree of Thoughts agent implementation.",
-      "features": [
-        "reasoning",
-        "retrieval"
-      ],
+      "features": ["reasoning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent",
-        "Generic"
-      ]
+      "base_classes": ["Agent", "Generic"]
     },
     {
       "name": "MCTSAgentConfig",
@@ -4459,16 +3532,12 @@
       "category": "Reasoning & Critique",
       "package": "haive-agents",
       "description": "Configuration for MCTS Agent.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "MCTSAgent",
@@ -4476,16 +3545,12 @@
       "category": "Reasoning & Critique",
       "package": "haive-agents",
       "description": "Monte Carlo Tree Search Agent implementation.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ToTAgentConfig",
@@ -4493,17 +3558,12 @@
       "category": "Reasoning & Critique",
       "package": "haive-agents",
       "description": "Configuration for a Tree of Thoughts agent.",
-      "features": [
-        "reasoning",
-        "retrieval"
-      ],
+      "features": ["reasoning", "retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "ToTAgent",
@@ -4516,9 +3576,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ReactAgentConfig",
@@ -4526,17 +3584,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "Configuration for a ReAct agent with tool integration.",
-      "features": [
-        "reasoning",
-        "tools"
-      ],
+      "features": ["reasoning", "tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "ReactAgent",
@@ -4544,18 +3597,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "A tool-using agent implementing the ReAct pattern.",
-      "features": [
-        "reasoning",
-        "tools",
-        "structured_output"
-      ],
+      "features": ["reasoning", "tools", "structured_output"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ReactAgentState",
@@ -4563,17 +3610,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "State schema for ReAct agent.",
-      "features": [
-        "tools",
-        "structured_output"
-      ],
+      "features": ["tools", "structured_output"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "ReactAgentConfig",
@@ -4581,16 +3623,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "Configuration for the ReAct agent.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "ReactAgent",
@@ -4598,16 +3636,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "ReAct agent implementation with tool usage and routing capabilities.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ReactAgentConfig",
@@ -4615,16 +3649,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "Configuration for a React agent that follows the ReAct pattern:",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "ReactAgentConfig",
@@ -4632,18 +3662,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "Configuration for a React agent that can use tools.",
-      "features": [
-        "reasoning",
-        "tools",
-        "memory"
-      ],
+      "features": ["reasoning", "tools", "memory"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": true,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "AdvancedReactAgentConfig",
@@ -4651,16 +3675,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "Extended configuration for the Advanced React Agent.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ReactAgentConfig"
-      ]
+      "base_classes": ["ReactAgentConfig"]
     },
     {
       "name": "AdvancedReactAgent",
@@ -4668,16 +3688,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "Advanced React agent with specialized tool routing.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "DynamicReactAgentState",
@@ -4685,17 +3701,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "Extended schema for dynamic tool selection.",
-      "features": [
-        "tools",
-        "structured_output"
-      ],
+      "features": ["tools", "structured_output"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ReactAgentState"
-      ]
+      "base_classes": ["ReactAgentState"]
     },
     {
       "name": "DynamicReactAgentConfig",
@@ -4703,16 +3714,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "Configuration for a React agent with dynamic tool selection.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ReactAgentConfig"
-      ]
+      "base_classes": ["ReactAgentConfig"]
     },
     {
       "name": "DynamicReactAgent",
@@ -4720,16 +3727,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "A React agent with dynamic tool selection.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "medium",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ReactAgent"
-      ]
+      "base_classes": ["ReactAgent"]
     },
     {
       "name": "ReactAgentState",
@@ -4737,18 +3740,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "State for React agents with tool usage.",
-      "features": [
-        "memory",
-        "tools",
-        "structured_output"
-      ],
+      "features": ["memory", "tools", "structured_output"],
       "complexity": "medium",
       "has_tools": true,
       "has_memory": true,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "ReactAgentSchema",
@@ -4756,17 +3753,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "Schema for React Agent State, extending SimpleAgentSchema.",
-      "features": [
-        "tools",
-        "structured_output"
-      ],
+      "features": ["tools", "structured_output"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgentState"
-      ]
+      "base_classes": ["SimpleAgentState"]
     },
     {
       "name": "ReactAgentSchemaWithStructuredResponse",
@@ -4774,16 +3766,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "Schema for React Agent with structured response.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ReactAgentSchema"
-      ]
+      "base_classes": ["ReactAgentSchema"]
     },
     {
       "name": "ReactAgentConfig",
@@ -4791,17 +3779,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "Configuration for a React agent, extending SimpleAgentConfig.",
-      "features": [
-        "reasoning",
-        "tools"
-      ],
+      "features": ["reasoning", "tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgentConfig"
-      ]
+      "base_classes": ["SimpleAgentConfig"]
     },
     {
       "name": "ReactAgent",
@@ -4809,18 +3792,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "A React agent implementing the Reasoning-Action-Observation pattern.",
-      "features": [
-        "reasoning",
-        "tools",
-        "structured_output"
-      ],
+      "features": ["reasoning", "tools", "structured_output"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgent"
-      ]
+      "base_classes": ["SimpleAgent"]
     },
     {
       "name": "ReactAgent",
@@ -4828,17 +3805,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "A React agent implementation using LangGraph.",
-      "features": [
-        "reasoning",
-        "tools"
-      ],
+      "features": ["reasoning", "tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ReactAgentState",
@@ -4846,18 +3818,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "State for React Agent, extending SimpleAgentState.",
-      "features": [
-        "reasoning",
-        "tools",
-        "structured_output"
-      ],
+      "features": ["reasoning", "tools", "structured_output"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgentState"
-      ]
+      "base_classes": ["SimpleAgentState"]
     },
     {
       "name": "ReactAgentConfig",
@@ -4865,17 +3831,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "Configuration for React Agent, extending SimpleAgentConfig.",
-      "features": [
-        "reasoning",
-        "tools"
-      ],
+      "features": ["reasoning", "tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgentConfig"
-      ]
+      "base_classes": ["SimpleAgentConfig"]
     },
     {
       "name": "ReactAgent",
@@ -4883,17 +3844,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "React Agent implementation that extends SimpleAgent.",
-      "features": [
-        "reasoning",
-        "tools"
-      ],
+      "features": ["reasoning", "tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ReactManyToolsState",
@@ -4901,17 +3857,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "State for React Agent with many tools.",
-      "features": [
-        "retrieval",
-        "tools"
-      ],
+      "features": ["retrieval", "tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ReactAgentState"
-      ]
+      "base_classes": ["ReactAgentState"]
     },
     {
       "name": "ReactManyToolsConfig",
@@ -4919,17 +3870,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "Configuration for React Agent with many tools.",
-      "features": [
-        "retrieval",
-        "tools"
-      ],
+      "features": ["retrieval", "tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ReactAgentConfig"
-      ]
+      "base_classes": ["ReactAgentConfig"]
     },
     {
       "name": "ReactManyToolsAgent",
@@ -4937,17 +3883,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "React Agent implementation that can handle many tools efficiently.",
-      "features": [
-        "retrieval",
-        "tools"
-      ],
+      "features": ["retrieval", "tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "ReactAgent"
-      ]
+      "base_classes": ["ReactAgent"]
     },
     {
       "name": "ReactAgentState",
@@ -4960,9 +3901,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "TypedDict"
-      ]
+      "base_classes": ["TypedDict"]
     },
     {
       "name": "ReactAgentConfig",
@@ -4970,16 +3909,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "No description available",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "ReactAgent",
@@ -4992,9 +3927,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ReactAgentState",
@@ -5002,17 +3935,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "State schema for React agent.",
-      "features": [
-        "tools",
-        "structured_output"
-      ],
+      "features": ["tools", "structured_output"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "ReactAgentConfig",
@@ -5020,17 +3948,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "Configuration for a React agent that can use tools and follow ReAct reasoning pattern.",
-      "features": [
-        "reasoning",
-        "tools"
-      ],
+      "features": ["reasoning", "tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgentConfig"
-      ]
+      "base_classes": ["SimpleAgentConfig"]
     },
     {
       "name": "ReactAgent",
@@ -5038,17 +3961,12 @@
       "category": "ReAct & Tool Use",
       "package": "haive-agents",
       "description": "A React agent that enhances SimpleAgent with tool-using capabilities.",
-      "features": [
-        "reasoning",
-        "tools"
-      ],
+      "features": ["reasoning", "tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "TaxonomyAgentConfig",
@@ -5056,17 +3974,12 @@
       "category": "Document Processing",
       "package": "haive-agents",
       "description": "Agent configuration for generating a taxonomy from conversation history.",
-      "features": [
-        "memory",
-        "conversation"
-      ],
+      "features": ["memory", "conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": true,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "TaxonomyAgent",
@@ -5074,17 +3987,12 @@
       "category": "Document Processing",
       "package": "haive-agents",
       "description": "Agent that generates a taxonomy from a conversation history.",
-      "features": [
-        "memory",
-        "conversation"
-      ],
+      "features": ["memory", "conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": true,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ComplexExtractionAgentConfig",
@@ -5092,17 +4000,12 @@
       "category": "Document Processing",
       "package": "haive-agents",
       "description": "Configuration for the complex extraction agent.",
-      "features": [
-        "tools",
-        "structured_output"
-      ],
+      "features": ["tools", "structured_output"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "ComplexExtractionAgent",
@@ -5110,16 +4013,12 @@
       "category": "Document Processing",
       "package": "haive-agents",
       "description": "Agent that extracts complex structured information from text.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "IterativeSummarizerConfig",
@@ -5132,9 +4031,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "IterativeSummarizer",
@@ -5147,9 +4044,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "SummarizerAgentConfig",
@@ -5162,9 +4057,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "SummarizerAgent",
@@ -5172,16 +4065,12 @@
       "category": "Document Processing",
       "package": "haive-agents",
       "description": "SummarizerAgent is a class that summarizes a list of documents.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "medium",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ParallelKGTransformerConfig",
@@ -5189,16 +4078,12 @@
       "category": "Document Processing",
       "package": "haive-agents",
       "description": "Configuration for the Parallel Knowledge Graph Transformer.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "ParallelKGTransformerConfig",
@@ -5206,16 +4091,12 @@
       "category": "Document Processing",
       "package": "haive-agents",
       "description": "Configuration for the Parallel Knowledge Graph Transformer.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "ParallelKGTransformer",
@@ -5223,16 +4104,12 @@
       "category": "Document Processing",
       "package": "haive-agents",
       "description": "An agent that builds a knowledge graph by extracting",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "StructuredKGAgent",
@@ -5240,17 +4117,12 @@
       "category": "Document Processing",
       "package": "haive-agents",
       "description": "An agent that builds a knowledge graph using structured output models.",
-      "features": [
-        "retrieval",
-        "structured_output"
-      ],
+      "features": ["retrieval", "structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "IterativeGraphTransformerConfig",
@@ -5263,9 +4135,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "IterativeGraphTransformer",
@@ -5278,9 +4148,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "SequentialMultiAgent",
@@ -5288,17 +4156,12 @@
       "category": "Multi-Agent Systems",
       "package": "haive-agents",
       "description": "Multi-agent system that executes agents sequentially.",
-      "features": [
-        "structured_output",
-        "conversation"
-      ],
+      "features": ["structured_output", "conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiAgent"
-      ]
+      "base_classes": ["MultiAgent"]
     },
     {
       "name": "CollaborativeConversation",
@@ -5306,17 +4169,12 @@
       "category": "Conversation & Multi-Agent",
       "package": "haive-agents",
       "description": "Collaborative conversation for building shared content.",
-      "features": [
-        "structured_output",
-        "conversation"
-      ],
+      "features": ["structured_output", "conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseConversationAgent"
-      ]
+      "base_classes": ["BaseConversationAgent"]
     },
     {
       "name": "BaseConversationAgent",
@@ -5324,17 +4182,12 @@
       "category": "Conversation & Multi-Agent",
       "package": "haive-agents",
       "description": "Base conversation agent that orchestrates multi-agent conversations.",
-      "features": [
-        "tools",
-        "conversation"
-      ],
+      "features": ["tools", "conversation"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": true,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "RoundRobinConversation",
@@ -5342,16 +4195,12 @@
       "category": "Conversation & Multi-Agent",
       "package": "haive-agents",
       "description": "Round-robin conversation where each agent speaks in a fixed order.",
-      "features": [
-        "conversation"
-      ],
+      "features": ["conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseConversationAgent"
-      ]
+      "base_classes": ["BaseConversationAgent"]
     },
     {
       "name": "DebateConversation",
@@ -5359,17 +4208,12 @@
       "category": "Conversation & Multi-Agent",
       "package": "haive-agents",
       "description": "Structured debate conversation with positions and formal argumentation.",
-      "features": [
-        "structured_output",
-        "conversation"
-      ],
+      "features": ["structured_output", "conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseConversationAgent"
-      ]
+      "base_classes": ["BaseConversationAgent"]
     },
     {
       "name": "DirectedConversation",
@@ -5377,17 +4221,12 @@
       "category": "Conversation & Multi-Agent",
       "package": "haive-agents",
       "description": "Directed conversation where agents respond to mentions and questions.",
-      "features": [
-        "structured_output",
-        "conversation"
-      ],
+      "features": ["structured_output", "conversation"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseConversationAgent"
-      ]
+      "base_classes": ["BaseConversationAgent"]
     },
     {
       "name": "InterviewAgentConfig",
@@ -5400,9 +4239,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentArchitectureConfig"
-      ]
+      "base_classes": ["AgentArchitectureConfig"]
     },
     {
       "name": "InterviewAgent",
@@ -5415,9 +4252,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentArchitecture"
-      ]
+      "base_classes": ["AgentArchitecture"]
     },
     {
       "name": "ProjectManagerAgentConfig",
@@ -5430,9 +4265,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentArchitectureConfig"
-      ]
+      "base_classes": ["AgentArchitectureConfig"]
     },
     {
       "name": "ProjectManagerAgent",
@@ -5445,9 +4278,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentArchitecture"
-      ]
+      "base_classes": ["AgentArchitecture"]
     },
     {
       "name": "TaskifierAgent",
@@ -5460,9 +4291,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "TLDRAgentConfig",
@@ -5475,9 +4304,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "ContractAnalysisAgentConfig",
@@ -5490,9 +4317,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentArchitectureConfig"
-      ]
+      "base_classes": ["AgentArchitectureConfig"]
     },
     {
       "name": "ContractAnalysisAgent",
@@ -5505,9 +4330,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentArchitecture"
-      ]
+      "base_classes": ["AgentArchitecture"]
     },
     {
       "name": "AgentState",
@@ -5520,9 +4343,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "SystemicReviewOfScientificArticlesAgent",
@@ -5535,9 +4356,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "PodcastGeneratorAgent",
@@ -5550,9 +4369,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ScientificPaperAgentState",
@@ -5560,16 +4377,12 @@
       "category": "Academic & Research",
       "package": "haive-prebuilt",
       "description": "The state of the agent during the paper research process.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "ScientificPaperAgent",
@@ -5582,9 +4395,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "AgentAction",
@@ -5592,18 +4403,12 @@
       "category": "Prebuilt Solutions",
       "package": "haive-prebuilt",
       "description": "Model representing an agent's action decision.",
-      "features": [
-        "reasoning",
-        "retrieval",
-        "tools"
-      ],
+      "features": ["reasoning", "retrieval", "tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "AgentOutput",
@@ -5611,16 +4416,12 @@
       "category": "Prebuilt Solutions",
       "package": "haive-prebuilt",
       "description": "Model representing the output from an agent's action.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "KYCAgentConfiguration",
@@ -5633,9 +4434,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "EnhancedKYCAgent",
@@ -5648,9 +4447,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "WeatherDisasterManagerConfig",
@@ -5658,16 +4455,12 @@
       "category": "Prebuilt Solutions",
       "package": "haive-prebuilt",
       "description": "No description available",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "WeatherDisasterManagementAgent",
@@ -5680,9 +4473,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "EssayGradingAgent",
@@ -5695,9 +4486,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "AgentMetadata",
@@ -5705,16 +4494,12 @@
       "category": "Prebuilt Solutions",
       "package": "haive-prebuilt",
       "description": "Metadata about agent contributions to content generation.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "ClueAgent",
@@ -5727,9 +4512,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "GameAgent"
-      ]
+      "base_classes": ["GameAgent"]
     },
     {
       "name": "CheckersAgentConfig",
@@ -5737,16 +4520,12 @@
       "category": "Classic Games",
       "package": "haive-games",
       "description": "Configuration for checkers game agent.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "ConfigurableCheckersConfig",
@@ -5759,9 +4538,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "CheckersAgentConfig"
-      ]
+      "base_classes": ["CheckersAgentConfig"]
     },
     {
       "name": "CheckersAgent",
@@ -5769,16 +4546,12 @@
       "category": "Classic Games",
       "package": "haive-games",
       "description": "Agent for playing checkers with LLM-based players and rich UI.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "GameAgent"
-      ]
+      "base_classes": ["GameAgent"]
     },
     {
       "name": "MastermindAgent",
@@ -5791,9 +4564,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "GameAgent"
-      ]
+      "base_classes": ["GameAgent"]
     },
     {
       "name": "MafiaAgentConfig",
@@ -5801,16 +4572,12 @@
       "category": "Strategy Games",
       "package": "haive-games",
       "description": "Configuration for the Mafia game agent.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiPlayerGameConfig"
-      ]
+      "base_classes": ["MultiPlayerGameConfig"]
     },
     {
       "name": "MafiaAgent",
@@ -5823,9 +4590,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiPlayerGameAgent"
-      ]
+      "base_classes": ["MultiPlayerGameAgent"]
     },
     {
       "name": "DominoesAgentConfig",
@@ -5838,9 +4603,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "GameConfig"
-      ]
+      "base_classes": ["GameConfig"]
     },
     {
       "name": "ConfigurableDominoesConfig",
@@ -5853,9 +4616,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "DominoesAgentConfig"
-      ]
+      "base_classes": ["DominoesAgentConfig"]
     },
     {
       "name": "DominoesAgent",
@@ -5868,9 +4629,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "GameAgent"
-      ]
+      "base_classes": ["GameAgent"]
     },
     {
       "name": "GameConfig",
@@ -5878,16 +4637,12 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Base configuration for game agents.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "GameAgentFactory",
@@ -5895,9 +4650,7 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Factory for creating game agents using a flexible, composable pattern.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
@@ -5910,17 +4663,12 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Base game agent that implements common workflow patterns.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent",
-        "Generic"
-      ]
+      "base_classes": ["Agent", "Generic"]
     },
     {
       "name": "MonopolyPlayerAgentConfig",
@@ -5933,9 +4681,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "MonopolyGameAgentConfig",
@@ -5943,16 +4689,12 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Configuration class for monopoly game agents.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "MonopolyPlayerAgent",
@@ -5965,9 +4707,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "MonopolyPlayerAgentConfig",
@@ -5980,9 +4720,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "MonopolyGameAgentConfig",
@@ -5990,16 +4728,12 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Configuration class for monopoly game agents.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "ConfigurableMonopolyConfig",
@@ -6012,9 +4746,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MonopolyGameAgentConfig"
-      ]
+      "base_classes": ["MonopolyGameAgentConfig"]
     },
     {
       "name": "MonopolyGameAgentConfig",
@@ -6027,9 +4759,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "MonopolyGameAgent",
@@ -6042,9 +4772,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "HoldemPlayerAgentConfig",
@@ -6057,9 +4785,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "HoldemPlayerAgent",
@@ -6067,16 +4793,12 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Player agent for Texas Hold'em poker games.",
-      "features": [
-        "planning"
-      ],
+      "features": ["planning"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ConfigurableHoldemConfig",
@@ -6089,9 +4811,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "HoldemGameAgentConfig"
-      ]
+      "base_classes": ["HoldemGameAgentConfig"]
     },
     {
       "name": "HoldemGameAgentConfig",
@@ -6099,16 +4819,12 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Configuration for the main Hold'em game agent.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "simple",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "HoldemGameAgent",
@@ -6121,9 +4837,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "NimAgent",
@@ -6136,9 +4850,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "GameAgent"
-      ]
+      "base_classes": ["GameAgent"]
     },
     {
       "name": "MultiPlayerGameConfig",
@@ -6146,16 +4858,12 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Configuration for multi-player game agents.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "MultiPlayerGameAgent",
@@ -6163,18 +4871,12 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Base game agent for multi-player games.",
-      "features": [
-        "tools",
-        "structured_output"
-      ],
+      "features": ["tools", "structured_output"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent",
-        "Generic"
-      ]
+      "base_classes": ["Agent", "Generic"]
     },
     {
       "name": "TicTacToeAgent",
@@ -6182,16 +4884,12 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Agent for playing Tic Tac Toe using structured game flow and LLM inference.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "medium",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "GameAgent"
-      ]
+      "base_classes": ["GameAgent"]
     },
     {
       "name": "MancalaAgent",
@@ -6204,9 +4902,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "GameAgent"
-      ]
+      "base_classes": ["GameAgent"]
     },
     {
       "name": "Connect4AgentConfig",
@@ -6219,9 +4915,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "ConfigurableConnect4Config",
@@ -6229,16 +4923,12 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Configurable Connect4 agent configuration.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "medium",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "Connect4Agent",
@@ -6251,9 +4941,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "GameAgent"
-      ]
+      "base_classes": ["GameAgent"]
     },
     {
       "name": "AmongUsAgentConfig",
@@ -6266,9 +4954,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "GameConfig"
-      ]
+      "base_classes": ["GameConfig"]
     },
     {
       "name": "AmongUsAgent",
@@ -6281,10 +4967,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AmongUsStateManagerMixin",
-        "MultiPlayerGameAgent"
-      ]
+      "base_classes": ["AmongUsStateManagerMixin", "MultiPlayerGameAgent"]
     },
     {
       "name": "PokerAgentConfig",
@@ -6292,18 +4975,12 @@
       "category": "Classic Games",
       "package": "haive-games",
       "description": "Configuration class for the poker agent.",
-      "features": [
-        "retrieval",
-        "memory",
-        "structured_output"
-      ],
+      "features": ["retrieval", "memory", "structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": true,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "AgentDecision",
@@ -6311,17 +4988,12 @@
       "category": "Classic Games",
       "package": "haive-games",
       "description": "Agent's decision in the game.",
-      "features": [
-        "reasoning",
-        "planning"
-      ],
+      "features": ["reasoning", "planning"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "AgentDecisionSchema",
@@ -6329,18 +5001,12 @@
       "category": "Classic Games",
       "package": "haive-games",
       "description": "Schema for LLM decision output.",
-      "features": [
-        "reasoning",
-        "planning",
-        "structured_output"
-      ],
+      "features": ["reasoning", "planning", "structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "ConfigurablePokerConfig",
@@ -6353,9 +5019,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "PokerAgentConfig"
-      ]
+      "base_classes": ["PokerAgentConfig"]
     },
     {
       "name": "PokerAgent",
@@ -6363,16 +5027,12 @@
       "category": "Classic Games",
       "package": "haive-games",
       "description": "Enhanced agent class for managing a multi-player Texas Hold'em poker game.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "DebateAgentConfig",
@@ -6385,9 +5045,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "ConfigurableDebateConfig",
@@ -6400,9 +5058,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "DebateAgentConfig"
-      ]
+      "base_classes": ["DebateAgentConfig"]
     },
     {
       "name": "DebateAgent",
@@ -6410,16 +5066,12 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Agent for facilitating debates and structured discussions.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "MultiPlayerGameAgent"
-      ]
+      "base_classes": ["MultiPlayerGameAgent"]
     },
     {
       "name": "FoxAndGeeseAgent",
@@ -6432,9 +5084,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "GameAgent"
-      ]
+      "base_classes": ["GameAgent"]
     },
     {
       "name": "FixedFoxAndGeeseAgent",
@@ -6447,9 +5097,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "FoxAndGeeseAgent"
-      ]
+      "base_classes": ["FoxAndGeeseAgent"]
     },
     {
       "name": "GoAgentConfig",
@@ -6457,16 +5105,12 @@
       "category": "Classic Games",
       "package": "haive-games",
       "description": "Configuration for the Go game agent.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "GoAgent",
@@ -6474,16 +5118,12 @@
       "category": "Classic Games",
       "package": "haive-games",
       "description": "Go game agent implementation.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "ReversiAgent",
@@ -6496,9 +5136,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "GameAgent"
-      ]
+      "base_classes": ["GameAgent"]
     },
     {
       "name": "RiskAgent",
@@ -6506,18 +5144,12 @@
       "category": "Strategy Games",
       "package": "haive-games",
       "description": "Agent for playing the Risk game.",
-      "features": [
-        "reasoning",
-        "planning",
-        "memory"
-      ],
+      "features": ["reasoning", "planning", "memory"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": true,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "SinglePlayerGameAgent",
@@ -6525,9 +5157,7 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Base agent for single-player games.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
@@ -6540,16 +5170,12 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Configuration class for Battleship game agents.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "ConfigurableBattleshipConfig",
@@ -6562,9 +5188,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BattleshipAgentConfig"
-      ]
+      "base_classes": ["BattleshipAgentConfig"]
     },
     {
       "name": "BattleshipAgent",
@@ -6572,17 +5196,12 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Battleship game agent with LLM-powered players.",
-      "features": [
-        "planning",
-        "memory"
-      ],
+      "features": ["planning", "memory"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": true,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "GameConfig",
@@ -6590,16 +5209,12 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Base configuration for game agents.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "GameAgentFactory",
@@ -6607,9 +5222,7 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Factory for creating game agents using a flexible, composable pattern.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
@@ -6622,17 +5235,12 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Base game agent that implements common workflow patterns.",
-      "features": [
-        "tools"
-      ],
+      "features": ["tools"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent",
-        "Generic"
-      ]
+      "base_classes": ["Agent", "Generic"]
     },
     {
       "name": "MultiPlayerGameConfig",
@@ -6640,16 +5248,12 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Configuration for multi-player game agents.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "MultiPlayerGameAgent",
@@ -6657,18 +5261,12 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Base game agent for multi-player games.",
-      "features": [
-        "tools",
-        "structured_output"
-      ],
+      "features": ["tools", "structured_output"],
       "complexity": "complex",
       "has_tools": true,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent",
-        "Generic"
-      ]
+      "base_classes": ["Agent", "Generic"]
     },
     {
       "name": "BasePlayerAgent",
@@ -6681,9 +5279,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "BullshitAgentConfig",
@@ -6691,16 +5287,12 @@
       "category": "Card Games",
       "package": "haive-games",
       "description": "Configuration for a Bullshit (BS) card game agent.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "simple",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "BullshitAgent",
@@ -6713,9 +5305,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "GameAgent"
-      ]
+      "base_classes": ["GameAgent"]
     },
     {
       "name": "BlackjackAgentConfig",
@@ -6723,16 +5313,12 @@
       "category": "Card Games",
       "package": "haive-games",
       "description": "Configuration for a multi-player Blackjack game agent.",
-      "features": [
-        "structured_output"
-      ],
+      "features": ["structured_output"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig"
-      ]
+      "base_classes": ["AgentConfig"]
     },
     {
       "name": "BlackjackAgent",
@@ -6745,9 +5331,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "GameAgent"
-      ]
+      "base_classes": ["GameAgent"]
     },
     {
       "name": "BasePlayerAgent",
@@ -6760,10 +5344,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SimpleAgentConfig",
-        "ABC"
-      ]
+      "base_classes": ["SimpleAgentConfig", "ABC"]
     },
     {
       "name": "GameAgentConfig",
@@ -6776,10 +5357,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "AgentConfig",
-        "ABC"
-      ]
+      "base_classes": ["AgentConfig", "ABC"]
     },
     {
       "name": "PlayerAgentConfig",
@@ -6792,9 +5370,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "BaseModel"
-      ]
+      "base_classes": ["BaseModel"]
     },
     {
       "name": "PlayerAgentFactory",
@@ -6820,9 +5396,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": true,
-      "base_classes": [
-        "ABC"
-      ]
+      "base_classes": ["ABC"]
     },
     {
       "name": "BaseGameConfig",
@@ -6830,17 +5404,12 @@
       "category": "Games",
       "package": "haive-games",
       "description": "Base configuration for all configurable games.",
-      "features": [
-        "retrieval"
-      ],
+      "features": ["retrieval"],
       "complexity": "complex",
       "has_tools": false,
       "has_memory": false,
       "is_abstract": true,
-      "base_classes": [
-        "AgentConfig",
-        "ABC"
-      ]
+      "base_classes": ["AgentConfig", "ABC"]
     },
     {
       "name": "RubiksCubeAgent",
@@ -6853,9 +5422,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "Agent"
-      ]
+      "base_classes": ["Agent"]
     },
     {
       "name": "WordConnectionsAgentConfig",
@@ -6868,9 +5435,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "GameConfig"
-      ]
+      "base_classes": ["GameConfig"]
     },
     {
       "name": "FlowFreeAgent",
@@ -6883,9 +5448,7 @@
       "has_tools": false,
       "has_memory": false,
       "is_abstract": false,
-      "base_classes": [
-        "SinglePlayerGameAgent"
-      ]
+      "base_classes": ["SinglePlayerGameAgent"]
     }
   ],
   "stats": {

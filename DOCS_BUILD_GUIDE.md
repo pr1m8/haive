@@ -5,6 +5,7 @@ This guide explains how to build and serve the Haive documentation using nox and
 ## Prerequisites
 
 1. **Install nox** (if not already installed):
+
    ```bash
    pip install nox
    # or
@@ -34,6 +35,7 @@ nox -s docs_clean
 ## Available Nox Sessions
 
 ### 1. Build Documentation (`nox -s docs`)
+
 Builds the HTML documentation using Sphinx.
 
 ```bash
@@ -43,6 +45,7 @@ nox -s docs
 Output will be in `docs/build/html/`
 
 ### 2. Serve Documentation (`nox -s docs_serve`)
+
 Builds and serves documentation with auto-reload on changes.
 
 ```bash
@@ -54,6 +57,7 @@ nox -s docs_serve
 - Press Ctrl+C to stop
 
 ### 3. Clean Documentation (`nox -s docs_clean`)
+
 Removes all build artifacts.
 
 ```bash
@@ -61,6 +65,7 @@ nox -s docs_clean
 ```
 
 ### 4. Check Links (`nox -s docs_check`)
+
 Checks for broken links and references.
 
 ```bash
@@ -68,6 +73,7 @@ nox -s docs_check
 ```
 
 ### 5. Check Coverage (`nox -s docs_coverage`)
+
 Checks documentation coverage for Python API.
 
 ```bash
@@ -98,6 +104,7 @@ make clean
 **Error**: `ModuleNotFoundError: No module named 'sphinx'`
 
 **Solution**:
+
 ```bash
 poetry install --with docs
 ```
@@ -113,6 +120,7 @@ poetry install --with docs
 **Error**: `ImportError: cannot import name 'SomeClass'`
 
 **Solution**: Ensure all packages are installed:
+
 ```bash
 poetry install
 ```
@@ -122,6 +130,7 @@ poetry install
 **Error**: `Theme 'sphinx_rtd_theme' not found`
 
 **Solution**:
+
 ```bash
 poetry add --group docs sphinx-rtd-theme
 ```
@@ -131,6 +140,7 @@ poetry add --group docs sphinx-rtd-theme
 **Error**: Mermaid diagrams show as code blocks
 
 **Solution**: Ensure mermaid extension is enabled in `conf.py`:
+
 ```python
 extensions = [
     # ... other extensions
@@ -178,7 +188,7 @@ To build docs in CI:
   run: |
     pip install nox
     nox -s docs
-    
+
 - name: Upload Documentation
   uses: actions/upload-artifact@v3
   with:

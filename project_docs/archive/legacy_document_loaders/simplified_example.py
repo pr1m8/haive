@@ -6,12 +6,11 @@ classes without relying on the full Haive framework.
 """
 
 import datetime
-from enum import Enum
 import os
 import tempfile
-from typing import Any
 import uuid
-
+from enum import Enum
+from typing import Any
 
 # ====== Mock classes to replace dependencies =======
 
@@ -215,8 +214,8 @@ class LoadingOptions:
         strategy: LoadingStrategy = LoadingStrategy.AUTO,
         max_size_bytes: int | None = None,
         recursive_depth: int = 3,
-        exclude_patterns: list[str] = None,
-        include_patterns: list[str] = None,
+        exclude_patterns: list[str] | None = None,
+        include_patterns: list[str] | None = None,
         max_files: int | None = None,
         force_reload: bool = False,
         timeout_seconds: int = 60,
@@ -240,7 +239,7 @@ class ChunkingOptions:
         chunk_size: int = 1000,
         chunk_overlap: int = 200,
         keep_separator: bool = True,
-        custom_separators: list[str] = None,
+        custom_separators: list[str] | None = None,
         metadata_scope: str = "all",
     ):
         self.strategy = strategy
@@ -256,16 +255,16 @@ class DocumentSourceMetadata:
 
     def __init__(
         self,
-        created_at: datetime.datetime = None,
-        updated_at: datetime.datetime = None,
+        created_at: datetime.datetime | None = None,
+        updated_at: datetime.datetime | None = None,
         size_bytes: int | None = None,
         mime_type: str | None = None,
         encoding: str | None = None,
         author: str | None = None,
         title: str | None = None,
         description: str | None = None,
-        tags: list[str] = None,
-        custom: dict[str, Any] = None,
+        tags: list[str] | None = None,
+        custom: dict[str, Any] | None = None,
     ):
         self.created_at = created_at or datetime.datetime.now()
         self.updated_at = updated_at or datetime.datetime.now()
@@ -291,7 +290,7 @@ class ProcessingStatistics:
 
     def __init__(
         self,
-        start_time: datetime.datetime = None,
+        start_time: datetime.datetime | None = None,
         end_time: datetime.datetime | None = None,
         total_sources: int = 0,
         processed_sources: int = 0,
@@ -370,7 +369,7 @@ class DocumentChunk:
         content: str,
         document_id: str,
         chunk_index: int,
-        metadata: dict[str, Any] = None,
+        metadata: dict[str, Any] | None = None,
         embedding: list[float] | None = None,
     ):
         self.content = content
@@ -390,11 +389,11 @@ class Document:
         source_path: str,
         source_type: DocumentSourceType = DocumentSourceType.UNKNOWN,
         format: DocumentFormat = DocumentFormat.UNKNOWN,
-        metadata: dict[str, Any] = None,
-        chunks: list[DocumentChunk] = None,
+        metadata: dict[str, Any] | None = None,
+        chunks: list[DocumentChunk] | None = None,
         embedding: list[float] | None = None,
-        created_at: datetime.datetime = None,
-        updated_at: datetime.datetime = None,
+        created_at: datetime.datetime | None = None,
+        updated_at: datetime.datetime | None = None,
     ):
         self.document_id = document_id
         self.content = content
@@ -435,17 +434,17 @@ class DocumentState:
 
     def __init__(
         self,
-        sources: list[DocumentSource] = None,
-        documents: list[Document] = None,
-        credentials: dict[str, Any] = None,
+        sources: list[DocumentSource] | None = None,
+        documents: list[Document] | None = None,
+        credentials: dict[str, Any] | None = None,
         loading_options: LoadingOptions | None = None,
         chunking_options: ChunkingOptions | None = None,
         processing_stats: ProcessingStatistics | None = None,
         current_query: str | None = None,
-        messages: list[dict[str, Any]] = None,
+        messages: list[dict[str, Any]] | None = None,
         parallel_processing: bool = True,
         max_workers: int = 4,
-        error_messages: list[str] = None,
+        error_messages: list[str] | None = None,
     ):
         self.sources = sources or []
         self.documents = documents or []
@@ -511,9 +510,7 @@ class DocumentState:
         """Get all documents from a specific source."""
         return [doc for doc in self.documents if doc.source_path == source_path]
 
-    def get_documents_by_format(
-        self, format: DocumentFormat | str
-    ) -> list[Document]:
+    def get_documents_by_format(self, format: DocumentFormat | str) -> list[Document]:
         """Get all documents of a specific format."""
         if isinstance(format, str):
             format = DocumentFormat(format)
@@ -656,9 +653,7 @@ class DocumentAgent:
         """Get all documents from a specific source."""
         return self.state.get_documents_by_source(source_path)
 
-    def get_documents_by_format(
-        self, format: DocumentFormat | str
-    ) -> list[Document]:
+    def get_documents_by_format(self, format: DocumentFormat | str) -> list[Document]:
         """Get all documents of a specific format."""
         return self.state.get_documents_by_format(format)
 
@@ -676,7 +671,6 @@ class DocumentAgent:
 
     def analyze_source(self, state: DocumentState) -> DocumentState:
         """Analyze document sources and prepare them for loading."""
-        print("Analyzing sources...")
 
         for source in state.sources:
             if source.stage == ProcessingStage.INITIALIZED:
@@ -703,15 +697,11 @@ class DocumentAgent:
 
                     # Update stage to QUEUED for loading
                     source.update_stage(ProcessingStage.QUEUED)
-                    print(
-                        f"  Source {source.path} analyzed as {source.source_type}, {source.format}"
-                    )
 
                 except Exception as e:
                     error_msg = f"Error analyzing source: {e!s}"
                     source.update_stage(ProcessingStage.FAILED, error_msg)
                     state.error_messages.append(error_msg)
-                    print(f"  Error analyzing source {source.path}: {e!s}")
                     if not self.options.skip_errors:
                         raise
 
@@ -719,7 +709,6 @@ class DocumentAgent:
 
     def load_documents(self, state: DocumentState) -> DocumentState:
         """Load documents from sources."""
-        print("Loading documents...")
 
         queued_sources = state.get_sources_by_stage(ProcessingStage.QUEUED)
 
@@ -729,7 +718,6 @@ class DocumentAgent:
         for source in queued_sources:
             try:
                 source.update_stage(ProcessingStage.LOADING)
-                print(f"  Loading {source.path}...")
 
                 # Get loader for this source
                 loader = get_loader_for_source(source.path, source.source_type)
@@ -738,14 +726,13 @@ class DocumentAgent:
                     error = f"No loader found for source: {source.path}"
                     source.update_stage(ProcessingStage.FAILED, error)
                     state.error_messages.append(error)
-                    print(f"  Error: {error}")
                     continue
 
                 # Load documents
                 raw_docs = loader.load()
 
                 # Convert to Document objects
-                for i, raw_doc in enumerate(raw_docs):
+                for _i, raw_doc in enumerate(raw_docs):
                     doc_id = f"{uuid.uuid4()}"
                     content = raw_doc.page_content
 
@@ -760,9 +747,6 @@ class DocumentAgent:
                     )
                     state.documents.append(doc)
                     state.processing_stats.total_documents += 1
-                    print(
-                        f"    Created document {doc_id} with {len(content)} characters"
-                    )
 
                 # Update source stage
                 if state.chunking_options.strategy == ChunkingStrategy.NONE:
@@ -774,7 +758,6 @@ class DocumentAgent:
                 error = f"Error loading source: {e!s}"
                 source.update_stage(ProcessingStage.FAILED, error)
                 state.error_messages.append(error)
-                print(f"  Error loading {source.path}: {e!s}")
                 if not self.options.skip_errors:
                     raise
 
@@ -782,7 +765,6 @@ class DocumentAgent:
 
     def chunk_documents(self, state: DocumentState) -> DocumentState:
         """Chunk documents into smaller pieces."""
-        print("Chunking documents...")
 
         # Use the local _simple_split_document function instead of the external processor
         # to avoid import errors with haive.core dependencies
@@ -799,7 +781,6 @@ class DocumentAgent:
             try:
                 # Get documents for this source
                 docs = state.get_documents_by_source(source.path)
-                print(f"  Chunking {len(docs)} documents from {source.path}")
 
                 for doc in docs:
                     # Skip already chunked documents
@@ -821,10 +802,6 @@ class DocumentAgent:
                         # Default to fixed size if strategy not implemented
                         self._chunk_fixed_size(doc, chunking_options)
 
-                    print(
-                        f"    Created {doc.chunk_count} chunks for document {doc.document_id}"
-                    )
-
                 # Update source stage
                 source.update_stage(ProcessingStage.COMPLETED)
 
@@ -832,7 +809,6 @@ class DocumentAgent:
                 error_msg = f"Error chunking documents: {e!s}"
                 source.update_stage(ProcessingStage.FAILED, error_msg)
                 state.error_messages.append(error_msg)
-                print(f"  Error chunking documents from {source.path}: {e!s}")
                 if not self.options.skip_errors:
                     raise
 
@@ -950,7 +926,6 @@ class DocumentAgent:
 
     def finalize_processing(self, state: DocumentState) -> DocumentState:
         """Finalize document processing."""
-        print("Finalizing document processing...")
 
         # Update statistics
         state.processing_stats.total_chunks = state.total_chunks
@@ -967,17 +942,10 @@ class DocumentAgent:
         # Mark processing as complete
         state.mark_processing_complete()
 
-        print(
-            f"Processing complete: {state.processing_stats.total_documents} documents, "
-            f"{state.processing_stats.total_chunks} chunks, "
-            f"{state.processing_stats.total_tokens} tokens (estimated)"
-        )
-
         return state
 
     def build_graph(self) -> StateGraph:
         """Build the document agent graph."""
-        print("Building document processing graph...")
 
         builder = StateGraph(DocumentState)
 
@@ -1141,7 +1109,6 @@ This is a sample markdown document for testing the DocumentAgent.
 
 def example_basic_usage():
     """Example of basic DocumentAgent usage."""
-    print("\n=== Example: Basic DocumentAgent Usage ===\n")
 
     # Create sample files
     file_paths = create_sample_files()
@@ -1150,7 +1117,6 @@ def example_basic_usage():
     agent = DocumentAgent()
 
     # Add sources
-    print("Adding sources...")
     agent.add_sources(file_paths)
     agent.add_source("text://This is a sample text source for testing.")
 
@@ -1158,25 +1124,15 @@ def example_basic_usage():
     agent.process_documents()
 
     # Display results
-    print("\nResults:")
-    print(f"- Processed {len(agent.get_documents())} documents")
     for doc in agent.get_documents():
-        print(
-            f"  - {doc.source_path}: {len(doc.content)} chars, {doc.chunk_count} chunks"
-        )
+        pass
 
     # Display statistics
     stats = agent.state.processing_stats
-    print("\nProcessing statistics:")
-    print(f"- Total sources: {stats.total_sources}")
-    print(f"- Total documents: {stats.total_documents}")
-    print(f"- Total chunks: {stats.total_chunks}")
-    print(f"- Processing time: {stats.processing_time_seconds:.2f} seconds")
 
 
 def example_chunking_strategies():
     """Example of different chunking strategies."""
-    print("\n=== Example: Different Chunking Strategies ===\n")
 
     # Create text content
     text_content = """This is a sample text for testing different chunking strategies.
@@ -1193,7 +1149,6 @@ The DocumentAgent supports different chunking strategies:
 """
 
     # 1. Fixed size chunking
-    print("1. Fixed Size Chunking")
     fixed_agent = DocumentAgent(
         options=DocumentAgentOptions(
             default_chunking_options=ChunkingOptions(
@@ -1208,14 +1163,12 @@ The DocumentAgent supports different chunking strategies:
 
     # Display results
     doc = fixed_agent.get_documents()[0]
-    print(f"Created {doc.chunk_count} fixed-size chunks:")
     for i, chunk in enumerate(doc.chunks[:3]):  # Show first 3 chunks
-        print(f"  Chunk {i}: '{chunk.content[:30]}...'")
+        pass
     if doc.chunk_count > 3:
-        print(f"  (and {doc.chunk_count - 3} more chunks)")
+        pass
 
     # 2. Paragraph chunking
-    print("\n2. Paragraph Chunking")
     para_agent = DocumentAgent(
         options=DocumentAgentOptions(
             default_chunking_options=ChunkingOptions(
@@ -1228,12 +1181,10 @@ The DocumentAgent supports different chunking strategies:
 
     # Display results
     doc = para_agent.get_documents()[0]
-    print(f"Created {doc.chunk_count} paragraph chunks:")
     for i, chunk in enumerate(doc.chunks):
-        print(f"  Paragraph {i}: '{chunk.content[:30]}...'")
+        pass
 
     # 3. Sentence chunking
-    print("\n3. Sentence Chunking")
     sent_agent = DocumentAgent(
         options=DocumentAgentOptions(
             default_chunking_options=ChunkingOptions(
@@ -1246,22 +1197,19 @@ The DocumentAgent supports different chunking strategies:
 
     # Display results
     doc = sent_agent.get_documents()[0]
-    print(f"Created {doc.chunk_count} sentence chunks:")
     for i, chunk in enumerate(doc.chunks[:5]):  # Show first 5 sentences
-        print(f"  Sentence {i}: '{chunk.content}'")
+        pass
     if doc.chunk_count > 5:
-        print(f"  (and {doc.chunk_count - 5} more sentences)")
+        pass
 
 
 def example_specialized_agents():
     """Example of specialized document agents."""
-    print("\n=== Example: Specialized Document Agents ===\n")
 
     # Create sample files
     file_paths = create_sample_files()
 
     # 1. File Document Agent
-    print("1. File Document Agent")
     file_agent = create_file_document_agent(
         file_paths=file_paths,
         chunking_strategy=ChunkingStrategy.FIXED_SIZE,
@@ -1270,24 +1218,15 @@ def example_specialized_agents():
     )
     file_agent.process_documents()
 
-    print(
-        f"Loaded {len(file_agent.get_documents())} documents with {file_agent.state.total_chunks} chunks"
-    )
-
     # 2. Web Document Agent
-    print("\n2. Web Document Agent")
     web_agent = create_web_document_agent(
         urls=["https://example.com", "https://haive.ai"],
         chunking_strategy=ChunkingStrategy.PARAGRAPH,
     )
 
     # Instead of actually processing, just show the configuration
-    print(f"Created agent for {len(web_agent.state.sources)} URLs")
-    print(f"Chunking strategy: {web_agent.state.chunking_options.strategy}")
-    print(f"Loading timeout: {web_agent.state.loading_options.timeout_seconds} seconds")
 
     # 3. Text Document Agent
-    print("\n3. Text Document Agent")
     text_agent = create_document_agent(
         options=DocumentAgentOptions(
             default_chunking_options=ChunkingOptions(
@@ -1301,20 +1240,13 @@ def example_specialized_agents():
     )
     text_agent.process_documents()
 
-    print(
-        f"Loaded {len(text_agent.get_documents())} text documents with {text_agent.state.total_chunks} chunks"
-    )
-
 
 def main():
     """Run the example script."""
-    print("==== Document Agent System Example ====")
 
     example_basic_usage()
     example_chunking_strategies()
     example_specialized_agents()
-
-    print("\n==== Example Complete ====")
 
 
 if __name__ == "__main__":

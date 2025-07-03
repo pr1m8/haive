@@ -74,6 +74,7 @@ project_docs/
 **Impact**: Fixed circular imports and unified API discovery system
 
 **Key Achievements**:
+
 - Resolved circular import between component_registry and haive_discovery
 - Refactored agent, tool, and game discovery APIs to use unified system
 - Eliminated code duplication across discovery endpoints

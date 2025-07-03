@@ -5,6 +5,7 @@ How to write effective, clear, and useful code examples for Haive documentation.
 ## 🎯 Purpose of Code Examples
 
 Code examples should:
+
 - **Demonstrate real usage** - Solve actual problems users face
 - **Work as written** - Copy-paste should work without modification
 - **Teach concepts** - Show best practices and patterns
@@ -13,6 +14,7 @@ Code examples should:
 ## 📋 Example Types
 
 ### 1. **Quick Start Examples**
+
 Show the simplest possible usage:
 
 ```python
@@ -27,12 +29,14 @@ print(result["output"])
 ```
 
 **Guidelines:**
+
 - Minimal setup required
 - Single clear purpose
 - Immediate visible result
 - No complex configuration
 
 ### 2. **Complete Working Examples**
+
 Full examples that demonstrate real workflows:
 
 ```python
@@ -71,12 +75,14 @@ print(f"Tools used: {tools_used}")
 ```
 
 **Guidelines:**
+
 - Complete imports and setup
 - Real-world scenario
 - Show error handling where relevant
 - Explain each major step
 
 ### 3. **Configuration Examples**
+
 Show different ways to configure components:
 
 ```python
@@ -104,12 +110,14 @@ config = AgentConfig.from_env(prefix="HAIVE_AGENT_")
 ```
 
 **Guidelines:**
+
 - Show progression from simple to complex
 - Explain when to use each approach
 - Include common configurations
 - Reference external config files
 
 ### 4. **Error Handling Examples**
+
 Demonstrate proper error handling:
 
 ```python
@@ -122,21 +130,22 @@ try:
     result = agent.invoke({
         "messages": [HumanMessage(content="Hello")]
     })
-    
+
 except ValidationError as e:
     print(f"Input validation failed: {e}")
     # Handle invalid input
-    
+
 except ExecutionError as e:
     print(f"Agent execution failed: {e}")
     # Handle execution failure
-    
+
 except Exception as e:
     print(f"Unexpected error: {e}")
     # Handle unexpected errors
 ```
 
 **Guidelines:**
+
 - Show specific exception types
 - Demonstrate recovery strategies
 - Include logging where appropriate
@@ -145,6 +154,7 @@ except Exception as e:
 ## 🎨 Writing Style
 
 ### Code Style
+
 Follow Haive project conventions:
 
 ```python
@@ -158,6 +168,7 @@ res = a.invoke(qd)
 ```
 
 ### Comments
+
 Use comments to explain the why, not the what:
 
 ```python
@@ -176,26 +187,27 @@ input_data = {
 ```
 
 ### Documentation Strings
+
 Include docstrings for complex examples:
 
 ```python
 def create_research_agent(api_keys: dict) -> SimpleAgent:
     """Create a research agent with web search capabilities.
-    
+
     Args:
         api_keys: Dictionary containing API keys for external services.
             Must include 'search_api_key' and optionally 'llm_api_key'.
-    
+
     Returns:
         Configured SimpleAgent ready for research tasks.
-    
+
     Example:
         >>> keys = {"search_api_key": "your_key"}
         >>> agent = create_research_agent(keys)
         >>> result = agent.invoke({"input": "Latest AI research"})
     """
     tools = [WebSearchTool(api_key=api_keys["search_api_key"])]
-    
+
     return SimpleAgent(
         name="researcher",
         tools=tools,
@@ -206,9 +218,10 @@ def create_research_agent(api_keys: dict) -> SimpleAgent:
 ## 📝 Content Organization
 
 ### Example Structure
+
 Organize examples with clear sections:
 
-```markdown
+````markdown
 ## Creating a Simple Agent
 
 Brief explanation of what this example demonstrates.
@@ -218,6 +231,7 @@ Brief explanation of what this example demonstrates.
 ```python
 # Minimal example
 ```
+````
 
 ### With Configuration
 
@@ -240,7 +254,8 @@ Expected output from the example
 ### Next Steps
 
 What to try after this example.
-```
+
+````
 
 ### Progressive Complexity
 Build examples from simple to complex:
@@ -273,11 +288,11 @@ from pathlib import Path
 def test_basic_agent_creation():
     """Test the basic agent creation example."""
     from haive.agents.simple import SimpleAgent
-    
+
     # Example from docs
     agent = SimpleAgent(name="helper")
     result = agent.invoke({"input": "Hello, world!"})
-    
+
     # Verify it works
     assert "output" in result
     assert isinstance(result["output"], str)
@@ -292,13 +307,14 @@ if __name__ == "__main__":
     test_basic_agent_creation()
     test_agent_with_tools()
     print("🎉 All examples pass!")
-```
+````
 
 ## 🎯 Example Categories
 
 ### By Complexity Level
 
 #### **Beginner Examples**
+
 - Single function calls
 - Basic configuration
 - Simple inputs and outputs
@@ -311,6 +327,7 @@ result = agent.invoke({"input": "Hello"})
 ```
 
 #### **Intermediate Examples**
+
 - Multiple components
 - Configuration options
 - Basic error handling
@@ -328,6 +345,7 @@ except ExecutionError as e:
 ```
 
 #### **Advanced Examples**
+
 - Complex workflows
 - Custom components
 - Comprehensive error handling
@@ -350,21 +368,25 @@ class MonitoredAgent(SimpleAgent):
 ### By Use Case
 
 #### **Getting Started**
+
 - First agent creation
 - Basic configuration
 - Simple interactions
 
 #### **Tool Integration**
+
 - Adding tools to agents
 - Tool configuration
 - Tool result handling
 
 #### **Advanced Workflows**
+
 - Multi-step processes
 - State management
 - Complex routing
 
 #### **Production Deployment**
+
 - Error handling
 - Monitoring
 - Performance optimization
@@ -372,6 +394,7 @@ class MonitoredAgent(SimpleAgent):
 ## ✅ Quality Checklist
 
 ### Before Publishing
+
 - [ ] Example runs without errors
 - [ ] All imports are included
 - [ ] Variables are clearly named
@@ -381,6 +404,7 @@ class MonitoredAgent(SimpleAgent):
 - [ ] Example serves a clear purpose
 
 ### Content Quality
+
 - [ ] Solves a real user problem
 - [ ] Follows project conventions
 - [ ] Uses current API versions

@@ -3,31 +3,35 @@
 ## Current ChainAgent Problems
 
 ### 1. **No Schema Composition at All**
+
 **Location**: `packages/haive-agents/src/haive/agents/chain/chain_agent_simple.py`
 
 **Current Implementation**:
+
 ```python
 def build_graph(self) -> BaseGraph:
-    """Build the graph from nodes and edges.""" 
+    """Build the graph from nodes and edges."""
     graph = BaseGraph(name=self.name.replace(" ", ""))
-    
+
     # Just adds nodes to graph - NO SCHEMA COMPOSITION
     for i, node in enumerate(self.nodes):
         node_name = f"node_{i}"
         # ... add node logic
-    
+
     # NO schema coordination between nodes
     # NO field mapping
     # NO state management
 ```
 
 **What's Missing**:
+
 - No use of SchemaComposer or AgentSchemaComposer
 - No state schema generation from nodes
 - No field mapping between chain steps
 - No tool_call_id preservation
 
 ### 2. **Wrong Abstraction Level - Uses Engines Not Agents**
+
 ```python
 # ChainAgent operates at ENGINE level:
 nodes: List[NodeLike] = Field(default_factory=list)
@@ -36,18 +40,20 @@ nodes: List[NodeLike] = Field(default_factory=list)
 # Example usage:
 ChainAgent(
     AugLLMConfig(...),  # Engine config
-    AugLLMConfig(...),  # Engine config  
+    AugLLMConfig(...),  # Engine config
     edges=["0->1"]
 )
 ```
 
 **Problems**:
+
 - Should chain Agents, not Engines
 - Engines don't have state management
 - Can't use AgentSchemaComposer with engines
 - Loses all agent-level capabilities
 
 ### 3. **Manual Data Passing Instead of Schema-Based**
+
 ```python
 # Current approach - manual state passing:
 def _add_edge_to_graph(self, graph, edge, node_names):
@@ -58,6 +64,7 @@ def _add_edge_to_graph(self, graph, edge, node_names):
 ```
 
 **Should be**:
+
 ```python
 # Schema-aware approach:
 def build_graph(self) -> BaseGraph:
@@ -70,12 +77,14 @@ def build_graph(self) -> BaseGraph:
 ```
 
 ### 4. **No Message Preservation**
+
 **Critical Issue**: ChainAgent loses tool_call_id between chain steps
 
 **Current**: No preserve_messages_reducer
 **Needed**: Message preservation like MultiAgent has
 
 ### 5. **No Compatibility with Agent Ecosystem**
+
 ```python
 # Can't do this with current ChainAgent:
 chain = ChainAgent([
@@ -90,12 +99,13 @@ chain = ChainAgent([
 ## What ChainAgent Should Look Like
 
 ### Fixed ChainAgent Design
+
 ```python
 class ChainAgent(Agent):  # or extends MultiAgentBase
     """Sequential agent execution with proper schema composition"""
-    
+
     agents: list[Agent] = Field(...)  # Agents, not engines!
-    
+
     def __init__(self, agents: list[Agent], **kwargs):
         # Use AgentSchemaComposer for proper schema handling
         self.state_schema = AgentSchemaComposer.from_agents(
@@ -104,17 +114,17 @@ class ChainAgent(Agent):  # or extends MultiAgentBase
             build_mode=BuildMode.SEQUENCE,
             include_meta=True  # For chain coordination
         )
-        
+
         super().__init__(agents=agents, **kwargs)
-    
+
     def build_graph(self) -> BaseGraph:
         graph = BaseGraph(name=self.name)
-        
+
         # Add agents with schema-aware nodes
         prev_node = None
         for i, agent in enumerate(self.agents):
             node_name = f"agent_{i}"
-            
+
             # Create schema-aware node function
             def create_agent_node(agent_instance):
                 def agent_node(state):
@@ -125,39 +135,41 @@ class ChainAgent(Agent):  # or extends MultiAgentBase
                     # Update state with result using schema mappings
                     return self._update_state_with_result(state, result, agent_instance)
                 return agent_node
-            
+
             graph.add_node(node_name, create_agent_node(agent))
-            
+
             # Connect in sequence
             if prev_node:
                 graph.add_edge(prev_node, node_name)
             else:
                 graph.add_edge(START, node_name)
-            
+
             prev_node = node_name
-        
+
         # Connect to end
         if prev_node:
             graph.add_edge(prev_node, END)
-        
+
         return graph
 ```
 
 ## Migration Strategy for ChainAgent
 
 ### Phase 1: Create Fixed ChainAgent Class
+
 ```python
 # New implementation alongside old one
 class SequentialAgent(MultiAgentBase):  # Temporary name
     """Proper sequential agent execution"""
     execution_pattern = "sequential"
-    
+
     def __init__(self, agents: list[Agent], **kwargs):
         # Use AgentSchemaComposer properly
         super().__init__(agents=agents, **kwargs)
 ```
 
 ### Phase 2: Deprecate Old ChainAgent
+
 ```python
 # Add deprecation warning to old ChainAgent
 class ChainAgent(Agent):
@@ -170,6 +182,7 @@ class ChainAgent(Agent):
 ```
 
 ### Phase 3: Migrate Usage
+
 ```python
 # Old usage (broken):
 chain = ChainAgent(
@@ -180,7 +193,7 @@ chain = ChainAgent(
 # New usage (working):
 chain = SequentialAgent([
     SimpleAgent(engine=engine1),
-    SimpleAgent(engine=engine2), 
+    SimpleAgent(engine=engine2),
     SimpleAgent(engine=engine3)
 ])
 ```
@@ -188,6 +201,7 @@ chain = SequentialAgent([
 ## Immediate Fix Options
 
 ### Option 1: Quick Fix - Add Schema Composition to Current ChainAgent
+
 ```python
 # Minimal changes to existing ChainAgent
 class ChainAgent(Agent):
@@ -201,18 +215,19 @@ class ChainAgent(Agent):
                 self.agents.append(agent)
             elif isinstance(node, Agent):
                 self.agents.append(node)
-        
+
         # Add schema composition
         if self.agents:
             self.state_schema = AgentSchemaComposer.from_agents(
                 agents=self.agents,
                 separation="sequence"
             )
-        
+
         super().__init__(**kwargs)
 ```
 
 ### Option 2: Create New SequentialAgent
+
 ```python
 # Clean implementation from scratch
 class SequentialAgent(MultiAgentBase):
@@ -222,6 +237,7 @@ class SequentialAgent(MultiAgentBase):
 ```
 
 ### Option 3: Fix Current ChainAgent in Place
+
 ```python
 # Rewrite current ChainAgent to use proper patterns
 # Risk: might break existing usage
@@ -231,13 +247,15 @@ class SequentialAgent(MultiAgentBase):
 ## Recommendation
 
 **Start with Option 2 (New SequentialAgent)**:
+
 1. Create SequentialAgent with proper schema composition
-2. Use MultiAgent infrastructure 
+2. Use MultiAgent infrastructure
 3. Test thoroughly with real use cases
 4. Once proven, deprecate old ChainAgent
 5. Provide migration guide
 
 This approach:
+
 - Fixes the schema composition problem immediately
 - Doesn't break existing code
 - Provides upgrade path
@@ -247,13 +265,15 @@ This approach:
 ## Testing Requirements
 
 ### Must Test
+
 1. **Schema composition** - fields flow correctly between agents
-2. **Tool_call_id preservation** - tools work across chain steps  
+2. **Tool_call_id preservation** - tools work across chain steps
 3. **Message handling** - conversation state maintained
 4. **Error handling** - failures don't break the chain
 5. **Performance** - reasonable overhead for schema composition
 
 ### Test Cases
+
 ```python
 # Basic sequential execution
 chain = SequentialAgent([
@@ -261,7 +281,7 @@ chain = SequentialAgent([
     SimpleAgent(engine=llm2)
 ])
 
-# Mixed agent types  
+# Mixed agent types
 chain = SequentialAgent([
     RetrieverAgent(engine=retriever),
     SimpleAgent(engine=llm),

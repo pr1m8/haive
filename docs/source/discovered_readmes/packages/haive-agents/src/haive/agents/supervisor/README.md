@@ -9,7 +9,7 @@ The Haive Supervisor agent provides a sophisticated multi-agent orchestration sy
 ### Core Components
 
 1. **SupervisorAgent** - Main orchestrator class inheriting from Haive's Agent base
-2. **DynamicRouting** - Utilizes `DynamicChoiceModel` for agent selection  
+2. **DynamicRouting** - Utilizes `DynamicChoiceModel` for agent selection
 3. **HandoffTools** - Agent transfer mechanisms adapted from LangGraph
 4. **AgentRegistry** - Dynamic agent management and discovery
 5. **StateCoordination** - Message flow and state isolation between agents
@@ -27,6 +27,7 @@ The Haive Supervisor implementation differs from vanilla LangGraph in several ke
 ## Key Features
 
 ### 1. Dynamic Agent Management
+
 ```python
 supervisor = SupervisorAgent(name="TaskRouter")
 
@@ -39,19 +40,23 @@ supervisor.register_agent(writer_agent)
 ```
 
 ### 2. Intelligent Routing
+
 Uses `DynamicChoiceModel` to:
+
 - Generate routing decisions based on agent capabilities
 - Support runtime agent addition/removal
 - Validate routing choices
 - Provide structured routing schemas
 
 ### 3. Haive Pattern Compliance
+
 - Inherits from `Agent` base class
 - Uses `ExecutionMixin`, `StateMixin`, `PersistenceMixin`
 - Supports Haive's graph building patterns
 - Compatible with existing tools and engines
 
 ### 4. Message Flow Control
+
 - Preserves conversation context during handoffs
 - Maintains tool call relationships
 - Supports both full history and last message modes
@@ -61,37 +66,41 @@ Uses `DynamicChoiceModel` to:
 
 ### LangGraph Supervisor vs Haive Supervisor
 
-| Aspect | LangGraph | Haive Implementation |
-|--------|-----------|---------------------|
-| Agent Management | Static list | Dynamic registry with `DynamicChoiceModel` |
-| Routing | Fixed handoff tools | Dynamic choice model + validation |
-| Integration | Standalone | Full Haive ecosystem integration |
-| State Management | Basic state passing | Haive's advanced state management |
-| Schema Handling | Manual | Automatic composition via `SchemaComposer` |
-| Tool Integration | Direct tool binding | Haive's `NodeFactory` pattern |
+| Aspect           | LangGraph           | Haive Implementation                       |
+| ---------------- | ------------------- | ------------------------------------------ |
+| Agent Management | Static list         | Dynamic registry with `DynamicChoiceModel` |
+| Routing          | Fixed handoff tools | Dynamic choice model + validation          |
+| Integration      | Standalone          | Full Haive ecosystem integration           |
+| State Management | Basic state passing | Haive's advanced state management          |
+| Schema Handling  | Manual              | Automatic composition via `SchemaComposer` |
+| Tool Integration | Direct tool binding | Haive's `NodeFactory` pattern              |
 
 ## Implementation Strategy
 
 ### Phase 1: Core Infrastructure
+
 - [x] Analyze LangGraph supervisor patterns
-- [x] Examine Haive agent architectures  
+- [x] Examine Haive agent architectures
 - [x] Review `DynamicChoiceModel` capabilities
 - [ ] Implement `SupervisorAgent` base class
 - [ ] Create `AgentRegistry` for dynamic management
 
 ### Phase 2: Routing Engine
+
 - [ ] Implement dynamic routing with `DynamicChoiceModel`
 - [ ] Create handoff tool generation
 - [ ] Build agent discovery mechanisms
 - [ ] Integrate with Haive's NodeFactory
 
 ### Phase 3: Advanced Features
+
 - [ ] Parallel agent execution support
 - [ ] Message preservation and context management
 - [ ] Agent lifecycle management
 - [ ] Performance optimization
 
 ### Phase 4: Testing & Documentation
+
 - [ ] Comprehensive test suite
 - [ ] Usage examples
 - [ ] Performance benchmarks
@@ -100,27 +109,29 @@ Uses `DynamicChoiceModel` to:
 ## Technical Design
 
 ### SupervisorAgent Class Structure
+
 ```python
 class SupervisorAgent(Agent):
     """Haive-native supervisor agent for multi-agent orchestration."""
-    
+
     # Core components
     agent_registry: AgentRegistry
     routing_model: DynamicChoiceModel
     handoff_tools: HandoffToolManager
-    
+
     # Haive integration
     def build_graph(self) -> BaseGraph:
         """Build supervisor graph with dynamic routing."""
-    
+
     def register_agent(self, agent: Agent) -> None:
         """Register agent and update routing model."""
-    
+
     def create_handoff_tools(self) -> list[BaseTool]:
         """Generate handoff tools for registered agents."""
 ```
 
 ### Routing Integration
+
 The supervisor uses `DynamicChoiceModel` to maintain a dynamic list of available agents:
 
 ```python
@@ -140,6 +151,7 @@ choice_schema = routing_model.current_model
 ```
 
 ### Engine Node Integration
+
 Leverages Haive's `NodeFactory` for creating supervisor nodes:
 
 ```python

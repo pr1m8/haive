@@ -14,16 +14,19 @@ This folder contains comprehensive documentation about the haive-agents package,
 The haive-agents package contains:
 
 ### RAG Agents
+
 - **12+ RAG strategies** implemented in `/packages/haive-agents/src/haive/agents/rag/`
 - Multiple implementation styles: Traditional, Chain, and Multi-agent
 - Specialized patterns like HyDE, FLARE, Corrective RAG, and more
 
 ### Document Agents
+
 - **Document Agent** - Full document processing pipeline (fetch → load → transform → split → annotate → embed → store → retrieve)
 - **Document Loader Agent** - Specialized for loading documents from various sources
 - **Document Grading Agent** - Evaluates document relevance and quality
 
 ### Key Features
+
 - Modular architecture with composable components
 - Support for 97+ document types through DocumentEngine
 - Integration with vector stores and embeddings
@@ -31,4 +34,5 @@ The haive-agents package contains:
 - Built on LangGraph for state management
 
 ## Package Location
+
 `/home/will/Projects/haive/backend/haive/packages/haive-agents/`

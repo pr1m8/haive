@@ -12,20 +12,25 @@ Guidelines for organizing and structuring documentation across the Haive project
 ## 🎯 Core Principles
 
 ### 1. **Predictable Structure**
+
 Users should be able to predict where information is located based on consistent organizational patterns.
 
 ### 2. **Logical Hierarchy**
+
 Information should be organized from general to specific, with clear parent-child relationships.
 
 ### 3. **Findable Content**
+
 Every piece of information should be discoverable through multiple paths - navigation, search, and cross-references.
 
 ### 4. **Maintainable Organization**
+
 The structure should be sustainable as the project grows and evolves.
 
 ## 📋 Quick Reference
 
 ### Documentation Hierarchy
+
 ```
 docs/
 ├── source/           # Sphinx-generated user documentation
@@ -34,16 +39,19 @@ docs/
 ```
 
 ### Naming Conventions
+
 - **Files**: `kebab-case.md` (lowercase with hyphens)
 - **Folders**: `kebab-case/` (lowercase with hyphens)
 - **Assets**: `descriptive-name.png` (descriptive, lowercase)
 
 ### Cross-Reference Standards
+
 - **Internal links**: Relative paths `../path/to/file.md`
 - **Section links**: Anchor format `#section-header`
 - **External links**: Full URLs with descriptive text
 
 ### Maintenance Guidelines
+
 - **Review cycle**: Quarterly documentation review
 - **Update triggers**: Code changes, feature additions, API changes
 - **Ownership**: Clear responsibility for each documentation area

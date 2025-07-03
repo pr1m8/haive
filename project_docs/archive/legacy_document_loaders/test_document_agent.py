@@ -3,15 +3,15 @@
 This module contains tests for the DocumentAgent class and related functionality.
 """
 
-from collections.abc import Generator
 import os
 import shutil
 import tempfile
+from collections.abc import Generator
 from typing import Any
 from unittest.mock import MagicMock, patch
 
-from pydantic import BaseModel
 import pytest
+from pydantic import BaseModel
 
 from .document_agent import (
     DocumentAgent,

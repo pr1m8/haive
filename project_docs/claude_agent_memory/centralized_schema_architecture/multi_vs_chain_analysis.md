@@ -6,6 +6,7 @@
 ## Critical Differences
 
 ### MultiAgent (Complex)
+
 ```python
 # Uses AgentSchemaComposer with sophisticated handling
 self.state_schema = AgentSchemaComposer.from_agents(
@@ -18,6 +19,7 @@ self.state_schema = AgentSchemaComposer.from_agents(
 ```
 
 **Key Features**:
+
 - Uses AgentSchemaComposer (not basic SchemaComposer)
 - Has separation strategies for field management
 - Preserves message reducers (tool_call_id preservation)
@@ -26,6 +28,7 @@ self.state_schema = AgentSchemaComposer.from_agents(
 - Handles I/O schema setup based on execution pattern
 
 ### ChainAgent (Too Simple)
+
 ```python
 # NO SCHEMA HANDLING AT ALL!
 def build_graph(self) -> BaseGraph:
@@ -36,6 +39,7 @@ def build_graph(self) -> BaseGraph:
 ```
 
 **Major Problems**:
+
 1. **NO SCHEMA SETUP** - Inherits from Agent but doesn't implement schema logic
 2. **NO STATE MANAGEMENT** - Just passes nodes through
 3. **NO FIELD COORDINATION** - Each node handles its own state
@@ -44,6 +48,7 @@ def build_graph(self) -> BaseGraph:
 ## The Problem
 
 ChainAgent is **too simple** - it completely ignores schema composition:
+
 - Doesn't call `_setup_schemas()`
 - Doesn't use SchemaComposer or AgentSchemaComposer
 - No consideration for how data flows between nodes
@@ -54,20 +59,24 @@ MultiAgent is **properly complex** but ChainAgent doesn't even try to handle sch
 ## Other Agent Schema Problems
 
 ### SimpleAgent
+
 - **MODIFIES ENGINE SCHEMAS DIRECTLY** (BAD!)
 - Uses basic SchemaComposer
 - No concept of shared fields or reducers
 
 ### RAG Agents
+
 - No consistent schema extension pattern
 - Each variant does its own thing
 - No use of SchemaComposer
 
 ### ReAct Agents
+
 - Multiple versions (v2, v3, etc.)
 - Inconsistent schema handling between versions
 
 ### Generic Agent
+
 - Over-engineered type system
 - Doesn't integrate well with dynamic schema composition
 

@@ -5,6 +5,7 @@
 This is your main routing file for the Haive codebase. Use this guide to navigate to the appropriate documentation based on your needs.
 
 ## ⚡ Essential Information
+
 **IMPORTANT**: See [CLAUDE_QUICKREF.md](./project_docs/claude_documentation/CLAUDE_QUICKREF.md) for essential commands, project structure, and common patterns used throughout the codebase.
 
 ## 🚀 Quick Start
@@ -19,6 +20,7 @@ poetry run pytest packages/your_package/tests/
 **Test Location**: `packages/{package_name}/tests/`
 
 ## 🔗 Quick Links to Key Resources
+
 - **Quick Reference**: [CLAUDE_QUICKREF.md](./project_docs/claude_documentation/CLAUDE_QUICKREF.md) ⭐ Start here!
 - **Supabase Integration**: [SUPABASE_INTEGRATION.md](./project_docs/SUPABASE_INTEGRATION.md) ⚡ New! Auto-persistence
 - **Project Notes**: `/project_docs/` - Development notes and analysis
@@ -41,15 +43,18 @@ All CLAUDE documentation has been organized in `/project_docs/claude_documentati
 ## 📂 Full Documentation Hierarchy
 
 ### 1. **Professional Documentation** (`/docs/source/`)
+
 - API references, user guides, agent showcase
 - Sphinx-generated documentation
 
 ### 2. **Project Documentation** (`/project_docs/`)
+
 - Development notes and analysis
 - CLAUDE documentation system
 - Technical implementation details
 
 ### 3. **Package Documentation** (`/packages/{name}/README.md`)
+
 - Package-specific documentation
 - Usage examples and API references
 

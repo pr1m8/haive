@@ -7,40 +7,47 @@ After analyzing the Sphinx documentation build output, I've identified **125+ fa
 ## Import Failure Categories
 
 ### 1. **TOOLKITS NAMESPACE ISSUES** (7 modules)
+
 These modules are being referenced incorrectly in the documentation - `haive.toolkits.*` should be `haive.tools.toolkits.*`:
 
 **Incorrect Imports:**
-- `haive.toolkits.api` → `haive.tools.toolkits.api` (exists with __init__.py)
-- `haive.toolkits.data` → `haive.tools.toolkits.data` (directory exists)  
-- `haive.toolkits.dev` → `haive.tools.toolkits.dev` (exists with __init__.py)
+
+- `haive.toolkits.api` → `haive.tools.toolkits.api` (exists with **init**.py)
+- `haive.toolkits.data` → `haive.tools.toolkits.data` (directory exists)
+- `haive.toolkits.dev` → `haive.tools.toolkits.dev` (exists with **init**.py)
 - `haive.toolkits.dev.cst` → `haive.tools.toolkits.dev.cst` (directory exists)
 - `haive.toolkits.dev.shell` → `haive.tools.toolkits.dev.shell` (directory exists)
 
 **Resolution:** Fix namespace references in documentation files.
 
 ### 2. **GAMES MODULES** (25+ modules)
-Most game modules exist but may have import issues or missing __init__.py files:
+
+Most game modules exist but may have import issues or missing **init**.py files:
 
 **High Priority (Referenced 3x each):**
+
 - `haive.games.chess` (directory exists but import fails)
-- `haive.games.checkers` (exists with __init__.py)  
+- `haive.games.checkers` (exists with **init**.py)
 - `haive.games.tic_tac_toe` (directory exists)
 - `haive.games.poker` (file exists)
-- `haive.games.monopoly` (exists with __init__.py)
+- `haive.games.monopoly` (exists with **init**.py)
 - `haive.games.mancala` (directory exists)
 - `haive.games.among_us` (directory exists)
 
 **Other Game Modules:**
-- `haive.games.base` (exists with __init__.py) - possible circular import
+
+- `haive.games.base` (exists with **init**.py) - possible circular import
 - `haive.games.reversi`, `haive.games.nim`, `haive.games.go`, `haive.games.connect4`
 - `haive.games.framework`, `haive.games.core`
 - Card games: `haive.games.cards.*`
 - Specialized: `haive.games.battleship`, `haive.games.clue`, `haive.games.mafia`
 
 ### 3. **AGENTS MODULES** (40+ modules)
+
 Agent modules exist but many submodules are missing or have import issues:
 
 **Agent Categories:**
+
 - `haive.agents.base.*` - Core base classes (import issues despite existing)
 - `haive.agents.rag.*` - RAG implementations (8 failed modules)
 - `haive.agents.conversation.*` - Conversation agents (5 failed modules)
@@ -50,14 +57,17 @@ Agent modules exist but many submodules are missing or have import issues:
 - `haive.agents.react.*`, `haive.agents.simple.*`, `haive.agents.sequential.*`
 
 ### 4. **TOOLS MODULES** (15+ modules)
+
 Tool-related imports with various issues:
 
 **Tool Categories:**
+
 - `haive.tools.tools.*` - Individual tool categories (api, code, data, google, etc.)
-- `haive.tools.toolkits.*` - Tool collections (alpha_vantage, chuck_norris, etc.) 
+- `haive.tools.toolkits.*` - Tool collections (alpha_vantage, chuck_norris, etc.)
 - `haive.tools.utility`, `haive.tools.utils`, `haive.tools.general`
 
 ### 5. **CORE UTILITIES** (3 modules)
+
 - `haive.core.utils.discovery` (reference issue)
 - `haive.core.utils.type_helpers` (missing)
 - `haive.core.utils.schema_utils` (missing)
@@ -65,19 +75,24 @@ Tool-related imports with various issues:
 
 ## Root Cause Analysis
 
-### 1. **Missing __init__.py Files**
-Many directories exist but lack proper __init__.py files for Python import system.
+### 1. **Missing **init**.py Files**
+
+Many directories exist but lack proper **init**.py files for Python import system.
 
 ### 2. **Namespace Path Errors**
+
 Documentation references use incorrect module paths (especially toolkits namespace).
 
 ### 3. **Circular Import Issues**
+
 Some modules fail to import due to circular dependencies.
 
 ### 4. **Incomplete Module Structure**
+
 Some modules are referenced in documentation but don't exist as importable Python modules.
 
 ### 5. **PYTHONPATH/Environment Issues**
+
 Sphinx may not be finding modules due to path configuration.
 
 ## Recommended Solutions
@@ -86,26 +101,26 @@ Sphinx may not be finding modules due to path configuration.
 
 1. **Fix Toolkits Namespace References (7 modules)**
    - **Problem**: Documentation refers to `haive.toolkits.*` but actual path is `haive.tools.toolkits.*`
-   - **Verification**: Confirmed `haive.tools.toolkits` exists with proper __init__.py
+   - **Verification**: Confirmed `haive.tools.toolkits` exists with proper **init**.py
    - **Action**: Find and replace in autosummary/RST files:
      ```bash
      find docs/source -name "*.rst" -exec sed -i 's/haive\.toolkits\./haive.tools.toolkits./g' {} \;
      ```
 
 2. **Enhance Mock System for Missing Modules**
-   - **Current**: Basic mock system exists in `_extensions/mock_handler.py` 
+   - **Current**: Basic mock system exists in `_extensions/mock_handler.py`
    - **Action**: Add comprehensive mock list to `mock_handler.py` or `conf.py`
    - **Target**: 125+ failing imports reduced to <20
 
 ### MEDIUM PRIORITY
 
 4. **Games Module Restructure**
-   - Verify all game directories have proper __init__.py files
+   - Verify all game directories have proper **init**.py files
    - Fix import issues in existing game modules
    - Consider consolidating game structure
 
 5. **Agent Module Cleanup**
-   - Review agent submodule structure 
+   - Review agent submodule structure
    - Fix circular import issues
    - Ensure all documented agents are importable
 
@@ -119,6 +134,7 @@ Sphinx may not be finding modules due to path configuration.
 ## Comprehensive Mock System Enhancement
 
 **Add to Mock System (120+ modules to mock):**
+
 ```python
 # Add to _extensions/mock_handler.py or conf.py autodoc_mock_imports:
 
@@ -128,12 +144,12 @@ Sphinx may not be finding modules due to path configuration.
 # Missing agent submodules (55+ modules)
 'haive.agents.base.agent',
 'haive.agents.base.mixins',
-'haive.agents.base.mixins.state_mixin', 
+'haive.agents.base.mixins.state_mixin',
 'haive.agents.base.mixins.execution_mixin',
 'haive.agents.rag.base',
 'haive.agents.rag.adaptive_rag',
 'haive.agents.rag.filtered',
-'haive.agents.rag.hyde', 
+'haive.agents.rag.hyde',
 'haive.agents.rag.self_corr',
 'haive.agents.rag.self_rag2',
 'haive.agents.rag.llm_rag',
@@ -167,7 +183,7 @@ Sphinx may not be finding modules due to path configuration.
 'haive.agents.sequential.agent',
 'haive.agents.sequential.config',
 
-# Game modules (25+ modules) - these exist but have import issues  
+# Game modules (25+ modules) - these exist but have import issues
 'haive.games.base.agent',
 'haive.games.base.config',
 'haive.games.base.factory',
@@ -185,7 +201,7 @@ Sphinx may not be finding modules due to path configuration.
 
 # Tool modules (20+ modules)
 'haive.tools.base',
-'haive.tools.core', 
+'haive.tools.core',
 'haive.tools.individual',
 'haive.tools.utils',
 'haive.tools.utility',
@@ -213,6 +229,7 @@ Sphinx may not be finding modules due to path configuration.
 
 **Quick Implementation:**
 Add this to `conf.py`:
+
 ```python
 autodoc_mock_imports = [
     # [paste the comprehensive list above]
@@ -224,6 +241,7 @@ autodoc_mock_imports = [
 ### Phase 1: Quick Wins (15 minutes)
 
 1. **Fix Toolkits Namespace References:**
+
    ```bash
    cd /home/will/Projects/haive/backend/haive/docs/source
    find . -name "*.rst" -exec sed -i 's/haive\.toolkits\./haive.tools.toolkits./g' {} \;
@@ -239,6 +257,7 @@ autodoc_mock_imports = [
 ### Phase 2: Verification (5 minutes)
 
 3. **Test Build with Fixes:**
+
    ```bash
    poetry run sphinx-build -b html source _build/html -W --keep-going 2>&1 | grep "Failed to import" | wc -l
    # Target: Reduce from 125+ to <20 warnings
@@ -252,7 +271,7 @@ autodoc_mock_imports = [
 ### Expected Results
 
 - **Before Fixes**: 125+ import warnings
-- **After Phase 1**: ~20-30 import warnings  
+- **After Phase 1**: ~20-30 import warnings
 - **After Phase 2**: <10 critical warnings
 - **Build Time**: Reduced from 10-18 minutes to 5-8 minutes
 - **Success Rate**: Documentation builds successfully with minimal warnings
@@ -262,6 +281,6 @@ autodoc_mock_imports = [
 ✅ **Toolkits namespace** - 7 modules fixed  
 ✅ **Mock system** - 120+ modules handled gracefully  
 ✅ **Build stability** - Consistent successful builds  
-✅ **Warning reduction** - 90%+ reduction in import warnings  
+✅ **Warning reduction** - 90%+ reduction in import warnings
 
 This systematic approach will resolve the majority of import issues affecting the Haive documentation build process.

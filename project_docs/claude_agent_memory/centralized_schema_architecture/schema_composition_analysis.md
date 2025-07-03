@@ -7,23 +7,27 @@
 ## Critical Points to Remember
 
 ### 1. NO DIRECT ENGINE MODIFICATION
+
 - SimpleAgent directly modifies engine schemas - **THIS IS BAD**
 - Breaks engine assumptions
 - Can contaminate shared engines
 - Must be fixed
 
 ### 2. Compatibility Component
+
 - AgentSchemaComposer includes compatibility analysis
 - Tracks which fields work with which components
 - Important for multi-agent coordination
 - Not discussed enough in initial analysis
 
 ### 3. Multi vs Chain Comparison (MISSING FROM ANALYSIS)
+
 - Need to analyze how Chain agents handle schemas
 - Compare with Multi-agent approach
 - Identify conflicts and patterns
 
 ### 4. Other Agent Problems (NOT FULLY DISCUSSED)
+
 - RAG agents: Inconsistent schema patterns
 - ReAct agents: Multiple versions with different approaches
 - Generic agents: Over-engineered type system doesn't play well with dynamic schemas
@@ -31,6 +35,7 @@
 ## Key Schema Composition Findings
 
 ### FieldDefinition Complexity
+
 ```python
 FieldDefinition(
     name="messages",
@@ -45,6 +50,7 @@ FieldDefinition(
 ```
 
 ### AgentSchemaComposer Features
+
 1. **Separation Strategies**:
    - "shared": All agents see all fields
    - "smart": Automatic sharing based on usage
@@ -59,6 +65,7 @@ FieldDefinition(
    - Critical for routing
 
 ### Current Issues Summary
+
 1. SimpleAgent modifies engine schemas directly
 2. No consistent base pattern for schema extension
 3. Each agent type has different approach
@@ -67,6 +74,7 @@ FieldDefinition(
 6. Chain vs Multi comparison needed
 
 ## Next Focus Areas
+
 1. Analyze Chain agent schema handling
 2. Compare Multi vs Chain approaches
 3. Document all agent type problems

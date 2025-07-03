@@ -7,6 +7,7 @@ Standardized naming rules for files, folders, and documentation elements in the 
 ### General Rules
 
 #### **Case Style: kebab-case**
+
 All files and folders use lowercase letters with hyphens:
 
 ```
@@ -24,6 +25,7 @@ Agent Showcase/
 ```
 
 #### **Descriptive Names**
+
 Names should clearly indicate content:
 
 ```
@@ -39,6 +41,7 @@ deploy.md
 ```
 
 #### **Length Guidelines**
+
 - **Minimum**: 3 characters
 - **Optimal**: 8-25 characters
 - **Maximum**: 50 characters
@@ -46,6 +49,7 @@ deploy.md
 ### File Naming Patterns
 
 #### **Documentation Files (.md)**
+
 ```
 {topic}-{type}.md
 
@@ -57,6 +61,7 @@ getting-started.md
 ```
 
 #### **Index Files**
+
 ```
 README.md          # Folder overview (preferred)
 index.md           # Alternative index file
@@ -64,6 +69,7 @@ index.md           # Alternative index file
 ```
 
 #### **Configuration Files**
+
 ```
 .{tool}rc          # Tool configuration
 {name}.config.js   # JavaScript config
@@ -73,6 +79,7 @@ index.md           # Alternative index file
 ### Folder Naming Patterns
 
 #### **Content Categories**
+
 ```
 getting-started/   # User journey stage
 user-guides/       # Content type
@@ -81,6 +88,7 @@ examples/          # Content type
 ```
 
 #### **Domain Areas**
+
 ```
 agents/           # Feature domain
 tools/            # Feature domain
@@ -89,6 +97,7 @@ deployment/       # Activity domain
 ```
 
 #### **Support Folders**
+
 ```
 images/           # Media assets
 assets/           # Static resources
@@ -100,6 +109,7 @@ templates/        # Reusable templates
 ### Page Titles
 
 #### **Capitalization: Sentence case**
+
 ```
 ✅ Good:
 # Getting started with agents
@@ -108,11 +118,12 @@ templates/        # Reusable templates
 
 ❌ Bad:
 # Getting Started With Agents
-# API Reference Guide  
+# API Reference Guide
 # Troubleshooting Common Issues
 ```
 
 #### **Structure Patterns**
+
 ```
 {Action} {Object}        # Creating agents
 {Object} {Type}          # Agent configuration
@@ -123,6 +134,7 @@ templates/        # Reusable templates
 ### Section Headers
 
 #### **Descriptive Headers**
+
 ```
 ✅ Good:
 ## Installing the core package
@@ -136,6 +148,7 @@ templates/        # Reusable templates
 ```
 
 #### **Parallel Structure**
+
 Keep similar sections consistent:
 
 ```
@@ -155,6 +168,7 @@ Keep similar sections consistent:
 ### Internal Links
 
 #### **Descriptive Link Text**
+
 ```
 ✅ Good:
 [agent configuration guide](../guides/agent-config.md)
@@ -166,6 +180,7 @@ Keep similar sections consistent:
 ```
 
 #### **Relative Path Standards**
+
 ```
 ../              # Parent directory
 ./               # Current directory
@@ -176,17 +191,21 @@ Keep similar sections consistent:
 ### Anchor Links
 
 #### **Header Anchors**
+
 Generated automatically from headers:
 
 ```markdown
 ## Installing the Core Package
+
 <!-- Anchor: #installing-the-core-package -->
 
 ## API Reference Guide
+
 <!-- Anchor: #api-reference-guide -->
 ```
 
 #### **Custom Anchors**
+
 Use for non-header references:
 
 ```markdown
@@ -199,25 +218,30 @@ Use for non-header references:
 ### Code Blocks
 
 #### **Language Specification**
+
 Always specify the language:
 
-```markdown
+````markdown
 ✅ Good:
+
 ```python
 def create_agent():
     pass
 ```
+````
 
 ```bash
 poetry install
 ```
 
 ❌ Bad:
+
 ```
 def create_agent():
     pass
 ```
-```
+
+````
 
 #### **Filename Annotations**
 For complex examples:
@@ -227,7 +251,8 @@ For complex examples:
 # File: src/agents/simple.py
 class SimpleAgent:
     pass
-```
+````
+
 ```
 
 ### Variable Examples
@@ -236,6 +261,7 @@ class SimpleAgent:
 Use descriptive placeholders:
 
 ```
+
 ✅ Good:
 your_api_key
 agent_name
@@ -245,12 +271,14 @@ config_file_path
 xxx
 placeholder
 value
+
 ```
 
 #### **Example Values**
 Use realistic examples:
 
 ```
+
 ✅ Good:
 api_key="sk-1234567890abcdef"
 agent_name="research_assistant"
@@ -260,6 +288,7 @@ temperature=0.7
 api_key="your_key_here"
 agent_name="agent"
 temperature=0.5
+
 ```
 
 ## 🎨 Asset Naming
@@ -268,6 +297,7 @@ temperature=0.5
 
 #### **Descriptive Names**
 ```
+
 ✅ Good:
 agent-workflow-diagram.svg
 tool-configuration-screenshot.png
@@ -277,31 +307,36 @@ api-response-example.json
 image1.png
 screenshot.png
 example.json
+
 ```
 
 #### **Naming Pattern**
 ```
+
 {description}-{type}.{extension}
 
 Examples:
 agent-creation-flow.svg
 error-message-example.png
 configuration-yaml-sample.yaml
+
 ```
 
 ### Asset Organization
 ```
+
 assets/
 ├── images/
-│   ├── diagrams/
-│   ├── screenshots/
-│   └── icons/
+│ ├── diagrams/
+│ ├── screenshots/
+│ └── icons/
 ├── examples/
-│   ├── configuration/
-│   └── code/
+│ ├── configuration/
+│ └── code/
 └── templates/
-    ├── agents/
-    └── tools/
+├── agents/
+└── tools/
+
 ```
 
 ## 🏷️ Taxonomy and Tags
@@ -310,26 +345,31 @@ assets/
 
 #### **Standard Categories**
 ```
+
 Getting Started
 User Guides
 API Reference
 Examples
 Troubleshooting
+
 ```
 
 #### **Domain Categories**
 ```
+
 Agents
 Tools
 Games
 Core
 Deployment
+
 ```
 
 ### Tag Conventions
 
 #### **Format**
 ```
+
 {category}:{subcategory}
 
 Examples:
@@ -337,10 +377,12 @@ guide:installation
 api:agents
 example:simple
 tutorial:beginner
+
 ```
 
 #### **Common Tags**
 ```
+
 difficulty:beginner
 difficulty:intermediate
 difficulty:advanced
@@ -353,7 +395,8 @@ type:example
 domain:agents
 domain:tools
 domain:games
-```
+
+````
 
 ## ✅ Validation Rules
 
@@ -390,9 +433,10 @@ find . -name "*[A-Z]*" -type f  # Find files with capitals
 
 # Validate markdown headers
 grep -r "^#.*[A-Z].*[A-Z]" *.md  # Find title case headers
-```
+````
 
 ### Renaming Scripts
+
 ```bash
 # Convert spaces to hyphens
 rename 's/ /-/g' *.md
@@ -402,6 +446,7 @@ rename 'y/A-Z/a-z/' *.md
 ```
 
 ### Link Validation
+
 ```bash
 # Check for broken internal links
 markdown-link-check *.md

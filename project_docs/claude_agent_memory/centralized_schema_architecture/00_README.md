@@ -9,6 +9,7 @@ This centralized folder contains all documentation related to fixing the schema 
 ## Document Index
 
 ### 📁 **Core Architecture Issues**
+
 1. **[AGENT_VS_COMPONENT_ARCHITECTURE.md](./AGENT_VS_COMPONENT_ARCHITECTURE.md)**
    - Fundamental distinction between agents and components
    - Clear definitions and proposed architecture
@@ -25,6 +26,7 @@ This centralized folder contains all documentation related to fixing the schema 
    - Phase-by-phase migration plan
 
 ### 📁 **Technical Analysis**
+
 4. **[layered_architecture_analysis.md](./layered_architecture_analysis.md)**
    - Engine → Node → Schema → Graph → Agent flow
    - Type safety degradation analysis
@@ -41,6 +43,7 @@ This centralized folder contains all documentation related to fixing the schema 
    - Runtime type guessing issues
 
 ### 📁 **Schema Composition Analysis**
+
 7. **[complete_schema_analysis.md](./complete_schema_analysis.md)**
    - Analysis of all agent types
    - Schema handling patterns comparison
@@ -52,6 +55,7 @@ This centralized folder contains all documentation related to fixing the schema 
    - Why ChainAgent has NO schema handling
 
 ### 📁 **Enhancement Approaches**
+
 9. **[engine_reference_pattern.md](./engine_reference_pattern.md)**
    - How engine_name references work
    - Type information flow
@@ -83,6 +87,7 @@ This centralized folder contains all documentation related to fixing the schema 
     - LangGraph standard patterns
 
 ### 📁 **Historical Approaches**
+
 15. **[compatibility_inheritance_approach.md](./compatibility_inheritance_approach.md)**
     - Compatibility protocols
     - Better inheritance patterns
@@ -100,22 +105,26 @@ This centralized folder contains all documentation related to fixing the schema 
 ## Quick Reference
 
 ### **The Core Problem**
+
 - **Type safety lost** between Engine → Node → Schema → Graph → Agent layers
 - **Agent vs Component confusion** - everything treated as an agent
 - **Schema composition inconsistency** - each agent type handles differently
 
 ### **The Gold Standard**
+
 - **MultiAgent with AgentSchemaComposer** - handles schema composition correctly
 - **Message preservation** with `preserve_messages_reducer`
 - **Field separation strategies** (smart/shared/namespaced)
 
 ### **Key Insights**
+
 1. **Not everything is an agent** - agents need reasoning capability (LLM)
 2. **Components are different** - retrievers, embeddings don't need agent complexity
 3. **Use the right tool** - AgentSchemaComposer for agents, SchemaComposer for components
 4. **Don't modify engine schemas** - keep modifications local to agents
 
 ### **Implementation Priority**
+
 1. Fix ChainAgent schema handling (add it)
 2. Fix SimpleAgent schema modification (stop it)
 3. Add ComponentNode for non-agents

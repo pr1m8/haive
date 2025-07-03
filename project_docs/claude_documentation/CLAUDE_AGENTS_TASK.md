@@ -1,22 +1,26 @@
 # Task-Oriented Agents Documentation
 
 ## Overview
+
 Task-oriented agents in Haive are designed to accomplish specific goals through planning, execution, and verification cycles. These agents excel at breaking down complex tasks and executing them systematically.
 
 ## Available Task Agents
 
 ### 1. ReactAgent
+
 **Location**: `/packages/haive-agents/src/haive/agents/react/`
 
 ReAct (Reasoning + Acting) agent that interleaves thought, action, and observation.
 
 **Key Features**:
+
 - Explicit reasoning steps
 - Tool usage with observations
 - Self-correction capabilities
 - Structured thought process
 
 **Usage Example**:
+
 ```python
 from haive.agents.react import ReactAgent
 from haive.tools import PythonREPLTool, WebSearchTool
@@ -33,17 +37,20 @@ result = await agent.execute(
 ```
 
 ### 2. PlanAndExecuteAgent
+
 **Location**: `/packages/haive-agents/src/haive/agents/plan_and_execute/`
 
 Agent that creates a plan before execution and follows it systematically.
 
 **Key Features**:
+
 - Upfront planning phase
 - Step-by-step execution
 - Plan revision capabilities
 - Progress tracking
 
 **Usage Example**:
+
 ```python
 from haive.agents.plan_and_execute import PlanAndExecuteAgent
 
@@ -60,17 +67,20 @@ result = await agent.execute({
 ```
 
 ### 3. ChainAgent
+
 **Location**: `/packages/haive-agents/src/haive/agents/chain/`
 
 Agent that chains multiple sub-agents or tasks in sequence.
 
 **Key Features**:
+
 - Sequential task execution
 - Inter-agent communication
 - Pipeline configuration
 - Result aggregation
 
 **Usage Example**:
+
 ```python
 from haive.agents.chain import ChainAgent
 from haive.agents import ResearchAgent, WriterAgent, ReviewerAgent
@@ -88,17 +98,20 @@ article = await agent.execute("Write an article about quantum computing")
 ```
 
 ### 4. MultiAgent
+
 **Location**: `/packages/haive-agents/src/haive/agents/multi/`
 
 Orchestrates multiple agents working in parallel or coordination.
 
 **Key Features**:
+
 - Parallel agent execution
 - Agent coordination
 - Resource management
 - Result synthesis
 
 **Usage Example**:
+
 ```python
 from haive.agents.multi import MultiAgent
 
@@ -114,17 +127,20 @@ agent = MultiAgent(
 ```
 
 ### 5. CodeExecutorAgent
+
 **Location**: `/packages/haive-agents/src/haive/agents/code_executor/`
 
 Specialized agent for code generation and execution tasks.
 
 **Key Features**:
+
 - Code generation
 - Safe execution environment
 - Error handling and debugging
 - Multiple language support
 
 **Usage Example**:
+
 ```python
 from haive.agents.code_executor import CodeExecutorAgent
 
@@ -142,6 +158,7 @@ result = await agent.execute(
 ## Task Execution Patterns
 
 ### Planning Pattern
+
 ```python
 # Explicit planning before execution
 agent = PlanAndExecuteAgent(
@@ -151,6 +168,7 @@ agent = PlanAndExecuteAgent(
 ```
 
 ### Iteration Pattern
+
 ```python
 # Iterative refinement
 agent = ReactAgent(
@@ -161,6 +179,7 @@ agent = ReactAgent(
 ```
 
 ### Pipeline Pattern
+
 ```python
 # Multi-stage processing
 pipeline = ChainAgent([
@@ -173,17 +192,20 @@ pipeline = ChainAgent([
 ## Configuration Options
 
 ### Execution Control
+
 - `max_iterations`: Maximum execution cycles
 - `timeout`: Task timeout in seconds
 - `retry_on_failure`: Automatic retry configuration
 - `checkpoint_frequency`: Save progress intervals
 
 ### Resource Management
+
 - `max_concurrent_tools`: Tool usage limits
 - `memory_limit`: Memory usage constraints
 - `api_rate_limits`: External API throttling
 
 ### Output Configuration
+
 - `output_format`: Structure of results
 - `include_reasoning`: Include thought process
 - `verbosity`: Logging detail level
@@ -191,6 +213,7 @@ pipeline = ChainAgent([
 ## Advanced Features
 
 ### Custom Success Criteria
+
 ```python
 def custom_validator(result):
     return result.accuracy > 0.95
@@ -201,6 +224,7 @@ agent = ReactAgent(
 ```
 
 ### Progress Callbacks
+
 ```python
 async def on_step_complete(step, result):
     await notify_progress(step, result)
@@ -211,6 +235,7 @@ agent = PlanAndExecuteAgent(
 ```
 
 ### State Persistence
+
 ```python
 # Save execution state
 checkpoint = agent.save_checkpoint()
@@ -245,6 +270,7 @@ result = await agent.resume()
 ## Integration Examples
 
 ### With Monitoring
+
 ```python
 from haive.monitoring import TaskMonitor
 
@@ -257,6 +283,7 @@ metrics = monitor.get_metrics()
 ```
 
 ### With Validation
+
 ```python
 from haive.validators import OutputValidator
 
@@ -268,6 +295,7 @@ agent = CodeExecutorAgent(
 ```
 
 ## See Also
+
 - [CLAUDE_AGENTS.md](./CLAUDE_AGENTS.md) - Main agents documentation
 - [CLAUDE_AGENTS_CONVERSATIONAL.md](./CLAUDE_AGENTS_CONVERSATIONAL.md) - Conversational agents
 - [CLAUDE_AGENT_TEMPLATE.md](./CLAUDE_AGENT_TEMPLATE.md) - Agent development template

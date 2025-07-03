@@ -1,4 +1,4 @@
-"""Source to Loader Mapping Functions
+"""Source to Loader Mapping Functions.
 
 This module provides functions for mapping sources to appropriate loaders.
 It includes pre-defined mappings for common file types and source types.
@@ -30,7 +30,6 @@ from source_implementation import (
 
 # Import from source registry
 from source_registry import auto_source, registry
-
 
 logger = logging.getLogger(__name__)
 
@@ -699,7 +698,7 @@ def register_standard_sources() -> None:
 def get_loader_for_source(
     source: str | Path | dict[str, Any] | BaseSource,
     strategy_name: str | None = None,
-    options: dict[str, Any] = None,
+    options: dict[str, Any] | None = None,
 ) -> Any:
     """Get a loader for a source.
 

@@ -8,12 +8,14 @@
 ### **1. AgentSchemaComposer - The Gold Standard for Multi-Agent**
 
 **When to use:**
+
 - Multiple agents that need coordination
 - Message preservation is critical (tool_call_id)
 - Complex field separation strategies needed
 - Build modes matter (parallel, sequential, hierarchical)
 
 **Example:**
+
 ```python
 from haive.core.schema.agent_schema_composer import AgentSchemaComposer, BuildMode
 
@@ -28,6 +30,7 @@ schema = AgentSchemaComposer.from_agents(
 ```
 
 **Key Features:**
+
 - `preserve_messages_reducer` - maintains tool_call_id
 - Field separation strategies (smart/shared/namespaced)
 - Build modes for execution patterns
@@ -37,12 +40,14 @@ schema = AgentSchemaComposer.from_agents(
 ### **2. SchemaComposer - For Simple Components**
 
 **When to use:**
+
 - Simple components without reasoning (retrievers, embeddings)
 - Basic field composition without complex reducers
 - No message preservation requirements
 - Single-purpose execution nodes
 
 **Example:**
+
 ```python
 from haive.core.schema.schema_composer import SchemaComposer
 
@@ -54,6 +59,7 @@ schema = SchemaComposer.from_components(
 ```
 
 **Key Features:**
+
 - Straightforward field extraction
 - No complex reducer logic
 - Lightweight composition
@@ -62,12 +68,14 @@ schema = SchemaComposer.from_components(
 ### **3. Direct Schema Definition - For Known Requirements**
 
 **When to use:**
+
 - Schema requirements are well-defined upfront
 - Custom reducers or validators needed
 - Performance-critical paths
 - Simple, static schemas
 
 **Example:**
+
 ```python
 from pydantic import BaseModel, Field
 from langchain_core.messages import BaseMessage
@@ -81,6 +89,7 @@ class SimpleRAGState(BaseModel):
 ## Anti-Patterns to Avoid
 
 ### **1. Using AgentSchemaComposer for Non-Agents**
+
 ```python
 # WRONG - Overkill for simple retriever
 schema = AgentSchemaComposer.from_agents(
@@ -95,6 +104,7 @@ schema = SchemaComposer.from_components(
 ```
 
 ### **2. Modifying Engine Schemas Directly**
+
 ```python
 # WRONG - SimpleAgent modifying engine schema
 self.engine.output_schema = enhanced_schema  # Dangerous!
@@ -104,6 +114,7 @@ self.output_schema = enhanced_schema  # Agent's own schema
 ```
 
 ### **3. Missing Message Preservation**
+
 ```python
 # WRONG - Using default add operator for messages
 composer.add_field("messages", list[BaseMessage], reducer=operator.add)
@@ -114,6 +125,7 @@ composer.add_field("messages", list[BaseMessage], reducer=preserve_messages_redu
 ```
 
 ### **4. No Schema at All**
+
 ```python
 # WRONG - ChainAgent with no schema handling
 class ChainAgent(Agent):
@@ -128,14 +140,15 @@ def setup_agent(self):
 ## Best Practices
 
 ### **1. Choose the Right Composer**
+
 ```python
 def choose_composer(components):
     """Select appropriate composer based on components."""
-    
+
     # Check if any are true agents
-    agents = [c for c in components if hasattr(c, 'has_reasoning_capability') 
+    agents = [c for c in components if hasattr(c, 'has_reasoning_capability')
               and c.has_reasoning_capability()]
-    
+
     if agents:
         # Use AgentSchemaComposer for agents
         return AgentSchemaComposer.from_agents(
@@ -150,6 +163,7 @@ def choose_composer(components):
 ```
 
 ### **2. Always Preserve Messages in Multi-Agent**
+
 ```python
 # Ensure tool_call_id preservation
 if "messages" in fields:
@@ -162,6 +176,7 @@ if "messages" in fields:
 ```
 
 ### **3. Use Type-Safe Field Definitions**
+
 ```python
 # Define clear field types
 composer.add_field(
@@ -173,6 +188,7 @@ composer.add_field(
 ```
 
 ### **4. Leverage Auto-Detection**
+
 ```python
 # Let AgentSchemaComposer figure out requirements
 schema = AgentSchemaComposer.from_agents(
@@ -184,10 +200,11 @@ schema = AgentSchemaComposer.from_agents(
 ```
 
 ### **5. Document Schema Intent**
+
 ```python
 class WorkflowState(StateSchema):
     """State schema for document processing workflow.
-    
+
     Uses AgentSchemaComposer because:
     - Multiple agents need coordination
     - Tool calls must preserve IDs
@@ -203,7 +220,7 @@ Is it a true agent (has LLM/reasoning)?
 │   ├─ Yes: Use AgentSchemaComposer
 │   │   └─ Consider: separation strategy, build mode
 │   └─ No: Single agent?
-│       ├─ Complex schema needs: AgentSchemaComposer  
+│       ├─ Complex schema needs: AgentSchemaComposer
 │       └─ Simple schema: Direct definition
 └─ No: It's a component
     ├─ Multiple components: Use SchemaComposer
@@ -211,7 +228,7 @@ Is it a true agent (has LLM/reasoning)?
 
 Special Considerations:
 - Need message preservation? → AgentSchemaComposer
-- Need field separation? → AgentSchemaComposer  
+- Need field separation? → AgentSchemaComposer
 - Need meta state? → AgentSchemaComposer
 - Simple I/O only? → SchemaComposer or direct
 ```
@@ -219,6 +236,7 @@ Special Considerations:
 ## Examples by Use Case
 
 ### **Multi-Agent RAG System**
+
 ```python
 # Multiple agents with coordination
 schema = AgentSchemaComposer.from_agents(
@@ -229,6 +247,7 @@ schema = AgentSchemaComposer.from_agents(
 ```
 
 ### **Simple Retrieval Pipeline**
+
 ```python
 # Just components, no agents
 schema = SchemaComposer.from_components(
@@ -237,6 +256,7 @@ schema = SchemaComposer.from_components(
 ```
 
 ### **Single Agent with Tools**
+
 ```python
 # Single agent but needs tool preservation
 schema = AgentSchemaComposer.from_agents(
@@ -246,6 +266,7 @@ schema = AgentSchemaComposer.from_agents(
 ```
 
 ### **Custom Workflow**
+
 ```python
 # Known requirements, direct definition
 class CustomWorkflowState(BaseModel):

@@ -3,29 +3,32 @@
 ## 🚨 **Issue 1: Agent vs Component Misclassification**
 
 ### **Problem**
+
 Everything inherits from `Agent` even when it has no reasoning capability.
 
 ### **Examples**
+
 ```python
 # WRONG: These are NOT agents (no LLM reasoning)
 class BaseRAGAgent(RetrieverMixin, Agent):
     """This retrieves documents - it's a COMPONENT"""
-    
+
 class DocumentLoaderAgent(Agent):
     """This loads files - it's a COMPONENT"""
-    
+
 class EmbeddingAgent(Agent):
     """This creates embeddings - it's a COMPONENT"""
 
 # RIGHT: These ARE agents (LLM reasoning)
 class SimpleAgent(Agent):
     """Uses LLM to reason about problems"""
-    
+
 class ReactAgent(SimpleAgent):
     """Uses LLM + tools in reasoning loop"""
 ```
 
 ### **How to Fix**
+
 1. **Create Component hierarchy** separate from Agent
 2. **Migrate misclassified agents** to appropriate type
 3. **Reserve Agent for LLM reasoning only**
@@ -34,13 +37,13 @@ class ReactAgent(SimpleAgent):
 # New hierarchy:
 class Component(CompiledStateGraph):
     """Deterministic processing, no LLM"""
-    
+
 class RetrieverComponent(Component):
     """Document retrieval"""
-    
+
 class LoaderComponent(Component):
     """File/data loading"""
-    
+
 class Agent(CompiledStateGraph):
     """LLM-based reasoning only"""
     engine: LLMConfig = Field(...)  # Must have LLM!
@@ -51,24 +54,26 @@ class Agent(CompiledStateGraph):
 ## 🚨 **Issue 2: ChainAgent Schema Composition Failure**
 
 ### **Problem**
+
 ChainAgent has NO schema composition - uses manual data passing that loses tool_call_id.
 
 ### **Examples**
+
 ```python
 # BROKEN: ChainAgent implementation
 class ChainAgent:
     def build_graph(self):
         # Uses DynamicGraph with engines (wrong level)
         gb = DynamicGraph(components=self.config.engines)
-        
+
         # Manual data passing loses type safety
         def chain_step(state):
             chain_data = state.get("chain_data", {})
             # Manual field extraction - fragile!
             messages = chain_data.get("messages", [])
             # tool_call_id LOST here!
-            
-# VS CORRECT: MultiAgent implementation  
+
+# VS CORRECT: MultiAgent implementation
 class MultiAgent:
     def __init__(self, agents):
         # Uses AgentSchemaComposer for proper field handling
@@ -80,6 +85,7 @@ class MultiAgent:
 ```
 
 ### **How to Fix**
+
 1. **Replace DynamicGraph with AgentSchemaComposer**
 2. **Use agents instead of engines**
 3. **Add preserve_messages_reducer**
@@ -101,9 +107,11 @@ class ChainAgent(MultiAgentBase):
 ## 🚨 **Issue 3: Multi-Agent Pattern Chaos**
 
 ### **Problem**
+
 Three incompatible approaches to multi-agent workflows.
 
 ### **Examples**
+
 ```python
 # Pattern A: MultiAgent (sophisticated)
 MultiAgent(
@@ -112,7 +120,7 @@ MultiAgent(
     build_mode=BuildMode.PARALLEL
 )
 
-# Pattern B: ChainAgent (broken)  
+# Pattern B: ChainAgent (broken)
 ChainAgent(
     engines=[engine1, engine2],  # Uses engines, not agents!
     chain_data={}               # Manual data passing
@@ -126,6 +134,7 @@ SequentialAgent.from_agents(
 ```
 
 ### **How to Fix**
+
 1. **Create unified MultiAgentBase**
 2. **Standardize constructor signatures**
 3. **All use AgentSchemaComposer**
@@ -134,7 +143,7 @@ SequentialAgent.from_agents(
 # Unified approach:
 class MultiAgentBase(Agent):
     agents: list[Agent] = Field(...)
-    
+
     def __init__(self, agents, execution_pattern, **kwargs):
         # ALL patterns use AgentSchemaComposer
         self.state_schema = AgentSchemaComposer.from_agents(
@@ -145,10 +154,10 @@ class MultiAgentBase(Agent):
 
 class ParallelMultiAgent(MultiAgentBase):
     execution_pattern = "parallel"
-    
+
 class SequentialMultiAgent(MultiAgentBase):
     execution_pattern = "sequential"
-    
+
 class ChainMultiAgent(MultiAgentBase):
     execution_pattern = "chain"
 ```
@@ -158,20 +167,22 @@ class ChainMultiAgent(MultiAgentBase):
 ## 🚨 **Issue 4: Hook System Isolation**
 
 ### **Problem**
+
 Pre/post hooks don't integrate with schema composition or multi-agent workflows.
 
 ### **Examples**
+
 ```python
 # ISOLATED: Base agent hooks
 class SimpleAgent(Agent):
     def setup_agent(self):
         """Hook runs BEFORE schema composition"""
         self._sync_fields()
-        
+
     def _setup_schemas(self):
         """Schema composition happens AFTER hooks"""
         # Hooks can't influence schema generation
-        
+
 # BYPASSED: Multi-agent workflows
 class MultiAgent:
     def __init__(self, agents):
@@ -181,6 +192,7 @@ class MultiAgent:
 ```
 
 ### **How to Fix**
+
 1. **Integrate hooks into schema composition**
 2. **Add multi-agent coordination hooks**
 3. **Support inter-node hooks**
@@ -193,13 +205,13 @@ class AgentSchemaComposer:
         # Call pre-composition hooks
         if hooks:
             agents = hooks.pre_schema_composition(agents)
-            
+
         # ... composition logic ...
-        
+
         # Call post-composition hooks
         if hooks:
             schema = hooks.post_schema_composition(schema)
-            
+
         return schema
 
 # Multi-agent with hooks:
@@ -217,9 +229,11 @@ class MultiAgent:
 ## 🚨 **Issue 5: NodeConfig-Schema Incompatibility**
 
 ### **Problem**
+
 Graph node configuration doesn't integrate with schema composition.
 
 ### **Examples**
+
 ```python
 # DISCONNECTED SYSTEMS:
 
@@ -239,6 +253,7 @@ def node_function(state: dict):  # Should be typed!
 ```
 
 ### **How to Fix**
+
 1. **Create schema-aware NodeConfig**
 2. **Bridge schema I/O mappings to node execution**
 3. **Preserve type safety in graph**
@@ -250,7 +265,7 @@ class SchemaAwareNodeConfig:
     state_schema: type[StateSchema]
     input_fields: list[str]   # From schema I/O mapping
     output_fields: list[str]  # From schema I/O mapping
-    
+
 # Type-safe node functions:
 def create_typed_node(config: SchemaAwareNodeConfig):
     def typed_node(state: config.state_schema) -> dict:
@@ -260,7 +275,7 @@ def create_typed_node(config: SchemaAwareNodeConfig):
             for field in config.input_fields
         }
         # ... execute with validation ...
-        
+
     return typed_node
 ```
 
@@ -269,17 +284,19 @@ def create_typed_node(config: SchemaAwareNodeConfig):
 ## 🚨 **Issue 6: Engine Type Inheritance Confusion**
 
 ### **Problem**
+
 Engine types don't reflect actual capabilities or inheritance needs.
 
 ### **Examples**
+
 ```python
 # CONFUSING: All use same engine type
 class SimpleAgent(Agent):
     engine_type = EngineType.AGENT    # Has LLM - correct
-    
+
 class BaseRAGAgent(Agent):
     engine_type = EngineType.AGENT    # Just retrieves - WRONG
-    
+
 class DocumentAgent(Agent):
     engine_type = EngineType.AGENT    # Just processes files - WRONG
 
@@ -290,6 +307,7 @@ class DocumentAgent(Agent):
 ```
 
 ### **How to Fix**
+
 1. **Create capability-based engine types**
 2. **Match inheritance to functionality**
 3. **Clear capability requirements**
@@ -307,11 +325,11 @@ class EngineType(Enum):
 class Agent(CompiledStateGraph):
     engine_type = EngineType.AGENT
     # Gets: LLM reasoning, tool coordination, conversation memory
-    
+
 class RetrieverComponent(CompiledStateGraph):
-    engine_type = EngineType.RETRIEVER  
+    engine_type = EngineType.RETRIEVER
     # Gets: Batch retrieval, similarity search, filtering
-    
+
 class ProcessorComponent(CompiledStateGraph):
     engine_type = EngineType.PROCESSOR
     # Gets: Bulk processing, transformation pipelines, validation
@@ -322,9 +340,11 @@ class ProcessorComponent(CompiledStateGraph):
 ## 🚨 **Issue 7: GenericAgent Unnecessary Complexity**
 
 ### **Problem**
+
 GenericAgent adds sophisticated features that nobody uses.
 
 ### **Examples**
+
 ```python
 # OVERCOMPLICATED: GenericAgent
 class GenericAgent[TInput, TOutput, TState](Agent):
@@ -333,7 +353,7 @@ class GenericAgent[TInput, TOutput, TState](Agent):
     # Universal adapter compatibility
     # Agent chaining compatibility checks
     # Factory functions for dynamic creation
-    
+
 # REALITY: Zero usage in entire codebase!
 # grep -r "GenericAgent" packages/ -> Only definition, no usage
 
@@ -345,6 +365,7 @@ class MyAgent(Agent):
 ```
 
 ### **How to Fix**
+
 1. **Remove GenericAgent entirely**
 2. **Use simple Pydantic typing for schemas**
 3. **Focus on CompiledStateGraph as common interface**
@@ -355,7 +376,7 @@ class Agent(CompiledStateGraph):
     input_schema: type[BaseModel] = Field(...)
     output_schema: type[BaseModel] = Field(...)
     state_schema: type[StateSchema] = Field(...)
-    
+
     # No complex generics needed
     # Pydantic handles type safety
     # Clear and usable
@@ -366,33 +387,34 @@ class Agent(CompiledStateGraph):
 ## 📋 **Priority Action Plan**
 
 ### **Phase 1: Critical Fixes (Week 1)**
-1. **Fix ChainAgent schema composition** 
+
+1. **Fix ChainAgent schema composition**
    - Replace DynamicGraph with AgentSchemaComposer
    - Add preserve_messages_reducer
-   
 2. **Create Component hierarchy**
    - Separate from Agent inheritance
    - Clear capability boundaries
 
 ### **Phase 2: Consistency (Month 1)**
+
 3. **Unified MultiAgentBase**
    - Standardize all multi-agent patterns
    - Consistent constructor signatures
-   
 4. **Schema-NodeConfig bridge**
    - Type-safe graph execution
    - Field mapping integration
 
 ### **Phase 3: Polish (Quarter 1)**
+
 5. **Hook system integration**
    - Schema composition hooks
    - Multi-agent coordination hooks
-   
 6. **Engine type cleanup**
    - Capability-based typing
    - Remove unnecessary complexity
 
 ### **Phase 4: Simplification**
+
 7. **Remove GenericAgent**
    - Use simple Pydantic schemas
    - Focus on CompiledStateGraph interface

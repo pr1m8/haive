@@ -7,6 +7,7 @@ Claude Code has a hardcoded timeout of approximately 2 minutes for command execu
 ### Workarounds for Long-Running Commands
 
 #### 1. Background Execution with nohup
+
 ```bash
 # Run command in background and save output
 nohup poetry run nox -s docs > docs_build.log 2>&1 &
@@ -19,6 +20,7 @@ tail -f docs_build.log
 ```
 
 #### 2. Using screen (if available)
+
 ```bash
 # Create a new screen session
 screen -S docs_build
@@ -32,6 +34,7 @@ screen -r docs_build
 ```
 
 #### 3. Using tmux (if available)
+
 ```bash
 # Create new tmux session
 tmux new -s docs_build
@@ -45,7 +48,9 @@ tmux attach -t docs_build
 ```
 
 #### 4. Split Long Operations
+
 For documentation builds specifically:
+
 ```bash
 # Clean first (quick)
 poetry run nox -s docs_clean
@@ -58,7 +63,9 @@ poetry run sphinx-build -b html docs/source docs/build/html
 ```
 
 #### 5. Check Existing Builds
+
 Often you can skip rebuilding entirely:
+
 ```bash
 # Serve existing docs without rebuilding
 cd docs/build/html && python -m http.server 8000
@@ -73,20 +80,23 @@ cd docs/build/html && python -m http.server 8000
 ## Best Practices
 
 1. **Always save output** when running long commands:
+
    ```bash
    command > output.log 2>&1 &
    ```
 
 2. **Check if rebuild is necessary** before starting:
+
    ```bash
    ls -la docs/build/html/
    ```
 
 3. **Monitor background processes**:
+
    ```bash
    # Check if still running
    ps aux | grep [p]rocess_name
-   
+
    # Check exit status
    echo $?
    ```
@@ -99,6 +109,7 @@ cd docs/build/html && python -m http.server 8000
 ## Documentation-Specific Tips
 
 ### Quick Serve Without Rebuild
+
 ```bash
 # If docs already built
 cd docs/build/html && python -m http.server 8000
@@ -108,6 +119,7 @@ poetry run nox -s docs_view
 ```
 
 ### Background Documentation Build
+
 ```bash
 # Start build in background
 nohup poetry run nox -s docs > docs_build_$(date +%Y%m%d_%H%M%S).log 2>&1 &
@@ -120,6 +132,7 @@ tail -f docs_build_*.log
 ```
 
 ### Check Build Status
+
 ```bash
 # See if sphinx-build is still running
 pgrep -f sphinx-build
@@ -131,6 +144,7 @@ find docs/build -name "*.html" -mmin -5 | wc -l
 ## When to Use Background Execution
 
 Use background execution for:
+
 - Documentation builds (usually 3-5+ minutes)
 - Full test suites
 - Large dependency installations
@@ -138,6 +152,7 @@ Use background execution for:
 - Data processing scripts
 
 Don't use for:
+
 - Quick commands (< 30 seconds)
 - Commands that need interactive input
 - Commands where you need immediate error feedback
