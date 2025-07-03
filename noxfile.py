@@ -36,30 +36,6 @@ def docs(session):
 
 
 @nox.session(python=PYTHON_VERSIONS)
-def docs_fast(session):
-    """Build documentation quickly for development (skip heavy operations)."""
-    session.install("poetry")
-    session.run("poetry", "install", "--with", "docs", external=True)
-    
-    # Clean build directory
-    if BUILD_DIR.exists():
-        session.run("rm", "-rf", str(BUILD_DIR), external=True)
-    
-    # Fast build - quiet mode, no warnings as errors
-    session.run(
-        "poetry", "run", "sphinx-build",
-        "-q",  # Quiet mode
-        "-b", "html",
-        str(SOURCE_DIR),
-        str(BUILD_DIR / "html"),
-        external=True
-    )
-    
-    session.log(f"Fast documentation built in {BUILD_DIR / 'html'}")
-    session.log("Note: This is a development build - some features may be disabled for speed")
-
-
-@nox.session(python=PYTHON_VERSIONS)
 def docs_serve(session):
     """Build and serve documentation with auto-reload."""
     session.install("poetry")
@@ -159,8 +135,7 @@ def typecheck(session):
 def list(session):
     """List all available nox sessions."""
     session.log("Available sessions:")
-    session.log("  docs         - Build documentation (full build)")
-    session.log("  docs_fast    - Build documentation quickly (development)")
+    session.log("  docs         - Build documentation")
     session.log("  docs_serve   - Build and serve docs with auto-reload")
     session.log("  docs_clean   - Clean documentation build")
     session.log("  docs_check   - Check for broken links")
