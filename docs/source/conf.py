@@ -126,15 +126,15 @@ html_short_title = "Haive"
 
 # Static files
 html_static_path = ["_static"]
-html_css_files = ["modern.css"]
-html_js_files = ["modern.js"]
+html_css_files = ["modern.css", "sidebar-fix.css"]
+html_js_files = ["modern.js", "sidebar-fix.js"]
 
-# Add showcase files if they exist
-static_dir = conf_dir / "_static"
-if (static_dir / "showcase.css").exists():
-    html_css_files.append("showcase.css")
-if (static_dir / "showcase.js").exists():
-    html_js_files.append("showcase.js")
+# Disable showcase files - they override all pages
+# static_dir = conf_dir / "_static"
+# if (static_dir / "showcase.css").exists():
+#     html_css_files.append("showcase.css")
+# if (static_dir / "showcase.js").exists():
+#     html_js_files.append("showcase.js")
 
 # Modern theme options
 html_theme_options = {
@@ -208,8 +208,8 @@ autodoc_typehints = "description"
 autodoc_typehints_format = "short"
 autodoc_class_signature = "separated"
 
-# Autosummary - disabled for faster builds
-autosummary_generate = False  # Disable temporarily due to import issues
+# Autosummary - disabled due to import errors
+autosummary_generate = False
 autosummary_generate_overwrite = False
 autosummary_imported_members = False
 
