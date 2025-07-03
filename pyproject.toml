@@ -5,6 +5,7 @@ description = "Package for langgraph agents"
 authors = ["pr1m8 <william.astley@algebraicwealth.com>"]
 license = "MIT"
 readme = "README.md"
+package-mode = false
 classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.12",

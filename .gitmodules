@@ -1,22 +1,19 @@
 [submodule "packages/haive-agents"]
     path = packages/haive-agents
     url = https://github.com/pr1m8/haive-agents.git
-    branch = main
+    branch = vzn/dav
 
 [submodule "packages/haive-core"]
     path = packages/haive-core
     url = https://github.com/pr1m8/haive-core.git
-    branch = main
+    branch = vzn/dav
 
-[submodule "packages/haive-dataflow"]
-    path = packages/haive-dataflow
-    url = https://github.com/pr1m8/haive-dataflow.git
-    branch = main
+
 
 [submodule "packages/haive-games"]
     path = packages/haive-games
     url = https://github.com/pr1m8/haive-games.git
-    branch = main
+    branch = analysis-backup-20250630-041259
 
 [submodule "packages/haive-prebuilt"]
     path = packages/haive-prebuilt
@@ -32,3 +29,8 @@
 	path = packages/haive-mcp
 	url = https://github.com/pr1m8/haive-mcp.git
     branch = main
+
+[submodule "packages/haive-dataflow"]
+    path = packages/haive-dataflow
+    url = https://github.com/pr1m8/haive-dataflow.git
+    branch = vzn/dav
