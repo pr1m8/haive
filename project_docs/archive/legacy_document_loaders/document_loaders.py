@@ -1,4 +1,4 @@
-"""Document-based Loaders for Haive Framework.
+"""Document-based Loaders for Haive Framework
 
 This module implements document-based loaders for various file formats including
 PDF, Word, Excel, PowerPoint, and other document types. It builds on the source
@@ -69,7 +69,10 @@ class PDFSource(LocalSource):
         """Create a PDF loader with the specified strategy."""
         # If no strategy specified, choose based on document characteristics
         if not strategy_name:
-            strategy_name = "ocr" if self.ocr_enabled else "fast"
+            if self.ocr_enabled:
+                strategy_name = "ocr"
+            else:
+                strategy_name = "fast"
 
         # Create the appropriate loader
         if strategy_name == "fast":
@@ -246,8 +249,8 @@ class ExcelSource(LocalSource):
     def create_pandas_loader(self):
         """Create a DataFrameLoader using pandas for Excel files."""
         try:
-            import pandas as pd
             from langchain_community.document_loaders import DataFrameLoader
+            import pandas as pd
 
             # Read Excel file into pandas DataFrame
             if self.sheet_name:
@@ -418,8 +421,8 @@ class ImageSource(LocalSource):
         except ImportError:
             # If unstructured is not available, try a simpler approach
             try:
-                import pytesseract
                 from PIL import Image
+                import pytesseract
 
                 def extract_text_with_tesseract():
                     try:
@@ -659,7 +662,7 @@ class DirectorySource(LocalSource):
             def loader_factory(file_path: str):
                 """Determine the appropriate loader based on file extension."""
                 path_obj = Path(file_path)
-                path_obj.suffix.lower()
+                ext = path_obj.suffix.lower()
 
                 # Create document source based on file extension
                 try:

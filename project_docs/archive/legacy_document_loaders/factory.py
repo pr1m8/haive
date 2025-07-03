@@ -1,4 +1,4 @@
-"""Factory Methods for Document Loader Engine.
+"""Factory Methods for Document Loader Engine
 
 This module provides factory methods for creating document loader engines
 for common use cases.
@@ -23,6 +23,7 @@ from source_loader_mapping import get_best_loader_for_path, initialize_registrie
 
 # Import source and loader registry
 from source_registry import registry as source_registry
+
 
 logger = logging.getLogger(__name__)
 
@@ -91,7 +92,7 @@ def create_file_loader_engine(
     # If file path is provided, analyze it to find the best loader
     if file_path:
         path_str = str(file_path)
-        analyze_source(path_str)
+        analysis = analyze_source(path_str)
 
         # Try to determine the best loader
         if not loader_name:

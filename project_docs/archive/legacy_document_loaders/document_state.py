@@ -37,40 +37,41 @@ from .document_models import (  # Enums; Configuration models; Document models; 
     lc_documents_to_document_collection,
 )
 
+
 # Ensure DocumentState is a StateSchema if the import succeeded
 try:
     if not issubclass(DocumentState, StateSchema):
         # Dynamically update the DocumentState class to inherit from StateSchema
-        DocumentState.__bases__ = (StateSchema, *DocumentState.__bases__)
+        DocumentState.__bases__ = (StateSchema,) + DocumentState.__bases__
 except (NameError, TypeError):
     # If StateSchema is not available, we're likely in a standalone environment
     pass
 
 __all__ = [
-    "ChunkingOptions",
-    "ChunkingStrategy",
-    "Document",
-    "DocumentChunk",
-    "DocumentCollection",
-    "DocumentCredential",
-    "DocumentError",
-    "DocumentFormat",
-    "DocumentSource",
-    # Document models
-    "DocumentSourceMetadata",
     # Enums
     "DocumentSourceType",
-    # State models
-    "DocumentState",
+    "DocumentFormat",
+    "ProcessingStage",
+    "LoadingStrategy",
+    "ChunkingStrategy",
     "EmbeddingModel",
-    "EmbeddingOptions",
     # Configuration models
     "LoadingOptions",
-    "LoadingStrategy",
-    "ProcessingStage",
+    "ChunkingOptions",
+    "EmbeddingOptions",
+    # Document models
+    "DocumentSourceMetadata",
+    "DocumentSource",
+    "DocumentChunk",
+    "Document",
+    "DocumentCollection",
+    # State models
+    "DocumentState",
     "ProcessingStatistics",
-    "chunks_to_langchain",
-    "documents_to_langchain",
+    "DocumentCredential",
+    "DocumentError",
     # Converter functions
     "lc_documents_to_document_collection",
+    "documents_to_langchain",
+    "chunks_to_langchain",
 ]
