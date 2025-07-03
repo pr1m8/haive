@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "haive"
 version = "0.1.0"
-description = "Package for langgraph agents"
+description = "Advanced AI Agent Framework with auto-persistence, multi-agent coordination, and rich tool ecosystem"
 authors = ["pr1m8 <william.astley@algebraicwealth.com>"]
 license = "MIT"
 readme = "README.md"
@@ -152,8 +152,8 @@ haive-games = { path = "packages/haive-games", develop = true }
 haive-prebuilt = { path = "packages/haive-prebuilt", develop = true }
 haive-tools = { path = "packages/haive-tools", develop = true }
 websocket = "^0.2.1"
-mcp = "^1.6.0"
-langchain-mcp-adapters = "^0.0.9"
+mcp = "^1.10.1"
+langchain-mcp-adapters = "^0.1.8"
 asyncpg = "^0.30.0"
 
 
@@ -221,6 +221,8 @@ watchdog = "^6.0.0"
 grandalf = "^0.8"
 prompt-toolkit = "^3.0.51"
 readchar = "^4.2.1"
+claude-code-sdk = "^0.0.14"
+terminal-controller = "^0.1.9"
 
 
 [tool.poetry.group.docs.dependencies]
@@ -254,6 +256,10 @@ sphinx-multiversion = "^0.2.4"
 sphinxcontrib-versioning = "^2.2.1"
 sphinxext-opengraph = "^0.10.0"
 sphinx-needs = "^5.1.0"
+langchain-google-vertexai = "^2.0.27"
+sphinx-gallery = "^0.19.0"
+sphinx-exec-directive = "^0.6"
+jupyter-cache = "^1.0.1"
 
 [tool.poetry.group.dev.dependencies.torch]
 version = "2.6.0+cu118"
