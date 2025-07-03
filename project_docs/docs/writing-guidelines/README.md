@@ -13,24 +13,28 @@ Comprehensive guidelines for writing high-quality documentation in the Haive pro
 ## 🎯 Key Principles
 
 ### 1. **Clarity First**
+
 - Write for your audience - assume varying levels of expertise
 - Use simple, direct language
 - Explain technical concepts clearly
 - Provide context and background when needed
 
 ### 2. **Consistency**
+
 - Follow established terminology and conventions
 - Use consistent formatting and structure
 - Maintain the same tone throughout related documents
 - Apply naming conventions consistently
 
 ### 3. **Completeness**
+
 - Cover all necessary information
 - Include prerequisites and assumptions
 - Provide complete examples that work
 - Address common questions and edge cases
 
 ### 4. **Accuracy**
+
 - Keep documentation up-to-date with code changes
 - Test all examples before publishing
 - Verify technical accuracy
@@ -39,6 +43,7 @@ Comprehensive guidelines for writing high-quality documentation in the Haive pro
 ## 📝 Writing Process
 
 ### 1. **Planning**
+
 ```
 1. Identify your audience
 2. Define the purpose and scope
@@ -47,6 +52,7 @@ Comprehensive guidelines for writing high-quality documentation in the Haive pro
 ```
 
 ### 2. **Writing**
+
 ```
 1. Start with a clear introduction
 2. Use headings to organize content
@@ -56,6 +62,7 @@ Comprehensive guidelines for writing high-quality documentation in the Haive pro
 ```
 
 ### 3. **Review**
+
 ```
 1. Check for accuracy and completeness
 2. Verify all examples work
@@ -67,26 +74,30 @@ Comprehensive guidelines for writing high-quality documentation in the Haive pro
 ## 🎨 Style Guidelines
 
 ### Voice and Tone
+
 - **Professional but approachable** - Technical but not intimidating
 - **Active voice** - "Configure the agent" not "The agent should be configured"
 - **Present tense** - "The system creates" not "The system will create"
 - **Second person** - "You can configure" not "One can configure"
 
 ### Language Conventions
+
 - **American English spelling** - "color" not "colour"
 - **Oxford comma** - "agents, tools, and frameworks"
 - **Consistent terminology** - Use the same terms throughout
 - **Avoid jargon** - Explain technical terms when first used
 
 ### Formatting Standards
+
 - **Headers** - Use sentence case: "Getting started" not "Getting Started"
 - **Code** - Use backticks for inline code: `variable_name`
 - **Lists** - Use bullet points for unordered, numbers for ordered
-- **Emphasis** - Use **bold** for UI elements, *italics* for emphasis
+- **Emphasis** - Use **bold** for UI elements, _italics_ for emphasis
 
 ## 📋 Content Standards
 
 ### Documentation Types
+
 Each type has specific requirements and conventions:
 
 1. **API Documentation** - Auto-generated from docstrings
@@ -96,6 +107,7 @@ Each type has specific requirements and conventions:
 5. **Conceptual** - Understanding-oriented content
 
 ### Required Elements
+
 Every documentation page should include:
 
 - **Clear title** - Describes the content accurately
@@ -106,6 +118,7 @@ Every documentation page should include:
 - **Next steps** - What to do after reading
 
 ### Code Examples
+
 All code examples must:
 
 - **Work as written** - Copy-paste should work

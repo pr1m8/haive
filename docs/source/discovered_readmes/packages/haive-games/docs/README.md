@@ -45,24 +45,31 @@ for state in agent.app.stream(initial_state):
 ## Available Games
 
 ### Classic Board Games
+
 - Chess, Checkers, Reversi (Othello), Mancala, Nim
 
-### Card Games  
+### Card Games
+
 - Poker, Texas Hold'em, Dominoes
 
 ### Strategy Games
+
 - Risk, Monopoly, Battleship
 
 ### Social Deduction Games
+
 - Mafia, Among Us, Clue
 
 ### Abstract Strategy
+
 - Connect 4, Tic-Tac-Toe, Fox and Geese, Go
 
 ### Puzzle Games
+
 - Mastermind
 
 ### Other Games
+
 - Debate (structured argumentation)
 
 ## Key Features
@@ -77,6 +84,7 @@ for state in agent.app.stream(initial_state):
 ## Support
 
 For issues or questions:
+
 - Check the [Troubleshooting Guide](./TROUBLESHOOTING.md)
 - See [Common Issues](./COMMON_ISSUES.md)
 - File issues at the main Haive repository

@@ -36,36 +36,36 @@ class MyAgentConfig(BaseModel):
 @register_agent(MyAgentConfig)
 class MyAgent(Agent[MyAgentConfig]):
     """Custom agent implementation"""
-    
+
     def __init__(self, config: MyAgentConfig, name: str = "MyAgent"):
         super().__init__(config=config, name=name)
         self.state_schema = MyAgentState
-    
+
     def process_data(self, state: MyAgentState) -> Command:
         """Process the input data"""
         # Your processing logic here
         processed = f"Processed: {state.input_data}"
         return Command(update={"processed_data": processed})
-    
+
     def generate_result(self, state: MyAgentState) -> Command:
         """Generate final result"""
         # Your generation logic here
         result = {"status": "success", "data": state.processed_data}
         return Command(update={"result": result})
-    
+
     def setup_workflow(self):
         """Define the agent workflow"""
         gb = DynamicGraph(state_schema=self.state_schema)
-        
+
         # Add nodes
         gb.add_node("process", self.process_data)
         gb.add_node("generate", self.generate_result)
-        
+
         # Add edges
         gb.add_edge(START, "process")
         gb.add_edge("process", "generate")
         gb.add_edge("generate", END)
-        
+
         # Build graph
         self.graph = gb.build()
 ```
@@ -91,14 +91,14 @@ from haive.agents.multi.base import SequentialAgent
 
 class MySequentialAgent(SequentialAgent):
     """Agent that executes sub-agents in sequence"""
-    
+
     @classmethod
     def create_pipeline(cls, config: Dict[str, Any]):
         # Create sub-agents
         agent1 = ProcessingAgent(config["processor_config"])
         agent2 = AnalysisAgent(config["analyzer_config"])
         agent3 = ReportAgent(config["reporter_config"])
-        
+
         # Return sequential agent
         return cls(
             agents=[agent1, agent2, agent3],
@@ -113,7 +113,7 @@ from haive.agents.multi.base import ConditionalAgent
 
 class MyConditionalAgent(ConditionalAgent):
     """Agent with conditional routing"""
-    
+
     def route_decision(self, state):
         """Determine which path to take"""
         if state.query_type == "simple":
@@ -122,18 +122,18 @@ class MyConditionalAgent(ConditionalAgent):
             return "complex_path"
         else:
             return "default_path"
-    
+
     def setup_workflow(self):
         gb = DynamicGraph(state_schema=self.state_schema)
-        
+
         # Add router node
         gb.add_node("router", self.route_decision)
-        
+
         # Add path nodes
         gb.add_node("simple_handler", self.handle_simple)
         gb.add_node("complex_handler", self.handle_complex)
         gb.add_node("default_handler", self.handle_default)
-        
+
         # Add conditional edges
         gb.add_edge(START, "router")
         gb.add_conditional_edges(
@@ -145,12 +145,12 @@ class MyConditionalAgent(ConditionalAgent):
                 "default_path": "default_handler"
             }
         )
-        
+
         # Connect to end
         gb.add_edge("simple_handler", END)
         gb.add_edge("complex_handler", END)
         gb.add_edge("default_handler", END)
-        
+
         self.graph = gb.build()
 ```
 
@@ -162,31 +162,31 @@ from haive.agents.rag.base.config import BaseRAGConfig
 
 class MyCustomRAGAgent(BaseRAGAgent):
     """Custom RAG implementation"""
-    
+
     def retrieve(self, state):
         """Custom retrieval logic"""
         # Add pre-processing
         processed_query = self.preprocess_query(state.query)
-        
+
         # Call parent retrieve
         documents = super().retrieve(state)
-        
+
         # Add post-processing
         filtered_docs = self.filter_documents(documents)
-        
+
         return Command(update={"retrieved_documents": filtered_docs})
-    
+
     def generate_answer(self, state):
         """Custom answer generation"""
         # Add custom prompt
         custom_prompt = self.build_custom_prompt(state)
-        
+
         # Generate answer
         answer = self.llm.invoke(custom_prompt)
-        
+
         # Add metadata
         metadata = self.extract_metadata(answer)
-        
+
         return Command(update={
             "answer": answer,
             "metadata": metadata
@@ -204,7 +204,7 @@ from haive.core.models.llm.base import AzureLLMConfig
 class LLMAgent(Agent):
     def __init__(self, config):
         super().__init__(config)
-        
+
         # Configure LLM
         self.llm_config = AugLLMConfig(
             llm_config=AzureLLMConfig(
@@ -213,7 +213,7 @@ class LLMAgent(Agent):
             ),
             prompt_template=self.get_prompt_template()
         )
-        
+
         # Create engine
         self.llm_engine = self.llm_config.create_engine()
 ```
@@ -226,14 +226,14 @@ from haive.core.engine.document import DocumentEngine, DocumentEngineConfig
 class DocumentProcessorAgent(Agent):
     def __init__(self, config):
         super().__init__(config)
-        
+
         # Configure document engine
         self.doc_config = DocumentEngineConfig(
             chunking_strategy="semantic",
             chunk_size=1000,
             chunk_overlap=200
         )
-        
+
         # Create engine
         self.doc_engine = DocumentEngine(self.doc_config)
 ```
@@ -246,14 +246,14 @@ from haive.core.engine.retriever import RetrieverEngineConfig
 class RetrieverAgent(Agent):
     def __init__(self, config):
         super().__init__(config)
-        
+
         # Configure retriever
         self.retriever_config = RetrieverEngineConfig(
             vector_store_type="faiss",
             embedding_model="text-embedding-ada-002",
             top_k=10
         )
-        
+
         # Create retriever
         self.retriever = self.retriever_config.create_retriever()
 ```
@@ -265,19 +265,19 @@ class RetrieverAgent(Agent):
 ```python
 class WellDesignedState(BaseModel):
     """Example of well-designed state"""
-    
+
     # Required fields with clear types
     query: str
     user_id: str
-    
+
     # Optional fields with defaults
     context: List[str] = Field(default_factory=list)
     metadata: Dict[str, Any] = Field(default_factory=dict)
-    
+
     # Computed fields
     processed: bool = False
     timestamp: float = Field(default_factory=time.time)
-    
+
     # Validation
     @field_validator('query')
     def validate_query(cls, v):
@@ -294,7 +294,7 @@ def update_state_safely(self, state):
     try:
         # Perform operation
         result = self.process_data(state.data)
-        
+
         # Update state
         return Command(update={
             "result": result,
@@ -338,14 +338,14 @@ def retrieve_with_fallback(self, state):
             return Command(update={"documents": docs})
     except Exception as e:
         self.logger.error(f"Primary retrieval failed: {e}")
-    
+
     try:
         # Fallback to secondary
         docs = self.secondary_retriever.invoke(state.query)
         return Command(update={"documents": docs})
     except Exception as e:
         self.logger.error(f"Secondary retrieval failed: {e}")
-        
+
     # Final fallback
     return Command(update={
         "documents": [],
@@ -366,21 +366,21 @@ class TestMyAgent:
     def agent(self):
         config = MyAgentConfig(temperature=0.5)
         return MyAgent(config)
-    
+
     def test_process_data(self, agent):
         # Create test state
         state = agent.state_schema(input_data="test")
-        
+
         # Call method
         result = agent.process_data(state)
-        
+
         # Assert
         assert result.update["processed_data"] == "Processed: test"
-    
+
     def test_full_workflow(self, agent):
         # Test complete workflow
         result = agent.invoke({"input_data": "test"})
-        
+
         assert result["result"]["status"] == "success"
         assert "data" in result["result"]
 ```
@@ -397,12 +397,12 @@ class TestMyAgentIntegration:
             temperature=0.7
         )
         agent = MyAgent(config)
-        
+
         # Test with real data
         result = agent.invoke({
             "input_data": "Analyze this text..."
         })
-        
+
         assert result["result"] is not None
 ```
 
@@ -420,7 +420,7 @@ def process_batch(self, items):
             executor.submit(self.process_item, item)
             for item in items
         ]
-        
+
         results = []
         for future in futures:
             try:
@@ -428,7 +428,7 @@ def process_batch(self, items):
             except Exception as e:
                 self.logger.error(f"Processing failed: {e}")
                 results.append(None)
-    
+
     return results
 ```
 
@@ -451,15 +451,15 @@ class CachedAgent(Agent):
 ```python
 class ProductionConfig(BaseModel):
     """Production-ready configuration"""
-    
+
     # Environment-based settings
     api_key: str = Field(default_factory=lambda: os.getenv("API_KEY"))
     endpoint: str = Field(default_factory=lambda: os.getenv("ENDPOINT"))
-    
+
     # Resource limits
     max_concurrent_requests: int = 10
     timeout_seconds: int = 30
-    
+
     # Feature flags
     enable_caching: bool = True
     enable_retry: bool = True
@@ -475,22 +475,22 @@ class MonitoredAgent(Agent):
     def __init__(self, config):
         super().__init__(config)
         self.logger = logging.getLogger(self.__class__.__name__)
-        
+
     def invoke(self, inputs):
         """Invoke with monitoring"""
         start_time = datetime.now()
         request_id = str(uuid.uuid4())
-        
+
         self.logger.info(f"Request {request_id} started")
-        
+
         try:
             result = super().invoke(inputs)
             duration = (datetime.now() - start_time).total_seconds()
-            
+
             self.logger.info(
                 f"Request {request_id} completed in {duration}s"
             )
-            
+
             return result
         except Exception as e:
             self.logger.error(
@@ -503,21 +503,26 @@ class MonitoredAgent(Agent):
 ## Common Pitfalls and Solutions
 
 ### 1. State Mutation
+
 **Problem**: Directly modifying state objects
 **Solution**: Always return new state via Command
 
 ### 2. Missing Error Handling
+
 **Problem**: Unhandled exceptions crash workflow
 **Solution**: Wrap operations in try-except blocks
 
 ### 3. Memory Leaks
+
 **Problem**: Accumulating data in agent instance
 **Solution**: Store data in state, not instance
 
 ### 4. Blocking Operations
+
 **Problem**: Synchronous operations block execution
 **Solution**: Use async operations or thread pools
 
 ### 5. Hard-coded Values
+
 **Problem**: Configuration mixed with logic
 **Solution**: Use config classes and environment variables

@@ -21,6 +21,7 @@ poetry run sphinx-autobuild docs/source docs/build/html --port 8000
 ```
 
 This will:
+
 - Watch for changes in source files
 - Automatically rebuild when changes are detected
 - Auto-refresh your browser
@@ -43,6 +44,7 @@ This uses the nox session we created that handles everything automatically.
 ## Addressing Warnings
 
 The warnings are primarily:
+
 1. **Title underline length** issues in RST files
 2. **Docstring formatting** issues (inline literals, indentation)
 3. **Grid structure** issues in showcase pages

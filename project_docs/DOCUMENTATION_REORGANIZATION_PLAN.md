@@ -1,9 +1,11 @@
 # Documentation Reorganization Plan
 
 ## Overview
+
 This plan outlines the reorganization of Haive's documentation to eliminate duplicates, establish clear hierarchy, and improve navigation.
 
 ## Current Issues
+
 1. **Duplicate Files**: Multiple versions of CLAUDE.md, frontend integration guides, RAG documentation
 2. **Scattered Documentation**: Architecture docs spread across multiple directories
 3. **Inconsistent Organization**: Mix of user docs and developer notes in same locations
@@ -13,6 +15,7 @@ This plan outlines the reorganization of Haive's documentation to eliminate dupl
 ## Proposed Structure
 
 ### 1. `/docs/` - User-Facing Documentation
+
 ```
 /docs/
 ├── README.md                    # Documentation overview for users
@@ -31,6 +34,7 @@ This plan outlines the reorganization of Haive's documentation to eliminate dupl
 ```
 
 ### 2. `/project_docs/` - Developer Documentation
+
 ```
 /project_docs/
 ├── README.md                    # Developer notes overview
@@ -52,6 +56,7 @@ This plan outlines the reorganization of Haive's documentation to eliminate dupl
 ```
 
 ### 3. Package Documentation
+
 ```
 /packages/{package-name}/
 ├── README.md                    # Package overview and usage
@@ -63,6 +68,7 @@ This plan outlines the reorganization of Haive's documentation to eliminate dupl
 ## Migration Tasks
 
 ### Phase 1: Clean Up Duplicates
+
 1. **CLAUDE.md Files**
    - Keep: `/home/will/Projects/haive/backend/haive/CLAUDE.md`
    - Remove: `/project_docs/CLAUDE.md`, `/packages/haive-dataflow/docs/CLAUDE.md`
@@ -77,6 +83,7 @@ This plan outlines the reorganization of Haive's documentation to eliminate dupl
    - Create user guide in: `/docs/source/guides/rag.rst`
 
 ### Phase 2: Reorganize Structure
+
 1. **Architecture Documentation**
    - Move design decisions to: `/project_docs/architecture/`
    - Keep user-facing architecture in: `/docs/source/guides/architecture.rst`
@@ -90,17 +97,20 @@ This plan outlines the reorganization of Haive's documentation to eliminate dupl
    - Link to specific implementations
 
 ### Phase 3: Update References
+
 1. Update CLAUDE.md with correct paths
 2. Fix all internal documentation links
 3. Update noxfile.py if paths change
 4. Update package imports/references
 
 ### Phase 4: Archive Legacy Content
+
 1. Move `/docs/source/reference/legacy_*` to `/project_docs/archive/`
 2. Archive outdated schema analyses
 3. Remove duplicate discovery logs
 
 ## Implementation Order
+
 1. Create new directory structure
 2. Move and consolidate documentation files
 3. Update all references and links
@@ -108,6 +118,7 @@ This plan outlines the reorganization of Haive's documentation to eliminate dupl
 5. Commit changes with clear message
 
 ## Success Criteria
+
 - No duplicate documentation files
 - Clear separation between user and developer docs
 - All links in CLAUDE.md work correctly

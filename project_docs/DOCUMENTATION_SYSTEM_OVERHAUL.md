@@ -23,6 +23,7 @@ The Haive project uses a monorepo structure with PEP 420 namespace packages dist
 **Key Insight**: The issue was NOT with the namespace package structure (which was correct) but with how Sphinx was configured to discover the distributed packages.
 
 **Implementation**:
+
 - Created `docs/source/conf_namespace.py` to properly set up sys.path
 - Added all package src directories to Python path for documentation
 - Maintained PEP 420 compliance (no `__init__.py` in namespace directories)
@@ -38,11 +39,13 @@ for package_name in package_names:
 ### 2. Enhanced Import Error Handling
 
 **Created comprehensive mock system**:
+
 - `docs/source/_extensions/mock_handler.py` - Mocks external dependencies
 - Updated `autodoc_mock_imports` in conf.py
 - Added graceful error handling for missing modules
 
 **External Dependencies Mocked**:
+
 - LangChain providers (langchain_google_vertexai, langchain_cerebras, etc.)
 - Cloud services (Azure, Google Cloud, etc.)
 - Optional tools (elevenlabs, jinaai, etc.)
@@ -53,6 +56,7 @@ for package_name in package_names:
 **After**: `autosummary_generate = True` with proper namespace handling
 
 **Key Configuration Changes**:
+
 ```python
 # conf.py
 autosummary_generate = True
@@ -64,11 +68,13 @@ autosummary_ignore_module_all = False
 ### 4. Improved Documentation Structure
 
 **Created multiple API index variations**:
+
 - `api/index_namespace.rst` - Full namespace package documentation
 - `api/index_auto.rst` - Autosummary-focused structure
 - `api/index_basic.rst` - Simple structure for testing
 
 **Current structure**:
+
 ```
 docs/source/
 ├── api/
@@ -106,15 +112,18 @@ packages/
 ## Files Modified/Created
 
 ### Core Configuration
+
 - `docs/source/conf.py` - Enhanced with namespace package support
 - `docs/source/conf_namespace.py` - **NEW** - Namespace package discovery
 - `docs/source/_extensions/mock_handler.py` - **NEW** - Comprehensive mocking
 
 ### Documentation Structure
+
 - `docs/source/api/index.rst` - Updated to use autosummary
 - `docs/source/index.rst` - Updated with better examples
 
 ### Build System
+
 - `noxfile.py` - Already properly configured
 - `pyproject.toml` - Dependencies already correct
 
@@ -164,7 +173,7 @@ Instead of trying to install all optional dependencies, we mock them:
 # Mock problematic external dependencies
 EXTERNAL_DEPENDENCIES = [
     "langchain_google_vertexai",
-    "elevenlabs", 
+    "elevenlabs",
     "azure.identity",
     # ... many more
 ]

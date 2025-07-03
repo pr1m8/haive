@@ -15,9 +15,9 @@ echo "  - All BuildKit cache"
 echo ""
 
 read -p "Are you sure? Type 'YES' to continue: " confirm
-if [ "$confirm" != "YES" ]; then
-    echo "❌ Cleanup cancelled"
-    exit 1
+if [[ ${confirm} != "YES" ]]; then
+	echo "❌ Cleanup cancelled"
+	exit 1
 fi
 
 echo "🧹 Starting nuclear cleanup..."
@@ -59,4 +59,4 @@ echo "🎉 Docker cleanup finished!"
 echo "💾 You should have freed up ~150GB of space!"
 echo ""
 echo "To restart fresh:"
-echo "  ./run.sh up" 
+echo "  ./run.sh up"

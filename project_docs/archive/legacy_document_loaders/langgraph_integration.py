@@ -1,11 +1,11 @@
-"""LangGraph integration for Document Loaders
+"""LangGraph integration for Document Loaders.
 
 This module demonstrates how to integrate the document loader system with LangGraph
 for production use, including proper error handling, authentication, and multi-source loading.
 """
 
-from concurrent.futures import ThreadPoolExecutor, as_completed
 import logging
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any
 
 from langgraph.graph import StateGraph
@@ -16,7 +16,6 @@ from .auto_loader_factory import analyze_path_and_suggest_loader, create_documen
 from .source_implementation import (
     CredentialManager,
 )
-
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -48,7 +47,7 @@ class DocumentSource(BaseModel):
     chunk_overlap: int = 200
 
     @validator("path")
-    def path_must_not_be_empty(cls, v):
+    def path_must_not_be_empty(self, v):
         if not v.strip():
             raise ValueError("Path cannot be empty")
         return v
@@ -203,7 +202,7 @@ def analyze_sources(state: DocumentLoaderState) -> DocumentLoaderState:
                 }
             )
         except Exception as e:
-            logger.error(f"Error analyzing source {source.path}: {e!s}")
+            logger.exception(f"Error analyzing source {source.path}: {e!s}")
 
             # Record the error
             errors.append(
@@ -253,7 +252,7 @@ def load_single_source(
 
         # Convert to our document model
         documents = []
-        for i, doc in enumerate(loaded_docs):
+        for _i, doc in enumerate(loaded_docs):
             # Extract content and metadata
             content = doc.page_content if hasattr(doc, "page_content") else str(doc)
             metadata = doc.metadata if hasattr(doc, "metadata") else {}
@@ -275,11 +274,16 @@ def load_single_source(
         return documents
 
     except Exception as e:
-        logger.error(f"Error loading source {source.path}: {e!s}")
+        logger.exception(f"Error loading source {source.path}: {e!s}")
 
         # Determine if error is recoverable
         recoverable = False
-        if "auth" in str(e).lower() or "credentials" in str(e).lower() or "timeout" in str(e).lower() or "connection" in str(e).lower():
+        if (
+            "auth" in str(e).lower()
+            or "credentials" in str(e).lower()
+            or "timeout" in str(e).lower()
+            or "connection" in str(e).lower()
+        ):
             recoverable = True
 
         return LoaderError(
@@ -291,8 +295,7 @@ def load_single_source(
 
 
 def load_documents_parallel(state: DocumentLoaderState) -> DocumentLoaderState:
-    """Load documents from all pending sources in parallel.
-    """
+    """Load documents from all pending sources in parallel."""
     documents = state.documents.copy()
     errors = state.errors.copy()
     completed_sources = state.completed_sources.copy()
@@ -328,7 +331,7 @@ def load_documents_parallel(state: DocumentLoaderState) -> DocumentLoaderState:
                 in_progress_sources.remove(source)
 
             except Exception as e:
-                logger.error(f"Unexpected error processing {source.path}: {e!s}")
+                logger.exception(f"Unexpected error processing {source.path}: {e!s}")
                 errors.append(
                     LoaderError(
                         source_path=source.path,
@@ -354,8 +357,7 @@ def load_documents_parallel(state: DocumentLoaderState) -> DocumentLoaderState:
 
 
 def load_documents_sequential(state: DocumentLoaderState) -> DocumentLoaderState:
-    """Load documents from all pending sources sequentially.
-    """
+    """Load documents from all pending sources sequentially."""
     documents = state.documents.copy()
     errors = state.errors.copy()
     completed_sources = state.completed_sources.copy()
@@ -391,8 +393,7 @@ def load_documents_sequential(state: DocumentLoaderState) -> DocumentLoaderState
 
 
 def retry_failed_sources(state: DocumentLoaderState) -> DocumentLoaderState:
-    """Retry loading sources that had recoverable errors.
-    """
+    """Retry loading sources that had recoverable errors."""
     pending_sources = state.pending_sources.copy()
     errors = []
 
@@ -470,8 +471,7 @@ def check_for_retries(state: DocumentLoaderState) -> str:
 
 # Create the document loader graph
 def create_document_loader_graph() -> Any:
-    """Create a LangGraph for document loading with error handling and retries.
-    """
+    """Create a LangGraph for document loading with error handling and retries."""
     workflow = StateGraph(DocumentLoaderState)
 
     # Add nodes
@@ -558,8 +558,3 @@ if __name__ == "__main__":
     result = load_documents_from_various_sources(example_sources)
 
     # Print summary
-    print(
-        f"Loaded {result['stats']['total_documents']} documents from {result['stats']['successful_sources']} sources"
-    )
-    print(f"Failed to load {result['stats']['failed_sources']} sources")
-    print(f"Document types: {result['stats']['source_types']}")

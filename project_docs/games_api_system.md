@@ -14,6 +14,7 @@ The Games API System provides a unified interface for all games in haive-games, 
 ### General API (`general_api.py`)
 
 The `GeneralGameAPI` class automatically:
+
 - Scans the `haive.games` package for available games
 - Imports game agents and configurations
 - Creates endpoints for each game
@@ -42,10 +43,13 @@ The `GeneralGameAPI` class automatically:
 ## API Endpoints
 
 ### List Games
+
 ```
 GET /api/games/
 ```
+
 Returns all discovered games with metadata:
+
 - Game name and ID
 - Available players
 - Example configurations
@@ -53,10 +57,13 @@ Returns all discovered games with metadata:
 - API endpoints
 
 ### Create Game
+
 ```
 POST /api/games/create
 ```
+
 Body:
+
 ```json
 {
   "game_id": "chess",
@@ -75,6 +82,7 @@ Body:
 ### Game-Specific Endpoints
 
 After creating a game:
+
 - `GET /api/games/{game_id}/{thread_id}` - Get state
 - `POST /api/games/{game_id}/{thread_id}/move` - Make move
 - `GET /api/games/{game_id}/{thread_id}/ai-move` - AI move
@@ -83,6 +91,7 @@ After creating a game:
 ## Configuration Examples
 
 ### Simple Mode
+
 ```python
 {
   "game_id": "chess",
@@ -95,6 +104,7 @@ After creating a game:
 ```
 
 ### Example Mode
+
 ```python
 {
   "game_id": "tic_tac_toe",
@@ -104,6 +114,7 @@ After creating a game:
 ```
 
 ### Advanced Mode
+
 ```python
 {
   "game_id": "connect4",
@@ -126,6 +137,7 @@ After creating a game:
 ## Usage
 
 ### Basic Setup
+
 ```python
 from haive.games.api import create_general_game_api
 
@@ -138,6 +150,7 @@ uvicorn.run(app, host="0.0.0.0", port=8000)
 ```
 
 ### Custom Configuration
+
 ```python
 app, game_api = create_general_game_api(
     route_prefix="/games",
@@ -179,6 +192,7 @@ The system automatically generates OpenAPI documentation:
 - **Examples**: Request/response samples
 
 Access at:
+
 - `/docs` - Swagger UI
 - `/redoc` - ReDoc interface
 - `/openapi.json` - Raw schema
@@ -202,6 +216,7 @@ Access at:
 ### Custom Game Mapping
 
 Override player model mapping in `_register_routes`:
+
 ```python
 if game_id == "your_game":
     config_kwargs["special_model"] = request.player_models.get("player1")
@@ -224,6 +239,7 @@ if game_id == "your_game":
 ## Examples
 
 See `/examples/general_api_example.py` for:
+
 - Complete API setup
 - Various configuration modes
 - HTTP client usage
@@ -232,6 +248,7 @@ See `/examples/general_api_example.py` for:
 ## Testing
 
 Test the API:
+
 ```bash
 # Run the server
 python examples/general_api_example.py --serve

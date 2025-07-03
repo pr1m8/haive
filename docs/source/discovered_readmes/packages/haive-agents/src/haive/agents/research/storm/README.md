@@ -58,7 +58,7 @@ The Writing Agent handles the final article creation process:
 
 ```bash
 # Install required packages
-pip install langchain langchain_openai langchain_community langgraph pydantic 
+pip install langchain langchain_openai langchain_community langgraph pydantic
 ```
 
 ## Usage

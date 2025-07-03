@@ -3,6 +3,7 @@
 ## Essential Commands
 
 ### Testing
+
 ```bash
 # Run tests for a specific package
 poetry run pytest packages/haive-agents/tests/
@@ -15,6 +16,7 @@ poetry run pytest --cov=haive
 ```
 
 ### Documentation
+
 ```bash
 # Build documentation
 poetry run nox -s docs
@@ -27,6 +29,7 @@ poetry run nox -s docs_check
 ```
 
 ### Development
+
 ```bash
 # Install all dependencies
 poetry install --all-extras
@@ -60,26 +63,28 @@ poetry run nox -s typecheck
 ## Common Patterns
 
 ### Agent Development
+
 ```python
 from haive.core.agent import BaseAgent
 from haive.core.schema import AgentSchema
 
 class MyAgent(BaseAgent):
     """Custom agent implementation."""
-    
+
     async def process(self, input_data):
         # Agent logic here
         return result
 ```
 
 ### Tool Creation
+
 ```python
 from haive.core.tool import BaseTool
 from haive.core.schema import ToolSchema
 
 class MyTool(BaseTool):
     """Custom tool implementation."""
-    
+
     async def execute(self, **kwargs):
         # Tool logic here
         return result

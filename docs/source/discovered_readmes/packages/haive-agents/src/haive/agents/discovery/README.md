@@ -24,12 +24,14 @@ discovery/
 Main discovery engine combining vector search, query analysis, and capability matching.
 
 **Key Classes:**
+
 - `SemanticDiscoveryEngine` - Main entry point
 - `VectorBasedToolSelector` - Handles embedding-based search
 - `QueryAnalyzer` - Analyzes natural language queries
 - `CapabilityMatcher` - Matches tools by capabilities
 
 **Usage:**
+
 ```python
 from haive.agents.discovery import SemanticDiscoveryEngine
 
@@ -45,12 +47,14 @@ tools, analysis = await engine.semantic_tool_selection(
 Implements LangGraph-style dynamic tool selection with state awareness.
 
 **Key Classes:**
+
 - `DynamicToolSelector` - Base selector interface
 - `LangGraphStyleSelector` - LangGraph pattern implementation
 - `ContextAwareSelector` - Context-based selection
 - `ToolUsageTracker` - Tracks tool performance
 
 **Usage:**
+
 ```python
 from haive.agents.discovery import LangGraphStyleSelector
 
@@ -67,6 +71,7 @@ result = await selector.select_tools_with_state({
 Pluggable strategies for component selection.
 
 **Available Strategies:**
+
 1. `SemanticSelectionStrategy` - Embedding similarity based
 2. `CapabilityBasedStrategy` - Exact capability matching
 3. `AdaptiveSelectionStrategy` - Learns from usage
@@ -74,6 +79,7 @@ Pluggable strategies for component selection.
 5. `EnsembleSelectionStrategy` - Combines multiple strategies
 
 **Usage:**
+
 ```python
 from haive.agents.discovery import AdaptiveSelectionStrategy
 
@@ -104,6 +110,7 @@ engine = SemanticDiscoveryEngine(component_registry=registry)
 ## Advanced Features
 
 ### Query Analysis
+
 ```python
 analyzer = QueryAnalyzer()
 analysis = analyzer.analyze_query("search for AI papers and summarize")
@@ -111,6 +118,7 @@ analysis = analyzer.analyze_query("search for AI papers and summarize")
 ```
 
 ### Capability Matching
+
 ```python
 matcher = CapabilityMatcher()
 matcher.build_capability_matrix(tools)
@@ -121,6 +129,7 @@ matches = matcher.match_tools(
 ```
 
 ### Performance Tracking
+
 ```python
 tracker = ToolUsageTracker()
 tracker.record_usage("web_search", success=True, duration=1.2)
@@ -130,6 +139,7 @@ performance = tracker.get_tool_performance("web_search")
 ## Configuration
 
 ### Environment Variables
+
 ```bash
 # Discovery-specific settings
 HAIVE_DISCOVERY_DEFAULT_STRATEGY=hybrid
@@ -138,6 +148,7 @@ HAIVE_DISCOVERY_SIMILARITY_THRESHOLD=0.7
 ```
 
 ### Programmatic Configuration
+
 ```python
 config = {
     "vector_selector": {
@@ -164,13 +175,15 @@ engine = SemanticDiscoveryEngine(**config)
 ## Testing
 
 ### Unit Tests
+
 ```bash
 poetry run pytest packages/haive-agents/tests/discovery/ -v
 ```
 
 ### Test Coverage
+
 - `test_semantic_discovery.py` - Core engine tests
-- `test_dynamic_tool_selector.py` - Dynamic selection tests  
+- `test_dynamic_tool_selector.py` - Dynamic selection tests
 - `test_selection_strategies.py` - Strategy implementations
 
 ## Performance Considerations
@@ -183,11 +196,12 @@ poetry run pytest packages/haive-agents/tests/discovery/ -v
 ## Common Patterns
 
 ### Tool Discovery for Agents
+
 ```python
 class ResearchAgent:
     def __init__(self):
         self.discovery = SemanticDiscoveryEngine()
-    
+
     async def select_tools_for_task(self, task: str):
         tools, _ = await self.discovery.semantic_tool_selection(
             task,
@@ -197,45 +211,50 @@ class ResearchAgent:
 ```
 
 ### Dynamic Tool Binding
+
 ```python
 async def bind_tools_dynamically(llm, query):
     selector = LangGraphStyleSelector()
     result = await selector.select_tools_for_query(query)
-    
+
     # Bind selected tools to LLM
     llm_with_tools = llm.bind_tools(result.selected_tools)
     return llm_with_tools
 ```
 
 ### Capability-First Selection
+
 ```python
 async def get_tools_for_workflow(workflow_steps):
     engine = SemanticDiscoveryEngine()
     workflow_tools = []
-    
+
     for step in workflow_steps:
         tools = await engine.get_tools_for_capabilities(
             required_capabilities=step.required_capabilities,
             optional_capabilities=step.optional_capabilities
         )
         workflow_tools.extend(tools)
-    
+
     return workflow_tools
 ```
 
 ## Troubleshooting
 
 ### Issue: No tools returned
+
 - Check if tools are registered in the component registry
 - Verify embedding provider is configured
 - Try broader search queries
 
 ### Issue: Wrong tools selected
+
 - Adjust similarity threshold
 - Improve tool descriptions and capability metadata
 - Use capability-based strategy for precise matching
 
-### Issue: Slow search performance  
+### Issue: Slow search performance
+
 - Disable embeddings for keyword-only search
 - Limit search scope with component_types parameter
 - Use caching for repeated queries

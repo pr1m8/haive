@@ -9,6 +9,7 @@ Haive uses **Google-style docstrings** for all Python code documentation. These 
 ## 🎯 Basic Format
 
 ### Module Docstrings
+
 ```python
 """Short description of the module.
 
@@ -24,7 +25,7 @@ Example:
     Basic usage example::
 
         from haive.agents.simple import SimpleAgent
-        
+
         agent = SimpleAgent(name="my_agent")
         result = agent.invoke({"input": "Hello, world!"})
 
@@ -38,6 +39,7 @@ See Also:
 ```
 
 ### Class Docstrings
+
 ```python
 class SimpleAgent(Agent):
     """A simple agent that processes input through a single workflow.
@@ -64,11 +66,11 @@ class SimpleAgent(Agent):
                 name="assistant",
                 tools=[web_search_tool, calculator_tool]
             )
-            
+
             result = agent.invoke({
                 "messages": [HumanMessage(content="What's 2+2?")]
             })
-            
+
             print(result["messages"][-1].content)
 
     Note:
@@ -83,6 +85,7 @@ class SimpleAgent(Agent):
 ```
 
 ### Method Docstrings
+
 ```python
 def invoke(self, input_data: dict) -> dict:
     """Execute the agent with the given input.
@@ -110,10 +113,10 @@ def invoke(self, input_data: dict) -> dict:
                 "messages": [HumanMessage(content="Hello!")],
                 "user_id": "user123"
             })
-            
+
             # Access the response
             response = result["messages"][-1].content
-            
+
         With tool usage::
 
             result = agent.invoke({
@@ -127,6 +130,7 @@ def invoke(self, input_data: dict) -> dict:
 ```
 
 ### Function Docstrings
+
 ```python
 def create_agent_from_config(config_path: str) -> Agent:
     """Create an agent instance from a configuration file.
@@ -162,6 +166,7 @@ def create_agent_from_config(config_path: str) -> Agent:
 ### Required Sections
 
 #### **Args**
+
 - List all parameters with types and descriptions
 - Use present tense: "The input data" not "The input data that will be processed"
 - Be specific about expected formats and constraints
@@ -176,6 +181,7 @@ Args:
 ```
 
 #### **Returns**
+
 - Describe the return value type and contents
 - Explain the structure for complex return types
 - Mention important attributes or methods
@@ -189,6 +195,7 @@ Returns:
 ```
 
 #### **Raises**
+
 - List all exceptions that might be raised
 - Explain when each exception occurs
 - Include both direct raises and propagated exceptions
@@ -204,6 +211,7 @@ Raises:
 ### Optional Sections
 
 #### **Example**
+
 - Provide working code examples
 - Show realistic usage scenarios
 - Include expected outputs when helpful
@@ -214,7 +222,7 @@ Example:
 
         agent = SimpleAgent(name="helper")
         result = agent.invoke({"input": "Hello"})
-        
+
     With custom configuration::
 
         config = AgentConfig(temperature=0.7, max_tokens=100)
@@ -224,6 +232,7 @@ Example:
 ```
 
 #### **Note**
+
 - Important information about usage
 - Warnings about common pitfalls
 - Performance considerations
@@ -232,12 +241,13 @@ Example:
 Note:
     This method loads the entire dataset into memory. For large
     datasets, consider using the streaming version instead.
-    
+
     The agent maintains conversation history automatically.
     Clear it manually if needed using `agent.clear_history()`.
 ```
 
 #### **See Also**
+
 - Related classes, functions, or modules
 - External resources or documentation
 - Alternative approaches
@@ -250,6 +260,7 @@ See Also:
 ```
 
 #### **Attributes** (for classes)
+
 - Public attributes that users should know about
 - Properties that provide important information
 - Don't document private attributes
@@ -265,12 +276,14 @@ Attributes:
 ## 🎨 Style Guidelines
 
 ### Language and Tone
+
 - **Present tense**: "Returns the result" not "Will return the result"
 - **Active voice**: "Processes the input" not "The input is processed"
 - **Imperative for Args**: "The input data" not "This is the input data"
 - **Be specific**: "List of tool instances" not "Tools"
 
 ### Formatting
+
 - **First line**: Short, concise summary (one line)
 - **Blank line**: After first line if there's more content
 - **Paragraphs**: Separate with blank lines
@@ -278,6 +291,7 @@ Attributes:
 - **References**: Use Sphinx cross-references `:class:`, `:func:`, etc.
 
 ### Content Guidelines
+
 - **Be comprehensive**: Include all important information
 - **Be concise**: Don't repeat information unnecessarily
 - **Be accurate**: Ensure all information is correct and up-to-date
@@ -286,6 +300,7 @@ Attributes:
 ## ✅ Common Patterns
 
 ### Configuration Classes
+
 ```python
 class AgentConfig(BaseModel):
     """Configuration for agent behavior and capabilities.
@@ -318,6 +333,7 @@ class AgentConfig(BaseModel):
 ```
 
 ### State Classes
+
 ```python
 class AgentState(StateSchema):
     """State schema for tracking agent execution.
@@ -339,6 +355,7 @@ class AgentState(StateSchema):
 ```
 
 ### Factory Functions
+
 ```python
 def create_simple_agent(name: str, **kwargs) -> SimpleAgent:
     """Factory function for creating a SimpleAgent with sensible defaults.
@@ -358,7 +375,7 @@ def create_simple_agent(name: str, **kwargs) -> SimpleAgent:
         Quick agent creation::
 
             agent = create_simple_agent("helper")
-            
+
         With customization::
 
             agent = create_simple_agent(
@@ -372,23 +389,25 @@ def create_simple_agent(name: str, **kwargs) -> SimpleAgent:
 ## ❌ Common Mistakes
 
 ### Don't Do This
+
 ```python
 def process(data):
     """Process data."""  # Too brief, no Args/Returns
-    
+
 def calculate(x, y, operation="add"):
     """Does math stuff.
-    
+
     x: first number
     y: second number  # Wrong format for Args
     operation: what to do
     """
-    
+
 class MyAgent:
     """Agent class."""  # No description of purpose or usage
 ```
 
 ### Do This Instead
+
 ```python
 def process(data: dict) -> ProcessResult:
     """Process input data through the configured pipeline.
@@ -402,7 +421,7 @@ def process(data: dict) -> ProcessResult:
     Raises:
         ValidationError: If data doesn't match the expected schema.
     """
-    
+
 def calculate(x: float, y: float, operation: str = "add") -> float:
     """Perform mathematical operations on two numbers.
 
@@ -425,7 +444,7 @@ def calculate(x: float, y: float, operation: str = "add") -> float:
             result = calculate(5, 3, "add")  # Returns 8
             result = calculate(10, 2, "divide")  # Returns 5.0
     """
-    
+
 class MyAgent(Agent):
     """Custom agent for specialized task processing.
 

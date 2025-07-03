@@ -6,6 +6,7 @@
 ## The Generic Approach
 
 ### **Core Concept: One Class, Generic Over Engine Type**
+
 ```python
 from typing import Generic, TypeVar
 from haive.core.engine.base import Engine, EngineType
@@ -14,30 +15,30 @@ E = TypeVar('E', bound=Engine)
 
 class EngineNodeConfig(NodeConfig, Generic[E]):
     """Generic engine node that inherits schemas from its engine type."""
-    
+
     engine: E  # Generic engine type
-    
+
     @property
     def input_schema(self) -> type[BaseModel]:
         """Inherit input schema from engine."""
         return self.engine.input_schema
-    
-    @property  
+
+    @property
     def output_schema(self) -> type[BaseModel]:
         """Inherit output schema from engine."""
         return self.engine.output_schema
-    
+
     def _extract_input(self, state) -> Dict[str, Any]:
         """Extract and validate using engine's input schema."""
         raw_input = super()._extract_input(state)
-        
+
         # Validate using inherited input schema
         try:
             validated = self.input_schema(**raw_input)
             return validated.model_dump()
         except ValidationError as e:
             raise ValueError(f"Input validation failed for {self.engine.engine_type.value}: {e}")
-    
+
     def _validate_output(self, result: Any) -> Dict[str, Any]:
         """Validate result using engine's output schema."""
         try:
@@ -49,10 +50,11 @@ class EngineNodeConfig(NodeConfig, Generic[E]):
 ```
 
 ### **Type Aliases for Specific Engine Types**
+
 ```python
 # Create type aliases for common engine types
 RetrieverNode = EngineNodeConfig[RetrieverEngine]
-LLMNode = EngineNodeConfig[LLMEngine] 
+LLMNode = EngineNodeConfig[LLMEngine]
 VectorStoreNode = EngineNodeConfig[VectorStoreEngine]
 EmbeddingsNode = EngineNodeConfig[EmbeddingsEngine]
 AgentNode = EngineNodeConfig[AgentEngine]
@@ -66,6 +68,7 @@ def create_llm_node(engine: LLMEngine, name: str) -> LLMNode:
 ```
 
 ### **Generic Factory Function**
+
 ```python
 def create_engine_node(engine: E, name: str, **kwargs) -> EngineNodeConfig[E]:
     """Generic factory that preserves engine type."""
@@ -84,11 +87,12 @@ retriever_node: EngineNodeConfig[RetrieverEngine] = create_engine_node(retriever
 ## Engine-Type-Specific Behavior with Method Overloading
 
 ### **Runtime Dispatch Based on Engine Type**
+
 ```python
 class EngineNodeConfig(NodeConfig, Generic[E]):
     def _extract_input_specialized(self, state) -> Dict[str, Any]:
         """Engine-type-specific extraction logic."""
-        
+
         # Dispatch based on engine type
         if self.engine.engine_type == EngineType.RETRIEVER:
             return self._extract_retriever_input(state)
@@ -98,35 +102,36 @@ class EngineNodeConfig(NodeConfig, Generic[E]):
             return self._extract_vectorstore_input(state)
         else:
             return self._extract_generic_input(state)
-    
+
     def _extract_retriever_input(self, state) -> Dict[str, Any]:
         """Retriever-specific extraction logic."""
         raw_input = super()._extract_input(state)
-        
+
         # Retriever-specific processing
         if 'query' in raw_input:
             raw_input['query'] = str(raw_input['query']).strip()
         if 'k' in raw_input:
             raw_input['k'] = max(1, min(100, int(raw_input['k'])))
-        
+
         # Validate with inherited schema
         validated = self.input_schema(**raw_input)
         return validated.model_dump()
-    
+
     def _extract_llm_input(self, state) -> Dict[str, Any]:
         """LLM-specific extraction logic."""
         raw_input = super()._extract_input(state)
-        
+
         # LLM-specific processing
         if 'messages' in raw_input and not raw_input['messages']:
             raise ValueError("LLM requires non-empty messages")
-        
+
         # Validate with inherited schema
         validated = self.input_schema(**raw_input)
         return validated.model_dump()
 ```
 
 ### **Type Guards for Engine-Specific Access**
+
 ```python
 from typing import TYPE_CHECKING
 
@@ -140,7 +145,7 @@ class EngineNodeConfig(NodeConfig, Generic[E]):
         if self.engine.engine_type != EngineType.RETRIEVER:
             raise TypeError(f"Node has {self.engine.engine_type}, not RETRIEVER")
         return self  # type: ignore
-    
+
     def as_llm_node(self) -> 'EngineNodeConfig[LLMEngine]':
         """Type guard for LLM nodes."""
         if self.engine.engine_type != EngineType.LLM:
@@ -160,6 +165,7 @@ if node.engine.engine_type == EngineType.RETRIEVER:
 ## Enhanced Generic Implementation
 
 ### **Protocol-Based Engine Requirements**
+
 ```python
 from typing import Protocol
 
@@ -173,9 +179,9 @@ E = TypeVar('E', bound=SchemaAwareEngine)
 
 class EngineNodeConfig(NodeConfig, Generic[E]):
     """Generic node that works with any schema-aware engine."""
-    
+
     engine: E
-    
+
     @model_validator(mode='after')
     def validate_engine_has_schemas(self) -> 'EngineNodeConfig[E]':
         """Ensure engine has required schemas."""
@@ -187,47 +193,50 @@ class EngineNodeConfig(NodeConfig, Generic[E]):
 ```
 
 ### **Specialized Factory Functions**
+
 ```python
 def create_retriever_node(
-    engine: RetrieverEngine, 
+    engine: RetrieverEngine,
     name: str,
     **kwargs
 ) -> EngineNodeConfig[RetrieverEngine]:
     """Create a typed retriever node."""
     node = EngineNodeConfig[RetrieverEngine](name=name, engine=engine, **kwargs)
-    
+
     # Add retriever-specific configuration
     if not hasattr(node, 'extract_fields'):
         node.extract_fields = ['query', 'k', 'filter']
-    
+
     return node
 
 def create_llm_node(
     engine: LLMEngine,
-    name: str, 
+    name: str,
     **kwargs
 ) -> EngineNodeConfig[LLMEngine]:
     """Create a typed LLM node."""
     node = EngineNodeConfig[LLMEngine](name=name, engine=engine, **kwargs)
-    
+
     # Add LLM-specific configuration
     if not hasattr(node, 'extract_fields'):
         node.extract_fields = ['messages', 'temperature', 'max_tokens']
-    
+
     return node
 ```
 
 ## Benefits of Generic Approach
 
 ### **1. Single Class, Multiple Types**
+
 ```python
 # One implementation handles all engine types
 EngineNodeConfig[RetrieverEngine]  # Typed for retrievers
-EngineNodeConfig[LLMEngine]        # Typed for LLMs  
+EngineNodeConfig[LLMEngine]        # Typed for LLMs
 EngineNodeConfig[VectorStoreEngine] # Typed for vector stores
 ```
 
 ### **2. Full Type Safety**
+
 ```python
 retriever_node: EngineNodeConfig[RetrieverEngine] = create_retriever_node(engine, "name")
 # Type checker knows retriever_node.engine is RetrieverEngine
@@ -235,12 +244,14 @@ retriever_node: EngineNodeConfig[RetrieverEngine] = create_retriever_node(engine
 ```
 
 ### **3. Engine-Specific Behavior via Dispatch**
+
 ```python
 # Runtime behavior adapts to engine type
 node._extract_input(state)  # Calls appropriate engine-specific method
 ```
 
 ### **4. Clean Type Aliases**
+
 ```python
 # Easy to use aliases
 RetrieverNode = EngineNodeConfig[RetrieverEngine]
@@ -248,6 +259,7 @@ LLMNode = EngineNodeConfig[LLMEngine]
 ```
 
 ### **5. Backward Compatibility**
+
 ```python
 # Existing code still works
 EngineNodeConfig(name="node", engine=some_engine)  # Generic[Engine]

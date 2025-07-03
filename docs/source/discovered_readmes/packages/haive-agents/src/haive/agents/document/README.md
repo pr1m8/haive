@@ -5,13 +5,15 @@ The Document Agent is a comprehensive solution for processing documents through 
 ## 🚀 Key Features
 
 ### Universal Source Support
+
 - **97+ document sources** including files, URLs, databases, cloud storage
 - **Auto-detection** of source types with intelligent processing
 - **Multi-format support**: PDF, DOCX, TXT, HTML, MD, JSON, CSV, XML, and 50+ more
 
 ### Advanced Processing Pipeline
+
 1. **FETCH**: Source discovery and validation
-2. **LOAD**: Intelligent loader selection with fallback mechanisms  
+2. **LOAD**: Intelligent loader selection with fallback mechanisms
 3. **TRANSFORM**: Content normalization, encoding detection, metadata extraction
 4. **SPLIT**: 5 chunking strategies (recursive, semantic, paragraph, sentence, fixed-size)
 5. **ANNOTATE**: Comprehensive metadata enrichment and content classification
@@ -20,6 +22,7 @@ The Document Agent is a comprehensive solution for processing documents through 
 8. **RETRIEVE**: Optional search and retrieval capabilities
 
 ### Enterprise-Ready Features
+
 - **Parallel processing** with configurable worker threads
 - **Error resilience** with graceful fallback and detailed reporting
 - **Extensible pipeline** with optional stages
@@ -241,6 +244,7 @@ print(f"Document formats: {result.document_formats}")
 ## 🎯 Document Source Types Supported
 
 ### File Formats
+
 - **Documents**: PDF, DOCX, ODT, RTF, EPUB
 - **Text**: TXT, MD, HTML, RST
 - **Data**: JSON, CSV, XML, YAML, TOML
@@ -249,12 +253,14 @@ print(f"Document formats: {result.document_formats}")
 - **Code**: PY, JS, TS, JAVA, C, CPP, and 20+ more
 
 ### Remote Sources
+
 - **Web**: HTTP/HTTPS URLs, APIs, RSS feeds
 - **Cloud Storage**: AWS S3, Google Cloud Storage, Azure Blob, Dropbox, Box
 - **Version Control**: Git repositories, GitHub, GitLab
 - **Knowledge Bases**: Notion, Confluence, Obsidian, Roam Research
 
 ### Databases & APIs
+
 - **SQL**: PostgreSQL, MySQL, SQLite, Oracle, SQL Server
 - **NoSQL**: MongoDB, Elasticsearch, Cassandra, CouchDB
 - **APIs**: REST APIs, GraphQL endpoints
@@ -263,6 +269,7 @@ print(f"Document formats: {result.document_formats}")
 ## ⚡ Performance Optimization
 
 ### Parallel Processing
+
 ```python
 # Configure for high throughput
 agent = DocumentAgent(
@@ -274,6 +281,7 @@ agent = DocumentAgent(
 ```
 
 ### Memory Management
+
 ```python
 # Optimize for large documents
 agent = DocumentAgent(
@@ -285,6 +293,7 @@ agent = DocumentAgent(
 ```
 
 ### Error Handling
+
 ```python
 # Configure error resilience
 agent = DocumentAgent(
@@ -303,6 +312,7 @@ if result.processing_errors:
 ## 🔍 Advanced Features
 
 ### Custom Processing Pipeline
+
 ```python
 # Create agent with specific pipeline stages
 agent = DocumentAgent(
@@ -312,6 +322,7 @@ agent = DocumentAgent(
 ```
 
 ### Content Filtering
+
 ```python
 # Process with content filtering
 result = agent.process_directory(
@@ -323,6 +334,7 @@ result = agent.process_directory(
 ```
 
 ### Metadata Enrichment
+
 ```python
 # Enhanced metadata extraction
 agent = DocumentAgent(
@@ -343,22 +355,24 @@ for doc in result.loaded_documents:
 ### Common Issues
 
 1. **Import Errors**
+
    ```python
    # Ensure haive-core is installed
    pip install haive-core
-   
+
    # Check for missing optional dependencies
    pip install pdfplumber beautifulsoup4 requests
    ```
 
 2. **Processing Failures**
+
    ```python
    # Enable detailed error reporting
    agent = DocumentAgent(
        raise_on_error=False,
        skip_invalid=True
    )
-   
+
    result = agent.process_sources(sources)
    if result.processing_errors:
        for error in result.processing_errors:
@@ -376,6 +390,7 @@ for doc in result.loaded_documents:
    ```
 
 ### Debug Mode
+
 ```python
 import logging
 logging.basicConfig(level=logging.DEBUG)
@@ -386,18 +401,19 @@ result = agent.process_sources("document.pdf")
 
 ## 📈 Performance Benchmarks
 
-| Document Type | Size | Processing Time | Chunks Created |
-|---------------|------|-----------------|----------------|
-| PDF (Text) | 1MB | ~2.5s | ~50 |
-| DOCX | 500KB | ~1.2s | ~25 |
-| Web Page | 100KB | ~0.8s | ~10 |
-| JSON Data | 2MB | ~1.5s | ~80 |
+| Document Type | Size  | Processing Time | Chunks Created |
+| ------------- | ----- | --------------- | -------------- |
+| PDF (Text)    | 1MB   | ~2.5s           | ~50            |
+| DOCX          | 500KB | ~1.2s           | ~25            |
+| Web Page      | 100KB | ~0.8s           | ~10            |
+| JSON Data     | 2MB   | ~1.5s           | ~80            |
 
-*Benchmarks on Intel i7-8750H, 16GB RAM, SSD storage*
+_Benchmarks on Intel i7-8750H, 16GB RAM, SSD storage_
 
 ## 🔗 Integration Examples
 
 ### With Vector Databases
+
 ```python
 # Enable storage for semantic search
 agent = DocumentAgent(
@@ -412,6 +428,7 @@ print(f"Stored {len(stored_ids)} documents for retrieval")
 ```
 
 ### With LangChain
+
 ```python
 from langchain.vectorstores import Chroma
 
@@ -426,6 +443,7 @@ vectorstore = Chroma.from_texts(texts, embeddings)
 ```
 
 ### Batch Processing
+
 ```python
 import os
 from pathlib import Path

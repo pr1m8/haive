@@ -3,6 +3,7 @@
 ## What was fixed:
 
 ### 1. Circular Import Issue
+
 **Problem**: Circular import between `component_registry.py` and `haive_discovery` module
 **Solution**: Implemented lazy import pattern in `component_registry.py`
 
@@ -20,10 +21,11 @@ def _get_unified_discovery():
 ```
 
 ### 2. Discovery APIs
+
 Fixed three API endpoints to use the unified discovery system:
 
 - **Game Discovery** (`game_router_fixed.py`)
-- **Agent Discovery** (`agent_discovery_routes_fixed.py`)  
+- **Agent Discovery** (`agent_discovery_routes_fixed.py`)
 - **Tool Discovery** (`tools_routes_fixed.py`)
 
 All now properly use `HaiveComponentDiscovery` and `UnifiedHaiveDiscovery` instead of reimplementing discovery logic.

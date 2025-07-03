@@ -1,21 +1,25 @@
 # Conversational Agents Documentation
 
 ## Overview
+
 This document covers conversational agents in the Haive framework - agents designed for natural language interactions and dialogue management.
 
 ## Available Conversational Agents
 
 ### 1. SimpleAgent
+
 **Location**: `/packages/haive-agents/src/haive/agents/simple/`
 
 A basic conversational agent that provides straightforward LLM interactions.
 
 **Key Features**:
+
 - Direct LLM communication
 - Simple state management
 - Minimal configuration required
 
 **Usage Example**:
+
 ```python
 from haive.agents.simple import SimpleAgent
 
@@ -29,17 +33,20 @@ response = await agent.chat("Hello, how are you?")
 ```
 
 ### 2. ConversationAgent
+
 **Location**: `/packages/haive-agents/src/haive/agents/conversation/`
 
 An advanced conversational agent with memory and context management.
 
 **Key Features**:
+
 - Conversation history tracking
 - Context window management
 - Memory persistence options
 - Multi-turn dialogue support
 
 **Usage Example**:
+
 ```python
 from haive.agents.conversation import ConversationAgent
 
@@ -56,17 +63,20 @@ response2 = await agent.chat("What about tomorrow?")  # Maintains context
 ```
 
 ### 3. PersonaAgent
+
 **Location**: `/packages/haive-agents/src/haive/agents/persona/`
 
 A conversational agent with customizable personality and behavioral traits.
 
 **Key Features**:
+
 - Persona configuration
 - Consistent personality traits
 - Role-playing capabilities
 - Emotional state tracking
 
 **Usage Example**:
+
 ```python
 from haive.agents.persona import PersonaAgent
 
@@ -84,6 +94,7 @@ agent = PersonaAgent(
 ## Common Patterns
 
 ### Memory Management
+
 ```python
 # Configure memory for conversation agents
 agent = ConversationAgent(
@@ -96,6 +107,7 @@ agent = ConversationAgent(
 ```
 
 ### Context Injection
+
 ```python
 # Add context to conversations
 agent.add_context({
@@ -105,6 +117,7 @@ agent.add_context({
 ```
 
 ### Stream Responses
+
 ```python
 # Stream responses for real-time interaction
 async for chunk in agent.stream_chat("Tell me a story"):
@@ -114,7 +127,9 @@ async for chunk in agent.stream_chat("Tell me a story"):
 ## Configuration Options
 
 ### Base Configuration
+
 All conversational agents support:
+
 - `name`: Agent identifier
 - `model`: LLM model to use
 - `temperature`: Response randomness (0-1)
@@ -122,6 +137,7 @@ All conversational agents support:
 - `system_prompt`: Base instructions
 
 ### Advanced Configuration
+
 - `memory_type`: ["buffer", "summary", "vector", "none"]
 - `context_window`: Maximum context size
 - `response_format`: ["text", "json", "markdown"]
@@ -147,6 +163,7 @@ All conversational agents support:
 ## Integration Examples
 
 ### With Tools
+
 ```python
 from haive.tools import WebSearchTool
 
@@ -157,6 +174,7 @@ agent = ConversationAgent(
 ```
 
 ### With Streaming
+
 ```python
 async def handle_stream():
     async for chunk in agent.stream_chat(query):
@@ -164,6 +182,7 @@ async def handle_stream():
 ```
 
 ### With Persistence
+
 ```python
 # Save conversation state
 state = agent.save_state()
@@ -174,6 +193,7 @@ agent.load_state(saved_state)
 ```
 
 ## See Also
+
 - [CLAUDE_AGENTS.md](./CLAUDE_AGENTS.md) - Main agents documentation
 - [CLAUDE_AGENTS_TASK.md](./CLAUDE_AGENTS_TASK.md) - Task-oriented agents
 - [CLAUDE_AGENT_TEMPLATE.md](./CLAUDE_AGENT_TEMPLATE.md) - Agent development template

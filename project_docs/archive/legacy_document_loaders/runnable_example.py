@@ -6,13 +6,12 @@ way that doesn't require the full Haive framework.
 """
 
 import datetime
-from enum import Enum
 import logging
 import os
 import tempfile
-from typing import Any
 import uuid
-
+from enum import Enum
+from typing import Any
 
 # Set up logging
 logging.basicConfig(
@@ -96,8 +95,8 @@ class LoadingOptions:
         strategy: LoadingStrategy = LoadingStrategy.AUTO,
         max_size_bytes: int | None = None,
         recursive_depth: int = 3,
-        exclude_patterns: list[str] = None,
-        include_patterns: list[str] = None,
+        exclude_patterns: list[str] | None = None,
+        include_patterns: list[str] | None = None,
         max_files: int | None = None,
         force_reload: bool = False,
         timeout_seconds: int = 60,
@@ -121,7 +120,7 @@ class ChunkingOptions:
         chunk_size: int = 1000,
         chunk_overlap: int = 200,
         keep_separator: bool = True,
-        custom_separators: list[str] = None,
+        custom_separators: list[str] | None = None,
         metadata_scope: str = "all",
     ):
         self.strategy = strategy
@@ -137,16 +136,16 @@ class DocumentSourceMetadata:
 
     def __init__(
         self,
-        created_at: datetime.datetime = None,
-        updated_at: datetime.datetime = None,
+        created_at: datetime.datetime | None = None,
+        updated_at: datetime.datetime | None = None,
         size_bytes: int | None = None,
         mime_type: str | None = None,
         encoding: str | None = None,
         author: str | None = None,
         title: str | None = None,
         description: str | None = None,
-        tags: list[str] = None,
-        custom: dict[str, Any] = None,
+        tags: list[str] | None = None,
+        custom: dict[str, Any] | None = None,
     ):
         self.created_at = created_at or datetime.datetime.now()
         self.updated_at = updated_at or datetime.datetime.now()
@@ -172,7 +171,7 @@ class ProcessingStatistics:
 
     def __init__(
         self,
-        start_time: datetime.datetime = None,
+        start_time: datetime.datetime | None = None,
         end_time: datetime.datetime | None = None,
         total_sources: int = 0,
         processed_sources: int = 0,
@@ -251,7 +250,7 @@ class DocumentChunk:
         content: str,
         document_id: str,
         chunk_index: int,
-        metadata: dict[str, Any] = None,
+        metadata: dict[str, Any] | None = None,
         embedding: list[float] | None = None,
     ):
         self.content = content
@@ -271,11 +270,11 @@ class Document:
         source_path: str,
         source_type: DocumentSourceType = DocumentSourceType.UNKNOWN,
         format: DocumentFormat = DocumentFormat.UNKNOWN,
-        metadata: dict[str, Any] = None,
-        chunks: list[DocumentChunk] = None,
+        metadata: dict[str, Any] | None = None,
+        chunks: list[DocumentChunk] | None = None,
         embedding: list[float] | None = None,
-        created_at: datetime.datetime = None,
-        updated_at: datetime.datetime = None,
+        created_at: datetime.datetime | None = None,
+        updated_at: datetime.datetime | None = None,
     ):
         self.document_id = document_id
         self.content = content
@@ -316,17 +315,17 @@ class DocumentState:
 
     def __init__(
         self,
-        sources: list[DocumentSource] = None,
-        documents: list[Document] = None,
-        credentials: dict[str, Any] = None,
+        sources: list[DocumentSource] | None = None,
+        documents: list[Document] | None = None,
+        credentials: dict[str, Any] | None = None,
         loading_options: LoadingOptions | None = None,
         chunking_options: ChunkingOptions | None = None,
         processing_stats: ProcessingStatistics | None = None,
         current_query: str | None = None,
-        messages: list[dict[str, Any]] = None,
+        messages: list[dict[str, Any]] | None = None,
         parallel_processing: bool = True,
         max_workers: int = 4,
-        error_messages: list[str] = None,
+        error_messages: list[str] | None = None,
     ):
         self.sources = sources or []
         self.documents = documents or []
@@ -392,9 +391,7 @@ class DocumentState:
         """Get all documents from a specific source."""
         return [doc for doc in self.documents if doc.source_path == source_path]
 
-    def get_documents_by_format(
-        self, format: DocumentFormat | str
-    ) -> list[Document]:
+    def get_documents_by_format(self, format: DocumentFormat | str) -> list[Document]:
         """Get all documents of a specific format."""
         if isinstance(format, str):
             format = DocumentFormat(format)
@@ -812,7 +809,7 @@ class MockLoader:
                         )
                     ]
                 except Exception as e:
-                    logger.error(f"Error reading file {self.path}: {e!s}")
+                    logger.exception(f"Error reading file {self.path}: {e!s}")
                     return [
                         MockDocument(
                             page_content=f"Error reading file: {e!s}",
@@ -931,10 +928,7 @@ class DocumentAgent:
 
         # Skip chunking if no documents need chunking
         chunking_sources = self.state.get_sources_by_stage(ProcessingStage.CHUNKING)
-        if not chunking_sources:
-            return False
-
-        return True
+        return chunking_sources
 
     def _analyze_sources(self) -> None:
         """Analyze document sources and prepare them for loading."""
@@ -973,7 +967,7 @@ class DocumentAgent:
                     error_msg = f"Error analyzing source: {e!s}"
                     source.update_stage(ProcessingStage.FAILED, error_msg)
                     self.state.error_messages.append(error_msg)
-                    logger.error(f"Error analyzing source {source.path}: {e!s}")
+                    logger.exception(f"Error analyzing source {source.path}: {e!s}")
                     if not self.options.skip_errors:
                         raise
 
@@ -1006,7 +1000,7 @@ class DocumentAgent:
                 raw_docs = loader.load()
 
                 # Convert to Document objects
-                for i, raw_doc in enumerate(raw_docs):
+                for _i, raw_doc in enumerate(raw_docs):
                     doc_id = f"{uuid.uuid4()}"
                     content = raw_doc.page_content
 
@@ -1035,7 +1029,7 @@ class DocumentAgent:
                 error = f"Error loading source: {e!s}"
                 source.update_stage(ProcessingStage.FAILED, error)
                 self.state.error_messages.append(error)
-                logger.error(f"Error loading {source.path}: {e!s}")
+                logger.exception(f"Error loading {source.path}: {e!s}")
                 if not self.options.skip_errors:
                     raise
 
@@ -1093,7 +1087,7 @@ class DocumentAgent:
                 error_msg = f"Error chunking documents: {e!s}"
                 source.update_stage(ProcessingStage.FAILED, error_msg)
                 self.state.error_messages.append(error_msg)
-                logger.error(f"Error chunking documents from {source.path}: {e!s}")
+                logger.exception(f"Error chunking documents from {source.path}: {e!s}")
                 if not self.options.skip_errors:
                     raise
 
@@ -1242,14 +1236,14 @@ This is a sample markdown document for testing the DocumentAgent.
 <body>
     <h1>Sample HTML Document</h1>
     <p>This is a sample HTML document for testing the DocumentAgent.</p>
-    
+
     <h2>Features</h2>
     <ul>
         <li>HTML to text transformation</li>
         <li>HTML header-based chunking</li>
         <li>Metadata extraction</li>
     </ul>
-    
+
     <h2>Benefits</h2>
     <ol>
         <li>Automatic HTML parsing</li>
@@ -1389,7 +1383,7 @@ def example_html_transformation():
     file_paths = create_sample_files()
 
     # Get only the HTML file
-    html_file = [f for f in file_paths if f.endswith(".html")][0]
+    html_file = next(f for f in file_paths if f.endswith(".html"))
 
     # Create a document agent specifically for HTML processing
     options = DocumentAgentOptions(

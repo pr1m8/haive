@@ -1,10 +1,10 @@
 import importlib
 import inspect
-from typing import Dict, Type, Any, List, Optional
+from typing import Any, Dict, Optional, Type
 
-def get_retrievers(module_name: str, serialize: bool = True) -> Dict[str, Any]:
-    """
-    Dynamically loads retrievers, handles dynamic imports, and extracts metadata.
+
+def get_retrievers(module_name: str, serialize: bool = True) -> dict[str, Any]:
+    """Dynamically loads retrievers, handles dynamic imports, and extracts metadata.
 
     Args:
         module_name (str): The module to inspect (e.g., "langchain.retrievers").
@@ -36,17 +36,23 @@ def get_retrievers(module_name: str, serialize: bool = True) -> Dict[str, Any]:
 
             if retriever_class:
                 # Extract core details
-                class_docstring = inspect.getdoc(retriever_class) or "No class docstring available."
+                class_docstring = (
+                    inspect.getdoc(retriever_class) or "No class docstring available."
+                )
                 init_args, init_docstring = extract_init_info(retriever_class)
                 properties = extract_class_properties(retriever_class)
                 methods = extract_methods(retriever_class)
 
                 # Extract base classes but remove `BaseRetriever`
                 base_classes = [
-                    base.__name__ for base in retriever_class.__bases__ if base.__name__ != base_retriever_name
+                    base.__name__
+                    for base in retriever_class.__bases__
+                    if base.__name__ != base_retriever_name
                 ]
                 additional_wrappers = [
-                    base.__name__ for base in retriever_class.__bases__ if base.__name__ not in [base_retriever_name]
+                    base.__name__
+                    for base in retriever_class.__bases__
+                    if base.__name__ not in [base_retriever_name]
                 ]
 
                 # Detect API key requirement
@@ -56,64 +62,95 @@ def get_retrievers(module_name: str, serialize: bool = True) -> Dict[str, Any]:
                 wrapper_details = extract_wrapper_details(retriever_class)
 
                 # Check for validate_environment and ImportError
-                validate_environment, import_error = extract_validate_environment(retriever_class)
+                validate_environment, import_error = extract_validate_environment(
+                    retriever_class
+                )
 
                 retrievers[name] = {
                     "class": retriever_class.__name__ if serialize else retriever_class,
                     "import_path": f"{retriever_module_name}.{name}",
                     "class_docstring": class_docstring,
-                    "init_args": {k: str(v) for k, v in init_args.items()} if serialize else init_args,
+                    "init_args": (
+                        {k: str(v) for k, v in init_args.items()}
+                        if serialize
+                        else init_args
+                    ),
                     "init_docstring": init_docstring,
-                    "properties": {
-                        k: {"type": str(v["type"]), "default": str(v["default"])}
-                        for k, v in properties.items()
-                    } if serialize else properties,
-                    "methods": {
-                        method: {
-                            "parameters": {k: str(v) for k, v in meta["parameters"].items()},
-                            "return_type": str(meta["return_type"])
+                    "properties": (
+                        {
+                            k: {"type": str(v["type"]), "default": str(v["default"])}
+                            for k, v in properties.items()
                         }
-                        for method, meta in methods.items()
-                    } if serialize else methods,
+                        if serialize
+                        else properties
+                    ),
+                    "methods": (
+                        {
+                            method: {
+                                "parameters": {
+                                    k: str(v) for k, v in meta["parameters"].items()
+                                },
+                                "return_type": str(meta["return_type"]),
+                            }
+                            for method, meta in methods.items()
+                        }
+                        if serialize
+                        else methods
+                    ),
                     "base_classes": base_classes,  # ✅ No `BaseRetriever`
                     "additional_wrappers": additional_wrappers,
                     "requires_api_key": requires_api_key,
-                    "wrapper_details": wrapper_details if not serialize else {
-                        wrapper: {
-                            "docstring": meta["docstring"],
-                            "init_args": {k: str(v) for k, v in meta["init_args"].items()},
-                            "properties": {
-                                k: {"type": str(v["type"]), "default": str(v["default"])}
-                                for k, v in meta["properties"].items()
-                            },
-                              "methods": {
-                                  method: {
-                                      "parameters": {k: str(v) for k, v in meta["methods"][method]["parameters"].items()},
-                                      "return_type": str(meta["methods"][method]["return_type"])
-                                  }
-                                  
-                                for method in meta["methods"] 
-                              }
+                    "wrapper_details": (
+                        wrapper_details
+                        if not serialize
+                        else {
+                            wrapper: {
+                                "docstring": meta["docstring"],
+                                "init_args": {
+                                    k: str(v) for k, v in meta["init_args"].items()
+                                },
+                                "properties": {
+                                    k: {
+                                        "type": str(v["type"]),
+                                        "default": str(v["default"]),
+                                    }
+                                    for k, v in meta["properties"].items()
+                                },
+                                "methods": {
+                                    method: {
+                                        "parameters": {
+                                            k: str(v)
+                                            for k, v in meta["methods"][method][
+                                                "parameters"
+                                            ].items()
+                                        },
+                                        "return_type": str(
+                                            meta["methods"][method]["return_type"]
+                                        ),
+                                    }
+                                    for method in meta["methods"]
+                                },
+                            }
+                            for wrapper, meta in wrapper_details.items()
                         }
-                        for wrapper, meta in wrapper_details.items()
-                    },
+                    ),
                     "validate_environment": validate_environment,
-                    "import_error": import_error
+                    "import_error": import_error,
                 }
         except ImportError as e:
-            print(f"⚠ {name} requires missing dependencies. Error: {e}")
+            pass")
         except AttributeError as e:
-            print(f"⚠ {name} not found in {retriever_module_name}. Error: {e}")
+            pass")
 
     return {
         "module": module_name,
         "base_class": base_retriever_name,  # ✅ Stored at the top level only once
-        "retrievers": retrievers
+        "retrievers": retrievers,
     }
 
-def extract_methods(cls: Type) -> Dict[str, Dict[str, Any]]:
-    """
-    Extracts all methods of a class, including method signatures and return types.
+
+def extract_methods(cls: type) -> dict[str, dict[str, Any]]:
+    """Extracts all methods of a class, including method signatures and return types.
 
     Returns:
         Dict[str, Dict[str, Any]]: A dictionary where:
@@ -133,14 +170,20 @@ def extract_methods(cls: Type) -> Dict[str, Dict[str, Any]]:
 
         # Extract parameter types
         parameters = {
-            param.name: str(param.annotation) if param.annotation != inspect.Parameter.empty else "Any"
+            param.name: (
+                str(param.annotation)
+                if param.annotation != inspect.Parameter.empty
+                else "Any"
+            )
             for param in signature.parameters.values()
-            if param.name != "self" and param.name != "cls"
+            if param.name not in {"self", "cls"}
         }
 
         # Extract return type
         return_type = (
-            str(signature.return_annotation) if signature.return_annotation != inspect.Signature.empty else "Unknown"
+            str(signature.return_annotation)
+            if signature.return_annotation != inspect.Signature.empty
+            else "Unknown"
         )
 
         # Determine if method is instance, class, or static
@@ -154,13 +197,16 @@ def extract_methods(cls: Type) -> Dict[str, Dict[str, Any]]:
         methods[name] = {
             "parameters": parameters,
             "return_type": return_type,
-            "method_type": method_type
+            "method_type": method_type,
         }
 
     return methods
 
+
 from typing import Tuple
-def extract_init_info(cls: Type) -> Tuple[Dict[str, Any], Optional[str]]:
+
+
+def extract_init_info(cls: type) -> tuple[dict[str, Any], str | None]:
     """Extracts __init__ method parameters and docstring, including inherited ones."""
     init_args = {}
     init_docstring = None
@@ -177,7 +223,9 @@ def extract_init_info(cls: Type) -> Tuple[Dict[str, Any], Optional[str]]:
             for param in init_signature.parameters.values():
                 if param.name != "self" and param.name not in init_args:
                     init_args[param.name] = (
-                        param.default if param.default is not inspect.Parameter.empty else "REQUIRED"
+                        param.default
+                        if param.default is not inspect.Parameter.empty
+                        else "REQUIRED"
                     )
 
             if not found_init and inspect.getdoc(init_method):
@@ -190,7 +238,7 @@ def extract_init_info(cls: Type) -> Tuple[Dict[str, Any], Optional[str]]:
     return init_args, init_docstring or "No __init__ docstring available."
 
 
-def extract_class_properties(cls: Type) -> Dict[str, Any]:
+def extract_class_properties(cls: type) -> dict[str, Any]:
     """Extracts explicitly defined class attributes."""
     properties = {}
 
@@ -204,7 +252,7 @@ def extract_class_properties(cls: Type) -> Dict[str, Any]:
     return properties
 
 
-def detect_api_key_requirement(cls: Type) -> bool:
+def detect_api_key_requirement(cls: type) -> bool:
     """Detects if a retriever requires an API key based on its base class docstrings."""
     for base in inspect.getmro(cls):
         if base is object:
@@ -220,7 +268,7 @@ def detect_api_key_requirement(cls: Type) -> bool:
     return False
 
 
-def extract_wrapper_details(cls: Type) -> Dict[str, Any]:
+def extract_wrapper_details(cls: type) -> dict[str, Any]:
     """Extracts __init__ arguments, properties, and docstrings from wrapper classes."""
     wrapper_details = {}
 
@@ -231,21 +279,21 @@ def extract_wrapper_details(cls: Type) -> Dict[str, Any]:
         wrapper_details[base.__name__] = {
             "docstring": inspect.getdoc(base) or "No wrapper docstring available.",
             "init_args": extract_init_info(base)[0],
-            "properties": extract_class_properties(base)
+            "properties": extract_class_properties(base),
         }
 
     return wrapper_details
 
 
-
-
-def extract_validate_environment(cls: Type) -> Tuple[bool, Optional[str]]:
+def extract_validate_environment(cls: type) -> tuple[bool, str | None]:
     """Checks if a class or any of its wrapper classes have `validate_environment` and detects ImportError."""
     for base in inspect.getmro(cls):
         if base is object:
             break
 
-        if hasattr(base, "validate_environment") and inspect.isfunction(base.validate_environment):
+        if hasattr(base, "validate_environment") and inspect.isfunction(
+            base.validate_environment
+        ):
             source = inspect.getsource(base.validate_environment)
             if "ImportError" in source:
                 return True, source
@@ -259,14 +307,3 @@ retrievers = get_retrievers("langchain_community.document_loaders")
 
 # Print dynamically found retrievers with inheritance details
 for name, meta in retrievers.items():
-    print(f"\n🔹 {name}")
-    print(f"📄 Class Docstring:\n{meta['class_docstring'][:300]}...")
-    print(f"🔧 Init Arguments: {meta['init_args']}")
-    print(f"📄 Init Docstring:\n{meta['init_docstring'][:300]}...")
-    print(f"🏷️ Properties: {meta['properties']}")
-    print(f"🔗 Base Classes: {meta['base_classes']}")
-    print(f"🧩 Additional Wrappers: {meta['additional_wrappers']}")
-    print(f"🔍 Wrapper Details: {meta['wrapper_details']}")
-    print(f"🔑 Requires API Key: {meta['requires_api_key']}")
-    print(f"🛠️ Has `validate_environment`: {meta['validate_environment']}")
-    print(f"⚠ ImportError in `validate_environment`: {meta['import_error']}")

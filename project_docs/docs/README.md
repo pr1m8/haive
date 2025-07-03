@@ -18,11 +18,13 @@ project_docs/docs/
 ## 🎯 Quick Start Guides
 
 ### For New Contributors
+
 1. **[Writing Guidelines](writing-guidelines/)** - Learn the Haive documentation style
 2. **[Content Types](content-types/)** - Understand what type of documentation to write
 3. **[Examples](examples/)** - See real examples and use templates
 
 ### For Maintainers
+
 1. **[Organization Standards](organization-standards/)** - Structure and hierarchy rules
 2. **[Tools and Automation](tools-and-automation/)** - Sphinx, extensions, and automation
 3. **[Quality Assurance](quality-assurance/)** - Review processes and standards
@@ -30,17 +32,20 @@ project_docs/docs/
 ## 📚 Documentation Hierarchy
 
 ### 1. **User-Facing Documentation** (`/docs/source/`)
+
 - **API References** - Auto-generated from docstrings
 - **User Guides** - How to use the framework
 - **Agent Showcase** - Live examples and demonstrations
 - **Getting Started** - Quick start and tutorials
 
 ### 2. **Developer Documentation** (`/project_docs/`)
+
 - **Technical Notes** - Implementation details
 - **Architecture Decisions** - Design rationale
 - **Development Guides** - How to contribute and develop
 
 ### 3. **Package Documentation** (`/packages/{name}/README.md`)
+
 - **Package-specific** - Individual package documentation
 - **API Examples** - Usage examples for each package
 - **Configuration** - Package-specific configuration
@@ -56,18 +61,21 @@ project_docs/docs/
 ## 📋 Quick Reference
 
 ### Writing Documentation
+
 - Use Google-style docstrings for all Python code
 - Write in clear, concise language
 - Include examples for all public APIs
 - Follow the established tone and style
 
 ### Organizing Content
+
 - Group related content together
 - Use consistent naming conventions
 - Maintain clear hierarchy and navigation
 - Cross-reference related sections
 
 ### Quality Standards
+
 - All documentation must be reviewed
 - Examples must be tested and working
 - Links must be verified

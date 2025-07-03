@@ -31,21 +31,25 @@ The configurable games system provides a unified framework for managing game con
 ## Configuration Modes
 
 ### 1. Legacy Mode
+
 - Uses existing hardcoded engines from `engines.py`
 - Backward compatibility for existing code
 - Activated with `use_legacy_engines=True`
 
 ### 2. Simple Mode (Default)
+
 - Specify models as strings
 - Game-specific fields (e.g., `white_model`, `black_model`)
 - Automatic engine creation
 
 ### 3. Example Mode
+
 - Predefined configurations (e.g., "budget", "gpt_vs_claude")
 - Easy switching between common setups
 - Activated with `example_config="name"`
 
 ### 4. Advanced Mode
+
 - Full PlayerAgentConfig specifications
 - Custom prompts and parameters
 - Maximum flexibility
@@ -104,6 +108,7 @@ The system integrates with haive-dataflow's GameAPI:
 ## Usage Examples
 
 ### Simple Configuration
+
 ```python
 config = ChessAgentConfig(
     white_model="gpt-4",
@@ -112,6 +117,7 @@ config = ChessAgentConfig(
 ```
 
 ### Example Configuration
+
 ```python
 config = ChessAgentConfig(
     example_config="budget",
@@ -120,6 +126,7 @@ config = ChessAgentConfig(
 ```
 
 ### Advanced Configuration
+
 ```python
 player_configs = {
     "white_player": PlayerAgentConfig(
@@ -135,16 +142,19 @@ config = ChessAgentConfig(player_configs=player_configs)
 ## Games Status
 
 ### Fully Implemented
+
 - Chess - white/black players
 - Connect4 - red/yellow players
 - Tic-Tac-Toe - X/O players
 
 ### Generic Engines Only
+
 - Battleship, Clue, Debate, Dominoes, Fox and Geese
 - Mafia, Mancala, Mastermind, Nim, Poker
 - Reversi, Risk
 
 ### Not Implemented
+
 - Go (package conflict)
 - Among Us (incomplete)
 - Hold'em (covered by Poker)
@@ -153,10 +163,12 @@ config = ChessAgentConfig(player_configs=player_configs)
 ## Testing
 
 Comprehensive tests in:
+
 - `/haive/games/tests/test_games_functionality.py`
 - `/haive/games/tests/test_all_games_end_to_end.py`
 
 Tests verify:
+
 - Import functionality
 - Configuration creation
 - Engine instantiation

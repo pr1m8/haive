@@ -1,4 +1,4 @@
-"""Document Loader Engine System
+"""Document Loader Engine System.
 
 This package provides a comprehensive document loader engine system for Haive.
 It integrates with the engine framework to provide a unified interface for
@@ -96,53 +96,52 @@ from .source_loader_mapping import (
 )
 from .source_registry import SourceTypeRegistry, auto_source, registry
 
-
 # Export components
 __all__ = [
-    # Engine components
-    "EngineType",
+    # Source components
+    "BaseSource",
+    "CloudProvider",
+    "CloudSource",
+    "DatabaseSource",
+    "DatabaseType",
     "DocumentLoaderConfig",
+    "DocumentLoaderEngine",
     "DocumentLoaderInput",
     "DocumentLoaderOutput",
     "DocumentMetadata",
-    "DocumentLoaderEngine",
-    # Source components
-    "BaseSource",
-    "LocalSource",
-    "RemoteSource",
-    "DatabaseSource",
-    "CloudSource",
-    "SourcePattern",
-    "SourceMetadata",
-    "SourceTypeRegistry",
-    "registry",
-    "auto_source",
+    # Engine components
+    "EngineType",
+    "FileCategory",
+    "LoaderCapability",
     # Loader components
     "LoaderPriority",
-    "LoaderCapability",
-    "LoaderStrategy",
     "LoaderRegistry",
-    "loader_registry",
+    "LoaderStrategy",
+    "LocalSource",
+    "PathAnalysisResult",
     # Path analysis
     "PathType",
-    "FileCategory",
-    "DatabaseType",
-    "CloudProvider",
-    "PathAnalysisResult",
-    "analyze_source",
+    "RemoteSource",
+    "SourceMetadata",
+    "SourcePattern",
+    "SourceTypeRegistry",
     "analyze_and_resolve_source",
+    "analyze_source",
+    "auto_source",
+    "create_cloud_loader_engine",
+    "create_database_loader_engine",
+    "create_directory_loader_engine",
     # Factory methods
     "create_document_loader_engine",
     "create_file_loader_engine",
     "create_web_loader_engine",
-    "create_directory_loader_engine",
-    "create_database_loader_engine",
-    "create_cloud_loader_engine",
-    # Source-to-loader mapping
-    "initialize_registries",
+    "get_best_loader_for_path",
     "get_loader_for_source",
     "get_loaders_for_file_extension",
-    "get_best_loader_for_path",
+    # Source-to-loader mapping
+    "initialize_registries",
+    "loader_registry",
+    "registry",
 ]
 
 # Initialize registries

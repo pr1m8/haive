@@ -11,6 +11,7 @@ The haive-agents package provides specialized agents for comprehensive document 
 **Purpose**: Implements the full document processing pipeline
 
 **Pipeline Stages**:
+
 1. **FETCH** - Retrieve documents from sources
 2. **LOAD** - Load documents into memory
 3. **TRANSFORM** - Normalize and transform documents
@@ -21,11 +22,13 @@ The haive-agents package provides specialized agents for comprehensive document 
 8. **RETRIEVE** - Query stored documents
 
 **Key Classes**:
+
 - `DocumentProcessingResult`: Comprehensive result tracking
 - `DocumentProcessingState`: Pipeline state management
 - `DocumentAgent`: Main agent implementation
 
 **Features**:
+
 - Handles 97+ document types
 - Advanced chunking strategies
 - Metadata extraction
@@ -33,6 +36,7 @@ The haive-agents package provides specialized agents for comprehensive document 
 - Integration with vector stores
 
 **Configuration Options**:
+
 - Source types: Local files, URLs, databases, cloud storage
 - Processing strategies: Sequential, parallel, batch
 - Chunking strategies: Fixed, semantic, sliding window
@@ -45,6 +49,7 @@ The haive-agents package provides specialized agents for comprehensive document 
 **Class**: `DocumentLoaderAgent`
 
 **Capabilities**:
+
 - Local files and directories
 - Web pages and URLs
 - Databases (with credentials)
@@ -52,12 +57,14 @@ The haive-agents package provides specialized agents for comprehensive document 
 - API services
 
 **Key Features**:
+
 - Synchronous and asynchronous operation
 - Batch loading support
 - Format detection
 - Error handling and retry logic
 
 **Integration**:
+
 - Can be used standalone
 - Integrates into complex workflows
 - Supports the agent framework
@@ -67,6 +74,7 @@ The haive-agents package provides specialized agents for comprehensive document 
 **Purpose**: Evaluate document relevance and quality
 
 **Features**:
+
 - Binary relevance grading (yes/no)
 - Comprehensive quality assessment
 - Integration with RAG pipelines
@@ -77,6 +85,7 @@ The haive-agents package provides specialized agents for comprehensive document 
 ### Document Engine Integration
 
 The agents leverage `haive.core.engine.document`:
+
 - `DocumentEngine`: Core processing engine
 - `DocumentEngineConfig`: Configuration management
 - Processing strategies and formats
@@ -84,6 +93,7 @@ The agents leverage `haive.core.engine.document`:
 ### Supported Document Types
 
 Through the Document Engine, agents support:
+
 - **Text**: TXT, MD, RST, LOG
 - **Office**: DOCX, XLSX, PPTX, ODT
 - **PDF**: Standard, scanned (with OCR)
@@ -168,6 +178,7 @@ response = rag_agent.invoke({"query": "What is the main topic?"})
 ### DocumentProcessingState
 
 Tracks the entire pipeline state:
+
 - Source tracking
 - Processing status
 - Error handling
@@ -177,6 +188,7 @@ Tracks the entire pipeline state:
 ### ProcessedDocument Model
 
 Standardized output format:
+
 - Document ID
 - Content
 - Metadata
@@ -187,21 +199,25 @@ Standardized output format:
 ## Advanced Features
 
 ### 1. Parallel Processing
+
 - Concurrent document loading
 - Batch embedding generation
 - Distributed processing support
 
 ### 2. Error Handling
+
 - Retry logic for failed documents
 - Partial success handling
 - Detailed error reporting
 
 ### 3. Metadata Extraction
+
 - Automatic metadata detection
 - Custom metadata extractors
 - Structured data parsing
 
 ### 4. Vector Store Integration
+
 - Direct integration with popular vector databases
 - Automatic indexing
 - Query optimization
@@ -209,6 +225,7 @@ Standardized output format:
 ## Testing and Validation
 
 Test files location:
+
 - `/tests/document/test_document_agent.py`
 - `/tests/unit/test_document_loader_agent.py`
 - `/tests/fixtures/documents.py`

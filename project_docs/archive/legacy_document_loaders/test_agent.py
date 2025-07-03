@@ -4,9 +4,9 @@ This module provides tests for the DocumentLoaderAgent and its specialized varia
 demonstrating how to use them in different scenarios.
 """
 
-from pathlib import Path
 import tempfile
 import unittest
+from pathlib import Path
 from unittest import mock
 
 # Import document loader agent
@@ -22,7 +22,6 @@ from engine import DocumentLoaderEngine
 
 # Import configuration models
 from engine_config import DocumentLoaderOutput
-
 from haive.core.engine.base import EngineType
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
@@ -60,13 +59,13 @@ class DocumentLoaderAgentTest(unittest.TestCase):
         agent = DocumentLoaderAgent()
 
         # Check basic properties
-        self.assertEqual(agent.name, "Document Loader Agent")
-        self.assertEqual(agent.engine_type, EngineType.AGENT)
-        self.assertIsInstance(agent.engine, DocumentLoaderEngine)
+        assert agent.name == "Document Loader Agent"
+        assert agent.engine_type == EngineType.AGENT
+        assert isinstance(agent.engine, DocumentLoaderEngine)
 
         # Check engine is registered
-        self.assertIn("document_loader", agent.engines)
-        self.assertEqual(agent.engines["document_loader"], agent.engine)
+        assert "document_loader" in agent.engines
+        assert agent.engines["document_loader"] == agent.engine
 
     def test_graph_building(self):
         """Test that the agent builds a proper graph."""
@@ -76,14 +75,14 @@ class DocumentLoaderAgentTest(unittest.TestCase):
         graph = agent.build_graph()
 
         # Check graph structure
-        self.assertIsInstance(graph, BaseGraph)
-        self.assertEqual(graph.name, "DocumentLoaderGraph")
+        assert isinstance(graph, BaseGraph)
+        assert graph.name == "DocumentLoaderGraph"
 
         # Check nodes
-        self.assertIn("document_loader", graph.nodes)
+        assert "document_loader" in graph.nodes
 
         # Check edges
-        self.assertEqual(len(graph.edges), 2)  # START->loader, loader->END
+        assert len(graph.edges) == 2  # START->loader, loader->END
 
     def test_file_loader_agent(self):
         """Test specialized file loader agent."""
@@ -91,11 +90,11 @@ class DocumentLoaderAgentTest(unittest.TestCase):
         agent = FileLoaderAgent(file_path=self.text_file, include_metadata=True)
 
         # Check agent configuration
-        self.assertEqual(agent.name, "File Loader Agent")
-        self.assertEqual(agent.file_path, self.text_file)
+        assert agent.name == "File Loader Agent"
+        assert agent.file_path == self.text_file
 
         # Check engine registration
-        self.assertIn("file_loader", agent.engines)
+        assert "file_loader" in agent.engines
 
     def test_web_loader_agent(self):
         """Test specialized web loader agent."""
@@ -107,12 +106,12 @@ class DocumentLoaderAgentTest(unittest.TestCase):
         )
 
         # Check agent configuration
-        self.assertEqual(agent.name, "Web Loader Agent")
-        self.assertEqual(agent.url, "https://example.com")
-        self.assertTrue(agent.dynamic_loading)
+        assert agent.name == "Web Loader Agent"
+        assert agent.url == "https://example.com"
+        assert agent.dynamic_loading
 
         # Check engine registration
-        self.assertIn("web_loader", agent.engines)
+        assert "web_loader" in agent.engines
 
     def test_directory_loader_agent(self):
         """Test specialized directory loader agent."""
@@ -124,13 +123,13 @@ class DocumentLoaderAgentTest(unittest.TestCase):
         )
 
         # Check agent configuration
-        self.assertEqual(agent.name, "Directory Loader Agent")
-        self.assertEqual(agent.directory_path, self.test_dir)
-        self.assertTrue(agent.recursive)
-        self.assertEqual(agent.include_extensions, [".txt", ".md"])
+        assert agent.name == "Directory Loader Agent"
+        assert agent.directory_path == self.test_dir
+        assert agent.recursive
+        assert agent.include_extensions == [".txt", ".md"]
 
         # Check engine registration
-        self.assertIn("directory_loader", agent.engines)
+        assert "directory_loader" in agent.engines
 
     def test_agent_invocation(self):
         """Test agent invocation with mocked engine."""
@@ -174,9 +173,9 @@ class DocumentLoaderAgentTest(unittest.TestCase):
             result = agent.invoke("test.txt")
 
             # Check result
-            self.assertIn("documents", result)
-            self.assertEqual(result["total_documents"], 1)
-            self.assertEqual(result["source_type"], "file")
+            assert "documents" in result
+            assert result["total_documents"] == 1
+            assert result["source_type"] == "file"
 
     def test_process_output(self):
         """Test the process_output method with different configurations."""
@@ -197,23 +196,23 @@ class DocumentLoaderAgentTest(unittest.TestCase):
 
         # Test with default settings (include content and metadata)
         result = agent.process_output(output)
-        self.assertIn("documents", result)
-        self.assertEqual(len(result["documents"]), 2)
-        self.assertIn("metadata", result["documents"][0])
+        assert "documents" in result
+        assert len(result["documents"]) == 2
+        assert "metadata" in result["documents"][0]
 
         # Test with include_content=False
         agent.include_content = False
         result = agent.process_output(output)
-        self.assertNotIn("documents", result)
-        self.assertEqual(result["document_count"], 2)
+        assert "documents" not in result
+        assert result["document_count"] == 2
 
         # Test with include_metadata=False
         agent.include_content = True
         agent.include_metadata = False
         result = agent.process_output(output)
-        self.assertIn("documents", result)
-        self.assertNotIn("metadata", result["documents"][0])
-        self.assertEqual(result["documents"][0]["page_content"], "Test content 1")
+        assert "documents" in result
+        assert "metadata" not in result["documents"][0]
+        assert result["documents"][0]["page_content"] == "Test content 1"
 
 
 if __name__ == "__main__":

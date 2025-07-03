@@ -81,10 +81,6 @@ extensions = [
 
 # Try to load custom extension if it exists
 # Temporarily disabled for faster builds
-# try:
-#     import haive_sphinx_ext  # noqa: F401
-#     extensions.append("haive_sphinx_ext")
-# except ImportError:
 #     pass
 
 # ==============================================================================
@@ -130,11 +126,8 @@ html_css_files = ["modern.css", "sidebar-fix.css"]
 html_js_files = ["modern.js", "sidebar-fix.js"]
 
 # Disable showcase files - they override all pages
-# static_dir = conf_dir / "_static"
 # if (static_dir / "showcase.css").exists():
-#     html_css_files.append("showcase.css")
 # if (static_dir / "showcase.js").exists():
-#     html_js_files.append("showcase.js")
 
 # Modern theme options
 html_theme_options = {
@@ -323,12 +316,14 @@ latex_documents = [
 # Custom Event Handlers
 # ==============================================================================
 
+
 def skip_submodules(app, what, name, obj, skip, options):  # noqa: PLR0913
     """Skip submodules to avoid duplication in autosummary."""
     if what == "module" and "." in name:
         # Skip submodules in autosummary
         return True
     return skip
+
 
 def setup(app):
     """Setup function for custom modifications."""
@@ -343,7 +338,8 @@ def setup(app):
     # Create minimal custom files if they don't exist
     modern_css = static_dir / "modern.css"
     if not modern_css.exists():
-        modern_css.write_text("""
+        modern_css.write_text(
+            """
 /* Modern Haive Documentation Styles */
 :root {
     --font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -399,11 +395,13 @@ code, pre {
     margin-bottom: 0.5rem;
     font-weight: 600;
 }
-""")
+"""
+        )
 
     modern_js = static_dir / "modern.js"
     if not modern_js.exists():
-        modern_js.write_text("""
+        modern_js.write_text(
+            """
 // Modern Haive Documentation JavaScript
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🤖 Haive Documentation loaded');
@@ -457,7 +455,8 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(section);
     });
 });
-""")
+"""
+        )
 
     # Connect event handlers
     app.connect("autodoc-skip-member", skip_submodules)

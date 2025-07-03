@@ -5,17 +5,19 @@
 ### What We Have Now
 
 #### BaseGraph (haive-core)
+
 - **Purpose**: Workflow template/definition
 - **Structure**: Pydantic model with nodes, edges, branches
 - **Key Feature**: `to_langgraph()` method converts to executable LangGraph
 - **Status**: ✅ Already well-designed and Pydantic-first
 
-#### Agent (haive-agents) 
+#### Agent (haive-agents)
+
 - **Purpose**: Everything! (This is the problem)
 - **Structure**: Massive Pydantic model inheriting from 5+ mixins
-- **Responsibilities**: 
+- **Responsibilities**:
   - Workflow execution
-  - Engine management  
+  - Engine management
   - Schema generation/inference
   - Persistence management
   - State management
@@ -24,6 +26,7 @@
   - Debugging/visualization
 
 #### NodeConfig (haive-core)
+
 - **Purpose**: Node specification with multiple resolution strategies
 - **Complexity**: Can reference engines by direct object, name, or callable
 - **Schema Integration**: Has own input/output schemas + field mappings
@@ -41,15 +44,18 @@
 ### Key Distinctions We Need
 
 #### Workflow vs Agent vs Engine
+
 - **Workflow (BaseGraph)**: "WHAT to do" - pure orchestration template
 - **Engine**: "HOW to do it" - execution units (LLM, processor, retriever, etc.)
 - **Agent**: "Workflow + Engines + Context" - executable instance
 
 #### Template vs Runtime
+
 - **Template**: Serializable, engine-agnostic workflow definition
 - **Runtime**: Bound workflow with actual engine instances
 
 #### Multi-Agent Clarification
+
 - **Multi-Agent ≠ Special inheritance**
 - **Multi-Agent = Agents as engines in a coordination workflow**
 
@@ -65,17 +71,19 @@
 ### Proposed Structure
 
 #### 1. Workflow Layer (BaseGraph - Keep as-is)
+
 ```python
 class BaseGraph(BaseModel):
     """Pure workflow template - already good!"""
     nodes: Dict[str, NodeConfig]
-    edges: List[Edge] 
+    edges: List[Edge]
     branches: Dict[str, Branch]
-    
+
     def to_langgraph(self, **schemas) -> StateGraph
 ```
 
 #### 2. Engine Layer (Improve typing)
+
 ```python
 class Engine(BaseModel):
     name: str
@@ -95,24 +103,26 @@ class AgentEngine(Engine):
 ```
 
 #### 3. Agent Layer (Minimal core)
+
 ```python
 class Agent(BaseModel):
     """Minimal agent = workflow + engines + context"""
     workflow: BaseGraph
     engines: Dict[str, Engine]
     context: AgentContext = Field(default_factory=AgentContext)
-    
+
     @computed_field
     @property
     def agent_type(self) -> AgentType:
         """Auto-detect from engines"""
         # LLM, RAG, PROCESSOR, MULTI_AGENT based on engine types
-    
+
     def invoke(self, input_data: Any) -> Any:
         """Clean execution path"""
 ```
 
 #### 4. Context Layer (Extract current bloat)
+
 ```python
 class AgentContext(BaseModel):
     """All the complex setup stuff currently in Agent"""
@@ -120,11 +130,11 @@ class AgentContext(BaseModel):
     state_schema: Optional[Type[BaseModel]] = None
     input_schema: Optional[Type[BaseModel]] = None
     output_schema: Optional[Type[BaseModel]] = None
-    
+
     # Persistence
     persistence_config: Optional[PersistenceConfig] = None
     checkpointer: Any = Field(exclude=True)
-    
+
     # Runtime
     verbose: bool = False
     debug: bool = False
@@ -134,6 +144,7 @@ class AgentContext(BaseModel):
 ### Node-Engine Relationship Options
 
 #### Option A: Simple Reference (Recommended)
+
 ```python
 class TemplateNodeConfig(BaseModel):
     """For workflow templates"""
@@ -146,6 +157,7 @@ class TemplateNodeConfig(BaseModel):
 ```
 
 #### Option B: Keep Current Complexity
+
 ```python
 class NodeConfig(BaseModel):
     """Current rich config with multiple resolution strategies"""
@@ -156,6 +168,7 @@ class NodeConfig(BaseModel):
 ```
 
 #### Option C: Template/Runtime Split
+
 ```python
 class WorkflowTemplate(BaseModel):
     """Pure template"""
@@ -169,21 +182,25 @@ class RuntimeWorkflow(BaseModel):
 ## Migration Strategy
 
 ### Phase 1: Foundation
+
 1. **Improve Engine typing** with `LLMEngine`, `ProcessorEngine`, etc.
 2. **Create AgentContext** to extract current Agent bloat
 3. **Keep current Agent as LegacyAgent** for compatibility
 
 ### Phase 2: New Agent
+
 1. **Create minimal Agent** = workflow + engines + context
 2. **Create agent factories** for LLM, RAG, processor patterns
 3. **Test with existing workflows**
 
 ### Phase 3: Gradual Migration
+
 1. **Migrate SimpleAgent** to new architecture
-2. **Migrate ReactAgent** to new architecture  
+2. **Migrate ReactAgent** to new architecture
 3. **Migrate specialized agents** (RAG, document, etc.)
 
 ### Phase 4: Cleanup
+
 1. **Deprecate LegacyAgent**
 2. **Remove complex schema inference** (move to factories)
 3. **Simplify inheritance hierarchy**
@@ -223,22 +240,26 @@ class RuntimeWorkflow(BaseModel):
 ## Benefits of This Approach
 
 ### Clarity
+
 - **BaseGraph**: "I define workflow steps"
-- **Engine**: "I execute specific tasks"  
+- **Engine**: "I execute specific tasks"
 - **Agent**: "I combine workflow + engines"
 - **AgentContext**: "I handle complex setup"
 
 ### Reusability
+
 - Same workflow, different engines
-- Same engine, different workflows  
+- Same engine, different workflows
 - Clear composition patterns
 
 ### Maintainability
+
 - Focused responsibilities
 - Easier testing
 - Clear upgrade paths
 
 ### Performance
+
 - No unnecessary overhead for simple agents
 - Clear optimization boundaries
 - Reduced complexity

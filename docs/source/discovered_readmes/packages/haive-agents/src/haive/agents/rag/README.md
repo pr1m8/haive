@@ -9,24 +9,28 @@ RAG (Retrieval-Augmented Generation) combines information retrieval with languag
 ## Available RAG Strategies
 
 ### Core RAG Patterns
+
 - **Simple RAG** (`simple/`) - Basic retrieve-and-generate pattern
 - **Multi-Query RAG** (`multi_query/`) - Multiple query perspectives for comprehensive retrieval
 - **HyDE RAG** (`hyde/`) - Hypothetical document generation for enhanced retrieval
 - **Fusion RAG** (`fusion/`) - Multi-query retrieval with reciprocal rank fusion
 
 ### Advanced RAG Patterns
+
 - **FLARE RAG** (`flare/`) - Forward-looking active retrieval with iterative refinement
 - **Speculative RAG** (`speculative/`) - Hypothesis generation and verification
 - **Step-Back RAG** (`step_back/`) - Abstract reasoning before specific answers
 - **Memory-Aware RAG** (`memory_aware/`) - Conversation context integration
 
 ### Agentic RAG Systems
+
 - **Self-Route RAG** (`self_route/`) - Dynamic routing based on query analysis
 - **Adaptive RAG** (`adaptive_tools/`) - Tool integration for enhanced capabilities
 - **Agentic Router** (`agentic_router/`) - Intelligent strategy selection
 - **Query Planning** (`query_planning/`) - Complex query decomposition
 
 ### Extended RAG Systems
+
 - **Modular RAG** (`modular_chain.py`) - Configurable pipeline components
 - **Branched RAG** (`branched_chain.py`) - Multi-path retrieval strategies
 - **Enhanced Memory ReAct** (`enhanced_memory_react.py`) - Full ReAct pattern with memory
@@ -172,6 +176,7 @@ print(f'Created {agent.name} with {len(agent.nodes)} nodes')
 ## Examples
 
 See the `examples/` directory for detailed usage examples:
+
 - Basic RAG usage patterns
 - Advanced configuration options
 - Integration with other agents
@@ -191,6 +196,6 @@ When adding new RAG patterns:
 ## Related Modules
 
 - `haive.agents.chain` - ChainAgent framework
-- `haive.agents.multi` - Multi-agent orchestration  
+- `haive.agents.multi` - Multi-agent orchestration
 - `haive.core.engine` - Engine system for LLM integration
 - `haive.tools` - Tool integration for adaptive RAG

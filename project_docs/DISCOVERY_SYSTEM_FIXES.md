@@ -9,7 +9,8 @@ This document details the fixes implemented to resolve circular import issues an
 ### 1. Circular Import Between Registry and Discovery
 
 **Problem**: A circular import existed between:
-- `haive.core.registry.component_registry` 
+
+- `haive.core.registry.component_registry`
 - `haive.core.utils.haive_discovery`
 
 This prevented proper initialization of the discovery system when using the enhanced component registry.
@@ -34,8 +35,9 @@ def _get_unified_discovery():
 **Problem**: The API routes in haive-dataflow were reimplementing discovery logic instead of using the centralized discovery system from haive-core.
 
 **Solution**: Refactored all three API endpoints to use `HaiveComponentDiscovery`:
+
 - Agent Discovery Routes
-- Tool Discovery Routes  
+- Tool Discovery Routes
 - Game Discovery Router
 
 ## Files Modified/Created
@@ -83,6 +85,7 @@ def _get_unified_discovery():
 ### 1. Lazy Import Pattern
 
 The lazy import pattern was chosen because:
+
 - Breaks the circular dependency at runtime
 - Minimal performance impact (one-time cost)
 - Maintains clean module interfaces
@@ -91,6 +94,7 @@ The lazy import pattern was chosen because:
 ### 2. Unified Discovery Usage
 
 All APIs now use the centralized discovery system because:
+
 - Single source of truth for component discovery
 - Consistent behavior across all endpoints
 - Reduced code duplication
@@ -99,6 +103,7 @@ All APIs now use the centralized discovery system because:
 ### 3. Enhanced Documentation
 
 Google-style docstrings were added throughout because:
+
 - Improves code maintainability
 - Provides clear API documentation
 - Enables better IDE support
@@ -109,12 +114,14 @@ Google-style docstrings were added throughout because:
 ### Agent Discovery API
 
 **Endpoints**:
+
 - `GET /agents` - List all agents with filtering
 - `GET /agents/search` - Search agents by query
 - `GET /agents/{agent_name}` - Get agent details
 - `GET /agents/stats` - Get discovery statistics
 
 **Features**:
+
 - Discovers both v1 (config-based) and v2 (class-based) agents
 - Rich metadata extraction
 - Category-based organization
@@ -123,6 +130,7 @@ Google-style docstrings were added throughout because:
 ### Tool Discovery API
 
 **Endpoints**:
+
 - `GET /tools` - List all tools with filtering
 - `GET /tools/search` - Search tools
 - `GET /tools/{tool_name}/schema` - Get tool schema
@@ -130,6 +138,7 @@ Google-style docstrings were added throughout because:
 - `GET /tools/stats` - Get statistics
 
 **Features**:
+
 - Automatic schema extraction
 - Category inference from module paths
 - Support for both tools and toolkits
@@ -138,12 +147,14 @@ Google-style docstrings were added throughout because:
 ### Game Discovery API
 
 **Endpoints**:
+
 - `GET /games` - Game index page
 - `GET /games/{game_type}` - Game client page
 - `POST /games/{game_type}/games` - Create new game
 - `WS /ws/{game_type}/{game_id}` - WebSocket connection
 
 **Features**:
+
 - Automatic game agent discovery
 - Real-time WebSocket communication
 - HTML client generation

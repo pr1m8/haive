@@ -15,6 +15,7 @@ export POSTGRES_CONNECTION_STRING="postgresql://postgres.your-project:password@a
 ```
 
 Or in your `.env` file:
+
 ```env
 POSTGRES_CONNECTION_STRING=postgresql://postgres.your-project:password@aws-0-region.pooler.supabase.com:6543/postgres
 ```
@@ -55,16 +56,19 @@ if hasattr(agent, 'persistence') and agent.persistence:
 Supabase stores conversation data in three main tables:
 
 #### `checkpoints`
+
 - **Purpose**: Conversation state snapshots
 - **Key Fields**: `thread_id`, `checkpoint_id`, `parent_checkpoint_id`, `type`
 - **Usage**: Tracks conversation flow and branching
 
 #### `checkpoint_writes`
+
 - **Purpose**: Individual state changes and writes
 - **Key Fields**: `thread_id`, `idx`, `channel`, `type`, `blob`
 - **Usage**: Records each step in conversation processing
 
 #### `checkpoint_blobs`
+
 - **Purpose**: Large data storage (messages, state)
 - **Key Fields**: `thread_id`, `channel`, `type`, `blob`
 - **Usage**: Stores actual conversation content and agent state
@@ -88,7 +92,7 @@ Supabase stores conversation data in three main tables:
 def _setup_default_persistence(self):
     # Check for connection string from environment
     connection_string = os.getenv("POSTGRES_CONNECTION_STRING")
-    
+
     if connection_string:
         # Use the connection string from environment (likely Supabase)
         self.persistence = PostgresCheckpointerConfig(
@@ -110,7 +114,7 @@ def _setup_default_persistence(self):
 # Before (incorrect)
 recursion_limit = base_config.get("recursion_limit")
 
-# After (correct)  
+# After (correct)
 recursion_limit = base_config.get("configurable", {}).get("recursion_limit")
 ```
 
@@ -188,24 +192,27 @@ Monitor your data in the Supabase dashboard:
 ### SQL Queries
 
 #### Recent Conversations
+
 ```sql
 SELECT thread_id, COUNT(*) as message_count, MAX(idx) as latest_idx
-FROM checkpoint_writes 
-GROUP BY thread_id 
-ORDER BY latest_idx DESC 
+FROM checkpoint_writes
+GROUP BY thread_id
+ORDER BY latest_idx DESC
 LIMIT 20;
 ```
 
 #### Specific Conversation
+
 ```sql
-SELECT * FROM checkpoint_writes 
-WHERE thread_id = 'your-thread-id' 
+SELECT * FROM checkpoint_writes
+WHERE thread_id = 'your-thread-id'
 ORDER BY idx;
 ```
 
 #### Conversation Statistics
+
 ```sql
-SELECT 
+SELECT
     COUNT(DISTINCT thread_id) as total_conversations,
     COUNT(*) as total_writes,
     MAX(idx) as highest_idx
@@ -242,6 +249,7 @@ logging.getLogger('haive.agents.base.mixins').setLevel(logging.DEBUG)
 **Cause**: Incorrect connection string format
 
 **Solution**: Ensure connection string follows this format:
+
 ```
 postgresql://postgres.{project-ref}:{password}@aws-0-{region}.pooler.supabase.com:6543/postgres
 ```
@@ -252,7 +260,8 @@ postgresql://postgres.{project-ref}:{password}@aws-0-{region}.pooler.supabase.co
 
 **Cause**: `POSTGRES_CONNECTION_STRING` not set
 
-**Solution**: 
+**Solution**:
+
 ```bash
 export POSTGRES_CONNECTION_STRING="your-supabase-connection-string"
 ```
@@ -264,25 +273,28 @@ export POSTGRES_CONNECTION_STRING="your-supabase-connection-string"
 **Cause**: Supabase RLS (Row Level Security) policies
 
 **Solution**: Ensure your database user has appropriate permissions:
+
 ```sql
 -- Grant permissions to postgres user
 GRANT ALL ON checkpoints TO postgres;
-GRANT ALL ON checkpoint_writes TO postgres;  
+GRANT ALL ON checkpoint_writes TO postgres;
 GRANT ALL ON checkpoint_blobs TO postgres;
 ```
 
 ### Verification Steps
 
 1. **Check Environment**:
+
    ```bash
    echo $POSTGRES_CONNECTION_STRING
    ```
 
 2. **Test Connection**:
+
    ```python
    import psycopg
    import os
-   
+
    conn_string = os.getenv("POSTGRES_CONNECTION_STRING")
    with psycopg.connect(conn_string) as conn:
        print("✅ Connection successful")
@@ -310,6 +322,7 @@ Supabase uses connection pooling via PgBouncer. Consider these settings:
 ### Optimization Tips
 
 1. **Thread ID Strategy**: Use meaningful, hierarchical thread IDs:
+
    ```python
    thread_id = f"user-{user_id}-session-{session_id}-{timestamp}"
    ```
@@ -350,7 +363,7 @@ Consider implementing regular backups:
 
 ```sql
 -- Export conversation data
-COPY (SELECT * FROM checkpoint_writes WHERE thread_id LIKE 'important-%') 
+COPY (SELECT * FROM checkpoint_writes WHERE thread_id LIKE 'important-%')
 TO '/path/to/backup.csv' WITH CSV HEADER;
 ```
 

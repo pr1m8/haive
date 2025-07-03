@@ -27,7 +27,7 @@ haive.core.utils.haive_discovery.UnifiedHaiveDiscovery
 ### Error Manifestation
 
 ```python
-ImportError: cannot import name 'UnifiedHaiveDiscovery' from partially initialized module 
+ImportError: cannot import name 'UnifiedHaiveDiscovery' from partially initialized module
 'haive.core.utils.haive_discovery' (most likely due to a circular import)
 ```
 
@@ -72,10 +72,12 @@ def _get_unified_discovery():
 **Approach**: Create an interface/protocol that both modules implement
 
 **Pros**:
+
 - Clean architecture
 - No runtime imports
 
 **Cons**:
+
 - Major refactoring required
 - Breaking changes to API
 
@@ -84,10 +86,12 @@ def _get_unified_discovery():
 **Approach**: Move shared functionality to a third module
 
 **Pros**:
+
 - Clear separation of concerns
 - No circular dependencies
 
 **Cons**:
+
 - Requires restructuring
 - May split logically related code
 
@@ -96,10 +100,12 @@ def _get_unified_discovery():
 **Approach**: Move all imports inside functions that use them
 
 **Pros**:
+
 - Simple to implement
 - No global state
 
 **Cons**:
+
 - Performance impact (repeated imports)
 - Less readable code
 
@@ -139,7 +145,7 @@ class TestImportOrder:
         from haive.core.registry.component_registry import EnhancedComponentRegistry
         assert UnifiedHaiveDiscovery is not None
         assert EnhancedComponentRegistry is not None
-    
+
     def test_import_registry_then_discovery(self):
         """Import registry first, then discovery."""
         from haive.core.registry.component_registry import EnhancedComponentRegistry
