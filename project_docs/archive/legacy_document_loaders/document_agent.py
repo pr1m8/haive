@@ -7,17 +7,18 @@ functions for creating specialized document agents.
 
 from __future__ import annotations
 
+from concurrent.futures import ThreadPoolExecutor
 import datetime
 import logging
-import uuid
-from concurrent.futures import ThreadPoolExecutor
 from typing import Any, cast
+import uuid
+
+from langgraph.graph import END, StateGraph
+from pydantic import BaseModel, Field
 
 from haive.agents.base.agent import Agent
 from haive.core.graph.node import node
 from haive.core.schema.base import StateSchema
-from langgraph.graph import END, StateGraph
-from pydantic import BaseModel, Field
 
 # Import document processor functions
 from .document_processors import (
@@ -191,7 +192,9 @@ class DocumentAgent(Agent):
         state = cast(DocumentState, self.state)
         return state.get_documents_by_source(source_path)
 
-    def get_documents_by_format(self, format: DocumentFormat | str) -> list[Document]:
+    def get_documents_by_format(
+        self, format: DocumentFormat | str
+    ) -> list[Document]:
         """Get all documents of a specific format.
 
         Args:
@@ -310,10 +313,11 @@ class DocumentAgent(Agent):
                     return source, documents, error
 
                 # Load documents
+                loading_options = source.loading_options
                 raw_docs = loader.load()
 
                 # Convert to Document objects
-                for _i, raw_doc in enumerate(raw_docs):
+                for i, raw_doc in enumerate(raw_docs):
                     doc_id = f"{uuid.uuid4()}"
                     content = raw_doc.page_content
 
@@ -638,7 +642,10 @@ class DocumentAgent(Agent):
 
         # Skip chunking if no documents need chunking
         chunking_sources = state.get_sources_by_stage(ProcessingStage.CHUNKING)
-        return chunking_sources
+        if not chunking_sources:
+            return False
+
+        return True
 
     def build_graph(self) -> StateGraph:
         """Build the document agent graph.

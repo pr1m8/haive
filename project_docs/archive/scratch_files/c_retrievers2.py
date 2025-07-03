@@ -1,8 +1,8 @@
-import functools
+import os
+import json
 import importlib
 import inspect
-import json
-import os
+import functools
 from typing import Any, Dict, List, get_type_hints
 
 BASE_CLASS_MAP = {
@@ -14,20 +14,18 @@ BASE_CLASS_MAP = {
 
 
 @functools.lru_cache(maxsize=None)
-def get_available_classes(module_name: str) -> dict[str, dict[str, Any]]:
+def get_available_classes(module_name: str) -> Dict[str, Dict[str, Any]]:
     try:
         module = importlib.import_module(module_name)
         available_classes = {}
-        base_class_to_ignore = BASE_CLASS_MAP.get(module_name)
+        base_class_to_ignore = BASE_CLASS_MAP.get(module_name, None)
 
         for cls_name in getattr(module, "__all__", []):
             cls = getattr(module, cls_name, None)
             if not inspect.isclass(cls):
                 continue
 
-            docstring = (
-                cls.__doc__.strip() if cls.__doc__ else "No description available."
-            )
+            docstring = cls.__doc__.strip() if cls.__doc__ else "No description available."
             parent_classes = [
                 base.__name__
                 for base in cls.__bases__
@@ -53,7 +51,7 @@ def get_available_classes(module_name: str) -> dict[str, dict[str, Any]]:
         raise ImportError(f"Failed to import module {module_name}: {e}")
 
 
-def _extract_class_attributes(cls) -> dict[str, Any]:
+def _extract_class_attributes(cls) -> Dict[str, Any]:
     attributes = {}
     try:
         type_hints = get_type_hints(cls, globalns=globals(), localns=locals())
@@ -75,18 +73,19 @@ def _extract_class_attributes(cls) -> dict[str, Any]:
     return attributes
 
 
-def _extract_class_methods(cls) -> dict[str, dict[str, str]]:
+def _extract_class_methods(cls) -> Dict[str, Dict[str, str]]:
     methods = {}
     for name, method in cls.__dict__.items():
         if inspect.isfunction(method) or inspect.ismethod(method):
             sig = inspect.signature(method)
             methods[name] = {
-                param: str(sig.parameters[param].annotation) for param in sig.parameters
+                param: str(sig.parameters[param].annotation)
+                for param in sig.parameters
             }
     return methods
 
 
-def _check_required_env_vars(cls) -> list[str]:
+def _check_required_env_vars(cls) -> List[str]:
     missing_env_vars = []
     for base in cls.__bases__:
         if "APIWrapper" in base.__name__:
@@ -114,5 +113,8 @@ if __name__ == "__main__":
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(metadata, f, indent=2, ensure_ascii=False, default=str)
 
+    print(f"✅ Saved metadata for {len(metadata)} classes from '{module_name}'")
+    print(f"📄 Output Path: {output_path}")
+    print("📦 Top-level class names:")
     for cls in metadata:
-        pass
+        print(" -", cls)

@@ -25,6 +25,7 @@ from document_models import (  # Base models; Enums; Configuration models; Utili
     lc_documents_to_document_collection,
 )
 
+
 # Try to import langchain for demonstration
 try:
     from langchain_core.documents import Document as LCDocument
@@ -152,7 +153,7 @@ def example_document_collections():
     # Create and add documents
     file_paths = create_sample_files()
 
-    for _i, path in enumerate(file_paths):
+    for i, path in enumerate(file_paths):
         with open(path) as f:
             content = f.read()
 

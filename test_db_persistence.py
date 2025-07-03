@@ -14,7 +14,6 @@ from haive.core.models.llm.base import AugLLMConfig
 
 def create_test_conversation():
     """Create a test conversation and return the thread ID."""
-
     # Generate a unique thread ID
     thread_id = f"test-thread-{uuid.uuid4()}"
 
@@ -48,7 +47,7 @@ def create_test_conversation():
     )
 
     # Run conversation
-    result = conversation.invoke(
+    conversation.invoke(
         {"messages": []}, config={"configurable": {"thread_id": thread_id}}
     )
 
@@ -57,7 +56,6 @@ def create_test_conversation():
 
 def query_database(thread_id):
     """Query the database to retrieve data for the given thread ID."""
-
     conn_string = os.getenv("POSTGRES_CONNECTION_STRING")
     if not conn_string:
         return
@@ -65,7 +63,6 @@ def query_database(thread_id):
     try:
         with psycopg2.connect(conn_string) as conn, conn.cursor() as cursor:
             # 1. Check threads table
-            print("1. Checking threads table:")
             cursor.execute(
                 """
                     SELECT thread_id, created_at, last_access, metadata
@@ -77,15 +74,10 @@ def query_database(thread_id):
 
             thread_data = cursor.fetchone()
             if thread_data:
-                print(f"   ✅ Thread found!")
-                print(f"   - Created: {thread_data[1]}")
-                print(f"   - Last Access: {thread_data[2]}")
-                print(f"   - Metadata: {thread_data[3]}")
             else:
-                print(f"   ❌ Thread not found in threads table")
+                pass")
 
             # 2. Check checkpoints table
-            print("\n2. Checking checkpoints table:")
             cursor.execute(
                 """
                     SELECT COUNT(*) as checkpoint_count,
@@ -99,14 +91,11 @@ def query_database(thread_id):
 
             checkpoint_info = cursor.fetchone()
             if checkpoint_info and checkpoint_info[0] > 0:
-                print(f"   ✅ Found {checkpoint_info[0]} checkpoints")
-                print(f"   - First: {checkpoint_info[1]}")
-                print(f"   - Last: {checkpoint_info[2]}")
 
                 # Get latest checkpoint data
                 cursor.execute(
                     """
-                        SELECT checkpoint_id, parent_checkpoint_id, 
+                        SELECT checkpoint_id, parent_checkpoint_id,
                                checkpoint, created_at
                         FROM checkpoints
                         WHERE thread_id = %s
@@ -118,43 +107,26 @@ def query_database(thread_id):
 
                 latest = cursor.fetchone()
                 if latest:
-                    print(f"\n   Latest checkpoint details:")
-                    print(f"   - ID: {latest[0]}")
-                    print(f"   - Parent: {latest[1]}")
-                    print(f"   - Created: {latest[3]}")
 
                     # Parse checkpoint data
                     checkpoint_data = latest[2]
                     if checkpoint_data:
-                        print(
-                            f"\n   Checkpoint data keys: {list(checkpoint_data.keys())}"
-                        )
 
                         # Extract conversation state
                         if "channel_values" in checkpoint_data:
                             values = checkpoint_data["channel_values"]
-                            print(f"\n   Conversation state:")
-                            print(f"   - Messages: {len(values.get('messages', []))}")
-                            print(f"   - Topic: {values.get('topic', 'N/A')}")
-                            print(f"   - Speakers: {values.get('speakers', [])}")
-                            print(f"   - Turn count: {values.get('turn_count', 0)}")
-                            print(
-                                f"   - Current section: {values.get('current_section', 'N/A')}"
-                            )
 
                             # Show document sections if available
                             if "document_sections" in values:
-                                print(f"\n   Document sections:")
                                 for section, content in values[
                                     "document_sections"
                                 ].items():
                                     if content:
-                                        print(f"   - {section}: {len(content)} chars")
+                                        pass
             else:
-                print(f"   ❌ No checkpoints found")
+                pass")
 
             # 3. List recent threads
-            print("\n3. Recent threads in database:")
             cursor.execute(
                 """
                     SELECT thread_id, created_at, last_access
@@ -166,11 +138,9 @@ def query_database(thread_id):
 
             recent_threads = cursor.fetchall()
             for thread in recent_threads:
-                print(
-                    f"   - {thread[0][:50]}... (created: {thread[1].strftime('%Y-%m-%d %H:%M')})"
-                )
+                pass
 
-    except Exception as e:
+    except Exception:
         import traceback
 
         traceback.print_exc()

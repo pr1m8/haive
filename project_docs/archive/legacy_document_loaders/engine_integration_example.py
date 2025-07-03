@@ -19,6 +19,7 @@ from document_state import (
     ChunkingStrategy,
 )
 
+
 # Set up logging
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -99,14 +100,14 @@ This is a sample markdown document for testing the DocumentAgent.
 <body>
     <h1>Sample HTML Document</h1>
     <p>This is a sample HTML document for testing the DocumentAgent.</p>
-
+    
     <h2>Features</h2>
     <ul>
         <li>HTML to text transformation</li>
         <li>HTML header-based chunking</li>
         <li>Metadata extraction</li>
     </ul>
-
+    
     <h2>Benefits</h2>
     <ol>
         <li>Automatic HTML parsing</li>
@@ -182,7 +183,7 @@ def example_html_transformation():
     file_paths = create_sample_files()
 
     # Get only the HTML file
-    html_file = next(f for f in file_paths if f.endswith(".html"))
+    html_file = [f for f in file_paths if f.endswith(".html")][0]
 
     # Create a document agent specifically for HTML processing
     options = DocumentAgentOptions(
