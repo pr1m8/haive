@@ -91,6 +91,9 @@ BaseAgent.ipynb
 Chinook.db
 EOF
 
+# === 📦 Node Modules ===
+node_modules/
+
 # === 🧪 Mypy, Pytest, Profiler, etc ===
 .pytest_cache/
 .mypy_cache/
@@ -174,4 +177,4 @@ docs/_build/
 docs/source/**/*.rst
 
 # Except for index.rst in the root of docs/source
-#!docs/source/index.rst
+#!docs/source/index.rst.claude/settings.local.json
