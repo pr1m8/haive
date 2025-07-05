@@ -148,6 +148,7 @@ allure-results/
 *.svg
 *.drawio
 *.png
+tests/persistence_debugging/state_history/
 
 # === 🧪 Notebooks & dev outputs ===
 *.ipynb
