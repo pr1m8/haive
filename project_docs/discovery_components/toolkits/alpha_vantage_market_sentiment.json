@@ -1,0 +1,52 @@
+{
+  "component_info": {
+    "name": "alpha_vantage_market_sentiment",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.alpha_vantage",
+    "class_name": "Tool",
+    "description": "Get market news sentiment for a given symbol.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-05T11:38:15.817713",
+    "schema": {
+      "properties": {
+        "name": {
+          "type": "str",
+          "default": null
+        },
+        "func": {
+          "type": "Optional[Callable]",
+          "default": null
+        },
+        "description": {
+          "type": "str",
+          "default": null
+        },
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "alpha_vantage_market_sentiment",
+    "tool_description": "Get market news sentiment for a given symbol."
+  },
+  "document": {
+    "page_content": "# alpha_vantage_market_sentiment\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.alpha_vantage\n**Class:** Tool\n\n## Description\nGet market news sentiment for a given symbol.\n\n## Schema\n```json\n{\n  \"properties\": {\n    \"name\": {\n      \"type\": \"str\",\n      \"default\": null\n    },\n    \"func\": {\n      \"type\": \"Optional[Callable]\",\n      \"default\": null\n    },\n    \"description\": {\n      \"type\": \"str\",\n      \"default\": null\n    },\n    \"kwargs\": {\n      \"type\": \"Any\",\n      \"default\": null\n    }\n  }\n}\n```\n\n## Usage as Tool\n**Tool Name:** `alpha_vantage_market_sentiment`\n**Description:** Get market news sentiment for a given symbol.\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "alpha_vantage_market_sentiment",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.alpha_vantage",
+      "class_name": "Tool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-05T11:38:15.817713",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

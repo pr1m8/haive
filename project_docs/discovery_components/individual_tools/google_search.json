@@ -1,0 +1,40 @@
+{
+  "component_info": {
+    "name": "google_search",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.google.google_search",
+    "class_name": "GoogleSearchRun",
+    "description": "A wrapper around Google Search. Useful for when you need to answer questions about current events. Input should be a search query.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-05T11:38:15.781969",
+    "schema": {
+      "properties": {
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "google_search",
+    "tool_description": "A wrapper around Google Search. Useful for when you need to answer questions about current events. Input should be a search query."
+  },
+  "document": {
+    "page_content": "# google_search\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.tools.google.google_search\n**Class:** GoogleSearchRun\n\n## Description\nA wrapper around Google Search. Useful for when you need to answer questions about current events. Input should be a search query.\n\n## Schema\n```json\n{\n  \"properties\": {\n    \"kwargs\": {\n      \"type\": \"Any\",\n      \"default\": null\n    }\n  }\n}\n```\n\n## Usage as Tool\n**Tool Name:** `google_search`\n**Description:** A wrapper around Google Search. Useful for when you need to answer questions about current events. Input should be a search query.\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "google_search",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.tools.google.google_search",
+      "class_name": "GoogleSearchRun",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-05T11:38:15.781969",
+      "category": "individual_tools"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

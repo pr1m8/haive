@@ -1,0 +1,61 @@
+{
+  "total_components": 684,
+  "components_by_type": {
+    "individual_tools": 0,
+    "toolkits": 0,
+    "retrievers": 288,
+    "vector_stores": 168,
+    "document_loaders": 0,
+    "engines": 228
+  },
+  "total_tools_created": 684,
+  "total_engine_configs": 684,
+  "failed_modules": 561,
+  "failure_analysis": {
+    "sys_exit": 1,
+    "import_errors": 83,
+    "other_errors": 477
+  },
+  "sample_failures": [
+    [
+      "packages.haive-tools.src.haive.tools.tools.pokebase_tool",
+      "ImportError: No module named 'pokebase'"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.dataforseo_tool",
+      "ImportError: No module named 'haive.config'"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.hinge_tools",
+      "ImportError: No module named 'squeaky_hinge'"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.wolfram_alpha_tool",
+      "ImportError: No module named 'haive.config'"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.bing_search_tool_INC",
+      "ImportError: No module named 'haive.config'"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.discord_tools",
+      "Unexpected error: Field 'name' defined on a base class was overridden by a non-annotated attribute. All field definitions, including overrides, require a type annotation.\n\nFor further information visit https://errors.pydantic.dev/2.11/u/model-field-overridden"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.ionic_tool",
+      "ImportError: No module named 'ionic_langchain'"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.brave_search",
+      "Unexpected error: 'module' object is not callable"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.google.google_jobs",
+      "ImportError: google-search-results is not installed. Please install it with `pip install google-search-results>=2.4.2`"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.google.google_trends",
+      "ImportError: google-search-results is not installed. Please install it with `pip install google-search-results>=2.4.2`"
+    ]
+  ]
+}

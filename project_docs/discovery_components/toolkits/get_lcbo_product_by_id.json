@@ -1,0 +1,45 @@
+{
+  "component_info": {
+    "name": "get_lcbo_product_by_id",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.lcbo_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Fetch detailed info for a product using its LCBO product ID",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-05T11:38:15.818184",
+    "schema": {
+      "description": "Input schema for fetching a product by ID from the LCBO API.\n\nArgs:\n    product_id: The unique LCBO product identifier",
+      "properties": {
+        "product_id": {
+          "description": "LCBO product ID",
+          "title": "Product Id",
+          "type": "integer"
+        }
+      },
+      "required": ["product_id"],
+      "title": "GetLCBOProductInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_lcbo_product_by_id",
+    "tool_description": "Fetch detailed info for a product using its LCBO product ID"
+  },
+  "document": {
+    "page_content": "# get_lcbo_product_by_id\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.lcbo_toolkit\n**Class:** StructuredTool\n\n## Description\nFetch detailed info for a product using its LCBO product ID\n\n## Schema\n```json\n{\n  \"description\": \"Input schema for fetching a product by ID from the LCBO API.\\n\\nArgs:\\n    product_id: The unique LCBO product identifier\",\n  \"properties\": {\n    \"product_id\": {\n      \"description\": \"LCBO product ID\",\n      \"title\": \"Product Id\",\n      \"type\": \"integer\"\n    }\n  },\n  \"required\": [\n    \"product_id\"\n  ],\n  \"title\": \"GetLCBOProductInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `get_lcbo_product_by_id`\n**Description:** Fetch detailed info for a product using its LCBO product ID\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "get_lcbo_product_by_id",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.lcbo_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-05T11:38:15.818184",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

@@ -13,6 +13,24 @@ from pathlib import Path
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", message=".*Matplotlib.*")
 
+# Add all package source directories to Python path for proper module discovery
+conf_dir = Path(__file__).parent
+project_root = conf_dir.parent.parent
+sys.path.insert(0, str(project_root))
+
+# Add all haive package source directories to sys.path
+packages_dir = project_root / "packages"
+if packages_dir.exists():
+    for package_dir in packages_dir.glob("haive-*"):
+        src_dir = package_dir / "src"
+        if src_dir.exists():
+            sys.path.insert(0, str(src_dir))
+
+# Ensure the main haive package is discoverable
+main_haive_path = packages_dir / "haive-core" / "src"
+if main_haive_path.exists():
+    sys.path.insert(0, str(main_haive_path))
+
 # ==============================================================================
 # Project Information
 # ==============================================================================
@@ -104,6 +122,7 @@ exclude_patterns = [
     "**/*_test.py",
     "**/example.py",
     "**/examples/**",
+    "examples/**",
     "**/ui.py",
     "**/demo.py",
     "**/*.egg-info/**",
@@ -122,8 +141,26 @@ html_short_title = "Haive"
 
 # Static files
 html_static_path = ["_static"]
-html_css_files = ["modern.css", "sidebar-fix.css"]
-html_js_files = ["modern.js", "sidebar-fix.js"]
+
+# Add custom JavaScript for navigation improvements
+html_js_files = [
+    "enhanced-sidebar.js",
+    "navigation-fixes.js",
+]
+html_css_files = [
+    "modern.css",
+    "sidebar-fix.css", 
+    "games-showcase.css",
+    "better-navigation.css",
+    "api-gallery.css",
+    "interactive-examples.css",
+]
+html_js_files = [
+    "modern.js",
+    "sidebar-fix.js",
+    "enhanced-sidebar.js",
+    "interactive-examples.js",
+]
 
 # Disable showcase files - they override all pages
 # if (static_dir / "showcase.css").exists():
@@ -201,10 +238,76 @@ autodoc_typehints = "description"
 autodoc_typehints_format = "short"
 autodoc_class_signature = "separated"
 
-# Autosummary - disabled due to import errors
-autosummary_generate = False
-autosummary_generate_overwrite = False
-autosummary_imported_members = False
+# Autosummary - re-enabled for testing
+autosummary_generate = True
+autosummary_generate_overwrite = True
+autosummary_imported_members = True
+autosummary_ignore_module_all = False
+autosummary_filename_map = {}
+# Fix module import issues
+import warnings
+warnings.filterwarnings('ignore', category=UserWarning, module='sphinx')
+warnings.filterwarnings('ignore', category=DeprecationWarning)
+# Enable recursive module discovery
+autodoc_default_options = {
+    "members": True,
+    "member-order": "bysource",
+    "special-members": "__init__",
+    "undoc-members": True,
+    "exclude-members": "__weakref__",
+    "show-inheritance": True,
+}
+
+# Force autosummary to generate proper module files
+autosummary_context = {
+    'fullname': lambda name: name,
+    'module': lambda name: name,
+    'objname': lambda name: name.split('.')[-1],
+}
+autosummary_mock_imports = [
+    "torch",
+    "tensorflow",
+    "transformers",
+    "scipy",
+    "sklearn",
+    "litellm",
+    "langchain",
+    "langchain_core",
+    "langchain_community",
+    "openai",
+    "anthropic",
+    "cohere",
+    "google.generativeai",
+    "pydantic",
+    "numpy",
+    "pandas",
+    "matplotlib",
+    "fastapi",
+    "uvicorn",
+    "websockets",
+    "httpx",
+    "sqlalchemy",
+    "motor",
+    "pymongo",
+    "redis",
+    "chromadb",
+    "pinecone",
+    "weaviate",
+    "qdrant_client",
+    "beautifulsoup4",
+    "requests",
+    "aiohttp",
+    "supabase",
+    "postgrest",
+    "gotrue",
+    "haive.core",
+    "haive.agents",
+    "haive.tools",
+    "haive.dataflow",
+    "haive.prebuilt",
+    "haive.mcp",
+    "haive.games",
+]
 
 # Napoleon (Google docstrings) - optimized settings
 napoleon_google_docstring = True
@@ -260,6 +363,9 @@ mermaid_version = "10.6.1"
 templates_path = ["_templates"]
 exclude_patterns.extend(["**/.tox", "**/.pytest_cache", "**/build", "**/dist"])
 
+# Autosummary template path
+autosummary_template_path = ["_templates/autosummary"]
+
 # Suppress specific warnings
 suppress_warnings = [
     "autosummary.import_cycle",
@@ -273,6 +379,86 @@ suppress_warnings = [
 # Set autodoc to continue on import failure
 autodoc_warningiserror = False
 autodoc_inherit_docstrings = True
+
+# Mock imports for autodoc
+autodoc_mock_imports = [
+    "torch",
+    "tensorflow",
+    "transformers",
+    "scipy",
+    "sklearn",
+    "litellm",
+    "langchain",
+    "langchain_core",
+    "langchain_community",
+    "openai",
+    "anthropic",
+    "cohere",
+    "google.generativeai",
+    "pydantic",
+    "numpy",
+    "pandas",
+    "matplotlib",
+    "fastapi",
+    "uvicorn",
+    "websockets",
+    "httpx",
+    "sqlalchemy",
+    "motor",
+    "pymongo",
+    "redis",
+    "chromadb",
+    "pinecone",
+    "weaviate",
+    "qdrant_client",
+    "beautifulsoup4",
+    "requests",
+    "aiohttp",
+    "supabase",
+    "postgrest",
+    "gotrue",
+    "bs4",
+    "PIL",
+    "cv2",
+    "spacy",
+    "nltk",
+    "plotly",
+    "seaborn",
+    "bokeh",
+    "dash",
+    "haive",
+    "langchain_google_vertexai",
+    "vertexai",
+    "google.cloud",
+    "google.cloud.aiplatform",
+    "google.auth",
+    "litellm.integrations",
+    "rich",
+    "typer",
+    "questionary",
+    "invoke",
+    "streamlit",
+    "tweepy",
+    "praw",
+    "discord",
+    "slack_sdk",
+    "telegram",
+    "wikipedia",
+    "wolframalpha",
+    "pyowm",
+    "newsapi",
+    "alpha_vantage",
+    "yfinance",
+    "finnhub",
+    "polygon",
+    "amadeus",
+    "azure.cognitiveservices",
+    "azure.ai",
+    "googlemaps",
+    "geopy",
+    "folium",
+    "geopandas",
+]
 
 # Language
 language = "en"

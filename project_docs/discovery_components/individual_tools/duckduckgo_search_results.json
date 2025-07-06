@@ -1,0 +1,45 @@
+{
+  "component_info": {
+    "name": "duckduckgo_search_results",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.duckduckgo_search",
+    "class_name": "DuckDuckGoSearchResults",
+    "description": "Search the web using DuckDuckGo and get structured results with URLs, titles, and snippets.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-05T11:38:15.738074",
+    "schema": {
+      "description": "Input for the DuckDuckGo search tool.",
+      "properties": {
+        "query": {
+          "description": "search query to look up",
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"],
+      "title": "DDGInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "duckduckgo_search_results",
+    "tool_description": "Search the web using DuckDuckGo and get structured results with URLs, titles, and snippets."
+  },
+  "document": {
+    "page_content": "# duckduckgo_search_results\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.tools.duckduckgo_search\n**Class:** DuckDuckGoSearchResults\n\n## Description\nSearch the web using DuckDuckGo and get structured results with URLs, titles, and snippets.\n\n## Schema\n```json\n{\n  \"description\": \"Input for the DuckDuckGo search tool.\",\n  \"properties\": {\n    \"query\": {\n      \"description\": \"search query to look up\",\n      \"title\": \"Query\",\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"query\"\n  ],\n  \"title\": \"DDGInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `duckduckgo_search_results`\n**Description:** Search the web using DuckDuckGo and get structured results with URLs, titles, and snippets.\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "duckduckgo_search_results",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.tools.duckduckgo_search",
+      "class_name": "DuckDuckGoSearchResults",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-05T11:38:15.738074",
+      "category": "individual_tools"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

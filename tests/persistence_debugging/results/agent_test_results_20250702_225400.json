@@ -1,0 +1,42 @@
+{
+  "simple": {
+    "status": "\u2705 PASSED",
+    "agent_name": "TestSimple_225352",
+    "thread_id": "simple_test_225352",
+    "persistence_type": "PostgresCheckpointerConfig",
+    "first_messages": 2,
+    "second_messages": 4,
+    "memory_working": true,
+    "app_name": "haive_TestSimple_225352_129950819033696"
+  },
+  "react": {
+    "status": "\u2705 PASSED",
+    "agent_name": "TestReact_225354",
+    "thread_id": "react_test_225354",
+    "persistence_type": "PostgresCheckpointerConfig",
+    "first_messages": 2,
+    "second_messages": 4,
+    "memory_working": true,
+    "app_name": "haive_TestReact_225354_129950819033696"
+  },
+  "rag": {
+    "status": "\u274c FAILED",
+    "error": "No module named 'haive.core.graph.node.callable_node'",
+    "error_type": "ModuleNotFoundError"
+  },
+  "collaborative": {
+    "status": "\u2705 PASSED",
+    "agent_name": "TestCollab_225358",
+    "thread_id": "collab_test_225358",
+    "persistence_type": "PostgresCheckpointerConfig",
+    "participants": ["TestPM_225358", "TestDev_225358"],
+    "has_prepared_statement_errors": false,
+    "app_name": "haive_conversation_129946453245504",
+    "shared_document_length": 0
+  },
+  "debate": {
+    "status": "\u274c FAILED",
+    "error": "cannot import name 'DebateAgent' from 'haive.agents.conversation.debate.agent' (/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/debate/agent.py)",
+    "error_type": "ImportError"
+  }
+}

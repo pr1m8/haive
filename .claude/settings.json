@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(poetry run pytest)",
+      "Bash(poetry run pytest packages/*/tests/)",
+      "Bash(poetry run nox -s lint)",
+      "Bash(poetry run nox -s typecheck)",
+      "Bash(poetry run nox -s docs_fast)",
+      "Bash(poetry run nox -s docs_serve)",
+      "Bash(poetry install --all-extras)",
+      "Bash(poetry add)",
+      "Bash(poetry remove)",
+      "Bash(git status)",
+      "Bash(git diff)",
+      "Bash(git log --oneline -10)",
+      "Bash(find . -name '*.py' -type f)",
+      "Bash(find . -name '*.md' -type f)",
+      "Bash(rg)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Write(.env)",
+      "Write(*.key)",
+      "Write(config/certs/*)"
+    ]
+  },
+  "env": {
+    "NODE_ENV": "development",
+    "PYTHONPATH": ".",
+    "POETRY_VENV_IN_PROJECT": "true"
+  },
+  "additionalDirectories": ["./project_docs/", "./docs/"]
+}

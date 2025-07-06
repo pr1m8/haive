@@ -1,0 +1,136 @@
+{
+  "component_info": {
+    "name": "search_locations",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.trip_advisor_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Search for TripAdvisor locations by name, address, lat/long, etc.\n\n    Performs a general search for TripAdvisor locations using various filters.\n\n    Args:\n        **kwargs: Keyword arguments matching the LocationSearchInput model.\n            searchQuery: Text to search for (e.g., hotel name, restaurant name).\n            category: Filter by category (hotels, attractions, restaurants).\n            phone: Search by phone number.\n            address: Search by street address.\n            latLong: Latitude,longitude pair (e.g., '42.3455,-71.0983').\n            radius: Search radius from the specified coordinates.\n            radius_unit: Unit for radius (km, mi, m).\n            language: The language code for the response content (ISO 639-1).\n\n    Returns:\n        dict: Search results with location data.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-05T11:38:15.821951",
+    "schema": {
+      "description": "Input parameters for searching locations.",
+      "properties": {
+        "searchQuery": {
+          "description": "Text to search for (e.g., hotel name, restaurant name).",
+          "title": "Searchquery",
+          "type": "string"
+        },
+        "category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter by category (hotels, attractions, restaurants).",
+          "title": "Category"
+        },
+        "phone": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search by phone number.",
+          "title": "Phone"
+        },
+        "address": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search by street address.",
+          "title": "Address"
+        },
+        "latLong": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Latitude,longitude pair (e.g., '42.3455,-71.0983').",
+          "title": "Latlong"
+        },
+        "radius": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Search radius from the specified coordinates.",
+          "title": "Radius"
+        },
+        "radius_unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Unit for radius (km, mi, m).",
+          "title": "Radius Unit"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "The language code for the response content (ISO 639-1).",
+          "title": "Language"
+        }
+      },
+      "required": ["searchQuery"],
+      "title": "LocationSearchInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "search_locations",
+    "tool_description": "Search for TripAdvisor locations by name, address, lat/long, etc.\n\n    Performs a general search for TripAdvisor locations using various filters.\n\n    Args:\n        **kwargs: Keyword arguments matching the LocationSearchInput model.\n            searchQuery: Text to search for (e.g., hotel name, restaurant name).\n            category: Filter by category (hotels, attractions, restaurants).\n            phone: Search by phone number.\n            address: Search by street address.\n            latLong: Latitude,longitude pair (e.g., '42.3455,-71.0983').\n            radius: Search radius from the specified coordinates.\n            radius_unit: Unit for radius (km, mi, m).\n            language: The language code for the response content (ISO 639-1).\n\n    Returns:\n        dict: Search results with location data."
+  },
+  "document": {
+    "page_content": "# search_locations\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.trip_advisor_toolkit\n**Class:** StructuredTool\n\n## Description\nSearch for TripAdvisor locations by name, address, lat/long, etc.\n\n    Performs a general search for TripAdvisor locations using various filters.\n\n    Args:\n        **kwargs: Keyword arguments matching the LocationSearchInput model.\n            searchQuery: Text to search for (e.g., hotel name, restaurant name).\n            category: Filter by category (hotels, attractions, restaurants).\n            phone: Search by phone number.\n            address: Search by street address.\n            latLong: Latitude,longitude pair (e.g., '42.3455,-71.0983').\n            radius: Search radius from the specified coordinates.\n            radius_unit: Unit for radius (km, mi, m).\n            language: The language code for the response content (ISO 639-1).\n\n    Returns:\n        dict: Search results with location data.\n\n## Schema\n```json\n{\n  \"description\": \"Input parameters for searching locations.\",\n  \"properties\": {\n    \"searchQuery\": {\n      \"description\": \"Text to search for (e.g., hotel name, restaurant name).\",\n      \"title\": \"Searchquery\",\n      \"type\": \"string\"\n    },\n    \"category\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": null,\n      \"description\": \"Filter by category (hotels, attractions, restaurants).\",\n      \"title\": \"Category\"\n    },\n    \"phone\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": null,\n      \"description\": \"Search by phone number.\",\n      \"title\": \"Phone\"\n    },\n    \"address\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": null,\n      \"description\": \"Search by street address.\",\n      \"title\": \"Address\"\n    },\n    \"latLong\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": null,\n      \"description\": \"Latitude,longitude pair (e.g., '42.3455,-71.0983').\",\n      \"title\": \"Latlong\"\n    },\n    \"radius\": {\n      \"anyOf\": [\n        {\n          \"type\": \"integer\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": null,\n      \"description\": \"Search radius from the specified coordinates.\",\n      \"title\": \"Radius\"\n    },\n    \"radius_unit\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": null,\n      \"description\": \"Unit for radius (km, mi, m).\",\n      \"title\": \"Radius Unit\"\n    },\n    \"language\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": \"en\",\n      \"description\": \"The language code for the response content (ISO 639-1).\",\n      \"title\": \"Language\"\n    }\n  },\n  \"required\": [\n    \"searchQuery\"\n  ],\n  \"title\": \"LocationSearchInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `search_locations`\n**Description:** Search for TripAdvisor locations by name, address, lat/long, etc.\n\n    Performs a general search for TripAdvisor locations using various filters.\n\n    Args:\n        **kwargs: Keyword arguments matching the LocationSearchInput model.\n            searchQuery: Text to search for (e.g., hotel name, restaurant name).\n            category: Filter by category (hotels, attractions, restaurants).\n            phone: Search by phone number.\n            address: Search by street address.\n            latLong: Latitude,longitude pair (e.g., '42.3455,-71.0983').\n            radius: Search radius from the specified coordinates.\n            radius_unit: Unit for radius (km, mi, m).\n            language: The language code for the response content (ISO 639-1).\n\n    Returns:\n        dict: Search results with location data.\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "search_locations",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.trip_advisor_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-05T11:38:15.821951",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

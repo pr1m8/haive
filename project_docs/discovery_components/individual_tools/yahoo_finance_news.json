@@ -1,0 +1,45 @@
+{
+  "component_info": {
+    "name": "yahoo_finance_news",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.yfinance_tool",
+    "class_name": "YahooFinanceNewsTool",
+    "description": "Useful for when you need to find financial news about a public company. Input should be a company ticker. For example, AAPL for Apple, MSFT for Microsoft.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-05T11:38:15.758336",
+    "schema": {
+      "description": "Input for the YahooFinanceNews tool.",
+      "properties": {
+        "query": {
+          "description": "company ticker query to look up",
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"],
+      "title": "YahooFinanceNewsInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "yahoo_finance_news",
+    "tool_description": "Useful for when you need to find financial news about a public company. Input should be a company ticker. For example, AAPL for Apple, MSFT for Microsoft."
+  },
+  "document": {
+    "page_content": "# yahoo_finance_news\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.tools.yfinance_tool\n**Class:** YahooFinanceNewsTool\n\n## Description\nUseful for when you need to find financial news about a public company. Input should be a company ticker. For example, AAPL for Apple, MSFT for Microsoft.\n\n## Schema\n```json\n{\n  \"description\": \"Input for the YahooFinanceNews tool.\",\n  \"properties\": {\n    \"query\": {\n      \"description\": \"company ticker query to look up\",\n      \"title\": \"Query\",\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"query\"\n  ],\n  \"title\": \"YahooFinanceNewsInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `yahoo_finance_news`\n**Description:** Useful for when you need to find financial news about a public company. Input should be a company ticker. For example, AAPL for Apple, MSFT for Microsoft.\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "yahoo_finance_news",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.tools.yfinance_tool",
+      "class_name": "YahooFinanceNewsTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-05T11:38:15.758336",
+      "category": "individual_tools"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

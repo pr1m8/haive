@@ -1,0 +1,51 @@
+{
+  "component_info": {
+    "name": "search_books_openlibrary",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.openlibrary_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Search for books by title, keyword, or subject using OpenLibrary",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-05T11:38:15.853022",
+    "schema": {
+      "description": "Input schema for the book search tool.\n\nAttributes:\n    query: The book title, keywords, or search query to use.\n    page: Page number of results to retrieve, starting from 1.",
+      "properties": {
+        "query": {
+          "description": "The book title, keywords, or search query",
+          "title": "Query",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "description": "Page number of results",
+          "title": "Page",
+          "type": "integer"
+        }
+      },
+      "required": ["query"],
+      "title": "BookSearchInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "search_books_openlibrary",
+    "tool_description": "Search for books by title, keyword, or subject using OpenLibrary"
+  },
+  "document": {
+    "page_content": "# search_books_openlibrary\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.openlibrary_toolkit\n**Class:** StructuredTool\n\n## Description\nSearch for books by title, keyword, or subject using OpenLibrary\n\n## Schema\n```json\n{\n  \"description\": \"Input schema for the book search tool.\\n\\nAttributes:\\n    query: The book title, keywords, or search query to use.\\n    page: Page number of results to retrieve, starting from 1.\",\n  \"properties\": {\n    \"query\": {\n      \"description\": \"The book title, keywords, or search query\",\n      \"title\": \"Query\",\n      \"type\": \"string\"\n    },\n    \"page\": {\n      \"default\": 1,\n      \"description\": \"Page number of results\",\n      \"title\": \"Page\",\n      \"type\": \"integer\"\n    }\n  },\n  \"required\": [\n    \"query\"\n  ],\n  \"title\": \"BookSearchInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `search_books_openlibrary`\n**Description:** Search for books by title, keyword, or subject using OpenLibrary\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "search_books_openlibrary",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.openlibrary_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-05T11:38:15.853022",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

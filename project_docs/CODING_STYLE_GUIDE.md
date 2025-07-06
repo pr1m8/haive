@@ -43,6 +43,7 @@ haive/ (workspace)
 ```
 
 **Key Characteristics:**
+
 - Each package is independently versioned and publishable
 - Packages share the `haive` namespace but can be installed separately
 - Workspace configuration coordinates development across packages
@@ -100,22 +101,22 @@ def create_rag_agent_with_vector_store(
     max_context_length: int = 4000
 ) -> RAGAgent:
     """Create a RAG agent with vector store retrieval.
-    
+
     Args:
         retriever: Vector store retriever for document lookup
         llm_config: Configuration for the language model
         max_context_length: Maximum context window size
-        
+
     Returns:
         Configured RAG agent ready for use
-        
+
     Raises:
         ValueError: If retriever is not properly configured
         ConfigError: If llm_config is invalid
     """
     if not retriever.is_ready():
         raise ValueError("Retriever must be initialized before use")
-    
+
     return RAGAgent(
         retriever=retriever,
         llm_config=llm_config,
@@ -140,7 +141,7 @@ class AgentConfig(BaseModel):
     temperature: float = 0.7
     max_tokens: Optional[int] = None
     tools: List[str] = []
-    
+
 # Use TypedDict for simple dictionaries
 class StateDict(TypedDict):
     messages: List[str]
@@ -153,7 +154,7 @@ T = TypeVar('T', bound=BaseModel)
 class Agent(Generic[T]):
     def __init__(self, state_schema: type[T]) -> None:
         self.state_schema = state_schema
-        
+
     def run(self, state: T) -> T:
         # Implementation
         pass
@@ -210,7 +211,7 @@ def process_user_request(user_id: str, request: str) -> Response:
             "timestamp": datetime.utcnow().isoformat()
         }
     )
-    
+
     try:
         response = generate_response(request)
         logger.info(
@@ -257,7 +258,7 @@ from haive.core.engine import AugLLMConfig
 
 class TestSimpleAgent:
     """Test suite for SimpleAgent functionality."""
-    
+
     @pytest.fixture
     def agent_config(self) -> AugLLMConfig:
         """Create a test agent configuration."""
@@ -266,7 +267,7 @@ class TestSimpleAgent:
             max_tokens=100,
             system_message="Test agent"
         )
-    
+
     @pytest.fixture
     def simple_agent(self, agent_config: AugLLMConfig) -> SimpleAgent:
         """Create a test SimpleAgent instance."""
@@ -274,22 +275,22 @@ class TestSimpleAgent:
             name="test_agent",
             engine=agent_config
         )
-    
+
     async def test_simple_agent_responds_to_basic_query(
         self, simple_agent: SimpleAgent
     ) -> None:
         """Test that agent responds to basic user query."""
         # Arrange
         user_input = "Hello, how are you?"
-        
+
         # Act
         response = await simple_agent.arun(user_input)
-        
+
         # Assert
         assert response is not None
         assert len(response) > 0
         assert isinstance(response, str)
-    
+
     async def test_simple_agent_maintains_conversation_state(
         self, simple_agent: SimpleAgent
     ) -> None:
@@ -297,25 +298,25 @@ class TestSimpleAgent:
         # Arrange
         thread_id = "test-conversation-123"
         config = {"configurable": {"thread_id": thread_id}}
-        
+
         # Act
         await simple_agent.arun("My name is Alice", config=config)
         response = await simple_agent.arun("What's my name?", config=config)
-        
+
         # Assert
         assert "alice" in response.lower()
-    
+
     async def test_simple_agent_handles_invalid_input_gracefully(
         self, simple_agent: SimpleAgent
     ) -> None:
         """Test agent error handling with invalid input."""
         # Arrange
         invalid_input = None
-        
+
         # Act & Assert
         with pytest.raises(ValueError, match="Input cannot be None"):
             await simple_agent.arun(invalid_input)
-    
+
     @patch('haive.core.engine.openai_client')
     async def test_simple_agent_handles_llm_timeout(
         self, mock_openai: Mock, simple_agent: SimpleAgent
@@ -323,7 +324,7 @@ class TestSimpleAgent:
         """Test agent behavior when LLM times out."""
         # Arrange
         mock_openai.chat.completions.create.side_effect = TimeoutError()
-        
+
         # Act & Assert
         with pytest.raises(AgentError, match="LLM request timed out"):
             await simple_agent.arun("Hello")
@@ -335,19 +336,19 @@ class TestSimpleAgent:
 @pytest.mark.integration
 class TestRAGAgentIntegration:
     """Integration tests for RAG agent with real components."""
-    
+
     @pytest.fixture(scope="module")
     async def vector_store(self) -> VectorStore:
         """Create test vector store with sample documents."""
         store = VectorStore.create_memory_store()
-        
+
         # Load test documents
         documents = load_test_documents("fixtures/sample_docs/")
         await store.add_documents(documents)
-        
+
         yield store
         await store.cleanup()
-    
+
     @pytest.fixture
     def rag_agent(self, vector_store: VectorStore) -> RAGAgent:
         """Create RAG agent with test vector store."""
@@ -355,18 +356,18 @@ class TestRAGAgentIntegration:
             retriever=VectorRetriever(vector_store),
             llm_config=AugLLMConfig(temperature=0.0)  # Deterministic
         )
-    
+
     async def test_rag_agent_retrieves_relevant_documents(
         self, rag_agent: RAGAgent
     ) -> None:
         """Test that RAG agent retrieves and uses relevant context."""
         # Arrange
         query = "What is the company's return policy?"
-        
+
         # Act
         response = await rag_agent.arun(query)
         sources = rag_agent.get_source_documents()
-        
+
         # Assert
         assert response is not None
         assert len(sources) > 0
@@ -381,7 +382,7 @@ class TestRAGAgentIntegration:
 @patch('haive.tools.web.requests.get')
 async def test_web_search_tool_handles_api_error(mock_get: Mock) -> None:
     mock_get.side_effect = requests.RequestException("API Error")
-    
+
     tool = WebSearchTool()
     with pytest.raises(ToolExecutionError):
         await tool.search("test query")
@@ -395,7 +396,7 @@ def create_test_agent(
     """Factory for creating test agents with sensible defaults."""
     if tools is None:
         tools = [MockTool(), MockCalculator()]
-    
+
     return ReactAgent(
         name=name,
         tools=tools,
@@ -424,7 +425,7 @@ Examples:
     Basic usage::
 
         from haive.agents.simple import SimpleAgent
-        
+
         agent = SimpleAgent(name="assistant")
         response = await agent.arun("Hello!")
 
@@ -447,11 +448,11 @@ See Also:
 ```python
 class SimpleAgent(Agent[MessageState]):
     """A basic conversational agent with state management.
-    
+
     The SimpleAgent provides fundamental conversational capabilities,
     including message history, state persistence, and streaming responses.
     It serves as the foundation for more complex agent implementations.
-    
+
     Args:
         name: Unique identifier for the agent instance
         engine: LLM configuration and client wrapper
@@ -459,36 +460,36 @@ class SimpleAgent(Agent[MessageState]):
         state_schema: Pydantic model for state validation
         enable_streaming: Whether to support streaming responses
         max_history: Maximum number of messages to retain
-        
+
     Attributes:
         name: The agent's identifier
         engine: The configured LLM engine
         state_schema: Schema class for state validation
-        
+
     Examples:
         Create a basic agent::
-        
+
             agent = SimpleAgent(name="helper")
             response = await agent.arun("What's the weather?")
-            
+
         With conversation state::
-        
+
             config = {"configurable": {"thread_id": "conv-123"}}
             await agent.arun("I'm Alice", config=config)
             response = await agent.arun("What's my name?", config=config)
             # Response: "Your name is Alice"
-            
+
         Custom system message::
-        
+
             agent = SimpleAgent(
                 name="specialist",
                 system_message="You are an expert in Python programming."
             )
-            
+
     Note:
         The agent automatically handles conversation persistence when
         a thread_id is provided in the configuration.
-        
+
     See Also:
         - :meth:`arun`: Main method for running the agent
         - :meth:`astream`: For streaming responses
@@ -506,11 +507,11 @@ async def process_conversation_turn(
     metadata: Optional[Dict[str, Any]] = None
 ) -> ConversationResult:
     """Process a single conversation turn with an agent.
-    
+
     This function handles the complete flow of processing user input
     through an agent, including state management, error handling,
     and result formatting.
-    
+
     Args:
         agent: The agent instance to use for processing
         user_input: The user's message or query
@@ -518,45 +519,45 @@ async def process_conversation_turn(
             If provided, the agent will maintain state across turns.
         metadata: Optional metadata to include with the request.
             Can contain user preferences, context flags, etc.
-            
+
     Returns:
         ConversationResult containing:
             - response: The agent's response text
             - sources: Any source documents referenced (for RAG agents)
             - metadata: Processing metadata (tokens used, timing, etc.)
             - state: Current conversation state
-            
+
     Raises:
         AgentError: If the agent fails to process the input
         ValidationError: If the input doesn't meet schema requirements
         TimeoutError: If processing exceeds configured timeout
-        
+
     Examples:
         Basic usage::
-        
+
             result = await process_conversation_turn(
                 agent=my_agent,
                 user_input="Hello, how are you?"
             )
             print(result.response)
-            
+
         With conversation continuity::
-        
+
             result = await process_conversation_turn(
                 agent=my_agent,
                 user_input="My name is Bob",
                 conversation_id="user-123-session-1"
             )
-            
+
             result = await process_conversation_turn(
                 agent=my_agent,
                 user_input="What's my name?",
                 conversation_id="user-123-session-1"
             )
             # result.response will reference "Bob"
-            
+
         With metadata::
-        
+
             result = await process_conversation_turn(
                 agent=my_agent,
                 user_input="Summarize this document",
@@ -565,12 +566,12 @@ async def process_conversation_turn(
                     "source_language": "en"
                 }
             )
-            
+
     Note:
         The function automatically handles conversation state persistence
         when a conversation_id is provided. State is stored using the
         agent's configured persistence backend.
-        
+
     See Also:
         - :class:`ConversationResult`: Return value structure
         - :func:`create_agent_session`: For managing multiple conversations
@@ -602,28 +603,28 @@ async def main() -> None:
         temperature=0.7,
         system_message="You are a helpful and friendly assistant."
     )
-    
+
     agent = SimpleAgent(
         name="friendly_assistant",
         engine=config
     )
-    
+
     print("=== Single Turn Conversation ===")
     response = await agent.arun("What's the capital of France?")
     print(f"Agent: {response}")
-    
+
     print("\n=== Multi-Turn Conversation ===")
     conversation_id = "example-conversation-1"
     config = {"configurable": {"thread_id": conversation_id}}
-    
+
     # First turn - establish context
     await agent.arun("My favorite color is blue", config=config)
     print("User: My favorite color is blue")
-    
+
     # Second turn - reference previous context
     response = await agent.arun("What's my favorite color?", config=config)
     print(f"Agent: {response}")
-    
+
     print("\n=== Conversation Complete ===")
 
 if __name__ == "__main__":
@@ -652,21 +653,21 @@ from haive.agents.multi import MultiAgent
 
 async def create_research_pipeline() -> MultiAgent:
     """Create a multi-agent research pipeline."""
-    
+
     # Specialized research agent
     researcher = PersonResearchAgent(
         name="researcher",
         search_depth="comprehensive",
         max_sources=10
     )
-    
+
     # Fact-checking agent with knowledge base
     fact_checker = BaseRAGAgent(
         name="fact_checker",
         retriever=create_fact_database_retriever(),
         verification_threshold=0.8
     )
-    
+
     # Writing agent for final output
     writer = SimpleAgent(
         name="writer",
@@ -675,7 +676,7 @@ async def create_research_pipeline() -> MultiAgent:
             "engaging content based on research findings."
         )
     )
-    
+
     # Coordinate agents in pipeline
     pipeline = MultiAgent(
         name="research_pipeline",
@@ -683,7 +684,7 @@ async def create_research_pipeline() -> MultiAgent:
         routing_strategy="sequential",
         state_sharing="full"
     )
-    
+
     return pipeline
 
 async def run_research_task(
@@ -692,14 +693,14 @@ async def run_research_task(
     output_format: str = "report"
 ) -> Dict[str, Any]:
     """Run a complete research task through the pipeline."""
-    
+
     task_config = {
         "topic": topic,
         "output_format": output_format,
         "quality_threshold": 0.9,
         "max_iterations": 3
     }
-    
+
     try:
         result = await pipeline.arun(task_config)
         return {
@@ -718,14 +719,14 @@ async def main() -> None:
     """Run the advanced research example."""
     print("Creating research pipeline...")
     pipeline = await create_research_pipeline()
-    
+
     print("Running research task...")
     result = await run_research_task(
         pipeline=pipeline,
         topic="Recent developments in quantum computing",
         output_format="technical_report"
     )
-    
+
     if result["success"]:
         print("Research completed successfully!")
         print(f"Result: {result['result']}")
@@ -744,6 +745,7 @@ if __name__ == "__main__":
 ### Adding New Agents
 
 1. **Create the module structure**:
+
    ```
    packages/haive-agents/src/haive/agents/new_agent_type/
    ├── __init__.py
@@ -754,14 +756,15 @@ if __name__ == "__main__":
    ```
 
 2. **Implement the agent class**:
+
    ```python
    from haive.agents.base import Agent
    from .config import NewAgentConfig
    from .state import NewAgentState
-   
+
    class NewAgent(Agent[NewAgentState]):
        """New agent implementation."""
-       
+
        def __init__(self, config: NewAgentConfig) -> None:
            super().__init__(
                name=config.name,
@@ -771,10 +774,11 @@ if __name__ == "__main__":
    ```
 
 3. **Add to package exports**:
+
    ```python
    # In packages/haive-agents/src/haive/agents/__init__.py
    from haive.agents.new_agent_type import NewAgent
-   
+
    __all__ = [..., "NewAgent"]
    ```
 
@@ -796,7 +800,7 @@ from typing import Optional, List
 
 class NewAgentConfig(BaseModel):
     """Configuration for NewAgent."""
-    
+
     name: str = Field(..., description="Agent identifier")
     max_iterations: int = Field(
         default=10,
@@ -818,7 +822,7 @@ class NewAgentConfig(BaseModel):
         default=None,
         description="Custom system prompt override"
     )
-    
+
     class Config:
         """Pydantic configuration."""
         validate_assignment = True
@@ -838,6 +842,7 @@ class NewAgentConfig(BaseModel):
 ```
 
 Types:
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation changes
@@ -847,6 +852,7 @@ Types:
 - `chore`: Maintenance tasks
 
 Examples:
+
 ```
 feat(agents): add TreeOfThoughts reasoning agent
 
@@ -869,7 +875,7 @@ and fallback behavior in adaptive RAG agents.
 ### Branch Naming
 
 - `feature/description` - New features
-- `fix/description` - Bug fixes  
+- `fix/description` - Bug fixes
 - `docs/description` - Documentation updates
 - `refactor/description` - Code refactoring
 
@@ -896,11 +902,11 @@ async def process_multiple_requests(
     requests: List[str]
 ) -> List[str]:
     """Process multiple requests concurrently."""
-    
+
     # Use asyncio.gather for concurrent execution
     tasks = [agent.arun(request) for request in requests]
     results = await asyncio.gather(*tasks, return_exceptions=True)
-    
+
     # Handle exceptions appropriately
     responses = []
     for i, result in enumerate(results):
@@ -909,7 +915,7 @@ async def process_multiple_requests(
             responses.append(f"Error: {result}")
         else:
             responses.append(result)
-    
+
     return responses
 
 # Good: Resource cleanup
@@ -934,7 +940,7 @@ async def stream_agent_response(
     input_data: str
 ) -> AsyncGenerator[str, None]:
     """Stream agent response to handle large outputs."""
-    
+
     async for chunk in agent.astream(input_data):
         yield chunk
 
@@ -945,17 +951,17 @@ async def process_large_dataset(
     batch_size: int = 10
 ) -> List[str]:
     """Process large dataset in memory-efficient batches."""
-    
+
     results = []
     for i in range(0, len(dataset), batch_size):
         batch = dataset[i:i + batch_size]
         batch_results = await process_multiple_requests(agent, batch)
         results.extend(batch_results)
-        
+
         # Optional: Force garbage collection between batches
         import gc
         gc.collect()
-    
+
     return results
 ```
 
@@ -971,10 +977,10 @@ async def performance_monitor(
     operation_name: str
 ) -> AsyncGenerator[Dict[str, Any], None]:
     """Context manager for monitoring operation performance."""
-    
+
     start_time = time.time()
     metrics = {"operation": operation_name, "start_time": start_time}
-    
+
     try:
         yield metrics
     finally:
@@ -983,7 +989,7 @@ async def performance_monitor(
             "end_time": end_time,
             "duration": end_time - start_time
         })
-        
+
         logger.info(
             f"Operation {operation_name} completed",
             extra=metrics
@@ -992,7 +998,7 @@ async def performance_monitor(
 # Usage
 async def run_monitored_agent(agent: Agent, input_data: str) -> str:
     """Run agent with performance monitoring."""
-    
+
     async with performance_monitor("agent_execution") as metrics:
         result = await agent.arun(input_data)
         metrics["tokens_used"] = getattr(agent, 'last_token_count', 0)
@@ -1009,23 +1015,23 @@ from typing import List, Optional, Dict, Any
 
 class AgentState(BaseModel):
     """Base state schema for agents."""
-    
+
     messages: List[str] = []
     metadata: Dict[str, Any] = {}
     iteration_count: int = 0
-    
+
 class SpecializedAgentState(AgentState):
     """Extended state for specialized agents."""
-    
+
     reasoning_trace: List[str] = []
     tool_results: Dict[str, Any] = {}
     confidence_scores: List[float] = []
-    
+
     def add_reasoning_step(self, step: str, confidence: float) -> None:
         """Add a reasoning step with confidence score."""
         self.reasoning_trace.append(step)
         self.confidence_scores.append(confidence)
-        
+
     def get_average_confidence(self) -> float:
         """Calculate average confidence across reasoning steps."""
         if not self.confidence_scores:
@@ -1041,19 +1047,19 @@ from typing import Dict, Any, List
 
 class Tool(ABC):
     """Base class for agent tools."""
-    
+
     @property
     @abstractmethod
     def name(self) -> str:
         """Tool identifier."""
         pass
-    
+
     @property
     @abstractmethod
     def description(self) -> str:
         """Tool description for LLM context."""
         pass
-    
+
     @abstractmethod
     async def arun(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Execute the tool asynchronously."""
@@ -1061,18 +1067,18 @@ class Tool(ABC):
 
 class ToolRegistry:
     """Registry for managing agent tools."""
-    
+
     def __init__(self) -> None:
         self._tools: Dict[str, Tool] = {}
-    
+
     def register(self, tool: Tool) -> None:
         """Register a tool."""
         self._tools[tool.name] = tool
-    
+
     def get_tool(self, name: str) -> Optional[Tool]:
         """Get a tool by name."""
         return self._tools.get(name)
-    
+
     def get_tool_descriptions(self) -> List[Dict[str, str]]:
         """Get descriptions of all registered tools."""
         return [
