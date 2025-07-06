@@ -47,6 +47,7 @@ packages/haive-{name}/
 ### Python Code Standards
 
 #### Imports
+
 ```python
 # Standard library imports first
 import os
@@ -65,6 +66,7 @@ from haive.agents.base import Agent
 ```
 
 #### Type Hints
+
 Always use type hints for function signatures and class attributes:
 
 ```python
@@ -80,15 +82,16 @@ class Agent(Generic[T]):
         tools: Optional[List[Tool]] = None
     ) -> None:
         ...
-    
+
     async def arun(
-        self, 
+        self,
         input_data: Union[str, Dict[str, Any]]
     ) -> T:
         ...
 ```
 
 #### Docstrings
+
 Use Google-style docstrings for all public functions, classes, and modules:
 
 ```python
@@ -100,16 +103,16 @@ pattern to solve problems by interleaving thought, action, and observation.
 
 class ReactAgent(Agent):
     """ReAct pattern agent with tool use capabilities.
-    
+
     The ReactAgent implements the ReAct (Reasoning + Acting) pattern,
     allowing it to solve complex problems by thinking step-by-step
     and using tools when necessary.
-    
+
     Attributes:
         tools: List of available tools for the agent to use.
         max_iterations: Maximum number of reasoning iterations.
         verbose: Whether to print reasoning traces.
-        
+
     Example:
         >>> agent = ReactAgent(
         ...     name="researcher",
@@ -118,22 +121,22 @@ class ReactAgent(Agent):
         ... )
         >>> result = await agent.arun("What is the population of Tokyo?")
     """
-    
+
     async def arun(
-        self, 
+        self,
         query: str,
         config: Optional[RunnableConfig] = None
     ) -> AgentResponse:
         """Execute the agent with a query.
-        
+
         Args:
             query: The input query to process.
             config: Optional configuration for the run, including
                 thread_id for conversation continuity.
-                
+
         Returns:
             AgentResponse containing the result and metadata.
-            
+
         Raises:
             ToolExecutionError: If a tool fails during execution.
             MaxIterationsError: If max iterations exceeded.
@@ -141,43 +144,44 @@ class ReactAgent(Agent):
 ```
 
 #### Class Structure
+
 ```python
 class MyAgent(BaseAgent):
     """One-line class description.
-    
+
     Detailed description of the agent's purpose and behavior.
     """
-    
+
     # Class constants
     DEFAULT_TEMPERATURE = 0.7
     MAX_RETRIES = 3
-    
+
     # Pydantic fields with descriptions
     model_name: str = Field(
         default="gpt-4",
         description="The LLM model to use"
     )
-    
+
     temperature: float = Field(
         default=DEFAULT_TEMPERATURE,
         ge=0.0,
         le=1.0,
         description="Sampling temperature for generation"
     )
-    
+
     # Private attributes use underscore prefix
     _client: Optional[AsyncOpenAI] = None
-    
+
     def __init__(self, **kwargs):
         """Initialize the agent."""
         super().__init__(**kwargs)
         self._setup_client()
-    
+
     # Public methods
     async def arun(self, input_data: str) -> str:
         """Main execution method."""
         ...
-    
+
     # Private methods use underscore prefix
     def _setup_client(self) -> None:
         """Setup the API client."""
@@ -228,6 +232,7 @@ except Exception as e:
 ## Testing
 
 ### Test Location
+
 Tests MUST be in `packages/haive-{name}/tests/` directory, NOT in the source tree.
 
 ### Test Structure
@@ -243,7 +248,7 @@ from haive.tools import SearchTool
 
 class TestReactAgent:
     """Test suite for ReactAgent."""
-    
+
     @pytest.fixture
     def agent(self):
         """Create a test agent instance."""
@@ -252,22 +257,22 @@ class TestReactAgent:
             tools=[SearchTool()],
             temperature=0  # Deterministic for tests
         )
-    
+
     @pytest.mark.asyncio
     async def test_simple_query(self, agent):
         """Test agent handles simple queries."""
         result = await agent.arun("What is 2+2?")
         assert "4" in result.content
-    
+
     @pytest.mark.asyncio
     async def test_tool_usage(self, agent, mock_search_tool):
         """Test agent correctly uses tools."""
         agent.tools = [mock_search_tool]
         result = await agent.arun("Search for Python tutorials")
-        
+
         mock_search_tool.execute.assert_called_once()
         assert result.tool_calls[0].tool_name == "search"
-    
+
     @pytest.mark.asyncio
     async def test_error_handling(self, agent):
         """Test agent handles errors gracefully."""
@@ -315,7 +320,7 @@ async def test_rag_with_real_retriever():
     # Use test collection
     retriever = VectorRetriever(collection="test_docs")
     agent = SimpleRAGAgent(retriever=retriever)
-    
+
     result = await agent.arun("What is the main feature?")
     assert result.source_documents
     assert len(result.source_documents) > 0
@@ -324,6 +329,7 @@ async def test_rag_with_real_retriever():
 ## Examples
 
 ### Example Files
+
 Each major module should have an `example.py` file in its directory (NOT in a separate examples folder):
 
 ```python
@@ -351,12 +357,12 @@ async def main():
         ],
         verbose=True  # Show reasoning trace
     )
-    
+
     # Example 1: Simple calculation
     print("Example 1: Calculation")
     result = await agent.arun("What is 15% of 2500?")
     print(f"Result: {result}")
-    
+
     # Example 2: Research task
     print("\nExample 2: Research")
     result = await agent.arun(
@@ -364,7 +370,7 @@ async def main():
         "is it of Japan's total population?"
     )
     print(f"Result: {result}")
-    
+
     # Example 3: Multi-step reasoning
     print("\nExample 3: Complex task")
     result = await agent.arun(
@@ -373,7 +379,7 @@ async def main():
         "percentage this is of Japan's total population."
     )
     print(f"Result: {result}")
-    
+
 
 if __name__ == "__main__":
     asyncio.run(main())
@@ -382,6 +388,7 @@ if __name__ == "__main__":
 ## Configuration
 
 ### Agent Configuration
+
 Use Pydantic models for configuration:
 
 ```python
@@ -391,31 +398,31 @@ from typing import Optional, List
 
 class ReactAgentConfig(BaseModel):
     """Configuration for ReactAgent."""
-    
+
     model_config = ConfigDict(
         validate_assignment=True,
         extra="forbid"
     )
-    
+
     max_iterations: int = Field(
         default=10,
         ge=1,
         le=50,
         description="Maximum reasoning iterations"
     )
-    
+
     temperature: float = Field(
         default=0.7,
         ge=0.0,
         le=2.0,
         description="LLM sampling temperature"
     )
-    
+
     tools: List[str] = Field(
         default_factory=list,
         description="List of tool names to load"
     )
-    
+
     enable_caching: bool = Field(
         default=True,
         description="Cache tool results"
@@ -425,6 +432,7 @@ class ReactAgentConfig(BaseModel):
 ## State Management
 
 ### State Schemas
+
 Define clear state schemas using Pydantic:
 
 ```python
@@ -435,27 +443,27 @@ from langchain_core.messages import BaseMessage
 
 class ReactState(BaseModel):
     """State for ReAct agent execution."""
-    
+
     messages: List[BaseMessage] = Field(
         default_factory=list,
         description="Conversation messages"
     )
-    
+
     reasoning_steps: List[Dict[str, Any]] = Field(
         default_factory=list,
         description="Reasoning trace"
     )
-    
+
     tool_calls: List[ToolCall] = Field(
         default_factory=list,
         description="History of tool calls"
     )
-    
+
     current_iteration: int = Field(
         default=0,
         description="Current reasoning iteration"
     )
-    
+
     final_answer: Optional[str] = Field(
         default=None,
         description="Final answer when complete"
@@ -479,10 +487,10 @@ class MyAgent:
             agent_name=name,
             agent_type=self.__class__.__name__
         )
-    
+
     async def arun(self, query: str):
         logger.debug("Processing query", query=query[:100])
-        
+
         try:
             result = await self._process(query)
             logger.info(
@@ -503,6 +511,7 @@ class MyAgent:
 ## Git Workflow
 
 ### Branch Naming
+
 - `feat/description` - New features
 - `fix/description` - Bug fixes
 - `docs/description` - Documentation only
@@ -510,6 +519,7 @@ class MyAgent:
 - `test/description` - Test additions/changes
 
 ### Commit Messages
+
 Follow conventional commits:
 
 ```
@@ -523,22 +533,27 @@ Closes #123
 ```
 
 ### Pull Request Template
+
 ```markdown
 ## Description
+
 Brief description of changes
 
 ## Type of Change
+
 - [ ] Bug fix
 - [ ] New feature
 - [ ] Breaking change
 - [ ] Documentation update
 
 ## Testing
+
 - [ ] Unit tests pass
 - [ ] Integration tests pass
 - [ ] Example scripts run successfully
 
 ## Checklist
+
 - [ ] Code follows style guide
 - [ ] Self-review completed
 - [ ] Comments added for complex logic
@@ -565,6 +580,7 @@ Brief description of changes
 ## Documentation
 
 Each module should have:
+
 1. **Module docstring** explaining purpose
 2. **Class/function docstrings** with examples
 3. **README.md** with usage examples

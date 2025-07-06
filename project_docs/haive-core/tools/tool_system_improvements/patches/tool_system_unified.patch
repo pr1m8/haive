@@ -1,0 +1,386 @@
+diff --git a/src/haive/core/common/mixins/tool_route_mixin.py b/src/haive/core/common/mixins/tool_route_mixin.py
+index 47e2c2a..23c4ab0 100644
+--- a/src/haive/core/common/mixins/tool_route_mixin.py
++++ b/src/haive/core/common/mixins/tool_route_mixin.py
+@@ -36,7 +36,9 @@ Usage:
+ """
+ 
+ import logging
+-from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
++from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union, Type
++import inspect
++from typing import get_type_hints
+ 
+ from pydantic import BaseModel, Field, field_validator, model_validator
+ from rich.console import Console
+@@ -97,6 +99,18 @@ class ToolRouteMixin(BaseModel):
+         description="Optional callable to validate tools before routing",
+         exclude=True,  # Exclude from serialization
+     )
++    
++    # NEW: Actual tool storage
++    tools: List[Any] = Field(
++        default_factory=list,
++        description="List of tools (BaseTool, StructuredTool, Pydantic models, callables)"
++    )
++    
++    # NEW: Tool instance mapping for quick lookup
++    tool_instances: Dict[str, Any] = Field(
++        default_factory=dict,
++        description="Mapping of tool names to actual tool instances"
++    )
+ 
+     def set_tool_route(
+         self, tool_name: str, route: str, metadata: Optional[Dict[str, Any]] = None
+@@ -303,6 +317,12 @@ class ToolRouteMixin(BaseModel):
+                 "module": getattr(tool, "__module__", "unknown"),
+                 "tool_type": "pydantic_model",
+             }
++            # Check if it has __call__ method (executable tool)
++            if hasattr(tool, "__call__") and callable(getattr(tool, "__call__")):
++                metadata["is_executable"] = True
++                route = "pydantic_tool"
++            else:
++                metadata["is_executable"] = False
+         elif hasattr(tool, "__class__") and "BaseTool" in str(tool.__class__.__mro__):
+             route = "langchain_tool"
+             metadata = {
+@@ -315,11 +335,57 @@ class ToolRouteMixin(BaseModel):
+                 "callable_type": type(tool).__name__,
+                 "has_annotations": hasattr(tool, "__annotations__"),
+             }
++            # Enhanced callable analysis
++            metadata.update(self._get_callable_metadata(tool))
+         else:
+             route = "unknown"
+             metadata = {"original_type": type(tool).__name__}
+ 
+         return route, metadata
++    
++    def _get_callable_metadata(self, callable_obj: Callable) -> Dict[str, Any]:
++        """Extract enhanced metadata from callable objects.
++        
++        Args:
++            callable_obj: Callable to analyze
++            
++        Returns:
++            Dictionary of metadata
++        """
++        metadata = {}
++        
++        try:
++            # Check if async
++            metadata["is_async"] = inspect.iscoroutinefunction(callable_obj)
++            
++            # Get signature
++            sig = inspect.signature(callable_obj)
++            metadata["parameters"] = list(sig.parameters.keys())
++            metadata["parameter_count"] = len(sig.parameters)
++            
++            # Check for type hints
++            try:
++                hints = get_type_hints(callable_obj)
++                metadata["has_type_hints"] = bool(hints)
++                metadata["has_return_type"] = "return" in hints
++            except Exception:
++                metadata["has_type_hints"] = False
++                metadata["has_return_type"] = False
++                
++            # Determine callable kind
++            if inspect.ismethod(callable_obj):
++                metadata["callable_kind"] = "method"
++            elif inspect.isfunction(callable_obj):
++                metadata["callable_kind"] = "function"
++            elif hasattr(callable_obj, "__name__") and callable_obj.__name__ == "<lambda>":
++                metadata["callable_kind"] = "lambda"
++            else:
++                metadata["callable_kind"] = "callable_object"
++                
++        except Exception as e:
++            logger.debug(f"Error analyzing callable: {e}")
++            
++        return metadata
+ 
+     def add_tools_to_category(
+         self, category: str, tools: List[Any]
+@@ -665,3 +731,113 @@ class ToolRouteMixin(BaseModel):
+ 
+         console.print("=" * 80 + "\n")
+         return self
++    
++    def add_tool(
++        self, 
++        tool: Any,
++        route: Optional[str] = None,
++        metadata: Optional[Dict[str, Any]] = None
++    ) -> "ToolRouteMixin":
++        """Add a tool with automatic routing and metadata.
++        
++        Args:
++            tool: Tool instance to add
++            route: Optional explicit route (auto-detected if not provided)
++            metadata: Optional metadata for the tool
++            
++        Returns:
++            Self for method chaining
++        """
++        # Get tool name
++        tool_name = self._get_tool_name(tool, len(self.tools))
++        
++        # Add to tools list if not already there
++        if tool not in self.tools:
++            self.tools.append(tool)
++        
++        # Store tool instance
++        self.tool_instances[tool_name] = tool
++        
++        # Determine route if not provided
++        if route is None:
++            route, auto_metadata = self._analyze_tool(tool)
++            if metadata:
++                metadata.update(auto_metadata or {})
++            else:
++                metadata = auto_metadata
++        
++        # Set route and metadata
++        self.set_tool_route(tool_name, route, metadata)
++        
++        logger.debug(f"Added tool '{tool_name}' with route '{route}'")
++        return self
++    
++    def get_tool(self, tool_name: str) -> Optional[Any]:
++        """Get a tool instance by name.
++        
++        Args:
++            tool_name: Name of the tool
++            
++        Returns:
++            Tool instance or None if not found
++        """
++        return self.tool_instances.get(tool_name)
++    
++    def get_tools_by_route(self, route: str) -> List[Any]:
++        """Get all tools with a specific route.
++        
++        Args:
++            route: Route to filter by
++            
++        Returns:
++            List of tools with that route
++        """
++        tools = []
++        for name, tool_route in self.tool_routes.items():
++            if tool_route == route:
++                tool = self.get_tool(name)
++                if tool:
++                    tools.append(tool)
++        return tools
++    
++    def clear_tools(self) -> "ToolRouteMixin":
++        """Clear all tools and routes.
++        
++        Returns:
++            Self for method chaining
++        """
++        self.tools.clear()
++        self.tool_instances.clear()
++        self.tool_routes.clear()
++        self.tool_metadata.clear()
++        logger.debug("Cleared all tools and routes")
++        return self
++    
++    def update_tool_route(self, tool_name: str, new_route: str) -> "ToolRouteMixin":
++        """Update an existing tool's route dynamically.
++        
++        Args:
++            tool_name: Name of the tool to update
++            new_route: New route to assign
++            
++        Returns:
++            Self for method chaining
++        """
++        if tool_name not in self.tool_routes:
++            logger.warning(f"Tool '{tool_name}' not found in routes")
++            return self
++        
++        old_route = self.tool_routes[tool_name]
++        self.tool_routes[tool_name] = new_route
++        
++        # Update metadata to track changes
++        if tool_name not in self.tool_metadata:
++            self.tool_metadata[tool_name] = {}
++        
++        self.tool_metadata[tool_name].update({
++            "route_updated": True,
++            "previous_route": old_route,
++        })
++        
++        logger.debug(f"Updated route for '{tool_name}': {old_route} -> {new_route}")
++        return self
+diff --git a/src/haive/core/engine/aug_llm/config.py b/src/haive/core/engine/aug_llm/config.py
+index e5c966f..70af9aa 100644
+--- a/src/haive/core/engine/aug_llm/config.py
++++ b/src/haive/core/engine/aug_llm/config.py
+@@ -69,6 +69,7 @@ from rich.table import Table
+ from rich.tree import Tree
+ 
+ from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
++from haive.core.common.mixins.structured_output_mixin import StructuredOutputMixin
+ from haive.core.engine.base import EngineType, InvokableEngine
+ from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+ 
+@@ -104,6 +105,7 @@ ToolChoiceMode = Literal["auto", "required", "optional", "none"]
+ 
+ class AugLLMConfig(
+     ToolRouteMixin,
++    StructuredOutputMixin,
+     InvokableEngine[
+         Union[str, Dict[str, Any], List[BaseMessage]],
+         Union[BaseMessage, Dict[str, Any]],
+@@ -220,10 +222,8 @@ class AugLLMConfig(
+         default=None, description="Input variables for the prompt template"
+     )
+ 
+-    # Tools - integrating ToolListMixin functionality
+-    tools: Sequence[
+-        Union[Type[BaseTool], Type[BaseModel], Callable, StructuredTool, BaseModel]
+-    ] = Field(default_factory=list, description="The tools to use for the node")
++    # Tools are inherited from ToolRouteMixin - no need to redefine
++    # When tools are passed to AugLLMConfig, they'll be stored in the mixin
+ 
+     # Tool routes (provided by ToolRouteMixin)
+     schemas: Sequence[
+@@ -255,6 +255,8 @@ class AugLLMConfig(
+     )
+ 
+     # Output handling
++    # TODO: TYPED DICT and DICT, use tool choice mixin. 
++    # TODO: STructured output model mixin. 
+     structured_output_model: Optional[Type[BaseModel]] = Field(
+         default=None, description="Pydantic model for structured output"
+     )
+@@ -599,41 +601,59 @@ class AugLLMConfig(
+             self._is_processing_validation = False
+ 
+         return self
++    
++    def _analyze_tool(self, tool: Any) -> Tuple[str, Optional[Dict[str, Any]]]:
++        """Analyze tool with AugLLM-specific context awareness.
++        
++        Extends ToolRouteMixin's analysis with structured output detection.
++        """
++        # Check if this is the structured output model
++        if self.structured_output_model and tool == self.structured_output_model:
++            route = "structured_output_tool" if self.structured_output_version == "v2" else "parser"
++            metadata = {
++                "purpose": "structured_output",
++                "version": self.structured_output_version,
++                "force_choice": self.structured_output_version == "v2",
++                "class_name": tool.__name__ if hasattr(tool, "__name__") else str(tool),
++            }
++            return route, metadata
++        
++        # Use parent implementation for regular tools
++        return super()._analyze_tool(tool)
+ 
+     def _process_and_validate_tools(self):
+-        """Process tools, detect BaseModel tools, and validate tool configuration."""
++        """Process tools using unified ToolRouteMixin functionality."""
+         debug_print("🔧 [blue]Processing and validating tools...[/blue]")
+ 
+         if not self.tools:
+-            # Clear derived fields if no tools
++            # Clear all tool data using mixin method
++            self.clear_tools()
+             self.pydantic_tools = []
+             self.tool_is_base_model = False
+-            self.tool_routes = {}
+             self._tool_name_mapping = {}
+             debug_print(
+                 "📝 [yellow]No tools provided - cleared tool-related fields[/yellow]"
+             )
+             return
+ 
+-        # Process each tool to detect types and update related fields
++        # Process each tool through the routing system
+         basemodel_tools = []
+         tool_names = []
+-        new_tool_routes = {}
+         tool_name_mapping = {}
+ 
+         for i, tool in enumerate(self.tools):
+-            tool_name = None
+-            tool_route = "default"
+-            actual_tool_name = None  # The name that will be used in LLM binding
+-
+-            # Case 1: Tool is a BaseModel type
++            # Add tool through unified routing system
++            # This will analyze the tool and set appropriate route
++            self.add_tool(tool)
++            
++            # Get the tool name and route that was assigned
++            tool_name = self._get_tool_name(tool, i)
++            tool_route = self.tool_routes.get(tool_name, "unknown")
++            actual_tool_name = tool_name  # The name that will be used in LLM binding
++
++            # Track BaseModel tools
+             if isinstance(tool, type) and issubclass(tool, BaseModel):
+                 basemodel_tools.append(tool)
+-                tool_name = tool.__name__
+-                # CRITICAL FIX: LangChain uses the exact class name for BaseModel tools
+-                # NOT lowercased - this matches convert_to_openai_tool() behavior
+-                actual_tool_name = tool.__name__
+-                tool_route = "pydantic_model"
+ 
+                 # Add to pydantic_tools if not already there
+                 if tool not in self.pydantic_tools:
+@@ -642,47 +662,13 @@ class AugLLMConfig(
+                         f"➕ [green]Added BaseModel {tool.__name__} to pydantic_tools[/green]"
+                     )
+ 
+-            # Case 2: Tool is a BaseTool instance or type
+-            elif isinstance(tool, BaseTool) or (
+-                isinstance(tool, type) and issubclass(tool, BaseTool)
+-            ):
+-                if isinstance(tool, type):
+-                    tool_name = getattr(tool, "name", tool.__name__)
+-                    actual_tool_name = tool_name
+-                else:
+-                    tool_name = getattr(tool, "name", f"tool_{i}")
+-                    actual_tool_name = tool_name
+-                tool_route = "langchain_tool"
+-
+-            # Case 3: Tool is a string (reference to a tool)
+-            elif isinstance(tool, str):
+-                tool_name = tool
+-                actual_tool_name = tool
+-                tool_route = "string_reference"
+-
+-            # Case 4: Callable function
+-            elif callable(tool) and not isinstance(tool, type):
+-                tool_name = getattr(tool, "__name__", f"function_{i}")
+-                actual_tool_name = tool_name
+-                tool_route = "function"
+-
+-            # Case 5: Other tool types
+-            else:
+-                tool_name = f"unknown_tool_{i}"
+-                actual_tool_name = tool_name
+-                tool_route = "unknown"
+-                debug_print(
+-                    f"⚠️ [yellow]Unrecognized tool type: {type(tool).__name__}[/yellow]"
+-                )
+-
++            # Track tool names and mapping
+             if tool_name:
+                 tool_names.append(tool_name)
+-                new_tool_routes[tool_name] = tool_route
+                 # Map display name to actual binding name
+                 tool_name_mapping[tool_name] = actual_tool_name
+ 
+-        # Update tool routes and name mapping
+-        self.tool_routes = new_tool_routes
++        # Store the name mapping
+         self._tool_name_mapping = tool_name_mapping
+ 
+         # Remove tools from pydantic_tools that are no longer in tools

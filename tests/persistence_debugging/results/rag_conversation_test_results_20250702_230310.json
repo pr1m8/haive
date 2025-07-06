@@ -1,0 +1,50 @@
+{
+  "rag_base": {
+    "status": "\u274c FAILED",
+    "error": "No module named 'haive.core.graph.node.callable_node'",
+    "error_type": "ModuleNotFoundError"
+  },
+  "rag_simple": {
+    "status": "\u274c FAILED",
+    "error": "1 validation error for SimpleRAGAgent\n  Value error, MultiAgent requires at least one agent [type=value_error, input_value={'name': 'TestRAGSimple_2....', 'persistence': True}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/value_error",
+    "error_type": "ValidationError"
+  },
+  "collaborative": {
+    "status": "\u2705 PASSED",
+    "agent_name": "TestCollab_230253",
+    "thread_id": "collab_test_230253",
+    "persistence_type": "PostgresCheckpointerConfig",
+    "participants": ["PM_230253", "Dev_230253"],
+    "has_prepared_statement_errors": false,
+    "app_name": "haive_conversation_125146075303936"
+  },
+  "debate": {
+    "status": "\u274c FAILED",
+    "error": "list index out of range",
+    "error_type": "IndexError"
+  },
+  "directed": {
+    "status": "\u2705 PASSED",
+    "agent_name": "TestDirected_230258",
+    "thread_id": "directed_test_230258",
+    "persistence_type": "PostgresCheckpointerConfig",
+    "participants": ["Lead_230258", "Member_230258"],
+    "app_name": "haive_conversation_125146023075264"
+  },
+  "round_robin": {
+    "status": "\u2705 PASSED",
+    "agent_name": "TestRoundRobin_230303",
+    "thread_id": "roundrobin_test_230303",
+    "persistence_type": "PostgresCheckpointerConfig",
+    "participants": ["A_230303", "B_230303"],
+    "app_name": "haive_conversation_125146023839488"
+  },
+  "social_media": {
+    "status": "\u2705 PASSED",
+    "agent_name": "TestSocialMedia_230305",
+    "thread_id": "socialmedia_test_230305",
+    "persistence_type": "PostgresCheckpointerConfig",
+    "participants": ["User_230305", "Influencer_230305"],
+    "app_name": "haive_conversation_125146023481408"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "component_info": {
+    "name": "search_authors_openlibrary",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.openlibrary_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Search for authors by name using OpenLibrary",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-05T11:38:15.852789",
+    "schema": {
+      "description": "Input schema for the author search tool.\n\nAttributes:\n    name: Name of the author to search for.",
+      "properties": {
+        "name": {
+          "description": "Name of the author to search for",
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": ["name"],
+      "title": "AuthorSearchInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "search_authors_openlibrary",
+    "tool_description": "Search for authors by name using OpenLibrary"
+  },
+  "document": {
+    "page_content": "# search_authors_openlibrary\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.openlibrary_toolkit\n**Class:** StructuredTool\n\n## Description\nSearch for authors by name using OpenLibrary\n\n## Schema\n```json\n{\n  \"description\": \"Input schema for the author search tool.\\n\\nAttributes:\\n    name: Name of the author to search for.\",\n  \"properties\": {\n    \"name\": {\n      \"description\": \"Name of the author to search for\",\n      \"title\": \"Name\",\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"name\"\n  ],\n  \"title\": \"AuthorSearchInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `search_authors_openlibrary`\n**Description:** Search for authors by name using OpenLibrary\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "search_authors_openlibrary",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.openlibrary_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-05T11:38:15.852789",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

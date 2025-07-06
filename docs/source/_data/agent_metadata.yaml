@@ -1,0 +1,268 @@
+# Agent Metadata Configuration
+# This file defines metadata for automatic documentation generation
+
+agents:
+  SimpleAgent:
+    category: simple
+    description: Basic conversational agent for straightforward interactions
+    icon: 🗣️
+    example_config:
+      engine: AugLLMConfig
+      params:
+        temperature: 0.7
+        system_message: "You are a helpful assistant."
+    example_usage: |
+      # Single turn conversation
+      response = await agent.arun("What's the capital of France?")
+
+      # Multi-turn with state persistence
+      config = {"configurable": {"thread_id": "conv-123"}}
+      await agent.arun("My name is Alice", config=config)
+      response = await agent.arun("What's my name?", config=config)
+    visualization:
+      supports_graph: true
+      graph_type: simple
+      state_schema: MessageState
+    key_features:
+      - Stateful conversations
+      - Streaming support
+      - Token usage tracking
+      - Persistence integration
+    benchmarks:
+      response_time: "< 1s"
+      tokens_per_second: 50
+
+  ReactAgent:
+    category: react
+    description: Reasoning and acting agent with tool use capabilities
+    icon: 🔄
+    example_config:
+      tools: ["SearchTool()", "CalculatorTool()"]
+      params:
+        max_iterations: 5
+        verbose: true
+    example_usage: |
+      # Research with reasoning
+      result = await agent.arun(
+          "Find the population density of Tokyo and compare to NYC"
+      )
+
+      # Access reasoning trace
+      trace = agent.get_reasoning_trace()
+    visualization:
+      supports_graph: true
+      graph_type: cyclic
+      includes_tools: true
+      state_schema: ReactState
+    key_features:
+      - Tool integration
+      - Reasoning traces
+      - Error recovery
+      - Parallel tool execution
+    advanced_features:
+      - Custom tool creation
+      - Tool result caching
+      - Reasoning strategy selection
+
+  BaseRAGAgent:
+    category: rag
+    description: Foundation for retrieval-augmented generation agents
+    icon: 📚
+    example_config:
+      retriever: VectorRetriever
+      params:
+        collection: docs
+        top_k: 5
+        llm_config:
+          temperature: 0.3
+    example_usage: |
+      # Query with retrieval
+      answer = await agent.arun("What are the main features?")
+
+      # Get source documents
+      sources = agent.get_source_documents()
+      for doc in sources:
+          print(f"Source: {doc.metadata['source']}")
+    visualization:
+      supports_graph: true
+      graph_type: dag
+      components: ["retriever", "reranker", "generator"]
+      state_schema: RAGState
+    key_features:
+      - Document retrieval
+      - Source tracking
+      - Reranking support
+      - Context window management
+
+  AdaptiveRAGAgent:
+    category: rag
+    subcategory: advanced
+    description: RAG agent that dynamically selects retrieval strategy
+    icon: 🎯
+    example_config:
+      strategies: ["simple", "multi_query", "hyde", "fusion"]
+      params:
+        strategy_selector: auto
+        fallback_strategy: simple
+    example_usage: |
+      # Complex query with adaptive strategy
+      result = await agent.arun(
+          "Compare pricing tiers focusing on enterprise features"
+      )
+
+      # Check which strategy was used
+      print(f"Strategy: {agent.last_strategy}")
+      print(f"Confidence: {agent.strategy_confidence}")
+    visualization:
+      supports_graph: true
+      graph_type: conditional
+      strategy_flow: true
+      state_schema: AdaptiveRAGState
+    key_features:
+      - Strategy selection
+      - Query analysis
+      - Fallback handling
+      - Performance tracking
+    strategies:
+      simple: Direct retrieval with query
+      multi_query: Generate multiple query variants
+      hyde: Hypothetical document embeddings
+      fusion: Reciprocal rank fusion
+
+  DebateConversation:
+    category: conversation
+    description: Structured debate management with multiple participants
+    icon: 🎭
+    example_config:
+      factory_method: create_simple_debate
+      params:
+        topic: "AI Ethics"
+        position_a: ["Alice", "Pro-regulation"]
+        position_b: ["Bob", "Pro-innovation"]
+        enable_judge: true
+        arguments_per_side: 3
+    example_usage: |
+      # Run debate
+      result = await debate.arun()
+
+      # Get debate summary
+      summary = debate.get_debate_summary()
+      print(f"Winner: {summary['winner']}")
+      print(f"Key arguments: {summary['key_points']}")
+    visualization:
+      supports_graph: true
+      graph_type: multi_agent
+      shows_turns: true
+      state_schema: DebateState
+    key_features:
+      - Turn management
+      - Argument tracking
+      - Judge integration
+      - Position enforcement
+    debate_formats:
+      - traditional
+      - oxford
+      - parliamentary
+
+  TreeOfThoughtsAgent:
+    category: reasoning
+    description: Explores multiple reasoning paths with tree search
+    icon: 🌳
+    example_config:
+      params:
+        branch_factor: 3
+        max_depth: 4
+        evaluation_strategy: value_function
+        pruning_threshold: 0.3
+    example_usage: |
+      # Complex problem solving
+      solution = await agent.arun(
+          "Design an algorithm to optimize delivery routes"
+      )
+
+      # Visualize reasoning tree
+      agent.visualize_reasoning_tree("tot_reasoning.png")
+    visualization:
+      supports_graph: true
+      graph_type: tree
+      interactive_tree: true
+      state_schema: TreeOfThoughtsState
+    key_features:
+      - Branch exploration
+      - Value-based pruning
+      - Backtracking support
+      - Path visualization
+
+  MultiAgent:
+    category: multi_agent
+    description: Orchestrates multiple agents for complex workflows
+    icon: 👥
+    example_config:
+      agents: ["researcher", "analyst", "writer"]
+      params:
+        routing_strategy: sequential
+        state_sharing: full
+        error_handling: retry
+    example_usage: |
+      # Create pipeline
+      pipeline = MultiAgent(
+          agents=[researcher, analyst, writer],
+          routing_strategy="skill_based"
+      )
+
+      # Run complex task
+      result = await pipeline.arun({
+          "task": "Market analysis report",
+          "industry": "EV charging"
+      })
+    visualization:
+      supports_graph: true
+      graph_type: workflow
+      shows_routing: true
+      state_schema: MultiAgentState
+    key_features:
+      - Dynamic routing
+      - State coordination
+      - Error propagation
+      - Performance monitoring
+    routing_strategies:
+      sequential: Execute agents in order
+      parallel: Execute agents concurrently
+      conditional: Route based on conditions
+      skill_based: Route based on agent capabilities
+
+# Categories metadata
+categories:
+  simple:
+    name: Simple Agents
+    description: Basic conversational and task agents
+    icon: 🗣️
+
+  react:
+    name: ReAct Agents
+    description: Reasoning and tool-using agents
+    icon: 🔄
+
+  rag:
+    name: RAG Agents
+    description: Retrieval-augmented generation agents
+    icon: 📚
+    subcategories:
+      - core
+      - advanced
+      - specialized
+
+  conversation:
+    name: Conversation Agents
+    description: Multi-party dialogue management
+    icon: 💬
+
+  reasoning:
+    name: Reasoning Agents
+    description: Advanced reasoning and critique
+    icon: 🧠
+
+  multi_agent:
+    name: Multi-Agent Systems
+    description: Coordinated agent workflows
+    icon: 👥

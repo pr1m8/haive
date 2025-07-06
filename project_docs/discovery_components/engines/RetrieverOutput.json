@@ -1,0 +1,55 @@
+{
+  "component_info": {
+    "name": "RetrieverOutput",
+    "component_type": "retriever",
+    "module_path": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+    "class_name": "RetrieverOutput",
+    "description": "Schema for retriever output.",
+    "source_code": "class RetrieverOutput(BaseModel):\n    \"\"\"Schema for retriever output.\"\"\"\n\n    retrieved_documents: Optional[Sequence[Document]] = Field(\n        default_factory=list, description=\"Retrieved documents\"\n    )\n\n    model_config = ConfigDict(extra=\"allow\")\n\n    @field_validator(\"retrieved_documents\", mode=\"before\")\n    @classmethod\n    def validate_documents(cls, v):\n        \"\"\"Validate that the documents are a list.\"\"\"\n        if v is None:\n            return []\n        return v\n",
+    "env_vars": [],
+    "timestamp": "2025-07-05T11:38:22.061876",
+    "schema": {
+      "properties": {
+        "data": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "retrieve_retrieveroutput",
+    "tool_description": "Retrieve documents using RetrieverOutput",
+    "engine_config": {
+      "engine_type": "retriever",
+      "retriever_class": "RetrieverOutput",
+      "module_path": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+      "description": "Schema for retriever output.",
+      "env_vars": [],
+      "schema": {
+        "properties": {
+          "data": {
+            "type": "Any",
+            "default": null
+          }
+        }
+      }
+    }
+  },
+  "document": {
+    "page_content": "# RetrieverOutput\n**Type:** retriever\n**Module:** packages.haive-core.src.haive.core.engine.retriever.retriever\n**Class:** RetrieverOutput\n\n## Description\nSchema for retriever output.\n\n## Schema\n```json\n{\n  \"properties\": {\n    \"data\": {\n      \"type\": \"Any\",\n      \"default\": null\n    }\n  }\n}\n```\n\n## Usage as Tool\n**Tool Name:** `retrieve_retrieveroutput`\n**Description:** Retrieve documents using RetrieverOutput\n\n## Engine Configuration\nThis component can be used as a Haive engine:\n```python\n# Example engine usage\nengine = RetrieverOutputEngine(name='RetrieverOutput')\n```\n\n## Source Code\n```python\nclass RetrieverOutput(BaseModel):\n    \"\"\"Schema for retriever output.\"\"\"\n\n    retrieved_documents: Optional[Sequence[Document]] = Field(\n        default_factory=list, description=\"Retrieved documents\"\n    )\n\n    model_config = ConfigDict(extra=\"allow\")\n\n    @field_validator(\"retrieved_documents\", mode=\"before\")\n    @classmethod\n    def validate_documents(cls, v):\n        \"\"\"Validate that the documents are a list.\"\"\"\n        if v is None:\n            return []\n        return v\n\n```",
+    "metadata": {
+      "name": "RetrieverOutput",
+      "component_type": "retriever",
+      "module_path": "packages.haive-core.src.haive.core.engine.retriever.retriever",
+      "class_name": "RetrieverOutput",
+      "has_tool": true,
+      "has_engine_config": true,
+      "env_vars": [],
+      "timestamp": "2025-07-05T11:38:22.061876",
+      "category": "engines"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": true
+}

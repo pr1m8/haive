@@ -13,7 +13,7 @@ The Haive Core package provides the fundamental building blocks for the entire f
    :gutter: 3
 
    .. grid-item-card:: 🌐 **Graph System**
-      :link: generated/haive.core.graph
+      :link: modules/haive.core.graph
       :link-type: doc
       
       State machines and workflow orchestration
@@ -67,14 +67,12 @@ Core Modules
    :maxdepth: 2
    :caption: Core Components
    
-   generated/haive.core
-   generated/haive.core.engine
-   generated/haive.core.graph
-   generated/haive.core.schema
-   generated/haive.core.persistence
-   generated/haive.core.registry
-   generated/haive.core.tools
-   generated/haive.core.utils
+   modules/haive.core.engine
+   modules/haive.core.graph
+   modules/haive.core.schema
+   modules/haive.core.persistence
+   modules/haive.core.registry
+   modules/haive.core.tools
 
 Engine System
 ~~~~~~~~~~~~~
@@ -83,10 +81,7 @@ Engine System
    :maxdepth: 2
    :caption: Engine & LLM
    
-   generated/haive.core.engine.base
-   generated/haive.core.engine.engine
-   generated/haive.core.engine.aug_llm
-   generated/haive.core.engine.protocol
+   modules/haive.core.engine
 
 Graph System
 ~~~~~~~~~~~~
@@ -95,10 +90,7 @@ Graph System
    :maxdepth: 2
    :caption: Graph Architecture
    
-   generated/haive.core.graph.state
-   generated/haive.core.graph.nodes
-   generated/haive.core.graph.edges
-   generated/haive.core.graph.builder
+   modules/haive.core.graph
 
 Schema System
 ~~~~~~~~~~~~~
@@ -107,10 +99,7 @@ Schema System
    :maxdepth: 2
    :caption: State Management
    
-   generated/haive.core.schema.state_schema
-   generated/haive.core.schema.schema_composer
-   generated/haive.core.schema.validation
-   generated/haive.core.schema.mixins
+   modules/haive.core.schema
 
 Quick Reference
 ~~~~~~~~~~~~~~~
@@ -179,6 +168,10 @@ Detailed Module Structure
    :maxdepth: 4
    :caption: Core Package Structure
    
-   generated/haive.core
+   modules/haive.core.engine
+   modules/haive.core.schema
+   modules/haive.core.persistence
+   modules/haive.core.registry
+   modules/haive.core.tools
 
 **Note**: The recursive documentation structure will be displayed after building the documentation with autosummary enabled.

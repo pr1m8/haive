@@ -1,0 +1,53 @@
+{
+  "rag_base": {
+    "status": "\u274c FAILED",
+    "error": "No module named 'haive.core.graph.node.callable_node'",
+    "error_type": "ModuleNotFoundError"
+  },
+  "rag_simple": {
+    "status": "\u274c FAILED",
+    "error": "1 validation error for SimpleRAGAgent\n  Value error, MultiAgent requires at least one agent [type=value_error, input_value={'name': 'TestRAGSimple_2....', 'persistence': True}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/value_error",
+    "error_type": "ValidationError"
+  },
+  "collaborative": {
+    "status": "\u2705 PASSED",
+    "agent_name": "TestCollab_230626",
+    "thread_id": "collab_test_230626",
+    "persistence_type": "PostgresCheckpointerConfig",
+    "participants": ["PM_230626", "Dev_230626"],
+    "has_prepared_statement_errors": false,
+    "app_name": "haive_conversation_137463517574848"
+  },
+  "debate": {
+    "status": "\u2705 PASSED",
+    "agent_name": "TestDebate_230631",
+    "thread_id": "debate_test_230631",
+    "persistence_type": "PostgresCheckpointerConfig",
+    "participants": ["Pro_230631", "Con_230631"],
+    "app_name": "haive_conversation_137462919162496"
+  },
+  "directed": {
+    "status": "\u2705 PASSED",
+    "agent_name": "TestDirected_230635",
+    "thread_id": "directed_test_230635",
+    "persistence_type": "PostgresCheckpointerConfig",
+    "participants": ["Lead_230635", "Member_230635"],
+    "app_name": "haive_conversation_137462919639488"
+  },
+  "round_robin": {
+    "status": "\u2705 PASSED",
+    "agent_name": "TestRoundRobin_230641",
+    "thread_id": "roundrobin_test_230641",
+    "persistence_type": "PostgresCheckpointerConfig",
+    "participants": ["A_230641", "B_230641"],
+    "app_name": "haive_conversation_137462917840768"
+  },
+  "social_media": {
+    "status": "\u2705 PASSED",
+    "agent_name": "TestSocialMedia_230643",
+    "thread_id": "socialmedia_test_230643",
+    "persistence_type": "PostgresCheckpointerConfig",
+    "participants": ["User_230643", "Influencer_230643"],
+    "app_name": "haive_conversation_137462919688256"
+  }
+}

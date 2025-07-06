@@ -1,0 +1,45 @@
+{
+  "component_info": {
+    "name": "GoogleBooks",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.google.google_books",
+    "class_name": "GoogleBooksQueryRun",
+    "description": "A wrapper around Google Books. Useful for when you need to answer general inquiries about books of certain topics and generate recommendation based off of key wordsInput should be a query string",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-05T11:38:15.785235",
+    "schema": {
+      "description": "Input for the GoogleBooksQuery tool.",
+      "properties": {
+        "query": {
+          "description": "query to look up on google books",
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"],
+      "title": "GoogleBooksQueryInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "GoogleBooks",
+    "tool_description": "A wrapper around Google Books. Useful for when you need to answer general inquiries about books of certain topics and generate recommendation based off of key wordsInput should be a query string"
+  },
+  "document": {
+    "page_content": "# GoogleBooks\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.tools.google.google_books\n**Class:** GoogleBooksQueryRun\n\n## Description\nA wrapper around Google Books. Useful for when you need to answer general inquiries about books of certain topics and generate recommendation based off of key wordsInput should be a query string\n\n## Schema\n```json\n{\n  \"description\": \"Input for the GoogleBooksQuery tool.\",\n  \"properties\": {\n    \"query\": {\n      \"description\": \"query to look up on google books\",\n      \"title\": \"Query\",\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"query\"\n  ],\n  \"title\": \"GoogleBooksQueryInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `GoogleBooks`\n**Description:** A wrapper around Google Books. Useful for when you need to answer general inquiries about books of certain topics and generate recommendation based off of key wordsInput should be a query string\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "GoogleBooks",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.tools.google.google_books",
+      "class_name": "GoogleBooksQueryRun",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-05T11:38:15.785235",
+      "category": "individual_tools"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}
