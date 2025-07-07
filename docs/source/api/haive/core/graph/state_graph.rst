@@ -1,0 +1,41 @@
+haive.core.graph.state_graph
+============================
+
+.. currentmodule:: haive.core.graph.state_graph
+
+.. automodule:: haive.core.graph.state_graph
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+   :private-members:
+   :special-members: __init__, __call__
+
+Classes
+-------
+
+.. autosummary::
+   :nosignatures:
+   :toctree: _autosummary
+
+Functions
+---------
+
+.. autosummary::
+   :nosignatures:
+   :toctree: _autosummary
+
+Examples
+--------
+
+.. code-block:: python
+
+   from haive.core.graph.state_graph import *
+   
+   # Your code here
+
+See Also
+--------
+
+- :doc:`/api/haive/core/index` - Package overview
+- :doc:`/api/haive/core/graph/index` - Module overview
