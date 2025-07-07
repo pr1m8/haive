@@ -2,19 +2,22 @@
 
 **Rationale**: Autosummary `:recursive:` flag consistently treats submodules as attributes rather than full modules, generating `.. autodata::` instead of `.. automodule::` directives.
 
-**Trade-offs**: 
+**Trade-offs**:
+
 - **Pro**: Manual approach works reliably and shows full documentation
 - **Pro**: Easy to scale and maintain
 - **Con**: Requires manual creation of module pages
 - **Con**: Not automatic like autosummary
 
 **Alternative Considered**: Fix autosummary configuration
+
 - **Rejected because**: Multiple attempts to fix autosummary failed
 - **Root issue**: Deep problem with how autosummary interprets namespaced modules
 
 ## Implementation Pattern
 
 ### Manual Module Page Template
+
 ```rst
 haive.core.module_name
 =====================
@@ -40,6 +43,7 @@ haive.core.module_name
 ```
 
 ### Gallery Update Pattern
+
 ```rst
 .. grid-item-card:: 🤖 **Module Name**
    :link: modules/haive.core.module_name
@@ -47,6 +51,7 @@ haive.core.module_name
 ```
 
 ## Files Changed
+
 - Created: `/docs/source/api/modules/haive.core.engine.rst`
 - Created: `/docs/source/api/modules/haive.core.schema.rst`
 - Created: `/docs/source/api/modules/haive.core.persistence.rst`

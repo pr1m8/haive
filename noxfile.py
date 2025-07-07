@@ -3,7 +3,7 @@
 Quick Commands:
 --------------
     nox -s docs         # Build docs with autosummary
-    nox -s docs_fast    # Build docs without autosummary 
+    nox -s docs_fast    # Build docs without autosummary
     nox -s docs_serve   # Build and serve with auto-reload
     nox -s docs_clean   # Clean build artifacts
     nox -s lint         # Run linters
@@ -13,7 +13,6 @@ Quick Commands:
 
 import os
 import shutil
-import webbrowser
 from pathlib import Path
 
 import nox
@@ -34,33 +33,35 @@ def docs(session):
     """Build documentation with full autosummary generation."""
     # Install dependencies
     session.run("poetry", "install", "--with", "docs", external=True)
-    
+
     # Clean build directory
     if BUILD_DIR.exists():
         shutil.rmtree(BUILD_DIR)
-    
+
     # Enable autosummary generation
     os.environ["SPHINX_AUTOSUMMARY_GENERATE"] = "true"
-    
+
     # Build documentation
     session.log("Building documentation with autosummary...")
     session.run(
         "poetry",
         "run",
         "sphinx-build",
-        "-b", "html",
-        "-j", "auto",
+        "-b",
+        "html",
+        "-j",
+        "auto",
         str(SOURCE_DIR),
         str(BUILD_DIR / "html"),
         external=True,
     )
-    
+
     # Run fix script if it exists
     fix_script = Path("scripts/fix_autosummary_output.py")
     if fix_script.exists():
         session.log("Fixing autosummary output...")
         session.run("poetry", "run", "python", str(fix_script), external=True)
-    
+
     session.log(f"✅ Documentation built in {BUILD_DIR / 'html'}")
     session.log(f"🌐 Open file://{BUILD_DIR.absolute() / 'html' / 'index.html'}")
 
@@ -70,28 +71,30 @@ def docs_fast(session):
     """Build documentation quickly without autosummary generation."""
     # Install minimal dependencies
     session.run("poetry", "install", "--only", "docs", external=True)
-    
+
     # Clean build directory
     if BUILD_DIR.exists():
         shutil.rmtree(BUILD_DIR)
-    
+
     # Disable autosummary generation for speed
     os.environ["SPHINX_AUTOSUMMARY_GENERATE"] = "false"
-    
+
     # Build documentation
     session.log("Building documentation (fast mode)...")
     session.run(
         "poetry",
         "run",
         "sphinx-build",
-        "-b", "html",
-        "-j", "auto",
+        "-b",
+        "html",
+        "-j",
+        "auto",
         "-q",  # Quiet mode
         str(SOURCE_DIR),
         str(BUILD_DIR / "html"),
         external=True,
     )
-    
+
     session.log(f"✅ Fast build complete in {BUILD_DIR / 'html'}")
 
 
@@ -100,10 +103,10 @@ def docs_serve(session):
     """Build and serve documentation with auto-reload using sphinx-autobuild."""
     # Install dependencies
     session.run("poetry", "install", "--with", "docs", external=True)
-    
+
     session.log("🔨 Building and serving documentation with auto-reload")
     session.log("🌐 Server at http://localhost:8000")
-    
+
     # Simple sphinx-autobuild
     session.run(
         "poetry",
@@ -111,7 +114,8 @@ def docs_serve(session):
         "sphinx-autobuild",
         str(SOURCE_DIR),
         str(BUILD_DIR / "html"),
-        "--port", "8000",
+        "--port",
+        "8000",
         external=True,
     )
 
@@ -123,19 +127,19 @@ def docs_clean(session):
     if BUILD_DIR.exists():
         shutil.rmtree(BUILD_DIR)
         session.log(f"✅ Cleaned {BUILD_DIR}")
-    
+
     # Clean generated API docs
     api_dir = SOURCE_DIR / "api" / "generated"
     if api_dir.exists():
         shutil.rmtree(api_dir)
         session.log(f"✅ Cleaned {api_dir}")
-    
+
     # Clean doctrees
     doctrees = DOCS_DIR / "doctrees"
     if doctrees.exists():
         shutil.rmtree(doctrees)
         session.log(f"✅ Cleaned {doctrees}")
-    
+
     session.log("✅ Documentation artifacts cleaned")
 
 
@@ -161,19 +165,14 @@ def typecheck(session):
     session.run("poetry", "run", "mypy", "packages/", external=True)
 
 
-
-
 @nox.session
 def fix_autosummary(session):
     """Fix autosummary generated files."""
     scripts_dir = Path("scripts")
-    
+
     # Run fix scripts
-    fix_scripts = [
-        "fix_generated_modules.py",
-        "fix_autosummary_output.py"
-    ]
-    
+    fix_scripts = ["fix_generated_modules.py", "fix_autosummary_output.py"]
+
     for script in fix_scripts:
         script_path = scripts_dir / script
         if script_path.exists():
@@ -181,5 +180,5 @@ def fix_autosummary(session):
             session.run("python", str(script_path), external=True)
         else:
             session.log(f"Script not found: {script}")
-    
+
     session.log("✅ Autosummary fixes applied")

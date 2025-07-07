@@ -1,7 +1,9 @@
 # Auto-Build Implementation with Smart Caching
 
 ## Overview
+
 Implemented comprehensive auto-build system for Haive documentation that:
+
 1. **Generates manual module pages** automatically from package structure
 2. **Smart caching** - only regenerates when source files change
 3. **Separate example runs** - don't rebuild docs when only running examples
@@ -10,7 +12,9 @@ Implemented comprehensive auto-build system for Haive documentation that:
 ## New Nox Sessions
 
 ### 1. `nox -s docs_auto` (Primary Command)
+
 **Smart auto-build with caching:**
+
 - ✅ **Detects changes**: Compares source file timestamps to last generation
 - ✅ **Generates modules**: Creates manual `.rst` files for all packages
 - ✅ **Builds docs**: Full Sphinx build with both galleries and automodule
@@ -18,13 +22,17 @@ Implemented comprehensive auto-build system for Haive documentation that:
 - ✅ **Performance**: Skips generation if modules are up-to-date
 
 ### 2. `nox -s docs_regenerate`
+
 **Force fresh module generation:**
+
 - 🗑️ Removes existing module files
 - 🏗️ Generates fresh documentation for all packages
 - ✨ Creates marker file for timestamp tracking
 
 ### 3. `nox -s docs_examples`
+
 **Run examples separately:**
+
 - 🏃 Executes documentation example scripts
 - 📁 Scans `examples/` directory for Python files
 - ⚠️ Reports failures but continues
@@ -35,6 +43,7 @@ Implemented comprehensive auto-build system for Haive documentation that:
 **Location**: `/scripts/generate_modules.py`
 
 ### Features:
+
 - **Package scanning**: Automatically discovers all Python modules
 - **Smart filtering**: Skips test files, cache, build artifacts
 - **Import validation**: Checks if modules can be imported
@@ -42,6 +51,7 @@ Implemented comprehensive auto-build system for Haive documentation that:
 - **Error handling**: Continues on failures, reports issues
 
 ### Template Format:
+
 ```rst
 haive.core.engine
 =================
@@ -69,12 +79,14 @@ haive.core.engine
 ## Smart Caching System
 
 ### Timestamp-Based Detection:
+
 1. **Marker file**: `.generated` in modules directory
 2. **Source scanning**: Checks all `.py` files in packages
 3. **Comparison**: Only regenerates if source files newer than marker
 4. **Performance**: Avoids unnecessary regeneration
 
 ### Cache Invalidation:
+
 - ✅ New Python files added to packages
 - ✅ Existing Python files modified
 - ✅ Package structure changes
@@ -83,12 +95,14 @@ haive.core.engine
 ## Gallery + Automodule Integration
 
 ### Maintains Both Approaches:
+
 1. **Visual galleries**: Beautiful card-based browsing (existing)
 2. **Full automodule**: Complete API documentation (new)
 3. **Consistent linking**: Gallery cards link to automodule pages
 4. **No conflicts**: Manual modules replace broken autosummary
 
 ### Result:
+
 - 🎨 **Users browse visually** via gallery cards
 - 📚 **Developers get full API** via automodule pages
 - 🔗 **Seamless navigation** between both views
@@ -97,6 +111,7 @@ haive.core.engine
 ## Commands Summary
 
 ### Daily Development:
+
 ```bash
 # Smart build (recommended)
 nox -s docs_auto
@@ -109,6 +124,7 @@ nox -s docs_view
 ```
 
 ### Maintenance:
+
 ```bash
 # Force fresh generation
 nox -s docs_regenerate
@@ -121,6 +137,7 @@ nox -s docs_clean
 ```
 
 ### Direct Poetry (Fastest):
+
 ```bash
 # If you just want to build quickly
 poetry run sphinx-build -b html docs/source docs/build/html
@@ -129,25 +146,30 @@ poetry run sphinx-build -b html docs/source docs/build/html
 ## Benefits
 
 ### For Developers:
+
 - **Automatic**: No manual module page creation
 - **Fast**: Smart caching prevents unnecessary work
 - **Reliable**: Always generates working automodule pages
 - **Complete**: Full API documentation with all classes/functions
 
 ### For Users:
+
 - **Visual**: Beautiful gallery browsing experience
 - **Functional**: All links work and show content
 - **Comprehensive**: Both overview and detailed documentation
 - **Responsive**: Modern navigation improvements
 
 ### For Maintenance:
+
 - **Self-updating**: Detects package changes automatically
 - **Separate concerns**: Examples don't trigger doc rebuilds
 - **Error resilient**: Continues on import failures
 - **Debuggable**: Clear logging and error reporting
 
 ## Status: ✅ COMPLETE
+
 Auto-build system implemented with:
+
 - ✅ Smart module generation
 - ✅ Timestamp-based caching
 - ✅ Separate example runs
