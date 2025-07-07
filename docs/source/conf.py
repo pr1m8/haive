@@ -13,6 +13,77 @@ from pathlib import Path
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", message=".*Matplotlib.*")
 
+# Mock imports early to help with module detection
+from unittest.mock import MagicMock
+import types
+
+# Create a simpler mock module
+def create_mock_module(name):
+    """Create a mock module that returns mock modules for any attribute access."""
+    module = types.ModuleType(name)
+    
+    # Make it look like a package
+    module.__path__ = []
+    module.__file__ = f"<mock {name}>"
+    
+    def mock_getattr(self, item):
+        # Avoid recursion by checking for special attributes
+        if item.startswith('_'):
+            raise AttributeError(item)
+        # Return a new mock module for any attribute
+        mock_sub = create_mock_module(f"{name}.{item}")
+        # Store it as an attribute so repeated access returns the same object
+        setattr(self, item, mock_sub)
+        # Also add to sys.modules
+        sys.modules[f"{name}.{item}"] = mock_sub
+        return mock_sub
+    
+    module.__getattr__ = mock_getattr.__get__(module)
+    return module
+
+# Mock all problematic imports
+sys.modules['langchain'] = create_mock_module('langchain')
+sys.modules['langchain_core'] = create_mock_module('langchain_core')
+sys.modules['langchain_core.messages'] = create_mock_module('langchain_core.messages')
+sys.modules['langchain_core.output_parsers'] = create_mock_module('langchain_core.output_parsers')
+sys.modules['langchain_core.output_parsers.openai_tools'] = create_mock_module('langchain_core.output_parsers.openai_tools')
+sys.modules['langchain_core.prompts'] = create_mock_module('langchain_core.prompts')
+sys.modules['langchain_core.runnables'] = create_mock_module('langchain_core.runnables')
+sys.modules['langchain_core.tools'] = create_mock_module('langchain_core.tools')
+sys.modules['langchain_core.utils'] = create_mock_module('langchain_core.utils')
+sys.modules['langchain_core.pydantic_v1'] = create_mock_module('langchain_core.pydantic_v1')
+sys.modules['langchain_community'] = create_mock_module('langchain_community')
+sys.modules['pydantic'] = create_mock_module('pydantic')
+sys.modules['litellm'] = create_mock_module('litellm')
+sys.modules['litellm.integrations'] = create_mock_module('litellm.integrations')
+sys.modules['litellm.integrations.custom_logger'] = create_mock_module('litellm.integrations.custom_logger')
+
+# Add some expected classes/functions to the mocks
+langchain_core = sys.modules['langchain_core']
+langchain_core.output_parsers.openai_tools.PydanticToolsParser = MagicMock
+langchain_core.output_parsers.JsonOutputParser = MagicMock
+langchain_core.messages.AIMessage = MagicMock
+langchain_core.messages.HumanMessage = MagicMock
+langchain_core.messages.SystemMessage = MagicMock
+langchain_core.messages.BaseMessage = MagicMock
+langchain_core.prompts.ChatPromptTemplate = MagicMock
+langchain_core.prompts.MessagesPlaceholder = MagicMock
+langchain_core.runnables.Runnable = MagicMock
+langchain_core.tools.Tool = MagicMock
+langchain_core.pydantic_v1.BaseModel = MagicMock
+langchain_core.utils.function_calling.convert_to_openai_tool = MagicMock
+
+# Add pydantic mocks
+pydantic = sys.modules['pydantic']
+pydantic.BaseModel = MagicMock
+pydantic.Field = MagicMock
+
+# Add litellm mocks
+litellm = sys.modules['litellm']
+litellm.acompletion = MagicMock
+litellm.completion = MagicMock
+litellm.integrations.custom_logger.CustomLogger = MagicMock
+
 # Add all package source directories to Python path for proper module discovery
 conf_dir = Path(__file__).parent
 project_root = conf_dir.parent.parent
@@ -221,6 +292,11 @@ html_theme_options = {
     "source_directory": "docs/source/",
 }
 
+# JavaScript files to include
+html_js_files = [
+    'contextual-navigation.js',
+]
+
 # ==============================================================================
 # Extension Configurations
 # ==============================================================================
@@ -240,10 +316,26 @@ autodoc_class_signature = "separated"
 
 # Autosummary - re-enabled for testing
 autosummary_generate = True
-autosummary_generate_overwrite = True
-autosummary_imported_members = True
+autosummary_generate_overwrite = False  # Don't overwrite our manually created files
+autosummary_imported_members = False  # Don't try to import members
 autosummary_ignore_module_all = False
 autosummary_filename_map = {}
+
+# Tell autosummary to treat these as modules
+def autosummary_get_type(app, obj, parent):
+    """Force certain patterns to be recognized as modules."""
+    if obj and hasattr(obj, '__name__'):
+        name = obj.__name__
+        # Force haive.core.* submodules to be treated as modules
+        if name.startswith('haive.core.') and '.' in name[11:]:
+            return 'module'
+        # Force haive.agents.* submodules to be treated as modules  
+        if name.startswith('haive.agents.') and '.' in name[13:]:
+            return 'module'
+        # Force haive.tools.* submodules to be treated as modules
+        if name.startswith('haive.tools.') and '.' in name[12:]:
+            return 'module'
+    return None
 # Fix module import issues
 import warnings
 warnings.filterwarnings('ignore', category=UserWarning, module='sphinx')
@@ -426,7 +518,6 @@ autodoc_mock_imports = [
     "seaborn",
     "bokeh",
     "dash",
-    "haive",
     "langchain_google_vertexai",
     "vertexai",
     "google.cloud",
