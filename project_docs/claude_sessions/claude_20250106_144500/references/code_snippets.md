@@ -3,6 +3,7 @@
 ## Manual Module Page Template
 
 ### Core Module Template
+
 ```rst
 haive.core.module_name
 =====================
@@ -30,6 +31,7 @@ haive.core.module_name
 ## Gallery Card Update Pattern
 
 ### Before (Broken)
+
 ```rst
 .. grid-item-card:: 🤖 **Engine System**
    :link: generated/haive.core.engine
@@ -37,6 +39,7 @@ haive.core.module_name
 ```
 
 ### After (Working)
+
 ```rst
 .. grid-item-card:: 🤖 **Engine System**
    :link: modules/haive.core.engine
@@ -46,6 +49,7 @@ haive.core.module_name
 ## Toctree Replacement
 
 ### Before (Autosummary)
+
 ```rst
 .. autosummary::
    :toctree: generated
@@ -58,6 +62,7 @@ haive.core.module_name
 ```
 
 ### After (Manual Toctree)
+
 ```rst
 .. toctree::
    :maxdepth: 2
@@ -72,16 +77,19 @@ haive.core.module_name
 ## Testing Commands
 
 ### Verify Module Import
+
 ```bash
 python -c "import haive.core.engine; print(dir(haive.core.engine))"
 ```
 
 ### Build Single Module Page
+
 ```bash
 poetry run sphinx-build -b html docs/source docs/build docs/source/api/modules/haive.core.engine.rst
 ```
 
 ### Debug Module Detection
+
 ```python
 import haive.core.engine as engine_module
 print('Module name:', engine_module.__name__)

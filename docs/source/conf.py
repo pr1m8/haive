@@ -213,11 +213,7 @@ html_short_title = "Haive"
 # Static files
 html_static_path = ["_static"]
 
-# Add custom JavaScript for navigation improvements
-html_js_files = [
-    "enhanced-sidebar.js",
-    "navigation-fixes.js",
-]
+# Add custom CSS files
 html_css_files = [
     "modern.css",
     "sidebar-fix.css", 
@@ -225,12 +221,18 @@ html_css_files = [
     "better-navigation.css",
     "api-gallery.css",
     "interactive-examples.css",
+    "haive-navigation.css",  # New navigation styles
+    "api-showcase.css",      # Beautiful gradient cards for API
 ]
+
+# Add custom JavaScript files
 html_js_files = [
     "modern.js",
     "sidebar-fix.js",
     "enhanced-sidebar.js",
     "interactive-examples.js",
+    "contextual-navigation.js",
+    "navigation-fixes.js",
 ]
 
 # Disable showcase files - they override all pages
@@ -270,7 +272,9 @@ html_theme_options = {
     # Navigation
     "sidebar_hide_name": False,
     "navigation_with_keys": True,
-    "navigation_depth": 3,
+    "navigation_depth": 4,
+    "show_nav_level": 1,
+    "show_toc_level": 2,
     # Features
     "announcement": (
         '<div style="text-align: center; font-weight: 600;">'
@@ -291,11 +295,6 @@ html_theme_options = {
     "source_branch": "main",
     "source_directory": "docs/source/",
 }
-
-# JavaScript files to include
-html_js_files = [
-    'contextual-navigation.js',
-]
 
 # ==============================================================================
 # Extension Configurations
