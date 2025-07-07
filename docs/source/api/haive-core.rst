@@ -1,105 +1,59 @@
 Haive Core
 ==========
 
-.. include:: ../../../packages/haive-core/README.md
-   :parser: myst_parser.sphinx_
+.. note::
+   
+   For the complete Haive Core API documentation with detailed module breakdowns, please visit:
+   
+   📚 **:doc:`haive-core/index`**
+   
+   The new documentation provides:
+   
+   - Organized module hierarchy
+   - Detailed submodule documentation
+   - Better navigation within the package
+   - Code examples for each component
 
-Core Components Gallery
------------------------
-
-The Haive Core package provides the fundamental building blocks for the entire framework.
+Quick Links
+-----------
 
 .. grid:: 1 2 2 3
    :gutter: 3
 
-   .. grid-item-card:: 🌐 **Graph System**
-      :link: modules/haive.core.graph
-      :link-type: doc
-      
-      State machines and workflow orchestration
-      
-      **Features:** Nodes, edges, state management, execution
-
    .. grid-item-card:: 🤖 **Engine System**
-      :link: modules/haive.core.engine
+      :link: haive-core/engine/index
       :link-type: doc
       
       LLM integration and augmentation
-      
-      **Provides:** Multi-provider support, streaming, tools
 
    .. grid-item-card:: 📊 **Schema System**
-      :link: modules/haive.core.schema
+      :link: haive-core/schema/index
       :link-type: doc
       
       Dynamic state schema composition
-      
-      **Includes:** Validation, mixins, type safety
 
-   .. grid-item-card:: 💾 **Persistence**
-      :link: modules/haive.core.persistence
+   .. grid-item-card:: 🌐 **Graph System**
+      :link: haive-core/graph/index
       :link-type: doc
       
-      State persistence and recovery
-      
-      **Supports:** Multiple backends, auto-save, history
+      State machines and workflows
 
-   .. grid-item-card:: 📖 **Registry**
-      :link: modules/haive.core.registry
-      :link-type: doc
-      
-      Component registration and discovery
-      
-      **Manages:** Engines, tools, agents, schemas
+Legacy Module Links
+~~~~~~~~~~~~~~~~~~~
 
-   .. grid-item-card:: 🔧 **Tools & Utils**
-      :link: modules/haive.core.tools
-      :link-type: doc
-      
-      Core utilities and tool system
-      
-      **Contains:** Helpers, validators, tool protocols
-
-Core Modules
-~~~~~~~~~~~~
+For backwards compatibility, the following direct module links are still available:
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Core Components
+   :maxdepth: 1
+   :caption: Direct Module Access
    
-   modules/haive.core.engine
-   modules/haive.core.graph
-   modules/haive.core.schema
-   modules/haive.core.persistence
-   modules/haive.core.registry
-   modules/haive.core.tools
+   generated/haive.core.engine
+   generated/haive.core.graph
+   generated/haive.core.schema
+   generated/haive.core.persistence
+   generated/haive.core.registry
+   generated/haive.core.tools
 
-Engine System
-~~~~~~~~~~~~~
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Engine & LLM
-   
-   modules/haive.core.engine
-
-Graph System
-~~~~~~~~~~~~
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Graph Architecture
-   
-   modules/haive.core.graph
-
-Schema System
-~~~~~~~~~~~~~
-
-.. toctree::
-   :maxdepth: 2
-   :caption: State Management
-   
-   modules/haive.core.schema
 
 Quick Reference
 ~~~~~~~~~~~~~~~
@@ -147,31 +101,3 @@ Quick Reference
    
    graph = builder.compile()
 
-Module Index
-~~~~~~~~~~~~
-
-Core modules with detailed API documentation:
-
-.. toctree::
-   :maxdepth: 2
-
-   modules/haive.core.engine
-   modules/haive.core.schema
-   modules/haive.core.persistence
-   modules/haive.core.registry
-   modules/haive.core.tools
-
-Detailed Module Structure
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. toctree::
-   :maxdepth: 4
-   :caption: Core Package Structure
-   
-   modules/haive.core.engine
-   modules/haive.core.schema
-   modules/haive.core.persistence
-   modules/haive.core.registry
-   modules/haive.core.tools
-
-**Note**: The recursive documentation structure will be displayed after building the documentation with autosummary enabled.
