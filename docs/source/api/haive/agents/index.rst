@@ -54,6 +54,11 @@ Modules
       :link-type: doc
       
       3 submodules
+   .. grid-item-card:: **Document Modifiers**
+      :link: document_modifiers/index
+      :link-type: doc
+      
+      4 submodules
 
 .. toctree::
    :maxdepth: 3
@@ -69,6 +74,7 @@ Modules
    multi/index
    planning/index
    research/index
+   document_modifiers/index
 
 Module Path
 -----------

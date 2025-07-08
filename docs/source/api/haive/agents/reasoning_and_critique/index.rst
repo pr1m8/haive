@@ -40,6 +40,11 @@ Submodules
       :link-type: doc
       
       haive.agents.reasoning_and_critique.self_discover
+   .. grid-item-card:: **Logic**
+      :link: logic
+      :link-type: doc
+      
+      haive.agents.reasoning_and_critique.logic
 
 
 Module Documentation
@@ -60,6 +65,7 @@ Module Documentation
    tot
    mcts
    self_discover
+   logic
 
 Import
 ------
