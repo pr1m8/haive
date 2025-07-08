@@ -147,24 +147,40 @@ Module Documentation
 Classes
 -------
 
-.. autosummary::
-   :nosignatures:
-   :toctree: _autosummary
-   
-   LLMConfig
-   LLMProvider
-   LLMRegistry
-   TokenUsage
+.. commenting out autosummary for now due to build issues
+.. .. .. autosummary::
+..    :nosignatures:
+..    :toctree: _autosummary
+..    
+..    LLMConfig
+..    LLMProvider
+..    LLMRegistry
+..    TokenUsage
 
 Functions
 ---------
 
-.. autosummary::
-   :nosignatures:
-   :toctree: _autosummary
+.. commenting out autosummary for now due to build issues
+.. .. .. autosummary::
+..    :nosignatures:
+..    :toctree: _autosummary
+..    
+..    create_llm
+..    get_model_info
+
+Providers
+---------
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Available Providers
+   :hidden:
    
-   create_llm
-   get_model_info
+   providers/index
+   providers/openai
+   providers/anthropic
+   providers/google
+   providers/ollama
 
 See Also
 --------
@@ -172,3 +188,4 @@ See Also
 - :doc:`/api/haive/core/engine/aug_llm` - Augmented LLM engine
 - :doc:`/api/haive/core/models/index` - Models overview
 - :doc:`/guides/core_concepts` - Core concepts guide
+- :doc:`providers/index` - Complete provider reference
