@@ -13,77 +13,6 @@ from pathlib import Path
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", message=".*Matplotlib.*")
 
-# Mock imports early to help with module detection
-from unittest.mock import MagicMock
-import types
-
-# Create a simpler mock module
-def create_mock_module(name):
-    """Create a mock module that returns mock modules for any attribute access."""
-    module = types.ModuleType(name)
-    
-    # Make it look like a package
-    module.__path__ = []
-    module.__file__ = f"<mock {name}>"
-    
-    def mock_getattr(self, item):
-        # Avoid recursion by checking for special attributes
-        if item.startswith('_'):
-            raise AttributeError(item)
-        # Return a new mock module for any attribute
-        mock_sub = create_mock_module(f"{name}.{item}")
-        # Store it as an attribute so repeated access returns the same object
-        setattr(self, item, mock_sub)
-        # Also add to sys.modules
-        sys.modules[f"{name}.{item}"] = mock_sub
-        return mock_sub
-    
-    module.__getattr__ = mock_getattr.__get__(module)
-    return module
-
-# Mock all problematic imports
-sys.modules['langchain'] = create_mock_module('langchain')
-sys.modules['langchain_core'] = create_mock_module('langchain_core')
-sys.modules['langchain_core.messages'] = create_mock_module('langchain_core.messages')
-sys.modules['langchain_core.output_parsers'] = create_mock_module('langchain_core.output_parsers')
-sys.modules['langchain_core.output_parsers.openai_tools'] = create_mock_module('langchain_core.output_parsers.openai_tools')
-sys.modules['langchain_core.prompts'] = create_mock_module('langchain_core.prompts')
-sys.modules['langchain_core.runnables'] = create_mock_module('langchain_core.runnables')
-sys.modules['langchain_core.tools'] = create_mock_module('langchain_core.tools')
-sys.modules['langchain_core.utils'] = create_mock_module('langchain_core.utils')
-sys.modules['langchain_core.pydantic_v1'] = create_mock_module('langchain_core.pydantic_v1')
-sys.modules['langchain_community'] = create_mock_module('langchain_community')
-sys.modules['pydantic'] = create_mock_module('pydantic')
-sys.modules['litellm'] = create_mock_module('litellm')
-sys.modules['litellm.integrations'] = create_mock_module('litellm.integrations')
-sys.modules['litellm.integrations.custom_logger'] = create_mock_module('litellm.integrations.custom_logger')
-
-# Add some expected classes/functions to the mocks
-langchain_core = sys.modules['langchain_core']
-langchain_core.output_parsers.openai_tools.PydanticToolsParser = MagicMock
-langchain_core.output_parsers.JsonOutputParser = MagicMock
-langchain_core.messages.AIMessage = MagicMock
-langchain_core.messages.HumanMessage = MagicMock
-langchain_core.messages.SystemMessage = MagicMock
-langchain_core.messages.BaseMessage = MagicMock
-langchain_core.prompts.ChatPromptTemplate = MagicMock
-langchain_core.prompts.MessagesPlaceholder = MagicMock
-langchain_core.runnables.Runnable = MagicMock
-langchain_core.tools.Tool = MagicMock
-langchain_core.pydantic_v1.BaseModel = MagicMock
-langchain_core.utils.function_calling.convert_to_openai_tool = MagicMock
-
-# Add pydantic mocks
-pydantic = sys.modules['pydantic']
-pydantic.BaseModel = MagicMock
-pydantic.Field = MagicMock
-
-# Add litellm mocks
-litellm = sys.modules['litellm']
-litellm.acompletion = MagicMock
-litellm.completion = MagicMock
-litellm.integrations.custom_logger.CustomLogger = MagicMock
-
 # Add all package source directories to Python path for proper module discovery
 conf_dir = Path(__file__).parent
 project_root = conf_dir.parent.parent
@@ -219,18 +148,21 @@ html_static_path = ["_static"]
 # Add custom CSS files
 html_css_files = [
     "modern.css",
+    "enhanced-templates.css",     # Enhanced agent & game templates
+    "enhanced-components.css",    # Interactive components
     "sidebar-fix.css", 
     "games-showcase.css",
     "better-navigation.css",
     "api-gallery.css",
     "interactive-examples.css",
-    "haive-navigation.css",  # New navigation styles
-    "api-showcase.css",      # Beautiful gradient cards for API
+    "haive-navigation.css",       # Navigation styles
+    "api-showcase.css",           # API gradient cards
 ]
 
 # Add custom JavaScript files
 html_js_files = [
     "modern.js",
+    "enhanced-interactions.js",   # Enhanced interactive functionality
     "sidebar-fix.js",
     "enhanced-sidebar.js",
     "interactive-examples.js",
@@ -316,7 +248,7 @@ autodoc_typehints = "description"
 autodoc_typehints_format = "short"
 autodoc_class_signature = "separated"
 
-# Autosummary - re-enabled for testing
+# Autosummary - re-enabled after fixing import issues
 autosummary_generate = True
 autosummary_generate_overwrite = False  # Don't overwrite our manually created files
 autosummary_imported_members = False  # Don't try to import members
@@ -338,10 +270,12 @@ def autosummary_get_type(app, obj, parent):
         if name.startswith('haive.tools.') and '.' in name[12:]:
             return 'module'
     return None
+
 # Fix module import issues
 import warnings
 warnings.filterwarnings('ignore', category=UserWarning, module='sphinx')
 warnings.filterwarnings('ignore', category=DeprecationWarning)
+
 # Enable recursive module discovery
 autodoc_default_options = {
     "members": True,
@@ -358,50 +292,6 @@ autosummary_context = {
     'module': lambda name: name,
     'objname': lambda name: name.split('.')[-1],
 }
-autosummary_mock_imports = [
-    "torch",
-    "tensorflow",
-    "transformers",
-    "scipy",
-    "sklearn",
-    "litellm",
-    "langchain",
-    "langchain_core",
-    "langchain_community",
-    "openai",
-    "anthropic",
-    "cohere",
-    "google.generativeai",
-    "pydantic",
-    "numpy",
-    "pandas",
-    "matplotlib",
-    "fastapi",
-    "uvicorn",
-    "websockets",
-    "httpx",
-    "sqlalchemy",
-    "motor",
-    "pymongo",
-    "redis",
-    "chromadb",
-    "pinecone",
-    "weaviate",
-    "qdrant_client",
-    "beautifulsoup4",
-    "requests",
-    "aiohttp",
-    "supabase",
-    "postgrest",
-    "gotrue",
-    "haive.core",
-    "haive.agents",
-    "haive.tools",
-    "haive.dataflow",
-    "haive.prebuilt",
-    "haive.mcp",
-    "haive.games",
-]
 
 # Napoleon (Google docstrings) - optimized settings
 napoleon_google_docstring = True
@@ -473,85 +363,6 @@ suppress_warnings = [
 # Set autodoc to continue on import failure
 autodoc_warningiserror = False
 autodoc_inherit_docstrings = True
-
-# Mock imports for autodoc
-autodoc_mock_imports = [
-    "torch",
-    "tensorflow",
-    "transformers",
-    "scipy",
-    "sklearn",
-    "litellm",
-    "langchain",
-    "langchain_core",
-    "langchain_community",
-    "openai",
-    "anthropic",
-    "cohere",
-    "google.generativeai",
-    "pydantic",
-    "numpy",
-    "pandas",
-    "matplotlib",
-    "fastapi",
-    "uvicorn",
-    "websockets",
-    "httpx",
-    "sqlalchemy",
-    "motor",
-    "pymongo",
-    "redis",
-    "chromadb",
-    "pinecone",
-    "weaviate",
-    "qdrant_client",
-    "beautifulsoup4",
-    "requests",
-    "aiohttp",
-    "supabase",
-    "postgrest",
-    "gotrue",
-    "bs4",
-    "PIL",
-    "cv2",
-    "spacy",
-    "nltk",
-    "plotly",
-    "seaborn",
-    "bokeh",
-    "dash",
-    "langchain_google_vertexai",
-    "vertexai",
-    "google.cloud",
-    "google.cloud.aiplatform",
-    "google.auth",
-    "litellm.integrations",
-    "rich",
-    "typer",
-    "questionary",
-    "invoke",
-    "streamlit",
-    "tweepy",
-    "praw",
-    "discord",
-    "slack_sdk",
-    "telegram",
-    "wikipedia",
-    "wolframalpha",
-    "pyowm",
-    "newsapi",
-    "alpha_vantage",
-    "yfinance",
-    "finnhub",
-    "polygon",
-    "amadeus",
-    "azure.cognitiveservices",
-    "azure.ai",
-    "googlemaps",
-    "geopy",
-    "folium",
-    "geopandas",
-]
 
 # Language
 language = "en"

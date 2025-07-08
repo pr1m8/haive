@@ -155,6 +155,7 @@ websocket = "^0.2.1"
 mcp = "^1.10.1"
 langchain-mcp-adapters = "^0.1.8"
 asyncpg = "^0.30.0"
+langchain-google-vertexai = "^2.0.27"
 
 
 [tool.poetry.dependencies.graphviz]
@@ -401,6 +402,10 @@ chess = "^1.11.2"
 mistralai = "^1.8.0"
 deepseek = "^1.0.0"
 google-genai = "^1.16.1"
+
+
+[tool.poetry.group.persistence.dependencies]
+langgraph-checkpoint-sqlite = "^2.0.10"
 
 [tool.poetry.extras]
 cpu = ["torch", "torchvision", "torchaudio"]
