@@ -26,6 +26,43 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-foreground-primary, #161616) !important;
 }
 
+/* CRITICAL FIX: Force showcase text to be visible */
+.agent-showcase-grid *,
+.agent-card *,
+.agent-card h3,
+.agent-card p,
+.showcase-section *,
+.section-title,
+.agent-cards-grid *,
+div[class*="showcase"] *,
+div[class*="agent"] * {
+  color: #1e293b !important;
+}
+
+/* Force specific showcase elements */
+.agent-card h3 {
+  color: #1e293b !important;
+  font-weight: 700 !important;
+  font-size: 1.25rem !important;
+}
+
+.agent-card p {
+  color: #4b5563 !important;
+  font-size: 0.95rem !important;
+}
+
+.section-title {
+  color: #6366f1 !important;
+  font-weight: 700 !important;
+  font-size: 2rem !important;
+}
+
+/* Feature tags with white text */
+.feature {
+  color: white !important;
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%) !important;
+}
+
 /* Fix specific white-on-white issues */
 .sd-card-body,
 .sd-card-text,
@@ -137,6 +174,35 @@ button.toctree-expand svg {
   padding: 0.5rem;
   border-radius: 50%;
   transition: all 0.2s ease;
+}
+
+/* =============================================================================
+   NUCLEAR OPTION: Force all showcase text to be visible
+   ============================================================================= */
+
+/* Super aggressive text color fixes */
+[class*="showcase"] h3,
+[class*="agent"] h3,
+[class*="card"] h3 {
+  color: #1e293b !important;
+  font-weight: 700 !important;
+}
+
+[class*="showcase"] p,
+[class*="agent"] p,
+[class*="card"] p {
+  color: #4b5563 !important;
+}
+
+/* Force any remaining invisible text */
+.bd-main .bd-content .agent-showcase-grid h3,
+.bd-main .bd-content .agent-card h3,
+.bd-main .bd-content .showcase-section h2 {
+  color: #1e293b !important;
+}
+
+.bd-main .bd-content .agent-card p {
+  color: #4b5563 !important;
 }
 
 /* =============================================================================
