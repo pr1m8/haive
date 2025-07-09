@@ -232,7 +232,7 @@ autodoc_type_aliases = {
 
 # Mock imports for missing modules
 autodoc_mock_imports = [
-    # Known missing modules
+    # Known missing modules that don't exist
     'haive.tools.api',
     'haive.tools.utility', 
     'haive.tools.code',
@@ -243,27 +243,15 @@ autodoc_mock_imports = [
     'haive.agents.conversation.collaborative',  # Typo: should be collaberative
     'haive.agents.supervisor',  # Various supervisor imports fail
     
-    # Critical module causing build failure
-    'haive.agents.document_modifiers.kg.kg_base',
-    'haive.agents.document_modifiers',
-    
     # Additional missing modules from latest build
     'haive.tools.search',
     'haive.tools.math',
     'haive.tools.data',
     'haive.core.engine.loaders',
     
-    # External dependencies that might not be installed
-    'langchain_community',
-    'langgraph',
-    'libcst',
-    'networkx',
-    'pandas',
-    'numpy',
-    'matplotlib',
-    'seaborn',
-    'scipy',
-    'sklearn',
+    # Only mock if they cause issues during build
+    'torch',
+    'tensorflow',
 ]
 
 # Autosummary - re-enabled after fixing import issues
