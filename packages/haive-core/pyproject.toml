@@ -1,0 +1,220 @@
+[tool.poetry]
+name = "haive-core"
+version = "0.1.0"
+description = "haive-core for Haive framework"
+authors = ["pr1m8 <william.astley@algebraicwealth.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{ include = "haive", from = "src" }]
+
+[tool.poetry.dependencies]
+python = ">=3.12,<3.13"
+# Core framework dependencies only
+pydantic = "^2.10.6"
+langchain = "^0.3.20"
+langchain-core = "^0.3.44"
+langgraph = "^0.3.5"
+langchain-community = "^0.3.27"
+langchain-huggingface = "^0.3.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.5"
+black = "^25.1.0"
+isort = "^6.0.1"
+mypy = "^1.15.0"
+pytest-sugar = "^1.0.0"
+pytest-asyncio = "^0.26.0"
+allure-pytest = "^2.14.2"
+pytest-clarity = "^1.0.1"
+pytest-html = "^4.1.1"
+
+
+[tool.poetry.extras]
+# Individual provider extras
+openai = ["langchain-openai"]
+anthropic = ["langchain-anthropic"]
+google = ["langchain-google-genai", "langchain-google-vertexai"]
+azure = ["langchain-openai"]
+aws = ["langchain-aws"]
+mistral = ["langchain-mistralai"]
+groq = ["langchain-groq"]
+cohere = ["langchain-cohere"]
+together = ["langchain-together"]
+fireworks = ["langchain-fireworks"]
+huggingface = ["langchain-huggingface"]
+ai21 = ["langchain-ai21"]
+nvidia = ["langchain-nvidia-ai-endpoints"]
+ollama = ["langchain-ollama"]
+upstage = ["langchain-upstage"]
+databricks = ["langchain-databricks"]
+ibm = ["langchain-ibm"]
+xai = ["langchain-xai"]
+
+# Retriever provider extras
+vector-store = ["langchain-core"]
+multi-query = ["langchain"]
+ensemble = ["langchain"]
+bm25 = ["langchain-community", "scikit-learn"]
+tfidf = ["langchain-community", "scikit-learn"]
+knn = ["langchain-community", "scikit-learn"]
+svm = ["langchain-community", "scikit-learn"]
+contextual-compression = ["langchain"]
+parent-document = ["langchain"]
+self-query = ["langchain"]
+time-weighted = ["langchain"]
+elasticsearch = ["langchain-community", "elasticsearch"]
+pinecone = ["langchain-pinecone"]
+qdrant = ["langchain-qdrant"]
+weaviate = ["langchain-weaviate"]
+chroma = ["langchain-chroma"]
+redis = ["langchain-redis"]
+faiss = ["langchain-community", "faiss-cpu"]
+cohere-rag = ["langchain-community", "cohere"]
+azure-search = ["langchain-community", "azure-search-documents"]
+kendra = ["langchain-aws", "boto3"]
+vertex-search = ["langchain-google-vertexai"]
+tavily = ["langchain-community", "tavily-python"]
+arxiv = ["langchain-community", "arxiv"]
+wikipedia = ["langchain-community", "wikipedia"]
+pubmed = ["langchain-community"]
+web-research = ["langchain-community", "google-search-results"]
+you-search = ["langchain-community"]
+bedrock = ["langchain-aws", "boto3"]
+google-vertex-search = ["langchain-google-vertexai"]
+pinecone-hybrid = ["langchain-pinecone", "pinecone-client"]
+metal = ["langchain-community", "metal_sdk"]
+milvus = ["langchain-milvus"]
+vespa = ["langchain-community", "pyvespa"]
+zep = ["langchain-community", "zep-python"]
+zep-cloud = ["langchain-community", "zep-python"]
+zilliz = ["langchain-milvus"]
+pgvector = ["langchain-postgres"]
+
+# Additional new retrievers
+asknews = ["langchain-community"]
+amazon-knowledge-bases = ["langchain-aws", "boto3"]
+google-vertex-ai-search = ["langchain-google-vertexai"]
+google-document-ai-warehouse = [
+  "langchain-community",
+  "google-cloud-documentai",
+]
+weaviate-hybrid = ["langchain-weaviate", "weaviate-client"]
+qdrant-sparse = ["langchain-qdrant", "qdrant-client"]
+docarray = ["langchain-community", "docarray"]
+neuraldb = ["langchain-community", "thirdai"]
+llamaindex = ["langchain-community", "llama-index"]
+chatgpt-plugin = ["langchain-community"]
+
+# Convenience groups
+all-providers = [
+  "langchain-openai",
+  "langchain-anthropic",
+  "langchain-google-genai",
+  "langchain-google-vertexai",
+  "langchain-aws",
+  "langchain-mistralai",
+  "langchain-groq",
+  "langchain-cohere",
+  "langchain-together",
+  "langchain-fireworks",
+  "langchain-huggingface",
+  "langchain-ai21",
+  "langchain-nvidia-ai-endpoints",
+  "langchain-ollama",
+  "langchain-upstage",
+  "langchain-databricks",
+  "langchain-ibm",
+  "langchain-xai",
+]
+
+popular-providers = [
+  "langchain-openai",
+  "langchain-anthropic",
+  "langchain-google-genai",
+  "langchain-aws",
+  "langchain-mistralai",
+  "langchain-groq",
+  "langchain-ollama",
+]
+
+# Retriever convenience groups
+all-retrievers = [
+  "langchain-core",
+  "langchain",
+  "langchain-community",
+  "langchain-aws",
+  "langchain-google-vertexai",
+  "elasticsearch",
+  "langchain-pinecone",
+  "pinecone-client",
+  "langchain-qdrant",
+  "qdrant-client",
+  "langchain-weaviate",
+  "weaviate-client",
+  "langchain-chroma",
+  "langchain-redis",
+  "langchain-milvus",
+  "langchain-postgres",
+  "faiss-cpu",
+  "cohere",
+  "azure-search-documents",
+  "boto3",
+  "tavily-python",
+  "arxiv",
+  "wikipedia",
+  "metal_sdk",
+  "pyvespa",
+  "zep-python",
+  "scikit-learn",
+  "google-search-results",
+  "google-cloud-documentai",
+  "docarray",
+  "thirdai",
+  "llama-index",
+]
+
+popular-retrievers = [
+  "langchain-core",
+  "langchain",
+  "langchain-community",
+  "langchain-pinecone",
+  "langchain-chroma",
+  "faiss-cpu",
+  "scikit-learn",
+]
+
+sparse-retrievers = ["langchain-community", "scikit-learn"]
+
+vector-retrievers = [
+  "langchain-core",
+  "langchain-pinecone",
+  "langchain-qdrant",
+  "langchain-weaviate",
+  "langchain-chroma",
+  "langchain-milvus",
+  "faiss-cpu",
+]
+
+api-retrievers = [
+  "langchain-community",
+  "arxiv",
+  "wikipedia",
+  "tavily-python",
+  "cohere",
+  "google-search-results",
+]
+
+cloud-retrievers = [
+  "langchain-aws",
+  "langchain-google-vertexai",
+  "azure-search-documents",
+  "boto3",
+]
+
+[tool.poetry.group.chat-models.dependencies]
+langchain-google-vertexai = "^2.0.24"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,149 @@
+#!/usr/bin/env python3
+"""
+Organize test files from root directory to proper locations.
+Uses git mv to preserve history.
+"""
+
+import os
+import subprocess
+import re
+from pathlib import Path
+
+# Base directories
+ROOT_DIR = Path("/home/will/Projects/haive/backend/haive")
+AGENTS_TESTS = ROOT_DIR / "packages/haive-agents/tests"
+CORE_TESTS = ROOT_DIR / "packages/haive-core/tests"
+
+# Create core tests directory if it doesn't exist
+CORE_TESTS.mkdir(parents=True, exist_ok=True)
+
+# File categorization rules
+CATEGORIZATION_RULES = {
+    # Multi-agent related tests
+    "multi_agent": {
+        "patterns": ["multi_agent", "meta_state", "recompile"],
+        "destination": AGENTS_TESTS / "multi"
+    },
+    
+    # Plan and Execute tests
+    "plan_execute": {
+        "patterns": ["plan_execute", "plan_and_execute"],
+        "destination": AGENTS_TESTS / "test_planning"
+    },
+    
+    # Schema related tests
+    "schema": {
+        "patterns": ["schema", "field_naming", "token_usage"],
+        "destination": CORE_TESTS / "schema"
+    },
+    
+    # MCP related tests
+    "mcp": {
+        "patterns": ["mcp"],
+        "destination": AGENTS_TESTS / "mcp"
+    },
+    
+    # Debug and utility tests
+    "debug": {
+        "patterns": ["debug", "verbose", "simple_debug"],
+        "destination": AGENTS_TESTS / "utilities"
+    },
+    
+    # Sphinx and documentation tests
+    "docs": {
+        "patterns": ["sphinx", "import"],
+        "destination": CORE_TESTS / "docs"
+    },
+    
+    # Sequential and state tests
+    "state": {
+        "patterns": ["sequential", "state_issue", "complete_flow"],
+        "destination": CORE_TESTS / "state"
+    }
+}
+
+def categorize_file(filename):
+    """Categorize a test file based on its name."""
+    filename_lower = filename.lower()
+    
+    for category, rules in CATEGORIZATION_RULES.items():
+        for pattern in rules["patterns"]:
+            if pattern in filename_lower:
+                return category, rules["destination"]
+    
+    # Default to agents/tests if uncategorized
+    return "uncategorized", AGENTS_TESTS / "utilities"
+
+def move_file_with_git(source, destination_dir, filename):
+    """Move file using git mv to preserve history."""
+    destination_dir.mkdir(parents=True, exist_ok=True)
+    destination = destination_dir / filename
+    
+    try:
+        # Use git mv to preserve history
+        cmd = ["git", "mv", str(source), str(destination)]
+        result = subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT_DIR)
+        
+        if result.returncode == 0:
+            print(f"✓ Moved {filename} to {destination_dir}")
+            return True
+        else:
+            print(f"❌ Git mv failed for {filename}: {result.stderr}")
+            
+            # Try regular mv as fallback
+            cmd = ["mv", str(source), str(destination)]
+            result = subprocess.run(cmd, capture_output=True, text=True)
+            if result.returncode == 0:
+                print(f"✓ Moved {filename} to {destination_dir} (fallback)")
+                return True
+            else:
+                print(f"❌ Regular mv also failed for {filename}: {result.stderr}")
+                return False
+                
+    except Exception as e:
+        print(f"❌ Error moving {filename}: {e}")
+        return False
+
+def main():
+    """Main function to organize test files."""
+    print("=== Organizing Test Files ===\n")
+    
+    # Find all test files in root
+    test_files = list(ROOT_DIR.glob("test_*.py"))
+    
+    if not test_files:
+        print("No test files found in root directory.")
+        return
+    
+    print(f"Found {len(test_files)} test files to organize:\n")
+    
+    # Categorize and move files
+    moved_count = 0
+    failed_count = 0
+    
+    for test_file in test_files:
+        filename = test_file.name
+        category, destination_dir = categorize_file(filename)
+        
+        print(f"📁 {filename} → {category} → {destination_dir}")
+        
+        if move_file_with_git(test_file, destination_dir, filename):
+            moved_count += 1
+        else:
+            failed_count += 1
+        
+        print()
+    
+    print(f"=== Summary ===")
+    print(f"✓ Successfully moved: {moved_count}")
+    print(f"❌ Failed to move: {failed_count}")
+    print(f"📊 Total files: {len(test_files)}")
+    
+    if moved_count > 0:
+        print(f"\n🎉 Test files have been organized!")
+        print(f"📝 Remember to commit these changes with:")
+        print(f"   git add .")
+        print(f"   git commit -m 'organize: Move test files to proper locations'")
+
+if __name__ == "__main__":
+    main()

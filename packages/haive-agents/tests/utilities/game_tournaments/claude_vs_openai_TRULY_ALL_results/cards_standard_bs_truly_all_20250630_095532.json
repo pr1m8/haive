@@ -1,0 +1,10 @@
+{
+  "game": "cards/standard/bs",
+  "timestamp": "20250630_095532",
+  "result": {
+    "success": false,
+    "error": "No config class found. Tried: ['BsConfig', 'BsAgentConfig', 'BsConfig', 'BsAgentConfig', 'Config', 'GameConfig', 'AgentConfig']",
+    "error_type": "ConfigClassNotFound",
+    "stage": "config_discovery"
+  }
+}

@@ -1,444 +1,433 @@
-# CLAUDE.md - Haive Agent Development & Memory System
+# CLAUDE.md - Haive Agent Framework Memory Hub
 
-**Version**: 2.0  
-**Purpose**: Comprehensive guide for Claude Code to develop agents with smart memory management  
-**Date**: 2025-01-06  
-**Memory System**: Active
+**Purpose**: Central routing and quick access to Haive development resources  
+**Version**: 3.0  
+**Last Updated**: 2025-01-09
 
-## 🧠 Memory Architecture Overview
+## 🎯 Quick Access
 
-This document serves as Claude Code's primary reference for developing agents in the Haive framework. It includes:
+- **Working Directory**: `/home/will/Projects/haive/backend/haive`
+- **Active Branch**: `feature/engine-typing-generics`
+- **Main Commands**: Always use `poetry run` for all operations
+- **Test Pattern**: Real components only, NO MOCKS EVER
+- **Import Pattern**: `from haive.core.*` (explicit package references)
 
-- Agent development patterns and best practices
-- Code style guidelines specific to Haive
-- Smart memory management system
-- Self-documenting workspace structure
+## 📁 Memory Organization
 
-## 🚀 Quick Start
+### Core Memories (Import these as needed)
+- **Command Execution**: @project_docs/active/standards/coding/COMMAND_EXECUTION_GUIDE.md - CRITICAL: Always use `poetry run`
+- **Memory System**: @project_docs/active/standards/documentation/memory_system.md - Memory architecture and principles
+- **Development Workflow**: @project_docs/active/standards/coding/development_workflow.md - Complete development methodology
+- **Build & Test**: @project_docs/active/standards/coding/BUILD_AND_TEST_GUIDE.md - Trunk, nox, and testing procedures
+- **Agent Configuration**: @project_docs/active/standards/coding/AGENT_CONFIGURATION_GUIDE.md - AugLLM, Simple, React, RAG agent patterns
+- **Pydantic Patterns**: @project_docs/active/standards/coding/PYDANTIC_PATTERNS.md - Proper Pydantic usage and anti-patterns
+- **Code Style**: @project_docs/active/standards/coding/style_guide.md - Python coding standards
+- **Testing**: @project_docs/active/standards/testing/philosophy.md - No-mocks testing approach
+- **Git Workflow**: @project_docs/active/standards/git/workflow.md - Git best practices
+
+### Package-Specific Memories
+- **haive-agents**: @project_docs/haive-agents/README.md - Agent development guide
+- **haive-core**: @project_docs/haive-core/README.md - Core architecture
+- **haive-games**: @project_docs/haive-games/README.md - Games framework
+- **haive-tools**: @project_docs/haive-tools/README.md - Tool implementations
+- **haive-mcp**: @project_docs/haive-mcp/README.md - MCP integration
+
+### Current Work Context
+- **Active Issues**: @project_docs/sessions/active/current_issues.md
+- **Sprint Progress**: @project_docs/sessions/active/current_sprint.md
+- **Recent Sessions**: @project_docs/sessions/active/README.md
+
+## 🚀 Current Focus Areas
+
+### Active Development
+1. **Schema Composition** - Improving state schema generation from engines
+2. **Multi-Agent State** - Designing proper multi-agent coordination
+3. **Validation Nodes** - Enhancing dynamic validation capabilities
+4. **Engine Typing** - Adding proper generics to engine system
+
+### Known Critical Issues
+- Schema field conflicts with multiple engines
+- Import cycles in agent/engine dependencies
+- See full list: @project_docs/claude_sessions/current_issues.md
+
+## 🧠 Smart Memory Protocol
+
+### Session Start Checklist
+```bash
+# 1. Check current state
+git status && git diff
+
+# 2. Load relevant package memory
+# Read the specific package README you're working on
+
+# 3. Create session workspace
+mkdir -p project_docs/claude_sessions/claude_$(date +%Y%m%d_%H%M%S)_{purpose}
+
+# 4. Use TodoWrite for planning
+```
+
+### During Development
+1. **Track Progress**: Update @project_docs/progress_tracking/current_sprint.md
+2. **Document Issues**: Add to @project_docs/claude_sessions/current_issues.md
+3. **Save Patterns**: Document in session memory for reuse
+4. **Cross-Reference**: Use [MEM-XXX] tags for navigation
+
+### After Tasks
+1. **Update Status**: Mark todos complete
+2. **Document Learning**: Add to relevant package docs
+3. **Clean Up**: Move completed work to archives
+4. **Commit Properly**: Follow @project_docs/GIT_WORKFLOW.md
+
+## 🔗 Essential Paths
 
 ```bash
-# Always use poetry run for all commands
-poetry run python -m haive.your_module
-poetry run pytest packages/your_package/tests/
+# Source code locations
+packages/haive-{package}/src/haive/{package}/
+packages/haive-{package}/tests/
 
-# Common commands for agent development
+# Documentation hierarchy
+project_docs/
+├── claude_documentation/     # Claude-specific guides
+├── {package_name}/          # Package documentation
+├── claude_sessions/         # Work session memories
+└── progress_tracking/       # Sprint and task tracking
+
+# Key files to know
+~/.claude/CLAUDE.md          # Global preferences (DO NOT MODIFY)
+./CLAUDE.local.md           # Local overrides (if needed)
+./pyproject.toml            # Workspace dependencies
+```
+
+## 🔥 GIT SAFETY FIRST - ALWAYS CHECK BEFORE ACTING
+
+### MANDATORY Git Workflow - Run EVERY TIME
+```bash
+# 1. BEFORE ANY WORK - See what's changed
+git status                    # What files are modified?
+git diff                      # What exact changes were made?
+git diff --cached             # What's staged for commit?
+
+# 2. BEFORE CREATING FILES - Check if it exists
+find . -name "similar_file*"  # Don't duplicate existing work
+
+# 3. AFTER MAKING CHANGES - Review everything
+git diff                      # Review your changes line by line
+git status                    # Confirm which files you touched
+
+# 4. BEFORE COMMITTING - Final safety check
+git diff --cached             # Review what you're about to commit
+trunk check --all             # Run linting
+poetry run pytest             # Run tests
+
+# 5. SAFE COMMIT PROCESS
+git add specific_file.py      # Add files individually (NOT git add .)
+git diff --cached             # Review staged changes AGAIN
+git commit -m "feat: clear description"
+```
+
+### Git Commands You MUST Use
+```bash
+# CRITICAL - Use these constantly
+git status                    # Current state - RUN OFTEN
+git diff                      # Unstaged changes - REVIEW CAREFULLY
+git diff --cached             # Staged changes - CHECK BEFORE COMMIT
+git log --oneline -5          # Recent commits
+git diff HEAD~1               # What changed in last commit
+
+# USEFUL - For specific situations
+git stash                     # Save work temporarily
+git checkout -- file.py       # Undo changes to specific file
+git reset HEAD file.py        # Unstage a file
+```
+
+## ⚡ Most Used Commands
+
+```bash
+# BEFORE ANY WORK - Research existing patterns
+find packages/ -name "*.py" | xargs grep -l "YourPattern" | head -5
+
+# Quality checks (ALWAYS run before committing)
+trunk check --all                      # Primary linting tool
+trunk check --fix --all                # Fix auto-fixable issues
+
+# Development
 poetry run python -m haive.agents.simple --example
-poetry run pytest packages/haive-agents/tests/test_simple/ -v
+poetry run pytest packages/haive-agents/tests/ -v
+poetry run python -c "from haive.core import *; print('Imports OK')"
+
+# Type checking and additional quality
+poetry run mypy packages/haive-{package}/src/
+poetry run ruff check packages/haive-{package}/
+
+# Testing specific components
+poetry run pytest packages/haive-{package}/tests/test_specific.py -v
+poetry run pytest --cov=haive --cov-report=html
 ```
 
-**Package Location**: `/home/will/Projects/haive/backend/haive/packages/`  
-**Test Location**: `packages/{package_name}/tests/`  
-**Claude Workspace**: `/home/will/Projects/haive/backend/haive/project_docs/claude_sessions/`
-
-## 📁 Claude Code Workspace Structure
-
-When working on agent development, create your own workspace:
+## 📊 Package Structure
 
 ```
-project_docs/claude_sessions/{session_id}/
-├── SESSION_INFO.md          # Session metadata and goals
-├── memory/
-│   ├── context.md          # Current working context
-│   ├── decisions.md        # Design decisions and rationale
-│   └── issues.md           # Problems encountered and solutions
-├── agents/
-│   ├── {agent_name}/       # Agent-specific development
-│   │   ├── design.md       # Architecture and design
-│   │   ├── implementation.md # Code snippets and patterns
-│   │   └── testing.md      # Test strategies and results
-│   └── patterns.md         # Reusable patterns discovered
-└── references/
-    ├── code_snippets.md    # Useful code examples
-    └── dependencies.md     # Package dependencies tracked
+haive/
+├── core/      # Engines, graphs, schemas (foundation)
+├── agents/    # Agent implementations (simple, react, rag)  
+├── tools/     # Tool implementations (math, web, file)
+├── games/     # Game implementations (chess, go, puzzles)
+├── dataflow/  # Streaming and data management
+├── mcp/       # Model Context Protocol integration
+└── prebuilt/  # Pre-configured components
 ```
 
-### Creating Your Workspace
+### Package File Structure
+```
+packages/haive-{package}/
+├── src/haive/{package}/        # Source code
+│   ├── __init__.py            # Public exports
+│   ├── base/                  # Base classes/interfaces
+│   └── {feature}/             # Feature modules
+├── tests/                     # REAL component tests
+│   ├── conftest.py           # Shared fixtures
+│   └── test_{feature}.py     # Test files
+└── pyproject.toml            # Package dependencies
+```
 
+## 🎯 Development Patterns
+
+### Import Hierarchy (CRITICAL)
 ```python
-# When starting a new agent development session:
-session_id = f"claude_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-workspace_path = f"/home/will/Projects/haive/backend/haive/project_docs/claude_sessions/{session_id}"
+# Core can only import from: standard library, third-party
+# Agents can import from: core, standard library, third-party  
+# Tools can import from: core, standard library, third-party
+# Games can import from: core, agents, tools, third-party
+
+# NEVER: Core importing from agents/tools/games (circular!)
 ```
 
-## 🎯 Agent Development Guide
+### Standard Patterns
+- **Configs**: Always use Pydantic models with validation
+- **Errors**: Structured logging, never print()
+- **State**: Use StateSchema for all agent states
+- **Testing**: Real components, descriptive test names
+- **Docs**: Google-style docstrings for Sphinx
 
-### 1. Understanding the Agent Hierarchy
-
-```
-Agent (Abstract Base)
-├── SimpleAgent          # Basic conversational agent
-├── ReactAgent          # Reasoning and acting agent
-├── BaseRAGAgent        # Retrieval-augmented generation
-├── PersonResearchAgent # Specialized research agent
-└── [Your New Agent]    # Custom implementations
-```
-
-### 2. Essential Agent Components
-
-Every agent needs:
-
-1. **State Schema** - Defines the agent's memory structure
-2. **Configuration** - Agent-specific settings
-3. **Graph Builder** - Workflow definition
-4. **Engine Integration** - LLM or tool connections
-
-### 3. Agent Development Workflow
-
+### Schema Inheritance Patterns
 ```python
-# Step 1: Define State Schema
-from haive.core.schema import StateSchema
-from pydantic import Field
-from typing import List, Dict, Any
+# Check existing schemas FIRST!
+from haive.core.schema.prebuilt.messages_state import MessagesState
+from haive.core.schema.prebuilt.meta_state import MetaStateSchema
+from haive.core.schema.prebuilt.messages.messages_with_token_usage import MessagesStateWithTokenUsage
 
-class MyAgentState(StateSchema):
-    """State schema for custom agent."""
-    messages: List[str] = Field(default_factory=list)
-    context: Dict[str, Any] = Field(default_factory=dict)
+# When extending schemas, check what they expect:
+# - MessagesState has: messages field
+# - MessagesStateWithTokenUsage has: messages + token_usage fields
+# - MetaStateSchema has: agent, agent_state, meta fields
+
+# Example: Extending properly
+class MyCustomState(MessagesStateWithTokenUsage):
+    """Extends with token tracking built-in"""
     custom_field: str = Field(default="")
-
-# Step 2: Create Agent Class
-from haive.agents.base import Agent
-from haive.core.graph import BaseGraph
-
-class MyCustomAgent(Agent[MyAgentState]):
-    """Custom agent implementation."""
-
-    def setup_agent(self) -> None:
-        """Initialize agent components."""
-        # Sync fields from engine
-        self._sync_fields_from_engine()
-        # Setup schemas
-        self._setup_schemas()
-        # Build initial graph
-        self._build_initial_graph()
-
-    def build_graph(self) -> BaseGraph:
-        """Define agent workflow."""
-        graph = BaseGraph()
-
-        # Add nodes
-        graph.add_node("process", self._process_input)
-        graph.add_node("respond", self._generate_response)
-
-        # Add edges
-        graph.add_edge("process", "respond")
-        graph.set_entry_point("process")
-
-        return graph.compile()
-
-# Step 3: Test Your Agent
-async def test_agent():
-    agent = MyCustomAgent(
-        name="test_agent",
-        engine=aug_llm_engine
-    )
-
-    result = await agent.arun("Hello!")
-    assert result is not None
 ```
 
-## 💻 Code Style Guidelines for Haive
+## 🔧 Common Imports & Configuration Patterns
 
-### Core Principles
-
-1. **Type Everything** - No untyped public APIs
-2. **Async First** - All agent operations should be async
-3. **Composition Over Inheritance** - Use mixins and composition
-4. **Defensive Programming** - Validate inputs, handle errors gracefully
-5. **Clear Naming** - `create_rag_agent_with_vector_store` not `make_agent`
-
-### Haive-Specific Patterns
-
+### Essential Imports
 ```python
-# ALWAYS: Use Pydantic for configurations
+# Core engine configurations
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.schema.prebuilt.messages_state import MessagesState
+from haive.core.schema.prebuilt.meta_state import MetaStateSchema
+
+# Agent types
+from haive.agents.simple.agent import SimpleAgent
+from haive.agents.react.agent import ReactAgent
+from haive.agents.rag.base.agent import BaseRAGAgent
+
+# LangChain core tools
+from langchain_core.tools import Tool
+from langchain_core.tools import tool  # decorator
+from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
+
+# Common utilities
 from pydantic import BaseModel, Field
+from typing import List, Dict, Any, Optional
+```
 
-class AgentConfig(BaseModel):
-    """Configuration for agent."""
-    name: str = Field(..., description="Agent identifier")
-    temperature: float = Field(default=0.7, ge=0.0, le=2.0)
-    max_tokens: Optional[int] = Field(default=None, ge=1)
+### AugLLMConfig Setup (CORRECT WAY)
+```python
+# ✅ CORRECT - Don't specify model parameter
+config = AugLLMConfig()  # Uses defaults (gpt-4o-mini)
 
-    class Config:
-        validate_assignment = True
-        extra = "forbid"  # Prevent unknown fields
-
-# ALWAYS: Use proper error handling
-from haive.core.exceptions import AgentError, ConfigurationError
-
-async def execute_agent_task(agent: Agent, task: str) -> str:
-    """Execute task with proper error handling."""
-    try:
-        result = await agent.arun(task)
-        return result
-    except ValidationError as e:
-        raise ConfigurationError(f"Invalid task format: {e}")
-    except TimeoutError:
-        raise AgentError(f"Agent {agent.name} timed out")
-    except Exception as e:
-        logger.exception(f"Unexpected error in {agent.name}")
-        raise AgentError(f"Execution failed: {e}")
-
-# ALWAYS: Use structured logging
-from haive.core.logging import get_logger
-
-logger = get_logger(__name__)
-
-logger.info(
-    "Processing agent request",
-    extra={
-        "agent_name": agent.name,
-        "task_type": task.type,
-        "timestamp": datetime.utcnow().isoformat()
-    }
+# ✅ CORRECT - With custom settings
+config = AugLLMConfig(
+    temperature=0.7,
+    max_tokens=1000,
+    system_message="You are a helpful assistant"
 )
+
+# ❌ WRONG - Don't set model parameter
+config = AugLLMConfig(model="gpt-4")  # This causes issues
 ```
 
-### Testing Standards
-
+### Simple Agent Setup
 ```python
-# ALWAYS: Use descriptive test names
-async def test_simple_agent_maintains_conversation_state_across_multiple_turns():
-    """Test that agent preserves context between interactions."""
-    # Test implementation
+from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
-# ALWAYS: Test error conditions
-async def test_agent_handles_invalid_configuration_gracefully():
-    """Test agent behavior with invalid config."""
-    with pytest.raises(ConfigurationError, match="temperature must be between"):
-        agent = SimpleAgent(temperature=3.0)
+# Basic setup
+config = AugLLMConfig()
+agent = SimpleAgent(engine=config)
 
-# ALWAYS: Use fixtures for common setup
-@pytest.fixture
-def configured_agent() -> SimpleAgent:
-    """Create a properly configured test agent."""
-    return SimpleAgent(
-        name="test_agent",
-        engine=create_test_engine()
-    )
+# With custom name and settings
+config = AugLLMConfig(
+    temperature=0.3,
+    system_message="You are a code reviewer"
+)
+agent = SimpleAgent(
+    name="code_reviewer",
+    engine=config
+)
+
+# Usage
+result = agent.run("Review this code: def hello(): print('hi')")
 ```
 
-## 🧠 Smart Memory Management
-
-### Memory Patterns for Agent Development
-
-When developing agents, track:
-
-1. **Design Decisions**
-
-   ```markdown
-   # Decision: Use SchemaComposer for dynamic state
-
-   **Rationale**: Allows runtime schema generation from engines
-   **Trade-offs**: More complex but more flexible
-   **Alternative**: Static schemas (simpler but less adaptable)
-   ```
-
-2. **Common Issues & Solutions**
-
-   ```markdown
-   # Issue: Schema generation fails with multiple engines
-
-   **Root Cause**: Field name conflicts between engines
-   **Solution**: Use field prefixing in SchemaComposer
-   **Code**: See schema_composer.py:L234
-   ```
-
-3. **Performance Insights**
-
-   ```markdown
-   # Performance: Streaming vs Batch Response
-
-   **Finding**: Streaming reduces memory by 70% for large responses
-   **Implementation**: Use astream() for responses > 1000 tokens
-   **Benchmark**: 100ms first token vs 3s full response
-   ```
-
-### Memory File Templates
-
-#### SESSION_INFO.md
-
-```markdown
-# Session: {session_id}
-
-**Date**: {date}
-**Goal**: Implement {agent_type} agent with {key_features}
-**Related Issues**: #{issue_numbers}
-
-## Objectives
-
-1. Create base agent structure
-2. Implement {specific_feature}
-3. Add comprehensive tests
-4. Document usage patterns
-
-## Key Decisions
-
-- Chose {approach} because {reason}
-- Using {pattern} for {purpose}
-
-## Results
-
-- [ ] Agent class implemented
-- [ ] Tests passing
-- [ ] Documentation complete
-- [ ] Example created
-```
-
-#### memory/context.md
-
-```markdown
-# Current Context
-
-## Working On
-
-- Implementing {feature} for {agent}
-- File: {file_path}
-- Line: {line_range}
-
-## Key Insights
-
-- Schema composition happens in `_setup_schemas()`
-- Tool routing uses `tool_route` field
-- Engine registration required for node discovery
-
-## Next Steps
-
-1. Complete {current_task}
-2. Test {functionality}
-3. Update documentation
-```
-
-## 🔧 Common Tasks & Solutions
-
-### Creating a New Agent Type
-
-```bash
-# 1. Create module structure
-mkdir -p packages/haive-agents/src/haive/agents/new_agent_type
-touch packages/haive-agents/src/haive/agents/new_agent_type/{__init__.py,agent.py,config.py,state.py,example.py}
-
-# 2. Run tests as you develop
-poetry run pytest packages/haive-agents/tests/test_new_agent_type/ -v --lf
-
-# 3. Check type safety
-poetry run mypy packages/haive-agents/src/haive/agents/new_agent_type/
-```
-
-### Debugging Schema Issues
-
+### React Agent Setup
 ```python
-# Debug schema generation
-from haive.core.schema import SchemaComposer
+from haive.agents.react.agent import ReactAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
-# Inspect generated schema
-composer = SchemaComposer(base_state_schema=MyAgentState)
-schema = composer.compose_state([engine1, engine2])
-print(schema.schema())  # View full schema
+# Basic setup with tools
+config = AugLLMConfig()
+agent = ReactAgent(
+    name="react_agent",
+    engine=config,
+    tools=["calculator", "search"]  # Tool names
+)
 
-# Check field conflicts
-for field_name, field_info in schema.__fields__.items():
-    print(f"{field_name}: {field_info.type_}")
+# Usage
+result = agent.run("Calculate 15 * 23 and search for Python tutorials")
 ```
 
-### Tool Integration Patterns
-
+### RAG Agent Setup
 ```python
-# Pattern 1: Direct tool assignment
-from haive.core.tools import tool
+from haive.agents.rag.base.agent import BaseRAGAgent
+from haive.core.engine.vectorstore.vectorstore import VectorStoreConfig
+from haive.core.engine.aug_llm import AugLLMConfig
 
+# Setup with documents
+documents = [...]  # Your documents
+config = AugLLMConfig()
+
+vector_config = VectorStoreConfig(
+    name="my_vectorstore",
+    documents=documents,
+    vector_store_provider=VectorStoreProvider.FAISS
+)
+
+agent = BaseRAGAgent(
+    name="rag_agent",
+    engine=vector_config,
+    llm_config=config
+)
+
+# Usage
+result = agent.run("What does the documentation say about X?")
+```
+
+### Tool Creation with LangChain
+```python
+from langchain_core.tools import Tool, tool
+from typing import Any
+
+# Method 1: Using @tool decorator
 @tool
-def calculate(expression: str) -> float:
-    """Calculate mathematical expression."""
-    return eval(expression)  # Simplified example
+def calculator(expression: str) -> str:
+    """Calculate mathematical expressions."""
+    try:
+        result = eval(expression)
+        return str(result)
+    except:
+        return "Error in calculation"
 
-# Pattern 2: Tool routing
-tool_routes = {
-    "calculate": "calculator_engine",
-    "search": "search_engine",
-    "default": "main_engine"
-}
+# Method 2: Using Tool class
+def search_function(query: str) -> str:
+    """Search for information."""
+    return f"Search results for: {query}"
 
-# Pattern 3: Dynamic tool loading
-from haive.core.registry import ToolRegistry
+search_tool = Tool(
+    name="search",
+    description="Search for information on any topic",
+    func=search_function
+)
 
-registry = ToolRegistry.get_instance()
-for tool_name in config.enabled_tools:
-    tool = registry.get_tool(tool_name)
-    agent.add_tool(tool)
+# Usage with agents
+tools = [calculator, search_tool]
+agent = ReactAgent(engine=config, tools=tools)
 ```
 
-## 📊 Key Architecture Insights
+## 🧪 Testing: NO MOCKS + Proper Structure
 
-### Schema System
+### Test File Organization
+```
+packages/haive-{package}/
+├── src/haive/{package}/
+│   └── my_module.py           # Your source code
+└── tests/
+    └── test_my_module.py      # Test for that module
 
-- **StateSchema**: Base class for all agent states
-- **SchemaComposer**: Dynamically generates schemas from engines
-- **AgentSchemaComposer**: Handles multi-agent schema composition
-- **Field Syncing**: Automatic field discovery from engines
-
-### Engine System
-
-- **BaseEngine**: Abstract engine interface
-- **AugLLMEngine**: Enhanced LLM with tools
-- **EngineRegistry**: Global engine registration
-- **Engine Nodes**: Graph nodes that use engines
-
-### Graph System
-
-- **BaseGraph**: Core workflow definition
-- **Node Types**: Regular, Engine, Conditional
-- **Edge Types**: Direct, Conditional, Mapped
-- **Compilation**: Graph → Executable workflow
-
-## 🚦 Quick Reference Commands
-
-```bash
-# Run specific agent tests
-poetry run pytest packages/haive-agents/tests/test_simple/ -k "test_name"
-
-# Check test coverage
-poetry run pytest --cov=haive.agents --cov-report=html
-
-# Lint code
-poetry run ruff check packages/haive-agents/src/
-
-# Format code
-poetry run black packages/haive-agents/src/
-
-# Type checking
-poetry run mypy packages/haive-agents/src/
-
-# Run example
-poetry run python packages/haive-agents/examples/simple_conversation.py
-
-# Build documentation
-poetry run sphinx-build -b html docs/source docs/build
+# ALWAYS: Test files go in packages/haive-*/tests/
+# NEVER: Create test files in root or random locations
 ```
 
-## 🔗 Essential Resources
+### Writing Tests - NO MOCKS PATTERN
+```python
+# packages/haive-agents/tests/test_simple_agent.py
 
-### Documentation
+from haive.agents.simple import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
-- **Agent Patterns**: `/project_docs/claude_agent_memory/agent_patterns/`
-- **Schema Analysis**: `/project_docs/claude_agent_memory/schema_analysis/`
-- **Code Examples**: `/packages/haive-agents/examples/`
-- **Test Examples**: `/packages/haive-agents/tests/`
+def test_simple_agent_real_execution():
+    """Test with REAL components - NO MOCKS."""
+    # Create real config (don't set model param)
+    config = AugLLMConfig()  
+    
+    # Create real agent
+    agent = SimpleAgent(engine=config)
+    
+    # Test real behavior
+    result = agent.run("Hello")
+    assert isinstance(result, str)
+    assert len(result) > 0
 
-### Key Files to Study
+# ❌ NEVER USE MOCKS
+# ✅ ALWAYS USE REAL COMPONENTS
+```
 
-- `packages/haive-core/src/haive/core/schema.py` - Schema system
-- `packages/haive-core/src/haive/core/engine.py` - Engine base
-- `packages/haive-agents/src/haive/agents/base.py` - Agent base
-- `packages/haive-agents/src/haive/agents/simple/agent.py` - Simple implementation
+## 🚨 Critical Reminders
 
-### When Stuck
+1. **GIT DIFF ALWAYS** - `git status` and `git diff` before ANY work
+2. **RESEARCH FIRST** - Check existing patterns before implementing anything
+3. **USE TRUNK** - Always run `trunk check --all` before committing
+4. **NO MOCKS IN TESTS** - Use real LLMs, real tools, real components
+5. **PROPER PYDANTIC** - No manual __init__, use Field validation, check existing patterns
+6. **EXPLICIT IMPORTS** - `from haive.core.engine import X`, not `from engine import X`
+7. **GIT REVIEW CHANGES** - `git diff --cached` before every commit
+8. **USE TODOS** - TodoWrite for planning, tracking, and organization
+9. **POETRY RUN EVERYTHING** - Never run Python directly, always `poetry run python`
+10. **CHECK EXISTING SCHEMAS** - Look at MessagesState, MetaStateSchema patterns first
+11. **STAGE FILES INDIVIDUALLY** - `git add file.py` NOT `git add .`
+12. **DOCUMENT PROGRESS** - Update session memory as you work
 
-1. Check existing implementations in `/packages/haive-agents/src/haive/agents/`
-2. Look for patterns in `/project_docs/claude_agent_memory/`
-3. Review tests for usage examples
-4. Create memory note for future reference
+## 📝 Quick Memory Access
+
+Need details? Import the full guides:
+- Memory architecture: @project_docs/active/standards/documentation/memory_system.md
+- Development workflow: @project_docs/active/standards/coding/development_workflow.md
+- Build & test procedures: @project_docs/active/standards/coding/BUILD_AND_TEST_GUIDE.md
+- Pydantic patterns: @project_docs/active/standards/coding/PYDANTIC_PATTERNS.md
+- Code examples: @project_docs/claude_documentation/CLAUDE_AGENTS.md
+- Testing details: @project_docs/active/standards/testing/philosophy.md
+- Git workflows: @project_docs/active/standards/git/workflow.md
 
 ---
 
-**Remember**: Always maintain your session workspace for continuity across conversations. Your memory is your strength in developing complex agents!
+**Remember**: This file is loaded at every session start. Keep it lean and use imports for detailed information!

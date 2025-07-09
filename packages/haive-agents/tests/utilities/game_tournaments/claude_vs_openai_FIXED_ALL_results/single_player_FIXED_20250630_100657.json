@@ -1,0 +1,10 @@
+{
+  "game": "single_player",
+  "timestamp": "20250630_100657",
+  "result": {
+    "success": false,
+    "error": "Import failed: cannot import name 'SinglePlayerGameConfig' from 'haive.games.single_player' (/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/single_player/__init__.py)",
+    "error_type": "ImportError",
+    "stage": "module_import"
+  }
+}

@@ -1,6 +1,131 @@
-﻿haive.agents.reasoning\_and\_critique.logic.engines.bias\_detector
-==================================================================
+﻿Bias Detector
+=============
 
-.. currentmodule:: haive.agents.reasoning_and_critique.logic.engines
+.. py:module:: haive.agents.reasoning_and_critique.logic.engines.bias_detector
 
-.. autodata:: bias_detector
+.. currentmodule:: haive.agents.reasoning_and_critique.logic.engines.bias_detector
+
+.. automodule:: haive.agents.reasoning_and_critique.logic.engines.bias_detector
+
+
+.. raw:: html
+
+   <div class="module-path" style="margin-bottom: 1rem; color: var(--color-foreground-secondary);">
+      <code>haive.agents.reasoning_and_critique.logic.engines.bias_detector</code>
+   </div>
+
+
+  
+  
+  .. ifconfig:: False
+     
+     .. include:: ../../../packages/haive-agents/src/haive/agents/reasoning_and_critique/logic/engines/bias_detector/README.md
+        :parser: myst_parser.sphinx_
+
+.. automodule:: haive.agents.reasoning_and_critique.logic.engines.bias_detector
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __init__, __call__, __new__
+   :imported-members:
+   :exclude-members: logger
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :nosignatures:
+      :toctree: .
+      :template: function.rst
+   
+      create_bias_detector
+   
+   
+   
+   
+   .. autofunction:: create_bias_detector
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :nosignatures:
+      :toctree: .
+      :template: class.rst
+   
+      AugLLMConfig
+      ChatPromptTemplate
+      MessagesPlaceholder
+      ReasoningAnalysis
+   
+   
+   
+   
+   .. autoclass:: AugLLMConfig
+      :members:
+      :undoc-members:
+      :show-inheritance:
+      :inherited-members:
+      :special-members: __init__, __call__
+      
+      .. rubric:: Examples
+      
+      .. note::
+         See the class docstring for usage examples.
+   
+   .. autoclass:: ChatPromptTemplate
+      :members:
+      :undoc-members:
+      :show-inheritance:
+      :inherited-members:
+      :special-members: __init__, __call__
+      
+      .. rubric:: Examples
+      
+      .. note::
+         See the class docstring for usage examples.
+   
+   .. autoclass:: MessagesPlaceholder
+      :members:
+      :undoc-members:
+      :show-inheritance:
+      :inherited-members:
+      :special-members: __init__, __call__
+      
+      .. rubric:: Examples
+      
+      .. note::
+         See the class docstring for usage examples.
+   
+   .. autoclass:: ReasoningAnalysis
+      :members:
+      :undoc-members:
+      :show-inheritance:
+      :inherited-members:
+      :special-members: __init__, __call__
+      
+      .. rubric:: Examples
+      
+      .. note::
+         See the class docstring for usage examples.
+   
+   
+
+   
+   
+   
+
+
+

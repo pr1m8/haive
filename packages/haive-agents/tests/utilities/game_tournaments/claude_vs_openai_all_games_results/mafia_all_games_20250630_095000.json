@@ -1,0 +1,10 @@
+{
+  "game": "mafia",
+  "timestamp": "20250630_095000",
+  "result": {
+    "success": false,
+    "error": "Import failed: cannot import name 'MafiaAgentConfig' from 'haive.games.mafia' (/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/mafia/__init__.py)",
+    "error_type": "ImportError",
+    "stage": "module_import"
+  }
+}

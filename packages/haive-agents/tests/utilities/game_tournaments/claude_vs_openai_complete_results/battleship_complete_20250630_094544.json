@@ -1,0 +1,10 @@
+{
+  "game": "battleship",
+  "timestamp": "20250630_094544",
+  "result": {
+    "success": false,
+    "error": "Import failed: cannot import name 'BattleshipConfig' from 'haive.games.battleship' (/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/battleship/__init__.py)",
+    "error_type": "ImportError",
+    "stage": "module_import"
+  }
+}

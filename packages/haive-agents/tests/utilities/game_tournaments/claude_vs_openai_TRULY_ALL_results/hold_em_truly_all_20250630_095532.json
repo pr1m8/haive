@@ -1,0 +1,10 @@
+{
+  "game": "hold_em",
+  "timestamp": "20250630_095532",
+  "result": {
+    "success": false,
+    "error": "Module import failed: unterminated string literal (detected at line 611) (game_agent.py, line 611)",
+    "error_type": "ModuleImportError",
+    "stage": "module_import"
+  }
+}
