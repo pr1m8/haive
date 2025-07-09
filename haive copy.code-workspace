@@ -1,0 +1,60 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "."
+    },
+    {
+      "name": "haive-core",
+      "path": "./packages/haive-core"
+    },
+    {
+      "name": "haive-agents",
+      "path": "./packages/haive-agents"
+    },
+    {
+      "name": "haive-games",
+      "path": "./packages/haive-games"
+    }
+  ],
+  "settings": {
+    "python.defaultInterpreterPath": "${workspaceFolder:root}/.venv/bin/python",
+    "python.envFile": "${workspaceFolder:root}/.env",
+    "python.analysis.extraPaths": [
+      "${workspaceFolder:root}/src",
+      "${workspaceFolder:haive-core}/src",
+      "${workspaceFolder:haive-agents}/src",
+      "${workspaceFolder:haive-games}/src"
+    ],
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+      "packages/haive-core",
+      "packages/haive-agents",
+      "packages/haive-games"
+    ],
+    "editor.formatOnSave": true,
+    "python.analysis.typeCheckingMode": "basic",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "terminal.integrated.cwd": "${workspaceFolder:root}",
+    "files.exclude": {
+      "**/__pycache__": true,
+      "**/*.pyc": true,
+      "**/*.pyo": true,
+      "**/.mypy_cache": true,
+      "**/.pytest_cache": true
+    }
+  },
+ 
+
+  "launch": {
+    "configurations": [],
+    "compounds": []
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-python.python",
+      "ms-python.vscode-pylance"
+    ]
+  }
+}
