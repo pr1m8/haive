@@ -145,29 +145,14 @@ html_short_title = "Haive"
 # Static files
 html_static_path = ["_static"]
 
-# Add custom CSS files
+# SIMPLIFIED: Only essential CSS and JS
 html_css_files = [
-    "modern.css",
-    "enhanced-templates.css",     # Enhanced agent & game templates
-    "enhanced-components.css",    # Interactive components
-    "sidebar-fix.css", 
-    "games-showcase.css",
-    "better-navigation.css",
-    "api-gallery.css",
-    "interactive-examples.css",
-    "haive-navigation.css",       # Navigation styles
-    "api-showcase.css",           # API gradient cards
+    "api-showcase.css",           # Beautiful gradient cards
+    "documentation-overrides.css", # Critical fixes only
 ]
 
-# Add custom JavaScript files
 html_js_files = [
-    "modern.js",
-    "enhanced-interactions.js",   # Enhanced interactive functionality
-    "sidebar-fix.js",
-    "enhanced-sidebar.js",
-    "interactive-examples.js",
-    "contextual-navigation.js",
-    "navigation-fixes.js",
+    "agent-visualization.js",     # Agent demos
 ]
 
 # Disable showcase files - they override all pages
@@ -179,37 +164,26 @@ html_theme_options = {
     # Branding
     "light_logo": "images/haive-logo-light.svg",
     "dark_logo": "images/haive-logo-dark.svg",
-    # Colors - Professional palette
+    # SIMPLIFIED Colors - Fix white-on-white issues
     "light_css_variables": {
-        "color-brand-primary": "#0f62fe",  # IBM Blue
-        "color-brand-content": "#4589ff",  # Lighter blue
-        "color-foreground-primary": "#161616",
+        "color-brand-primary": "#0f62fe",
+        "color-brand-content": "#4589ff", 
+        "color-foreground-primary": "#161616",  # Dark text on light bg
         "color-foreground-secondary": "#525252",
         "color-background-primary": "#ffffff",
-        "color-background-secondary": "#fafbff",
-        "color-api-background": "#f8faff",
-        "color-api-background-hover": "#e6f0ff",
-        "color-sidebar-background": "#f8faff",
-        "color-sidebar-background-border": "#e0e7ff",
+        "color-background-secondary": "#f8f9fb",
     },
     "dark_css_variables": {
         "color-brand-primary": "#4589ff",
-        "color-brand-content": "#8a3ffc",  # Purple accent
-        "color-foreground-primary": "#f4f4f4",
+        "color-brand-content": "#8a3ffc",
+        "color-foreground-primary": "#f4f4f4",  # Light text on dark bg
         "color-foreground-secondary": "#c6c6c6",
-        "color-background-primary": "#0a0a0a",
+        "color-background-primary": "#161616",
         "color-background-secondary": "#1a1a1a",
-        "color-api-background": "#1a1a1a",
-        "color-api-background-hover": "#2a2a2a",
-        "color-sidebar-background": "#1a1a1a",
-        "color-sidebar-background-border": "#2a2a2a",
     },
-    # Navigation
+    # SIMPLIFIED Navigation
     "sidebar_hide_name": False,
-    "navigation_with_keys": True,
-    "navigation_depth": 4,
-    "show_nav_level": 1,
-    "show_toc_level": 2,
+    "navigation_depth": 3,
     # Features
     "announcement": (
         '<div style="text-align: center; font-weight: 600;">'
