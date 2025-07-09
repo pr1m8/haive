@@ -6,6 +6,68 @@
 /* =============================================================================
    Design System - Gradient-heavy, modern, impressive
    ============================================================================= */
+
+/* Fix white-on-white text issues */
+.agent-showcase-grid,
+.showcase-section,
+.agent-cards-grid,
+.agent-card,
+.agent-card h3,
+.agent-card p,
+.section-title {
+  color: #1e293b !important;
+}
+
+.agent-showcase-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+  min-height: 100vh;
+  position: relative;
+  color: #1e293b;
+}
+
+.showcase-section {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #6366f1;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0.5rem;
+}
+
+.agent-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.agent-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.agent-features {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.feature {
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
 :root {
   /* Core brand colors - Beautiful purple theme */
   --haive-primary: #8b5cf6;
@@ -138,8 +200,9 @@ body {
    ============================================================================= */
 .agent-gallery {
   padding: var(--space-16) var(--space-4);
-  background: linear-gradient(180deg, #fafbff 0%, #f0f4ff 100%);
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
   min-height: 100vh;
+  color: #1e293b;
 }
 
 .gallery-controls {
@@ -238,6 +301,7 @@ body {
   transition: all var(--duration-normal) var(--ease-out-quart);
   position: relative;
   cursor: pointer;
+  color: #1e293b;
 }
 
 .agent-card:hover {
@@ -266,6 +330,7 @@ body {
   padding: var(--space-6);
   background: linear-gradient(135deg, #f8faff 0%, #e6f0ff 100%);
   position: relative;
+  color: #1e293b;
 }
 
 .agent-name {
