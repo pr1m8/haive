@@ -1,0 +1,575 @@
+/**
+ * Haive Agent Showcase - Sexy, Sleek, Overwhelming (in a good way)
+ * Designed to showcase the impressive breadth of AI agents
+ */
+
+/* =============================================================================
+   Design System - Gradient-heavy, modern, impressive
+   ============================================================================= */
+:root {
+  /* Core brand colors - Beautiful purple theme */
+  --haive-primary: #8b5cf6;
+  --haive-secondary: #a855f7;
+  --haive-accent: #d946ef;
+  --haive-success: #10b981;
+  --haive-warning: #f59e0b;
+  --haive-danger: #ef4444;
+  
+  /* Gradients for impact - Purple spectrum */
+  --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+  --gradient-secondary: linear-gradient(135deg, #a855f7 0%, #d946ef 100%);
+  --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+  --gradient-cool: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+  --gradient-dark: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+  
+  /* Glass morphism */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  
+  /* Typography */
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', monospace;
+  
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  
+  /* Animations */
+  --duration-fast: 200ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* =============================================================================
+   Base Styles - Modern & Clean
+   ============================================================================= */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-display);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* =============================================================================
+   Hero Section - Make a Statement
+   ============================================================================= */
+.hero-section {
+  background: var(--gradient-primary);
+  color: white;
+  padding: var(--space-20) var(--space-8);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  opacity: 0.1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-weight: 800;
+  margin-bottom: var(--space-6);
+  background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  font-weight: 300;
+  opacity: 0.9;
+  margin-bottom: var(--space-8);
+}
+
+.agent-count-display {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 50px;
+  padding: var(--space-4) var(--space-8);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: var(--space-8);
+}
+
+.agent-count-number {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--haive-warning);
+  text-shadow: 0 0 20px rgba(241, 194, 27, 0.5);
+}
+
+/* =============================================================================
+   Agent Gallery - The Main Attraction
+   ============================================================================= */
+.agent-gallery {
+  padding: var(--space-16) var(--space-4);
+  background: linear-gradient(180deg, #fafbff 0%, #f0f4ff 100%);
+  min-height: 100vh;
+}
+
+.gallery-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-12);
+  flex-wrap: wrap;
+}
+
+.view-toggle {
+  display: flex;
+  background: white;
+  border-radius: 50px;
+  padding: var(--space-1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.view-toggle button {
+  padding: var(--space-3) var(--space-6);
+  border: none;
+  background: transparent;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out-quart);
+  position: relative;
+}
+
+.view-toggle button.active {
+  background: var(--gradient-primary);
+  color: white;
+  box-shadow: 0 4px 15px rgba(15, 98, 254, 0.3);
+}
+
+.category-filter {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.category-chip {
+  padding: var(--space-2) var(--space-4);
+  background: white;
+  border: 2px solid transparent;
+  border-radius: 25px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out-quart);
+  font-size: 0.875rem;
+}
+
+.category-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.category-chip.active {
+  background: var(--gradient-primary);
+  color: white;
+  border-color: var(--haive-primary);
+}
+
+/* Grid Views */
+.agents-grid {
+  display: grid;
+  gap: var(--space-6);
+  max-width: 1400px;
+  margin: 0 auto;
+  opacity: 0;
+  animation: fadeInUp var(--duration-slow) var(--ease-out-expo) forwards;
+}
+
+.grid-compact {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-comfortable {
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+}
+
+.grid-showcase {
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+}
+
+/* Agent Cards - The Stars of the Show */
+.agent-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all var(--duration-normal) var(--ease-out-quart);
+  position: relative;
+  cursor: pointer;
+}
+
+.agent-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  border-color: var(--haive-primary);
+}
+
+.agent-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
+  opacity: 0;
+  transition: opacity var(--duration-normal);
+}
+
+.agent-card:hover::before {
+  opacity: 1;
+}
+
+.agent-card-header {
+  padding: var(--space-6);
+  background: linear-gradient(135deg, #f8faff 0%, #e6f0ff 100%);
+  position: relative;
+}
+
+.agent-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--haive-primary);
+  margin-bottom: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.agent-category {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  background: var(--gradient-primary);
+  color: white;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.agent-description {
+  color: #525252;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-top: var(--space-3);
+}
+
+.agent-card-body {
+  padding: var(--space-6);
+}
+
+.agent-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.feature-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  background: rgba(15, 98, 254, 0.1);
+  color: var(--haive-primary);
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.agent-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--haive-primary);
+  display: block;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+/* =============================================================================
+   Pagination & Load More
+   ============================================================================= */
+.gallery-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-12);
+}
+
+.load-more-btn {
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  padding: var(--space-4) var(--space-8);
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out-quart);
+  box-shadow: 0 4px 20px rgba(15, 98, 254, 0.3);
+}
+
+.load-more-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(15, 98, 254, 0.4);
+}
+
+.pagination-info {
+  background: white;
+  padding: var(--space-3) var(--space-6);
+  border-radius: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-weight: 500;
+  color: #6b7280;
+}
+
+/* =============================================================================
+   Search & Filters
+   ============================================================================= */
+.search-container {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto var(--space-8);
+}
+
+.search-input {
+  width: 100%;
+  padding: var(--space-4) var(--space-6) var(--space-4) var(--space-12);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50px;
+  font-size: 1rem;
+  background: white;
+  transition: all var(--duration-normal);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--haive-primary);
+  box-shadow: 0 4px 20px rgba(15, 98, 254, 0.2);
+}
+
+.search-icon {
+  position: absolute;
+  left: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  font-size: 1.25rem;
+}
+
+/* =============================================================================
+   Stats Dashboard
+   ============================================================================= */
+.stats-dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-6);
+  margin: var(--space-12) 0;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stats-card {
+  background: white;
+  padding: var(--space-6);
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: transform var(--duration-normal) var(--ease-out-quart);
+}
+
+.stats-card:hover {
+  transform: translateY(-4px);
+}
+
+.stats-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto var(--space-4);
+  background: var(--gradient-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.stats-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--haive-primary);
+  margin-bottom: var(--space-2);
+}
+
+.stats-label {
+  color: #6b7280;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.875rem;
+}
+
+/* =============================================================================
+   Animations & Effects
+   ============================================================================= */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* =============================================================================
+   Responsive Design
+   ============================================================================= */
+@media (max-width: 768px) {
+  .hero-section {
+    padding: var(--space-12) var(--space-4);
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .agent-gallery {
+    padding: var(--space-8) var(--space-2);
+  }
+  
+  .agents-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .gallery-controls {
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  
+  .stats-dashboard {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* =============================================================================
+   Dark Mode Support
+   ============================================================================= */
+@media (prefers-color-scheme: dark) {
+  .agent-gallery {
+    background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+  }
+  
+  .agent-card {
+    background: #262626;
+    border-color: #404040;
+  }
+  
+  .agent-card-header {
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+  }
+  
+  .agent-description {
+    color: #c6c6c6;
+  }
+  
+  .search-input,
+  .view-toggle,
+  .category-chip {
+    background: #262626;
+    border-color: #404040;
+    color: #f4f4f4;
+  }
+}

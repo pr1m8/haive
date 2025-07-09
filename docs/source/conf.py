@@ -254,12 +254,15 @@ autodoc_mock_imports = [
     'tensorflow',
 ]
 
-# Autosummary - re-enabled after fixing import issues
+# Autosummary - fixed configuration for proper documentation generation
 autosummary_generate = True
-autosummary_generate_overwrite = False  # Don't overwrite our manually created files
-autosummary_imported_members = False  # Don't try to import members
+autosummary_generate_overwrite = True  # Overwrite to keep docs up to date
+autosummary_imported_members = True  # Import members for proper documentation
 autosummary_ignore_module_all = False
 autosummary_filename_map = {}
+
+# Make autosummary work properly with our module structure
+autosummary_mock_imports = autodoc_mock_imports
 
 # Tell autosummary to treat these as modules
 def autosummary_get_type(app, obj, parent):

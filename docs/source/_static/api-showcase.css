@@ -5,17 +5,17 @@
 
 /* Import showcase variables */
 :root {
-  /* Core brand colors from showcase */
-  --haive-primary: #0f62fe;
-  --haive-secondary: #4589ff;
-  --haive-accent: #8a3ffc;
-  --haive-success: #24a148;
+  /* Core brand colors - Beautiful purple theme */
+  --haive-primary: #8b5cf6;
+  --haive-secondary: #a855f7;
+  --haive-accent: #d946ef;
+  --haive-success: #10b981;
   
-  /* Subtle gradients - more professional */
-  --gradient-primary: linear-gradient(135deg, rgba(15, 98, 254, 0.08) 0%, rgba(69, 137, 255, 0.05) 100%);
-  --gradient-secondary: linear-gradient(135deg, rgba(138, 63, 252, 0.08) 0%, rgba(15, 98, 254, 0.05) 100%);
-  --gradient-warm: linear-gradient(135deg, rgba(241, 194, 27, 0.08) 0%, rgba(255, 131, 43, 0.05) 100%);
-  --gradient-cool: linear-gradient(135deg, rgba(69, 137, 255, 0.08) 0%, rgba(36, 161, 72, 0.05) 100%);
+  /* Subtle gradients - more professional with purple */
+  --gradient-primary: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(168, 85, 247, 0.05) 100%);
+  --gradient-secondary: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(217, 70, 239, 0.05) 100%);
+  --gradient-warm: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(249, 115, 22, 0.05) 100%);
+  --gradient-cool: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(6, 182, 212, 0.05) 100%);
   
   /* Spacing scale */
   --space-1: 0.25rem;
