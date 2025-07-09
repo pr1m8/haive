@@ -1,0 +1,145 @@
+/**
+ * Documentation Override Styles
+ * Fix white-on-white text and ugly "On this page" section
+ */
+
+/* =============================================================================
+   FIX CRITICAL TEXT CONTRAST ISSUES
+   ============================================================================= */
+
+/* Force proper text colors to prevent white-on-white */
+body,
+article,
+section,
+.bd-content,
+.bd-article,
+.content {
+  color: var(--color-foreground-primary, #161616) !important;
+}
+
+/* Fix all text elements */
+p, span, div, li, td, th {
+  color: var(--color-foreground-primary, #161616) !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-foreground-primary, #161616) !important;
+}
+
+/* Fix specific white-on-white issues */
+.sd-card-body,
+.sd-card-text,
+.sd-card-title {
+  color: var(--color-foreground-primary, #161616) !important;
+}
+
+/* =============================================================================
+   FIX UGLY "ON THIS PAGE" SECTION
+   ============================================================================= */
+
+/* Hide the terrible "On this page" completely */
+.toc-drawer,
+.toc-overlay,
+.toc-content-icon,
+.toc-header-icon {
+  display: none !important;
+}
+
+/* Remove TOC button from mobile */
+.toc-overlay-icon {
+  display: none !important;
+}
+
+/* If TOC is still visible, make it clean */
+.toc-tree {
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.toc-tree .caption {
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-foreground-secondary) !important;
+  margin-bottom: 0.5rem;
+}
+
+.toc-tree ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.toc-tree li {
+  margin: 0.25rem 0;
+}
+
+.toc-tree a {
+  color: var(--color-foreground-secondary) !important;
+  text-decoration: none;
+  padding: 0.25rem 0;
+  display: block;
+  transition: color 0.15s ease;
+}
+
+.toc-tree a:hover {
+  color: var(--color-brand-primary) !important;
+}
+
+/* =============================================================================
+   SURGICAL Header Link Removal
+   ============================================================================= */
+
+/* Completely remove headerlink elements */
+.headerlink {
+  display: none !important;
+}
+
+a.headerlink {
+  display: none !important;
+}
+
+/* =============================================================================
+   Fix Sidebar Dropdown Icons Only
+   ============================================================================= */
+
+/* Smaller dropdown icons in sidebar */
+.sidebar-tree .toctree-expand,
+button.toctree-expand {
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  padding: 0.125rem !important;
+  margin: 0.125rem !important;
+  font-size: 0.75rem !important;
+}
+
+.sidebar-tree .toctree-expand svg,
+button.toctree-expand svg {
+  width: 0.75rem !important;
+  height: 0.75rem !important;
+}
+
+/* =============================================================================
+   Theme Toggle Position Only  
+   ============================================================================= */
+
+.theme-toggle-container {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 1000;
+}
+
+.theme-toggle {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+/* =============================================================================
+   DO NOT TOUCH ANYTHING ELSE
+   Preserve beautiful showcase cards and all other styling
+   ============================================================================= */
