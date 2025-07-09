@@ -1,0 +1,10 @@
+{
+  "game": "single_player/wordle",
+  "timestamp": "20250630_100657",
+  "result": {
+    "success": false,
+    "error": "Import failed: cannot import name 'WordConnectionsAgentConfig' from 'haive.games.single_player.wordle' (/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/single_player/wordle/__init__.py)",
+    "error_type": "ImportError",
+    "stage": "module_import"
+  }
+}

@@ -3,136 +3,165 @@ Games Showcase
 
 Beautiful, interactive game environments with intelligent AI opponents.
 
-.. raw:: html
+Board Games
+-----------
 
-    <div class="agent-showcase-grid">
-        
-        <!-- Board Games -->
-        <div class="showcase-section">
-            <h2 class="section-title">♟️ Board Games</h2>
-            <div class="agent-cards-grid">
-                
-                <div class="agent-card" onclick="window.open('demos/chess-demo.html', '_blank')">
-                    <div class="agent-icon">♟️</div>
-                    <h3>Chess</h3>
-                    <p>Play interactive chess against AI opponents of varying skill levels</p>
-                    <div class="agent-features">
-                        <span class="feature">Strategy</span>
-                        <span class="feature">AI Opponent</span>
-                    </div>
-                </div>
-                
-                <div class="agent-card" onclick="window.open('demos/checkers-demo.html', '_blank')">
-                    <div class="agent-icon">🔴</div>
-                    <h3>Checkers</h3>
-                    <p>Strategic board game with jumping captures and AI strategy</p>
-                    <div class="agent-features">
-                        <span class="feature">Jumping</span>
-                        <span class="feature">Captures</span>
-                    </div>
-                </div>
-                
-                <div class="agent-card" onclick="window.open('demos/mancala-demo.html', '_blank')">
-                    <div class="agent-icon">🟤</div>
-                    <h3>Mancala</h3>
-                    <p>Ancient counting game with strategic depth and AI planning</p>
-                    <div class="agent-features">
-                        <span class="feature">Ancient</span>
-                        <span class="feature">Counting</span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        <!-- Quick Games -->
-        <div class="showcase-section">
-            <h2 class="section-title">⚡ Quick Games</h2>
-            <div class="agent-cards-grid">
-                
-                <div class="agent-card" onclick="window.open('demos/tictactoe-demo.html', '_blank')">
-                    <div class="agent-icon">⭕</div>
-                    <h3>Tic Tac Toe</h3>
-                    <p>Quick 3x3 strategy game with perfect AI opponent</p>
-                    <div class="agent-features">
-                        <span class="feature">Perfect AI</span>
-                        <span class="feature">Quick</span>
-                    </div>
-                </div>
-                
-                <div class="agent-card" onclick="window.open('demos/connect4-demo.html', '_blank')">
-                    <div class="agent-icon">🎯</div>
-                    <h3>Connect 4</h3>
-                    <p>Classic connection game with strategic depth</p>
-                    <div class="agent-features">
-                        <span class="feature">Connection</span>
-                        <span class="feature">Strategy</span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        <!-- Card & Social Games -->
-        <div class="showcase-section">
-            <h2 class="section-title">🃏 Card & Social Games</h2>
-            <div class="agent-cards-grid">
-                
-                <div class="agent-card" onclick="window.open('demos/poker-demo.html', '_blank')">
-                    <div class="agent-icon">🃏</div>
-                    <h3>Poker (Hold'em)</h3>
-                    <p>Texas Hold'em with betting, bluffing, and AI psychology</p>
-                    <div class="agent-features">
-                        <span class="feature">Bluffing</span>
-                        <span class="feature">Psychology</span>
-                    </div>
-                </div>
-                
-                <div class="agent-card" onclick="window.open('demos/among_us-demo.html', '_blank')">
-                    <div class="agent-icon">🚀</div>
-                    <h3>Among Us</h3>
-                    <p>Social deduction game with intelligent AI crewmates and imposters</p>
-                    <div class="agent-features">
-                        <span class="feature">Deduction</span>
-                        <span class="feature">Social</span>
-                    </div>
-                </div>
-                
-                <div class="agent-card" onclick="window.open('demos/clue-demo.html', '_blank')">
-                    <div class="agent-icon">🕵️</div>
-                    <h3>Clue</h3>
-                    <p>Mystery deduction game with logical reasoning and AI detective work</p>
-                    <div class="agent-features">
-                        <span class="feature">Mystery</span>
-                        <span class="feature">Logic</span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        <!-- Economic Games -->
-        <div class="showcase-section">
-            <h2 class="section-title">💰 Economic Games</h2>
-            <div class="agent-cards-grid">
-                
-                <div class="agent-card" onclick="window.open('demos/monopoly-demo.html', '_blank')">
-                    <div class="agent-icon">🏨</div>
-                    <h3>Monopoly</h3>
-                    <p>Economic strategy with AI negotiation and property trading</p>
-                    <div class="agent-features">
-                        <span class="feature">Trading</span>
-                        <span class="feature">Negotiation</span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-    </div>
+.. grid:: 1 2 3 3
+   :gutter: 3
 
-    <link rel="stylesheet" href="../_static/showcase.css">
-    <script src="../_static/showcase.js"></script>
+   .. grid-item-card:: ♟️ **Chess**
+      :class-header: text-center
+      :class-body: text-center
+      
+      Play interactive chess against AI opponents of varying skill levels
+      
+      :bdg-primary:`Strategy` :bdg-secondary:`AI Opponent`
+
+   .. grid-item-card:: 🔴 **Checkers**
+      :class-header: text-center
+      :class-body: text-center
+      
+      Strategic board game with jumping captures and AI strategy
+      
+      :bdg-primary:`Jumping` :bdg-secondary:`Captures`
+
+   .. grid-item-card:: 🟤 **Mancala**
+      :class-header: text-center
+      :class-body: text-center
+      
+      Ancient counting game with strategic depth and AI planning
+      
+      :bdg-primary:`Ancient` :bdg-secondary:`Counting`
+
+   .. grid-item-card:: ⚫ **Go**
+      :class-header: text-center
+      :class-body: text-center
+      
+      Ancient strategy game with territory control and complex AI
+      
+      :bdg-primary:`Territory` :bdg-secondary:`Complex AI`
+
+   .. grid-item-card:: 🎯 **Reversi**
+      :class-header: text-center
+      :class-body: text-center
+      
+      Strategic tile-flipping game with AI pattern recognition
+      
+      :bdg-primary:`Pattern` :bdg-secondary:`Strategy`
+
+   .. grid-item-card:: 🎲 **Risk**
+      :class-header: text-center
+      :class-body: text-center
+      
+      World domination strategy with AI diplomacy and warfare
+      
+      :bdg-primary:`Diplomacy` :bdg-secondary:`Warfare`
+
+Quick Games
+-----------
+
+.. grid:: 1 2 3 3
+   :gutter: 3
+
+   .. grid-item-card:: ⭕ **Tic Tac Toe**
+      :class-header: text-center
+      :class-body: text-center
+      
+      Quick 3x3 strategy game with perfect AI opponent
+      
+      :bdg-success:`Perfect AI` :bdg-info:`Quick`
+
+   .. grid-item-card:: 🎯 **Connect 4**
+      :class-header: text-center
+      :class-body: text-center
+      
+      Classic connection game with strategic depth
+      
+      :bdg-success:`Connection` :bdg-info:`Strategy`
+
+   .. grid-item-card:: 🔢 **Nim**
+      :class-header: text-center
+      :class-body: text-center
+      
+      Mathematical strategy game with optimal play
+      
+      :bdg-success:`Math` :bdg-info:`Optimal`
+
+Card & Social Games
+-------------------
+
+.. grid:: 1 2 3 3
+   :gutter: 3
+
+   .. grid-item-card:: 🃏 **Poker (Hold'em)**
+      :class-header: text-center
+      :class-body: text-center
+      
+      Texas Hold'em with betting, bluffing, and AI psychology
+      
+      :bdg-warning:`Bluffing` :bdg-danger:`Psychology`
+
+   .. grid-item-card:: 🚀 **Among Us**
+      :class-header: text-center
+      :class-body: text-center
+      
+      Social deduction game with intelligent AI crewmates and imposters
+      
+      :bdg-warning:`Deduction` :bdg-danger:`Social`
+
+   .. grid-item-card:: 🕵️ **Clue**
+      :class-header: text-center
+      :class-body: text-center
+      
+      Mystery deduction game with logical reasoning and AI detective work
+      
+      :bdg-warning:`Mystery` :bdg-danger:`Logic`
+
+   .. grid-item-card:: 🎭 **Mafia**
+      :class-header: text-center
+      :class-body: text-center
+      
+      Social deduction with AI role-playing and strategic elimination
+      
+      :bdg-warning:`Role-play` :bdg-danger:`Elimination`
+
+Economic Games
+--------------
+
+.. grid:: 1 2 3 3
+   :gutter: 3
+
+   .. grid-item-card:: 🏨 **Monopoly**
+      :class-header: text-center
+      :class-body: text-center
+      
+      Economic strategy with AI negotiation and property trading
+      
+      :bdg-light:`Trading` :bdg-dark:`Negotiation`
+
+   .. grid-item-card:: 🎯 **Battleship**
+      :class-header: text-center
+      :class-body: text-center
+      
+      Naval strategy with AI pattern recognition and probability
+      
+      :bdg-light:`Naval` :bdg-dark:`Probability`
+
+   .. grid-item-card:: 🎲 **Dominoes**
+      :class-header: text-center
+      :class-body: text-center
+      
+      Tile-based strategy with AI scoring optimization
+      
+      :bdg-light:`Tiles` :bdg-dark:`Scoring`
+
+   .. grid-item-card:: 🔍 **Mastermind**
+      :class-header: text-center
+      :class-body: text-center
+      
+      Code-breaking game with AI logical deduction
+      
+      :bdg-light:`Deduction` :bdg-dark:`Logic`
 
 Game Categories
 ---------------

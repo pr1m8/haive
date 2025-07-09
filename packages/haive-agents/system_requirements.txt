@@ -1,0 +1,12 @@
+# System dependencies detected by automated analysis
+# Install these using your system's package manager
+
+## Ubuntu/Debian:
+# sudo apt-get install \
+#   libpq-dev \
+#   libjpeg-dev libpng-dev \
+
+## macOS:
+# brew install \
+#   pq \
+#   jpeg-dev \

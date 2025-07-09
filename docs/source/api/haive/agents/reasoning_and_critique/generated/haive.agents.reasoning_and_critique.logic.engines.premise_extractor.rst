@@ -1,6 +1,131 @@
-﻿haive.agents.reasoning\_and\_critique.logic.engines.premise\_extractor
-======================================================================
+﻿Premise Extractor
+=================
 
-.. currentmodule:: haive.agents.reasoning_and_critique.logic.engines
+.. py:module:: haive.agents.reasoning_and_critique.logic.engines.premise_extractor
 
-.. autodata:: premise_extractor
+.. currentmodule:: haive.agents.reasoning_and_critique.logic.engines.premise_extractor
+
+.. automodule:: haive.agents.reasoning_and_critique.logic.engines.premise_extractor
+
+
+.. raw:: html
+
+   <div class="module-path" style="margin-bottom: 1rem; color: var(--color-foreground-secondary);">
+      <code>haive.agents.reasoning_and_critique.logic.engines.premise_extractor</code>
+   </div>
+
+
+  
+  
+  .. ifconfig:: False
+     
+     .. include:: ../../../packages/haive-agents/src/haive/agents/reasoning_and_critique/logic/engines/premise_extractor/README.md
+        :parser: myst_parser.sphinx_
+
+.. automodule:: haive.agents.reasoning_and_critique.logic.engines.premise_extractor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __init__, __call__, __new__
+   :imported-members:
+   :exclude-members: logger
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :nosignatures:
+      :toctree: .
+      :template: function.rst
+   
+      create_premise_extractor
+   
+   
+   
+   
+   .. autofunction:: create_premise_extractor
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :nosignatures:
+      :toctree: .
+      :template: class.rst
+   
+      AugLLMConfig
+      ChatPromptTemplate
+      MessagesPlaceholder
+      ReasoningChain
+   
+   
+   
+   
+   .. autoclass:: AugLLMConfig
+      :members:
+      :undoc-members:
+      :show-inheritance:
+      :inherited-members:
+      :special-members: __init__, __call__
+      
+      .. rubric:: Examples
+      
+      .. note::
+         See the class docstring for usage examples.
+   
+   .. autoclass:: ChatPromptTemplate
+      :members:
+      :undoc-members:
+      :show-inheritance:
+      :inherited-members:
+      :special-members: __init__, __call__
+      
+      .. rubric:: Examples
+      
+      .. note::
+         See the class docstring for usage examples.
+   
+   .. autoclass:: MessagesPlaceholder
+      :members:
+      :undoc-members:
+      :show-inheritance:
+      :inherited-members:
+      :special-members: __init__, __call__
+      
+      .. rubric:: Examples
+      
+      .. note::
+         See the class docstring for usage examples.
+   
+   .. autoclass:: ReasoningChain
+      :members:
+      :undoc-members:
+      :show-inheritance:
+      :inherited-members:
+      :special-members: __init__, __call__
+      
+      .. rubric:: Examples
+      
+      .. note::
+         See the class docstring for usage examples.
+   
+   
+
+   
+   
+   
+
+
+

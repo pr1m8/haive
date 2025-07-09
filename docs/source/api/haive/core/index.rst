@@ -1,79 +1,164 @@
 Haive Core
 ==========
 
-Core infrastructure and utilities
+The foundation of the Haive framework - core infrastructure, engines, and utilities for building intelligent agents.
 
-Modules
--------
+.. tip::
+   **Quick Start**: Most users start with :doc:`engine/index` for LLM integration and :doc:`schema/index` for state management.
 
-.. grid:: 1 2 2 3
+Core Components
+---------------
+
+Essential components for agent development:
+
+.. grid:: 1 2 3 3
    :gutter: 3
 
-   .. grid-item-card:: **Engine**
+   .. grid-item-card:: ⚙️ **Engine**
       :link: engine/index
       :link-type: doc
+      :class-header: text-center
+      :class-body: text-center
       
-      8 submodules
-   .. grid-item-card:: **Schema**
+      LLM engines, embeddings, and retrieval systems
+      
+      :bdg-primary:`8 modules` :bdg-secondary:`Essential`
+
+   .. grid-item-card:: 📋 **Schema**
       :link: schema/index
       :link-type: doc
+      :class-header: text-center
+      :class-body: text-center
       
-      4 submodules
-   .. grid-item-card:: **Graph**
+      State management and schema composition
+      
+      :bdg-success:`4 modules` :bdg-info:`Type-safe`
+
+   .. grid-item-card:: 🔄 **Graph**
       :link: graph/index
       :link-type: doc
+      :class-header: text-center
+      :class-body: text-center
       
-      6 submodules
-   .. grid-item-card:: **Persistence**
+      Workflow graphs, nodes, and routing patterns
+      
+      :bdg-warning:`6 modules` :bdg-danger:`Workflows`
+
+Infrastructure
+--------------
+
+Supporting infrastructure and utilities:
+
+.. grid:: 1 2 3 3
+   :gutter: 3
+
+   .. grid-item-card:: 💾 **Persistence**
       :link: persistence/index
       :link-type: doc
+      :class-header: text-center
+      :class-body: text-center
       
-      3 submodules
-   .. grid-item-card:: **Registry**
+      Data storage and state persistence
+      
+      :bdg-light:`3 modules` :bdg-dark:`Storage`
+
+   .. grid-item-card:: 📚 **Registry**
       :link: registry/index
       :link-type: doc
+      :class-header: text-center
+      :class-body: text-center
       
-      3 submodules
-   .. grid-item-card:: **Common**
+      Component registration and discovery
+      
+      :bdg-light:`3 modules` :bdg-dark:`Registry`
+
+   .. grid-item-card:: 🔧 **Common**
       :link: common/index
       :link-type: doc
+      :class-header: text-center
+      :class-body: text-center
       
-      3 submodules
-   .. grid-item-card:: **Config**
-      :link: config/index
-      :link-type: doc
+      Shared utilities and base classes
       
-      Core module
-   .. grid-item-card:: **Logging**
-      :link: logging/index
-      :link-type: doc
-      
-      Core module
-   .. grid-item-card:: **Models**
+      :bdg-light:`3 modules` :bdg-dark:`Utilities`
+
+   .. grid-item-card:: 🎭 **Models**
       :link: models/index
       :link-type: doc
+      :class-header: text-center
+      :class-body: text-center
       
-      4 submodules
-   .. grid-item-card:: **Runtime**
+      LLM models and embedding interfaces
+      
+      :bdg-primary:`4 modules` :bdg-secondary:`Models`
+
+   .. grid-item-card:: 🚀 **Runtime**
       :link: runtime/index
       :link-type: doc
+      :class-header: text-center
+      :class-body: text-center
       
-      2 submodules
-   .. grid-item-card:: **Types**
-      :link: types/index
-      :link-type: doc
+      Runtime environment and extensions
       
-      Core module
-   .. grid-item-card:: **Ui**
+      :bdg-success:`2 modules` :bdg-info:`Runtime`
+
+   .. grid-item-card:: 🖥️ **UI**
       :link: ui/index
       :link-type: doc
+      :class-header: text-center
+      :class-body: text-center
       
-      Core module
-   .. grid-item-card:: **Utils**
+      User interface components
+      
+      :bdg-warning:`Core` :bdg-danger:`Interface`
+
+System Utilities
+----------------
+
+Configuration and system utilities:
+
+.. grid:: 1 2 3 3
+   :gutter: 3
+
+   .. grid-item-card:: ⚙️ **Config**
+      :link: config/index
+      :link-type: doc
+      :class-header: text-center
+      :class-body: text-center
+      
+      Configuration management and settings
+      
+      :bdg-light:`Core` :bdg-dark:`Config`
+
+   .. grid-item-card:: 📝 **Logging**
+      :link: logging/index
+      :link-type: doc
+      :class-header: text-center
+      :class-body: text-center
+      
+      Structured logging and monitoring
+      
+      :bdg-light:`Core` :bdg-dark:`Logging`
+
+   .. grid-item-card:: 🏷️ **Types**
+      :link: types/index
+      :link-type: doc
+      :class-header: text-center
+      :class-body: text-center
+      
+      Type definitions and annotations
+      
+      :bdg-light:`Core` :bdg-dark:`Types`
+
+   .. grid-item-card:: 🛠️ **Utils**
       :link: utils/index
       :link-type: doc
+      :class-header: text-center
+      :class-body: text-center
       
-      Core module
+      General utilities and helper functions
+      
+      :bdg-light:`Core` :bdg-dark:`Utils`
 
 .. toctree::
    :maxdepth: 3

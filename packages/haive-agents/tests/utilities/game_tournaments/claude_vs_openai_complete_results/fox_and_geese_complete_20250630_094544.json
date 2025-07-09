@@ -1,0 +1,10 @@
+{
+  "game": "fox_and_geese",
+  "timestamp": "20250630_094544",
+  "result": {
+    "success": false,
+    "error": "Import failed: cannot import name 'Fox_And_GeeseConfig' from 'haive.games.fox_and_geese' (/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/fox_and_geese/__init__.py)",
+    "error_type": "ImportError",
+    "stage": "module_import"
+  }
+}

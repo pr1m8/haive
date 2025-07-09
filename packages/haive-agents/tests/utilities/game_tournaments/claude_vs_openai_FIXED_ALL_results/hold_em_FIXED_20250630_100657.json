@@ -1,0 +1,11 @@
+{
+  "game": "hold_em",
+  "timestamp": "20250630_100657",
+  "result": {
+    "success": false,
+    "error": "unterminated string literal (detected at line 611) (game_agent.py, line 611)",
+    "error_type": "SyntaxError",
+    "stage": "unknown",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/will/Projects/haive/backend/haive/claude_vs_openai_FIXED_ALL_GAMES.py\", line 158, in test_game_with_fixed_names\n    exec(f\"from {module_path} import {config_class_name}, {state_class_name}\")\n  File \"<string>\", line 1, in <module>\n  File \"/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/hold_em/__init__.py\", line 28, in <module>\n    from haive.games.hold_em.config import (\n  File \"/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/hold_em/config.py\", line 17, in <module>\n    from haive.games.hold_em.game_agent import HoldemGameAgentConfig\n  File \"/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/hold_em/game_agent.py\", line 611\n    logger.info(\"\ud83c\udfaf Current player details:\"s:\")\n                                             ^\nSyntaxError: unterminated string literal (detected at line 611)\n"
+  }
+}

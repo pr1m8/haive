@@ -1,0 +1,10 @@
+{
+  "game": "debate",
+  "timestamp": "20250630_095532",
+  "result": {
+    "success": false,
+    "error": "No config class found. Tried: ['DebateConfig', 'DebateAgentConfig', 'DebateConfig', 'DebateAgentConfig', 'Config', 'GameConfig', 'AgentConfig']",
+    "error_type": "ConfigClassNotFound",
+    "stage": "config_discovery"
+  }
+}

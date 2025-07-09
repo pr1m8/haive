@@ -1,180 +1,140 @@
-# Haive Project Documentation Index
+# Haive Project Documentation
 
-This directory contains all project-related documentation, reports, and organizational materials for the Haive AI agent framework.
+**Version**: 3.0  
+**Last Updated**: 2025-01-09  
+**Status**: Newly Organized
 
-## Directory Structure
+Welcome to the Haive AI Agent Framework documentation. This README serves as your navigation hub for all project documentation.
 
-```
-project_docs/
-├── README.md                           # This index file
-├── documentation_cleanup/              # Documentation cleanup project
-│   ├── README.md                       # Complete project overview
-│   ├── planning/                       # Project planning documents
-│   │   ├── DOCUMENTATION_CONSOLIDATION_PLAN.md
-│   │   ├── DOCUMENTATION_SETUP.md
-│   │   ├── DOCUMENTATION_SETUP_SUMMARY.md
-│   │   └── DOCUMENTATION_CLEANUP_SUMMARY.md
-│   ├── implementation/                 # Implementation details
-│   │   └── TEST_MIGRATION_SUMMARY.md
-│   ├── final_reports/                  # Completion reports
-│   │   ├── DOCUMENTATION_CLEANUP_COMPLETED.md
-│   │   └── SHOWCASE_DOCUMENTATION_COMPLETE.md
-│   └── archive/                        # Legacy data
-│       ├── DOCUMENTATION_FIXES_SUMMARY.json
-│       └── FINAL_DOCUMENTATION_REPORT.json
-├── DISCOVERY_SYSTEM_FIXES.md          # Discovery system refactoring documentation
-├── CIRCULAR_IMPORT_ANALYSIS.md        # Technical analysis of circular import fix
-└── logs_and_data/                     # Organized logs and datasets
-    ├── debug_logs/                    # Debug and test logs
-    │   ├── vault_cli_*.log
-    │   ├── poker_*.log
-    │   ├── monopoly_test.log
-    │   ├── benchmark.log
-    │   └── debug_simple_agent.log
-    └── model_data/                    # LLM model datasets
-        ├── anthropic_models.csv
-        ├── deepseek_models.csv
-        ├── mistral_models.csv
-        ├── openai_models.csv
-        └── all_models.csv
-```
+## 🚀 Quick Start
 
-## Project Categories
+**New to Haive?** Start here:
+- [Getting Started](quick_start/README.md) - First-time setup and overview
+- [Development Setup](quick_start/development_setup.md) - Environment configuration
+- [Create Your First Agent](quick_start/first_agent.md) - Step-by-step tutorial
 
-### 📚 Documentation Projects
+## 📁 Documentation Structure
 
-#### [Documentation Cleanup Project](./documentation_cleanup/)
+### 🏗️ Active Development
+Current development documentation, regularly updated:
 
-**Status**: ✅ Complete  
-**Duration**: ~40 hours over multiple sessions  
-**Impact**: Transformed chaotic documentation into professional showcase
+- **[Architecture](active/architecture/README.md)** - System design and technical architecture
+  - [Agents](active/architecture/agents/) - Agent system architecture
+  - [Schemas](active/architecture/schemas/) - Schema system design
+  - [Engines](active/architecture/engines/) - Engine architecture
+  - [Graphs](active/architecture/graphs/) - Graph system design
 
-**Key Achievements**:
+- **[Implementation](active/implementation/README.md)** - How-to guides and tutorials
+  - [Agent Development](active/implementation/agent_development/) - Creating agents
+  - [Tool Integration](active/implementation/tool_integration/) - Adding tools
+  - [Testing](active/implementation/testing/) - Testing approaches
+  - [Deployment](active/implementation/deployment/) - Deployment guides
 
-- Consolidated 50+ scattered documentation files
-- Migrated all tests to proper `packages/haive-*/tests/` structure
-- Generated 311 module READMEs and updated 312 `__init__.py` files
-- Created stunning agent showcase with interactive gallery
-- Reduced build warnings by 67% (5090 → 1679)
-- Simplified Sphinx configuration by 59% (800+ → 330 lines)
+- **[Analysis](active/analysis/README.md)** - Technical analysis and research
+  - [Performance](active/analysis/performance/) - Performance studies
+  - [Compatibility](active/analysis/compatibility/) - Compatibility analysis
+  - [Research](active/analysis/research/) - Research findings
 
-**Deliverables**:
+- **[Standards](active/standards/README.md)** - Development standards and guidelines
+  - [Coding](active/standards/coding/) - Code style guides
+  - [Documentation](active/standards/documentation/) - Documentation standards
+  - [Testing](active/standards/testing/) - Testing standards
+  - [Git](active/standards/git/) - Git workflows
 
-- ✅ Automated migration scripts (`scripts/migrate_tests.py`, `scripts/generate_module_docs.py`)
-- ✅ Modern documentation configuration and styling
-- ✅ Professional agent showcase with search and filtering
-- ✅ Complete module documentation system
-- ✅ Comprehensive project reports and documentation
+### 🧠 Claude Sessions
+Claude Code working memory and session tracking:
 
-### 🔍 Discovery System Refactoring
+- **[Active Sessions](sessions/active/README.md)** - Current work sessions
+  - [Current Issues](sessions/active/current_issues.md) - Active problems
+  - [Current Sprint](sessions/active/current_sprint.md) - Sprint progress
+  - Individual session folders
 
-#### [Discovery System Fixes](./DISCOVERY_SYSTEM_FIXES.md)
+- **[Session Archive](sessions/archive/README.md)** - Completed sessions
 
-**Status**: ✅ Complete  
-**Impact**: Fixed circular imports and unified API discovery system
+### 🤖 Generated Documentation
+Auto-generated documentation and discovery:
 
-**Key Achievements**:
+- **[Discovery](generated/discovery/README.md)** - Component discovery reports
+  - [Retrievers](generated/discovery/retrievers/) - Retriever discovery
+  - [Vector Stores](generated/discovery/vector_stores/) - Vector store discovery
+  - [Tools](generated/discovery/tools/) - Tool discovery
 
-- Resolved circular import between component_registry and haive_discovery
-- Refactored agent, tool, and game discovery APIs to use unified system
-- Eliminated code duplication across discovery endpoints
-- Added comprehensive Google-style docstrings
+- **[API Documentation](generated/api/README.md)** - Auto-generated API docs
+- **[Metrics](generated/metrics/README.md)** - Performance metrics
 
-**Technical Details**: See [Circular Import Analysis](./CIRCULAR_IMPORT_ANALYSIS.md)
+### 📚 Reference Materials
+Reference documentation and resources:
 
-### 🔧 Development Data
+- **[API Reference](reference/api/README.md)** - API documentation
+- **[Examples](reference/examples/README.md)** - Code examples
+- **[Templates](reference/templates/README.md)** - Document templates
+- **[Troubleshooting](reference/troubleshooting/README.md)** - Common problems
 
-#### [Logs and Data](./logs_and_data/)
+### 🗄️ Archive
+Historical documentation and deprecated content:
 
-**Purpose**: Organized storage for debug logs and model datasets
+- **[Archive](archive/README.md)** - Historical content
+  - [Version 1](archive/v1/) - Version 1 documentation
+  - [Experiments](archive/experiments/) - Experimental features
+  - [Deprecated](archive/deprecated/) - Deprecated approaches
 
-**Debug Logs**:
-
-- `vault_cli_*.log`: CLI tool debug sessions
-- `poker_*.log`: Game development debugging
-- `monopoly_test.log`: Game testing logs
-- `benchmark.log`: Performance benchmarking data
-- `debug_simple_agent.log`: Agent development debugging
-
-**Model Data**:
-
-- `anthropic_models.csv`: Anthropic AI model specifications
-- `deepseek_models.csv`: DeepSeek model configurations
-- `mistral_models.csv`: Mistral AI model data
-- `openai_models.csv`: OpenAI model specifications
-- `all_models.csv`: Consolidated model dataset
-
-## Usage Guidelines
+## 🎯 Common Tasks
 
 ### For Developers
+- **Starting a new agent**: See [Agent Development](active/implementation/agent_development/)
+- **Adding tools**: See [Tool Integration](active/implementation/tool_integration/)
+- **Testing approaches**: See [Testing Standards](active/standards/testing/)
+- **Code style**: See [Coding Standards](active/standards/coding/)
 
-1. **Documentation Standards**: Reference [Documentation Cleanup](./documentation_cleanup/) for templates and best practices
-2. **Project History**: Use this index to understand project evolution and decisions
-3. **Debug Data**: Check [logs_and_data](./logs_and_data/) for debugging patterns and model comparisons
+### For Architects
+- **System design**: See [Architecture](active/architecture/)
+- **Performance analysis**: See [Analysis](active/analysis/performance/)
+- **Compatibility studies**: See [Analysis](active/analysis/compatibility/)
 
-### For Maintenance
+### For Claude Code
+- **Session management**: See [Active Sessions](sessions/active/)
+- **Progress tracking**: See [Current Sprint](sessions/active/current_sprint.md)
+- **Issue tracking**: See [Current Issues](sessions/active/current_issues.md)
 
-1. **Keep Organized**: Add new project documentation to appropriate subdirectories
-2. **Update Index**: Update this README when adding new major projects
-3. **Archive Old**: Move completed project artifacts to archive folders
-4. **Follow Patterns**: Use established directory structure for consistency
+## 📊 Documentation Health
 
-## Key Project Insights
+### Recent Changes
+- **2025-01-09**: Major reorganization - improved structure and navigation
+- **2025-01-09**: Removed 6.7MB of duplicate files
+- **2025-01-09**: Created modular memory system
 
-### Documentation Project Lessons
+### Statistics
+- **File Count**: ~261 files (reduced from 348)
+- **Storage**: ~9.2MB (reduced from 15.9MB)
+- **Organization**: Hierarchical structure with clear navigation
 
-1. **Automation is Critical**: Scripts saved 30+ hours of manual work
-2. **Templates Ensure Consistency**: Standardized templates maintain quality
-3. **Modern Tools Matter**: Updated Sphinx configuration reduced complexity significantly
-4. **Visual Impact**: Professional showcase transforms user perception
-5. **Proper Organization**: Structured approach enables future scalability
+## 🔧 Maintenance
 
-### Discovery System Lessons
+### For Contributors
+- **Add new documentation**: Follow [Documentation Standards](active/standards/documentation/)
+- **Update existing docs**: Maintain cross-references and navigation
+- **File organization**: Keep files in appropriate categories
 
-1. **Lazy Imports Work**: Simple pattern resolves complex circular dependencies
-2. **Centralization Matters**: Single discovery implementation prevents drift
-3. **Documentation Essential**: Google-style docstrings improve maintainability
-4. **Testing Critical**: Comprehensive tests ensure fixes remain stable
-5. **Performance Acceptable**: Discovery is slow but functional with missing deps
+### For Maintainers
+- **Regular cleanup**: Monthly review of generated content
+- **Link validation**: Quarterly check of all cross-references
+- **Structure evolution**: Adapt organization as project grows
 
-### Technical Decisions
+## 📝 Contributing
 
-1. **Kept Notebooks in Root**: Preserved `/notebooks/` for easy access
-2. **Package-based Testing**: Moved all tests to `packages/haive-*/tests/`
-3. **Gradient-heavy Design**: Created impressive visual impact for agent showcase
-4. **Automated Documentation**: Generated comprehensive module docs programmatically
-5. **Performance Focus**: Optimized build process and reduced warnings
+To contribute to documentation:
 
-## Future Projects
+1. **Follow standards**: See [Documentation Standards](active/standards/documentation/)
+2. **Use templates**: See [Templates](reference/templates/)
+3. **Update navigation**: Maintain this README and category indexes
+4. **Test links**: Verify all cross-references work
 
-### Potential Additions
+## 🆘 Need Help?
 
-- **API Documentation Enhancement**: Automated API doc generation improvements
-- **Performance Monitoring**: Agent performance dashboards and metrics
-- **Integration Testing**: Comprehensive test suite for multi-agent interactions
-- **User Experience**: Enhanced documentation search and navigation
-- **Developer Tools**: Additional automation scripts for maintenance
+- **Development questions**: See [Troubleshooting](reference/troubleshooting/)
+- **Documentation issues**: Check [Templates](reference/templates/)
+- **System problems**: See [Current Issues](sessions/active/current_issues.md)
 
-### Maintenance Schedule
+---
 
-- **Monthly**: Review and organize new logs and data
-- **Quarterly**: Update documentation templates and standards
-- **Annually**: Comprehensive project documentation audit
-
-## Contact and Contribution
-
-This project documentation structure was established during the comprehensive documentation cleanup project. For questions about the organization or to contribute improvements:
-
-1. Follow established templates and patterns
-2. Update relevant index files when adding content
-3. Maintain the directory structure for consistency
-4. Document decisions and rationale for future reference
-
-## Historical Context
-
-The Haive project has evolved significantly, and this documentation structure represents the culmination of organizing years of development work into a professional, maintainable system. The documentation cleanup project in particular transformed the entire presentation and usability of the project.
-
-**Before**: Scattered files, inconsistent documentation, poor organization  
-**After**: Professional showcase, comprehensive documentation, automated maintenance
-
-This foundation supports the continued growth and development of the Haive AI agent ecosystem.
+**Note**: This documentation is actively maintained and regularly updated. For the most current information, always check the modification dates on individual files.

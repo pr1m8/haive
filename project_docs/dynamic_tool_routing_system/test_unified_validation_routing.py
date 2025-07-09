@@ -118,7 +118,7 @@ class RecompilableAgentWithUnifiedValidation:
         )
         
         # Add nodes
-        graph.add_node("agent_node", self.base_agent.create_runnable())
+        graph.add_node("agent_node", self.base_agent)
         graph.add_node("unified_validation", validation_node)
         graph.add_node("tool_node", self._create_tool_executor())
         graph.add_node("parse_output", self._create_output_parser())
@@ -251,8 +251,7 @@ def test_unified_validation_simple_agent():
     }
     
     # Test validation
-    validator = validation_node.create_runnable()
-    result = validator(test_state)
+    result = validation_node(test_state)
     
     print(f"   Validation result type: {type(result)}")
     print(f"   Validation result: {result}")
@@ -312,8 +311,7 @@ def test_unified_validation_react_agent():
         parallel_execution=True
     )
     
-    validator = validation_node.create_runnable()
-    result = validator(test_state)
+    result = validation_node(test_state)
     
     print(f"   Validation result: {result}")
     
@@ -368,8 +366,7 @@ def test_command_send_routing():
         parallel_execution=True
     )
     
-    validator = validation_node.create_runnable()
-    result = validator(test_state)
+    result = validation_node(test_state)
     
     print(f"   Result type: {type(result)}")
     print(f"   Result: {result}")
@@ -382,8 +379,7 @@ def test_command_send_routing():
         parallel_execution=False
     )
     
-    validator_single = validation_node_single.create_runnable()
-    result_single = validator_single(test_state)
+    result_single = validation_node_single(test_state)
     
     print(f"   Result type: {type(result_single)}")
     print(f"   Result: {result_single}")

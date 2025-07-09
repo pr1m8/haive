@@ -1,0 +1,9 @@
+{
+  "game": "connect4",
+  "timestamp": "20250630_094308",
+  "api_result": {
+    "success": false,
+    "error": "'AgentConfig' object has no attribute 'enable_analysis'",
+    "error_type": "AttributeError"
+  }
+}

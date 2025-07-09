@@ -1,0 +1,184 @@
+"""
+Schema management mixin for the state graph system.
+
+This module provides the SchemaMixin class for managing state,
+input, and output schemas in graph objects.
+"""
+
+from typing import Any, Dict, Generic, List, Optional, TypeVar
+
+from pydantic import BaseModel, ConfigDict, Field, model_validator
+
+from haive.core.graph.common.types import ConfigLike, StateLike
+
+T = TypeVar("T", bound=StateLike)
+C = TypeVar("C", bound=Optional[ConfigLike])
+
+
+class SchemaMixin(BaseModel, Generic[T, C]):
+    """
+    Mixin for schema management in graphs.
+
+    This mixin provides functionality for managing state, input, and output schemas
+    in graph objects.
+    """
+
+    state_schema: T = Field(description="Schema for graph state")
+    input_schema: T = Field(description="Schema for graph inputs")
+    output_schema: T = Field(description="Schema for graph outputs")
+    config_schema: C = Field(
+        default=None, description="Optional schema for graph configuration"
+    )
+
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+    @model_validator(mode="before")
+    @classmethod
+    def validate_schema_setup(cls, data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Validate schema relationships and set defaults.
+
+        Args:
+            data: Dictionary of values being validated
+
+        Returns:
+            Validated values dictionary
+        """
+        # Create a copy to avoid modifying the input
+        values = data.copy() if isinstance(data, dict) else {"__root__": data}
+
+        # Case 1: state_schema is provided, derive input/output if needed
+        if "state_schema" in values and values["state_schema"] is not None:
+            state_schema = values["state_schema"]
+            # Use state_schema for input if not provided
+            if "input_schema" not in values or values["input_schema"] is None:
+                values["input_schema"] = state_schema
+            # Use state_schema for output if not provided
+            if "output_schema" not in values or values["output_schema"] is None:
+                values["output_schema"] = state_schema
+        # Case 2: input_schema and output_schema are provided, derive state_schema
+        elif (
+            "input_schema" in values
+            and values["input_schema"] is not None
+            and "output_schema" in values
+            and values["output_schema"] is not None
+        ):
+            # If input and output schemas are provided but state isn't, create a pass-through state schema
+            if "state_schema" not in values or values["state_schema"] is None:
+
+                class PassThroughState(BaseModel):
+                    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+                values["state_schema"] = PassThroughState
+
+        # Ensure we have schemas
+        if "state_schema" not in values or values["state_schema"] is None:
+            raise ValueError("state_schema must be provided")
+        if "input_schema" not in values or values["input_schema"] is None:
+            raise ValueError("input_schema must be provided")
+        if "output_schema" not in values or values["output_schema"] is None:
+            raise ValueError("output_schema must be provided")
+
+        return values
+
+    def validate_input(self, data: Any) -> Any:
+        """
+        Validate input data against input schema.
+
+        Args:
+            data: Input data
+
+        Returns:
+            Validated input data
+        """
+        if hasattr(self.input_schema, "model_validate"):
+            return self.input_schema.model_validate(data)
+        elif hasattr(self.input_schema, "parse_obj"):
+            # Pydantic v1 support
+            return self.input_schema.parse_obj(data)
+        return data
+
+    def validate_output(self, data: Any) -> Any:
+        """
+        Validate output data against output schema.
+
+        Args:
+            data: Output data
+
+        Returns:
+            Validated output data
+        """
+        if hasattr(self.output_schema, "model_validate"):
+            return self.output_schema.model_validate(data)
+        elif hasattr(self.output_schema, "parse_obj"):
+            # Pydantic v1 support
+            return self.output_schema.parse_obj(data)
+        return data
+
+    def create_state(self, data: Optional[Any] = None) -> Any:
+        """
+        Create a state instance based on state schema.
+
+        Args:
+            data: Optional initial data
+
+        Returns:
+            State instance
+        """
+        if data is None:
+            # Create empty instance
+            if isinstance(self.state_schema, type):
+                return self.state_schema()
+            return {}
+
+        # Validate and create instance
+        if hasattr(self.state_schema, "model_validate"):
+            return self.state_schema.model_validate(data)
+        elif hasattr(self.state_schema, "parse_obj"):
+            # Pydantic v1 support
+            return self.state_schema.parse_obj(data)
+        return data
+
+    def get_shared_fields(self) -> List[str]:
+        """
+        Get list of shared fields from state schema.
+
+        Returns:
+            List of field names that are shared
+        """
+        if hasattr(self.state_schema, "__shared_fields__") and isinstance(
+            self.state_schema.__shared_fields__, list
+        ):
+            return self.state_schema.__shared_fields__
+        return []
+
+    def get_reducer_fields(self) -> Dict[str, Any]:
+        """
+        Get reducer functions from state schema.
+
+        Returns:
+            Dictionary mapping field names to reducer functions
+        """
+        if hasattr(self.state_schema, "__reducer_fields__") and isinstance(
+            self.state_schema.__reducer_fields__, dict
+        ):
+            return self.state_schema.__reducer_fields__
+        return {}
+
+    def has_field(self, field_name: str) -> bool:
+        """
+        Check if state schema has a specific field.
+
+        Args:
+            field_name: Field name to check
+
+        Returns:
+            True if field exists in schema
+        """
+        if hasattr(self.state_schema, "model_fields"):
+            # Pydantic v2
+            return field_name in self.state_schema.model_fields
+        elif hasattr(self.state_schema, "__fields__"):
+            # Pydantic v1
+            return field_name in self.state_schema.__fields__
+        return False

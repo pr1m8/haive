@@ -1,0 +1,10 @@
+{
+  "game": "dominoes",
+  "timestamp": "20250630_095532",
+  "result": {
+    "success": false,
+    "error": "No config class found. Tried: ['DominoesConfig', 'DominoesAgentConfig', 'DominoesConfig', 'DominoesAgentConfig', 'Config', 'GameConfig', 'AgentConfig']",
+    "error_type": "ConfigClassNotFound",
+    "stage": "config_discovery"
+  }
+}

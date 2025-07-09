@@ -1,0 +1,10 @@
+{
+  "game": "connect4",
+  "timestamp": "20250630_094544",
+  "result": {
+    "success": false,
+    "error": "Import failed: cannot import name 'Connect4Config' from 'haive.games.connect4' (/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/connect4/__init__.py)",
+    "error_type": "ImportError",
+    "stage": "module_import"
+  }
+}

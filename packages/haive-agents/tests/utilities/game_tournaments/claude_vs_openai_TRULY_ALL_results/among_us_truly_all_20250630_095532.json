@@ -1,0 +1,10 @@
+{
+  "game": "among_us",
+  "timestamp": "20250630_095532",
+  "result": {
+    "success": false,
+    "error": "No config class found. Tried: ['AmongusConfig', 'AmongusAgentConfig', 'AmongUsConfig', 'AmongUsAgentConfig', 'Config', 'GameConfig', 'AgentConfig']",
+    "error_type": "ConfigClassNotFound",
+    "stage": "config_discovery"
+  }
+}

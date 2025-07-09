@@ -145,10 +145,10 @@ html_short_title = "Haive"
 # Static files
 html_static_path = ["_static"]
 
-# SIMPLIFIED: Only essential CSS and JS
+# Enhanced CSS for better styling and syntax highlighting
 html_css_files = [
-    "api-showcase.css",           # Beautiful gradient cards
-    "documentation-overrides.css", # Critical fixes only
+    "haive-docs-enhanced.css",      # Comprehensive styling fixes
+    "api-showcase.css",             # Beautiful gradient cards (enhanced)
 ]
 
 html_js_files = [
@@ -248,6 +248,19 @@ autodoc_mock_imports = [
     'haive.tools.math',
     'haive.tools.data',
     'haive.core.engine.loaders',
+    
+    # Document modifiers that are failing
+    'haive.agents.document_modifiers.kg',
+    'haive.agents.document_modifiers.kg.kg_base',
+    'haive.agents.document_modifiers.kg.kg_iterative_refinement',
+    'haive.agents.document_modifiers.kg.kg_map_merge',
+    'haive.agents.document_modifiers.summarizer',
+    'haive.agents.document_modifiers.summarizer.iterative_refinement',
+    
+    # Persistence modules that don't exist
+    'haive.core.persistence.create_checkpointer',
+    'haive.core.persistence.create_memory_checkpointer',
+    'haive.core.persistence.create_postgres_checkpointer',
     
     # Only mock if they cause issues during build
     'torch',
@@ -352,7 +365,7 @@ myst_enable_extensions = [
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
     "pydantic": ("https://docs.pydantic.dev/latest/", None),
-    "langchain": ("https://python.langchain.com/", None),
+    "langchain": ("https://api.python.langchain.com/en/latest/", None),
 }
 
 # Mermaid diagrams

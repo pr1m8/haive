@@ -1,0 +1,95 @@
+[07/07/25 15:46:53] INFO     Registered agent: research_agent                   
+                    INFO     Registered agent: math_agent                       
+                    INFO     Registered engine 'aug_llm_68d66366' in            
+                             EngineRegistry                                     
+                    INFO     Set up PostgreSQL persistence for haive_Workflow   
+                             Demo Supervisor_126382214738432 (prepared          
+                             statements disabled)                               
+                    INFO     Using PostgresSaverNoPreparedStatements to avoid   
+                             prepared statement conflicts                       
+                    INFO     PostgreSQL connection pool opened successfully     
+                    INFO     PostgreSQL tables set up successfully              
+                    INFO     Registered agent: creative_writer                  
+                    INFO     Added agent 'creative_writer' to supervisor        
+                             registry                                           
+🎭 FULL DYNAMIC SUPERVISOR WORKFLOW DEMO
+============================================================
+
+1. Creating Dynamic Supervisor...
+✅ Created: Workflow Demo Supervisor
+🤖 Available agents: ['research_agent', 'math_agent']
+🔧 Tools: 5
+
+2. Adding Writing Agent Dynamically...
+✅ Added creative_writer
+🔧 Updated tools count: 6
+
+3. Setting Up Initial State...
+📦 Initial state created
+📝 Initial message: I need help with a math problem and then writing a story about it.
+📊 Registry has 3 agents
+
+4. Testing Tools with State...
+
+   4a. Testing list_agents tool...
+   Result: Available agents:
+
+• research_agent: Searches for information and conducts research
+  Capabilities: ...
+
+   4b. Testing handoff tool structure...
+   Tool: handoff_to_math_agent
+   Description: Transfer control to the specified agent.
+
+        Args:
+            task: The specific task for the agent to handle
+
+        Returns:
+            Result from the agent execution
+   Args schema: <class 'langchain_core.utils.pydantic.handoff_to_agent'>
+
+5. Simulating Workflow State Updates...
+
+   5a. Simulating math agent handoff...
+   ✅ Math agent execution recorded
+   📊 Result: 15 * 23 = 345, then 345 + 47 = 392. The answer is 392.
+
+   5b. Simulating creative writer handoff...
+   ✅ Creative writer execution recorded
+   📊 Result: Once upon a time, in a digital realm, there lived a number named 392. This numbe...
+
+6. Final Workflow State...
+   🎯 Task complete: True
+   📊 Total iterations: 2
+   🤖 Completed agents: ['creative_writer', 'math_agent']
+   📝 Execution history entries: 2
+
+7. Workflow Summary...
+   Step 1: math_agent - Solve: What is 15 * 23 + 47?
+           Success: True
+           Result: 15 * 23 = 345, then 345 + 47 = 392. The answer is 392....
+
+   Step 2: creative_writer - Write a short story about the number 392
+           Success: True
+           Result: Once upon a time, in a digital realm, there lived a number n...
+
+✅ Full workflow demonstration completed!
+🎉 Supervisor successfully coordinated 2 agents
+
+📝 WORKFLOW SUMMARY FOR REVIEW
+============================================================
+Supervisor: Workflow Demo Supervisor
+Debug Mode: True
+Total Tools: 6
+Available Agents: 3
+Workflow Iterations: 2
+Agents Used: ['creative_writer', 'math_agent']
+Task Complete: True
+Handoff Tools: ['handoff_to_research_agent', 'handoff_to_math_agent', 'handoff_to_creative_writer']
+
+🚀 The supervisor workflow demonstrates:
+  ✓ Dynamic agent registration
+  ✓ Tool creation without recompilation
+  ✓ State management across agent handoffs
+  ✓ Execution history tracking
+  ✓ Multi-agent coordination
