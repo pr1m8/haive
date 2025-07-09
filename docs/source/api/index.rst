@@ -21,30 +21,16 @@ Complete API documentation for the Haive framework with hierarchical navigation 
 
 .. toctree::
    :maxdepth: 2
-   :caption: 📚 Auto-Generated Reference
+   :caption: 📦 Package Reference
    :hidden:
    
-   generated/haive.agents.base
-   generated/haive.agents.multi
-   generated/haive.agents.planning
-   generated/haive.agents.rag
-   generated/haive.agents.react
-   generated/haive.agents.simple
-   generated/haive.core.engine
-   generated/haive.core.graph
-   generated/haive.core.persistence
-   generated/haive.core.schema
-   generated/haive.core.tools
-   generated/haive.dataflow
-   generated/haive.games
-   generated/haive.mcp
-   generated/haive.prebuilt
-   generated/haive.tools.api
-   generated/haive.tools.code
-   generated/haive.tools.data
-   generated/haive.tools.math
-   generated/haive.tools.search
-   generated/haive.tools.utility
+   haive/core/index
+   haive/agents/index
+   haive/tools/index
+   haive/games/index
+   haive/dataflow/index
+   haive/prebuilt/index
+   haive/mcp/index
 
 .. note::
    **Navigation Structure**: 

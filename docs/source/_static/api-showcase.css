@@ -11,11 +11,11 @@
   --haive-accent: #8a3ffc;
   --haive-success: #24a148;
   
-  /* Gradients for impact */
-  --gradient-primary: linear-gradient(135deg, #0f62fe 0%, #4589ff 50%, #8a3ffc 100%);
-  --gradient-secondary: linear-gradient(135deg, #8a3ffc 0%, #0f62fe 100%);
-  --gradient-warm: linear-gradient(135deg, #f1c21b 0%, #ff832b 100%);
-  --gradient-cool: linear-gradient(135deg, #4589ff 0%, #24a148 100%);
+  /* Subtle gradients - more professional */
+  --gradient-primary: linear-gradient(135deg, rgba(15, 98, 254, 0.08) 0%, rgba(69, 137, 255, 0.05) 100%);
+  --gradient-secondary: linear-gradient(135deg, rgba(138, 63, 252, 0.08) 0%, rgba(15, 98, 254, 0.05) 100%);
+  --gradient-warm: linear-gradient(135deg, rgba(241, 194, 27, 0.08) 0%, rgba(255, 131, 43, 0.05) 100%);
+  --gradient-cool: linear-gradient(135deg, rgba(69, 137, 255, 0.08) 0%, rgba(36, 161, 72, 0.05) 100%);
   
   /* Spacing scale */
   --space-1: 0.25rem;
@@ -54,14 +54,14 @@ section[id*="engine"] .sd-container-fluid .sd-card {
   transform: translateY(0);
 }
 
-/* Beautiful hover animations */
+/* Subtle hover animations */
 article[id*="haive"] .sd-container-fluid .sd-card:hover,
 section[id*="haive"] .sd-container-fluid .sd-card:hover,
 section[id*="schema"] .sd-container-fluid .sd-card:hover,
 section[id*="engine"] .sd-container-fluid .sd-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15) !important;
-  border-color: var(--haive-primary) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08) !important;
+  border-color: var(--color-brand-primary) !important;
 }
 
 /* Gradient top border on hover */
@@ -153,29 +153,29 @@ section[id="haive-api-reference"] .sd-card:hover,
   border-color: var(--haive-primary) !important;
 }
 
-/* Package card headers with stronger gradients */
+/* Package card headers with subtle gradients - NO WHITE TEXT */
 section[id="haive-api-reference"] .sd-card-body,
 .sd-card-body {
   padding: var(--space-8) !important;
-  background: var(--gradient-primary) !important;
-  color: white !important;
+  background: linear-gradient(135deg, #f8faff 0%, #e6f0ff 100%) !important;
+  color: #161616 !important;
   position: relative;
 }
 
 section[id="haive-api-reference"] .sd-card-title,
 .sd-card-title {
-  color: white !important;
+  color: var(--haive-primary) !important;
   font-size: 1.5rem !important;
   font-weight: 800 !important;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: none;
 }
 
 section[id="haive-api-reference"] .sd-card-text,
 .sd-card-text {
-  color: rgba(255, 255, 255, 0.9) !important;
+  color: #525252 !important;
   font-size: 1rem !important;
-  background: rgba(255, 255, 255, 0.1) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(15, 98, 254, 0.1) !important;
+  border: 1px solid rgba(15, 98, 254, 0.2);
 }
 
 /* =============================================================================

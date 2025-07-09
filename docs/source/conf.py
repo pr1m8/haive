@@ -217,10 +217,54 @@ autodoc_default_options = {
     "special-members": "__init__",
     "member-order": "bysource",
     "exclude-members": "__weakref__",
+    "inherited-members": True,
 }
-autodoc_typehints = "description"
+autodoc_typehints = "both"  # Show types in signature AND description
 autodoc_typehints_format = "short"
 autodoc_class_signature = "separated"
+autodoc_type_aliases = {
+    # Simplify common Haive types
+    'Agent': 'haive.agents.base.Agent',
+    'StateSchema': 'haive.core.schema.StateSchema',
+    'Engine': 'haive.core.engine.Engine',
+    'Tool': 'haive.core.tools.Tool',
+}
+
+# Mock imports for missing modules
+autodoc_mock_imports = [
+    # Known missing modules
+    'haive.tools.api',
+    'haive.tools.utility', 
+    'haive.tools.code',
+    'haive.agents.rag.self_rag',
+    'haive.core.schema.compatibility',
+    'haive.agents.planning.llm_compiler',
+    'haive.agents.reasoning_and_critique.reflection',  # Should be reflexion
+    'haive.agents.conversation.collaborative',  # Typo: should be collaberative
+    'haive.agents.supervisor',  # Various supervisor imports fail
+    
+    # Critical module causing build failure
+    'haive.agents.document_modifiers.kg.kg_base',
+    'haive.agents.document_modifiers',
+    
+    # Additional missing modules from latest build
+    'haive.tools.search',
+    'haive.tools.math',
+    'haive.tools.data',
+    'haive.core.engine.loaders',
+    
+    # External dependencies that might not be installed
+    'langchain_community',
+    'langgraph',
+    'libcst',
+    'networkx',
+    'pandas',
+    'numpy',
+    'matplotlib',
+    'seaborn',
+    'scipy',
+    'sklearn',
+]
 
 # Autosummary - re-enabled after fixing import issues
 autosummary_generate = True
@@ -269,22 +313,32 @@ autosummary_context = {
 
 # Napoleon (Google docstrings) - optimized settings
 napoleon_google_docstring = True
-napoleon_numpy_docstring = True
+napoleon_numpy_docstring = False  # We use Google style, not NumPy
 napoleon_include_init_with_doc = True
 napoleon_include_private_with_doc = False
 napoleon_include_special_with_doc = True
 napoleon_use_admonition_for_examples = True
 napoleon_use_admonition_for_notes = True
-napoleon_use_admonition_for_references = False
+napoleon_use_admonition_for_references = True
 napoleon_use_ivar = True
 napoleon_use_param = True
 napoleon_use_rtype = True
 napoleon_use_keyword = True
 napoleon_preprocess_types = True
-napoleon_type_aliases: dict[str, str] = {
-    # Add common type aliases if needed
+napoleon_type_aliases = {
+    # Haive-specific type aliases
+    'Agent': 'haive.agents.base.Agent',
+    'StateSchema': 'haive.core.schema.StateSchema',
+    'Engine': 'haive.core.engine.Engine',
+    'Tool': 'haive.core.tools.Tool',
+    'Graph': 'haive.core.graph.BaseGraph',
+    'RunnableConfig': 'Dict[str, Any]',
 }
 napoleon_attr_annotations = True
+napoleon_custom_sections = [
+    ('Type Parameters', 'params_style'),
+    ('State Schema', 'params_style'),
+]
 
 # Copy button
 copybutton_prompt_text = r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
@@ -398,6 +452,31 @@ def setup(app):
     # Create images directory if it doesn't exist
     images_dir = static_dir / "images"
     images_dir.mkdir(exist_ok=True)
+    
+    # Add monorepo import failure handler
+    def handle_import_failure(app, what, name, obj, options, lines):
+        """Handle import failures gracefully with helpful messages."""
+        if name in autodoc_mock_imports:
+            if 'haive.tools.api' in name:
+                lines.insert(0, '.. warning::')
+                lines.insert(1, '')
+                lines.insert(2, '   This module has been reorganized. API tools are now in:')
+                lines.insert(3, '   ``haive.tools.toolkits.{service_name}``')
+                lines.insert(4, '')
+            elif 'haive.tools.code' in name:
+                lines.insert(0, '.. warning::')
+                lines.insert(1, '') 
+                lines.insert(2, '   Code tools have moved to:')
+                lines.insert(3, '   ``haive.tools.toolkits.dev``')
+                lines.insert(4, '')
+            elif 'haive.tools.utility' in name:
+                lines.insert(0, '.. warning::')
+                lines.insert(1, '')
+                lines.insert(2, '   Utility tools are now in individual modules:')
+                lines.insert(3, '   ``haive.tools.tools.{tool_name}``')
+                lines.insert(4, '')
+    
+    app.connect('autodoc-process-docstring', handle_import_failure)
 
     # Create minimal custom files if they don't exist
     modern_css = static_dir / "modern.css"
