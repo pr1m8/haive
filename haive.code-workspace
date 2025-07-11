@@ -1,102 +1,185 @@
-// haive-monorepo.code-workspace
 {
-	"folders": [
-	  {
-		"name": "haive-monorepo",
-		"path": "."
-	  }
-	],
-	"settings": {
-	  // --- Git Configuration ---
-	  // Fix for nested repositories: tells VS Code to scan subdirectories
-	  // for .git folders, so each package is treated as a separate repo.
-	  "git.repositoryScanMaxDepth": 2,
-  
-	  // --- Python Environment & Paths ---
-	  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
-	  "python.envFile": "${workspaceFolder}/.env",
-	  "python.analysis.extraPaths": [
-		// These paths allow the IDE to find modules inside each package for
-		// IntelliSense, even though the parent 'packages' folder is hidden.
-		"./packages/haive-core/src",
-		"./packages/haive-agents/src",
-		"./packages/haive-games/src",
-		"./packages/haive-prebuilt/src",
-		"./packages/haive-tools/src",
-		"./packages/haive-dataflow/src"
-	  ],
-  
-	  // --- Testing ---
-	  "python.testing.pytestEnabled": true,
-	  "python.testing.pytestArgs": [
-		"packages/haive-core/tests",
-		"packages/haive-agents/tests",
-		"packages/haive-games/tests",
-		"packages/haive-prebuilt/tests",
-		"packages/haive-tools/tests",
-		"packages/haive-dataflow/tests"
-	  ],
-  
-	  // --- Linting & Formatting ---
-	  "python.analysis.typeCheckingMode": "basic",
-	  "python.linting.enabled": true,
-	  "python.linting.pylintEnabled": true,
-	  "editor.formatOnSave": true,
-  
-	  // --- Editor & Terminal ---
-	  "terminal.integrated.cwd": "${workspaceFolder}",
-  
-	  // --- File Exclusions & Performance Tuning ---
-	  // Hides specified folders from the Explorer view to reduce clutter.
-	  "files.exclude": {
-		// Fix for "packages appearing twice": hides the top-level folder.
-		"packages": true,
-		// Common Python/Node cache and virtual environment folders.
-		"**/__pycache__": true,
-		"**/*.py[co]": true, // Combines .pyc and .pyo
-		"**/.mypy_cache": true,
-		"**/.pytest_cache": true,
-		"**/.venv": true,
-		"**/node_modules": true,
-		// Hide history and documentation folders.
-		"**/.history": true,
-		"docs": true,
-		"project_docs": true
-	  },
-	  // Excludes folders from search results (Ctrl+Shift+F).
-	  "search.exclude": {
-		"**/.venv": true,
-		"**/node_modules": true,
-		"**/.history": true,
-		"docs/**": true,
-		"project_docs/**": true
-	  },
-	  // Prevents VS Code from watching files in these folders, which
-	  // significantly improves performance, especially in WSL.
-	  "files.watcherExclude": {
-		"**/__pycache__": true,
-		"**/*.py[co]": true,
-		"**/.mypy_cache": true,
-		"**/.pytest_cache": true,
-		"**/.venv": true,
-		"**/node_modules": true,
-		"**/.git": true,
-		"**/.history": true,
-		"docs/**": true,
-		"project_docs/**": true
-	  }
-	},
-	"launch": {
-	  "configurations": [],
-	  "compounds": []
-	},
-	"extensions": {
-	  "recommendations": [
-		"ms-python.python",
-		"ms-python.vscode-pylance",
-		"esbenp.prettier-vscode",
-		"charliermarsh.ruff"
-	  ]
-	}
+  "folders": [
+    {
+      "name": "🏠 root",
+      "path": ".",
+      "settings": {
+        "files.exclude": {
+          "packages/haive-core/**": true,
+          "packages/haive-agents/**": true,
+          "packages/haive-games/**": true,
+          "packages/haive-tools/**": true,
+          "packages/haive-dataflow/**": true,
+          "packages/haive-prebuilt/**": true,
+          "packages/haive-mcp/**": true
+        },
+        "search.exclude": {
+          "packages/**": true
+        },
+        "files.watcherExclude": {
+          "packages/**": true
+        },
+        "git.scanRepositories": false,
+        "git.autoRepositoryDetection": false
+      }
+    },
+    {
+      "name": "🧠 haive-core",
+      "path": "./packages/haive-core"
+    },
+    {
+      "name": "🤖 haive-agents",
+      "path": "./packages/haive-agents"
+    },
+    {
+      "name": "🎮 haive-games",
+      "path": "./packages/haive-games"
+    },
+    {
+      "name": "🛠️ haive-tools",
+      "path": "./packages/haive-tools"
+    },
+    {
+      "name": "📊 haive-dataflow",
+      "path": "./packages/haive-dataflow"
+    },
+    {
+      "name": "🏗️ haive-prebuilt",
+      "path": "./packages/haive-prebuilt"
+    },
+    {
+      "name": "🔌 haive-mcp",
+      "path": "./packages/haive-mcp"
+    }
+  ],
+  "settings": {
+    "python.defaultInterpreterPath": "${workspaceFolder:🏠 root}/.venv/bin/python",
+    "python.envFile": "${workspaceFolder:🏠 root}/.env",
+    "python.analysis.extraPaths": [
+      "${workspaceFolder:🏠 root}/src",
+      "${workspaceFolder:🧠 haive-core}/src",
+      "${workspaceFolder:🤖 haive-agents}/src",
+      "${workspaceFolder:🎮 haive-games}/src",
+      "${workspaceFolder:🛠️ haive-tools}/src",
+      "${workspaceFolder:📊 haive-dataflow}/src",
+      "${workspaceFolder:🏗️ haive-prebuilt}/src",
+      "${workspaceFolder:🔌 haive-mcp}/src"
+    ],
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+      "packages/haive-core",
+      "packages/haive-agents",
+      "packages/haive-games",
+      "packages/haive-tools",
+      "packages/haive-dataflow",
+      "packages/haive-prebuilt",
+      "packages/haive-mcp"
+    ],
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false,
+    "python.analysis.typeCheckingMode": "basic",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "terminal.integrated.cwd": "${workspaceFolder:🏠 root}",
+
+    "files.exclude": {
+      "**/__pycache__": true,
+      "**/*.pyc": true,
+      "**/*.pyo": true,
+      "**/.mypy_cache": true,
+      "**/.pytest_cache": true,
+      "**/.venv": true,
+      "**/.secrets": true,
+      "**/.nox": true,
+      "**/.ipynb_checkpoints": true,
+      "**/.ruff_cache": true,
+      "**/node_modules": true,
+      "**/.git": false
+    },
+
+    "files.watcherExclude": {
+      "**/.git/objects/**": true,
+      "**/.git/subtree-cache/**": true,
+      "**/node_modules/**": true,
+      "**/__pycache__/**": true,
+      "**/*.pyc": true,
+      "**/.venv/**": true,
+      "**/.secrets/**": true,
+      "**/.nox/**": true,
+      "**/.ipynb_checkpoints/**": true,
+      "**/.pytest_cache/**": true,
+      "**/.mypy_cache/**": true,
+      "**/.ruff_cache/**": true,
+      "**/logs/**": true,
+      "**/dist/**": true,
+      "**/build/**": true
+    },
+
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/*.code-search": true,
+      "**/.venv": true,
+      "**/.secrets": true,
+      "**/.nox": true,
+      "**/.ipynb_checkpoints": true,
+      "**/packages/logs": true,
+      "**/__pycache__": true,
+      "**/dist": true,
+      "**/build": true,
+      "**/*.backup": true,
+      "project_docs/**": true,
+      "docs/**": true,
+      "!docs/**/*.py": false
+    },
+
+    "cursorpyright.analysis.extraPaths": [
+      "${workspaceFolder:🏠 root}/src",
+      "${workspaceFolder:🧠 haive-core}/src",
+      "${workspaceFolder:🤖 haive-agents}/src",
+      "${workspaceFolder:🎮 haive-games}/src",
+      "${workspaceFolder:🛠️ haive-tools}/src",
+      "${workspaceFolder:📊 haive-dataflow}/src",
+      "${workspaceFolder:🏗️ haive-prebuilt}/src",
+      "${workspaceFolder:🔌 haive-mcp}/src"
+    ],
+    "cursorpyright.analysis.typeCheckingMode": "basic",
+
+    "git.enabled": true,
+    "git.path": "git",
+    "git.autoRepositoryDetection": "openEditors",
+    "git.repositoryScanMaxDepth": 1,
+    "git.ignoreLimitWarning": true,
+    "git.ignoreSubmodules": false,
+
+    "python.analysis.autoSearchPaths": false,
+    "python.analysis.indexing": false,
+    "python.analysis.autoImportCompletions": true,
+    "python.jediEnabled": false,
+    "python.languageServer": "None"
+  },
+  "launch": {
+    "configurations": [
+      {
+        "name": "Debug Haive Agent",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder:🏠 root}/src/haive/main.py",
+        "console": "integratedTerminal",
+        "cwd": "${workspaceFolder:🏠 root}",
+        "envFile": "${workspaceFolder:🏠 root}/.env"
+      }
+    ],
+    "compounds": []
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-python.python",
+      "ms-python.vscode-pylance",
+      "ms-python.debugpy",
+      "charliermarsh.ruff"
+    ]
   }
-  
+}
