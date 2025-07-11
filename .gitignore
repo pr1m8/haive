@@ -583,3 +583,11 @@ wheels/
 resources/
 lc_cache/
 # End of .gitignore
+# Ignore submodule changes in root
+/packages/haive-core/
+/packages/haive-agents/
+/packages/haive-games/
+/packages/haive-tools/
+/packages/haive-dataflow/
+/packages/haive-prebuilt/
+/packages/haive-mcp/
