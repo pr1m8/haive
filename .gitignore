@@ -2,180 +2,186 @@
 # 🧠 Haive AI – Master .gitignore
 # =============================================================================
 
+# === CRITICAL: VS Code/Cursor tracking issues (FIXES YOUR PROBLEMS) ===
+**/.history/           # Cursor's local file history - causes tracking conflicts
+**/.history            # Alternative format for history folders
+**/.cursor/            # Cursor IDE cache files
+.cursor/               # Root cursor cache
+packages/*/.git/       # CRITICAL: Prevents nested git repositories in packages
+packages/*/.git        # Alternative format
+*/.git/                # Prevent any nested .git folders
+!/.git/                # EXCEPT the root .git folder
+
 # === 💾 Large database dumps and exports (Docker build optimization) ===
-data_dump.sql
-local_postgres_export.json
-supabase_import_threads.sql
-*.dump
-*.backup
+data_dump.sql          # PostgreSQL database dumps
+local_postgres_export.json  # Local DB exports
+supabase_import_threads.sql # Supabase migration files
+*.dump                 # Any dump files
+*.backup               # Database backup files
 
 # === 🧪 Auto-generated agent run folders ===
-simple_agent_*/
-memory_test_*/
-postgres_test_*/
-summary_agent/
-test_simple_agent/
-output_file.json
-retrievers_output.json
+simple_agent_*/        # Generated when running simple agents
+memory_test_*/         # Memory testing output folders
+postgres_test_*/       # PostgreSQL testing folders
+summary_agent/         # Summary agent outputs
+test_simple_agent/     # Test agent runs
+output_file.json       # Generic output files
+retrievers_output.json # Retriever test outputs
 
 # === 🔬 Cache / experiment outputs ===
-.cache/
-.lc_cache/
-src/lc_cache/
-pytest_cache/
-.pytest_cache/
-.mypy_cache/
-.nox/
-htmlcov/
-coverage.xml
-dist/
-build/
-.eggs/
+.cache/                # General cache folder
+.lc_cache/             # LangChain cache
+src/lc_cache/          # LangChain cache in src
+pytest_cache/          # PyTest cache (old format)
+.pytest_cache/         # PyTest cache (new format)
+.mypy_cache/           # MyPy type checker cache
+.nox/                  # Nox testing tool cache
+htmlcov/               # HTML coverage reports
+coverage.xml           # Coverage XML reports
+dist/                  # Python package distributions
+build/                 # Build artifacts
+.eggs/                 # Python egg files
 
 # === 🎮 Game history / graph renderings ===
-graphs/
-game_history/
-resources/graph_images/
-resources/state_history/
-resources/Graphs/
-resources/State_History/
-resources/State_History/*.json
+graphs/                # Graph visualization outputs
+game_history/          # Agent game history files
+resources/graph_images/        # Generated graph images
+resources/state_history/       # Agent state history
+resources/Graphs/              # Alternative graph folder
+resources/State_History/       # Alternative state history
+resources/State_History/*.json # State history JSON files
 
 # === 🧰 IDEs and editors ===
-.vscode/
-.idea/
-*.sublime-project
-*.sublime-workspace
+.vscode/               # VS Code settings (you can override with specific includes)
+.idea/                 # JetBrains IDEs (PyCharm, etc.)
+*.sublime-project      # Sublime Text project files
+*.sublime-workspace    # Sublime Text workspace files
 
 # === 🔒 Lock, secret, and build files ===
-poetry.lock
-Pipfile.lock
-*.egg-info/
-*.db
-*.sqlite3
-*.pid
-*.pem
-*.key
-*.cert
-token.json
-credentials.json
-.env
-.env.*
-.secrets/
-.secrets/
+poetry.lock            # Poetry dependency lock file
+Pipfile.lock           # Pipenv lock file
+*.egg-info/            # Python package metadata
+*.db                   # Database files
+*.sqlite3              # SQLite databases
+*.pid                  # Process ID files
+*.pem                  # SSL certificates
+*.key                  # Private keys
+*.cert                 # SSL certificates
+token.json             # API tokens
+credentials.json       # Service account credentials
+.env                   # Environment variables
+.env.*                 # Environment variable variants (.env.local, .env.prod, etc.)
+.secrets/              # Secrets folder
+.secrets/              # Duplicate line - should be removed
 
 # === 📜 Logs, outputs, scratch data ===
-*.log
-*.err
-logs/
-logs/**
-scratches/
-scratches/*.json
-examples/outputs/
-loader_analysis/
-reports/
-out.json
-haive_vault_*.log
+*.log                  # All log files
+*.err                  # Error files
+logs/                  # Log directories
+logs/**                # Everything in logs folders
+scratches/             # Scratch/temp work files
+scratches/*.json       # JSON files in scratches
+examples/outputs/      # Example script outputs
+loader_analysis/       # Data loader analysis files
+reports/               # Generated reports
+out.json               # Generic output JSON
+haive_vault_*.log      # Haive vault specific logs
 
 # === 🧬 Misc ===
-*.bak
-*.out
-*.so
-*.pyd
-*.pyo
-*.py[cod]
-Thumbs.db
-.DS_Store
-check_registry_data.py
-BaseAgent.ipynb
-Chinook.db
-EOF
+*.bak                  # Backup files
+*.out                  # Output files
+*.so                   # Shared object files (compiled extensions)
+*.pyd                  # Python extension modules (Windows)
+*.pyo                  # Python optimized bytecode
+*.py[cod]              # Python bytecode files
+Thumbs.db              # Windows thumbnail cache
+.DS_Store              # macOS folder metadata
+check_registry_data.py # Specific script to ignore
+BaseAgent.ipynb        # Specific notebook to ignore
+Chinook.db             # Specific database file
 
 # === 📦 Node Modules ===
-node_modules/
+node_modules/          # JavaScript dependencies
 
-# === 🧪 Mypy, Pytest, Profiler, etc ===
-.pytest_cache/
-.mypy_cache/
-.nox/
-.ipynb_checkpoints/
-.pytest_html/
-viztracer_*.json
-*.prof
-*.profraw
+# === 🧪 Testing, profiling, and development tools ===
+.pytest_cache/         # PyTest cache
+.mypy_cache/           # MyPy type checker cache
+.nox/                  # Nox testing sessions
+.ipynb_checkpoints/    # Jupyter notebook checkpoints
+.pytest_html/          # PyTest HTML reports
+viztracer_*.json       # Performance profiling traces
+*.prof                 # Profile files
+*.profraw              # Raw profile data
 
 # === 🍃 OS junk ===
-.DS_Store
-*.swp
+.DS_Store              # macOS folder settings
+*.swp                  # Vim swap files
 
 # === 🐍 Python standard ===
-__pycache__/
-*.py[cod]
-*.pyo
+__pycache__/           # Python bytecode cache
+*.py[cod]              # Python bytecode variants
+*.pyo                  # Python optimized bytecode
 
 # === 📘 Sphinx / documentation ===
-docs/build/
-docs/_build/
-docs/source/_build/
-docs/source/_static/
-docs/source/_templates/
-docs/source/api/
-docs/scratch/
-*.pdf
-*.tex
-sphinx*
-readthedocs-sphinx-search/
-*.rst~
-personal_notes/**/rendered/
-personal_notes/**/*.html
-**/rendered/
-**/*.html
-**/_build/
-**/_static/
-**/_templates/
-**/api/
+docs/build/            # Sphinx build output
+docs/_build/           # Alternative Sphinx build folder
+docs/source/_build/    # Nested build folder
+docs/source/_static/   # Generated static files
+docs/source/_templates/ # Generated templates
+docs/source/api/       # Auto-generated API docs
+docs/scratch/          # Documentation scratch work
+*.pdf                  # Generated PDFs
+*.tex                  # LaTeX files
+sphinx*                # Sphinx related files
+readthedocs-sphinx-search/  # ReadTheDocs search files
+*.rst~                 # reStructuredText backup files
+personal_notes/**/rendered/  # Rendered personal notes
+personal_notes/**/*.html     # HTML in personal notes
+**/rendered/           # Any rendered folders
+**/*.html              # HTML files anywhere
+**/_build/             # Build folders anywhere
+**/_static/            # Static folders anywhere  
+**/_templates/         # Template folders anywhere
+**/api/                # API doc folders anywhere
 
 # === 🔧 Temporary dev output ===
-packages/resources/State_History/
-packages/resources/embeddings_cache/
-resources/**/_agent_*/
-resources/**/test_*/
+packages/resources/State_History/     # Package-specific state history
+packages/resources/embeddings_cache/  # Embeddings cache
+resources/**/_agent_*/                # Agent-specific folders in resources
+resources/**/test_*/                  # Test folders in resources
 
-# === 🧪 Test logs and aux resources ===
-test_output/
-test_outputs/
-allure-results/
-*.svg
-*.drawio
-*.png
-tests/persistence_debugging/state_history/
+# === 🧪 Test logs and auxiliary resources ===
+test_output/           # Test output folders
+test_outputs/          # Alternative test outputs
+allure-results/        # Allure test reporting
+*.svg                  # SVG files (often generated)
+*.drawio               # Draw.io diagram files
+*.png                  # PNG images (often generated)
+tests/persistence_debugging/state_history/  # Specific test debugging
 
 # === 🧪 Notebooks & dev outputs ===
-*.ipynb
-notebooks/
-notebooks/**
-resources/
+*.ipynb                # Jupyter notebooks
+notebooks/             # Notebook folders
+notebooks/**           # Everything in notebooks
+resources/             # Resources folder (but you might want to be more specific)
 
 # === 🧠 Virtual environments ===
-.venv/
-venv/
-ENV/
+.venv/                 # Virtual environment folder
+venv/                  # Alternative venv name
+ENV/                   # Alternative env name
 
-# === 🐍 Python Poetry extras ===
-poetry.lock
-.cache/pypoetry/
+# === 📦 Python Poetry extras ===
+.cache/pypoetry/       # Poetry cache
 
-# === 📦 Extra files ===
-.history/
+# === 📦 Additional files ===
+.history/              # Local history files
 
+# === 🤖 Claude AI specific ===
+**/.claude/settings.local.json  # Claude AI local settings
+.claude/settings.local.json     # Root Claude settings
 
-**/.claude/settings.local.json
-docs/source/*.rst   
-docs/source/*.rst
-!docs/source/index.rst
-docs/_build/
-# Ignore all .rst files in docs/source and its subdirectories
-docs/source/**/*.rst
-
-# Except for index.rst in the root of docs/source
-#!docs/source/index.rst.claude/settings.local.json
+# === 📖 Documentation control ===
+docs/source/*.rst      # Most reStructuredText files in docs/source
+docs/source/**/*.rst   # RST files in subdirectories
+!docs/source/index.rst # EXCEPT keep the main index file
+docs/_build/           # Documentation build output
