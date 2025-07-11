@@ -15,6 +15,7 @@
 ## 📁 Memory Organization
 
 ### Core Memories (Import these as needed)
+
 - **Command Execution**: @project_docs/active/standards/coding/COMMAND_EXECUTION_GUIDE.md - CRITICAL: Always use `poetry run`
 - **Memory System**: @project_docs/active/standards/documentation/memory_system.md - Memory architecture and principles
 - **Development Workflow**: @project_docs/active/standards/coding/development_workflow.md - Complete development methodology
@@ -26,6 +27,7 @@
 - **Git Workflow**: @project_docs/active/standards/git/workflow.md - Git best practices
 
 ### Package-Specific Memories
+
 - **haive-agents**: @project_docs/haive-agents/README.md - Agent development guide
 - **haive-core**: @project_docs/haive-core/README.md - Core architecture
 - **haive-games**: @project_docs/haive-games/README.md - Games framework
@@ -33,6 +35,7 @@
 - **haive-mcp**: @project_docs/haive-mcp/README.md - MCP integration
 
 ### Current Work Context
+
 - **Active Issues**: @project_docs/sessions/active/current_issues.md
 - **Sprint Progress**: @project_docs/sessions/active/current_sprint.md
 - **Recent Sessions**: @project_docs/sessions/active/README.md
@@ -40,12 +43,14 @@
 ## 🚀 Current Focus Areas
 
 ### Active Development
+
 1. **Schema Composition** - Improving state schema generation from engines
 2. **Multi-Agent State** - Designing proper multi-agent coordination
 3. **Validation Nodes** - Enhancing dynamic validation capabilities
 4. **Engine Typing** - Adding proper generics to engine system
 
 ### Known Critical Issues
+
 - Schema field conflicts with multiple engines
 - Import cycles in agent/engine dependencies
 - See full list: @project_docs/claude_sessions/current_issues.md
@@ -53,6 +58,7 @@
 ## 🧠 Smart Memory Protocol
 
 ### Session Start Checklist
+
 ```bash
 # 1. Check current state
 git status && git diff
@@ -67,12 +73,14 @@ mkdir -p project_docs/claude_sessions/claude_$(date +%Y%m%d_%H%M%S)_{purpose}
 ```
 
 ### During Development
+
 1. **Track Progress**: Update @project_docs/progress_tracking/current_sprint.md
 2. **Document Issues**: Add to @project_docs/claude_sessions/current_issues.md
 3. **Save Patterns**: Document in session memory for reuse
 4. **Cross-Reference**: Use [MEM-XXX] tags for navigation
 
 ### After Tasks
+
 1. **Update Status**: Mark todos complete
 2. **Document Learning**: Add to relevant package docs
 3. **Clean Up**: Move completed work to archives
@@ -101,6 +109,7 @@ project_docs/
 ## 🔥 GIT SAFETY FIRST - ALWAYS CHECK BEFORE ACTING
 
 ### MANDATORY Git Workflow - Run EVERY TIME
+
 ```bash
 # 1. BEFORE ANY WORK - See what's changed
 git status                    # What files are modified?
@@ -126,6 +135,7 @@ git commit -m "feat: clear description"
 ```
 
 ### Git Commands You MUST Use
+
 ```bash
 # CRITICAL - Use these constantly
 git status                    # Current state - RUN OFTEN
@@ -169,7 +179,7 @@ poetry run pytest --cov=haive --cov-report=html
 ```
 haive/
 ├── core/      # Engines, graphs, schemas (foundation)
-├── agents/    # Agent implementations (simple, react, rag)  
+├── agents/    # Agent implementations (simple, react, rag)
 ├── tools/     # Tool implementations (math, web, file)
 ├── games/     # Game implementations (chess, go, puzzles)
 ├── dataflow/  # Streaming and data management
@@ -178,6 +188,7 @@ haive/
 ```
 
 ### Package File Structure
+
 ```
 packages/haive-{package}/
 ├── src/haive/{package}/        # Source code
@@ -193,9 +204,10 @@ packages/haive-{package}/
 ## 🎯 Development Patterns
 
 ### Import Hierarchy (CRITICAL)
+
 ```python
 # Core can only import from: standard library, third-party
-# Agents can import from: core, standard library, third-party  
+# Agents can import from: core, standard library, third-party
 # Tools can import from: core, standard library, third-party
 # Games can import from: core, agents, tools, third-party
 
@@ -203,6 +215,7 @@ packages/haive-{package}/
 ```
 
 ### Standard Patterns
+
 - **Configs**: Always use Pydantic models with validation
 - **Errors**: Structured logging, never print()
 - **State**: Use StateSchema for all agent states
@@ -210,6 +223,7 @@ packages/haive-{package}/
 - **Docs**: Google-style docstrings for Sphinx
 
 ### Schema Inheritance Patterns
+
 ```python
 # Check existing schemas FIRST!
 from haive.core.schema.prebuilt.messages_state import MessagesState
@@ -230,6 +244,7 @@ class MyCustomState(MessagesStateWithTokenUsage):
 ## 🔧 Common Imports & Configuration Patterns
 
 ### Essential Imports
+
 ```python
 # Core engine configurations
 from haive.core.engine.aug_llm import AugLLMConfig
@@ -252,6 +267,7 @@ from typing import List, Dict, Any, Optional
 ```
 
 ### AugLLMConfig Setup (CORRECT WAY)
+
 ```python
 # ✅ CORRECT - Don't specify model parameter
 config = AugLLMConfig()  # Uses defaults (gpt-4o-mini)
@@ -268,6 +284,7 @@ config = AugLLMConfig(model="gpt-4")  # This causes issues
 ```
 
 ### Simple Agent Setup
+
 ```python
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
@@ -291,6 +308,7 @@ result = agent.run("Review this code: def hello(): print('hi')")
 ```
 
 ### React Agent Setup
+
 ```python
 from haive.agents.react.agent import ReactAgent
 from haive.core.engine.aug_llm import AugLLMConfig
@@ -308,6 +326,7 @@ result = agent.run("Calculate 15 * 23 and search for Python tutorials")
 ```
 
 ### RAG Agent Setup
+
 ```python
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.core.engine.vectorstore.vectorstore import VectorStoreConfig
@@ -334,6 +353,7 @@ result = agent.run("What does the documentation say about X?")
 ```
 
 ### Tool Creation with LangChain
+
 ```python
 from langchain_core.tools import Tool, tool
 from typing import Any
@@ -367,6 +387,7 @@ agent = ReactAgent(engine=config, tools=tools)
 ## 🧪 Testing: NO MOCKS + Proper Structure
 
 ### Test File Organization
+
 ```
 packages/haive-{package}/
 ├── src/haive/{package}/
@@ -379,6 +400,7 @@ packages/haive-{package}/
 ```
 
 ### Writing Tests - NO MOCKS PATTERN
+
 ```python
 # packages/haive-agents/tests/test_simple_agent.py
 
@@ -388,11 +410,11 @@ from haive.core.engine.aug_llm import AugLLMConfig
 def test_simple_agent_real_execution():
     """Test with REAL components - NO MOCKS."""
     # Create real config (don't set model param)
-    config = AugLLMConfig()  
-    
+    config = AugLLMConfig()
+
     # Create real agent
     agent = SimpleAgent(engine=config)
-    
+
     # Test real behavior
     result = agent.run("Hello")
     assert isinstance(result, str)
@@ -408,7 +430,7 @@ def test_simple_agent_real_execution():
 2. **RESEARCH FIRST** - Check existing patterns before implementing anything
 3. **USE TRUNK** - Always run `trunk check --all` before committing
 4. **NO MOCKS IN TESTS** - Use real LLMs, real tools, real components
-5. **PROPER PYDANTIC** - No manual __init__, use Field validation, check existing patterns
+5. **PROPER PYDANTIC** - No manual **init**, use Field validation, check existing patterns
 6. **EXPLICIT IMPORTS** - `from haive.core.engine import X`, not `from engine import X`
 7. **GIT REVIEW CHANGES** - `git diff --cached` before every commit
 8. **USE TODOS** - TodoWrite for planning, tracking, and organization
@@ -420,6 +442,7 @@ def test_simple_agent_real_execution():
 ## 📝 Quick Memory Access
 
 Need details? Import the full guides:
+
 - Memory architecture: @project_docs/active/standards/documentation/memory_system.md
 - Development workflow: @project_docs/active/standards/coding/development_workflow.md
 - Build & test procedures: @project_docs/active/standards/coding/BUILD_AND_TEST_GUIDE.md
