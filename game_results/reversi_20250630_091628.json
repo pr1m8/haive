@@ -1,7 +1,0 @@
-{
-  "game": "reversi",
-  "timestamp": "20250630_091628",
-  "success": false,
-  "error": "Error in reversi: Graph must have an entrypoint: add at least one edge from START to another node",
-  "result": {}
-}
