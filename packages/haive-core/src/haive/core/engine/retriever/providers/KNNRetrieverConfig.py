@@ -1,5 +1,4 @@
-"""
-K-Nearest Neighbors Retriever implementation for the Haive framework.
+"""K-Nearest Neighbors Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the KNN (K-Nearest Neighbors) retriever,
 which uses k-nearest neighbors algorithm for document retrieval based on vector similarity.
@@ -33,8 +32,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.KNN)
 class KNNRetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for K-Nearest Neighbors retriever in the Haive framework.
+    """Configuration for K-Nearest Neighbors retriever in the Haive framework.
 
     This retriever uses the KNN algorithm to find the most similar documents
     based on vector embeddings and distance metrics.
@@ -76,7 +74,7 @@ class KNNRetrieverConfig(BaseRetrieverConfig):
     )
 
     # Documents to index
-    documents: List[Document] = Field(
+    documents: list[Document] = Field(
         default_factory=list, description="Documents to index for KNN retrieval"
     )
 
@@ -91,7 +89,7 @@ class KNNRetrieverConfig(BaseRetrieverConfig):
         description="Distance metric: 'cosine', 'euclidean', 'manhattan', 'hamming'",
     )
 
-    embedding_model: Optional[str] = Field(
+    embedding_model: str | None = Field(
         default=None,
         description="Embedding model for vectorization (e.g., 'sentence-transformers/all-MiniLM-L6-v2')",
     )
@@ -102,24 +100,23 @@ class KNNRetrieverConfig(BaseRetrieverConfig):
         description="KNN algorithm: 'auto', 'ball_tree', 'kd_tree', 'brute'",
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for KNN retriever."""
         return {
             "query": (str, Field(description="Text query for KNN similarity search")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for KNN retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(default_factory=list, description="K nearest neighbor documents"),
             ),
         }
 
     def instantiate(self):
-        """
-        Create a KNN retriever from this configuration.
+        """Create a KNN retriever from this configuration.
 
         Returns:
             KNNRetriever: Instantiated retriever ready for similarity search.

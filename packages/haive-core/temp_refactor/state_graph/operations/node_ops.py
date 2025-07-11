@@ -1,20 +1,20 @@
-"""
-Node operations for the state graph system.
+"""Node operations for the state graph system.
 
 This module provides operations for adding, removing, and manipulating
 nodes in a graph.
 """
 
-import logging
-import uuid
 from datetime import datetime
+import logging
 from typing import Any, Callable, Dict, List, Tuple
+import uuid
 
 from pydantic import BaseModel
 
 from haive.core.graph.common.types import NodeType
 from haive.core.graph.node.base_config import NodeConfig
 from haive.core.graph.state_graph.base.graph_base import GraphBase
+
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -26,12 +26,11 @@ class Node(BaseModel):
     name: str
     function: Callable
     node_type: NodeType = NodeType.CALLABLE
-    metadata: Dict[str, Any] = {}
+    metadata: dict[str, Any] = {}
 
 
 class NodeOperations:
-    """
-    Operations for managing nodes in a graph.
+    """Operations for managing nodes in a graph.
 
     This class provides methods for adding, removing, updating,
     and manipulating nodes in a graph.
@@ -41,8 +40,7 @@ class NodeOperations:
     def add_node(
         graph: GraphBase, node_name: str, node_obj: Any, **kwargs
     ) -> GraphBase:
-        """
-        Add a node to the graph.
+        """Add a node to the graph.
 
         Args:
             graph: Graph to add the node to
@@ -69,8 +67,7 @@ class NodeOperations:
 
     @staticmethod
     def remove_node(graph: GraphBase, node_name: str) -> GraphBase:
-        """
-        Remove a node from the graph.
+        """Remove a node from the graph.
 
         Args:
             graph: Graph to remove the node from
@@ -128,8 +125,7 @@ class NodeOperations:
 
     @staticmethod
     def update_node(graph: GraphBase, node_name: str, **updates) -> GraphBase:
-        """
-        Update a node's properties.
+        """Update a node's properties.
 
         Args:
             graph: Graph containing the node
@@ -182,8 +178,7 @@ class NodeOperations:
         new_node: Any,
         preserve_connections: bool = True,
     ) -> GraphBase:
-        """
-        Replace a node with a new one, optionally preserving connections.
+        """Replace a node with a new one, optionally preserving connections.
 
         Args:
             graph: Graph containing the node
@@ -271,8 +266,7 @@ class NodeOperations:
         new_node_obj: Any,
         **kwargs,
     ) -> GraphBase:
-        """
-        Insert a new node after an existing node, redirecting all outgoing connections.
+        """Insert a new node after an existing node, redirecting all outgoing connections.
 
         Args:
             graph: Graph containing the target node
@@ -339,8 +333,7 @@ class NodeOperations:
         new_node_obj: Any,
         **kwargs,
     ) -> GraphBase:
-        """
-        Insert a new node before an existing node, redirecting all incoming connections.
+        """Insert a new node before an existing node, redirecting all incoming connections.
 
         Args:
             graph: Graph containing the target node
@@ -405,8 +398,7 @@ class NodeOperations:
     def add_prelude_node(
         graph: GraphBase, node_name: str, node_obj: Any, **kwargs
     ) -> GraphBase:
-        """
-        Add a node at the beginning of the graph (after START).
+        """Add a node at the beginning of the graph (after START).
 
         Args:
             graph: Graph to add the prelude node to
@@ -464,8 +456,7 @@ class NodeOperations:
     def add_postlude_node(
         graph: GraphBase, node_name: str, node_obj: Any, **kwargs
     ) -> GraphBase:
-        """
-        Add a node at the end of the graph (before END).
+        """Add a node at the end of the graph (before END).
 
         Args:
             graph: Graph to add the postlude node to
@@ -523,13 +514,12 @@ class NodeOperations:
     @staticmethod
     def add_sequence(
         graph: GraphBase,
-        node_sequence: List[Tuple[str, Any]],
+        node_sequence: list[tuple[str, Any]],
         connect_start: bool = False,
         connect_end: bool = False,
         **kwargs,
     ) -> GraphBase:
-        """
-        Add a sequence of nodes and connect them in order.
+        """Add a sequence of nodes and connect them in order.
 
         Args:
             graph: Graph to add the sequence to
@@ -569,8 +559,7 @@ class NodeOperations:
 
     @staticmethod
     def _infer_node_type(node: Any) -> NodeType:
-        """
-        Infer the node type from a node object.
+        """Infer the node type from a node object.
 
         Args:
             node: Node object to infer type from
@@ -587,12 +576,11 @@ class NodeOperations:
             # Different NodeConfig classes map to different node types
             if "EngineNodeConfig" in node.__class__.__name__:
                 return NodeType.ENGINE
-            elif "ToolNodeConfig" in node.__class__.__name__:
+            if "ToolNodeConfig" in node.__class__.__name__:
                 return NodeType.TOOL
-            elif "ValidationNodeConfig" in node.__class__.__name__:
+            if "ValidationNodeConfig" in node.__class__.__name__:
                 return NodeType.VALIDATION
-            else:
-                return NodeType.CALLABLE
+            return NodeType.CALLABLE
 
         # Check for engine objects
         if hasattr(node, "engine_type") and hasattr(node, "create_runnable"):

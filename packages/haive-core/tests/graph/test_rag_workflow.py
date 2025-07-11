@@ -1,5 +1,4 @@
-"""
-Test implementation of a complex RAG workflow using StateGraph with
+"""Test implementation of a complex RAG workflow using StateGraph with
 validation nodes, engine nodes, and visualization capabilities.
 
 This test demonstrates a real-world Retrieval Augmented Generation (RAG) workflow
@@ -10,16 +9,15 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 import pytest
-from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
-from langgraph.types import Command
-from pydantic import BaseModel, Field, validator
-
 from haive.core.engine.base import Engine
 from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.node.validation_node_config import ValidationNodeConfig
 from haive.core.graph.state_graph import END, START, StateGraph
 from haive.core.graph.state_graph.visualization import MermaidGenerator
 from haive.core.schema.prebuilt.tool_state import ToolState
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
+from langgraph.types import Command
+from pydantic import BaseModel, Field, validator
 
 
 # Define specialized domain objects and tools for RAG
@@ -28,31 +26,27 @@ class Document(BaseModel):
 
     id: str = Field(..., description="Unique identifier for the document")
     content: str = Field(..., description="Document content")
-    metadata: Dict[str, Any] = Field(
+    metadata: dict[str, Any] = Field(
         default_factory=dict, description="Document metadata"
     )
-    embedding: Optional[List[float]] = Field(
-        default=None, description="Vector embedding"
-    )
-    relevance_score: Optional[float] = Field(
-        default=None, description="Relevance score"
-    )
+    embedding: list[float] | None = Field(default=None, description="Vector embedding")
+    relevance_score: float | None = Field(default=None, description="Relevance score")
 
 
 class RetrievalResult(BaseModel):
     """Result schema for document retrieval."""
 
     query: str = Field(..., description="Original or rewritten query")
-    documents: List[Document] = Field(
+    documents: list[Document] = Field(
         default_factory=list, description="Retrieved documents"
     )
     total_found: int = Field(..., description="Total number of documents found")
-    metadata: Dict[str, Any] = Field(
+    metadata: dict[str, Any] = Field(
         default_factory=dict, description="Retrieval metadata"
     )
 
     @validator("documents")
-    def validate_documents(cls, v):
+    def validate_documents(self, v):
         """Validate that documents have required fields."""
         if len(v) == 0:
             return v
@@ -81,12 +75,12 @@ class RAGState(ToolState):
     """State schema for RAG workflow."""
 
     # RAG-specific fields
-    query: Optional[str] = Field(default=None, description="User query")
-    rewritten_query: Optional[str] = Field(default=None, description="Rewritten query")
-    retrieval_result: Optional[RetrievalResult] = Field(
+    query: str | None = Field(default=None, description="User query")
+    rewritten_query: str | None = Field(default=None, description="Rewritten query")
+    retrieval_result: RetrievalResult | None = Field(
         default=None, description="Retrieved documents"
     )
-    generation_params: Optional[GenerationParameters] = Field(
+    generation_params: GenerationParameters | None = Field(
         default=None, description="Generation parameters"
     )
 
@@ -109,15 +103,15 @@ class RAGState(ToolState):
     workflow_complete: bool = Field(
         default=False, description="Whether workflow is complete"
     )
-    generated_at: Optional[datetime] = Field(
+    generated_at: datetime | None = Field(
         default=None, description="Timestamp of generation"
     )
 
     # Metrics
-    processing_time: Dict[str, float] = Field(
+    processing_time: dict[str, float] = Field(
         default_factory=dict, description="Processing time by stage"
     )
-    token_usage: Dict[str, int] = Field(
+    token_usage: dict[str, int] = Field(
         default_factory=dict, description="Token usage by stage"
     )
 
@@ -131,8 +125,8 @@ class QueryAnalysisEngine(Engine):
         self.id = f"engine_{name}"
 
     def invoke(
-        self, inputs: Any, config: Optional[Dict[str, Any]] = None
-    ) -> Dict[str, Any]:
+        self, inputs: Any, config: dict[str, Any] | None = None
+    ) -> dict[str, Any]:
         """Analyze query and return rewritten version."""
         # Extract query from different input types
         query = inputs
@@ -160,8 +154,8 @@ class DocumentRetrievalEngine(Engine):
         self.id = f"engine_{name}"
 
     def invoke(
-        self, inputs: Any, config: Optional[Dict[str, Any]] = None
-    ) -> Dict[str, Any]:
+        self, inputs: Any, config: dict[str, Any] | None = None
+    ) -> dict[str, Any]:
         """Retrieve documents based on query."""
         # Extract query
         query = inputs
@@ -197,8 +191,8 @@ class ContentGenerationEngine(Engine):
         self.id = f"engine_{name}"
 
     def invoke(
-        self, inputs: Any, config: Optional[Dict[str, Any]] = None
-    ) -> Dict[str, Any]:
+        self, inputs: Any, config: dict[str, Any] | None = None
+    ) -> dict[str, Any]:
         """Generate content based on documents and query."""
         if isinstance(inputs, dict):
             query = inputs.get("query", "")
@@ -430,8 +424,10 @@ def rag_workflow(rag_engines):
         # Add error message
         return Command(
             update={
-                "messages": state.get("messages", [])
-                + [SystemMessage(content=f"Error: {error_message}")],
+                "messages": [
+                    *state.get("messages", []),
+                    SystemMessage(content=f"Error: {error_message}"),
+                ],
                 "workflow_complete": True,
                 "workflow_stage": f"error_{error_stage}",
             },

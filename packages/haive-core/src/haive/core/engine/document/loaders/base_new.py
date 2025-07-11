@@ -14,9 +14,7 @@ from langchain_core.document_loaders import BaseLoader
 from pydantic import BaseModel, Field
 
 from haive.core.common.mixins.secure_config import SecureConfigMixin
-from haive.core.engine.document.config import (
-    LoaderPreference,
-)
+from haive.core.engine.document.config import LoaderPreference
 
 
 class LoaderSpeed(str, Enum):
@@ -53,11 +51,11 @@ class LoaderStrategy:
     requires_auth: bool = False
 
     # Best use cases
-    best_for: List[str] = field(default_factory=list)
+    best_for: list[str] = field(default_factory=list)
 
     # Required/optional packages
-    required_packages: List[str] = field(default_factory=list)
-    optional_packages: List[str] = field(default_factory=list)
+    required_packages: list[str] = field(default_factory=list)
+    optional_packages: list[str] = field(default_factory=list)
 
     def __post_init__(self):
         """Validate strategy configuration."""
@@ -72,61 +70,61 @@ class SourcePattern:
     """Pattern specification for source matching."""
 
     # File patterns
-    file_extensions: List[str] = field(default_factory=list)
-    mime_types: List[str] = field(default_factory=list)
+    file_extensions: list[str] = field(default_factory=list)
+    mime_types: list[str] = field(default_factory=list)
 
     # URL patterns
-    domain_patterns: List[str] = field(default_factory=list)
-    url_patterns: List[str] = field(default_factory=list)
-    scheme_patterns: List[str] = field(default_factory=list)
+    domain_patterns: list[str] = field(default_factory=list)
+    url_patterns: list[str] = field(default_factory=list)
+    scheme_patterns: list[str] = field(default_factory=list)
 
     # Content patterns
-    content_types: List[str] = field(default_factory=list)
+    content_types: list[str] = field(default_factory=list)
 
     # Priority for matching
     priority: int = 0
 
     # Custom matcher function
-    custom_matcher: Optional[Callable[[str], bool]] = None
+    custom_matcher: Callable[[str], bool] | None = None
 
 
 class BaseSource(BaseModel, ABC):
     """Abstract base class for all document sources."""
 
     # Source identification
-    source_type: Optional[str] = Field(None, description="Type identifier")
+    source_type: str | None = Field(None, description="Type identifier")
 
     # Metadata
-    description: Optional[str] = Field(None, description="Source description")
+    description: str | None = Field(None, description="Source description")
     confidence_score: float = Field(0.0, description="Confidence in source match")
 
     class Config:
         """Configuration for source classes."""
 
         # Pattern matching
-        patterns: List[SourcePattern] = []
+        patterns: list[SourcePattern] = []
 
         # Available loader strategies
-        loader_strategies: Dict[str, LoaderStrategy] = {}
+        loader_strategies: dict[str, LoaderStrategy] = {}
 
         # Default strategy
-        default_strategy: Optional[str] = None
+        default_strategy: str | None = None
 
         # Required credentials
-        required_credentials: List[str] = []
+        required_credentials: list[str] = []
 
     @classmethod
-    def get_patterns(cls) -> List[SourcePattern]:
+    def get_patterns(cls) -> list[SourcePattern]:
         """Get all patterns for this source."""
         return getattr(cls.Config, "patterns", [])
 
     @classmethod
-    def get_loader_strategies(cls) -> Dict[str, LoaderStrategy]:
+    def get_loader_strategies(cls) -> dict[str, LoaderStrategy]:
         """Get available loader strategies."""
         return getattr(cls.Config, "loader_strategies", {})
 
     @abstractmethod
-    def create_loader(self, strategy: Optional[str] = None, **kwargs) -> BaseLoader:
+    def create_loader(self, strategy: str | None = None, **kwargs) -> BaseLoader:
         """Create a document loader instance.
 
         Args:
@@ -136,11 +134,10 @@ class BaseSource(BaseModel, ABC):
         Returns:
             Configured document loader
         """
-        pass
 
     def get_best_strategy(
         self, preference: LoaderPreference = LoaderPreference.BALANCED
-    ) -> Optional[LoaderStrategy]:
+    ) -> LoaderStrategy | None:
         """Get best strategy based on preference."""
         strategies = self.get_loader_strategies()
         if not strategies:
@@ -161,7 +158,7 @@ class BaseSource(BaseModel, ABC):
         # Return first available strategy
         return next(iter(strategies.values()))
 
-    def _import_loader_class(self, strategy: LoaderStrategy) -> Type[BaseLoader]:
+    def _import_loader_class(self, strategy: LoaderStrategy) -> type[BaseLoader]:
         """Dynamically import a loader class."""
         try:
             module = __import__(strategy.module, fromlist=[strategy.loader_class])
@@ -175,7 +172,7 @@ class BaseSource(BaseModel, ABC):
 class LocalSource(BaseSource):
     """Base class for local file sources."""
 
-    file_path: Optional[str] = Field(None, description="Path to local file")
+    file_path: str | None = Field(None, description="Path to local file")
     encoding: str = Field("utf-8", description="File encoding")
 
     def validate_file_exists(self) -> bool:
@@ -190,11 +187,11 @@ class LocalSource(BaseSource):
 class RemoteSource(BaseSource, SecureConfigMixin):
     """Base class for remote sources with credential support."""
 
-    url: Optional[str] = Field(None, description="Remote URL")
+    url: str | None = Field(None, description="Remote URL")
     provider: str = Field("generic", description="Provider name for credentials")
 
     # SecureConfigMixin fields
-    api_key: Optional[str] = Field(None, description="API key if required")
+    api_key: str | None = Field(None, description="API key if required")
 
     def requires_authentication(self) -> bool:
         """Check if this source requires authentication."""
@@ -206,7 +203,7 @@ class RemoteSource(BaseSource, SecureConfigMixin):
 class DirectorySource(LocalSource):
     """Base class for directory sources."""
 
-    directory_path: Optional[str] = Field(None, description="Directory path")
+    directory_path: str | None = Field(None, description="Directory path")
     glob_pattern: str = Field("**/*", description="File glob pattern")
     recursive: bool = Field(True, description="Recursive search")
 
@@ -214,21 +211,21 @@ class DirectorySource(LocalSource):
 class DatabaseSource(BaseSource, SecureConfigMixin):
     """Base class for database sources."""
 
-    connection_string: Optional[str] = Field(None, description="Database connection")
-    query: Optional[str] = Field(None, description="Query to execute")
+    connection_string: str | None = Field(None, description="Database connection")
+    query: str | None = Field(None, description="Query to execute")
     provider: str = Field("database", description="Database provider")
 
 
 class CloudSource(RemoteSource):
     """Base class for cloud storage sources."""
 
-    bucket_name: Optional[str] = Field(None, description="Bucket/container name")
-    prefix: Optional[str] = Field(None, description="Object prefix")
+    bucket_name: str | None = Field(None, description="Bucket/container name")
+    prefix: str | None = Field(None, description="Object prefix")
 
 
 # Helper function for creating simple loaders
 def create_simple_loader(
-    source_class: Type[BaseSource],
+    source_class: type[BaseSource],
     loader_class_name: str,
     module: str = "langchain_community.document_loaders",
     **loader_kwargs,

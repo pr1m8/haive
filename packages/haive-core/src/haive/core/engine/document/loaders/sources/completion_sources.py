@@ -10,16 +10,15 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import Field
 
-from .enhanced_registry import enhanced_registry, register_source, register_bulk_source
+from .enhanced_registry import enhanced_registry, register_bulk_source, register_source
 from .source_types import (
     CredentialType,
-    LoaderCapability,
-    RemoteSource,
-    LocalFileSource,
     DatabaseSource,
+    LoaderCapability,
+    LocalFileSource,
+    RemoteSource,
     SourceCategory,
 )
-
 
 # =============================================================================
 # Version Control Systems
@@ -47,7 +46,7 @@ from .source_types import (
 )
 class BitbucketSource(RemoteSource):
     """Bitbucket repository source."""
-    
+
     source_type: str = "bitbucket"
     workspace: str = Field(..., description="Bitbucket workspace")
     repo_slug: str = Field(..., description="Repository slug")
@@ -75,7 +74,7 @@ class BitbucketSource(RemoteSource):
 )
 class PerforceSource(RemoteSource):
     """Perforce version control source."""
-    
+
     source_type: str = "perforce"
     p4port: str = Field(..., description="Perforce server")
     depot_path: str = Field(..., description="Depot path")
@@ -103,12 +102,15 @@ class PerforceSource(RemoteSource):
     description="JupyterHub multi-user notebook server loader",
     requires_credentials=True,
     credential_type=CredentialType.API_KEY,
-    capabilities=[LoaderCapability.STRUCTURED_DATA, LoaderCapability.COLLABORATIVE_EDITING],
+    capabilities=[
+        LoaderCapability.STRUCTURED_DATA,
+        LoaderCapability.COLLABORATIVE_EDITING,
+    ],
     priority=8,
 )
 class JupyterHubSource(RemoteSource):
     """JupyterHub notebook server source."""
-    
+
     source_type: str = "jupyter_hub"
     hub_url: str = Field(..., description="JupyterHub URL")
     user: Optional[str] = Field(None, description="Specific user")
@@ -136,7 +138,7 @@ class JupyterHubSource(RemoteSource):
 )
 class OverleafSource(RemoteSource):
     """Overleaf LaTeX collaboration source."""
-    
+
     source_type: str = "overleaf"
     project_id: str = Field(..., description="Overleaf project ID")
     include_history: bool = Field(False, description="Include version history")
@@ -166,7 +168,7 @@ class OverleafSource(RemoteSource):
 )
 class OPCUASource(RemoteSource):
     """OPC UA industrial protocol source."""
-    
+
     source_type: str = "opcua"
     server_url: str = Field(..., description="OPC UA server URL")
     node_ids: List[str] = Field(..., description="Node IDs to monitor")
@@ -192,7 +194,7 @@ class OPCUASource(RemoteSource):
 )
 class ModbusSource(RemoteSource):
     """Modbus industrial protocol source."""
-    
+
     source_type: str = "modbus"
     host: str = Field(..., description="Modbus host")
     port: int = Field(502, description="Modbus port")
@@ -225,7 +227,7 @@ class ModbusSource(RemoteSource):
 )
 class ParquetSource(LocalFileSource):
     """Apache Parquet file source."""
-    
+
     source_type: str = "parquet"
     columns: Optional[List[str]] = Field(None, description="Columns to load")
     filters: Optional[List[tuple]] = Field(None, description="PyArrow filters")
@@ -251,7 +253,7 @@ class ParquetSource(LocalFileSource):
 )
 class AvroSource(LocalFileSource):
     """Apache Avro file source."""
-    
+
     source_type: str = "avro"
     schema: Optional[Dict[str, Any]] = Field(None, description="Avro schema")
 
@@ -276,7 +278,7 @@ class AvroSource(LocalFileSource):
 )
 class FeatherSource(LocalFileSource):
     """Feather file format source."""
-    
+
     source_type: str = "feather"
     columns: Optional[List[str]] = Field(None, description="Columns to load")
 
@@ -307,7 +309,7 @@ class FeatherSource(LocalFileSource):
 )
 class WooCommerceSource(RemoteSource):
     """WooCommerce e-commerce source."""
-    
+
     source_type: str = "woocommerce"
     store_url: str = Field(..., description="WooCommerce store URL")
     resource_type: str = Field("products", description="Resource type")
@@ -335,7 +337,7 @@ class WooCommerceSource(RemoteSource):
 )
 class MagentoSource(RemoteSource):
     """Magento e-commerce source."""
-    
+
     source_type: str = "magento"
     store_url: str = Field(..., description="Magento store URL")
     entity_type: str = Field("products", description="Entity type")
@@ -365,7 +367,7 @@ class MagentoSource(RemoteSource):
 )
 class DataGovSource(RemoteSource):
     """Data.gov open data source."""
-    
+
     source_type: str = "data_gov"
     dataset_id: Optional[str] = Field(None, description="Specific dataset ID")
     organization: Optional[str] = Field(None, description="Organization filter")
@@ -393,7 +395,7 @@ class DataGovSource(RemoteSource):
 )
 class CensusSource(RemoteSource):
     """US Census Bureau data source."""
-    
+
     source_type: str = "census"
     dataset: str = Field(..., description="Census dataset name")
     year: int = Field(..., description="Census year")
@@ -425,7 +427,7 @@ class CensusSource(RemoteSource):
 )
 class MatlabSource(LocalFileSource):
     """MATLAB file source."""
-    
+
     source_type: str = "matlab"
     variable_names: Optional[List[str]] = Field(None, description="Variables to load")
 
@@ -445,12 +447,15 @@ class MatlabSource(LocalFileSource):
     default_loader="sav",
     description="SPSS statistics data file loader",
     file_extensions=[".sav", ".zsav"],
-    capabilities=[LoaderCapability.STRUCTURED_DATA, LoaderCapability.METADATA_EXTRACTION],
+    capabilities=[
+        LoaderCapability.STRUCTURED_DATA,
+        LoaderCapability.METADATA_EXTRACTION,
+    ],
     priority=7,
 )
 class SPSSSource(LocalFileSource):
     """SPSS statistics file source."""
-    
+
     source_type: str = "spss"
     encoding: str = Field("utf-8", description="File encoding")
 
@@ -475,7 +480,7 @@ class SPSSSource(LocalFileSource):
 )
 class RDataSource(LocalFileSource):
     """R data file source."""
-    
+
     source_type: str = "rdata"
     objects: Optional[List[str]] = Field(None, description="R objects to load")
 
@@ -483,17 +488,26 @@ class RDataSource(LocalFileSource):
 # Auto-register all sources
 __all__ = [
     # VCS
-    "BitbucketSource", "PerforceSource",
+    "BitbucketSource",
+    "PerforceSource",
     # Research
-    "JupyterHubSource", "OverleafSource",
+    "JupyterHubSource",
+    "OverleafSource",
     # Industrial
-    "OPCUASource", "ModbusSource",
+    "OPCUASource",
+    "ModbusSource",
     # File formats
-    "ParquetSource", "AvroSource", "FeatherSource",
+    "ParquetSource",
+    "AvroSource",
+    "FeatherSource",
     # E-commerce
-    "WooCommerceSource", "MagentoSource",
+    "WooCommerceSource",
+    "MagentoSource",
     # Government
-    "DataGovSource", "CensusSource",
+    "DataGovSource",
+    "CensusSource",
     # Specialty
-    "MatlabSource", "SPSSSource", "RDataSource",
+    "MatlabSource",
+    "SPSSSource",
+    "RDataSource",
 ]

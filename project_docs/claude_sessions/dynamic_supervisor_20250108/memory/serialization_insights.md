@@ -4,16 +4,18 @@
 
 ### What We Discovered
 
-1. **Sets aren't serializable**: 
+1. **Sets aren't serializable**:
+
    ```python
    # ❌ This fails
    active_agents: Set[str] = Field(default_factory=set)
-   
+
    # ✅ This works
    active_agents: List[str] = Field(default_factory=list)
    ```
 
 2. **Pydantic model classes aren't serializable**:
+
    ```python
    # These fields contain CLASS objects (ModelMetaclass)
    state_schema: type[BaseModel]  # ❌ Not serializable
@@ -29,6 +31,7 @@
 ### Why This Happens
 
 msgpack (used by LangGraph for checkpointing) can only serialize:
+
 - Basic types: str, int, float, bool, None
 - Collections: list, dict, tuple
 - Bytes: bytes, bytearray
@@ -49,15 +52,17 @@ class AgentInfo(BaseModel):
 ### Alternative Solutions We Considered
 
 1. **Agent Registry Pattern** (cleaner architecture):
+
    ```python
    # Agents stored outside state
    AgentRegistry.register("search", search_agent)
-   
+
    # State only has references
    state.agent_names = ["search", "math"]
    ```
 
 2. **Field Serializers** (more complex):
+
    ```python
    @field_serializer('active_agents')
    def serialize_set(self, v: Set[str]) -> List[str]:
@@ -72,6 +77,7 @@ class AgentInfo(BaseModel):
 ### What Actually Gets Serialized
 
 When we call `state.model_dump()`:
+
 ```python
 {
     "messages": [...],  # Serializable
@@ -94,6 +100,7 @@ When we call `state.model_dump()`:
 ### Testing Serialization
 
 Always test early:
+
 ```python
 import ormsgpack
 
@@ -122,7 +129,7 @@ class State(BaseModel):
     messages: List[BaseMessage]   # Data
     config: Dict[str, Any]        # Settings
 
-# Registry = Non-serializable objects  
+# Registry = Non-serializable objects
 class Registry:
     agents: Dict[str, Agent]      # Live objects
     tools: Dict[str, Tool]        # Functions

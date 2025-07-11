@@ -1,22 +1,23 @@
-"""Query Decomposition Agents
+"""Query Decomposition Agents.
 
 Modular agents for breaking down complex queries into manageable sub-queries.
 Can be plugged into any workflow with compatible I/O schemas.
 """
 
-import logging
 from enum import Enum
+import logging
 from typing import Any, Dict, List, Literal, Optional, Union
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field
 
 from haive.agents.base.agent import Agent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+
 
 logger = logging.getLogger(__name__)
 
@@ -42,7 +43,7 @@ class SubQuery(BaseModel):
     priority: int = Field(
         ge=1, le=5, description="Priority level (1=highest, 5=lowest)"
     )
-    dependencies: List[int] = Field(
+    dependencies: list[int] = Field(
         default_factory=list, description="Indices of sub-queries this depends on"
     )
     expected_info_type: str = Field(description="Type of information expected")
@@ -58,8 +59,8 @@ class QueryDecomposition(BaseModel):
         ge=0.0, le=1.0, description="Query complexity (0-1)"
     )
 
-    sub_queries: List[SubQuery] = Field(description="List of decomposed sub-queries")
-    execution_order: List[int] = Field(
+    sub_queries: list[SubQuery] = Field(description="List of decomposed sub-queries")
+    execution_order: list[int] = Field(
         description="Suggested execution order (indices)"
     )
 
@@ -69,7 +70,7 @@ class QueryDecomposition(BaseModel):
     )
 
     reasoning: str = Field(description="Overall decomposition reasoning")
-    alternative_approaches: List[str] = Field(
+    alternative_approaches: list[str] = Field(
         default_factory=list, description="Alternative decomposition approaches"
     )
 
@@ -81,14 +82,14 @@ class HierarchicalDecomposition(BaseModel):
 
     # Hierarchical structure
     main_question: str = Field(description="Primary question to answer")
-    sub_questions: List[str] = Field(description="Supporting sub-questions")
-    detail_questions: List[str] = Field(description="Detailed follow-up questions")
+    sub_questions: list[str] = Field(description="Supporting sub-questions")
+    detail_questions: list[str] = Field(description="Detailed follow-up questions")
 
     # Execution strategy
-    execution_levels: List[List[int]] = Field(
+    execution_levels: list[list[int]] = Field(
         description="Execution levels (parallel within level, sequential between levels)"
     )
-    dependency_map: Dict[str, List[str]] = Field(
+    dependency_map: dict[str, list[str]] = Field(
         description="Dependencies between questions"
     )
 
@@ -106,10 +107,10 @@ class ContextualDecomposition(BaseModel):
     context_analysis: str = Field(description="Analysis of available context")
 
     # Context-driven sub-queries
-    context_dependent_queries: List[str] = Field(
+    context_dependent_queries: list[str] = Field(
         description="Queries that require context"
     )
-    context_independent_queries: List[str] = Field(
+    context_independent_queries: list[str] = Field(
         description="Queries that can be answered independently"
     )
 
@@ -121,7 +122,7 @@ class ContextualDecomposition(BaseModel):
         ge=0.0, le=1.0, description="How sufficient current context is"
     )
 
-    missing_context_queries: List[str] = Field(
+    missing_context_queries: list[str] = Field(
         default_factory=list, description="Queries to gather missing context"
     )
 
@@ -268,7 +269,7 @@ class QueryDecomposerAgent(Agent):
     name: str = "Query Decomposer"
 
     def __init__(
-        self, llm_config: Optional[LLMConfig] = None, max_sub_queries: int = 5, **kwargs
+        self, llm_config: LLMConfig | None = None, max_sub_queries: int = 5, **kwargs
     ):
         """Initialize query decomposer.
 
@@ -297,7 +298,7 @@ class QueryDecomposerAgent(Agent):
             output_key="query_decomposition",
         )
 
-        def decompose_query(state: Dict[str, Any]) -> Dict[str, Any]:
+        def decompose_query(state: dict[str, Any]) -> dict[str, Any]:
             """Decompose complex query into sub-queries."""
             query = getattr(state, "query", "")
             retrieved_documents = getattr(state, "retrieved_documents", [])
@@ -355,7 +356,7 @@ class HierarchicalQueryDecomposerAgent(Agent):
     name: str = "Hierarchical Query Decomposer"
 
     def __init__(
-        self, llm_config: Optional[LLMConfig] = None, max_levels: int = 3, **kwargs
+        self, llm_config: LLMConfig | None = None, max_levels: int = 3, **kwargs
     ):
         """Initialize hierarchical query decomposer.
 
@@ -384,7 +385,7 @@ class HierarchicalQueryDecomposerAgent(Agent):
             output_key="hierarchical_decomposition",
         )
 
-        def hierarchical_decompose(state: Dict[str, Any]) -> Dict[str, Any]:
+        def hierarchical_decompose(state: dict[str, Any]) -> dict[str, Any]:
             """Create hierarchical decomposition."""
             query = getattr(state, "query", "")
             retrieved_documents = getattr(state, "retrieved_documents", [])
@@ -407,11 +408,11 @@ class HierarchicalQueryDecomposerAgent(Agent):
             )
 
             # Build execution plan
-            all_questions = (
-                [decomposition.main_question]
-                + decomposition.sub_questions
-                + decomposition.detail_questions
-            )
+            all_questions = [
+                decomposition.main_question,
+                *decomposition.sub_questions,
+                *decomposition.detail_questions,
+            ]
 
             return {
                 "hierarchical_decomposition": decomposition,
@@ -438,7 +439,7 @@ class ContextualQueryDecomposerAgent(Agent):
 
     def __init__(
         self,
-        llm_config: Optional[LLMConfig] = None,
+        llm_config: LLMConfig | None = None,
         context_threshold: float = 0.7,
         **kwargs,
     ):
@@ -469,7 +470,7 @@ class ContextualQueryDecomposerAgent(Agent):
             output_key="contextual_decomposition",
         )
 
-        def contextual_decompose(state: Dict[str, Any]) -> Dict[str, Any]:
+        def contextual_decompose(state: dict[str, Any]) -> dict[str, Any]:
             """Create context-aware decomposition."""
             query = getattr(state, "query", "")
             retrieved_documents = getattr(state, "retrieved_documents", [])
@@ -532,7 +533,7 @@ class AdaptiveQueryDecomposerAgent(Agent):
 
     def __init__(
         self,
-        llm_config: Optional[LLMConfig] = None,
+        llm_config: LLMConfig | None = None,
         enable_fallback: bool = True,
         **kwargs,
     ):
@@ -555,12 +556,12 @@ class AdaptiveQueryDecomposerAgent(Agent):
         """Build adaptive decomposition graph."""
         graph = BaseGraph(name="AdaptiveQueryDecomposer")
 
-        def adaptive_decompose(state: Dict[str, Any]) -> Dict[str, Any]:
+        def adaptive_decompose(state: dict[str, Any]) -> dict[str, Any]:
             """Adaptively choose decomposition strategy."""
             query = getattr(state, "query", "")
             retrieved_documents = getattr(state, "retrieved_documents", [])
             constraints = getattr(state, "constraints", {})
-            previous_decompositions = getattr(state, "previous_decompositions", [])
+            getattr(state, "previous_decompositions", [])
 
             # Analyze query to choose strategy
             query_length = len(query.split())
@@ -629,8 +630,7 @@ class AdaptiveQueryDecomposerAgent(Agent):
                         }
                     )
                     return result_dict
-                else:
-                    raise
+                raise
 
         graph.add_node("adaptive_decompose", adaptive_decompose)
         graph.add_edge(START, "adaptive_decompose")
@@ -644,7 +644,7 @@ def create_query_decomposer(
     decomposer_type: Literal[
         "basic", "hierarchical", "contextual", "adaptive"
     ] = "basic",
-    llm_config: Optional[LLMConfig] = None,
+    llm_config: LLMConfig | None = None,
     **kwargs,
 ) -> Agent:
     """Create a query decomposer agent.
@@ -659,18 +659,17 @@ def create_query_decomposer(
     """
     if decomposer_type == "basic":
         return QueryDecomposerAgent(llm_config=llm_config, **kwargs)
-    elif decomposer_type == "hierarchical":
+    if decomposer_type == "hierarchical":
         return HierarchicalQueryDecomposerAgent(llm_config=llm_config, **kwargs)
-    elif decomposer_type == "contextual":
+    if decomposer_type == "contextual":
         return ContextualQueryDecomposerAgent(llm_config=llm_config, **kwargs)
-    elif decomposer_type == "adaptive":
+    if decomposer_type == "adaptive":
         return AdaptiveQueryDecomposerAgent(llm_config=llm_config, **kwargs)
-    else:
-        raise ValueError(f"Unknown decomposer type: {decomposer_type}")
+    raise ValueError(f"Unknown decomposer type: {decomposer_type}")
 
 
 # I/O schema for compatibility checking
-def get_query_decomposer_io_schema() -> Dict[str, List[str]]:
+def get_query_decomposer_io_schema() -> dict[str, list[str]]:
     """Get I/O schema for query decomposers for compatibility checking."""
     return {
         "inputs": [

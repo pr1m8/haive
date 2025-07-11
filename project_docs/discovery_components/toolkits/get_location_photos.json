@@ -7,7 +7,7 @@
     "description": "Get high-quality photos for a location.\n\n    Retrieves photos from TripAdvisor for a specific location.\n\n    Args:\n        location_id: The unique identifier for a TripAdvisor location.\n        language: The language code for the response content (ISO 639-1).\n        limit: Maximum number of photos to return (1-100).\n        offset: Number of photos to skip for pagination.\n        source: Filter photos by source (tripadvisor, management).\n\n    Returns:\n        dict: Collection of photo objects with URLs and metadata.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.819937",
+    "timestamp": "2025-07-10T19:45:29.035554",
     "schema": {
       "description": "Input parameters for retrieving location photos.",
       "properties": {
@@ -88,7 +88,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.819937",
+      "timestamp": "2025-07-10T19:45:29.035554",
       "category": "toolkits"
     }
   },

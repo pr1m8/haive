@@ -8,14 +8,11 @@ from datetime import datetime
 import psycopg
 
 
-def view_checkpoint_metadata(thread_id: str = None):
+def view_checkpoint_metadata(thread_id: str | None = None):
     """View checkpoint metadata for debugging."""
-    print("🔍 Viewing Checkpoint Metadata")
-    print("=" * 70)
 
     conn_string = os.environ.get("POSTGRES_CONNECTION_STRING")
     if not conn_string:
-        print("❌ No connection string")
         return
 
     try:
@@ -23,7 +20,7 @@ def view_checkpoint_metadata(thread_id: str = None):
             with conn.cursor() as cur:
                 # Build query
                 query = """
-                    SELECT 
+                    SELECT
                         thread_id,
                         checkpoint_id,
                         metadata
@@ -43,11 +40,8 @@ def view_checkpoint_metadata(thread_id: str = None):
                 cur.execute(query, params)
                 checkpoints = cur.fetchall()
 
-                print(f"\n📊 Found {len(checkpoints)} checkpoints with metadata")
 
                 for thread, cp_id, metadata in checkpoints:
-                    print(f"\n📋 Thread: {thread}")
-                    print(f"   Checkpoint: {cp_id}")
 
                     try:
                         meta_dict = (
@@ -58,13 +52,13 @@ def view_checkpoint_metadata(thread_id: str = None):
 
                         # Show key fields
                         if "step" in meta_dict:
-                            print(f"   Step: {meta_dict['step']}")
+                            pass
 
                         if "langgraph_node" in meta_dict:
-                            print(f"   Node: {meta_dict['langgraph_node']}")
+                            pass
 
                         if "error" in meta_dict:
-                            print(f"   ❌ Error: {meta_dict['error']}")
+                            pass")
 
                         # Check writes for errors
                         if "writes" in meta_dict:
@@ -73,9 +67,7 @@ def view_checkpoint_metadata(thread_id: str = None):
                                 for node, data in writes.items():
                                     if isinstance(data, dict):
                                         if "error" in data:
-                                            print(
-                                                f"   ❌ Error in {node}: {data['error']}"
-                                            )
+                                            pass
                                         if "process_response" in data:
                                             pr = data["process_response"]
                                             if (
@@ -94,21 +86,17 @@ def view_checkpoint_metadata(thread_id: str = None):
                                                             or "prepared statement"
                                                             in content.lower()
                                                         ):
-                                                            print(
-                                                                f"   ❌ Error from {contrib[0]}: {content[:100]}..."
-                                                            )
+                                                            pass
 
                     except Exception as e:
-                        print(f"   ⚠️  Error parsing metadata: {e}")
+                        passe}")
 
     except Exception as e:
-        print(f"❌ Database error: {e}")
+        pass")
 
 
 def organize_test_files():
     """Organize test files into proper structure."""
-    print("\n\n🗂️  Organizing Test Files")
-    print("=" * 70)
 
     test_dir = "/home/will/Projects/haive/backend/haive/tests/persistence_debugging"
 
@@ -122,7 +110,6 @@ def organize_test_files():
     for subdir, description in subdirs.items():
         path = os.path.join(test_dir, subdir)
         os.makedirs(path, exist_ok=True)
-        print(f"📁 {subdir}/: {description}")
 
     # Categorize files
     file_categories = {
@@ -147,11 +134,9 @@ def organize_test_files():
                     new_path = os.path.join(test_dir, category, file)
                     if not os.path.exists(new_path):
                         os.rename(file_path, new_path)
-                        print(f"   ✅ Moved {file} -> {category}/")
                         moved += 1
                     break
 
-    print(f"\n✅ Moved {moved} files")
 
     # Update README
     readme_content = """# PostgreSQL Persistence Debugging
@@ -184,7 +169,7 @@ Agent state history files
 
 1. **Prepared Statement Conflicts**: Fixed by setting `prepare_threshold=None`
 2. **Connection Manager**: Updated to disable prepared statements
-3. **Persistence Mixin**: Fixed to handle `persistence=True` 
+3. **Persistence Mixin**: Fixed to handle `persistence=True`
 4. **Unique App Names**: Each agent gets unique PostgreSQL app name
 
 ## Usage
@@ -204,7 +189,6 @@ python utilities/check_db.py
     with open(os.path.join(test_dir, "README.md"), "w") as f:
         f.write(readme_content)
 
-    print("\n✅ Updated README.md")
 
 
 def main():
@@ -214,10 +198,8 @@ def main():
     # View metadata
     if len(sys.argv) > 1:
         thread_id = sys.argv[1]
-        print(f"Viewing metadata for thread: {thread_id}")
         view_checkpoint_metadata(thread_id)
     else:
-        print("Viewing checkpoints with errors in metadata")
         view_checkpoint_metadata()
 
     # Organize files

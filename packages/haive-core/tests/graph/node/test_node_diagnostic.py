@@ -21,11 +21,11 @@ console.print("Registered processors:")
 for processor_type, processor in registry.node_processors.items():
     console.print(f"  {processor_type}: {processor.__class__.__name__}")
 
-from langgraph.graph import END
-
-# Create basic test components
 from haive.core.graph.node.config import NodeConfig
 from haive.core.graph.node.factory import NodeFactory
+
+# Create basic test components
+from langgraph.graph import END
 
 
 # Create a simple test function

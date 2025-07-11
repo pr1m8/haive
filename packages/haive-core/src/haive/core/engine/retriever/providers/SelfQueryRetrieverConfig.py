@@ -1,5 +1,4 @@
-"""
-Self-Query Retriever implementation for the Haive framework.
+"""Self-Query Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Self-Query retriever,
 which enables natural language queries to be converted into structured queries
@@ -34,8 +33,7 @@ from haive.core.engine.vectorstore.vectorstore import VectorStoreConfig
 
 @BaseRetrieverConfig.register(RetrieverType.SELF_QUERY)
 class SelfQueryRetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for Self-Query retriever in the Haive framework.
+    """Configuration for Self-Query retriever in the Haive framework.
 
     This retriever converts natural language queries into structured queries
     that can filter on document metadata and perform semantic similarity search.
@@ -102,7 +100,7 @@ class SelfQueryRetrieverConfig(BaseRetrieverConfig):
     )
 
     # Metadata schema definition
-    metadata_field_info: List[Dict[str, Any]] = Field(
+    metadata_field_info: list[dict[str, Any]] = Field(
         default_factory=list,
         description="List of metadata fields that can be filtered on",
     )
@@ -111,7 +109,7 @@ class SelfQueryRetrieverConfig(BaseRetrieverConfig):
     k: int = Field(default=4, ge=1, le=100, description="Number of documents to return")
 
     @validator("metadata_field_info", each_item=True)
-    def validate_metadata_field_info(cls, v):
+    def validate_metadata_field_info(self, v):
         """Validate metadata field info structure."""
         required_keys = {"name", "description", "type"}
         if not isinstance(v, dict):
@@ -131,7 +129,7 @@ class SelfQueryRetrieverConfig(BaseRetrieverConfig):
 
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Self-Query retriever."""
         return {
             "query": (
@@ -142,11 +140,11 @@ class SelfQueryRetrieverConfig(BaseRetrieverConfig):
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Self-Query retriever."""
         return {
             "documents": (
-                List[Any],  # List[Document] but avoiding import
+                list[Any],  # List[Document] but avoiding import
                 Field(
                     default_factory=list,
                     description="Documents matching both semantic and metadata criteria",
@@ -155,8 +153,7 @@ class SelfQueryRetrieverConfig(BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a Self-Query retriever from this configuration.
+        """Create a Self-Query retriever from this configuration.
 
         Returns:
             SelfQueryRetriever: Instantiated retriever ready for self-query retrieval.

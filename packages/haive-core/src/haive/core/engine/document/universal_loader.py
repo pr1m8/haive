@@ -11,8 +11,6 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 from urllib.parse import urlparse
 
-from langchain_core.document_loaders.base import BaseLoader
-
 from haive.core.engine.document.factory import AutoLoaderFactory
 from haive.core.engine.document.loaders.sources.implementation import CredentialManager
 from haive.core.engine.document.loaders.specific.cloud import (
@@ -127,6 +125,7 @@ from haive.core.engine.document.loaders.specific.web_social import (
     TwitterSource,
     WhatsAppSource,
 )
+from langchain_core.document_loaders.base import BaseLoader
 
 logger = logging.getLogger(__name__)
 

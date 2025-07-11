@@ -16,12 +16,9 @@ from typing import Any, Dict, List, Optional
 base_path = Path("/home/will/Projects/haive/backend/haive/packages/haive-core/src")
 sys.path.insert(0, str(base_path))
 
-print("🔬 Testing Specialized Platform Sources System")
-print("=" * 60)
 
 try:
     # Test importing the specialized sources components
-    print("📦 Testing specialized components...")
 
     # Test the enums and basic classes
     from enum import Enum
@@ -71,17 +68,13 @@ try:
         RELEASES = "releases"
         DISCUSSIONS = "discussions"
 
-    print("✅ Specialized enums working correctly!")
 
 except Exception as e:
-    print(f"❌ Enum test failed: {e}")
+    pass")
 
 
 def test_platform_detection():
     """Test specialized platform detection from URLs."""
-
-    print("\n🔍 Testing Platform Detection")
-    print("-" * 40)
 
     def detect_specialized_platform(url_or_path: str):
         """Detect specialized platform from URL or path."""
@@ -115,23 +108,16 @@ def test_platform_detection():
     for url, expected_platform in test_urls.items():
         detected = detect_specialized_platform(url)
         status = "✅" if detected == expected_platform else "❌"
-        print(f"  {status} {url} → {detected}")
         if detected == expected_platform:
             detection_success += 1
 
     success_rate = (detection_success / len(test_urls)) * 100
-    print(
-        f"\n  Success Rate: {detection_success}/{len(test_urls)} ({success_rate:.1f}%)"
-    )
 
     return detection_success >= 5
 
 
 def test_academic_sources():
     """Test academic platform source configurations."""
-
-    print("\n🎓 Testing Academic Sources")
-    print("-" * 40)
 
     # Mock academic source class
     class MockAcademicSource:
@@ -192,20 +178,14 @@ def test_academic_sources():
 
             loader_kwargs = source.get_loader_kwargs()
 
-            print(f"  ✅ {config['name']}: {config['platform'].value}")
-            print(f"    Query: {loader_kwargs.get('query', 'N/A')}")
-            print(f"    Max results: {loader_kwargs.get('max_results')}")
 
             assert loader_kwargs["platform"] == config["platform"].value
 
             academic_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {config['name']}: Error - {e}")
+            pass")
 
-    print(
-        f"\n  Academic Source Tests: {academic_tests_passed}/{len(test_configs)} passed"
-    )
 
     return academic_tests_passed >= 2
 
@@ -213,14 +193,11 @@ def test_academic_sources():
 def test_media_sources():
     """Test media platform source configurations."""
 
-    print("\n🎥 Testing Media Sources")
-    print("-" * 40)
-
     def extract_video_id(url):
         """Extract YouTube video ID from URL."""
         if "youtube.com/watch?v=" in url:
             return url.split("v=")[1].split("&")[0]
-        elif "youtu.be/" in url:
+        if "youtu.be/" in url:
             return url.split("youtu.be/")[1].split("?")[0]
         return None
 
@@ -283,14 +260,12 @@ def test_media_sources():
             source = MockYouTubeSource(**config)
             loader_kwargs = source.get_loader_kwargs()
 
-            print(f"  ✅ {config['name']}: {source.media_type.value}")
 
             # Verify video ID extraction
             if "expected_id" in config:
                 assert (
                     source.video_id == config["expected_id"]
                 ), f"Expected {config['expected_id']}, got {source.video_id}"
-                print(f"    Video ID: {source.video_id}")
 
             # Verify loader kwargs
             if source.media_type == MediaType.TRANSCRIPT:
@@ -301,18 +276,14 @@ def test_media_sources():
             media_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {config['name']}: Error - {e}")
+            pass")
 
-    print(f"\n  Media Source Tests: {media_tests_passed}/{len(test_configs)} passed")
 
     return media_tests_passed >= 2
 
 
 def test_development_sources():
     """Test development platform source configurations."""
-
-    print("\n💻 Testing Development Sources")
-    print("-" * 40)
 
     # Mock development source class
     class MockGitHubSource:
@@ -375,12 +346,10 @@ def test_development_sources():
             source = MockGitHubSource(**config)
             loader_kwargs = source.get_loader_kwargs()
 
-            print(f"  ✅ {config['name']}: {config['repo']}")
 
             # Check data types
             if "data_types" in config:
                 data_type_names = [dt.value for dt in config["data_types"]]
-                print(f"    Data types: {', '.join(data_type_names)}")
 
             # Verify loader kwargs
             assert loader_kwargs["repo"] == config["repo"]
@@ -391,20 +360,14 @@ def test_development_sources():
             dev_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {config['name']}: Error - {e}")
+            pass")
 
-    print(
-        f"\n  Development Source Tests: {dev_tests_passed}/{len(test_configs)} passed"
-    )
 
     return dev_tests_passed >= 2
 
 
 def test_knowledge_sources():
     """Test knowledge platform source configurations."""
-
-    print("\n📚 Testing Knowledge Sources")
-    print("-" * 40)
 
     # Mock knowledge source class
     class MockWikipediaSource:
@@ -461,12 +424,11 @@ def test_knowledge_sources():
             source = MockWikipediaSource(**config)
             loader_kwargs = source.get_loader_kwargs()
 
-            print(f"  ✅ {config['name']}: {source.lang}")
 
             if config.get("query"):
-                print(f"    Query: {config['query']}")
+                pass
             elif config.get("page_titles"):
-                print(f"    Pages: {len(config['page_titles'])} pages")
+                pass
 
             assert loader_kwargs["platform"] == source.platform.value
             assert loader_kwargs["lang"] == source.lang
@@ -474,11 +436,8 @@ def test_knowledge_sources():
             knowledge_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {config['name']}: Error - {e}")
+            pass")
 
-    print(
-        f"\n  Knowledge Source Tests: {knowledge_tests_passed}/{len(test_configs)} passed"
-    )
 
     return knowledge_tests_passed >= 2
 
@@ -486,75 +445,18 @@ def test_knowledge_sources():
 def display_specialized_system_summary():
     """Display summary of the specialized sources implementation."""
 
-    print("\n" + "=" * 60)
-    print("🔬 SPECIALIZED SOURCES IMPLEMENTATION")
-    print("=" * 60)
 
-    print(f"\n🎓 ACADEMIC & RESEARCH:")
-    print("  ✅ Platforms:")
-    print("    • arXiv (research papers with search)")
-    print("    • PubMed (biomedical literature)")
-    print("    • Semantic Scholar (academic database)")
-    print("    • bioRxiv (preprints)")
 
-    print(f"\n🎥 MEDIA PROCESSING:")
-    print("  ✅ Video Platforms:")
-    print("    • YouTube (transcripts & audio)")
-    print("    • Bilibili (Chinese video platform)")
-    print("  ✅ Audio Processing:")
-    print("    • Local audio files (MP3, WAV, etc.)")
-    print("    • AssemblyAI (cloud transcription)")
-    print("    • Whisper (local transcription)")
 
-    print(f"\n💻 DEVELOPMENT PLATFORMS:")
-    print("  ✅ Repository Hosting:")
-    print("    • GitHub (repos, issues, PRs)")
-    print("    • GitLab (repos, merge requests)")
-    print("    • Git (local repositories)")
-    print("  ✅ Data Types:")
-    print("    • Issues & Pull Requests")
-    print("    • Commits & Releases")
-    print("    • Wiki & Discussions")
 
-    print(f"\n📚 KNOWLEDGE PLATFORMS:")
-    print("  ✅ Encyclopedias:")
-    print("    • Wikipedia (article search & retrieval)")
-    print("    • MediaWiki (dump processing)")
 
-    print(f"\n🌐 DOMAIN-SPECIFIC:")
-    print("  ✅ Specialized Data:")
-    print("    • Weather (OpenWeatherMap)")
-    print("    • Financial news (Alpha Vantage)")
-    print("    • News aggregation")
 
-    print(f"\n🔬 RESEARCH FEATURES:")
-    print("  • Advanced search with filters")
-    print("  • Category-based filtering")
-    print("  • Citation tracking")
-    print("  • Bulk paper downloading")
 
-    print(f"\n🎬 MEDIA FEATURES:")
-    print("  • Video transcript extraction")
-    print("  • Audio file transcription")
-    print("  • Speaker diarization")
-    print("  • Multi-language support")
 
-    print(f"\n⚙️ DEVELOPMENT FEATURES:")
-    print("  • Full repository analysis")
-    print("  • Issue and PR tracking")
-    print("  • Code file extraction")
-    print("  • Branch selection")
-
-    print("\n" + "=" * 60)
-    print("🎉 SPECIALIZED SOURCES PHASE 8 COMPLETE!")
-    print("=" * 60)
 
 
 def main():
     """Run all specialized sources tests."""
-
-    print("\n🧪 Running Specialized Sources Tests")
-    print("=" * 40)
 
     tests_passed = 0
     total_tests = 5
@@ -562,50 +464,40 @@ def main():
     # Test 1: Platform Detection
     if test_platform_detection():
         tests_passed += 1
-        print("✅ Platform Detection: PASS")
     else:
-        print("❌ Platform Detection: FAIL")
+        pass")
 
     # Test 2: Academic Sources
     if test_academic_sources():
         tests_passed += 1
-        print("✅ Academic Sources: PASS")
     else:
-        print("❌ Academic Sources: FAIL")
+        pass")
 
     # Test 3: Media Sources
     if test_media_sources():
         tests_passed += 1
-        print("✅ Media Sources: PASS")
     else:
-        print("❌ Media Sources: FAIL")
+        pass")
 
     # Test 4: Development Sources
     if test_development_sources():
         tests_passed += 1
-        print("✅ Development Sources: PASS")
     else:
-        print("❌ Development Sources: FAIL")
+        pass")
 
     # Test 5: Knowledge Sources
     if test_knowledge_sources():
         tests_passed += 1
-        print("✅ Knowledge Sources: PASS")
     else:
-        print("❌ Knowledge Sources: FAIL")
+        pass")
 
     # Results
-    print(
-        f"\n🎯 TEST RESULTS: {tests_passed}/{total_tests} tests passed ({(tests_passed/total_tests*100):.1f}%)"
-    )
 
     if tests_passed >= 4:
-        print("🎉 SPECIALIZED SOURCES: EXCELLENT IMPLEMENTATION!")
         display_specialized_system_summary()
         return True
-    else:
-        print("⚠️ SPECIALIZED SOURCES: NEEDS IMPROVEMENT")
-        return False
+    print("⚠️ SPECIALIZED SOURCES: NEEDS IMPROVEMENT")
+    return False
 
 
 if __name__ == "__main__":

@@ -1,11 +1,11 @@
 # tests/graph/node/test_validation_node.py
 from typing import Any, List
 
-import pytest
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 from langchain_core.tools import tool
 from langgraph.types import Command
 from pydantic import Field
+import pytest
 
 from haive.core.graph.node.types import NodeType
 from haive.core.graph.node.validation_node_config import ValidationNodeConfig
@@ -16,7 +16,7 @@ from haive.core.schema.state_schema import StateSchema
 class _ValidationState(StateSchema):
     """State schema with messages and validation fields."""
 
-    messages: List[Any] = Field(default_factory=list)
+    messages: list[Any] = Field(default_factory=list)
     validated: bool = Field(default=False)
 
 

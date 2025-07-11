@@ -1,11 +1,10 @@
-from pydantic import Field
-
 from haive.core.engine.document.loaders.base.schema import (
     DocumentEngineInputSchema,
     DocumentEngineOutputSchema,
 )
 from haive.core.engine.document.loaders.sources.remote.base import URLSource
 from haive.core.engine.document.loaders.sources.source_types import SourceCategory
+from pydantic import Field
 
 
 class ArxivSource(URLSource):

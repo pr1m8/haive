@@ -37,6 +37,7 @@ from typing import Optional
 
 from pydantic import SecretStr, field_validator
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -131,8 +132,7 @@ class SecureConfigMixin:
                     f"Found API key for {provider_value} in {env_key} (length: {len(api_key)})"
                 )
                 return SecretStr(api_key)
-            else:
-                logger.warning(f"Environment variable {env_key} not found or empty")
+            logger.warning(f"Environment variable {env_key} not found or empty")
         else:
             logger.warning(
                 f"No environment mapping found for provider: {provider_value}"
@@ -144,7 +144,7 @@ class SecureConfigMixin:
         )
         return SecretStr("")
 
-    def get_api_key(self) -> Optional[str]:
+    def get_api_key(self) -> str | None:
         """Safely retrieve the API key with improved error handling.
 
         This method attempts to retrieve the API key value from the SecretStr
@@ -203,7 +203,7 @@ class SecureConfigMixin:
 
             return key_value
         except Exception as e:
-            logger.error(f"Error retrieving API key: {e}")
+            logger.exception(f"Error retrieving API key: {e}")
 
             # If we're in a testing environment, use fake keys for development
             if (

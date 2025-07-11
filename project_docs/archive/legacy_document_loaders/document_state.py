@@ -14,64 +14,47 @@ from __future__ import annotations
 from haive.core.schema.base import StateSchema
 
 from .document_models import (  # Enums; Configuration models; Document models; State models; Converter functions
-    ChunkingOptions,
-    ChunkingStrategy,
-    Document,
-    DocumentChunk,
-    DocumentCollection,
-    DocumentCredential,
-    DocumentError,
-    DocumentFormat,
-    DocumentSource,
-    DocumentSourceMetadata,
-    DocumentSourceType,
-    DocumentState,
-    EmbeddingModel,
-    EmbeddingOptions,
-    LoadingOptions,
-    LoadingStrategy,
-    ProcessingStage,
-    ProcessingStatistics,
-    chunks_to_langchain,
-    documents_to_langchain,
-    lc_documents_to_document_collection,
-)
-
+    ChunkingOptions, ChunkingStrategy, Document, DocumentChunk,
+    DocumentCollection, DocumentCredential, DocumentError, DocumentFormat,
+    DocumentSource, DocumentSourceMetadata, DocumentSourceType, DocumentState,
+    EmbeddingModel, EmbeddingOptions, LoadingOptions, LoadingStrategy,
+    ProcessingStage, ProcessingStatistics, chunks_to_langchain,
+    documents_to_langchain, lc_documents_to_document_collection)
 
 # Ensure DocumentState is a StateSchema if the import succeeded
 try:
     if not issubclass(DocumentState, StateSchema):
         # Dynamically update the DocumentState class to inherit from StateSchema
-        DocumentState.__bases__ = (StateSchema,) + DocumentState.__bases__
+        DocumentState.__bases__ = (StateSchema, *DocumentState.__bases__)
 except (NameError, TypeError):
     # If StateSchema is not available, we're likely in a standalone environment
     pass
 
 __all__ = [
-    # Enums
-    "DocumentSourceType",
-    "DocumentFormat",
-    "ProcessingStage",
-    "LoadingStrategy",
-    "ChunkingStrategy",
-    "EmbeddingModel",
-    # Configuration models
-    "LoadingOptions",
     "ChunkingOptions",
-    "EmbeddingOptions",
-    # Document models
-    "DocumentSourceMetadata",
-    "DocumentSource",
-    "DocumentChunk",
+    "ChunkingStrategy",
     "Document",
+    "DocumentChunk",
     "DocumentCollection",
-    # State models
-    "DocumentState",
-    "ProcessingStatistics",
     "DocumentCredential",
     "DocumentError",
+    "DocumentFormat",
+    "DocumentSource",
+    # Document models
+    "DocumentSourceMetadata",
+    # Enums
+    "DocumentSourceType",
+    # State models
+    "DocumentState",
+    "EmbeddingModel",
+    "EmbeddingOptions",
+    # Configuration models
+    "LoadingOptions",
+    "LoadingStrategy",
+    "ProcessingStage",
+    "ProcessingStatistics",
+    "chunks_to_langchain",
+    "documents_to_langchain",
     # Converter functions
     "lc_documents_to_document_collection",
-    "documents_to_langchain",
-    "chunks_to_langchain",
 ]

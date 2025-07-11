@@ -1,10 +1,10 @@
 import operator
 from typing import Annotated, List, Optional
 
-import pytest
 from langchain.output_parsers import PydanticOutputParser
 from langchain_core.messages import BaseMessage, HumanMessage
 from pydantic import BaseModel, Field
+import pytest
 
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.schema_composer import SchemaComposer
@@ -17,7 +17,7 @@ class AnalysisResult(BaseModel):
     """Structured analysis of text content."""
 
     main_topic: str = Field(description="The main topic of the text")
-    keywords: List[str] = Field(description="Key terms extracted from the text")
+    keywords: list[str] = Field(description="Key terms extracted from the text")
     sentiment: float = Field(description="Sentiment score from -1.0 to 1.0")
     summary: str = Field(description="Brief summary of the text")
 
@@ -26,10 +26,10 @@ class AnalysisResult(BaseModel):
 class AnalysisState(StateSchema):
     """State for text analysis workflow."""
 
-    messages: List[BaseMessage] = Field(default_factory=list)
+    messages: list[BaseMessage] = Field(default_factory=list)
     query: str = Field(default="")
-    context: Annotated[List[str], operator.add] = Field(default_factory=list)
-    analysis: Optional[AnalysisResult] = Field(default=None)
+    context: Annotated[list[str], operator.add] = Field(default_factory=list)
+    analysis: AnalysisResult | None = Field(default=None)
     attempts: Annotated[int, operator.add] = Field(default=0)
 
 
@@ -120,8 +120,6 @@ class TestAugLLMWithStateSchema:
             if isinstance(result, dict) and "main_topic" in result:
                 analysis = AnalysisResult(**result)
             # If result is a string that needs parsing
-            # elif isinstance(result, str):
-            #    analysis = analysis_parser.parse(result)
             # If result is in a different format
             else:
                 analysis = AnalysisResult(

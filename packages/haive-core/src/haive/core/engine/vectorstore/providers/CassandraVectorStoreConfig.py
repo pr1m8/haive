@@ -1,5 +1,4 @@
-"""
-Cassandra Vector Store implementation for the Haive framework.
+"""Cassandra Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the Cassandra vector store,
 which provides distributed vector storage with Apache Cassandra.
@@ -25,17 +24,15 @@ a consistent Haive configuration interface.
 
 from typing import Any, Dict, List, Optional, Tuple, Type
 
-from langchain_core.documents import Document
-from pydantic import Field, validator
-
 from haive.core.engine.vectorstore.base import BaseVectorStoreConfig
 from haive.core.engine.vectorstore.types import VectorStoreType
+from langchain_core.documents import Document
+from pydantic import Field, validator
 
 
 @BaseVectorStoreConfig.register(VectorStoreType.CASSANDRA)
 class CassandraVectorStoreConfig(BaseVectorStoreConfig):
-    """
-    Configuration for Cassandra vector store in the Haive framework.
+    """Configuration for Cassandra vector store in the Haive framework.
 
     This vector store uses Apache Cassandra for distributed vector
     storage with high availability and scalability.
@@ -82,16 +79,16 @@ class CassandraVectorStoreConfig(BaseVectorStoreConfig):
     """
 
     # Cassandra cluster configuration
-    hosts: List[str] = Field(
+    hosts: list[str] = Field(
         default=["localhost"], description="List of Cassandra host addresses"
     )
 
     port: int = Field(default=9042, ge=1, le=65535, description="Cassandra port number")
 
     # Authentication
-    username: Optional[str] = Field(default=None, description="Cassandra username")
+    username: str | None = Field(default=None, description="Cassandra username")
 
-    password: Optional[str] = Field(
+    password: str | None = Field(
         default=None,
         description="Cassandra password (auto-resolved from CASSANDRA_PASSWORD)",
     )
@@ -104,7 +101,7 @@ class CassandraVectorStoreConfig(BaseVectorStoreConfig):
     )
 
     # TTL configuration
-    ttl_seconds: Optional[int] = Field(
+    ttl_seconds: int | None = Field(
         default=None, ge=1, description="Time-to-live for added texts in seconds"
     )
 
@@ -128,14 +125,14 @@ class CassandraVectorStoreConfig(BaseVectorStoreConfig):
     )
 
     @validator("hosts")
-    def validate_hosts(cls, v):
+    def validate_hosts(self, v):
         """Validate hosts list is not empty."""
         if not v or len(v) == 0:
             raise ValueError("hosts list cannot be empty")
         return v
 
     @validator("setup_mode")
-    def validate_setup_mode(cls, v):
+    def validate_setup_mode(self, v):
         """Validate setup mode is supported."""
         valid_modes = ["SYNC", "ASYNC", "OFF"]
         if v not in valid_modes:
@@ -143,7 +140,7 @@ class CassandraVectorStoreConfig(BaseVectorStoreConfig):
         return v
 
     @validator("metadata_indexing")
-    def validate_metadata_indexing(cls, v):
+    def validate_metadata_indexing(self, v):
         """Validate metadata indexing policy."""
         valid_policies = ["all", "none"]
         if v not in valid_policies:
@@ -151,12 +148,13 @@ class CassandraVectorStoreConfig(BaseVectorStoreConfig):
             import warnings
 
             warnings.warn(
-                f"metadata_indexing '{v}' is custom - ensure it's properly formatted"
+                f"metadata_indexing '{v}' is custom - ensure it's properly formatted",
+                stacklevel=2,
             )
         return v
 
     @validator("keyspace")
-    def validate_keyspace(cls, v):
+    def validate_keyspace(self, v):
         """Validate keyspace name format."""
         if not v or len(v.strip()) == 0:
             raise ValueError("keyspace cannot be empty")
@@ -169,27 +167,26 @@ class CassandraVectorStoreConfig(BaseVectorStoreConfig):
             )
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Cassandra vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Cassandra vector store."""
         return {
             "ids": (
-                List[str],
+                list[str],
                 Field(description="IDs of the added documents in Cassandra"),
             ),
         }
 
     def instantiate(self):
-        """
-        Create a Cassandra vector store from this configuration.
+        """Create a Cassandra vector store from this configuration.
 
         Returns:
             Cassandra: Instantiated Cassandra vector store.

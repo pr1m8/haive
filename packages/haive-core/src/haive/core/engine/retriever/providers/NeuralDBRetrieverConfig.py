@@ -1,5 +1,4 @@
-"""
-NeuralDB Retriever implementation for the Haive framework.
+"""NeuralDB Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the NeuralDB retriever,
 which uses ThirdAI's NeuralDB for fast neural search without GPUs.
@@ -35,8 +34,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.NEURAL_DB)
 class NeuralDBRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for NeuralDB retriever in the Haive framework.
+    """Configuration for NeuralDB retriever in the Haive framework.
 
     This retriever uses ThirdAI's NeuralDB to provide fast neural search
     without requiring GPU infrastructure, enabling efficient CPU-based retrieval.
@@ -86,7 +84,7 @@ class NeuralDBRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None, description="ThirdAI API key (auto-resolved from THIRDAI_API_KEY)"
     )
 
@@ -96,13 +94,13 @@ class NeuralDBRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # Model configuration
-    model_path: Optional[str] = Field(
+    model_path: str | None = Field(
         default=None,
         description="Path to the NeuralDB model file (if using pre-trained model)",
     )
 
     # Documents to index
-    documents: List[Document] = Field(
+    documents: list[Document] = Field(
         default_factory=list, description="Documents to index for NeuralDB retrieval"
     )
 
@@ -144,17 +142,17 @@ class NeuralDBRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         description="Maximum sequence length for processing",
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for NeuralDB retriever."""
         return {
             "query": (str, Field(description="Neural search query for NeuralDB")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for NeuralDB retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list, description="Documents from NeuralDB search"
                 ),
@@ -162,8 +160,7 @@ class NeuralDBRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a NeuralDB retriever from this configuration.
+        """Create a NeuralDB retriever from this configuration.
 
         Returns:
             NeuralDBRetriever: Instantiated retriever ready for neural search.

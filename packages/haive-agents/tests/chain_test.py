@@ -403,7 +403,7 @@ class BranchingDocumentAnalyzer:
                 }
 
             except Exception as e:
-                logger.error(f"Error in document classifier: {e!s}")
+                logger.exception(f"Error in document classifier: {e!s}")
                 return {"error": f"Error in document classifier: {e!s}"}
 
         dg.add_node(
@@ -476,7 +476,7 @@ class BranchingDocumentAnalyzer:
                 }
 
             except Exception as e:
-                logger.error(f"Error in document router: {e!s}")
+                logger.exception(f"Error in document router: {e!s}")
                 return {
                     "error": f"Error in document router: {e!s}",
                     "branch_path": "general",
@@ -552,7 +552,7 @@ class BranchingDocumentAnalyzer:
                     }
 
                 except Exception as e:
-                    logger.error(f"Error in {analyzer_name}: {e!s}")
+                    logger.exception(f"Error in {analyzer_name}: {e!s}")
                     error_msg = f"Error in {analyzer_name}: {e!s}"
                     return {
                         "error": error_msg,
@@ -649,7 +649,7 @@ class BranchingDocumentAnalyzer:
                 }
 
             except Exception as e:
-                logger.error(f"Error in executive summary: {e!s}")
+                logger.exception(f"Error in executive summary: {e!s}")
                 error_msg = f"Error generating executive summary: {e!s}"
 
                 # Add error as message
@@ -769,19 +769,9 @@ ACME Holdings, Inc.
 """
 
     # Create and run the analyzer
-    print("Initializing document analyzer...")
     analyzer = BranchingDocumentAnalyzer()
 
-    print("\nAnalyzing financial document...")
     results = analyzer.analyze_document(financial_doc)
 
-    print("\n=== ANALYSIS RESULTS ===\n")
-    print(f"Document Type: {results.get('document_type', 'Unknown')}")
-    print(f"Primary Topic: {results.get('primary_topic', 'Unknown')}")
-    print(f"Selected Branch: {results.get('branch_path', 'Unknown')}")
-
     if results.get("error"):
-        print(f"\nERROR: {results['error']}")
-
-    print("\n=== EXECUTIVE SUMMARY ===\n")
-    print(results.get("output", "No summary generated"))
+        pass

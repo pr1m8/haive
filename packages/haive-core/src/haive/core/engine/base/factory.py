@@ -1,5 +1,4 @@
-"""
-Factory implementation for creating runtime components in the Haive system.
+"""Factory implementation for creating runtime components in the Haive system.
 
 This module provides a factory pattern implementation that separates the serializable
 configuration of components from their non-serializable runtime instances. This enables
@@ -10,6 +9,7 @@ from typing import TYPE_CHECKING, Any, Dict, Generic, Optional, TypeVar
 
 from pydantic import BaseModel, ConfigDict, Field, PrivateAttr
 
+
 # Forward reference to avoid circular imports
 if TYPE_CHECKING:
     from haive.core.engine.base.reference import ComponentRef
@@ -18,8 +18,7 @@ T = TypeVar("T")  # Type variable for the created component
 
 
 class ComponentFactory(BaseModel, Generic[T]):
-    """
-    Factory for creating runtime components from engine configurations.
+    """Factory for creating runtime components from engine configurations.
 
     This class implements the factory pattern to separate serializable configurations
     from non-serializable runtime components. It provides lazy instantiation,
@@ -52,19 +51,18 @@ class ComponentFactory(BaseModel, Generic[T]):
     )
 
     # Runtime configuration
-    runtime_config: Optional[Dict[str, Any]] = Field(
+    runtime_config: dict[str, Any] | None = Field(
         default=None, description="Runtime configuration overrides"
     )
 
     # Private attribute for component cache
-    _component: Optional[T] = PrivateAttr(default=None)
+    _component: T | None = PrivateAttr(default=None)
 
     # Configuration for model serialization
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     def create(self) -> T:
-        """
-        Create the runtime component.
+        """Create the runtime component.
 
         Resolves the engine reference and creates a runnable component instance
         using the engine's create_runnable method. Caches the created component
@@ -102,8 +100,7 @@ class ComponentFactory(BaseModel, Generic[T]):
         return component
 
     def invalidate_cache(self) -> None:
-        """
-        Invalidate the cached component.
+        """Invalidate the cached component.
 
         Clears the cached component instance and invalidates the engine reference cache.
         This forces the next call to create() to instantiate a fresh component.
@@ -121,10 +118,9 @@ class ComponentFactory(BaseModel, Generic[T]):
 
     @classmethod
     def for_engine(
-        cls, engine: Any, runtime_config: Optional[Dict[str, Any]] = None
+        cls, engine: Any, runtime_config: dict[str, Any] | None = None
     ) -> "ComponentFactory[T]":
-        """
-        Create a factory for a specific engine.
+        """Create a factory for a specific engine.
 
         Factory method to create a component factory that will use the specified
         engine and runtime configuration.

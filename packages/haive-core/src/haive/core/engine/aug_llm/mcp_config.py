@@ -15,10 +15,12 @@ from pydantic import Field, model_validator
 from haive.core.common.mixins import MCPMixin, ToolRouteMixin
 from haive.core.engine.aug_llm.config import AugLLMConfig
 
+
 if TYPE_CHECKING:
     from haive.mcp.config import MCPConfig
 
 import logging
+
 
 logger = logging.getLogger(__name__)
 
@@ -169,7 +171,7 @@ class MCPAugLLMConfig(MCPMixin, AugLLMConfig):
 
         logger.debug(f"Integrated {len(mcp_tool_names)} MCP tools into configuration")
 
-    def get_all_tools(self) -> List[str]:
+    def get_all_tools(self) -> list[str]:
         """Get all available tool names including MCP tools.
 
         Returns:
@@ -184,7 +186,7 @@ class MCPAugLLMConfig(MCPMixin, AugLLMConfig):
 
         return all_tools
 
-    def get_tool_by_name(self, name: str) -> Optional[Any]:
+    def get_tool_by_name(self, name: str) -> Any | None:
         """Get a tool instance by name, checking both regular and MCP tools.
 
         Args:
@@ -211,7 +213,6 @@ class MCPAugLLMConfig(MCPMixin, AugLLMConfig):
         Useful for troubleshooting MCP configuration and tool discovery.
         """
         from rich.console import Console
-        from rich.panel import Panel
         from rich.table import Table
 
         console = Console()
@@ -277,7 +278,7 @@ class MCPAugLLMConfig(MCPMixin, AugLLMConfig):
 async def create_mcp_aug_llm_config(
     name: str,
     model: str = "gpt-4",
-    mcp_servers: Optional[Dict[str, Any]] = None,
+    mcp_servers: dict[str, Any] | None = None,
     **kwargs,
 ) -> MCPAugLLMConfig:
     """Factory function to create and initialize MCPAugLLMConfig.

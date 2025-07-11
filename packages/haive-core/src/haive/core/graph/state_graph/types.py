@@ -1,6 +1,7 @@
 # src/haive/core/graph/common/types.py
 
-from typing import Any, Callable, Dict, ForwardRef, Optional, Type, TypeVar, Union
+from collections.abc import Callable
+from typing import Any, Dict, ForwardRef, Optional, Type, TypeVar, Union
 
 from pydantic import BaseModel
 
@@ -9,10 +10,10 @@ T = TypeVar("T", bound="BaseModel")
 C = TypeVar("C", bound=Optional["BaseModel"])
 
 # Common type aliases
-StateLike = Union[Type[BaseModel], BaseModel, Dict[str, Any]]
-ConfigLike = Union[Type[BaseModel], BaseModel, Dict[str, Any]]
+StateLike = Union[type[BaseModel], BaseModel, dict[str, Any]]
+ConfigLike = Union[type[BaseModel], BaseModel, dict[str, Any]]
 NodeLike = Union[ForwardRef("NodeConfig"), Callable, ForwardRef("BaseGraph")]
-BranchLike = Union[ForwardRef("Branch"), Callable[[Dict[str, Any]], Any]]
+BranchLike = Union[ForwardRef("Branch"), Callable[[dict[str, Any]], Any]]
 EdgePair = tuple[str, str]
-NodeColorMap = Dict[str, str]
-ConditionalEdge = Dict[str, Any]
+NodeColorMap = dict[str, str]
+ConditionalEdge = dict[str, Any]

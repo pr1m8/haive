@@ -1,13 +1,10 @@
-"""Enhanced Multi-Agent RAG with Built-in Compatibility
+"""Enhanced Multi-Agent RAG with Built-in Compatibility.
 
 This module demonstrates RAG systems using the compatibility-enhanced multi-agent base,
 providing automatic compatibility checking and adaptation.
 """
 
 from typing import Any
-
-from haive.core.fixtures.documents import conversation_documents
-from langchain_core.documents import Document
 
 from haive.agents.multi.compatibility_enhanced_base import (
     CompatibilityEnhancedConditionalAgent,
@@ -17,6 +14,8 @@ from haive.agents.multi.compatibility_enhanced_base import (
     CompatibilityMode,
     create_compatible_multi_agent,
 )
+from haive.core.fixtures.documents import conversation_documents
+from langchain_core.documents import Document
 
 from .agents import (
     SIMPLE_RAG_AGENT,
@@ -74,7 +73,6 @@ class EnhancedRAGSequentialAgent(CompatibilityEnhancedSequentialAgent):
         else:
             self.add_agent(SIMPLE_RAG_ANSWER_AGENT)
 
-        print(f"✅ Created {self.name} with {len(self.agents)} compatible agents")
 
 
 class EnhancedRAGConditionalAgent(CompatibilityEnhancedConditionalAgent):
@@ -117,7 +115,6 @@ class EnhancedRAGConditionalAgent(CompatibilityEnhancedConditionalAgent):
         # Set up conditional routing after all agents are added and validated
         self._setup_enhanced_conditional_routing()
 
-        print(f"✅ Created {self.name} with compatibility-aware routing")
 
     def _setup_enhanced_conditional_routing(self):
         """Set up conditional routing with compatibility awareness."""
@@ -186,7 +183,6 @@ class EnhancedRAGParallelAgent(CompatibilityEnhancedParallelAgent):
         for variant in rag_variants:
             self.add_agent(variant)
 
-        print(f"✅ Created {self.name} with {len(self.agents)} compatible RAG variants")
 
 
 # ============================================================================
@@ -219,16 +215,12 @@ class SmartRAGFactory:
         Returns:
             Optimally configured RAG system with compatibility checking
         """
-        print(f"🔍 Analyzing {len(agents)} agents for optimal RAG system...")
 
         # Analyze agent types
         retrieval_agents = [a for a in agents if isinstance(a, SimpleRAGAgent)]
         grading_agents = [a for a in agents if isinstance(a, DocumentGradingAgent)]
         answer_agents = [a for a in agents if isinstance(a, SimpleRAGAnswerAgent)]
 
-        print(
-            f"   Found: {len(retrieval_agents)} retrieval, {len(grading_agents)} grading, {len(answer_agents)} answer agents"
-        )
 
         # Determine optimal structure
         if preferred_mode == "parallel" or len(retrieval_agents) > 1:
@@ -269,22 +261,18 @@ class SmartRAGFactory:
             a
             for a in agents
             if not isinstance(
-                a, (SimpleRAGAgent, DocumentGradingAgent, SimpleRAGAnswerAgent)
+                a, SimpleRAGAgent | DocumentGradingAgent | SimpleRAGAnswerAgent
             )
         ]
 
         for agent in remaining_agents:
             try:
                 system.add_agent(agent)
-                print(f"   ✅ Added additional agent: {agent.name}")
             except Exception as e:
-                print(f"   ⚠️  Could not add {agent.name}: {e!s}")
+                passs}")
 
         # Generate compatibility report
         report = system.get_compatibility_report(detailed=True)
-        print(f"✅ Created {system.name}")
-        print(f"   Overall compatible: {report['overall_compatible']}")
-        print(f"   Applied adapters: {report['applied_adapters']}")
 
         return system
 
@@ -300,7 +288,6 @@ class SmartRAGFactory:
         This method creates a RAG system that is guaranteed to be compatible
         or will fail with clear error messages.
         """
-        print("🛡️  Creating safe RAG system with strict compatibility...")
 
         try:
             # Create agents
@@ -336,13 +323,11 @@ class SmartRAGFactory:
                     f"Safe RAG system failed compatibility check: {report}"
                 )
 
-            print("✅ Safe RAG system created successfully")
             system.visualize_compatibility()
 
             return system
 
         except Exception as e:
-            print(f"❌ Failed to create safe RAG system: {e!s}")
             raise
 
 
@@ -353,12 +338,8 @@ class SmartRAGFactory:
 
 def demonstrate_enhanced_rag_compatibility():
     """Demonstrate the enhanced RAG system with built-in compatibility checking."""
-    print("🚀 Demonstrating Enhanced RAG with Built-in Compatibility")
-    print("=" * 60)
 
     # Example 1: Sequential RAG with automatic compatibility checking
-    print("\n1. Creating Sequential RAG with Compatibility Checking")
-    print("-" * 50)
 
     sequential_rag = EnhancedRAGSequentialAgent(
         compatibility_mode=CompatibilityMode.ADAPTIVE
@@ -367,21 +348,16 @@ def demonstrate_enhanced_rag_compatibility():
     sequential_rag.visualize_compatibility()
 
     # Example 2: Adding incompatible agent to demonstrate adaptation
-    print("\n2. Testing Compatibility Adaptation")
-    print("-" * 50)
 
     # Create a potentially incompatible agent
     custom_agent = SimpleRAGAgent(name="Custom Agent")
 
     try:
         sequential_rag.add_agent(custom_agent)
-        print("✅ Agent added successfully (compatibility was handled automatically)")
     except Exception as e:
-        print(f"❌ Agent incompatible: {e!s}")
+        pass")
 
     # Example 3: Smart factory creation
-    print("\n3. Using Smart RAG Factory")
-    print("-" * 50)
 
     test_agents = [
         SimpleRAGAgent(name="Agent 1"),
@@ -394,8 +370,6 @@ def demonstrate_enhanced_rag_compatibility():
     )
 
     # Example 4: Safe RAG system
-    print("\n4. Creating Safe RAG System")
-    print("-" * 50)
 
     try:
         SmartRAGFactory.create_safe_rag_system(
@@ -404,13 +378,10 @@ def demonstrate_enhanced_rag_compatibility():
             compatibility_mode=CompatibilityMode.STRICT,
         )
 
-        print("✅ Safe RAG system created and validated")
 
     except Exception as e:
-        print(f"❌ Safe RAG system creation failed: {e!s}")
+        pass")
 
-    print("\n" + "=" * 60)
-    print("🎉 Enhanced RAG Compatibility Demonstration Complete!")
 
 
 # ============================================================================

@@ -49,6 +49,7 @@ from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel, Field, PrivateAttr
 
+
 # Type checking imports
 if TYPE_CHECKING:
     from haive.mcp.config import MCPConfig
@@ -64,7 +65,7 @@ class MCPResource(BaseModel):
     name: str = Field(..., description="Resource name")
     description: str = Field(default="", description="Resource description")
     mime_type: str = Field(default="application/json", description="MIME type")
-    content: Optional[Any] = Field(None, description="Cached content")
+    content: Any | None = Field(None, description="Cached content")
 
 
 class MCPPromptTemplate(BaseModel):
@@ -72,7 +73,7 @@ class MCPPromptTemplate(BaseModel):
 
     name: str = Field(..., description="Prompt name")
     description: str = Field(..., description="Prompt description")
-    arguments: List[Dict[str, Any]] = Field(
+    arguments: list[dict[str, Any]] = Field(
         default_factory=list, description="Prompt arguments"
     )
     template: str = Field(default="", description="Prompt template string")
@@ -87,7 +88,7 @@ class MCPToolWrapper(BaseTool):
 
     name: str
     description: str
-    mcp_tool: Dict[str, Any]
+    mcp_tool: dict[str, Any]
     mcp_client: Any  # MCPClient instance
 
     def _run(self, **kwargs: Any) -> Any:
@@ -107,7 +108,7 @@ class MCPToolWrapper(BaseTool):
             result = await self.mcp_client.call_tool(self.name, arguments=kwargs)
             return result
         except Exception as e:
-            logger.error(f"Error executing MCP tool {self.name}: {e}")
+            logger.exception(f"Error executing MCP tool {self.name}: {e}")
             raise
 
 
@@ -138,11 +139,11 @@ class MCPMixin(BaseModel):
     )
 
     # MCP resources and prompts
-    mcp_resources: List[MCPResource] = Field(
+    mcp_resources: list[MCPResource] = Field(
         default_factory=list, description="MCP resources available to the configuration"
     )
 
-    mcp_prompts: Dict[str, MCPPromptTemplate] = Field(
+    mcp_prompts: dict[str, MCPPromptTemplate] = Field(
         default_factory=dict, description="MCP prompt templates"
     )
 
@@ -161,7 +162,7 @@ class MCPMixin(BaseModel):
 
     # Private attributes
     _mcp_manager: Optional["MCPManager"] = PrivateAttr(default=None)
-    _mcp_tools: List[MCPToolWrapper] = PrivateAttr(default_factory=list)
+    _mcp_tools: list[MCPToolWrapper] = PrivateAttr(default_factory=list)
 
     async def setup_mcp(self) -> None:
         """Initialize MCP integration.
@@ -199,7 +200,7 @@ class MCPMixin(BaseModel):
             logger.info("MCP integration setup complete")
 
         except Exception as e:
-            logger.error(f"Error setting up MCP integration: {e}")
+            logger.exception(f"Error setting up MCP integration: {e}")
             raise
 
     async def _discover_mcp_tools(self) -> None:
@@ -238,7 +239,7 @@ class MCPMixin(BaseModel):
                 logger.info(f"Discovered {len(tools)} tools from {server_name}")
 
             except Exception as e:
-                logger.error(f"Error discovering tools from {server_name}: {e}")
+                logger.exception(f"Error discovering tools from {server_name}: {e}")
 
     async def _load_mcp_resources(self) -> None:
         """Load MCP resources from connected servers."""
@@ -264,7 +265,7 @@ class MCPMixin(BaseModel):
                 logger.info(f"Loaded {len(resources)} resources from {server_name}")
 
             except Exception as e:
-                logger.error(f"Error loading resources from {server_name}: {e}")
+                logger.exception(f"Error loading resources from {server_name}: {e}")
 
     async def _load_mcp_prompts(self) -> None:
         """Load MCP prompts from connected servers."""
@@ -290,9 +291,9 @@ class MCPMixin(BaseModel):
                 logger.info(f"Loaded {len(prompts)} prompts from {server_name}")
 
             except Exception as e:
-                logger.error(f"Error loading prompts from {server_name}: {e}")
+                logger.exception(f"Error loading prompts from {server_name}: {e}")
 
-    def get_mcp_tools(self) -> List[MCPToolWrapper]:
+    def get_mcp_tools(self) -> list[MCPToolWrapper]:
         """Get all discovered MCP tools.
 
         Returns:
@@ -300,7 +301,7 @@ class MCPMixin(BaseModel):
         """
         return self._mcp_tools.copy()
 
-    def get_mcp_resources(self) -> List[MCPResource]:
+    def get_mcp_resources(self) -> list[MCPResource]:
         """Get all loaded MCP resources.
 
         Returns:
@@ -308,7 +309,7 @@ class MCPMixin(BaseModel):
         """
         return self.mcp_resources.copy()
 
-    def get_mcp_prompts(self) -> Dict[str, MCPPromptTemplate]:
+    def get_mcp_prompts(self) -> dict[str, MCPPromptTemplate]:
         """Get all loaded MCP prompt templates.
 
         Returns:
@@ -396,8 +397,8 @@ class MCPMixin(BaseModel):
         raise ValueError(f"No MCP server can handle resource: {uri}")
 
     async def call_mcp_prompt(
-        self, prompt_name: str, arguments: Optional[Dict[str, Any]] = None
-    ) -> List[Dict[str, str]]:
+        self, prompt_name: str, arguments: dict[str, Any] | None = None
+    ) -> list[dict[str, str]]:
         """Call an MCP prompt to get formatted messages.
 
         Args:
@@ -416,7 +417,7 @@ class MCPMixin(BaseModel):
         # Find the prompt
         if prompt_name not in self.mcp_prompts:
             # Try to find by suffix match
-            matching = [k for k in self.mcp_prompts.keys() if k.endswith(prompt_name)]
+            matching = [k for k in self.mcp_prompts if k.endswith(prompt_name)]
             if not matching:
                 raise ValueError(f"Prompt '{prompt_name}' not found")
             prompt_name = matching[0]
@@ -446,7 +447,7 @@ class MCPMixin(BaseModel):
             return messages
 
         except Exception as e:
-            logger.error(f"Error calling prompt {prompt_name}: {e}")
+            logger.exception(f"Error calling prompt {prompt_name}: {e}")
             raise
 
     def cleanup_mcp(self) -> None:
@@ -462,7 +463,7 @@ class MCPMixin(BaseModel):
                     self._mcp_manager.cleanup()
                 logger.info("MCP cleanup complete")
             except Exception as e:
-                logger.error(f"Error during MCP cleanup: {e}")
+                logger.exception(f"Error during MCP cleanup: {e}")
 
         # Clear resources
         self._mcp_tools.clear()

@@ -3,6 +3,7 @@
 import logging
 from typing import Any, List, Optional, Union
 
+from haive.agents.base.agent import Agent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.node.parser_node_config import ParserNodeConfig
@@ -20,8 +21,6 @@ from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
 from langgraph.graph import END, START
 from langgraph.types import Command, Send
 from pydantic import BaseModel, Field, field_validator
-
-from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 
@@ -277,7 +276,6 @@ class SimpleAgentWithValidation(Agent):
 
     def _create_validation_node(self) -> StateUpdatingValidationNode:
         """Create the StateUpdatingValidationNode with proper configuration."""
-
         # Determine route to node mapping based on available nodes
         route_mapping = {}
 
@@ -470,7 +468,6 @@ def upgrade_simple_agent_with_validation(
     simple_agent: "SimpleAgent",
 ) -> SimpleAgentWithValidation:
     """Upgrade a SimpleAgent to use StateUpdatingValidationNode."""
-
     # Extract all fields from SimpleAgent
     agent_data = simple_agent.model_dump()
 

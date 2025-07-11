@@ -1,22 +1,11 @@
 # haive/core/graph/common/types.py
 from enum import Enum
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    List,
-    Optional,
-    Tuple,
-    Type,
-    TypeVar,
-    Union,
-)
+from typing import Any, Callable, Dict, List, Optional, Tuple, Type, TypeVar, Union
 
+from haive.core.schema.state_schema import StateSchema
 from langchain_core.runnables import RunnableConfig
 from langgraph.types import Command, Send
 from pydantic import BaseModel
-
-from haive.core.schema.state_schema import StateSchema
 
 # Core type definitions
 # CHECK:

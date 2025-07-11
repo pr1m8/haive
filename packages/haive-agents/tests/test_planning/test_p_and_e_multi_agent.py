@@ -1,5 +1,4 @@
-"""
-Comprehensive Test Suite for Plan and Execute Multi-Agent System.
+"""Comprehensive Test Suite for Plan and Execute Multi-Agent System.
 
 This test suite covers:
 1. Basic Plan and Execute workflow
@@ -14,10 +13,8 @@ from datetime import datetime
 from typing import Any, Dict, List
 from unittest.mock import AsyncMock, MagicMock
 
-import pytest
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.schema.agent_schema_composer import BuildMode
 from langgraph.graph import END, START
+import pytest
 
 from haive.agents.base.agent import Agent
 from haive.agents.multi.enhanced_base import (
@@ -33,6 +30,8 @@ from haive.agents.planning.p_and_e.models import (
 )
 from haive.agents.planning.p_and_e.state import PlanExecuteState
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.schema.agent_schema_composer import BuildMode
 
 
 class TestPlanExecuteState:
@@ -400,14 +399,13 @@ class TestPlanExecuteMultiAgent:
 
         # Get routing functions from branches
         executor_branch = None
-        replanner_branch = None
 
         for branch in plan_execute_system.branches:
             source, condition, destinations = branch
             if source == executor_agent:
                 executor_branch = condition
             elif source == replanner_agent:
-                replanner_branch = condition
+                pass
 
         # Should handle no plan gracefully
         route = executor_branch(empty_state)
@@ -535,8 +533,7 @@ class TestPlanExecuteIntegration:
 def create_sequential_plan_execute_multi_agent(
     planner: Agent, executor: Agent, replanner: Agent, **kwargs
 ) -> MultiAgentBase:
-    """
-    Create a simple sequential Plan and Execute system.
+    """Create a simple sequential Plan and Execute system.
 
     Args:
         planner: Planning agent
@@ -559,11 +556,10 @@ def create_custom_plan_execute_multi_agent(
     planner: Agent,
     executor: Agent,
     replanner: Agent,
-    custom_branches: List[tuple],
+    custom_branches: list[tuple],
     **kwargs
 ) -> MultiAgentBase:
-    """
-    Create a Plan and Execute system with custom branches.
+    """Create a Plan and Execute system with custom branches.
 
     Args:
         planner: Planning agent

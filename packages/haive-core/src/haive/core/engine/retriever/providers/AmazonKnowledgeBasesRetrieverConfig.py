@@ -1,5 +1,4 @@
-"""
-Amazon Knowledge Bases Retriever implementation for the Haive framework.
+"""Amazon Knowledge Bases Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Amazon Knowledge Bases retriever,
 which uses AWS Bedrock Knowledge Bases for retrieval-augmented generation (RAG).
@@ -35,8 +34,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.AMAZON_KNOWLEDGE_BASES)
 class AmazonKnowledgeBasesRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for Amazon Knowledge Bases retriever in the Haive framework.
+    """Configuration for Amazon Knowledge Bases retriever in the Haive framework.
 
     This retriever uses AWS Bedrock Knowledge Bases to provide managed
     RAG capabilities with semantic search and various data source integrations.
@@ -86,12 +84,12 @@ class AmazonKnowledgeBasesRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig
     region_name: str = Field(default="us-east-1", description="AWS region name")
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None,
         description="AWS access key ID (auto-resolved from AWS_ACCESS_KEY_ID)",
     )
 
-    secret_key: Optional[SecretStr] = Field(
+    secret_key: SecretStr | None = Field(
         default=None,
         description="AWS secret access key (auto-resolved from AWS_SECRET_ACCESS_KEY)",
     )
@@ -111,27 +109,27 @@ class AmazonKnowledgeBasesRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig
     )
 
     # Advanced filtering
-    filter: Optional[Dict[str, Any]] = Field(
+    filter: dict[str, Any] | None = Field(
         default=None, description="Metadata filters for search results"
     )
 
     # Knowledge Base specific parameters
-    retrieval_configuration: Optional[Dict[str, Any]] = Field(
+    retrieval_configuration: dict[str, Any] | None = Field(
         default=None,
         description="Advanced retrieval configuration for the knowledge base",
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Amazon Knowledge Bases retriever."""
         return {
             "query": (str, Field(description="Search query for Knowledge Bases")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Amazon Knowledge Bases retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list, description="Documents from Knowledge Bases"
                 ),
@@ -139,8 +137,7 @@ class AmazonKnowledgeBasesRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig
         }
 
     def instantiate(self):
-        """
-        Create an Amazon Knowledge Bases retriever from this configuration.
+        """Create an Amazon Knowledge Bases retriever from this configuration.
 
         Returns:
             AmazonKnowledgeBasesRetriever: Instantiated retriever ready for RAG.

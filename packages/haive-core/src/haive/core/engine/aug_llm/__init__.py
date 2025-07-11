@@ -1,5 +1,4 @@
-"""
-AugLLM module for creating enhanced LLM chains.
+"""AugLLM module for creating enhanced LLM chains.
 
 This module provides a comprehensive configuration and factory system for building
 enhanced LLM chains with prompts, tools, output parsers, and structured output models.
@@ -56,12 +55,12 @@ from haive.core.engine.aug_llm.utils import (
 
 __all__ = [
     "AugLLMConfig",
-    "MCPAugLLMConfig",
     "AugLLMFactory",
-    "compose_runnable",
-    "create_runnables_dict",
-    "compose_runnables_from_dict",
+    "MCPAugLLMConfig",
     "chain_runnables",
-    "merge_configs",
+    "compose_runnable",
+    "compose_runnables_from_dict",
     "create_mcp_aug_llm_config",
+    "create_runnables_dict",
+    "merge_configs",
 ]

@@ -9,10 +9,9 @@ import logging
 from enum import Enum
 from typing import Any, Dict, List, Literal, Optional
 
+from haive.core.engine.document.loaders.sources.implementation import EnhancedSource
 from langchain_core.document_loaders.base import BaseLoader
 from pydantic import BaseModel, Field
-
-from haive.core.engine.document.loaders.sources.implementation import EnhancedSource
 
 logger = logging.getLogger(__name__)
 

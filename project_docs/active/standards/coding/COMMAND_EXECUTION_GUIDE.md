@@ -9,6 +9,7 @@
 **EVERY Python command in this project MUST use `poetry run` prefix.**
 
 ### Why This Matters
+
 - Poetry manages virtual environments and dependencies
 - Direct Python execution will use wrong dependencies
 - Import errors and version conflicts without `poetry run`
@@ -17,6 +18,7 @@
 ## ✅ CORRECT Command Patterns
 
 ### Python Scripts
+
 ```bash
 # ✅ CORRECT
 poetry run python scripts/my_script.py
@@ -30,6 +32,7 @@ python examples/agent_example.py
 ```
 
 ### Testing
+
 ```bash
 # ✅ CORRECT
 poetry run pytest
@@ -42,6 +45,7 @@ pytest packages/haive-agents/tests/ -v
 ```
 
 ### Type Checking
+
 ```bash
 # ✅ CORRECT
 poetry run mypy packages/
@@ -52,6 +56,7 @@ mypy packages/
 ```
 
 ### Linting
+
 ```bash
 # ✅ CORRECT (with poetry)
 poetry run ruff check packages/
@@ -63,6 +68,7 @@ trunk check --fix --all
 ```
 
 ### Documentation
+
 ```bash
 # ✅ CORRECT
 poetry run sphinx-build -b html docs/source docs/build
@@ -72,6 +78,7 @@ sphinx-build -b html docs/source docs/build
 ```
 
 ### Interactive Python
+
 ```bash
 # ✅ CORRECT
 poetry run python
@@ -100,7 +107,7 @@ def test(session):
     # ✅ CORRECT in noxfile.py
     session.run("poetry", "install", external=True)
     session.run("poetry", "run", "pytest", external=True)
-    
+
     # ❌ WRONG in noxfile.py
     session.run("pytest")  # Will fail!
 ```
@@ -123,6 +130,7 @@ poetry run python -c "from haive.your.module import YourClass; print('✅ Import
 ## 🚨 Common Execution Mistakes
 
 ### 1. Running scripts directly
+
 ```bash
 # ❌ WRONG - Extremely common mistake
 python examples/simple_agent.py
@@ -134,6 +142,7 @@ poetry run python examples/simple_agent.py
 ```
 
 ### 2. Testing without poetry
+
 ```bash
 # ❌ WRONG
 pytest tests/
@@ -145,6 +154,7 @@ poetry run pytest tests/
 ```
 
 ### 3. Running modules
+
 ```bash
 # ❌ WRONG
 python -m haive.agents.simple
@@ -154,6 +164,7 @@ poetry run python -m haive.agents.simple
 ```
 
 ### 4. Quick scripts
+
 ```bash
 # ❌ WRONG - Even for one-liners!
 python -c "import haive; print(haive.__version__)"
@@ -183,6 +194,7 @@ poetry install --all-extras
 ## 📊 Environment Verification
 
 ### Check Your Setup
+
 ```bash
 # Verify poetry installation
 poetry --version
@@ -198,6 +210,7 @@ poetry run python --version
 ```
 
 ### Fix Common Issues
+
 ```bash
 # Rebuild environment
 poetry env remove python
@@ -213,23 +226,26 @@ poetry cache clear pypi --all
 ## 🎯 Integration with Tools
 
 ### VS Code
+
 ```json
 // .vscode/settings.json
 {
-    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
-    "python.terminal.activateEnvironment": true,
-    "python.testing.pytestArgs": ["--no-cov"],
-    "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "python.terminal.activateEnvironment": true,
+  "python.testing.pytestArgs": ["--no-cov"],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true
 }
 ```
 
 ### PyCharm
+
 - Set interpreter to: `{project}/.venv/bin/python`
 - Enable "Use Poetry" in project settings
 - Configure run configurations with poetry
 
 ### Command Aliases (Optional)
+
 ```bash
 # In your shell config (.bashrc, .zshrc)
 alias pr='poetry run'

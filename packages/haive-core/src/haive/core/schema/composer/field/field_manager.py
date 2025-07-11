@@ -24,36 +24,36 @@ class FieldManagerMixin:
         super().__init__(*args, **kwargs)
 
         # Core field storage
-        self.fields: Dict[str, FieldDefinition] = {}
+        self.fields: dict[str, FieldDefinition] = {}
 
         # Field metadata tracking
         self.shared_fields: set = set()
-        self.field_sources: Dict[str, set] = defaultdict(set)
-        self.nested_schemas: Dict[str, Type] = {}
+        self.field_sources: dict[str, set] = defaultdict(set)
+        self.nested_schemas: dict[str, type] = {}
 
         # Engine I/O tracking
-        self.input_fields: Dict[str, set] = defaultdict(set)
-        self.output_fields: Dict[str, set] = defaultdict(set)
-        self.engine_io_mappings: Dict[str, Dict[str, List[str]]] = defaultdict(
+        self.input_fields: dict[str, set] = defaultdict(set)
+        self.output_fields: dict[str, set] = defaultdict(set)
+        self.engine_io_mappings: dict[str, dict[str, list[str]]] = defaultdict(
             lambda: {"inputs": [], "outputs": []}
         )
 
         # Structured output tracking
-        self.structured_models: Dict[str, Type] = {}
-        self.structured_model_fields: Dict[str, List[str]] = defaultdict(list)
+        self.structured_models: dict[str, type] = {}
+        self.structured_model_fields: dict[str, list[str]] = defaultdict(list)
 
     def add_field(
         self,
         name: str,
-        field_type: Type,
+        field_type: type,
         default: Any = None,
-        default_factory: Optional[Callable[[], Any]] = None,
-        description: Optional[str] = None,
+        default_factory: Callable[[], Any] | None = None,
+        description: str | None = None,
         shared: bool = False,
-        reducer: Optional[Callable] = None,
-        source: Optional[str] = None,
-        input_for: Optional[List[str]] = None,
-        output_from: Optional[List[str]] = None,
+        reducer: Callable | None = None,
+        source: str | None = None,
+        input_for: list[str] | None = None,
+        output_from: list[str] | None = None,
     ) -> "FieldManagerMixin":
         """Add a field definition to the schema.
 
@@ -73,7 +73,7 @@ class FieldManagerMixin:
             Self for method chaining
         """
         # Skip special fields
-        if name == "__runnable_config__" or name == "runnable_config":
+        if name in {"__runnable_config__", "runnable_config"}:
             logger.warning(f"Skipping special field {name}")
             return self
 
@@ -81,15 +81,8 @@ class FieldManagerMixin:
         if field_type is None:
             field_type = Any
         elif not isinstance(field_type, type) and not hasattr(field_type, "__origin__"):
-            if isinstance(field_type, (dict, list, tuple)) and not hasattr(
+            if isinstance(field_type, dict | list | tuple) and not hasattr(
                 field_type, "__origin__"
-            ):
-                logger.warning(
-                    f"Invalid field type for '{name}': {field_type}, using Any"
-                )
-                field_type = Any
-            elif not hasattr(field_type, "__module__") or "typing" not in str(
-                getattr(field_type, "__module__", "")
             ):
                 logger.warning(
                     f"Invalid field type for '{name}': {field_type}, using Any"
@@ -230,14 +223,14 @@ class FieldManagerMixin:
         """Check if a field is defined."""
         return name in self.fields
 
-    def get_field_names(self) -> List[str]:
+    def get_field_names(self) -> list[str]:
         """Get list of all field names."""
         return list(self.fields.keys())
 
-    def get_shared_fields(self) -> List[str]:
+    def get_shared_fields(self) -> list[str]:
         """Get list of shared field names."""
         return list(self.shared_fields)
 
-    def get_engine_io_mapping(self, engine_name: str) -> Dict[str, List[str]]:
+    def get_engine_io_mapping(self, engine_name: str) -> dict[str, list[str]]:
         """Get input/output mapping for a specific engine."""
         return self.engine_io_mappings.get(engine_name, {"inputs": [], "outputs": []})

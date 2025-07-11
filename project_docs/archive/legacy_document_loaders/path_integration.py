@@ -1,4 +1,4 @@
-"""Path Analysis Integration for Document Loader Engine
+"""Path Analysis Integration for Document Loader Engine.
 
 This module integrates the path analysis system with the document loader engine.
 It provides functions for analyzing paths and creating appropriate source instances.
@@ -9,21 +9,15 @@ import os
 from pathlib import Path
 from typing import Any
 
-
 # Import path analysis - placeholder for now
 # Import the actual path analysis when available
 try:
-    from path_analysis_implementation import (
-        CloudProvider,
-        DatabaseType,
-        FileCategory,
-        PathAnalysisResult,
-        PathType,
-        analyze_cloud_path,
-        analyze_database_uri,
-        analyze_path_comprehensive,
-        analyze_url,
-    )
+    from path_analysis_implementation import (CloudProvider, DatabaseType,
+                                              FileCategory, PathAnalysisResult,
+                                              PathType, analyze_cloud_path,
+                                              analyze_database_uri,
+                                              analyze_path_comprehensive,
+                                              analyze_url)
 
     _HAS_PATH_ANALYSIS = True
 except ImportError:
@@ -196,7 +190,6 @@ except ImportError:
 
 # Import source registry
 from source_registry import registry
-
 
 logger = logging.getLogger(__name__)
 

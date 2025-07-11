@@ -1,5 +1,4 @@
-"""
-USearch Vector Store implementation for the Haive framework.
+"""USearch Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the USearch vector store,
 which offers high-performance universal similarity search.
@@ -34,8 +33,7 @@ from haive.core.engine.vectorstore.types import VectorStoreType
 
 @BaseVectorStoreConfig.register(VectorStoreType.USEARCH)
 class USearchVectorStoreConfig(BaseVectorStoreConfig):
-    """
-    Configuration for USearch vector store in the Haive framework.
+    """Configuration for USearch vector store in the Haive framework.
 
     This vector store uses USearch for high-performance universal
     similarity search operations.
@@ -75,13 +73,13 @@ class USearchVectorStoreConfig(BaseVectorStoreConfig):
     )
 
     # Vector dimension configuration
-    ndim: Optional[int] = Field(
+    ndim: int | None = Field(
         default=None,
         description="Number of dimensions (auto-detected from embedding if not specified)",
     )
 
     @validator("metric")
-    def validate_metric(cls, v):
+    def validate_metric(self, v):
         """Validate distance metric is supported by USearch."""
         valid_metrics = ["cos", "l2sq", "ip"]
         if v not in valid_metrics:
@@ -89,33 +87,32 @@ class USearchVectorStoreConfig(BaseVectorStoreConfig):
         return v
 
     @validator("ndim")
-    def validate_ndim(cls, v):
+    def validate_ndim(self, v):
         """Validate ndim is positive if specified."""
         if v is not None and v <= 0:
             raise ValueError("ndim must be a positive integer")
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for USearch vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for USearch vector store."""
         return {
             "ids": (
-                List[str],
+                list[str],
                 Field(description="IDs of the added documents in USearch"),
             ),
         }
 
     def instantiate(self):
-        """
-        Create a USearch vector store from this configuration.
+        """Create a USearch vector store from this configuration.
 
         Returns:
             USearch: Instantiated USearch vector store.
@@ -128,7 +125,7 @@ class USearchVectorStoreConfig(BaseVectorStoreConfig):
             from langchain_community.vectorstores import USearch
         except ImportError:
             raise ImportError(
-                "USearch requires usearch package. " "Install with: pip install usearch"
+                "USearch requires usearch package. Install with: pip install usearch"
             )
 
         # Validate embedding
@@ -149,7 +146,7 @@ class USearchVectorStoreConfig(BaseVectorStoreConfig):
             import usearch.index
         except ImportError:
             raise ImportError(
-                "USearch requires usearch package. " "Install with: pip install usearch"
+                "USearch requires usearch package. Install with: pip install usearch"
             )
 
         # Create USearch index

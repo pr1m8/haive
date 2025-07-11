@@ -7,7 +7,7 @@
     "description": "Use this tool to retrieve product data using a barcode from Open Food Facts.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.758972",
+    "timestamp": "2025-07-10T19:45:28.987930",
     "schema": {
       "description": "Input schema for the Open Food Facts product lookup.\n\nAttributes:\n    barcode: The barcode of the product to look up",
       "properties": {
@@ -36,7 +36,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.758972",
+      "timestamp": "2025-07-10T19:45:28.987930",
       "category": "individual_tools"
     }
   },

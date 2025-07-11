@@ -7,6 +7,7 @@
 ## 🔄 Memory-Driven Development Process
 
 ### 1. Context Loading (Session Start)
+
 ```bash
 # Read current context
 cat CLAUDE.md                          # Main routing
@@ -21,6 +22,7 @@ git status && git diff
 ```
 
 ### 2. Work Planning
+
 ```python
 # Use TodoWrite for task management
 from haive.core.utils.todo import TodoWrite
@@ -32,12 +34,14 @@ TodoWrite(todos=[
 ```
 
 ### 3. Execution Standards
+
 - **Apply Standards**: Follow @project_docs/CODING_STYLE_GUIDE.md
 - **Document Decisions**: Update session memory in real-time
 - **Test Continuously**: Use real components, no mocks
 - **Update Progress**: Mark todos complete as you finish
 
 ### 4. Quality Assurance
+
 ```bash
 # Before committing
 poetry run pytest                      # All tests pass
@@ -48,6 +52,7 @@ poetry run mypy                        # Type checking
 ## 🎯 Package Development Workflow
 
 ### Creating New Agents
+
 ```bash
 # 1. Create module structure
 mkdir -p packages/haive-agents/src/haive/agents/new_agent_type
@@ -61,6 +66,7 @@ poetry run mypy packages/haive-agents/src/haive/agents/new_agent_type/
 ```
 
 ### Implementation Pattern
+
 ```python
 # Step 1: Define State Schema
 from haive.core.schema import StateSchema
@@ -99,6 +105,7 @@ class MyCustomAgent(Agent[MyAgentState]):
 ## 🧪 Testing Workflow
 
 ### Test-First Development
+
 ```python
 # 1. Write test first
 def test_new_agent_processes_user_input():
@@ -113,6 +120,7 @@ def test_new_agent_processes_user_input():
 ```
 
 ### Real Component Testing
+
 ```python
 # ALWAYS use real components
 def test_react_agent_with_real_llm_and_tools():
@@ -131,6 +139,7 @@ def test_react_agent_with_real_llm_and_tools():
 ## 📊 Quality Metrics Tracking
 
 ### Code Quality
+
 ```bash
 # Coverage tracking
 poetry run pytest --cov=haive --cov-report=html
@@ -143,6 +152,7 @@ poetry run ruff check packages/ --fix
 ```
 
 ### Performance Monitoring
+
 ```python
 import time
 from contextlib import asynccontextmanager
@@ -161,6 +171,7 @@ async def performance_monitor(operation_name: str):
 ## 🔧 Common Development Tasks
 
 ### Debugging Schema Issues
+
 ```python
 # Debug schema generation
 from haive.core.schema import SchemaComposer
@@ -175,6 +186,7 @@ for field_name, field_info in schema.__fields__.items():
 ```
 
 ### Tool Integration
+
 ```python
 # Pattern 1: Direct tool assignment
 from haive.core.tools import tool
@@ -195,6 +207,7 @@ tool_routes = {
 ## 📝 Documentation Workflow
 
 ### Module Documentation
+
 ```python
 """Module summary in one line.
 
@@ -211,23 +224,24 @@ Examples:
 ```
 
 ### Function Documentation
+
 ```python
 def process_data(data: List[Dict], threshold: float = 0.5) -> ProcessedResult:
     """Process input data using specified threshold.
-    
+
     Args:
         data: List of dictionaries containing raw data points
         threshold: Minimum confidence score for filtering
-        
+
     Returns:
         ProcessedResult: Object containing filtered data and metadata
-        
+
     Raises:
         ValueError: If data is empty or malformed
-        
+
     Examples:
         Basic processing::
-        
+
             data = [{'value': 0.8, 'timestamp': '2023-01-01'}]
             result = process_data(data)
     """
@@ -236,15 +250,17 @@ def process_data(data: List[Dict], threshold: float = 0.5) -> ProcessedResult:
 ## 🚨 Error Prevention
 
 ### Pre-commit Checklist
+
 - [ ] All tests pass with real components
 - [ ] No print statements (use logger.debug)
 - [ ] Type hints on all public functions
 - [ ] Docstrings in Google format
 - [ ] No hardcoded secrets
-- [ ] Explicit imports (from haive.core.*)
+- [ ] Explicit imports (from haive.core.\*)
 - [ ] Memory documentation updated
 
 ### Common Pitfalls
+
 ```python
 # ❌ WRONG - Generic imports
 from utils import helper
@@ -264,6 +280,7 @@ logger.debug("Debug info", extra={"context": "value"})
 ## 🔄 Session Memory Management
 
 ### Session Creation
+
 ```bash
 # Create new session workspace
 session_id="claude_$(date +%Y%m%d_%H%M%S)_{purpose}"
@@ -271,21 +288,26 @@ mkdir -p "project_docs/claude_sessions/$session_id"/{memory,references}
 ```
 
 ### Progress Tracking
+
 ```markdown
 # In session memory
+
 ## Current Focus
+
 - Working on: [specific component]
 - Issues encountered: [list]
 - Decisions made: [list]
 - Next steps: [list]
 
 ## Key Insights
+
 - Pattern discovered: [description]
 - Performance finding: [metrics]
 - Integration challenge: [solution]
 ```
 
 ### Session Completion
+
 ```bash
 # Archive completed session
 mv "project_docs/claude_sessions/$session_id" "project_docs/claude_sessions/archive/"
@@ -297,12 +319,14 @@ echo "Completed: $session_id" >> project_docs/progress_tracking/completed_sessio
 ## 📈 Continuous Improvement
 
 ### Learning Capture
+
 - Document patterns that work
 - Record solutions to common problems
 - Update methodology based on experience
 - Share insights across sessions
 
 ### Workflow Optimization
+
 - Monitor task completion times
 - Identify bottlenecks in development
 - Refine testing strategies

@@ -11,7 +11,6 @@ def view_ps_errors():
     """View prepared statement errors from metadata."""
     conn_string = os.environ.get("POSTGRES_CONNECTION_STRING")
     if not conn_string:
-        print("❌ POSTGRES_CONNECTION_STRING not set")
         return
 
     try:
@@ -20,7 +19,7 @@ def view_ps_errors():
                 # Find checkpoints with prepared statement errors
                 cur.execute(
                     """
-                    SELECT 
+                    SELECT
                         thread_id,
                         checkpoint_id,
                         metadata
@@ -32,14 +31,8 @@ def view_ps_errors():
                 )
 
                 results = cur.fetchall()
-                print(
-                    f"\n🔍 Found {len(results)} checkpoints with prepared statement errors\n"
-                )
 
                 for thread_id, checkpoint_id, metadata in results:
-                    print(f"=" * 80)
-                    print(f"Thread: {thread_id}")
-                    print(f"Checkpoint: {checkpoint_id}")
 
                     try:
                         meta_dict = (
@@ -50,7 +43,7 @@ def view_ps_errors():
 
                         # Show step
                         if "step" in meta_dict:
-                            print(f'Step: {meta_dict["step"]}')
+                            pass
 
                         # Extract prepared statement errors
                         if "writes" in meta_dict:
@@ -63,9 +56,6 @@ def view_ps_errors():
                                             isinstance(pr, dict)
                                             and "contributions" in pr
                                         ):
-                                            print(
-                                                f"\n📝 Node: {node_name} - process_response contributions:"
-                                            )
                                             for i, contrib in enumerate(
                                                 pr["contributions"]
                                             ):
@@ -80,22 +70,10 @@ def view_ps_errors():
                                                         "prepared statement"
                                                         in content.lower()
                                                     ):
-                                                        print(
-                                                            f"\n  ❌ Contribution {i}:"
-                                                        )
-                                                        print(f"     Agent: {agent}")
-                                                        print(
-                                                            f"     Section: {section}"
-                                                        )
-                                                        print(
-                                                            f"     Error: {content[:200]}..."
-                                                        )
 
                                     # Check error field
                                     if "error" in node_data:
-                                        print(
-                                            f'\n  ❌ Direct error in {node_name}: {node_data["error"]}'
-                                        )
+                                        pass
 
                                     # Check messages for errors
                                     if "messages" in node_data:
@@ -110,23 +88,20 @@ def view_ps_errors():
                                                         "prepared statement"
                                                         in str(msg["content"]).lower()
                                                     ):
-                                                        print(
-                                                            f'\n  ❌ Error in message: {msg["content"][:200]}...'
-                                                        )
+                                                        pass
 
                         # Check for error at top level
                         if "error" in meta_dict:
-                            print(f'\n❌ Top-level error: {meta_dict["error"]}')
+                            pass')
 
                     except Exception as e:
-                        print(f"⚠️  Error parsing metadata: {e}")
+                        passe}")
 
-                    print()
 
                 # Get stats on which agents have errors
                 cur.execute(
                     """
-                    SELECT 
+                    SELECT
                         COUNT(DISTINCT thread_id) as unique_threads,
                         COUNT(*) as total_errors
                     FROM public.checkpoints
@@ -135,12 +110,9 @@ def view_ps_errors():
                 )
 
                 stats = cur.fetchone()
-                print(f"\n📊 SUMMARY:")
-                print(f"   Unique threads with PS errors: {stats[0]}")
-                print(f"   Total checkpoints with PS errors: {stats[1]}")
 
     except Exception as e:
-        print(f"❌ Database error: {e}")
+        pass")
 
 
 if __name__ == "__main__":

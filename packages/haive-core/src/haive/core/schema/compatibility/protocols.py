@@ -17,8 +17,6 @@ from typing import (
     runtime_checkable,
 )
 
-from pydantic import BaseModel
-
 from haive.core.schema.compatibility.types import (
     CompatibilityLevel,
     ConversionContext,
@@ -26,6 +24,7 @@ from haive.core.schema.compatibility.types import (
     FieldInfo,
     SchemaInfo,
 )
+from pydantic import BaseModel
 
 T = TypeVar("T")
 U = TypeVar("U")

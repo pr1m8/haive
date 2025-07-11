@@ -1,4 +1,4 @@
-"""Enhanced Multi-Agent RAG Workflows
+"""Enhanced Multi-Agent RAG Workflows.
 
 Implements advanced RAG patterns like CRAG, Self-RAG, HYDE, and grading workflows
 using the new multi-agent base with compatibility and enhanced state management.
@@ -6,6 +6,10 @@ using the new multi-agent base with compatibility and enhanced state management.
 
 from typing import Optional
 
+from haive.agents.base.agent import Agent
+from haive.agents.multi.base import ConditionalAgent, SequentialAgent
+from haive.agents.rag.base.agent import SimpleRAGAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.callable_node import (
     CallableNodeConfig,
@@ -17,11 +21,6 @@ from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.prebuilt.rag_state import MultiAgentRAGState
 from langchain_core.documents import Document
 from langgraph.graph import END, START
-
-from haive.agents.base.agent import Agent
-from haive.agents.multi.base import ConditionalAgent, SequentialAgent
-from haive.agents.rag.base.agent import SimpleRAGAgent
-from haive.agents.simple.agent import SimpleAgent
 
 
 class DocumentGradingAgent(Agent):
@@ -79,11 +78,11 @@ class CorrectiveRAGAgent(ConditionalAgent):
 
     def __init__(
         self,
-        retrieval_agent: Optional[SimpleRAGAgent] = None,
-        grading_agent: Optional[DocumentGradingAgent] = None,
-        requery_agent: Optional[RequeryDecisionAgent] = None,
-        answer_agent: Optional[SimpleAgent] = None,
-        documents: Optional[list[Document]] = None,
+        retrieval_agent: SimpleRAGAgent | None = None,
+        grading_agent: DocumentGradingAgent | None = None,
+        requery_agent: RequeryDecisionAgent | None = None,
+        answer_agent: SimpleAgent | None = None,
+        documents: list[Document] | None = None,
         **kwargs,
     ):
         # Create default agents if not provided
@@ -167,10 +166,10 @@ class HYDERAGAgent(SequentialAgent):
 
     def __init__(
         self,
-        hypothesis_agent: Optional[SimpleAgent] = None,
-        retrieval_agent: Optional[SimpleRAGAgent] = None,
-        answer_agent: Optional[SimpleAgent] = None,
-        documents: Optional[list[Document]] = None,
+        hypothesis_agent: SimpleAgent | None = None,
+        retrieval_agent: SimpleRAGAgent | None = None,
+        answer_agent: SimpleAgent | None = None,
+        documents: list[Document] | None = None,
         **kwargs,
     ):
         # Create hypothesis generator
@@ -216,11 +215,11 @@ class SelfRAGAgent(ConditionalAgent):
 
     def __init__(
         self,
-        retrieval_decision_agent: Optional[SimpleAgent] = None,
-        retrieval_agent: Optional[SimpleRAGAgent] = None,
-        relevance_agent: Optional[SimpleAgent] = None,
-        generation_agent: Optional[SimpleAgent] = None,
-        documents: Optional[list[Document]] = None,
+        retrieval_decision_agent: SimpleAgent | None = None,
+        retrieval_agent: SimpleRAGAgent | None = None,
+        relevance_agent: SimpleAgent | None = None,
+        generation_agent: SimpleAgent | None = None,
+        documents: list[Document] | None = None,
         **kwargs,
     ):
         # Create retrieval decision agent
@@ -289,7 +288,6 @@ class SelfRAGAgent(ConditionalAgent):
 
         def self_rag_router(state: MultiAgentRAGState) -> str:
             """Route based on Self-RAG reflection logic."""
-
             # Check if we need retrieval decision
             if (
                 not hasattr(state, "needs_retrieval_decision")
@@ -320,7 +318,7 @@ class SelfRAGAgent(ConditionalAgent):
 
 
 def create_enhanced_rag_workflow(
-    workflow_type: str = "crag", documents: Optional[list[Document]] = None, **kwargs
+    workflow_type: str = "crag", documents: list[Document] | None = None, **kwargs
 ) -> Agent:
     """Factory function to create enhanced RAG workflows.
 
@@ -334,19 +332,18 @@ def create_enhanced_rag_workflow(
     """
     if workflow_type.lower() == "crag":
         return CorrectiveRAGAgent(documents=documents, **kwargs)
-    elif workflow_type.lower() == "hyde":
+    if workflow_type.lower() == "hyde":
         return HYDERAGAgent(documents=documents, **kwargs)
-    elif workflow_type.lower() == "self_rag":
+    if workflow_type.lower() == "self_rag":
         return SelfRAGAgent(documents=documents, **kwargs)
-    else:
-        raise ValueError(f"Unknown workflow type: {workflow_type}")
+    raise ValueError(f"Unknown workflow type: {workflow_type}")
 
 
 __all__ = [
-    "DocumentGradingAgent",
-    "RequeryDecisionAgent",
     "CorrectiveRAGAgent",
+    "DocumentGradingAgent",
     "HYDERAGAgent",
+    "RequeryDecisionAgent",
     "SelfRAGAgent",
     "create_enhanced_rag_workflow",
 ]

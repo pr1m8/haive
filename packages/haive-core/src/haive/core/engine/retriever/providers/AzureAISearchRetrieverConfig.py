@@ -1,5 +1,4 @@
-"""
-Azure AI Search Retriever implementation for the Haive framework.
+"""Azure AI Search Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Azure AI Search (formerly Azure Cognitive Search)
 retriever, which retrieves documents from Azure's cloud search service.
@@ -31,8 +30,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.AZURE_AI_SEARCH)
 class AzureAISearchRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for Azure AI Search retriever in the Haive framework.
+    """Configuration for Azure AI Search retriever in the Haive framework.
 
     This retriever searches documents in Azure AI Search service and returns
     ranked results. It requires Azure credentials and search service configuration.
@@ -68,7 +66,7 @@ class AzureAISearchRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None,
         description="Azure Search API key (auto-resolved from AZURE_SEARCH_API_KEY)",
     )
@@ -96,21 +94,21 @@ class AzureAISearchRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         description="Type of search: 'similarity', 'semantic', 'hybrid'",
     )
 
-    semantic_configuration_name: Optional[str] = Field(
+    semantic_configuration_name: str | None = Field(
         default=None, description="Name of semantic configuration for semantic search"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Azure AI Search retriever."""
         return {
             "query": (str, Field(description="Search query for Azure AI Search")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Azure AI Search retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list, description="Documents from Azure AI Search"
                 ),
@@ -118,8 +116,7 @@ class AzureAISearchRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create an Azure AI Search retriever from this configuration.
+        """Create an Azure AI Search retriever from this configuration.
 
         Returns:
             AzureAISearchRetriever: Instantiated retriever ready for document retrieval.

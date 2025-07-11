@@ -10,20 +10,20 @@ This example demonstrates the dynamic supervisor capabilities including:
 import asyncio
 from typing import List
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage
 from rich.console import Console
 
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
 from haive.agents.supervisor.dynamic_supervisor import DynamicSupervisorAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 console = Console()
 
 
 async def demonstrate_dynamic_supervisor():
     """Comprehensive demonstration of dynamic supervisor capabilities."""
-
     console.print("\n[bold blue]🚀 Dynamic Supervisor Agent Demo[/bold blue]\n")
 
     # Create supervisor with enhanced configuration
@@ -112,7 +112,7 @@ async def demonstrate_dynamic_supervisor():
             }
 
             # Run supervisor
-            result = await supervisor.ainvoke(state)
+            await supervisor.ainvoke(state)
 
             console.print(f"[green]✅ Query {i} completed[/green]")
 
@@ -178,7 +178,7 @@ async def demonstrate_dynamic_supervisor():
                 "configurable": {"thread_id": f"updated_session_{i}"},
             }
 
-            result = await supervisor.ainvoke(state)
+            await supervisor.ainvoke(state)
             console.print(f"[green]✅ Updated Query {i} completed[/green]")
 
         except Exception as e:
@@ -206,7 +206,6 @@ async def demonstrate_dynamic_supervisor():
 
 async def demonstrate_parallel_execution():
     """Demonstrate parallel agent execution capabilities."""
-
     console.print("\n[bold blue]🔄 Parallel Execution Demo[/bold blue]\n")
 
     # Create supervisor with parallel execution enabled
@@ -243,7 +242,7 @@ async def demonstrate_parallel_execution():
             "configurable": {"thread_id": "parallel_session"},
         }
 
-        result = await parallel_supervisor.ainvoke(state)
+        await parallel_supervisor.ainvoke(state)
         console.print("[green]✅ Parallel execution completed[/green]")
 
         parallel_supervisor.print_supervisor_dashboard()
@@ -254,7 +253,6 @@ async def demonstrate_parallel_execution():
 
 async def demonstrate_adaptation_rules():
     """Demonstrate response adaptation capabilities."""
-
     console.print("\n[bold blue]🔧 Response Adaptation Demo[/bold blue]\n")
 
     # Create supervisor with adaptation enabled
@@ -297,7 +295,7 @@ async def demonstrate_adaptation_rules():
             "configurable": {"thread_id": "adaptation_session"},
         }
 
-        result = await adaptive_supervisor.ainvoke(state)
+        await adaptive_supervisor.ainvoke(state)
         console.print("[green]✅ Response adaptation completed[/green]")
 
         adaptive_supervisor.print_supervisor_dashboard()
@@ -308,7 +306,6 @@ async def demonstrate_adaptation_rules():
 
 async def main():
     """Run all dynamic supervisor demonstrations."""
-
     console.print("[bold magenta]Dynamic Supervisor Agent Examples[/bold magenta]")
     console.print("=" * 50)
 

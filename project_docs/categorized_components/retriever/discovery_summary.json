@@ -10,52 +10,52 @@
   },
   "total_tools_created": 684,
   "total_engine_configs": 684,
-  "failed_modules": 561,
+  "failed_modules": 628,
   "failure_analysis": {
-    "sys_exit": 1,
-    "import_errors": 83,
-    "other_errors": 477
+    "sys_exit": 0,
+    "import_errors": 31,
+    "other_errors": 597
   },
   "sample_failures": [
     [
+      "packages.haive-tools.src.haive.tools.tools.report_of_the_week_tool",
+      "Unexpected error: Google Search requires GOOGLE_API_KEY and GOOGLE_CSE_ID environment variables"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.arxiv",
+      "Unexpected error: Google Search requires GOOGLE_API_KEY and GOOGLE_CSE_ID environment variables"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.genderize_tool",
+      "Unexpected error: Google Search requires GOOGLE_API_KEY and GOOGLE_CSE_ID environment variables"
+    ],
+    [
       "packages.haive-tools.src.haive.tools.tools.pokebase_tool",
-      "ImportError: No module named 'pokebase'"
+      "Unexpected error: Google Search requires GOOGLE_API_KEY and GOOGLE_CSE_ID environment variables"
     ],
     [
       "packages.haive-tools.src.haive.tools.tools.dataforseo_tool",
-      "ImportError: No module named 'haive.config'"
+      "Unexpected error: Google Search requires GOOGLE_API_KEY and GOOGLE_CSE_ID environment variables"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.techy_phrase_tool",
+      "Unexpected error: Google Search requires GOOGLE_API_KEY and GOOGLE_CSE_ID environment variables"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.duckduckgo_search",
+      "Unexpected error: Google Search requires GOOGLE_API_KEY and GOOGLE_CSE_ID environment variables"
+    ],
+    [
+      "packages.haive-tools.src.haive.tools.tools.eleven_labs",
+      "Unexpected error: Google Search requires GOOGLE_API_KEY and GOOGLE_CSE_ID environment variables"
     ],
     [
       "packages.haive-tools.src.haive.tools.tools.hinge_tools",
-      "ImportError: No module named 'squeaky_hinge'"
+      "Unexpected error: Google Search requires GOOGLE_API_KEY and GOOGLE_CSE_ID environment variables"
     ],
     [
-      "packages.haive-tools.src.haive.tools.tools.wolfram_alpha_tool",
-      "ImportError: No module named 'haive.config'"
-    ],
-    [
-      "packages.haive-tools.src.haive.tools.tools.bing_search_tool_INC",
-      "ImportError: No module named 'haive.config'"
-    ],
-    [
-      "packages.haive-tools.src.haive.tools.tools.discord_tools",
-      "Unexpected error: Field 'name' defined on a base class was overridden by a non-annotated attribute. All field definitions, including overrides, require a type annotation.\n\nFor further information visit https://errors.pydantic.dev/2.11/u/model-field-overridden"
-    ],
-    [
-      "packages.haive-tools.src.haive.tools.tools.ionic_tool",
-      "ImportError: No module named 'ionic_langchain'"
-    ],
-    [
-      "packages.haive-tools.src.haive.tools.tools.brave_search",
-      "Unexpected error: 'module' object is not callable"
-    ],
-    [
-      "packages.haive-tools.src.haive.tools.tools.google.google_jobs",
-      "ImportError: google-search-results is not installed. Please install it with `pip install google-search-results>=2.4.2`"
-    ],
-    [
-      "packages.haive-tools.src.haive.tools.tools.google.google_trends",
-      "ImportError: google-search-results is not installed. Please install it with `pip install google-search-results>=2.4.2`"
+      "packages.haive-tools.src.haive.tools.tools.youtube_search_tool",
+      "Unexpected error: Google Search requires GOOGLE_API_KEY and GOOGLE_CSE_ID environment variables"
     ]
   ]
 }

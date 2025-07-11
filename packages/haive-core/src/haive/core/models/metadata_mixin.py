@@ -1,5 +1,4 @@
-"""
-Model metadata mixin for LLM configurations.
+"""Model metadata mixin for LLM configurations.
 
 This module provides a mixin class that adds comprehensive model metadata
 access to LLM configuration classes, including context windows, pricing,
@@ -7,24 +6,23 @@ and capability information.
 """
 
 import logging
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 from haive.core.models.metadata import get_model_metadata
+
 
 logger = logging.getLogger(__name__)
 
 
 class ModelMetadataMixin:
-    """
-    Mixin to add comprehensive model metadata methods to LLMConfig classes.
+    """Mixin to add comprehensive model metadata methods to LLMConfig classes.
 
     This mixin provides access to model capabilities, context window sizes,
     pricing information, and other metadata from the model catalog.
     """
 
     def get_context_window(self) -> int:
-        """
-        Get the maximum context window size for this model.
+        """Get the maximum context window size for this model.
 
         Returns:
             int: Total context window size (input + output tokens)
@@ -54,8 +52,7 @@ class ModelMetadataMixin:
         return 0
 
     def get_max_input_tokens(self) -> int:
-        """
-        Get the maximum input tokens for this model.
+        """Get the maximum input tokens for this model.
 
         Returns:
             int: Maximum input tokens the model can accept
@@ -64,8 +61,7 @@ class ModelMetadataMixin:
         return metadata.get("max_input_tokens", self.get_context_window())
 
     def get_max_output_tokens(self) -> int:
-        """
-        Get the maximum output tokens for this model.
+        """Get the maximum output tokens for this model.
 
         Returns:
             int: Maximum output tokens the model can generate
@@ -73,9 +69,8 @@ class ModelMetadataMixin:
         metadata = self._get_model_metadata()
         return metadata.get("max_output_tokens", metadata.get("max_tokens", 0))
 
-    def get_token_pricing(self) -> Tuple[float, float]:
-        """
-        Get the token pricing for this model.
+    def get_token_pricing(self) -> tuple[float, float]:
+        """Get the token pricing for this model.
 
         Returns:
             Tuple[float, float]: (input_cost_per_token, output_cost_per_token)
@@ -85,9 +80,8 @@ class ModelMetadataMixin:
         output_cost = metadata.get("output_cost_per_token", 0.0)
         return (input_cost, output_cost)
 
-    def get_batch_token_pricing(self) -> Tuple[float, float]:
-        """
-        Get the batch token pricing for this model.
+    def get_batch_token_pricing(self) -> tuple[float, float]:
+        """Get the batch token pricing for this model.
 
         Returns:
             Tuple[float, float]: (input_batch_cost, output_batch_cost)
@@ -98,8 +92,7 @@ class ModelMetadataMixin:
         return (input_cost, output_cost)
 
     def supports_feature(self, feature: str) -> bool:
-        """
-        Check if this model supports a specific feature.
+        """Check if this model supports a specific feature.
 
         Args:
             feature: Feature name (e.g., "vision", "function_calling")
@@ -127,9 +120,8 @@ class ModelMetadataMixin:
 
         return False
 
-    def get_search_context_costs(self) -> Dict[str, float]:
-        """
-        Get the search context costs for this model.
+    def get_search_context_costs(self) -> dict[str, float]:
+        """Get the search context costs for this model.
 
         Returns:
             Dict[str, float]: Dictionary mapping context sizes to costs
@@ -138,9 +130,8 @@ class ModelMetadataMixin:
         search_costs = metadata.get("search_context_cost_per_query", {})
         return search_costs
 
-    def get_supported_endpoints(self) -> List[str]:
-        """
-        Get the supported API endpoints for this model.
+    def get_supported_endpoints(self) -> list[str]:
+        """Get the supported API endpoints for this model.
 
         Returns:
             List[str]: List of supported endpoints
@@ -148,9 +139,8 @@ class ModelMetadataMixin:
         metadata = self._get_model_metadata()
         return metadata.get("supported_endpoints", [])
 
-    def get_supported_modalities(self) -> List[str]:
-        """
-        Get the supported input modalities for this model.
+    def get_supported_modalities(self) -> list[str]:
+        """Get the supported input modalities for this model.
 
         Returns:
             List[str]: List of supported modalities (e.g., "text", "image")
@@ -158,9 +148,8 @@ class ModelMetadataMixin:
         metadata = self._get_model_metadata()
         return metadata.get("supported_modalities", ["text"])
 
-    def get_supported_output_modalities(self) -> List[str]:
-        """
-        Get the supported output modalities for this model.
+    def get_supported_output_modalities(self) -> list[str]:
+        """Get the supported output modalities for this model.
 
         Returns:
             List[str]: List of supported output modalities
@@ -168,9 +157,8 @@ class ModelMetadataMixin:
         metadata = self._get_model_metadata()
         return metadata.get("supported_output_modalities", ["text"])
 
-    def get_deprecation_date(self) -> Optional[str]:
-        """
-        Get the deprecation date for this model, if available.
+    def get_deprecation_date(self) -> str | None:
+        """Get the deprecation date for this model, if available.
 
         Returns:
             Optional[str]: Deprecation date in YYYY-MM-DD format, or None if not deprecated
@@ -179,8 +167,7 @@ class ModelMetadataMixin:
         return metadata.get("deprecation_date")
 
     def get_model_mode(self) -> str:
-        """
-        Get the mode for this model.
+        """Get the mode for this model.
 
         Returns:
             str: Model mode (e.g., "chat", "embedding", "completion")
@@ -188,14 +175,12 @@ class ModelMetadataMixin:
         metadata = self._get_model_metadata()
         return metadata.get("mode", "chat")
 
-    def _get_model_metadata(self) -> Dict[str, Any]:
-        """
-        Get metadata for the current model, using alias if available.
+    def _get_model_metadata(self) -> dict[str, Any]:
+        """Get metadata for the current model, using alias if available.
 
         Returns:
             Dictionary of model metadata
         """
-
         # Use model_alias if available, otherwise use model name
         model_name_for_lookup = getattr(self, "model_alias", None) or self.model
 

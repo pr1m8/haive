@@ -21,6 +21,7 @@ graph = StateGraph()
 ```
 
 This approach fails for dynamic agent management because:
+
 1. Tools are created before graph compilation
 2. Can't add new agents after compilation
 3. Each agent needs its own pre-defined tool
@@ -37,20 +38,20 @@ class SupervisorState(StateSchema):
 
 def build_graph():
     graph = BaseGraph()
-    
+
     # Supervisor decides routing
     graph.add_node("supervisor", supervisor_node)
-    
+
     # Single node executes ANY agent
     graph.add_node("agent_execution", agent_execution_node)
-    
+
     # Conditional routing based on state
     graph.add_conditional_edges(
         "supervisor",
         lambda state: "agent" if state.agent_route else "end",
         {"agent": "agent_execution", "end": END}
     )
-    
+
     return graph.compile()
 
 async def agent_execution_node(state):
@@ -84,30 +85,30 @@ async def agent_execution_node(state):
 ```python
 class DynamicSupervisor(ReactAgent):
     registry: AgentRegistry = Field(default_factory=AgentRegistry)
-    
+
     def build_graph(self):
         graph = BaseGraph()
-        
+
         # 1. Supervisor analyzes and routes
         graph.add_node("supervisor", self._supervisor_node)
-        
+
         # 2. General execution node (THE KEY!)
         graph.add_node("agent_node", self._agent_execution_node)
-        
+
         # 3. Conditional routing
         graph.add_conditional_edges(
             "supervisor",
             self._check_routing,
             {"agent": "agent_node", "end": END}
         )
-        
+
         return graph.compile()
-    
+
     async def _supervisor_node(self, state):
         # Analyze task, check capabilities, activate if needed
         # Set state.agent_route = "selected_agent"
         return {"state": state}
-    
+
     async def _agent_execution_node(self, state):
         # Get agent from registry dynamically
         agent = self.registry.get_active_agent(state.agent_route)
@@ -140,6 +141,7 @@ def select_agent(name: str, task: str) -> str:
 ## Comparison to LangGraph Patterns
 
 LangGraph's approach with `Send` and `Command`:
+
 ```python
 # LangGraph pattern (requires pre-compilation)
 def handoff_tool(task_description: str, state: MessagesState) -> Command:
@@ -150,6 +152,7 @@ def handoff_tool(task_description: str, state: MessagesState) -> Command:
 ```
 
 Our pattern achieves the same result but with runtime flexibility:
+
 ```python
 # Our pattern (dynamic at runtime)
 state.agent_route = agent_name  # Set in supervisor
@@ -159,6 +162,7 @@ state.agent_route = agent_name  # Set in supervisor
 ## Summary
 
 The key insight is treating agent execution like tool execution:
+
 - **Tools**: `tool_node` executes any tool based on tool calls
 - **Agents**: `agent_execution_node` executes any agent based on routing
 

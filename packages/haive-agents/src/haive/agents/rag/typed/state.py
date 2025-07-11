@@ -1,9 +1,8 @@
 from typing import Any
 
+from haive.agents.rag.base.state import BaseRAGState
 from langchain.schema import Document
 from pydantic import Field
-
-from haive.agents.rag.base.state import BaseRAGState
 
 
 class TypedRAGState(BaseRAGState):

@@ -9,12 +9,11 @@ from pydantic import BaseModel, Field
 class DynamicModuleType(str):
     """Enum for dynamically loaded module types (retrievers, tools, etc.)."""
 
-    pass  # Populated dynamically
+    # Populated dynamically
 
 
-def get_available_classes(module_names: List[str]) -> Dict[str, Dict[str, Any]]:
-    """
-    Get available classes from multiple modules and remove duplicates.
+def get_available_classes(module_names: list[str]) -> dict[str, dict[str, Any]]:
+    """Get available classes from multiple modules and remove duplicates.
 
     Args:
         module_names (List[str]): The list of module names to scan.
@@ -60,7 +59,7 @@ def get_available_classes(module_names: List[str]) -> Dict[str, Dict[str, Any]]:
                 # ✅ Detect API dependencies (e.g., `api_key`, `api_wrapper`, `resource`)
                 missing_dependencies = [
                     arg
-                    for arg in init_args.keys()
+                    for arg in init_args
                     if "api" in arg.lower()
                     or "wrapper" in arg.lower()
                     or "resource" in arg.lower()
@@ -102,29 +101,26 @@ def get_available_classes(module_names: List[str]) -> Dict[str, Dict[str, Any]]:
                 }
 
         except ImportError as e:
-            print(f"⚠️ Failed to import module {module_name}: {e}")
+            passe}")
 
     return available_classes
 
 
 class DynamicModuleConfig(BaseModel):
-    """
-    Configuration for dynamically loading LangChain components (retrievers, tools, API wrappers, etc.).
-    """
+    """Configuration for dynamically loading LangChain components (retrievers, tools, API wrappers, etc.)."""
 
-    module_names: List[str] = Field(
+    module_names: list[str] = Field(
         description="List of module paths for dynamic loading (e.g., ['langchain_community.retrievers', 'langchain.retrievers'])"
     )
-    class_type: Optional[str] = Field(
+    class_type: str | None = Field(
         None, description="Specific class to load from the modules."
     )
-    init_kwargs: Dict[str, Any] = Field(
+    init_kwargs: dict[str, Any] = Field(
         default_factory=dict, description="Initialization arguments."
     )
 
-    def get_available_classes(self) -> Dict[str, Any]:
-        """
-        Retrieve metadata of all available classes in the specified modules.
+    def get_available_classes(self) -> dict[str, Any]:
+        """Retrieve metadata of all available classes in the specified modules.
 
         Returns:
             Dict[str, Any]: Class metadata dictionary.
@@ -132,8 +128,7 @@ class DynamicModuleConfig(BaseModel):
         return get_available_classes(self.module_names)
 
     def set_class_type(self, class_type: str):
-        """
-        Set the class_type dynamically.
+        """Set the class_type dynamically.
 
         Args:
             class_type (str): The class to load.
@@ -146,9 +141,7 @@ class DynamicModuleConfig(BaseModel):
         self.class_type = class_type
 
     def load_instance(self) -> Any:
-        """
-        Dynamically loads and returns an instance of the specified class.
-        """
+        """Dynamically loads and returns an instance of the specified class."""
         if not self.class_type:
             raise ValueError("Class type must be set before loading instance.")
 
@@ -181,10 +174,8 @@ class DynamicModuleConfig(BaseModel):
             f"Class '{self.class_type}' not found in any of the modules: {self.module_names}"
         )
 
-    def get_class_metadata(self) -> Dict[str, Any]:
-        """
-        Get metadata (docstring, dependencies, args_schema, tools) for the selected class.
-        """
+    def get_class_metadata(self) -> dict[str, Any]:
+        """Get metadata (docstring, dependencies, args_schema, tools) for the selected class."""
         if not self.class_type:
             raise ValueError("Class type must be set before retrieving metadata.")
 
@@ -196,10 +187,8 @@ class DynamicModuleConfig(BaseModel):
 
         return available_classes[self.class_type]
 
-    def get_tools(self) -> Union[List[Any], str]:
-        """
-        Call `.get_tools()` if the class supports it and return the available tools.
-        """
+    def get_tools(self) -> List[Any] | str:
+        """Call `.get_tools()` if the class supports it and return the available tools."""
         try:
             instance = self.load_instance()
             if hasattr(instance, "get_tools") and callable(instance.get_tools):
@@ -216,20 +205,12 @@ config = DynamicModuleConfig(
 
 # 🎯 Step 1: Retrieve available classes
 available_classes = config.get_available_classes()
-print(f"📌 Available Classes: {list(available_classes.keys())}")
 
 # 🎯 Step 2: Set class type dynamically
 config.set_class_type("BM25Retriever")  # Change this to any retriever/toolkit
 
 # 🎯 Step 3: Retrieve class metadata
 metadata = config.get_class_metadata()
-print(f"🔹 Class: {config.class_type}")
-print(f"📝 Description: {metadata['description']}")
-print(f"👨‍👩‍👧 Parent Classes: {metadata['parent_classes']}")
-print(f"⚠️ Missing Dependencies: {metadata['missing_dependencies']}")
-print(f"🔧 Required Init Args: {metadata['init_args']}")
-print(f"📜 Args Schema Class: {metadata['args_schema_class']}")
-print(f"📜 Args Schema Fields: {metadata['args_schema_fields']}")
 
 # 🎯 Step 4: Load instance (handles missing args)
 try:
@@ -239,11 +220,9 @@ try:
     try:
         instance.get_relevant_documents("Hello, world!")
     except Exception as e:
-        print(f"❌ Failed to invoke: {e}")
-    print(f"✅ Successfully loaded instance: {instance}")
+        pass")
 except Exception as e:
-    print(f"❌ Failed to instantiate: {e}")
+    pass")
 
 # 🎯 Step 5: Check if `get_tools()` is available
 tools = config.get_tools()
-print(f"🛠️ Tools Available: {tools}")

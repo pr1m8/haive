@@ -87,17 +87,17 @@ class FieldDefinition:
     def __init__(
         self,
         name: str,
-        field_type: Type[Any],
+        field_type: type[Any],
         field_info: Any = None,
         default: Any = None,
-        default_factory: Optional[Callable[[], Any]] = None,
-        description: Optional[str] = None,
+        default_factory: Callable[[], Any] | None = None,
+        description: str | None = None,
         shared: bool = False,
-        reducer: Optional[Callable] = None,
-        source: Optional[str] = None,
-        input_for: Optional[List[str]] = None,
-        output_from: Optional[List[str]] = None,
-        structured_model: Optional[str] = None,
+        reducer: Callable | None = None,
+        source: str | None = None,
+        input_for: list[str] | None = None,
+        output_from: list[str] | None = None,
+        structured_model: str | None = None,
         **kwargs,
     ):
         """Initialize a field definition with comprehensive metadata.
@@ -173,7 +173,7 @@ class FieldDefinition:
     def extract_from_model_field(
         cls,
         name: str,
-        field_type: Type[Any],
+        field_type: type[Any],
         field_info: Any,
         include_annotations: bool = True,
     ) -> "FieldDefinition":
@@ -255,7 +255,7 @@ class FieldDefinition:
 
         return field_def
 
-    def to_field_info(self) -> Tuple[Type[Any], Any]:
+    def to_field_info(self) -> tuple[type[Any], Any]:
         """Convert to a field type and info pair for standard model creation.
 
         This method generates the necessary type and field_info objects needed
@@ -290,11 +290,15 @@ class FieldDefinition:
             )
             ```
         """
+        logger.debug(f"🔍 TO_FIELD_INFO DEBUG {self.name}: default={self.default}, factory={self.default_factory}")
+        
         if self.field_info:
             # Use existing field info if available
+            logger.debug(f"🔍 TO_FIELD_INFO {self.name}: Using existing field_info, default={self.field_info.default}")
             return self.field_type, self.field_info
 
         # Create field using utility function
+        logger.debug(f"🔍 TO_FIELD_INFO {self.name}: Creating new field with default={self.default}, factory={self.default_factory}")
         field_type, field_info = create_field(
             field_type=self.field_type,
             default=self.default,
@@ -304,10 +308,11 @@ class FieldDefinition:
             reducer=self.reducer,
             **self.metadata,
         )
+        logger.debug(f"🔍 TO_FIELD_INFO {self.name}: Created field_info with default={field_info.default}, required={field_info.default is ...}")
 
         return field_type, field_info
 
-    def to_annotated_field(self) -> Tuple[Type[Any], Any]:
+    def to_annotated_field(self) -> tuple[type[Any], Any]:
         """Convert to an annotated field type and info pair for model creation.
 
         This method generates a field type and info pair using Python's Annotated type,
@@ -360,7 +365,7 @@ class FieldDefinition:
 
         return field_type, field_info
 
-    def get_reducer_name(self) -> Optional[str]:
+    def get_reducer_name(self) -> str | None:
         """Get the reducer function name for serialization purposes.
 
         This method attempts to extract a meaningful, serializable string
@@ -406,10 +411,9 @@ class FieldDefinition:
         # Add module path if available
         if hasattr(self.reducer, "__module__"):
             return f"{self.reducer.__module__}.{name}"
-        else:
-            return name
+        return name
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Convert the field definition to a serializable dictionary.
 
         This method creates a complete dictionary representation of the field

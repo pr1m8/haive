@@ -5,17 +5,19 @@ input/output schema support, schema composition integration, and improved
 mapping capabilities.
 """
 
+from datetime import datetime
 import logging
 import uuid
-from datetime import datetime
+
+from langchain_core.messages import SystemMessage
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from pydantic import BaseModel, Field, field_validator
 
 from haive.core.engine.agent.agent import AgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from haive.core.schema.state_schema import StateSchema
-from langchain_core.messages import SystemMessage
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from pydantic import BaseModel, Field, field_validator
+
 
 # Setup logging
 logger = logging.getLogger(__name__)
@@ -72,15 +74,15 @@ class SimpleAgentConfig(AgentConfig):
     model_config = {"arbitrary_types_allowed": True}
 
     @field_validator("engine")
-    def validate_engine(cls, v):
-        """Ensure engine is an AugLLMConfig instance"""
+    def validate_engine(self, v):
+        """Ensure engine is an AugLLMConfig instance."""
         if not isinstance(v, AugLLMConfig):
             raise TypeError(f"Engine must be AugLLMConfig, got {type(v)}")
         return v
 
     @field_validator("input_mapping", "output_mapping", mode="after")
-    def validate_mappings(cls, v, info):
-        """Validate mappings if provided"""
+    def validate_mappings(self, v, info):
+        """Validate mappings if provided."""
         if v is None:
             return v  # None is allowed for auto-derivation
 
@@ -133,9 +135,6 @@ class SimpleAgentConfig(AgentConfig):
             id=id,
             name=name,
             engine=aug_llm,
-            # input_schema=input_schema,
-            # output_schema=output_schema,
-            # state_schema=state_schema,
             **kwargs,
         )
 

@@ -7,7 +7,7 @@
     "description": "List economic data series in a FRED category",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.823529",
+    "timestamp": "2025-07-10T19:45:29.039198",
     "schema": {
       "description": "Input schema for FRED category queries.",
       "properties": {
@@ -36,7 +36,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.823529",
+      "timestamp": "2025-07-10T19:45:29.039198",
       "category": "toolkits"
     }
   },

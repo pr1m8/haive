@@ -39,7 +39,7 @@ class EmbeddingConfigFactory:
 
     @staticmethod
     def create(
-        provider: Union[str, EmbeddingType],
+        provider: str | EmbeddingType,
         model: str,
         name: str = "default_embedding",
         **kwargs,
@@ -121,7 +121,7 @@ class EmbeddingConfigFactory:
         return list(registered.keys())
 
     @staticmethod
-    def get_provider_info(provider: Union[str, EmbeddingType]) -> Dict[str, Any]:
+    def get_provider_info(provider: str | EmbeddingType) -> dict[str, Any]:
         """Get information about a specific provider.
 
         Args:
@@ -155,7 +155,7 @@ class EmbeddingConfigFactory:
         try:
             # Some methods might be available as class methods or static methods
             if hasattr(config_class, "get_supported_models"):
-                method = getattr(config_class, "get_supported_models")
+                method = config_class.get_supported_models
                 if callable(method):
                     try:
                         models = method()
@@ -165,7 +165,7 @@ class EmbeddingConfigFactory:
                         pass
 
             if hasattr(config_class, "get_default_model"):
-                method = getattr(config_class, "get_default_model")
+                method = config_class.get_default_model
                 if callable(method):
                     try:
                         default = method()
@@ -179,7 +179,7 @@ class EmbeddingConfigFactory:
         return info
 
     @staticmethod
-    def validate_provider(provider: Union[str, EmbeddingType]) -> bool:
+    def validate_provider(provider: str | EmbeddingType) -> bool:
         """Check if a provider is available.
 
         Args:
@@ -200,7 +200,7 @@ class EmbeddingConfigFactory:
 
 
 def create_embedding_config(
-    provider: Union[str, EmbeddingType],
+    provider: str | EmbeddingType,
     model: str,
     name: str = "default_embedding",
     **kwargs,
@@ -257,7 +257,7 @@ def list_embedding_providers() -> list[str]:
     return EmbeddingConfigFactory.list_providers()
 
 
-def get_embedding_provider_info(provider: Union[str, EmbeddingType]) -> Dict[str, Any]:
+def get_embedding_provider_info(provider: str | EmbeddingType) -> dict[str, Any]:
     """Get information about an embedding provider.
 
     Args:
@@ -277,7 +277,7 @@ def get_embedding_provider_info(provider: Union[str, EmbeddingType]) -> Dict[str
     return EmbeddingConfigFactory.get_provider_info(provider)
 
 
-def validate_embedding_provider(provider: Union[str, EmbeddingType]) -> bool:
+def validate_embedding_provider(provider: str | EmbeddingType) -> bool:
     """Check if an embedding provider is available.
 
     Args:

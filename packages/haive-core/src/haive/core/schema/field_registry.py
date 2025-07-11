@@ -14,10 +14,9 @@ Key benefits:
 
 from typing import Any, Dict, List, Optional, Type, TypeVar, Union
 
+from haive.core.schema.field_definition import FieldDefinition
 from langchain_core.messages import BaseMessage
 from pydantic import BaseModel, Field
-
-from haive.core.schema.field_definition import FieldDefinition
 
 # Type variables for generics
 T = TypeVar("T")
@@ -60,6 +59,7 @@ class StandardFields:
         else:
             # Basic message list for backwards compatibility - use AnyMessage
             from langchain_core.messages import AnyMessage
+
             field_type = List[AnyMessage]
             metadata = {"reducer": "add_messages", "shared": True}
             default_factory = list
@@ -67,7 +67,7 @@ class StandardFields:
         # Note: shared is already in metadata, so don't pass it twice
         # Extract reducer_name from metadata if needed
         reducer_name = metadata.pop("reducer", None)
-        
+
         return FieldDefinition(
             name="messages",
             field_type=field_type,
@@ -288,48 +288,60 @@ class CommonFieldSets:
     """Pre-defined sets of fields for common use cases."""
 
     LLM_BASIC = [StandardFields.messages(use_enhanced=True)]
-    LLM_WITH_CONTEXT = [StandardFields.messages(use_enhanced=True), StandardFields.context()]
+    LLM_WITH_CONTEXT = [
+        StandardFields.messages(use_enhanced=True),
+        StandardFields.context(),
+    ]
     RAG_INPUT = [StandardFields.query(), StandardFields.messages(use_enhanced=True)]
     RAG_OUTPUT = [
         StandardFields.context(),
         StandardFields.documents(),
         StandardFields.ai_message(),
     ]
-    PLANNER_INPUT = [StandardFields.messages(use_enhanced=True), StandardFields.context()]
+    PLANNER_INPUT = [
+        StandardFields.messages(use_enhanced=True),
+        StandardFields.context(),
+    ]
     PLANNER_OUTPUT = [StandardFields.plan_steps(), StandardFields.thoughts()]
 
 
 # Prebuilt state schemas registry
 class PrebuiltStates:
     """Registry of prebuilt state schemas for common use cases.
-    
+
     Hierarchy:
     - MessagesState (basic, no tokens)
     - MessagesStateWithTokenUsage (with token tracking)
       - LLMState (single engine + tokens + thresholds)
         - ToolState (tools + LLM features)
     """
-    
+
     @classmethod
     def messages_with_tokens(cls):
         """Get MessagesStateWithTokenUsage for token-aware conversations."""
-        from haive.core.schema.prebuilt.messages.messages_with_token_usage import MessagesStateWithTokenUsage
+        from haive.core.schema.prebuilt.messages.messages_with_token_usage import (
+            MessagesStateWithTokenUsage,
+        )
+
         return MessagesStateWithTokenUsage
-    
+
     @classmethod
     def llm_state(cls):
         """Get LLMState for single-engine LLM agents with token tracking and model awareness."""
         from haive.core.schema.prebuilt.llm_state import LLMState
+
         return LLMState
-    
+
     @classmethod
     def tool_state(cls):
         """Get ToolState for tool-using agents with LLM features, tools, and token tracking."""
         from haive.core.schema.prebuilt.tool_state import ToolState
+
         return ToolState
-    
+
     @classmethod
     def base_messages_state(cls):
         """Get basic MessagesState without token tracking."""
         from haive.core.schema.prebuilt.messages_state import MessagesState
+
         return MessagesState

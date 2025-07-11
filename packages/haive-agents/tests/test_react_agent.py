@@ -13,7 +13,6 @@ logger = logging.getLogger(__name__)
 
 # Add src to path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-print(f"sys.path: {sys.path}")
 # Import agent
 from agents.react_agent2.agent2 import create_react_agent
 from haive.core.models.llm.base import AzureLLMConfig
@@ -101,8 +100,6 @@ TEST_CASES = [
 
 def run_test_cases():
     """Run the agent on test cases."""
-    print("\n=== Creating React Agent ===")
-
     # Create LLM config (using Azure OpenAI)
     llm_config = AzureLLMConfig(model="gpt-4o", parameters={"temperature": 0.7})
 
@@ -121,11 +118,8 @@ def run_test_cases():
         ),
     )
 
-    print(f"Agent created: {agent.config.name}")
-
     # Run test cases
-    for i, test_case in enumerate(TEST_CASES, 1):
-        print(f"\n\n=== Test Case {i}: '{test_case}' ===\n")
+    for _i, test_case in enumerate(TEST_CASES, 1):
 
         # Run agent
         result = agent.run(test_case)
@@ -136,28 +130,20 @@ def run_test_cases():
         # Print messages in a readable format
         for msg in messages:
             if hasattr(msg, "content") and hasattr(msg, "type"):
-                print(f"{msg.type.upper()}: {msg.content}")
-            elif hasattr(msg, "content"):
-                print(f"{type(msg).__name__.upper()}: {msg.content}")
+                pass
             else:
-                print(f"MESSAGE: {msg}")
+                pass
 
             # Print tool calls if present
             if hasattr(msg, "tool_calls") and msg.tool_calls:
-                print("\nTOOL CALLS:")
-                for call in msg.tool_calls:
-                    print(
-                        f"  - {call.get('name', 'Unknown tool')}: {call.get('args', {})}"
-                    )
+                for _call in msg.tool_calls:
+                    pass
 
         # Print final stats
-        print(f"\nSteps taken: {result.get('current_step', 0)}")
-        print(f"Observations: {len(result.get('observations', []))}")
-        print(f"Tool calls: {len(result.get('action_history', []))}")
 
         # Print any errors
         if result.get("error"):
-            print(f"ERROR: {result['error']}")
+            pass
 
 
 if __name__ == "__main__":

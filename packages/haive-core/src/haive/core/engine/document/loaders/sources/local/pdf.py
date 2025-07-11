@@ -3,7 +3,7 @@
 Shows how to implement a concrete source with multiple loader strategies.
 """
 
-from typing import Any, Dict, Optional
+from typing import Any
 
 from haive.core.engine.document.loaders.sources.base import LocalSource
 from haive.core.engine.document.loaders.sources.registry import register_source
@@ -67,15 +67,15 @@ class PDFSource(LocalSource):
     extract_images: bool = False
     ocr_enabled: bool = False
     split_pages: bool = True
-    password: Optional[str] = None
+    password: str | None = None
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         """Get kwargs for PDF loaders."""
         # Start with base kwargs
         kwargs = super().get_loader_kwargs()
 
         # Add PDF-specific options based on loader
-        if self.preferred_loader == "quality" or self.preferred_loader == "ocr":
+        if self.preferred_loader in {"quality", "ocr"}:
             # Unstructured/PDFPlumber options
             kwargs.update(
                 {
@@ -140,7 +140,7 @@ class AcademicPDFSource(LocalSource):
     extract_figures: bool = True
     extract_tables: bool = True
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         """Get kwargs for academic PDF loaders."""
         kwargs = super().get_loader_kwargs()
 

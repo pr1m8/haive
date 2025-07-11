@@ -1,5 +1,4 @@
-"""
-Qdrant Sparse Vector Retriever implementation for the Haive framework.
+"""Qdrant Sparse Vector Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Qdrant Sparse Vector retriever,
 which uses Qdrant's sparse vector capabilities for keyword-based and hybrid search.
@@ -35,8 +34,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.QDRANT_SPARSE_VECTOR)
 class QdrantSparseVectorRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for Qdrant Sparse Vector retriever in the Haive framework.
+    """Configuration for Qdrant Sparse Vector retriever in the Haive framework.
 
     This retriever uses Qdrant's sparse vector capabilities to provide efficient
     keyword-based search and hybrid dense + sparse vector retrieval.
@@ -91,7 +89,7 @@ class QdrantSparseVectorRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None, description="Qdrant API key (auto-resolved from QDRANT_API_KEY)"
     )
 
@@ -126,35 +124,35 @@ class QdrantSparseVectorRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # Search filtering
-    filter_conditions: Optional[Dict[str, Any]] = Field(
+    filter_conditions: dict[str, Any] | None = Field(
         default=None, description="Qdrant filter conditions for search results"
     )
 
     # Advanced parameters
-    score_threshold: Optional[float] = Field(
+    score_threshold: float | None = Field(
         default=None, ge=0.0, le=1.0, description="Minimum score threshold for results"
     )
 
-    sparse_encoder_model: Optional[str] = Field(
+    sparse_encoder_model: str | None = Field(
         default=None, description="Sparse encoder model name (e.g., 'splade++', 'bm25')"
     )
 
     # Connection parameters
-    timeout: Optional[float] = Field(
+    timeout: float | None = Field(
         default=60.0, ge=1.0, le=300.0, description="Request timeout in seconds"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Qdrant Sparse Vector retriever."""
         return {
             "query": (str, Field(description="Sparse vector search query for Qdrant")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Qdrant Sparse Vector retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list,
                     description="Documents from Qdrant sparse vector search",
@@ -163,8 +161,7 @@ class QdrantSparseVectorRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a Qdrant Sparse Vector retriever from this configuration.
+        """Create a Qdrant Sparse Vector retriever from this configuration.
 
         Returns:
             QdrantSparseVectorRetriever: Instantiated retriever ready for sparse vector search.

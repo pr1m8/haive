@@ -130,10 +130,9 @@ class ReflectionAgent(SimpleAgent):
                 # Use the engine to generate an initial response
                 result = self.engine.invoke({"messages": state.messages})
 
-                if hasattr(result, "content"):
-                    response_content = result.content
-                else:
-                    response_content = str(result)
+                response_content = (
+                    result.content if hasattr(result, "content") else str(result)
+                )
 
                 # Extract the original request (last human message)
                 original_request = state.last_human_message
@@ -142,13 +141,13 @@ class ReflectionAgent(SimpleAgent):
                 response_message = AIMessage(content=response_content)
 
                 return {
-                    "messages": state.messages + [response_message],
+                    "messages": [*state.messages, response_message],
                     "original_request": original_request,
                     "response": response_content,
                     "reflection_round": 0,
                 }
             except Exception as e:
-                logger.error(f"Error in initial response: {e}")
+                logger.exception(f"Error in initial response: {e}")
                 return state
 
         return initial_response_function
@@ -233,7 +232,7 @@ class ReflectionAgent(SimpleAgent):
                 return Command(update=state_update, goto="continue")
 
             except Exception as e:
-                logger.error(f"Error in reflection: {e}")
+                logger.exception(f"Error in reflection: {e}")
                 return Command(update=state, goto="end")
 
         return reflection_function
@@ -290,7 +289,7 @@ class ReflectionAgent(SimpleAgent):
                 return state
 
             except Exception as e:
-                logger.error(f"Error in search: {e}")
+                logger.exception(f"Error in search: {e}")
                 return state
 
         return search_function
@@ -367,7 +366,7 @@ class ReflectionAgent(SimpleAgent):
                 }
 
             except Exception as e:
-                logger.error(f"Error in improvement: {e}")
+                logger.exception(f"Error in improvement: {e}")
                 return state
 
         return improvement_function

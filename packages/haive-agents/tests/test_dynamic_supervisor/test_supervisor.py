@@ -12,10 +12,8 @@ Test Classes:
 import asyncio
 from typing import Dict, List
 
-import pytest
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.messages import AIMessage, HumanMessage
+import pytest
 
 from haive.agents.dynamic_supervisor import (
     AgentInfo,
@@ -24,6 +22,8 @@ from haive.agents.dynamic_supervisor import (
     SupervisorStateWithTools,
 )
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
 
 
 class MockAgent:
@@ -32,7 +32,7 @@ class MockAgent:
     def __init__(self, name: str, response: str = "Mock response"):
         self.name = name
         self.response = response
-        self.calls: List[str] = []
+        self.calls: list[str] = []
 
     def run(self, task: str) -> str:
         """Synchronous execution."""
@@ -304,4 +304,3 @@ class TestSupervisorIntegration:
     async def test_multi_agent_coordination(self):
         """Test coordinating multiple agents."""
         # This would use real agents in a full integration test
-        pass

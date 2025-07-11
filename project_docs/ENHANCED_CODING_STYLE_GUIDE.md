@@ -12,7 +12,7 @@
 8. [Performance Guidelines](#performance-guidelines)
 9. [Agent Development Patterns](#agent-development-patterns)
 10. [Type Hints Complete Guide](#type-hints-complete-guide)
-11. [__init__.py Best Practices](#initpy-best-practices)
+11. [**init**.py Best Practices](#initpy-best-practices)
 12. [README Templates](#readme-templates)
 
 ## Project Structure
@@ -169,8 +169,8 @@ from .utils import format_response, validate_input
 
 ```python
 from typing import (
-    Any, Dict, List, Set, Tuple, Optional, Union, 
-    Callable, Awaitable, Iterator, Generator, 
+    Any, Dict, List, Set, Tuple, Optional, Union,
+    Callable, Awaitable, Iterator, Generator,
     TypeVar, Generic, Protocol, Final, Literal,
     ClassVar, cast, overload
 )
@@ -258,13 +258,13 @@ V = TypeVar('V')
 
 class Cache(Generic[K, V]):
     """Generic cache implementation."""
-    
+
     def __init__(self) -> None:
         self._cache: Dict[K, V] = {}
-    
+
     def get(self, key: K) -> Optional[V]:
         return self._cache.get(key)
-    
+
     def set(self, key: K, value: V) -> None:
         self._cache[key] = value
 
@@ -273,11 +273,11 @@ StateT = TypeVar('StateT', bound='BaseState')
 
 class Agent(Generic[StateT]):
     """Agent with typed state."""
-    
+
     def __init__(self, state_class: type[StateT]) -> None:
         self.state_class = state_class
         self._state: Optional[StateT] = None
-    
+
     def get_state(self) -> StateT:
         if self._state is None:
             self._state = self.state_class()
@@ -292,7 +292,7 @@ from typing import Protocol, runtime_checkable
 @runtime_checkable
 class Comparable(Protocol):
     """Protocol for comparable objects."""
-    
+
     def __lt__(self, other: Any) -> bool: ...
     def __le__(self, other: Any) -> bool: ...
     def __gt__(self, other: Any) -> bool: ...
@@ -300,10 +300,10 @@ class Comparable(Protocol):
 
 class Persistable(Protocol):
     """Protocol for objects that can be persisted."""
-    
+
     def save(self, path: Path) -> None: ...
     def load(self, path: Path) -> None: ...
-    
+
     @property
     def is_dirty(self) -> bool: ...
 
@@ -327,7 +327,7 @@ def is_valid_config(value: Any) -> TypeGuard[Dict[str, str]]:
     """Check if value is a valid configuration dictionary."""
     return (
         isinstance(value, dict) and
-        all(isinstance(k, str) and isinstance(v, str) 
+        all(isinstance(k, str) and isinstance(v, str)
             for k, v in value.items())
     )
 
@@ -390,30 +390,30 @@ class Status(str, Enum):
 
 class TaskConfig(BaseModel):
     """Advanced task configuration with validation."""
-    
+
     # Basic fields with constraints
     name: Annotated[str, Field(min_length=1, max_length=100)]
     priority: Annotated[int, Field(ge=1, le=10)] = 5
     timeout_seconds: Annotated[float, Field(gt=0)] = 60.0
-    
+
     # Optional fields
     description: Optional[str] = None
     tags: List[str] = Field(default_factory=list)
     metadata: Dict[str, Any] = Field(default_factory=dict)
-    
+
     # Enum field
     status: Status = Status.PENDING
-    
+
     # Datetime fields
     created_at: datetime = Field(default_factory=datetime.utcnow)
     scheduled_at: Optional[datetime] = None
-    
+
     # Union types
     retry_policy: Union[int, Dict[str, Any]] = 3
-    
+
     # Nested models
     dependencies: List["TaskConfig"] = Field(default_factory=list)
-    
+
     # Validators
     @validator('name')
     def validate_name(cls, v: str) -> str:
@@ -421,7 +421,7 @@ class TaskConfig(BaseModel):
         if not v.replace('_', '').replace('-', '').isalnum():
             raise ValueError('Name must be alphanumeric with _ or -')
         return v
-    
+
     @validator('scheduled_at')
     def validate_scheduled_time(cls, v: Optional[datetime], values: Dict[str, Any]) -> Optional[datetime]:
         """Ensure scheduled time is in the future."""
@@ -429,13 +429,13 @@ class TaskConfig(BaseModel):
             if v <= values['created_at']:
                 raise ValueError('Scheduled time must be after creation time')
         return v
-    
+
     @root_validator
     def validate_dependencies(cls, values: Dict[str, Any]) -> Dict[str, Any]:
         """Ensure no circular dependencies."""
         # Implementation for circular dependency check
         return values
-    
+
     class Config:
         """Pydantic configuration."""
         use_enum_values = True
@@ -446,9 +446,9 @@ class TaskConfig(BaseModel):
         }
 ```
 
-## __init__.py Best Practices
+## **init**.py Best Practices
 
-### Package Level __init__.py
+### Package Level **init**.py
 
 ```python
 """Haive Core - Foundation for the Haive Agent Framework.
@@ -463,14 +463,14 @@ This package provides the core components for building intelligent agents:
 Quick Start:
     >>> from haive.core import Agent, Engine, Tool
     >>> from haive.core.schema import StateSchema
-    >>> 
+    >>>
     >>> # Create a simple agent
     >>> agent = Agent(name="my_agent")
     >>> result = await agent.arun("Hello!")
 
 Main Components:
     - Agent: Base class for all agents
-    - Engine: LLM and tool execution engines  
+    - Engine: LLM and tool execution engines
     - Graph: Workflow definition and execution
     - Schema: State management and composition
     - Registry: Global component registration
@@ -521,10 +521,10 @@ __all__ = [
     # Version info
     "__version__",
     "__author__",
-    
+
     # Core classes
     "Agent",
-    "AgentConfig", 
+    "AgentConfig",
     "Engine",
     "BaseEngine",
     "AugLLMEngine",
@@ -537,20 +537,20 @@ __all__ = [
     "SchemaComposer",
     "Tool",
     "tool_decorator",
-    
+
     # Types
     "MessageType",
-    "StateType", 
+    "StateType",
     "ConfigType",
     "EngineType",
-    
+
     # Exceptions
     "HaiveError",
     "AgentError",
-    "EngineError", 
+    "EngineError",
     "SchemaError",
     "RegistryError",
-    
+
     # Utilities
     "setup_logging",
     "get_logger",
@@ -562,24 +562,24 @@ def _initialize_package() -> None:
     """Initialize package-level resources."""
     # Setup default logging
     setup_logging()
-    
+
     # Register default components
     registry = get_registry()
     registry.register_defaults()
-    
+
     # Validate environment
     _validate_environment()
 
 def _validate_environment() -> None:
     """Validate runtime environment."""
     import sys
-    
+
     # Check Python version
     if sys.version_info < (3, 10):
         raise RuntimeError(
             f"Haive requires Python 3.10+, got {sys.version}"
         )
-    
+
     # Check required packages
     try:
         import pydantic
@@ -595,11 +595,11 @@ _initialize_package()
 # Convenience functions
 def create_agent(name: str, **kwargs) -> Agent:
     """Create an agent with default configuration.
-    
+
     Args:
         name: Agent identifier
         **kwargs: Additional configuration options
-        
+
     Returns:
         Configured agent instance
     """
@@ -608,7 +608,7 @@ def create_agent(name: str, **kwargs) -> Agent:
 
 def version_info() -> Dict[str, str]:
     """Get detailed version information.
-    
+
     Returns:
         Dictionary with version details
     """
@@ -624,7 +624,7 @@ def version_info() -> Dict[str, str]:
     }
 ```
 
-### Module Level __init__.py
+### Module Level **init**.py
 
 ```python
 """Schema module - State management and composition for Haive agents.
@@ -638,7 +638,7 @@ This module provides the schema system for managing agent state:
 
 Example:
     >>> from haive.core.schema import StateSchema, Field
-    >>> 
+    >>>
     >>> class MyState(StateSchema):
     ...     messages: List[str] = Field(default_factory=list)
     ...     metadata: Dict[str, Any] = Field(default_factory=dict)
@@ -658,24 +658,24 @@ __all__ = [
     # Base schemas
     "StateSchema",
     "BaseSchema",
-    
+
     # Composition
     "SchemaComposer",
     "FieldInfo",
-    
+
     # Fields
     "Field",
     "create_field",
     "merge_fields",
-    
+
     # Validation
     "validate_state",
     "ValidationError",
-    
+
     # Serialization
-    "serialize_state", 
+    "serialize_state",
     "deserialize_state",
-    
+
     # Types
     "SchemaType",
     "FieldType",
@@ -691,7 +691,7 @@ def __dir__():
     return __all__
 ```
 
-### Sub-package __init__.py
+### Sub-package **init**.py
 
 ```python
 """RAG Agents - Retrieval-Augmented Generation agents.
@@ -723,7 +723,7 @@ from .retrievers import (
     create_retriever,
 )
 
-# Reranker imports  
+# Reranker imports
 from .rerankers import (
     CrossEncoderReranker,
     DiversityReranker,
@@ -741,21 +741,21 @@ __all__ = [
     # Agents
     "BaseRAGAgent",
     "RAGConfig",
-    "SimpleRAGAgent", 
+    "SimpleRAGAgent",
     "AdaptiveRAGAgent",
     "MultiSourceRAGAgent",
-    
+
     # Retrievers
     "VectorRetriever",
     "KeywordRetriever",
     "HybridRetriever",
     "create_retriever",
-    
+
     # Rerankers
     "CrossEncoderReranker",
     "DiversityReranker",
     "create_reranker",
-    
+
     # Utils
     "chunk_documents",
     "create_embeddings",
@@ -781,7 +781,7 @@ def __getattr__(name: str):
 
 ### Package README Template
 
-```markdown
+````markdown
 # Haive Core
 
 [![PyPI version](https://badge.fury.io/py/haive-core.svg)](https://badge.fury.io/py/haive-core)
@@ -812,6 +812,7 @@ pip install haive-core[all]     # All optional features
 pip install haive-core[dev]     # Development dependencies
 pip install haive-core[docs]    # Documentation building
 ```
+````
 
 ## Quick Start
 
@@ -853,15 +854,15 @@ from haive.core.graph import Graph
 class CustomAgent(Agent):
     def build_graph(self) -> Graph:
         graph = Graph()
-        
+
         # Define nodes
         graph.add_node("process", self.process_input)
         graph.add_node("respond", self.generate_response)
-        
+
         # Define edges
         graph.add_edge("process", "respond")
         graph.set_entry_point("process")
-        
+
         return graph
 ```
 
@@ -877,7 +878,7 @@ class ConversationState(StateSchema):
     messages: List[Message] = Field(default_factory=list)
     user_profile: Optional[UserProfile] = None
     session_id: str = Field(default_factory=lambda: str(uuid4()))
-    
+
     def add_message(self, message: Message) -> None:
         self.messages.append(message)
         self.last_updated = datetime.utcnow()
@@ -966,12 +967,12 @@ Configure Haive through environment variables or configuration files:
 agent:
   default_timeout: 30
   max_retries: 3
-  
+
 engine:
   provider: openai
   model: gpt-4
   temperature: 0.7
-  
+
 logging:
   level: INFO
   format: json
@@ -1015,16 +1016,16 @@ class TestMyAgent(AgentTestCase):
     async def test_basic_response(self):
         agent = await self.create_test_agent()
         response = await agent.arun("test input")
-        
+
         assert response is not None
         assert len(response) > 0
-        
+
     async def test_state_persistence(self):
         agent = await self.create_test_agent()
-        
+
         # First interaction
         await agent.arun("My name is Alice")
-        
+
         # Second interaction should remember
         response = await agent.arun("What's my name?")
         assert "Alice" in response
@@ -1079,7 +1080,7 @@ Key changes in v1.0:
 agent = Agent()
 result = agent.run("input")
 
-# New (v1.0)  
+# New (v1.0)
 agent = Agent()
 result = await agent.arun("input")
 ```
@@ -1125,7 +1126,8 @@ If you use Haive in your research, please cite:
   url = {https://github.com/haive/haive-core}
 }
 ```
-```
+
+````
 
 ### Module README Template
 
@@ -1151,21 +1153,21 @@ from typing import List, Dict, Any
 
 class MyAgentState(StateSchema):
     """Custom agent state."""
-    
+
     messages: List[str] = Field(
         default_factory=list,
         description="Conversation history"
     )
-    
+
     metadata: Dict[str, Any] = Field(
         default_factory=dict,
         description="Additional context"
     )
-    
+
     def add_message(self, message: str) -> None:
         """Add a message to history."""
         self.messages.append(message)
-```
+````
 
 ## Schema Composition
 
@@ -1256,7 +1258,7 @@ from pydantic import validator
 
 class ValidatedState(StateSchema):
     email: str
-    
+
     @validator('email')
     def validate_email(cls, v):
         if '@' not in v:
@@ -1312,11 +1314,12 @@ from haive.core.schema import StateSchema
 def test_schema_creation():
     class TestState(StateSchema):
         value: int = 0
-    
+
     state = TestState(value=42)
     assert state.value == 42
 ```
-```
+
+````
 
 ## Error Handling
 
@@ -1348,7 +1351,7 @@ async def execute_tool(tool: Tool, input_data: Dict[str, Any]) -> ToolResult:
     except Exception as e:
         logger.exception(f"Unexpected error in tool {tool.name}")
         raise ToolExecutionError(tool.name, f"Unexpected error: {e}")
-```
+````
 
 ### Logging
 
@@ -1496,7 +1499,7 @@ from typing import List, Any
 
 class TestSchemaValidation:
     """Test schema validation behaviors."""
-    
+
     @pytest.mark.parametrize("field_type,value,expected", [
         (str, "hello", "hello"),
         (int, 42, 42),
@@ -1506,18 +1509,18 @@ class TestSchemaValidation:
         (Dict[str, int], {"a": 1}, {"a": 1}),
     ])
     def test_field_type_validation(
-        self, 
+        self,
         field_type: type,
         value: Any,
         expected: Any
     ) -> None:
         """Test field validation for various types."""
         from haive.core.schema import create_field
-        
+
         field = create_field(field_type)
         validated = field.validate(value)
         assert validated == expected
-    
+
     @pytest.mark.parametrize("invalid_value,error_match", [
         (123, "str type expected"),
         ([], "str type expected"),
@@ -1531,7 +1534,7 @@ class TestSchemaValidation:
     ) -> None:
         """Test string field rejects invalid values."""
         from haive.core.schema import create_field
-        
+
         field = create_field(str)
         with pytest.raises(ValidationError, match=error_match):
             field.validate(invalid_value)
@@ -1545,7 +1548,7 @@ from hypothesis import assume
 
 class TestSchemaProperties:
     """Property-based tests for schema system."""
-    
+
     @given(
         field_name=st.text(min_size=1, max_size=50),
         default_value=st.text(),
@@ -1559,15 +1562,15 @@ class TestSchemaProperties:
     ) -> None:
         """Test field creation with random valid inputs."""
         assume(field_name.isidentifier())  # Valid Python identifier
-        
+
         from haive.core.schema import create_field
-        
+
         field = create_field(
             str,
             default=default_value,
             description=description
         )
-        
+
         assert field.default == default_value
         assert field.description == description
         assert field.type_ == str
@@ -1582,40 +1585,40 @@ import pytest
 @pytest.mark.asyncio
 class TestAsyncPatterns:
     """Test async behavior patterns."""
-    
+
     async def test_concurrent_agent_execution(self) -> None:
         """Test agents can run concurrently."""
         agents = [
             SimpleAgent(name=f"agent_{i}")
             for i in range(5)
         ]
-        
+
         # Run all agents concurrently
         tasks = [
             agent.arun(f"Process request {i}")
             for i, agent in enumerate(agents)
         ]
-        
+
         results = await asyncio.gather(*tasks)
-        
+
         assert len(results) == 5
         assert all(result is not None for result in results)
-    
+
     async def test_agent_timeout_behavior(self) -> None:
         """Test agent handles timeouts gracefully."""
         agent = SimpleAgent(
             name="timeout_test",
             timeout=0.1  # 100ms timeout
         )
-        
+
         # Simulate slow operation
         with patch.object(agent, '_process') as mock_process:
             async def slow_process(*args):
                 await asyncio.sleep(1)  # Longer than timeout
                 return "result"
-            
+
             mock_process.side_effect = slow_process
-            
+
             with pytest.raises(asyncio.TimeoutError):
                 await agent.arun("test")
 ```
@@ -1675,7 +1678,7 @@ from typing import Generator, AsyncGenerator
 def temp_directory() -> Generator[Path, None, None]:
     """Provide temporary directory for tests."""
     import tempfile
-    
+
     with tempfile.TemporaryDirectory() as tmpdir:
         yield Path(tmpdir)
 
@@ -1698,14 +1701,14 @@ def shared_resource() -> Resource:
 def make_agent():
     """Factory fixture for creating agents."""
     created_agents = []
-    
+
     def _make_agent(**kwargs) -> Agent:
         agent = Agent(**kwargs)
         created_agents.append(agent)
         return agent
-    
+
     yield _make_agent
-    
+
     # Cleanup
     for agent in created_agents:
         agent.cleanup()
@@ -1743,21 +1746,21 @@ def create_test_agent(
 # Good: Mock with realistic responses
 class MockLLMEngine:
     """Mock LLM engine for testing."""
-    
+
     def __init__(self, responses: Optional[Dict[str, str]] = None):
         self.responses = responses or {}
         self.call_count = 0
         self.last_input = None
-    
+
     async def ainvoke(self, input_text: str) -> str:
         self.call_count += 1
         self.last_input = input_text
-        
+
         # Return predefined response or generate one
         for pattern, response in self.responses.items():
             if pattern in input_text:
                 return response
-        
+
         return f"Mock response to: {input_text}"
 ```
 
@@ -2460,7 +2463,7 @@ async def retry_with_backoff(
     jitter: bool = True
 ) -> T:
     """Retry async function with exponential backoff.
-    
+
     Args:
         func: Async function to retry
         max_retries: Maximum number of retry attempts
@@ -2468,45 +2471,45 @@ async def retry_with_backoff(
         max_delay: Maximum delay between retries
         exponential_base: Base for exponential backoff
         jitter: Whether to add random jitter to delays
-        
+
     Returns:
         Result from successful function call
-        
+
     Raises:
         Last exception if all retries fail
     """
     delay = base_delay
     last_exception: Optional[Exception] = None
-    
+
     for attempt in range(max_retries + 1):
         try:
             return await func()
         except Exception as e:
             last_exception = e
-            
+
             if attempt == max_retries:
                 logger.error(
                     f"All {max_retries} retries failed",
                     extra={"last_error": str(e)}
                 )
                 raise
-            
+
             # Calculate next delay
             if jitter:
                 actual_delay = delay * (0.5 + random.random())
             else:
                 actual_delay = delay
-                
+
             logger.warning(
                 f"Attempt {attempt + 1} failed, retrying in {actual_delay:.2f}s",
                 extra={"error": str(e), "attempt": attempt + 1}
             )
-            
+
             await asyncio.sleep(actual_delay)
-            
+
             # Exponential backoff
             delay = min(delay * exponential_base, max_delay)
-    
+
     # Should never reach here, but for type safety
     assert last_exception is not None
     raise last_exception
@@ -2514,13 +2517,13 @@ async def retry_with_backoff(
 # Usage
 async def fetch_with_retry(url: str) -> Dict[str, Any]:
     """Fetch URL with automatic retry on failure."""
-    
+
     async def _fetch():
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 response.raise_for_status()
                 return await response.json()
-    
+
     return await retry_with_backoff(_fetch)
 ```
 
@@ -2532,36 +2535,36 @@ from typing import AsyncGenerator, Optional
 
 class AgentContext:
     """Context manager for agent execution."""
-    
+
     def __init__(self, agent: Agent):
         self.agent = agent
         self.start_time: Optional[float] = None
         self.metrics: Dict[str, Any] = {}
-        
+
     async def __aenter__(self) -> "AgentContext":
         """Enter context and initialize resources."""
         self.start_time = time.time()
         await self.agent.initialize()
-        
+
         logger.info(
             f"Agent {self.agent.name} context entered",
             extra={"agent_id": self.agent.id}
         )
-        
+
         return self
-        
+
     async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Exit context and cleanup resources."""
         duration = time.time() - self.start_time
-        
+
         self.metrics.update({
             "duration": duration,
             "success": exc_type is None,
             "error": str(exc_val) if exc_val else None
         })
-        
+
         await self.agent.cleanup()
-        
+
         logger.info(
             f"Agent {self.agent.name} context exited",
             extra=self.metrics
@@ -2572,7 +2575,7 @@ async def managed_agent_execution(
     agent: Agent
 ) -> AsyncGenerator[Agent, None]:
     """Manage agent lifecycle during execution."""
-    
+
     async with AgentContext(agent):
         try:
             yield agent
@@ -2590,7 +2593,7 @@ async def managed_agent_execution(
 # Usage
 async def run_agent_with_context(agent: Agent, input_text: str) -> str:
     """Run agent with full context management."""
-    
+
     async with managed_agent_execution(agent) as managed_agent:
         result = await managed_agent.arun(input_text)
         return result

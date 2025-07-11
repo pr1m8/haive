@@ -1,18 +1,21 @@
 # Token Tracking and State Schema Session Memory
 
 ## Session Overview
+
 **Date**: 2025-01-09
 **Goal**: Implement token tracking for messages and create a clean state schema hierarchy
 
 ## Key Accomplishments
 
 ### 1. Token Tracking Implementation
+
 - Created `MessagesStateWithTokenUsage` as THE standard for token-aware conversations
 - Automatically tracks tokens for ALL messages (not just AI messages)
 - Includes cost calculation, usage aggregation, and capacity monitoring
 - Added `TokenUsageMixin` for reusable token tracking functionality
 
 ### 2. State Schema Hierarchy
+
 ```
 MessagesState (basic, no tokens)
 └── MessagesStateWithTokenUsage (with token tracking)
@@ -21,6 +24,7 @@ MessagesState (basic, no tokens)
 ```
 
 ### 3. LLMState Features
+
 - Single engine focus (not multiple engines)
 - Auto-detects context length from model name (gpt-4-turbo → 128k)
 - Configurable thresholds (warning at 75%, critical at 90%)
@@ -28,6 +32,7 @@ MessagesState (basic, no tokens)
 - Rich metadata extraction from engine
 
 ### 4. Field Registry Updates
+
 - Added `PrebuiltStates` registry for easy access
 - Created aliases:
   - `TokenAwareState` = `MessagesStateWithTokenUsage`
@@ -36,6 +41,7 @@ MessagesState (basic, no tokens)
 - StandardFields.messages(use_enhanced=True) now uses MessageList
 
 ### 5. Schema Composer Integration
+
 - Fixed to use StandardFields instead of hardcoded List[BaseMessage]
 - Now uses field registry for messages field
 - Replaced BaseMessage with AnyMessage for compatibility

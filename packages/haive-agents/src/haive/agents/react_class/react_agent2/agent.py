@@ -1,17 +1,12 @@
 # src/haive/agents/react/agent.py
 
-import logging
-import os
-import uuid
 from collections.abc import Callable
 from datetime import datetime
+import logging
+import os
 from typing import Any, Literal
+import uuid
 
-from haive.core.engine.agent.agent import register_agent
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.graph.tool_config import ToolConfig
-from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.messages import AIMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables import RunnableConfig
@@ -23,6 +18,12 @@ from langgraph.types import Checkpointer, Command
 from pydantic import BaseModel, Field
 
 from haive.agents.simple.agent import SimpleAgent, SimpleAgentConfig, SimpleAgentState
+from haive.core.engine.agent.agent import register_agent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.graph.tool_config import ToolConfig
+from haive.core.models.llm.base import AzureLLMConfig
+
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -241,11 +242,7 @@ class ReactAgent(SimpleAgent):
         gb.add_node(self.config.node_name, self.config.engine)
 
         # Add the tool execution node
-        tool_node = ToolNode(
-            tools=self.config.tools
-            # name=self.config.tool_node_name,
-            # config=self.config.tools
-        )
+        tool_node = ToolNode(tools=self.config.tools)
         gb.add_node(self.config.tool_node_name, tool_node)
 
         # Add the router node
@@ -275,11 +272,7 @@ class ReactAgent(SimpleAgent):
                             tool_obj = tool.tool
 
                         if getattr(tool_obj, "name", "") == tool_name:
-                            specialized_tool_node = ToolNode(
-                                # name=destination,
-                                # config=[tool]
-                                tools=[tool]
-                            )
+                            specialized_tool_node = ToolNode(tools=[tool])
                             gb.add_node(destination, specialized_tool_node)
                             custom_nodes[destination] = tool_name
                             # Connect back to the agent
@@ -336,10 +329,9 @@ class ReactAgent(SimpleAgent):
                 render_and_display_graph(self.app, output_name=graph_path)
                 logger.info(f"Graph visualization saved to {graph_path}")
             except Exception as e:
-                logger.error(f"Error generating graph visualization: {e}")
+                logger.exception(f"Error generating graph visualization: {e}")
 
         # Ensure the graph is compiled
-        # self.compile()
 
         logger.info(f"Set up React workflow for {self.config.name}")
 
@@ -465,7 +457,7 @@ class ReactAgent(SimpleAgent):
 
                 return {"structured_response": response}
             except Exception as e:
-                logger.error(f"Error generating structured response: {e}")
+                logger.exception(f"Error generating structured response: {e}")
                 return {"structured_response": {"error": str(e)}}
 
         return generate_structured_response

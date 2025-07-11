@@ -2,14 +2,11 @@
 
 import os
 
-import pytest
 from langchain_core.messages import SystemMessage  # , MessagesPlaceholder
-from langchain_core.prompts import (
-    ChatPromptTemplate,
-    MessagesPlaceholder,
-)
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
+import pytest
 
 from haive.core.models.llm.base import AzureLLMConfig, OpenAILLMConfig
 

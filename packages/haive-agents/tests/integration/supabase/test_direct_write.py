@@ -11,18 +11,12 @@ import psycopg
 async def direct_write_test():
     """Test writing directly to Supabase."""
 
-    print("🧪 Direct Supabase Write Test")
-    print("=" * 60)
-
     conn_string = os.getenv("POSTGRES_CONNECTION_STRING")
     if not conn_string:
-        print("❌ No connection string")
         return False
 
-    print(f"✅ Using Supabase: {'supabase.com' in conn_string}")
 
     thread_id = f"direct_test_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-    print(f"📝 Thread ID: {thread_id}")
 
     try:
         # Write some test data
@@ -38,7 +32,6 @@ async def direct_write_test():
                 )
 
                 await conn.commit()
-                print("✅ Direct write successful!")
 
                 # Verify it's there
                 await cur.execute(
@@ -46,20 +39,15 @@ async def direct_write_test():
                     (thread_id,),
                 )
                 count = (await cur.fetchone())[0]
-                print(f"✅ Verified: {count} row(s) written")
 
                 return True
 
     except Exception as e:
-        print(f"❌ Error: {e}")
         return False
 
 
 async def check_tables():
     """Check table structure."""
-
-    print("\n📊 Checking Supabase Tables")
-    print("=" * 60)
 
     conn_string = os.getenv("POSTGRES_CONNECTION_STRING")
 
@@ -69,18 +57,17 @@ async def check_tables():
                 # Check tables
                 await cur.execute(
                     """
-                    SELECT table_name 
-                    FROM information_schema.tables 
-                    WHERE table_schema = 'public' 
+                    SELECT table_name
+                    FROM information_schema.tables
+                    WHERE table_schema = 'public'
                     AND table_name IN ('checkpoints', 'checkpoint_writes', 'checkpoint_blobs')
                     ORDER BY table_name
                 """
                 )
 
                 tables = await cur.fetchall()
-                print("✅ Found tables:")
                 for (table,) in tables:
-                    print(f"   - {table}")
+                    pass
 
                 # Get row counts
                 for table_name in [
@@ -90,10 +77,9 @@ async def check_tables():
                 ]:
                     await cur.execute(f"SELECT COUNT(*) FROM {table_name}")
                     count = (await cur.fetchone())[0]
-                    print(f"   {table_name}: {count} total rows")
 
     except Exception as e:
-        print(f"❌ Error: {e}")
+        pass")
 
 
 if __name__ == "__main__":
@@ -101,7 +87,3 @@ if __name__ == "__main__":
     asyncio.run(check_tables())
 
     if success:
-        print("\n✅ Supabase is accessible and writable!")
-        print(
-            "🔗 https://supabase.com/dashboard/project/zkssazqhwcetsnbiuqik/editor/45942"
-        )

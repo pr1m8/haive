@@ -12,9 +12,6 @@ import uuid
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
-from langchain_core.documents import Document
-from langgraph.graph import END, START
-
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.engine.retriever import BaseRetrieverConfig, RetrieverType
 from haive.core.engine.vectorstore import VectorStoreConfig
@@ -22,6 +19,8 @@ from haive.core.engine.vectorstore import VectorStoreConfig
 # Adjust these imports to match your project structure
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from haive.core.models.retriever.base import RetrieverType
+from langchain_core.documents import Document
+from langgraph.graph import END, START
 
 
 # Import the visualization utils

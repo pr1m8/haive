@@ -1,5 +1,4 @@
-"""
-Complex tests integrating the visualization capabilities with validation and engine nodes.
+"""Complex tests integrating the visualization capabilities with validation and engine nodes.
 
 These tests demonstrate the enhanced visualization features in scenarios with complex graph
 structures, including subgraphs, validation branching, and engine nodes.
@@ -8,10 +7,10 @@ structures, including subgraphs, validation branching, and engine nodes.
 import os
 from typing import Any, Dict, List, Optional
 
-import pytest
 from langchain_core.tools import tool
 from langgraph.types import Command
 from pydantic import BaseModel, Field
+import pytest
 
 from haive.core.engine.base import Engine
 from haive.core.graph.node.engine_node import EngineNodeConfig
@@ -49,7 +48,7 @@ class MockEngine(Engine):
         self.id = f"mock_engine_{name}"
         self.mode = mode
 
-    def invoke(self, inputs: Any, config: Optional[Dict[str, Any]] = None) -> Any:
+    def invoke(self, inputs: Any, config: dict[str, Any] | None = None) -> Any:
         """Mock invoke method that returns input."""
         return inputs
 
@@ -61,7 +60,7 @@ class ComplexWorkflowState(ToolState):
     validation_complete: bool = Field(default=False)
     processing_complete: bool = Field(default=False)
     current_stage: str = Field(default="init")
-    engine_results: Dict[str, Any] = Field(default_factory=dict)
+    engine_results: dict[str, Any] = Field(default_factory=dict)
 
 
 # Test fixtures
@@ -84,8 +83,7 @@ def validation_tools():
 
 @pytest.fixture
 def hierarchical_graph(mock_engines, validation_tools):
-    """
-    Create a complex hierarchical graph with nested subgraphs,
+    """Create a complex hierarchical graph with nested subgraphs,
     validation nodes, and engine nodes.
     """
     # Create main graph
@@ -250,8 +248,7 @@ def hierarchical_graph(mock_engines, validation_tools):
 
 @pytest.fixture
 def complex_branching_graph(mock_engines, validation_tools):
-    """
-    Create a complex graph with multiple branching paths based on
+    """Create a complex graph with multiple branching paths based on
     validation results and engine outputs.
     """
     # Create main graph
@@ -296,8 +293,8 @@ def complex_branching_graph(mock_engines, validation_tools):
                 "DocumentSchema",
                 (BaseModel,),
                 {
-                    "documents": (List[Dict[str, Any]], ...),
-                    "relevance_scores": (List[float], ...),
+                    "documents": (list[dict[str, Any]], ...),
+                    "relevance_scores": (list[float], ...),
                 },
             )
         ],
@@ -313,7 +310,7 @@ def complex_branching_graph(mock_engines, validation_tools):
             type(
                 "ResponseSchema",
                 (BaseModel,),
-                {"text": (str, ...), "sources": (List[str], ...)},
+                {"text": (str, ...), "sources": (list[str], ...)},
             )
         ],
         messages_field="generated_response",
@@ -326,10 +323,9 @@ def complex_branching_graph(mock_engines, validation_tools):
         docs = state.get("retrieved_documents", {}).get("documents", [])
         if len(docs) > 5:
             return "many_docs"
-        elif len(docs) > 0:
+        if len(docs) > 0:
             return "few_docs"
-        else:
-            return "no_docs"
+        return "no_docs"
 
     # Processing for different document counts
     def process_many_docs(state):

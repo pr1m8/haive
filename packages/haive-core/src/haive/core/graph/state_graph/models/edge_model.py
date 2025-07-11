@@ -21,13 +21,13 @@ class EdgeModel(SerializableModel):
     source: str = Field(..., description="Source node name")
     target: str = Field(..., description="Target node name")
     edge_type: EdgeType = Field(default=EdgeType.STANDARD, description="Type of edge")
-    sources: Optional[List[str]] = Field(
+    sources: list[str] | None = Field(
         default=None, description="Source nodes for waiting edges"
     )
-    branch_name: Optional[str] = Field(
+    branch_name: str | None = Field(
         default=None, description="Branch name for branch edges"
     )
-    condition: Optional[str] = Field(
+    condition: str | None = Field(
         default=None, description="Condition value for branch edges"
     )
 
@@ -62,7 +62,7 @@ class EdgeModel(SerializableModel):
         )
 
     @classmethod
-    def create_waiting(cls, sources: List[str], target: str) -> "EdgeModel":
+    def create_waiting(cls, sources: list[str], target: str) -> "EdgeModel":
         """Create a waiting edge."""
         return cls(
             name=f"wait_{'+'.join(sources)}_to_{target}",

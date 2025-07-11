@@ -8,13 +8,13 @@ from langgraph.graph import END, START
 from haive.core.graph.common.types import NodeLike
 from haive.core.graph.state_graph.pattern.base import GraphPattern
 
+
 logger = logging.getLogger(__name__)
 
 
 @GraphPattern.register("simple")
 class SimplePattern(GraphPattern):
-    """
-    Simple agent pattern with a single LLM node.
+    """Simple agent pattern with a single LLM node.
 
     Structure:
     - Single agent node that processes input
@@ -23,11 +23,11 @@ class SimplePattern(GraphPattern):
 
     # Define structure through class attributes - use 'pattern_' prefix
     # to match the attribute names in the base class
-    pattern_nodes: ClassVar[Dict[str, Optional[NodeLike]]] = {
+    pattern_nodes: ClassVar[dict[str, NodeLike | None]] = {
         "agent": None  # Placeholder to be filled at build time
     }
 
-    pattern_edges: ClassVar[List[tuple]] = [(START, "agent"), ("agent", END)]
+    pattern_edges: ClassVar[list[tuple]] = [(START, "agent"), ("agent", END)]
 
     def _build(self):
         """Implementation-specific logic."""
@@ -45,8 +45,7 @@ class SimplePattern(GraphPattern):
 
 @GraphPattern.register("react")
 class ReactPattern(SimplePattern):  # Change to inherit from SimplePattern!
-    """
-    ReAct pattern extending SimplePattern with tools.
+    """ReAct pattern extending SimplePattern with tools.
 
     Structure:
     - Agent node from SimplePattern
@@ -56,17 +55,17 @@ class ReactPattern(SimplePattern):  # Change to inherit from SimplePattern!
     """
 
     # Define only NEW structure not in SimplePattern
-    pattern_nodes: ClassVar[Dict[str, Optional[NodeLike]]] = {
+    pattern_nodes: ClassVar[dict[str, NodeLike | None]] = {
         "tools": None  # Only add tools, agent comes from SimplePattern
     }
 
-    pattern_edges: ClassVar[List[tuple]] = [
+    pattern_edges: ClassVar[list[tuple]] = [
         # Remove (START, "agent") since it comes from SimplePattern
         # Remove ("agent", END) to replace with conditional
         ("tools", "agent")  # Add edge from tools back to agent
     ]
 
-    pattern_conditionals: ClassVar[List[Dict[str, Any]]] = [
+    pattern_conditionals: ClassVar[list[dict[str, Any]]] = [
         {
             "source": "agent",
             "condition": lambda state: (
@@ -77,8 +76,7 @@ class ReactPattern(SimplePattern):  # Change to inherit from SimplePattern!
     ]
 
     def _build(self):
-        """
-        Implementation-specific logic.
+        """Implementation-specific logic.
 
         1. First call parent's _build to set up agent node
         2. Then add our tools node

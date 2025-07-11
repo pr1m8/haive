@@ -1,19 +1,18 @@
-"""
-Rate limiting mixin for LLM configurations.
+"""Rate limiting mixin for LLM configurations.
 
 This module provides a mixin class that adds rate limiting capabilities to LLM configurations,
 allowing for controlled request rates to prevent API throttling and manage costs.
 """
 
 import logging
-from typing import Any, Optional
+from typing import Any
+
 
 logger = logging.getLogger(__name__)
 
 
 class RateLimitingMixin:
-    """
-    Mixin class that adds rate limiting configuration to LLM models.
+    """Mixin class that adds rate limiting configuration to LLM models.
 
     This mixin provides configuration for rate limiting when calling LLM APIs,
     including request limits, token limits, and time windows. It integrates with
@@ -31,17 +30,16 @@ class RateLimitingMixin:
 
     # These attributes are expected to be defined in the class using this mixin
     # They will be added via Pydantic Field definitions in the concrete class
-    requests_per_second: Optional[float]
-    tokens_per_second: Optional[int]
-    tokens_per_minute: Optional[int]
+    requests_per_second: float | None
+    tokens_per_second: int | None
+    tokens_per_minute: int | None
     max_retries: int
     retry_delay: float
-    check_every_n_seconds: Optional[float]
-    burst_size: Optional[int]
+    check_every_n_seconds: float | None
+    burst_size: int | None
 
     def apply_rate_limiting(self, llm: Any) -> Any:
-        """
-        Apply rate limiting to an LLM instance.
+        """Apply rate limiting to an LLM instance.
 
         Args:
             llm: The LLM instance to apply rate limiting to
@@ -90,13 +88,12 @@ class RateLimitingMixin:
                     f"Applying rate limiting with config: {rate_limiter_config}"
                 )
                 return llm.with_rate_limiter(rate_limiter)
-            else:
-                # Otherwise, wrap it manually
-                logger.warning(
-                    f"LLM {type(llm).__name__} does not support with_rate_limiter method. "
-                    "Rate limiting may not work as expected."
-                )
-                return llm
+            # Otherwise, wrap it manually
+            logger.warning(
+                f"LLM {type(llm).__name__} does not support with_rate_limiter method. "
+                "Rate limiting may not work as expected."
+            )
+            return llm
 
         except ImportError as e:
             logger.warning(
@@ -105,12 +102,11 @@ class RateLimitingMixin:
             )
             return llm
         except Exception as e:
-            logger.error(f"Failed to apply rate limiting: {e}")
+            logger.exception(f"Failed to apply rate limiting: {e}")
             return llm
 
     def get_rate_limit_info(self) -> dict:
-        """
-        Get a dictionary of rate limiting configuration for debugging.
+        """Get a dictionary of rate limiting configuration for debugging.
 
         Returns:
             Dictionary containing rate limiting configuration

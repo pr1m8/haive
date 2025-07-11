@@ -1,10 +1,15 @@
-#from.core.prompts.base import PromptTemplateConfig
-from haive.agents.reasoning_and_critique.self_discover.models import , Plan, AdaptedModules
-from haive.core.utils.parser_utils import parse_reasoning_modules_to_string
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
-reasoning_prompt= """
+
+from haive.agents.reasoning_and_critique.self_discover.models import (
+    AdaptedModules,
+    Plan,
+)
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.utils.parser_utils import parse_reasoning_modules_to_string
+
+
+reasoning_prompt = """
 Step {step_id}: {step_description}
 
 Task Context: {task_description}
@@ -18,12 +23,13 @@ step_reasoning_prompt_template = PromptTemplate(template=reasoning_prompt)
 step_reasoning_chain = AugLLMConfig(
     name="step_reasoning_executor",
     prompt_template=step_reasoning_prompt_template,
-    output_parser=StrOutputParser()
+    output_parser=StrOutputParser(),
 )
 reasoning_modules_instance = ReasoningModules()  # ✅ Create an instance
 
 
-select_prompt_template = PromptTemplate(template="""
+select_prompt_template = PromptTemplate(
+    template="""
 Select several reasoning modules that are crucial to utilize in order to solve the given task:
 
 All reasoning module descriptions:
@@ -32,12 +38,17 @@ All reasoning module descriptions:
 Task: {task_description}
 
 Select several modules that are crucial for solving the task above:
-""")
-select_prompt_template = select_prompt_template.partial(reasoning_modules=parse_reasoning_modules_to_string(reasoning_modules_instance.modules))
+"""
+)
+select_prompt_template = select_prompt_template.partial(
+    reasoning_modules=parse_reasoning_modules_to_string(
+        reasoning_modules_instance.modules
+    )
+)
 select_chain = AugLLMConfig(
     name="select",
     prompt_template=select_prompt_template,
-    structured_output_model=ReasoningModules
+    structured_output_model=ReasoningModules,
 )
 
 
@@ -55,7 +66,7 @@ adapt_prompt_template = PromptTemplate(template=adapt_template)
 adapt_chain = AugLLMConfig(
     name="adapt",
     prompt_template=adapt_prompt_template,
-    structured_output_model=AdaptedModules
+    structured_output_model=AdaptedModules,
 )
 
 
@@ -115,5 +126,5 @@ structured_template = PromptTemplate(template=structured_template_prompt)
 structured_chain = AugLLMConfig(
     name="structured_reasoning_planner",
     prompt_template=structured_template,
-    structured_output_model=Plan
+    structured_output_model=Plan,
 )

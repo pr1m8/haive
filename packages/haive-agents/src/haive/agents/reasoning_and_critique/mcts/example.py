@@ -3,11 +3,13 @@
 import logging
 from typing import Any
 
-from agents.mcts.utils import create_mcts_agent, extract_best_solution, print_tree_stats
-from haive.core.models.llm.base import AzureLLMConfig
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_community.utilities.tavily_search import TavilySearchAPIWrapper
 from langchain_core.tools import BaseTool
+
+from agents.mcts.utils import create_mcts_agent, extract_best_solution, print_tree_stats
+from haive.core.models.llm.base import AzureLLMConfig
+
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -53,7 +55,7 @@ def run_mcts_agent_example(
         name="research_mcts_agent",
     )
     for step in agent.stream(question, debug=True):
-        print(step)
+        pass
 
     logger.info(f"Running MCTS agent on question: {question}")
 
@@ -90,9 +92,6 @@ def run_mcts_agent_example(
             logger.info(f"Solution score: {solution['score']}/10")
             if solution["output"]:
                 logger.info("Solution output:")
-                print("-" * 80)
-                print(solution["output"])
-                print("-" * 80)
 
     return final_result
 

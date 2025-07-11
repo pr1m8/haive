@@ -7,7 +7,7 @@
     "description": "Search for LCBO products by keyword, name, etc.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.818590",
+    "timestamp": "2025-07-10T19:45:29.034443",
     "schema": {
       "description": "Input schema for searching LCBO products.\n\nArgs:\n    query: The search terms to find matching products\n    page: Page number for paginated results\n    per_page: Number of results to return per page",
       "properties": {
@@ -62,7 +62,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.818590",
+      "timestamp": "2025-07-10T19:45:29.034443",
       "category": "toolkits"
     }
   },

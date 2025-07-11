@@ -7,7 +7,7 @@
     "description": "Retrieve all food and drink reviews from The Report Of The Week.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.731172",
+    "timestamp": "2025-07-10T19:45:28.966092",
     "schema": {
       "description": "Input model for retrieving all reports from The Report Of The Week API.\n\nThis empty model is used as a placeholder for the get_all_reports function\nto maintain a consistent API pattern across tools.",
       "properties": {},
@@ -29,7 +29,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.731172",
+      "timestamp": "2025-07-10T19:45:28.966092",
       "category": "individual_tools"
     }
   },

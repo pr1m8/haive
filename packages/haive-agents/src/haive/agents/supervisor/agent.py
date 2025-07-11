@@ -9,10 +9,6 @@ import logging
 import time
 from typing import Any, Callable, Dict, List, Optional, Union
 
-from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
 from langgraph.graph import END, START
@@ -25,6 +21,11 @@ from rich.table import Table
 from haive.agents.base.agent import Agent
 from haive.agents.react.agent import ReactAgent
 from haive.agents.supervisor.registry import AgentRegistry
+from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
 
 logger = logging.getLogger(__name__)
 console = Console()
@@ -34,24 +35,22 @@ class SupervisorState(BaseModel):
     """Extended state for supervisor operations."""
 
     # Core messaging (inherited from base state)
-    messages: List[Any] = Field(default_factory=list)
+    messages: list[Any] = Field(default_factory=list)
 
     # Supervisor-specific fields
-    registered_agents: Dict[str, Any] = Field(
+    registered_agents: dict[str, Any] = Field(
         default_factory=dict, description="Available agents"
     )
-    routing_decision: Optional[str] = Field(None, description="Last routing decision")
-    routing_timestamp: Optional[float] = Field(
-        None, description="When routing occurred"
-    )
-    target_agent: Optional[str] = Field(None, description="Current target agent")
-    last_agent: Optional[str] = Field(None, description="Previously active agent")
+    routing_decision: str | None = Field(None, description="Last routing decision")
+    routing_timestamp: float | None = Field(None, description="When routing occurred")
+    target_agent: str | None = Field(None, description="Current target agent")
+    last_agent: str | None = Field(None, description="Previously active agent")
     conversation_complete: bool = Field(
         False, description="Whether conversation is done"
     )
 
     # Task tracking
-    task_keywords: List[str] = Field(
+    task_keywords: list[str] = Field(
         default_factory=list, description="Detected task types"
     )
     task_complexity: str = Field("Simple", description="Estimated complexity")
@@ -65,7 +64,7 @@ class SupervisorAgent(ReactAgent):
     """
 
     def __init__(
-        self, name: str = "supervisor", engine: Optional[AugLLMConfig] = None, **kwargs
+        self, name: str = "supervisor", engine: AugLLMConfig | None = None, **kwargs
     ):
         """Initialize supervisor agent.
 
@@ -92,7 +91,7 @@ class SupervisorAgent(ReactAgent):
         logger.info(f"SupervisorAgent '{name}' initialized")
 
     def register_agent(
-        self, agent: Agent, capability_description: Optional[str] = None
+        self, agent: Agent, capability_description: str | None = None
     ) -> bool:
         """Register an agent for supervision.
 
@@ -132,7 +131,6 @@ class SupervisorAgent(ReactAgent):
 
     def _create_delegation_prompt(self) -> ChatPromptTemplate:
         """Create prompt template for agent delegation."""
-
         # Get available agents and capabilities
         available_agents = self.agent_registry.get_available_agents()
         capabilities = self.agent_registry.get_agent_capabilities()
@@ -172,7 +170,6 @@ Response format: Provide only the agent name or END, nothing else."""
 
     def build_graph(self) -> BaseGraph:
         """Build supervisor graph with custom routing logic."""
-
         # Create base graph
         graph = BaseGraph(self.state_schema)
 
@@ -195,7 +192,7 @@ Response format: Provide only the agent name or END, nothing else."""
             graph.add_edge(agent_name, "supervisor")
 
         # Add conditional edges from routing node
-        routing_destinations = available_agents + ["__end__"]
+        routing_destinations = [*available_agents, "__end__"]
         graph.add_conditional_edges(
             "routing", self._routing_condition, routing_destinations
         )
@@ -207,7 +204,6 @@ Response format: Provide only the agent name or END, nothing else."""
 
         async def supervisor_node(state: SupervisorState, config=None) -> dict:
             """Supervisor node that makes routing decisions."""
-
             # Update registered agents in state
             agent_dict = {}
             for agent_name in self.agent_registry.get_available_agents():
@@ -252,8 +248,10 @@ Response format: Provide only the agent name or END, nothing else."""
                 logger.info(f"Supervisor decision: {decision}")
 
                 return {
-                    "messages": state.messages
-                    + [AIMessage(content=f"Routing to: {decision}")],
+                    "messages": [
+                        *state.messages,
+                        AIMessage(content=f"Routing to: {decision}"),
+                    ],
                     "registered_agents": agent_dict,
                     "routing_decision": decision,
                     "routing_timestamp": time.time(),
@@ -270,7 +268,6 @@ Response format: Provide only the agent name or END, nothing else."""
 
         def routing_node(state: SupervisorState, config=None) -> dict:
             """Route based on supervisor decision."""
-
             decision = state.routing_decision
 
             if not decision:
@@ -287,13 +284,14 @@ Response format: Provide only the agent name or END, nothing else."""
 
         async def agent_wrapper(state: SupervisorState, config=None) -> dict:
             """Execute the target agent and return results."""
-
             agent = self.agent_registry.get_agent(agent_name)
             if not agent:
                 logger.error(f"Agent {agent_name} not found")
                 return {
-                    "messages": state.messages
-                    + [AIMessage(content=f"Error: Agent {agent_name} not available")],
+                    "messages": [
+                        *state.messages,
+                        AIMessage(content=f"Error: Agent {agent_name} not available"),
+                    ],
                     "last_agent": agent_name,
                     "target_agent": None,
                 }
@@ -319,13 +317,13 @@ Response format: Provide only the agent name or END, nothing else."""
                 }
 
             except Exception as e:
-                logger.error(f"Agent {agent_name} execution failed: {e}")
+                logger.exception(f"Agent {agent_name} execution failed: {e}")
                 return {
-                    "messages": state.messages
-                    + [
+                    "messages": [
+                        *state.messages,
                         AIMessage(
-                            content=f"Agent {agent_name} encountered an error: {str(e)}"
-                        )
+                            content=f"Agent {agent_name} encountered an error: {e!s}"
+                        ),
                     ],
                     "last_agent": agent_name,
                     "target_agent": None,
@@ -337,7 +335,6 @@ Response format: Provide only the agent name or END, nothing else."""
         self, supervisor_state: SupervisorState, agent: Agent
     ) -> Any:
         """Prepare state for agent execution."""
-
         # If agent has specific state schema, try to convert
         if hasattr(agent, "state_schema") and agent.state_schema:
             try:
@@ -365,13 +362,12 @@ Response format: Provide only the agent name or END, nothing else."""
         # Default to end if invalid
         return "__end__"
 
-    def get_registered_agents(self) -> List[str]:
+    def get_registered_agents(self) -> list[str]:
         """Get list of registered agent names."""
         return self.agent_registry.get_available_agents()
 
     def print_supervisor_status(self) -> None:
         """Print comprehensive supervisor status."""
-
         # Main status table
         table = Table(title="🔧 Supervisor Agent Status")
         table.add_column("Property", style="cyan")

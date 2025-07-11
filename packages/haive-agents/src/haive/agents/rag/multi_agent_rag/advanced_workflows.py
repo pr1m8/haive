@@ -1,39 +1,36 @@
-"""
-Advanced RAG Workflows - Graph RAG and Agentic RAG Patterns
+"""Advanced RAG Workflows - Graph RAG and Agentic RAG Patterns.
 
 This module implements the most sophisticated RAG architectures including
 Graph RAG, Agentic routing, speculative execution, and self-routing patterns.
 """
 
-from typing import Any, Dict, List
-
-from haive.core.schema.prebuilt.rag_state import RAGState
+from typing import Any
 
 from haive.agents.multi.base import ExecutionMode, MultiAgent
 from haive.agents.simple import SimpleAgent
+from haive.core.schema.prebuilt.rag_state import RAGState
 
 
 class GraphRAGState(RAGState):
-    """RAG state for graph-based approaches"""
+    """RAG state for graph-based approaches."""
 
-    knowledge_graph: Dict[str, List[str]] = {}
-    graph_entities: List[str] = []
-    entity_relationships: Dict[str, Dict[str, str]] = {}
-    graph_paths: List[List[str]] = []
+    knowledge_graph: dict[str, list[str]] = {}
+    graph_entities: list[str] = []
+    entity_relationships: dict[str, dict[str, str]] = {}
+    graph_paths: list[list[str]] = []
 
 
 class AgenticRAGState(RAGState):
-    """RAG state for agentic routing and planning"""
+    """RAG state for agentic routing and planning."""
 
     routing_strategy: str = ""
-    agent_plan: List[Dict[str, Any]] = []
-    execution_trace: List[str] = []
+    agent_plan: list[dict[str, Any]] = []
+    execution_trace: list[str] = []
     dynamic_routing: bool = True
 
 
 class GraphRAGAgent(MultiAgent):
-    """
-    Graph RAG - uses knowledge graph construction and traversal
+    """Graph RAG - uses knowledge graph construction and traversal
     for contextually rich retrieval and reasoning.
     """
 
@@ -115,13 +112,12 @@ class GraphRAGAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for this multi-agent workflow"""
-        return None  # Use default graph structure
+        """Build the custom graph for this multi-agent workflow."""
+        return  # Use default graph structure
 
 
 class AgenticGraphRAGAgent(MultiAgent):
-    """
-    Agentic Graph RAG - combines graph reasoning with agentic routing
+    """Agentic Graph RAG - combines graph reasoning with agentic routing
     and dynamic planning for complex multi-step reasoning.
     """
 
@@ -132,7 +128,7 @@ class AgenticGraphRAGAgent(MultiAgent):
             instructions="""
             Analyze query complexity and determine the optimal agentic strategy:
             - Simple: Direct graph lookup
-            - Medium: Multi-hop traversal  
+            - Medium: Multi-hop traversal
             - Complex: Dynamic planning with multiple reasoning steps
             - Expert: Hierarchical decomposition with specialized sub-agents
             """,
@@ -150,7 +146,7 @@ class AgenticGraphRAGAgent(MultiAgent):
             instructions="""
             Route to appropriate specialized sub-agents based on query analysis:
             - Graph construction specialist
-            - Entity resolution specialist  
+            - Entity resolution specialist
             - Relationship extraction specialist
             - Multi-hop reasoning specialist
             - Answer synthesis specialist
@@ -192,13 +188,12 @@ class AgenticGraphRAGAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for this multi-agent workflow"""
-        return None  # Use default graph structure
+        """Build the custom graph for this multi-agent workflow."""
+        return  # Use default graph structure
 
 
 class AgenticRAGRouterAgent(MultiAgent):
-    """
-    Agentic RAG Router - intelligently routes queries to different RAG strategies
+    """Agentic RAG Router - intelligently routes queries to different RAG strategies
     based on query type, complexity, and domain.
     """
 
@@ -268,13 +263,12 @@ class AgenticRAGRouterAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for this multi-agent workflow"""
-        return None  # Use default graph structure
+        """Build the custom graph for this multi-agent workflow."""
+        return  # Use default graph structure
 
 
 class QueryPlanningAgenticRAGAgent(MultiAgent):
-    """
-    Query Planning Agentic RAG - creates detailed execution plans
+    """Query Planning Agentic RAG - creates detailed execution plans
     for complex queries requiring multiple reasoning steps.
     """
 
@@ -329,13 +323,12 @@ class QueryPlanningAgenticRAGAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for this multi-agent workflow"""
-        return None  # Use default graph structure
+        """Build the custom graph for this multi-agent workflow."""
+        return  # Use default graph structure
 
 
 class SelfReflectiveAgenticRAGAgent(MultiAgent):
-    """
-    Self-Reflective Agentic RAG - continuously reflects on and improves
+    """Self-Reflective Agentic RAG - continuously reflects on and improves
     its own reasoning and retrieval processes.
     """
 
@@ -408,13 +401,12 @@ class SelfReflectiveAgenticRAGAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for this multi-agent workflow"""
-        return None  # Use default graph structure
+        """Build the custom graph for this multi-agent workflow."""
+        return  # Use default graph structure
 
 
 class SpeculativeRAGAgent(MultiAgent):
-    """
-    Speculative RAG - generates multiple possible answer hypotheses
+    """Speculative RAG - generates multiple possible answer hypotheses
     in parallel and validates them against retrieved evidence.
     """
 
@@ -484,13 +476,12 @@ class SpeculativeRAGAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for this multi-agent workflow"""
-        return None  # Use default graph structure
+        """Build the custom graph for this multi-agent workflow."""
+        return  # Use default graph structure
 
 
 class SelfRouteRAGAgent(MultiAgent):
-    """
-    Self-Route RAG - dynamically routes itself to different reasoning
+    """Self-Route RAG - dynamically routes itself to different reasoning
     strategies based on intermediate results and confidence levels.
     """
 
@@ -517,7 +508,7 @@ class SelfRouteRAGAgent(MultiAgent):
             Continuously evaluate intermediate results and route to
             different strategies as needed:
             - Monitor answer quality
-            - Assess retrieval effectiveness  
+            - Assess retrieval effectiveness
             - Switch strategies when confidence drops
             - Try multiple approaches if needed
             """,
@@ -554,5 +545,5 @@ class SelfRouteRAGAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for this multi-agent workflow"""
-        return None  # Use default graph structure
+        """Build the custom graph for this multi-agent workflow."""
+        return  # Use default graph structure

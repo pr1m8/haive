@@ -1,4 +1,4 @@
-"""State for the self-rag agent"""
+"""State for the self-rag agent."""
 
 from typing_extensions import TypedDict
 

@@ -1,5 +1,4 @@
-"""
-AskNews Retriever implementation for the Haive framework.
+"""AskNews Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the AskNews retriever,
 which retrieves news articles and current events using AskNews API.
@@ -35,8 +34,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.ASK_NEWS)
 class AskNewsRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for AskNews retriever in the Haive framework.
+    """Configuration for AskNews retriever in the Haive framework.
 
     This retriever searches news articles using AskNews API and returns
     relevant news content with metadata and categorization.
@@ -78,7 +76,7 @@ class AskNewsRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None, description="AskNews API key (auto-resolved from ASKNEWS_API_KEY)"
     )
 
@@ -92,12 +90,12 @@ class AskNewsRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         default=10, ge=1, le=100, description="Number of news articles to retrieve"
     )
 
-    categories: Optional[List[str]] = Field(
+    categories: list[str] | None = Field(
         default=None,
         description="News categories to filter by (e.g., ['technology', 'science', 'business'])",
     )
 
-    sources: Optional[List[str]] = Field(
+    sources: list[str] | None = Field(
         default=None,
         description="Specific news sources to include (e.g., ['reuters', 'bbc', 'cnn'])",
     )
@@ -119,32 +117,31 @@ class AskNewsRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         default="relevance", description="Sort order: 'relevance', 'date', 'popularity'"
     )
 
-    include_domains: Optional[List[str]] = Field(
+    include_domains: list[str] | None = Field(
         default=None, description="Specific domains to include in search"
     )
 
-    exclude_domains: Optional[List[str]] = Field(
+    exclude_domains: list[str] | None = Field(
         default=None, description="Specific domains to exclude from search"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for AskNews retriever."""
         return {
             "query": (str, Field(description="News search query for AskNews")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for AskNews retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(default_factory=list, description="News articles from AskNews"),
             ),
         }
 
     def instantiate(self):
-        """
-        Create an AskNews retriever from this configuration.
+        """Create an AskNews retriever from this configuration.
 
         Returns:
             AskNewsRetriever: Instantiated retriever ready for news search.

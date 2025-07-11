@@ -7,7 +7,7 @@
     "description": "Get details about a location by ID.\n\n    Retrieves comprehensive information about a specific TripAdvisor location\n    such as a hotel, restaurant, or attraction.\n\n    Args:\n        location_id: The unique identifier for a TripAdvisor location.\n        language: The language code for the response content (ISO 639-1).\n        currency: The currency code for price values (ISO 4217).\n\n    Returns:\n        dict: Location details including name, address, rating, etc.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.819088",
+    "timestamp": "2025-07-10T19:45:29.035056",
     "schema": {
       "description": "Input parameters for retrieving location details.",
       "properties": {
@@ -62,7 +62,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.819088",
+      "timestamp": "2025-07-10T19:45:29.035056",
       "category": "toolkits"
     }
   },

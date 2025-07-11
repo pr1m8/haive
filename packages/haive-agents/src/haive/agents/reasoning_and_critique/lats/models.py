@@ -1,5 +1,5 @@
-import math
 from collections import deque
+import math
 from typing import Optional
 
 from langchain_core.messages import BaseMessage, HumanMessage
@@ -100,7 +100,7 @@ class Node:
 
     def get_messages(self, include_reflections: bool = True):
         if include_reflections:
-            return self.messages + [self.reflection.as_message()]
+            return [*self.messages, self.reflection.as_message()]
         return self.messages
 
     def get_trajectory(self, include_reflections: bool = True) -> list[BaseMessage]:
@@ -128,7 +128,7 @@ class Node:
 
     def get_best_solution(self):
         """Return the best solution from within the current sub-tree."""
-        all_nodes = [self] + self._get_all_children()
+        all_nodes = [self, *self._get_all_children()]
         best_node = max(
             all_nodes,
             # We filter out all non-terminal, non-solution trajectories

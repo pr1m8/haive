@@ -1,17 +1,12 @@
-"""Tests for Document Grading Components
+"""Tests for Document Grading Components.
 
 Run with: poetry run pytest packages/haive-agents/tests/rag/multi_agent_rag/test_document_grading.py -v
 """
 
 from typing import Any
 
-import pytest
-from haive.core.fixtures.documents import (
-    conversation_documents,
-    news_documents,
-    technical_documents,
-)
 from langchain_core.documents import Document
+import pytest
 
 from haive.agents.rag.common.document_graders.models import (
     DocumentBinaryResponse,
@@ -22,6 +17,11 @@ from haive.agents.rag.multi_agent_rag import (
     IterativeDocumentGradingAgent,
     MultiAgentRAGState,
     RAGOperationType,
+)
+from haive.core.fixtures.documents import (
+    conversation_documents,
+    news_documents,
+    technical_documents,
 )
 
 

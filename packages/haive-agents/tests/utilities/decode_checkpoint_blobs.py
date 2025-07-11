@@ -11,12 +11,9 @@ import psycopg
 
 def decode_checkpoint_blobs(thread_id: str):
     """Decode and display checkpoint blob contents."""
-    print(f"🔍 Decoding checkpoint blobs for thread: {thread_id}")
-    print("=" * 70)
 
     conn_string = os.environ.get("POSTGRES_CONNECTION_STRING")
     if not conn_string:
-        print("❌ No connection string")
         return
 
     try:
@@ -25,13 +22,13 @@ def decode_checkpoint_blobs(thread_id: str):
                 # Get message blobs
                 cur.execute(
                     """
-                    SELECT 
+                    SELECT
                         version,
                         channel,
                         type,
                         blob
                     FROM public.checkpoint_blobs
-                    WHERE thread_id = %s 
+                    WHERE thread_id = %s
                     AND channel = 'messages'
                     ORDER BY version DESC
                     LIMIT 4
@@ -40,11 +37,8 @@ def decode_checkpoint_blobs(thread_id: str):
                 )
 
                 blobs = cur.fetchall()
-                print(f"\n📊 Found {len(blobs)} message blobs")
 
                 for i, (version, channel, blob_type, blob_data) in enumerate(blobs):
-                    print(f"\n📋 Message blob {i+1} - Version: {version}")
-                    print(f"   Type: {blob_type}")
 
                     if blob_type == "msgpack" and blob_data:
                         try:
@@ -52,34 +46,23 @@ def decode_checkpoint_blobs(thread_id: str):
                             messages = msgpack.unpackb(
                                 blob_data, raw=False, strict_map_key=False
                             )
-                            print(
-                                f"   Messages: {len(messages) if isinstance(messages, list) else 'Not a list'}"
-                            )
 
                             if isinstance(messages, list):
                                 for j, msg in enumerate(messages):
                                     if isinstance(msg, dict):
                                         msg_type = msg.get("type", "unknown")
                                         content = msg.get("content", "")[:100]
-                                        print(
-                                            f"      {j+1}. [{msg_type}]: {content}..."
-                                        )
                                     else:
-                                        print(
-                                            f"      {j+1}. {type(msg).__name__}: {str(msg)[:100]}..."
-                                        )
+                                        pass
                         except Exception as e:
-                            print(f"   ❌ Error decoding msgpack: {e}")
+                            pass")
                     else:
-                        print(
-                            f"   Blob size: {len(blob_data) if blob_data else 0} bytes"
-                        )
+                        pass
 
                 # Also check the actual checkpoint data
-                print("\n🔍 Checking checkpoint channel_values...")
                 cur.execute(
                     """
-                    SELECT 
+                    SELECT
                         checkpoint_id,
                         checkpoint
                     FROM public.checkpoints
@@ -93,7 +76,6 @@ def decode_checkpoint_blobs(thread_id: str):
                 result = cur.fetchone()
                 if result:
                     cp_id, cp_data = result
-                    print(f"\nLatest checkpoint: {cp_id}")
 
                     # Parse checkpoint
                     cp_dict = (
@@ -101,15 +83,12 @@ def decode_checkpoint_blobs(thread_id: str):
                     )
 
                     # Check structure
-                    print("\nCheckpoint structure:")
-                    for key in cp_dict.keys():
-                        print(f"  - {key}")
+                    for key in cp_dict:
                         if key == "channel_values":
-                            for channel in cp_dict[key].keys():
-                                print(f"    - {channel}")
+                            for channel in cp_dict[key]:
+                                pass
 
     except Exception as e:
-        print(f"❌ Error: {e}")
         import traceback
 
         traceback.print_exc()
@@ -117,32 +96,28 @@ def decode_checkpoint_blobs(thread_id: str):
 
 def check_persistence_store_link():
     """Check store persistence linkage in detail."""
-    print("\n\n🔍 Checking Store Persistence Files")
-    print("=" * 70)
 
     # Find all store-related files
     store_dir = "/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/persistence/store"
 
     if os.path.exists(store_dir):
-        print(f"\n📁 Store directory contents:")
         for file in os.listdir(store_dir):
             if file.endswith(".py"):
-                print(f"  - {file}")
 
                 # Check if it imports ConnectionManager
                 file_path = os.path.join(store_dir, file)
                 try:
-                    with open(file_path, "r") as f:
+                    with open(file_path) as f:
                         content = f.read()
 
                     if "ConnectionManager" in content:
-                        print(f"    ✅ Uses ConnectionManager")
+                        pass")
                     elif "connection" in content.lower():
-                        print(f"    ℹ️  Has connection-related code")
+                        passde")
                 except:
                     pass
     else:
-        print(f"❌ Store directory not found: {store_dir}")
+        pass")
 
 
 def main():
@@ -157,7 +132,6 @@ def main():
         thread_id = (
             f"msg_test_{datetime.now().strftime('%H%M%S')[:-2]}02"  # Guess recent
         )
-        print(f"ℹ️  No thread ID provided, trying: {thread_id}")
 
     decode_checkpoint_blobs(thread_id)
     check_persistence_store_link()

@@ -1,11 +1,10 @@
-"""
-Specialized Workflows V2 - Using Enhanced State Schemas
+"""Specialized Workflows V2 - Using Enhanced State Schemas.
 
 Updated versions of FLARE, Dynamic RAG, Debate RAG, etc. using
 state schemas with built-in configuration support.
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from haive.agents.multi.base import ExecutionMode, MultiAgent
 from haive.agents.rag.multi_agent_rag.enhanced_state_schemas import (
@@ -19,9 +18,7 @@ from haive.agents.simple import SimpleAgent
 
 
 class FLAREAgentV2(MultiAgent, StateConfigMixin):
-    """
-    FLARE V2 - Configuration stored in FLAREState
-    """
+    """FLARE V2 - Configuration stored in FLAREState."""
 
     def __init__(
         self,
@@ -98,22 +95,20 @@ class FLAREAgentV2(MultiAgent, StateConfigMixin):
             "workflow_type": "flare",
         }
 
-    async def ainvoke(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Inject configuration into state"""
+    async def ainvoke(self, inputs: dict[str, Any]) -> dict[str, Any]:
+        """Inject configuration into state."""
         for key, value in self._initial_config.items():
             if key not in inputs:
                 inputs[key] = value
         return await super().ainvoke(inputs)
 
     def build_custom_graph(self):
-        """Build the custom graph for this workflow"""
-        return None  # Use default graph structure
+        """Build the custom graph for this workflow."""
+        return  # Use default graph structure
 
 
 class DynamicRAGAgentV2(MultiAgent, StateConfigMixin):
-    """
-    Dynamic RAG V2 - Configuration in DynamicRAGState
-    """
+    """Dynamic RAG V2 - Configuration in DynamicRAGState."""
 
     def __init__(
         self,
@@ -193,26 +188,24 @@ class DynamicRAGAgentV2(MultiAgent, StateConfigMixin):
             "workflow_type": "dynamic_rag",
         }
 
-    async def ainvoke(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Inject configuration"""
+    async def ainvoke(self, inputs: dict[str, Any]) -> dict[str, Any]:
+        """Inject configuration."""
         for key, value in self._initial_config.items():
             if key not in inputs:
                 inputs[key] = value
         return await super().ainvoke(inputs)
 
     def build_custom_graph(self):
-        """Build the custom graph for this workflow"""
-        return None  # Use default graph structure
+        """Build the custom graph for this workflow."""
+        return  # Use default graph structure
 
 
 class DebateRAGAgentV2(MultiAgent, StateConfigMixin):
-    """
-    Debate RAG V2 - Configuration in DebateRAGState
-    """
+    """Debate RAG V2 - Configuration in DebateRAGState."""
 
     def __init__(
         self,
-        position_names: Optional[List[str]] = None,
+        position_names: list[str] | None = None,
         max_debate_rounds: int = 3,
         require_consensus: bool = False,
         enable_judge: bool = True,
@@ -268,9 +261,9 @@ class DebateRAGAgentV2(MultiAgent, StateConfigMixin):
                     "scores": "Dict[str, float]",
                 },
             )
-            agents = position_agents + [moderator, judge]
+            agents = [*position_agents, moderator, judge]
         else:
-            agents = position_agents + [moderator]
+            agents = [*position_agents, moderator]
 
         # Synthesis
         synthesis_judge = SimpleAgent(
@@ -299,8 +292,8 @@ class DebateRAGAgentV2(MultiAgent, StateConfigMixin):
             "workflow_type": "debate_rag",
         }
 
-    async def ainvoke(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Inject configuration and initialize debate positions"""
+    async def ainvoke(self, inputs: dict[str, Any]) -> dict[str, Any]:
+        """Inject configuration and initialize debate positions."""
         for key, value in self._initial_config.items():
             if key not in inputs:
                 inputs[key] = value
@@ -315,14 +308,12 @@ class DebateRAGAgentV2(MultiAgent, StateConfigMixin):
         return await super().ainvoke(inputs)
 
     def build_custom_graph(self):
-        """Build the custom graph for this workflow"""
-        return None  # Use default graph structure
+        """Build the custom graph for this workflow."""
+        return  # Use default graph structure
 
 
 class AdaptiveThresholdRAGAgentV2(MultiAgent, StateConfigMixin):
-    """
-    Adaptive Threshold RAG V2 - Configuration in AdaptiveThresholdRAGState
-    """
+    """Adaptive Threshold RAG V2 - Configuration in AdaptiveThresholdRAGState."""
 
     def __init__(
         self,
@@ -402,13 +393,13 @@ class AdaptiveThresholdRAGAgentV2(MultiAgent, StateConfigMixin):
             "workflow_type": "adaptive_threshold_rag",
         }
 
-    async def ainvoke(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Inject configuration"""
+    async def ainvoke(self, inputs: dict[str, Any]) -> dict[str, Any]:
+        """Inject configuration."""
         for key, value in self._initial_config.items():
             if key not in inputs:
                 inputs[key] = value
         return await super().ainvoke(inputs)
 
     def build_custom_graph(self):
-        """Build the custom graph for this workflow"""
-        return None  # Use default graph structure
+        """Build the custom graph for this workflow."""
+        return  # Use default graph structure

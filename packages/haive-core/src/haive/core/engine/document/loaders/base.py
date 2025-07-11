@@ -1,5 +1,5 @@
-import logging
 from datetime import datetime
+import logging
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Type, Union
 
@@ -15,10 +15,9 @@ from haive.core.engine.loaders.sources.types import SourceType
 
 
 class DocumentLoaderEngine(
-    InvokableEngine[Union[BaseSource, str, Path, Dict[str, Any]], List[Document]]
+    InvokableEngine[Union[BaseSource, str, Path, dict[str, Any]], list[Document]]
 ):
-    """
-    Engine for loading documents from various sources.
+    """Engine for loading documents from various sources.
 
     This engine handles:
     1. Auto-detection and creation of source objects
@@ -31,7 +30,7 @@ class DocumentLoaderEngine(
 
     # Loader configuration
     loader_name: str = Field(description="Name of the document loader to use")
-    supported_source_types: List[SourceType] = Field(
+    supported_source_types: list[SourceType] = Field(
         default_factory=list,
         description="Source types this loader supports (empty list = all types)",
     )
@@ -43,7 +42,7 @@ class DocumentLoaderEngine(
     recursive: bool = Field(
         default=False, description="Whether to recursively load from directory sources"
     )
-    max_documents: Optional[int] = Field(
+    max_documents: int | None = Field(
         default=None, description="Maximum number of documents to load"
     )
 
@@ -53,36 +52,36 @@ class DocumentLoaderEngine(
     )
 
     # Loader-specific options
-    loader_options: Dict[str, Any] = Field(
+    loader_options: dict[str, Any] = Field(
         default_factory=dict, description="Additional options for the loader"
     )
 
     # Track loaded sources
-    _loaded_sources: Dict[str, int] = Field(
+    _loaded_sources: dict[str, int] = Field(
         default_factory=dict,
         description="Sources loaded and document count",
         exclude=True,
     )
 
     # Execution logs
-    _execution_log: List[Dict[str, Any]] = Field(
+    _execution_log: list[dict[str, Any]] = Field(
         default_factory=list, description="Log of loading operations", exclude=True
     )
 
     model_config = {"arbitrary_types_allowed": True}
 
     @computed_field
-    def supported_source_types_names(self) -> List[str]:
+    def supported_source_types_names(self) -> list[str]:
         """Get supported source type names."""
         return [t.value for t in self.supported_source_types]
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Define input field requirements."""
         from pydantic import Field
 
         return {
             "source": (
-                Union[BaseSource, str, Path, Dict[str, Any]],
+                Union[BaseSource, str, Path, dict[str, Any]],
                 Field(description="Source to load documents from"),
             ),
             "recursive": (
@@ -107,7 +106,7 @@ class DocumentLoaderEngine(
                 ),
             ),
             "loader_options": (
-                Dict[str, Any],
+                dict[str, Any],
                 Field(
                     default_factory=dict,
                     description="Additional options for the loader",
@@ -115,14 +114,14 @@ class DocumentLoaderEngine(
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Define output field requirements."""
         from pydantic import Field
 
         return {
-            "documents": (List[Document], Field(description="Loaded documents")),
+            "documents": (list[Document], Field(description="Loaded documents")),
             "metadata": (
-                Dict[str, Any],
+                dict[str, Any],
                 Field(
                     default_factory=dict,
                     description="Metadata about the loading process",
@@ -131,7 +130,7 @@ class DocumentLoaderEngine(
         }
 
     def create_runnable(
-        self, runnable_config: Optional[RunnableConfig] = None
+        self, runnable_config: RunnableConfig | None = None
     ) -> BaseDocumentLoader:
         """Create a document loader instance."""
         from haive.core.registry.base import LoaderRegistry
@@ -157,10 +156,9 @@ class DocumentLoaderEngine(
         )
 
     def _prepare_source(
-        self, input_data: Union[BaseSource, str, Path, Dict[str, Any]]
+        self, input_data: BaseSource | str | Path | dict[str, Any]
     ) -> BaseSource:
-        """
-        Prepare source from input data.
+        """Prepare source from input data.
 
         Args:
             input_data: Input data to prepare source from
@@ -203,8 +201,7 @@ class DocumentLoaderEngine(
         return source
 
     def _validate_source(self, source: BaseSource) -> None:
-        """
-        Validate that the source is supported by this loader.
+        """Validate that the source is supported by this loader.
 
         Args:
             source: Source to validate
@@ -224,11 +221,10 @@ class DocumentLoaderEngine(
 
     def invoke(
         self,
-        input_data: Union[BaseSource, str, Path, Dict[str, Any]],
-        runnable_config: Optional[RunnableConfig] = None,
-    ) -> List[Document]:
-        """
-        Load documents from a source.
+        input_data: BaseSource | str | Path | dict[str, Any],
+        runnable_config: RunnableConfig | None = None,
+    ) -> list[Document]:
+        """Load documents from a source.
 
         Args:
             input_data: Source to load documents from
@@ -319,11 +315,11 @@ class DocumentLoaderEngine(
             raise ValueError(f"Error loading documents: {e}")
 
     @property
-    def execution_log(self) -> List[Dict[str, Any]]:
+    def execution_log(self) -> list[dict[str, Any]]:
         """Get the execution log."""
         return self._execution_log
 
     @property
-    def loaded_sources(self) -> Dict[str, int]:
+    def loaded_sources(self) -> dict[str, int]:
         """Get the loaded sources and document counts."""
         return self._loaded_sources

@@ -12,9 +12,7 @@ temporary state management is sufficient.
 """
 
 import logging
-from typing import Any, Dict
-
-from pydantic import Field
+from typing import Any
 
 from haive.core.persistence.base import CheckpointerConfig
 from haive.core.persistence.types import (
@@ -22,11 +20,12 @@ from haive.core.persistence.types import (
     CheckpointerType,
     CheckpointStorageMode,
 )
+from pydantic import Field
 
 logger = logging.getLogger(__name__)
 
 
-class MemoryCheckpointerConfig(CheckpointerConfig[Dict[str, Any]]):
+class MemoryCheckpointerConfig(CheckpointerConfig[dict[str, Any]]):
     """Configuration for in-memory checkpoint persistence.
 
     This implementation provides a simple non-persistent memory-based
@@ -123,7 +122,7 @@ class MemoryCheckpointerConfig(CheckpointerConfig[Dict[str, Any]]):
             return checkpointer
 
         except Exception as e:
-            logger.error(f"Failed to create memory checkpointer: {e}")
+            logger.exception(f"Failed to create memory checkpointer: {e}")
             raise RuntimeError(f"Failed to create memory checkpointer: {e}")
 
     async def create_async_checkpointer(self) -> Any:

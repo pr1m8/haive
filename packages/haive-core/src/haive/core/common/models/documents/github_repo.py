@@ -1,8 +1,8 @@
+from datetime import datetime
+from functools import lru_cache
 import logging
 import os
 import re
-from datetime import datetime
-from functools import lru_cache
 from typing import Any, Dict, List, Optional, Tuple
 
 import httpx
@@ -17,25 +17,26 @@ from pydantic import (
 )
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+
 logger = logging.getLogger(__name__)
 
 
 class GithubSettings(BaseSettings):
     """GitHub-related environment settings."""
 
-    github_token: Optional[SecretStr] = Field(
+    github_token: SecretStr | None = Field(
         default=None,
         description="GitHub personal access token from environment",
         alias="GITHUB_TOKEN",
     )
 
-    github_api_token: Optional[SecretStr] = Field(
+    github_api_token: SecretStr | None = Field(
         default=None,
         description="Alternative GitHub API token",
         alias="GITHUB_API_TOKEN",
     )
 
-    github_pat: Optional[SecretStr] = Field(
+    github_pat: SecretStr | None = Field(
         default=None, description="GitHub Personal Access Token", alias="GITHUB_PAT"
     )
 
@@ -45,7 +46,7 @@ class GithubSettings(BaseSettings):
         alias="GITHUB_DEFAULT_BRANCH",
     )
 
-    github_fallback_branches: List[str] = Field(
+    github_fallback_branches: list[str] = Field(
         default=["main", "master", "develop", "development", "prod", "production"],
         description="Branches to try if default fails",
         alias="GITHUB_FALLBACK_BRANCHES",
@@ -68,7 +69,7 @@ class GithubSettings(BaseSettings):
     )
 
     @property
-    def active_token(self) -> Optional[SecretStr]:
+    def active_token(self) -> SecretStr | None:
         """Get the first available token."""
         return self.github_token or self.github_api_token or self.github_pat
 
@@ -91,7 +92,7 @@ class GithubRepo(BaseModel):
     """
 
     # Core identification fields
-    owner: Optional[str] = Field(
+    owner: str | None = Field(
         default=None,
         description="GitHub username or organization that owns the repository",
         min_length=1,
@@ -99,7 +100,7 @@ class GithubRepo(BaseModel):
         examples=["microsoft", "facebook", "openai"],
     )
 
-    name: Optional[str] = Field(
+    name: str | None = Field(
         default=None,
         description="Repository name",
         min_length=1,
@@ -108,7 +109,7 @@ class GithubRepo(BaseModel):
     )
 
     # URL input (can be provided instead of owner/name)
-    url: Optional[HttpUrl] = Field(
+    url: HttpUrl | None = Field(
         default=None,
         description="Any GitHub URL (repo, file, API, etc.) - will be parsed to extract owner/name",
         examples=[
@@ -119,42 +120,42 @@ class GithubRepo(BaseModel):
     )
 
     # Access configuration
-    is_private: Optional[bool] = Field(
+    is_private: bool | None = Field(
         default=None,
         description="Whether the repository is private (auto-detected if not specified)",
     )
 
-    branch: Optional[str] = Field(
+    branch: str | None = Field(
         default=None,
         description="Preferred branch (will fallback to main/master if not found)",
         min_length=1,
     )
 
     # Authentication
-    access_token: Optional[SecretStr] = Field(
+    access_token: SecretStr | None = Field(
         default=None,
         description="GitHub personal access token (falls back to environment variables)",
     )
 
     # Auto-populated fields
-    api_url: Optional[HttpUrl] = Field(
+    api_url: HttpUrl | None = Field(
         default=None, description="GitHub API URL (auto-generated)", exclude=True
     )
 
-    clone_url: Optional[HttpUrl] = Field(
+    clone_url: HttpUrl | None = Field(
         default=None, description="Git clone URL (auto-generated)", exclude=True
     )
 
-    default_branch: Optional[str] = Field(
+    default_branch: str | None = Field(
         default=None,
         description="The actual default branch from GitHub (auto-discovered)",
     )
 
-    discovered_branch: Optional[str] = Field(
+    discovered_branch: str | None = Field(
         default=None, description="The branch that was actually found and validated"
     )
 
-    available_branches: List[str] = Field(
+    available_branches: list[str] = Field(
         default_factory=list,
         description="List of available branches discovered during validation",
     )
@@ -164,22 +165,22 @@ class GithubRepo(BaseModel):
         default=False, description="Whether the repository has been validated to exist"
     )
 
-    validation_error: Optional[str] = Field(
+    validation_error: str | None = Field(
         default=None, description="Error message if validation failed"
     )
 
-    validation_warnings: List[str] = Field(
+    validation_warnings: list[str] = Field(
         default_factory=list,
         description="Warnings from validation (e.g., branch fallback used)",
     )
 
     # Additional metadata
-    description: Optional[str] = Field(default=None)
-    topics: List[str] = Field(default_factory=list)
-    stars: Optional[int] = Field(default=None, ge=0)
-    forks: Optional[int] = Field(default=None, ge=0)
-    last_updated: Optional[datetime] = Field(default=None)
-    metadata: Dict[str, Any] = Field(default_factory=dict)
+    description: str | None = Field(default=None)
+    topics: list[str] = Field(default_factory=list)
+    stars: int | None = Field(default=None, ge=0)
+    forks: int | None = Field(default=None, ge=0)
+    last_updated: datetime | None = Field(default=None)
+    metadata: dict[str, Any] = Field(default_factory=dict)
 
     # Branch fallback configuration
     auto_retry_branches: bool = Field(
@@ -187,15 +188,15 @@ class GithubRepo(BaseModel):
         description="Automatically try fallback branches if specified branch doesn't exist",
     )
 
-    fallback_branches: List[str] = Field(
+    fallback_branches: list[str] = Field(
         default_factory=lambda: ["main", "master"],
         description="Branches to try if the specified branch doesn't exist",
     )
 
     # Private attributes
-    _settings: Optional[GithubSettings] = PrivateAttr(default=None)
-    _http_client: Optional[httpx.Client] = PrivateAttr(default=None)
-    _branch_cache: Dict[str, bool] = PrivateAttr(default_factory=dict)
+    _settings: GithubSettings | None = PrivateAttr(default=None)
+    _http_client: httpx.Client | None = PrivateAttr(default=None)
+    _branch_cache: dict[str, bool] = PrivateAttr(default_factory=dict)
 
     model_config = {"arbitrary_types_allowed": True, "validate_assignment": True}
 
@@ -220,7 +221,7 @@ class GithubRepo(BaseModel):
 
     @field_validator("owner", "name")
     @classmethod
-    def validate_github_identifier(cls, v: Optional[str]) -> Optional[str]:
+    def validate_github_identifier(cls, v: str | None) -> str | None:
         """Validate GitHub username/repo name format."""
         if v is None:
             return v
@@ -276,13 +277,13 @@ class GithubRepo(BaseModel):
         except Exception as e:
             self.is_valid = False
             self.validation_error = str(e)
-            logger.error(
+            logger.exception(
                 f"Repository validation failed for {self.owner}/{self.name}: {e}"
             )
 
         return self
 
-    def _parse_github_url(self, url: str) -> Tuple[Optional[str], Optional[str]]:
+    def _parse_github_url(self, url: str) -> tuple[str | None, str | None]:
         """Parse various GitHub URL formats to extract owner and repository name."""
         patterns = [
             # Standard repo URLs
@@ -317,16 +318,15 @@ class GithubRepo(BaseModel):
 
             if response.status_code == 404:
                 raise ValueError(f"Repository {self.owner}/{self.name} not found")
-            elif response.status_code == 403:
+            if response.status_code == 403:
                 # Rate limited or forbidden
                 if not self.access_token:
                     raise ValueError(
                         "GitHub API rate limit exceeded or repository is private. "
                         "Please provide an access token."
                     )
-                else:
-                    raise ValueError("Access forbidden - check your token permissions")
-            elif response.status_code != 200:
+                raise ValueError("Access forbidden - check your token permissions")
+            if response.status_code != 200:
                 raise ValueError(
                     f"GitHub API error: {response.status_code} - {response.text}"
                 )
@@ -421,18 +421,16 @@ class GithubRepo(BaseModel):
                 raise ValueError(
                     f"No valid branch found. Tried: {tried_branches}.{available_msg}"
                 )
+        elif self.branch:
+            if not self._check_branch_exists(self.branch):
+                raise ValueError(
+                    f"Branch '{self.branch}' not found and auto-retry is disabled"
+                )
+            self.discovered_branch = self.branch
         else:
-            # No auto-retry, just validate the specified branch
-            if self.branch:
-                if not self._check_branch_exists(self.branch):
-                    raise ValueError(
-                        f"Branch '{self.branch}' not found and auto-retry is disabled"
-                    )
-                self.discovered_branch = self.branch
-            else:
-                # Use default branch
-                self.branch = self.default_branch
-                self.discovered_branch = self.default_branch
+            # Use default branch
+            self.branch = self.default_branch
+            self.discovered_branch = self.default_branch
 
     def _check_branch_exists(self, branch: str) -> bool:
         """Check if a specific branch exists (with caching)."""
@@ -459,7 +457,7 @@ class GithubRepo(BaseModel):
             self._branch_cache[branch] = False
             return False
 
-    def get_api_headers(self) -> Dict[str, str]:
+    def get_api_headers(self) -> dict[str, str]:
         """Get headers for GitHub API requests."""
         headers = {
             "Accept": "application/vnd.github.v3+json",
@@ -499,8 +497,7 @@ class GithubRepo(BaseModel):
 
         if raw:
             return f"https://raw.githubusercontent.com/{self.owner}/{self.name}/{branch}/{file_path}"
-        else:
-            return f"{self.url}/blob/{branch}/{file_path}"
+        return f"{self.url}/blob/{branch}/{file_path}"
 
     def switch_branch(self, new_branch: str, validate: bool = True) -> None:
         """Switch to a different branch."""
@@ -510,16 +507,16 @@ class GithubRepo(BaseModel):
         if validate:
             try:
                 self._discover_and_validate_branch()
-            except Exception as e:
+            except Exception:
                 # Revert on failure
                 self.branch = old_branch
-                raise e
+                raise
 
     def refresh(self) -> None:
         """Refresh repository metadata from GitHub."""
         self._validate_and_discover()
 
-    def to_safe_dict(self) -> Dict[str, Any]:
+    def to_safe_dict(self) -> dict[str, Any]:
         """Convert to dictionary excluding sensitive fields."""
         data = self.model_dump(
             exclude={

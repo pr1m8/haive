@@ -1,4 +1,4 @@
-"""Reflexion - TODO: Add brief description
+"""Reflexion - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

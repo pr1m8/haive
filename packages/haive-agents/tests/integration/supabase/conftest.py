@@ -3,8 +3,9 @@
 import os
 import warnings
 
-import pytest
 from dotenv import load_dotenv
+import pytest
+
 
 # Load environment variables
 load_dotenv()

@@ -37,10 +37,7 @@ from haive.core.schema.compatibility.mergers import (
     SchemaMerger,
     merge_schemas,
 )
-from haive.core.schema.compatibility.reports import (
-    CompatibilityReport,
-    generate_report,
-)
+from haive.core.schema.compatibility.reports import CompatibilityReport, generate_report
 from haive.core.schema.compatibility.types import (
     ConversionPath,
     FieldInfo,

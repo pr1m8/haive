@@ -25,10 +25,9 @@ from typing import (
     get_type_hints,
 )
 
+from haive.core.schema.compatibility.types import FieldInfo, SchemaInfo, TypeInfo
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo as PydanticFieldInfo
-
-from haive.core.schema.compatibility.types import FieldInfo, SchemaInfo, TypeInfo
 
 # Handle different Python versions
 if sys.version_info >= (3, 10):

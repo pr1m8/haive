@@ -1,22 +1,22 @@
 """Test validation node improvements with various tool types."""
 
-import uuid
 from typing import List
+import uuid
 
-import pytest
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
+import pytest
 
 from haive.agents.simple import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 # Test schemas
 class Plan(BaseModel):
     """A plan with steps."""
 
-    steps: List[str] = Field(description="A list of steps to complete the task")
+    steps: list[str] = Field(description="A list of steps to complete the task")
 
 
 class MathResult(BaseModel):
@@ -67,7 +67,7 @@ class TestValidationImprovements:
 
         # Simulate a request that should trigger the Plan model
         # This would normally come from the LLM, but we'll create it manually
-        messages = [
+        [
             HumanMessage(content="Create a plan for making coffee"),
             AIMessage(
                 content="I'll create a plan for making coffee.",
@@ -92,7 +92,6 @@ class TestValidationImprovements:
 
         # Run the agent with these messages
         # In a real scenario, the agent would generate the AIMessage
-        state = {"messages": messages}
 
         # The validation node should route to parse_output
         # The parse_output node should create a ToolMessage
@@ -117,7 +116,7 @@ class TestValidationImprovements:
         assert "tool_node" in graph.nodes
 
         # Simulate tool calls
-        messages = [
+        [
             HumanMessage(content="Add 5 and 3"),
             AIMessage(
                 content="I'll add those numbers for you.",
@@ -127,7 +126,6 @@ class TestValidationImprovements:
             ),
         ]
 
-        state = {"messages": messages}
         # Tool node should create ToolMessage with result
 
     def test_invalid_tool_creates_error_message(self):
@@ -141,10 +139,10 @@ class TestValidationImprovements:
         )
 
         # Create simple agent
-        agent = SimpleAgent(name="test_agent", engine=engine)
+        SimpleAgent(name="test_agent", engine=engine)
 
         # Try to call a tool that doesn't exist
-        messages = [
+        [
             HumanMessage(content="Multiply 5 and 3"),
             AIMessage(
                 content="I'll multiply those numbers for you.",
@@ -158,7 +156,6 @@ class TestValidationImprovements:
             ),
         ]
 
-        state = {"messages": messages}
         # Validation should create error ToolMessage
 
     def test_mixed_tools_and_models(self):
@@ -189,10 +186,10 @@ class TestValidationImprovements:
             tools=[add_numbers, multiply_numbers],
         )
 
-        agent = SimpleAgent(name="test_agent", engine=engine)
+        SimpleAgent(name="test_agent", engine=engine)
 
         # Multiple tool calls
-        messages = [
+        [
             HumanMessage(content="Add 5 and 3, then multiply 4 and 2"),
             AIMessage(
                 content="I'll perform both calculations.",
@@ -207,7 +204,6 @@ class TestValidationImprovements:
             ),
         ]
 
-        state = {"messages": messages}
         # Should create two ToolMessages
 
     def test_validation_with_no_tool_calls(self):
@@ -218,14 +214,13 @@ class TestValidationImprovements:
             system_message="You are a helpful assistant.",
         )
 
-        agent = SimpleAgent(name="test_agent", engine=engine)
+        SimpleAgent(name="test_agent", engine=engine)
 
-        messages = [
+        [
             HumanMessage(content="Hello"),
             AIMessage(content="Hello! How can I help you today?"),
         ]
 
-        state = {"messages": messages}
         # Should route to END without creating any ToolMessages
 
 

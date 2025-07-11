@@ -6,6 +6,10 @@ import logging
 from enum import Enum
 from typing import Any, Callable, Dict, List, Optional, Type, TypeVar, Union
 
+from haive.core.graph.common.types import ConfigLike, NodeType, StateLike
+from haive.core.graph.node.base_node_config import BaseNodeConfig
+from haive.core.schema.field_definition import FieldDefinition
+from haive.core.schema.field_registry import StandardFields
 from langchain_core.messages import (
     AIMessage,
     BaseMessage,
@@ -16,11 +20,6 @@ from langchain_core.messages import (
 from langgraph.types import Command
 from pydantic import BaseModel, Field, model_validator
 from rich.console import Console
-
-from haive.core.graph.common.types import ConfigLike, NodeType, StateLike
-from haive.core.graph.node.base_node_config import BaseNodeConfig
-from haive.core.schema.field_definition import FieldDefinition
-from haive.core.schema.field_registry import StandardFields
 
 logger = logging.getLogger(__name__)
 console = Console()
@@ -50,10 +49,10 @@ class MessageTransformationNodeConfig(BaseNodeConfig[TInput, TOutput]):
 
     Supports multiple transformation types including role swapping,
     metadata manipulation, and agent-to-agent communication.
-    
+
     Input Schema Requirements:
     - Must have a messages field (List[BaseMessage]) or custom messages field
-    
+
     Output Schema:
     - Will contain the transformed messages field
     - Optional error field for transformation failures
@@ -68,18 +67,17 @@ class MessageTransformationNodeConfig(BaseNodeConfig[TInput, TOutput]):
 
     # Field names
     messages_field: str = Field(
-        default="messages", 
-        description="Name of the messages field in input schema"
+        default="messages", description="Name of the messages field in input schema"
     )
-    
+
     output_field: Optional[str] = Field(
         default=None,
-        description="Name of the output field in output schema (defaults to messages_field)"
+        description="Name of the output field in output schema (defaults to messages_field)",
     )
-    
+
     error_field: str = Field(
         default="transformation_error",
-        description="Name of the error field in output schema"
+        description="Name of the error field in output schema",
     )
 
     # Engine ID configuration
@@ -103,16 +101,14 @@ class MessageTransformationNodeConfig(BaseNodeConfig[TInput, TOutput]):
         default=False,
         description="Whether to exclude tool messages from transformation",
     )
-    
+
     # Filter by type configuration
     include_types: Optional[List[str]] = Field(
-        default=None,
-        description="Message types to include (for FILTER_BY_TYPE)"
+        default=None, description="Message types to include (for FILTER_BY_TYPE)"
     )
-    
+
     exclude_types: Optional[List[str]] = Field(
-        default=None,
-        description="Message types to exclude (for FILTER_BY_TYPE)"
+        default=None, description="Message types to exclude (for FILTER_BY_TYPE)"
     )
 
     # Agent-specific configuration
@@ -148,7 +144,7 @@ class MessageTransformationNodeConfig(BaseNodeConfig[TInput, TOutput]):
             and not self.custom_transformer
         ):
             raise ValueError("custom_transformer is required for CUSTOM transformation")
-            
+
         if self.transformation_type == TransformationType.FILTER_BY_TYPE:
             if not self.include_types and not self.exclude_types:
                 raise ValueError(
@@ -164,7 +160,7 @@ class MessageTransformationNodeConfig(BaseNodeConfig[TInput, TOutput]):
     def get_default_output_fields(self) -> List[FieldDefinition]:
         """Get default output field definitions."""
         output_field_name = self.output_field or self.messages_field
-        
+
         fields = [
             FieldDefinition(
                 name=output_field_name,
@@ -172,16 +168,18 @@ class MessageTransformationNodeConfig(BaseNodeConfig[TInput, TOutput]):
                 default_factory=list,
                 description="Transformed messages",
                 shared=True if output_field_name == "messages" else False,
-                reducer_name="add_messages" if output_field_name == "messages" else None
+                reducer_name=(
+                    "add_messages" if output_field_name == "messages" else None
+                ),
             ),
             FieldDefinition(
                 name=self.error_field,
                 field_type=Optional[str],
                 default=None,
-                description="Transformation error message if transformation failed"
-            )
+                description="Transformation error message if transformation failed",
+            ),
         ]
-        
+
         return fields
 
     def __call__(
@@ -215,10 +213,7 @@ class MessageTransformationNodeConfig(BaseNodeConfig[TInput, TOutput]):
 
             # Create update dictionary
             output_field = self.output_field or self.messages_field
-            update = {
-                output_field: transformed_messages,
-                self.error_field: None
-            }
+            update = {output_field: transformed_messages, self.error_field: None}
 
             return self._create_output_command(update, goto=self._get_goto_node())
 
@@ -226,11 +221,7 @@ class MessageTransformationNodeConfig(BaseNodeConfig[TInput, TOutput]):
             logger.error(f"Error in message transformation: {e}")
             output_field = self.output_field or self.messages_field
             return self._create_output_command(
-                {
-                    output_field: [],
-                    self.error_field: str(e)
-                },
-                goto=self._get_goto_node()
+                {output_field: [], self.error_field: str(e)}, goto=self._get_goto_node()
             )
 
     def _get_messages_from_state(self, state: StateLike) -> List[BaseMessage]:
@@ -241,17 +232,17 @@ class MessageTransformationNodeConfig(BaseNodeConfig[TInput, TOutput]):
             messages = state.get(self.messages_field, [])
         else:
             messages = []
-            
+
         # Ensure it's a list
         if not isinstance(messages, list):
             messages = [messages]
-            
+
         return messages
 
     def _get_goto_node(self) -> str:
         """Get the node to go to after transformation."""
         return self.command_goto or "agent"
-        
+
     def _create_output_command(self, update: Dict[str, Any], goto: str) -> Command:
         """Create output command with proper typing."""
         return Command(update=update, goto=goto)
@@ -534,14 +525,14 @@ class MessageTransformationNodeConfig(BaseNodeConfig[TInput, TOutput]):
         if self.debug:
             console.print("[yellow]No real human input found[/]")
         return []
-        
+
     def _filter_by_type(self, messages: List[BaseMessage]) -> List[BaseMessage]:
         """Filter messages by type (include or exclude)."""
         transformed = []
-        
+
         for msg in messages:
             msg_type = msg.type
-            
+
             # Check inclusion
             if self.include_types:
                 if msg_type in self.include_types:
@@ -550,8 +541,10 @@ class MessageTransformationNodeConfig(BaseNodeConfig[TInput, TOutput]):
                         console.print(f"[green]Including {msg_type} message[/]")
                 else:
                     if self.debug:
-                        console.print(f"[dim]Excluding {msg_type} message (not in include list)[/]")
-            
+                        console.print(
+                            f"[dim]Excluding {msg_type} message (not in include list)[/]"
+                        )
+
             # Check exclusion
             elif self.exclude_types:
                 if msg_type not in self.exclude_types:
@@ -560,18 +553,20 @@ class MessageTransformationNodeConfig(BaseNodeConfig[TInput, TOutput]):
                         console.print(f"[green]Including {msg_type} message[/]")
                 else:
                     if self.debug:
-                        console.print(f"[dim]Excluding {msg_type} message (in exclude list)[/]")
-                        
+                        console.print(
+                            f"[dim]Excluding {msg_type} message (in exclude list)[/]"
+                        )
+
         return transformed
-        
+
     def _merge_consecutive(self, messages: List[BaseMessage]) -> List[BaseMessage]:
         """Merge consecutive messages of the same type."""
         if not messages:
             return []
-            
+
         transformed = []
         current_group = [messages[0]]
-        
+
         for msg in messages[1:]:
             # Check if same type as current group
             if type(msg) == type(current_group[0]):
@@ -582,36 +577,38 @@ class MessageTransformationNodeConfig(BaseNodeConfig[TInput, TOutput]):
                 if merged:
                     transformed.append(merged)
                 current_group = [msg]
-                
+
         # Don't forget the last group
         merged = self._merge_message_group(current_group)
         if merged:
             transformed.append(merged)
-            
+
         if self.debug:
             console.print(
                 f"[green]Merged {len(messages)} messages into {len(transformed)}[/]"
             )
-            
+
         return transformed
-        
-    def _merge_message_group(self, messages: List[BaseMessage]) -> Optional[BaseMessage]:
+
+    def _merge_message_group(
+        self, messages: List[BaseMessage]
+    ) -> Optional[BaseMessage]:
         """Merge a group of messages of the same type."""
         if not messages:
             return None
-            
+
         if len(messages) == 1:
             return messages[0]
-            
+
         # Merge content
         merged_content = "\n\n".join(msg.content for msg in messages)
-        
+
         # Use first message as template
         template = messages[0]
         msg_class = type(template)
-        
+
         kwargs = {"content": merged_content}
-        
+
         if self.preserve_metadata:
             # Merge metadata from all messages
             if hasattr(template, "additional_kwargs"):
@@ -621,11 +618,11 @@ class MessageTransformationNodeConfig(BaseNodeConfig[TInput, TOutput]):
                         merged_kwargs.update(msg.additional_kwargs)
                 if merged_kwargs:
                     kwargs["additional_kwargs"] = merged_kwargs
-                    
+
             # Use first message's name if any
             if hasattr(template, "name") and template.name:
                 kwargs["name"] = template.name
-                
+
         return msg_class(**kwargs)
 
     def _apply_custom_transformation(
@@ -718,7 +715,7 @@ def create_message_filter(
     exclude_types: Optional[List[str]] = None,
     messages_field: str = "messages",
     output_field: Optional[str] = None,
-    **kwargs
+    **kwargs,
 ) -> MessageTransformationNodeConfig:
     """Create a message filter by type."""
     return MessageTransformationNodeConfig(
@@ -728,7 +725,7 @@ def create_message_filter(
         exclude_types=exclude_types,
         messages_field=messages_field,
         output_field=output_field,
-        **kwargs
+        **kwargs,
     )
 
 
@@ -736,7 +733,7 @@ def create_message_merger(
     name: str = "message_merger",
     messages_field: str = "messages",
     output_field: Optional[str] = None,
-    **kwargs
+    **kwargs,
 ) -> MessageTransformationNodeConfig:
     """Create a transformer that merges consecutive messages of the same type."""
     return MessageTransformationNodeConfig(
@@ -744,5 +741,5 @@ def create_message_merger(
         transformation_type=TransformationType.MERGE_CONSECUTIVE,
         messages_field=messages_field,
         output_field=output_field,
-        **kwargs
+        **kwargs,
     )

@@ -4,11 +4,10 @@ from collections.abc import Callable
 
 from langchain_core.tools import BaseTool, StructuredTool, Tool
 from pydantic import BaseModel
-from src.haive.core.engine.aug_llm import AugLLMConfig
-
 from src.haive.agents.v2.agent import ReactAgent
 from src.haive.agents.v2.config import ReactAgentConfig, ToolsInput
 from src.haive.agents.v2.state import create_structured_state
+from src.haive.core.engine.aug_llm import AugLLMConfig
 
 
 def create_react_agent(
@@ -113,7 +112,7 @@ def create_structured_react_agent(
 
 def organize_tools_by_category(
     tools: list[BaseTool | StructuredTool | Tool | Callable],
-    categories: dict[str, list[str]] = None,
+    categories: dict[str, list[str]] | None = None,
 ) -> dict[str, list[BaseTool | StructuredTool | Tool | Callable]]:
     """Organize tools into categories for parallel processing.
 

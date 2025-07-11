@@ -30,7 +30,6 @@ Usage:
 """
 
 import logging
-from typing import Optional
 
 from pydantic import BaseModel, PrivateAttr
 from rich.console import Console
@@ -53,7 +52,7 @@ class RichLoggerMixin(BaseModel):
     debug: bool = False
 
     # Private logger instance
-    _logger: Optional[logging.Logger] = PrivateAttr(default=None)
+    _logger: logging.Logger | None = PrivateAttr(default=None)
     _logger_setup: bool = PrivateAttr(default=False)
 
     @property

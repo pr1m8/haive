@@ -1,12 +1,7 @@
-import uuid
 from collections.abc import Callable
 from typing import Any
+import uuid
 
-from haive.core.engine.agent.agent import Agent, AgentConfig, register_agent
-from haive.core.engine.aug_llm import AugLLMConfig, AugLLMFactory
-from haive.core.models.llm.base import AzureLLMConfig
-from haive.core.utils.visualize_graph_utils import render_and_display_graph
-from haive.tools.tools.search_tools import tavily_search_tool
 from langchain_core.messages import SystemMessage, filter_messages
 from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import BaseTool, StructuredTool, Tool
@@ -19,6 +14,11 @@ from haive.agents.react_class.react_agent.aug_llms import (
     default_react_llm_runnable_config,
 )
 from haive.agents.react_class.react_agent.state import ReactAgentState
+from haive.core.engine.agent.agent import Agent, AgentConfig, register_agent
+from haive.core.engine.aug_llm import AugLLMConfig, AugLLMFactory
+from haive.core.models.llm.base import AzureLLMConfig
+from haive.core.utils.visualize_graph_utils import render_and_display_graph
+from haive.tools.tools.search_tools import tavily_search_tool
 
 
 # Utility function to determine whether to continue execution
@@ -115,7 +115,7 @@ class ReactAgentConfig(AgentConfig):
         return v
 
     @field_validator("structured_output_model", mode="before")
-    def ensure_serializable(cls, v):
+    def ensure_serializable(self, v):
         """Ensure structured output schema is serializable."""
         if v is not None and not isinstance(v, type) and not issubclass(v, BaseModel):
             raise TypeError(
@@ -152,9 +152,7 @@ class ReactAgent(Agent[ReactAgentConfig]):
         self._initialize_tool_node()
 
         # ✅ Setup Graph
-        # self.setup_workflow()
         super().__init__(config)
-        # self.compile_graph()
 
     def _initialize_tool_node(self):
         """Initialize ToolNode if required."""
@@ -163,7 +161,6 @@ class ReactAgent(Agent[ReactAgentConfig]):
 
     def default_agent_node(self, state: ReactAgentState) -> Command:
         """Default implementation of the agent node."""
-        print(state)
         response = self.aug_llm_model.invoke(
             {"messages": state["messages"]}, config=self.runnable_config
         )
@@ -221,8 +218,7 @@ class ReactAgent(Agent[ReactAgentConfig]):
         for output in self.app.stream(
             inputs, stream_mode="values", config=self.runnable_config
         ):
-            message = output["messages"][-1]
-            print(message)
+            output["messages"][-1]
 
     def chat(self):
         """Interactive chat loop."""
@@ -234,8 +230,8 @@ class ReactAgent(Agent[ReactAgentConfig]):
                 self.run(user_input)
             except KeyboardInterrupt:
                 break
-            except Exception as e:
-                print("Error:", e)
+            except Exception:
+                pass
 
 
 # ============================
@@ -261,6 +257,3 @@ def chat_react_agent(config: ReactAgentConfig = ReactAgentConfig()):
 def chat_react_agent_with_tool_node(config: ReactAgentConfig = ReactAgentConfig()):
     """Start a chat session with ReactAgent."""
     return create_react_agent(config).chat()
-
-
-# chat_react_agent()

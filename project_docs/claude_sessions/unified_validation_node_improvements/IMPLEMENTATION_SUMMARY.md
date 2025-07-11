@@ -57,6 +57,7 @@ graph.add_node("unified_validation", validation_node)
 ## Testing Results
 
 All tests pass successfully:
+
 - ✅ Basic instantiation
 - ✅ Pydantic model validation (success/error)
 - ✅ Langchain tool routing
@@ -67,7 +68,7 @@ All tests pass successfully:
 ## Architectural Benefits
 
 1. **Unified Processing**: Single node handles both validation and routing
-2. **Proper Pydantic Compliance**: No custom __init__ methods
+2. **Proper Pydantic Compliance**: No custom **init** methods
 3. **Dynamic Routing**: Uses Command/Send patterns effectively
 4. **Performance**: Eliminates duplicate processing
 5. **Maintainability**: Clear, single-purpose implementation
@@ -76,6 +77,7 @@ All tests pass successfully:
 ## Integration with Existing System
 
 The unified validation node integrates seamlessly with:
+
 - Existing ValidationNodeV2 patterns
 - ToolNodeConfig patterns
 - Dynamic tool routing systems

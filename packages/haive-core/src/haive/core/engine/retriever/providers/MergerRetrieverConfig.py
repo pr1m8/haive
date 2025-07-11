@@ -1,5 +1,4 @@
-"""
-Merger Retriever implementation for the Haive framework.
+"""Merger Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Merger retriever,
 which combines and merges results from multiple retrievers to provide
@@ -31,8 +30,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.MERGER)
 class MergerRetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for Merger retriever in the Haive framework.
+    """Configuration for Merger retriever in the Haive framework.
 
     This retriever combines and merges results from multiple retrievers to provide
     comprehensive and deduplicated search results.
@@ -68,7 +66,7 @@ class MergerRetrieverConfig(BaseRetrieverConfig):
     )
 
     # Core configuration
-    retrievers: List[BaseRetrieverConfig] = Field(
+    retrievers: list[BaseRetrieverConfig] = Field(
         ...,
         min_items=2,
         description="List of retriever configurations to merge results from",
@@ -82,7 +80,7 @@ class MergerRetrieverConfig(BaseRetrieverConfig):
         description="Maximum number of results to return after merging",
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Merger retriever."""
         return {
             "query": (
@@ -91,11 +89,11 @@ class MergerRetrieverConfig(BaseRetrieverConfig):
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Merger retriever."""
         return {
             "documents": (
-                List[Any],  # List[Document] but avoiding import
+                list[Any],  # List[Document] but avoiding import
                 Field(
                     default_factory=list,
                     description="Merged and deduplicated documents from multiple retrievers",
@@ -104,8 +102,7 @@ class MergerRetrieverConfig(BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a Merger retriever from this configuration.
+        """Create a Merger retriever from this configuration.
 
         Returns:
             MergerRetriever: Instantiated retriever ready for merging multiple retrieval results.

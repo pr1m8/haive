@@ -5,13 +5,15 @@ automates the process of connecting multiple engine components in a sequence.
 """
 
 import logging
-import uuid
 from typing import Any
+import uuid
+
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from haive.core.engine.agent.config import AgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.state_schema import StateSchema
-from pydantic import BaseModel, Field, field_validator, model_validator
+
 
 logger = logging.getLogger(__name__)
 
@@ -89,7 +91,7 @@ class SequentialAgentConfig(AgentConfig):
     model_config = {"arbitrary_types_allowed": True}
 
     @field_validator("steps")
-    def validate_steps(cls, v):
+    def validate_steps(self, v):
         """Ensure we have at least one step."""
         if not v or len(v) == 0:
             raise ValueError("SequentialAgent must have at least one step")

@@ -11,21 +11,18 @@ class ResponderWithRetries:
     """A responder that retries a given runnable a number of times if it fails to validate."""
 
     def __init__(
-        self, aug_llm_config: AugLLMConfig, num_retries: int = 3, name: str = None
+        self,
+        aug_llm_config: AugLLMConfig,
+        num_retries: int = 3,
+        name: str | None = None,
     ):
         """Args:
         aug_llm_config: The config for the LLM to use.
         num_retries: The number of times to retry the runnable.
         """
         self.runnable = aug_llm_config.create_runnable()
-        print("runnable", self.runnable)
-        # self.runnable.invoke(state.messages)
-        print("setting validator")
-        print("name", name)
         self.aug_llm_config = aug_llm_config
-        print("tools", aug_llm_config.tools)
         self.validator = PydanticToolsParser(tools=aug_llm_config.tools)
-        print("validator set")
         self.name = name
         self.num_retries = num_retries
 
@@ -34,15 +31,11 @@ class ResponderWithRetries:
         response = []
         reflections_count = state.reflections_count
         for attempt in range(self.num_retries):
-            print("attempt", attempt)
             response = self.runnable.invoke(
                 {"messages": state.messages}, {"tags": [f"attempt:{attempt}"]}
             )
             try:
-                print("validating response")
-                print("response", response)
                 self.validator.invoke(response)
-                print("response validated")
                 if self.name == "revisor":
                     return Command(
                         update={
@@ -52,9 +45,8 @@ class ResponderWithRetries:
                     )
                 return Command(update={"messages": response})
             except ValidationError as e:
-                print("validation error")
-                print("response", response)
-                response = [response] + [
+                response = [
+                    response,
                     ToolMessage(
                         content=f"{e!r}\n\nPay close attention to the function schema.\n\n"
                         + json.dumps(self.validator.schema(), indent=2)
@@ -62,8 +54,6 @@ class ResponderWithRetries:
                         tool_call_id=response.tool_calls[0]["id"],
                     ),
                 ]
-                # print('messages',message)
-                # return Command(update={"messages": message})
         if self.name == "revisor":
             return Command(
                 update={
@@ -72,4 +62,3 @@ class ResponderWithRetries:
                 }
             )
         return Command(update={"messages": response})
-        # return Command(update={"messages": response})

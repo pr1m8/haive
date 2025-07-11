@@ -39,22 +39,22 @@ class ToolValidationResult(BaseModel):
     )
 
     # Validation details
-    errors: List[str] = Field(default_factory=list, description="Validation errors")
-    warnings: List[str] = Field(default_factory=list, description="Validation warnings")
-    corrected_args: Optional[Dict[str, Any]] = Field(
+    errors: list[str] = Field(default_factory=list, description="Validation errors")
+    warnings: list[str] = Field(default_factory=list, description="Validation warnings")
+    corrected_args: dict[str, Any] | None = Field(
         default=None, description="Corrected arguments"
     )
 
     # Routing details
-    target_node: Optional[str] = Field(default=None, description="Specific target node")
-    engine_name: Optional[str] = Field(default=None, description="Recommended engine")
+    target_node: str | None = Field(default=None, description="Specific target node")
+    engine_name: str | None = Field(default=None, description="Recommended engine")
     priority: int = Field(default=0, description="Execution priority")
 
     # Metadata
     validation_time: float = Field(
         default_factory=time.time, description="Validation timestamp"
     )
-    metadata: Dict[str, Any] = Field(
+    metadata: dict[str, Any] = Field(
         default_factory=dict, description="Additional metadata"
     )
 
@@ -63,18 +63,18 @@ class ValidationRoutingState(BaseModel):
     """State for managing validation results and routing decisions."""
 
     # Validation results
-    tool_validations: Dict[str, ToolValidationResult] = Field(
+    tool_validations: dict[str, ToolValidationResult] = Field(
         default_factory=dict, description="Validation results keyed by tool_call_id"
     )
 
     # Routing decisions
-    valid_tool_calls: List[str] = Field(
+    valid_tool_calls: list[str] = Field(
         default_factory=list, description="Tool call IDs that passed validation"
     )
-    invalid_tool_calls: List[str] = Field(
+    invalid_tool_calls: list[str] = Field(
         default_factory=list, description="Tool call IDs that failed validation"
     )
-    error_tool_calls: List[str] = Field(
+    error_tool_calls: list[str] = Field(
         default_factory=list, description="Tool call IDs that had validation errors"
     )
 
@@ -83,17 +83,17 @@ class ValidationRoutingState(BaseModel):
         default=RouteRecommendation.EXECUTE,
         description="Overall recommendation for next action",
     )
-    target_nodes: Set[str] = Field(
+    target_nodes: set[str] = Field(
         default_factory=set, description="Set of target nodes for routing"
     )
 
     # Message updates
-    tool_message_updates: Dict[str, Dict[str, Any]] = Field(
+    tool_message_updates: dict[str, dict[str, Any]] = Field(
         default_factory=dict, description="Updates to apply to tool messages"
     )
 
     # Branch decision data
-    branch_data: Dict[str, Any] = Field(
+    branch_data: dict[str, Any] = Field(
         default_factory=dict, description="Data for conditional branching decisions"
     )
 
@@ -187,7 +187,7 @@ class ValidationRoutingState(BaseModel):
 
         self.tool_message_updates[result.tool_call_id] = updates
 
-    def get_routing_decision(self) -> Dict[str, Any]:
+    def get_routing_decision(self) -> dict[str, Any]:
         """Get routing decision data for conditional branching."""
         return {
             "next_action": self.next_action.value,
@@ -204,7 +204,7 @@ class ValidationRoutingState(BaseModel):
             "branch_data": self.branch_data,
         }
 
-    def get_valid_tool_calls(self) -> List[ToolValidationResult]:
+    def get_valid_tool_calls(self) -> list[ToolValidationResult]:
         """Get validation results for valid tool calls."""
         return [
             self.tool_validations[call_id]
@@ -212,7 +212,7 @@ class ValidationRoutingState(BaseModel):
             if call_id in self.tool_validations
         ]
 
-    def get_invalid_tool_calls(self) -> List[ToolValidationResult]:
+    def get_invalid_tool_calls(self) -> list[ToolValidationResult]:
         """Get validation results for invalid tool calls."""
         return [
             self.tool_validations[call_id]
@@ -220,7 +220,7 @@ class ValidationRoutingState(BaseModel):
             if call_id in self.tool_validations
         ]
 
-    def get_error_tool_calls(self) -> List[ToolValidationResult]:
+    def get_error_tool_calls(self) -> list[ToolValidationResult]:
         """Get validation results for error tool calls."""
         return [
             self.tool_validations[call_id]
@@ -228,7 +228,7 @@ class ValidationRoutingState(BaseModel):
             if call_id in self.tool_validations
         ]
 
-    def get_correctable_tool_calls(self) -> List[ToolValidationResult]:
+    def get_correctable_tool_calls(self) -> list[ToolValidationResult]:
         """Get tool calls that have corrections available."""
         return [
             result
@@ -277,13 +277,13 @@ class ValidationStateManager:
         tool_name: str,
         status: ValidationStatus,
         route_recommendation: RouteRecommendation = RouteRecommendation.EXECUTE,
-        errors: Optional[List[str]] = None,
-        warnings: Optional[List[str]] = None,
-        corrected_args: Optional[Dict[str, Any]] = None,
-        target_node: Optional[str] = None,
-        engine_name: Optional[str] = None,
+        errors: list[str] | None = None,
+        warnings: list[str] | None = None,
+        corrected_args: dict[str, Any] | None = None,
+        target_node: str | None = None,
+        engine_name: str | None = None,
         priority: int = 0,
-        metadata: Optional[Dict[str, Any]] = None,
+        metadata: dict[str, Any] | None = None,
     ) -> ToolValidationResult:
         """Create a validation result with all parameters."""
         return ToolValidationResult(
@@ -307,7 +307,7 @@ class ValidationStateManager:
 
     @staticmethod
     def merge_routing_states(
-        states: List[ValidationRoutingState],
+        states: list[ValidationRoutingState],
     ) -> ValidationRoutingState:
         """Merge multiple routing states into one."""
         merged = ValidationRoutingState()

@@ -64,7 +64,7 @@ def pytest_collection_modifyitems(config, items):
 
 
 @pytest.fixture(scope="session")
-def pg_params() -> Dict[str, Any]:
+def pg_params() -> dict[str, Any]:
     """Get PostgreSQL connection parameters from environment or defaults."""
     return {
         "db_host": os.environ.get("TEST_POSTGRES_HOST", "localhost"),
@@ -102,6 +102,6 @@ def check_postgres_connection(pg_params):
 
         return True
     except Exception as e:
-        logger.error(f"PostgreSQL connection failed: {e}")
+        logger.exception(f"PostgreSQL connection failed: {e}")
         pytest.skip(f"PostgreSQL connection failed: {e}")
         return False

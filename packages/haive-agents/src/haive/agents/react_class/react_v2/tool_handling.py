@@ -8,6 +8,7 @@ from langchain_core.tools import BaseTool
 from langgraph.prebuilt.tool_node import ToolNode as LangGraphToolNode
 from langgraph.types import Command
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -50,7 +51,6 @@ class GeneralizedToolNode:
 
         # Find the last AI message with tool calls
         tool_calls = []
-        last_ai_message = None
         for message in reversed(messages):
             if (
                 isinstance(message, AIMessage)
@@ -58,7 +58,6 @@ class GeneralizedToolNode:
                 and message.tool_calls
             ):
                 tool_calls = message.tool_calls
-                last_ai_message = message
                 break
 
         if not tool_calls:
@@ -114,7 +113,7 @@ class GeneralizedToolNode:
                     tool = self.tools_by_name[tool_name]
                     tool_result = tool.invoke(tool_args)
                 except Exception as e:
-                    logger.error(f"Error executing tool '{tool_name}': {e}")
+                    logger.exception(f"Error executing tool '{tool_name}': {e}")
                     tool_result = f"Error executing tool: {e!s}"
 
             # Create ToolMessage for the result

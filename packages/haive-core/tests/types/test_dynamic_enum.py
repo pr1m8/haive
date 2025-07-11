@@ -1,6 +1,5 @@
-from pydantic import BaseModel, ValidationError
-
 from haive.core.types.dynamic_enum import DynamicEnum, create_dynamic_enum
+from pydantic import BaseModel, ValidationError
 
 
 # ─── Example subclass ─── #
@@ -17,7 +16,6 @@ class Animal(BaseModel):
 def test_valid_enum():
     a = Animal(kind="dog", name="Fido")
     assert a.kind == "dog"
-    print("✅ Passed valid enum test")
 
 
 def test_dynamic_registration():
@@ -25,7 +23,6 @@ def test_dynamic_registration():
     assert "lizard" in AnimalType.choices()
     a = Animal(kind="lizard", name="Slinky")
     assert a.kind == "lizard"
-    print("✅ Passed dynamic register test")
 
 
 def test_dynamic_removal():
@@ -33,12 +30,11 @@ def test_dynamic_removal():
     try:
         Animal(kind="cat", name="Whiskers")
     except ValidationError as e:
-        print("✅ Passed unregister test with expected error:", e)
+        passe)
 
 
 def test_json_schema():
     schema = Animal.model_json_schema()
-    print("🧬 JSON Schema enum options:", schema["properties"]["kind"]["enum"])
 
 
 def test_dynamic_enum_factory():
@@ -52,7 +48,6 @@ def test_dynamic_enum_factory():
     PlanetType.register("pluto")
     m2 = Mission(destination="pluto")
     assert m2.destination == "pluto"
-    print("✅ Passed dynamic enum factory test")
 
 
 if __name__ == "__main__":

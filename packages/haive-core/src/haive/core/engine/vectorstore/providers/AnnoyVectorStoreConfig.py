@@ -1,5 +1,4 @@
-"""
-Annoy Vector Store implementation for the Haive framework.
+"""Annoy Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the Annoy vector store,
 which provides memory-efficient approximate nearest neighbor search.
@@ -37,8 +36,7 @@ from haive.core.engine.vectorstore.types import VectorStoreType
 
 @BaseVectorStoreConfig.register(VectorStoreType.ANNOY)
 class AnnoyVectorStoreConfig(BaseVectorStoreConfig):
-    """
-    Configuration for Annoy vector store in the Haive framework.
+    """Configuration for Annoy vector store in the Haive framework.
 
     This vector store uses Annoy for memory-efficient approximate
     nearest neighbor search with immutable indices.
@@ -107,7 +105,7 @@ class AnnoyVectorStoreConfig(BaseVectorStoreConfig):
     )
 
     @validator("metric")
-    def validate_metric(cls, v):
+    def validate_metric(self, v):
         """Validate distance metric is supported by Annoy."""
         valid_metrics = ["angular", "euclidean", "manhattan", "hamming", "dot"]
         if v not in valid_metrics:
@@ -115,30 +113,29 @@ class AnnoyVectorStoreConfig(BaseVectorStoreConfig):
         return v
 
     @validator("n_jobs")
-    def validate_n_jobs(cls, v):
+    def validate_n_jobs(self, v):
         """Validate n_jobs parameter."""
         if v < -1 or v == 0:
             raise ValueError("n_jobs must be -1 (all cores) or positive integer")
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Annoy vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to build Annoy index from"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Annoy vector store."""
         return {
             "index": (Any, Field(description="Built Annoy index (immutable)")),
         }
 
-    def instantiate(self, documents: Optional[List[Document]] = None):
-        """
-        Create an Annoy vector store from this configuration.
+    def instantiate(self, documents: list[Document] | None = None):
+        """Create an Annoy vector store from this configuration.
 
         Args:
             documents: Documents to build the index from. Required for Annoy
@@ -155,7 +152,7 @@ class AnnoyVectorStoreConfig(BaseVectorStoreConfig):
             from langchain_community.vectorstores import Annoy
         except ImportError:
             raise ImportError(
-                "Annoy requires annoy package. " "Install with: pip install annoy"
+                "Annoy requires annoy package. Install with: pip install annoy"
             )
 
         # Validate embedding
@@ -194,9 +191,8 @@ class AnnoyVectorStoreConfig(BaseVectorStoreConfig):
 
         return vectorstore
 
-    def create_runnable(self, runnable_config: Optional[Dict[str, Any]] = None):
-        """
-        Create a runnable Annoy vector store instance.
+    def create_runnable(self, runnable_config: dict[str, Any] | None = None):
+        """Create a runnable Annoy vector store instance.
 
         Note: For Annoy, documents must be provided in runnable_config
         since the index is immutable after creation.

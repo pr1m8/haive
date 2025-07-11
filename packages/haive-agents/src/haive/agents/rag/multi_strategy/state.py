@@ -1,8 +1,7 @@
 from typing import Any
 
-from pydantic import Field
-
 from haive.agents.rag.self_corr.state import SelfCorrectiveRAGState
+from pydantic import Field
 
 
 class MultiStrategyRAGState(SelfCorrectiveRAGState):

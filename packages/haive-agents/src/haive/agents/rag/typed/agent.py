@@ -1,12 +1,11 @@
 import logging
 
-from haive.core.engine.agent.agent import register_agent
-from haive.core.graph.GraphBuilder import DynamicGraph
-from langgraph.graph import END, START
-
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.rag.typed.config import TypedRAGConfig
 from haive.agents.rag.typed.query_types import QueryCategory
+from haive.core.engine.agent.agent import register_agent
+from haive.core.graph.GraphBuilder import DynamicGraph
+from langgraph.graph import END, START
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -87,7 +86,7 @@ class TypedRAGAgent(BaseRAGAgent):
             return {"query_category": "factoid", "query_metadata": {}}
 
         except Exception as e:
-            logger.error(f"Error classifying query: {e}")
+            logger.exception(f"Error classifying query: {e}")
             return {"query_category": "factoid", "query_metadata": {}}
 
     def generate_subqueries(self, state):
@@ -130,7 +129,7 @@ class TypedRAGAgent(BaseRAGAgent):
             return {"subqueries": {category: query}}
 
         except Exception as e:
-            logger.error(f"Error generating subqueries: {e}")
+            logger.exception(f"Error generating subqueries: {e}")
             return {"subqueries": {category: query}}
 
     def retrieve_for_subqueries(self, state):
@@ -148,7 +147,7 @@ class TypedRAGAgent(BaseRAGAgent):
                 docs = retriever.invoke(subquery)
                 subquery_results[subquery_key] = docs
             except Exception as e:
-                logger.error(f"Error retrieving for subquery {subquery_key}: {e}")
+                logger.exception(f"Error retrieving for subquery {subquery_key}: {e}")
                 subquery_results[subquery_key] = []
 
         # Combine all documents for standard processing
@@ -211,7 +210,7 @@ class TypedRAGAgent(BaseRAGAgent):
             return {"aggregated_answer": aggregated_answer, "answer": aggregated_answer}
 
         except Exception as e:
-            logger.error(f"Error aggregating answers: {e}")
+            logger.exception(f"Error aggregating answers: {e}")
             # Fall back to standard answer generation
             return self.generate_answer(state)
 
@@ -241,7 +240,7 @@ class TypedRAGAgent(BaseRAGAgent):
             return {"answer": answer}
 
         except Exception as e:
-            logger.error(f"Error generating answer: {e}")
+            logger.exception(f"Error generating answer: {e}")
             return {
                 "answer": "I encountered an error while generating an answer to your question."
             }

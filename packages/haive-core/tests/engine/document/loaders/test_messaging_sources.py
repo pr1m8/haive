@@ -18,12 +18,9 @@ from typing import Any, Dict, List
 base_path = Path("/home/will/Projects/haive/backend/haive/packages/haive-core/src")
 sys.path.insert(0, str(base_path))
 
-print("💬 Testing Messaging & Social Media Sources System")
-print("=" * 60)
 
 try:
     # Test importing the messaging sources components
-    print("📦 Testing messaging components...")
 
     # Test the enums and basic classes
     from enum import Enum
@@ -68,17 +65,13 @@ try:
         ALL_TIME = "all_time"
         CUSTOM = "custom"
 
-    print("✅ Messaging enums working correctly!")
 
 except Exception as e:
-    print(f"❌ Enum test failed: {e}")
+    pass")
 
 
 def test_platform_detection():
     """Test messaging platform detection from file paths."""
-
-    print("\n🔍 Testing Platform Detection")
-    print("-" * 40)
 
     def detect_chat_platform(file_path: str):
         """Detect chat platform from export file."""
@@ -112,23 +105,16 @@ def test_platform_detection():
     for file_path, expected_platform in test_files.items():
         detected = detect_chat_platform(file_path)
         status = "✅" if detected == expected_platform else "❌"
-        print(f"  {status} {file_path} → {detected}")
         if detected == expected_platform:
             detection_success += 1
 
     success_rate = (detection_success / len(test_files)) * 100
-    print(
-        f"\n  Success Rate: {detection_success}/{len(test_files)} ({success_rate:.1f}%)"
-    )
 
     return detection_success >= 5
 
 
 def test_date_filtering():
     """Test date range filtering functionality."""
-
-    print("\n📅 Testing Date Filtering")
-    print("-" * 40)
 
     def get_date_filter(date_range: DateRange, start_date=None, end_date=None):
         """Get date filtering configuration."""
@@ -163,12 +149,8 @@ def test_date_filtering():
             date_filter = get_date_filter(date_range)
 
             if date_range == DateRange.ALL_TIME:
-                print(f"  ✅ {date_range.value}: No date filter (all time)")
                 assert date_filter == {}
             else:
-                print(
-                    f"  ✅ {date_range.value}: {date_filter['start_date'].strftime('%Y-%m-%d')} to {date_filter['end_date'].strftime('%Y-%m-%d')}"
-                )
                 assert "start_date" in date_filter
                 assert "end_date" in date_filter
                 assert date_filter["start_date"] < date_filter["end_date"]
@@ -176,7 +158,7 @@ def test_date_filtering():
             date_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {date_range.value}: Error - {e}")
+            pass")
 
     # Test custom date range
     try:
@@ -184,27 +166,20 @@ def test_date_filtering():
         custom_end = datetime(2023, 12, 31)
         custom_filter = get_date_filter(DateRange.CUSTOM, custom_start, custom_end)
 
-        print(
-            f"  ✅ custom: {custom_filter['start_date'].strftime('%Y-%m-%d')} to {custom_filter['end_date'].strftime('%Y-%m-%d')}"
-        )
         assert custom_filter["start_date"] == custom_start
         assert custom_filter["end_date"] == custom_end
 
         date_tests_passed += 1
 
     except Exception as e:
-        print(f"  ❌ custom: Error - {e}")
+        pass")
 
-    print(f"\n  Date Filter Tests: {date_tests_passed}/{len(test_ranges) + 1} passed")
 
     return date_tests_passed >= 5
 
 
 def test_messaging_source_creation():
     """Test creating messaging source instances."""
-
-    print("\n💬 Testing Messaging Source Creation")
-    print("-" * 40)
 
     # Mock messaging source class
     class MockMessagingSource:
@@ -277,31 +252,20 @@ def test_messaging_source_creation():
 
             loader_kwargs = source.get_loader_kwargs()
 
-            print(f"  ✅ {config['name']}: {config['platform'].value}")
-            print(
-                f"    Content types: {[ct.value for ct in config.get('content_types', [])]}"
-            )
-            print(f"    Platform: {loader_kwargs['platform']}")
 
             assert loader_kwargs["platform"] == config["platform"].value
 
             source_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {config['name']}: Error - {e}")
+            pass")
 
-    print(
-        f"\n  Source Creation Tests: {source_tests_passed}/{len(test_configs)} passed"
-    )
 
     return source_tests_passed >= 3
 
 
 def test_content_filtering():
     """Test content filtering and extraction options."""
-
-    print("\n🔍 Testing Content Filtering")
-    print("-" * 40)
 
     def apply_content_filters(
         content_types,
@@ -373,32 +337,25 @@ def test_content_filtering():
                 keyword_filter=test_filter.get("keyword_filter"),
             )
 
-            print(
-                f"  ✅ {test_filter['name']}: {len(filters['content_types'])} content types"
-            )
 
             if test_filter.get("user_filter"):
-                print(f"    User filter: {filters.get('user_filter', [])}")
+                pass
             if test_filter.get("keyword_filter"):
-                print(f"    Keyword filter: {filters.get('keyword_filter', [])}")
+                pass
 
             assert len(filters["content_types"]) == test_filter["expected_count"]
 
             filter_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {test_filter['name']}: Error - {e}")
+            pass")
 
-    print(f"\n  Content Filter Tests: {filter_tests_passed}/{len(test_filters)} passed")
 
     return filter_tests_passed >= 4
 
 
 def test_api_authentication():
     """Test API authentication handling for different platforms."""
-
-    print("\n🔐 Testing API Authentication")
-    print("-" * 40)
 
     # Mock authentication configurations
     auth_configs = [
@@ -441,9 +398,6 @@ def test_api_authentication():
             auth_type = config["auth_type"]
             required_fields = config["required_fields"]
 
-            print(f"  ✅ {platform.value}: {auth_type}")
-            print(f"    Required: {', '.join(required_fields)}")
-            print(f"    Optional: {', '.join(config['optional_fields'])}")
 
             # Validate that we have all required authentication fields
             assert len(required_fields) > 0, "Must have required auth fields"
@@ -451,18 +405,14 @@ def test_api_authentication():
             auth_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {platform.value}: Error - {e}")
+            pass")
 
-    print(f"\n  Authentication Tests: {auth_tests_passed}/{len(auth_configs)} passed")
 
     return auth_tests_passed >= 4
 
 
 def test_bulk_messaging_operations():
     """Test bulk messaging and export processing."""
-
-    print("\n📦 Testing Bulk Messaging Operations")
-    print("-" * 40)
 
     # Mock bulk operations
     def process_bulk_exports(export_directory, supported_formats, auto_detect=True):
@@ -515,21 +465,15 @@ def test_bulk_messaging_operations():
                 auto_detect=True,
             )
 
-            print(f"  ✅ {operation['name']}: {result['total_files']} files")
-            print(f"    Directory: {operation['directory']}")
-            print(f"    Formats: {', '.join(operation['formats'])}")
 
             assert result["total_files"] == operation["expected_files"]
-            assert result["config"]["auto_detect_platform"] == True
+            assert result["config"]["auto_detect_platform"]
 
             bulk_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {operation['name']}: Error - {e}")
+            pass")
 
-    print(
-        f"\n  Bulk Operation Tests: {bulk_tests_passed}/{len(test_operations)} passed"
-    )
 
     return bulk_tests_passed >= 2
 
@@ -537,72 +481,16 @@ def test_bulk_messaging_operations():
 def display_messaging_system_summary():
     """Display summary of the messaging sources implementation."""
 
-    print("\n" + "=" * 60)
-    print("💬 MESSAGING & SOCIAL MEDIA SOURCES IMPLEMENTATION")
-    print("=" * 60)
 
-    print(f"\n📱 SUPPORTED PLATFORMS:")
-    print("  ✅ Team Communication:")
-    print("    • Discord (chat, servers, threads)")
-    print("    • Slack (workspaces, channels, DMs)")
-    print("    • Microsoft Teams (teams, channels)")
-    print("  ✅ Social Media:")
-    print("    • Twitter/X (tweets, threads, searches)")
-    print("    • Reddit (posts, comments, subreddits)")
-    print("    • Mastodon (toots, timelines)")
-    print("  ✅ Messaging Apps:")
-    print("    • WhatsApp (chat exports)")
-    print("    • Telegram (chat exports)")
-    print("  ✅ Email Systems:")
-    print("    • IMAP (any email server)")
-    print("    • Gmail (OAuth API access)")
 
-    print(f"\n🔐 AUTHENTICATION:")
-    print("  ✅ API Keys: Discord, Slack, Twitter, Reddit")
-    print("  ✅ OAuth: Gmail, Microsoft Teams")
-    print("  ✅ Username/Password: IMAP email")
-    print("  ✅ Export Files: WhatsApp, Telegram")
 
-    print(f"\n📄 CONTENT TYPES:")
-    print("  ✅ Messages & Threads")
-    print("  ✅ Posts & Comments")
-    print("  ✅ Channels & Conversations")
-    print("  ✅ Reactions & Attachments")
-    print("  ✅ Metadata & User Info")
 
-    print(f"\n📅 FILTERING OPTIONS:")
-    print("  ✅ Date Ranges: Last day/week/month/year, custom")
-    print("  ✅ User Filtering: Specific users, exclude bots")
-    print("  ✅ Keyword Filtering: Search terms, hashtags")
-    print("  ✅ Content Limits: Max messages, channels")
-    print("  ✅ Platform-Specific: Subreddits, hashtags, servers")
 
-    print(f"\n🔄 PROCESSING FEATURES:")
-    print("  ✅ Bulk Export Processing")
-    print("  ✅ Auto-Platform Detection")
-    print("  ✅ Rate Limiting Compliance")
-    print("  ✅ Attachment Handling")
-    print("  ✅ Metadata Preservation")
-    print("  ✅ Error Recovery")
 
-    print(f"\n🚀 PRODUCTION FEATURES:")
-    print("  • Multi-platform chat export processing")
-    print("  • Social media content aggregation")
-    print("  • Team communication archival")
-    print("  • Email system integration")
-    print("  • Comprehensive content filtering")
-    print("  • API rate limit handling")
-
-    print("\n" + "=" * 60)
-    print("🎉 MESSAGING & SOCIAL MEDIA PHASE 6 COMPLETE!")
-    print("=" * 60)
 
 
 def main():
     """Run all messaging sources tests."""
-
-    print("\n🧪 Running Messaging Sources Tests")
-    print("=" * 40)
 
     tests_passed = 0
     total_tests = 6
@@ -610,57 +498,46 @@ def main():
     # Test 1: Platform Detection
     if test_platform_detection():
         tests_passed += 1
-        print("✅ Platform Detection: PASS")
     else:
-        print("❌ Platform Detection: FAIL")
+        pass")
 
     # Test 2: Date Filtering
     if test_date_filtering():
         tests_passed += 1
-        print("✅ Date Filtering: PASS")
     else:
-        print("❌ Date Filtering: FAIL")
+        pass")
 
     # Test 3: Messaging Source Creation
     if test_messaging_source_creation():
         tests_passed += 1
-        print("✅ Messaging Source Creation: PASS")
     else:
-        print("❌ Messaging Source Creation: FAIL")
+        pass")
 
     # Test 4: Content Filtering
     if test_content_filtering():
         tests_passed += 1
-        print("✅ Content Filtering: PASS")
     else:
-        print("❌ Content Filtering: FAIL")
+        pass")
 
     # Test 5: API Authentication
     if test_api_authentication():
         tests_passed += 1
-        print("✅ API Authentication: PASS")
     else:
-        print("❌ API Authentication: FAIL")
+        pass")
 
     # Test 6: Bulk Operations
     if test_bulk_messaging_operations():
         tests_passed += 1
-        print("✅ Bulk Messaging Operations: PASS")
     else:
-        print("❌ Bulk Messaging Operations: FAIL")
+        pass")
 
     # Results
-    print(
-        f"\n🎯 TEST RESULTS: {tests_passed}/{total_tests} tests passed ({(tests_passed/total_tests*100):.1f}%)"
-    )
 
     if tests_passed >= 5:
-        print("🎉 MESSAGING & SOCIAL MEDIA SOURCES: EXCELLENT IMPLEMENTATION!")
         display_messaging_system_summary()
         return True
-    else:
-        print("⚠️ MESSAGING & SOCIAL MEDIA SOURCES: NEEDS IMPROVEMENT")
-        return False
+    print("⚠️ MESSAGING & SOCIAL MEDIA SOURCES: NEEDS IMPROVEMENT")
+    return False
 
 
 if __name__ == "__main__":

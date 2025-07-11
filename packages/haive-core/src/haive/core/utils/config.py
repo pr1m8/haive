@@ -11,5 +11,4 @@ DOCUMENTS_DIR = os.path.join(os.path.dirname(BASE_DIR), "documents")
 VECTORSTORE_DIR = os.path.join(os.path.dirname(BASE_DIR), "vectorstore")
 
 # Data directories
-# DATA_DIR=os.path.join(os.path.dirname(BASE_DIR),'data')
 CACHE_DIR = os.path.join(os.path.dirname(BASE_DIR), "lc_cache")

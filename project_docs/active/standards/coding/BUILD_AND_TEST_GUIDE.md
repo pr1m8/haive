@@ -7,6 +7,7 @@
 ## 🚨 NEVER Rush Implementation
 
 ### Research First, Code Second
+
 ```bash
 # ALWAYS research before implementing
 # 1. Check existing codebase for patterns
@@ -20,6 +21,7 @@ find packages/ -name "*.py" -path "*/similar_module/*" | head -5
 ```
 
 ### Common Rushing Mistakes
+
 - **Skipping Pydantic research** - Not checking existing model patterns
 - **Ignoring existing utilities** - Reinventing wheels that exist
 - **Missing validation patterns** - Not following established schemas
@@ -28,11 +30,13 @@ find packages/ -name "*.py" -path "*/similar_module/*" | head -5
 ## 🛠️ Build System Overview
 
 ### Core Tools
+
 - **Trunk**: Code linting, formatting, and quality checks
 - **Poetry**: Dependency management and virtual environments
 - **Pytest**: Testing framework with real component testing
 
 ### Quality Pipeline
+
 ```bash
 # Complete quality check pipeline
 trunk check --all                    # Lint and format
@@ -44,6 +48,7 @@ poetry run ruff check packages/      # Additional linting
 ## 🔧 Essential Build Commands
 
 ### Development Workflow
+
 ```bash
 # 1. Install dependencies
 poetry install --all-extras
@@ -62,6 +67,7 @@ poetry run sphinx-build -b html docs/source docs/build
 ```
 
 ### Trunk Usage (Primary Quality Tool)
+
 ```bash
 # Check all files
 trunk check --all
@@ -80,6 +86,7 @@ trunk check --filter=mypy,black
 ```
 
 ### Documentation Commands
+
 ```bash
 # Build documentation (when system is ready)
 poetry run sphinx-build -b html docs/source docs/build
@@ -91,6 +98,7 @@ cd docs && make html
 ## 📊 Testing Standards
 
 ### Testing Commands
+
 ```bash
 # Run all tests
 poetry run pytest
@@ -109,7 +117,9 @@ poetry run pytest -k "test_agent" -v
 ```
 
 ### Test Configuration
+
 The project uses pytest with these paths configured:
+
 ```toml
 [tool.pytest.ini_options]
 pythonpath = [
@@ -126,19 +136,21 @@ pythonpath = [
 
 ### 🚨 Common Pydantic Mistakes to Avoid
 
-#### 1. Manual __init__ Override (DON'T DO THIS)
+#### 1. Manual **init** Override (DON'T DO THIS)
+
 ```python
 # ❌ WRONG - Overriding __init__ breaks Pydantic
 class AgentConfig(BaseModel):
     name: str
     temperature: float
-    
+
     def __init__(self, name, temperature):  # ❌ BREAKS PYDANTIC
         self.name = name
         self.temperature = temperature
 ```
 
 #### 2. Not Using Field Validation
+
 ```python
 # ❌ WRONG - No validation
 class AgentConfig(BaseModel):
@@ -152,6 +164,7 @@ class AgentConfig(BaseModel):
 ```
 
 #### 3. Ignoring Existing Patterns
+
 ```bash
 # ALWAYS check existing Pydantic patterns before creating new ones
 find packages/ -name "*.py" | xargs grep -l "class.*BaseModel" | head -5
@@ -161,6 +174,7 @@ grep -r "Field(" packages/ | head -10
 ### ✅ Proper Pydantic Usage
 
 #### Research Existing Patterns First
+
 ```bash
 # Check existing config patterns
 find packages/ -name "*config*.py" | head -5
@@ -173,6 +187,7 @@ grep -r "Field(" packages/ | head -10
 ```
 
 #### Proper Model Definition
+
 ```python
 from pydantic import BaseModel, Field, field_validator, model_validator
 from typing import List, Optional, Dict, Any
@@ -186,21 +201,21 @@ class ModelType(str, Enum):
 
 class AgentConfig(BaseModel):
     """Agent configuration with comprehensive validation.
-    
+
     Always include:
     - Full docstring with examples
     - Field validation with constraints
     - Custom validators when needed
     - Configuration class for Pydantic settings
     """
-    
+
     model_config = ConfigDict(
         str_strip_whitespace=True,
         validate_assignment=True,
         use_enum_values=True,
         extra="forbid"  # Prevent unknown fields
     )
-    
+
     name: str = Field(
         ...,
         min_length=3,
@@ -208,24 +223,24 @@ class AgentConfig(BaseModel):
         pattern=r"^[a-zA-Z0-9_]+$",
         description="Agent identifier (alphanumeric + underscore)"
     )
-    
+
     model: ModelType = Field(
         default=ModelType.GPT4,
         description="LLM model selection"
     )
-    
+
     temperature: float = Field(
         default=0.7,
         ge=0.0,
         le=2.0,
         description="Sampling temperature"
     )
-    
+
     tools: List[str] = Field(
         default_factory=list,
         description="Available tool names"
     )
-    
+
     @field_validator("name")
     @classmethod
     def validate_name(cls, v: str) -> str:
@@ -233,7 +248,7 @@ class AgentConfig(BaseModel):
         if not v.replace("_", "").isalnum():
             raise ValueError("Name must be alphanumeric with underscores only")
         return v
-    
+
     @field_validator("tools")
     @classmethod
     def validate_tools(cls, v: List[str]) -> List[str]:
@@ -245,7 +260,7 @@ class AgentConfig(BaseModel):
         if invalid:
             raise ValueError(f"Unknown tools: {', '.join(invalid)}")
         return v
-    
+
     @model_validator(mode="after")
     def validate_compatibility(self) -> "AgentConfig":
         """Validate cross-field compatibility."""
@@ -256,6 +271,7 @@ class AgentConfig(BaseModel):
 ```
 
 #### Using Existing Patterns
+
 ```python
 # ALWAYS check if similar configs exist
 from haive.core.config import BaseEngineConfig  # Check if this exists
@@ -269,6 +285,7 @@ class MyAgentConfig(BaseEngineConfig):
 ## 🔍 Research Methodology
 
 ### Before Writing ANY Code
+
 ```bash
 # 1. Check existing implementations
 find packages/ -name "*.py" | xargs grep -l "similar_concept" | head -5
@@ -284,6 +301,7 @@ grep -r "from.*import.*YourConcept" packages/ | head -5
 ```
 
 ### Research Checklist
+
 - [ ] **Existing implementations**: Are there similar classes/functions?
 - [ ] **Documentation**: Is this already documented somewhere?
 - [ ] **Test patterns**: How are similar things tested?
@@ -294,6 +312,7 @@ grep -r "from.*import.*YourConcept" packages/ | head -5
 ## 📋 Quality Checklist
 
 ### Before Committing
+
 ```bash
 # 1. Research existing patterns
 find packages/ -name "*.py" | xargs grep -l "your_pattern"
@@ -312,8 +331,9 @@ poetry run sphinx-build -b html docs/source docs/build
 ```
 
 ### Code Quality Standards
+
 - [ ] **No rushing**: Researched existing patterns first
-- [ ] **Proper Pydantic**: No manual __init__, proper Field usage
+- [ ] **Proper Pydantic**: No manual **init**, proper Field usage
 - [ ] **Type hints**: All public functions fully typed
 - [ ] **Documentation**: Google-style docstrings
 - [ ] **Testing**: Real components, no mocks
@@ -323,6 +343,7 @@ poetry run sphinx-build -b html docs/source docs/build
 ## 🚨 Build Failure Recovery
 
 ### Common Issues and Solutions
+
 ```bash
 # Import errors
 poetry run python -c "import sys; print(sys.path)"
@@ -340,6 +361,7 @@ trunk check --fix --all       # Auto-fix what's possible
 ```
 
 ### Environment Issues
+
 ```bash
 # Clean environment
 poetry env remove python
@@ -355,6 +377,7 @@ poetry show --tree
 ## 📊 Performance Monitoring
 
 ### Build Performance
+
 ```bash
 # Time commands for performance monitoring
 time trunk check --all
@@ -363,6 +386,7 @@ time poetry run mypy packages/
 ```
 
 ### Quality Metrics
+
 - **Lint time**: <30 seconds for full check
 - **Test time**: <5 minutes for full suite
 - **Type check**: <2 minutes for full codebase

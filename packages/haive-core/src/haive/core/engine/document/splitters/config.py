@@ -1,43 +1,44 @@
 from enum import Enum
 
+
 __all__ = [
+    "CharacterTextSplitter",
     "DocSplitterType",
-    "TokenTextSplitter",
-    "TextSplitter",
-    "Tokenizer",
-    "Language",
-    "RecursiveCharacterTextSplitter",
-    "RecursiveJsonSplitter",
-    "LatexTextSplitter",
-    "PythonCodeTextSplitter",
-    "KonlpyTextSplitter",
-    "SpacyTextSplitter",
-    "NLTKTextSplitter",
-    "split_text_on_tokens",
-    "SentenceTransformersTokenTextSplitter",
     "ElementType",
-    "HeaderType",
-    "LineType",
     "HTMLHeaderTextSplitter",
+    "HeaderType",
+    "KonlpyTextSplitter",
+    "Language",
+    "LatexTextSplitter",
+    "LineType",
     "MarkdownHeaderTextSplitter",
     "MarkdownTextSplitter",
-    "CharacterTextSplitter",
+    "NLTKTextSplitter",
+    "PythonCodeTextSplitter",
+    "RecursiveCharacterTextSplitter",
+    "RecursiveJsonSplitter",
+    "SentenceTransformersTokenTextSplitter",
+    "SpacyTextSplitter",
+    "TextSplitter",
+    "TokenTextSplitter",
+    "Tokenizer",
+    "split_text_on_tokens",
 ]
 
 
 class DocSplitterType(str, Enum):
     """Document splitter types available in the system."""
-    
-    NLTK = 'nltk'
-    CHARACTER = 'character'
-    RECURSIVE_CHARACTER = 'recursive_character'
-    HTML = 'html'
-    MARKDOWN = 'markdown'
-    JSON = 'json'
-    LATEX = 'latex'
-    PYTHON = 'python'
-    KONLPY = 'konlpy'
-    SPACY = 'spacy'
-    SENTENCE_TRANSFORMERS = 'sentence_transformers'
-    TOKEN = 'token'
-    TEXT = 'text'
+
+    NLTK = "nltk"
+    CHARACTER = "character"
+    RECURSIVE_CHARACTER = "recursive_character"
+    HTML = "html"
+    MARKDOWN = "markdown"
+    JSON = "json"
+    LATEX = "latex"
+    PYTHON = "python"
+    KONLPY = "konlpy"
+    SPACY = "spacy"
+    SENTENCE_TRANSFORMERS = "sentence_transformers"
+    TOKEN = "token"
+    TEXT = "text"

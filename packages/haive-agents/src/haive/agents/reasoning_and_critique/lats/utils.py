@@ -1,32 +1,33 @@
 from typing import Any
 
-from agents.lats.models import Reflection
 from langchain_core.output_parsers import PydanticOutputParser
 from langchain_core.prompts import ChatPromptTemplate
+
+from agents.lats.models import Reflection
 
 
 def create_reflection_chain():
     """Create a chain for generating reflections on responses."""
     # Template for reflection
     reflection_template = """You are an objective evaluator. Your task is to evaluate a candidate response based on how well it addresses a given query.
-    
-    Query: 
+
+    Query:
     {input}
-    
+
     Candidate Solution:
     {candidate}
-    
+
     Please evaluate and rate the candidate solution's effectiveness at addressing the query. Consider:
     1. Clarity and comprehensiveness of the response
     2. Factual accuracy and relevance
     3. Intelligent reasoning
     4. Whether it fully addresses all aspects of the query
-    
+
     Provide:
     1. Reflections: A paragraph with your thoughts on the response's strengths and weaknesses
     2. A score from 0-10 (where 10 is perfect)
     3. Whether the solution fully addresses the question (true/false)
-    
+
     Output must be in JSON format:
     ```json
     {{
@@ -41,7 +42,6 @@ def create_reflection_chain():
     reflection_prompt = ChatPromptTemplate.from_template(reflection_template)
 
     # Create the reflection model (use a specific model for good evaluations)
-    # model = ChatOpenAI(temperature=0)
 
     # Create parser for Reflection
     parser = PydanticOutputParser(pydantic_object=Reflection)
@@ -71,16 +71,17 @@ def format_messages_for_chain(messages: list[Any]) -> str:
 """
 Factory functions for creating LATS agents.
 """
+from langchain_core.tools import BaseTool
+
 from agents.lats.config import LATSAgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from haive.core.tools.search_tools import tavily_search_tool
-from langchain_core.tools import BaseTool
 
 
 def create_lats_agent(
     system_prompt: str = "You are a helpful assistant that can answer questions and help with tasks.",
-    tools: list[BaseTool] | None = [tavily_search_tool],
+    tools: list[BaseTool] | None = None,
     max_depth: int = 3,
     max_iterations: int = 3,
     n_candidates: int = 3,
@@ -104,6 +105,16 @@ def create_lats_agent(
         A configured LATS agent
     """
     # Create LLM config
+    if tools is None:
+        tools = [tavily_search_tool]
+    if tools is None:
+        tools = [tavily_search_tool]
+    if tools is None:
+        tools = [tavily_search_tool]
+    if tools is None:
+        tools = [tavily_search_tool]
+    if tools is None:
+        tools = [tavily_search_tool]
     llm_config = AzureLLMConfig(model=model, parameters={"temperature": 0.7})
 
     # Create reflection engine

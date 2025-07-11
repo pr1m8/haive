@@ -1,18 +1,14 @@
+from datetime import datetime
 import importlib
 import inspect
 import json
 import logging
+from pathlib import Path
 
 # Import document loader utilities
 import pkgutil
-from datetime import datetime
-from pathlib import Path
 from typing import Any
 
-from haive.core.engine.agent.agent import Agent, register_agent
-from haive.core.engine.retriever import create_retriever_from_vectorstore
-from haive.core.graph.branches import Branch
-from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from langchain_core.messages import AIMessage, HumanMessage
 from langgraph.graph import END, START
 from langgraph.types import Command
@@ -23,16 +19,21 @@ from haive.agents.research.open_perplexity.state import (
     ReportSection,
     ResearchState,
 )
+from haive.core.engine.agent.agent import Agent, register_agent
+from haive.core.engine.retriever import create_retriever_from_vectorstore
+from haive.core.graph.branches import Branch
+from haive.core.graph.dynamic_graph_builder import DynamicGraph
+
 
 logger = logging.getLogger(__name__)
 
 
 @register_agent(ResearchAgentConfig)
 class ResearchAgent(Agent[ResearchAgentConfig]):
-    """Agent for performing deep research on any topic with dynamic document loader selection"""
+    """Agent for performing deep research on any topic with dynamic document loader selection."""
 
     def __init__(self, config: ResearchAgentConfig):
-        """Initialize the research agent"""
+        """Initialize the research agent."""
         super().__init__(config)
         self.config = config
         self.document_loaders = {}
@@ -46,7 +47,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
 
     @property
     def react_agent(self):
-        """Get the ReAct agent for research tasks"""
+        """Get the ReAct agent for research tasks."""
         if not hasattr(self, "_react_agent"):
             if not self.config.react_agent_name:
                 raise ValueError("ReAct agent name not configured")
@@ -55,7 +56,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
 
     @property
     def rag_agent(self):
-        """Get the RAG agent for retrieval tasks"""
+        """Get the RAG agent for retrieval tasks."""
         if not hasattr(self, "_rag_agent"):
             if not self.config.rag_agent_name:
                 logger.warning("RAG agent not configured, will be set up as needed")
@@ -65,7 +66,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
 
     @property
     def vectorstore(self):
-        """Get or create the vector store"""
+        """Get or create the vector store."""
         if not hasattr(self, "_vectorstore"):
             if not self.vectorstore_config:
                 logger.warning("Vector store not configured")
@@ -75,7 +76,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
 
     @property
     def retriever(self):
-        """Get or create the retriever from the vector store"""
+        """Get or create the retriever from the vector store."""
         if not hasattr(self, "_retriever"):
             if not self.vectorstore:
                 logger.warning(
@@ -88,7 +89,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         return self._retriever
 
     def _discover_document_loaders(self) -> dict[str, Any]:
-        """Discover available document loaders"""
+        """Discover available document loaders."""
         import langchain_community.document_loaders as base_loader_pkg
 
         loader_classes = {}
@@ -108,7 +109,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         return loader_classes
 
     def _create_document_loader(self, loader_name: str, **kwargs) -> Any:
-        """Create a document loader instance by name"""
+        """Create a document loader instance by name."""
         if loader_name not in self._available_loaders:
             raise ValueError(f"Document loader {loader_name} not found")
 
@@ -116,7 +117,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         return loader_class(**kwargs)
 
     def setup_workflow(self) -> None:
-        """Set up the research workflow graph"""
+        """Set up the research workflow graph."""
         graph_builder = DynamicGraph(ResearchState)
 
         # Define nodes
@@ -162,8 +163,8 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         self.graph = graph_builder.compile()
 
     def process_input(self, state: ResearchState) -> Command:
-        """Process the initial input and set up the research state"""
-        engine = self.get_engine("main")
+        """Process the initial input and set up the research state."""
+        self.get_engine("main")
 
         # Extract the first message if available
         if state.messages:
@@ -176,7 +177,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         return {"next": "extract_topic"}
 
     def extract_topic(self, state: ResearchState) -> Command:
-        """Extract the research topic and question from user input"""
+        """Extract the research topic and question from user input."""
         engine = self.get_engine("topic_extraction")
 
         input_text = state.input_context or ""
@@ -200,7 +201,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         return {"next": "generate_report_plan"}
 
     def generate_report_plan(self, state: ResearchState) -> Command:
-        """Generate a research report plan with appropriate sections"""
+        """Generate a research report plan with appropriate sections."""
         engine = self.get_engine("report_planning")
 
         # Start with default sections from config
@@ -240,7 +241,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         return {"next": "generate_search_queries"}
 
     def generate_search_queries(self, state: ResearchState) -> Command:
-        """Generate search queries for the current section"""
+        """Generate search queries for the current section."""
         engine = self.get_engine("query_generation")
 
         if state.current_section_index is None or state.current_section_index >= len(
@@ -283,7 +284,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         return {"next": "recommend_document_loaders"}
 
     def recommend_document_loaders(self, state: ResearchState) -> Command:
-        """Recommend document loaders based on queries and data sources"""
+        """Recommend document loaders based on queries and data sources."""
         # Get data source types from queries
         data_sources = set()
         for query in state.search_queries:
@@ -327,12 +328,12 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         return {"next": "execute_searches"}
 
     def execute_searches(self, state: ResearchState) -> Command:
-        """Execute searches using appropriate document loaders"""
+        """Execute searches using appropriate document loaders."""
         if not state.search_queries:
             return {"next": "check_section_completion"}
 
         # Get current section
-        current_section = state.report_sections[state.current_section_index]
+        state.report_sections[state.current_section_index]
 
         # Execute each search query
         for i, query in enumerate(state.search_queries):
@@ -398,7 +399,9 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
                     state.vectorstore_documents.extend(documents)
 
             except Exception as e:
-                logger.error(f"Error executing search for query '{query_text}': {e}")
+                logger.exception(
+                    f"Error executing search for query '{query_text}': {e}"
+                )
                 results.append({"error": str(e), "query": query_text})
 
             # Update query with results
@@ -411,7 +414,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         return {"next": "evaluate_sources"}
 
     def evaluate_sources(self, state: ResearchState) -> Command:
-        """Evaluate and rate the reliability of retrieved sources"""
+        """Evaluate and rate the reliability of retrieved sources."""
         engine = self.get_engine("source_evaluation")
 
         # Get sources from current search queries
@@ -456,7 +459,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
                         sources.append(source)
 
                 except Exception as e:
-                    logger.error(f"Error evaluating source {url}: {e}")
+                    logger.exception(f"Error evaluating source {url}: {e}")
 
         # Add to sources list
         state.sources.extend(sources)
@@ -474,7 +477,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         return {"next": "write_section"}
 
     def write_section(self, state: ResearchState) -> Command:
-        """Write the current section of the report"""
+        """Write the current section of the report."""
         engine = self.get_engine("section_writing")
 
         if state.current_section_index is None or state.current_section_index >= len(
@@ -510,7 +513,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
                     research_context += f"--- Document {i+1} ---\n"
                     research_context += doc.page_content[:500] + "...\n\n"
             except Exception as e:
-                logger.error(f"Error retrieving documents from vector store: {e}")
+                logger.exception(f"Error retrieving documents from vector store: {e}")
 
         # Use the section writing engine to create content
         response = engine.invoke(
@@ -532,7 +535,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         return {"next": "check_section_completion"}
 
     def check_section_completion(self, state: ResearchState) -> str:
-        """Check if all sections are completed or if more research is needed"""
+        """Check if all sections are completed or if more research is needed."""
         if state.current_section_index is None:
             return "all_sections_completed"
 
@@ -559,7 +562,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         return "all_sections_completed"
 
     def consolidate_findings(self, state: ResearchState) -> Command:
-        """Consolidate findings from all sections"""
+        """Consolidate findings from all sections."""
         engine = self.get_engine("research_finding")
 
         # Extract key findings from each section
@@ -574,10 +577,10 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
             Research topic: {state.research_topic}
             Research question: {state.research_question}
             Section: {section.name}
-            
+
             Content:
             {section.content}
-            
+
             Please extract the key findings from this section.
             """
             )
@@ -587,7 +590,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
                 if isinstance(response, dict):
                     findings.append(response)
             except Exception as e:
-                logger.error(
+                logger.exception(
                     f"Error extracting findings from section {section.name}: {e}"
                 )
 
@@ -603,7 +606,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         return {"next": "assess_confidence"}
 
     def assess_confidence(self, state: ResearchState) -> Command:
-        """Assess confidence in research findings"""
+        """Assess confidence in research findings."""
         engine = self.get_engine("confidence_assessment")
 
         # Count source statistics
@@ -645,7 +648,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         return {"next": "compile_final_report"}
 
     def compile_final_report(self, state: ResearchState) -> Command:
-        """Compile the final research report"""
+        """Compile the final research report."""
         engine = self.get_engine("final_report_compilation")
 
         # Format section content
@@ -657,7 +660,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         # Format confidence assessment
         confidence_assessment = f"""
         Confidence Level: {state.confidence_level or 'Not assessed'}
-        
+
         Explanation: {state.confidence_explanation or 'No explanation provided'}
         """
 
@@ -678,12 +681,12 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         output_message = AIMessage(
             content=f"""
         Research on "{state.research_topic}" completed with {state.confidence_level or 'UNKNOWN'} confidence.
-        
+
         A comprehensive report has been generated. The report includes:
         - {len(state.report_sections)} sections
         - {len(state.sources)} sources
         - {len(state.research_findings.get('findings', []))} key findings
-        
+
         You can view or save the full report for detailed information.
         """
         )
@@ -695,7 +698,7 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         return {"next": END}
 
     def generate_markdown_report(self, state: dict[str, Any]) -> str:
-        """Generate a markdown report from the final state"""
+        """Generate a markdown report from the final state."""
         if (
             isinstance(state, dict)
             and "final_report" in state
@@ -735,43 +738,30 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
         return report
 
     def visualize_state(self, state: dict[str, Any]) -> None:
-        """Visualize the research state"""
-        print("\n" + "=" * 50)
-        print("RESEARCH STATE VISUALIZATION")
-        print("=" * 50)
-
+        """Visualize the research state."""
         # Print basic info
-        print(f"\nResearch Topic: {state.get('research_topic', 'Not specified')}")
-        print(f"Research Question: {state.get('research_question', 'Not specified')}")
-        print(f"Confidence Level: {state.get('confidence_level', 'Not assessed')}")
 
         # Print sections
-        print(f"\nReport Sections ({len(state.get('report_sections', []))}):")
-        for i, section in enumerate(state.get("report_sections", [])):
-            status_marker = "✅" if section.get("status") == "completed" else "⬜"
-            print(f"{i+1}. {status_marker} {section.get('name', 'Unnamed Section')}")
+        for _i, section in enumerate(state.get("report_sections", [])):
+            "✅" if section.get("status") == "completed" else "⬜"
 
         # Print source statistics
         sources = state.get("sources", [])
-        print(f"\nSources: {len(sources)} total")
         source_types = {}
         for source in sources:
             source_type = source.get("source_type", "unknown")
             source_types[source_type] = source_types.get(source_type, 0) + 1
 
-        for source_type, count in source_types.items():
-            print(f"- {source_type}: {count}")
+        for source_type, _count in source_types.items():
+            pass
 
         # Print findings
-        findings = state.get("research_findings", {}).get("findings", [])
-        print(f"\nKey Findings: {len(findings)}")
+        state.get("research_findings", {}).get("findings", [])
 
         # Print current step
-        print(f"\nCurrent Step: {state.get('current_step', 'Not started')}")
-        print("=" * 50)
 
-    def save_state_history(self, file_path: str = None) -> str:
-        """Save the state history to a file"""
+    def save_state_history(self, file_path: str | None = None) -> str:
+        """Save the state history to a file."""
         if not hasattr(self, "state_history"):
             logger.warning("No state history to save")
             return None
@@ -791,5 +781,5 @@ class ResearchAgent(Agent[ResearchAgentConfig]):
             logger.info(f"State history saved to {file_path}")
             return file_path
         except Exception as e:
-            logger.error(f"Error saving state history: {e}")
+            logger.exception(f"Error saving state history: {e}")
             return None

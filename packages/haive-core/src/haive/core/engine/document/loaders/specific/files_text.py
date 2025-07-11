@@ -7,9 +7,8 @@ ReStructuredText, LaTeX, and other document formats.
 import logging
 from typing import Optional
 
-from langchain_core.document_loaders.base import BaseLoader
-
 from haive.core.engine.document.loaders.sources.implementation import LocalFileSource
+from langchain_core.document_loaders.base import BaseLoader
 
 logger = logging.getLogger(__name__)
 

@@ -12,25 +12,24 @@ sys.path.insert(
 )
 
 
+from haive.agents.multi.base import SequentialAgent
+from haive.agents.react.agent import ReactAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
 
-from haive.agents.multi.base import SequentialAgent
-from haive.agents.react.agent import ReactAgent
-from haive.agents.simple.agent import SimpleAgent
-
 
 @tool
 def add(a: int, b: int) -> int:
-    """Returns the sum of two numbers"""
+    """Returns the sum of two numbers."""
     return a + b
 
 
 @tool
 def get_earth_age() -> int:
-    """Returns the age of Earth in years"""
+    """Returns the age of Earth in years."""
     return 4_543_000_000  # 4.543 billion years
 
 
@@ -48,11 +47,8 @@ simple_agent = SimpleAgent(engine=plan_aug)
 # Create sequential agent
 seq_agent = SequentialAgent(agents=[react_agent, simple_agent])
 
-print("Compiling...")
 compiled = seq_agent.compile()
-print("✅ Compiled!")
 
-print("\nRunning...")
 try:
     result = seq_agent.run(
         {
@@ -64,24 +60,18 @@ try:
         }
     )
 
-    print("\n✅ Success!")
-    print(f"\nFinal message count: {len(result.get('messages', []))}")
-
     # Show the last few messages
     messages = result.get("messages", [])
     if messages:
-        print("\nLast AI message:")
         for msg in reversed(messages):
             if hasattr(msg, "type") and msg.type == "ai":
-                print(f"  Content: {msg.content}")
                 break
 
     # Check for plan
     if "simple_agent_plan" in result:
-        print(f"\nPlan generated: {result['simple_agent_plan']}")
+        pass
 
-except Exception as e:
-    print(f"\n❌ Error: {e}")
+except Exception:
     import traceback
 
     traceback.print_exc()

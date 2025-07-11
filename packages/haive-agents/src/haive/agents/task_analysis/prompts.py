@@ -2,6 +2,7 @@
 
 from langchain_core.prompts import ChatPromptTemplate
 
+
 # Parallelization Analysis Template
 PARALLELIZATION_ANALYSIS_TEMPLATE = ChatPromptTemplate.from_messages(
     [

@@ -22,12 +22,12 @@ class EngineComposerMixin:
         super().__init__(*args, **kwargs)
 
         # Engine tracking
-        self.engines: Dict[str, Any] = {}
-        self.engines_by_type: Dict[str, List[str]] = defaultdict(list)
+        self.engines: dict[str, Any] = {}
+        self.engines_by_type: dict[str, list[str]] = defaultdict(list)
 
         # Processing history for debugging
         if not hasattr(self, "processing_history"):
-            self.processing_history: List[Dict[str, Any]] = []
+            self.processing_history: list[dict[str, Any]] = []
 
     def add_engine(self, engine: Any) -> "EngineComposerMixin":
         """Add an engine to the composer for tracking and later updates.
@@ -76,7 +76,7 @@ class EngineComposerMixin:
         return self
 
     def update_engine_provider(
-        self, engine_type: str, updates: Dict[str, Any]
+        self, engine_type: str, updates: dict[str, Any]
     ) -> "EngineComposerMixin":
         """Update configuration for all engines of a specific type.
 
@@ -128,7 +128,7 @@ class EngineComposerMixin:
 
         return self
 
-    def get_engines_by_type(self, engine_type: str) -> List[Any]:
+    def get_engines_by_type(self, engine_type: str) -> list[Any]:
         """Get all engines of a specific type.
 
         Args:
@@ -177,11 +177,10 @@ class EngineComposerMixin:
 
         # Add explicit engines dict if not present
         if "engines" not in self.fields and "engines" not in self.base_class_fields:
-            from typing import Dict
 
             self.add_field(
                 name="engines",
-                field_type=Dict[str, Any],
+                field_type=dict[str, Any],
                 default_factory=dict,
                 description="Engine registry for this state (backward compatible)",
                 source="engine_management",

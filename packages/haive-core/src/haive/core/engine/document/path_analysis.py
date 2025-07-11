@@ -1,5 +1,4 @@
-"""
-Path Analysis System for Document Loader Engine
+"""Path Analysis System for Document Loader Engine.
 
 This module provides a path analysis system for the document loader engine,
 which analyzes paths and URLs to determine their nature and properties.
@@ -96,13 +95,13 @@ class URLComponents(BaseModel):
     scheme: str = ""
     netloc: str = ""
     hostname: str = ""
-    port: Optional[int] = None
+    port: int | None = None
     path: str = ""
     params: str = ""
     query: str = ""
     fragment: str = ""
-    username: Optional[str] = None
-    password: Optional[str] = None
+    username: str | None = None
+    password: str | None = None
 
 
 class DomainInfo(BaseModel):
@@ -116,8 +115,7 @@ class DomainInfo(BaseModel):
 
 
 class PathAnalysisResult(BaseModel):
-    """
-    Result of path analysis.
+    """Result of path analysis.
 
     This model contains comprehensive information about a path, including its type,
     properties, and metadata.
@@ -150,64 +148,60 @@ class PathAnalysisResult(BaseModel):
     exists: bool = Field(default=False, description="Whether the path exists")
 
     # Path components
-    normalized_path: Optional[str] = Field(
+    normalized_path: str | None = Field(
         default=None, description="Normalized version of the path"
     )
-    parent_path: Optional[str] = Field(
+    parent_path: str | None = Field(
         default=None, description="Parent directory of the path"
     )
-    file_name: Optional[str] = Field(
-        default=None, description="File name (if applicable)"
-    )
-    file_extension: Optional[str] = Field(
+    file_name: str | None = Field(default=None, description="File name (if applicable)")
+    file_extension: str | None = Field(
         default=None, description="File extension (if applicable)"
     )
 
     # File properties
-    file_size: Optional[int] = Field(
+    file_size: int | None = Field(
         default=None, description="File size in bytes (if available)"
     )
-    mime_type: Optional[str] = Field(
-        default=None, description="MIME type (if available)"
-    )
-    encoding: Optional[str] = Field(
+    mime_type: str | None = Field(default=None, description="MIME type (if available)")
+    encoding: str | None = Field(
         default=None, description="File encoding (if available)"
     )
 
     # Categorization
-    file_category: Optional[FileCategory] = Field(
+    file_category: FileCategory | None = Field(
         default=None, description="High-level file category"
     )
 
     # URL-specific properties
-    url_components: Optional[URLComponents] = Field(
+    url_components: URLComponents | None = Field(
         default=None, description="Components of the URL (if applicable)"
     )
-    domain_info: Optional[DomainInfo] = Field(
+    domain_info: DomainInfo | None = Field(
         default=None, description="Domain information (if applicable)"
     )
 
     # Database-specific properties
-    database_type: Optional[DatabaseType] = Field(
+    database_type: DatabaseType | None = Field(
         default=None, description="Database type (if applicable)"
     )
-    database_name: Optional[str] = Field(
+    database_name: str | None = Field(
         default=None, description="Database name (if applicable)"
     )
 
     # Cloud storage properties
-    cloud_provider: Optional[CloudProvider] = Field(
+    cloud_provider: CloudProvider | None = Field(
         default=None, description="Cloud storage provider (if applicable)"
     )
-    bucket_name: Optional[str] = Field(
+    bucket_name: str | None = Field(
         default=None, description="Bucket name (if applicable)"
     )
-    object_key: Optional[str] = Field(
+    object_key: str | None = Field(
         default=None, description="Object key (if applicable)"
     )
 
     # Network properties
-    is_secure: Optional[bool] = Field(
+    is_secure: bool | None = Field(
         default=None, description="Whether the connection is secure (https, sftp, etc.)"
     )
 
@@ -216,15 +210,14 @@ class PathAnalysisResult(BaseModel):
         """Generate a summary of the source."""
         if self.path_type in [PathType.LOCAL_FILE, PathType.LOCAL_DIRECTORY]:
             return f"Local {'directory' if self.is_directory else 'file'}: {self.original_path}"
-        elif self.path_type in [PathType.URL_HTTP, PathType.URL_HTTPS]:
+        if self.path_type in [PathType.URL_HTTP, PathType.URL_HTTPS]:
             domain = self.domain_info.domain if self.domain_info else "unknown"
             return f"Web URL ({domain}): {self.original_path}"
-        elif self.path_type == PathType.DATABASE_URI:
+        if self.path_type == PathType.DATABASE_URI:
             return f"Database ({self.database_type}): {self.original_path}"
-        elif self.path_type == PathType.CLOUD_STORAGE:
+        if self.path_type == PathType.CLOUD_STORAGE:
             return f"Cloud storage ({self.cloud_provider}): {self.original_path}"
-        else:
-            return f"Unknown source: {self.original_path}"
+        return f"Unknown source: {self.original_path}"
 
 
 # File extension to MIME type mappings (in addition to standard ones)
@@ -386,9 +379,8 @@ CLOUD_STORAGE_PATTERNS = {
 }
 
 
-def detect_mime_type(file_path: str) -> Optional[str]:
-    """
-    Detect the MIME type of a file.
+def detect_mime_type(file_path: str) -> str | None:
+    """Detect the MIME type of a file.
 
     Args:
         file_path: Path to the file
@@ -417,8 +409,7 @@ def detect_mime_type(file_path: str) -> Optional[str]:
 
 
 def is_binary_file(file_path: str) -> bool:
-    """
-    Check if a file is binary.
+    """Check if a file is binary.
 
     Args:
         file_path: Path to the file
@@ -451,9 +442,10 @@ def is_binary_file(file_path: str) -> bool:
 
     # Check MIME type
     mime_type = detect_mime_type(file_path)
-    if mime_type:
-        if not mime_type.startswith(("text/", "application/json", "application/xml")):
-            return True
+    if mime_type and not mime_type.startswith(
+        ("text/", "application/json", "application/xml")
+    ):
+        return True
 
     # Check content (first few KB)
     try:
@@ -468,16 +460,15 @@ def is_binary_file(file_path: str) -> bool:
                 return False
             except UnicodeDecodeError:
                 return True
-    except (IOError, Exception):
+    except (OSError, Exception):
         # If we can't read the file, assume it's not binary
         pass
 
     return False
 
 
-def detect_encoding(file_path: str) -> Optional[str]:
-    """
-    Detect the encoding of a text file.
+def detect_encoding(file_path: str) -> str | None:
+    """Detect the encoding of a text file.
 
     Args:
         file_path: Path to the file
@@ -506,8 +497,7 @@ def detect_encoding(file_path: str) -> Optional[str]:
 
 
 def extract_url_components(url: str) -> URLComponents:
-    """
-    Extract components from a URL.
+    """Extract components from a URL.
 
     Args:
         url: URL string
@@ -542,8 +532,7 @@ def extract_url_components(url: str) -> URLComponents:
 
 
 def extract_domain_info(url_components: URLComponents) -> DomainInfo:
-    """
-    Extract domain information from URL components.
+    """Extract domain information from URL components.
 
     Args:
         url_components: URLComponents object
@@ -590,9 +579,8 @@ def extract_domain_info(url_components: URLComponents) -> DomainInfo:
     )
 
 
-def extract_database_info(uri: str, db_type: DatabaseType) -> Dict[str, Any]:
-    """
-    Extract database information from a URI.
+def extract_database_info(uri: str, db_type: DatabaseType) -> dict[str, Any]:
+    """Extract database information from a URI.
 
     Args:
         uri: Database URI
@@ -623,9 +611,8 @@ def extract_database_info(uri: str, db_type: DatabaseType) -> Dict[str, Any]:
     return info
 
 
-def extract_cloud_storage_info(uri: str, provider: CloudProvider) -> Dict[str, Any]:
-    """
-    Extract cloud storage information from a URI.
+def extract_cloud_storage_info(uri: str, provider: CloudProvider) -> dict[str, Any]:
+    """Extract cloud storage information from a URI.
 
     Args:
         uri: Cloud storage URI
@@ -648,8 +635,7 @@ def extract_cloud_storage_info(uri: str, provider: CloudProvider) -> Dict[str, A
 
 
 def analyze_local_path(path: str) -> PathAnalysisResult:
-    """
-    Analyze a local filesystem path.
+    """Analyze a local filesystem path.
 
     Args:
         path: Path to analyze
@@ -722,8 +708,7 @@ def analyze_local_path(path: str) -> PathAnalysisResult:
 
 
 def analyze_url(url: str) -> PathAnalysisResult:
-    """
-    Analyze a URL.
+    """Analyze a URL.
 
     Args:
         url: URL to analyze
@@ -796,8 +781,7 @@ def analyze_url(url: str) -> PathAnalysisResult:
 
 
 def analyze_database_uri(uri: str) -> PathAnalysisResult:
-    """
-    Analyze a database URI.
+    """Analyze a database URI.
 
     Args:
         uri: Database URI to analyze
@@ -833,8 +817,7 @@ def analyze_database_uri(uri: str) -> PathAnalysisResult:
 
 
 def analyze_cloud_path(path: str) -> PathAnalysisResult:
-    """
-    Analyze a cloud storage path.
+    """Analyze a cloud storage path.
 
     Args:
         path: Cloud storage path to analyze
@@ -890,8 +873,7 @@ def analyze_cloud_path(path: str) -> PathAnalysisResult:
 
 
 def analyze_network_path(path: str) -> PathAnalysisResult:
-    """
-    Analyze a network share path.
+    """Analyze a network share path.
 
     Args:
         path: Network path to analyze
@@ -921,7 +903,7 @@ def analyze_network_path(path: str) -> PathAnalysisResult:
             )
 
     # Determine if it's a file or directory
-    if path.endswith("\\") or path.endswith("/"):
+    if path.endswith(("\\", "/")):
         result.is_directory = True
     else:
         # Check file extension
@@ -940,8 +922,7 @@ def analyze_network_path(path: str) -> PathAnalysisResult:
 
 
 def analyze_special_path(path: str) -> PathAnalysisResult:
-    """
-    Analyze a special path (e.g., git SSH URL).
+    """Analyze a special path (e.g., git SSH URL).
 
     Args:
         path: Special path to analyze
@@ -979,9 +960,8 @@ def analyze_special_path(path: str) -> PathAnalysisResult:
     return result
 
 
-def analyze_path_comprehensive(path: Union[str, Path]) -> PathAnalysisResult:
-    """
-    Analyze a path comprehensively.
+def analyze_path_comprehensive(path: str | Path) -> PathAnalysisResult:
+    """Analyze a path comprehensively.
 
     This function analyzes a path to determine its type, properties, and metadata.
     It handles various path types including local files, URLs, database URIs, and
@@ -1031,23 +1011,23 @@ def analyze_path_comprehensive(path: Union[str, Path]) -> PathAnalysisResult:
 
 
 __all__ = [
-    "PathType",
-    "FileCategory",
-    "DatabaseType",
     "CloudProvider",
-    "URLComponents",
+    "DatabaseType",
     "DomainInfo",
+    "FileCategory",
     "PathAnalysisResult",
-    "detect_mime_type",
-    "is_binary_file",
-    "detect_encoding",
-    "extract_url_components",
-    "extract_domain_info",
-    "analyze_local_path",
-    "analyze_url",
-    "analyze_database_uri",
+    "PathType",
+    "URLComponents",
     "analyze_cloud_path",
+    "analyze_database_uri",
+    "analyze_local_path",
     "analyze_network_path",
-    "analyze_special_path",
     "analyze_path_comprehensive",
+    "analyze_special_path",
+    "analyze_url",
+    "detect_encoding",
+    "detect_mime_type",
+    "extract_domain_info",
+    "extract_url_components",
+    "is_binary_file",
 ]

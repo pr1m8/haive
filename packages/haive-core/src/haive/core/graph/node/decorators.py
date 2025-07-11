@@ -9,8 +9,6 @@ of nodes from functions, with proper configuration and registration.
 import logging
 from typing import Any, Callable, Dict, List, Optional, Union
 
-from langgraph.types import RetryPolicy
-
 from haive.core.graph.node.config import NodeConfig
 from haive.core.graph.node.factory import NodeFactory
 from haive.core.graph.node.types import (
@@ -20,6 +18,7 @@ from haive.core.graph.node.types import (
     StateInput,
     StateOutput,
 )
+from langgraph.types import RetryPolicy
 
 logger = logging.getLogger(__name__)
 

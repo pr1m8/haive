@@ -2,8 +2,16 @@
 
 """Dynamic React Agent - an extension of React agent with tool selection capabilities."""
 import logging
-import uuid
 from typing import Any
+import uuid
+
+from langchain_core.documents import Document
+from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
+from langchain_core.tools import BaseTool
+from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
+from langgraph.checkpoint.memory import MemorySaver
+from langgraph.graph import END
+from pydantic import BaseModel, Field
 
 from agents.react_agent2.agent2 import ReactAgent
 from agents.react_agent2.config2 import ReactAgentConfig
@@ -12,13 +20,7 @@ from haive.core.engine.agent.agent import register_agent
 from haive.core.graph.branches import Branch
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from haive.core.models.vectorstore.base import VectorStoreConfig
-from langchain_core.documents import Document
-from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
-from langchain_core.tools import BaseTool
-from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
-from langgraph.checkpoint.memory import MemorySaver
-from langgraph.graph import END
-from pydantic import BaseModel, Field
+
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -347,7 +349,7 @@ class DynamicReactAgent(ReactAgent):
                 )
 
             except Exception as e:
-                logger.error(f"Error creating vector store from src.config: {e}")
+                logger.exception(f"Error creating vector store from src.config: {e}")
                 # Fall back to in-memory vector store
                 self._initialize_in_memory_vector_store(tool_documents)
         else:
@@ -447,7 +449,7 @@ class DynamicReactAgent(ReactAgent):
             return state_update
 
         except Exception as e:
-            logger.error(f"Error during tool selection: {e}")
+            logger.exception(f"Error during tool selection: {e}")
             return state
 
     def _create_fixed_tool_node(self):
@@ -526,7 +528,7 @@ class DynamicReactAgent(ReactAgent):
                         logger.info(f"Successfully executed tool {tool_name}")
                     except Exception as e:
                         error_msg = f"Error executing tool {tool_name}: {e!s}"
-                        logger.error(error_msg)
+                        logger.exception(error_msg)
                         tool_message = ToolMessage(
                             content=error_msg, name=tool_name, tool_call_id=tool_call_id
                         )

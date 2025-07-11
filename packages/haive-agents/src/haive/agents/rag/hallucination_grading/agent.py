@@ -1,4 +1,4 @@
-"""Hallucination Grading Agents
+"""Hallucination Grading Agents.
 
 Modular agents for detecting and grading hallucinations in RAG responses.
 Can be plugged into any workflow with compatible I/O schemas.
@@ -7,6 +7,8 @@ Can be plugged into any workflow with compatible I/O schemas.
 import logging
 from typing import Any, Dict, List, Literal, Optional
 
+from haive.agents.base.agent import Agent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.agent_node import AgentNodeConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
@@ -14,9 +16,6 @@ from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field
-
-from haive.agents.base.agent import Agent
-from haive.agents.simple.agent import SimpleAgent
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +36,7 @@ class HallucinationGrade(BaseModel):
     severity: Literal["low", "medium", "high", "critical"] = Field(
         description="Severity of hallucination"
     )
-    evidence: List[str] = Field(
+    evidence: list[str] = Field(
         default_factory=list, description="Specific evidence of hallucination"
     )
     reasoning: str = Field(description="Detailed reasoning for the assessment")
@@ -69,18 +68,18 @@ class AdvancedHallucinationGrade(BaseModel):
     )
 
     # Specific hallucination types
-    hallucination_types: List[str] = Field(
+    hallucination_types: list[str] = Field(
         default_factory=list, description="Types of hallucinations found"
     )
 
     # Evidence and examples
-    fabricated_facts: List[str] = Field(
+    fabricated_facts: list[str] = Field(
         default_factory=list, description="Specific fabricated facts identified"
     )
-    unsupported_claims: List[str] = Field(
+    unsupported_claims: list[str] = Field(
         default_factory=list, description="Claims not supported by context"
     )
-    contradictions: List[str] = Field(
+    contradictions: list[str] = Field(
         default_factory=list, description="Contradictions with source material"
     )
 
@@ -94,7 +93,7 @@ class AdvancedHallucinationGrade(BaseModel):
 
     # Detailed analysis
     detailed_reasoning: str = Field(description="Comprehensive reasoning")
-    improvement_suggestions: List[str] = Field(
+    improvement_suggestions: list[str] = Field(
         default_factory=list, description="Specific suggestions for improvement"
     )
 
@@ -106,7 +105,7 @@ class RealtimeHallucinationCheck(BaseModel):
     risk_level: Literal["very_low", "low", "medium", "high", "very_high"] = Field(
         description="Risk level for hallucination"
     )
-    quick_flags: List[str] = Field(
+    quick_flags: list[str] = Field(
         default_factory=list, description="Quick warning flags"
     )
     confidence: float = Field(ge=0.0, le=1.0, description="Confidence in assessment")
@@ -118,7 +117,7 @@ BASIC_HALLUCINATION_PROMPT = ChatPromptTemplate.from_messages(
         (
             "system",
             """You are an expert at detecting hallucinations in AI-generated responses.
-    
+
 A hallucination occurs when the response contains information that is:
 - Not supported by the provided context/documents
 - Factually incorrect or fabricated
@@ -200,7 +199,7 @@ REALTIME_HALLUCINATION_PROMPT = ChatPromptTemplate.from_messages(
         (
             "system",
             """You are a fast hallucination detector for real-time applications.
-    
+
 Quickly assess if the response is safe to use. Focus on:
 - Obviously fabricated facts
 - Clear contradictions with context
@@ -229,7 +228,7 @@ class HallucinationGraderAgent(Agent):
     name: str = "Hallucination Grader"
 
     def __init__(
-        self, llm_config: Optional[LLMConfig] = None, threshold: float = 0.7, **kwargs
+        self, llm_config: LLMConfig | None = None, threshold: float = 0.7, **kwargs
     ):
         """Initialize hallucination grader.
 
@@ -259,7 +258,7 @@ class HallucinationGraderAgent(Agent):
         )
 
         # Grading function
-        def grade_hallucination(state: Dict[str, Any]) -> Dict[str, Any]:
+        def grade_hallucination(state: dict[str, Any]) -> dict[str, Any]:
             """Grade response for hallucinations."""
             query = getattr(state, "query", "")
             retrieved_documents = getattr(state, "retrieved_documents", [])
@@ -301,7 +300,7 @@ class HallucinationGraderAgent(Agent):
             }
 
         # Add grading node
-        grader_node = AgentNodeConfig(
+        AgentNodeConfig(
             name="hallucination_grader",
             agent=SimpleAgent(
                 engine=grading_engine, name="Hallucination Grader Engine"
@@ -322,7 +321,7 @@ class AdvancedHallucinationGraderAgent(Agent):
 
     def __init__(
         self,
-        llm_config: Optional[LLMConfig] = None,
+        llm_config: LLMConfig | None = None,
         enable_context_expansion: bool = True,
         **kwargs,
     ):
@@ -353,7 +352,7 @@ class AdvancedHallucinationGraderAgent(Agent):
             output_key="advanced_hallucination_grade",
         )
 
-        def advanced_hallucination_analysis(state: Dict[str, Any]) -> Dict[str, Any]:
+        def advanced_hallucination_analysis(state: dict[str, Any]) -> dict[str, Any]:
             """Comprehensive hallucination analysis."""
             query = getattr(state, "query", "")
             retrieved_documents = getattr(state, "retrieved_documents", [])
@@ -433,7 +432,7 @@ class RealtimeHallucinationGraderAgent(Agent):
 
     def __init__(
         self,
-        llm_config: Optional[LLMConfig] = None,
+        llm_config: LLMConfig | None = None,
         safety_threshold: float = 0.8,
         **kwargs,
     ):
@@ -464,7 +463,7 @@ class RealtimeHallucinationGraderAgent(Agent):
             output_key="realtime_hallucination_check",
         )
 
-        def quick_hallucination_check(state: Dict[str, Any]) -> Dict[str, Any]:
+        def quick_hallucination_check(state: dict[str, Any]) -> dict[str, Any]:
             """Quick safety check for hallucinations."""
             query = getattr(state, "query", "")
             retrieved_documents = getattr(state, "retrieved_documents", [])
@@ -519,7 +518,7 @@ class RealtimeHallucinationGraderAgent(Agent):
 # Factory functions for easy creation
 def create_hallucination_grader(
     grader_type: Literal["basic", "advanced", "realtime"] = "basic",
-    llm_config: Optional[LLMConfig] = None,
+    llm_config: LLMConfig | None = None,
     **kwargs,
 ) -> Agent:
     """Create a hallucination grader agent.
@@ -534,16 +533,15 @@ def create_hallucination_grader(
     """
     if grader_type == "basic":
         return HallucinationGraderAgent(llm_config=llm_config, **kwargs)
-    elif grader_type == "advanced":
+    if grader_type == "advanced":
         return AdvancedHallucinationGraderAgent(llm_config=llm_config, **kwargs)
-    elif grader_type == "realtime":
+    if grader_type == "realtime":
         return RealtimeHallucinationGraderAgent(llm_config=llm_config, **kwargs)
-    else:
-        raise ValueError(f"Unknown grader type: {grader_type}")
+    raise ValueError(f"Unknown grader type: {grader_type}")
 
 
 # Example usage and I/O compatibility
-def get_hallucination_grader_io_schema() -> Dict[str, List[str]]:
+def get_hallucination_grader_io_schema() -> dict[str, list[str]]:
     """Get I/O schema for hallucination graders for compatibility checking."""
     return {
         "inputs": [

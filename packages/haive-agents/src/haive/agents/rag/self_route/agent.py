@@ -1,16 +1,13 @@
-"""Self-Route RAG Agents
+"""Self-Route RAG Agents.
 
 Implementation of self-routing RAG with dynamic strategy selection and iterative planning.
 Uses structured output models for complex routing decisions and preprocessing.
 """
 
-import logging
 from enum import Enum
+import logging
 from typing import Any, Dict, List, Literal, Optional, Union
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
@@ -20,6 +17,10 @@ from haive.agents.base.agent import Agent
 from haive.agents.multi.base import ConditionalAgent, SequentialAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+
 
 logger = logging.getLogger(__name__)
 
@@ -77,8 +78,8 @@ class QueryAnalysis(BaseModel):
     )
 
     # Technical Indicators
-    named_entities: List[str] = Field(description="Identified named entities")
-    domain_topics: List[str] = Field(description="Domain-specific topics")
+    named_entities: list[str] = Field(description="Identified named entities")
+    domain_topics: list[str] = Field(description="Domain-specific topics")
     query_intent: str = Field(
         description="Primary intent (factual, analytical, creative, etc.)"
     )
@@ -94,7 +95,7 @@ class QueryAnalysis(BaseModel):
     primary_strategy: RoutingStrategy = Field(
         description="Primary recommended strategy"
     )
-    fallback_strategies: List[RoutingStrategy] = Field(
+    fallback_strategies: list[RoutingStrategy] = Field(
         description="Alternative strategies"
     )
     confidence: float = Field(
@@ -111,8 +112,8 @@ class IterativePlan(BaseModel):
     current_iteration: int = Field(ge=0, description="Current iteration number")
 
     # Per-iteration planning
-    iteration_goals: Dict[str, str] = Field(description="Goals for each iteration")
-    iteration_strategies: Dict[str, RoutingStrategy] = Field(
+    iteration_goals: dict[str, str] = Field(description="Goals for each iteration")
+    iteration_strategies: dict[str, RoutingStrategy] = Field(
         description="Strategy for each iteration"
     )
 
@@ -126,24 +127,24 @@ class IterativePlan(BaseModel):
     accumulated_context: str = Field(
         description="Context accumulated across iterations"
     )
-    iteration_results: Dict[str, str] = Field(description="Results from each iteration")
+    iteration_results: dict[str, str] = Field(description="Results from each iteration")
     should_continue: bool = Field(description="Whether to continue iterations")
 
-    completion_reason: Optional[str] = Field(description="Why iteration completed")
+    completion_reason: str | None = Field(description="Why iteration completed")
 
 
 class RoutingDecision(BaseModel):
     """Final routing decision with execution plan."""
 
     selected_strategy: RoutingStrategy = Field(description="Chosen strategy")
-    execution_plan: Dict[str, Any] = Field(description="Detailed execution parameters")
+    execution_plan: dict[str, Any] = Field(description="Detailed execution parameters")
 
     # Quality assurance
     expected_quality: float = Field(
         ge=0.0, le=1.0, description="Expected result quality"
     )
-    risk_factors: List[str] = Field(description="Potential risks or limitations")
-    mitigation_strategies: List[str] = Field(description="Risk mitigation approaches")
+    risk_factors: list[str] = Field(description="Potential risks or limitations")
+    mitigation_strategies: list[str] = Field(description="Risk mitigation approaches")
 
     # Performance optimization
     estimated_latency: str = Field(description="Expected response time")
@@ -151,7 +152,7 @@ class RoutingDecision(BaseModel):
 
     # Fallback planning
     fallback_enabled: bool = Field(description="Whether fallback is configured")
-    fallback_trigger: Optional[str] = Field(
+    fallback_trigger: str | None = Field(
         description="Conditions for fallback activation"
     )
 
@@ -318,7 +319,7 @@ class QueryAnalyzerAgent(Agent):
 
     def __init__(
         self,
-        llm_config: Optional[LLMConfig] = None,
+        llm_config: LLMConfig | None = None,
         analysis_depth: str = "comprehensive",
         **kwargs,
     ):
@@ -349,7 +350,7 @@ class QueryAnalyzerAgent(Agent):
             output_key="query_analysis",
         )
 
-        def analyze_query(state: Dict[str, Any]) -> Dict[str, Any]:
+        def analyze_query(state: dict[str, Any]) -> dict[str, Any]:
             """Perform comprehensive query analysis."""
             query = getattr(state, "query", "")
             context = getattr(state, "context", "") or getattr(
@@ -440,7 +441,7 @@ class IterativePlannerAgent(Agent):
     name: str = "Iterative Planner"
 
     def __init__(
-        self, llm_config: Optional[LLMConfig] = None, max_iterations: int = 3, **kwargs
+        self, llm_config: LLMConfig | None = None, max_iterations: int = 3, **kwargs
     ):
         """Initialize iterative planner.
 
@@ -469,7 +470,7 @@ class IterativePlannerAgent(Agent):
             output_key="iterative_plan",
         )
 
-        def create_iterative_plan(state: Dict[str, Any]) -> Dict[str, Any]:
+        def create_iterative_plan(state: dict[str, Any]) -> dict[str, Any]:
             """Create structured iterative plan."""
             query = getattr(state, "query", "")
             query_analysis = getattr(state, "query_analysis", None)
@@ -518,8 +519,9 @@ class IterativePlannerAgent(Agent):
             )
 
             # Ensure plan doesn't exceed max iterations
-            if plan_result.total_iterations > self.max_iterations:
-                plan_result.total_iterations = self.max_iterations
+            plan_result.total_iterations = min(
+                plan_result.total_iterations, self.max_iterations
+            )
 
             return {
                 "iterative_plan": plan_result,
@@ -544,7 +546,7 @@ class RoutingDecisionAgent(Agent):
 
     def __init__(
         self,
-        llm_config: Optional[LLMConfig] = None,
+        llm_config: LLMConfig | None = None,
         enable_fallback: bool = True,
         **kwargs,
     ):
@@ -575,7 +577,7 @@ class RoutingDecisionAgent(Agent):
             output_key="routing_decision",
         )
 
-        def make_routing_decision(state: Dict[str, Any]) -> Dict[str, Any]:
+        def make_routing_decision(state: dict[str, Any]) -> dict[str, Any]:
             """Make final routing decision."""
             query = getattr(state, "query", "")
             query_analysis = getattr(state, "query_analysis", None)
@@ -634,8 +636,8 @@ class SelfRouteRAGAgent(SequentialAgent):
     @classmethod
     def from_documents(
         cls,
-        documents: List[Document],
-        llm_config: Optional[LLMConfig] = None,
+        documents: list[Document],
+        llm_config: LLMConfig | None = None,
         analysis_depth: str = "comprehensive",
         max_iterations: int = 3,
         enable_fallback: bool = True,
@@ -714,8 +716,8 @@ class SelfRouteRAGAgent(SequentialAgent):
 
 # Factory function
 def create_self_route_rag_agent(
-    documents: List[Document],
-    llm_config: Optional[LLMConfig] = None,
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
     routing_mode: str = "adaptive",
     **kwargs,
 ) -> SelfRouteRAGAgent:
@@ -750,7 +752,7 @@ def create_self_route_rag_agent(
 
 
 # I/O schema for compatibility
-def get_self_route_rag_io_schema() -> Dict[str, List[str]]:
+def get_self_route_rag_io_schema() -> dict[str, list[str]]:
     """Get I/O schema for Self-Route RAG agents."""
     return {
         "inputs": ["query", "context", "messages"],

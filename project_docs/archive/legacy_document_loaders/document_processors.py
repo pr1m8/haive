@@ -13,7 +13,6 @@ from typing import Any, cast
 # Import core document models
 from langchain_core.documents import Document as LCDocument
 
-
 # Import document splitters from core engine
 try:
     # Check if we can import the core splitters
@@ -22,6 +21,11 @@ try:
     )
 
     if has_splitters:
+        from haive.core.engine.document.splitters.base import (
+            DocSplitterType,
+            TextSplitter,
+        )
+        from haive.core.engine.document.splitters.engine import DocSplitterEngine
         from langchain_text_splitters import (
             CharacterTextSplitter,
             HTMLHeaderTextSplitter,
@@ -31,12 +35,6 @@ try:
             SpacyTextSplitter,
             TokenTextSplitter,
         )
-
-        from haive.core.engine.document.splitters.base import (
-            DocSplitterType,
-            TextSplitter,
-        )
-        from haive.core.engine.document.splitters.engine import DocSplitterEngine
 
         SPLITTERS_AVAILABLE = True
     else:
@@ -96,7 +94,6 @@ from .document_models import (
     DocumentChunk,
     DocumentFormat,
 )
-
 
 logger = logging.getLogger(__name__)
 
@@ -515,10 +512,7 @@ def _simple_split_document(
     content = doc.content
     chunks = []
 
-    if (
-        strategy == ChunkingStrategy.FIXED_SIZE
-        or strategy == ChunkingStrategy.RECURSIVE
-    ):
+    if strategy in (ChunkingStrategy.FIXED_SIZE, ChunkingStrategy.RECURSIVE):
         # Fixed size chunking
         chunk_size = options.chunk_size
         chunk_overlap = options.chunk_overlap

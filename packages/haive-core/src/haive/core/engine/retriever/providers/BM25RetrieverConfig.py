@@ -1,5 +1,4 @@
-"""
-BM25 Retriever implementation for the Haive framework.
+"""BM25 Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the BM25 (Best Matching 25) retriever,
 which uses the BM25 ranking function for text retrieval. BM25 is a probabilistic
@@ -34,8 +33,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.BM25)
 class BM25RetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for BM25 retriever in the Haive framework.
+    """Configuration for BM25 retriever in the Haive framework.
 
     This retriever uses the BM25 ranking function to score documents based on
     term frequency, inverse document frequency, and document length normalization.
@@ -78,7 +76,7 @@ class BM25RetrieverConfig(BaseRetrieverConfig):
     )
 
     # Documents to index
-    documents: List[Document] = Field(
+    documents: list[Document] = Field(
         default_factory=list, description="Documents to index for BM25 retrieval"
     )
 
@@ -109,17 +107,17 @@ class BM25RetrieverConfig(BaseRetrieverConfig):
         description="BM25 epsilon parameter for IDF calculation",
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for BM25 retriever."""
         return {
             "query": (str, Field(description="Text query for BM25 ranking")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for BM25 retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list, description="Documents ranked by BM25 scores"
                 ),
@@ -127,8 +125,7 @@ class BM25RetrieverConfig(BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a BM25 retriever from this configuration.
+        """Create a BM25 retriever from this configuration.
 
         Returns:
             BM25Retriever: Instantiated retriever ready for text ranking.

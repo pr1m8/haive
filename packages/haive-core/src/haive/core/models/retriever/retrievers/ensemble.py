@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 from langchain_core.retrievers import BaseRetriever
 from pydantic import Field
 
@@ -10,10 +8,10 @@ from haive.core.models.retriever.base import RetrieverConfig, RetrieverType
 class EnsembleRetrieverConfig(RetrieverConfig):
     """Configuration for ensemble retrievers."""
 
-    retriever_configs: List[RetrieverConfig] = Field(
+    retriever_configs: list[RetrieverConfig] = Field(
         default_factory=list, description="Configurations for the component retrievers"
     )
-    weights: Optional[List[float]] = Field(
+    weights: list[float] | None = Field(
         default=None, description="Optional weights for the retrievers"
     )
 

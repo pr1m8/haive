@@ -1,6 +1,4 @@
-"""
-Analyzer for Haive engine components.
-"""
+"""Analyzer for Haive engine components."""
 
 import inspect
 import logging

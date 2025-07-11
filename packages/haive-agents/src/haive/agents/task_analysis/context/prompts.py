@@ -2,6 +2,7 @@
 
 from langchain_core.prompts import ChatPromptTemplate
 
+
 CONTEXT_ANALYSIS_PROMPT = ChatPromptTemplate.from_messages(
     [
         (

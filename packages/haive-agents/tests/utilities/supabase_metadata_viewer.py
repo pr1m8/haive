@@ -19,7 +19,7 @@ def get_database_connection():
     return psycopg2.connect(conn_str)
 
 
-def view_recent_errors(limit: int = 10) -> List[Dict[str, Any]]:
+def view_recent_errors(limit: int = 10) -> list[dict[str, Any]]:
     """View recent prepared statement errors from checkpoints metadata."""
     conn = get_database_connection()
     cursor = conn.cursor(cursor_factory=RealDictCursor)
@@ -28,14 +28,14 @@ def view_recent_errors(limit: int = 10) -> List[Dict[str, Any]]:
         # Search for prepared statement errors in metadata and checkpoint data
         cursor.execute(
             """
-            SELECT 
+            SELECT
                 thread_id,
                 checkpoint_id,
                 metadata->>'step' as step,
                 metadata->>'source' as source,
                 metadata->'writes' as writes,
                 checkpoint->'channel_values' as channel_values
-            FROM checkpoints 
+            FROM checkpoints
             WHERE (
                 checkpoint::text ILIKE '%prepared statement%'
                 OR checkpoint::text ILIKE '%_pg3_%'
@@ -66,7 +66,7 @@ def view_recent_errors(limit: int = 10) -> List[Dict[str, Any]]:
                         if isinstance(write_data, dict):
                             for key, value in write_data.items():
                                 if (
-                                    isinstance(value, (str, list))
+                                    isinstance(value, str | list)
                                     and "prepared statement" in str(value).lower()
                                 ):
                                     error_info["errors_found"].append(
@@ -86,7 +86,7 @@ def view_recent_errors(limit: int = 10) -> List[Dict[str, Any]]:
                 if isinstance(channel_values, dict):
                     for key, value in channel_values.items():
                         if (
-                            isinstance(value, (str, list))
+                            isinstance(value, str | list)
                             and "prepared statement" in str(value).lower()
                         ):
                             error_info["errors_found"].append(
@@ -128,7 +128,7 @@ def view_recent_errors(limit: int = 10) -> List[Dict[str, Any]]:
         conn.close()
 
 
-def view_conversation_threads(limit: int = 20) -> List[Dict[str, Any]]:
+def view_conversation_threads(limit: int = 20) -> list[dict[str, Any]]:
     """View recent conversation threads and their status."""
     conn = get_database_connection()
     cursor = conn.cursor(cursor_factory=RealDictCursor)
@@ -136,17 +136,17 @@ def view_conversation_threads(limit: int = 20) -> List[Dict[str, Any]]:
     try:
         cursor.execute(
             """
-            SELECT 
+            SELECT
                 thread_id,
                 COUNT(*) as checkpoint_count,
                 MAX(CAST(metadata->>'step' AS INTEGER)) as max_step,
                 MIN(checkpoint_id) as first_checkpoint,
                 MAX(checkpoint_id) as last_checkpoint,
                 COUNT(CASE WHEN checkpoint::text ILIKE '%error%' THEN 1 END) as error_count
-            FROM checkpoints 
+            FROM checkpoints
             WHERE (
                 thread_id ILIKE '%conversation%'
-                OR thread_id ILIKE '%collaborative%' 
+                OR thread_id ILIKE '%collaborative%'
                 OR thread_id ILIKE '%agent%'
                 OR metadata::text ILIKE '%ProductManager%'
                 OR metadata::text ILIKE '%Designer%'
@@ -167,7 +167,7 @@ def view_conversation_threads(limit: int = 20) -> List[Dict[str, Any]]:
         conn.close()
 
 
-def get_thread_details(thread_id: str) -> Dict[str, Any]:
+def get_thread_details(thread_id: str) -> dict[str, Any]:
     """Get detailed information about a specific thread."""
     conn = get_database_connection()
     cursor = conn.cursor(cursor_factory=RealDictCursor)
@@ -176,12 +176,12 @@ def get_thread_details(thread_id: str) -> Dict[str, Any]:
         # Get thread overview
         cursor.execute(
             """
-            SELECT 
+            SELECT
                 COUNT(*) as total_checkpoints,
                 MAX(CAST(metadata->>'step' AS INTEGER)) as max_step,
                 MIN(checkpoint_id) as first_checkpoint,
                 MAX(checkpoint_id) as last_checkpoint
-            FROM checkpoints 
+            FROM checkpoints
             WHERE thread_id = %s;
         """,
             (thread_id,),
@@ -192,12 +192,12 @@ def get_thread_details(thread_id: str) -> Dict[str, Any]:
         # Get recent checkpoints
         cursor.execute(
             """
-            SELECT 
+            SELECT
                 checkpoint_id,
                 metadata->>'step' as step,
                 metadata->>'source' as source,
                 metadata->'writes' as writes
-            FROM checkpoints 
+            FROM checkpoints
             WHERE thread_id = %s
             ORDER BY checkpoint_id DESC
             LIMIT 10;
@@ -211,7 +211,7 @@ def get_thread_details(thread_id: str) -> Dict[str, Any]:
         cursor.execute(
             """
             SELECT COUNT(*) as error_count
-            FROM checkpoints 
+            FROM checkpoints
             WHERE thread_id = %s
             AND (
                 checkpoint::text ILIKE '%error%'
@@ -245,13 +245,10 @@ def test_conversation_agent_with_new_id():
     )
 
     try:
-        from haive.core.engine.aug_llm import AugLLMConfig
-
         from haive.agents.conversation.collaberative.agent import (
             CollaborativeConversation,
         )
-
-        print("🧪 Testing Collaborative Conversation Agent with new thread ID...")
+        from haive.core.engine.aug_llm import AugLLMConfig
 
         # Create fresh participant agents with unique names
         timestamp = datetime.now().strftime("%H%M%S")
@@ -277,13 +274,11 @@ def test_conversation_agent_with_new_id():
         )
 
         agent.compile()
-        print(f"✅ Agent compiled: {agent.name}")
 
         # Use completely fresh thread ID
         fresh_thread_id = f"fresh_test_{timestamp}_{datetime.now().microsecond}"
         config = {"configurable": {"thread_id": fresh_thread_id}}
 
-        print(f"🔄 Running with thread: {fresh_thread_id}")
 
         test_input = {
             "messages": [],
@@ -293,23 +288,18 @@ def test_conversation_agent_with_new_id():
 
         result = agent.invoke(test_input, config)
 
-        print(f"✅ Execution completed!")
-        print(f"   Thread ID: {fresh_thread_id}")
 
         # Check result for errors
         if hasattr(result, "shared_document"):
             doc = result.shared_document
             if "prepared statement" in str(doc).lower():
-                print("❌ Found prepared statement errors in result!")
                 return fresh_thread_id, False
-            else:
-                print("✅ No prepared statement errors in result")
-                return fresh_thread_id, True
+            print("✅ No prepared statement errors in result")
+            return fresh_thread_id, True
 
         return fresh_thread_id, True
 
     except Exception as e:
-        print(f"❌ Test failed: {e}")
         import traceback
 
         traceback.print_exc()
@@ -318,60 +308,39 @@ def test_conversation_agent_with_new_id():
 
 def main():
     """Main function to run the metadata viewer."""
-    print("🔍 Supabase Metadata Viewer for Conversation Agent Monitoring")
-    print("=" * 70)
 
     try:
         # View recent errors
-        print("\n📊 Recent Prepared Statement Errors:")
-        print("-" * 50)
 
         errors = view_recent_errors(limit=5)
         if errors:
             for i, error in enumerate(errors, 1):
-                print(f"\n{i}. Thread: {error['thread_id']}")
-                print(f"   Step: {error['step']}, Source: {error['source']}")
-                print(f"   Errors found: {len(error['errors_found'])}")
 
                 for err in error["errors_found"][:3]:  # Show first 3 errors
-                    print(f"     - {err['location']}: {err['error'][:100]}...")
+                    pass
         else:
-            print("✅ No recent prepared statement errors found!")
+            pass")
 
         # View conversation threads
-        print("\n🧵 Recent Conversation Threads:")
-        print("-" * 50)
 
         threads = view_conversation_threads(limit=10)
         for thread in threads:
             status = "❌ HAS ERRORS" if thread["error_count"] > 0 else "✅ Clean"
-            print(
-                f"{thread['thread_id'][:30]:<30} | Steps: {thread['max_step']:<3} | Checkpoints: {thread['checkpoint_count']:<3} | {status}"
-            )
 
         # Test with new thread ID
-        print("\n🧪 Testing Conversation Agent with Fresh Thread ID:")
-        print("-" * 50)
 
         fresh_thread_id, success = test_conversation_agent_with_new_id()
 
         if fresh_thread_id and success:
-            print(f"\n🔍 Checking new thread {fresh_thread_id} in database...")
             details = get_thread_details(fresh_thread_id)
 
-            print(
-                f"   Total checkpoints: {details['overview'].get('total_checkpoints', 0)}"
-            )
-            print(f"   Max step: {details['overview'].get('max_step', 0)}")
-            print(f"   Error count: {details['error_count']}")
 
             if details["error_count"] == 0:
-                print("✅ SUCCESS: No prepared statement errors in new thread!")
+                pass")
             else:
-                print("❌ FAILED: Still getting prepared statement errors")
+                pass")
 
     except Exception as e:
-        print(f"❌ Error: {e}")
         import traceback
 
         traceback.print_exc()

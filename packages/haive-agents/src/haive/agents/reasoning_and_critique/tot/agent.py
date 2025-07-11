@@ -6,12 +6,6 @@ This module implements the Tree of Thoughts algorithm as a Haive agent.
 import logging
 from typing import Generic, TypeVar
 
-from haive.core.engine.agent.agent import Agent, register_agent
-from haive.core.graph.dynamic_graph_builder import DynamicGraph
-from langchain_core.messages import HumanMessage
-from langgraph.graph import END, START
-from langgraph.types import Command, Send
-
 from haive.agents.reasoning_and_critique.tot.config import TOTAgentConfig
 from haive.agents.reasoning_and_critique.tot.models import (
     Candidate,
@@ -19,6 +13,11 @@ from haive.agents.reasoning_and_critique.tot.models import (
     ScoredCandidate,
 )
 from haive.agents.reasoning_and_critique.tot.state import TOTState
+from haive.core.engine.agent.agent import Agent, register_agent
+from haive.core.graph.dynamic_graph_builder import DynamicGraph
+from langchain_core.messages import HumanMessage
+from langgraph.graph import END, START
+from langgraph.types import Command, Send
 
 logger = logging.getLogger(__name__)
 
@@ -256,7 +255,7 @@ class ToTAgent(Agent[TOTAgentConfig], Generic[T]):
             )
 
         except Exception as e:
-            logger.error(f"Error generating candidates: {e}")
+            logger.exception(f"Error generating candidates: {e}")
             return Command(update={"candidates": [], "error": str(e)}, goto=END)
 
     def _map_candidates_to_evaluation(self, state: TOTState) -> list[Send]:
@@ -318,7 +317,7 @@ class ToTAgent(Agent[TOTAgentConfig], Generic[T]):
             return Command(update={"scored_candidate": scored_candidate})
 
         except Exception as e:
-            logger.error(f"Error evaluating candidate: {e}")
+            logger.exception(f"Error evaluating candidate: {e}")
             # Create a zero-scored candidate as fallback
             fallback_score = Score(value=0.0, feedback=f"Error: {e}")
             scored_candidate = ScoredCandidate(
@@ -346,7 +345,7 @@ class ToTAgent(Agent[TOTAgentConfig], Generic[T]):
 
         # Add to the list of scored candidates
         current_scored = state.get("scored_candidates", [])
-        updated_scored = current_scored + [scored_candidate]
+        updated_scored = [*current_scored, scored_candidate]
 
         return Command(update={"scored_candidates": updated_scored})
 
@@ -420,7 +419,7 @@ class ToTAgent(Agent[TOTAgentConfig], Generic[T]):
                 scored_candidates.append(scored_candidate)
 
             except Exception as e:
-                logger.error(f"Error scoring candidate: {e}")
+                logger.exception(f"Error scoring candidate: {e}")
                 # Add a zero-scored candidate as fallback
                 content = (
                     candidate.content

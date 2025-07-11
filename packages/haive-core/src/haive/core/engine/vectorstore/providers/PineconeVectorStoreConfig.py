@@ -1,5 +1,4 @@
-"""
-Pinecone Vector Store implementation for the Haive framework.
+"""Pinecone Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the Pinecone vector store,
 which is a fully managed vector database service designed for production workloads.
@@ -35,8 +34,7 @@ from haive.core.engine.vectorstore.types import VectorStoreType
 
 @BaseVectorStoreConfig.register(VectorStoreType.PINECONE)
 class PineconeVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
-    """
-    Configuration for Pinecone vector store in the Haive framework.
+    """Configuration for Pinecone vector store in the Haive framework.
 
     This vector store uses Pinecone's managed service for scalable vector
     similarity search with enterprise-grade features.
@@ -78,7 +76,7 @@ class PineconeVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
     """
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None,
         description="Pinecone API key (auto-resolved from PINECONE_API_KEY)",
     )
@@ -89,14 +87,14 @@ class PineconeVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
     )
 
     # Pinecone configuration
-    environment: Optional[str] = Field(
+    environment: str | None = Field(
         default=None,
         description="Pinecone environment (deprecated in newer versions, optional)",
     )
 
     index_name: str = Field(..., description="Name of the Pinecone index to use")
 
-    namespace: Optional[str] = Field(
+    namespace: str | None = Field(
         default=None, description="Namespace within the index for data isolation"
     )
 
@@ -110,12 +108,12 @@ class PineconeVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
     )
 
     # Timeout settings
-    timeout: Optional[int] = Field(
+    timeout: int | None = Field(
         default=None, description="Timeout for Pinecone operations in seconds"
     )
 
     # Index configuration (used only when creating new index)
-    dimension: Optional[int] = Field(
+    dimension: int | None = Field(
         default=None, description="Vector dimension (required only for index creation)"
     )
 
@@ -133,31 +131,30 @@ class PineconeVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
     )
 
     @validator("metric")
-    def validate_metric(cls, v):
+    def validate_metric(self, v):
         """Validate distance metric is supported."""
         valid_metrics = ["cosine", "euclidean", "dotproduct"]
         if v not in valid_metrics:
             raise ValueError(f"metric must be one of {valid_metrics}, got {v}")
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Pinecone vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Pinecone vector store."""
         return {
-            "ids": (List[str], Field(description="IDs of the added documents")),
+            "ids": (list[str], Field(description="IDs of the added documents")),
         }
 
     def instantiate(self):
-        """
-        Create a Pinecone vector store from this configuration.
+        """Create a Pinecone vector store from this configuration.
 
         Returns:
             Pinecone: Instantiated Pinecone vector store.

@@ -1,6 +1,6 @@
 import inspect
 import json
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import BaseModel
 
@@ -8,12 +8,11 @@ from pydantic import BaseModel
 def stringify_pydantic_model(
     model: BaseModel,
     pretty: bool = False,
-    exclude: Optional[set] = None,
-    include: Optional[set] = None,
+    exclude: set | None = None,
+    include: set | None = None,
     indent: int = 2,
 ) -> str:
-    """
-    Universal stringifier for any Pydantic model.
+    """Universal stringifier for any Pydantic model.
 
     Args:
         model: The Pydantic model to stringify
@@ -31,22 +30,18 @@ def stringify_pydantic_model(
             return model.model_dump_json(
                 indent=indent, exclude=exclude, include=include
             )
-        else:
-            return model.model_dump_json(exclude=exclude, include=include)
-    elif hasattr(model, "json"):
+        return model.model_dump_json(exclude=exclude, include=include)
+    if hasattr(model, "json"):
         # Pydantic v1 fallback
         if pretty:
             return model.json(indent=indent, exclude=exclude, include=include)
-        else:
-            return model.json(exclude=exclude, include=include)
-    else:
-        # Fallback to string representation
-        return str(model)
+        return model.json(exclude=exclude, include=include)
+    # Fallback to string representation
+    return str(model)
 
 
 def ensure_json_serializable(obj: Any) -> Any:
-    """
-    Ensure object is JSON serializable, converting non-serializable objects.
+    """Ensure object is JSON serializable, converting non-serializable objects.
 
     Args:
         obj: The object to make JSON serializable
@@ -67,7 +62,7 @@ def ensure_json_serializable(obj: Any) -> Any:
             return "<callable object>"
         if isinstance(obj, dict):
             return {k: ensure_json_serializable(v) for k, v in obj.items()}
-        if isinstance(obj, (list, tuple)):
+        if isinstance(obj, list | tuple):
             return [ensure_json_serializable(v) for v in obj]
         if hasattr(obj, "__dict__"):
             return ensure_json_serializable(vars(obj))

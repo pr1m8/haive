@@ -2,22 +2,28 @@
 
 ## Key Files & What They Do
 
-### 1. `real_dynamic_agent_system.py` 
+### 1. `real_dynamic_agent_system.py`
+
 **The main working implementation**
+
 - Uses real SimpleAgent and ReactAgent
 - Demonstrates dynamic tool addition
 - Shows recompilation detection
 - **Run**: `poetry run python project_docs/dynamic_tool_routing_system/real_dynamic_agent_system.py`
 
 ### 2. `DYNAMIC_TOOL_ROUTING_ARCHITECTURE.md`
+
 **Complete architecture documentation**
+
 - Full system design
 - Implementation patterns
 - Code examples
 - Integration roadmap
 
 ### 3. `META_AGENT_INTEGRATION_GUIDE.md`
+
 **Specific guide for meta-agent implementation**
+
 - Key insights from testing
 - Recompilation strategies
 - Meta-agent specific patterns
@@ -25,6 +31,7 @@
 ## Core Patterns
 
 ### Dynamic Routing (No Literals)
+
 ```python
 def router(state) -> Send:
     return Send("agent_executor", {
@@ -34,6 +41,7 @@ def router(state) -> Send:
 ```
 
 ### Recompilation Detection
+
 ```python
 def needs_recompilation(self) -> bool:
     current_hash = self._compute_tool_route_hash()
@@ -41,6 +49,7 @@ def needs_recompilation(self) -> bool:
 ```
 
 ### Tool Addition
+
 ```python
 agent.add_tool_dynamically(new_tool, "tool_node")
 if agent.needs_recompilation():

@@ -6,5 +6,5 @@ from pydantic import BaseModel
 from haive.core.schema.state_schema import StateSchema
 
 
-def placeholder_node(state: Union[StateSchema, BaseModel]) -> Command[None]:
+def placeholder_node(state: StateSchema | BaseModel) -> Command[None]:
     return Command(update={})

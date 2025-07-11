@@ -2,6 +2,7 @@
 
 from langchain_core.prompts import ChatPromptTemplate
 
+
 EXECUTION_PLANNING_PROMPT = ChatPromptTemplate.from_messages(
     [
         (

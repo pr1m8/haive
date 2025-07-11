@@ -8,8 +8,7 @@ from haive.core.graph.common.types import C, T
 
 
 class GraphSchemaMixin(BaseModel, Generic[T, C]):
-    """
-    Mixin for schema management in graphs.
+    """Mixin for schema management in graphs.
 
     This mixin provides functionality for managing state, input, and output schemas
     in graph objects.
@@ -26,9 +25,8 @@ class GraphSchemaMixin(BaseModel, Generic[T, C]):
 
     @model_validator(mode="before")
     @classmethod
-    def validate_schema_setup(cls, data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Validate schema relationships and set defaults.
+    def validate_schema_setup(cls, data: dict[str, Any]) -> dict[str, Any]:
+        """Validate schema relationships and set defaults.
 
         Args:
             data: Dictionary of values being validated
@@ -74,8 +72,7 @@ class GraphSchemaMixin(BaseModel, Generic[T, C]):
         return values
 
     def validate_input(self, data: Any) -> Any:
-        """
-        Validate input data against input schema.
+        """Validate input data against input schema.
 
         Args:
             data: Input data
@@ -86,8 +83,7 @@ class GraphSchemaMixin(BaseModel, Generic[T, C]):
         return self.input_schema.model_validate(data)
 
     def validate_output(self, data: Any) -> Any:
-        """
-        Validate output data against output schema.
+        """Validate output data against output schema.
 
         Args:
             data: Output data
@@ -97,9 +93,8 @@ class GraphSchemaMixin(BaseModel, Generic[T, C]):
         """
         return self.output_schema.model_validate(data)
 
-    def create_state(self, data: Optional[Any] = None) -> Any:
-        """
-        Create a state instance based on state schema.
+    def create_state(self, data: Any | None = None) -> Any:
+        """Create a state instance based on state schema.
 
         Args:
             data: Optional initial data

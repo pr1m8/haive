@@ -1,5 +1,4 @@
-"""
-Arcee Retriever implementation for the Haive framework.
+"""Arcee Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Arcee retriever,
 which provides AI/ML focused retrieval capabilities through the Arcee service
@@ -32,8 +31,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.ARCEE)
 class ArceeRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for Arcee retriever in the Haive framework.
+    """Configuration for Arcee retriever in the Haive framework.
 
     This retriever provides AI/ML focused retrieval capabilities through the Arcee
     service for domain-specific artificial intelligence and machine learning content.
@@ -65,7 +63,7 @@ class ArceeRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None,
         description="API key for Arcee service (auto-resolved from ARCEE_API_KEY)",
     )
@@ -83,7 +81,7 @@ class ArceeRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     k: int = Field(default=4, ge=1, le=100, description="Number of documents to return")
 
     # Service configuration
-    endpoint_url: Optional[str] = Field(
+    endpoint_url: str | None = Field(
         default=None,
         description="Custom endpoint URL for Arcee service (uses default if None)",
     )
@@ -96,11 +94,11 @@ class ArceeRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         description="Temperature for retrieval (affects result diversity)",
     )
 
-    max_tokens: Optional[int] = Field(
+    max_tokens: int | None = Field(
         default=None, ge=1, le=8192, description="Maximum tokens per retrieved document"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Arcee retriever."""
         return {
             "query": (
@@ -109,11 +107,11 @@ class ArceeRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Arcee retriever."""
         return {
             "documents": (
-                List[Any],  # List[Document] but avoiding import
+                list[Any],  # List[Document] but avoiding import
                 Field(
                     default_factory=list,
                     description="AI/ML focused documents from Arcee service",
@@ -122,8 +120,7 @@ class ArceeRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create an Arcee retriever from this configuration.
+        """Create an Arcee retriever from this configuration.
 
         Returns:
             ArceeRetriever: Instantiated retriever ready for AI/ML focused retrieval.

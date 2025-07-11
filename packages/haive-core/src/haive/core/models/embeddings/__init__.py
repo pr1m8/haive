@@ -1,5 +1,4 @@
-"""
-Haive Embeddings Module.
+"""Haive Embeddings Module.
 
 This module provides comprehensive abstractions and implementations for working with
 text embedding models from various providers. Embeddings are vector representations
@@ -74,26 +73,26 @@ from haive.core.models.embeddings.base import (  # Base classes; Cloud providers
 from haive.core.models.embeddings.provider_types import EmbeddingProvider
 
 __all__ = [
-    # Enum
-    "EmbeddingProvider",
-    # Base class
-    "BaseEmbeddingConfig",
+    "AnyscaleEmbeddingConfig",
     # Cloud providers
     "AzureEmbeddingConfig",
-    "OpenAIEmbeddingConfig",
-    "CohereEmbeddingConfig",
-    "JinaEmbeddingConfig",
-    "VertexAIEmbeddingConfig",
+    # Base class
+    "BaseEmbeddingConfig",
     "BedrockEmbeddingConfig",
     "CloudflareEmbeddingConfig",
-    "VoyageAIEmbeddingConfig",
-    "AnyscaleEmbeddingConfig",
+    "CohereEmbeddingConfig",
+    # Enum
+    "EmbeddingProvider",
+    "FastEmbedEmbeddingConfig",
     # Local providers
     "HuggingFaceEmbeddingConfig",
-    "SentenceTransformerEmbeddingConfig",
-    "FastEmbedEmbeddingConfig",
-    "OllamaEmbeddingConfig",
+    "JinaEmbeddingConfig",
     "LlamaCppEmbeddingConfig",
+    "OllamaEmbeddingConfig",
+    "OpenAIEmbeddingConfig",
+    "SentenceTransformerEmbeddingConfig",
+    "VertexAIEmbeddingConfig",
+    "VoyageAIEmbeddingConfig",
     # Factory function
     "create_embeddings",
 ]

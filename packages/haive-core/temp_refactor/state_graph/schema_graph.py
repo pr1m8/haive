@@ -1,5 +1,4 @@
-"""
-Schema-aware graph implementation for the Haive framework.
+"""Schema-aware graph implementation for the Haive framework.
 
 This module provides the SchemaGraph class, which is a StateGraph with
 enhanced schema management capabilities.
@@ -8,25 +7,22 @@ enhanced schema management capabilities.
 import logging
 from typing import Any, Type
 
-from pydantic import BaseModel
-
 from haive.core.graph.state_graph.graph import StateGraph
+from pydantic import BaseModel
 
 # Set up logging
 logger = logging.getLogger(__name__)
 
 
 class SchemaGraph(StateGraph):
-    """
-    Graph implementation with enhanced schema management capabilities.
+    """Graph implementation with enhanced schema management capabilities.
 
     SchemaGraph is a StateGraph with additional methods for schema
     validation and handling.
     """
 
-    def __init__(self, name: str, state_schema: Type[BaseModel], **kwargs):
-        """
-        Initialize a SchemaGraph.
+    def __init__(self, name: str, state_schema: type[BaseModel], **kwargs):
+        """Initialize a SchemaGraph.
 
         Args:
             name: Name of the graph
@@ -36,8 +32,7 @@ class SchemaGraph(StateGraph):
         super().__init__(name=name, state_schema=state_schema, **kwargs)
 
     def validate_state(self, state: Any) -> Any:
-        """
-        Validate a state against the state schema.
+        """Validate a state against the state schema.
 
         Args:
             state: State to validate
@@ -47,9 +42,8 @@ class SchemaGraph(StateGraph):
         """
         return self.create_state(state)
 
-    def update_state_schema(self, new_schema: Type[BaseModel]) -> "SchemaGraph":
-        """
-        Update the state schema.
+    def update_state_schema(self, new_schema: type[BaseModel]) -> "SchemaGraph":
+        """Update the state schema.
 
         Args:
             new_schema: New schema for graph state
@@ -65,47 +59,35 @@ class SchemaGraph(StateGraph):
         return self
 
     def display(self):
-        """
-        Display a visual representation of the graph structure.
+        """Display a visual representation of the graph structure.
 
         Outputs information about nodes, edges, branches, and generates
         a Mermaid diagram for visualization.
         """
-        print("\n" + "=" * 50)
-        print(f"GRAPH: {self.name}")
-        print("=" * 50)
 
         # Display schema information
         schema_name = getattr(self.state_schema, "__name__", str(self.state_schema))
-        print(f"\nSchema: {schema_name}")
 
         # Display basic graph info
-        print(f"\nNodes ({len(self.nodes)}):")
         for name, _node in self.nodes.items():
             node_type = self.node_types.get(name, "unknown")
-            print(f"  - {name} ({node_type})")
 
-        print(f"\nEdges ({len(self.edges)}):")
         for src, dst in self.edges:
-            print(f"  - {src} → {dst}")
+            pass")
 
-        print(f"\nBranches ({len(self.branches)}):")
         for _branch_id, branch in self.branches.items():
-            print(f"  - {branch.name} (from {branch.source_node}):")
             for cond, dest in branch.destinations.items():
-                print(f"    - {cond} → {dest}")
+                pass")
             if branch.default:
-                print(f"    - default → {branch.default}")
+                pass")
 
         # Display validation issues if any
         issues = self.validate_graph()
         if issues:
-            print("\nWARNING: Graph Validation Issues:")
             for issue in issues:
-                print(f"  - {issue}")
+                pass
         else:
-            print("\nGraph validation: OK")
+            pass
 
-        print("\n" + "=" * 50 + "\n")
 
         return self

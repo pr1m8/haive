@@ -1,4 +1,4 @@
-"""Step-Back Prompting RAG Agents
+"""Step-Back Prompting RAG Agents.
 
 Implementation of step-back prompting for abstract reasoning.
 Generates broader conceptual queries for enhanced context retrieval.
@@ -7,9 +7,6 @@ Generates broader conceptual queries for enhanced context retrieval.
 import logging
 from typing import Any, Dict, List, Optional
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
@@ -19,6 +16,10 @@ from haive.agents.base.agent import Agent
 from haive.agents.multi.base import ParallelAgent, SequentialAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+
 
 logger = logging.getLogger(__name__)
 
@@ -42,8 +43,8 @@ class StepBackQuery(BaseModel):
 class StepBackResult(BaseModel):
     """Combined results from step-back retrieval."""
 
-    original_documents: List[str] = Field(description="Documents from original query")
-    step_back_documents: List[str] = Field(description="Documents from step-back query")
+    original_documents: list[str] = Field(description="Documents from original query")
+    step_back_documents: list[str] = Field(description="Documents from step-back query")
 
     conceptual_coverage: float = Field(
         ge=0.0, le=1.0, description="Conceptual coverage score"
@@ -63,7 +64,7 @@ STEP_BACK_GENERATOR_PROMPT = ChatPromptTemplate.from_messages(
             "system",
             """You are an expert at step-back prompting for enhanced reasoning and retrieval.
 
-Step-back prompting involves taking a specific question and generating a more general, 
+Step-back prompting involves taking a specific question and generating a more general,
 abstract question that explores the underlying principles, concepts, or broader context.
 
 **STEP-BACK PRINCIPLES:**
@@ -114,7 +115,7 @@ You have access to:
 1. **Original Context**: Documents retrieved for the specific query
 2. **Step-Back Context**: Documents retrieved for the broader/abstract query
 
-Use the step-back context to provide foundational understanding, then apply that 
+Use the step-back context to provide foundational understanding, then apply that
 knowledge to give a comprehensive answer to the original specific query.
 
 **SYNTHESIS STRATEGY:**
@@ -141,7 +142,7 @@ knowledge to give a comprehensive answer to the original specific query.
 - Context Enhancement: {context_enhancement}
 - Integration Strategy: {integration_strategy}
 
-Provide a comprehensive answer that leverages both the foundational step-back context 
+Provide a comprehensive answer that leverages both the foundational step-back context
 and the specific context to thoroughly address the original query.""",
         ),
     ]
@@ -155,7 +156,7 @@ class StepBackQueryGeneratorAgent(Agent):
 
     def __init__(
         self,
-        llm_config: Optional[LLMConfig] = None,
+        llm_config: LLMConfig | None = None,
         abstraction_level: str = "moderate",
         **kwargs,
     ):
@@ -186,7 +187,7 @@ class StepBackQueryGeneratorAgent(Agent):
             output_key="step_back_query_result",
         )
 
-        def generate_step_back_query(state: Dict[str, Any]) -> Dict[str, Any]:
+        def generate_step_back_query(state: dict[str, Any]) -> dict[str, Any]:
             """Generate step-back query for broader context."""
             query = getattr(state, "query", "")
             context = getattr(state, "context", "") or getattr(
@@ -241,8 +242,8 @@ class DualRetrievalAgent(Agent):
 
     def __init__(
         self,
-        documents: List[Document],
-        embedding_model: Optional[str] = None,
+        documents: list[Document],
+        embedding_model: str | None = None,
         max_docs_each: int = 5,
         **kwargs,
     ):
@@ -268,7 +269,7 @@ class DualRetrievalAgent(Agent):
         """Build dual retrieval graph."""
         graph = BaseGraph(name="DualRetrieval")
 
-        def dual_retrieve(state: Dict[str, Any]) -> Dict[str, Any]:
+        def dual_retrieve(state: dict[str, Any]) -> dict[str, Any]:
             """Retrieve for both original and step-back queries."""
             original_query = getattr(state, "original_query", "") or getattr(
                 state, "query", ""
@@ -359,9 +360,9 @@ class StepBackRAGAgent(SequentialAgent):
     @classmethod
     def from_documents(
         cls,
-        documents: List[Document],
-        llm_config: Optional[LLMConfig] = None,
-        embedding_model: Optional[str] = None,
+        documents: list[Document],
+        llm_config: LLMConfig | None = None,
+        embedding_model: str | None = None,
         abstraction_level: str = "moderate",
         max_docs_each: int = 5,
         **kwargs,
@@ -418,8 +419,8 @@ class StepBackRAGAgent(SequentialAgent):
 
 # Factory function
 def create_step_back_rag_agent(
-    documents: List[Document],
-    llm_config: Optional[LLMConfig] = None,
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
     reasoning_depth: str = "moderate",
     **kwargs,
 ) -> StepBackRAGAgent:
@@ -451,7 +452,7 @@ def create_step_back_rag_agent(
 
 
 # I/O schema for compatibility
-def get_step_back_rag_io_schema() -> Dict[str, List[str]]:
+def get_step_back_rag_io_schema() -> dict[str, list[str]]:
     """Get I/O schema for Step-Back RAG agents."""
     return {
         "inputs": ["query", "context", "messages"],

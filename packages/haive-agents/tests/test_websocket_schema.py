@@ -1,9 +1,8 @@
 """Test WebSocket schema behavior with SimpleAgent."""
 
 import pytest
-from haive.core.engine.aug_llm import AugLLMConfig
-
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 def create_weather_tool():
@@ -31,10 +30,6 @@ class TestSimpleAgentSchema:
         )
 
         # Check schemas
-        print(f"\nWithout tools:")
-        print(f"Input schema fields: {list(agent.input_schema.model_fields.keys())}")
-        print(f"State schema fields: {list(agent.state_schema.model_fields.keys())}")
-        print(f"State schema base: {agent.state_schema.__bases__}")
 
         # Should have MessagesState
         assert "messages" in agent.input_schema.model_fields
@@ -54,10 +49,6 @@ class TestSimpleAgentSchema:
         )
 
         # Check schemas
-        print(f"\nWith tools:")
-        print(f"Input schema fields: {list(agent.input_schema.model_fields.keys())}")
-        print(f"State schema fields: {list(agent.state_schema.model_fields.keys())}")
-        print(f"State schema base: {agent.state_schema.__bases__}")
 
         # Should have ToolState with extra fields
         assert "messages" in agent.input_schema.model_fields
@@ -97,13 +88,7 @@ class TestSimpleAgentSchema:
 
         # This should work even though schema has 7 fields
         try:
-            result = agent.invoke(minimal_input)
-            print(f"\nMinimal input test:")
-            print(f"✓ Invoked successfully with minimal input")
-            print(f"Result type: {type(result)}")
-            print(
-                f"Result keys: {list(result.keys()) if hasattr(result, 'keys') else 'N/A'}"
-            )
+            agent.invoke(minimal_input)
         except Exception as e:
             pytest.fail(f"Minimal input failed: {e}")
 
@@ -115,26 +100,19 @@ class TestSimpleAgentSchema:
             set_schema=True,
         )
 
-        print(f"\nField details for agent with tools:")
-        print(f"State schema: {agent_with_tools.state_schema.__name__}")
-
         # Check which fields are required
         for (
-            field_name,
+            _field_name,
             field_info,
         ) in agent_with_tools.state_schema.model_fields.items():
-            is_required = field_info.is_required()
-            default = field_info.default
-            print(f"  {field_name}: required={is_required}, default={default}")
+            field_info.is_required()
 
         # Check input schema
-        print(f"\nInput schema: {agent_with_tools.input_schema.__name__}")
         for (
-            field_name,
+            _field_name,
             field_info,
         ) in agent_with_tools.input_schema.model_fields.items():
-            is_required = field_info.is_required()
-            print(f"  {field_name}: required={is_required}")
+            field_info.is_required()
 
 
 if __name__ == "__main__":

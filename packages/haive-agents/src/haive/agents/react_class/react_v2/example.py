@@ -2,13 +2,12 @@
 
 import uuid
 
+from haive.agents.react_class.react_v2.config import ReactAgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
-
-from haive.agents.react_class.react_v2.config import ReactAgentConfig
 
 
 # 1. Define our tools
@@ -61,11 +60,11 @@ class TripPlan(BaseModel):
 
 
 # 3. Configure the React agent
-system_prompt = """You are a helpful travel assistant that helps users plan trips. 
+system_prompt = """You are a helpful travel assistant that helps users plan trips.
 You have access to tools that can help you gather information.
 Always use tools when appropriate and think step by step.
 
-When you don't have enough information, use the request_human_assistance tool 
+When you don't have enough information, use the request_human_assistance tool
 to ask the user for more details.
 """
 
@@ -81,7 +80,6 @@ react_config = ReactAgentConfig(
     max_iterations=5,
     parallel_tools=True,
 )
-print(react_config)
 # 4. Build the agent
 travel_agent = react_config.build_agent()
 
@@ -91,26 +89,19 @@ user_input = "I want to plan a trip but I'm not sure where to go. Can you help?"
 
 # This simulates an interaction with human intervention
 def simulate_react_agent_with_human():
-    print("Initial query:", user_input)
-    print("\n--- Starting Agent ---\n")
 
     # Start a thread for persistence
     thread_id = uuid.uuid4()
 
     # First run - this will likely request human input
-    for i, state in enumerate(travel_agent.stream(user_input, thread_id=thread_id)):
+    for _i, state in enumerate(travel_agent.stream(user_input, thread_id=thread_id)):
         # Print step details
-        print(f"\nStep {i+1}:")
 
         # Check if human input is needed
         if state.get("requires_human_input", False):
-            print(
-                f"\n🔄 HUMAN INPUT REQUESTED: {state.get('human_request', 'Please provide more information.')}"
-            )
 
             # Simulate human response
             human_response = "I'd like to go somewhere warm, maybe Miami or Hawaii, for about 5 days. My budget is around $2000."
-            print(f"\n👤 Human responds: {human_response}")
 
             # Provide human input to continue the conversation
             state = travel_agent.run(
@@ -120,7 +111,6 @@ def simulate_react_agent_with_human():
             break
 
     # Continue agent execution after human input
-    print("\n--- Continuing After Human Input ---\n")
 
     # Run a simple follow-up to see the final plan
     follow_up = "That sounds great. What activities would you recommend?"
@@ -128,18 +118,12 @@ def simulate_react_agent_with_human():
     result = travel_agent.run(follow_up, thread_id=thread_id)
 
     # Print the final structured output
-    print("\n=== Final Trip Plan ===")
     if "structured_output" in result:
         plan = result["structured_output"]
-        print(f"Destination: {plan.get('destination')}")
-        print(f"Duration: {plan.get('duration_days')} days")
-        print(f"Budget: ${plan.get('budget_estimate')}")
-        print("Activities:")
-        for activity in plan.get("activities", []):
-            print(f" - {activity}")
-        print(f"Weather: {plan.get('weather_summary')}")
+        for _activity in plan.get("activities", []):
+            pass
     else:
-        print("No structured output available yet.")
+        pass
 
     return result
 

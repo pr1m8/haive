@@ -1,13 +1,12 @@
 # src/haive/core/logging/decorators.py
 
-"""
-Decorators for automatic logging with Rich formatting.
-"""
+"""Decorators for automatic logging with Rich formatting."""
 
 import functools
 import logging
 import time
-from typing import Any, Callable, Dict, Optional, TypeVar, Union
+from collections.abc import Callable
+from typing import Any, Dict, Optional, TypeVar, Union
 
 from haive.core.logging.utils import get_logger
 
@@ -15,14 +14,13 @@ T = TypeVar("T")
 
 
 def log_calls(
-    logger: Optional[Union[str, logging.Logger]] = None,
+    logger: str | logging.Logger | None = None,
     level: int = logging.INFO,
     include_args: bool = False,
     include_result: bool = False,
-    component: Optional[str] = None,
+    component: str | None = None,
 ):
-    """
-    Decorator to log function/method calls.
+    """Decorator to log function/method calls.
 
     Args:
         logger: Logger instance or name
@@ -73,7 +71,7 @@ def log_calls(
                 return result
 
             except Exception as e:
-                log.error(f"{func.__name__} failed: {type(e).__name__}: {e}")
+                log.exception(f"{func.__name__} failed: {type(e).__name__}: {e}")
                 raise
 
         return wrapper
@@ -82,13 +80,12 @@ def log_calls(
 
 
 def log_performance(
-    logger: Optional[Union[str, logging.Logger]] = None,
+    logger: str | logging.Logger | None = None,
     threshold_seconds: float = 1.0,
-    component: Optional[str] = None,
+    component: str | None = None,
     include_args: bool = False,
 ):
-    """
-    Decorator to log function performance with Rich formatting.
+    """Decorator to log function performance with Rich formatting.
 
     Args:
         logger: Logger instance or name
@@ -147,7 +144,7 @@ def log_performance(
 
             except Exception as e:
                 duration = time.time() - start_time
-                log.error(
+                log.exception(
                     f"{func.__name__} failed after {duration:.3f}s: {type(e).__name__}: {e}"
                 )
                 raise
@@ -158,13 +155,12 @@ def log_performance(
 
 
 def log_errors(
-    logger: Optional[Union[str, logging.Logger]] = None,
+    logger: str | logging.Logger | None = None,
     reraise: bool = True,
-    component: Optional[str] = None,
+    component: str | None = None,
     include_context: bool = True,
 ):
-    """
-    Decorator to log errors with Rich formatting and context.
+    """Decorator to log errors with Rich formatting and context.
 
     Args:
         logger: Logger instance or name
@@ -224,8 +220,7 @@ def log_errors(
 def log_method_calls(
     level: int = logging.DEBUG, include_args: bool = False, include_result: bool = False
 ):
-    """
-    Class decorator to log all method calls.
+    """Class decorator to log all method calls.
 
     Args:
         level: Logging level
@@ -253,22 +248,20 @@ def log_method_calls(
 
 
 class TimedOperation:
-    """
-    Context manager for timing operations with Rich logging.
-    """
+    """Context manager for timing operations with Rich logging."""
 
     def __init__(
         self,
         operation_name: str,
-        logger: Optional[logging.Logger] = None,
+        logger: logging.Logger | None = None,
         component: str = "System",
-        context: Optional[Dict[str, Any]] = None,
+        context: dict[str, Any] | None = None,
     ):
         self.operation_name = operation_name
         self.component = component
         self.context = context or {}
         self.logger = logger or get_logger(f"{component}.performance")
-        self.start_time: Optional[float] = None
+        self.start_time: float | None = None
 
     def __enter__(self) -> "TimedOperation":
         self.start_time = time.time()

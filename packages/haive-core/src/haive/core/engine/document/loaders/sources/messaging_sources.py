@@ -11,17 +11,8 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import Field, validator
 
-from .enhanced_registry import (
-    enhanced_registry,
-    register_bulk_source,
-    register_source,
-)
-from .source_types import (
-    CredentialType,
-    LoaderCapability,
-    RemoteSource,
-    SourceCategory,
-)
+from .enhanced_registry import enhanced_registry, register_bulk_source, register_source
+from .source_types import CredentialType, LoaderCapability, RemoteSource, SourceCategory
 
 
 class MessagingPlatform(str, Enum):

@@ -1,11 +1,6 @@
 # src/haive/core/graph/node/protocols.py
 
-from typing import (
-    Any,
-    Dict,
-    Protocol,
-    runtime_checkable,
-)
+from typing import Any, Protocol, runtime_checkable
 
 
 @runtime_checkable
@@ -21,7 +16,7 @@ class CommandHandler(Protocol):
     """Protocol for handlers that process command patterns."""
 
     def process_result(
-        self, result: Any, config: Any, original_state: Dict[str, Any]
+        self, result: Any, config: Any, original_state: dict[str, Any]
     ) -> Any: ...
 
 
@@ -29,7 +24,7 @@ class CommandHandler(Protocol):
 class InputProcessor(Protocol):
     """Protocol for input processing strategies."""
 
-    def extract_input(self, state: Dict[str, Any], config: Any) -> Any: ...
+    def extract_input(self, state: dict[str, Any], config: Any) -> Any: ...
 
 
 @runtime_checkable
@@ -37,5 +32,5 @@ class OutputProcessor(Protocol):
     """Protocol for output processing strategies."""
 
     def process_output(
-        self, result: Any, config: Any, original_state: Dict[str, Any]
-    ) -> Dict[str, Any]: ...
+        self, result: Any, config: Any, original_state: dict[str, Any]
+    ) -> dict[str, Any]: ...

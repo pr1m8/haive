@@ -31,17 +31,15 @@ class RuntimeComponent(Runnable[I, O], Generic[EC, I, O]):
         Args:
             **kwargs: Additional parameters
         """
-        pass
 
     @abstractmethod
     def invoke(
-        self, input_data: I, config: Optional[RunnableConfig] = None, **kwargs
+        self, input_data: I, config: RunnableConfig | None = None, **kwargs
     ) -> O:
         """Invoke the component."""
-        pass
 
     async def ainvoke(
-        self, input_data: I, config: Optional[RunnableConfig] = None, **kwargs
+        self, input_data: I, config: RunnableConfig | None = None, **kwargs
     ) -> O:
         """Asynchronously invoke the component.
 

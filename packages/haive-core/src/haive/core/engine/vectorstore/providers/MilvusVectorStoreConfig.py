@@ -1,5 +1,4 @@
-"""
-Milvus Vector Store implementation for the Haive framework.
+"""Milvus Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the Milvus vector store,
 which is a cloud-native vector database built for scalable similarity search.
@@ -34,8 +33,7 @@ from haive.core.engine.vectorstore.types import VectorStoreType
 
 @BaseVectorStoreConfig.register(VectorStoreType.MILVUS)
 class MilvusVectorStoreConfig(BaseVectorStoreConfig):
-    """
-    Configuration for Milvus vector store in the Haive framework.
+    """Configuration for Milvus vector store in the Haive framework.
 
     This vector store uses Milvus for billion-scale vector similarity search
     with distributed architecture and advanced indexing options.
@@ -86,7 +84,7 @@ class MilvusVectorStoreConfig(BaseVectorStoreConfig):
     """
 
     # Connection configuration
-    connection_args: Dict[str, Any] = Field(
+    connection_args: dict[str, Any] = Field(
         ...,
         description="Connection parameters: {'host': 'localhost', 'port': '19530'} or {'uri': '...', 'token': '...'}",
     )
@@ -97,12 +95,12 @@ class MilvusVectorStoreConfig(BaseVectorStoreConfig):
     )
 
     # Index configuration
-    index_params: Optional[Dict[str, Any]] = Field(
+    index_params: dict[str, Any] | None = Field(
         default=None,
         description="Index parameters: {'metric_type': 'L2', 'index_type': 'IVF_FLAT', 'params': {...}}",
     )
 
-    search_params: Optional[Dict[str, Any]] = Field(
+    search_params: dict[str, Any] | None = Field(
         default=None,
         description="Search parameters: {'metric_type': 'L2', 'params': {'nprobe': 10}}",
     )
@@ -125,22 +123,22 @@ class MilvusVectorStoreConfig(BaseVectorStoreConfig):
     # Advanced configuration
     auto_id: bool = Field(default=True, description="Whether to auto-generate IDs")
 
-    partition_key_field: Optional[str] = Field(
+    partition_key_field: str | None = Field(
         default=None, description="Field to use for partitioning"
     )
 
-    partition_names: Optional[List[str]] = Field(
+    partition_names: list[str] | None = Field(
         default=None, description="List of partition names to create"
     )
 
     replica_number: int = Field(default=1, ge=1, description="Number of replicas")
 
-    timeout: Optional[float] = Field(
+    timeout: float | None = Field(
         default=None, description="Timeout for operations in seconds"
     )
 
     @validator("consistency_level")
-    def validate_consistency_level(cls, v):
+    def validate_consistency_level(self, v):
         """Validate consistency level is supported."""
         valid_levels = ["Strong", "Session", "Bounded", "Eventually"]
         if v not in valid_levels:
@@ -150,7 +148,7 @@ class MilvusVectorStoreConfig(BaseVectorStoreConfig):
         return v
 
     @validator("connection_args")
-    def validate_connection_args(cls, v):
+    def validate_connection_args(self, v):
         """Validate connection arguments."""
         if not v:
             raise ValueError("connection_args must be provided")
@@ -167,27 +165,26 @@ class MilvusVectorStoreConfig(BaseVectorStoreConfig):
 
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Milvus vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Milvus vector store."""
         return {
             "ids": (
-                List[Union[str, int]],
+                list[str | int],
                 Field(description="IDs of the added documents"),
             ),
         }
 
     def instantiate(self):
-        """
-        Create a Milvus vector store from this configuration.
+        """Create a Milvus vector store from this configuration.
 
         Returns:
             Milvus: Instantiated Milvus vector store.

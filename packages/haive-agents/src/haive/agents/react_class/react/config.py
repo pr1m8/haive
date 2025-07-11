@@ -1,10 +1,9 @@
 from typing import Any, Literal
 
-from langchain_core.tools import BaseTool
-from pydantic import BaseModel, Field, model_validator
-
 from haive.agents.react_class.react.state import ReactAgentState
 from haive.agents.simple.config import SimpleAgentConfig
+from langchain_core.tools import BaseTool
+from pydantic import BaseModel, Field, model_validator
 
 
 class ReactAgentConfig(SimpleAgentConfig):
@@ -58,10 +57,10 @@ class ReactAgentConfig(SimpleAgentConfig):
 
         # Set react-specific prompt if not provided
         if not self.system_prompt:
-            self.system_prompt = """You are a helpful AI assistant. 
-            
+            self.system_prompt = """You are a helpful AI assistant.
+
 Answer the human's questions thoughtfully and accurately.
-            
+
 When you need more information or need to perform an action:
 1. Use the available tools to gather information or perform actions
 2. Always think step-by-step about what information you need

@@ -1,6 +1,4 @@
-"""
-Type definitions for the Branch system.
-"""
+"""Type definitions for the Branch system."""
 
 from enum import Enum
 from typing import Any, Dict, Generic, List, Optional, Protocol
@@ -8,11 +6,7 @@ from typing import Any, Dict, Generic, List, Optional, Protocol
 from pydantic import BaseModel, Field
 
 # Import common types
-from haive.core.graph.common.types import (
-    ConfigLike,
-    NodeOutput,
-    StateLike,
-)
+from haive.core.graph.common.types import ConfigLike, NodeOutput, StateLike
 
 
 class ComparisonType(str, Enum):
@@ -52,17 +46,17 @@ class BranchProtocol(Protocol, Generic[StateLike, ConfigLike]):
     """Protocol for branch callables."""
 
     def __call__(
-        self, state: StateLike, config: Optional[ConfigLike] = None
+        self, state: StateLike, config: ConfigLike | None = None
     ) -> NodeOutput: ...
 
 
 class BranchResult(BaseModel):
     """Structured result from a branch evaluation."""
 
-    next_node: Optional[str] = None
-    send_objects: List[Any] = Field(default_factory=list)  # Use Any instead of Send
-    command_object: Optional[Any] = None  # Use Any instead of Command
-    output_mapping: Optional[Dict[str, str]] = None
+    next_node: str | None = None
+    send_objects: list[Any] = Field(default_factory=list)  # Use Any instead of Send
+    command_object: Any | None = None  # Use Any instead of Command
+    output_mapping: dict[str, str] | None = None
 
     model_config = {"arbitrary_types_allowed": True}
 

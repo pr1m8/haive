@@ -7,6 +7,7 @@
 ## 🚨 CRITICAL: Always Use `poetry run`
 
 **ALL commands must use `poetry run` prefix:**
+
 ```bash
 # CORRECT
 poetry run python your_script.py
@@ -20,6 +21,7 @@ pytest packages/haive-agents/tests/ -v
 ## 🚨 CRITICAL: Research First, Configure Second
 
 ### Before Creating ANY Agent Configuration
+
 ```bash
 # 1. Check existing agent examples
 find packages/haive-agents/examples/ -name "*.py" | head -5
@@ -40,12 +42,14 @@ poetry run python -c "from haive.agents.simple import SimpleAgent; print('✅ Im
 ## 📋 Agent Types Overview
 
 ### Available Agent Types
+
 1. **SimpleAgent** - Basic conversational agent with optional structured output
 2. **ReactAgent** - Reasoning and acting agent with looping behavior
 3. **BaseRAGAgent** - Retrieval-augmented generation agent
 4. **MultiAgent** - Coordination of multiple agents
 
 ### Engine Types
+
 1. **AugLLMConfig** - Primary engine for LLM interactions with tools
 2. **VectorStoreConfig** - Vector store engine for RAG agents
 3. **VectorStoreRetrieverConfig** - Retriever engine for RAG agents
@@ -53,6 +57,7 @@ poetry run python -c "from haive.agents.simple import SimpleAgent; print('✅ Im
 ## 🔧 AugLLMConfig - Primary Engine Configuration
 
 ### Research Existing Patterns First
+
 ```bash
 # Check existing AugLLMConfig usage
 grep -r "AugLLMConfig" packages/haive-agents/examples/ | head -5
@@ -60,6 +65,7 @@ grep -r "AugLLMConfig" packages/haive-agents/tests/ | head -5
 ```
 
 ### Basic AugLLMConfig Usage
+
 ```python
 from haive.core.engine.aug_llm import AugLLMConfig
 
@@ -89,6 +95,7 @@ engine = AugLLMConfig(
 ```
 
 ### Structured Output Configuration
+
 ```python
 from pydantic import BaseModel, Field
 
@@ -114,12 +121,14 @@ engine = AugLLMConfig(
 ## 🤖 SimpleAgent Configuration
 
 ### Research Existing Patterns
+
 ```bash
 # Check SimpleAgent usage patterns
 find packages/haive-agents/ -name "*.py" | xargs grep -l "SimpleAgent" | head -5
 ```
 
 ### Basic SimpleAgent Setup
+
 ```python
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
@@ -146,6 +155,7 @@ agent = SimpleAgent(
 ```
 
 ### SimpleAgent Convenience Fields
+
 ```python
 # ✅ CORRECT - Using convenience fields
 agent = SimpleAgent(
@@ -165,6 +175,7 @@ agent = SimpleAgent(
 ```
 
 ### SimpleAgent Factory Methods
+
 ```python
 # ✅ CORRECT - Factory method patterns
 agent = SimpleAgent.from_engine(
@@ -181,12 +192,14 @@ agent = SimpleAgent.create_with_tools(
 ## 🔄 ReactAgent Configuration
 
 ### Research Existing Patterns
+
 ```bash
 # Check ReactAgent usage patterns
 find packages/haive-agents/ -name "*.py" | xargs grep -l "ReactAgent" | head -5
 ```
 
 ### Basic ReactAgent Setup
+
 ```python
 from haive.agents.react.agent import ReactAgent
 from haive.core.engine.aug_llm import AugLLMConfig
@@ -208,6 +221,7 @@ react_agent = ReactAgent(
 ```
 
 ### ReactAgent Key Features
+
 ```python
 # ReactAgent inherits ALL SimpleAgent patterns
 # - Convenience fields
@@ -232,6 +246,7 @@ react_agent = ReactAgent(
 ## 📚 BaseRAGAgent Configuration
 
 ### Research Existing Patterns
+
 ```bash
 # Check BaseRAGAgent usage patterns
 find packages/haive-agents/ -name "*.py" | xargs grep -l "BaseRAGAgent" | head -5
@@ -239,6 +254,7 @@ find packages/haive-agents/ -name "*.py" | xargs grep -l "VectorStoreConfig" | h
 ```
 
 ### Basic BaseRAGAgent Setup
+
 ```python
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.core.engine.vectorstore import VectorStoreConfig
@@ -252,12 +268,13 @@ rag_agent = BaseRAGAgent(
 
 # ✅ CORRECT - From retriever config
 rag_agent = BaseRAGAgent(
-    name="rag_agent", 
+    name="rag_agent",
     engine=retriever_config
 )
 ```
 
 ### BaseRAGAgent Factory Methods
+
 ```python
 # ✅ CORRECT - Factory methods
 rag_agent = BaseRAGAgent.from_documents(
@@ -273,6 +290,7 @@ rag_agent = BaseRAGAgent.from_vectorstore(
 ```
 
 ### Vector Store Configuration
+
 ```python
 from haive.core.engine.vectorstore import VectorStoreConfig
 
@@ -295,12 +313,14 @@ retriever_config = VectorStoreRetrieverConfig(
 ## 🎯 MultiAgent Configuration
 
 ### Research Existing Patterns
+
 ```bash
 # Check MultiAgent usage patterns
 find packages/haive-agents/ -name "*.py" | xargs grep -l "MultiAgent" | head -5
 ```
 
 ### MultiAgent Factory Method
+
 ```python
 from haive.agents.multi.agent import MultiAgent
 from haive.core.tools import tool
@@ -319,8 +339,8 @@ agent_configs = [
         "structured_output_version": "v2",
     },
     {
-        "type": "react", 
-        "name": "Calculator", 
+        "type": "react",
+        "name": "Calculator",
         "tools": [add_tool]
     },
 ]
@@ -334,6 +354,7 @@ multi_agent = MultiAgent.with_structured_agents(
 ## 🔧 Common Configuration Patterns
 
 ### Tool Integration Pattern
+
 ```python
 from haive.core.tools import tool
 
@@ -357,6 +378,7 @@ agent = SimpleAgent(
 ```
 
 ### System Message Pattern
+
 ```python
 # ✅ CORRECT - System message in engine
 agent = SimpleAgent(
@@ -379,6 +401,7 @@ agent = SimpleAgent(
 ## 🚨 Common Mistakes to Avoid
 
 ### 1. Not Researching Existing Patterns
+
 ```python
 # ❌ WRONG - Not checking existing examples
 agent = SimpleAgent(
@@ -394,6 +417,7 @@ agent = SimpleAgent(
 ```
 
 ### 2. Incorrect Engine Type for Agent
+
 ```python
 # ❌ WRONG - Using wrong engine type
 rag_agent = BaseRAGAgent(
@@ -409,6 +433,7 @@ rag_agent = BaseRAGAgent(
 ```
 
 ### 3. Double Configuration
+
 ```python
 # ❌ WRONG - Configuring same field in multiple places
 agent = SimpleAgent(
@@ -426,6 +451,7 @@ agent = SimpleAgent(
 ```
 
 ### 4. Missing Engine Registration
+
 ```python
 # ❌ WRONG - Manual engine registration
 from haive.core.engine.base import EngineRegistry
@@ -443,6 +469,7 @@ agent = SimpleAgent(
 ## 📋 Complete Configuration Examples
 
 ### Simple Conversational Agent
+
 ```python
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
@@ -461,6 +488,7 @@ result = await agent.arun("Hello, how are you?")
 ```
 
 ### Tool-Enhanced Agent
+
 ```python
 from haive.core.tools import tool
 
@@ -479,6 +507,7 @@ agent = SimpleAgent(
 ```
 
 ### Structured Output Agent
+
 ```python
 from pydantic import BaseModel, Field
 
@@ -497,6 +526,7 @@ agent = SimpleAgent(
 ```
 
 ### RAG Agent with Documents
+
 ```python
 from haive.agents.rag.base.agent import BaseRAGAgent
 
@@ -515,6 +545,7 @@ rag_agent = BaseRAGAgent.from_documents(
 ## 🔍 Research Commands for Each Agent Type
 
 ### SimpleAgent Research
+
 ```bash
 # Check existing SimpleAgent examples
 find packages/haive-agents/examples/ -name "*.py" | xargs grep -l "SimpleAgent"
@@ -527,6 +558,7 @@ grep -r "SimpleAgent(" packages/haive-agents/examples/ | head -5
 ```
 
 ### ReactAgent Research
+
 ```bash
 # Check existing ReactAgent examples
 find packages/haive-agents/examples/ -name "*.py" | xargs grep -l "ReactAgent"
@@ -539,6 +571,7 @@ grep -r "ReactAgent(" packages/haive-agents/examples/ | head -5
 ```
 
 ### BaseRAGAgent Research
+
 ```bash
 # Check existing BaseRAGAgent examples
 find packages/haive-agents/examples/ -name "*.py" | xargs grep -l "BaseRAGAgent"
@@ -553,6 +586,7 @@ grep -r "VectorStoreConfig" packages/haive-agents/examples/ | head -5
 ## 🛠️ Testing Your Configuration
 
 ### Basic Agent Test
+
 ```python
 import asyncio
 from haive.agents.simple.agent import SimpleAgent
@@ -563,10 +597,10 @@ async def test_agent():
         name="test_agent",
         engine=AugLLMConfig()
     )
-    
+
     result = await agent.arun("Hello!")
     print(f"Result: {result}")
-    
+
     # Test structured output
     if hasattr(agent, 'structured_output_model'):
         print(f"Structured output: {result}")
@@ -577,6 +611,7 @@ asyncio.run(test_agent())
 ```
 
 ### Running Agent Tests
+
 ```bash
 # ALWAYS use poetry run for testing
 poetry run python your_agent_test.py
@@ -592,17 +627,18 @@ poetry run python -c "from haive.agents.simple import SimpleAgent; print('✅ Im
 ```
 
 ### Configuration Validation
+
 ```python
 def validate_agent_config(agent):
     """Validate agent configuration."""
     assert agent.name is not None, "Agent must have a name"
     assert agent.engine is not None, "Agent must have an engine"
-    
+
     # Check engine registration
     from haive.core.engine.base import EngineRegistry
     registry = EngineRegistry.get_instance()
     assert registry.find(agent.engine.name), "Engine should be registered"
-    
+
     print("✅ Configuration valid!")
 ```
 

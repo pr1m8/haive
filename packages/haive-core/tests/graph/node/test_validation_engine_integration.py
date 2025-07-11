@@ -1,15 +1,14 @@
-"""
-Tests for integration between ValidationNodeConfig and EngineNodeConfig
+"""Tests for integration between ValidationNodeConfig and EngineNodeConfig
 in complex graph scenarios using the StateGraph system.
 """
 
 from typing import Any, Dict, Optional
 
-import pytest
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 from langchain_core.tools import tool
 from langgraph.types import Command
 from pydantic import BaseModel, Field
+import pytest
 
 from haive.core.engine.base import Engine
 from haive.core.graph.node.engine_node import EngineNodeConfig
@@ -41,20 +40,20 @@ class MockEngine(Engine):
         self.mode = mode
         self.call_count = 0
 
-    def invoke(self, inputs: Any, config: Optional[Dict[str, Any]] = None) -> Any:
+    def invoke(self, inputs: Any, config: dict[str, Any] | None = None) -> Any:
         """Mock invoke method with different behaviors based on mode."""
         self.call_count += 1
 
         if self.mode == "error":
             raise ValueError("Simulated engine error")
 
-        elif self.mode == "transform":
+        if self.mode == "transform":
             # Transform input data in some way
             if isinstance(inputs, dict):
                 return {k: f"processed_{v}" for k, v in inputs.items()}
             return f"processed_{inputs}"
 
-        elif self.mode == "structured":
+        if self.mode == "structured":
             # Return structured data
             return {
                 "result": "success",
@@ -62,9 +61,9 @@ class MockEngine(Engine):
                 "metadata": {"engine": self.name},
             }
 
-        else:  # normal mode
-            # Simple pass-through
-            return inputs
+        # normal mode
+        # Simple pass-through
+        return inputs
 
 
 # Define a combined state schema for testing
@@ -77,15 +76,15 @@ class WorkflowState(ToolState):
     current_stage: str = Field(default="init")
 
     # Engine results
-    engine_results: Dict[str, Any] = Field(default_factory=dict)
+    engine_results: dict[str, Any] = Field(default_factory=dict)
 
     # Workflow metrics
     processing_time: float = Field(default=0.0)
     error_count: int = Field(default=0)
 
     # Custom workflow data
-    user_profile: Optional[Dict[str, Any]] = Field(default=None)
-    context_data: Optional[Dict[str, Any]] = Field(default=None)
+    user_profile: dict[str, Any] | None = Field(default=None)
+    context_data: dict[str, Any] | None = Field(default=None)
 
 
 # Create fixtures for testing
@@ -165,7 +164,6 @@ def complex_state():
 @pytest.fixture
 def validation_branching_graph(validation_node_config, mock_engines):
     """Create a graph with validation node that branches based on validation result."""
-
     # Create graph
     graph = StateGraph(name="validation_branching_test", state_schema=WorkflowState)
 
@@ -223,7 +221,6 @@ def validation_branching_graph(validation_node_config, mock_engines):
 @pytest.fixture
 def complex_engine_chain_graph(mock_engines, validation_tools):
     """Create a graph with a chain of engine nodes and validation."""
-
     # Create graph
     graph = StateGraph(name="complex_engine_chain", state_schema=WorkflowState)
 
@@ -308,7 +305,6 @@ def complex_engine_chain_graph(mock_engines, validation_tools):
 @pytest.fixture
 def parallel_validation_graph(mock_engines, validation_tools):
     """Create a graph with parallel validation and processing paths."""
-
     # Create graph
     graph = StateGraph(name="parallel_validation", state_schema=WorkflowState)
 

@@ -6,9 +6,7 @@ from haive.core.engine.loaders.sources.types import SourceType
 
 
 class NotebookSource(FileSource):
-    """
-    A source that is a Notebook file.
-    """
+    """A source that is a Notebook file."""
 
     source_type: SourceType = Field(default=SourceType.NOTEBOOK)
     file_type: LocalSourceFileType = Field(default=LocalSourceFileType.NOTEBOOK)

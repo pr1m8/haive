@@ -1,15 +1,16 @@
 # tests/core/schema/test_state_schema.py
 
-import logging
 from collections.abc import Sequence
+import logging
 from typing import Annotated, Any
 
-import pytest
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 from langgraph.graph import add_messages
 from pydantic import Field
+import pytest
 
 from haive.core.schema.state_schema import StateSchema
+
 
 # Set up logging for tests
 logging.basicConfig(level=logging.DEBUG)
@@ -238,7 +239,7 @@ class TestStateSchemaOperations:
             assert new_instance.count == 10
             assert new_instance.flag is False  # Default value
         except Exception as e:
-            logger.error(f"Error in test_to_dict_from_dict: {e}")
+            logger.exception(f"Error in test_to_dict_from_dict: {e}")
             raise
 
     def test_update(self, test_state_schema_cls):

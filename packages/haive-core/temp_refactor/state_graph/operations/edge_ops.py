@@ -1,5 +1,4 @@
-"""
-Edge operations for the state graph system.
+"""Edge operations for the state graph system.
 
 This module provides operations for adding, removing, and managing
 edges in a graph.
@@ -16,8 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 class EdgeOperations:
-    """
-    Operations for managing edges in a graph.
+    """Operations for managing edges in a graph.
 
     This class provides methods for adding, removing, and
     querying edges in a graph.
@@ -25,8 +23,7 @@ class EdgeOperations:
 
     @staticmethod
     def add_edge(graph: GraphBase, source: str, target: str) -> GraphBase:
-        """
-        Add a direct edge to the graph.
+        """Add a direct edge to the graph.
 
         Args:
             graph: Graph to add the edge to
@@ -61,10 +58,9 @@ class EdgeOperations:
 
     @staticmethod
     def remove_edge(
-        graph: GraphBase, source: str, target: Optional[str] = None
+        graph: GraphBase, source: str, target: str | None = None
     ) -> GraphBase:
-        """
-        Remove an edge from the graph.
+        """Remove an edge from the graph.
 
         Args:
             graph: Graph to remove the edge from
@@ -97,12 +93,11 @@ class EdgeOperations:
     @staticmethod
     def get_edges(
         graph: GraphBase,
-        source: Optional[str] = None,
-        target: Optional[str] = None,
+        source: str | None = None,
+        target: str | None = None,
         include_branches: bool = True,
-    ) -> List[Tuple[str, str]]:
-        """
-        Get edges matching criteria.
+    ) -> list[tuple[str, str]]:
+        """Get edges matching criteria.
 
         Args:
             graph: Graph to query
@@ -149,9 +144,8 @@ class EdgeOperations:
         end_node: str = "END",
         max_depth: int = 100,
         include_loops: bool = False,
-    ) -> List[List[str]]:
-        """
-        Find all possible paths between two nodes.
+    ) -> list[list[str]]:
+        """Find all possible paths between two nodes.
 
         Args:
             graph: Graph to search in
@@ -194,7 +188,7 @@ class EdgeOperations:
                     # Skip visited nodes unless we're including loops
                     if not include_loops and dst in visited:
                         continue
-                    stack.append((dst, path + [dst]))
+                    stack.append((dst, [*path, dst]))
 
             # Follow branch destinations
             for branch in graph.branches.values():
@@ -203,7 +197,7 @@ class EdgeOperations:
                     for dest in set(branch.destinations.values()):
                         if not include_loops and dest in visited:
                             continue
-                        stack.append((dest, path + [dest]))
+                        stack.append((dest, [*path, dest]))
 
                     # Add default if different
                     if (
@@ -212,14 +206,13 @@ class EdgeOperations:
                     ):
                         if not include_loops and branch.default in visited:
                             continue
-                        stack.append((branch.default, path + [branch.default]))
+                        stack.append((branch.default, [*path, branch.default]))
 
         return paths
 
     @staticmethod
     def has_path(graph: GraphBase, source: str, target: str) -> bool:
-        """
-        Check if there is a path between source and target nodes.
+        """Check if there is a path between source and target nodes.
 
         Args:
             graph: Graph to search in

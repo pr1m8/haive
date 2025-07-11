@@ -1,10 +1,9 @@
-from haive.core.engine.agent.agent import register_agent
-from haive.core.graph import DynamicGraph
-from langgraph.graph import END, START
-
 from haive.agents.rag.multi_strategy.config import MultiStrategyRAGConfig
 from haive.agents.rag.multi_strategy.query_types import QueryType
 from haive.agents.rag.self_corr.agent import SelfCorrectiveRAGAgent
+from haive.core.engine.agent.agent import register_agent
+from haive.core.graph import DynamicGraph
+from langgraph.graph import END, START
 
 
 @register_agent(MultiStrategyRAGConfig)

@@ -1,5 +1,5 @@
-import logging
 from abc import ABC
+import logging
 from typing import Any, ClassVar, Dict, List, Optional, Tuple, Type
 
 from langgraph.graph import END, START
@@ -8,31 +8,30 @@ from pydantic import Field
 from haive.core.graph.common.types import NodeLike
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
+
 logger = logging.getLogger(__name__)
 
 
 class GraphPattern(BaseGraph, ABC):
-    """
-    Abstract base class for graph patterns built on BaseGraph.
+    """Abstract base class for graph patterns built on BaseGraph.
 
     GraphPattern provides a foundation for creating reusable graph structures
     with automatic inheritance of nodes, edges, and conditional branches.
     """
 
     # Pattern structure to be defined in subclasses - renamed to avoid conflicts
-    pattern_nodes: ClassVar[Dict[str, Optional[NodeLike]]] = {}
-    pattern_edges: ClassVar[List[Tuple[str, str]]] = []
-    pattern_conditionals: ClassVar[List[Dict[str, Any]]] = []
+    pattern_nodes: ClassVar[dict[str, NodeLike | None]] = {}
+    pattern_edges: ClassVar[list[tuple[str, str]]] = []
+    pattern_conditionals: ClassVar[list[dict[str, Any]]] = []
 
     # Registry for pattern classes
-    _registry: ClassVar[Dict[str, Type["GraphPattern"]]] = {}
+    _registry: ClassVar[dict[str, type["GraphPattern"]]] = {}
 
     # Add implementations field as a proper Pydantic field
-    implementations: Dict[str, Any] = Field(default_factory=dict)
+    implementations: dict[str, Any] = Field(default_factory=dict)
 
     def __init__(self, name=None, description=None, **kwargs):
-        """
-        Initialize the pattern with default name and description.
+        """Initialize the pattern with default name and description.
 
         Args:
             name: Optional name (defaults to class name in snake_case)
@@ -47,8 +46,7 @@ class GraphPattern(BaseGraph, ABC):
         super().__init__(name=pattern_name, description=pattern_desc, **kwargs)
 
     def set_implementation(self, node_name: str, implementation: Any) -> "GraphPattern":
-        """
-        Set implementation for a node in the pattern.
+        """Set implementation for a node in the pattern.
 
         Args:
             node_name: Name of the node
@@ -61,8 +59,7 @@ class GraphPattern(BaseGraph, ABC):
         return self
 
     def build(self):
-        """
-        Build the pattern with structure from class hierarchy.
+        """Build the pattern with structure from class hierarchy.
 
         This automatically:
         1. Collects nodes/edges from parent classes
@@ -111,12 +108,10 @@ class GraphPattern(BaseGraph, ABC):
         return self
 
     def _build(self):
-        """
-        Implementation-specific build logic.
+        """Implementation-specific build logic.
 
         Override this method in subclasses to add custom build logic.
         """
-        pass
 
     def _add_class_nodes(self, cls):
         """Add nodes from a class to this graph instance."""
@@ -168,8 +163,7 @@ class GraphPattern(BaseGraph, ABC):
                 logger.warning(f"Error adding conditional branch: {e}")
 
     def get_source_nodes(self):
-        """
-        Get nodes that have no incoming edges from regular nodes (excluding START).
+        """Get nodes that have no incoming edges from regular nodes (excluding START).
 
         Returns:
             List of source node names
@@ -196,9 +190,8 @@ class GraphPattern(BaseGraph, ABC):
         return [node for node in self.nodes if node not in has_incoming_from_regular]
 
     @classmethod
-    def register(cls, pattern_name: str = None):
-        """
-        Decorator for registering pattern classes.
+    def register(cls, pattern_name: str | None = None):
+        """Decorator for registering pattern classes.
 
         Args:
             pattern_name: Optional name for the pattern
@@ -216,9 +209,8 @@ class GraphPattern(BaseGraph, ABC):
         return decorator
 
     @classmethod
-    def get_pattern(cls, pattern_name: str) -> Type["GraphPattern"]:
-        """
-        Get a pattern class by name.
+    def get_pattern(cls, pattern_name: str) -> type["GraphPattern"]:
+        """Get a pattern class by name.
 
         Args:
             pattern_name: Name of the pattern
@@ -234,9 +226,8 @@ class GraphPattern(BaseGraph, ABC):
         return cls._registry[pattern_name]
 
     @classmethod
-    def list_patterns(cls) -> List[str]:
-        """
-        List all registered patterns.
+    def list_patterns(cls) -> list[str]:
+        """List all registered patterns.
 
         Returns:
             List of pattern names
@@ -245,8 +236,7 @@ class GraphPattern(BaseGraph, ABC):
 
     @classmethod
     def create(cls, pattern_name: str, **kwargs) -> "GraphPattern":
-        """
-        Create a pattern instance from the registry.
+        """Create a pattern instance from the registry.
 
         Args:
             pattern_name: Name of the pattern

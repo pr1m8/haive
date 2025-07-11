@@ -56,6 +56,7 @@ from rich.panel import Panel
 from rich.table import Table
 from rich.tree import Tree
 
+
 logger = logging.getLogger(__name__)
 console = Console()
 
@@ -84,46 +85,46 @@ class ToolRouteMixin(BaseModel):
     """
 
     # Tool routes mapping tool names to their types/destinations
-    tool_routes: Dict[str, str] = Field(
+    tool_routes: dict[str, str] = Field(
         default_factory=dict, description="Mapping of tool names to their routes/types"
     )
 
     # Tool metadata for enhanced management
-    tool_metadata: Dict[str, Dict[str, Any]] = Field(
+    tool_metadata: dict[str, dict[str, Any]] = Field(
         default_factory=dict, description="Metadata for each tool"
     )
 
     # Enhanced tool management
-    tools_dict: Dict[str, List[Any]] = Field(
+    tools_dict: dict[str, list[Any]] = Field(
         default_factory=dict,
         description="Dictionary mapping tool category strings to lists of tools",
     )
 
-    routed_tools: List[Tuple[Any, str]] = Field(
+    routed_tools: list[tuple[Any, str]] = Field(
         default_factory=list,
         description="List of (tool, route) tuples for explicit routing",
     )
 
-    before_tool_validator: Optional[Callable[[Any], Any]] = Field(
+    before_tool_validator: Callable[[Any], Any] | None = Field(
         default=None,
         description="Optional callable to validate tools before routing",
         exclude=True,  # Exclude from serialization
     )
 
     # NEW: Actual tool storage
-    tools: List[Any] = Field(
+    tools: list[Any] = Field(
         default_factory=list,
         description="List of tools (BaseTool, StructuredTool, Pydantic models, callables)",
     )
 
     # NEW: Tool instance mapping for quick lookup
-    tool_instances: Dict[str, Any] = Field(
+    tool_instances: dict[str, Any] = Field(
         default_factory=dict,
         description="Mapping of tool names to actual tool instances",
     )
 
     def set_tool_route(
-        self, tool_name: str, route: str, metadata: Optional[Dict[str, Any]] = None
+        self, tool_name: str, route: str, metadata: dict[str, Any] | None = None
     ) -> "ToolRouteMixin":
         """Set a tool route with optional metadata.
 
@@ -151,7 +152,7 @@ class ToolRouteMixin(BaseModel):
 
         return self
 
-    def get_tool_route(self, tool_name: str) -> Optional[str]:
+    def get_tool_route(self, tool_name: str) -> str | None:
         """Get the route for a specific tool.
 
         Args:
@@ -162,7 +163,7 @@ class ToolRouteMixin(BaseModel):
         """
         return self.tool_routes.get(tool_name)
 
-    def get_tool_metadata(self, tool_name: str) -> Optional[Dict[str, Any]]:
+    def get_tool_metadata(self, tool_name: str) -> dict[str, Any] | None:
         """Get metadata for a specific tool.
 
         Args:
@@ -175,7 +176,7 @@ class ToolRouteMixin(BaseModel):
             return None
         return self.tool_metadata.get(tool_name)
 
-    def list_tools_by_route(self, route: str) -> List[str]:
+    def list_tools_by_route(self, route: str) -> list[str]:
         """Get all tool names for a specific route.
 
         This method finds all tools that are routed to a specific destination.
@@ -206,7 +207,7 @@ class ToolRouteMixin(BaseModel):
         logger.debug(f"Removed tool route: {tool_name}")
         return self
 
-    def update_tool_routes(self, routes: Dict[str, str]) -> "ToolRouteMixin":
+    def update_tool_routes(self, routes: dict[str, str]) -> "ToolRouteMixin":
         """Update multiple tool routes at once.
 
         Args:
@@ -308,15 +309,13 @@ class ToolRouteMixin(BaseModel):
             base_name = tool.name
         elif isinstance(tool, type) and hasattr(tool, "__name__"):
             base_name = tool.__name__
-        elif hasattr(tool, "__name__"):
-            base_name = tool.__name__
         else:
             base_name = f"tool_{index}"
 
         # Create prefixed name
         return f"{prefix}_{base_name}" if prefix else base_name
 
-    def _analyze_tool(self, tool: Any) -> Tuple[str, Optional[Dict[str, Any]]]:
+    def _analyze_tool(self, tool: Any) -> tuple[str, dict[str, Any] | None]:
         """Analyze a tool to determine its route and metadata."""
         metadata = {}
 
@@ -332,7 +331,7 @@ class ToolRouteMixin(BaseModel):
             has_explicit_call = (
                 "__call__" in tool.__dict__ if hasattr(tool, "__dict__") else False
             )
-            if has_explicit_call and callable(getattr(tool, "__call__")):
+            if has_explicit_call and callable(tool.__call__):
                 metadata["is_executable"] = True
                 route = "pydantic_tool"
             else:
@@ -357,7 +356,7 @@ class ToolRouteMixin(BaseModel):
 
         return route, metadata
 
-    def _get_callable_metadata(self, callable_obj: Callable) -> Dict[str, Any]:
+    def _get_callable_metadata(self, callable_obj: Callable) -> dict[str, Any]:
         """Extract enhanced metadata from callable objects.
 
         Args:
@@ -405,7 +404,7 @@ class ToolRouteMixin(BaseModel):
         return metadata
 
     def add_tools_to_category(
-        self, category: str, tools: List[Any]
+        self, category: str, tools: list[Any]
     ) -> "ToolRouteMixin":
         """Add tools to a specific category in tools_dict."""
         if category not in self.tools_dict:
@@ -444,7 +443,7 @@ class ToolRouteMixin(BaseModel):
         # Find matching tool names
         matching_tools = [
             name
-            for name in self.tool_routes.keys()
+            for name in self.tool_routes
             if tool_identifier in name or name == tool_identifier
         ]
 
@@ -465,11 +464,11 @@ class ToolRouteMixin(BaseModel):
 
         return self
 
-    def get_tools_by_category(self, category: str) -> List[Any]:
+    def get_tools_by_category(self, category: str) -> list[Any]:
         """Get all tools in a specific category."""
         return self.tools_dict.get(category, [])
 
-    def get_all_tools_flat(self) -> List[Any]:
+    def get_all_tools_flat(self) -> list[Any]:
         """Get all tools from tools_dict and routed_tools as a flat list."""
         all_tools = []
 
@@ -484,7 +483,7 @@ class ToolRouteMixin(BaseModel):
         return all_tools
 
     def add_tools_from_list(
-        self, tools: List[Union[Any, Tuple[Any, str]]], clear_existing: bool = False
+        self, tools: list[Any | tuple[Any, str]], clear_existing: bool = False
     ) -> "ToolRouteMixin":
         """Add tools from a list to tool_routes without clearing existing routes.
 
@@ -541,8 +540,6 @@ class ToolRouteMixin(BaseModel):
                 tool_name = tool.name
             elif isinstance(tool, type) and hasattr(tool, "__name__"):
                 tool_name = tool.__name__
-            elif hasattr(tool, "__name__"):
-                tool_name = tool.__name__
             else:
                 tool_name = f"tool_{i}"
 
@@ -578,7 +575,7 @@ class ToolRouteMixin(BaseModel):
 
         return self
 
-    def sync_tool_routes_from_tools(self, tools: List[Any]) -> "ToolRouteMixin":
+    def sync_tool_routes_from_tools(self, tools: list[Any]) -> "ToolRouteMixin":
         """Synchronize tool_routes with a list of tools.
 
         This method analyzes a list of tools and automatically creates
@@ -595,9 +592,9 @@ class ToolRouteMixin(BaseModel):
 
     def to_tool(
         self,
-        name: Optional[str] = None,
-        description: Optional[str] = None,
-        route: Optional[str] = None,
+        name: str | None = None,
+        description: str | None = None,
+        route: str | None = None,
         **kwargs,
     ) -> Any:
         """Convert this configuration to a tool.
@@ -752,8 +749,8 @@ class ToolRouteMixin(BaseModel):
     def add_tool(
         self,
         tool: Any,
-        route: Optional[str] = None,
-        metadata: Optional[Dict[str, Any]] = None,
+        route: str | None = None,
+        metadata: dict[str, Any] | None = None,
     ) -> "ToolRouteMixin":
         """Add a tool with automatic routing and metadata.
 
@@ -789,7 +786,7 @@ class ToolRouteMixin(BaseModel):
         logger.debug(f"Added tool '{tool_name}' with route '{route}'")
         return self
 
-    def get_tool(self, tool_name: str) -> Optional[Any]:
+    def get_tool(self, tool_name: str) -> Any | None:
         """Get a tool instance by name.
 
         Args:
@@ -800,7 +797,7 @@ class ToolRouteMixin(BaseModel):
         """
         return self.tool_instances.get(tool_name)
 
-    def get_tools_by_route(self, route: str) -> List[Any]:
+    def get_tools_by_route(self, route: str) -> list[Any]:
         """Get all tools with a specific route.
 
         Args:
@@ -874,9 +871,6 @@ class ToolRouteMixin(BaseModel):
         # Try to get name from tool
         if hasattr(tool, "name") and tool.name:
             return tool.name
-        elif isinstance(tool, type) and hasattr(tool, "__name__"):
+        if isinstance(tool, type) and hasattr(tool, "__name__"):
             return tool.__name__
-        elif hasattr(tool, "__name__"):
-            return tool.__name__
-        else:
-            return f"tool_{index}"
+        return f"tool_{index}"

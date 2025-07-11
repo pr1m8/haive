@@ -1,8 +1,5 @@
 """Override for LangGraph's PostgresSaver to properly disable prepared statements."""
 
-from contextlib import contextmanager
-from typing import Optional, Union
-
 import psycopg
 from langgraph.checkpoint.postgres import PostgresSaver as BasePostgresSaver
 from psycopg.rows import dict_row
@@ -32,7 +29,7 @@ class PostgresSaverNoPreparedStatements(BasePostgresSaver):
 
     def __init__(
         self,
-        conn: Union[psycopg.Connection, ConnectionPool],
+        conn: psycopg.Connection | ConnectionPool,
     ) -> None:
         """Initialize with connection that has prepared statements disabled."""
         # If it's a raw connection, ensure prepare_threshold is None
@@ -56,7 +53,6 @@ import psycopg
 from langgraph.checkpoint.postgres.aio import (
     AsyncPostgresSaver as BaseAsyncPostgresSaver,
 )
-from psycopg.rows import dict_row
 from psycopg_pool import AsyncConnectionPool
 
 
@@ -83,7 +79,7 @@ class AsyncPostgresSaverNoPreparedStatements(BaseAsyncPostgresSaver):
 
     def __init__(
         self,
-        conn: Union[psycopg.AsyncConnection, AsyncConnectionPool],
+        conn: psycopg.AsyncConnection | AsyncConnectionPool,
     ) -> None:
         """Initialize with async connection that has prepared statements disabled."""
         # If it's a raw connection, ensure prepare_threshold is None

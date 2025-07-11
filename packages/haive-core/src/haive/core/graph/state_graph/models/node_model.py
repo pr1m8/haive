@@ -6,31 +6,32 @@ from haive.core.graph.state_graph.base import SerializableModel
 from haive.core.graph.state_graph.models.function_ref import FunctionReference
 from haive.core.graph.state_graph.models.type_ref import TypeReference
 
+
 TSpec = TypeVar("TSpec", bound=Any)
 
 
 class NodeModel(SerializableModel, Generic[TSpec]):
     """Serializable representation of a graph node."""
 
-    runnable: Optional[FunctionReference] = Field(
+    runnable: FunctionReference | None = Field(
         default=None, description="Function reference for this node"
     )
-    input_type: Optional[TypeReference] = Field(
+    input_type: TypeReference | None = Field(
         default=None, description="Input type for this node"
     )
-    retry_policy: Optional[Dict[str, Any]] = Field(
+    retry_policy: dict[str, Any] | None = Field(
         default=None, description="Retry configuration"
     )
-    spec: Optional[TSpec] = Field(
+    spec: TSpec | None = Field(
         default=None, description="Original specification object", exclude=True
     )
-    metadata: Dict[str, Any] = Field(
+    metadata: dict[str, Any] = Field(
         default_factory=dict, description="Additional metadata"
     )
-    tags: List[str] = Field(default_factory=list, description="Tags for categorization")
+    tags: list[str] = Field(default_factory=list, description="Tags for categorization")
 
     # Class variables
-    RESERVED_NAMES: ClassVar[List[str]] = ["__start__", "__end__"]
+    RESERVED_NAMES: ClassVar[list[str]] = ["__start__", "__end__"]
     __model_type__: ClassVar[str] = "node"
     __abstract__ = False
 

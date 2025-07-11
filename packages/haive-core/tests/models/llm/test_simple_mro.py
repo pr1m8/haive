@@ -53,10 +53,9 @@ def test_provider_imports():
 
 def test_create_simple_provider():
     """Test creating a simple provider without full dependencies."""
-    from pydantic import Field
-
     from haive.core.models.llm.provider_types import LLMProvider
     from haive.core.models.llm.providers.base import BaseLLMProvider
+    from pydantic import Field
 
     class SimpleTestProvider(BaseLLMProvider):
         provider: LLMProvider = Field(default=LLMProvider.OPENAI)

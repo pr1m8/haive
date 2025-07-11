@@ -1,5 +1,4 @@
-"""
-Base Embedding Models Module.
+"""Base Embedding Models Module.
 
 This module provides the foundational abstractions for embedding models in the Haive framework.
 It includes base classes and implementations for different embedding providers that transform
@@ -24,10 +23,12 @@ Typical usage example:
 """
 
 import os
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict
 
 import torch
 from dotenv import load_dotenv
+from haive.core.config.constants import EMBEDDINGS_CACHE_DIR
+from haive.core.models.embeddings.provider_types import EmbeddingProvider
 from langchain.embeddings import CacheBackedEmbeddings
 from langchain.storage import LocalFileStore
 from langchain_community.embeddings.anyscale import AnyscaleEmbeddings
@@ -49,16 +50,12 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
 from pydantic import BaseModel, Field, SecretStr, field_validator
 
-from haive.core.config.constants import EMBEDDINGS_CACHE_DIR
-from haive.core.models.embeddings.provider_types import EmbeddingProvider
-
 # Load environment variables from .env file if present
 load_dotenv(".env")
 
 
 class SecureConfigMixin:
-    """
-    Mixin for securely handling API keys from environment variables.
+    """Mixin for securely handling API keys from environment variables.
 
     This mixin provides methods for securely resolving API keys from environment
     variables or explicitly provided values, with appropriate fallbacks.
@@ -67,8 +64,7 @@ class SecureConfigMixin:
     @field_validator("api_key", mode="after")
     @classmethod
     def resolve_api_key(cls, v, values):
-        """
-        Resolve API key from provided value or environment variables.
+        """Resolve API key from provided value or environment variables.
 
         Args:
             v: The provided API key value
@@ -107,8 +103,7 @@ class SecureConfigMixin:
 
 
 class BaseEmbeddingConfig(BaseModel, SecureConfigMixin):
-    """
-    Base configuration for embedding models.
+    """Base configuration for embedding models.
 
     This abstract base class defines the common interface for all embedding model
     configurations, ensuring consistent instantiation patterns across providers.
@@ -126,8 +121,7 @@ class BaseEmbeddingConfig(BaseModel, SecureConfigMixin):
     )
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate the embedding model with the configuration.
+        """Instantiate the embedding model with the configuration.
 
         Args:
             **kwargs: Additional keyword arguments to pass to the model constructor
@@ -142,8 +136,7 @@ class BaseEmbeddingConfig(BaseModel, SecureConfigMixin):
 
 
 class AzureEmbeddingConfig(BaseEmbeddingConfig):
-    """
-    Configuration for Azure OpenAI embedding models.
+    """Configuration for Azure OpenAI embedding models.
 
     This class configures embedding models from Azure OpenAI services,
     supporting environment variable resolution for credentials.
@@ -174,8 +167,7 @@ class AzureEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     def instantiate(self, **kwargs) -> AzureOpenAIEmbeddings:
-        """
-        Instantiate an Azure OpenAI embedding model.
+        """Instantiate an Azure OpenAI embedding model.
 
         Args:
             **kwargs: Additional keyword arguments to pass to AzureOpenAIEmbeddings
@@ -192,8 +184,7 @@ class AzureEmbeddingConfig(BaseEmbeddingConfig):
         )
 
     def get_api_key(self) -> str:
-        """
-        Get the API key as a string.
+        """Get the API key as a string.
 
         Returns:
             str: The API key
@@ -202,8 +193,7 @@ class AzureEmbeddingConfig(BaseEmbeddingConfig):
 
 
 class HuggingFaceEmbeddingConfig(BaseEmbeddingConfig):
-    """
-    Configuration for HuggingFace embedding models.
+    """Configuration for HuggingFace embedding models.
 
     This class configures embedding models from HuggingFace's model hub,
     with support for local caching and hardware acceleration.
@@ -222,7 +212,7 @@ class HuggingFaceEmbeddingConfig(BaseEmbeddingConfig):
 
     provider: EmbeddingProvider = EmbeddingProvider.HUGGINGFACE
 
-    model_kwargs: Optional[Dict[str, Any]] = Field(
+    model_kwargs: dict[str, Any] | None = Field(
         default_factory=lambda: {
             "device": "cuda" if torch.cuda.is_available() else "cpu"
         },
@@ -232,17 +222,17 @@ class HuggingFaceEmbeddingConfig(BaseEmbeddingConfig):
         default="sentence-transformers/all-MiniLM-L6-v2",
         description="HuggingFace model ID",
     )
-    encode_kwargs: Optional[Dict[str, Any]] = Field(
+    encode_kwargs: dict[str, Any] | None = Field(
         default_factory=dict, description="Additional keyword arguments for encoding"
     )
-    query_encode_kwargs: Optional[Dict[str, Any]] = Field(
+    query_encode_kwargs: dict[str, Any] | None = Field(
         default_factory=dict,
         description="Additional keyword arguments for query encoding",
     )
     multi_process: bool = Field(
         default=False, description="Whether to use multi-processing for encoding"
     )
-    cache_folder: Optional[str] = Field(
+    cache_folder: str | None = Field(
         default=str(EMBEDDINGS_CACHE_DIR), description="Where to cache the model files"
     )
     show_progress: bool = Field(
@@ -253,8 +243,7 @@ class HuggingFaceEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     def instantiate(self, **kwargs) -> HuggingFaceEmbeddings:
-        """
-        Instantiate a HuggingFace embedding model.
+        """Instantiate a HuggingFace embedding model.
 
         This method includes error handling and GPU memory cleanup
         in case of initialization failures.
@@ -312,14 +301,12 @@ class HuggingFaceEmbeddingConfig(BaseEmbeddingConfig):
                         namespace=self.model,
                     )
                 return embedder
-            except Exception as e:
-                print(f"Error instantiating HuggingFaceEmbeddings: {e}")
-                raise e
+            except Exception:
+                raise
 
 
 class OpenAIEmbeddingConfig(BaseEmbeddingConfig):
-    """
-    Configuration for OpenAI embedding models.
+    """Configuration for OpenAI embedding models.
 
     This class configures embedding models from OpenAI services,
     supporting multiple model types and configurations.
@@ -336,7 +323,7 @@ class OpenAIEmbeddingConfig(BaseEmbeddingConfig):
     model: str = Field(
         default="text-embedding-3-small", description="OpenAI embedding model name"
     )
-    dimensions: Optional[int] = Field(
+    dimensions: int | None = Field(
         default=None, description="Output dimensions for the embedding vectors"
     )
     show_progress_bar: bool = Field(
@@ -347,8 +334,7 @@ class OpenAIEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     def instantiate(self, **kwargs) -> OpenAIEmbeddings:
-        """
-        Instantiate an OpenAI embedding model.
+        """Instantiate an OpenAI embedding model.
 
         Args:
             **kwargs: Additional keyword arguments to pass to OpenAIEmbeddings
@@ -370,8 +356,7 @@ class OpenAIEmbeddingConfig(BaseEmbeddingConfig):
 
 
 class CohereEmbeddingConfig(BaseEmbeddingConfig):
-    """
-    Configuration for Cohere embedding models.
+    """Configuration for Cohere embedding models.
 
     This class configures embedding models from Cohere services.
 
@@ -390,8 +375,7 @@ class CohereEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     def instantiate(self, **kwargs) -> CohereEmbeddings:
-        """
-        Instantiate a Cohere embedding model.
+        """Instantiate a Cohere embedding model.
 
         Args:
             **kwargs: Additional keyword arguments to pass to CohereEmbeddings
@@ -408,8 +392,7 @@ class CohereEmbeddingConfig(BaseEmbeddingConfig):
 
 
 class OllamaEmbeddingConfig(BaseEmbeddingConfig):
-    """
-    Configuration for Ollama embedding models.
+    """Configuration for Ollama embedding models.
 
     This class configures embedding models from Ollama, which runs
     locally and doesn't require an API key.
@@ -427,8 +410,7 @@ class OllamaEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     def instantiate(self, **kwargs) -> OllamaEmbeddings:
-        """
-        Instantiate an Ollama embedding model.
+        """Instantiate an Ollama embedding model.
 
         Args:
             **kwargs: Additional keyword arguments to pass to OllamaEmbeddings
@@ -444,8 +426,7 @@ class OllamaEmbeddingConfig(BaseEmbeddingConfig):
 
 
 class SentenceTransformerEmbeddingConfig(BaseEmbeddingConfig):
-    """
-    Configuration for SentenceTransformer embedding models.
+    """Configuration for SentenceTransformer embedding models.
 
     This class configures embedding models from SentenceTransformers library,
     which provides efficient and accurate sentence and text embeddings.
@@ -461,7 +442,7 @@ class SentenceTransformerEmbeddingConfig(BaseEmbeddingConfig):
     model: str = Field(
         default="all-MiniLM-L6-v2", description="SentenceTransformer model name or path"
     )
-    cache_folder: Optional[str] = Field(
+    cache_folder: str | None = Field(
         default=str(EMBEDDINGS_CACHE_DIR), description="Where to cache the model files"
     )
     use_cache: bool = Field(
@@ -469,8 +450,7 @@ class SentenceTransformerEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     def instantiate(self, **kwargs) -> SentenceTransformerEmbeddings:
-        """
-        Instantiate a SentenceTransformer embedding model.
+        """Instantiate a SentenceTransformer embedding model.
 
         Args:
             **kwargs: Additional keyword arguments to pass to SentenceTransformerEmbeddings
@@ -496,8 +476,7 @@ class SentenceTransformerEmbeddingConfig(BaseEmbeddingConfig):
 
 
 class FastEmbedEmbeddingConfig(BaseEmbeddingConfig):
-    """
-    Configuration for FastEmbed embedding models.
+    """Configuration for FastEmbed embedding models.
 
     This class configures FastEmbed models, which are lightweight and efficient
     embeddings that can run on CPU.
@@ -515,7 +494,7 @@ class FastEmbedEmbeddingConfig(BaseEmbeddingConfig):
         default="BAAI/bge-small-en-v1.5", description="FastEmbed model name"
     )
     max_length: int = Field(default=512, description="Maximum sequence length")
-    cache_folder: Optional[str] = Field(
+    cache_folder: str | None = Field(
         default=str(EMBEDDINGS_CACHE_DIR), description="Where to cache the model files"
     )
     use_cache: bool = Field(
@@ -523,8 +502,7 @@ class FastEmbedEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     def instantiate(self, **kwargs) -> FastEmbedEmbeddings:
-        """
-        Instantiate a FastEmbed embedding model.
+        """Instantiate a FastEmbed embedding model.
 
         Args:
             **kwargs: Additional keyword arguments to pass to FastEmbedEmbeddings
@@ -551,8 +529,7 @@ class FastEmbedEmbeddingConfig(BaseEmbeddingConfig):
 
 
 class JinaEmbeddingConfig(BaseEmbeddingConfig):
-    """
-    Configuration for Jina AI embedding models.
+    """Configuration for Jina AI embedding models.
 
     This class configures embedding models from Jina AI.
 
@@ -567,8 +544,7 @@ class JinaEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     def instantiate(self, **kwargs) -> JinaEmbeddings:
-        """
-        Instantiate a Jina AI embedding model.
+        """Instantiate a Jina AI embedding model.
 
         Args:
             **kwargs: Additional keyword arguments to pass to JinaEmbeddings
@@ -584,8 +560,7 @@ class JinaEmbeddingConfig(BaseEmbeddingConfig):
 
 
 class VertexAIEmbeddingConfig(BaseEmbeddingConfig):
-    """
-    Configuration for Google Vertex AI embedding models.
+    """Configuration for Google Vertex AI embedding models.
 
     This class configures embedding models from Google Vertex AI.
 
@@ -600,15 +575,14 @@ class VertexAIEmbeddingConfig(BaseEmbeddingConfig):
     model: str = Field(
         default="textembedding-gecko@latest", description="Vertex AI model name"
     )
-    project: Optional[str] = Field(
+    project: str | None = Field(
         default_factory=lambda: os.getenv("GOOGLE_CLOUD_PROJECT", ""),
         description="Google Cloud project ID",
     )
     location: str = Field(default="us-central1", description="Google Cloud region")
 
     def instantiate(self, **kwargs) -> VertexAIEmbeddings:
-        """
-        Instantiate a Google Vertex AI embedding model.
+        """Instantiate a Google Vertex AI embedding model.
 
         Args:
             **kwargs: Additional keyword arguments to pass to VertexAIEmbeddings
@@ -625,8 +599,7 @@ class VertexAIEmbeddingConfig(BaseEmbeddingConfig):
 
 
 class BedrockEmbeddingConfig(BaseEmbeddingConfig):
-    """
-    Configuration for AWS Bedrock embedding models.
+    """Configuration for AWS Bedrock embedding models.
 
     This class configures embedding models from AWS Bedrock service.
 
@@ -645,13 +618,12 @@ class BedrockEmbeddingConfig(BaseEmbeddingConfig):
         default_factory=lambda: os.getenv("AWS_REGION", "us-east-1"),
         description="AWS region",
     )
-    credentials_profile_name: Optional[str] = Field(
+    credentials_profile_name: str | None = Field(
         default=None, description="AWS credentials profile name"
     )
 
     def instantiate(self, **kwargs) -> BedrockEmbeddings:
-        """
-        Instantiate an AWS Bedrock embedding model.
+        """Instantiate an AWS Bedrock embedding model.
 
         Args:
             **kwargs: Additional keyword arguments to pass to BedrockEmbeddings
@@ -671,8 +643,7 @@ class BedrockEmbeddingConfig(BaseEmbeddingConfig):
 
 
 class CloudflareEmbeddingConfig(BaseEmbeddingConfig):
-    """
-    Configuration for Cloudflare Workers AI embedding models.
+    """Configuration for Cloudflare Workers AI embedding models.
 
     This class configures embedding models from Cloudflare Workers AI.
 
@@ -693,8 +664,7 @@ class CloudflareEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     def instantiate(self, **kwargs) -> CloudflareWorkersAIEmbeddings:
-        """
-        Instantiate a Cloudflare Workers AI embedding model.
+        """Instantiate a Cloudflare Workers AI embedding model.
 
         Args:
             **kwargs: Additional keyword arguments to pass to CloudflareWorkersAIEmbeddings
@@ -711,8 +681,7 @@ class CloudflareEmbeddingConfig(BaseEmbeddingConfig):
 
 
 class LlamaCppEmbeddingConfig(BaseEmbeddingConfig):
-    """
-    Configuration for LlamaCpp local embedding models.
+    """Configuration for LlamaCpp local embedding models.
 
     This class configures embedding models using LlamaCpp for local execution.
 
@@ -737,8 +706,7 @@ class LlamaCppEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     def instantiate(self, **kwargs) -> LlamaCppEmbeddings:
-        """
-        Instantiate a LlamaCpp embedding model.
+        """Instantiate a LlamaCpp embedding model.
 
         Args:
             **kwargs: Additional keyword arguments to pass to LlamaCppEmbeddings
@@ -756,8 +724,7 @@ class LlamaCppEmbeddingConfig(BaseEmbeddingConfig):
 
 
 class VoyageAIEmbeddingConfig(BaseEmbeddingConfig):
-    """
-    Configuration for Voyage AI embedding models.
+    """Configuration for Voyage AI embedding models.
 
     This class configures embedding models from Voyage AI.
 
@@ -779,8 +746,7 @@ class VoyageAIEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     def instantiate(self, **kwargs) -> VoyageEmbeddings:
-        """
-        Instantiate a Voyage AI embedding model.
+        """Instantiate a Voyage AI embedding model.
 
         Args:
             **kwargs: Additional keyword arguments to pass to VoyageEmbeddings
@@ -798,8 +764,7 @@ class VoyageAIEmbeddingConfig(BaseEmbeddingConfig):
 
 
 class AnyscaleEmbeddingConfig(BaseEmbeddingConfig):
-    """
-    Configuration for Anyscale embedding models.
+    """Configuration for Anyscale embedding models.
 
     This class configures embedding models from Anyscale.
 
@@ -811,13 +776,12 @@ class AnyscaleEmbeddingConfig(BaseEmbeddingConfig):
 
     provider: EmbeddingProvider = EmbeddingProvider.ANYSCALE
     model: str = Field(default="thenlper/gte-large", description="Anyscale model name")
-    base_url: Optional[str] = Field(
+    base_url: str | None = Field(
         default=None, description="Base URL for the Anyscale API"
     )
 
     def instantiate(self, **kwargs) -> AnyscaleEmbeddings:
-        """
-        Instantiate an Anyscale embedding model.
+        """Instantiate an Anyscale embedding model.
 
         Args:
             **kwargs: Additional keyword arguments to pass to AnyscaleEmbeddings
@@ -837,8 +801,7 @@ class AnyscaleEmbeddingConfig(BaseEmbeddingConfig):
 
 
 def create_embeddings(config: BaseEmbeddingConfig) -> Any:
-    """
-    Factory function to create embedding models from a configuration.
+    """Factory function to create embedding models from a configuration.
 
     This function simplifies the instantiation of embedding models by
     delegating to the appropriate configuration class.

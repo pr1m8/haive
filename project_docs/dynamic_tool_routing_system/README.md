@@ -5,6 +5,7 @@ This directory contains a proof-of-concept implementation demonstrating how to a
 ## Files Overview
 
 ### 1. `real_dynamic_agent_system.py`
+
 **Real implementation using actual Haive agents**
 
 - Uses `SimpleAgent` and `ReactAgent` from haive-agents
@@ -13,12 +14,14 @@ This directory contains a proof-of-concept implementation demonstrating how to a
 - Implements recompilation tracking for agent graphs
 
 **Key Features:**
+
 - `RecompilableAgent` class that extends base agents
 - Dynamic tool addition with `add_tool_dynamically()`
 - Hash-based change detection for tool routes
 - Multi-agent coordination with dynamic routing
 
 ### 2. `basegraph2_recompilation_integration.py`
+
 **Integration with BaseGraph2's recompilation system**
 
 - Extends `BaseGraph2` with tool route tracking
@@ -26,12 +29,14 @@ This directory contains a proof-of-concept implementation demonstrating how to a
 - Shows how to create tool-route-aware nodes
 
 **Key Features:**
+
 - `ToolRouteAwareBaseGraph` class
 - Tool route hash computation
 - Dynamic node routing with `DynamicToolNode`
 - Graph-integrated agents
 
 ### 3. `dynamic_tool_route_mixin.py`
+
 **Extended mixin for dynamic tool routing**
 
 - Extends `ToolRouteMixin` with change callbacks
@@ -39,11 +44,13 @@ This directory contains a proof-of-concept implementation demonstrating how to a
 - Supports batch updates and pending change tracking
 
 **Key Features:**
+
 - Change callbacks for tool route modifications
 - Batch update operations
 - Pending change tracking and notifications
 
 ### 4. `recompilation_hook_example.py`
+
 **Recompilation hook system demonstration**
 
 - Shows how to implement hash-based change detection

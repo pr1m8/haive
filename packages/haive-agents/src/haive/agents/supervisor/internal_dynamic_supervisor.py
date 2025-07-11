@@ -7,12 +7,11 @@ not external management calls.
 import logging
 from typing import Any, Dict, List, Literal, Optional, Union
 
+from haive.agents.base.agent import Agent
+from haive.agents.multi.agent import MultiAgent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from pydantic import Field, PrivateAttr
-
-from haive.agents.base.agent import Agent
-from haive.agents.multi.agent import MultiAgent
 
 logger = logging.getLogger(__name__)
 
@@ -41,8 +40,8 @@ class InternalDynamicSupervisor(MultiAgent):
     )
 
     # Private attributes
-    _agent_templates: Dict[str, Dict[str, Any]] = PrivateAttr(default_factory=dict)
-    _creation_history: List[Dict[str, Any]] = PrivateAttr(default_factory=list)
+    _agent_templates: dict[str, dict[str, Any]] = PrivateAttr(default_factory=dict)
+    _creation_history: list[dict[str, Any]] = PrivateAttr(default_factory=list)
 
     def setup_agent(self) -> None:
         """Set up with agent creation templates."""
@@ -168,9 +167,8 @@ class InternalDynamicSupervisor(MultiAgent):
     def _create_internal_supervisor_node(self):
         """Create supervisor that makes internal decisions about agent management."""
 
-        async def supervisor_node(state: Any) -> Dict[str, Any]:
+        async def supervisor_node(state: Any) -> dict[str, Any]:
             """Make decisions about agent creation and routing."""
-
             logger.info("=" * 60)
             logger.info("INTERNAL DYNAMIC SUPERVISOR")
             logger.info("=" * 60)
@@ -222,7 +220,7 @@ class InternalDynamicSupervisor(MultiAgent):
 
             # Step 3: Use best available agent or end
             if self.agents:
-                best_agent = list(self.agents.keys())[0]  # Simple fallback
+                best_agent = next(iter(self.agents.keys()))  # Simple fallback
                 logger.info(f"Using fallback agent: {best_agent}")
                 return {
                     "target_agent": best_agent,
@@ -238,9 +236,8 @@ class InternalDynamicSupervisor(MultiAgent):
     def _create_agent_creator_node(self):
         """Create node that actually creates new agents."""
 
-        async def agent_creator_node(state: Any) -> Dict[str, Any]:
+        async def agent_creator_node(state: Any) -> dict[str, Any]:
             """Create a new agent based on supervisor decision."""
-
             logger.info("=" * 60)
             logger.info("AGENT CREATOR NODE")
             logger.info("=" * 60)
@@ -281,18 +278,16 @@ class InternalDynamicSupervisor(MultiAgent):
                     "agent_created": True,
                     "created_agent_type": agent_type,
                 }
-            else:
-                logger.error(f"Failed to create {agent_type} agent")
-                return {"error": f"Failed to create {agent_type} agent"}
+            logger.error(f"Failed to create {agent_type} agent")
+            return {"error": f"Failed to create {agent_type} agent"}
 
         return agent_creator_node
 
     def _create_dynamic_executor_node(self):
         """Create executor that runs the selected agent."""
 
-        async def executor_node(state: Any) -> Dict[str, Any]:
+        async def executor_node(state: Any) -> dict[str, Any]:
             """Execute the target agent."""
-
             logger.info("=" * 60)
             logger.info("DYNAMIC EXECUTOR")
             logger.info("=" * 60)
@@ -332,12 +327,12 @@ class InternalDynamicSupervisor(MultiAgent):
                 return update
 
             except Exception as e:
-                logger.error(f"Error executing {target_agent}: {e}")
+                logger.exception(f"Error executing {target_agent}: {e}")
                 return {"error": str(e), "last_agent": target_agent}
 
         return executor_node
 
-    def _find_suitable_existing_agent(self, content: str) -> Optional[str]:
+    def _find_suitable_existing_agent(self, content: str) -> str | None:
         """Find if we have an existing agent that can handle the request."""
         content_lower = content.lower()
 
@@ -357,7 +352,7 @@ class InternalDynamicSupervisor(MultiAgent):
 
         return None
 
-    def _determine_needed_agent_type(self, content: str) -> Optional[str]:
+    def _determine_needed_agent_type(self, content: str) -> str | None:
         """Determine what type of agent is needed for this request."""
         content_lower = content.lower()
 
@@ -389,7 +384,6 @@ class InternalDynamicSupervisor(MultiAgent):
 
     async def _create_agent_from_template(self, agent_type: str, request: str) -> bool:
         """Actually create an agent from a template."""
-
         if agent_type not in self._agent_templates:
             return False
 
@@ -438,10 +432,10 @@ class InternalDynamicSupervisor(MultiAgent):
             return True
 
         except Exception as e:
-            logger.error(f"Failed to create agent {agent_name}: {e}")
+            logger.exception(f"Failed to create agent {agent_name}: {e}")
             return False
 
-    def _extract_state_dict(self, state: Any) -> Dict[str, Any]:
+    def _extract_state_dict(self, state: Any) -> dict[str, Any]:
         """Extract state dict preserving messages."""
         if isinstance(state, dict):
             return state
@@ -466,18 +460,18 @@ class InternalDynamicSupervisor(MultiAgent):
 
         if action == "create_agent":
             return "agent_creator"
-        elif action == "execute":
+        if action == "execute":
             return "executor"
-        elif state_dict.get("is_complete"):
+        if state_dict.get("is_complete"):
             return "END"
 
         return "END"
 
-    def get_creation_history(self) -> List[Dict[str, Any]]:
+    def get_creation_history(self) -> list[dict[str, Any]]:
         """Get history of agents created by supervisor."""
         return self._creation_history.copy()
 
-    def get_available_templates(self) -> Dict[str, Dict[str, Any]]:
+    def get_available_templates(self) -> dict[str, dict[str, Any]]:
         """Get available agent templates."""
         return self._agent_templates.copy()
 
@@ -488,11 +482,6 @@ if __name__ == "__main__":
 
     async def test_internal_dynamic():
         """Test the internal dynamic supervisor."""
-
-        print("\n" + "=" * 80)
-        print("🧪 TESTING INTERNAL DYNAMIC SUPERVISOR")
-        print("=" * 80 + "\n")
-
         # Create supervisor with no initial agents
         supervisor = InternalDynamicSupervisor(
             name="internal_dynamic",
@@ -501,19 +490,13 @@ if __name__ == "__main__":
             max_agents=5,
         )
 
-        print(f"Starting with {len(supervisor.agents)} agents")
-
         # Test 1: Research request (should create research agent)
-        print("\n[Test 1] Research request")
-        result1 = await supervisor.ainvoke(
+        await supervisor.ainvoke(
             {"messages": [HumanMessage(content="Research the latest AI trends")]}
         )
 
-        print(f"Agents after research: {list(supervisor.agents.keys())}")
-
         # Test 2: Coding request (should create coding agent)
-        print("\n[Test 2] Coding request")
-        result2 = await supervisor.ainvoke(
+        await supervisor.ainvoke(
             {
                 "messages": [
                     HumanMessage(content="Write code to implement a binary search")
@@ -521,32 +504,18 @@ if __name__ == "__main__":
             }
         )
 
-        print(f"Agents after coding: {list(supervisor.agents.keys())}")
-
         # Test 3: Analysis request (should create analysis agent)
-        print("\n[Test 3] Analysis request")
-        result3 = await supervisor.ainvoke(
+        await supervisor.ainvoke(
             {"messages": [HumanMessage(content="Analyze the data patterns")]}
         )
 
-        print(f"Agents after analysis: {list(supervisor.agents.keys())}")
-
         # Test 4: Another research request (should use existing)
-        print("\n[Test 4] Another research request")
-        result4 = await supervisor.ainvoke(
+        await supervisor.ainvoke(
             {
                 "messages": [
                     HumanMessage(content="Find information about quantum computing")
                 ]
             }
         )
-
-        print(f"Final agents: {list(supervisor.agents.keys())}")
-        print(
-            f"Creation history: {len(supervisor.get_creation_history())} agents created"
-        )
-
-        print("\n✅ Internal dynamic supervisor works!")
-        print("Key insight: Supervisor creates agents based on need!")
 
     asyncio.run(test_internal_dynamic())

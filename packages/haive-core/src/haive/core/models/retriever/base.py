@@ -1,11 +1,12 @@
-import logging
 from enum import Enum
-from typing import Any, ClassVar, Dict, Optional, Type, Union
+import logging
+from typing import Any, ClassVar
 
 from langchain_core.retrievers import BaseRetriever
 from pydantic import BaseModel, Field
 
 from haive.core.models.vectorstore.base import VectorStoreConfig
+
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -56,7 +57,7 @@ class RetrieverConfig(BaseModel):
 
     retriever_type: RetrieverType = Field(description="The type of retriever to use")
     name: str = Field(description="Name identifier for this retriever configuration")
-    description: Optional[str] = Field(
+    description: str | None = Field(
         default=None, description="Description of this retriever"
     )
 
@@ -64,13 +65,13 @@ class RetrieverConfig(BaseModel):
     search_type: str = Field(
         default="similarity", description="Search type ('similarity', 'mmr', etc.)"
     )
-    search_kwargs: Dict[str, Any] = Field(
+    search_kwargs: dict[str, Any] = Field(
         default_factory=dict, description="Additional search parameters"
     )
     k: int = Field(default=4, description="Number of documents to retrieve")
 
     # Core functionality
-    _registry: ClassVar[Dict[RetrieverType, Type["RetrieverConfig"]]] = {}
+    _registry: ClassVar[dict[RetrieverType, type["RetrieverConfig"]]] = {}
 
     def instantiate(self) -> BaseRetriever:
         """Create the retriever instance based on configuration."""
@@ -87,7 +88,7 @@ class RetrieverConfig(BaseModel):
         return decorator
 
     @classmethod
-    def get_config_class(cls, retriever_type: RetrieverType) -> Type["RetrieverConfig"]:
+    def get_config_class(cls, retriever_type: RetrieverType) -> type["RetrieverConfig"]:
         """Get the appropriate config class for the retriever type."""
         if retriever_type not in cls._registry:
             logger.warning(
@@ -106,15 +107,14 @@ class RetrieverConfig(BaseModel):
 
 
 def create_retriever_config(
-    retriever_type: Union[RetrieverType, str],
+    retriever_type: RetrieverType | str,
     name: str,
-    description: Optional[str] = None,
-    vector_store_config: Optional[VectorStoreConfig] = None,
-    llm_config: Optional[Any] = None,
+    description: str | None = None,
+    vector_store_config: VectorStoreConfig | None = None,
+    llm_config: Any | None = None,
     **kwargs,
 ) -> RetrieverConfig:
-    """
-    Factory function to create appropriate retriever configuration.
+    """Factory function to create appropriate retriever configuration.
 
     Args:
         retriever_type: Type of retriever to create
@@ -135,14 +135,17 @@ def create_retriever_config(
     config_params = {"name": name, "description": description, **kwargs}
 
     # Add specific parameters based on retriever type
-    if retriever_type in [
-        RetrieverType.VECTOR_STORE,
-        RetrieverType.TIME_WEIGHTED,
-        RetrieverType.MULTI_QUERY,
-        RetrieverType.SELF_QUERY,
-    ]:
-        if vector_store_config:
-            config_params["vector_store_config"] = vector_store_config
+    if (
+        retriever_type
+        in [
+            RetrieverType.VECTOR_STORE,
+            RetrieverType.TIME_WEIGHTED,
+            RetrieverType.MULTI_QUERY,
+            RetrieverType.SELF_QUERY,
+        ]
+        and vector_store_config
+    ):
+        config_params["vector_store_config"] = vector_store_config
 
     if retriever_type in [RetrieverType.MULTI_QUERY, RetrieverType.REPHRASE_QUERY]:
         if llm_config:

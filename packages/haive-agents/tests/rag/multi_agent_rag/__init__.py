@@ -1,1 +1,1 @@
-"""Tests for Multi-Agent RAG System"""
+"""Tests for Multi-Agent RAG System."""

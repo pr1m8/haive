@@ -1,6 +1,6 @@
 """OpenAI embedding configuration."""
 
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import Field, validator
 
@@ -61,15 +61,13 @@ class OpenAIEmbeddingConfig(BaseEmbeddingConfig):
     max_retries: int = Field(
         default=3, description="Maximum number of retries for API calls"
     )
-    request_timeout: Optional[float] = Field(
+    request_timeout: float | None = Field(
         default=None, description="Timeout for API requests in seconds"
     )
-    base_url: Optional[str] = Field(
+    base_url: str | None = Field(
         default=None, description="Base URL for OpenAI API (for custom endpoints)"
     )
-    organization: Optional[str] = Field(
-        default=None, description="OpenAI organization ID"
-    )
+    organization: str | None = Field(default=None, description="OpenAI organization ID")
 
     # SecureConfigMixin configuration
     provider: str = Field(
@@ -77,6 +75,7 @@ class OpenAIEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     @validator("model")
+    @classmethod
     def validate_model(cls, v):
         """Validate the OpenAI model name."""
         valid_models = {
@@ -96,6 +95,7 @@ class OpenAIEmbeddingConfig(BaseEmbeddingConfig):
         return v
 
     @validator("dimensions")
+    @classmethod
     def validate_dimensions(cls, v, values):
         """Validate dimensions based on model."""
         if v is None:
@@ -104,9 +104,9 @@ class OpenAIEmbeddingConfig(BaseEmbeddingConfig):
         model = values.get("model")
         if model == "text-embedding-3-large" and v > 3072:
             raise ValueError("text-embedding-3-large maximum dimensions: 3072")
-        elif model == "text-embedding-3-small" and v > 1536:
+        if model == "text-embedding-3-small" and v > 1536:
             raise ValueError("text-embedding-3-small maximum dimensions: 1536")
-        elif model == "text-embedding-ada-002" and v != 1536:
+        if model == "text-embedding-ada-002" and v != 1536:
             raise ValueError("text-embedding-ada-002 dimensions must be 1536")
 
         return v

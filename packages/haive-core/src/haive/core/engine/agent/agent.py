@@ -1,5 +1,4 @@
-"""
-Agent - Base class for all agent implementations in the Haive framework.
+"""Agent - Base class for all agent implementations in the Haive framework.
 
 This module provides the core agent architecture with consistent schema handling,
 execution flows, persistence management, and extensibility through patterns.
@@ -8,25 +7,17 @@ All agent implementations conform to the protocol interfaces for consistent API 
 
 from __future__ import annotations
 
+from abc import ABC, abstractmethod
 import asyncio
+from collections.abc import AsyncGenerator, Generator
+from datetime import datetime
 import json
 import logging
 import os
-import time
-import uuid
-from abc import ABC, abstractmethod
-from collections.abc import AsyncGenerator, Generator
-from datetime import datetime
 from pathlib import Path
-from typing import (
-    Any,
-    Dict,
-    Generic,
-    Optional,
-    Type,
-    TypeVar,
-    Union,
-)
+import time
+from typing import Any, Dict, Generic, Optional, Type, TypeVar, Union
+import uuid
 
 from langchain_core.messages import HumanMessage
 from langchain_core.runnables import RunnableConfig
@@ -51,6 +42,7 @@ from haive.core.persistence.handlers import (
 from haive.core.persistence.types import CheckpointerMode
 from haive.core.schema.schema_composer import SchemaComposer
 from haive.core.utils.pydantic_utils import ensure_json_serializable
+
 
 # Rich UI imports - handle gracefully if not available
 try:
@@ -79,13 +71,13 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 # Agent registry maps config classes to agent classes
-AGENT_REGISTRY: Dict[Type[AgentConfig], Type[Agent]] = {}
+AGENT_REGISTRY: dict[type[AgentConfig], type[Agent]] = {}
 
 
-def register_agent(config_class: Type[AgentConfig]):
+def register_agent(config_class: type[AgentConfig]):
     """Register an agent class with its configuration class."""
 
-    def decorator(agent_class: Type[Agent]):
+    def decorator(agent_class: type[Agent]):
         AGENT_REGISTRY[config_class] = agent_class
         # Set reference to config class on agent class
         agent_class.config_class = config_class
@@ -100,12 +92,11 @@ def register_agent(config_class: Type[AgentConfig]):
 TConfig = TypeVar("TConfig", bound="AgentConfig")  # Required
 TIn = TypeVar("TIn")  # Defaults to Any in practice
 TOut = TypeVar("TOut")  # Defaults to Any in practice
-TState = TypeVar("TState", bound=Optional[BaseModel])  # Defaults to None in practice
+TState = TypeVar("TState", bound=BaseModel | None)  # Defaults to None in practice
 
 
 class Agent(Generic[TConfig], ABC):
-    """
-    Base agent architecture class for all agent implementations.
+    """Base agent architecture class for all agent implementations.
 
     Type Parameters:
         TConfig: Type of agent configuration
@@ -117,8 +108,7 @@ class Agent(Generic[TConfig], ABC):
     def __init__(
         self, config: TConfig, verbose: bool = False, rich_logging: bool = True
     ):
-        """
-        Initialize the agent with its configuration.
+        """Initialize the agent with its configuration.
 
         Args:
             config: Agent configuration
@@ -412,11 +402,10 @@ class Agent(Generic[TConfig], ABC):
         self.debug_dir.mkdir(exist_ok=True)
         self.debug_log_path = self.debug_dir / f"{self.config.name}_{timestamp}.log"
 
-        if self.rich_logging and RICH_AVAILABLE:
-            if hasattr(self, "console"):
-                self.console.print(
-                    f"[blue]Created output directories in:[/blue] {self.config.output_dir}"
-                )
+        if self.rich_logging and RICH_AVAILABLE and hasattr(self, "console"):
+            self.console.print(
+                f"[blue]Created output directories in:[/blue] {self.config.output_dir}"
+            )
 
         logger.debug(f"Output directories set up for {self.config.name}")
 
@@ -809,10 +798,7 @@ class Agent(Generic[TConfig], ABC):
                 schema_table.add_row("Input", field_name, type_str, default_str)
 
         # Add output schema if different from state
-        if (
-            self.output_schema != self.state_schema
-            and self.output_schema != self.input_schema
-        ):
+        if self.output_schema not in (self.state_schema, self.input_schema):
             output_fields = extract_field_info(self.output_schema)
             for field_name, info in output_fields.items():
                 type_str = str(info["type"]).replace("typing.", "")
@@ -1077,7 +1063,7 @@ class Agent(Generic[TConfig], ABC):
                     self.console.print(
                         "[yellow]Falling back to synchronous checkpointer[/yellow]"
                     )
-                    logger.error(f"Failed to create async checkpointer: {e}")
+                    logger.exception(f"Failed to create async checkpointer: {e}")
                     logger.warning("Falling back to synchronous checkpointer")
                     self._async_checkpointer = None
 
@@ -1137,7 +1123,7 @@ class Agent(Generic[TConfig], ABC):
                     f"Async checkpointer created successfully for {self.config.name}"
                 )
             except Exception as e:
-                logger.error(f"Failed to create async checkpointer: {e}")
+                logger.exception(f"Failed to create async checkpointer: {e}")
                 logger.warning("Falling back to synchronous checkpointer")
 
             # Add store if configured
@@ -1149,8 +1135,7 @@ class Agent(Generic[TConfig], ABC):
                 logger.debug("BaseStore added to agent")
 
     async def _get_async_checkpointer(self):
-        """
-        Get async checkpointer instance, creating it if necessary.
+        """Get async checkpointer instance, creating it if necessary.
 
         Returns:
             Async checkpointer instance
@@ -1189,7 +1174,7 @@ class Agent(Generic[TConfig], ABC):
 
                     return self._async_checkpointer
         except Exception as e:
-            logger.error(
+            logger.exception(
                 f"Error creating async checkpointer from persistence config: {e}"
             )
 
@@ -1213,7 +1198,7 @@ class Agent(Generic[TConfig], ABC):
 
             return self._async_checkpointer
         except Exception as e:
-            logger.error(f"Error setting up async checkpointer: {e}")
+            logger.exception(f"Error setting up async checkpointer: {e}")
             raise RuntimeError(f"Failed to create async checkpointer: {e}")
 
     async def _cleanup_async_resources(self):
@@ -1225,7 +1210,9 @@ class Agent(Generic[TConfig], ABC):
                 await cm.__aexit__(None, None, None)
                 logger.debug(f"Closed async context manager {context_id}")
             except Exception as e:
-                logger.error(f"Error closing async context manager {context_id}: {e}")
+                logger.exception(
+                    f"Error closing async context manager {context_id}: {e}"
+                )
 
             # Remove from active managers
             del self._async_context_managers[context_id]
@@ -1264,7 +1251,7 @@ class Agent(Generic[TConfig], ABC):
             # Note: We keep the sync checkpointer as fallback, but async operations
             # will use the _async_checkpointer when available
         except Exception as e:
-            logger.error(f"Error completing async setup: {e}")
+            logger.exception(f"Error completing async setup: {e}")
             # Don't raise - keep the sync checkpointer as fallback
             self._async_setup_pending = False
             logger.warning(
@@ -1467,19 +1454,17 @@ class Agent(Generic[TConfig], ABC):
                     self.apply_pattern(pattern_name, **pattern_params)
                     self.config.mark_pattern_applied(pattern_name)
                 except Exception as e:
-                    logger.error(f"Error applying pattern '{pattern_name}': {e}")
+                    logger.exception(f"Error applying pattern '{pattern_name}': {e}")
 
         logger.debug("Finished applying patterns from configuration")
 
     @abstractmethod
     def setup_workflow(self) -> None:
-        """
-        Set up the workflow graph for this agent.
+        """Set up the workflow graph for this agent.
 
         This method must be implemented by concrete agent classes to define
         the agent's workflow structure.
         """
-        pass
 
     @property
     def app(self) -> Any:
@@ -1554,7 +1539,7 @@ class Agent(Generic[TConfig], ABC):
                     self.checkpointer.setup()
                     logger.debug("Checkpointer tables set up successfully")
                 except Exception as e:
-                    logger.error(f"Error setting up checkpointer tables: {e}")
+                    logger.exception(f"Error setting up checkpointer tables: {e}")
 
             # Compile the graph
             logger.debug("Compiling graph with checkpointer")
@@ -1564,9 +1549,8 @@ class Agent(Generic[TConfig], ABC):
 
         logger.info(f"Graph compiled successfully for {self.config.name}")
 
-    def visualize_graph(self, output_path: Optional[str] = None) -> None:
-        """
-        Generate and save a visualization of the agent's graph.
+    def visualize_graph(self, output_path: str | None = None) -> None:
+        """Generate and save a visualization of the agent's graph.
 
         Args:
             output_path: Optional custom path for visualization output
@@ -1613,11 +1597,10 @@ class Agent(Generic[TConfig], ABC):
                 logger.warning("Unable to visualize graph: No compiled graph available")
                 logger.warning("Compile the graph first with compile() method")
         except Exception as e:
-            logger.error(f"Error visualizing graph: {e}")
+            logger.exception(f"Error visualizing graph: {e}")
 
     def apply_pattern(self, pattern_name: str, **kwargs) -> None:
-        """
-        Apply a graph pattern to the agent's workflow.
+        """Apply a graph pattern to the agent's workflow.
 
         Args:
             pattern_name: Name of the pattern to apply
@@ -1657,12 +1640,11 @@ class Agent(Generic[TConfig], ABC):
                 self.config.mark_pattern_applied(pattern_name)
 
         except Exception as e:
-            logger.error(f"Error applying pattern '{pattern_name}': {e}")
+            logger.exception(f"Error applying pattern '{pattern_name}': {e}")
             raise RuntimeError(f"Failed to apply pattern '{pattern_name}': {e}") from e
 
     def _prepare_input(self, input_data: Any) -> Any:
-        """
-        Prepare input for the agent based on the input schema.
+        """Prepare input for the agent based on the input schema.
 
         Args:
             input_data: Input in various formats
@@ -1853,12 +1835,11 @@ class Agent(Generic[TConfig], ABC):
 
     def _prepare_runnable_config(
         self,
-        thread_id: Optional[str] = None,
-        config: Optional[RunnableConfig] = None,
+        thread_id: str | None = None,
+        config: RunnableConfig | None = None,
         **kwargs,
     ) -> RunnableConfig:
-        """
-        Prepare a runnable config with thread ID and other parameters.
+        """Prepare a runnable config with thread ID and other parameters.
 
         Args:
             thread_id: Optional thread ID for persistence
@@ -1893,12 +1874,10 @@ class Agent(Generic[TConfig], ABC):
                 runtime_config = RunnableConfigManager.merge(base_config, config)
             else:
                 runtime_config = config
+        elif base_config:
+            runtime_config = base_config
         else:
-            # Use base config or create new one
-            if base_config:
-                runtime_config = base_config
-            else:
-                runtime_config = RunnableConfigManager.create()
+            runtime_config = RunnableConfigManager.create()
 
         # Ensure configurable section exists
         if "configurable" not in runtime_config:
@@ -1966,8 +1945,7 @@ class Agent(Generic[TConfig], ABC):
         return runtime_config
 
     def _process_output(self, output_data: Any) -> Any:
-        """
-        Process and validate output data.
+        """Process and validate output data.
 
         Args:
             output_data: Raw output data from the graph
@@ -2013,13 +1991,12 @@ class Agent(Generic[TConfig], ABC):
     def run(
         self,
         input_data: TIn,
-        thread_id: Optional[str] = None,
-        debug: bool = None,
-        config: Optional[RunnableConfig] = None,
+        thread_id: str | None = None,
+        debug: bool | None = None,
+        config: RunnableConfig | None = None,
         **kwargs,
     ) -> TOut:
-        """
-        Synchronously run the agent with input data.
+        """Synchronously run the agent with input data.
 
         Args:
             input_data: Input data for the agent
@@ -2125,11 +2102,6 @@ class Agent(Generic[TConfig], ABC):
             logger.debug(processed_input)
             logger.debug(runtime_config)
             logger.debug(input_data)
-            print("--------------------------------")
-            print(processed_input)
-            print(runtime_config)
-            print(input_data)
-            print("--------------------------------")
             logger.debug(f"Attempting to invoke app with input data: {processed_input}")
             processed_input = (
                 processed_input.model_dump()
@@ -2138,7 +2110,6 @@ class Agent(Generic[TConfig], ABC):
             )
             result = self.app.invoke(processed_input, runtime_config, debug=debug)
             logger.debug("Agent execution completed successfully")
-            print(result)
             # Process the result if needed
             output = self._process_output(result)
 
@@ -2187,12 +2158,12 @@ class Agent(Generic[TConfig], ABC):
             return output
 
         except Exception as e:
-            logger.error(f"Error during agent execution: {e}")
+            logger.exception(f"Error during agent execution: {e}")
 
             if self.rich_logging and RICH_AVAILABLE and hasattr(self, "console"):
                 self.console.print(
                     Panel.fit(
-                        f"[bold red]Execution Error:[/bold red] {str(e)}",
+                        f"[bold red]Execution Error:[/bold red] {e!s}",
                         border_style="red",
                         title="Agent Execution Failed",
                     )
@@ -2203,13 +2174,12 @@ class Agent(Generic[TConfig], ABC):
     async def arun(
         self,
         input_data: TIn,
-        thread_id: Optional[str] = None,
-        config: Optional[RunnableConfig] = None,
-        debug: bool = None,
+        thread_id: str | None = None,
+        config: RunnableConfig | None = None,
+        debug: bool | None = None,
         **kwargs,
     ) -> TOut:
-        """
-        Asynchronously run the agent with input data.
+        """Asynchronously run the agent with input data.
 
         Args:
             input_data: Input data for the agent
@@ -2363,7 +2333,7 @@ class Agent(Generic[TConfig], ABC):
                     return output
                 except Exception as e:
                     # Log error and re-raise
-                    logger.error(
+                    logger.exception(
                         f"Error in async invocation using async checkpointer: {e}"
                     )
                     raise
@@ -2433,12 +2403,12 @@ class Agent(Generic[TConfig], ABC):
                 return output
 
         except Exception as e:
-            logger.error(f"Error during async agent execution: {e}")
+            logger.exception(f"Error during async agent execution: {e}")
 
             if self.rich_logging and RICH_AVAILABLE and hasattr(self, "console"):
                 self.console.print(
                     Panel.fit(
-                        f"[bold red]Async Execution Error:[/bold red] {str(e)}",
+                        f"[bold red]Async Execution Error:[/bold red] {e!s}",
                         border_style="red",
                         title="Agent Execution Failed",
                     )
@@ -2476,19 +2446,18 @@ class Agent(Generic[TConfig], ABC):
                 try:
                     await self._cleanup_async_resources()
                 except Exception as e:
-                    logger.error(f"Error cleaning up async resources: {e}")
+                    logger.exception(f"Error cleaning up async resources: {e}")
 
     def stream(
         self,
         input_data: TIn,
-        thread_id: Optional[str] = None,
+        thread_id: str | None = None,
         stream_mode: str = "values",
-        config: Optional[RunnableConfig] = None,
-        debug: bool = None,
+        config: RunnableConfig | None = None,
+        debug: bool | None = None,
         **kwargs,
-    ) -> Generator[Dict[str, Any], None, None]:
-        """
-        Stream agent execution with input data.
+    ) -> Generator[dict[str, Any], None, None]:
+        """Stream agent execution with input data.
 
         Args:
             input_data: Input data for the agent
@@ -2640,12 +2609,12 @@ class Agent(Generic[TConfig], ABC):
                 )
 
         except Exception as e:
-            logger.error(f"Error during streaming execution: {e}")
+            logger.exception(f"Error during streaming execution: {e}")
 
             if self.rich_logging and RICH_AVAILABLE and hasattr(self, "console"):
                 self.console.print(
                     Panel.fit(
-                        f"[bold red]Streaming Error:[/bold red] {str(e)}",
+                        f"[bold red]Streaming Error:[/bold red] {e!s}",
                         border_style="red",
                         title="Agent Streaming Failed",
                     )
@@ -2653,9 +2622,8 @@ class Agent(Generic[TConfig], ABC):
 
             raise
 
-    def _process_stream_chunk(self, chunk: Any, stream_mode: str) -> Dict[str, Any]:
-        """
-        Process a stream chunk based on stream mode.
+    def _process_stream_chunk(self, chunk: Any, stream_mode: str) -> dict[str, Any]:
+        """Process a stream chunk based on stream mode.
 
         Args:
             chunk: The raw stream chunk
@@ -2668,16 +2636,16 @@ class Agent(Generic[TConfig], ABC):
         if stream_mode == "custom":
             # Return custom chunks as-is
             return chunk
-        elif stream_mode == "values":
+        if stream_mode == "values":
             # Return the entire state values
             if isinstance(chunk, dict) and "values" in chunk:
                 return chunk["values"]
             return chunk
-        elif stream_mode == "updates":
+        if stream_mode == "updates":
             # Return just the updates
             if isinstance(chunk, dict) and "updates" in chunk:
                 return chunk["updates"]
-            elif isinstance(chunk, dict) and "node" in chunk:
+            if isinstance(chunk, dict) and "node" in chunk:
                 return chunk
             return chunk
         elif stream_mode == "messages":
@@ -2685,9 +2653,9 @@ class Agent(Generic[TConfig], ABC):
             if isinstance(chunk, dict):
                 if "values" in chunk and "messages" in chunk["values"]:
                     return {"messages": chunk["values"]["messages"]}
-                elif "updates" in chunk and "messages" in chunk["updates"]:
+                if "updates" in chunk and "messages" in chunk["updates"]:
                     return {"messages": chunk["updates"]["messages"]}
-                elif "messages" in chunk:
+                if "messages" in chunk:
                     return {"messages": chunk["messages"]}
 
             # Default fallback
@@ -2699,14 +2667,13 @@ class Agent(Generic[TConfig], ABC):
     async def astream(
         self,
         input_data: TIn,
-        thread_id: Optional[str] = None,
+        thread_id: str | None = None,
         stream_mode: str = "values",
-        config: Optional[RunnableConfig] = None,
-        debug: bool = None,
+        config: RunnableConfig | None = None,
+        debug: bool | None = None,
         **kwargs,
-    ) -> AsyncGenerator[Dict[str, Any], None]:
-        """
-        Asynchronously stream agent execution with input data.
+    ) -> AsyncGenerator[dict[str, Any], None]:
+        """Asynchronously stream agent execution with input data.
 
         Args:
             input_data: Input data for the agent
@@ -2961,12 +2928,12 @@ class Agent(Generic[TConfig], ABC):
                     )
 
         except Exception as e:
-            logger.error(f"Error during async streaming execution: {e}")
+            logger.exception(f"Error during async streaming execution: {e}")
 
             if self.rich_logging and RICH_AVAILABLE and hasattr(self, "console"):
                 self.console.print(
                     Panel.fit(
-                        f"[bold red]Async Streaming Error:[/bold red] {str(e)}",
+                        f"[bold red]Async Streaming Error:[/bold red] {e!s}",
                         border_style="red",
                         title="Agent Async Streaming Failed",
                     )
@@ -2996,11 +2963,8 @@ class Agent(Generic[TConfig], ABC):
                     )
                 )
 
-    def save_state_history(
-        self, runnable_config: Optional[RunnableConfig] = None
-    ) -> bool:
-        """
-        Save the current agent state to a JSON file.
+    def save_state_history(self, runnable_config: RunnableConfig | None = None) -> bool:
+        """Save the current agent state to a JSON file.
 
         Args:
             runnable_config: Optional runnable configuration
@@ -3063,14 +3027,13 @@ class Agent(Generic[TConfig], ABC):
                     f"[bold red]Error saving state history: {e}[/bold red]"
                 )
             else:
-                logger.error(f"Error saving state history: {e}")
+                logger.exception(f"Error saving state history: {e}")
             return False
 
     async def save_state_history_async(
-        self, runnable_config: Optional[RunnableConfig] = None
+        self, runnable_config: RunnableConfig | None = None
     ) -> bool:
-        """
-        Asynchronously save the current agent state to a JSON file.
+        """Asynchronously save the current agent state to a JSON file.
 
         Args:
             runnable_config: Optional runnable configuration
@@ -3094,14 +3057,13 @@ class Agent(Generic[TConfig], ABC):
 
             return result
         except Exception as e:
-            logger.error(f"Error saving state history asynchronously: {e}")
+            logger.exception(f"Error saving state history asynchronously: {e}")
             return False
 
     def inspect_state(
-        self, thread_id: Optional[str] = None, config: Optional[RunnableConfig] = None
+        self, thread_id: str | None = None, config: RunnableConfig | None = None
     ) -> None:
-        """
-        Inspect the current state of the agent.
+        """Inspect the current state of the agent.
 
         Args:
             thread_id: Optional thread ID for persistence
@@ -3200,15 +3162,14 @@ class Agent(Generic[TConfig], ABC):
                     logger.info(f"State (Type: {type(state).__name__}): {state}")
 
         except Exception as e:
-            logger.error(f"Error inspecting state: {e}")
+            logger.exception(f"Error inspecting state: {e}")
             if self.rich_logging and RICH_AVAILABLE and hasattr(self, "console"):
                 self.console.print(f"[bold red]Error inspecting state: {e}[/bold red]")
 
     async def inspect_state_async(
-        self, thread_id: Optional[str] = None, config: Optional[RunnableConfig] = None
+        self, thread_id: str | None = None, config: RunnableConfig | None = None
     ) -> None:
-        """
-        Asynchronously inspect the current state of the agent.
+        """Asynchronously inspect the current state of the agent.
 
         Args:
             thread_id: Optional thread ID for persistence
@@ -3225,13 +3186,12 @@ class Agent(Generic[TConfig], ABC):
                 None, lambda: self.inspect_state(thread_id, config)
             )
         except Exception as e:
-            logger.error(f"Error in async state inspection: {e}")
+            logger.exception(f"Error in async state inspection: {e}")
 
     def reset_state(
-        self, thread_id: Optional[str] = None, config: Optional[RunnableConfig] = None
+        self, thread_id: str | None = None, config: RunnableConfig | None = None
     ) -> bool:
-        """
-        Reset the agent's state for a thread.
+        """Reset the agent's state for a thread.
 
         Args:
             thread_id: Optional thread ID for persistence
@@ -3304,16 +3264,15 @@ class Agent(Generic[TConfig], ABC):
 
             return True
         except Exception as e:
-            logger.error(f"Error resetting state: {e}")
+            logger.exception(f"Error resetting state: {e}")
             if self.rich_logging and RICH_AVAILABLE and hasattr(self, "console"):
                 self.console.print(f"[bold red]Error resetting state: {e}[/bold red]")
             return False
 
     async def reset_state_async(
-        self, thread_id: Optional[str] = None, config: Optional[RunnableConfig] = None
+        self, thread_id: str | None = None, config: RunnableConfig | None = None
     ) -> bool:
-        """
-        Asynchronously reset the agent's state for a thread.
+        """Asynchronously reset the agent's state for a thread.
 
         Args:
             thread_id: Optional thread ID for persistence
@@ -3370,7 +3329,7 @@ class Agent(Generic[TConfig], ABC):
                 return True
 
             except Exception as e:
-                logger.error(f"Error resetting state asynchronously: {e}")
+                logger.exception(f"Error resetting state asynchronously: {e}")
                 return False
         else:
             # Use thread pool for async operation with sync checkpointer
@@ -3381,14 +3340,13 @@ class Agent(Generic[TConfig], ABC):
                 )
                 return result
             except Exception as e:
-                logger.error(f"Error in async state reset: {e}")
+                logger.exception(f"Error in async state reset: {e}")
                 return False
 
     def load_from_state(
-        self, state_data: Union[Dict[str, Any], str], thread_id: Optional[str] = None
+        self, state_data: dict[str, Any] | str, thread_id: str | None = None
     ) -> bool:
-        """
-        Load agent state from a saved state file or dictionary.
+        """Load agent state from a saved state file or dictionary.
 
         Args:
             state_data: Dictionary or path to JSON file containing state data
@@ -3408,10 +3366,10 @@ class Agent(Generic[TConfig], ABC):
         # Load state from string path if provided
         if isinstance(state_data, str) and os.path.exists(state_data):
             try:
-                with open(state_data, "r") as f:
+                with open(state_data) as f:
                     state_data = json.load(f)
             except Exception as e:
-                logger.error(f"Error loading state file: {e}")
+                logger.exception(f"Error loading state file: {e}")
                 return False
 
         # Ensure state is a dictionary
@@ -3452,24 +3410,22 @@ class Agent(Generic[TConfig], ABC):
                             raise NotImplementedError(
                                 "No checkpoint save mechanism available"
                             )
+                    elif hasattr(self.app, "app"):
+                        # If app is a wrapper
+                        config = runtime_config.copy()
+                        self.app.app.checkpoint_save(thread_id, state_data, config)
+                    elif hasattr(self.app, "checkpoint_save"):
+                        # Direct access
+                        config = runtime_config.copy()
+                        self.app.checkpoint_save(thread_id, state_data, config)
+                    elif hasattr(self.checkpointer, "save"):
+                        # Use checkpointer directly
+                        self.checkpointer.save(thread_id, state_data)
                     else:
-                        # Assume the entire dict is the state
-                        if hasattr(self.app, "app"):
-                            # If app is a wrapper
-                            config = runtime_config.copy()
-                            self.app.app.checkpoint_save(thread_id, state_data, config)
-                        elif hasattr(self.app, "checkpoint_save"):
-                            # Direct access
-                            config = runtime_config.copy()
-                            self.app.checkpoint_save(thread_id, state_data, config)
-                        elif hasattr(self.checkpointer, "save"):
-                            # Use checkpointer directly
-                            self.checkpointer.save(thread_id, state_data)
-                        else:
-                            # Fallback approach
-                            raise NotImplementedError(
-                                "No checkpoint save mechanism available"
-                            )
+                        # Fallback approach
+                        raise NotImplementedError(
+                            "No checkpoint save mechanism available"
+                        )
 
                 self.console.print(
                     f"[bold green]State loaded successfully for thread {thread_id}[/bold green]"
@@ -3503,39 +3459,34 @@ class Agent(Generic[TConfig], ABC):
                         raise NotImplementedError(
                             "No checkpoint save mechanism available"
                         )
+                elif hasattr(self.app, "app"):
+                    # If app is a wrapper
+                    config = runtime_config.copy()
+                    self.app.app.checkpoint_save(thread_id, state_data, config)
+                elif hasattr(self.app, "checkpoint_save"):
+                    # Direct access
+                    config = runtime_config.copy()
+                    self.app.checkpoint_save(thread_id, state_data, config)
+                elif hasattr(self.checkpointer, "save"):
+                    # Use checkpointer directly
+                    self.checkpointer.save(thread_id, state_data)
                 else:
-                    # Assume the entire dict is the state
-                    if hasattr(self.app, "app"):
-                        # If app is a wrapper
-                        config = runtime_config.copy()
-                        self.app.app.checkpoint_save(thread_id, state_data, config)
-                    elif hasattr(self.app, "checkpoint_save"):
-                        # Direct access
-                        config = runtime_config.copy()
-                        self.app.checkpoint_save(thread_id, state_data, config)
-                    elif hasattr(self.checkpointer, "save"):
-                        # Use checkpointer directly
-                        self.checkpointer.save(thread_id, state_data)
-                    else:
-                        # Fallback approach
-                        raise NotImplementedError(
-                            "No checkpoint save mechanism available"
-                        )
+                    # Fallback approach
+                    raise NotImplementedError("No checkpoint save mechanism available")
 
                 logger.info(f"State loaded successfully for thread {thread_id}")
 
             return True
         except Exception as e:
-            logger.error(f"Error loading state: {e}")
+            logger.exception(f"Error loading state: {e}")
             if self.rich_logging and RICH_AVAILABLE and hasattr(self, "console"):
                 self.console.print(f"[bold red]Error loading state: {e}[/bold red]")
             return False
 
     async def load_from_state_async(
-        self, state_data: Union[Dict[str, Any], str], thread_id: Optional[str] = None
+        self, state_data: dict[str, Any] | str, thread_id: str | None = None
     ) -> bool:
-        """
-        Asynchronously load agent state from a saved state file or dictionary.
+        """Asynchronously load agent state from a saved state file or dictionary.
 
         Args:
             state_data: Dictionary or path to JSON file containing state data
@@ -3560,10 +3511,10 @@ class Agent(Generic[TConfig], ABC):
                 # Load state from string path if provided
                 if isinstance(state_data, str) and os.path.exists(state_data):
                     try:
-                        with open(state_data, "r") as f:
+                        with open(state_data) as f:
                             state_data = json.load(f)
                     except Exception as e:
-                        logger.error(f"Error loading state file: {e}")
+                        logger.exception(f"Error loading state file: {e}")
                         return False
 
                 # Ensure state is a dictionary
@@ -3588,22 +3539,20 @@ class Agent(Generic[TConfig], ABC):
                         await asyncio.get_event_loop().run_in_executor(
                             None, lambda: self.load_from_state(state_data, thread_id)
                         )
+                elif hasattr(async_checkpointer, "save"):
+                    # Use checkpointer directly
+                    await async_checkpointer.save(thread_id, state_data)
                 else:
-                    # Assume the entire dict is the state
-                    if hasattr(async_checkpointer, "save"):
-                        # Use checkpointer directly
-                        await async_checkpointer.save(thread_id, state_data)
-                    else:
-                        # Fallback to sync approach in thread
-                        await asyncio.get_event_loop().run_in_executor(
-                            None, lambda: self.load_from_state(state_data, thread_id)
-                        )
+                    # Fallback to sync approach in thread
+                    await asyncio.get_event_loop().run_in_executor(
+                        None, lambda: self.load_from_state(state_data, thread_id)
+                    )
 
                 logger.info(f"State loaded successfully for thread {thread_id} (async)")
                 return True
 
             except Exception as e:
-                logger.error(f"Error loading state asynchronously: {e}")
+                logger.exception(f"Error loading state asynchronously: {e}")
                 return False
         else:
             # Use thread pool for async operation with sync checkpointer
@@ -3614,7 +3563,7 @@ class Agent(Generic[TConfig], ABC):
                 )
                 return result
             except Exception as e:
-                logger.error(f"Error in async state loading: {e}")
+                logger.exception(f"Error in async state loading: {e}")
                 return False
 
     def __del__(self):

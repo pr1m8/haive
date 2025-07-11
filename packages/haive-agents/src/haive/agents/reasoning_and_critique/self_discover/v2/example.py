@@ -1,9 +1,6 @@
 # src/haive/agents/self_discovery/example.py
-"""
-Example usage of the Self-Discovery reasoning system.
-"""
+"""Example usage of the Self-Discovery reasoning system."""
 
-from typing import List
 
 from haive.agents.reasoning_and_critique.self_discover.v2.agent import (
     DEFAULT_REASONING_MODULES,
@@ -16,7 +13,6 @@ from haive.agents.reasoning_and_critique.self_discover.v2.state import (
 
 def run_self_discovery_example():
     """Run the self-discovery agent on example tasks."""
-
     # Example 1: Simple math problem
     task1 = "Lisa has 10 apples. She gives 3 apples to her friend and then buys 5 more apples from the store. How many apples does Lisa have now?"
 
@@ -29,54 +25,37 @@ def run_self_discovery_example():
     reasoning_modules_str = "\n".join(DEFAULT_REASONING_MODULES)
 
     # Run on first task
-    print("=" * 80)
-    print("TASK 1: Apple counting problem")
-    print("=" * 80)
 
     state1 = SelfDiscoveryState(
         task_description=task1, reasoning_modules=reasoning_modules_str
     )
 
-    result1 = self_discovery.invoke(state1)
-    print(f"\nFinal Answer: {result1.answer}")
+    self_discovery.invoke(state1)
 
     # Run on second task
-    print("\n" + "=" * 80)
-    print("TASK 2: SVG shape identification")
-    print("=" * 80)
 
     state2 = SelfDiscoveryState(
         task_description=task2, reasoning_modules=reasoning_modules_str
     )
 
     result2 = self_discovery.invoke(state2)
-    print(f"\nFinal Answer: {result2.answer}")
 
     # Show intermediate results
-    print("\n" + "=" * 80)
-    print("INTERMEDIATE RESULTS FOR TASK 2")
-    print("=" * 80)
 
-    print("\nSelected Modules:")
     if result2.selected_modules:
-        for i, module in enumerate(result2.selected_modules, 1):
-            print(f"{i}. {module}")
+        for _i, _module in enumerate(result2.selected_modules, 1):
+            pass
 
-    print("\nAdapted Modules:")
     if result2.adapted_modules:
-        for module_dict in result2.adapted_modules:
-            print(f"- {module_dict['module']}: {module_dict['adaptation']}")
+        for _module_dict in result2.adapted_modules:
+            pass
 
-    print("\nReasoning Structure:")
     if result2.reasoning_structure:
-        import json
-
-        print(json.dumps(result2.reasoning_structure, indent=2))
+        pass
 
 
-def run_custom_task(task_description: str, custom_modules: List[str] = None):
+def run_custom_task(task_description: str, custom_modules: list[str] | None = None):
     """Run self-discovery on a custom task."""
-
     modules = custom_modules or DEFAULT_REASONING_MODULES
     reasoning_modules_str = "\n".join(modules)
 

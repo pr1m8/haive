@@ -7,7 +7,7 @@
     "description": "Fetch detailed info for a product using its LCBO product ID",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.818184",
+    "timestamp": "2025-07-10T19:45:29.033694",
     "schema": {
       "description": "Input schema for fetching a product by ID from the LCBO API.\n\nArgs:\n    product_id: The unique LCBO product identifier",
       "properties": {
@@ -36,7 +36,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.818184",
+      "timestamp": "2025-07-10T19:45:29.033694",
       "category": "toolkits"
     }
   },

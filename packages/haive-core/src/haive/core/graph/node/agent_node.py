@@ -1,6 +1,5 @@
 # haive/agents/multi/agent_node.py
-"""
-Agent-specific node configurations for multi-agent systems.
+"""Agent-specific node configurations for multi-agent systems.
 
 This module provides node configurations that properly handle:
 - Agent state isolation and merging
@@ -12,21 +11,19 @@ import logging
 from typing import Any, Dict, List, Literal, Optional, Type, Union
 
 from haive.agents.base.agent import Agent
-from langchain_core.messages import BaseMessage, ToolMessage
-from langchain_core.runnables import RunnableConfig
-from pydantic import BaseModel, Field
-
 from haive.core.engine.base import EngineType
 from haive.core.graph.node.base_config import NodeConfig
 from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.node.types import NodeType
+from langchain_core.messages import BaseMessage, ToolMessage
+from langchain_core.runnables import RunnableConfig
+from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
 
 
 class AgentNodeConfig(EngineNodeConfig):
-    """
-    Node configuration specifically for agents in multi-agent systems.
+    """Node configuration specifically for agents in multi-agent systems.
 
     This extends EngineNodeConfig to:
     - Properly handle agent as the engine
@@ -39,7 +36,7 @@ class AgentNodeConfig(EngineNodeConfig):
     engine: Agent = Field(description="The agent to execute")
 
     # Agent-specific fields
-    private_state_schema: Optional[Type[BaseModel]] = Field(
+    private_state_schema: type[BaseModel] | None = Field(
         default=None, description="Private state schema for this agent"
     )
 
@@ -72,11 +69,10 @@ class AgentNodeConfig(EngineNodeConfig):
 
     def __call__(
         self,
-        state: Union[Dict[str, Any], BaseModel],
-        config: Optional[RunnableConfig] = None,
-    ) -> Dict[str, Any]:
-        """
-        Execute the agent with proper state management.
+        state: dict[str, Any] | BaseModel,
+        config: RunnableConfig | None = None,
+    ) -> dict[str, Any]:
+        """Execute the agent with proper state management.
 
         This method:
         1. Updates meta state to track agent start
@@ -93,7 +89,7 @@ class AgentNodeConfig(EngineNodeConfig):
         agent_id = getattr(agent, "id", agent.name)
         agent_name = getattr(agent, "name", agent.__class__.__name__)
 
-        logger.info(f"Step 1: Agent Details")
+        logger.info("Step 1: Agent Details")
         logger.info(f"  Agent Name: {agent_name}")
         logger.info(f"  Agent ID: {agent_id}")
         logger.info(f"  Agent Type: {type(agent).__name__}")
@@ -102,7 +98,7 @@ class AgentNodeConfig(EngineNodeConfig):
         )
 
         # Log incoming state
-        logger.info(f"Step 2: Incoming State Analysis")
+        logger.info("Step 2: Incoming State Analysis")
         logger.info(f"  State type: {type(state).__name__}")
 
         # Handle both dict and Pydantic model states
@@ -111,7 +107,7 @@ class AgentNodeConfig(EngineNodeConfig):
             state_dict = state
         else:
             # It's a Pydantic model, extract actual messages
-            logger.info(f"  State is Pydantic model, extracting messages")
+            logger.info("  State is Pydantic model, extracting messages")
             state_dict = state.model_dump()
 
             # IMPORTANT: For messages, keep the actual BaseMessage objects, don't serialize them
@@ -124,7 +120,7 @@ class AgentNodeConfig(EngineNodeConfig):
                     # MessageList with root attribute
                     actual_messages = original_messages.root
                     logger.info(f"  Extracted from .root: {type(actual_messages)}")
-                elif isinstance(original_messages, (list, tuple)):
+                elif isinstance(original_messages, list | tuple):
                     # Direct list/tuple of messages
                     actual_messages = list(original_messages)
                     logger.info(f"  Direct list/tuple: {type(actual_messages)}")
@@ -140,7 +136,7 @@ class AgentNodeConfig(EngineNodeConfig):
                         actual_messages = []
 
                 # Check what we actually got
-                logger.info(f"FINAL MESSAGE TYPES:")
+                logger.info("FINAL MESSAGE TYPES:")
                 for i, msg in enumerate(actual_messages):
                     logger.info(
                         f"  Message {i}: {type(msg)} (is BaseMessage: {isinstance(msg, BaseMessage)})"
@@ -152,7 +148,7 @@ class AgentNodeConfig(EngineNodeConfig):
                                 f"    Dict has tool_call_id: {msg['tool_call_id']}"
                             )
                         else:
-                            logger.warning(f"    Dict missing tool_call_id!")
+                            logger.warning("    Dict missing tool_call_id!")
                     elif hasattr(msg, "tool_call_id"):
                         logger.info(
                             f"    BaseMessage tool_call_id: {getattr(msg, 'tool_call_id', 'None')}"
@@ -198,7 +194,7 @@ class AgentNodeConfig(EngineNodeConfig):
 
         try:
             # 2. Prepare agent input using agent's own state schema
-            logger.info(f"Step 3: Preparing Agent Input with Agent's Own State Schema")
+            logger.info("Step 3: Preparing Agent Input with Agent's Own State Schema")
 
             # Use agent's own state schema instead of multi-agent composed schema
             if hasattr(agent, "state_schema") and agent.state_schema:
@@ -210,7 +206,7 @@ class AgentNodeConfig(EngineNodeConfig):
                 agent_state_fields = {}
 
                 # Extract fields that the agent's state schema expects
-                for field_name, field_info in agent.state_schema.model_fields.items():
+                for field_name, _field_info in agent.state_schema.model_fields.items():
                     if field_name in state:
                         agent_state_fields[field_name] = state[field_name]
                         logger.debug(
@@ -223,7 +219,7 @@ class AgentNodeConfig(EngineNodeConfig):
                     and "engines" not in agent_state_fields
                 ):
                     # Use the engines from the parent state if available
-                    if "engines" in state and state["engines"]:
+                    if state.get("engines"):
                         agent_state_fields["engines"] = state["engines"]
                         logger.debug(
                             f"    Using engines from parent state: {list(state['engines'].keys())}"
@@ -237,7 +233,7 @@ class AgentNodeConfig(EngineNodeConfig):
                     else:
                         # Empty dict as last resort
                         agent_state_fields["engines"] = {}
-                        logger.warning(f"    No engines found for agent state")
+                        logger.warning("    No engines found for agent state")
 
                 # Create instance of agent's own state schema
                 try:
@@ -249,14 +245,14 @@ class AgentNodeConfig(EngineNodeConfig):
                     # IMPORTANT: Do NOT override engines with actual engine objects
                     # Keep the serialized version from state to avoid msgpack errors
                     # The engines in agent_input are already properly serialized
-                    if "engines" in agent_input and agent_input["engines"]:
+                    if agent_input.get("engines"):
                         logger.info(
                             f"    Using serialized engines from state: {list(agent_input['engines'].keys())}"
                         )
 
                     # IMPORTANT: Also serialize tools to avoid msgpack errors
                     # Tools often contain Pydantic classes in args_schema that can't be serialized
-                    if "tools" in agent_input and agent_input["tools"]:
+                    if agent_input.get("tools"):
                         serialized_tools = []
                         for tool in agent_input["tools"]:
                             if tool is not None:
@@ -267,10 +263,7 @@ class AgentNodeConfig(EngineNodeConfig):
                                             mode="json", exclude_none=True
                                         )
                                         # Clean up args_schema - it's usually a Pydantic class
-                                        if (
-                                            "args_schema" in tool_dict
-                                            and tool_dict["args_schema"]
-                                        ):
+                                        if tool_dict.get("args_schema"):
                                             if hasattr(
                                                 tool_dict["args_schema"], "__name__"
                                             ):
@@ -311,17 +304,17 @@ class AgentNodeConfig(EngineNodeConfig):
                         )
 
                     logger.info(
-                        f"  Created agent-specific state with agent's own tools/schemas"
+                        "  Created agent-specific state with agent's own tools/schemas"
                     )
 
                 except Exception as e:
                     logger.warning(f"  Could not create agent-specific state: {e}")
                     logger.warning(
-                        f"  Falling back to prepared input from multi-agent state"
+                        "  Falling back to prepared input from multi-agent state"
                     )
                     agent_input = self._prepare_agent_input(state, agent)
             else:
-                logger.info(f"  Agent has no state_schema, using prepared input")
+                logger.info("  Agent has no state_schema, using prepared input")
                 agent_input = self._prepare_agent_input(state, agent)
 
             logger.info(f"  Final agent input keys: {list(agent_input.keys())}")
@@ -355,7 +348,7 @@ class AgentNodeConfig(EngineNodeConfig):
                     logger.info(f"  {key}: {type(value).__name__} = {value_str}")
 
             # 3. Clean agent's engine tools before execution to prevent contamination
-            logger.info(f"Step 4: Cleaning Agent Tools (preventing contamination)")
+            logger.info("Step 4: Cleaning Agent Tools (preventing contamination)")
             original_tools = None
             original_tool_routes = None
 
@@ -423,7 +416,7 @@ class AgentNodeConfig(EngineNodeConfig):
                     logger.info(f"  Cleaned routes: {list(clean_routes.keys())}")
 
             # 4. Execute agent with clean tools
-            logger.info(f"Step 5: Executing Agent")
+            logger.info("Step 5: Executing Agent")
             logger.info(
                 f"  Method: {'compiled graph' if hasattr(agent, '_app') and agent._app else 'invoke method'}"
             )
@@ -432,11 +425,11 @@ class AgentNodeConfig(EngineNodeConfig):
                 # Check if agent has compiled graph
                 if hasattr(agent, "_app") and agent._app:
                     # Use compiled graph
-                    logger.info(f"  Using agent's compiled graph (_app)")
+                    logger.info("  Using agent's compiled graph (_app)")
                     result = agent._app.invoke(agent_input, config)
                 else:
                     # Use agent's invoke method
-                    logger.info(f"  Using agent's invoke method")
+                    logger.info("  Using agent's invoke method")
                     logger.info(
                         f"  About to invoke agent with input type: {type(agent_input)}"
                     )
@@ -463,9 +456,9 @@ class AgentNodeConfig(EngineNodeConfig):
                         agent.engine, "tool_routes"
                     ):
                         agent.engine.tool_routes = original_tool_routes
-                    logger.debug(f"  Restored original tools after execution")
+                    logger.debug("  Restored original tools after execution")
 
-            logger.info(f"Step 5: Agent Result Analysis")
+            logger.info("Step 5: Agent Result Analysis")
             logger.info(f"  Result type: {type(result).__name__}")
             if isinstance(result, dict):
                 logger.info(f"  Result keys: {list(result.keys())}")
@@ -484,7 +477,7 @@ class AgentNodeConfig(EngineNodeConfig):
                         logger.info(f"  {key}: {type(value).__name__}")
 
             # 4. Process agent output
-            logger.info(f"Step 6: Processing Agent Output")
+            logger.info("Step 6: Processing Agent Output")
             state_update = self._process_agent_output(result, state, agent)
 
             logger.info(f"  State update keys: {list(state_update.keys())}")
@@ -499,11 +492,11 @@ class AgentNodeConfig(EngineNodeConfig):
             return state_update
 
         except Exception as e:
-            logger.error(f"❌ Error executing agent {agent_name}: {e}")
-            logger.error(f"Error type: {type(e).__name__}")
+            logger.exception(f"❌ Error executing agent {agent_name}: {e}")
+            logger.exception(f"Error type: {type(e).__name__}")
             import traceback
 
-            logger.error(f"Traceback:\n{traceback.format_exc()}")
+            logger.exception(f"Traceback:\n{traceback.format_exc()}")
 
             # Update meta state - agent error
             if self.update_meta_state and "meta_state" in state:
@@ -514,15 +507,14 @@ class AgentNodeConfig(EngineNodeConfig):
             raise
 
     def _prepare_agent_input(
-        self, state: Dict[str, Any], agent: Agent
-    ) -> Dict[str, Any]:
-        """
-        Prepare input for agent execution.
+        self, state: dict[str, Any], agent: Agent
+    ) -> dict[str, Any]:
+        """Prepare input for agent execution.
 
         If agent has a private state schema, extract only relevant fields.
         Otherwise, pass appropriate fields based on agent's input schema.
         """
-        logger.debug(f"=== _prepare_agent_input called ===")
+        logger.debug("=== _prepare_agent_input called ===")
         logger.debug(f"  Agent: {agent.name}")
         logger.debug(f"  Private state schema: {self.private_state_schema}")
         logger.debug(f"  Extract private state: {self.extract_private_state}")
@@ -549,7 +541,7 @@ class AgentNodeConfig(EngineNodeConfig):
 
         # Otherwise, use agent's input schema or heuristics
         if hasattr(agent, "input_schema") and agent.input_schema:
-            logger.debug(f"Using agent's input_schema")
+            logger.debug("Using agent's input_schema")
             logger.debug(
                 f"  Input schema fields: {list(agent.input_schema.model_fields.keys())}"
             )
@@ -593,10 +585,9 @@ class AgentNodeConfig(EngineNodeConfig):
         return default_input if default_input else state
 
     def _process_agent_output(
-        self, result: Any, state: Dict[str, Any], agent: Agent
-    ) -> Dict[str, Any]:
-        """
-        Process agent output and merge with global state.
+        self, result: Any, state: dict[str, Any], agent: Agent
+    ) -> dict[str, Any]:
+        """Process agent output and merge with global state.
 
         Handles various output formats and ensures proper state updates.
         """
@@ -630,7 +621,7 @@ class AgentNodeConfig(EngineNodeConfig):
                 # Keep the actual BaseMessage objects instead of serialized dicts
                 state_update["messages"] = result.messages
                 logger.info(
-                    f"STATE UPDATE: Setting messages to actual BaseMessage objects"
+                    "STATE UPDATE: Setting messages to actual BaseMessage objects"
                 )
                 for i, msg in enumerate(result.messages):
                     if hasattr(msg, "tool_call_id"):
@@ -680,8 +671,7 @@ class AgentNodeConfig(EngineNodeConfig):
 
 
 class CoordinatorNodeConfig(NodeConfig):
-    """
-    Coordinator node for parallel agent execution.
+    """Coordinator node for parallel agent execution.
 
     Handles fan-out and aggregation of parallel agent execution.
     """
@@ -690,15 +680,14 @@ class CoordinatorNodeConfig(NodeConfig):
         default=NodeType.CALLABLE, description="Coordinator is a callable node"
     )
 
-    agents: List[Agent] = Field(description="Agents to coordinate")
+    agents: list[Agent] = Field(description="Agents to coordinate")
 
     mode: Literal["fanout", "aggregate"] = Field(description="Coordination mode")
 
     def __call__(
-        self, state: Dict[str, Any], config: Optional[RunnableConfig] = None
-    ) -> Union[Dict[str, Any], List[Dict[str, Any]]]:
-        """
-        Execute coordination logic.
+        self, state: dict[str, Any], config: RunnableConfig | None = None
+    ) -> dict[str, Any] | list[dict[str, Any]]:
+        """Execute coordination logic.
 
         For fanout: Returns list of states for each agent
         For aggregate: Combines results from all agents
@@ -717,7 +706,7 @@ class CoordinatorNodeConfig(NodeConfig):
             # In the future, we can use Send commands with proper annotations
             return state
 
-        elif self.mode == "aggregate":
+        if self.mode == "aggregate":
             # Aggregate results from parallel execution
             logger.info("Aggregating results from parallel agents")
 
@@ -733,16 +722,14 @@ class CoordinatorNodeConfig(NodeConfig):
 
             return state
 
-        else:
-            raise ValueError(f"Unknown coordination mode: {self.mode}")
+        raise ValueError(f"Unknown coordination mode: {self.mode}")
 
 
 # Update engine_node.py to route agents to AgentNodeConfig
 def create_node_for_engine(
-    engine: Union[Agent, Any], name: str, **kwargs
-) -> Union[AgentNodeConfig, EngineNodeConfig]:
-    """
-    Factory function to create appropriate node config for an engine/agent.
+    engine: Agent | Any, name: str, **kwargs
+) -> AgentNodeConfig | EngineNodeConfig:
+    """Factory function to create appropriate node config for an engine/agent.
 
     Routes agents to AgentNodeConfig, others to EngineNodeConfig.
     """
@@ -751,5 +738,4 @@ def create_node_for_engine(
         hasattr(engine, "engine_type") and engine.engine_type == EngineType.AGENT
     ):
         return AgentNodeConfig(name=name, engine=engine, **kwargs)
-    else:
-        return EngineNodeConfig(name=name, engine=engine, **kwargs)
+    return EngineNodeConfig(name=name, engine=engine, **kwargs)

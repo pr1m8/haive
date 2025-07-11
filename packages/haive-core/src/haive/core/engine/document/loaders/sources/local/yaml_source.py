@@ -6,9 +6,7 @@ from haive.core.engine.loaders.sources.types import SourceType
 
 
 class YamlSource(FileSource):
-    """
-    A source that is a Yaml file.
-    """
+    """A source that is a Yaml file."""
 
     source_type: SourceType = Field(default=SourceType.YAML)
     file_type: LocalSourceFileType = Field(default=LocalSourceFileType.YAML)

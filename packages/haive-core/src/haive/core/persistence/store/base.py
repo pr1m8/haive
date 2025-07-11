@@ -8,14 +8,12 @@ consistent behavior, serialization support, and proper lifecycle management.
 import logging
 import uuid
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any
 
 from langgraph.store.base import BaseStore
 from pydantic import BaseModel, Field, PrivateAttr
 
-from .connection import ConnectionManager
-from .embeddings import EmbeddingAdapter
-from .types import StoreConfig, StoreType
+from .types import StoreConfig
 
 logger = logging.getLogger(__name__)
 
@@ -33,11 +31,10 @@ class SerializableStoreWrapper(BaseModel, ABC):
     All store implementations should inherit from this class.
     """
 
-    # Configuration (serialized)
     config: StoreConfig = Field(description="Store configuration")
 
     # Runtime state (not serialized)
-    _store: Optional[BaseStore] = PrivateAttr(default=None)
+    _store: BaseStore | None = PrivateAttr(default=None)
     _initialized: bool = PrivateAttr(default=False)
 
     class Config:
@@ -59,7 +56,6 @@ class SerializableStoreWrapper(BaseModel, ABC):
         Returns:
             LangGraph store instance
         """
-        pass
 
     @abstractmethod
     async def _create_async_store(self) -> BaseStore:
@@ -68,7 +64,6 @@ class SerializableStoreWrapper(BaseModel, ABC):
         Returns:
             Async LangGraph store instance
         """
-        pass
 
     def get_store(self) -> BaseStore:
         """Get or create the underlying store.
@@ -92,7 +87,7 @@ class SerializableStoreWrapper(BaseModel, ABC):
             self._initialized = True
         return self._store
 
-    def _apply_namespace_prefix(self, namespace: Tuple[str, ...]) -> Tuple[str, ...]:
+    def _apply_namespace_prefix(self, namespace: tuple[str, ...]) -> tuple[str, ...]:
         """Apply namespace prefix if configured.
 
         Args:
@@ -102,23 +97,23 @@ class SerializableStoreWrapper(BaseModel, ABC):
             Namespace with prefix applied
         """
         if self.config.namespace_prefix:
-            return (self.config.namespace_prefix,) + namespace
+            return (self.config.namespace_prefix, *namespace)
         return namespace
 
     # Synchronous methods
-    def put(self, namespace: Tuple[str, ...], key: str, value: Dict[str, Any]) -> None:
+    def put(self, namespace: tuple[str, ...], key: str, value: dict[str, Any]) -> None:
         """Store a value."""
         store = self.get_store()
         namespace = self._apply_namespace_prefix(namespace)
         store.put(namespace, key, value)
 
-    def get(self, namespace: Tuple[str, ...], key: str) -> Optional[Dict[str, Any]]:
+    def get(self, namespace: tuple[str, ...], key: str) -> dict[str, Any] | None:
         """Retrieve a value."""
         store = self.get_store()
         namespace = self._apply_namespace_prefix(namespace)
         return store.get(namespace, key)
 
-    def delete(self, namespace: Tuple[str, ...], key: str) -> None:
+    def delete(self, namespace: tuple[str, ...], key: str) -> None:
         """Delete a value."""
         store = self.get_store()
         namespace = self._apply_namespace_prefix(namespace)
@@ -126,24 +121,23 @@ class SerializableStoreWrapper(BaseModel, ABC):
 
     def search(
         self,
-        namespace: Tuple[str, ...],
+        namespace: tuple[str, ...],
         query: str,
         limit: int = 10,
-        filter: Optional[Dict[str, Any]] = None,
-    ) -> List[Any]:
+        filter: dict[str, Any] | None = None,
+    ) -> list[Any]:
         """Search for values using semantic similarity."""
         store = self.get_store()
         namespace = self._apply_namespace_prefix(namespace)
 
         if hasattr(store, "search"):
             return store.search(namespace, query=query, limit=limit, filter=filter)
-        else:
-            logger.warning(f"Store {type(store).__name__} doesn't support search")
-            return []
+        logger.warning(f"Store {type(store).__name__} doesn't support search")
+        return []
 
     # Asynchronous methods
     async def aput(
-        self, namespace: Tuple[str, ...], key: str, value: Dict[str, Any]
+        self, namespace: tuple[str, ...], key: str, value: dict[str, Any]
     ) -> None:
         """Async store a value."""
         store = await self.get_async_store()
@@ -155,20 +149,17 @@ class SerializableStoreWrapper(BaseModel, ABC):
             # Fallback to sync
             store.put(namespace, key, value)
 
-    async def aget(
-        self, namespace: Tuple[str, ...], key: str
-    ) -> Optional[Dict[str, Any]]:
+    async def aget(self, namespace: tuple[str, ...], key: str) -> dict[str, Any] | None:
         """Async retrieve a value."""
         store = await self.get_async_store()
         namespace = self._apply_namespace_prefix(namespace)
 
         if hasattr(store, "aget"):
             return await store.aget(namespace, key)
-        else:
-            # Fallback to sync
-            return store.get(namespace, key)
+        # Fallback to sync
+        return store.get(namespace, key)
 
-    async def adelete(self, namespace: Tuple[str, ...], key: str) -> None:
+    async def adelete(self, namespace: tuple[str, ...], key: str) -> None:
         """Async delete a value."""
         store = await self.get_async_store()
         namespace = self._apply_namespace_prefix(namespace)
@@ -181,11 +172,11 @@ class SerializableStoreWrapper(BaseModel, ABC):
 
     async def asearch(
         self,
-        namespace: Tuple[str, ...],
+        namespace: tuple[str, ...],
         query: str,
         limit: int = 10,
-        filter: Optional[Dict[str, Any]] = None,
-    ) -> List[Any]:
+        filter: dict[str, Any] | None = None,
+    ) -> list[Any]:
         """Async search for values using semantic similarity."""
         store = await self.get_async_store()
         namespace = self._apply_namespace_prefix(namespace)
@@ -194,12 +185,11 @@ class SerializableStoreWrapper(BaseModel, ABC):
             return await store.asearch(
                 namespace, query=query, limit=limit, filter=filter
             )
-        elif hasattr(store, "search"):
+        if hasattr(store, "search"):
             # Fallback to sync
             return store.search(namespace, query=query, limit=limit, filter=filter)
-        else:
-            logger.warning(f"Store {type(store).__name__} doesn't support search")
-            return []
+        logger.warning(f"Store {type(store).__name__} doesn't support search")
+        return []
 
     # Serialization
     def __reduce__(self):
@@ -217,4 +207,3 @@ class SerializableStoreWrapper(BaseModel, ABC):
         """Cleanup when wrapper is deleted."""
         # Note: Connection pools are managed centrally
         # and not closed here to allow sharing
-        pass

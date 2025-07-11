@@ -3,6 +3,7 @@
 import logging
 from typing import Any, List, Type
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -25,7 +26,9 @@ class EngineDetectorMixin:
         self.detected_base_class = None
         self.base_class_fields = set()
 
-    def _detect_base_class_requirements(self, components: List[Any] = None) -> None:
+    def _detect_base_class_requirements(
+        self, components: list[Any] | None = None
+    ) -> None:
         """Detect what base class is needed based on components.
 
         Args:
@@ -132,7 +135,7 @@ class EngineDetectorMixin:
         else:
             self.base_class_fields = set()
 
-    def get_detected_base_class(self) -> Type:
+    def get_detected_base_class(self) -> type:
         """Get the detected base class.
 
         Returns:

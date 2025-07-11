@@ -54,6 +54,7 @@ class FakeEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     @validator("size")
+    @classmethod
     def validate_size(cls, v):
         """Validate embedding size."""
         if v <= 0:
@@ -63,6 +64,7 @@ class FakeEmbeddingConfig(BaseEmbeddingConfig):
         return v
 
     @validator("model")
+    @classmethod
     def validate_model(cls, v):
         """Validate fake model name."""
         if not v or not v.strip():

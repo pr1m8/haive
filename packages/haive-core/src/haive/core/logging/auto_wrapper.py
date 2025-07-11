@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Auto-wrapper for running Python scripts with source tracking.
+"""Auto-wrapper for running Python scripts with source tracking.
 
 Usage:
     python -m haive.core.logging.auto_wrapper your_script.py [args]
@@ -22,21 +21,12 @@ def setup_logging():
         setup_development_logging()
         return True
     except ImportError:
-        print("⚠️  Haive logging not available. Install with: pip install haive-core")
         return False
 
 
 def main():
     """Main entry point."""
     if len(sys.argv) < 2:
-        print("Usage: python -m haive.core.logging.auto_wrapper <script.py> [args...]")
-        print(
-            "\nThis wrapper automatically enables source tracking for any Python script."
-        )
-        print("\nExample:")
-        print("  python -m haive.core.logging.auto_wrapper myscript.py --arg1 value1")
-        print("\nTo make it permanent, add to your shell profile:")
-        print("  alias python='python -m haive.core.logging.auto_wrapper'")
         sys.exit(1)
 
     # Get the script to run
@@ -47,7 +37,7 @@ def main():
 
     # Set up logging
     if setup_logging():
-        print(f"📍 Running {script_path} with source tracking enabled\n")
+        passn")
 
     # Run the script
     if script_path.endswith(".py"):

@@ -3,6 +3,7 @@
 import logging
 from typing import Any
 
+from haive.agents.react_class.react_v2.config import ReactAgentConfig
 from haive.core.engine.agent.agent import Agent, register_agent
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from langchain_core.messages import AIMessage
@@ -12,8 +13,6 @@ from langgraph.prebuilt.tool_node import ToolNode
 from langgraph.pregel import RetryPolicy
 from langgraph.types import Send
 from pydantic import BaseModel
-
-from haive.agents.react_class.react_v2.config import ReactAgentConfig
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -68,13 +67,13 @@ class ReactAgent(Agent[ReactAgentConfig]):
         if isinstance(tools_input, dict):
             # Dict mapping - {node_name: tool or [tools]}
             for node_name, tools in tools_input.items():
-                if isinstance(tools, (list, tuple)):
+                if isinstance(tools, list | tuple):
                     # List of tools for this node
                     tools_map[node_name] = self._convert_tools_list(tools)
                 else:
                     # Single tool for this node
                     tools_map[node_name] = self._convert_tools_list([tools])
-        elif isinstance(tools_input, (list, tuple)):
+        elif isinstance(tools_input, list | tuple):
             # Simple list - map to default node names
             tools_list = self._convert_tools_list(tools_input)
             if len(tools_list) == 1:
@@ -104,7 +103,7 @@ class ReactAgent(Agent[ReactAgentConfig]):
         converted_tools = []
 
         for t in tools_list:
-            if isinstance(t, (BaseTool, StructuredTool, Tool)):
+            if isinstance(t, BaseTool | StructuredTool | Tool):
                 # Already a valid tool
                 converted_tools.append(t)
             elif callable(t) and not isinstance(t, type):
@@ -188,7 +187,7 @@ class ReactAgent(Agent[ReactAgentConfig]):
                 routes={
                     "end": END,
                     "structured_output": "structured_output",
-                    **{name: name for name in self.tool_nodes.keys()},
+                    **{name: name for name in self.tool_nodes},
                 },
             )
         elif self.tool_nodes:
@@ -196,7 +195,7 @@ class ReactAgent(Agent[ReactAgentConfig]):
             gb.add_conditional_edges(
                 from_node="agent",
                 condition_or_branch=self._route_agent_output,
-                routes={"end": END, **{name: name for name in self.tool_nodes.keys()}},
+                routes={"end": END, **{name: name for name in self.tool_nodes}},
             )
         else:
             # No tools, just add edge to END

@@ -7,7 +7,7 @@
     "description": "Schema for retriever input.",
     "source_code": "class RetrieverInput(BaseModel):\n    \"\"\"Schema for retriever input.\"\"\"\n\n    query: str = Field(description=\"Query string for retrieval\")\n    k: Optional[int] = Field(\n        default=None, description=\"Number of documents to retrieve\"\n    )\n    filter: Optional[Dict[str, Any]] = Field(\n        default=None, description=\"Filter criteria for retrieval\"\n    )\n    search_type: Optional[str] = Field(\n        default=None, description=\"Type of search to perform\"\n    )\n    score_threshold: Optional[float] = Field(\n        default=None, description=\"Minimum similarity score threshold\"\n    )\n\n    model_config = ConfigDict(extra=\"allow\")\n",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:17.222336",
+    "timestamp": "2025-07-10T19:45:34.815221",
     "schema": {
       "properties": {
         "data": {
@@ -46,7 +46,7 @@
       "has_tool": true,
       "has_engine_config": true,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:17.222336",
+      "timestamp": "2025-07-10T19:45:34.815221",
       "category": "retrievers"
     }
   },

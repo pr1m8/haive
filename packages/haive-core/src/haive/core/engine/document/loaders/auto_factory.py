@@ -8,8 +8,6 @@ detection, and loader creation.
 import logging
 from typing import Any, Dict, List, Optional, Union
 
-from langchain_core.document_loaders import BaseLoader
-
 from haive.core.engine.document.config import (
     DocumentInput,
     DocumentOutput,
@@ -19,6 +17,7 @@ from haive.core.engine.document.config import (
 from haive.core.engine.document.loaders.path_analyzer import analyze_path
 from haive.core.engine.document.loaders.sources.registry import source_registry
 from haive.core.engine.document.loaders.sources.source_base import BaseSource
+from langchain_core.document_loaders import BaseLoader
 
 logger = logging.getLogger(__name__)
 

@@ -1,17 +1,18 @@
 import operator
 from typing import Annotated, Any, Dict, List, Literal, Optional, Union
 
-from haive.core.schema.prebuilt.messages_state import MessagesState
 from langchain_core.messages import BaseMessage, HumanMessage
 from pydantic import Field, computed_field, model_validator
+
+from haive.core.schema.prebuilt.messages_state import MessagesState
 
 from .models import Candidate, ScoredCandidate
 
 
 def update_candidates(
-    existing: Optional[List] = None,
-    updates: Optional[Union[List, Literal["clear"]]] = None,
-) -> List:
+    existing: list | None = None,
+    updates: list | Literal["clear"] | None = None,
+) -> list:
     """Custom reducer for candidates."""
     if existing is None:
         existing = []
@@ -27,25 +28,25 @@ class ToTState(MessagesState):
     """Base Tree of Thoughts state."""
 
     # Problem is derived from messages
-    problem_type: Optional[str] = Field(
+    problem_type: str | None = Field(
         default=None, description="Type/category of problem"
     )
-    problem_context: Dict[str, Any] = Field(
+    problem_context: dict[str, Any] = Field(
         default_factory=dict, description="Additional problem context"
     )
 
     # Core fields with proper annotations
-    candidates: Annotated[List[Candidate], update_candidates] = Field(
+    candidates: Annotated[list[Candidate], update_candidates] = Field(
         default_factory=list, description="Current candidates"
     )
-    scored_candidates: Annotated[List[ScoredCandidate], update_candidates] = Field(
+    scored_candidates: Annotated[list[ScoredCandidate], update_candidates] = Field(
         default_factory=list, description="Scored candidates"
     )
-    selected_candidates: List[ScoredCandidate] = Field(
+    selected_candidates: list[ScoredCandidate] = Field(
         default_factory=list, description="Best candidates selected for next iteration"
     )
     all_candidates_history: Annotated[
-        List[Union[Candidate, ScoredCandidate]], operator.add
+        list[Candidate | ScoredCandidate], operator.add
     ] = Field(default_factory=list, description="All candidates ever generated")
 
     # Search parameters
@@ -65,10 +66,10 @@ class ToTState(MessagesState):
     should_terminate: bool = Field(
         default=False, description="Whether to terminate search"
     )
-    termination_reason: Optional[str] = Field(
+    termination_reason: str | None = Field(
         default=None, description="Why search was terminated"
     )
-    best_solution: Optional[ScoredCandidate] = Field(
+    best_solution: ScoredCandidate | None = Field(
         default=None, description="Best solution found so far"
     )
 
@@ -78,7 +79,7 @@ class ToTState(MessagesState):
     )
 
     # Current candidate being processed (for scoring phase)
-    current_candidate_id: Optional[str] = Field(
+    current_candidate_id: str | None = Field(
         default=None, description="ID of candidate being scored"
     )
 
@@ -95,21 +96,21 @@ class ToTState(MessagesState):
     # Model validators for type conversions
     @model_validator(mode="before")
     @classmethod
-    def convert_candidates(cls, data: Dict[str, Any]) -> Dict[str, Any]:
+    def convert_candidates(cls, data: dict[str, Any]) -> dict[str, Any]:
         """Convert raw candidate data to proper Candidate/ScoredCandidate objects."""
         # Convert candidates
         if "candidates" in data and isinstance(data["candidates"], list):
             converted = []
             for item in data["candidates"]:
                 if isinstance(item, dict) and not isinstance(
-                    item, (Candidate, ScoredCandidate)
+                    item, Candidate | ScoredCandidate
                 ):
                     # Check if it has score to determine type
                     if "score" in item and item["score"] is not None:
                         converted.append(ScoredCandidate(**item))
                     else:
                         converted.append(Candidate(**item))
-                elif not isinstance(item, (Candidate, ScoredCandidate)):
+                elif not isinstance(item, Candidate | ScoredCandidate):
                     # Convert arbitrary objects to candidates
                     converted.append(Candidate(content=item))
                 else:
@@ -126,13 +127,13 @@ class ToTState(MessagesState):
                 converted = []
                 for item in data[field]:
                     if isinstance(item, dict) and not isinstance(
-                        item, (Candidate, ScoredCandidate)
+                        item, Candidate | ScoredCandidate
                     ):
                         if "score" in item and item["score"] is not None:
                             converted.append(ScoredCandidate(**item))
                         else:
                             converted.append(Candidate(**item))
-                    elif not isinstance(item, (Candidate, ScoredCandidate)):
+                    elif not isinstance(item, Candidate | ScoredCandidate):
                         # Convert to candidate
                         converted.append(Candidate(content=item))
                     else:
@@ -245,7 +246,7 @@ class ToTState(MessagesState):
     def search_progress(self) -> str:
         """Current search progress description."""
         progress_parts = [
-            f"Search Progress:",
+            "Search Progress:",
             f"  - Depth: {self.depth}/{self.max_depth}",
             f"  - Total candidates explored: {len(self.all_candidates_history)}",
             f"  - Current beam size: {len(self.selected_candidates)}/{self.beam_size}",
@@ -269,7 +270,7 @@ class ToTState(MessagesState):
     # Helper methods
     def get_candidate_by_id(
         self, candidate_id: str
-    ) -> Optional[Union[Candidate, ScoredCandidate]]:
+    ) -> Candidate | ScoredCandidate | None:
         """Find a candidate by ID in any list."""
         # Check all lists
         for c in self.candidates:
@@ -290,6 +291,6 @@ class ToTState(MessagesState):
 class ExpansionState(ToTState):
     """State for expansion with seed candidate."""
 
-    seed: Optional[ScoredCandidate] = Field(
+    seed: ScoredCandidate | None = Field(
         default=None, description="Parent candidate to expand from"
     )

@@ -1,5 +1,4 @@
-"""
-LLM Model Export Utility.
+"""LLM Model Export Utility.
 
 This module provides functionality to export lists of available models from
 various LLM providers to CSV files. It is used for model discovery, cataloging,
@@ -18,7 +17,6 @@ from each configured provider.
 """
 
 import csv
-from typing import Any, List, Tuple, Type, Union
 
 from base import (
     AnthropicLLMConfig,
@@ -28,7 +26,7 @@ from base import (
 )
 
 # List of (class, provider_name, filename)
-PROVIDERS: List[Tuple[Type, str, str]] = [
+PROVIDERS: list[tuple[type, str, str]] = [
     (AnthropicLLMConfig, "anthropic", "anthropic_models.csv"),
     (OpenAILLMConfig, "openai", "openai_models.csv"),
     (MistralLLMConfig, "mistral", "mistral_models.csv"),
@@ -37,9 +35,8 @@ PROVIDERS: List[Tuple[Type, str, str]] = [
 ]
 
 
-def save_models_to_csv(model_names: List[str], filename: str) -> None:
-    """
-    Save a list of model names to a CSV file.
+def save_models_to_csv(model_names: list[str], filename: str) -> None:
+    """Save a list of model names to a CSV file.
 
     Args:
         model_names: List of model identifier strings
@@ -56,8 +53,7 @@ def save_models_to_csv(model_names: List[str], filename: str) -> None:
 
 
 def main() -> None:
-    """
-    Main function to fetch models from all providers and save to CSV files.
+    """Main function to fetch models from all providers and save to CSV files.
 
     This function:
     1. Iterates through the configured providers
@@ -72,7 +68,6 @@ def main() -> None:
     summary = []
     for config_cls, provider, filename in PROVIDERS:
         try:
-            print(f"Fetching models for {provider}...")
             models = config_cls.get_models()
 
             # Handle different API response formats
@@ -93,9 +88,8 @@ def main() -> None:
         except Exception as e:
             summary.append(f"{provider}: ERROR - {e}")
 
-    print("\nSummary:")
-    for line in summary:
-        print(line)
+    for _line in summary:
+        pass
 
 
 if __name__ == "__main__":

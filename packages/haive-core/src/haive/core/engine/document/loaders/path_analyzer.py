@@ -124,10 +124,10 @@ class SourceInfo(BaseModel):
     confidence: float = Field(
         ge=0.0, le=1.0, description="Detection confidence score from 0.0 to 1.0"
     )
-    metadata: Dict[str, Any] = Field(
+    metadata: dict[str, Any] = Field(
         default_factory=dict, description="Rich metadata collected during analysis"
     )
-    capabilities: Optional[List["LoaderCapability"]] = Field(
+    capabilities: list["LoaderCapability"] | None = Field(
         default=None, description="List of supported capabilities for this source type"
     )
 
@@ -146,37 +146,33 @@ class PathAnalysisResult(BaseModel):
     is_file: bool = Field(default=False, description="Whether this is a file")
     is_directory: bool = Field(default=False, description="Whether this is a directory")
     file_exists: bool = Field(default=False, description="Whether the file exists")
-    file_extension: Optional[str] = Field(
+    file_extension: str | None = Field(
         default=None, description="File extension if applicable"
     )
-    file_category: Optional[FileCategory] = Field(
+    file_category: FileCategory | None = Field(
         default=None, description="High-level file category"
     )
-    mime_type: Optional[str] = Field(default=None, description="Detected MIME type")
-    file_size: Optional[int] = Field(
-        default=None, ge=0, description="File size in bytes"
-    )
+    mime_type: str | None = Field(default=None, description="Detected MIME type")
+    file_size: int | None = Field(default=None, ge=0, description="File size in bytes")
 
     # URL info
     is_remote: bool = Field(default=False, description="Whether this is a remote URL")
-    url_components: Optional[Dict[str, Any]] = Field(
+    url_components: dict[str, Any] | None = Field(
         default=None, description="Parsed URL components"
     )
-    domain: Optional[str] = Field(default=None, description="Domain name for URLs")
+    domain: str | None = Field(default=None, description="Domain name for URLs")
 
     # Database info
     is_database: bool = Field(
         default=False, description="Whether this is a database URI"
     )
-    database_type: Optional[str] = Field(default=None, description="Type of database")
+    database_type: str | None = Field(default=None, description="Type of database")
 
     # Cloud storage info
     is_cloud: bool = Field(default=False, description="Whether this is cloud storage")
-    cloud_provider: Optional[str] = Field(
-        default=None, description="Cloud provider name"
-    )
-    bucket_name: Optional[str] = Field(default=None, description="Storage bucket name")
-    object_key: Optional[str] = Field(
+    cloud_provider: str | None = Field(default=None, description="Cloud provider name")
+    bucket_name: str | None = Field(default=None, description="Storage bucket name")
+    object_key: str | None = Field(
         default=None, description="Object key/path in storage"
     )
 
@@ -276,7 +272,7 @@ class PathAnalyzer:
     }
 
     @classmethod
-    def analyze(cls, path: Union[str, Path]) -> PathAnalysisResult:
+    def analyze(cls, path: str | Path) -> PathAnalysisResult:
         """Perform comprehensive path analysis."""
         path_str = str(path)
 
@@ -355,20 +351,18 @@ class PathAnalyzer:
                 result.is_directory = True
                 result.path_type = PathType.LOCAL_DIRECTORY
                 result.confidence = 1.0
+        elif "." in path_obj.name:
+            result.is_file = True
+            result.file_extension = path_obj.suffix.lower()
+            result.file_category = cls.EXTENSION_CATEGORIES.get(
+                result.file_extension, FileCategory.UNKNOWN
+            )
+            result.confidence = 0.7
         else:
-            # File doesn't exist, analyze based on extension
-            if "." in path_obj.name:
-                result.is_file = True
-                result.file_extension = path_obj.suffix.lower()
-                result.file_category = cls.EXTENSION_CATEGORIES.get(
-                    result.file_extension, FileCategory.UNKNOWN
-                )
-                result.confidence = 0.7
-            else:
-                # Assume directory if no extension
-                result.is_directory = True
-                result.path_type = PathType.LOCAL_DIRECTORY
-                result.confidence = 0.6
+            # Assume directory if no extension
+            result.is_directory = True
+            result.path_type = PathType.LOCAL_DIRECTORY
+            result.confidence = 0.6
 
         return result
 
@@ -464,7 +458,7 @@ class PathAnalyzer:
         return result
 
 
-def analyze_path(path: Union[str, Path]) -> PathAnalysisResult:
+def analyze_path(path: str | Path) -> PathAnalysisResult:
     """Convenience function for path analysis."""
     return PathAnalyzer.analyze(path)
 
@@ -497,10 +491,7 @@ def convert_to_source_info(analysis: PathAnalysisResult) -> "SourceInfo":
     if analysis.file_extension:
         ext = analysis.file_extension.lower().lstrip(".")
         source_type = ext
-    elif (
-        analysis.path_type == PathType.URL_HTTP
-        or analysis.path_type == PathType.URL_HTTPS
-    ):
+    elif analysis.path_type in (PathType.URL_HTTP, PathType.URL_HTTPS):
         source_type = "web"
     elif analysis.path_type == PathType.DATABASE_URI:
         source_type = getattr(analysis, "database_type", "database")
@@ -536,7 +527,7 @@ def convert_to_source_info(analysis: PathAnalysisResult) -> "SourceInfo":
 
 
 # Add method to PathAnalyzer class to return SourceInfo directly
-def analyze_path_to_source_info(path: Union[str, Path]) -> "SourceInfo":
+def analyze_path_to_source_info(path: str | Path) -> "SourceInfo":
     """Analyze path and return SourceInfo directly.
 
     Args:
@@ -556,12 +547,12 @@ PathAnalyzer.analyze_path = classmethod(
 
 
 __all__ = [
-    "PathAnalyzer",
-    "PathAnalysisResult",
-    "SourceInfo",
-    "PathType",
     "FileCategory",
+    "PathAnalysisResult",
+    "PathAnalyzer",
+    "PathType",
+    "SourceInfo",
     "analyze_path",
-    "convert_to_source_info",
     "analyze_path_to_source_info",
+    "convert_to_source_info",
 ]

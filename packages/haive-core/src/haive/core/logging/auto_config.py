@@ -1,5 +1,4 @@
-"""
-Automatic logging configuration for haive framework.
+"""Automatic logging configuration for haive framework.
 
 This module provides default configurations to reduce log clutter
 while preserving important information.
@@ -92,12 +91,11 @@ INFO_MODULES = [
 
 def auto_configure_logging(
     preset: str = "default",
-    additional_suppressions: Optional[List[str]] = None,
-    debug_modules: Optional[List[str]] = None,
+    additional_suppressions: List[str] | None = None,
+    debug_modules: List[str] | None = None,
     use_source_formatter: bool = True,
 ):
-    """
-    Automatically configure logging with sensible defaults.
+    """Automatically configure logging with sensible defaults.
 
     Args:
         preset: Configuration preset ('default', 'minimal', 'verbose', 'development')
@@ -105,7 +103,6 @@ def auto_configure_logging(
         debug_modules: Modules to set to DEBUG level
         use_source_formatter: Use enhanced formatter that shows source info
     """
-
     # Set up enhanced formatter if available and requested
     if use_source_formatter and ENHANCED_FORMATTER_AVAILABLE:
         # Remove existing handlers
@@ -207,8 +204,7 @@ def configure_for_agent_development():
 
 
 def show_clean_logs():
-    """
-    Ultra-clean configuration showing only essential logs.
+    """Ultra-clean configuration showing only essential logs.
     Perfect for demos or when you just want to see your app work.
     """
     # Start with minimal
@@ -222,8 +218,7 @@ def show_clean_logs():
 
 
 def enable_source_tracking(verbose: bool = False):
-    """
-    Enable detailed source tracking for all logs.
+    """Enable detailed source tracking for all logs.
 
     This shows exactly where each log message comes from:
     - Module path (e.g., haive.core.engine)
@@ -237,23 +232,19 @@ def enable_source_tracking(verbose: bool = False):
     if ENHANCED_FORMATTER_AVAILABLE:
         setup_source_aware_logging()
         if verbose and not hasattr(enable_source_tracking, "_already_announced"):
-            print(
-                "📍 Source tracking enabled - you'll see exactly where each log comes from!"
-            )
             enable_source_tracking._already_announced = True
-    else:
-        if verbose:
-            print("⚠️  Enhanced formatter not available - using standard logging")
+    elif verbose:
+        print("⚠️  Enhanced formatter not available - using standard logging")
 
 
 # Export convenience functions
 __all__ = [
-    "auto_configure_logging",
-    "configure_for_game_development",
-    "configure_for_agent_development",
-    "show_clean_logs",
-    "enable_source_tracking",
+    "INFO_MODULES",
     "NOISY_MODULES",
     "WARNING_MODULES",
-    "INFO_MODULES",
+    "auto_configure_logging",
+    "configure_for_agent_development",
+    "configure_for_game_development",
+    "enable_source_tracking",
+    "show_clean_logs",
 ]

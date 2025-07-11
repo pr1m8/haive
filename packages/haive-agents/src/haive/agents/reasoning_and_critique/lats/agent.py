@@ -1,13 +1,9 @@
 # src/haive/agents/lats/tree_agent.py
 
-import logging
 from datetime import datetime
+import logging
 from typing import Any
 
-from agents.lats.models import Node, Reflection
-from agents.lats.state import TreeState
-from haive.core.engine.agent.agent import Agent, AgentConfig, register_agent
-from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.output_parsers.openai_tools import (
     JsonOutputToolsParser,
@@ -15,10 +11,15 @@ from langchain_core.output_parsers.openai_tools import (
 )
 from langchain_core.prompt_values import ChatPromptValue
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.runnables import RunnableConfig
-from langchain_core.runnables import chain as as_runnable
+from langchain_core.runnables import RunnableConfig, chain as as_runnable
 from langgraph.graph import END
 from pydantic import BaseModel, Field
+
+from agents.lats.models import Node, Reflection
+from agents.lats.state import TreeState
+from haive.core.engine.agent.agent import Agent, AgentConfig, register_agent
+from haive.core.models.llm.base import AzureLLMConfig
+
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -319,7 +320,7 @@ class LATSAgent(Agent[LATSAgentConfig]):
                         )
                         tool_responses.append((i, response))
                     except Exception as e:
-                        logger.error(f"Error executing tool: {e}")
+                        logger.exception(f"Error executing tool: {e}")
                         # Create an error message
                         tool_responses.append(
                             (
@@ -401,7 +402,7 @@ class LATSAgent(Agent[LATSAgentConfig]):
                 "best_node": best_node,
                 "output": best_messages[-1].content if best_messages else "",
                 "messages": (
-                    state.get("messages", []) + [best_messages[-1]]
+                    [*state.get("messages", []), best_messages[-1]]
                     if best_messages
                     else []
                 ),
@@ -453,10 +454,7 @@ class LATSAgent(Agent[LATSAgentConfig]):
         def check_node(node):
             if node.is_solved:
                 return True
-            for child in node.children:
-                if check_node(child):
-                    return True
-            return False
+            return any(check_node(child) for child in node.children)
 
         return check_node(root)
 

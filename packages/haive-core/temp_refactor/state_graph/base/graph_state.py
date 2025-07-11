@@ -1,19 +1,17 @@
-"""
-Graph state tracking for compilation optimization.
+"""Graph state tracking for compilation optimization.
 
 This module provides classes for tracking the state of a graph,
 particularly whether it needs recompilation after changes.
 """
 
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 from pydantic import BaseModel, Field
 
 
 class CompilationState(BaseModel):
-    """
-    Track the compilation state of a graph.
+    """Track the compilation state of a graph.
 
     This class maintains a record of changes that would require recompilation
     and provides methods to check if recompilation is needed.
@@ -21,15 +19,15 @@ class CompilationState(BaseModel):
 
     # Core tracking properties
     is_compiled: bool = False
-    compile_timestamp: Optional[datetime] = None
+    compile_timestamp: datetime | None = None
     schema_version: int = 0
     topology_version: int = 0
 
     # Detailed change tracking
-    schema_changes: Dict[str, int] = Field(default_factory=dict)
-    node_changes: Dict[str, int] = Field(default_factory=dict)
-    edge_changes: List[Tuple[str, str, int]] = Field(default_factory=list)
-    branch_changes: Dict[str, int] = Field(default_factory=dict)
+    schema_changes: dict[str, int] = Field(default_factory=dict)
+    node_changes: dict[str, int] = Field(default_factory=dict)
+    edge_changes: list[tuple[str, str, int]] = Field(default_factory=list)
+    branch_changes: dict[str, int] = Field(default_factory=dict)
 
     # Tracking flags
     track_detailed_changes: bool = True
@@ -91,7 +89,7 @@ class CompilationState(BaseModel):
         """Check if the graph needs recompilation."""
         return not self.is_compiled
 
-    def get_change_summary(self) -> Dict[str, Any]:
+    def get_change_summary(self) -> dict[str, Any]:
         """Get a summary of changes since last compilation."""
         return {
             "schema_version": self.schema_version,

@@ -12,14 +12,14 @@ class Leaf(BaseModel, Generic[T]):
     kind: Literal["leaf"] = "leaf"  # discriminator
     value: T
 
-    model_config = dict(extra="forbid")
+    model_config = {"extra": "forbid"}
 
 
 class Branch(BaseModel, Generic[T]):
     kind: Literal["branch"] = "branch"
-    children: List["Node[T]"] = Field(default_factory=list)
+    children: list[Node[T]] = Field(default_factory=list)
 
-    model_config = dict(extra="forbid")
+    model_config = {"extra": "forbid"}
 
 
 # Self‑recursive union

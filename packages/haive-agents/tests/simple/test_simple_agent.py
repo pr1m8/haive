@@ -1,8 +1,9 @@
 # tests/test_simple_agent.py
 
+from pydantic import BaseModel
+
 from haive.core.engine.agent.agent import SimpleAgent, SimpleAgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
-from pydantic import BaseModel
 
 
 # Test creating simple agent

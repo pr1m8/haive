@@ -1,4 +1,4 @@
-"""Modular - TODO: Add brief description
+"""Modular - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

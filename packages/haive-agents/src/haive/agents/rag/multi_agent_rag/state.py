@@ -1,17 +1,18 @@
-"""Enhanced RAG State Schema for Multi-Agent RAG Systems
+"""Enhanced RAG State Schema for Multi-Agent RAG Systems.
 
 This module provides comprehensive state management for complex RAG workflows,
 supporting document processing, grading, multi-step retrieval, and conditional routing.
 """
 
-import operator
 from enum import Enum
+import operator
 from typing import Annotated, Any
 
-from haive.core.schema.state_schema import StateSchema
 from langchain_core.documents import Document
 from langchain_core.messages import BaseMessage
 from pydantic import BaseModel, Field
+
+from haive.core.schema.state_schema import StateSchema
 
 
 class RAGOperationType(str, Enum):
@@ -209,12 +210,12 @@ class MultiAgentRAGState(StateSchema):
         self,
         operation_type: RAGOperationType,
         agent_name: str,
-        input_data: dict[str, Any] = None,
-        output_data: dict[str, Any] = None,
+        input_data: dict[str, Any] | None = None,
+        output_data: dict[str, Any] | None = None,
     ) -> str:
         """Add a new workflow step."""
-        import uuid
         from datetime import datetime
+        import uuid
 
         step_id = str(uuid.uuid4())[:8]
         step = RAGStep(

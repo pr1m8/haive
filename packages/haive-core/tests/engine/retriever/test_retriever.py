@@ -2,16 +2,15 @@
 
 import logging
 
-from langchain_core.documents import Document
-from langchain_core.retrievers import BaseRetriever
-from langchain_core.runnables import RunnableConfig
-
 from haive.core.engine.retriever import VectorStoreRetrieverConfig
 from haive.core.engine.vectorstore.vectorstore import (
     VectorStoreConfig,
     VectorStoreProvider,
 )
 from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig
+from langchain_core.documents import Document
+from langchain_core.retrievers import BaseRetriever
+from langchain_core.runnables import RunnableConfig
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)

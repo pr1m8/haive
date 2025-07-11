@@ -19,12 +19,9 @@ from typing import Any, Dict, List
 base_path = Path("/home/will/Projects/haive/backend/haive/packages/haive-core/src")
 sys.path.insert(0, str(base_path))
 
-print("💼 Testing Business & CRM Sources System")
-print("=" * 60)
 
 try:
     # Test importing the business sources components
-    print("📦 Testing business components...")
 
     # Test the enums and basic classes
     from enum import Enum
@@ -87,17 +84,13 @@ try:
         APPEND_ONLY = "append_only"
         DEDUPED = "deduped"
 
-    print("✅ Business enums working correctly!")
 
 except Exception as e:
-    print(f"❌ Enum test failed: {e}")
+    pass")
 
 
 def test_platform_detection():
     """Test business platform detection from URLs."""
-
-    print("\n🔍 Testing Platform Detection")
-    print("-" * 40)
 
     def detect_business_platform(url_or_id: str):
         """Detect business platform from URL or identifier."""
@@ -133,23 +126,16 @@ def test_platform_detection():
     for url, expected_platform in test_urls.items():
         detected = detect_business_platform(url)
         status = "✅" if detected == expected_platform else "❌"
-        print(f"  {status} {url} → {detected}")
         if detected == expected_platform:
             detection_success += 1
 
     success_rate = (detection_success / len(test_urls)) * 100
-    print(
-        f"\n  Success Rate: {detection_success}/{len(test_urls)} ({success_rate:.1f}%)"
-    )
 
     return detection_success >= 6
 
 
 def test_sync_modes():
     """Test data synchronization modes."""
-
-    print("\n🔄 Testing Sync Modes")
-    print("-" * 40)
 
     def get_sync_params(sync_mode: SyncMode, last_sync_date=None, max_records=None):
         """Get synchronization parameters."""
@@ -183,7 +169,6 @@ def test_sync_modes():
                 max_records=1000,
             )
 
-            print(f"  ✅ {test_sync['mode'].value}: {list(sync_params.keys())}")
 
             assert test_sync["expected_key"] in sync_params
             assert sync_params["page_size"] == 100
@@ -192,18 +177,14 @@ def test_sync_modes():
             sync_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {test_sync['mode'].value}: Error - {e}")
+            pass")
 
-    print(f"\n  Sync Mode Tests: {sync_tests_passed}/{len(test_syncs)} passed")
 
     return sync_tests_passed >= 3
 
 
 def test_business_source_creation():
     """Test creating business source instances."""
-
-    print("\n💼 Testing Business Source Creation")
-    print("-" * 40)
 
     # Mock business source class
     class MockBusinessSource:
@@ -277,31 +258,20 @@ def test_business_source_creation():
 
             loader_kwargs = source.get_loader_kwargs()
 
-            print(f"  ✅ {config['name']}: {config['platform'].value}")
-            print(
-                f"    Data types: {[dt.value for dt in config.get('data_types', [])]}"
-            )
-            print(f"    Sync mode: {loader_kwargs['sync_mode']}")
 
             assert loader_kwargs["platform"] == config["platform"].value
 
             source_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {config['name']}: Error - {e}")
+            pass")
 
-    print(
-        f"\n  Source Creation Tests: {source_tests_passed}/{len(test_configs)} passed"
-    )
 
     return source_tests_passed >= 3
 
 
 def test_data_filtering():
     """Test data filtering and field selection options."""
-
-    print("\n🔍 Testing Data Filtering")
-    print("-" * 40)
 
     def apply_data_filters(
         data_types, custom_fields=None, filter_query=None, max_records=None
@@ -364,32 +334,25 @@ def test_data_filtering():
                 max_records=test_filter.get("max_records"),
             )
 
-            print(
-                f"  ✅ {test_filter['name']}: {len(filters['data_types'])} data types"
-            )
 
             if test_filter.get("custom_fields"):
-                print(f"    Custom fields: {len(filters.get('fields', []))} fields")
+                pass
             if test_filter.get("filter_query"):
-                print(f"    Filter: {filters.get('filter', '')[:30]}...")
+                pass
 
             assert len(filters["data_types"]) == test_filter["expected_count"]
 
             filter_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {test_filter['name']}: Error - {e}")
+            pass")
 
-    print(f"\n  Data Filter Tests: {filter_tests_passed}/{len(test_filters)} passed")
 
     return filter_tests_passed >= 4
 
 
 def test_platform_authentication():
     """Test platform-specific authentication configurations."""
-
-    print("\n🔐 Testing Platform Authentication")
-    print("-" * 40)
 
     # Mock authentication configurations
     auth_configs = [
@@ -432,9 +395,6 @@ def test_platform_authentication():
             auth_type = config["auth_type"]
             required_fields = config["required_fields"]
 
-            print(f"  ✅ {platform.value}: {auth_type}")
-            print(f"    Required: {', '.join(required_fields)}")
-            print(f"    Optional: {', '.join(config['optional_fields'])}")
 
             # Validate that we have all required authentication fields
             assert len(required_fields) > 0, "Must have required auth fields"
@@ -442,18 +402,14 @@ def test_platform_authentication():
             auth_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {platform.value}: Error - {e}")
+            pass")
 
-    print(f"\n  Authentication Tests: {auth_tests_passed}/{len(auth_configs)} passed")
 
     return auth_tests_passed >= 4
 
 
 def test_bulk_sync_operations():
     """Test bulk synchronization and batch processing."""
-
-    print("\n📦 Testing Bulk Sync Operations")
-    print("-" * 40)
 
     # Mock bulk sync operations
     def configure_bulk_sync(
@@ -512,9 +468,6 @@ def test_bulk_sync_operations():
                 page_size=operation["page_size"],
             )
 
-            print(f"  ✅ {operation['name']}: {config['performance_mode']} mode")
-            print(f"    Platform: {operation['platform'].value}")
-            print(f"    Parallel streams: {config['parallel_streams']}")
 
             # Check expected features
             for feature in operation["expected_features"]:
@@ -523,9 +476,8 @@ def test_bulk_sync_operations():
             bulk_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {operation['name']}: Error - {e}")
+            pass")
 
-    print(f"\n  Bulk Sync Tests: {bulk_tests_passed}/{len(test_operations)} passed")
 
     return bulk_tests_passed >= 2
 
@@ -533,74 +485,16 @@ def test_bulk_sync_operations():
 def display_business_system_summary():
     """Display summary of the business sources implementation."""
 
-    print("\n" + "=" * 60)
-    print("💼 BUSINESS & CRM SOURCES IMPLEMENTATION")
-    print("=" * 60)
 
-    print(f"\n🏢 SUPPORTED PLATFORMS:")
-    print("  ✅ CRM Systems:")
-    print("    • HubSpot (contacts, deals, companies, tickets)")
-    print("    • Salesforce (SOQL queries, bulk API)")
-    print("    • Pipedrive (deals, contacts, activities)")
-    print("  ✅ E-commerce:")
-    print("    • Shopify (products, orders, customers, inventory)")
-    print("    • WooCommerce (WordPress integration)")
-    print("  ✅ Productivity Tools:")
-    print("    • Notion (workspaces, databases, pages)")
-    print("    • Airtable (bases, tables, views)")
-    print("    • Trello (boards, cards, checklists)")
-    print("  ✅ Enterprise Platforms:")
-    print("    • Jira (issues, projects, JQL queries)")
-    print("    • Confluence (spaces, pages, attachments)")
-    print("  ✅ Data Integration:")
-    print("    • Airbyte (300+ connectors)")
-    print("  ✅ Analytics:")
-    print("    • Google Analytics (metrics, dimensions, reports)")
 
-    print(f"\n🔐 AUTHENTICATION METHODS:")
-    print("  ✅ API Keys: HubSpot, Pipedrive, Airtable, Trello")
-    print("  ✅ OAuth 2.0: Salesforce, Google Analytics")
-    print("  ✅ Username/Password: Salesforce, Jira, Confluence")
-    print("  ✅ Integration Tokens: Notion, Shopify")
 
-    print(f"\n📊 DATA TYPES:")
-    print("  ✅ CRM: Contacts, Leads, Opportunities, Deals")
-    print("  ✅ E-commerce: Products, Orders, Customers, Inventory")
-    print("  ✅ Projects: Tasks, Issues, Tickets, Projects")
-    print("  ✅ Content: Pages, Documents, Knowledge Base")
-    print("  ✅ Analytics: Reports, Metrics, Events")
 
-    print(f"\n🔄 SYNC CAPABILITIES:")
-    print("  ✅ Full Refresh: Complete data replacement")
-    print("  ✅ Incremental: Only new/changed records")
-    print("  ✅ Append Only: Add new records only")
-    print("  ✅ Deduped: Unique record preservation")
 
-    print(f"\n⚡ PERFORMANCE FEATURES:")
-    print("  ✅ Batch Processing: Optimized bulk operations")
-    print("  ✅ Parallel Streams: Up to 10 concurrent")
-    print("  ✅ Page Size Control: Configurable limits")
-    print("  ✅ Rate Limit Compliance: Platform-specific")
-    print("  ✅ Error Recovery: Retry logic")
 
-    print(f"\n🚀 PRODUCTION FEATURES:")
-    print("  • Enterprise CRM integration")
-    print("  • E-commerce platform support")
-    print("  • Productivity tool connectivity")
-    print("  • Project management systems")
-    print("  • 300+ Airbyte connectors")
-    print("  • Advanced filtering and field selection")
-
-    print("\n" + "=" * 60)
-    print("🎉 BUSINESS & CRM PHASE 7 COMPLETE!")
-    print("=" * 60)
 
 
 def main():
     """Run all business sources tests."""
-
-    print("\n🧪 Running Business Sources Tests")
-    print("=" * 40)
 
     tests_passed = 0
     total_tests = 6
@@ -608,57 +502,46 @@ def main():
     # Test 1: Platform Detection
     if test_platform_detection():
         tests_passed += 1
-        print("✅ Platform Detection: PASS")
     else:
-        print("❌ Platform Detection: FAIL")
+        pass")
 
     # Test 2: Sync Modes
     if test_sync_modes():
         tests_passed += 1
-        print("✅ Sync Modes: PASS")
     else:
-        print("❌ Sync Modes: FAIL")
+        pass")
 
     # Test 3: Business Source Creation
     if test_business_source_creation():
         tests_passed += 1
-        print("✅ Business Source Creation: PASS")
     else:
-        print("❌ Business Source Creation: FAIL")
+        pass")
 
     # Test 4: Data Filtering
     if test_data_filtering():
         tests_passed += 1
-        print("✅ Data Filtering: PASS")
     else:
-        print("❌ Data Filtering: FAIL")
+        pass")
 
     # Test 5: Platform Authentication
     if test_platform_authentication():
         tests_passed += 1
-        print("✅ Platform Authentication: PASS")
     else:
-        print("❌ Platform Authentication: FAIL")
+        pass")
 
     # Test 6: Bulk Sync Operations
     if test_bulk_sync_operations():
         tests_passed += 1
-        print("✅ Bulk Sync Operations: PASS")
     else:
-        print("❌ Bulk Sync Operations: FAIL")
+        pass")
 
     # Results
-    print(
-        f"\n🎯 TEST RESULTS: {tests_passed}/{total_tests} tests passed ({(tests_passed/total_tests*100):.1f}%)"
-    )
 
     if tests_passed >= 5:
-        print("🎉 BUSINESS & CRM SOURCES: EXCELLENT IMPLEMENTATION!")
         display_business_system_summary()
         return True
-    else:
-        print("⚠️ BUSINESS & CRM SOURCES: NEEDS IMPROVEMENT")
-        return False
+    print("⚠️ BUSINESS & CRM SOURCES: NEEDS IMPROVEMENT")
+    return False
 
 
 if __name__ == "__main__":

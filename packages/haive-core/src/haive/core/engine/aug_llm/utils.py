@@ -1,5 +1,4 @@
-"""
-Utility functions for working with AugLLMConfig instances.
+"""Utility functions for working with AugLLMConfig instances.
 
 This module provides helper functions for composing, managing, and utilizing
 augmented LLM runnables within the Haive framework. The utilities here enable
@@ -21,6 +20,7 @@ from langchain_core.runnables import Runnable, RunnableConfig
 
 from haive.core.engine.aug_llm.config import AugLLMConfig
 
+
 # Type for runnable configs
 T = TypeVar("T")
 
@@ -28,10 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 def compose_runnable(
-    aug_llm_config: AugLLMConfig, runnable_config: Optional[RunnableConfig] = None
+    aug_llm_config: AugLLMConfig, runnable_config: RunnableConfig | None = None
 ) -> Runnable:
-    """
-    Compose a runnable LLM chain from an AugLLMConfig.
+    """Compose a runnable LLM chain from an AugLLMConfig.
 
     Creates a ready-to-use runnable object from the provided configuration,
     applying any runtime configuration overrides as needed.
@@ -58,15 +57,14 @@ def compose_runnable(
     try:
         return aug_llm_config.create_runnable(runnable_config)
     except Exception as e:
-        logger.error(f"Error composing runnable: {e}")
+        logger.exception(f"Error composing runnable: {e}")
         raise
 
 
 def create_runnables_dict(
-    runnables: Union[List[AugLLMConfig], Dict[str, AugLLMConfig], AugLLMConfig],
-) -> Dict[str, AugLLMConfig]:
-    """
-    Create a dictionary mapping names to runnable configs from various input formats.
+    runnables: list[AugLLMConfig] | dict[str, AugLLMConfig] | AugLLMConfig,
+) -> dict[str, AugLLMConfig]:
+    """Create a dictionary mapping names to runnable configs from various input formats.
 
     Normalizes different input formats (list, dictionary, or single config) into
     a consistent dictionary format mapping names to configurations. This is useful
@@ -123,11 +121,10 @@ def create_runnables_dict(
 
 
 def compose_runnables_from_dict(
-    runnables: Dict[str, Union[AugLLMConfig, Any]],
-    runnable_config: Optional[RunnableConfig] = None,
-) -> Dict[str, Runnable]:
-    """
-    Compose and return a dictionary of runnables from a dictionary of configs.
+    runnables: dict[str, AugLLMConfig | Any],
+    runnable_config: RunnableConfig | None = None,
+) -> dict[str, Runnable]:
+    """Compose and return a dictionary of runnables from a dictionary of configs.
 
     Takes a dictionary mapping names to configurations and returns a dictionary
     mapping the same names to fully composed, executable runnables. This is useful
@@ -162,16 +159,15 @@ def compose_runnables_from_dict(
             else:
                 logger.warning(f"Config for {key} does not have create_runnable method")
         except Exception as e:
-            logger.error(f"Error composing runnable for {key}: {e}")
+            logger.exception(f"Error composing runnable for {key}: {e}")
 
     return result
 
 
 def chain_runnables(
-    runnables: List[Runnable], override_config: Optional[Dict[str, Any]] = None
+    runnables: list[Runnable], override_config: dict[str, Any] | None = None
 ) -> Runnable:
-    """
-    Chain multiple runnables together with optional configuration overrides.
+    """Chain multiple runnables together with optional configuration overrides.
 
     Creates a composite runnable that passes the output of each runnable to the
     input of the next one in sequence. This is useful for creating processing
@@ -219,10 +215,9 @@ def chain_runnables(
 
 
 def merge_configs(
-    base_config: Optional[RunnableConfig], override_config: Optional[RunnableConfig]
+    base_config: RunnableConfig | None, override_config: RunnableConfig | None
 ) -> RunnableConfig:
-    """
-    Merge two runnable configs, with override taking precedence.
+    """Merge two runnable configs, with override taking precedence.
 
     Performs a deep merge of two configuration dictionaries, with special handling
     for nested structures like engine_configs. The override values take precedence

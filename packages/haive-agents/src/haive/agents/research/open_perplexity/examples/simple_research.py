@@ -56,23 +56,12 @@ def main():
     logger.info(f"Report saved to {report_path}")
 
     # Show summary
-    print("\n" + "=" * 50)
-    print("RESEARCH SUMMARY")
-    print("=" * 50)
 
     # Print a brief summary
-    topic = final_state.get("research_topic", "Unknown topic")
-    sections = final_state.get("report_sections", [])
-    sources = final_state.get("sources", [])
-    confidence = final_state.get("confidence_level", "Unknown")
-
-    print(f"Topic: {topic}")
-    print(f"Sections: {len(sections)}")
-    print(f"Sources: {len(sources)}")
-    print(f"Confidence: {confidence}")
-    print("=" * 50)
-
-    print(f"\nFull report saved to: {report_path}")
+    final_state.get("research_topic", "Unknown topic")
+    final_state.get("report_sections", [])
+    final_state.get("sources", [])
+    final_state.get("confidence_level", "Unknown")
 
 
 if __name__ == "__main__":

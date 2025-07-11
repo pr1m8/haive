@@ -32,9 +32,9 @@ Usage:
     ```
 """
 
+from datetime import datetime
 import json
 import logging
-from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, ConfigDict, Field, PrivateAttr, model_validator
@@ -45,6 +45,7 @@ from rich.table import Table
 from rich.tree import Tree
 
 from haive.core.engine.base import Engine, EngineType
+
 
 logger = logging.getLogger(__name__)
 
@@ -69,22 +70,22 @@ class EngineStateMixin(BaseModel):
     """
 
     # Main storage - using proper field names (no leading underscore)
-    engines: Dict[str, Engine] = Field(
+    engines: dict[str, Engine] = Field(
         default_factory=dict, description="Engines indexed by name"
     )
-    engines_by_type: Dict[EngineType, List[Engine]] = Field(
+    engines_by_type: dict[EngineType, list[Engine]] = Field(
         default_factory=lambda: {engine_type: [] for engine_type in EngineType},
         description="Engines organized by type for quick access",
     )
 
     # Track engine metadata and relationships
-    engine_metadata: Dict[str, Dict[str, Any]] = Field(
+    engine_metadata: dict[str, dict[str, Any]] = Field(
         default_factory=dict, description="Additional metadata for each engine"
     )
 
     # Private attributes for internal tracking
-    _engine_access_log: List[Dict[str, Any]] = PrivateAttr(default_factory=list)
-    _engine_performance_metrics: Dict[str, Dict[str, float]] = PrivateAttr(
+    _engine_access_log: list[dict[str, Any]] = PrivateAttr(default_factory=list)
+    _engine_performance_metrics: dict[str, dict[str, float]] = PrivateAttr(
         default_factory=dict
     )
 
@@ -129,7 +130,7 @@ class EngineStateMixin(BaseModel):
 
     # ===== Engine Management Methods =====
 
-    def add_engine(self, engine: Engine, name: Optional[str] = None) -> None:
+    def add_engine(self, engine: Engine, name: str | None = None) -> None:
         """Add an engine to the state with automatic organization by type.
 
         This method adds an engine to both the main engines dictionary and the
@@ -158,7 +159,7 @@ class EngineStateMixin(BaseModel):
 
         logger.debug(f"Added engine '{engine_name}' of type {engine.engine_type}")
 
-    def get_engine(self, name: str) -> Optional[Engine]:
+    def get_engine(self, name: str) -> Engine | None:
         """Get an engine by name with access logging.
 
         This method retrieves an engine by name and updates access metrics
@@ -201,7 +202,7 @@ class EngineStateMixin(BaseModel):
 
         return engine
 
-    def get_engines_by_type(self, engine_type: EngineType) -> List[Engine]:
+    def get_engines_by_type(self, engine_type: EngineType) -> list[Engine]:
         """Get all engines of a specific type.
 
         Args:
@@ -212,7 +213,7 @@ class EngineStateMixin(BaseModel):
         """
         return self.engines_by_type.get(engine_type, [])
 
-    def get_all_engines(self) -> Dict[str, Engine]:
+    def get_all_engines(self) -> dict[str, Engine]:
         """Get all engines as a dictionary.
 
         Returns:
@@ -222,7 +223,7 @@ class EngineStateMixin(BaseModel):
 
     # ===== Specialized Getters =====
 
-    def get_llms(self) -> List[Engine]:
+    def get_llms(self) -> list[Engine]:
         """Get all LLM/AugLLM engines.
 
         Returns:
@@ -230,7 +231,7 @@ class EngineStateMixin(BaseModel):
         """
         return self.get_engines_by_type(EngineType.LLM)
 
-    def get_retrievers(self) -> List[Engine]:
+    def get_retrievers(self) -> list[Engine]:
         """Get all retriever engines.
 
         Returns:
@@ -238,7 +239,7 @@ class EngineStateMixin(BaseModel):
         """
         return self.get_engines_by_type(EngineType.RETRIEVER)
 
-    def get_agents(self) -> List[Engine]:
+    def get_agents(self) -> list[Engine]:
         """Get all agent engines.
 
         Returns:
@@ -246,7 +247,7 @@ class EngineStateMixin(BaseModel):
         """
         return self.get_engines_by_type(EngineType.AGENT)
 
-    def get_vector_stores(self) -> List[Engine]:
+    def get_vector_stores(self) -> list[Engine]:
         """Get all vector store engines.
 
         Returns:
@@ -254,7 +255,7 @@ class EngineStateMixin(BaseModel):
         """
         return self.get_engines_by_type(EngineType.VECTOR_STORE)
 
-    def get_tools(self) -> List[Engine]:
+    def get_tools(self) -> list[Engine]:
         """Get all tool engines.
 
         Returns:
@@ -262,7 +263,7 @@ class EngineStateMixin(BaseModel):
         """
         return self.get_engines_by_type(EngineType.TOOL)
 
-    def get_embeddings(self) -> List[Engine]:
+    def get_embeddings(self) -> list[Engine]:
         """Get all embeddings engines.
 
         Returns:
@@ -322,7 +323,7 @@ class EngineStateMixin(BaseModel):
         else:
             logger.warning(f"Engine '{name}' does not have a provider attribute")
 
-    def get_engine_tools(self, name: str) -> List[Any]:
+    def get_engine_tools(self, name: str) -> list[Any]:
         """Get tools from an engine (for agents/LLMs with tools).
 
         This method tries to extract tools from an engine by checking
@@ -344,12 +345,12 @@ class EngineStateMixin(BaseModel):
                 tools = getattr(engine, attr)
                 if isinstance(tools, list):
                     return tools
-                elif tools is not None:
+                if tools is not None:
                     return [tools]
 
         return []
 
-    def get_engine_routes(self, name: str) -> Dict[str, str]:
+    def get_engine_routes(self, name: str) -> dict[str, str]:
         """Get tool routes from an engine.
 
         This method tries to extract routing information from an engine
@@ -686,7 +687,7 @@ class EngineStateMixin(BaseModel):
 
             console.print(log_table)
 
-    def get_engine_summary(self) -> Dict[str, Any]:
+    def get_engine_summary(self) -> dict[str, Any]:
         """Get a summary of all engines.
 
         This method generates a summary of engine statistics including

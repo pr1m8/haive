@@ -1,13 +1,13 @@
-"""Test Corrective RAG V2 Agent
+"""Test Corrective RAG V2 Agent.
 
 Tests the improved CorrectiveRAGAgentV2 with proper document grading.
 """
 
 import pytest
-from haive.core.fixtures.documents import conversation_documents
-from haive.core.models.llm.base import AzureLLMConfig
 
 from haive.agents.rag.corrective.agent_v2 import CorrectiveRAGAgentV2
+from haive.core.fixtures.documents import conversation_documents
+from haive.core.models.llm.base import AzureLLMConfig
 
 
 class TestCorrectiveRAGAgentV2:
@@ -63,13 +63,10 @@ class TestCorrectiveRAGAgentV2:
 
             # Should have results
             assert result is not None
-            print(f"✅ Corrective RAG completed for relevant query")
 
             # Check if grading happened
             if "document_decisions" in result:
-                print(
-                    f"Document grading performed: {len(result['document_decisions'])} documents graded"
-                )
+                pass
 
         except Exception as e:
             pytest.fail(f"Corrective RAG failed: {e}")
@@ -93,11 +90,10 @@ class TestCorrectiveRAGAgentV2:
 
             # Should complete even with irrelevant query
             assert result is not None
-            print(f"✅ Corrective RAG handled irrelevant query")
 
-        except Exception as e:
+        except Exception:
             # Expected - web search is placeholder
-            print(f"Note: Web search not implemented yet: {e}")
+            pass
 
     def test_corrective_rag_threshold_variations(self, llm_config):
         """Test different relevance thresholds."""
@@ -120,7 +116,6 @@ class TestCorrectiveRAGAgentV2:
 
         assert rag_low.name == "Corrective RAG Agent V2"
         assert rag_high.name == "Corrective RAG Agent V2"
-        print("✅ Created Corrective RAG agents with different thresholds")
 
 
 if __name__ == "__main__":

@@ -8,12 +8,11 @@ import logging
 from typing import List, Optional
 from urllib.parse import urlparse
 
-from langchain_core.document_loaders.base import BaseLoader
-
 from haive.core.engine.document.loaders.sources.implementation import (
     CloudStorageSource,
     CredentialType,
 )
+from langchain_core.document_loaders.base import BaseLoader
 
 logger = logging.getLogger(__name__)
 

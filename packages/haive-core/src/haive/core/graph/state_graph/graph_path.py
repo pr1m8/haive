@@ -10,14 +10,13 @@ console = Console()
 
 
 class GraphPath(BaseModel):
-    """
-    Model representing a path through the graph with analysis capabilities.
+    """Model representing a path through the graph with analysis capabilities.
 
     Provides methods for analyzing paths including conditional branches,
     reaching END nodes, and path visualization.
     """
 
-    nodes: List[str] = Field(
+    nodes: list[str] = Field(
         default_factory=list, description="Ordered list of nodes in the path"
     )
     contains_conditional: bool = Field(
@@ -73,8 +72,7 @@ class GraphPath(BaseModel):
         console.print(panel)
 
     def merge(self, other: "GraphPath") -> "GraphPath":
-        """
-        Merge this path with another path, continuing from the last node.
+        """Merge this path with another path, continuing from the last node.
 
         Args:
             other: The path to merge with this one
@@ -108,8 +106,7 @@ class GraphPath(BaseModel):
     def append(
         self, node: str, is_conditional: bool = False, is_end: bool = False
     ) -> "GraphPath":
-        """
-        Append a node to this path.
+        """Append a node to this path.
 
         Args:
             node: Node to append

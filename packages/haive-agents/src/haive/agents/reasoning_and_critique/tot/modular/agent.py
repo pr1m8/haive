@@ -85,12 +85,14 @@ class ToTAgent(Agent[ToTAgentConfig]):
             return Command(update={"candidates": candidates})
 
         except Exception as e:
-            logger.error(f"Error in expand node: {e}")
+            logger.exception(f"Error in expand node: {e}")
             messages = self.get_state_value(state, "messages", [])
             return Command(
                 update={
-                    "messages": messages
-                    + [AIMessage(content=f"Error generating candidates: {e}")],
+                    "messages": [
+                        *messages,
+                        AIMessage(content=f"Error generating candidates: {e}"),
+                    ],
                     "candidates": [Candidate(content="Expansion failed")],
                 }
             )
@@ -142,7 +144,7 @@ class ToTAgent(Agent[ToTAgentConfig]):
             return Command(update={"candidates": "clear", "scored_candidates": scored})
 
         except Exception as e:
-            logger.error(f"Error scoring candidates: {e}")
+            logger.exception(f"Error scoring candidates: {e}")
             messages = self.get_state_value(state, "messages", [])
             fallback = [
                 Candidate(
@@ -154,7 +156,7 @@ class ToTAgent(Agent[ToTAgentConfig]):
             ]
             return Command(
                 update={
-                    "messages": messages + [AIMessage(content=f"Scoring error: {e}")],
+                    "messages": [*messages, AIMessage(content=f"Scoring error: {e}")],
                     "candidates": "clear",
                     "scored_candidates": fallback,
                 }

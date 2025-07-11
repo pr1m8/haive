@@ -9,11 +9,12 @@ import inspect
 import logging
 from typing import Any, Callable, Dict, List, Optional, Type
 
+from haive.core.engine.document.loaders.sources.source_types import (
+    SourceCategory as SourceType,
+)
+from haive.core.registry.base import AbstractRegistry
 from langchain_core.document_loaders.base import BaseLoader
 from pydantic import BaseModel, ConfigDict, Field, create_model
-
-from haive.core.engine.document.loaders.sources.source_types import SourceCategory as SourceType
-from haive.core.registry.base import AbstractRegistry
 
 logger = logging.getLogger(__name__)
 

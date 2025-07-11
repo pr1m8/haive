@@ -7,13 +7,13 @@ def ensure_json_serializable(data: Any) -> Any:
     if data is None:
         return None
 
-    if isinstance(data, (str, int, float, bool)):
+    if isinstance(data, str | int | float | bool):
         return data
 
     if isinstance(data, dict):
         return {k: ensure_json_serializable(v) for k, v in data.items()}
 
-    if isinstance(data, (list, tuple)):
+    if isinstance(data, list | tuple):
         return [ensure_json_serializable(item) for item in data]
 
     if callable(data) and hasattr(data, "__name__"):

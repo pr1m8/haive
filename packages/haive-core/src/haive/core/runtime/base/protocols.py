@@ -5,6 +5,7 @@ from langchain_core.runnables import RunnableConfig
 
 from haive.core.engine.base.protocols import ExtensibleProtocol
 
+
 # Type variables
 I = TypeVar("I")  # Input type
 O = TypeVar("O")  # Output type

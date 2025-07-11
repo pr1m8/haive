@@ -15,24 +15,20 @@ def run_tests():
     ]
 
     for test_file in test_files:
-        print(f"\n{'='*60}")
-        print(f"Running {test_file}")
-        print("=" * 60)
 
         result = subprocess.run(
-            ["poetry", "run", "pytest", test_file, "-v"], capture_output=True, text=True
+            ["poetry", "run", "pytest", test_file, "-v"],
+            check=False,
+            capture_output=True,
+            text=True,
         )
 
-        print(result.stdout)
         if result.stderr:
-            print("STDERR:", result.stderr)
+            pass
 
         if result.returncode != 0:
-            print(f"FAILED: {test_file}")
             return False
 
-    print("\n" + "=" * 60)
-    print("All tests completed!")
     return True
 
 

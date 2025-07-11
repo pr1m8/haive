@@ -3,35 +3,24 @@
 This module contains tests for the DocumentAgent class and related functionality.
 """
 
-from collections.abc import Generator
 import os
 import shutil
 import tempfile
+from collections.abc import Generator
 from typing import Any
 from unittest.mock import MagicMock, patch
 
-from pydantic import BaseModel
 import pytest
+from pydantic import BaseModel
 
-from .document_agent import (
-    DocumentAgent,
-    DocumentAgentOptions,
-    create_directory_document_agent,
-    create_document_agent,
-    create_file_document_agent,
-    create_web_document_agent,
-)
-from .document_state import (
-    ChunkingOptions,
-    ChunkingStrategy,
-    Document,
-    DocumentFormat,
-    DocumentSource,
-    DocumentSourceType,
-    DocumentState,
-    LoadingStrategy,
-    ProcessingStage,
-)
+from .document_agent import (DocumentAgent, DocumentAgentOptions,
+                             create_directory_document_agent,
+                             create_document_agent, create_file_document_agent,
+                             create_web_document_agent)
+from .document_state import (ChunkingOptions, ChunkingStrategy, Document,
+                             DocumentFormat, DocumentSource,
+                             DocumentSourceType, DocumentState,
+                             LoadingStrategy, ProcessingStage)
 
 
 class MockDocument(BaseModel):

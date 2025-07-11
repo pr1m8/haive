@@ -7,7 +7,7 @@
     "description": "Extract raw content from a list of websites using the Tavily Extract API.\n\n    This tool retrieves the content from specified URLs, which is useful for data collection,\n    content analysis, and research. It can be combined with search methods to first find\n    relevant documents and then extract detailed information from them.\n\n    Args:\n        urls (List[str]): The list of URLs to extract content from.\n        **kwargs: Additional arguments to pass to the Tavily Extract API.\n\n    Returns:\n        Dict: The extracted content from the specified URLs in a structured format.\n\n    Raises:\n        Exception: If the URL extraction fails or if the API request encounters an error.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.755346",
+    "timestamp": "2025-07-10T19:45:28.984234",
     "schema": {
       "description": "Extract raw content from a list of websites using the Tavily Extract API.\n\nThis tool retrieves the content from specified URLs, which is useful for data collection,\ncontent analysis, and research. It can be combined with search methods to first find\nrelevant documents and then extract detailed information from them.\n\nArgs:\n    urls (List[str]): The list of URLs to extract content from.\n    **kwargs: Additional arguments to pass to the Tavily Extract API.\n\nReturns:\n    Dict: The extracted content from the specified URLs in a structured format.\n\nRaises:\n    Exception: If the URL extraction fails or if the API request encounters an error.",
       "properties": {
@@ -44,7 +44,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.755346",
+      "timestamp": "2025-07-10T19:45:28.984234",
       "category": "individual_tools"
     }
   },

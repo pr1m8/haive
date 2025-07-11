@@ -23,7 +23,7 @@ class AnswerQuestion(BaseModel):
 
 
 class ReviseAnswer(AnswerQuestion):
-    """Revise your original answer to your question. Provide an answer, reflection,
+    """Revise your original answer to your question. Provide an answer, reflection,.
 
     cite your reflection with references, and finally
     add search queries to improve the answer.

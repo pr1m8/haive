@@ -1,13 +1,10 @@
 # src/haive/core/logging/handlers.py
 
-"""
-Custom handlers for Rich console and rotating file output.
-"""
+"""Custom handlers for Rich console and rotating file output."""
 
 import logging
 from logging.handlers import RotatingFileHandler as BaseRotatingFileHandler
 from pathlib import Path
-from typing import Optional
 
 from rich.console import Console
 from rich.logging import RichHandler
@@ -18,7 +15,7 @@ from rich.text import Text
 class RichConsoleHandler(RichHandler):
     """Enhanced Rich console handler with additional formatting."""
 
-    def __init__(self, console: Optional[Console] = None, **kwargs):
+    def __init__(self, console: Console | None = None, **kwargs):
         # Set up console
         if console is None:
             console = Console()

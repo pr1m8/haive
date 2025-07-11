@@ -1,13 +1,14 @@
 # tests/engine/agent/debug_test.py
 
 import logging
-import uuid
 from typing import Any
+import uuid
 
-from haive.agents.simple.config import SimpleAgentConfig
 from langchain_core.messages import HumanMessage
 
+from haive.agents.simple.config import SimpleAgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
+
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +37,6 @@ def debug_state_inspection():
 
     # Run the agent
     result = agent.run({"messages": [input_message]}, config=config)
-    print(result)
     # Debug output
     logger.info("FIRST RUN RESULT:")
     print_state_deeply(result)

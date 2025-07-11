@@ -9,19 +9,17 @@ from haive.core.engine.loaders.sources.types import SourceType
 
 
 class WebSource(BaseSource):
-    """
-    Base class for all web-based sources.
-    """
+    """Base class for all web-based sources."""
 
     url: HttpUrl = Field(description="URL of the resource")
-    headers: Dict[str, str] = Field(default_factory=dict, description="HTTP headers")
+    headers: dict[str, str] = Field(default_factory=dict, description="HTTP headers")
     timeout: int = Field(default=30, description="Timeout in seconds")
     verify_ssl: bool = Field(
         default=True, description="Whether to verify SSL certificates"
     )
 
     # Class variable for domain-based source type mapping
-    DOMAIN_PATTERNS: ClassVar[Dict[str, SourceType]] = {
+    DOMAIN_PATTERNS: ClassVar[dict[str, SourceType]] = {
         r"github\.com": SourceType.GITHUB,
         r"arxiv\.org": SourceType.ARXIV,
         r"reddit\.com": SourceType.REDDIT,
@@ -53,8 +51,7 @@ class WebSource(BaseSource):
         return self.url
 
     def validate(self) -> bool:
-        """
-        Basic validation of URL format.
+        """Basic validation of URL format.
         Note: This doesn't check if the URL is accessible.
         """
         return True  # URL is already validated by Pydantic
@@ -78,12 +75,12 @@ class WebSource(BaseSource):
         return parsed.path
 
     @computed_field
-    def query_params(self) -> Dict[str, List[str]]:
+    def query_params(self) -> dict[str, list[str]]:
         """Get the query parameters from the URL."""
         parsed = urlparse(str(self.url))
         return parse_qs(parsed.query)
 
-    def get_metadata(self) -> Dict[str, Any]:
+    def get_metadata(self) -> dict[str, Any]:
         """Get URL metadata."""
         metadata = super().get_metadata()
         metadata.update(
@@ -102,7 +99,7 @@ class WebSource(BaseSource):
         return metadata
 
     @classmethod
-    def from_url(cls, url: Union[str, HttpUrl], **kwargs) -> "WebSource":
+    def from_url(cls, url: str | HttpUrl, **kwargs) -> "WebSource":
         """Create a WebSource from a URL."""
         # Set default name from domain if not provided
         if "name" not in kwargs:
@@ -117,13 +114,13 @@ class ApiSource(WebSource):
 
     source_type: SourceType = Field(default=SourceType.API)
     method: str = Field(default="GET", description="HTTP method")
-    params: Dict[str, Any] = Field(default_factory=dict, description="Query parameters")
-    data: Optional[Dict[str, Any]] = Field(default=None, description="Request data")
-    auth: Optional[Dict[str, str]] = Field(
+    params: dict[str, Any] = Field(default_factory=dict, description="Query parameters")
+    data: dict[str, Any] | None = Field(default=None, description="Request data")
+    auth: dict[str, str] | None = Field(
         default=None, description="Authentication credentials"
     )
 
-    def get_metadata(self) -> Dict[str, Any]:
+    def get_metadata(self) -> dict[str, Any]:
         """Get API metadata."""
         metadata = super().get_metadata()
         metadata.update({"method": self.method, "params": self.params})

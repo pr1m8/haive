@@ -8,14 +8,14 @@ efficient resource usage and prevent connection exhaustion.
 import asyncio
 import logging
 import threading
-from contextlib import asynccontextmanager, contextmanager
-from typing import Any, Dict, Optional, Union
+from typing import Any
+
 
 logger = logging.getLogger(__name__)
 
 # Global connection registries
-_sync_connections: Dict[str, Any] = {}
-_async_connections: Dict[str, Any] = {}
+_sync_connections: dict[str, Any] = {}
+_async_connections: dict[str, Any] = {}
 _sync_lock = threading.Lock()
 _async_lock = asyncio.Lock()
 
@@ -31,8 +31,8 @@ class ConnectionManager:
     @staticmethod
     def get_or_create_sync_pool(
         connection_id: str,
-        connection_params: Dict[str, Any],
-        pool_config: Optional[Dict[str, Any]] = None,
+        connection_params: dict[str, Any],
+        pool_config: dict[str, Any] | None = None,
     ) -> Any:
         """Get or create a synchronous connection pool.
 
@@ -75,8 +75,8 @@ class ConnectionManager:
     @staticmethod
     async def get_or_create_async_pool(
         connection_id: str,
-        connection_params: Dict[str, Any],
-        pool_config: Optional[Dict[str, Any]] = None,
+        connection_params: dict[str, Any],
+        pool_config: dict[str, Any] | None = None,
     ) -> Any:
         """Get or create an asynchronous connection pool.
 
@@ -118,7 +118,7 @@ class ConnectionManager:
             return pool
 
     @staticmethod
-    def _build_postgres_uri(params: Dict[str, Any]) -> str:
+    def _build_postgres_uri(params: dict[str, Any]) -> str:
         """Build PostgreSQL connection URI."""
         import urllib.parse
 
@@ -151,7 +151,7 @@ class ConnectionManager:
                     pool.close()
                     logger.info(f"Closed sync pool for {connection_id}")
                 except Exception as e:
-                    logger.error(f"Error closing sync pool: {e}")
+                    logger.exception(f"Error closing sync pool: {e}")
                 del _sync_connections[connection_id]
 
     @staticmethod
@@ -164,5 +164,5 @@ class ConnectionManager:
                     await pool.close()
                     logger.info(f"Closed async pool for {connection_id}")
                 except Exception as e:
-                    logger.error(f"Error closing async pool: {e}")
+                    logger.exception(f"Error closing async pool: {e}")
                 del _async_connections[connection_id]

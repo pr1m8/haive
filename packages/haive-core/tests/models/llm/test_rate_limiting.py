@@ -9,8 +9,8 @@ This module tests the rate limiting mixin including:
 from typing import Optional
 from unittest.mock import Mock, patch
 
-import pytest
 from pydantic import BaseModel, Field
+import pytest
 
 from haive.core.models.llm.rate_limiting_mixin import RateLimitingMixin
 
@@ -20,13 +20,13 @@ def create_rate_limited_class():
 
     class TestClass(RateLimitingMixin, BaseModel):
         # Add the rate limiting fields with validation
-        requests_per_second: Optional[float] = Field(default=None, ge=0)
-        tokens_per_second: Optional[int] = Field(default=None, ge=0)
-        tokens_per_minute: Optional[int] = Field(default=None, ge=0)
+        requests_per_second: float | None = Field(default=None, ge=0)
+        tokens_per_second: int | None = Field(default=None, ge=0)
+        tokens_per_minute: int | None = Field(default=None, ge=0)
         max_retries: int = Field(default=3, ge=0)
         retry_delay: float = Field(default=1.0, ge=0)
-        check_every_n_seconds: Optional[float] = Field(default=None, ge=0)
-        burst_size: Optional[int] = Field(default=None, ge=1)
+        check_every_n_seconds: float | None = Field(default=None, ge=0)
+        burst_size: int | None = Field(default=None, ge=1)
 
     return TestClass
 
@@ -125,7 +125,7 @@ class TestRateLimitingMixin:
         mock_rate_limiter = Mock()
         mock_rate_limiter_class.return_value = mock_rate_limiter
 
-        result = obj.apply_rate_limiting(mock_llm)
+        obj.apply_rate_limiting(mock_llm)
 
         # Should pass all params to rate limiter
         mock_rate_limiter_class.assert_called_once_with(

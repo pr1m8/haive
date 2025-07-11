@@ -1,4 +1,4 @@
-"""Complete RAG Workflows Implementation
+"""Complete RAG Workflows Implementation.
 
 Implements all RAG architectures from rag-architectures-flows.md including:
 - Corrective RAG with web search fallback
@@ -12,6 +12,10 @@ Implements all RAG architectures from rag-architectures-flows.md including:
 from enum import Enum
 from typing import List, Optional
 
+from haive.agents.base.agent import Agent
+from haive.agents.multi.base import ConditionalAgent, SequentialAgent
+from haive.agents.rag.base.agent import SimpleRAGAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.fixtures.documents import conversation_documents
 from haive.core.graph.node.callable_node import CallableNodeConfig
@@ -19,11 +23,6 @@ from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.prebuilt.rag_state import MultiAgentRAGState
 from langchain_core.documents import Document
 from langgraph.graph import END, START
-
-from haive.agents.base.agent import Agent
-from haive.agents.multi.base import ConditionalAgent, SequentialAgent
-from haive.agents.rag.base.agent import SimpleRAGAgent
-from haive.agents.simple.agent import SimpleAgent
 
 
 class RAGQuality(str, Enum):
@@ -259,11 +258,11 @@ def hyde_hypothesis_generation(input_data: dict) -> dict:
     # Mock hypothesis generation (replace with actual LLM call)
     hypothesis = f"""
     A comprehensive answer to "{query}" would include the following information:
-    
+
     Key details about the topic, relevant background information, specific examples,
     and practical considerations. The response would be well-structured and informative,
     covering multiple aspects of the question to provide complete understanding.
-    
+
     This hypothetical document represents the ideal response that would perfectly
     answer the user's question with accurate, detailed, and relevant information.
     """
@@ -283,7 +282,7 @@ def hyde_hypothesis_generation(input_data: dict) -> dict:
 class CorrectiveRAGAgent(ConditionalAgent):
     """Full Corrective RAG implementation with web search fallback."""
 
-    def __init__(self, documents: Optional[List[Document]] = None, **kwargs):
+    def __init__(self, documents: list[Document] | None = None, **kwargs):
         # Create retrieval agent
         retrieval_agent = SimpleRAGAgent.from_documents(
             documents or conversation_documents, name="CRAG Retrieval Agent"
@@ -389,7 +388,7 @@ class CorrectiveRAGAgent(ConditionalAgent):
 class SelfRAGAgent(ConditionalAgent):
     """Self-RAG with reflection tokens and adaptive retrieval."""
 
-    def __init__(self, documents: Optional[List[Document]] = None, **kwargs):
+    def __init__(self, documents: list[Document] | None = None, **kwargs):
         # Create retrieval decision agent
         decision_agent = Agent()
         decision_agent.name = "Self-RAG Decision Agent"
@@ -530,7 +529,7 @@ class SelfRAGAgent(ConditionalAgent):
 class AdaptiveRAGAgent(ConditionalAgent):
     """Adaptive RAG with complexity-based routing."""
 
-    def __init__(self, documents: Optional[List[Document]] = None, **kwargs):
+    def __init__(self, documents: list[Document] | None = None, **kwargs):
         # Create query analyzer
         analyzer_agent = Agent()
         analyzer_agent.name = "Query Complexity Analyzer"
@@ -583,7 +582,7 @@ class AdaptiveRAGAgent(ConditionalAgent):
 
         return graph
 
-    def _create_multi_query_agent(self, documents: Optional[List[Document]]) -> Agent:
+    def _create_multi_query_agent(self, documents: list[Document] | None) -> Agent:
         """Create multi-query RAG agent."""
         multi_query_agent = Agent()
         multi_query_agent.name = "Multi-Query RAG Agent"
@@ -636,12 +635,11 @@ class AdaptiveRAGAgent(ConditionalAgent):
             # Route based on complexity
             if complexity == "simple":
                 return self._get_agent_node_name(self.simple_rag_agent)
-            elif complexity == "medium":
+            if complexity == "medium":
                 return self._get_agent_node_name(self.multi_query_agent)
-            elif complexity == "complex":
+            if complexity == "complex":
                 return self._get_agent_node_name(self.complex_rag_agent)
-            else:
-                return self._get_agent_node_name(self.direct_agent)
+            return self._get_agent_node_name(self.direct_agent)
 
         # Add conditional routing
         for agent in self.agents:
@@ -656,7 +654,7 @@ class AdaptiveRAGAgent(ConditionalAgent):
 class HYDERAGAgent(SequentialAgent):
     """Enhanced HYDE RAG with hypothesis generation."""
 
-    def __init__(self, documents: Optional[List[Document]] = None, **kwargs):
+    def __init__(self, documents: list[Document] | None = None, **kwargs):
         # Create hypothesis generator
         hypothesis_agent = Agent()
         hypothesis_agent.name = "HYDE Hypothesis Generator"
@@ -699,7 +697,7 @@ class HYDERAGAgent(SequentialAgent):
 
 
 def create_complete_rag_workflow(
-    workflow_type: str, documents: Optional[List[Document]] = None, **kwargs
+    workflow_type: str, documents: list[Document] | None = None, **kwargs
 ) -> Agent:
     """Factory for creating complete RAG workflows.
 
@@ -726,14 +724,14 @@ def create_complete_rag_workflow(
 
 
 __all__ = [
-    "CorrectiveRAGAgent",
-    "SelfRAGAgent",
     "AdaptiveRAGAgent",
+    "CorrectiveRAGAgent",
     "HYDERAGAgent",
-    "create_complete_rag_workflow",
     "RAGQuality",
     "ReflectionToken",
+    "SelfRAGAgent",
     "crag_relevance_check",
+    "create_complete_rag_workflow",
     "hallucination_detection",
     "web_search_fallback",
 ]

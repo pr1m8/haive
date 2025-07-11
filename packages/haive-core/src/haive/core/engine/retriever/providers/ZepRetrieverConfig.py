@@ -1,5 +1,4 @@
-"""
-Zep Retriever implementation for the Haive framework.
+"""Zep Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Zep retriever,
 which retrieves conversation history and memory from Zep's long-term memory store.
@@ -35,8 +34,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.ZEP)
 class ZepRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for Zep retriever in the Haive framework.
+    """Configuration for Zep retriever in the Haive framework.
 
     This retriever searches conversational memory stored in Zep and returns
     relevant chat history and context for AI applications.
@@ -87,7 +85,7 @@ class ZepRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     url: str = Field(..., description="Zep server URL (e.g., 'http://localhost:8000')")
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None, description="Zep API key (auto-resolved from ZEP_API_KEY)"
     )
 
@@ -118,21 +116,21 @@ class ZepRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         description="Lambda parameter for MMR search (diversity vs relevance)",
     )
 
-    metadata_filter: Optional[Dict[str, Any]] = Field(
+    metadata_filter: dict[str, Any] | None = Field(
         default=None, description="Metadata filters for search"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Zep retriever."""
         return {
             "query": (str, Field(description="Search query for conversation memory")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Zep retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list,
                     description="Conversation history from Zep memory",
@@ -141,8 +139,7 @@ class ZepRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a Zep retriever from this configuration.
+        """Create a Zep retriever from this configuration.
 
         Returns:
             ZepRetriever: Instantiated retriever ready for memory search.

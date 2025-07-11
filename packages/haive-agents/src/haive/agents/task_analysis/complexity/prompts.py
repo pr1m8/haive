@@ -2,6 +2,7 @@
 
 from langchain_core.prompts import ChatPromptTemplate
 
+
 COMPLEXITY_ASSESSMENT_PROMPT = ChatPromptTemplate.from_messages(
     [
         (

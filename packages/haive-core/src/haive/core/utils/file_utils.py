@@ -17,13 +17,12 @@ def read_file_content(file_path):
         ChatPromptTemplate: Chat prompt template with the file content as the system message.
     """
     try:
-        if file_path.endswith(".yml") or file_path.endswith(".yaml"):
+        if file_path.endswith((".yml", ".yaml")):
             return read_yaml_file(file_path)
         # Read the content of the .md file
         with open(file_path, encoding="utf-8") as file:
             file_content = file.read()
-    except Exception as e:
-        print(f"Error reading file {file_path}: {e}")
+    except Exception:
         return None
 
     return file_content

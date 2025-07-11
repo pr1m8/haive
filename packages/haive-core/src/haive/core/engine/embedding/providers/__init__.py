@@ -49,13 +49,13 @@ from .OpenAIEmbeddingConfig import OpenAIEmbeddingConfig
 
 # Export all configurations
 __all__ = [
-    "OpenAIEmbeddingConfig",
     "AzureOpenAIEmbeddingConfig",
-    "HuggingFaceEmbeddingConfig",
     "CohereEmbeddingConfig",
-    "GoogleVertexAIEmbeddingConfig",
-    "OllamaEmbeddingConfig",
     "FakeEmbeddingConfig",
+    "GoogleVertexAIEmbeddingConfig",
+    "HuggingFaceEmbeddingConfig",
+    "OllamaEmbeddingConfig",
+    "OpenAIEmbeddingConfig",
 ]
 
 # Provider information for discovery
@@ -115,7 +115,7 @@ PROVIDER_INFO = {
 }
 
 
-def get_provider_info(provider_name: str = None) -> dict:
+def get_provider_info(provider_name: str | None = None) -> dict:
     """Get information about embedding providers.
 
     Args:
@@ -159,7 +159,7 @@ def list_providers() -> list[str]:
 
 
 def get_providers_by_requirement(
-    auth_required: bool = None, local_only: bool = None
+    auth_required: bool | None = None, local_only: bool | None = None
 ) -> list[str]:
     """Get providers filtered by requirements.
 

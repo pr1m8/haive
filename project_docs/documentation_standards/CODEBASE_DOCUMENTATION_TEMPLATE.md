@@ -1,43 +1,51 @@
 # Codebase Documentation Template for Haive
 
 ## Overview
+
 This template provides the structure for documenting the Haive codebase. Use this as a guide for creating comprehensive documentation for modules, classes, and functions.
 
 ## Module Documentation Structure
 
 ### 1. Module Overview File (`{module_name}/README.md`)
 
-```markdown
+````markdown
 # Module: haive.{module_name}
 
 ## Purpose
+
 Brief description of what this module does and why it exists.
 
 ## Architecture
+
 - Key components and their relationships
 - Design patterns used
 - Integration points with other modules
 
 ## Quick Start
+
 ```python
 # Minimal working example
 from haive.{module_name} import MainClass
 instance = MainClass()
 result = instance.main_method()
 ```
+````
 
 ## API Summary
-| Class/Function | Description | Status |
-|----------------|-------------|---------|
-| `MainClass` | Primary interface for X | Stable |
-| `HelperClass` | Utilities for Y | Beta |
-| `experimental_feature()` | New feature Z | Experimental |
+
+| Class/Function           | Description             | Status       |
+| ------------------------ | ----------------------- | ------------ |
+| `MainClass`              | Primary interface for X | Stable       |
+| `HelperClass`            | Utilities for Y         | Beta         |
+| `experimental_feature()` | New feature Z           | Experimental |
 
 ## Dependencies
+
 - Internal: `haive.core`, `haive.utils`
 - External: `pydantic>=2.0`, `aiohttp>=3.8`
 
 ## Configuration
+
 ```yaml
 module_name:
   setting_a: default_value
@@ -45,18 +53,22 @@ module_name:
 ```
 
 ## Testing
+
 ```bash
 pytest tests/test_{module_name}/
 ```
 
 ## Known Issues
+
 - Issue #123: Description
 - Issue #456: Description
 
 ## Changelog
+
 - v0.2.0: Added feature X
 - v0.1.0: Initial release
-```
+
+````
 
 ### 2. Python File Documentation Template
 
@@ -72,25 +84,25 @@ Architecture Notes:
 
 Example:
     Basic usage::
-    
+
         from haive.{package}.{module} import {MainClass}
-        
+
         instance = {MainClass}(config={"key": "value"})
         result = await instance.process(data)
-        
+
     Advanced usage::
-    
+
         # With custom configuration
         config = {
             "option1": True,
             "option2": "custom_value"
         }
         instance = {MainClass}(**config)
-        
+
         # Process with callbacks
         async def callback(event):
             print(f"Event: {event}")
-            
+
         result = await instance.process(
             data,
             callback=callback
@@ -127,11 +139,11 @@ ConfigType = Dict[str, Any]
 
 class {ClassName}Protocol(Protocol):
     """{ClassName} protocol definition.
-    
+
     This protocol defines the interface that all {ClassName}
     implementations must follow.
     """
-    
+
     async def process(self, data: Any) -> Any:
         """Process data according to implementation."""
         ...
@@ -139,17 +151,17 @@ class {ClassName}Protocol(Protocol):
 
 class {ClassName}Config(BaseModel):
     """Configuration for {ClassName}.
-    
+
     This configuration model validates and provides defaults for all
-    {ClassName} settings. It uses Pydantic for validation and 
+    {ClassName} settings. It uses Pydantic for validation and
     serialization.
-    
+
     Attributes:
         setting_a (str): Description of setting A. Used for X.
         setting_b (int): Description of setting B. Must be positive.
         advanced_option (Optional[Dict]): Advanced configuration options.
             Only needed for custom implementations.
-    
+
     Example:
         >>> config = {ClassName}Config(
         ...     setting_a="value",
@@ -162,37 +174,37 @@ class {ClassName}Config(BaseModel):
           "advanced_option": null
         }
     """
-    
+
     setting_a: str = Field(
         default="default_value",
         description="Main configuration setting",
         regex="^[a-zA-Z0-9_]+$"
     )
-    
+
     setting_b: int = Field(
         default=100,
         description="Numeric setting with constraints",
         ge=1,
         le=1000
     )
-    
+
     advanced_option: Optional[Dict[str, Any]] = Field(
         default=None,
         description="Advanced options for power users"
     )
-    
+
     class Config:
         """Pydantic configuration."""
         validate_assignment = True
         extra = "forbid"
-        
+
     @validator('setting_b')
     def validate_setting_b(cls, v: int) -> int:
         """Ensure setting_b is even for internal reasons."""
         if v % 2 != 0:
             raise ValueError("setting_b must be even")
         return v
-        
+
     @root_validator
     def validate_config(cls, values: Dict[str, Any]) -> Dict[str, Any]:
         """Cross-field validation."""
@@ -205,96 +217,96 @@ class {ClassName}Config(BaseModel):
 
 class {ClassName}:
     """Main class implementation.
-    
+
     This class provides the primary interface for {functionality}.
     It handles {what it handles} and integrates with {what it integrates with}.
-    
+
     Design Notes:
         - Thread-safe: All methods are thread-safe
         - Async-first: All I/O operations are async
         - Lazy loading: Resources loaded on first use
-        
+
     Attributes:
         config ({ClassName}Config): Configuration instance
         is_initialized (bool): Whether the instance is initialized
         _internal_state (Dict): Internal state (private)
-    
+
     Example:
         Simple usage::
-        
+
             async with {ClassName}() as instance:
                 result = await instance.process("input")
-                
+
         Manual lifecycle::
-        
+
             instance = {ClassName}(config)
             await instance.initialize()
             try:
                 result = await instance.process("input")
             finally:
                 await instance.cleanup()
-                
+
     Raises:
         ConfigurationError: If configuration is invalid
         InitializationError: If initialization fails
     """
-    
+
     def __init__(
         self,
         config: Optional[Union[{ClassName}Config, Dict[str, Any]]] = None,
         **kwargs: Any
     ) -> None:
         """Initialize {ClassName}.
-        
+
         Args:
             config: Configuration object or dict. If None, uses defaults.
                 Can be either a {ClassName}Config instance or a dict that
                 will be converted to {ClassName}Config.
             **kwargs: Additional keyword arguments that override config values.
                 These are applied after config initialization.
-                
+
         Raises:
             ValidationError: If config validation fails
             TypeError: If config is neither dict nor {ClassName}Config
-            
+
         Example:
             >>> # Using config object
             >>> config = {ClassName}Config(setting_a="custom")
             >>> instance = {ClassName}(config)
-            
+
             >>> # Using dict
             >>> instance = {ClassName}({"setting_a": "custom"})
-            
+
             >>> # Using kwargs
             >>> instance = {ClassName}(setting_a="custom", setting_b=200)
         """
         # Implementation with detailed comments
-        
+
     async def initialize(self) -> None:
         """Initialize resources and connections.
-        
+
         This method must be called before using the instance. It sets up
         all necessary resources, connections, and internal state.
-        
+
         The initialization process:
         1. Validates configuration
         2. Establishes connections
         3. Loads required resources
         4. Sets up internal state
-        
+
         Raises:
             InitializationError: If any step fails
             TimeoutError: If initialization takes too long
-            
+
         Note:
             This is automatically called when using async context manager.
-            
+
         Example:
             >>> instance = {ClassName}()
             >>> await instance.initialize()
             >>> # Now ready to use
         """
-        
+
     async def process(
         self,
         data: Any,
@@ -304,108 +316,108 @@ class {ClassName}:
         timeout: Optional[float] = None
     ) -> ProcessResult:
         """Process input data.
-        
+
         This is the main processing method. It takes input data,
         applies transformations according to configuration, and
         returns the result.
-        
+
         Args:
             data: Input data to process. Can be:
                 - str: Text input
                 - Dict: Structured data
                 - List: Batch of items
                 - Custom type: Must implement __str__
-                
+
             options: Processing options that override defaults:
                 - "strict": bool, whether to enforce strict validation
                 - "format": str, output format ("json", "text", "binary")
                 - "chunk_size": int, processing chunk size
-                
+
             callback: Optional async callback for progress updates.
                 Called with status messages during processing.
-                
+
             timeout: Override default timeout in seconds.
                 If None, uses config.timeout.
-                
+
         Returns:
             ProcessResult: Object containing:
                 - data: Processed output
                 - metadata: Processing metadata
                 - errors: List of non-fatal errors
                 - stats: Performance statistics
-                
+
         Raises:
             ProcessingError: If processing fails
-            ValidationError: If input validation fails  
+            ValidationError: If input validation fails
             TimeoutError: If processing exceeds timeout
-            
+
         Example:
             Basic usage::
-            
+
                 result = await instance.process("Hello world")
                 print(result.data)
-                
+
             With options::
-            
+
                 result = await instance.process(
                     {"key": "value"},
                     options={"format": "json", "strict": True}
                 )
-                
+
             With callback::
-            
+
                 async def progress(msg: str):
                     print(f"Progress: {msg}")
-                    
+
                 result = await instance.process(
                     large_data,
                     callback=progress,
                     timeout=60.0
                 )
-                
+
         Warning:
             Large inputs may require increased timeout values.
-            
+
         See Also:
             - :meth:`process_batch`: For batch processing
             - :meth:`process_stream`: For streaming processing
         """
-        
-    @property  
+
+    @property
     def statistics(self) -> Statistics:
         """Get processing statistics.
-        
+
         Returns current statistics including:
         - Total items processed
-        - Success/failure rates  
+        - Success/failure rates
         - Average processing time
         - Resource usage
-        
+
         Returns:
             Statistics: Current statistics object
-            
+
         Example:
             >>> stats = instance.statistics
             >>> print(f"Processed: {stats.total_processed}")
             >>> print(f"Success rate: {stats.success_rate:.2%}")
         """
-        
+
     @classmethod
     def from_config_file(cls, path: str) -> Self:
         """Create instance from configuration file.
-        
+
         Supports YAML, JSON, and TOML formats.
-        
+
         Args:
             path: Path to configuration file
-            
+
         Returns:
             New configured instance
-            
+
         Raises:
             FileNotFoundError: If config file doesn't exist
             ParseError: If config file is malformed
-            
+
         Example:
             >>> instance = {ClassName}.from_config_file("config.yaml")
         """
@@ -414,15 +426,15 @@ class {ClassName}:
 # Specialized exceptions
 class {ClassName}Error(Exception):
     """Base exception for {ClassName} errors.
-    
+
     All {ClassName}-specific exceptions inherit from this.
-    
+
     Attributes:
         message: Error message
         code: Error code for programmatic handling
         details: Additional error details
     """
-    
+
     def __init__(
         self,
         message: str,
@@ -430,7 +442,7 @@ class {ClassName}Error(Exception):
         details: Optional[Dict[str, Any]] = None
     ):
         """Initialize exception.
-        
+
         Args:
             message: Human-readable error message
             code: Machine-readable error code (e.g., "CONFIG_INVALID")
@@ -448,17 +460,17 @@ async def create_{classname}(
     **kwargs: Any
 ) -> {ClassName}:
     """Factory function to create and initialize {ClassName}.
-    
+
     This is the recommended way to create instances as it handles
     initialization automatically.
-    
+
     Args:
         config: Configuration dict or None for defaults
         **kwargs: Override configuration values
-        
+
     Returns:
         Initialized {ClassName} instance
-        
+
     Example:
         >>> instance = await create_{classname}(
         ...     setting_a="custom",
@@ -470,10 +482,10 @@ async def create_{classname}(
         instance = {ClassName}(config, **kwargs)
     else:
         instance = {ClassName}(**kwargs)
-        
+
     # Initialize
     await instance.initialize()
-    
+
     return instance
 
 
@@ -488,11 +500,11 @@ SUPPORTED_FORMATS = ["json", "yaml", "text", "binary"]
 __version__ = "0.1.0"
 __all__ = [
     "{ClassName}",
-    "{ClassName}Config", 
+    "{ClassName}Config",
     "{ClassName}Error",
     "create_{classname}",
 ]
-```
+````
 
 ### 3. Test Documentation Template
 
@@ -519,7 +531,7 @@ from haive.{module_name} import {ClassName}, {ClassName}Config
 
 class Test{ClassName}:
     """Test suite for {ClassName}.
-    
+
     Tests are organized by functionality:
     - Initialization and configuration
     - Core processing methods
@@ -527,11 +539,11 @@ class Test{ClassName}:
     - Edge cases
     - Performance characteristics
     """
-    
+
     @pytest.fixture
     def default_config(self) -> {ClassName}Config:
         """Provide default test configuration.
-        
+
         Returns:
             Configuration suitable for most tests
         """
@@ -539,17 +551,17 @@ class Test{ClassName}:
             setting_a="test_value",
             setting_b=100
         )
-        
+
     @pytest.fixture
     async def initialized_instance(
         self,
         default_config: {ClassName}Config
     ) -> {ClassName}:
         """Provide initialized instance for testing.
-        
+
         Args:
             default_config: Configuration fixture
-            
+
         Returns:
             Ready-to-use instance
         """
@@ -557,13 +569,13 @@ class Test{ClassName}:
         await instance.initialize()
         yield instance
         await instance.cleanup()
-        
+
     class TestInitialization:
         """Test initialization and configuration."""
-        
+
         def test_init_with_defaults(self):
             """Test initialization with default values.
-            
+
             Verifies:
             - Instance created successfully
             - Default values applied
@@ -573,10 +585,10 @@ class Test{ClassName}:
             assert instance.config.setting_a == "default_value"
             assert instance.config.setting_b == 100
             assert not instance.is_initialized
-            
+
         def test_init_with_config_object(self, default_config):
             """Test initialization with config object.
-            
+
             Verifies:
             - Config object accepted
             - Values preserved
@@ -584,10 +596,10 @@ class Test{ClassName}:
             """
             original_dict = default_config.dict()
             instance = {ClassName}(default_config)
-            
+
             assert instance.config.setting_a == "test_value"
             assert default_config.dict() == original_dict
-            
+
         @pytest.mark.parametrize("invalid_config", [
             {"setting_b": -1},  # Negative value
             {"setting_b": 1001},  # Exceeds maximum
@@ -596,33 +608,33 @@ class Test{ClassName}:
         ])
         def test_init_with_invalid_config(self, invalid_config):
             """Test initialization with invalid configurations.
-            
+
             Verifies proper validation and error messages.
             """
             with pytest.raises(ValidationError) as exc_info:
                 {ClassName}(invalid_config)
-                
+
             assert "validation error" in str(exc_info.value).lower()
-            
+
     class TestProcessing:
         """Test core processing functionality."""
-        
+
         @pytest.mark.asyncio
         async def test_process_simple_input(self, initialized_instance):
             """Test processing with simple string input.
-            
+
             Verifies:
             - Basic processing works
             - Result structure is correct
             - Metadata is populated
             """
             result = await initialized_instance.process("test input")
-            
+
             assert result.data is not None
             assert result.metadata["input_type"] == "str"
             assert result.errors == []
             assert result.stats.duration > 0
-            
+
         @pytest.mark.asyncio
         @pytest.mark.parametrize("data,expected_type", [
             ("string", "str"),
@@ -637,19 +649,19 @@ class Test{ClassName}:
             expected_type: str
         ):
             """Test processing with different input types.
-            
+
             Verifies type handling and polymorphic behavior.
             """
             result = await initialized_instance.process(data)
             assert result.metadata["input_type"] == expected_type
-            
+
     class TestErrorHandling:
         """Test error handling and edge cases."""
-        
+
         @pytest.mark.asyncio
         async def test_process_timeout(self, initialized_instance):
             """Test timeout handling.
-            
+
             Verifies:
             - Timeout is respected
             - Proper error is raised
@@ -665,26 +677,26 @@ class Test{ClassName}:
                         "data",
                         timeout=0.1
                     )
-                    
+
         @pytest.mark.asyncio
         async def test_process_with_callback_error(self, initialized_instance):
             """Test handling of callback errors.
-            
+
             Verifies that callback errors don't break processing.
             """
             async def failing_callback(msg: str):
                 raise Exception("Callback failed")
-                
+
             # Should complete despite callback error
             result = await initialized_instance.process(
                 "data",
                 callback=failing_callback
             )
             assert result.data is not None
-            
+
     class TestPerformance:
         """Test performance characteristics."""
-        
+
         @pytest.mark.asyncio
         @pytest.mark.performance
         async def test_process_large_input_performance(
@@ -693,29 +705,29 @@ class Test{ClassName}:
             benchmark
         ):
             """Benchmark processing of large inputs.
-            
+
             Verifies:
             - Performance scales linearly
             - Memory usage is bounded
             - No performance regressions
             """
             large_data = "x" * 1_000_000  # 1MB of data
-            
+
             result = await benchmark(
                 initialized_instance.process,
                 large_data
             )
-            
+
             assert result.stats.duration < 1.0  # Should complete in < 1s
-            
+
     class TestIntegration:
         """Integration tests with other components."""
-        
+
         @pytest.mark.asyncio
         @pytest.mark.integration
         async def test_with_real_engine(self):
             """Test with real engine integration.
-            
+
             Note: Requires API keys to be set.
             """
             instance = {ClassName}(
@@ -725,14 +737,14 @@ class Test{ClassName}:
                 }
             )
             await instance.initialize()
-            
+
             result = await instance.process("real data")
             assert result.data is not None
 ```
 
 ### 4. Issues and Troubleshooting Documentation
 
-```markdown
+````markdown
 # Troubleshooting: haive.{module_name}
 
 ## Common Issues
@@ -744,12 +756,15 @@ class Test{ClassName}:
 **Cause**: Module not installed or dependencies missing
 
 **Solutions**:
+
 1. Install with correct extras:
    ```bash
    pip install haive[{module_name}]
    ```
+````
 
 2. Check Python path:
+
    ```python
    import sys
    print(sys.path)
@@ -766,11 +781,13 @@ class Test{ClassName}:
 **Cause**: Class not imported correctly or version mismatch
 
 **Solutions**:
+
 1. Check import statement:
+
    ```python
    # Correct
    from haive.{module_name} import {ClassName}
-   
+
    # Incorrect
    import haive.{module_name}.{ClassName}
    ```
@@ -788,15 +805,17 @@ class Test{ClassName}:
 **Common Causes and Solutions**:
 
 1. **Invalid type**:
+
    ```python
    # Wrong
    instance = {ClassName}(setting_b="100")  # Should be int
-   
+
    # Correct
    instance = {ClassName}(setting_b=100)
    ```
 
 2. **Missing required fields**:
+
    ```python
    # Check required fields
    print({ClassName}Config.schema()["required"])
@@ -813,12 +832,15 @@ class Test{ClassName}:
 #### Issue: `TimeoutError` during processing
 
 **Solutions**:
+
 1. Increase timeout:
+
    ```python
    result = await instance.process(data, timeout=60.0)
    ```
 
 2. Process in smaller chunks:
+
    ```python
    for chunk in chunks(data, size=100):
        result = await instance.process(chunk)
@@ -835,7 +857,9 @@ class Test{ClassName}:
 #### Issue: Slow processing
 
 **Diagnostic Steps**:
+
 1. Enable profiling:
+
    ```python
    instance = {ClassName}(debug=True, profile=True)
    result = await instance.process(data)
@@ -843,6 +867,7 @@ class Test{ClassName}:
    ```
 
 2. Check resource usage:
+
    ```python
    import psutil
    process = psutil.Process()
@@ -912,33 +937,36 @@ except ValidationError as e:
 
 ## Error Messages Reference
 
-| Error Code | Message | Cause | Solution |
-|------------|---------|-------|----------|
-| `CONFIG_INVALID` | "Invalid configuration: {details}" | Validation failed | Check config against schema |
-| `INIT_FAILED` | "Initialization failed: {reason}" | Resource unavailable | Check connections/permissions |
-| `PROCESS_TIMEOUT` | "Processing exceeded timeout" | Long operation | Increase timeout or optimize |
-| `INVALID_INPUT` | "Input validation failed" | Bad input format | Validate input before processing |
+| Error Code        | Message                            | Cause                | Solution                         |
+| ----------------- | ---------------------------------- | -------------------- | -------------------------------- |
+| `CONFIG_INVALID`  | "Invalid configuration: {details}" | Validation failed    | Check config against schema      |
+| `INIT_FAILED`     | "Initialization failed: {reason}"  | Resource unavailable | Check connections/permissions    |
+| `PROCESS_TIMEOUT` | "Processing exceeded timeout"      | Long operation       | Increase timeout or optimize     |
+| `INVALID_INPUT`   | "Input validation failed"          | Bad input format     | Validate input before processing |
 
 ## Getting Help
 
 1. **Check logs** - Most issues are logged with context
-2. **Read stack trace** - Error location often hints at cause  
+2. **Read stack trace** - Error location often hints at cause
 3. **Search issues** - GitHub issues may have solutions
 4. **Ask community** - Discord/Slack for quick help
 5. **File bug report** - Include minimal reproduction
 
 ### Bug Report Template
 
-```markdown
+````markdown
 **Environment**:
+
 - Haive version: X.Y.Z
 - Python version: 3.x
 - OS: Linux/Mac/Windows
 
 **Code to reproduce**:
+
 ```python
 # Minimal code that shows the issue
 ```
+````
 
 **Expected behavior**:
 What should happen
@@ -947,9 +975,11 @@ What should happen
 What actually happens
 
 **Logs**:
+
 ```
 Relevant log output
 ```
+
 ```
 
 ## Documentation Checklist
@@ -958,7 +988,7 @@ When documenting a module, ensure you have:
 
 - [ ] Module README.md with overview and quick start
 - [ ] Docstrings for all public classes and functions
-- [ ] Type hints for all parameters and returns  
+- [ ] Type hints for all parameters and returns
 - [ ] Examples in docstrings showing common usage
 - [ ] Error documentation with causes and solutions
 - [ ] Test documentation explaining test structure
@@ -969,3 +999,4 @@ When documenting a module, ensure you have:
 - [ ] Configuration schema documentation
 - [ ] Environment variables documentation
 - [ ] Changelog with version history
+```

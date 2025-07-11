@@ -1,5 +1,4 @@
-"""
-TF-IDF Retriever implementation for the Haive framework.
+"""TF-IDF Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the TF-IDF (Term Frequency-Inverse Document Frequency)
 retriever, which uses classical TF-IDF scoring for document retrieval. TF-IDF is a numerical
@@ -33,8 +32,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.TFIDF)
 class TFIDFRetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for TF-IDF retriever in the Haive framework.
+    """Configuration for TF-IDF retriever in the Haive framework.
 
     This retriever uses Term Frequency-Inverse Document Frequency scoring to rank
     documents based on the importance of query terms in the document collection.
@@ -74,7 +72,7 @@ class TFIDFRetrieverConfig(BaseRetrieverConfig):
     )
 
     # Documents to index
-    documents: List[Document] = Field(
+    documents: list[Document] = Field(
         default_factory=list, description="Documents to index for TF-IDF retrieval"
     )
 
@@ -84,22 +82,22 @@ class TFIDFRetrieverConfig(BaseRetrieverConfig):
     )
 
     # TF-IDF computation parameters
-    tfidf_params: Optional[Dict[str, Any]] = Field(
+    tfidf_params: dict[str, Any] | None = Field(
         default=None,
         description="Additional parameters for TF-IDF vectorizer (max_features, stop_words, etc.)",
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for TF-IDF retriever."""
         return {
             "query": (str, Field(description="Text query for TF-IDF ranking")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for TF-IDF retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list,
                     description="Documents ranked by TF-IDF scores",
@@ -108,8 +106,7 @@ class TFIDFRetrieverConfig(BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a TF-IDF retriever from this configuration.
+        """Create a TF-IDF retriever from this configuration.
 
         Returns:
             TFIDFRetriever: Instantiated retriever ready for text ranking.

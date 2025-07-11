@@ -15,9 +15,7 @@ concurrent access capabilities.
 """
 
 import logging
-from typing import Any, Dict, Optional
-
-from pydantic import Field, SecretStr
+from typing import Any
 
 from haive.core.persistence.base import CheckpointerConfig
 from haive.core.persistence.types import (
@@ -25,11 +23,12 @@ from haive.core.persistence.types import (
     CheckpointerType,
     CheckpointStorageMode,
 )
+from pydantic import Field, SecretStr
 
 logger = logging.getLogger(__name__)
 
 
-class PostgresCheckpointerConfig(CheckpointerConfig[Dict[str, Any]]):
+class PostgresCheckpointerConfig(CheckpointerConfig[dict[str, Any]]):
     """Configuration for PostgreSQL-based checkpoint persistence.
 
     This implementation provides a robust, production-ready persistence solution
@@ -112,7 +111,7 @@ class PostgresCheckpointerConfig(CheckpointerConfig[Dict[str, Any]]):
     prepare_threshold: int | None = Field(
         default=None, description="Prepared statement threshold (None to disable)"
     )
-    connection_kwargs: Dict[str, Any] = Field(
+    connection_kwargs: dict[str, Any] = Field(
         default_factory=lambda: {
             "keepalives": 1,
             "keepalives_idle": 30,
@@ -124,7 +123,7 @@ class PostgresCheckpointerConfig(CheckpointerConfig[Dict[str, Any]]):
     )
 
     # Optional direct connection string
-    connection_string: Optional[str] = Field(
+    connection_string: str | None = Field(
         default=None,
         description="Direct connection string (overrides individual parameters)",
     )
@@ -194,7 +193,7 @@ class PostgresCheckpointerConfig(CheckpointerConfig[Dict[str, Any]]):
             db_uri += f"?sslmode={self.ssl_mode}"
         return db_uri
 
-    def get_connection_kwargs(self) -> Dict[str, Any]:
+    def get_connection_kwargs(self) -> dict[str, Any]:
         """Get connection keyword arguments for PostgreSQL connections.
 
         This method constructs a dictionary of connection options to be passed
@@ -328,7 +327,7 @@ class PostgresCheckpointerConfig(CheckpointerConfig[Dict[str, Any]]):
                 pool.open()
                 logger.info("PostgreSQL connection pool opened successfully")
             except Exception as e:
-                logger.error(f"Failed to open PostgreSQL connection pool: {e}")
+                logger.exception(f"Failed to open PostgreSQL connection pool: {e}")
                 raise
 
             # Create checkpointer
@@ -345,7 +344,7 @@ class PostgresCheckpointerConfig(CheckpointerConfig[Dict[str, Any]]):
             return checkpointer
 
         except Exception as e:
-            logger.error(f"Failed to create PostgreSQL checkpointer: {e}")
+            logger.exception(f"Failed to create PostgreSQL checkpointer: {e}")
             raise RuntimeError(f"Failed to create PostgreSQL checkpointer: {e}")
 
     async def create_async_checkpointer(self) -> Any:
@@ -426,7 +425,7 @@ class PostgresCheckpointerConfig(CheckpointerConfig[Dict[str, Any]]):
                         "Successfully imported AsyncPostgresSaver from langgraph.checkpoint.postgres.aio"
                     )
                 except ImportError as e:
-                    logger.error(
+                    logger.exception(
                         f"Failed to import AsyncPostgresSaver from aio module: {e}"
                     )
 
@@ -458,7 +457,7 @@ class PostgresCheckpointerConfig(CheckpointerConfig[Dict[str, Any]]):
                                     "Successfully imported AsyncPostgresSaver from langgraph_checkpoint_postgres"
                                 )
                             except ImportError:
-                                logger.error(
+                                logger.exception(
                                     "AsyncPostgresSaver not available in any known location. "
                                     "Please ensure langgraph-checkpoint-postgres is installed with async support."
                                 )
@@ -496,7 +495,9 @@ class PostgresCheckpointerConfig(CheckpointerConfig[Dict[str, Any]]):
                 await pool.open()
                 logger.info("Async PostgreSQL connection pool opened successfully")
             except Exception as e:
-                logger.error(f"Failed to open async PostgreSQL connection pool: {e}")
+                logger.exception(
+                    f"Failed to open async PostgreSQL connection pool: {e}"
+                )
                 raise
 
             # Create checkpointer
@@ -513,18 +514,18 @@ class PostgresCheckpointerConfig(CheckpointerConfig[Dict[str, Any]]):
             return checkpointer
 
         except Exception as e:
-            logger.error(f"Failed to create async PostgreSQL checkpointer: {e}")
-            logger.error(f"Connection URI: {self.get_connection_uri()}")
-            logger.error(f"Storage mode: {self.storage_mode}")
-            logger.error(f"Mode: {self.mode}")
+            logger.exception(f"Failed to create async PostgreSQL checkpointer: {e}")
+            logger.exception(f"Connection URI: {self.get_connection_uri()}")
+            logger.exception(f"Storage mode: {self.storage_mode}")
+            logger.exception(f"Mode: {self.mode}")
 
             # Try to provide more specific error information
             if "AsyncPostgresSaver" in str(e):
-                logger.error("AsyncPostgresSaver import or creation failed")
+                logger.exception("AsyncPostgresSaver import or creation failed")
             if "pool" in str(e).lower():
-                logger.error("Connection pool creation failed")
+                logger.exception("Connection pool creation failed")
             if "connection" in str(e).lower():
-                logger.error("Database connection failed")
+                logger.exception("Database connection failed")
 
             raise RuntimeError(f"Failed to create async PostgreSQL checkpointer: {e}")
 

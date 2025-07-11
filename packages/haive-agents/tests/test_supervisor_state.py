@@ -1,7 +1,7 @@
 # Test SupervisorState schema
 
-import pytest
 from langchain_core.messages import AIMessage, HumanMessage
+import pytest
 
 from haive.agents.supervisor.state import SupervisorState
 

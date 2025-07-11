@@ -1,5 +1,4 @@
-"""
-Milvus Retriever implementation for the Haive framework.
+"""Milvus Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Milvus retriever,
 which uses Milvus vector database for high-performance similarity search.
@@ -35,8 +34,7 @@ from haive.core.engine.vectorstore.vectorstore import VectorStoreConfig
 
 @BaseRetrieverConfig.register(RetrieverType.MILVUS)
 class MilvusRetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for Milvus retriever in the Haive framework.
+    """Configuration for Milvus retriever in the Haive framework.
 
     This retriever uses Milvus vector database to perform high-performance
     similarity search with support for various indexing and search parameters.
@@ -90,7 +88,7 @@ class MilvusRetrieverConfig(BaseRetrieverConfig):
         default=10, ge=1, le=1000, description="Number of documents to retrieve"
     )
 
-    search_params: Optional[Dict[str, Any]] = Field(
+    search_params: dict[str, Any] | None = Field(
         default=None,
         description="Milvus search parameters (nprobe, ef, search_k, etc.)",
     )
@@ -101,31 +99,31 @@ class MilvusRetrieverConfig(BaseRetrieverConfig):
         description="Consistency level: 'Strong', 'Session', 'Bounded', 'Eventually'",
     )
 
-    timeout: Optional[float] = Field(
+    timeout: float | None = Field(
         default=None, ge=0.1, le=300.0, description="Search timeout in seconds"
     )
 
     # Expression filter
-    expr: Optional[str] = Field(
+    expr: str | None = Field(
         default=None, description="Boolean expression for metadata filtering"
     )
 
     # Partition names
-    partition_names: Optional[List[str]] = Field(
+    partition_names: list[str] | None = Field(
         default=None, description="List of partition names to search"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Milvus retriever."""
         return {
             "query": (str, Field(description="Vector search query for Milvus")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Milvus retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list,
                     description="Documents from Milvus vector search",
@@ -134,8 +132,7 @@ class MilvusRetrieverConfig(BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a Milvus retriever from this configuration.
+        """Create a Milvus retriever from this configuration.
 
         Returns:
             MilvusRetriever: Instantiated retriever ready for vector search.

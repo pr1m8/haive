@@ -13,25 +13,31 @@
 ## Key Findings
 
 ### 1. Multi-Engine Architecture
+
 The p_and_e agent demonstrates using multiple specialized engines:
+
 - **Planner Engine**: Creates structured plans with `Plan` model
 - **Executor Engine**: Executes steps with tool access
 - **Replanner Engine**: Makes decisions with `Act` union type
 
 ### 2. Structured Output Patterns
+
 - Complex nested models (Plan → PlanStep)
 - Union types for decisions (Response | Plan)
 - Computed fields for derived state
 - Model validators for consistency
 
 ### 3. Tool Routing System
+
 Discovered four main tool types:
+
 - `langchain_tool` → tool_node
-- `pydantic_model` → parser_node  
+- `pydantic_model` → parser_node
 - `function` → tool_node (usually)
 - `engine` → stays in engine
 
 ### 4. SimpleAgent Schema Modification
+
 SimpleAgent dynamically modifies engine schemas to incorporate structured outputs through SchemaComposer, enabling seamless integration without complex configuration.
 
 ## Key Insights
@@ -50,6 +56,7 @@ SimpleAgent dynamically modifies engine schemas to incorporate structured output
 ## Next Steps
 
 These patterns can be applied to create sophisticated SimpleAgent implementations:
+
 - Use multi-engine patterns for complex workflows
 - Implement union types for flexible decision making
 - Leverage computed fields for state management

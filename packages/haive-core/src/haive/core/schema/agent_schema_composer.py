@@ -46,10 +46,9 @@ import logging
 from enum import Enum
 from typing import TYPE_CHECKING, Any, Dict, List, Literal, Optional, Set, Tuple, Type
 
-from langchain_core.messages import AnyMessage, BaseMessage
-
 from haive.core.schema.schema_composer import SchemaComposer
 from haive.core.schema.state_schema import StateSchema
+from langchain_core.messages import AnyMessage, BaseMessage
 
 logger = logging.getLogger(__name__)
 

@@ -67,7 +67,7 @@ echo ""
 # Add to current session
 read -p "Would you like to enable Method 1 (alias) for this session? (y/n) " -n 1 -r
 echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
+if [[ ${REPLY} =~ ^[Yy]$ ]]; then
 	alias python='python -m haive.core.logging.auto_wrapper'
 	echo "✅ Alias enabled for this session!"
 	echo "   Now any 'python' command will have source tracking."

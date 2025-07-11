@@ -12,15 +12,14 @@ a unified API for state persistence.
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Generic, TypeVar
-
-from pydantic import BaseModel, Field
+from typing import Any, Generic, TypeVar
 
 from haive.core.persistence.types import (
     CheckpointerMode,
     CheckpointerType,
     CheckpointStorageMode,
 )
+from pydantic import BaseModel, Field
 
 # Type variable for different connection types
 T = TypeVar("T")
@@ -115,7 +114,6 @@ class CheckpointerConfig(BaseModel, ABC, Generic[T]):
             graph = Graph(checkpointer=checkpointer)
             ```
         """
-        pass
 
     @abstractmethod
     async def create_async_checkpointer(self) -> Any:
@@ -144,7 +142,6 @@ class CheckpointerConfig(BaseModel, ABC, Generic[T]):
             graph = AsyncGraph(checkpointer=async_checkpointer)
             ```
         """
-        pass
 
     @abstractmethod
     async def initialize_async_checkpointer(self) -> Any:
@@ -170,9 +167,8 @@ class CheckpointerConfig(BaseModel, ABC, Generic[T]):
                 # Resources will be properly closed after this block
             ```
         """
-        pass
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Convert this configuration to a dictionary.
 
         This method serializes the configuration to a dictionary format,
@@ -199,7 +195,7 @@ class CheckpointerConfig(BaseModel, ABC, Generic[T]):
         return self.dict(exclude={"db_pass"})
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "CheckpointerConfig":
+    def from_dict(cls, data: dict[str, Any]) -> "CheckpointerConfig":
         """Create a checkpointer configuration from a dictionary.
 
         This factory method deserializes a configuration from a dictionary,
@@ -243,11 +239,10 @@ class CheckpointerConfig(BaseModel, ABC, Generic[T]):
             from haive.core.persistence.memory import MemoryCheckpointerConfig
 
             return MemoryCheckpointerConfig(**data)
-        elif checkpointer_type == CheckpointerType.POSTGRES:
+        if checkpointer_type == CheckpointerType.POSTGRES:
             from haive.core.persistence.postgres_config import (
                 PostgresCheckpointerConfig,
             )
 
             return PostgresCheckpointerConfig(**data)
-        else:
-            raise ValueError(f"Unsupported checkpointer type: {checkpointer_type}")
+        raise ValueError(f"Unsupported checkpointer type: {checkpointer_type}")

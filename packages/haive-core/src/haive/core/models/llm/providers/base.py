@@ -37,14 +37,13 @@ Examples:
 import logging
 import os
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional, Type
-
-from pydantic import BaseModel, Field, SecretStr, field_validator, model_validator
+from typing import Any, Dict
 
 from haive.core.common.mixins.secure_config import SecureConfigMixin
 from haive.core.models.llm.provider_types import LLMProvider
 from haive.core.models.llm.rate_limiting_mixin import RateLimitingMixin
 from haive.core.models.metadata_mixin import ModelMetadataMixin
+from pydantic import BaseModel, Field, SecretStr, field_validator, model_validator
 
 logger = logging.getLogger(__name__)
 
@@ -62,7 +61,7 @@ class ProviderImportError(ImportError):
         message: Custom error message
     """
 
-    def __init__(self, provider: str, package: str, message: Optional[str] = None):
+    def __init__(self, provider: str, package: str, message: str | None = None):
         """Initialize the provider import error.
 
         Args:
@@ -126,32 +125,32 @@ class BaseLLMProvider(
     """
 
     provider: LLMProvider = Field(..., description="The LLM provider identifier")
-    model: Optional[str] = Field(None, description="The model to use")
-    name: Optional[str] = Field(None, description="Friendly display name")
+    model: str | None = Field(None, description="The model to use")
+    name: str | None = Field(None, description="Friendly display name")
     api_key: SecretStr = Field(
         default_factory=lambda: SecretStr(""), description="API key for the provider"
     )
     cache_enabled: bool = Field(default=True, description="Enable response caching")
-    cache_ttl: Optional[int] = Field(
+    cache_ttl: int | None = Field(
         default=300, description="Cache time-to-live in seconds"
     )
-    extra_params: Optional[Dict[str, Any]] = Field(
+    extra_params: dict[str, Any] | None = Field(
         default_factory=dict, description="Additional provider-specific parameters"
     )
     debug: bool = Field(default=False, description="Enable debug output")
 
     # Rate limiting fields (from RateLimitingMixin)
-    requests_per_second: Optional[float] = Field(
+    requests_per_second: float | None = Field(
         default=None,
         description="Maximum number of requests per second. None means no limit.",
         ge=0,
     )
-    tokens_per_second: Optional[int] = Field(
+    tokens_per_second: int | None = Field(
         default=None,
         description="Maximum number of tokens per second. None means no limit.",
         ge=0,
     )
-    tokens_per_minute: Optional[int] = Field(
+    tokens_per_minute: int | None = Field(
         default=None,
         description="Maximum number of tokens per minute. None means no limit.",
         ge=0,
@@ -164,12 +163,12 @@ class BaseLLMProvider(
     retry_delay: float = Field(
         default=1.0, description="Base delay between retries in seconds.", ge=0
     )
-    check_every_n_seconds: Optional[float] = Field(
+    check_every_n_seconds: float | None = Field(
         default=None,
         description="How often to check rate limits. None uses default.",
         ge=0,
     )
-    burst_size: Optional[int] = Field(
+    burst_size: int | None = Field(
         default=None,
         description="Maximum burst size for rate limiting. None uses default.",
         ge=1,
@@ -198,7 +197,7 @@ class BaseLLMProvider(
         return self
 
     @abstractmethod
-    def _get_chat_class(self) -> Type[Any]:
+    def _get_chat_class(self) -> type[Any]:
         """Get the LangChain chat class for this provider.
 
         This method must be implemented by each provider to return
@@ -211,7 +210,6 @@ class BaseLLMProvider(
         Raises:
             ProviderImportError: If required dependencies are not installed
         """
-        pass
 
     @abstractmethod
     def _get_default_model(self) -> str:
@@ -220,7 +218,6 @@ class BaseLLMProvider(
         Returns:
             The default model identifier
         """
-        pass
 
     @abstractmethod
     def _get_import_package(self) -> str:
@@ -229,7 +226,6 @@ class BaseLLMProvider(
         Returns:
             The package name for pip install
         """
-        pass
 
     def _get_env_key_name(self) -> str:
         """Get the environment variable name for API key.
@@ -241,10 +237,9 @@ class BaseLLMProvider(
         # Handle special cases
         if provider_upper == "TOGETHER_AI":
             return "TOGETHER_AI_API_KEY"
-        elif provider_upper == "FIREWORKS_AI":
+        if provider_upper == "FIREWORKS_AI":
             return "FIREWORKS_AI_API_KEY"
-        else:
-            return f"{provider_upper}_API_KEY"
+        return f"{provider_upper}_API_KEY"
 
     @field_validator("api_key")
     @classmethod
@@ -268,7 +263,7 @@ class BaseLLMProvider(
                 return SecretStr(env_value)
         return v
 
-    def _get_initialization_params(self, **kwargs) -> Dict[str, Any]:
+    def _get_initialization_params(self, **kwargs) -> dict[str, Any]:
         """Get parameters for initializing the LLM.
 
         This method prepares all parameters needed to instantiate
@@ -298,7 +293,7 @@ class BaseLLMProvider(
 
         return params
 
-    def _get_api_key_param_name(self) -> Optional[str]:
+    def _get_api_key_param_name(self) -> str | None:
         """Get the parameter name for API key.
 
         Different providers use different parameter names for API keys.
@@ -346,9 +341,11 @@ class BaseLLMProvider(
         try:
             llm = chat_class(**params)
         except Exception as e:
-            logger.error(f"Failed to instantiate {self.provider.value} model: {str(e)}")
+            logger.exception(
+                f"Failed to instantiate {self.provider.value} model: {e!s}"
+            )
             raise RuntimeError(
-                f"Failed to instantiate {self.provider.value} model: {str(e)}"
+                f"Failed to instantiate {self.provider.value} model: {e!s}"
             ) from e
 
         # Apply rate limiting if configured
@@ -385,7 +382,7 @@ class BaseLLMProvider(
         return True
 
     @classmethod
-    def get_models(cls) -> List[str]:
+    def get_models(cls) -> list[str]:
         """Get available models for this provider.
 
         This method attempts to retrieve the list of available models

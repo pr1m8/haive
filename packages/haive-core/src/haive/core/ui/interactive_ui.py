@@ -3,7 +3,6 @@
 import importlib
 import inspect
 import json
-from typing import Optional
 
 from haive_core.config.runnable import RunnableConfigManager
 from haive_core.engine.base import Engine, EngineRegistry, EngineType
@@ -17,8 +16,7 @@ from .debug_interface import HaiveDebugger
 
 
 class HaiveInteractiveUI:
-    """
-    Interactive UI for testing and debugging Haive framework components.
+    """Interactive UI for testing and debugging Haive framework components.
 
     Provides a REPL-like interface for:
     - Exploring available components
@@ -28,7 +26,7 @@ class HaiveInteractiveUI:
     - Running benchmarks
     """
 
-    def __init__(self, debugger: Optional[HaiveDebugger] = None):
+    def __init__(self, debugger: HaiveDebugger | None = None):
         """Initialize the interactive UI."""
         self.debugger = debugger or HaiveDebugger()
         self.console = self.debugger.console
@@ -50,7 +48,7 @@ class HaiveInteractiveUI:
 
                 if command.lower() in ["exit", "quit", "q"]:
                     break
-                elif command.lower() == "help":
+                if command.lower() == "help":
                     self._show_help()
                 elif command.lower() == "components":
                     self._list_components()
@@ -83,7 +81,7 @@ class HaiveInteractiveUI:
                         "[yellow]Unknown command. Type 'help' for available commands.[/yellow]"
                     )
             except Exception as e:
-                self.console.print(f"[bold red]Error: {str(e)}[/bold red]")
+                self.console.print(f"[bold red]Error: {e!s}[/bold red]")
                 import traceback
 
                 self.console.print(traceback.format_exc())
@@ -92,13 +90,13 @@ class HaiveInteractiveUI:
         """Show help information."""
         help_md = """
         # Haive Interactive UI Commands
-        
+
         ## General Commands
         - `help` - Show this help information
         - `exit`, `quit`, `q` - Exit the interactive UI
         - `clear` - Clear the console
         - `history` - Show command history
-        
+
         ## Component Commands
         - `components` - List available components
         - `inspect <name>` - Inspect a component
@@ -107,7 +105,7 @@ class HaiveInteractiveUI:
         - `benchmark <name> [iterations]` - Benchmark a component
         - `save <name> <file>` - Save a component to a file
         - `load <module>` - Load a module with components
-        
+
         ## Graph Commands
         - `graph create <name>` - Create a new graph
         - `graph add <graph> <node> <engine>` - Add a node to a graph
@@ -115,13 +113,13 @@ class HaiveInteractiveUI:
         - `graph compile <name>` - Compile a graph
         - `graph run <name> <input>` - Run a graph
         - `graph visualize <name>` - Visualize a graph
-        
+
         ## Config Commands
         - `config create <name>` - Create a new config
         - `config add <config> <key> <value>` - Add a parameter to a config
         - `config show <name>` - Show a config
         - `config use <component> <config>` - Use a config with a component
-        
+
         ## State Commands
         - `state` - Show the current state
         """
@@ -274,7 +272,7 @@ class HaiveInteractiveUI:
 
                     # Display result
                     self.console.print("[bold green]Result:[/bold green]")
-                    if isinstance(result, (dict, list)):
+                    if isinstance(result, dict | list):
                         result_json = json.dumps(result, indent=2, default=str)
                         self.console.print(Syntax(result_json, "json"))
                     else:
@@ -286,7 +284,7 @@ class HaiveInteractiveUI:
                         f"[bold green]Instantiated: {type(instance).__name__}[/bold green]"
                     )
             except Exception as e:
-                self.console.print(f"[bold red]Error: {str(e)}[/bold red]")
+                self.console.print(f"[bold red]Error: {e!s}[/bold red]")
 
     def _test_graph(self, graph):
         """Test a graph component."""
@@ -299,7 +297,7 @@ class HaiveInteractiveUI:
                     graph.compile()
                     self.console.print("[green]Graph compiled successfully.[/green]")
                 except Exception as e:
-                    self.console.print(f"[red]Error compiling graph: {str(e)}[/red]")
+                    self.console.print(f"[red]Error compiling graph: {e!s}[/red]")
                     return
             else:
                 return
@@ -325,7 +323,7 @@ class HaiveInteractiveUI:
 
                 # Display result
                 self.console.print("[bold green]Result:[/bold green]")
-                if isinstance(result, (dict, list)):
+                if isinstance(result, dict | list):
                     result_json = json.dumps(result, indent=2, default=str)
                     self.console.print(Syntax(result_json, "json"))
                 else:
@@ -334,7 +332,7 @@ class HaiveInteractiveUI:
                 # Update state
                 self.current_state = result
             except Exception as e:
-                self.console.print(f"[bold red]Error: {str(e)}[/bold red]")
+                self.console.print(f"[bold red]Error: {e!s}[/bold red]")
 
     def _create_component(self, command):
         """Create a new component."""
@@ -398,7 +396,7 @@ class HaiveInteractiveUI:
                 f"[green]Created graph '{name}' with {len(components)} components.[/green]"
             )
         except Exception as e:
-            self.console.print(f"[red]Error creating graph: {str(e)}[/red]")
+            self.console.print(f"[red]Error creating graph: {e!s}[/red]")
 
     def _create_config(self, name):
         """Create a new config component."""
@@ -485,7 +483,7 @@ class HaiveInteractiveUI:
                 f"[green]Added node '{node_name}' to graph '{graph_name}'.[/green]"
             )
         except Exception as e:
-            self.console.print(f"[red]Error adding node: {str(e)}[/red]")
+            self.console.print(f"[red]Error adding node: {e!s}[/red]")
 
     def _connect_graph_nodes(self, graph_name, source, target):
         """Connect nodes in a graph."""
@@ -506,7 +504,7 @@ class HaiveInteractiveUI:
                 f"[green]Connected '{source}' to '{target}' in graph '{graph_name}'.[/green]"
             )
         except Exception as e:
-            self.console.print(f"[red]Error connecting nodes: {str(e)}[/red]")
+            self.console.print(f"[red]Error connecting nodes: {e!s}[/red]")
 
     def _compile_graph(self, graph_name):
         """Compile a graph."""
@@ -528,7 +526,7 @@ class HaiveInteractiveUI:
                 f"[green]Graph '{graph_name}' compiled successfully.[/green]"
             )
         except Exception as e:
-            self.console.print(f"[red]Error compiling graph: {str(e)}[/red]")
+            self.console.print(f"[red]Error compiling graph: {e!s}[/red]")
 
     def _run_graph(self, graph_name, input_str):
         """Run a compiled graph."""
@@ -549,7 +547,7 @@ class HaiveInteractiveUI:
                     graph.compile()
                     self.console.print("[green]Graph compiled successfully.[/green]")
                 except Exception as e:
-                    self.console.print(f"[red]Error compiling graph: {str(e)}[/red]")
+                    self.console.print(f"[red]Error compiling graph: {e!s}[/red]")
                     return
             else:
                 return
@@ -571,7 +569,7 @@ class HaiveInteractiveUI:
 
             # Display result
             self.console.print("[bold green]Result:[/bold green]")
-            if isinstance(result, (dict, list)):
+            if isinstance(result, dict | list):
                 result_json = json.dumps(result, indent=2, default=str)
                 self.console.print(Syntax(result_json, "json"))
             else:
@@ -580,7 +578,7 @@ class HaiveInteractiveUI:
             # Update state
             self.current_state = result
         except Exception as e:
-            self.console.print(f"[red]Error running graph: {str(e)}[/red]")
+            self.console.print(f"[red]Error running graph: {e!s}[/red]")
 
     def _visualize_graph(self, graph_name):
         """Visualize a graph."""
@@ -599,7 +597,7 @@ class HaiveInteractiveUI:
             # Use debugger to visualize
             self.debugger.display_graph(graph, visualize=True)
         except Exception as e:
-            self.console.print(f"[red]Error visualizing graph: {str(e)}[/red]")
+            self.console.print(f"[red]Error visualizing graph: {e!s}[/red]")
 
     def _handle_config_command(self, command):
         """Handle config-related commands."""
@@ -661,7 +659,7 @@ class HaiveInteractiveUI:
                 f"[green]Added parameter '{key}' to config '{config_name}'.[/green]"
             )
         except Exception as e:
-            self.console.print(f"[red]Error adding parameter: {str(e)}[/red]")
+            self.console.print(f"[red]Error adding parameter: {e!s}[/red]")
 
     def _show_config(self, config_name):
         """Show a config."""
@@ -718,7 +716,7 @@ class HaiveInteractiveUI:
 
                 # Display result
                 self.console.print("[bold green]Result:[/bold green]")
-                if isinstance(result, (dict, list)):
+                if isinstance(result, dict | list):
                     result_json = json.dumps(result, indent=2, default=str)
                     self.console.print(Syntax(result_json, "json"))
                 else:
@@ -728,7 +726,7 @@ class HaiveInteractiveUI:
                     "[yellow]Component does not support invoke method.[/yellow]"
                 )
         except Exception as e:
-            self.console.print(f"[red]Error using config: {str(e)}[/red]")
+            self.console.print(f"[red]Error using config: {e!s}[/red]")
 
     def _show_state(self):
         """Show the current state."""
@@ -809,7 +807,7 @@ class HaiveInteractiveUI:
                     for _ in range(iterations):
                         engine.instantiate(config)
             except Exception as e:
-                self.console.print(f"[red]Error during benchmark: {str(e)}[/red]")
+                self.console.print(f"[red]Error during benchmark: {e!s}[/red]")
 
     def _benchmark_graph(self, graph, iterations):
         """Benchmark a graph component."""
@@ -822,7 +820,7 @@ class HaiveInteractiveUI:
                     graph.compile()
                     self.console.print("[green]Graph compiled successfully.[/green]")
                 except Exception as e:
-                    self.console.print(f"[red]Error compiling graph: {str(e)}[/red]")
+                    self.console.print(f"[red]Error compiling graph: {e!s}[/red]")
                     return
             else:
                 return
@@ -846,7 +844,7 @@ class HaiveInteractiveUI:
                 for _ in range(iterations):
                     graph.app.invoke(input_data, config)
             except Exception as e:
-                self.console.print(f"[red]Error during benchmark: {str(e)}[/red]")
+                self.console.print(f"[red]Error during benchmark: {e!s}[/red]")
 
     def _show_history(self):
         """Show command history."""
@@ -882,7 +880,7 @@ class HaiveInteractiveUI:
                 f"[green]Found and registered {engines_found} engines.[/green]"
             )
         except Exception as e:
-            self.console.print(f"[red]Error loading module: {str(e)}[/red]")
+            self.console.print(f"[red]Error loading module: {e!s}[/red]")
 
     def _save_component(self, command):
         """Save a component to a file."""
@@ -930,4 +928,4 @@ class HaiveInteractiveUI:
                 f"[green]Component '{component_name}' saved to {file_path}[/green]"
             )
         except Exception as e:
-            self.console.print(f"[red]Error saving component: {str(e)}[/red]")
+            self.console.print(f"[red]Error saving component: {e!s}[/red]")

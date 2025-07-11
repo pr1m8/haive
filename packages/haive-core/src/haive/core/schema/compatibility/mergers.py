@@ -8,8 +8,6 @@ from abc import ABC, abstractmethod
 from enum import Enum
 from typing import Any, Callable, Dict, List, Optional, Set, Tuple, Type, Union
 
-from pydantic import BaseModel, Field, create_model
-
 from haive.core.schema.compatibility.analyzer import TypeAnalyzer
 from haive.core.schema.compatibility.compatibility import CompatibilityChecker
 from haive.core.schema.compatibility.types import (
@@ -18,6 +16,7 @@ from haive.core.schema.compatibility.types import (
     MergeStrategy,
     SchemaInfo,
 )
+from pydantic import BaseModel, Field, create_model
 
 
 class ConflictResolution(str, Enum):

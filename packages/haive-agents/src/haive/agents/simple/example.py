@@ -6,6 +6,10 @@ This script demonstrates how to create and use SimpleAgent with custom state sch
 import logging
 import uuid
 
+from haive.agents.simple import (
+    SimpleAgent,
+    SimpleAgentConfig,
+)
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.messages import BaseMessage
@@ -18,11 +22,6 @@ from rich.console import Console
 from rich.logging import RichHandler
 from rich.panel import Panel
 from rich.traceback import install as install_rich_traceback
-
-from haive.agents.simple import (
-    SimpleAgent,
-    SimpleAgentConfig,
-)
 
 # Install rich traceback for better error display
 install_rich_traceback(show_locals=True, width=120, suppress=[])
@@ -69,9 +68,9 @@ def example_with_custom_state_schema():
     prompt = PromptTemplate.from_template(
         """
         Context information: {context}
-        
+
         User query: {input}
-        
+
         Please provide a helpful response based on the context and query.
         """
     )
@@ -101,7 +100,7 @@ def example_with_custom_state_schema():
 
     # Define our processor directly as a factory function that will be called
     async def custom_process(state, inputs):
-        """Custom process function that ensures the answer is stored"""
+        """Custom process function that ensures the answer is stored."""
         # Call the LLM directly
         result = await aug_llm.ainvoke(inputs)
         console.print(f"[bold blue]LLM Result:[/bold blue] {result}")

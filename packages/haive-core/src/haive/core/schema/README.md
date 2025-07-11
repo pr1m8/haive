@@ -628,7 +628,7 @@ class ParentState(StateSchema):
     messages: List[BaseMessage] = Field(default_factory=list)
     global_context: str = Field(default="")
     results: List[str] = Field(default_factory=list)
-    
+
     __shared_fields__ = ["messages", "global_context"]
 
 # Child state
@@ -636,7 +636,7 @@ class ChildState(StateSchema):
     messages: List[BaseMessage] = Field(default_factory=list)  # From parent
     global_context: str = Field(default="")  # From parent
     local_data: str = Field(default="")  # Local only
-    
+
     __shared_fields__ = ["messages", "global_context"]
     __reducer_fields__ = {
         "messages": add_messages,
@@ -653,13 +653,13 @@ class StreamingState(StateSchema):
     chunks: List[str] = Field(default_factory=list)
     buffer: str = Field(default="")
     is_complete: bool = Field(default=False)
-    
+
     __reducer_fields__ = {
         "chunks": operator.add,
         "buffer": lambda old, new: new,  # Replace buffer
         "is_complete": lambda old, new: old or new  # Once true, stays true
     }
-    
+
     def flush_buffer(self) -> str:
         """Flush buffer and return content."""
         content = self.buffer
@@ -678,19 +678,19 @@ class ValidatedState(StateSchema):
     email: str = Field(default="")
     age: int = Field(default=0)
     tags: List[str] = Field(default_factory=list)
-    
+
     @validator("email")
     def validate_email(cls, v):
         if v and "@" not in v:
             raise ValueError("Invalid email format")
         return v
-    
+
     @validator("age")
     def validate_age(cls, v):
         if v < 0 or v > 150:
             raise ValueError("Age must be between 0 and 150")
         return v
-    
+
     @validator("tags")
     def validate_tags(cls, v):
         return list(set(v))  # Remove duplicates
@@ -843,7 +843,7 @@ restored = MyState.from_dict(state_dict)
 # Custom serialization for non-standard types
 class CustomState(StateSchema):
     data: CustomType = Field(default_factory=CustomType)
-    
+
     class Config:
         json_encoders = {
             CustomType: lambda v: v.to_dict()
@@ -873,7 +873,7 @@ class OrganizedState(StateSchema):
 ```python
 class LazyState(StateSchema):
     _large_data: Optional[LargeData] = None
-    
+
     @property
     def large_data(self) -> LargeData:
         if self._large_data is None:
@@ -905,7 +905,7 @@ def test_message_reducer():
         "messages": [HumanMessage(content="Hello")]
     })
     assert len(state.messages) == 1
-    
+
     state.apply_reducers({
         "messages": [AIMessage(content="Hi")]
     })
@@ -921,6 +921,7 @@ def test_message_reducer():
 **Problem**: Multiple engines define the same field with different types.
 
 **Solution**:
+
 ```python
 # Use prefixing
 composer = SchemaComposer()
@@ -933,6 +934,7 @@ composer.add_fields_from_engine(engine2, prefix="eng2_")
 **Problem**: Field updates overwrite instead of reducing.
 
 **Solution**:
+
 ```python
 # Ensure reducer is defined
 __reducer_fields__ = {
@@ -948,6 +950,7 @@ state.apply_reducers(update_dict)
 **Problem**: Updates in child graph don't appear in parent.
 
 **Solution**:
+
 ```python
 # Both parent and child must list the field
 __shared_fields__ = ["messages"]  # In BOTH schemas
@@ -958,10 +961,11 @@ __shared_fields__ = ["messages"]  # In BOTH schemas
 **Problem**: Custom types fail to serialize.
 
 **Solution**:
+
 ```python
 class MyState(StateSchema):
     custom: CustomType = Field(...)
-    
+
     class Config:
         json_encoders = {
             CustomType: lambda v: v.to_dict(),
@@ -974,6 +978,7 @@ class MyState(StateSchema):
 **Problem**: Large states causing slowdowns.
 
 **Solution**:
+
 ```python
 # Use selective field updates
 state.model_validate_assignment = False  # Disable validation
@@ -989,7 +994,7 @@ state.model_update({"messages": new_messages})
 For complete working examples, see the [example.py](example.py) file which demonstrates:
 
 - Basic schema creation and usage
-- Dynamic schema composition from engines  
+- Dynamic schema composition from engines
 - Parent-child state sharing
 - Custom reducers and validators
 - Schema merging and extension
@@ -999,39 +1004,39 @@ For complete working examples, see the [example.py](example.py) file which demon
 
 ### StateSchema
 
-| Method | Description |
-|--------|-------------|
-| `to_dict()` | Convert to dictionary |
-| `to_json()` | Convert to JSON string |
-| `from_dict(data)` | Create from dictionary |
-| `from_json(json_str)` | Create from JSON |
-| `apply_reducers(update)` | Apply update with reducers |
-| `add_message(msg)` | Add single message |
-| `add_messages(msgs)` | Add multiple messages |
-| `prepare_for_engine(name)` | Get engine inputs |
-| `to_command(goto)` | Convert to Command |
+| Method                     | Description                |
+| -------------------------- | -------------------------- |
+| `to_dict()`                | Convert to dictionary      |
+| `to_json()`                | Convert to JSON string     |
+| `from_dict(data)`          | Create from dictionary     |
+| `from_json(json_str)`      | Create from JSON           |
+| `apply_reducers(update)`   | Apply update with reducers |
+| `add_message(msg)`         | Add single message         |
+| `add_messages(msgs)`       | Add multiple messages      |
+| `prepare_for_engine(name)` | Get engine inputs          |
+| `to_command(goto)`         | Convert to Command         |
 
 ### SchemaComposer
 
-| Method | Description |
-|--------|-------------|
-| `add_field(...)` | Add single field |
-| `add_fields_from_model(model)` | Import from Pydantic model |
-| `add_fields_from_engine(engine)` | Import from engine |
-| `from_components(components)` | Create from component list |
-| `build()` | Generate StateSchema class |
-| `merge(composer1, composer2)` | Merge two composers |
+| Method                           | Description                |
+| -------------------------------- | -------------------------- |
+| `add_field(...)`                 | Add single field           |
+| `add_fields_from_model(model)`   | Import from Pydantic model |
+| `add_fields_from_engine(engine)` | Import from engine         |
+| `from_components(components)`    | Create from component list |
+| `build()`                        | Generate StateSchema class |
+| `merge(composer1, composer2)`    | Merge two composers        |
 
-### StateSchemaManager  
+### StateSchemaManager
 
-| Method | Description |
-|--------|-------------|
-| `add_field(...)` | Add field to schema |
-| `remove_field(name)` | Remove field |
-| `modify_field(...)` | Update field properties |
-| `get_model()` | Get Pydantic model class |
-| `add_method(func)` | Add custom method |
-| `from_components(...)` | Build from components |
+| Method                 | Description              |
+| ---------------------- | ------------------------ |
+| `add_field(...)`       | Add field to schema      |
+| `remove_field(name)`   | Remove field             |
+| `modify_field(...)`    | Update field properties  |
+| `get_model()`          | Get Pydantic model class |
+| `add_method(func)`     | Add custom method        |
+| `from_components(...)` | Build from components    |
 
 ## Conclusion
 
@@ -1040,7 +1045,7 @@ The Haive Schema System provides a comprehensive foundation for state management
 Key strengths include:
 
 - **Field Sharing**: Enables seamless state flow between parent and child graphs
-- **Reducer Functions**: Customizable state update behavior  
+- **Reducer Functions**: Customizable state update behavior
 - **Dynamic Composition**: Build schemas from components at runtime
 - **Engine Integration**: Track field-to-engine relationships
 - **Serialization**: Full support for serializing and deserializing schemas and states
@@ -1053,5 +1058,5 @@ By leveraging these capabilities, you can build sophisticated agent systems with
 ## See Also
 
 - [Engine System](../engine/README.md) - How engines integrate with schemas
-- [Graph System](../graph/README.md) - Using schemas in graphs  
+- [Graph System](../graph/README.md) - Using schemas in graphs
 - [Agent Base](../../../haive-agents/src/haive/agents/base/README.md) - Schema usage in agents

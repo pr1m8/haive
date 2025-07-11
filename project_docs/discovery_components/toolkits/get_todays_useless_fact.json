@@ -7,7 +7,7 @@
     "description": "Get today's useless fact. Optionally specify the language ('en' or 'de').",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.846607",
+    "timestamp": "2025-07-10T19:45:29.063949",
     "schema": {
       "description": "Input schema for the useless facts tools.\n\nAttributes:\n    language: Language code for the fact (en or de)",
       "properties": {
@@ -43,7 +43,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.846607",
+      "timestamp": "2025-07-10T19:45:29.063949",
       "category": "toolkits"
     }
   },

@@ -11,12 +11,12 @@ from pydantic import BaseModel, Field
 def test_conditional_routing_concept():
     """Test the concept of conditional routing."""
 
-    def router(state: Dict) -> str:
+    def router(state: dict) -> str:
         """Route based on state content."""
         query = state.get("query", "").lower()
         if "analyze" in query:
             return "analyzer"
-        elif "search" in query:
+        if "search" in query:
             return "searcher"
         return "default"
 
@@ -24,8 +24,6 @@ def test_conditional_routing_concept():
     assert router({"query": "analyze this"}) == "analyzer"
     assert router({"query": "search for info"}) == "searcher"
     assert router({"query": "hello"}) == "default"
-
-    print("✅ Conditional routing concept works")
 
 
 # Test model_post_init pattern
@@ -35,7 +33,7 @@ def test_model_post_init_pattern():
     class ValidatedAgent(BaseModel):
         name: str
         min_tools: int = Field(default=1, ge=0)
-        tools: List[str] = Field(default_factory=list)
+        tools: list[str] = Field(default_factory=list)
         tool_count: int = 0  # Will be set in post_init
 
         def model_post_init(self, __context):
@@ -55,8 +53,6 @@ def test_model_post_init_pattern():
     with pytest.raises(ValueError):
         ValidatedAgent(name="bad", min_tools=3, tools=["only_one"])
 
-    print("✅ model_post_init validation works")
-
 
 # Test schema composition concept
 def test_schema_composition_concept():
@@ -64,12 +60,12 @@ def test_schema_composition_concept():
 
     # Base schema
     class BaseState(BaseModel):
-        messages: List[str] = Field(default_factory=list)
+        messages: list[str] = Field(default_factory=list)
 
     # Extended schema
     class ExtendedState(BaseState):
         query: str = ""
-        results: List[str] = Field(default_factory=list)
+        results: list[str] = Field(default_factory=list)
 
     # Create instance
     state = ExtendedState(messages=["Hello"], query="test query")
@@ -77,13 +73,10 @@ def test_schema_composition_concept():
     assert len(state.messages) == 1
     assert state.query == "test query"
 
-    print("✅ Schema composition works")
-
 
 # Test multi-agent coordination concept
 def test_multi_agent_coordination():
     """Test multi-agent coordination patterns."""
-
     # Mock agents
     agent1 = Mock(name="processor")
     agent1.process = Mock(return_value={"processed": True})
@@ -103,12 +96,10 @@ def test_multi_agent_coordination():
     state.update(result2)
 
     # Verify coordination
-    assert state["processed"] == True
-    assert state["analyzed"] == True
+    assert state["processed"]
+    assert state["analyzed"]
     assert agent1.process.called
     assert agent2.process.called
-
-    print("✅ Multi-agent coordination works")
 
 
 # Test field sync concept
@@ -136,8 +127,6 @@ def test_field_sync_concept():
     assert agent.temperature == 0.9
     assert agent.model == "gpt-3.5"
 
-    print("✅ Field sync works")
-
 
 # Test conditional edges in graph concept
 def test_conditional_edges_concept():
@@ -156,7 +145,7 @@ def test_conditional_edges_concept():
             self.edges.append((from_node, to_node))
 
         def add_conditional_edge(
-            self, from_node: str, condition, routes: Dict[str, str]
+            self, from_node: str, condition, routes: dict[str, str]
         ):
             self.conditional_edges[from_node] = (condition, routes)
 
@@ -178,11 +167,8 @@ def test_conditional_edges_concept():
     assert len(graph.conditional_edges) == 1
     assert "router" in graph.conditional_edges
 
-    print("✅ Conditional edges concept works")
-
 
 if __name__ == "__main__":
-    print("\n🧪 Running Working Tests\n")
 
     test_conditional_routing_concept()
     test_model_post_init_pattern()
@@ -190,5 +176,3 @@ if __name__ == "__main__":
     test_multi_agent_coordination()
     test_field_sync_concept()
     test_conditional_edges_concept()
-
-    print("\n🎉 All tests passed!")

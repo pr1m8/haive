@@ -28,10 +28,6 @@ from typing import (
     get_origin,
 )
 
-from langchain_core.runnables import RunnableConfig
-from langgraph.graph import END
-from pydantic import BaseModel, Field, model_validator
-
 from haive.core.config.runnable import RunnableConfigManager
 
 # Import the protocol definitions
@@ -48,13 +44,15 @@ from haive.core.persistence.base import CheckpointerConfig
 
 # Import persistence-related functionality
 from haive.core.schema.schema_composer import SchemaComposer
+from langchain_core.runnables import RunnableConfig
+from langgraph.graph import END
+from pydantic import BaseModel, Field, model_validator
 
 # Check if PostgreSQL dependencies are available
 try:
-    from langgraph.checkpoint.postgres import PostgresSaver
-
     from haive.core.persistence.memory import MemoryCheckpointerConfig
     from haive.core.persistence.postgres_config import PostgresCheckpointerConfig
+    from langgraph.checkpoint.postgres import PostgresSaver
 
     POSTGRES_AVAILABLE = True
 except ImportError:
@@ -83,17 +81,17 @@ class PatternConfig(BaseModel):
     """
 
     name: str = Field(description="Name of the pattern to apply")
-    parameters: Dict[str, Any] = Field(
+    parameters: dict[str, Any] = Field(
         default_factory=dict, description="Parameters for pattern application"
     )
-    order: Optional[int] = Field(
+    order: int | None = Field(
         default=None, description="Order to apply pattern (lower numbers first)"
     )
-    condition: Optional[str] = Field(
+    condition: str | None = Field(
         default=None, description="Condition for pattern application"
     )
     enabled: bool = Field(default=True, description="Whether this pattern is enabled")
-    metadata: Dict[str, Any] = Field(
+    metadata: dict[str, Any] = Field(
         default_factory=dict, description="Additional metadata"
     )
 
@@ -139,12 +137,12 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
     """
 
     # Class variables for schema caching
-    _schema_cache: ClassVar[Dict[str, Type[BaseModel]]] = {}
-    _input_schema_cache: ClassVar[Dict[str, Type[BaseModel]]] = {}
-    _output_schema_cache: ClassVar[Dict[str, Type[BaseModel]]] = {}
+    _schema_cache: ClassVar[dict[str, type[BaseModel]]] = {}
+    _input_schema_cache: ClassVar[dict[str, type[BaseModel]]] = {}
+    _output_schema_cache: ClassVar[dict[str, type[BaseModel]]] = {}
 
     # Expected protocols for agent implementations
-    expected_protocols: ClassVar[List[Type]] = [
+    expected_protocols: ClassVar[list[type]] = [
         AgentProtocol,  # Core functionality (required)
         StreamingAgentProtocol,  # Streaming support
         PersistentAgentProtocol,  # Persistence capabilities
@@ -156,30 +154,30 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
     name: str = Field(default_factory=lambda: f"agent_{uuid.uuid4().hex[:8]}")
 
     # Primary engine (used as default processor)
-    engine: Optional[Union[Engine, str]] = None
+    engine: Engine | str | None = None
 
     # Additional named engines
-    engines: Dict[str, Union[Engine, str]] = Field(default_factory=dict)
+    engines: dict[str, Engine | str] = Field(default_factory=dict)
 
     # Schema definitions
-    state_schema: Optional[Union[Type[BaseModel], Dict[str, Any]]] = None
-    input_schema: Optional[Union[Type[BaseModel], Dict[str, Any]]] = None
-    output_schema: Optional[Union[Type[BaseModel], Dict[str, Any]]] = None
+    state_schema: Type[BaseModel] | Dict[str, Any] | None = None
+    input_schema: Type[BaseModel] | Dict[str, Any] | None = None
+    output_schema: Type[BaseModel] | Dict[str, Any] | None = None
 
     # Node configurations
-    node_configs: Dict[str, NodeConfig] = Field(
+    node_configs: dict[str, NodeConfig] = Field(
         default_factory=dict,
         description="Node configurations for explicit workflow definition",
     )
 
     # Pattern system integration
-    patterns: List[PatternConfig] = Field(
+    patterns: list[PatternConfig] = Field(
         default_factory=list, description="Patterns to apply to this agent"
     )
-    pattern_parameters: Dict[str, Dict[str, Any]] = Field(
+    pattern_parameters: dict[str, dict[str, Any]] = Field(
         default_factory=dict, description="Global parameters for patterns by name"
     )
-    default_patterns: List[Union[str, Dict[str, Any]]] = Field(
+    default_patterns: list[str | dict[str, Any]] = Field(
         default_factory=list,
         description="Patterns to apply by default during initialization",
     )
@@ -201,10 +199,10 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
     add_store: bool = Field(default=False)
 
     # Agent-specific settings (to be overridden by subclasses)
-    agent_settings: Dict[str, Any] = Field(default_factory=dict)
+    agent_settings: dict[str, Any] = Field(default_factory=dict)
 
     # Recursive agent composition
-    subagents: Dict[str, "AgentConfig"] = Field(
+    subagents: dict[str, "AgentConfig"] = Field(
         default_factory=dict, description="Subagents for recursive composition"
     )
 
@@ -212,14 +210,14 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
     version: str = Field(
         default="1.0.0", description="Version of this agent configuration"
     )
-    metadata: Dict[str, Any] = Field(
+    metadata: dict[str, Any] = Field(
         default_factory=dict, description="Additional metadata for this agent"
     )
 
     # =============================================
     # Persistence Configuration - DEFAULT TO POSTGRES IF AVAILABLE
     # =============================================
-    persistence: Optional[CheckpointerConfig] = Field(
+    persistence: CheckpointerConfig | None = Field(
         default_factory=lambda: (
             PostgresCheckpointerConfig()
             if POSTGRES_AVAILABLE
@@ -236,9 +234,9 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
     model_config = {"arbitrary_types_allowed": True}
 
     # Instance cache for derived schemas
-    _state_schema_instance: Optional[Type[BaseModel]] = None
-    _input_schema_instance: Optional[Type[BaseModel]] = None
-    _output_schema_instance: Optional[Type[BaseModel]] = None
+    _state_schema_instance: type[BaseModel] | None = None
+    _input_schema_instance: type[BaseModel] | None = None
+    _output_schema_instance: type[BaseModel] | None = None
 
     # Pattern application tracking
     _applied_patterns: set = set()
@@ -263,7 +261,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
             self.state_schema = self.derive_schema()
         return self
 
-    def get_input_fields(self) -> Dict[str, tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions as field_name -> (type, default) pairs.
 
         Implements the abstract method from Engine base class.
@@ -288,7 +286,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
         # Return empty dict if no schema available
         return {}
 
-    def get_output_fields(self) -> Dict[str, tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions as field_name -> (type, default) pairs.
 
         Implements the abstract method from Engine base class.
@@ -432,7 +430,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
 
         return ":".join(key_parts)
 
-    def derive_schema(self) -> Type[BaseModel]:
+    def derive_schema(self) -> type[BaseModel]:
         """Derive state schema from components and engines using SchemaComposer.
 
         Returns:
@@ -464,7 +462,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
 
         return schema
 
-    def _generate_schema_without_caching(self) -> Type[BaseModel]:
+    def _generate_schema_without_caching(self) -> type[BaseModel]:
         """Generate schema directly without caching.
 
         This is used internally by derive_schema and in testing contexts.
@@ -497,8 +495,6 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
         schema = SchemaComposer.from_components(
             components=all_components,
             name=schema_name,
-            # include_messages=True,
-            # include_runnable_config=False  # Never include __runnable_config__
         )
 
         # Enhance schema with pattern-specific fields
@@ -506,7 +502,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
 
         return schema
 
-    def _get_pattern_schema_components(self) -> List[Any]:
+    def _get_pattern_schema_components(self) -> list[Any]:
         """Get components required by patterns.
 
         Returns:
@@ -537,7 +533,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
                             components.append(AugLLMConfig())
                         elif component_type == "retriever" and not any(
                             getattr(c, "engine_type", None) == EngineType.RETRIEVER
-                            for c in [self.engine] + list(self.engines.values())
+                            for c in [self.engine, *list(self.engines.values())]
                         ):
                             from haive.core.engine.retriever import (
                                 VectorStoreRetrieverConfig,
@@ -556,7 +552,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
 
         return components
 
-    def _enhance_schema_with_patterns(self, schema: Type[BaseModel]) -> Type[BaseModel]:
+    def _enhance_schema_with_patterns(self, schema: type[BaseModel]) -> type[BaseModel]:
         """Enhance schema with pattern-specific fields and reducers.
 
         Args:
@@ -587,12 +583,12 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
                     if pattern_type == "retrieval":
                         if not manager.has_field("context"):
                             manager.add_field(
-                                "context", List[Dict[str, Any]], default_factory=list
+                                "context", list[dict[str, Any]], default_factory=list
                             )
                     elif pattern_type == "agent":
                         if not manager.has_field("tools"):
                             manager.add_field(
-                                "tools", List[Dict[str, Any]], default_factory=list
+                                "tools", list[dict[str, Any]], default_factory=list
                             )
         except ImportError:
             # Pattern system not available
@@ -600,7 +596,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
 
         return manager.get_model()
 
-    def derive_input_schema(self) -> Type[BaseModel]:
+    def derive_input_schema(self) -> type[BaseModel]:
         """Derive input schema for this agent.
 
         Returns:
@@ -663,13 +659,12 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
         schema = SchemaComposer.compose_input_schema(
             components=all_components,
             name=f"{self.name}Input",
-            # include_runnable_config=False  # Never include __runnable_config__
         )
 
         self._input_schema_instance = schema
         return schema
 
-    def derive_output_schema(self) -> Type[BaseModel]:
+    def derive_output_schema(self) -> type[BaseModel]:
         """Derive output schema for this agent.
 
         Returns:
@@ -734,7 +729,6 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
         schema = SchemaComposer.compose_output_schema(
             components=all_components,
             name=f"{self.name}Output",
-            # include_runnable_config=False  # Never include __runnable_config__
         )
 
         self._output_schema_instance = schema
@@ -844,7 +838,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
                 f"Agent class {agent.__class__.__name__} doesn't implement ExtensibilityAgentProtocol"
             )
 
-    def _resolve_agent_class_by_name(self) -> Optional[Type["Agent"]]:
+    def _resolve_agent_class_by_name(self) -> type["Agent"] | None:
         """Try to resolve agent class by naming convention."""
         import importlib
 
@@ -871,7 +865,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
 
         return None
 
-    def create_runnable(self, runnable_config: Optional[RunnableConfig] = None) -> Any:
+    def create_runnable(self, runnable_config: RunnableConfig | None = None) -> Any:
         """Create a runnable instance from this agent config.
 
         Args:
@@ -897,7 +891,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
         return agent.app
 
     def invoke(
-        self, input_data: TIn, runnable_config: Optional[RunnableConfig] = None
+        self, input_data: TIn, runnable_config: RunnableConfig | None = None
     ) -> TOut:
         """Invoke the agent with input data.
 
@@ -924,7 +918,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
         return agent.run(input_data, thread_id=thread_id, config=runnable_config)
 
     async def ainvoke(
-        self, input_data: TIn, runnable_config: Optional[RunnableConfig] = None
+        self, input_data: TIn, runnable_config: RunnableConfig | None = None
     ) -> TOut:
         """Asynchronously invoke the agent with input data.
 
@@ -951,8 +945,8 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
         return await agent.arun(input_data, thread_id=thread_id, config=runnable_config)
 
     def apply_runnable_config(
-        self, runnable_config: Optional[RunnableConfig] = None
-    ) -> Dict[str, Any]:
+        self, runnable_config: RunnableConfig | None = None
+    ) -> dict[str, Any]:
         """Extract parameters from runnable_config relevant to this agent.
 
         Args:
@@ -993,7 +987,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
 
         return params
 
-    def get_schema_fields(self) -> Dict[str, tuple[Type, Any]]:
+    def get_schema_fields(self) -> dict[str, tuple[type, Any]]:
         """Get schema fields for this agent.
 
         Returns:
@@ -1010,7 +1004,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
         manager = self.get_schema_manager(schema)
         return manager.get_field_definitions(include_runnable_config=False)
 
-    def extract_params(self) -> Dict[str, Any]:
+    def extract_params(self) -> dict[str, Any]:
         """Extract parameters from this engine for serialization.
 
         Returns:
@@ -1040,7 +1034,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
 
         return params
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Convert agent config to a dictionary.
 
         Returns:
@@ -1109,7 +1103,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
         return data
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "AgentConfig":
+    def from_dict(cls, data: dict[str, Any]) -> "AgentConfig":
         """Create an agent config from a dictionary.
 
         Args:
@@ -1184,9 +1178,9 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
     def use_pattern(
         self,
         pattern_name: str,
-        parameters: Optional[Dict[str, Any]] = None,
-        order: Optional[int] = None,
-        condition: Optional[str] = None,
+        parameters: dict[str, Any] | None = None,
+        order: int | None = None,
+        condition: str | None = None,
         enabled: bool = True,
     ) -> "AgentConfig":
         """Add a pattern to be applied to this agent.
@@ -1317,7 +1311,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
 
         return self
 
-    def get_pattern_order(self) -> List[str]:
+    def get_pattern_order(self) -> list[str]:
         """Get ordered list of patterns to apply.
 
         Returns:
@@ -1331,7 +1325,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
         # Filter enabled patterns
         return [p.name for p in sorted_patterns if p.enabled]
 
-    def get_pattern_parameters(self, pattern_name: str) -> Dict[str, Any]:
+    def get_pattern_parameters(self, pattern_name: str) -> dict[str, Any]:
         """Get combined parameters for a pattern.
 
         Args:
@@ -1370,7 +1364,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
         """
         self._applied_patterns.add(pattern_name)
 
-    def with_config_overrides(self, overrides: Dict[str, Any]) -> "AgentConfig":
+    def with_config_overrides(self, overrides: dict[str, Any]) -> "AgentConfig":
         """Create a new agent config with configuration overrides.
 
         Args:
@@ -1391,7 +1385,7 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
         return self.__class__.model_validate(config)
 
     @classmethod
-    def register_agent_class(cls, agent_class: Type["Agent"]) -> None:
+    def register_agent_class(cls, agent_class: type["Agent"]) -> None:
         """Register an agent class for this configuration.
 
         This method checks protocol compliance before registration.
@@ -1421,11 +1415,10 @@ class AgentConfig(InvokableEngine[TIn, TOut], Generic[TIn, TOut, TState]):
                 )
 
             # If we have an instance, verify it implements required protocols
-            if test_instance:
-                if not isinstance(test_instance, AgentProtocol):
-                    raise TypeError(
-                        f"Agent class {agent_class.__name__} must implement AgentProtocol"
-                    )
+            if test_instance and not isinstance(test_instance, AgentProtocol):
+                raise TypeError(
+                    f"Agent class {agent_class.__name__} must implement AgentProtocol"
+                )
         except Exception as e:
             logger.warning(f"Protocol validation failed: {e}")
             # Even if validation fails, we still register the class but with a warning

@@ -1,4 +1,4 @@
-"""React - ReAct agent implementation
+"""React - ReAct agent implementation.
 
 ReAct (Reasoning and Acting) agent that can use tools and reason about actions.
 
@@ -15,5 +15,6 @@ Example:
 """
 
 from haive.agents.react.agent import ReactAgent
+
 
 __all__ = ["ReactAgent"]

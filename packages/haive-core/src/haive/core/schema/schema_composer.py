@@ -299,18 +299,45 @@ class SchemaComposer:
                         pass
 
         # Determine base class with proper priority
-        # Always use StateSchema as base - but import the right one based on needs
-        if self.has_tools:
+        # NEW LOGIC: Always use LLMState as foundation for LLM engines
+        has_llm_engine = False
+        
+        # Check for LLM engines in components or current engines
+        if components:
+            for component in components:
+                if component is None:
+                    continue
+                if hasattr(component, "engine_type"):
+                    engine_type_value = getattr(
+                        component.engine_type, "value", component.engine_type
+                    )
+                    engine_type_str = str(engine_type_value).lower()
+                    if engine_type_str == "llm":
+                        has_llm_engine = True
+                        break
+        
+        # Also check current engines
+        for engine_name in self.engines_by_type.get("llm", []):
+            has_llm_engine = True
+            break
+            
+        # Priority: LLMState for LLM engines (includes messages + tools + token tracking)
+        if has_llm_engine:
+            from haive.core.schema.prebuilt.llm_state import LLMState
+
+            base_class = LLMState
+            logger.debug("Using LLMState as base class (found LLM engine - includes messages, tools, and token tracking)")
+        elif self.has_tools:
             from haive.core.schema.prebuilt.tool_state import ToolState
 
             base_class = ToolState
-            logger.debug("Using ToolState as base class (found tools)")
+            logger.debug("Using ToolState as base class (found tools without LLM)")
         elif self.has_messages:
             # Use token-aware messages state for better tracking
             from haive.core.schema.prebuilt.messages.messages_with_token_usage import MessagesStateWithTokenUsage
 
             base_class = MessagesStateWithTokenUsage
-            logger.debug("Using MessagesStateWithTokenUsage as base class (found messages, with token tracking)")
+            logger.debug("Using MessagesStateWithTokenUsage as base class (found messages without LLM/tools)")
         else:
             from haive.core.schema.state_schema import StateSchema
 
@@ -1492,6 +1519,28 @@ class SchemaComposer:
                 )
 
                 logger.debug(f"Added 'tools' field for engine '{engine_name}'")
+
+        # 5. Check for tool routes (from ToolRouteMixin)
+        if hasattr(engine, "tool_routes") and engine.tool_routes:
+            tool_routes = engine.tool_routes
+            logger.debug(f"Engine {engine_name} has {len(tool_routes)} tool routes")
+
+            # Add tool_routes field if not present and not in base class
+            if "tool_routes" not in self.fields and "tool_routes" not in self.base_class_fields:
+                from haive.core.schema.field_registry import StandardFields
+
+                # Use StandardFields to get the tool_routes field definition
+                tool_routes_field = StandardFields.tool_routes()
+                
+                self.add_field(
+                    name=tool_routes_field.name,
+                    field_type=tool_routes_field.field_type,
+                    default_factory=tool_routes_field.default_factory,
+                    description=tool_routes_field.description,
+                    source=source,
+                )
+
+                logger.debug(f"Added 'tool_routes' field for engine '{engine_name}'")
 
         # Update engine IO mapping
         if self.input_fields[engine_name]:

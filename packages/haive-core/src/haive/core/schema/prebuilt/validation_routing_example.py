@@ -9,17 +9,16 @@ This example demonstrates:
 
 from typing import Any, Dict, List, Union
 
-from langchain_core.messages import AIMessage, ToolMessage
-from langgraph.graph import END, StateGraph
-from langgraph.types import Send
-from pydantic import BaseModel, Field
-
 from haive.core.schema.prebuilt.tool_state_with_validation import EnhancedToolState
 from haive.core.schema.prebuilt.tools.validation_state import (
     RouteRecommendation,
     ValidationStateManager,
     ValidationStatus,
 )
+from langchain_core.messages import AIMessage, ToolMessage
+from langgraph.graph import END, StateGraph
+from langgraph.types import Send
+from pydantic import BaseModel, Field
 
 
 class ValidationExample(BaseModel):

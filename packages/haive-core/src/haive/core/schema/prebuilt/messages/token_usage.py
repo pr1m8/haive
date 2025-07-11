@@ -5,8 +5,6 @@ across different LLM providers and models. It supports comprehensive metrics
 including cached tokens, audio tokens, and reasoning tokens.
 """
 
-from typing import Dict, List, Optional, Union
-
 from langchain_core.messages import AIMessage, BaseMessage
 from pydantic import BaseModel, Field, model_validator
 
@@ -28,13 +26,13 @@ class TokenUsage(BaseModel):
     total_tokens: int = Field(default=0, description="Total tokens (input + output)")
 
     # Advanced token types
-    input_tokens_cached: Optional[int] = Field(
+    input_tokens_cached: int | None = Field(
         default=None, description="Number of cached input tokens (if supported)"
     )
-    audio_tokens: Optional[int] = Field(
+    audio_tokens: int | None = Field(
         default=None, description="Number of audio tokens (for multimodal models)"
     )
-    reasoning_tokens: Optional[int] = Field(
+    reasoning_tokens: int | None = Field(
         default=None, description="Number of reasoning tokens (for reasoning models)"
     )
 
@@ -96,8 +94,8 @@ class TokenUsage(BaseModel):
 
 
 def extract_token_usage_from_message(
-    message: BaseMessage, provider: Optional[str] = None
-) -> Optional[TokenUsage]:
+    message: BaseMessage, provider: str | None = None
+) -> TokenUsage | None:
     """Extract token usage information from a message.
 
     Args:
@@ -181,7 +179,7 @@ def extract_token_usage_from_message(
     return None
 
 
-def aggregate_token_usage(messages: List[BaseMessage]) -> TokenUsage:
+def aggregate_token_usage(messages: list[BaseMessage]) -> TokenUsage:
     """Aggregate token usage across multiple messages.
 
     Args:
@@ -204,7 +202,7 @@ def calculate_token_cost(
     usage: TokenUsage,
     input_cost_per_1k: float,
     output_cost_per_1k: float,
-    cached_input_cost_per_1k: Optional[float] = None,
+    cached_input_cost_per_1k: float | None = None,
 ) -> TokenUsage:
     """Calculate costs based on token usage and pricing.
 

@@ -8,11 +8,10 @@ import asyncio
 import logging
 from typing import Any, Callable, Dict, List, Optional
 
+from haive.agents.react.agent import ReactAgent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import BaseMessage
 from pydantic import Field
-
-from haive.agents.react.agent import ReactAgent
 
 from .dynamic_state import DynamicSupervisorState
 
@@ -36,7 +35,7 @@ class DynamicSupervisorFixed(ReactAgent):
     )
 
     # Private state
-    _agent_registry: Dict[str, Any] = {}
+    _agent_registry: dict[str, Any] = {}
     _needs_rebuild: bool = False
     _initial_build_complete: bool = False
 
@@ -47,7 +46,10 @@ class DynamicSupervisorFixed(ReactAgent):
         self._initial_build_complete = False
 
     def register_agent(
-        self, agent: Any, capability: str = None, rebuild_immediately: bool = False
+        self,
+        agent: Any,
+        capability: str | None = None,
+        rebuild_immediately: bool = False,
     ) -> bool:
         """Register an agent for dynamic routing.
 
@@ -130,7 +132,7 @@ class DynamicSupervisorFixed(ReactAgent):
             {
                 "executor": "executor",
                 "END": "__end__",
-                **{name: name for name in self._agent_registry.keys()},
+                **{name: name for name in self._agent_registry},
             },
         )
 
@@ -139,7 +141,7 @@ class DynamicSupervisorFixed(ReactAgent):
             "executor",
             self._route_to_agent,
             {
-                **{name: name for name in self._agent_registry.keys()},
+                **{name: name for name in self._agent_registry},
                 "supervisor": "supervisor",
             },
         )
@@ -167,11 +169,10 @@ class DynamicSupervisorFixed(ReactAgent):
             self._needs_rebuild = False
 
         except Exception as e:
-            logger.error(f"Failed to mark graph for rebuild: {e}")
+            logger.exception(f"Failed to mark graph for rebuild: {e}")
 
-    async def ainvoke(self, input: Any, config: Optional[Any] = None, **kwargs) -> Any:
+    async def ainvoke(self, input: Any, config: Any | None = None, **kwargs) -> Any:
         """Override ainvoke to handle lazy graph rebuilding."""
-
         # Check if we need to rebuild before invoking
         if self._needs_rebuild and self.auto_rebuild_graph:
             logger.info("Rebuilding graph before invocation...")
@@ -184,9 +185,8 @@ class DynamicSupervisorFixed(ReactAgent):
         # Call parent ainvoke which will trigger recompilation if needed
         return await super().ainvoke(input, config, **kwargs)
 
-    def invoke(self, input: Any, config: Optional[Any] = None, **kwargs) -> Any:
+    def invoke(self, input: Any, config: Any | None = None, **kwargs) -> Any:
         """Override invoke to handle lazy graph rebuilding."""
-
         # Check if we need to rebuild before invoking
         if self._needs_rebuild and self.auto_rebuild_graph:
             logger.info("Rebuilding graph before invocation...")
@@ -202,9 +202,8 @@ class DynamicSupervisorFixed(ReactAgent):
     def _create_dynamic_supervisor_node(self) -> Callable:
         """Create supervisor node that routes based on dynamic registry."""
 
-        async def supervisor_node(state: DynamicSupervisorState) -> Dict[str, Any]:
+        async def supervisor_node(state: DynamicSupervisorState) -> dict[str, Any]:
             """Supervisor that checks registry dynamically."""
-
             # Check available agents IN REAL TIME
             available_agents = list(self._agent_registry.keys())
             logger.info(f"Available agents at runtime: {available_agents}")
@@ -219,23 +218,21 @@ class DynamicSupervisorFixed(ReactAgent):
             # Route based on keywords
             if "math" in content and "math_agent" in available_agents:
                 return {"next": "math_agent", "target_agent": "math_agent"}
-            elif "write" in content and "writing_agent" in available_agents:
+            if "write" in content and "writing_agent" in available_agents:
                 return {"next": "writing_agent", "target_agent": "writing_agent"}
-            elif available_agents:
+            if available_agents:
                 # Default to first available
                 target = available_agents[0]
                 return {"next": target, "target_agent": target}
-            else:
-                return {"next": "END"}
+            return {"next": "END"}
 
         return supervisor_node
 
     def _create_dynamic_executor_node(self) -> Callable:
         """Create executor node that prepares for agent execution."""
 
-        async def executor_node(state: DynamicSupervisorState) -> Dict[str, Any]:
+        async def executor_node(state: DynamicSupervisorState) -> dict[str, Any]:
             """Prepare state for agent execution."""
-
             target = getattr(state, "target_agent", None)
             if target and target in self._agent_registry:
                 logger.info(f"Preparing to execute agent: {target}")
@@ -248,9 +245,8 @@ class DynamicSupervisorFixed(ReactAgent):
     def _create_agent_wrapper(self, agent_name: str, agent: Any) -> Callable:
         """Create wrapper function for agent execution."""
 
-        async def agent_wrapper(state: DynamicSupervisorState) -> Dict[str, Any]:
+        async def agent_wrapper(state: DynamicSupervisorState) -> dict[str, Any]:
             """Execute agent and update state."""
-
             logger.info(f"Executing agent: {agent_name}")
 
             try:
@@ -268,7 +264,7 @@ class DynamicSupervisorFixed(ReactAgent):
                 return {"messages": new_messages, "last_agent": agent_name}
 
             except Exception as e:
-                logger.error(f"Agent {agent_name} execution failed: {e}")
+                logger.exception(f"Agent {agent_name} execution failed: {e}")
                 return {"error": str(e)}
 
         return agent_wrapper
@@ -288,11 +284,11 @@ class DynamicSupervisorFixed(ReactAgent):
 
         return "supervisor"
 
-    def get_registered_agents(self) -> List[str]:
+    def get_registered_agents(self) -> list[str]:
         """Get list of currently registered agents."""
         return list(self._agent_registry.keys())
 
-    def get_agent_info(self, agent_name: str) -> Optional[Dict[str, Any]]:
+    def get_agent_info(self, agent_name: str) -> dict[str, Any] | None:
         """Get information about a registered agent."""
         return self._agent_registry.get(agent_name)
 
@@ -302,7 +298,6 @@ if __name__ == "__main__":
 
     async def test_dynamic_supervisor():
         """Test the fixed dynamic supervisor."""
-
         # Create supervisor
         supervisor = DynamicSupervisorFixed(
             name="fixed_supervisor", auto_rebuild_graph=True
@@ -315,25 +310,21 @@ if __name__ == "__main__":
 
             async def ainvoke(self, state):
                 messages = state.get("messages", [])
-                return {"messages": messages + [f"Response from {self.name}"]}
+                return {"messages": [*messages, f"Response from {self.name}"]}
 
         # Register initial agent
         writing_agent = MockAgent("writing_agent")
         supervisor.register_agent(writing_agent, "Writing and content creation")
 
         # First invocation - triggers initial build
-        result1 = await supervisor.ainvoke({"messages": ["Write a story"]})
-        print(f"Result 1: {result1}")
+        await supervisor.ainvoke({"messages": ["Write a story"]})
 
         # Register new agent AFTER compilation
         math_agent = MockAgent("math_agent")
         supervisor.register_agent(math_agent, "Mathematical calculations")
 
         # Next invocation will trigger rebuild
-        result2 = await supervisor.ainvoke({"messages": ["Calculate 2+2"]})
-        print(f"Result 2: {result2}")
-
-        print(f"\nRegistered agents: {supervisor.get_registered_agents()}")
+        await supervisor.ainvoke({"messages": ["Calculate 2+2"]})
 
     # Run test
     asyncio.run(test_dynamic_supervisor())

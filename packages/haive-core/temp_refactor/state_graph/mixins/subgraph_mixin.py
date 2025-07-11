@@ -7,12 +7,11 @@ in a graph.
 
 from typing import Dict, List, Optional
 
-from pydantic import Field
-
 from haive.core.graph.common.types import NodeType
 from haive.core.graph.state_graph.base.graph_base import GraphBase
 from haive.core.graph.state_graph.components.subgraph import Subgraph
 from haive.core.graph.state_graph.components.subgraph_registry import SubgraphRegistry
+from pydantic import Field
 
 
 class SubgraphMixin:

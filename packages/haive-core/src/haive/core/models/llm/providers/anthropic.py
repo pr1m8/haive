@@ -35,12 +35,12 @@ Examples:
 """
 
 import os
-from typing import Any, List, Optional, Type
-
-from pydantic import Field
+from typing import Any
 
 from haive.core.models.llm.provider_types import LLMProvider
-from haive.core.models.llm.providers.base import BaseLLMProvider, ProviderImportError
+from haive.core.models.llm.providers.base import (BaseLLMProvider,
+                                                  ProviderImportError)
+from pydantic import Field
 
 
 class AnthropicProvider(BaseLLMProvider):
@@ -95,21 +95,21 @@ class AnthropicProvider(BaseLLMProvider):
     )
 
     # Anthropic specific parameters
-    temperature: Optional[float] = Field(
+    temperature: float | None = Field(
         default=None, ge=0, le=1, description="Sampling temperature"
     )
-    max_tokens: Optional[int] = Field(
+    max_tokens: int | None = Field(
         default=None, ge=1, le=4096, description="Maximum tokens to generate"
     )
-    top_p: Optional[float] = Field(
+    top_p: float | None = Field(
         default=None, ge=0, le=1, description="Nucleus sampling parameter"
     )
-    top_k: Optional[int] = Field(
+    top_k: int | None = Field(
         default=None, ge=1, description="Top-k sampling parameter"
     )
     streaming: bool = Field(default=False, description="Whether to stream responses")
 
-    def _get_chat_class(self) -> Type[Any]:
+    def _get_chat_class(self) -> type[Any]:
         """Get the Anthropic chat class.
 
         Returns:
@@ -161,7 +161,7 @@ class AnthropicProvider(BaseLLMProvider):
 
         return params
 
-    def _get_api_key_param_name(self) -> Optional[str]:
+    def _get_api_key_param_name(self) -> str | None:
         """Get the parameter name for API key.
 
         Returns:
@@ -170,7 +170,7 @@ class AnthropicProvider(BaseLLMProvider):
         return "anthropic_api_key"
 
     @classmethod
-    def get_models(cls) -> List[str]:
+    def get_models(cls) -> list[str]:
         """Get available Anthropic models.
 
         Note: Anthropic doesn't provide a public API to list models,

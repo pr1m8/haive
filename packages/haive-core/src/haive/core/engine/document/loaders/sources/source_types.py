@@ -9,9 +9,8 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Dict, Optional, Set, Union
 
-from pydantic import BaseModel, Field, SecretStr
-
 from haive.core.common.mixins.secure_config import SecureConfigMixin
+from pydantic import BaseModel, Field, SecretStr
 
 
 class SourceCategory(str, Enum):
@@ -201,7 +200,7 @@ class SourceCapabilities(BaseModel):
     requires_credentials: bool = False
     credential_type: CredentialType = CredentialType.NONE
     rate_limited: bool = False
-    capabilities: Set[LoaderCapability] = Field(default_factory=set)
+    capabilities: set[LoaderCapability] = Field(default_factory=set)
 
     # Processing characteristics
     typical_speed: str = "medium"  # fast, medium, slow
@@ -209,9 +208,9 @@ class SourceCapabilities(BaseModel):
     memory_usage: str = "medium"  # low, medium, high
 
     # Supported formats/patterns
-    file_extensions: Set[str] = Field(default_factory=set)
-    url_patterns: Set[str] = Field(default_factory=set)
-    mime_types: Set[str] = Field(default_factory=set)
+    file_extensions: set[str] = Field(default_factory=set)
+    url_patterns: set[str] = Field(default_factory=set)
+    mime_types: set[str] = Field(default_factory=set)
 
 
 # =============================================================================
@@ -228,23 +227,22 @@ class BaseSource(BaseModel, ABC):
     capabilities: SourceCapabilities
 
     # Common fields
-    name: Optional[str] = None
-    description: Optional[str] = None
-    tags: Set[str] = Field(default_factory=set)
-    preferred_loader: Optional[str] = None
+    name: str | None = None
+    description: str | None = None
+    tags: set[str] = Field(default_factory=set)
+    preferred_loader: str | None = None
 
     # Processing options
-    chunk_size: Optional[int] = None
-    chunk_overlap: Optional[int] = None
+    chunk_size: int | None = None
+    chunk_overlap: int | None = None
     encoding: str = "utf-8"
 
     class Config:
         use_enum_values = True
 
     @abstractmethod
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         """Get kwargs for creating the actual loader."""
-        pass
 
     def add_capability(self, capability: LoaderCapability) -> None:
         """Add a capability to this source."""
@@ -258,11 +256,11 @@ class BaseSource(BaseModel, ABC):
 class LocalFileSource(BaseSource):
     """Base for local file-based sources."""
 
-    file_path: Union[str, Path]
-    file_size: Optional[int] = None
-    file_modified: Optional[str] = None
+    file_path: str | Path
+    file_size: int | None = None
+    file_modified: str | None = None
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = {"file_path": str(self.file_path), "encoding": self.encoding}
         if self.chunk_size:
             kwargs["chunk_size"] = self.chunk_size
@@ -273,18 +271,18 @@ class RemoteSource(BaseSource, SecureConfigMixin):
     """Base for remote sources requiring authentication."""
 
     url: str
-    headers: Dict[str, str] = Field(default_factory=dict)
+    headers: dict[str, str] = Field(default_factory=dict)
     timeout: int = 30
     retry_count: int = 3
 
     # Required for SecureConfigMixin
     provider: str = Field(default="generic", description="API provider name")
-    api_key: Optional[SecretStr] = Field(None, description="API key for authentication")
+    api_key: SecretStr | None = Field(None, description="API key for authentication")
 
     class Config:
         arbitrary_types_allowed = True
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = {"url": self.url, "headers": self.headers, "timeout": self.timeout}
         # Add authentication if available
         auth_headers = self.get_auth_headers()
@@ -292,7 +290,7 @@ class RemoteSource(BaseSource, SecureConfigMixin):
             kwargs["headers"].update(auth_headers)
         return kwargs
 
-    def get_auth_headers(self) -> Dict[str, str]:
+    def get_auth_headers(self) -> dict[str, str]:
         """Get authentication headers if credentials are available."""
         if hasattr(self, "api_key") and self.api_key:
             return {"Authorization": f"Bearer {self.api_key.get_secret_value()}"}
@@ -302,19 +300,19 @@ class RemoteSource(BaseSource, SecureConfigMixin):
 class DatabaseSource(BaseSource, SecureConfigMixin):
     """Base for database sources."""
 
-    connection_string: Optional[str] = None
-    database_name: Optional[str] = None
-    table_name: Optional[str] = None
-    query: Optional[str] = None
+    connection_string: str | None = None
+    database_name: str | None = None
+    table_name: str | None = None
+    query: str | None = None
 
     # Required for SecureConfigMixin
     provider: str = Field(default="database", description="Database provider")
-    api_key: Optional[SecretStr] = Field(None, description="Not used for databases")
+    api_key: SecretStr | None = Field(None, description="Not used for databases")
 
     class Config:
         arbitrary_types_allowed = True
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = {}
         if self.connection_string:
             kwargs["connection_string"] = self.connection_string
@@ -333,15 +331,15 @@ class CloudStorageSource(BaseSource, SecureConfigMixin):
     bucket_name: str
     object_key: str
     provider: str  # aws, gcp, azure
-    region: Optional[str] = None
+    region: str | None = None
 
     # Required for SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(None, description="Cloud storage credentials")
+    api_key: SecretStr | None = Field(None, description="Cloud storage credentials")
 
     class Config:
         arbitrary_types_allowed = True
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         return {
             "bucket": self.bucket_name,
             "key": self.object_key,
@@ -352,13 +350,13 @@ class CloudStorageSource(BaseSource, SecureConfigMixin):
 class DirectorySource(BaseSource):
     """Base for directory-based sources with bulk loading."""
 
-    directory_path: Union[str, Path]
+    directory_path: str | Path
     glob_pattern: str = "**/*"
     recursive: bool = True
-    max_files: Optional[int] = None
-    file_filter: Optional[str] = None
+    max_files: int | None = None
+    file_filter: str | None = None
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         return {
             "path": str(self.directory_path),
             "glob": self.glob_pattern,
@@ -371,21 +369,21 @@ class MessagingSource(BaseSource, SecureConfigMixin):
     """Base for messaging platform sources."""
 
     platform: str
-    channel_id: Optional[str] = None
-    user_id: Optional[str] = None
-    date_from: Optional[str] = None
-    date_to: Optional[str] = None
+    channel_id: str | None = None
+    user_id: str | None = None
+    date_from: str | None = None
+    date_to: str | None = None
 
     # Required for SecureConfigMixin
     provider: str = Field(
         default="messaging", description="Messaging platform provider"
     )
-    api_key: Optional[SecretStr] = Field(None, description="Platform API key")
+    api_key: SecretStr | None = Field(None, description="Platform API key")
 
     class Config:
         arbitrary_types_allowed = True
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = {"platform": self.platform}
         if self.channel_id:
             kwargs["channel_id"] = self.channel_id
@@ -402,17 +400,17 @@ class BusinessSource(BaseSource, SecureConfigMixin):
     """Base for business system sources (CRM, productivity tools)."""
 
     platform: str
-    workspace_id: Optional[str] = None
-    object_type: Optional[str] = None  # contacts, deals, etc.
+    workspace_id: str | None = None
+    object_type: str | None = None  # contacts, deals, etc.
 
     # Required for SecureConfigMixin
     provider: str = Field(default="business", description="Business platform provider")
-    api_key: Optional[SecretStr] = Field(None, description="Business platform API key")
+    api_key: SecretStr | None = Field(None, description="Business platform API key")
 
     class Config:
         arbitrary_types_allowed = True
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = {"platform": self.platform}
         if self.workspace_id:
             kwargs["workspace_id"] = self.workspace_id
@@ -427,9 +425,9 @@ class AcademicSource(BaseSource):
     query: str
     max_results: int = 10
     sort_by: str = "relevance"
-    date_filter: Optional[str] = None
+    date_filter: str | None = None
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         return {
             "query": self.query,
             "max_results": self.max_results,
@@ -442,19 +440,19 @@ class MediaSource(BaseSource, SecureConfigMixin):
     """Base for media platform sources (video, audio)."""
 
     platform: str
-    content_id: Optional[str] = None
-    channel_id: Optional[str] = None
+    content_id: str | None = None
+    channel_id: str | None = None
     quality: str = "best"
     format_preference: str = "mp4"
 
     # Required for SecureConfigMixin
     provider: str = Field(default="media", description="Media platform provider")
-    api_key: Optional[SecretStr] = Field(None, description="Media platform API key")
+    api_key: SecretStr | None = Field(None, description="Media platform API key")
 
     class Config:
         arbitrary_types_allowed = True
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = {
             "platform": self.platform,
             "quality": self.quality,
@@ -471,8 +469,8 @@ class KnowledgeSource(BaseSource, SecureConfigMixin):
     """Base for knowledge management sources."""
 
     platform: str
-    workspace_id: Optional[str] = None
-    page_id: Optional[str] = None
+    workspace_id: str | None = None
+    page_id: str | None = None
     export_format: str = "markdown"
     include_metadata: bool = True
 
@@ -480,12 +478,12 @@ class KnowledgeSource(BaseSource, SecureConfigMixin):
     provider: str = Field(
         default="knowledge", description="Knowledge platform provider"
     )
-    api_key: Optional[SecretStr] = Field(None, description="Knowledge platform API key")
+    api_key: SecretStr | None = Field(None, description="Knowledge platform API key")
 
     class Config:
         arbitrary_types_allowed = True
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         return {
             "platform": self.platform,
             "workspace_id": self.workspace_id,
@@ -507,14 +505,12 @@ class DevelopmentSource(BaseSource, SecureConfigMixin):
     provider: str = Field(
         default="development", description="Development platform provider"
     )
-    api_key: Optional[SecretStr] = Field(
-        None, description="Development platform API key"
-    )
+    api_key: SecretStr | None = Field(None, description="Development platform API key")
 
     class Config:
         arbitrary_types_allowed = True
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         return {
             "repo_url": self.repository_url,
             "branch": self.branch,
@@ -536,7 +532,7 @@ class PDFSource(LocalFileSource):
     extract_images: bool = False
     layout_analysis: bool = False
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_loader_kwargs()
         kwargs.update(
             {
@@ -555,9 +551,9 @@ class WebScrapingSource(RemoteSource):
     use_browser: bool = False
     wait_for_js: bool = False
     scroll_to_bottom: bool = False
-    selector: Optional[str] = None
+    selector: str | None = None
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_loader_kwargs()
         kwargs.update(
             {
@@ -577,7 +573,7 @@ class DatabaseQuerySource(DatabaseSource):
     page_size: int = 1000
     streaming: bool = False
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_loader_kwargs()
         kwargs.update({"page_size": self.page_size, "streaming": self.streaming})
         return kwargs
@@ -589,9 +585,9 @@ class BulkDirectorySource(DirectorySource):
     category: SourceCategory = SourceCategory.DIRECTORY_LOCAL
     parallel_processing: bool = True
     worker_count: int = 4
-    progress_callback: Optional[str] = None
+    progress_callback: str | None = None
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_loader_kwargs()
         kwargs.update(
             {

@@ -15,12 +15,7 @@ from .enhanced_registry import (
     register_bulk_source,
     register_web_source,
 )
-from .source_types import (
-    CredentialType,
-    LoaderCapability,
-    RemoteSource,
-    SourceCategory,
-)
+from .source_types import CredentialType, LoaderCapability, RemoteSource, SourceCategory
 
 
 class CrawlStrategy(str, Enum):

@@ -1,15 +1,16 @@
 # src/haive/agents/react/tool_utils.py
 
+from collections.abc import Callable
 import inspect
 import logging
-import uuid
-from collections.abc import Callable
 from typing import Any, Literal
+import uuid
 
 from langchain_core.messages import AIMessage, ToolMessage
 from langchain_core.tools import BaseTool, StructuredTool
 from langgraph.graph import END
 from langgraph.types import Send
+
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +48,7 @@ def prepare_tools(tools: list[BaseTool | dict[str, Any] | Callable]) -> list[Bas
                         )
                     )
             except Exception as e:
-                logger.error(f"Error creating tool from dictionary: {e}")
+                logger.exception(f"Error creating tool from dictionary: {e}")
         elif callable(tool):
             # Callable function that can be converted to a tool
             try:
@@ -59,7 +60,7 @@ def prepare_tools(tools: list[BaseTool | dict[str, Any] | Callable]) -> list[Bas
                     )
                 )
             except Exception as e:
-                logger.error(f"Error creating tool from callable: {e}")
+                logger.exception(f"Error creating tool from callable: {e}")
 
     return prepared_tools
 
@@ -310,7 +311,7 @@ def create_tool_executor_v2(tools: list[BaseTool]) -> Callable:
         # Update the state
         return {
             "messages": [tool_message],
-            "tool_results": state.get("tool_results", []) + [tool_result],
+            "tool_results": [*state.get("tool_results", []), tool_result],
             "current_iteration": state.get("current_iteration", 0) + 1,
         }
 

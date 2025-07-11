@@ -20,9 +20,6 @@ from typing import (
     overload,
 )
 
-from langgraph.types import Command, RetryPolicy, Send
-from pydantic import BaseModel, Field
-
 from haive.core.engine.base import Engine, EngineType
 from haive.core.graph.common.types import ConfigLike, StateLike
 from haive.core.graph.node.base_config import NodeConfig
@@ -30,6 +27,8 @@ from haive.core.graph.node.types import NodeType
 from haive.core.logging.rich_logger import LogLevel, get_logger
 from haive.core.schema.field_definition import FieldDefinition
 from haive.core.schema.field_registry import CommonFieldSets, StandardFields
+from langgraph.types import Command, RetryPolicy, Send
+from pydantic import BaseModel, Field
 
 # Type variables for input/output schemas
 TInput = TypeVar("TInput", bound=BaseModel)
@@ -49,20 +48,20 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
 
     # Core identity
     node_type: NodeType = Field(default=NodeType.ENGINE)
-    engine: Optional[Engine] = Field(default=None)
-    engine_name: Optional[str] = Field(default=None)
+    engine: Engine | None = Field(default=None)
+    engine_name: str | None = Field(default=None)
 
     # Schema definitions (new approach)
-    input_schema: Optional[Type[TInput]] = Field(default=None)
-    output_schema: Optional[Type[TOutput]] = Field(default=None)
+    input_schema: Type[TInput] | None = Field(default=None)
+    output_schema: Type[TOutput] | None = Field(default=None)
 
     # Field registry integration
-    input_field_defs: List[FieldDefinition] = Field(default_factory=list)
-    output_field_defs: List[FieldDefinition] = Field(default_factory=list)
+    input_field_defs: list[FieldDefinition] = Field(default_factory=list)
+    output_field_defs: list[FieldDefinition] = Field(default_factory=list)
 
     # Legacy field mappings (backwards compatibility)
-    input_fields: Optional[Union[List[str], Dict[str, str]]] = Field(default=None)
-    output_fields: Optional[Union[List[str], Dict[str, str]]] = Field(default=None)
+    input_fields: Union[List[str], Dict[str, str]] | None = Field(default=None)
+    output_fields: Union[List[str], Dict[str, str]] | None = Field(default=None)
 
     # Engine attribution
     auto_add_engine_attribution: bool = Field(
@@ -70,7 +69,7 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
     )
 
     # Options
-    retry_policy: Optional[RetryPolicy] = Field(default=None)
+    retry_policy: RetryPolicy | None = Field(default=None)
     use_send: bool = Field(default=False)
     debug: bool = Field(default=True)
 
@@ -92,8 +91,8 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
             )
 
     def _create_schema_from_fields(
-        self, field_defs: List[FieldDefinition], schema_name: str
-    ) -> Type[BaseModel]:
+        self, field_defs: list[FieldDefinition], schema_name: str
+    ) -> type[BaseModel]:
         """Create a Pydantic schema from field definitions."""
         from pydantic import create_model
 
@@ -104,21 +103,21 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
 
         return create_model(schema_name, **fields)
 
-    def get_input_fields_for_state(self) -> Dict[str, Any]:
+    def get_input_fields_for_state(self) -> dict[str, Any]:
         """Get input fields that should be included in state schema."""
         if self.input_field_defs:
             return {fd.name: fd.to_field_info() for fd in self.input_field_defs}
         return {}
 
-    def get_output_fields_for_state(self) -> Dict[str, Any]:
+    def get_output_fields_for_state(self) -> dict[str, Any]:
         """Get output fields that should be included in state schema."""
         if self.output_field_defs:
             return {fd.name: fd.to_field_info() for fd in self.output_field_defs}
         return {}
 
     def __call__(
-        self, state: StateLike, config: Optional[ConfigLike] = None
-    ) -> Union[Command, Send]:
+        self, state: StateLike, config: ConfigLike | None = None
+    ) -> Command | Send:
         """Execute the engine node with type-safe I/O."""
         logger.info("=" * 80)
         logger.info(f"GENERIC ENGINE NODE EXECUTION: {self.name}")
@@ -143,7 +142,7 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
                 return wrapped
 
             except Exception as e:
-                logger.error(f"Error in {self.name}: {e}")
+                logger.exception(f"Error in {self.name}: {e}")
                 raise
 
     def _extract_typed_input(self, state: StateLike, engine: Engine) -> Any:
@@ -155,13 +154,12 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
                 if hasattr(state, field_name):
                     input_dict[field_name] = getattr(state, field_name)
             return input_dict
-        else:
-            # Fallback to original logic
-            return self._extract_smart_input(state, engine)
+        # Fallback to original logic
+        return self._extract_smart_input(state, engine)
 
     def _wrap_typed_result(
         self, result: Any, state: StateLike, engine: Engine
-    ) -> Union[Command, Send]:
+    ) -> Command | Send:
         """Wrap result using output schema if available."""
         if self.output_schema:
             # Create typed output
@@ -184,12 +182,11 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
                 output_dict["engine_name"] = engine.name
 
             return output_dict
-        else:
-            # Fallback to original logic
-            return self._wrap_smart_result(result, state, engine)
+        # Fallback to original logic
+        return self._wrap_smart_result(result, state, engine)
 
     # Placeholder methods for backwards compatibility
-    def _get_engine(self, state: Optional[StateLike] = None) -> Optional[Engine]:
+    def _get_engine(self, state: StateLike | None = None) -> Engine | None:
         """Get engine (to be implemented by subclasses or copied from original)."""
         raise NotImplementedError("Subclasses should implement _get_engine")
 
@@ -198,14 +195,14 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         raise NotImplementedError("Subclasses should implement _extract_smart_input")
 
     def _execute_with_config(
-        self, engine: Engine, input_data: Any, config: Optional[ConfigLike]
+        self, engine: Engine, input_data: Any, config: ConfigLike | None
     ) -> Any:
         """Execute engine with config (to be implemented by subclasses or copied from original)."""
         raise NotImplementedError("Subclasses should implement _execute_with_config")
 
     def _wrap_smart_result(
         self, result: Any, state: StateLike, engine: Engine
-    ) -> Union[Command, Send]:
+    ) -> Command | Send:
         """Wrap smart result (to be implemented by subclasses or copied from original)."""
         raise NotImplementedError("Subclasses should implement _wrap_smart_result")
 
@@ -249,26 +246,6 @@ class RAGNodeConfig(GenericEngineNodeConfig[BaseModel, BaseModel]):
         super().__init__(**kwargs)
 
 
-class PlannerNodeConfig(GenericEngineNodeConfig[BaseModel, BaseModel]):
-    """Specialized node configuration for planning engines."""
-
-    def __init__(self, **kwargs):
-        # Set default field definitions for planner nodes
-        if "input_field_defs" not in kwargs:
-            kwargs["input_field_defs"] = [
-                StandardFields.messages(),
-                StandardFields.context(),
-            ]
-        if "output_field_defs" not in kwargs:
-            kwargs["output_field_defs"] = [
-                StandardFields.plan_steps(),
-                StandardFields.thoughts(),
-                StandardFields.engine_name(),
-            ]
-
-        super().__init__(**kwargs)
-
-
 # Factory functions with overloads for type safety
 
 
@@ -285,44 +262,7 @@ def create_engine_node(
 
 
 @overload
-def create_engine_node(
-    engine: Engine, name: str, *, engine_type: EngineType.AGENT
-) -> PlannerNodeConfig: ...
-
-
-@overload
 def create_engine_node(engine: Engine, name: str) -> GenericEngineNodeConfig: ...
-
-
-def create_engine_node(
-    engine: Engine, name: str, *, engine_type: Optional[EngineType] = None, **kwargs
-) -> Union[LLMNodeConfig, RAGNodeConfig, PlannerNodeConfig, GenericEngineNodeConfig]:
-    """Create an appropriate engine node config based on engine type.
-
-    Args:
-        engine: The engine instance
-        name: Node name
-        engine_type: Explicit engine type (optional, will be inferred from engine)
-        **kwargs: Additional configuration options
-
-    Returns:
-        Appropriate specialized node config
-    """
-    # Infer engine type if not provided
-    if engine_type is None:
-        engine_type = engine.engine_type
-
-    # Create appropriate node config
-    config_kwargs = {"engine": engine, "name": name, **kwargs}
-
-    if engine_type == EngineType.LLM:
-        return LLMNodeConfig(**config_kwargs)
-    elif engine_type == EngineType.RETRIEVER:
-        return RAGNodeConfig(**config_kwargs)
-    elif engine_type == EngineType.AGENT:
-        return PlannerNodeConfig(**config_kwargs)
-    else:
-        return GenericEngineNodeConfig(**config_kwargs)
 
 
 # Convenience class methods for creating specific node types
@@ -336,8 +276,8 @@ class NodeFactory:
         cls,
         engine: Engine,
         name: str,
-        custom_input_fields: Optional[List[FieldDefinition]] = None,
-        custom_output_fields: Optional[List[FieldDefinition]] = None,
+        custom_input_fields: List[FieldDefinition] | None = None,
+        custom_output_fields: List[FieldDefinition] | None = None,
         **kwargs,
     ) -> LLMNodeConfig:
         """Create an LLM node with optional custom fields."""
@@ -353,8 +293,8 @@ class NodeFactory:
         cls,
         engine: Engine,
         name: str,
-        custom_input_fields: Optional[List[FieldDefinition]] = None,
-        custom_output_fields: Optional[List[FieldDefinition]] = None,
+        custom_input_fields: List[FieldDefinition] | None = None,
+        custom_output_fields: List[FieldDefinition] | None = None,
         **kwargs,
     ) -> RAGNodeConfig:
         """Create a RAG node with optional custom fields."""
@@ -364,20 +304,3 @@ class NodeFactory:
             kwargs["output_field_defs"] = custom_output_fields
 
         return RAGNodeConfig(engine=engine, name=name, **kwargs)
-
-    @classmethod
-    def planner_node(
-        cls,
-        engine: Engine,
-        name: str,
-        custom_input_fields: Optional[List[FieldDefinition]] = None,
-        custom_output_fields: Optional[List[FieldDefinition]] = None,
-        **kwargs,
-    ) -> PlannerNodeConfig:
-        """Create a planner node with optional custom fields."""
-        if custom_input_fields:
-            kwargs["input_field_defs"] = custom_input_fields
-        if custom_output_fields:
-            kwargs["output_field_defs"] = custom_output_fields
-
-        return PlannerNodeConfig(engine=engine, name=name, **kwargs)

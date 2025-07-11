@@ -81,7 +81,7 @@ Additional Context: {additional_context}
 I have an initial plan with these sections:
 {initial_sections}
 
-Please review this plan and suggest any modifications to make this a comprehensive research report. 
+Please review this plan and suggest any modifications to make this a comprehensive research report.
 Consider:
 1. Are there any missing sections specific to this topic?
 2. Should any sections be removed or combined?
@@ -149,7 +149,7 @@ I need to evaluate the reliability and relevance of the following source:
 
 Source Title: {source_title}
 Source URL: {source_url}
-Source Content: 
+Source Content:
 {source_content}
 
 Research Topic: {research_topic}

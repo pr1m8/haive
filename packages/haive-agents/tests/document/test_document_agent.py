@@ -4,18 +4,18 @@ Tests the complete document processing agent that implements:
 FETCH -> LOAD -> TRANSFORM -> SPLIT -> ANNOTATE -> EMBED -> STORE -> RETRIEVE
 """
 
-import tempfile
 from pathlib import Path
+import tempfile
 from typing import List
 
 import pytest
+
+from haive.agents.document.agent import DocumentAgent, DocumentProcessingResult
 from haive.core.engine.document.config import (
     ChunkingStrategy,
     DocumentSourceType,
     ProcessingStrategy,
 )
-
-from haive.agents.document.agent import DocumentAgent, DocumentProcessingResult
 
 
 class TestDocumentAgent:
@@ -266,7 +266,7 @@ class TestDocumentAgentSpecializedMethods:
 
         # This would normally process URLs, but we'll test the interface
         try:
-            result = agent.process_urls(urls)
+            agent.process_urls(urls)
             # In test environment, this may fail due to network access
             # The important thing is the method exists and accepts the right parameters
         except Exception:
@@ -281,7 +281,7 @@ class TestDocumentAgentSpecializedMethods:
 
         # Test the interface (won't actually access cloud in test)
         try:
-            result = agent.process_cloud_storage(cloud_paths)
+            agent.process_cloud_storage(cloud_paths)
         except Exception:
             # Expected in test environment without cloud access
             pass

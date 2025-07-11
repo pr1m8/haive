@@ -132,7 +132,6 @@ def action_executor_processor(state: dict[str, Any]) -> dict[str, Any]:
 
 def run_custom_tool_routing_example():
     """Example of React agent with custom tool routing."""
-    print("\n===== React Agent with Custom Tool Routing Example =====\n")
 
     # Define tools with configurations
     tools = [
@@ -206,7 +205,6 @@ Always explain your reasoning before using a tool.
     ]
 
     for i, question in enumerate(questions):
-        print(f"\n----- Question {i+1}: {question} -----\n")
 
         # Create input with human message
         input_data = {"messages": [HumanMessage(content=question)]}
@@ -222,22 +220,13 @@ Always explain your reasoning before using a tool.
                     msg_type = f"{msg_type} ({msg.name})"
 
                 if hasattr(msg, "tool_calls") and msg.tool_calls:
-                    print(f"\n--- {msg_type} ---")
-                    print(msg.content)
-                    print("\nTOOL CALLS:")
                     for tool_call in msg.tool_calls:
-                        print(f"- {tool_call['name']}: {tool_call['args']}")
+                        pass
                 else:
-                    print(f"\n--- {msg_type} ---")
-                    print(msg.content)
             elif isinstance(msg, tuple) and len(msg) == 2:
-                print(f"\n--- {msg[0].upper()} ---")
-                print(msg[1])
 
     # Visualization should have been saved to the output directory
     visualization_dir = agent.config.output_dir or "outputs"
-    print(f"\nVisualization saved to: {visualization_dir}")
-    print("Check for image files with the pattern: BusinessIntelligenceAgent_*.png")
 
 
 # =============================================

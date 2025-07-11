@@ -1,12 +1,13 @@
 from typing import Any
 
+from langchain_core.output_parsers import PydanticOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+from pydantic import Field
+
 from agents.react_agent2.models import ReactState, Thought
 from haive.core.engine.agent.agent import AgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
-from langchain_core.output_parsers import PydanticOutputParser
-from langchain_core.prompts import ChatPromptTemplate
-from pydantic import Field
 
 
 class ReactAgentConfig(AgentConfig):
@@ -14,7 +15,7 @@ class ReactAgentConfig(AgentConfig):
     1. Think: Reason about the current state
     2. Act: Decide on an action and execute it
     3. Observe: See the result of the action
-    4. Repeat until a final answer is reached
+    4. Repeat until a final answer is reached.
     """
 
     # Schema
@@ -35,7 +36,7 @@ Remember to:
 3. Properly interpret tool outputs
 4. Provide a clear final answer when done
 
-Available tools: 
+Available tools:
 {tool_descriptions}
 
 For each step, output your thought process and chosen action in a structured format:
@@ -188,12 +189,7 @@ Action Input: <your final answer>
             prompt_template=think_prompt,
             output_parser=PydanticOutputParser(pydantic_object=Thought),
         )
-        # print(think_llm)
         # Add to config
         config.think_llm = think_llm
         config.engine = think_llm  # For compatibility with AgentConfig
-        # print(think_llm.create_runnable())
-        # print(config.think_llm)
-        # print(think_llm.create_runnable().invoke({"input":"Hello"}))
-        # print(config.engine)
         return config

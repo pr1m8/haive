@@ -9,6 +9,7 @@ their implementing classes, allowing dynamic discovery and resolution.
 import importlib
 import logging
 
+
 logger = logging.getLogger(__name__)
 
 # Global registry mapping config classes to agent classes
@@ -131,5 +132,5 @@ def register_agents_from_module(module_path: str) -> int:
 
         return count
     except ImportError as e:
-        logger.error(f"Error importing module {module_path}: {e}")
+        logger.exception(f"Error importing module {module_path}: {e}")
         return 0

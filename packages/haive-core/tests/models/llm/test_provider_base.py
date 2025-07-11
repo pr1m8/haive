@@ -10,13 +10,12 @@ This module tests the base provider infrastructure, including:
 from unittest.mock import Mock, patch
 
 import pytest
-from pydantic import Field, SecretStr
-
 from haive.core.common.mixins.secure_config import SecureConfigMixin
 from haive.core.models.llm.provider_types import LLMProvider
 from haive.core.models.llm.providers.base import BaseLLMProvider, ProviderImportError
 from haive.core.models.llm.rate_limiting_mixin import RateLimitingMixin
 from haive.core.models.metadata_mixin import ModelMetadataMixin
+from pydantic import Field, SecretStr
 
 
 class TestMRO:

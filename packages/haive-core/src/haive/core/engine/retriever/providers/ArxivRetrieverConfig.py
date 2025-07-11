@@ -1,5 +1,4 @@
-"""
-Arxiv Retriever implementation for the Haive framework.
+"""Arxiv Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Arxiv retriever, which
 retrieves academic papers from the arXiv preprint repository.
@@ -30,8 +29,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.ARXIV)
 class ArxivRetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for Arxiv retriever in the Haive framework.
+    """Configuration for Arxiv retriever in the Haive framework.
 
     This retriever searches the arXiv preprint repository for academic papers
     matching the query and returns their abstracts and metadata as documents.
@@ -73,24 +71,23 @@ class ArxivRetrieverConfig(BaseRetrieverConfig):
         default=False, description="Whether to load all available metadata"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Arxiv retriever."""
         return {
             "query": (str, Field(description="Search query for academic papers")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Arxiv retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(default_factory=list, description="Academic papers from arXiv"),
             ),
         }
 
     def instantiate(self):
-        """
-        Create an Arxiv retriever from this configuration.
+        """Create an Arxiv retriever from this configuration.
 
         Returns:
             ArxivRetriever: Instantiated retriever ready for document retrieval.

@@ -6,8 +6,8 @@ following the same pattern as the retriever configurations.
 
 from __future__ import annotations
 
-import logging
 from abc import abstractmethod
+import logging
 from typing import Any, Dict, List, Optional, Tuple, Type, Union
 
 from langchain_core.vectorstores import VectorStore
@@ -16,10 +16,11 @@ from pydantic import Field
 from haive.core.engine.base import EngineType, InvokableEngine
 from haive.core.models.embeddings.base import BaseEmbeddingConfig
 
+
 logger = logging.getLogger(__name__)
 
 # Registry defined outside the class to avoid Pydantic model conflicts
-_VECTOR_STORE_REGISTRY: Dict[str, Type["BaseVectorStoreConfig"]] = {}
+_VECTOR_STORE_REGISTRY: dict[str, type[BaseVectorStoreConfig]] = {}
 
 
 class BaseVectorStoreConfig(InvokableEngine):
@@ -64,7 +65,7 @@ class BaseVectorStoreConfig(InvokableEngine):
     )
 
     @classmethod
-    def register(cls, vector_store_type: Union[str, Any]) -> Any:
+    def register(cls, vector_store_type: str | Any) -> Any:
         """Register a vector store configuration class.
 
         This decorator registers a vector store configuration class with a specific type,
@@ -83,8 +84,8 @@ class BaseVectorStoreConfig(InvokableEngine):
         """
 
         def decorator(
-            config_cls: Type[BaseVectorStoreConfig],
-        ) -> Type[BaseVectorStoreConfig]:
+            config_cls: type[BaseVectorStoreConfig],
+        ) -> type[BaseVectorStoreConfig]:
             type_str = str(
                 vector_store_type.value
                 if hasattr(vector_store_type, "value")
@@ -100,8 +101,8 @@ class BaseVectorStoreConfig(InvokableEngine):
 
     @classmethod
     def get_config_class(
-        cls, vector_store_type: Union[str, Any]
-    ) -> Optional[Type[BaseVectorStoreConfig]]:
+        cls, vector_store_type: str | Any
+    ) -> type[BaseVectorStoreConfig] | None:
         """Get a registered vector store configuration class by type.
 
         Args:
@@ -142,7 +143,7 @@ class BaseVectorStoreConfig(InvokableEngine):
         raise NotImplementedError("Subclasses must implement instantiate()")
 
     def create_runnable(
-        self, runnable_config: Optional[Dict[str, Any]] = None
+        self, runnable_config: dict[str, Any] | None = None
     ) -> VectorStore:
         """Create a runnable vector store instance.
 
@@ -156,7 +157,7 @@ class BaseVectorStoreConfig(InvokableEngine):
         """
         return self.instantiate()
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for vector stores.
 
         Default implementation for adding documents to vector stores.
@@ -170,12 +171,12 @@ class BaseVectorStoreConfig(InvokableEngine):
 
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for vector stores.
 
         Default implementation returns document IDs.
@@ -187,7 +188,7 @@ class BaseVectorStoreConfig(InvokableEngine):
         from pydantic import Field
 
         return {
-            "ids": (List[str], Field(description="IDs of the added documents")),
+            "ids": (list[str], Field(description="IDs of the added documents")),
         }
 
     def validate_embedding(self) -> None:

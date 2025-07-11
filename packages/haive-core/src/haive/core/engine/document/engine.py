@@ -15,10 +15,6 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union, cast
 
-from langchain_core.documents import Document
-from langchain_core.runnables import RunnableConfig
-from pydantic import Field, model_validator
-
 from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
 from haive.core.engine.base import InvokableEngine
 from haive.core.engine.base.types import EngineType
@@ -39,6 +35,9 @@ from haive.core.engine.document.path_analysis import (
     PathAnalysisResult,
     analyze_path_comprehensive,
 )
+from langchain_core.documents import Document
+from langchain_core.runnables import RunnableConfig
+from pydantic import Field, model_validator
 
 logger = logging.getLogger(__name__)
 

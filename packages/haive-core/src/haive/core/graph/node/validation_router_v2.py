@@ -1,5 +1,4 @@
-"""
-Validation Router V2 - Conditional edge function for routing after V2 validation.
+"""Validation Router V2 - Conditional edge function for routing after V2 validation.
 
 This router function works with ValidationNodeV2 to make routing decisions
 based on the ToolMessages that were added to state by the validation node.
@@ -61,9 +60,8 @@ def has_tool_error_v2(message: ToolMessage) -> bool:
     return False
 
 
-def validation_router_v2(state: Dict[str, Any]) -> Union[str, List[str], Send]:
-    """
-    V2 Validation Router - Routes based on ToolMessages added by ValidationNodeV2.
+def validation_router_v2(state: dict[str, Any]) -> str | list[str] | Send:
+    """V2 Validation Router - Routes based on ToolMessages added by ValidationNodeV2.
 
     This function analyzes the ToolMessages that were just added to state
     and determines where to route next.
@@ -152,53 +150,47 @@ def validation_router_v2(state: Dict[str, Any]) -> Union[str, List[str], Send]:
                 else:
                     logger.info(f"Tool execution completed for {tool_name}")
                     # Tool is done, no further routing needed
-                    pass
             else:
                 # Tool needs to be executed
                 logger.info(f"Routing {tool_name} to tool_node for execution")
                 destinations.add("tool_node")
 
+        elif tool_message and has_tool_error_v2(tool_message):
+            logger.warning(f"Unknown tool error for {tool_name}")
+            destinations.add("agent_node")
+            has_errors = True
         else:
-            # Unknown tool
-            if tool_message and has_tool_error_v2(tool_message):
-                logger.warning(f"Unknown tool error for {tool_name}")
-                destinations.add("agent_node")
-                has_errors = True
-            else:
-                logger.warning(f"Unknown tool {tool_name}, routing to agent")
-                destinations.add("agent_node")
-                has_errors = True
+            logger.warning(f"Unknown tool {tool_name}, routing to agent")
+            destinations.add("agent_node")
+            has_errors = True
 
     # Determine final routing decision
     destinations_list = list(destinations)
 
-    logger.info(f"Routing analysis complete:")
+    logger.info("Routing analysis complete:")
     logger.info(f"  Destinations: {destinations_list}")
     logger.info(f"  Has errors: {has_errors}")
 
     if not destinations_list:
         logger.info("No destinations found, ending")
         return END
-    elif len(destinations_list) == 1:
+    if len(destinations_list) == 1:
         destination = destinations_list[0]
         logger.info(f"Single destination: {destination}")
         return destination
-    else:
-        # Multiple destinations - prioritize
-        if "agent_node" in destinations_list:
-            # If there are errors, go to agent first
-            logger.info("Multiple destinations with errors, routing to agent_node")
-            return "agent_node"
-        elif "tool_node" in destinations_list:
-            # If tools need execution, do that first
-            logger.info("Multiple destinations, prioritizing tool_node")
-            return "tool_node"
-        elif "parse_output" in destinations_list:
-            # Parse output next
-            logger.info("Multiple destinations, prioritizing parse_output")
-            return "parse_output"
-        else:
-            # Fallback to first destination
-            destination = destinations_list[0]
-            logger.info(f"Multiple destinations, using first: {destination}")
-            return destination
+    if "agent_node" in destinations_list:
+        # If there are errors, go to agent first
+        logger.info("Multiple destinations with errors, routing to agent_node")
+        return "agent_node"
+    if "tool_node" in destinations_list:
+        # If tools need execution, do that first
+        logger.info("Multiple destinations, prioritizing tool_node")
+        return "tool_node"
+    if "parse_output" in destinations_list:
+        # Parse output next
+        logger.info("Multiple destinations, prioritizing parse_output")
+        return "parse_output"
+    # Fallback to first destination
+    destination = destinations_list[0]
+    logger.info(f"Multiple destinations, using first: {destination}")
+    return destination

@@ -7,9 +7,9 @@ Memory Reference: [MEM-004-CORE-G-002] Enhanced Tool Management Session.
 
 from typing import Any, Dict, List
 
-import pytest
 from langchain_core.tools import BaseTool, StructuredTool
 from pydantic import BaseModel, Field
+import pytest
 
 from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
 
@@ -133,10 +133,10 @@ class TestEnhancedToolRouting:
 
         # Assert - Verify routing differences
         assert regular_route == "pydantic_model"
-        assert regular_metadata["is_executable"] == False
+        assert not regular_metadata["is_executable"]
 
         assert executable_route == "pydantic_tool"
-        assert executable_metadata["is_executable"] == True
+        assert executable_metadata["is_executable"]
 
     def test_enhanced_metadata_generation(self):
         """Test that enhanced metadata is generated for tools."""

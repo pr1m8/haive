@@ -2,9 +2,11 @@
 
 import logging
 
+from langchain_core.prompts import PromptTemplate
+
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
-from langchain_core.prompts import PromptTemplate
+
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
@@ -13,15 +15,14 @@ logging.basicConfig(level=logging.DEBUG)
 prompt = PromptTemplate.from_template(
     """
     Context information: {context}
-    
+
     User query: {input}
-    
+
     Please provide a helpful response based on the context and query.
     """
 )
 
 # Print the prompt's input variables
-print(f"Prompt input variables: {prompt.input_variables}")
 
 # Create AugLLMConfig
 aug_llm = AugLLMConfig(
@@ -33,11 +34,9 @@ aug_llm = AugLLMConfig(
 
 # Get variables from _get_input_variables
 input_vars = aug_llm._get_input_variables()
-print(f"AugLLMConfig input variables: {input_vars}")
 
 # Derive the input schema
 input_schema = aug_llm.derive_input_schema()
-print(f"Input schema fields: {list(input_schema.model_fields.keys())}")
 
 # Try to process different types of input
 test_inputs = [
@@ -47,14 +46,12 @@ test_inputs = [
 ]
 
 # Process each input and print results
-for idx, test_input in enumerate(test_inputs):
-    print(f"\nTest {idx+1}: {type(test_input)}")
+for _idx, test_input in enumerate(test_inputs):
     result = aug_llm._process_input(test_input)
-    print(f"Processed result: {result}")
 
     # Check if all required variables are present
     missing = [var for var in input_vars if var not in result]
     if missing:
-        print(f"WARNING: Missing variables: {missing}")
+        pass
     else:
-        print("All required variables present")
+        pass

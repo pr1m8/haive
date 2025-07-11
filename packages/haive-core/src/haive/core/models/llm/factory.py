@@ -56,14 +56,12 @@ Module Structure:
 """
 
 import logging
-import os
-from typing import Any, Dict, List, Optional, Type, Union
-
-from pydantic import BaseModel, Field
+from typing import Any
 
 from haive.core.models.llm.provider_types import LLMProvider
 from haive.core.models.llm.providers import get_provider, list_providers
-from haive.core.models.llm.providers.base import BaseLLMProvider, ProviderImportError
+from haive.core.models.llm.providers.base import ProviderImportError
+
 
 logger = logging.getLogger(__name__)
 
@@ -116,7 +114,7 @@ class LLMFactory:
         # No need for internal registries - we use the providers module
 
     def create(
-        self, provider: Union[LLMProvider, str], model: Optional[str] = None, **kwargs
+        self, provider: LLMProvider | str, model: str | None = None, **kwargs
     ) -> Any:
         """Create an LLM instance for the specified provider.
 
@@ -176,7 +174,7 @@ class LLMFactory:
         try:
             provider_class = get_provider(provider)
         except (ValueError, ImportError) as e:
-            raise ValueError(f"Provider {provider} not available: {str(e)}")
+            raise ValueError(f"Provider {provider} not available: {e!s}")
 
         # Extract rate limiting parameters
         rate_limit_params = {}
@@ -202,7 +200,7 @@ class LLMFactory:
         try:
             provider_instance = provider_class(**provider_params)
         except Exception as e:
-            raise ValueError(f"Failed to create provider for {provider}: {str(e)}")
+            raise ValueError(f"Failed to create provider for {provider}: {e!s}")
 
         # Create LLM instance
         try:
@@ -211,13 +209,11 @@ class LLMFactory:
             # Re-raise with original clear message
             raise
         except Exception as e:
-            raise RuntimeError(
-                f"Failed to create {provider.value} LLM: {str(e)}"
-            ) from e
+            raise RuntimeError(f"Failed to create {provider.value} LLM: {e!s}") from e
 
         return llm
 
-    def get_available_providers(self) -> List[str]:
+    def get_available_providers(self) -> list[str]:
         """Get list of all available LLM providers.
 
         Returns:
@@ -233,7 +229,7 @@ class LLMFactory:
         """
         return list_providers()
 
-    def get_provider_info(self, provider: Union[LLMProvider, str]) -> Dict[str, Any]:
+    def get_provider_info(self, provider: LLMProvider | str) -> dict[str, Any]:
         """Get information about a specific provider.
 
         Args:
@@ -296,9 +292,7 @@ class LLMFactory:
 _factory = LLMFactory()
 
 
-def create_llm(
-    provider: Union[LLMProvider, str], model: Optional[str] = None, **kwargs
-) -> Any:
+def create_llm(provider: LLMProvider | str, model: str | None = None, **kwargs) -> Any:
     """Create an LLM instance using the global factory.
 
     This is a convenience function that uses a global LLMFactory instance
@@ -337,7 +331,7 @@ def create_llm(
     return _factory.create(provider=provider, model=model, **kwargs)
 
 
-def get_available_providers() -> List[str]:
+def get_available_providers() -> list[str]:
     """Get list of all available LLM providers.
 
     Returns:
@@ -352,7 +346,7 @@ def get_available_providers() -> List[str]:
     return list_providers()
 
 
-def get_provider_models(provider: Union[LLMProvider, str]) -> List[str]:
+def get_provider_models(provider: LLMProvider | str) -> list[str]:
     """Get available models for a specific provider.
 
     This function attempts to retrieve the list of available models
@@ -385,14 +379,14 @@ def get_provider_models(provider: Union[LLMProvider, str]) -> List[str]:
     try:
         provider_class = get_provider(provider)
     except (ValueError, ImportError) as e:
-        raise ValueError(f"Provider {provider} not available: {str(e)}")
+        raise ValueError(f"Provider {provider} not available: {e!s}")
 
     # Check if get_models method exists
     if hasattr(provider_class, "get_models"):
         try:
             return provider_class.get_models()
         except Exception as e:
-            logger.warning(f"Failed to get models for {provider}: {str(e)}")
+            logger.warning(f"Failed to get models for {provider}: {e!s}")
             raise
     else:
         raise NotImplementedError(

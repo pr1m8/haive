@@ -1,5 +1,4 @@
-"""
-Elasticsearch Retriever implementation for the Haive framework.
+"""Elasticsearch Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Elasticsearch retriever,
 which performs full-text search and retrieval using Elasticsearch. Elasticsearch
@@ -35,8 +34,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.ELASTICSEARCH)
 class ElasticsearchRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for Elasticsearch retriever in the Haive framework.
+    """Configuration for Elasticsearch retriever in the Haive framework.
 
     This retriever performs full-text search using Elasticsearch with support
     for various search types including keyword, vector, and hybrid search.
@@ -96,11 +94,11 @@ class ElasticsearchRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # Authentication with SecureConfigMixin
-    username: Optional[str] = Field(
+    username: str | None = Field(
         default=None, description="Username for Elasticsearch authentication"
     )
 
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None,
         description="Elasticsearch API key or password (auto-resolved from ELASTICSEARCH_API_KEY)",
     )
@@ -121,12 +119,12 @@ class ElasticsearchRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # Advanced configuration
-    custom_query: Optional[Dict[str, Any]] = Field(
+    custom_query: dict[str, Any] | None = Field(
         default=None,
         description="Custom Elasticsearch query DSL (overrides search_type)",
     )
 
-    source_fields: Optional[List[str]] = Field(
+    source_fields: list[str] | None = Field(
         default=None, description="Specific fields to retrieve from documents"
     )
 
@@ -139,17 +137,17 @@ class ElasticsearchRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         default=30, ge=1, le=300, description="Request timeout in seconds"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Elasticsearch retriever."""
         return {
             "query": (str, Field(description="Search query for Elasticsearch")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Elasticsearch retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list,
                     description="Documents from Elasticsearch search",
@@ -158,8 +156,7 @@ class ElasticsearchRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create an Elasticsearch retriever from this configuration.
+        """Create an Elasticsearch retriever from this configuration.
 
         Returns:
             ElasticsearchRetriever: Instantiated retriever ready for search.
@@ -220,11 +217,11 @@ class ElasticsearchRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
 
         return ElasticsearchRetriever(**retriever_config)
 
-    def _build_standard_query(self, query: str) -> Dict[str, Any]:
+    def _build_standard_query(self, query: str) -> dict[str, Any]:
         """Build standard Elasticsearch query based on search_type."""
         if self.search_type == "match":
             return {"query": {"match": {"content": query}}}
-        elif self.search_type == "multi_match":
+        if self.search_type == "multi_match":
             return {
                 "query": {
                     "multi_match": {
@@ -233,15 +230,14 @@ class ElasticsearchRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
                     }
                 }
             }
-        elif self.search_type == "fuzzy":
+        if self.search_type == "fuzzy":
             return {
                 "query": {"fuzzy": {"content": {"value": query, "fuzziness": "AUTO"}}}
             }
-        else:
-            # Default to match
-            return {"query": {"match": {"content": query}}}
+        # Default to match
+        return {"query": {"match": {"content": query}}}
 
-    def _build_custom_query(self, query: str) -> Dict[str, Any]:
+    def _build_custom_query(self, query: str) -> dict[str, Any]:
         """Build custom Elasticsearch query from template."""
         import json
 

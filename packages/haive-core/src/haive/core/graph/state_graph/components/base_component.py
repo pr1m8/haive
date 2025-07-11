@@ -110,7 +110,7 @@ class BaseGraphComponent(ABC):
 
         return errors
 
-    def get_component_info(self) -> Dict[str, Any]:
+    def get_component_info(self) -> dict[str, Any]:
         """Get component metadata and status information.
 
         Returns:
@@ -166,7 +166,7 @@ class ComponentRegistry:
 
     def __init__(self) -> None:
         """Initialize empty component registry."""
-        self._components: Dict[str, BaseGraphComponent] = {}
+        self._components: dict[str, BaseGraphComponent] = {}
         self._initialization_order: list[str] = []
 
     def register(self, name: str, component: BaseGraphComponent) -> None:
@@ -191,7 +191,7 @@ class ComponentRegistry:
         self._components[name] = component
         self._initialization_order.append(name)
 
-    def get(self, name: str) -> Optional[BaseGraphComponent]:
+    def get(self, name: str) -> BaseGraphComponent | None:
         """Get a registered component by name.
 
         Args:
@@ -202,7 +202,7 @@ class ComponentRegistry:
         """
         return self._components.get(name)
 
-    def get_all(self) -> Dict[str, BaseGraphComponent]:
+    def get_all(self) -> dict[str, BaseGraphComponent]:
         """Get all registered components.
 
         Returns:
@@ -224,7 +224,7 @@ class ComponentRegistry:
             if component.is_initialized:
                 component.cleanup()
 
-    def validate_all(self) -> Dict[str, list[str]]:
+    def validate_all(self) -> dict[str, list[str]]:
         """Validate all registered components.
 
         Returns:
@@ -239,7 +239,7 @@ class ComponentRegistry:
 
         return validation_results
 
-    def get_registry_info(self) -> Dict[str, Any]:
+    def get_registry_info(self) -> dict[str, Any]:
         """Get registry status and component information.
 
         Returns:

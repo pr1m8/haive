@@ -136,7 +136,7 @@ class ResearchSource(BaseModel):
     )
 
     @field_validator("relevance_score")
-    def validate_relevance_score(cls, v):
+    def validate_relevance_score(self, v):
         """Ensure relevance score is between 0 and 1.
 
         Args:
@@ -180,7 +180,7 @@ class ResearchFinding(BaseModel):
     )
 
     @field_validator("confidence")
-    def validate_confidence(cls, v):
+    def validate_confidence(self, v):
         """Ensure confidence is between 0 and 1.
 
         Args:
@@ -237,7 +237,7 @@ class ResearchSummary(BaseModel):
     )
 
     @field_validator("confidence_score")
-    def validate_confidence_score(cls, v):
+    def validate_confidence_score(self, v):
         """Ensure confidence score is between 0 and 1.
 
         Args:
@@ -299,7 +299,7 @@ class DataSourceConfig(BaseModel):
     )
 
     @field_validator("priority")
-    def validate_priority(cls, v):
+    def validate_priority(self, v):
         """Ensure priority is between 1 and 10.
 
         Args:

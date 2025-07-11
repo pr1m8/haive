@@ -8,7 +8,6 @@ import json
 import unittest
 
 import pytest
-
 from haive.core.graph.branches import Branch, BranchMode, ComparisonType
 from haive.core.graph.branches.dynamic import DynamicMapping
 from haive.core.graph.state_graph.base_graph import (

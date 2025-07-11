@@ -7,13 +7,12 @@ Uses DynamicChoiceModel for selection and all agents are ReactAgents.
 import logging
 from typing import Any, Dict, List, Literal, Optional, Union
 
+from haive.agents.react.agent import ReactAgent
 from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, ToolMessage
 from langchain_core.tools import BaseTool
 from pydantic import Field, PrivateAttr
-
-from haive.agents.react.agent import ReactAgent
 
 logger = logging.getLogger(__name__)
 
@@ -22,10 +21,10 @@ class AgentRegistry:
     """Registry of available agents that can be added to supervisor."""
 
     def __init__(self):
-        self.available_agents: Dict[str, ReactAgent] = {}
-        self.agent_capabilities: Dict[str, str] = {}
+        self.available_agents: dict[str, ReactAgent] = {}
+        self.agent_capabilities: dict[str, str] = {}
 
-    def register_agent(self, agent: ReactAgent, capability: str = None):
+    def register_agent(self, agent: ReactAgent, capability: str | None = None):
         """Register an agent as available."""
         self.available_agents[agent.name] = agent
         self.agent_capabilities[agent.name] = (
@@ -33,18 +32,18 @@ class AgentRegistry:
         )
         logger.info(f"Registered {agent.name} in registry")
 
-    def get_agent(self, agent_name: str) -> Optional[ReactAgent]:
+    def get_agent(self, agent_name: str) -> ReactAgent | None:
         """Get an agent from registry."""
         return self.available_agents.get(agent_name)
 
-    def get_available_agents(self) -> Dict[str, str]:
+    def get_available_agents(self) -> dict[str, str]:
         """Get available agents with capabilities."""
         return {
             name: self.agent_capabilities.get(name, "General tasks")
-            for name in self.available_agents.keys()
+            for name in self.available_agents
         }
 
-    def search_agents_by_capability(self, task_description: str) -> List[str]:
+    def search_agents_by_capability(self, task_description: str) -> list[str]:
         """Search for agents that might handle the task."""
         task_lower = task_description.lower()
         matches = []
@@ -73,7 +72,6 @@ class AgentRetrievalTool(BaseTool):
 
     def _run(self, task_description: str, agent_type_needed: str = "") -> str:
         """Retrieve agent from registry."""
-
         logger.info(f"Looking for agent for task: {task_description}")
 
         # Get agents that might match
@@ -118,7 +116,6 @@ class AgentSelectionTool(BaseTool):
 
     def _run(self, task_description: str) -> str:
         """Select from currently active agents."""
-
         available_options = self.choice_model.option_names
 
         if not available_options or available_options == ["END"]:
@@ -137,22 +134,6 @@ class AgentSelectionTool(BaseTool):
             # Match agent type to task
             if "research" in option_lower and any(
                 word in task_lower for word in ["research", "find", "search"]
-            ):
-                return option
-            elif "code" in option_lower and any(
-                word in task_lower for word in ["code", "program", "implement"]
-            ):
-                return option
-            elif "write" in option_lower and any(
-                word in task_lower for word in ["write", "create", "draft"]
-            ):
-                return option
-            elif "math" in option_lower and any(
-                word in task_lower for word in ["calculate", "math", "solve"]
-            ):
-                return option
-            elif "analy" in option_lower and any(
-                word in task_lower for word in ["analyze", "examine", "study"]
             ):
                 return option
 
@@ -176,12 +157,11 @@ class RegistrySupervisor(ReactAgent):
 
     # Private attributes
     _registry: AgentRegistry = PrivateAttr(default_factory=AgentRegistry)
-    _active_agents: Dict[str, ReactAgent] = PrivateAttr(default_factory=dict)
-    _choice_model: Optional[DynamicChoiceModel] = PrivateAttr(default=None)
+    _active_agents: dict[str, ReactAgent] = PrivateAttr(default_factory=dict)
+    _choice_model: DynamicChoiceModel | None = PrivateAttr(default=None)
 
     def setup_agent(self) -> None:
         """Set up supervisor with registry and choice model."""
-
         # Initialize
         self._registry = AgentRegistry()
         self._active_agents = {}
@@ -203,10 +183,9 @@ class RegistrySupervisor(ReactAgent):
         logger.info("✅ Registry supervisor initialized")
 
     def populate_registry(
-        self, agents: List[ReactAgent], capabilities: List[str] = None
+        self, agents: list[ReactAgent], capabilities: list[str] | None = None
     ):
         """Populate the agent registry with available agents."""
-
         if capabilities and len(capabilities) != len(agents):
             capabilities = None
 
@@ -220,7 +199,6 @@ class RegistrySupervisor(ReactAgent):
 
     def _add_agent_to_active(self, agent: ReactAgent):
         """Add agent to active roster and update choice model."""
-
         if len(self._active_agents) >= self.max_active_agents:
             logger.warning("Max active agents reached, cannot add more")
             return False
@@ -233,8 +211,7 @@ class RegistrySupervisor(ReactAgent):
 
     def _update_choice_model(self):
         """Update choice model with current active agents."""
-
-        agent_names = list(self._active_agents.keys()) + ["END"]
+        agent_names = [*list(self._active_agents.keys()), "END"]
         descriptions = []
 
         for name in agent_names:
@@ -253,7 +230,6 @@ class RegistrySupervisor(ReactAgent):
 
     def build_graph(self) -> BaseGraph:
         """Build supervisor graph with registry integration."""
-
         logger.info("Building registry supervisor graph")
 
         graph = BaseGraph(name=f"{self.name}Graph")
@@ -285,9 +261,8 @@ class RegistrySupervisor(ReactAgent):
     def _create_supervisor_node(self):
         """Create supervisor node that uses tools for agent management."""
 
-        async def supervisor_node(state: Any) -> Dict[str, Any]:
+        async def supervisor_node(state: Any) -> dict[str, Any]:
             """Supervisor uses tools to manage agents."""
-
             logger.info("=" * 60)
             logger.info("REGISTRY SUPERVISOR")
             logger.info("=" * 60)
@@ -348,11 +323,10 @@ Available in registry: {list(self._registry.get_available_agents().keys())}"""
                         "original_request": content,
                         "is_complete": False,
                     }
-                else:
-                    return {"is_complete": True}
+                return {"is_complete": True}
 
             except Exception as e:
-                logger.error(f"Error in supervisor decision: {e}")
+                logger.exception(f"Error in supervisor decision: {e}")
                 return {"is_complete": True}
 
         return supervisor_node
@@ -360,9 +334,8 @@ Available in registry: {list(self._registry.get_available_agents().keys())}"""
     def _create_executor_node(self):
         """Create executor that runs selected ReactAgent."""
 
-        async def executor_node(state: Any) -> Dict[str, Any]:
+        async def executor_node(state: Any) -> dict[str, Any]:
             """Execute the selected ReactAgent."""
-
             logger.info("=" * 60)
             logger.info("AGENT EXECUTOR")
             logger.info("=" * 60)
@@ -399,14 +372,13 @@ Available in registry: {list(self._registry.get_available_agents().keys())}"""
                 }
 
             except Exception as e:
-                logger.error(f"Error executing {target_agent}: {e}")
+                logger.exception(f"Error executing {target_agent}: {e}")
                 return {"error": str(e)}
 
         return executor_node
 
-    def _parse_decision_result(self, result: Dict[str, Any]) -> Optional[str]:
+    def _parse_decision_result(self, result: dict[str, Any]) -> str | None:
         """Parse the supervisor's decision result."""
-
         messages = result.get("messages", [])
 
         # Look for tool results
@@ -430,11 +402,11 @@ Available in registry: {list(self._registry.get_available_agents().keys())}"""
 
         # Check if we have any active agents as fallback
         if self._active_agents:
-            return list(self._active_agents.keys())[0]
+            return next(iter(self._active_agents.keys()))
 
         return None
 
-    def _extract_state_dict(self, state: Any) -> Dict[str, Any]:
+    def _extract_state_dict(self, state: Any) -> dict[str, Any]:
         """Extract state dict preserving messages."""
         if isinstance(state, dict):
             return state
@@ -463,15 +435,15 @@ Available in registry: {list(self._registry.get_available_agents().keys())}"""
         return "END"
 
     # Public interface
-    def get_active_agents(self) -> List[str]:
+    def get_active_agents(self) -> list[str]:
         """Get currently active agents."""
         return list(self._active_agents.keys())
 
-    def get_registry_agents(self) -> Dict[str, str]:
+    def get_registry_agents(self) -> dict[str, str]:
         """Get available agents in registry."""
         return self._registry.get_available_agents()
 
-    def get_choice_model_status(self) -> Dict[str, Any]:
+    def get_choice_model_status(self) -> dict[str, Any]:
         """Get choice model status."""
         return {
             "options": self._choice_model.option_names if self._choice_model else [],
@@ -486,11 +458,6 @@ if __name__ == "__main__":
 
     async def test_registry_supervisor():
         """Test the registry supervisor."""
-
-        print("\n" + "=" * 80)
-        print("🧪 TESTING REGISTRY SUPERVISOR")
-        print("=" * 80 + "\n")
-
         # Create some ReactAgents for the registry
         from haive.core.engine.aug_llm import AugLLMConfig
 
@@ -524,26 +491,14 @@ if __name__ == "__main__":
             ],
         )
 
-        print(f"Registry agents: {supervisor.get_registry_agents()}")
-        print(f"Active agents: {supervisor.get_active_agents()}")
-
         # Test 1: Research request
-        print("\n[Test 1] Research request")
-        result1 = await supervisor.ainvoke(
+        await supervisor.ainvoke(
             {"messages": [HumanMessage(content="Research machine learning trends")]}
         )
 
-        print(f"Active agents after test 1: {supervisor.get_active_agents()}")
-
         # Test 2: Coding request
-        print("\n[Test 2] Coding request")
-        result2 = await supervisor.ainvoke(
+        await supervisor.ainvoke(
             {"messages": [HumanMessage(content="Write Python code for sorting")]}
         )
-
-        print(f"Active agents after test 2: {supervisor.get_active_agents()}")
-        print(f"Choice model: {supervisor.get_choice_model_status()}")
-
-        print("\n✅ Registry supervisor test complete!")
 
     asyncio.run(test_registry_supervisor())

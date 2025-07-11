@@ -1,5 +1,4 @@
-"""
-Type definitions for the state graph system.
+"""Type definitions for the state graph system.
 
 This module contains type definitions and constants used throughout
 the state graph system.
@@ -35,7 +34,7 @@ class BranchType(str, enum.Enum):
 
 
 # Simple edge: (source_node_name, target_node_name)
-SimpleEdge = Tuple[str, str]
+SimpleEdge = tuple[str, str]
 
 # Complete edge type - now just simple edges
 Edge = SimpleEdge
@@ -44,15 +43,15 @@ Edge = SimpleEdge
 BranchResultType = Union[
     str,  # Node name
     bool,  # Boolean condition
-    List[str],  # List of node names
-    List[Send],  # List of Send objects
+    list[str],  # List of node names
+    list[Send],  # List of Send objects
     Send,  # Single Send object
     Command,  # Command object
     None,  # Default case
 ]
 
 # Type for node functions
-NodeFunc = Callable[[Any, Optional[Dict[str, Any]]], Any]
+NodeFunc = Callable[[Any, dict[str, Any] | None], Any]
 
 # Constants
 GRAPH_CONSTANTS = {

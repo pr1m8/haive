@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class ProgrammingLanguage(str, Enum):
-    """Supported programming languages with common file extensions"""
+    """Supported programming languages with common file extensions."""
 
     PYTHON = "python"
     JAVASCRIPT = "javascript"
@@ -31,7 +31,7 @@ class ProgrammingLanguage(str, Enum):
 
 
 class CodeFileType(str, Enum):
-    """Code-specific file types with language associations"""
+    """Code-specific file types with language associations."""
 
     # Python
     PY = "py"

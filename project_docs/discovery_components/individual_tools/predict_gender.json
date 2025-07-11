@@ -7,7 +7,7 @@
     "description": "Predict gender from a single first name, with optional country scope.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.732683",
+    "timestamp": "2025-07-10T19:45:28.967434",
     "schema": {
       "description": "Predict gender from a first name using the Genderize.io API.\n\nArgs:\n    name: The first name to predict gender for\n    country_id: Optional two-letter country code (ISO 3166-1 alpha-2)\n        to scope the search to a specific country\n\nReturns:\n    GenderizeResponse: An object containing the predicted gender, probability,\n        and other metadata from the API\n\nRaises:\n    requests.exceptions.HTTPError: If the API request fails",
       "properties": {
@@ -47,7 +47,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.732683",
+      "timestamp": "2025-07-10T19:45:28.967434",
       "category": "individual_tools"
     }
   },

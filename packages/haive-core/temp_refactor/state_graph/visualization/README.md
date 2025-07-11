@@ -41,24 +41,20 @@ mermaid_code = MermaidGenerator.generate(
 ### Improvements Over GraphVisualizer
 
 1. **Better Subgraph Handling**:
-
    - Properly handles nested subgraphs to any depth
    - Configurable maximum depth for subgraph rendering
    - Works with both direct subgraphs and subgraph registries
 
 2. **Cleaner Code Structure**:
-
    - Modular design with methods for specific aspects of diagram generation
    - Better code organization and documentation
 
 3. **Enhanced Compatibility**:
-
    - Works with the new state graph architecture
    - Maintains backward compatibility with older graph structures
    - Compatible with upcoming subgraph registry approach
 
 4. **Better Node Type Detection**:
-
    - Improved detection of node types from different graph structures
    - Consistent display of type information
 

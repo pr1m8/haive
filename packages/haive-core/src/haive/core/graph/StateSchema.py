@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field, create_model
 class StateSchema:
     """Enhanced schema management system with RunnableConfig awareness."""
 
-    def __init__(self, name: str = "State", fields: dict[str, Any] = None):
+    def __init__(self, name: str = "State", fields: dict[str, Any] | None = None):
         self.name = name
         self.fields = fields or {}
         self.config_aware_fields = set()
@@ -96,7 +96,7 @@ class StateSchema:
         return schema
 
     @classmethod
-    def from_aug_llm(cls, aug_llm_config, name: str = None) -> "StateSchema":
+    def from_aug_llm(cls, aug_llm_config, name: str | None = None) -> "StateSchema":
         """Create schema from AugLLMConfig."""
         # Extract name from AugLLMConfig if not provided
         schema_name = name or f"{aug_llm_config.name}State"

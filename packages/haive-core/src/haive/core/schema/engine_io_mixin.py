@@ -14,7 +14,7 @@ from pydantic import BaseModel, Field
 from rich.console import Console
 
 if TYPE_CHECKING:
-    from haive.core.engine.base import Engine
+    pass
 
 logger = logging.getLogger(__name__)
 console = Console()
@@ -31,15 +31,15 @@ class EngineIOSchemaMixin(BaseModel):
     """
 
     # Engine I/O tracking metadata
-    __engine_io_mappings__: Dict[str, Dict[str, List[str]]] = {}
-    __input_fields__: Dict[str, List[str]] = {}
-    __output_fields__: Dict[str, List[str]] = {}
-    __structured_models__: Dict[str, str] = {}
-    __structured_model_fields__: Dict[str, List[str]] = {}
+    __engine_io_mappings__: dict[str, dict[str, list[str]]] = {}
+    __input_fields__: dict[str, list[str]] = {}
+    __output_fields__: dict[str, list[str]] = {}
+    __structured_models__: dict[str, str] = {}
+    __structured_model_fields__: dict[str, list[str]] = {}
 
     # Convenience properties for accessing engines
     @property
-    def llm(self) -> Optional[Any]:
+    def llm(self) -> Any | None:
         """Convenience property to access the LLM engine."""
         # First check the main engine field
         if (
@@ -53,7 +53,7 @@ class EngineIOSchemaMixin(BaseModel):
 
         # Then check engines dict for LLM
         if hasattr(self, "engines"):
-            for name, eng in self.engines.items():
+            for _name, eng in self.engines.items():
                 if hasattr(eng, "engine_type"):
                     engine_type_str = str(eng.engine_type).lower()
                     if "llm" in engine_type_str:
@@ -62,7 +62,7 @@ class EngineIOSchemaMixin(BaseModel):
         return None
 
     @property
-    def main_engine(self) -> Optional[Any]:
+    def main_engine(self) -> Any | None:
         """Convenience property to access the main engine."""
         if hasattr(self, "engine") and self.engine:
             return self.engine
@@ -70,35 +70,35 @@ class EngineIOSchemaMixin(BaseModel):
             return self.engines.get("main")
         return None
 
-    def get_engine_io_mappings(self) -> Dict[str, Dict[str, List[str]]]:
+    def get_engine_io_mappings(self) -> dict[str, dict[str, list[str]]]:
         """Get engine I/O mappings for this state schema."""
         return getattr(self.__class__, "__engine_io_mappings__", {})
 
-    def get_engine_input_fields(self, engine_name: str) -> List[str]:
+    def get_engine_input_fields(self, engine_name: str) -> list[str]:
         """Get input fields for a specific engine."""
         mappings = self.get_engine_io_mappings()
         return mappings.get(engine_name, {}).get("inputs", [])
 
-    def get_engine_output_fields(self, engine_name: str) -> List[str]:
+    def get_engine_output_fields(self, engine_name: str) -> list[str]:
         """Get output fields for a specific engine."""
         mappings = self.get_engine_io_mappings()
         return mappings.get(engine_name, {}).get("outputs", [])
 
-    def get_all_engine_input_fields(self) -> Set[str]:
+    def get_all_engine_input_fields(self) -> set[str]:
         """Get all input fields across all engines."""
         fields = set()
         for mapping in self.get_engine_io_mappings().values():
             fields.update(mapping.get("inputs", []))
         return fields
 
-    def get_all_engine_output_fields(self) -> Set[str]:
+    def get_all_engine_output_fields(self) -> set[str]:
         """Get all output fields across all engines."""
         fields = set()
         for mapping in self.get_engine_io_mappings().values():
             fields.update(mapping.get("outputs", []))
         return fields
 
-    def prepare_engine_input(self, engine_name: str) -> Dict[str, Any]:
+    def prepare_engine_input(self, engine_name: str) -> dict[str, Any]:
         """Prepare input data for a specific engine."""
         input_fields = self.get_engine_input_fields(engine_name)
         result = {}
@@ -110,7 +110,7 @@ class EngineIOSchemaMixin(BaseModel):
         return result
 
     def update_from_engine_output(
-        self, engine_name: str, output_data: Dict[str, Any]
+        self, engine_name: str, output_data: dict[str, Any]
     ) -> None:
         """Update state from engine output data."""
         output_fields = self.get_engine_output_fields(engine_name)
@@ -122,7 +122,7 @@ class EngineIOSchemaMixin(BaseModel):
                 else:
                     logger.warning(f"Field {field_name} not found in state schema")
 
-    def get_engines_for_field(self, field_name: str) -> List[str]:
+    def get_engines_for_field(self, field_name: str) -> list[str]:
         """Get list of engines that use a specific field."""
         engines = []
         for engine_name, mapping in self.get_engine_io_mappings().items():
@@ -163,7 +163,7 @@ class EngineIOSchemaMixin(BaseModel):
 
         return True  # Can't validate, assume compatible
 
-    def get_schema_summary(self) -> Dict[str, Any]:
+    def get_schema_summary(self) -> dict[str, Any]:
         """Get a summary of the engine I/O schema configuration."""
         return {
             "engine_io_mappings": self.get_engine_io_mappings(),

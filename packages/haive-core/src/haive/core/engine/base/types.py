@@ -1,5 +1,4 @@
-"""
-Engine type definitions for the Haive framework.
+"""Engine type definitions for the Haive framework.
 
 This module defines the core engine type classifications used throughout
 the Haive system. These types are used for registration, factory creation,
@@ -10,8 +9,7 @@ from enum import Enum
 
 
 class EngineType(str, Enum):
-    """
-    Enumeration of engine types supported by the Haive system.
+    """Enumeration of engine types supported by the Haive system.
 
     This enum defines the various types of engines that can be registered and
     instantiated within the Haive framework. Each engine type serves a specific

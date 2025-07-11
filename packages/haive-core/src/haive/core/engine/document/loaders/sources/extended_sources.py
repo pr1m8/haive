@@ -10,16 +10,15 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import Field
 
-from .enhanced_registry import enhanced_registry, register_source, register_bulk_source
+from .enhanced_registry import enhanced_registry, register_bulk_source, register_source
 from .source_types import (
     CredentialType,
-    LoaderCapability,
-    RemoteSource,
-    LocalFileSource,
     DatabaseSource,
+    LoaderCapability,
+    LocalFileSource,
+    RemoteSource,
     SourceCategory,
 )
-
 
 # =============================================================================
 # Image and Document Processing
@@ -46,7 +45,7 @@ from .source_types import (
 )
 class PaddleOCRSource(LocalFileSource):
     """PaddleOCR multilingual OCR source."""
-    
+
     source_type: str = "paddleocr"
     lang: str = Field("en", description="Language code")
 
@@ -72,7 +71,7 @@ class PaddleOCRSource(LocalFileSource):
 )
 class AzureFormRecognizerSource(RemoteSource):
     """Azure Form Recognizer source."""
-    
+
     source_type: str = "azure_form_recognizer"
     endpoint: str = Field(..., description="Azure endpoint")
     model_id: str = Field("prebuilt-document", description="Model ID")
@@ -104,7 +103,7 @@ class AzureFormRecognizerSource(RemoteSource):
 )
 class DatadogSource(RemoteSource):
     """Datadog monitoring source."""
-    
+
     source_type: str = "datadog"
     query: str = Field(..., description="Datadog query")
     from_time: datetime = Field(..., description="Start time")
@@ -132,7 +131,7 @@ class DatadogSource(RemoteSource):
 )
 class NewRelicSource(RemoteSource):
     """New Relic monitoring source."""
-    
+
     source_type: str = "new_relic"
     account_id: str = Field(..., description="New Relic account ID")
     query_type: str = Field("nrql", description="Query type")
@@ -164,7 +163,7 @@ class NewRelicSource(RemoteSource):
 )
 class AlibabaOSSSource(RemoteSource):
     """Alibaba Cloud OSS source."""
-    
+
     source_type: str = "alibaba_cloud_oss"
     bucket_name: str = Field(..., description="OSS bucket name")
     object_key: str = Field(..., description="Object key")
@@ -192,7 +191,7 @@ class AlibabaOSSSource(RemoteSource):
 )
 class TencentCOSSource(RemoteSource):
     """Tencent Cloud COS source."""
-    
+
     source_type: str = "tencent_cos"
     bucket: str = Field(..., description="COS bucket")
     key: str = Field(..., description="Object key")
@@ -225,7 +224,7 @@ class TencentCOSSource(RemoteSource):
 )
 class PineconeSource(RemoteSource):
     """Pinecone vector database source."""
-    
+
     source_type: str = "pinecone"
     index_name: str = Field(..., description="Pinecone index name")
     namespace: Optional[str] = Field(None, description="Namespace")
@@ -253,7 +252,7 @@ class PineconeSource(RemoteSource):
 )
 class WeaviateSource(RemoteSource):
     """Weaviate vector database source."""
-    
+
     source_type: str = "weaviate"
     url: str = Field(..., description="Weaviate URL")
     class_name: str = Field(..., description="Weaviate class name")
@@ -279,7 +278,7 @@ class WeaviateSource(RemoteSource):
 )
 class ChromaSource(DatabaseSource):
     """Chroma vector database source."""
-    
+
     source_type: str = "chroma"
     collection_name: str = Field(..., description="Collection name")
     persist_directory: Optional[str] = Field(None, description="Persist directory")
@@ -311,7 +310,7 @@ class ChromaSource(DatabaseSource):
 )
 class CourseraSource(RemoteSource):
     """Coursera e-learning source."""
-    
+
     source_type: str = "coursera"
     course_url: str = Field(..., description="Course URL")
     include_videos: bool = Field(False, description="Include video transcripts")
@@ -338,7 +337,7 @@ class CourseraSource(RemoteSource):
 )
 class UdemySource(RemoteSource):
     """Udemy e-learning source."""
-    
+
     source_type: str = "udemy"
     course_id: str = Field(..., description="Udemy course ID")
     include_captions: bool = Field(True, description="Include video captions")
@@ -365,12 +364,15 @@ class UdemySource(RemoteSource):
     description="Crowdin localization platform loader",
     requires_credentials=True,
     credential_type=CredentialType.API_KEY,
-    capabilities=[LoaderCapability.MULTILINGUAL, LoaderCapability.COLLABORATIVE_EDITING],
+    capabilities=[
+        LoaderCapability.MULTILINGUAL,
+        LoaderCapability.COLLABORATIVE_EDITING,
+    ],
     priority=7,
 )
 class CrowdinSource(RemoteSource):
     """Crowdin localization source."""
-    
+
     source_type: str = "crowdin"
     project_id: int = Field(..., description="Crowdin project ID")
     file_id: Optional[int] = Field(None, description="Specific file ID")
@@ -392,12 +394,15 @@ class CrowdinSource(RemoteSource):
     description="Transifex translation management loader",
     requires_credentials=True,
     credential_type=CredentialType.API_KEY,
-    capabilities=[LoaderCapability.MULTILINGUAL, LoaderCapability.COLLABORATIVE_EDITING],
+    capabilities=[
+        LoaderCapability.MULTILINGUAL,
+        LoaderCapability.COLLABORATIVE_EDITING,
+    ],
     priority=7,
 )
 class TransifexSource(RemoteSource):
     """Transifex translation source."""
-    
+
     source_type: str = "transifex"
     organization: str = Field(..., description="Organization slug")
     project: str = Field(..., description="Project slug")
@@ -429,7 +434,7 @@ class TransifexSource(RemoteSource):
 )
 class WordPressSource(RemoteSource):
     """WordPress CMS source."""
-    
+
     source_type: str = "wordpress"
     site_url: str = Field(..., description="WordPress site URL")
     post_type: str = Field("post", description="Post type to load")
@@ -455,7 +460,7 @@ class WordPressSource(RemoteSource):
 )
 class DrupalSource(RemoteSource):
     """Drupal CMS source."""
-    
+
     source_type: str = "drupal"
     site_url: str = Field(..., description="Drupal site URL")
     content_type: str = Field("article", description="Content type")
@@ -482,7 +487,7 @@ class DrupalSource(RemoteSource):
 )
 class GhostSource(RemoteSource):
     """Ghost blogging platform source."""
-    
+
     source_type: str = "ghost"
     site_url: str = Field(..., description="Ghost site URL")
     content_api_key: str = Field(..., description="Content API key")
@@ -514,7 +519,7 @@ class GhostSource(RemoteSource):
 )
 class LinearSource(RemoteSource):
     """Linear issue tracking source."""
-    
+
     source_type: str = "linear"
     team_id: Optional[str] = Field(None, description="Team ID")
     project_id: Optional[str] = Field(None, description="Project ID")
@@ -542,7 +547,7 @@ class LinearSource(RemoteSource):
 )
 class ShortcutSource(RemoteSource):
     """Shortcut project management source."""
-    
+
     source_type: str = "shortcut"
     workspace_name: str = Field(..., description="Workspace name")
     project_id: Optional[int] = Field(None, description="Project ID")
@@ -574,7 +579,7 @@ class ShortcutSource(RemoteSource):
 )
 class EpicFHIRSource(RemoteSource):
     """Epic FHIR healthcare source."""
-    
+
     source_type: str = "epic_fhir"
     fhir_server_url: str = Field(..., description="FHIR server URL")
     resource_type: str = Field("Patient", description="FHIR resource type")
@@ -601,7 +606,7 @@ class EpicFHIRSource(RemoteSource):
 )
 class CernerFHIRSource(RemoteSource):
     """Cerner FHIR healthcare source."""
-    
+
     source_type: str = "cerner_fhir"
     fhir_server_url: str = Field(..., description="FHIR server URL")
     patient_id: Optional[str] = Field(None, description="Patient ID")
@@ -632,7 +637,7 @@ class CernerFHIRSource(RemoteSource):
 )
 class HDF5Source(LocalFileSource):
     """HDF5 scientific data source."""
-    
+
     source_type: str = "hdf5"
     dataset_path: Optional[str] = Field(None, description="Dataset path within HDF5")
 
@@ -657,7 +662,7 @@ class HDF5Source(LocalFileSource):
 )
 class NetCDFSource(LocalFileSource):
     """NetCDF scientific data source."""
-    
+
     source_type: str = "netcdf"
     variables: Optional[List[str]] = Field(None, description="Variables to extract")
 
@@ -687,7 +692,7 @@ class NetCDFSource(LocalFileSource):
 )
 class AnsibleSource(LocalFileSource):
     """Ansible configuration source."""
-    
+
     source_type: str = "ansible"
     file_type: str = Field("playbook", description="playbook or inventory")
 
@@ -712,7 +717,7 @@ class AnsibleSource(LocalFileSource):
 )
 class TerraformSource(LocalFileSource):
     """Terraform configuration source."""
-    
+
     source_type: str = "terraform"
     parse_variables: bool = Field(True, description="Parse variable definitions")
 
@@ -741,7 +746,7 @@ class TerraformSource(LocalFileSource):
 )
 class TrustpilotSource(RemoteSource):
     """Trustpilot reviews source."""
-    
+
     source_type: str = "trustpilot"
     business_unit_id: str = Field(..., description="Business unit ID")
     max_reviews: int = Field(100, description="Maximum reviews to fetch")
@@ -766,7 +771,7 @@ class TrustpilotSource(RemoteSource):
 )
 class G2ReviewsSource(RemoteSource):
     """G2 software reviews source."""
-    
+
     source_type: str = "g2_reviews"
     product_slug: str = Field(..., description="G2 product slug")
     review_count: int = Field(50, description="Number of reviews")
@@ -798,7 +803,7 @@ class G2ReviewsSource(RemoteSource):
 )
 class ShippoSource(RemoteSource):
     """Shippo shipping logistics source."""
-    
+
     source_type: str = "shippo"
     object_type: str = Field("shipments", description="Object type to load")
     status_filter: Optional[str] = Field(None, description="Status filter")
@@ -828,7 +833,7 @@ class ShippoSource(RemoteSource):
 )
 class ZillowSource(RemoteSource):
     """Zillow real estate source."""
-    
+
     source_type: str = "zillow"
     location: str = Field(..., description="Location to search")
     listing_type: str = Field("for_sale", description="Listing type")
@@ -858,7 +863,7 @@ class ZillowSource(RemoteSource):
 )
 class IndeedSource(RemoteSource):
     """Indeed job listings source."""
-    
+
     source_type: str = "indeed"
     query: str = Field(..., description="Job search query")
     location: str = Field(..., description="Job location")
@@ -889,7 +894,7 @@ class IndeedSource(RemoteSource):
 )
 class AirbnbSource(RemoteSource):
     """Airbnb listings source."""
-    
+
     source_type: str = "airbnb"
     location: str = Field(..., description="Search location")
     checkin_date: datetime = Field(..., description="Check-in date")
@@ -922,7 +927,7 @@ class AirbnbSource(RemoteSource):
 )
 class SpotifySource(RemoteSource):
     """Spotify music platform source."""
-    
+
     source_type: str = "spotify"
     playlist_id: Optional[str] = Field(None, description="Playlist ID")
     artist_id: Optional[str] = Field(None, description="Artist ID")
@@ -948,7 +953,7 @@ class SpotifySource(RemoteSource):
 )
 class SoundCloudSource(RemoteSource):
     """SoundCloud audio platform source."""
-    
+
     source_type: str = "soundcloud"
     track_url: Optional[str] = Field(None, description="Track URL")
     playlist_url: Optional[str] = Field(None, description="Playlist URL")
@@ -980,7 +985,7 @@ class SoundCloudSource(RemoteSource):
 )
 class DiscourseSource(RemoteSource):
     """Discourse forum platform source."""
-    
+
     source_type: str = "discourse"
     base_url: str = Field(..., description="Discourse forum URL")
     category_id: Optional[int] = Field(None, description="Category ID")
@@ -1006,7 +1011,7 @@ class DiscourseSource(RemoteSource):
 )
 class phpBBSource(RemoteSource):
     """phpBB forum source."""
-    
+
     source_type: str = "phpbb"
     forum_url: str = Field(..., description="Forum URL")
     board_id: Optional[int] = Field(None, description="Board ID")
@@ -1036,7 +1041,7 @@ class phpBBSource(RemoteSource):
 )
 class ConsulSource(RemoteSource):
     """HashiCorp Consul KV store source."""
-    
+
     source_type: str = "consul"
     host: str = Field("localhost", description="Consul host")
     port: int = Field(8500, description="Consul port")
@@ -1046,29 +1051,43 @@ class ConsulSource(RemoteSource):
 # Auto-register all source classes
 __all__ = [
     # Image processing
-    "PaddleOCRSource", "AzureFormRecognizerSource",
+    "PaddleOCRSource",
+    "AzureFormRecognizerSource",
     # Monitoring
-    "DatadogSource", "NewRelicSource",
+    "DatadogSource",
+    "NewRelicSource",
     # Cloud storage
-    "AlibabaOSSSource", "TencentCOSSource",
+    "AlibabaOSSSource",
+    "TencentCOSSource",
     # Vector databases
-    "PineconeSource", "WeaviateSource", "ChromaSource",
+    "PineconeSource",
+    "WeaviateSource",
+    "ChromaSource",
     # E-learning
-    "CourseraSource", "UdemySource",
+    "CourseraSource",
+    "UdemySource",
     # Translation
-    "CrowdinSource", "TransifexSource",
+    "CrowdinSource",
+    "TransifexSource",
     # CMS
-    "WordPressSource", "DrupalSource", "GhostSource",
+    "WordPressSource",
+    "DrupalSource",
+    "GhostSource",
     # Project management
-    "LinearSource", "ShortcutSource",
+    "LinearSource",
+    "ShortcutSource",
     # Healthcare
-    "EpicFHIRSource", "CernerFHIRSource",
+    "EpicFHIRSource",
+    "CernerFHIRSource",
     # Scientific
-    "HDF5Source", "NetCDFSource",
+    "HDF5Source",
+    "NetCDFSource",
     # Configuration
-    "AnsibleSource", "TerraformSource",
+    "AnsibleSource",
+    "TerraformSource",
     # Reviews
-    "TrustpilotSource", "G2ReviewsSource",
+    "TrustpilotSource",
+    "G2ReviewsSource",
     # Logistics
     "ShippoSource",
     # Real estate
@@ -1078,9 +1097,11 @@ __all__ = [
     # Travel
     "AirbnbSource",
     # Music
-    "SpotifySource", "SoundCloudSource",
+    "SpotifySource",
+    "SoundCloudSource",
     # Forums
-    "DiscourseSource", "phpBBSource",
+    "DiscourseSource",
+    "phpBBSource",
     # Others
     "ConsulSource",
 ]

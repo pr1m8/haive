@@ -10,7 +10,8 @@ We've built a comprehensive dynamic tool routing system that solves the core cha
 
 ## What We Built & Tested
 
-### 1. **Real Working Implementation** 
+### 1. **Real Working Implementation**
+
 - Uses actual `SimpleAgent` and `ReactAgent` from Haive
 - Successfully adds tools dynamically at runtime
 - Demonstrates recompilation detection and execution
@@ -18,6 +19,7 @@ We've built a comprehensive dynamic tool routing system that solves the core cha
 ### 2. **Core Components**
 
 #### A. Dynamic Routing System (`real_dynamic_agent_system.py`)
+
 ```python
 # Route dynamically without compile-time literals
 def agent_router(state) -> Send:
@@ -28,6 +30,7 @@ def agent_router(state) -> Send:
 ```
 
 #### B. Recompilation Detection (`RecompilableAgent`)
+
 ```python
 def needs_recompilation(self) -> bool:
     current_hash = self._compute_tool_route_hash()
@@ -35,6 +38,7 @@ def needs_recompilation(self) -> bool:
 ```
 
 #### C. Tool Management Flow
+
 ```
 tool_manager → recompilation_manager → agent_executor
 ```
@@ -47,7 +51,7 @@ Initial agent configuration:
    - react_agent: ['search', 'analyze']
 
 After dynamic tool addition:
-   - simple_agent: ['calculate', 'summarize', 'search']  
+   - simple_agent: ['calculate', 'summarize', 'search']
    - react_agent: ['search', 'analyze', 'calculate']
 
 Recompilations: 2 (triggered by tool route changes)
@@ -56,16 +60,19 @@ Recompilations: 2 (triggered by tool route changes)
 ## Key Insights for Meta-Agent
 
 ### 1. **Graph Structure Doesn't Change**
+
 - Adding tools doesn't create new nodes
 - Existing nodes (`agent_node`, `validation`, `tool_node`) handle new tools
 - **Implication**: Focus on tool routing within existing structure
 
 ### 2. **Validation Node V2 is Critical**
+
 - Current SimpleAgent uses `placeholder_node` instead of `ValidationNodeConfigV2`
 - **Issue**: Tool routing depends on validation node having proper computed fields
 - **Solution**: Need V2 validation node with dynamic tool message handling
 
 ### 3. **State-Driven Architecture Works**
+
 - Routing decisions made at runtime based on state
 - No hardcoded paths in graph structure
 - **Benefits**: Maximum flexibility for meta-agent scenarios
@@ -73,6 +80,7 @@ Recompilations: 2 (triggered by tool route changes)
 ## Recompilation Check Strategy
 
 ### Hash-Based Detection
+
 ```python
 def _compute_tool_route_hash(self) -> str:
     route_str = str(sorted(self.tool_routes.items()))
@@ -80,42 +88,45 @@ def _compute_tool_route_hash(self) -> str:
 ```
 
 ### Efficient Recompilation
+
 - **Only recompile when tool routes actually change**
 - **Batch operations** to reduce recompilation frequency
 - **Lazy recompilation** - mark as needed but recompile only when executing
 
 ### Meta-Agent Context
+
 ```python
 class MetaAgent:
     def add_capability(self, agent_name: str, tool: Any):
         """Add tool to agent and handle recompilation."""
         agent = self.agents[agent_name]
         agent.add_tool_dynamically(tool)
-        
+
         if agent.needs_recompilation():
             self.schedule_recompilation(agent_name)
-            
+
     def execute_with_recompilation_check(self, agent_name: str, task: str):
         """Execute after checking recompilation needs."""
         agent = self.agents[agent_name]
-        
+
         if agent.needs_recompilation():
             agent.recompile_if_needed()
-            
+
         return agent.execute(task)
 ```
 
 ## Implementation for Meta-Agent
 
 ### 1. **Tool Route Registry**
+
 ```python
 class MetaAgentState(BaseModel):
     # Central registry of all tool routes
     global_tool_routes: Dict[str, str] = Field(default_factory=dict)
-    
+
     # Track which agents need recompilation
     agents_needing_recompile: Set[str] = Field(default_factory=set)
-    
+
     @computed_field
     def available_capabilities(self) -> List[str]:
         """All tools available across agents."""
@@ -123,20 +134,21 @@ class MetaAgentState(BaseModel):
 ```
 
 ### 2. **Dynamic Agent Orchestration**
+
 ```python
 def meta_agent_router(state: MetaAgentState) -> Union[Send, Command]:
     """Route based on capabilities needed."""
-    
+
     # Analyze task requirements
     required_tools = analyze_task_requirements(state.current_task)
-    
+
     # Find best agent for tools needed
     best_agent = find_agent_with_tools(required_tools, state.agents)
-    
+
     # Check if recompilation needed
     if best_agent in state.agents_needing_recompile:
         return Send("recompilation_manager", state)
-    
+
     # Execute with best agent
     return Send("agent_executor", {
         "agent_name": best_agent,
@@ -146,25 +158,26 @@ def meta_agent_router(state: MetaAgentState) -> Union[Send, Command]:
 ```
 
 ### 3. **Capability Management**
+
 ```python
 class CapabilityManager:
     def add_capability_to_agent(self, agent_name: str, capability: Any):
         """Add capability and track recompilation needs."""
-        
+
         # Add to specific agent
         agent = self.agents[agent_name]
         agent.add_tool_dynamically(capability)
-        
+
         # Update global registry
         self.global_tool_routes[capability.name] = f"{agent_name}.tool_node"
-        
+
         # Mark for recompilation if needed
         if agent.needs_recompilation():
             self.agents_needing_recompile.add(agent_name)
-    
+
     def distribute_capability(self, capability: Any, strategy: str = "all"):
         """Distribute capability across multiple agents."""
-        
+
         if strategy == "all":
             for agent_name in self.agents:
                 self.add_capability_to_agent(agent_name, capability)
@@ -176,21 +189,25 @@ class CapabilityManager:
 ## Next Steps for Meta-Agent
 
 ### 1. **Immediate Integration**
+
 - Adapt `RecompilableAgent` pattern for your meta-agent
 - Use `Send`/`Command` routing patterns
 - Implement tool route registry
 
 ### 2. **V2 Node Integration** (Dependency)
+
 - Wait for V2 validation node with computed fields
 - Integrate proper tool message handling
 - Test dynamic routing through validation
 
 ### 3. **Meta-Agent Specific Features**
+
 - Agent creation/destruction at runtime
-- Capability distribution strategies  
+- Capability distribution strategies
 - Performance monitoring for recompilation
 
 ### 4. **Advanced Patterns**
+
 - Event-driven capability management
 - Hierarchical agent structures
 - Cross-agent tool sharing

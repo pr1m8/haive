@@ -1,4 +1,4 @@
-"""Speculative RAG Module
+"""Speculative RAG Module.
 
 Speculative RAG with parallel hypothesis generation and verification.
 Uses structured output models for complex reasoning and iterative processing.
@@ -10,8 +10,9 @@ from .agent import (
     SpeculativeRAGAgent,
 )
 
+
 __all__ = [
-    "SpeculativeRAGAgent",
     "HypothesisGeneratorAgent",
     "ParallelVerificationAgent",
+    "SpeculativeRAGAgent",
 ]

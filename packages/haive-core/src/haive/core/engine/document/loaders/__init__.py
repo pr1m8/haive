@@ -145,11 +145,7 @@ from .auto_registry import (
 )
 
 # Path Analysis
-from .path_analyzer import (
-    PathAnalyzer,
-    SourceInfo,
-    analyze_path,
-)
+from .path_analyzer import PathAnalyzer, SourceInfo, analyze_path
 
 # Enhanced Registry
 from .sources.enhanced_registry import (

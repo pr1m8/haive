@@ -1,5 +1,4 @@
-"""
-Enhanced formatter for haive logging that shows detailed source information.
+"""Enhanced formatter for haive logging that shows detailed source information.
 
 This formatter makes it easy to see exactly where each log message comes from,
 including the module, class, function, and line number.
@@ -8,7 +7,6 @@ including the module, class, function, and line number.
 import logging
 import os
 from datetime import datetime
-from typing import Optional
 
 try:
     from rich import box
@@ -22,8 +20,7 @@ except ImportError:
 
 
 class SourceAwareFormatter(logging.Formatter):
-    """
-    Enhanced formatter that shows detailed source information.
+    """Enhanced formatter that shows detailed source information.
 
     Shows:
     - Full module path (e.g., haive.core.engine.executor)
@@ -34,8 +31,7 @@ class SourceAwareFormatter(logging.Formatter):
     """
 
     def __init__(self, show_full_path: bool = False, show_thread: bool = True):
-        """
-        Initialize the formatter.
+        """Initialize the formatter.
 
         Args:
             show_full_path: Show full file paths instead of shortened ones
@@ -44,7 +40,6 @@ class SourceAwareFormatter(logging.Formatter):
         self.show_full_path = show_full_path
         self.show_thread = show_thread
 
-        # Format: TIME | LEVEL | MODULE | SOURCE | MESSAGE
         fmt = (
             "%(asctime)s | %(levelname)-8s | %(name)-30s | %(source)-40s | %(message)s"
         )
@@ -95,9 +90,7 @@ class SourceAwareFormatter(logging.Formatter):
 
 
 class RichSourceFormatter(logging.Formatter):
-    """
-    Rich formatter that beautifully displays source information.
-    """
+    """Rich formatter that beautifully displays source information."""
 
     def __init__(self):
         super().__init__()
@@ -166,9 +159,8 @@ class RichSourceFormatter(logging.Formatter):
         return text.plain if hasattr(text, "plain") else str(text)
 
 
-def create_source_table(records: list) -> Optional[Table]:
-    """
-    Create a rich table showing log sources.
+def create_source_table(records: list) -> Table | None:
+    """Create a rich table showing log sources.
 
     Useful for analyzing where logs are coming from.
     """
@@ -213,18 +205,14 @@ def create_source_table(records: list) -> Optional[Table]:
 
 
 class AutoSourceHandler(logging.Handler):
-    """
-    Handler that automatically captures and enriches source information.
-    """
+    """Handler that automatically captures and enriches source information."""
 
     def __init__(self, formatter=None):
         super().__init__()
         self.formatter = formatter or RichSourceFormatter()
 
     def emit(self, record: logging.LogRecord):
-        """
-        Emit a record with enhanced source information.
-        """
+        """Emit a record with enhanced source information."""
         # Try to get class name from stack
         if not hasattr(record, "className"):
             # Look for 'self' in the calling frame
@@ -248,15 +236,13 @@ class AutoSourceHandler(logging.Handler):
 
         # Format and output
         try:
-            msg = self.format(record)
-            print(msg)
+            self.format(record)
         except Exception:
             self.handleError(record)
 
 
 def setup_source_aware_logging():
-    """
-    Set up logging to automatically show source information.
+    """Set up logging to automatically show source information.
 
     This function configures the logging system to use enhanced formatters
     that show detailed source information for every log message.
@@ -274,14 +260,6 @@ def setup_source_aware_logging():
     # Also update haive loggers
     haive_logger = logging.getLogger("haive")
     haive_logger.propagate = True
-
-    print(
-        "✨ Source-aware logging enabled! You'll now see exactly where each log comes from."
-    )
-    print("   Format: [TIME] LEVEL MODULE | function() in file:line")
-    print(
-        "   Example: [14:32:15] INFO haive.core.engine | execute() in executor.py:123"
-    )
 
 
 # Convenience function to test

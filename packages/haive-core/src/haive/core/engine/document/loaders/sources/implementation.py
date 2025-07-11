@@ -4,15 +4,16 @@ This module provides enhanced source type implementations adapted from the origi
 project_notes with proper integration into the Haive document engine framework.
 """
 
-import logging
-import os
 from abc import ABC, abstractmethod
 from enum import Enum
+import logging
+import os
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 from urllib.parse import urlparse
 
 from pydantic import BaseModel, Field
+
 
 logger = logging.getLogger(__name__)
 
@@ -54,7 +55,7 @@ class Credential(BaseModel):
 
     credential_type: CredentialType
     value: str = Field(..., description="The credential value")
-    metadata: Dict[str, Any] = Field(default_factory=dict)
+    metadata: dict[str, Any] = Field(default_factory=dict)
 
     class Config:
         extra = "allow"
@@ -64,14 +65,14 @@ class CredentialManager:
     """Manages credentials for various source types."""
 
     def __init__(self):
-        self._credentials: Dict[str, Credential] = {}
+        self._credentials: dict[str, Credential] = {}
         self._env_prefix = "HAIVE_CRED_"
 
     def add_credential(self, source_id: str, credential: Credential) -> None:
         """Add a credential for a source."""
         self._credentials[source_id] = credential
 
-    def get_credential(self, source_id: str) -> Optional[Credential]:
+    def get_credential(self, source_id: str) -> Credential | None:
         """Get credential for a source."""
         # Try direct lookup first
         if source_id in self._credentials:
@@ -95,8 +96,8 @@ class EnhancedSource(BaseModel, ABC):
 
     source_type: SourceType
     source_path: str = Field(..., description="Path or identifier for the source")
-    metadata: Dict[str, Any] = Field(default_factory=dict)
-    credential_manager: Optional[CredentialManager] = Field(default=None, exclude=True)
+    metadata: dict[str, Any] = Field(default_factory=dict)
+    credential_manager: CredentialManager | None = Field(default=None, exclude=True)
 
     class Config:
         arbitrary_types_allowed = True
@@ -104,18 +105,16 @@ class EnhancedSource(BaseModel, ABC):
     @abstractmethod
     def can_handle(self, path: str) -> bool:
         """Check if this source can handle the given path."""
-        pass
 
     @abstractmethod
     def get_confidence_score(self, path: str) -> float:
         """Get confidence score (0.0-1.0) for handling this path."""
-        pass
 
     def requires_authentication(self) -> bool:
         """Check if this source requires authentication."""
         return False
 
-    def get_credential_requirements(self) -> List[CredentialType]:
+    def get_credential_requirements(self) -> list[CredentialType]:
         """Get required credential types."""
         return []
 
@@ -124,7 +123,7 @@ class LocalFileSource(EnhancedSource):
     """Source for local files."""
 
     source_type: SourceType = Field(default=SourceType.LOCAL_FILE)
-    file_extensions: List[str] = Field(default_factory=list)
+    file_extensions: list[str] = Field(default_factory=list)
 
     def can_handle(self, path: str) -> bool:
         """Check if this is a local file."""
@@ -153,8 +152,8 @@ class LocalDirectorySource(EnhancedSource):
 
     source_type: SourceType = Field(default=SourceType.LOCAL_DIRECTORY)
     recursive: bool = Field(default=True)
-    include_patterns: List[str] = Field(default_factory=list)
-    exclude_patterns: List[str] = Field(default_factory=list)
+    include_patterns: list[str] = Field(default_factory=list)
+    exclude_patterns: list[str] = Field(default_factory=list)
 
     def can_handle(self, path: str) -> bool:
         """Check if this is a local directory."""
@@ -175,8 +174,8 @@ class WebUrlSource(EnhancedSource):
     """Source for web URLs."""
 
     source_type: SourceType = Field(default=SourceType.WEB_URL)
-    allowed_schemes: List[str] = Field(default=["http", "https"])
-    allowed_domains: List[str] = Field(default_factory=list)
+    allowed_schemes: list[str] = Field(default=["http", "https"])
+    allowed_domains: list[str] = Field(default_factory=list)
 
     def can_handle(self, path: str) -> bool:
         """Check if this is a valid web URL."""
@@ -207,7 +206,7 @@ class DatabaseSource(EnhancedSource):
     """Source for database connections."""
 
     source_type: SourceType = Field(default=SourceType.DATABASE)
-    supported_schemes: List[str] = Field(
+    supported_schemes: list[str] = Field(
         default=["postgresql", "mysql", "sqlite", "mongodb"]
     )
 
@@ -229,7 +228,7 @@ class DatabaseSource(EnhancedSource):
         """Database sources typically require authentication."""
         return True
 
-    def get_credential_requirements(self) -> List[CredentialType]:
+    def get_credential_requirements(self) -> list[CredentialType]:
         """Database sources need connection credentials."""
         return [CredentialType.USERNAME_PASSWORD, CredentialType.CONNECTION_STRING]
 
@@ -238,7 +237,7 @@ class CloudStorageSource(EnhancedSource):
     """Source for cloud storage."""
 
     source_type: SourceType = Field(default=SourceType.CLOUD_STORAGE)
-    supported_providers: List[str] = Field(default=["s3", "gcs", "azure", "dropbox"])
+    supported_providers: list[str] = Field(default=["s3", "gcs", "azure", "dropbox"])
 
     def can_handle(self, path: str) -> bool:
         """Check if this is a cloud storage path."""
@@ -260,7 +259,7 @@ class CloudStorageSource(EnhancedSource):
         """Cloud storage typically requires authentication."""
         return True
 
-    def get_credential_requirements(self) -> List[CredentialType]:
+    def get_credential_requirements(self) -> list[CredentialType]:
         """Cloud storage needs API credentials."""
         return [CredentialType.API_KEY, CredentialType.SERVICE_ACCOUNT]
 
@@ -286,7 +285,7 @@ class SourceRegistry:
     """Registry for managing source types."""
 
     def __init__(self):
-        self._sources: List[EnhancedSource] = []
+        self._sources: list[EnhancedSource] = []
         self._register_default_sources()
 
     def _register_default_sources(self):
@@ -302,7 +301,7 @@ class SourceRegistry:
         """Register a new source type."""
         self._sources.append(source)
 
-    def find_best_source(self, path: str) -> Optional[EnhancedSource]:
+    def find_best_source(self, path: str) -> EnhancedSource | None:
         """Find the best source for a given path."""
         candidates = []
 
@@ -326,7 +325,7 @@ class SourceRegistry:
             credential_manager=best_source.credential_manager,
         )
 
-    def find_all_sources(self, path: str) -> List[tuple[EnhancedSource, float]]:
+    def find_all_sources(self, path: str) -> list[tuple[EnhancedSource, float]]:
         """Find all sources that can handle a path with confidence scores."""
         candidates = []
 
@@ -346,17 +345,17 @@ source_registry = SourceRegistry()
 
 # Export key components
 __all__ = [
-    "SourceType",
-    "CredentialType",
+    "CloudStorageSource",
     "Credential",
     "CredentialManager",
-    "EnhancedSource",
-    "LocalFileSource",
-    "LocalDirectorySource",
-    "WebUrlSource",
+    "CredentialType",
     "DatabaseSource",
-    "CloudStorageSource",
-    "TextInputSource",
+    "EnhancedSource",
+    "LocalDirectorySource",
+    "LocalFileSource",
     "SourceRegistry",
+    "SourceType",
+    "TextInputSource",
+    "WebUrlSource",
     "source_registry",
 ]

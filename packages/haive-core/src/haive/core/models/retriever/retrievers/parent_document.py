@@ -1,12 +1,11 @@
 # Additional retriever configurations
 import logging
-from typing import Any, Dict, Optional
-
-from langchain_core.retrievers import BaseRetriever
-from pydantic import Field
+from typing import Any
 
 from haive.core.models.retriever.base import RetrieverConfig, RetrieverType
 from haive.core.models.vectorstore.base import VectorStoreConfig
+from langchain_core.retrievers import BaseRetriever
+from pydantic import Field
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -16,13 +15,13 @@ logger.setLevel(logging.DEBUG)
 class ParentDocumentRetrieverConfig(RetrieverConfig):
     """Configuration for parent document retrievers."""
 
-    vector_store_config: Optional[VectorStoreConfig] = Field(
+    vector_store_config: VectorStoreConfig | None = Field(
         default=None, description="Configuration for the vector store"
     )
-    parent_document_store_config: Optional[Dict[str, Any]] = Field(
+    parent_document_store_config: dict[str, Any] | None = Field(
         default=None, description="Configuration for the parent document store"
     )
-    child_splitter_config: Optional[Dict[str, Any]] = Field(
+    child_splitter_config: dict[str, Any] | None = Field(
         default=None, description="Configuration for the text splitter for children"
     )
 

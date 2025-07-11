@@ -1,11 +1,12 @@
-import os
+import functools
 import importlib
 import inspect
-import functools
+import os
 from enum import Enum
-from typing import Any, Dict, List, Type, Optional, Tuple, Union, get_type_hints
-from pydantic import BaseModel, Field, field_validator
+from typing import (Any, Dict, List, Optional, Tuple, Type, Union,
+                    get_type_hints)
 
+from pydantic import BaseModel, Field, field_validator
 
 BASE_CLASS_MAP = {
     "langchain_community.retrievers": "BaseRetriever",
@@ -42,7 +43,9 @@ def get_available_classes(module_name: str) -> Dict[str, Dict[str, Any]]:
                 continue
 
             # ✅ Extract metadata
-            docstring = cls.__doc__.strip() if cls.__doc__ else "No description available."
+            docstring = (
+                cls.__doc__.strip() if cls.__doc__ else "No description available."
+            )
             parent_classes = [
                 base.__name__
                 for base in cls.__bases__
@@ -81,7 +84,9 @@ def _extract_class_attributes(cls) -> Dict[str, Any]:
     """
     attributes = {}
     try:
-        type_hints = get_type_hints(cls, globalns=globals(), localns=locals())  # ✅ Fixed
+        type_hints = get_type_hints(
+            cls, globalns=globals(), localns=locals()
+        )  # ✅ Fixed
     except Exception:
         type_hints = {}  # ✅ If evaluation fails, default to empty hints
 
@@ -110,8 +115,7 @@ def _extract_class_methods(cls) -> Dict[str, Dict[str, str]]:
         if inspect.isfunction(method) or inspect.ismethod(method):
             sig = inspect.signature(method)
             methods[name] = {
-                param: str(sig.parameters[param].annotation)
-                for param in sig.parameters
+                param: str(sig.parameters[param].annotation) for param in sig.parameters
             }
 
     return methods
@@ -141,9 +145,16 @@ class DynamicModuleConfig(BaseModel):
     """
     Configuration for dynamically loading LangChain components (retrievers, tools, API wrappers, etc.).
     """
-    module_name: str = Field(description="Module path for dynamic loading (e.g., 'langchain_community.retrievers')")
-    class_type: Optional[str] = Field(default=None, description="Specific class to load from the module.")
-    init_kwargs: Dict[str, Any] = Field(default_factory=dict, description="Initialization arguments.")
+
+    module_name: str = Field(
+        description="Module path for dynamic loading (e.g., 'langchain_community.retrievers')"
+    )
+    class_type: Optional[str] = Field(
+        default=None, description="Specific class to load from the module."
+    )
+    init_kwargs: Dict[str, Any] = Field(
+        default_factory=dict, description="Initialization arguments."
+    )
 
     @field_validator("module_name")
     @classmethod
@@ -186,7 +197,9 @@ class DynamicModuleConfig(BaseModel):
         except ImportError as e:
             raise ImportError(f"Failed to import module {self.module_name}: {e}")
         except AttributeError as e:
-            raise AttributeError(f"Class '{self.class_type}' not found in '{self.module_name}': {e}")
+            raise AttributeError(
+                f"Class '{self.class_type}' not found in '{self.module_name}': {e}"
+            )
 
     def get_class_metadata(self) -> Dict[str, Any]:
         """
@@ -197,9 +210,12 @@ class DynamicModuleConfig(BaseModel):
         """
         available_classes = get_available_classes(self.module_name)
         if self.class_type not in available_classes:
-            raise ValueError(f"Class '{self.class_type}' not found in module '{self.module_name}'")
+            raise ValueError(
+                f"Class '{self.class_type}' not found in module '{self.module_name}'"
+            )
 
         return available_classes[self.class_type]
+
 
 """
 # ✅ Example Usage - Load a Retriever
@@ -229,14 +245,14 @@ print(f"✅ Has `validate_environment` Method: {metadata['has_validate_environme
 DocumentLoaderType = Enum(
     "RetrieverType",
     {cls: cls for cls in get_available_classes("langchain_community.document_loaders")},
-    type=str
+    type=str,
 )
 from langchain_community.document_loaders import AZLyricsLoader
 
 loader_config = DynamicModuleConfig(
     module_name="langchain_community.document_loaders",
-    #class_type="TextLoader",  # Replace with a valid loader class you want to use
-    #init_kwargs={"file_path": "example.txt"}  # Customize based on your loader’s __init__ params
+    # class_type="TextLoader",  # Replace with a valid loader class you want to use
+    # init_kwargs={"file_path": "example.txt"}  # Customize based on your loader’s __init__ params
 )
 
 loader = loader_config.load_instance()
@@ -252,7 +268,6 @@ print(f"🔑 Missing Env Vars: {metadata['missing_env_vars']}")
 print(f"✅ Has `validate_environment` Method: {metadata['has_validate_environment']}")
 import json
 
-
 if __name__ == "__main__":
     module_name = "langchain_community.document_loaders.parsers"
     metadata = get_available_classes(module_name)
@@ -260,7 +275,9 @@ if __name__ == "__main__":
     with open("all_document_loaders_parsers_metadata.json", "w", encoding="utf-8") as f:
         json.dump(metadata, f, indent=2, ensure_ascii=False, default=str)
 
-    print("✅ Saved metadata to all_document_loaders_parsers_metadata.json with full structure.")
+    print(
+        "✅ Saved metadata to all_document_loaders_parsers_metadata.json with full structure."
+    )
 import json
 
 with open("all_document_loaders_parsers_metadata.json", "r", encoding="utf-8") as f:

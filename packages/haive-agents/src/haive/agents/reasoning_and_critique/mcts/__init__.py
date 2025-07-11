@@ -1,4 +1,4 @@
-"""Mcts - TODO: Add brief description
+"""Mcts - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 
@@ -18,9 +18,18 @@ Example:
 
 from haive.agents.reasoning_and_critique.mcts.agent import MCTSAgent
 from haive.agents.reasoning_and_critique.mcts.config import MCTSAgentConfig
-from haive.agents.reasoning_and_critique.mcts.models import MCTSNodes, NodeData, Reflection
+from haive.agents.reasoning_and_critique.mcts.models import (
+    MCTSNodes,
+    NodeData,
+    Reflection,
+)
 from haive.agents.reasoning_and_critique.mcts.state import MCTSAgentState
-from haive.agents.reasoning_and_critique.mcts.utils import create_mcts_agent, extract_best_solution, print_tree_stats
+from haive.agents.reasoning_and_critique.mcts.utils import (
+    create_mcts_agent,
+    extract_best_solution,
+    print_tree_stats,
+)
+
 
 __all__ = [
     "MCTSAgent",

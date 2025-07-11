@@ -1,13 +1,12 @@
 import logging
 from typing import Any
 
+from haive.agents.rag.base.agent import BaseRAGAgent
+from haive.agents.rag.llm_rag.config import LLMRAGConfig
 from haive.core.engine.agent.agent import register_agent
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from langgraph.graph import END, START
 from langgraph.types import Command
-
-from haive.agents.rag.base.agent import BaseRAGAgent
-from haive.agents.rag.llm_rag.config import LLMRAGConfig
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -78,7 +77,7 @@ class LLMRAGAgent(BaseRAGAgent):
                     goto="check_relevance"
                 )
             except Exception as e:
-                logger.error(f"Error in document retrieval: {e}")
+                logger.exception(f"Error in document retrieval: {e}")
                 return Command(
                     update={"error": str(e)},
                     goto="check_relevance",  # Still try to proceed
@@ -113,7 +112,7 @@ class LLMRAGAgent(BaseRAGAgent):
                     update={"is_relevant": is_relevant}, goto="generate_answer"
                 )
             except Exception as e:
-                logger.error(f"Error in relevance checker: {e}")
+                logger.exception(f"Error in relevance checker: {e}")
                 return Command(
                     update={"is_relevant": False, "error": str(e)},
                     goto="generate_answer",
@@ -148,7 +147,7 @@ class LLMRAGAgent(BaseRAGAgent):
 
                 return Command(update={"answer": answer}, goto=END)
             except Exception as e:
-                logger.error(f"Error in answer generation: {e}")
+                logger.exception(f"Error in answer generation: {e}")
                 return Command(
                     update={
                         "answer": f"Error generating answer: {e!s}",

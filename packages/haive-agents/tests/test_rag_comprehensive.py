@@ -1,4 +1,4 @@
-"""Comprehensive RAG Test Suite
+"""Comprehensive RAG Test Suite.
 
 Tests all RAG implementations including ChainAgent versions, traditional agents,
 and multi-agent integrations.
@@ -388,10 +388,9 @@ class TestRAGPerformance:
         agent = create_rag_chain("simple", TEST_DOCUMENTS, llm_config=TEST_LLM_CONFIG)
 
         # Test state structure
-        test_state = {"query": "What is machine learning?", "messages": []}
 
         # Verify agent has callable interface
-        assert hasattr(agent, "invoke") or hasattr(agent, "__call__")
+        assert hasattr(agent, "invoke") or callable(agent)
         assert hasattr(agent, "nodes")
         assert len(agent.nodes) > 0
 
@@ -414,11 +413,6 @@ class TestRAGPerformance:
         agent = create_simple_memory_react_rag(TEST_DOCUMENTS, TEST_LLM_CONFIG)
 
         # Test with different message contexts
-        empty_state = {"query": "Test", "messages": []}
-        memory_state = {
-            "query": "Test",
-            "messages": [{"role": "user", "content": "Previous message"}],
-        }
 
         # Should handle both states without errors during construction
         assert agent is not None
@@ -426,7 +420,6 @@ class TestRAGPerformance:
 
 def run_comprehensive_rag_tests():
     """Run all RAG tests and return summary."""
-
     test_classes = [
         TestRAGChainCollection,
         TestUnifiedRAGFactory,
@@ -455,21 +448,12 @@ def run_comprehensive_rag_tests():
             try:
                 getattr(test_instance, test_method)()
                 passed_tests += 1
-                print(f"✅ {test_class.__name__}.{test_method}")
             except Exception as e:
                 failed_tests.append(f"{test_class.__name__}.{test_method}: {e}")
-                print(f"❌ {test_class.__name__}.{test_method}: {e}")
-
-    print(f"\n📊 Test Summary:")
-    print(f"Total Tests: {total_tests}")
-    print(f"Passed: {passed_tests}")
-    print(f"Failed: {len(failed_tests)}")
-    print(f"Success Rate: {(passed_tests/total_tests)*100:.1f}%")
 
     if failed_tests:
-        print(f"\n❌ Failed Tests:")
-        for failure in failed_tests:
-            print(f"  - {failure}")
+        for _failure in failed_tests:
+            pass
 
     return {
         "total": total_tests,
@@ -481,6 +465,4 @@ def run_comprehensive_rag_tests():
 
 
 if __name__ == "__main__":
-    print("🧪 Running Comprehensive RAG Test Suite...")
     results = run_comprehensive_rag_tests()
-    print(f"\n🎯 Overall Success Rate: {results['success_rate']:.1f}%")

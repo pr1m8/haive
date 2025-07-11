@@ -1,4 +1,4 @@
-"""Self Rag2 - TODO: Add brief description
+"""Self Rag2 - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

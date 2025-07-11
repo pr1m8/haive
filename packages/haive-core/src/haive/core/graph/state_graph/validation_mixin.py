@@ -1,12 +1,7 @@
 # haive/core/graph/validation.py
 
 from abc import abstractmethod
-from typing import (
-    List,
-    Protocol,
-    Tuple,
-    runtime_checkable,
-)
+from typing import Protocol, runtime_checkable
 
 from rich.console import Console
 from rich.table import Table
@@ -22,27 +17,27 @@ class GraphValidationProtocol(Protocol):
     require_end_path: bool
 
     @abstractmethod
-    def analyze_cycles(self) -> List[List[str]]:
+    def analyze_cycles(self) -> list[list[str]]:
         """Find all cycles in the graph."""
         ...
 
     @abstractmethod
-    def find_orphan_nodes(self) -> List[str]:
+    def find_orphan_nodes(self) -> list[str]:
         """Find nodes with no incoming or outgoing edges."""
         ...
 
     @abstractmethod
-    def find_dangling_edges(self) -> List[Tuple[str, str]]:
+    def find_dangling_edges(self) -> list[tuple[str, str]]:
         """Find edges pointing to non-existent nodes."""
         ...
 
     @abstractmethod
-    def find_unreachable_nodes(self) -> List[str]:
+    def find_unreachable_nodes(self) -> list[str]:
         """Find nodes that cannot be reached from the entry point."""
         ...
 
     @abstractmethod
-    def find_nodes_without_end_path(self) -> List[str]:
+    def find_nodes_without_end_path(self) -> list[str]:
         """Find nodes that cannot reach the END node."""
         ...
 
@@ -53,8 +48,7 @@ class GraphValidationProtocol(Protocol):
 
 
 class ValidationMixin:
-    """
-    Mixin for graph validation functionality.
+    """Mixin for graph validation functionality.
 
     Provides methods for validating graph integrity, detecting cycles,
     finding orphaned nodes, and ensuring paths to END.
@@ -65,14 +59,13 @@ class ValidationMixin:
     - Various analysis methods defined in GraphValidationProtocol
     """
 
-    def validate_graph(self) -> List[str]:  # Renamed from validate()
-        """
-        Perform comprehensive validation of the graph.
+    def validate_graph(self) -> list[str]:  # Renamed from validate()
+        """Perform comprehensive validation of the graph.
 
         Returns:
             List of validation issues (empty if valid)
         """
-        issues: List[str] = []
+        issues: list[str] = []
 
         # Check for circular references only if cycles are not allowed
         if not self.allow_cycles:

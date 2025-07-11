@@ -1,5 +1,4 @@
-"""
-Retriever provider implementations for the Haive framework.
+"""Retriever provider implementations for the Haive framework.
 
 This package contains implementations of various retriever providers that extend
 the core retriever functionality. These implementations are automatically registered

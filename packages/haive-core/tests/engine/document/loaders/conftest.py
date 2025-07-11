@@ -15,8 +15,6 @@ from typing import Any, Dict, List, Optional
 from unittest.mock import MagicMock, Mock
 
 import pytest
-from langchain_core.documents import Document
-
 from haive.core.engine.document.config import LoaderPreference
 from haive.core.engine.document.loaders.auto_loader import (
     AutoLoader,
@@ -29,10 +27,7 @@ from haive.core.engine.document.loaders.auto_registry import (
     RegistrationInfo,
     RegistrationStats,
 )
-from haive.core.engine.document.loaders.path_analyzer import (
-    PathAnalyzer,
-    SourceInfo,
-)
+from haive.core.engine.document.loaders.path_analyzer import PathAnalyzer, SourceInfo
 from haive.core.engine.document.loaders.sources.enhanced_registry import (
     EnhancedSourceRegistry,
 )
@@ -44,6 +39,7 @@ from haive.core.engine.document.loaders.sources.source_types import (
     RemoteSource,
     SourceCategory,
 )
+from langchain_core.documents import Document
 
 
 @pytest.fixture

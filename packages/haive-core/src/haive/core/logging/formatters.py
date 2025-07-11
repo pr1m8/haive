@@ -1,12 +1,10 @@
 # src/haive/core/logging/formatters.py
 
-"""
-Rich formatters for beautiful console and file logging.
-"""
+"""Rich formatters for beautiful console and file logging."""
 
-import logging
 from datetime import datetime
-from typing import Any, Dict
+import logging
+from typing import Any
 
 from rich.console import Console
 from rich.text import Text
@@ -90,7 +88,7 @@ class FileFormatter(logging.Formatter):
 
         return formatted
 
-    def _format_context(self, context: Dict[str, Any]) -> str:
+    def _format_context(self, context: dict[str, Any]) -> str:
         """Format context dictionary for file output."""
         if not context:
             return ""

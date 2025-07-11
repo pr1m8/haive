@@ -1,5 +1,4 @@
-"""
-Agent protocols - Protocol definitions for Agent capabilities.
+"""Agent protocols - Protocol definitions for Agent capabilities.
 
 This module defines protocol interfaces that describe the expected
 functionality of Agent classes in the Haive framework. These protocols
@@ -8,14 +7,7 @@ different agent implementations.
 """
 
 from collections.abc import AsyncGenerator, Generator
-from typing import (
-    Any,
-    Dict,
-    Optional,
-    Protocol,
-    TypeVar,
-    runtime_checkable,
-)
+from typing import Any, Dict, Optional, Protocol, TypeVar, runtime_checkable
 
 from langchain_core.runnables import RunnableConfig
 
@@ -41,9 +33,9 @@ class AgentProtocol(Protocol[TIn, TOut, TState]):
     def run(
         self,
         input_data: TIn,
-        thread_id: Optional[str] = None,
+        thread_id: str | None = None,
         debug: bool = True,
-        config: Optional[RunnableConfig] = None,
+        config: RunnableConfig | None = None,
         **kwargs
     ) -> TOut:
         """Synchronously run the agent with input data.
@@ -63,8 +55,8 @@ class AgentProtocol(Protocol[TIn, TOut, TState]):
     async def arun(
         self,
         input_data: TIn,
-        thread_id: Optional[str] = None,
-        config: Optional[RunnableConfig] = None,
+        thread_id: str | None = None,
+        config: RunnableConfig | None = None,
         **kwargs
     ) -> TOut:
         """Asynchronously run the agent with input data.
@@ -100,12 +92,12 @@ class StreamingAgentProtocol(Protocol[TIn, TOut]):
     def stream(
         self,
         input_data: TIn,
-        thread_id: Optional[str] = None,
+        thread_id: str | None = None,
         stream_mode: str = "values",
-        config: Optional[RunnableConfig] = None,
+        config: RunnableConfig | None = None,
         debug: bool = True,
         **kwargs
-    ) -> Generator[Dict[str, Any], None, None]:
+    ) -> Generator[dict[str, Any], None, None]:
         """Stream agent execution with input data.
 
         Args:
@@ -124,11 +116,11 @@ class StreamingAgentProtocol(Protocol[TIn, TOut]):
     async def astream(
         self,
         input_data: TIn,
-        thread_id: Optional[str] = None,
+        thread_id: str | None = None,
         stream_mode: str = "values",
-        config: Optional[RunnableConfig] = None,
+        config: RunnableConfig | None = None,
         **kwargs
-    ) -> AsyncGenerator[Dict[str, Any], None]:
+    ) -> AsyncGenerator[dict[str, Any], None]:
         """Asynchronously stream agent execution with input data.
 
         Args:
@@ -152,9 +144,7 @@ class PersistentAgentProtocol(Protocol):
     and thread management in agents.
     """
 
-    def save_state_history(
-        self, runnable_config: Optional[RunnableConfig] = None
-    ) -> bool:
+    def save_state_history(self, runnable_config: RunnableConfig | None = None) -> bool:
         """Save the current agent state to a JSON file.
 
         Args:
@@ -166,7 +156,7 @@ class PersistentAgentProtocol(Protocol):
         ...
 
     def inspect_state(
-        self, thread_id: Optional[str] = None, config: Optional[RunnableConfig] = None
+        self, thread_id: str | None = None, config: RunnableConfig | None = None
     ) -> None:
         """Inspect the current state of the agent.
 
@@ -177,7 +167,7 @@ class PersistentAgentProtocol(Protocol):
         ...
 
     def reset_state(
-        self, thread_id: Optional[str] = None, config: Optional[RunnableConfig] = None
+        self, thread_id: str | None = None, config: RunnableConfig | None = None
     ) -> bool:
         """Reset the agent's state for a thread.
 
@@ -199,7 +189,7 @@ class VisualizationAgentProtocol(Protocol):
     and debugging.
     """
 
-    def visualize_graph(self, output_path: Optional[str] = None) -> None:
+    def visualize_graph(self, output_path: str | None = None) -> None:
         """Generate and save a visualization of the agent's graph.
 
         Args:
@@ -241,8 +231,6 @@ class FullAgentProtocol(
     This protocol represents a fully-featured agent with all available
     capabilities in the Haive framework.
     """
-
-    pass
 
 
 # Type assertions to verify that Agent class implements protocols

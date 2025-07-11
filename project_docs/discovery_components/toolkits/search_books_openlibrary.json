@@ -7,7 +7,7 @@
     "description": "Search for books by title, keyword, or subject using OpenLibrary",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.853022",
+    "timestamp": "2025-07-10T19:45:29.071015",
     "schema": {
       "description": "Input schema for the book search tool.\n\nAttributes:\n    query: The book title, keywords, or search query to use.\n    page: Page number of results to retrieve, starting from 1.",
       "properties": {
@@ -42,7 +42,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.853022",
+      "timestamp": "2025-07-10T19:45:29.071015",
       "category": "toolkits"
     }
   },

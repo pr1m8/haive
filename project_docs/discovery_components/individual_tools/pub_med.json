@@ -7,7 +7,7 @@
     "description": "A wrapper around PubMed. Useful for when you need to answer questions about medicine, health, and biomedical topics from biomedical literature, MEDLINE, life science journals, and online books. Input should be a search query.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.771125",
+    "timestamp": "2025-07-10T19:45:28.994947",
     "schema": {
       "properties": {
         "kwargs": {
@@ -31,7 +31,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.771125",
+      "timestamp": "2025-07-10T19:45:28.994947",
       "category": "individual_tools"
     }
   },

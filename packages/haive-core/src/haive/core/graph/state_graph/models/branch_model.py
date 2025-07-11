@@ -10,13 +10,13 @@ class BranchModel(SerializableModel):
     """Serializable representation of a graph branch."""
 
     source_node: str = Field(..., description="Source node name")
-    path: Optional[FunctionReference] = Field(
+    path: FunctionReference | None = Field(
         default=None, description="Function reference for condition"
     )
-    ends: Dict[str, str] = Field(
+    ends: dict[str, str] = Field(
         default_factory=dict, description="Mapping of condition values to target nodes"
     )
-    then: Optional[str] = Field(
+    then: str | None = Field(
         default=None, description="Target node after condition evaluation"
     )
     branch_type: Literal["conditional", "parallel", "switch"] = Field(
@@ -63,7 +63,7 @@ class BranchModel(SerializableModel):
         if hasattr(branch, "ends"):
             if isinstance(branch.ends, dict):
                 branch_model.ends = dict(branch.ends)  # Make a copy
-            elif isinstance(branch.ends, (list, tuple)):
+            elif isinstance(branch.ends, list | tuple):
                 # Convert list/tuple to dict with index keys
                 branch_model.ends = {str(i): v for i, v in enumerate(branch.ends)}
             else:

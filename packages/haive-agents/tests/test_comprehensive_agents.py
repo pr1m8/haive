@@ -11,18 +11,18 @@ This test suite validates:
 from typing import Any, Dict, List, Optional
 from unittest.mock import MagicMock, Mock, patch
 
-import pytest
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.engine.base import EngineRetriever
 from langchain_core.documents import Document
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, ToolMessage
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
+import pytest
 
 from haive.agents.multi.base import SequentialAgent
 from haive.agents.rag.agent import SimpleRAGAgent
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.engine.base import EngineRetriever
 
 
 # Test Models
@@ -38,7 +38,7 @@ class AnalysisResult(BaseModel):
 
     summary: str = Field(description="Summary of findings")
     confidence: float = Field(description="Confidence score", ge=0, le=1)
-    recommendations: List[str] = Field(default_factory=list)
+    recommendations: list[str] = Field(default_factory=list)
 
 
 # Test Tools
@@ -73,18 +73,18 @@ def mock_llm_engine():
 
     # Mock schema methods
     engine.get_input_fields.return_value = {
-        "messages": (List[BaseMessage], Field(default_factory=list)),
+        "messages": (list[BaseMessage], Field(default_factory=list)),
         "query": (str, Field(default="")),
     }
     engine.get_output_fields.return_value = {
         "response": (str, Field(default="")),
-        "messages": (List[BaseMessage], Field(default_factory=list)),
+        "messages": (list[BaseMessage], Field(default_factory=list)),
     }
 
     # Mock output schema
     class MockOutputSchema(BaseModel):
         response: str = ""
-        messages: List[BaseMessage] = Field(default_factory=list)
+        messages: list[BaseMessage] = Field(default_factory=list)
 
     engine.derive_output_schema.return_value = MockOutputSchema
     engine.output_schema = MockOutputSchema
@@ -98,8 +98,8 @@ def mock_llm_engine():
         if "search" in query.lower():
             return {
                 "response": "I'll search for that.",
-                "messages": messages
-                + [
+                "messages": [
+                    *messages,
                     AIMessage(
                         content="I'll search for that.",
                         tool_calls=[
@@ -111,7 +111,7 @@ def mock_llm_engine():
                                 },
                             }
                         ],
-                    )
+                    ),
                 ],
                 "structured_result": AnalysisResult(
                     summary="Found relevant information",
@@ -123,7 +123,7 @@ def mock_llm_engine():
         # Regular response
         return {
             "response": f"Processed: {query}",
-            "messages": messages + [AIMessage(content=f"Processed: {query}")],
+            "messages": [*messages, AIMessage(content=f"Processed: {query}")],
             "structured_result": AnalysisResult(
                 summary=f"Analysis of: {query}",
                 confidence=0.75,
@@ -147,8 +147,8 @@ def mock_retriever_engine():
     # Mock schema methods
     engine.get_input_fields.return_value = {"query": (str, Field(default=""))}
     engine.get_output_fields.return_value = {
-        "documents": (List[Document], Field(default_factory=list)),
-        "context": (List[str], Field(default_factory=list)),
+        "documents": (list[Document], Field(default_factory=list)),
+        "context": (list[str], Field(default_factory=list)),
     }
 
     # Mock retrieval
@@ -290,9 +290,7 @@ class TestReactAgent:
     def test_react_multi_turn(self, mock_llm_engine):
         """Test ReactAgent handling multiple turns."""
         with patch("haive.agents.react.agent.ReactAgent.setup_workflow"):
-            agent = ReactAgent(
-                engine=mock_llm_engine, structured_output_model=AnalysisResult
-            )
+            ReactAgent(engine=mock_llm_engine, structured_output_model=AnalysisResult)
 
             # Mock multi-turn conversation
             turn_count = 0
@@ -305,8 +303,8 @@ class TestReactAgent:
                 if turn_count == 1:
                     # First turn - ask for search
                     return {
-                        "messages": messages
-                        + [
+                        "messages": [
+                            *messages,
                             AIMessage(
                                 content="Let me search for that.",
                                 tool_calls=[
@@ -318,22 +316,21 @@ class TestReactAgent:
                                         },
                                     }
                                 ],
-                            )
+                            ),
                         ]
                     }
-                else:
-                    # Final turn - provide answer
-                    return {
-                        "messages": messages
-                        + [
-                            AIMessage(content="Based on the search, here's the answer.")
-                        ],
-                        "structured_result": AnalysisResult(
-                            summary="Search completed",
-                            confidence=0.95,
-                            recommendations=["Use the search results"],
-                        ),
-                    }
+                # Final turn - provide answer
+                return {
+                    "messages": [
+                        *messages,
+                        AIMessage(content="Based on the search, here's the answer."),
+                    ],
+                    "structured_result": AnalysisResult(
+                        summary="Search completed",
+                        confidence=0.95,
+                        recommendations=["Use the search results"],
+                    ),
+                }
 
             mock_llm_engine.invoke.side_effect = mock_multi_turn_invoke
 
@@ -347,7 +344,6 @@ class TestMultiAgentWithRAG:
         self, mock_retriever_engine, mock_llm_engine, conversation_docs
     ):
         """Test sequential execution of RAG agent followed by analysis agent."""
-
         # Create RAG agent
         with patch("haive.agents.rag.agent.SimpleRAGAgent.setup_workflow"):
             rag_agent = SimpleRAGAgent(
@@ -480,8 +476,8 @@ class TestPromptTemplatesAndMessages:
             def preserve_messages(input_data, config=None):
                 messages = input_data.get("messages", [])
                 return {
-                    "messages": messages
-                    + [
+                    "messages": [
+                        *messages,
                         AIMessage(
                             content="I'll search for Python tutorials.",
                             tool_calls=[
@@ -493,7 +489,7 @@ class TestPromptTemplatesAndMessages:
                                     },
                                 }
                             ],
-                        )
+                        ),
                     ]
                 }
 
@@ -502,8 +498,8 @@ class TestPromptTemplatesAndMessages:
             # Mock graph to show full conversation
             mock_graph = Mock()
             mock_graph.invoke.return_value = {
-                "messages": input_messages
-                + [
+                "messages": [
+                    *input_messages,
                     AIMessage(content="I'll search for Python tutorials."),
                     ToolMessage(
                         content="Found 10 Python tutorials", tool_call_id="call_456"

@@ -22,13 +22,12 @@ allowing users to specify what they want rather than how to implement it.
 
 import json
 import logging
-from typing import Any, Dict, List, Optional, Union
-
-from pydantic import BaseModel, SecretStr
+from typing import Any
 
 from haive.core.persistence.memory import MemoryCheckpointerConfig
 from haive.core.persistence.postgres_config import PostgresCheckpointerConfig
 from haive.core.persistence.types import CheckpointerMode, CheckpointStorageMode
+from pydantic import BaseModel, SecretStr
 
 logger = logging.getLogger(__name__)
 
@@ -92,7 +91,7 @@ def setup_checkpointer(config: Any) -> Any:
         try:
             return config.persistence.create_checkpointer()
         except Exception as e:
-            logger.error(f"Failed to create checkpointer: {e}")
+            logger.exception(f"Failed to create checkpointer: {e}")
             logger.warning(
                 f"Falling back to memory checkpointer for {getattr(config, 'name', 'unnamed')}"
             )
@@ -109,7 +108,7 @@ def setup_checkpointer(config: Any) -> Any:
             memory_config = MemoryCheckpointerConfig()
             return memory_config.create_checkpointer()
 
-        elif persistence_type == "postgres":
+        if persistence_type == "postgres":
             # PostgreSQL checkpointer
             try:
                 # Get connection parameters
@@ -143,7 +142,7 @@ def setup_checkpointer(config: Any) -> Any:
 
                 return postgres_config.create_checkpointer()
             except Exception as e:
-                logger.error(f"Failed to create PostgreSQL checkpointer: {e}")
+                logger.exception(f"Failed to create PostgreSQL checkpointer: {e}")
                 logger.warning(
                     f"Falling back to memory checkpointer for {getattr(config, 'name', 'unnamed')}"
                 )
@@ -159,8 +158,7 @@ def setup_checkpointer(config: Any) -> Any:
 
 
 async def setup_async_checkpointer(config: Any) -> Any:
-    """
-    Set up the appropriate async checkpointer based on persistence configuration.
+    """Set up the appropriate async checkpointer based on persistence configuration.
 
     This function analyzes the provided configuration and creates the appropriate
     async checkpointer based on the persistence settings. It properly handles
@@ -193,7 +191,7 @@ async def setup_async_checkpointer(config: Any) -> Any:
             # Use the async creation method
             return await config.persistence.create_async_checkpointer()
         except Exception as e:
-            logger.error(f"Failed to create async checkpointer: {e}")
+            logger.exception(f"Failed to create async checkpointer: {e}")
             logger.warning(
                 f"Falling back to memory checkpointer for {getattr(config, 'name', 'unnamed')}"
             )
@@ -214,7 +212,7 @@ async def setup_async_checkpointer(config: Any) -> Any:
             memory_config = MemoryCheckpointerConfig()
             return memory_config.create_checkpointer()
 
-        elif persistence_type == "postgres":
+        if persistence_type == "postgres":
             # PostgreSQL checkpointer
             try:
                 # Get connection parameters
@@ -256,7 +254,7 @@ async def setup_async_checkpointer(config: Any) -> Any:
                 # Create async checkpointer
                 return await postgres_config.create_async_checkpointer()
             except Exception as e:
-                logger.error(f"Failed to create async PostgreSQL checkpointer: {e}")
+                logger.exception(f"Failed to create async PostgreSQL checkpointer: {e}")
                 logger.warning(
                     f"Falling back to memory checkpointer for {getattr(config, 'name', 'unnamed')}"
                 )
@@ -275,9 +273,8 @@ async def setup_async_checkpointer(config: Any) -> Any:
     return memory_config.create_checkpointer()
 
 
-def ensure_pool_open(checkpointer: Any) -> Optional[Any]:
-    """
-    Ensure that any PostgreSQL connection pool is properly opened.
+def ensure_pool_open(checkpointer: Any) -> Any | None:
+    """Ensure that any PostgreSQL connection pool is properly opened.
 
     This should be called before any operation that uses the checkpointer.
 
@@ -315,7 +312,7 @@ def ensure_pool_open(checkpointer: Any) -> Optional[Any]:
                                 opened_pool = conn
                                 logger.info("Successfully opened pool")
                             except Exception as e:
-                                logger.error(f"Error opening pool: {e}")
+                                logger.exception(f"Error opening pool: {e}")
 
                                 # Try a different approach with direct pool access
                                 if hasattr(conn, "_pool"):
@@ -331,7 +328,7 @@ def ensure_pool_open(checkpointer: Any) -> Optional[Any]:
                                     conn._opened = True
                                     opened_pool = conn
                     except Exception as e:
-                        logger.error(f"Error checking if pool is open: {e}")
+                        logger.exception(f"Error checking if pool is open: {e}")
                         # Last ditch effort - try direct attribute manipulation
                         if hasattr(conn, "_pool"):
                             conn._pool = (
@@ -352,17 +349,16 @@ def ensure_pool_open(checkpointer: Any) -> Optional[Any]:
             try:
                 checkpointer.setup()
             except Exception as e:
-                logger.error(f"Error setting up checkpointer: {e}")
+                logger.exception(f"Error setting up checkpointer: {e}")
 
     except Exception as e:
-        logger.error(f"Error ensuring pool is open: {e}")
+        logger.exception(f"Error ensuring pool is open: {e}")
 
     return opened_pool
 
 
-async def ensure_async_pool_open(checkpointer: Any) -> Optional[Any]:
-    """
-    Ensure that any async PostgreSQL connection pool is properly opened.
+async def ensure_async_pool_open(checkpointer: Any) -> Any | None:
+    """Ensure that any async PostgreSQL connection pool is properly opened.
 
     This should be called before any async operation that uses the checkpointer.
 
@@ -411,7 +407,7 @@ async def ensure_async_pool_open(checkpointer: Any) -> Optional[Any]:
                                 opened_pool = conn
                                 logger.info("Successfully opened async pool")
                             except Exception as e:
-                                logger.error(f"Error opening async pool: {e}")
+                                logger.exception(f"Error opening async pool: {e}")
 
                                 # Try a different approach with direct pool access
                                 if hasattr(conn, "_pool"):
@@ -427,7 +423,7 @@ async def ensure_async_pool_open(checkpointer: Any) -> Optional[Any]:
                                     conn._opened = True
                                     opened_pool = conn
                     except Exception as e:
-                        logger.error(f"Error checking if async pool is open: {e}")
+                        logger.exception(f"Error checking if async pool is open: {e}")
                         # Last ditch effort - try direct attribute manipulation
                         if hasattr(conn, "_pool"):
                             conn._pool = (
@@ -450,17 +446,16 @@ async def ensure_async_pool_open(checkpointer: Any) -> Optional[Any]:
                     await checkpointer.setup()
                 # Otherwise it's a sync method, skip
             except Exception as e:
-                logger.error(f"Error setting up async checkpointer: {e}")
+                logger.exception(f"Error setting up async checkpointer: {e}")
 
     except Exception as e:
-        logger.error(f"Error ensuring async pool is open: {e}")
+        logger.exception(f"Error ensuring async pool is open: {e}")
 
     return opened_pool
 
 
 async def close_async_pool_if_needed(checkpointer: Any, pool: Any = None) -> None:
-    """
-    Close an async PostgreSQL connection pool if it was previously opened.
+    """Close an async PostgreSQL connection pool if it was previously opened.
 
     This should be called in finally blocks after async operations.
 
@@ -497,7 +492,6 @@ async def close_async_pool_if_needed(checkpointer: Any, pool: Any = None) -> Non
                     logger.debug("Closing async PostgreSQL connection pool")
                     # We don't actually close the pool unless explicitly requested
                     # as it's generally reused across invocations
-                    # await pool.close()
             except Exception as e:
                 logger.warning(f"Error checking async pool status: {e}")
     except (ImportError, AttributeError) as e:
@@ -505,10 +499,9 @@ async def close_async_pool_if_needed(checkpointer: Any, pool: Any = None) -> Non
 
 
 async def register_async_thread_if_needed(
-    checkpointer: Any, thread_id: str, metadata: Optional[Dict[str, Any]] = None
+    checkpointer: Any, thread_id: str, metadata: dict[str, Any] | None = None
 ) -> None:
-    """
-    Register a thread in the persistence system asynchronously if needed.
+    """Register a thread in the persistence system asynchronously if needed.
 
     Args:
         checkpointer: The checkpointer to use
@@ -539,60 +532,64 @@ async def register_async_thread_if_needed(
                 await ensure_async_pool_open(checkpointer)
 
                 # Register the thread
-                async with pool.connection() as conn:
-                    async with conn.cursor() as cursor:
-                        # Check if threads table exists
-                        await cursor.execute(
-                            """
+                async with pool.connection() as conn, conn.cursor() as cursor:
+                    # Check if threads table exists
+                    await cursor.execute(
+                        """
                             SELECT EXISTS (
-                                SELECT FROM information_schema.tables 
+                                SELECT FROM information_schema.tables
                                 WHERE table_name = 'threads'
                             );
                         """
-                        )
-                        result = await cursor.fetchone()
-                        table_exists = result[0] if result else False
+                    )
+                    result = await cursor.fetchone()
+                    table_exists = result[0] if result else False
 
-                        if not table_exists:
-                            logger.debug("Creating threads table")
-                            await cursor.execute(
-                                """
+                    if not table_exists:
+                        logger.debug("Creating threads table")
+                        await cursor.execute(
+                            """
                                 CREATE TABLE IF NOT EXISTS threads (
                                     thread_id TEXT PRIMARY KEY,
+                                    thread_name TEXT DEFAULT NULL,
                                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                     metadata JSONB DEFAULT '{}'::jsonb,
                                     user_id TEXT,
                                     last_access TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
                                 );
                             """
-                            )
+                        )
 
-                        # Convert metadata to JSON string if provided
-                        metadata_json = "{}"
-                        if metadata:
-                            metadata_json = json.dumps(metadata)
+                    # Convert metadata to JSON string if provided
+                    metadata_json = "{}"
+                    if metadata:
+                        metadata_json = json.dumps(metadata)
 
-                        # Insert the thread if not exists
-                        await cursor.execute(
-                            """
-                            INSERT INTO threads (thread_id, metadata, last_access) 
-                            VALUES (%s, %s, CURRENT_TIMESTAMP) 
-                            ON CONFLICT (thread_id) 
-                            DO UPDATE SET last_access = CURRENT_TIMESTAMP
+                    thread_name = metadata.get("thread_name") if metadata else None
+
+                    # Insert the thread if not exists
+                    await cursor.execute(
+                        """
+                            INSERT INTO threads (thread_id, thread_name, metadata, last_access)
+                            VALUES (%s, %s, %s, CURRENT_TIMESTAMP)
+                            ON CONFLICT (thread_id)
+                            DO UPDATE SET
+                                last_access = CURRENT_TIMESTAMP,
+                                thread_name = EXCLUDED.thread_name,
+                                metadata = EXCLUDED.metadata
                         """,
-                            (thread_id, metadata_json),
-                        )
+                        (thread_id, thread_name, metadata_json),
+                    )
 
-                        logger.info(
-                            f"Thread {thread_id} registered/updated asynchronously in PostgreSQL"
-                        )
+                    logger.info(
+                        f"Thread {thread_id} registered/updated asynchronously in PostgreSQL"
+                    )
         except Exception as e:
             logger.warning(f"Error registering thread asynchronously: {e}")
 
 
 def close_pool_if_needed(checkpointer: Any, pool: Any = None) -> None:
-    """
-    Close a PostgreSQL connection pool if it was previously opened.
+    """Close a PostgreSQL connection pool if it was previously opened.
 
     This should be called in finally blocks after operations.
 
@@ -617,14 +614,12 @@ def close_pool_if_needed(checkpointer: Any, pool: Any = None) -> None:
             logger.debug("Closing PostgreSQL connection pool")
             # We don't actually close the pool - generally not recommended
             # unless you're sure you won't need it again
-            # pool.close()
     except (ImportError, AttributeError):
         pass
 
 
 async def close_async_pool_if_needed(checkpointer: Any, pool: Any = None) -> None:
-    """
-    Close an async PostgreSQL connection pool if it was previously opened.
+    """Close an async PostgreSQL connection pool if it was previously opened.
 
     This should be called in finally blocks after operations.
 
@@ -648,16 +643,14 @@ async def close_async_pool_if_needed(checkpointer: Any, pool: Any = None) -> Non
         if isinstance(pool, AsyncConnectionPool) and await pool.is_open():
             logger.debug("Closing async PostgreSQL connection pool")
             # Similarly, we don't actually close the pool
-            # await pool.close()
     except (ImportError, AttributeError):
         pass
 
 
 def register_thread_if_needed(
-    checkpointer: Any, thread_id: str, metadata: Optional[Dict[str, Any]] = None
+    checkpointer: Any, thread_id: str, metadata: dict[str, Any] | None = None
 ) -> None:
-    """
-    Register a thread in the persistence system if needed.
+    """Register a thread in the persistence system if needed.
 
     Args:
         checkpointer: The checkpointer to use
@@ -680,61 +673,63 @@ def register_thread_if_needed(
                 ensure_pool_open(checkpointer)
 
                 # Register the thread
-                with pool.connection() as conn:
-                    with conn.cursor() as cursor:
-                        # Check if threads table exists
-                        cursor.execute(
-                            """
+                with pool.connection() as conn, conn.cursor() as cursor:
+                    # Check if threads table exists
+                    cursor.execute(
+                        """
                             SELECT EXISTS (
-                                SELECT FROM information_schema.tables 
+                                SELECT FROM information_schema.tables
                                 WHERE table_name = 'threads'
                             );
                         """
-                        )
-                        table_exists = cursor.fetchone()[0]
+                    )
+                    table_exists = cursor.fetchone()[0]
 
-                        if not table_exists:
-                            logger.debug("Creating threads table")
-                            cursor.execute(
-                                """
+                    if not table_exists:
+                        logger.debug("Creating threads table")
+                        cursor.execute(
+                            """
                                 CREATE TABLE IF NOT EXISTS threads (
                                     thread_id TEXT PRIMARY KEY,
+                                    thread_name TEXT,
                                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                     metadata JSONB DEFAULT '{}'::jsonb,
                                     user_id TEXT,
                                     last_access TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
                                 );
                             """
-                            )
+                        )
 
-                        # Convert metadata to JSON string if provided
-                        metadata_json = "{}"
-                        if metadata:
-                            metadata_json = json.dumps(metadata)
+                    # Convert metadata to JSON string if provided
+                    metadata_json = "{}"
+                    if metadata:
+                        metadata_json = json.dumps(metadata)
 
-                        # Insert the thread if not exists
-                        cursor.execute(
-                            """
-                            INSERT INTO threads (thread_id, metadata, last_access) 
-                            VALUES (%s, %s, CURRENT_TIMESTAMP) 
-                            ON CONFLICT (thread_id) 
-                            DO UPDATE SET last_access = CURRENT_TIMESTAMP
+                    thread_name = metadata.get("thread_name") if metadata else None
+
+                    # Insert the thread if not exists
+                    cursor.execute(
+                        """
+                            INSERT INTO threads (thread_id, thread_name, metadata, last_access)
+                            VALUES (%s, %s, %s, CURRENT_TIMESTAMP)
+                            ON CONFLICT (thread_id)
+                            DO UPDATE SET
+                                last_access = CURRENT_TIMESTAMP,
+                                thread_name = EXCLUDED.thread_name,
+                                metadata = EXCLUDED.metadata
                         """,
-                            (thread_id, metadata_json),
-                        )
+                        (thread_id, thread_name, metadata_json),
+                    )
 
-                        logger.info(
-                            f"Thread {thread_id} registered/updated in PostgreSQL"
-                        )
+                    logger.info(f"Thread {thread_id} registered/updated in PostgreSQL")
         except Exception as e:
             logger.warning(f"Error registering thread: {e}")
 
 
 async def register_async_thread_if_needed(
-    checkpointer: Any, thread_id: str, metadata: Optional[Dict[str, Any]] = None
+    checkpointer: Any, thread_id: str, metadata: dict[str, Any] | None = None
 ) -> None:
-    """
-    Register a thread in the persistence system asynchronously if needed.
+    """Register a thread in the persistence system asynchronously if needed.
 
     Args:
         checkpointer: The checkpointer to use
@@ -757,65 +752,69 @@ async def register_async_thread_if_needed(
                 await ensure_async_pool_open(checkpointer)
 
                 # Register the thread
-                async with pool.connection() as conn:
-                    async with conn.cursor() as cursor:
-                        # Check if threads table exists
-                        await cursor.execute(
-                            """
+                async with pool.connection() as conn, conn.cursor() as cursor:
+                    # Check if threads table exists
+                    await cursor.execute(
+                        """
                             SELECT EXISTS (
-                                SELECT FROM information_schema.tables 
+                                SELECT FROM information_schema.tables
                                 WHERE table_name = 'threads'
                             );
                         """
-                        )
-                        table_exists = (await cursor.fetchone())[0]
+                    )
+                    table_exists = (await cursor.fetchone())[0]
 
-                        if not table_exists:
-                            logger.debug("Creating threads table")
-                            await cursor.execute(
-                                """
+                    if not table_exists:
+                        logger.debug("Creating threads table")
+                        await cursor.execute(
+                            """
                                 CREATE TABLE IF NOT EXISTS threads (
                                     thread_id TEXT PRIMARY KEY,
+                                    thread_name TEXT,
                                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                     metadata JSONB DEFAULT '{}'::jsonb,
                                     user_id TEXT,
                                     last_access TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
                                 );
                             """
-                            )
+                        )
 
-                        # Convert metadata to JSON string if provided
-                        metadata_json = "{}"
-                        if metadata:
-                            metadata_json = json.dumps(metadata)
+                    # Convert metadata to JSON string if provided
+                    metadata_json = "{}"
+                    if metadata:
+                        metadata_json = json.dumps(metadata)
 
-                        # Insert the thread if not exists
-                        await cursor.execute(
-                            """
-                            INSERT INTO threads (thread_id, metadata, last_access) 
-                            VALUES (%s, %s, CURRENT_TIMESTAMP) 
-                            ON CONFLICT (thread_id) 
-                            DO UPDATE SET last_access = CURRENT_TIMESTAMP
+                    thread_name = metadata.get("thread_name") if metadata else None
+
+                    # Insert the thread if not exists
+                    await cursor.execute(
+                        """
+                            INSERT INTO threads (thread_id, thread_name, metadata, last_access)
+                            VALUES (%s, %s, %s, CURRENT_TIMESTAMP)
+                            ON CONFLICT (thread_id)
+                            DO UPDATE SET
+                                last_access = CURRENT_TIMESTAMP,
+                                thread_name = EXCLUDED.thread_name,
+                                metadata = EXCLUDED.metadata
                         """,
-                            (thread_id, metadata_json),
-                        )
+                        (thread_id, thread_name, metadata_json),
+                    )
 
-                        logger.info(
-                            f"Thread {thread_id} registered/updated asynchronously in PostgreSQL"
-                        )
+                    logger.info(
+                        f"Thread {thread_id} registered/updated asynchronously in PostgreSQL"
+                    )
         except Exception as e:
             logger.warning(f"Error registering thread asynchronously: {e}")
 
 
 def prepare_merged_input(
-    input_data: Union[str, List[str], Dict[str, Any], BaseModel],
-    previous_state: Optional[Any] = None,
-    runtime_config: Optional[Dict[str, Any]] = None,
+    input_data: str | list[str] | dict[str, Any] | BaseModel,
+    previous_state: Any | None = None,
+    runtime_config: dict[str, Any] | None = None,
     input_schema=None,
     state_schema=None,
 ) -> Any:
-    """
-    Process input data and merge with previous state if available.
+    """Process input data and merge with previous state if available.
 
     Args:
         input_data: Input data in various formats
@@ -903,7 +902,7 @@ def prepare_merged_input(
                 # Convert back to dict
                 if hasattr(validated, "model_dump"):
                     return validated.model_dump()
-                elif hasattr(validated, "dict"):
+                if hasattr(validated, "dict"):
                     return validated.dict()
                 return validated
             except Exception as e:
@@ -915,9 +914,8 @@ def prepare_merged_input(
     return processed_input
 
 
-def get_thread_id_from_config(config: Dict[str, Any]) -> Optional[str]:
-    """
-    Extract thread_id from a RunnableConfig.
+def get_thread_id_from_config(config: dict[str, Any]) -> str | None:
+    """Extract thread_id from a RunnableConfig.
 
     Args:
         config: Configuration to extract from

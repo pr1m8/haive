@@ -12,12 +12,9 @@ sys.path.insert(0, "/home/will/Projects/haive/backend/haive/packages/haive-agent
 
 def test_message_flow():
     """Test that messages flow logically and sound right."""
-    print("🔍 Testing Message Quality and Flow")
-    print("=" * 70)
-
-    from langchain_core.messages import HumanMessage
 
     from haive.agents.simple.agent import SimpleAgent
+    from langchain_core.messages import HumanMessage
 
     timestamp = datetime.now().strftime("%H%M%S")
     thread_id = f"flow_test_{timestamp}"
@@ -25,7 +22,7 @@ def test_message_flow():
     # Create agent with specific personality
     agent = SimpleAgent(
         name=f"FlowTest_{timestamp}",
-        system_message="""You are a helpful AI assistant named Alex. 
+        system_message="""You are a helpful AI assistant named Alex.
         You have a friendly, professional tone.
         You remember previous conversations and refer back to them naturally.
         Always be concise but complete in your responses.""",
@@ -50,39 +47,34 @@ def test_message_flow():
     all_messages = []
 
     for i, (user_msg, test_type) in enumerate(conversations):
-        print(f"\n📤 Message {i+1} ({test_type}): {user_msg}")
 
         result = agent.invoke({"messages": [HumanMessage(content=user_msg)]}, config)
 
         # Extract response
-        if hasattr(result, "messages"):
-            response = result.messages[-1].content
-        else:
-            response = "No response"
+        response = result.messages[-1].content if hasattr(result, "messages") else "No response"
 
         all_messages.append((user_msg, response))
-        print(f"📥 Response: {response[:200]}...")
 
         # Check quality based on test type
         if test_type == "greeting":
             if "hello" in response.lower() or "hi" in response.lower():
-                print("   ✅ Appropriate greeting")
+                pass")
             else:
-                print("   ❌ Missing greeting")
+                pass")
 
         elif test_type == "memory_check":
             if "john" in response.lower():
-                print("   ✅ Remembers user's name")
+                pass")
             else:
-                print("   ❌ Doesn't remember name")
+                pass")
 
         elif test_type == "summary_request":
             keywords = ["python", "database", "postgresql", "prepared statements"]
             found = sum(1 for k in keywords if k in response.lower())
             if found >= 2:
-                print(f"   ✅ Good summary (mentioned {found}/4 key topics)")
+                pass")
             else:
-                print(f"   ❌ Poor summary (only mentioned {found}/4 key topics)")
+                pass")
 
     # Save conversation for review
     output_file = f"conversation_flow_{timestamp}.json"
@@ -97,19 +89,15 @@ def test_message_flow():
             indent=2,
         )
 
-    print(f"\n📁 Conversation saved to: {output_file}")
 
     return thread_id
 
 
 def check_ssl_connection_issue():
     """Check SSL connection configuration."""
-    print("\n\n🔍 Checking SSL Connection Configuration")
-    print("=" * 70)
 
     conn_string = os.environ.get("POSTGRES_CONNECTION_STRING")
     if conn_string:
-        print(f"Connection string: {conn_string[:50]}...")
 
         # Check if SSL mode is specified
         if "sslmode=" in conn_string:
@@ -118,23 +106,15 @@ def check_ssl_connection_issue():
             match = re.search(r"sslmode=(\w+)", conn_string)
             if match:
                 sslmode = match.group(1)
-                print(f"SSL mode: {sslmode}")
 
                 if sslmode == "require":
-                    print(
-                        "   ℹ️  SSL is required - this can cause issues with connection stability"
-                    )
-                    print("   💡 Consider adding: ?sslmode=require&keepalives_idle=600")
         else:
-            print("   ⚠️  No SSL mode specified")
+            passed")
 
     # Check connection pool settings
-    print("\n📊 Connection Pool Settings:")
 
     try:
-        from haive.core.persistence.store.connection import ConnectionManager
 
-        print("   ✅ ConnectionManager available")
 
         # Check for keepalive settings in configs
         from haive.agents.conversation.base.agent import BaseConversationAgent
@@ -145,29 +125,24 @@ def check_ssl_connection_issue():
             test_agent.persistence, "connection_kwargs"
         ):
             kwargs = test_agent.persistence.connection_kwargs
-            print(f"   Connection kwargs: {kwargs}")
 
             if "keepalives_idle" in kwargs:
-                print(
-                    f"   ✅ Keepalive settings configured: {kwargs.get('keepalives_idle')}s"
-                )
+                pass
             else:
-                print("   ❌ No keepalive settings")
+                pass")
 
     except Exception as e:
-        print(f"   ❌ Error checking settings: {e}")
+        pass")
 
 
 def main():
     """Run message quality tests."""
     # Test message flow
-    thread_id = test_message_flow()
+    test_message_flow()
 
     # Check SSL configuration
     check_ssl_connection_issue()
 
-    print("\n" + "=" * 70)
-    print("✅ Message quality test complete!")
 
 
 if __name__ == "__main__":

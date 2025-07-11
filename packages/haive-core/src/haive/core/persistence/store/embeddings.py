@@ -6,9 +6,7 @@ to the format expected by LangGraph stores.
 """
 
 import logging
-from typing import Any, Dict, List, Optional, Union
-
-from pydantic import BaseModel
+from typing import Any, Dict
 
 logger = logging.getLogger(__name__)
 
@@ -23,8 +21,8 @@ class EmbeddingAdapter:
 
     @staticmethod
     def create_embedding_function(
-        provider: str, dims: int, config: Optional[Dict[str, Any]] = None
-    ) -> Optional[Any]:
+        provider: str, dims: int, config: dict[str, Any] | None = None
+    ) -> Any | None:
         """Create an embedding function from provider string.
 
         Args:
@@ -73,13 +71,12 @@ class EmbeddingAdapter:
             embeddings = create_embeddings(embedding_config)
 
             # Return a function that matches LangGraph's expected signature
-            def embed_texts(texts: List[str]) -> List[List[float]]:
+            def embed_texts(texts: list[str]) -> list[list[float]]:
                 """Embed texts using Haive embeddings."""
                 if hasattr(embeddings, "embed_documents"):
                     return embeddings.embed_documents(texts)
-                else:
-                    # Fallback for single text embedding
-                    return [embeddings.embed_query(text) for text in texts]
+                # Fallback for single text embedding
+                return [embeddings.embed_query(text) for text in texts]
 
             return embed_texts
 
@@ -92,18 +89,18 @@ class EmbeddingAdapter:
 
                 embeddings = init_embeddings(provider)
 
-                def embed_texts(texts: List[str]) -> List[List[float]]:
+                def embed_texts(texts: list[str]) -> list[list[float]]:
                     return embeddings.embed_documents(texts)
 
                 return embed_texts
             except Exception as e2:
-                logger.error(f"Failed to create any embedding function: {e2}")
+                logger.exception(f"Failed to create any embedding function: {e2}")
                 return None
 
     @staticmethod
     def create_async_embedding_function(
-        provider: str, dims: int, config: Optional[Dict[str, Any]] = None
-    ) -> Optional[Any]:
+        provider: str, dims: int, config: dict[str, Any] | None = None
+    ) -> Any | None:
         """Create an async embedding function from provider string.
 
         Args:
@@ -146,7 +143,7 @@ class EmbeddingAdapter:
                 # Check for async support
                 if hasattr(embeddings, "aembed_documents"):
 
-                    async def aembed_texts(texts: List[str]) -> List[List[float]]:
+                    async def aembed_texts(texts: list[str]) -> list[list[float]]:
                         """Async embed texts using Haive embeddings."""
                         return await embeddings.aembed_documents(texts)
 
@@ -155,7 +152,7 @@ class EmbeddingAdapter:
             logger.debug(f"No async embedding support: {e}")
 
         # Fallback to sync wrapper
-        async def aembed_texts(texts: List[str]) -> List[List[float]]:
+        async def aembed_texts(texts: list[str]) -> list[list[float]]:
             """Async wrapper around sync embedding function."""
             return sync_func(texts)
 

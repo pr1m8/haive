@@ -13,14 +13,13 @@ The processors handle:
 import logging
 from typing import Any, Dict, List, Optional
 
-from langchain_core.documents import Document as LCDocument
-
 from haive.core.engine.document.config import (
     ChunkingStrategy,
     DocumentChunk,
     DocumentFormat,
     ProcessedDocument,
 )
+from langchain_core.documents import Document as LCDocument
 
 logger = logging.getLogger(__name__)
 

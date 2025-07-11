@@ -7,7 +7,7 @@
     "description": "Search tool for getting a quick answer to a specific question using Tavily's QnA search.\n\n    This tool queries the Tavily API with a question and returns a direct answer along\n    with supporting information from web search results.\n\n    Args:\n        query (str): The search query or question to be answered.\n        max_results (int): Maximum number of results to return. Default is 5.\n        include_answer (bool): Include short answer in response. Default is True.\n        search_depth (Literal[\"basic\", \"advanced\"]): Search depth, either 'basic' or 'advanced'.\n            Default is 'advanced'.\n        verbose (bool): Log the tool's progress. Default is False.\n        topic (Literal[\"general\", \"news\", \"finance\"]): Topic category for search context.\n            Default is 'general'.\n        days (int): How recent the information should be in days. Default is 3.\n        include_domains (Sequence[str]): Specific domains to include in search. Default is empty list.\n        exclude_domains (Sequence[str]): Specific domains to exclude from search. Default is empty list.\n\n    Returns:\n        str: The search results with a direct answer to the question.\n\n    Raises:\n        Exception: If the Tavily API request fails.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.756086",
+    "timestamp": "2025-07-10T19:45:28.984958",
     "schema": {
       "description": "Search tool for getting a quick answer to a specific question using Tavily's QnA search.\n\nThis tool queries the Tavily API with a question and returns a direct answer along\nwith supporting information from web search results.\n\nArgs:\n    query (str): The search query or question to be answered.\n    max_results (int): Maximum number of results to return. Default is 5.\n    include_answer (bool): Include short answer in response. Default is True.\n    search_depth (Literal[\"basic\", \"advanced\"]): Search depth, either 'basic' or 'advanced'.\n        Default is 'advanced'.\n    verbose (bool): Log the tool's progress. Default is False.\n    topic (Literal[\"general\", \"news\", \"finance\"]): Topic category for search context.\n        Default is 'general'.\n    days (int): How recent the information should be in days. Default is 3.\n    include_domains (Sequence[str]): Specific domains to include in search. Default is empty list.\n    exclude_domains (Sequence[str]): Specific domains to exclude from search. Default is empty list.\n\nReturns:\n    str: The search results with a direct answer to the question.\n\nRaises:\n    Exception: If the Tavily API request fails.",
       "properties": {
@@ -83,7 +83,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.756086",
+      "timestamp": "2025-07-10T19:45:28.984958",
       "category": "individual_tools"
     }
   },

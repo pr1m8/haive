@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Test real LangMem integration with Anthropic provider.
+"""Test real LangMem integration with Anthropic provider.
 
 Run with: poetry run python packages/haive-agents/tests/ltm/test_real_langmem.py
 """
@@ -8,10 +7,9 @@ Run with: poetry run python packages/haive-agents/tests/ltm/test_real_langmem.py
 import logging
 import sys
 
+from haive.agents.ltm.agent import LTMAgent, LTMState
 from haive.core.models.llm.base import LLMConfig
 from langchain_core.messages import AIMessage, HumanMessage
-
-from haive.agents.ltm.agent import LTMAgent, LTMState
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -20,7 +18,6 @@ logger = logging.getLogger(__name__)
 
 def test_langmem_with_anthropic():
     """Test LangMem with Anthropic provider."""
-    print("=== Testing LangMem with Anthropic ===")
 
     try:
         # Create agent with Anthropic provider
@@ -31,8 +28,6 @@ def test_langmem_with_anthropic():
         agent = LTMAgent(name="Anthropic LTM Agent", llm_config=anthropic_config)
         agent.setup_agent()
 
-        print(f"✅ Created agent with Anthropic: {agent.ltm_llm_config.provider}")
-        print(f"   Model: {agent.ltm_llm_config.model}")
 
         # Create test conversation
         state = LTMState(
@@ -59,59 +54,42 @@ def test_langmem_with_anthropic():
         )
 
         # Test real LangMem extraction
-        print("\nTesting real LangMem memory extraction...")
         result = agent.extract_memories_node(state)
 
         # Verify results
         assert "extracted_memories" in result
         memories = result["extracted_memories"]
 
-        print(f"✅ Successfully extracted {len(memories)} memories")
-        print(f"   Quality score: {result['extraction_quality']:.2f}")
-        print(f"   Processing stage: {result['processing_stage']}")
 
         # Verify we got real LangMem extraction (not fallback)
         real_langmem = any(m["source"] == "langmem_extraction" for m in memories)
         fallback_used = any(m["source"] == "fallback_extraction" for m in memories)
 
         if real_langmem:
-            print("🎉 REAL LangMem extraction successful!")
 
             # Print detailed memory analysis
-            print("\n📋 Extracted Memories:")
             for i, memory in enumerate(memories):
-                print(f"\n   Memory {i+1}:")
-                print(f"     ID: {memory['memory_id']}")
-                print(f"     Schema: {memory['schema']}")
-                print(f"     Source: {memory['source']}")
-                print(f"     Confidence: {memory.get('confidence', 'N/A')}")
                 if isinstance(memory["content"], dict):
                     for key, value in memory["content"].items():
-                        print(f"     {key}: {value}")
+                        pass
                 else:
-                    print(f"     Content: {memory['content']}")
+                    pass
 
             # Verify schema diversity
-            schemas = set(m["schema"] for m in memories)
-            print(f"\n📊 Schema Analysis:")
-            print(f"   Unique schemas: {len(schemas)}")
-            print(f"   Schema types: {schemas}")
+            schemas = set(m["schema"] for m in memories}
 
             return memories
 
-        elif fallback_used:
-            print("❌ LangMem failed, fallback was used")
-            print("This suggests an issue with Anthropic configuration or API")
+        if fallback_used:
 
             # Print error details if available
             if "processing_errors" in result:
-                print(f"Errors: {result['processing_errors']}")
+                pass
 
         else:
-            print("❓ Unclear extraction source")
+            pass")
 
     except Exception as e:
-        print(f"❌ Test failed with error: {e}")
         import traceback
 
         traceback.print_exc()
@@ -120,7 +98,6 @@ def test_langmem_with_anthropic():
 
 def test_langmem_with_groq():
     """Test LangMem with Groq provider as backup."""
-    print("\n=== Testing LangMem with Groq ===")
 
     try:
         # Create agent with Groq provider
@@ -129,8 +106,6 @@ def test_langmem_with_groq():
         agent = LTMAgent(name="Groq LTM Agent", llm_config=groq_config)
         agent.setup_agent()
 
-        print(f"✅ Created agent with Groq: {agent.ltm_llm_config.provider}")
-        print(f"   Model: {agent.ltm_llm_config.model}")
 
         # Create different test conversation
         state = LTMState(
@@ -151,31 +126,24 @@ def test_langmem_with_groq():
         )
 
         # Test real LangMem extraction
-        print("\nTesting Groq LangMem memory extraction...")
         result = agent.extract_memories_node(state)
 
         # Verify results
         memories = result["extracted_memories"]
-        print(f"✅ Extracted {len(memories)} memories with Groq")
-        print(f"   Quality score: {result['extraction_quality']:.2f}")
 
         # Check if real LangMem worked
         real_langmem = any(m["source"] == "langmem_extraction" for m in memories)
 
         if real_langmem:
-            print("🎉 Groq LangMem extraction successful!")
             return memories
-        else:
-            print("❌ Groq also fell back to simple extraction")
+        print("❌ Groq also fell back to simple extraction")")
 
     except Exception as e:
-        print(f"❌ Groq test failed: {e}")
         return None
 
 
 def test_langmem_with_deepseek():
     """Test LangMem with DeepSeek provider."""
-    print("\n=== Testing LangMem with DeepSeek ===")
 
     try:
         # Create agent with DeepSeek provider
@@ -184,8 +152,6 @@ def test_langmem_with_deepseek():
         agent = LTMAgent(name="DeepSeek LTM Agent", llm_config=deepseek_config)
         agent.setup_agent()
 
-        print(f"✅ Created agent with DeepSeek: {agent.ltm_llm_config.provider}")
-        print(f"   Model: {agent.ltm_llm_config.model}")
 
         # Simple test
         state = LTMState(
@@ -199,28 +165,22 @@ def test_langmem_with_deepseek():
             ]
         )
 
-        print("\nTesting DeepSeek LangMem extraction...")
         result = agent.extract_memories_node(state)
 
         memories = result["extracted_memories"]
-        print(f"✅ Extracted {len(memories)} memories with DeepSeek")
 
         real_langmem = any(m["source"] == "langmem_extraction" for m in memories)
 
         if real_langmem:
-            print("🎉 DeepSeek LangMem extraction successful!")
             return memories
-        else:
-            print("❌ DeepSeek also used fallback")
+        print("❌ DeepSeek also used fallback")")
 
     except Exception as e:
-        print(f"❌ DeepSeek test failed: {e}")
         return None
 
 
 def test_langchain_direct():
     """Test creating LangChain models directly to verify they work."""
-    print("\n=== Testing Direct LangChain Model Creation ===")
 
     providers_to_test = [
         ("anthropic", "claude-3-haiku-20240307"),
@@ -229,7 +189,6 @@ def test_langchain_direct():
 
     for provider, model in providers_to_test:
         try:
-            print(f"\nTesting {provider} with {model}...")
 
             if provider == "anthropic":
                 from langchain_anthropic import ChatAnthropic
@@ -244,21 +203,17 @@ def test_langchain_direct():
 
             # Try a simple invocation
             response = llm.invoke([HumanMessage(content="Say hello")])
-            print(f"✅ {provider} model works: {response.content[:50]}...")
 
             # Try with LangMem
             from langmem import create_memory_manager
 
-            manager = create_memory_manager(llm)
-            print(f"✅ {provider} LangMem manager created successfully")
+            create_memory_manager(llm)
 
         except Exception as e:
-            print(f"❌ {provider} failed: {e}")
+            pass")
 
 
 if __name__ == "__main__":
-    print("🧠 Real LangMem Integration Testing with Alternative Providers")
-    print("=" * 70)
 
     # Test direct LangChain models first
     test_langchain_direct()
@@ -268,27 +223,21 @@ if __name__ == "__main__":
     groq_result = test_langmem_with_groq()
     deepseek_result = test_langmem_with_deepseek()
 
-    print("\n" + "=" * 70)
-    print("🎯 FINAL RESULTS:")
 
     if anthropic_result:
-        print("✅ Anthropic LangMem integration: SUCCESS")
+        pass")
     else:
-        print("❌ Anthropic LangMem integration: FAILED")
+        pass")
 
     if groq_result:
-        print("✅ Groq LangMem integration: SUCCESS")
+        pass")
     else:
-        print("❌ Groq LangMem integration: FAILED")
+        pass")
 
     if deepseek_result:
-        print("✅ DeepSeek LangMem integration: SUCCESS")
+        pass")
     else:
-        print("❌ DeepSeek LangMem integration: FAILED")
+        pass")
 
     if any([anthropic_result, groq_result, deepseek_result]):
-        print("\n🎉 LangMem integration PROVEN to work with alternative providers!")
-        print("✅ Our LTM agent implementation is correct!")
     else:
-        print("\n❌ All providers failed - there may be a deeper integration issue")
-        print("🔍 Further debugging needed")

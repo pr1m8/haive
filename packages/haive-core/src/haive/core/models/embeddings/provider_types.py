@@ -1,5 +1,4 @@
-"""
-Embedding Provider Types Module.
+"""Embedding Provider Types Module.
 
 This module defines the supported embedding model providers as an enumeration,
 ensuring consistent identification and type safety when configuring embedding models.
@@ -22,8 +21,7 @@ from enum import Enum
 
 
 class EmbeddingProvider(str, Enum):
-    """
-    Enumeration of supported embedding model providers.
+    """Enumeration of supported embedding model providers.
 
     This enum inherits from str to allow string comparison and serialization
     while maintaining type safety and providing autocompletion support.

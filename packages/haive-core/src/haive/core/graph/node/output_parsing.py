@@ -5,14 +5,13 @@
 import logging
 from typing import Any, Dict, Optional
 
+from haive.core.graph.common.types import ConfigLike, NodeType, StateLike
+from haive.core.graph.node.parser_node_config import ParserNodeConfig
 from langchain_core.messages import AIMessage, BaseMessage
 from langchain_core.output_parsers.base import BaseOutputParser
 from langgraph.types import Command
 from pydantic import BaseModel, Field
 from rich.console import Console
-
-from haive.core.graph.common.types import ConfigLike, NodeType, StateLike
-from haive.core.graph.node.parser_node_config import ParserNodeConfig
 
 logger = logging.getLogger(__name__)
 console = Console()
@@ -20,8 +19,7 @@ logger.setLevel(logging.WARNING)
 
 
 class OutputParserNodeConfig(ParserNodeConfig):
-    """
-    Configuration for a node that parses LLM output using LangChain output parsers.
+    """Configuration for a node that parses LLM output using LangChain output parsers.
 
     This extends ParserNodeConfig to handle regular output parsing (not tool calls).
     It parses the last message content using a LangChain BaseOutputParser.
@@ -44,9 +42,7 @@ class OutputParserNodeConfig(ParserNodeConfig):
         description="Whether tool information is required (False for output parsing)",
     )
 
-    def __call__(
-        self, state: StateLike, config: Optional[ConfigLike] = None
-    ) -> Command:
+    def __call__(self, state: StateLike, config: ConfigLike | None = None) -> Command:
         """Parse the last message content using the output parser."""
         # Ensure we have a valid command_goto
         goto_node = self.command_goto or self.agent_node
@@ -98,11 +94,11 @@ class OutputParserNodeConfig(ParserNodeConfig):
                 return Command(update=update_dict, goto=goto_node)
 
             except Exception as parse_error:
-                logger.error(f"Output parser failed: {parse_error}")
+                logger.exception(f"Output parser failed: {parse_error}")
                 return Command(
                     update={
                         self.output_key: None,
-                        "parse_error": f"Parser failed: {str(parse_error)}",
+                        "parse_error": f"Parser failed: {parse_error!s}",
                         "raw_content": content,
                     },
                     goto=goto_node,
@@ -111,13 +107,12 @@ class OutputParserNodeConfig(ParserNodeConfig):
         except Exception as e:
             logger.exception(f"Error in output parser node: {e}")
             return Command(
-                update={self.output_key: None, "parse_error": f"Node error: {str(e)}"},
+                update={self.output_key: None, "parse_error": f"Node error: {e!s}"},
                 goto=goto_node,
             )
 
-    def _extract_content_from_message(self, message: Any) -> Optional[str]:
-        """
-        Extract content from a message, handling different message types.
+    def _extract_content_from_message(self, message: Any) -> str | None:
+        """Extract content from a message, handling different message types.
 
         Args:
             message: Message to extract content from
@@ -130,13 +125,13 @@ class OutputParserNodeConfig(ParserNodeConfig):
             return message.content
 
         # Handle dictionary messages
-        elif isinstance(message, dict):
+        if isinstance(message, dict):
             if "content" in message:
                 return message["content"]
             # Some messages might have the content in different keys
-            elif "text" in message:
+            if "text" in message:
                 return message["text"]
-            elif "message" in message:
+            if "message" in message:
                 return message["message"]
 
         # Handle string messages directly
@@ -162,8 +157,7 @@ def create_json_output_parser_node(
     agent_node: str = "agent",
     **kwargs,
 ) -> OutputParserNodeConfig:
-    """
-    Create an OutputParserNodeConfig for JSON parsing.
+    """Create an OutputParserNodeConfig for JSON parsing.
 
     Args:
         messages_key: State key to get messages from
@@ -191,8 +185,7 @@ def create_string_output_parser_node(
     agent_node: str = "agent",
     **kwargs,
 ) -> OutputParserNodeConfig:
-    """
-    Create an OutputParserNodeConfig for string extraction.
+    """Create an OutputParserNodeConfig for string extraction.
 
     Args:
         messages_key: State key to get messages from
@@ -217,12 +210,11 @@ def create_string_output_parser_node(
 def create_pydantic_output_parser_node(
     pydantic_model: type,
     messages_key: str = "messages",
-    output_key: Optional[str] = None,
+    output_key: str | None = None,
     agent_node: str = "agent",
     **kwargs,
 ) -> OutputParserNodeConfig:
-    """
-    Create an OutputParserNodeConfig for Pydantic model parsing.
+    """Create an OutputParserNodeConfig for Pydantic model parsing.
 
     Args:
         pydantic_model: Pydantic model class to parse into
@@ -254,8 +246,7 @@ def create_pydantic_output_parser_node(
 
 
 def detect_output_parser_need(agent) -> bool:
-    """
-    Detect if an agent needs an output parser node.
+    """Detect if an agent needs an output parser node.
 
     Args:
         agent: Agent instance to check
@@ -267,9 +258,8 @@ def detect_output_parser_need(agent) -> bool:
     return hasattr(agent, "output_parser") and agent.output_parser is not None
 
 
-def create_output_parser_node_for_agent(agent) -> Optional[OutputParserNodeConfig]:
-    """
-    Create an output parser node config for an agent if needed.
+def create_output_parser_node_for_agent(agent) -> OutputParserNodeConfig | None:
+    """Create an output parser node config for an agent if needed.
 
     Args:
         agent: Agent instance

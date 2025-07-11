@@ -1,18 +1,17 @@
 from datetime import datetime
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.engine.retriever import VectorStoreRetrieverConfig
-from haive.core.models.llm.base import AzureLLMConfig
-from haive.core.models.vectorstore.base import VectorStoreConfig
-from langchain_core.messages import SystemMessage
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-
 from haive.agents.rag.base.config import BaseRAGConfig
 
 # Import agent-specific modules
 from haive.agents.research.open_perplexity.prompts import RESEARCH_SYSTEM_PROMPT
 from haive.agents.research.open_perplexity.structured_tools import RESEARCH_TOOLS
 from haive.agents.v2.config import ReactAgentConfig
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.engine.retriever import VectorStoreRetrieverConfig
+from haive.core.models.llm.base import AzureLLMConfig
+from haive.core.models.vectorstore.base import VectorStoreConfig
+from langchain_core.messages import SystemMessage
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 
 def create_research_react_agent_config(
@@ -82,7 +81,7 @@ def create_research_rag_engine(
     2. Extract key information and insights
     3. Focus on high-quality, reliable sources
     4. Identify connections between pieces of information
-    
+
     Be thorough and accurate in your retrieval and analysis. Prioritize authoritative sources while
     considering multiple perspectives on the topic.
     """

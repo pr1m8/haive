@@ -1,5 +1,11 @@
 from collections.abc import Callable
 
+from langchain_core.prompts import PromptTemplate
+from langchain_core.tools import BaseTool, StructuredTool
+from langgraph.graph import END, START
+from langgraph.prebuilt import ToolNode
+from langgraph.types import Command
+
 from agents.reflexion.config import ReflexionConfig
 from agents.reflexion.responder_with_retries import ResponderWithRetries
 
@@ -8,11 +14,6 @@ from agents.reflexion.utils import _get_num_iterations
 from haive.core.engine.agent.agent import Agent, register_agent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.branches import Branch
-from langchain_core.prompts import PromptTemplate
-from langchain_core.tools import BaseTool, StructuredTool
-from langgraph.graph import END, START
-from langgraph.prebuilt import ToolNode
-from langgraph.types import Command
 
 
 @register_agent(ReflexionConfig)
@@ -36,7 +37,6 @@ class ReflexionAgent(Agent[ReflexionConfig]):
             > self.config.max_iterations,
             destinations={True: "end", False: "execute_tools"},
         )
-        # self.tool_node_tools = []
         super().__init__(config)
 
     def create_tool_node(self, tools: list[BaseTool | Callable]) -> ToolNode:
@@ -53,7 +53,6 @@ class ReflexionAgent(Agent[ReflexionConfig]):
                 tool_node_tools.append(
                     StructuredTool.from_function(tool, name=model.__name__)
                 )
-                print(f"Tool {model.__name__} added to tool node")
         return ToolNode(tools=tool_node_tools)
 
     def final_answer(self, state: dict):
@@ -76,12 +75,8 @@ class ReflexionAgent(Agent[ReflexionConfig]):
         self.graph.add_node("tools", self.tool_node)
         self.graph.add_edge("draft", "tools")
         self.graph.add_node("revision", self.revisor.respond)
-        # self.graph.add_edge("revision","draft")
-        # self.graph.add_edge("draft","end")
-        # self.graph.add_edge("revision","end")
         self.graph.add_node("final_answer", self.final_answer)
         self.graph.add_edge("tools", "revision")
-        # return super().setup_workflow()
         self.graph.add_edge("final_answer", END)
         self.graph.add_conditional_edges(
             "revision",

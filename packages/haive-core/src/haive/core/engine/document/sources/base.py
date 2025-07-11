@@ -3,9 +3,8 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 from typing import Any, Dict, Optional, Protocol
 
-from pydantic import BaseModel, ConfigDict, Field, computed_field
-
 from haive.core.engine.loaders.sources.types import SourceType
+from pydantic import BaseModel, ConfigDict, Field, computed_field
 
 
 class SourceInterface(Protocol):
@@ -15,20 +14,17 @@ class SourceInterface(Protocol):
 
     def get_source_value(self) -> Any: ...
     def validate(self) -> bool: ...
-    def get_metadata(self) -> Dict[str, Any]: ...
+    def get_metadata(self) -> dict[str, Any]: ...
 
 
 class BaseSource(BaseModel, ABC):
-    """
-    Abstract base class for all document sources.
+    """Abstract base class for all document sources.
 
     Provides common functionality and required methods for all sources.
     """
 
     source_type: SourceType = Field(description="Type of source")
-    name: Optional[str] = Field(
-        default=None, description="Optional name for the source"
-    )
+    name: str | None = Field(default=None, description="Optional name for the source")
     created_at: datetime = Field(
         default_factory=datetime.now, description="Creation timestamp"
     )
@@ -38,12 +34,10 @@ class BaseSource(BaseModel, ABC):
     @abstractmethod
     def get_source_value(self) -> Any:
         """Get the underlying source value."""
-        pass
 
     @abstractmethod
     def validate(self) -> bool:
         """Validate that the source exists and is accessible."""
-        pass
 
     @computed_field
     def source_id(self) -> str:
@@ -58,7 +52,7 @@ class BaseSource(BaseModel, ABC):
 
         return SOURCE_TO_GROUP.get(self.source_type, "OTHER")
 
-    def get_metadata(self) -> Dict[str, Any]:
+    def get_metadata(self) -> dict[str, Any]:
         """Get basic metadata about the source."""
         return {
             "source_id": self.source_id,

@@ -1,9 +1,8 @@
 # src/haive/agents/reasoning/logical_reasoner.py
 
+from haive.agents.reasoning_and_critique.logic.models import ReasoningChain
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-
-from haive.agents.reasoning_and_critique.logic.models import ReasoningChain
 
 LOGICAL_REASONING_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -152,5 +151,4 @@ def create_logical_reasoner():
         prompt_template=LOGICAL_REASONING_PROMPT,
         structured_output_model=ReasoningChain,
         temperature=0.2,
-        # model="gpt-4o"
     )

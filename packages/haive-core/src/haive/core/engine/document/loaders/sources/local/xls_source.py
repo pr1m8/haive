@@ -6,9 +6,7 @@ from haive.core.engine.loaders.sources.types import SourceType
 
 
 class XlsSource(FileSource):
-    """
-    A source that is a Xls file.
-    """
+    """A source that is a Xls file."""
 
     source_type: SourceType = Field(default=SourceType.XLS)
     file_type: LocalSourceFileType = Field(default=LocalSourceFileType.XLS)

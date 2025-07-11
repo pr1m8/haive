@@ -34,12 +34,12 @@ Examples:
 """
 
 import os
-from typing import Any, List, Optional, Type
-
-from pydantic import Field
+from typing import Any
 
 from haive.core.models.llm.provider_types import LLMProvider
-from haive.core.models.llm.providers.base import BaseLLMProvider, ProviderImportError
+from haive.core.models.llm.providers.base import (BaseLLMProvider,
+                                                  ProviderImportError)
+from pydantic import Field
 
 
 class OpenAIProvider(BaseLLMProvider):
@@ -90,28 +90,28 @@ class OpenAIProvider(BaseLLMProvider):
     )
 
     # OpenAI specific parameters
-    temperature: Optional[float] = Field(
+    temperature: float | None = Field(
         default=None, ge=0, le=2, description="Sampling temperature"
     )
-    max_tokens: Optional[int] = Field(
+    max_tokens: int | None = Field(
         default=None, ge=1, description="Maximum tokens to generate"
     )
-    top_p: Optional[float] = Field(
+    top_p: float | None = Field(
         default=None, ge=0, le=1, description="Nucleus sampling parameter"
     )
-    frequency_penalty: Optional[float] = Field(
+    frequency_penalty: float | None = Field(
         default=None, ge=-2, le=2, description="Frequency penalty"
     )
-    presence_penalty: Optional[float] = Field(
+    presence_penalty: float | None = Field(
         default=None, ge=-2, le=2, description="Presence penalty"
     )
-    n: Optional[int] = Field(default=None, ge=1, description="Number of completions")
-    organization: Optional[str] = Field(
+    n: int | None = Field(default=None, ge=1, description="Number of completions")
+    organization: str | None = Field(
         default_factory=lambda: os.getenv("OPENAI_ORG_ID"),
         description="OpenAI organization ID",
     )
 
-    def _get_chat_class(self) -> Type[Any]:
+    def _get_chat_class(self) -> type[Any]:
         """Get the OpenAI chat class.
 
         Returns:
@@ -177,7 +177,7 @@ class OpenAIProvider(BaseLLMProvider):
 
         return params
 
-    def _get_api_key_param_name(self) -> Optional[str]:
+    def _get_api_key_param_name(self) -> str | None:
         """Get the parameter name for API key.
 
         Returns:
@@ -186,7 +186,7 @@ class OpenAIProvider(BaseLLMProvider):
         return "openai_api_key"
 
     @classmethod
-    def get_models(cls) -> List[str]:
+    def get_models(cls) -> list[str]:
         """Get available OpenAI models.
 
         Returns:
@@ -220,4 +220,4 @@ class OpenAIProvider(BaseLLMProvider):
                 "Install with: pip install openai"
             )
         except Exception as e:
-            raise Exception(f"Failed to retrieve OpenAI models: {str(e)}")
+            raise Exception(f"Failed to retrieve OpenAI models: {e!s}")

@@ -17,12 +17,7 @@ from typing import (
     runtime_checkable,
 )
 
-from pydantic import (
-    BaseModel,
-    Field,
-    computed_field,
-    model_validator,
-)
+from pydantic import BaseModel, Field, computed_field, model_validator
 from pydantic.functional_validators import BeforeValidator
 
 # ────────────────────────────  Typing helpers  ─────────────────────────── #

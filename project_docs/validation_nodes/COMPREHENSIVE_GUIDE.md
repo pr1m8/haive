@@ -21,16 +21,16 @@ validation_node = UnifiedValidationNodeConfig(
 
 ## All Validation Nodes Comparison
 
-| Node | Type | Status | Dynamic Choice | Key Features |
-|------|------|--------|----------------|--------------|
-| **UnifiedValidationNode** | Single Node | ✅ **RECOMMENDED** | ❌ No | Single node, Command/Send routing, Pydantic compliant |
-| ValidationNodeConfig | Conditional Edge | ❌ Legacy | ❌ No | Can't update state properly |
-| ValidationNodeV2 + router | Node + Router | ⚠️ Working | ❌ No | Two-part system, extra step |
-| ValidationNodeConfigV2 | Simple Node | ⚠️ Limited | ❌ No | Basic Command routing |
-| ValidationNodeWithRouting | Complex Node | ⚠️ Complex | ❌ No | Routing state tracking |
-| StateUpdatingValidationNode | Mode-based | ⚠️ Special | ❌ No | STRICT/PARTIAL/PERMISSIVE modes |
-| RoutingValidationNode | Send-focused | ⚠️ Special | ❌ No | Send-based parallel routing |
-| StatefulValidationNode | History-tracking | ⚠️ Special | ❌ No | Validation analytics |
+| Node                        | Type             | Status             | Dynamic Choice | Key Features                                          |
+| --------------------------- | ---------------- | ------------------ | -------------- | ----------------------------------------------------- |
+| **UnifiedValidationNode**   | Single Node      | ✅ **RECOMMENDED** | ❌ No          | Single node, Command/Send routing, Pydantic compliant |
+| ValidationNodeConfig        | Conditional Edge | ❌ Legacy          | ❌ No          | Can't update state properly                           |
+| ValidationNodeV2 + router   | Node + Router    | ⚠️ Working         | ❌ No          | Two-part system, extra step                           |
+| ValidationNodeConfigV2      | Simple Node      | ⚠️ Limited         | ❌ No          | Basic Command routing                                 |
+| ValidationNodeWithRouting   | Complex Node     | ⚠️ Complex         | ❌ No          | Routing state tracking                                |
+| StateUpdatingValidationNode | Mode-based       | ⚠️ Special         | ❌ No          | STRICT/PARTIAL/PERMISSIVE modes                       |
+| RoutingValidationNode       | Send-focused     | ⚠️ Special         | ❌ No          | Send-based parallel routing                           |
+| StatefulValidationNode      | History-tracking | ⚠️ Special         | ❌ No          | Validation analytics                                  |
 
 ## Dynamic Choice Model Support
 
@@ -67,11 +67,13 @@ choice_builder.remove_option_by_name("agent2")
 ### Why Don't Validation Nodes Use It?
 
 Validation nodes focus on:
+
 - Validating tool calls from AIMessages
 - Routing to appropriate tool execution nodes
 - Creating ToolMessages for validation results
 
 They don't need dynamic choice models because:
+
 - Tool routes are determined by the engine's `tool_routes` dictionary
 - Routing destinations are fixed node names in the graph
 - Validation is based on tool existence, not dynamic choices
@@ -84,14 +86,14 @@ They don't need dynamic choice models because:
 class UnifiedValidationNodeConfig(BaseNodeConfig):
     """
     Unified validation node that combines tool validation and routing.
-    
+
     Key Features:
     - Single node (no separate router)
     - Proper Pydantic patterns (no custom __init__)
     - Command/Send routing support
     - Parallel tool execution
     """
-    
+
     # Configuration
     engine_name: str  # Engine to get tool routes from
     tool_node: str = "tool_node"  # Langchain tool execution
@@ -104,6 +106,7 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
 ### How It Works
 
 1. **Analyzes Tool Calls**:
+
    ```python
    # Finds last AIMessage with tool_calls
    for msg in reversed(messages):
@@ -112,6 +115,7 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
    ```
 
 2. **Determines Tool Route**:
+
    ```python
    # Check engine.tool_routes
    route = engine.tool_routes.get(tool_name)
@@ -201,6 +205,7 @@ graph.add_edge("agent", "validation")
 ### Need Validation History?
 
 Use `StatefulValidationNode`:
+
 ```python
 # Tracks validation patterns and statistics
 stateful_validation = StatefulValidationNode(
@@ -212,6 +217,7 @@ stateful_validation = StatefulValidationNode(
 ### Need Strict/Partial Validation?
 
 Use `StateUpdatingValidationNode`:
+
 ```python
 # Different validation modes
 validation = StateUpdatingValidationNode(
@@ -222,6 +228,7 @@ validation = StateUpdatingValidationNode(
 ### Need Pure Send-based Routing?
 
 Use `RoutingValidationNode`:
+
 ```python
 # Always returns Send objects for routing
 routing_validation = RoutingValidationNode(

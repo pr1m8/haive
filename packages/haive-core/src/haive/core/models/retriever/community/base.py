@@ -32,7 +32,7 @@ class CommunityRetrieverType(str, Enum):
 
 class CommunityRetrieverConfig(BaseRetrieverConfig):
     retriever_type: CommunityRetrieverType
-    retriever_kwargs: Dict[str, Any] = Field(default_factory=dict)
+    retriever_kwargs: dict[str, Any] = Field(default_factory=dict)
 
     def create(self) -> BaseRetriever:
         from langchain_community.retrievers import __getattr__
@@ -53,7 +53,6 @@ sample_queries = {
 }
 
 for retriever_name, query in sample_queries.items():
-    print(f"\n🔍 Testing: {retriever_name} | Query: {query}")
 
     try:
         config = CommunityRetrieverConfig(
@@ -64,10 +63,8 @@ for retriever_name, query in sample_queries.items():
         docs = retriever.invoke(query)
 
         if docs:
-            print(
-                f"✅ Retrieved {len(docs)} document(s). Sample:\n- {docs[0].page_content[:200]}..."
-            )
+            pass
         else:
-            print("⚠️ No documents returned.")
+            passd.")
     except Exception as e:
-        print(f"❌ Error: {e}")
+        pass")

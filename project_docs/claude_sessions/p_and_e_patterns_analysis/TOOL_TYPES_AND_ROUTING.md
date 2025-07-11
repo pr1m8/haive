@@ -11,7 +11,8 @@ This guide documents the different tool types in Haive and how they are routed t
 Standard LangChain BaseTool implementations that perform actions and return string results.
 
 **Characteristics:**
-- Inherit from `BaseTool` 
+
+- Inherit from `BaseTool`
 - Return string results
 - Can be sync or async
 - Support tool descriptions and schemas
@@ -19,6 +20,7 @@ Standard LangChain BaseTool implementations that perform actions and return stri
 **Routing:** `langchain_tool` → `tool_node`
 
 **Example:**
+
 ```python
 from langchain_core.tools import tool
 
@@ -28,7 +30,7 @@ def search_web(query: str) -> str:
     # Implementation
     return f"Search results for: {query}"
 
-@tool 
+@tool
 async def fetch_data(url: str) -> str:
     """Fetch data from a URL."""
     # Async implementation
@@ -40,6 +42,7 @@ async def fetch_data(url: str) -> str:
 Tools that return structured Pydantic models instead of strings.
 
 **Characteristics:**
+
 - Return Pydantic BaseModel instances
 - Provide structured, typed outputs
 - Enable complex data structures
@@ -48,6 +51,7 @@ Tools that return structured Pydantic models instead of strings.
 **Routing:** `pydantic_model` → `parser_node`
 
 **Example:**
+
 ```python
 from pydantic import BaseModel
 from typing import List
@@ -73,6 +77,7 @@ def analyze_document(text: str) -> AnalysisResult:
 Simple Python functions that can be called directly.
 
 **Characteristics:**
+
 - Plain Python functions
 - Can have any signature
 - Often used for calculations or transformations
@@ -80,10 +85,11 @@ Simple Python functions that can be called directly.
 **Routing:** `function` → `tool_node` (usually)
 
 **Example:**
+
 ```python
 def calculate_compound_interest(
-    principal: float, 
-    rate: float, 
+    principal: float,
+    rate: float,
     time: int
 ) -> float:
     """Calculate compound interest."""
@@ -95,6 +101,7 @@ def calculate_compound_interest(
 Tools that are handled directly by the engine without separate nodes.
 
 **Characteristics:**
+
 - Integrated into the engine's processing
 - No separate tool node needed
 - Often for simple transformations
@@ -102,6 +109,7 @@ Tools that are handled directly by the engine without separate nodes.
 **Routing:** `engine` → stays in engine node
 
 **Example:**
+
 ```python
 # These are typically defined in engine configuration
 # and handled internally by the engine
@@ -121,7 +129,7 @@ engine = AugLLMConfig(
     tools=[search_web, analyze_document, calculate_compound_interest],
     tool_routes={
         "search_web": "langchain_tool",
-        "analyze_document": "pydantic_model", 
+        "analyze_document": "pydantic_model",
         "calculate_compound_interest": "function",
     }
 )
@@ -151,10 +159,10 @@ The agent graph uses routing information to direct tool calls:
 ```python
 def build_graph(self) -> BaseGraph:
     graph = BaseGraph(name=self.name)
-    
+
     # Check what nodes we need based on tool routes
     tool_routes = self.get_tool_routes()
-    
+
     # Add tool node for langchain tools
     langchain_tools = [
         tool for tool, route in tool_routes.items()
@@ -162,7 +170,7 @@ def build_graph(self) -> BaseGraph:
     ]
     if langchain_tools:
         graph.add_node("tool_node", ToolNodeConfig(...))
-    
+
     # Add parser node for pydantic tools
     pydantic_tools = [
         tool for tool, route in tool_routes.items()
@@ -187,6 +195,7 @@ validation_config = ValidationNodeConfigV2(
 ```
 
 The validation node:
+
 1. Examines the tool calls from the agent
 2. Checks the tool_routes to determine routing
 3. Sends tool calls to appropriate nodes using Command/Send
@@ -194,6 +203,7 @@ The validation node:
 ## Tool Integration Patterns
 
 ### 1. Mixed Tool Types
+
 ```python
 from langchain_core.tools import tool
 from pydantic import BaseModel
@@ -224,6 +234,7 @@ agent = SimpleAgent(
 ```
 
 ### 2. Force Tool Use Pattern
+
 ```python
 agent = SimpleAgent(
     tools=[calculator, analyzer],
@@ -233,6 +244,7 @@ agent = SimpleAgent(
 ```
 
 ### 3. Tool Chaining Pattern
+
 ```python
 # Tools can call other tools
 @tool
@@ -240,10 +252,10 @@ def research_and_analyze(topic: str) -> str:
     """Research a topic and analyze findings."""
     # First search
     search_results = search_web(topic)
-    
+
     # Then analyze (returns pydantic model)
     analysis = analyze_document(search_results)
-    
+
     # Return formatted string
     return f"Analysis: {analysis.summary} (confidence: {analysis.confidence})"
 ```
@@ -251,6 +263,7 @@ def research_and_analyze(topic: str) -> str:
 ## Advanced Routing Patterns
 
 ### 1. Conditional Tool Routing
+
 ```python
 def has_tool_calls(state) -> bool:
     """Check if the last AI message has tool calls."""
@@ -268,6 +281,7 @@ graph.add_conditional_edges(
 ```
 
 ### 2. Dynamic Tool Selection
+
 ```python
 class DynamicToolAgent(SimpleAgent):
     def get_tool_routes(self) -> dict[str, str]:
@@ -282,6 +296,7 @@ class DynamicToolAgent(SimpleAgent):
 ```
 
 ### 3. Tool Route Override
+
 ```python
 # Override specific tool routes
 agent = SimpleAgent(
@@ -297,12 +312,14 @@ agent = SimpleAgent(
 ## Best Practices
 
 ### 1. Choose the Right Tool Type
+
 - Use `langchain_tool` for actions with string results
 - Use `pydantic_model` for structured data returns
 - Use `function` for simple calculations
 - Use `engine` for integrated processing
 
 ### 2. Explicit Route Definition
+
 ```python
 # Be explicit about tool routes
 tool_routes = {
@@ -313,15 +330,16 @@ tool_routes = {
 ```
 
 ### 3. Tool Documentation
+
 ```python
 @tool
 def search_knowledge_base(query: str, limit: int = 10) -> str:
     """Search the knowledge base for relevant information.
-    
+
     Args:
         query: The search query
         limit: Maximum number of results to return
-        
+
     Returns:
         Formatted search results
     """
@@ -329,6 +347,7 @@ def search_knowledge_base(query: str, limit: int = 10) -> str:
 ```
 
 ### 4. Error Handling in Tools
+
 ```python
 @tool
 def safe_calculation(expression: str) -> str:
@@ -343,6 +362,7 @@ def safe_calculation(expression: str) -> str:
 ## Debugging Tool Routing
 
 ### 1. Check Tool Routes
+
 ```python
 # Debug tool routing
 agent = SimpleAgent(...)
@@ -351,6 +371,7 @@ print("Available nodes:", agent.graph.metadata.get("available_nodes"))
 ```
 
 ### 2. Trace Tool Execution
+
 ```python
 # Enable verbose logging
 import logging
@@ -361,6 +382,7 @@ result = await agent.arun("Use the search tool")
 ```
 
 ### 3. Validate Tool Configuration
+
 ```python
 # Ensure tools are properly configured
 for tool in agent.tools:

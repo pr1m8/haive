@@ -10,25 +10,24 @@ sys.path.insert(
 )
 
 
+from haive.agents.multi.base import SequentialAgent
+from haive.agents.react.agent import ReactAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
 
-from haive.agents.multi.base import SequentialAgent
-from haive.agents.react.agent import ReactAgent
-from haive.agents.simple.agent import SimpleAgent
-
 
 @tool
 def add(a: int, b: int) -> int:
-    """Returns the sum of two numbers"""
+    """Returns the sum of two numbers."""
     return a + b
 
 
 @tool
 def get_earth_age() -> int:
-    """Returns the age of Earth in years"""
+    """Returns the age of Earth in years."""
     return 4_543_000_000  # 4.543 billion years
 
 
@@ -37,10 +36,7 @@ class Plan(BaseModel):
 
 
 def test_user_example():
-    """Test the exact user example with ReactAgent -> SimpleAgent"""
-    print("=" * 80)
-    print("TEST: User Example - ReactAgent -> SimpleAgent Sequential")
-    print("=" * 80)
+    """Test the exact user example with ReactAgent -> SimpleAgent."""
 
     # Create agents as per user example
     add_aug = AugLLMConfig(tools=[add, get_earth_age])
@@ -59,11 +55,8 @@ def test_user_example():
 
     # Compile and run
     try:
-        print("\nCompiling sequential agent...")
         seq_agent.compile()
-        print("✅ Sequential agent compiled successfully!")
 
-        print("\nRunning with user's exact input...")
         result = seq_agent.run(
             {
                 "messages": [
@@ -74,53 +67,42 @@ def test_user_example():
             }
         )
 
-        print("\n" + "=" * 80)
-        print("RESULT:")
-        print("=" * 80)
 
         if isinstance(result, dict):
             # Print messages
             if "messages" in result:
-                print("\nMessages:")
                 for msg in result["messages"]:
-                    print(f"  {msg.type}: {msg.content[:200]}...")
+                    pass
 
             # Print plan if available
             if "simple_agent_plan" in result:
-                print(f"\nPlan: {result['simple_agent_plan']}")
+                pass
             elif "planner_plan" in result:
-                print(f"\nPlan: {result['planner_plan']}")
+                pass
 
             # Print agent outputs
             if "agent_outputs" in result:
-                print("\nAgent Outputs:")
                 for agent_id, output in result["agent_outputs"].items():
-                    print(f"  {agent_id}: {type(output).__name__}")
+                    pass
         else:
-            print(f"Result type: {type(result).__name__}")
-            print(f"Result: {result}")
 
     except Exception as e:
-        print(f"\n❌ Error: {e}")
         import traceback
 
         traceback.print_exc()
 
 
 def test_with_different_tools():
-    """Test with different tools and tasks"""
-    print("\n" + "=" * 80)
-    print("TEST: Different Tools Example")
-    print("=" * 80)
+    """Test with different tools and tasks."""
 
     @tool
     def multiply(a: int, b: int) -> int:
-        """Multiply two numbers"""
+        """Multiply two numbers."""
         return a * b
 
     @tool
     def divide(a: int, b: int) -> float:
-        """Divide two numbers"""
+        """Divide two numbers."""
         if b == 0:
             return float("inf")
         return a / b
@@ -146,7 +128,6 @@ def test_with_different_tools():
 
     try:
         seq_agent.compile()
-        print("✅ Agent compiled successfully!")
 
         result = seq_agent.run(
             {
@@ -161,17 +142,12 @@ def test_with_different_tools():
             }
         )
 
-        print("\nResult received!")
 
         if isinstance(result, dict) and "messages" in result:
-            print(f"\nTotal messages: {len(result['messages'])}")
             # Show last few messages
             for msg in result["messages"][-3:]:
-                print(f"\n{msg.type}:")
-                print(f"  {msg.content[:300]}...")
 
     except Exception as e:
-        print(f"\n❌ Error: {e}")
         import traceback
 
         traceback.print_exc()
@@ -184,6 +160,3 @@ if __name__ == "__main__":
     # Run additional test
     test_with_different_tools()
 
-    print("\n" + "=" * 80)
-    print("All tests completed!")
-    print("=" * 80)

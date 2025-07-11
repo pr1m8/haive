@@ -2,13 +2,14 @@
 
 import json
 import logging
-import urllib.parse
 from typing import Any, Dict, List, Optional, Tuple
+import urllib.parse
 
 from pydantic import Field, model_validator
 
 from haive.core.engine.agent.persistence.base import CheckpointerConfig
 from haive.core.engine.agent.persistence.types import CheckpointerType
+
 
 # Check if PostgreSQL dependencies are installed
 try:
@@ -23,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class PostgresCheckpointerConfig(CheckpointerConfig):
-    """
-    Configuration for PostgreSQL-based checkpointing.
+    """Configuration for PostgreSQL-based checkpointing.
 
     This class handles creation and configuration of a PostgreSQL-based
     checkpointer for LangGraph agents, with thread registration and pool
@@ -54,8 +54,8 @@ class PostgresCheckpointerConfig(CheckpointerConfig):
     use_async: bool = Field(default=False, description="Whether to use async mode")
 
     # Internal state (not serialized)
-    _pool: Optional[Any] = None
-    _checkpointer: Optional[Any] = None
+    _pool: Any | None = None
+    _checkpointer: Any | None = None
 
     @model_validator(mode="after")
     def validate_postgres_available(self):
@@ -68,8 +68,7 @@ class PostgresCheckpointerConfig(CheckpointerConfig):
         return self
 
     def create_checkpointer(self) -> Any:
-        """
-        Create a PostgreSQL checkpointer with the specified configuration.
+        """Create a PostgreSQL checkpointer with the specified configuration.
 
         Returns:
             A PostgresSaver instance for use with LangGraph
@@ -115,7 +114,7 @@ class PostgresCheckpointerConfig(CheckpointerConfig):
             return self._checkpointer
 
         except Exception as e:
-            logger.error(f"Error creating PostgreSQL checkpointer: {e}")
+            logger.exception(f"Error creating PostgreSQL checkpointer: {e}")
             logger.warning("Falling back to memory checkpointer")
             from langgraph.checkpoint.memory import MemorySaver
 
@@ -128,20 +127,16 @@ class PostgresCheckpointerConfig(CheckpointerConfig):
                 if hasattr(self._pool, "is_open") and self._pool.is_open():
                     logger.info("Closing PostgreSQL connection pool")
                     self._pool.close()
-                elif hasattr(self._pool, "_opened") and self._pool._opened:
-                    logger.info("Closing PostgreSQL connection pool")
-                    self._pool.close()
             except Exception as e:
-                logger.error(f"Error closing PostgreSQL connection pool: {e}")
+                logger.exception(f"Error closing PostgreSQL connection pool: {e}")
 
     def register_thread(
         self,
         thread_id: str,
-        name: Optional[str] = None,
-        metadata: Optional[Dict[str, Any]] = None,
+        name: str | None = None,
+        metadata: dict[str, Any] | None = None,
     ):
-        """
-        Register a thread in the PostgreSQL database.
+        """Register a thread in the PostgreSQL database.
 
         This ensures that the thread exists in the database before
         any checkpoints are created that reference it.
@@ -212,16 +207,15 @@ class PostgresCheckpointerConfig(CheckpointerConfig):
                         logger.debug(f"Thread {thread_id} already exists in database")
 
         except Exception as e:
-            logger.error(f"Error registering thread in PostgreSQL: {e}")
+            logger.exception(f"Error registering thread in PostgreSQL: {e}")
 
     def put_checkpoint(
         self,
-        config: Dict[str, Any],
+        config: dict[str, Any],
         data: Any,
-        metadata: Optional[Dict[str, Any]] = None,
-    ) -> Dict[str, Any]:
-        """
-        Store a checkpoint in the database.
+        metadata: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Store a checkpoint in the database.
 
         Args:
             config: Configuration with thread_id and optional checkpoint_id
@@ -271,20 +265,17 @@ class PostgresCheckpointerConfig(CheckpointerConfig):
                     config, checkpoint_data, checkpoint_metadata, channel_versions
                 )
                 return next_config
-            else:
-                # Older API pattern without new_versions parameter (legacy)
-                next_config = checkpointer.put(config, checkpoint_data)
-                return next_config
-        else:
-            # Fallback to a memory saver
-            from langgraph.checkpoint.memory import MemorySaver
+            # Older API pattern without new_versions parameter (legacy)
+            next_config = checkpointer.put(config, checkpoint_data)
+            return next_config
+        # Fallback to a memory saver
+        from langgraph.checkpoint.memory import MemorySaver
 
-            memory_saver = MemorySaver()
-            return memory_saver.put(config, checkpoint_data)
+        memory_saver = MemorySaver()
+        return memory_saver.put(config, checkpoint_data)
 
-    def get_checkpoint(self, config: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """
-        Retrieve a checkpoint from the database.
+    def get_checkpoint(self, config: dict[str, Any]) -> dict[str, Any] | None:
+        """Retrieve a checkpoint from the database.
 
         Args:
             config: Configuration with thread_id and optional checkpoint_id
@@ -308,10 +299,9 @@ class PostgresCheckpointerConfig(CheckpointerConfig):
         return None
 
     def list_checkpoints(
-        self, config: Dict[str, Any], limit: Optional[int] = None
-    ) -> List[Tuple[Dict[str, Any], Any]]:
-        """
-        List checkpoints for a thread.
+        self, config: dict[str, Any], limit: int | None = None
+    ) -> list[tuple[dict[str, Any], Any]]:
+        """List checkpoints for a thread.
 
         Args:
             config: Configuration with thread_id
@@ -334,7 +324,7 @@ class PostgresCheckpointerConfig(CheckpointerConfig):
                 checkpoint_tuples = list(checkpointer.list(config, limit=limit))
                 return [(cp.config, cp.checkpoint) for cp in checkpoint_tuples]
             except Exception as e:
-                logger.error(f"Error listing checkpoints: {e}")
+                logger.exception(f"Error listing checkpoints: {e}")
                 return []
 
         return []

@@ -9,7 +9,6 @@ sys.path.insert(0, "packages/haive-core/src")
 from enum import Enum
 
 # Direct imports of only what we need
-from typing import Any, Dict, List, Optional
 
 
 # Mock the required dependencies
@@ -149,12 +148,10 @@ class SimpleStateUpdatingValidationNode:
         """Create the state-updating validation node function."""
 
         def validation_node(state, config=None):
-            print(f"[{self.name}] Starting state-updating validation")
 
             # Get tool calls
             tool_calls = self._extract_tool_calls(state)
             if not tool_calls:
-                print(f"[{self.name}] No tool calls found")
                 return state
 
             # Get tools and routes
@@ -173,10 +170,7 @@ class SimpleStateUpdatingValidationNode:
             # Apply to state
             self._apply_validation_to_state(state, routing_state, tool_calls)
 
-            summary = routing_state.get_routing_decision()
-            print(
-                f"[{self.name}] Validation complete: {summary['valid_count']} valid, {summary['error_count']} errors"
-            )
+            routing_state.get_routing_decision()
 
             return state
 
@@ -186,12 +180,10 @@ class SimpleStateUpdatingValidationNode:
         """Create the dynamic router function."""
 
         def validation_router(state):
-            print(f"[{self.name}] Routing based on validation state")
 
             # Get validation state
             validation_state = getattr(state, "validation_state", None)
             if not validation_state:
-                print(f"[{self.name}] No validation state found")
                 return END
 
             # Get routing decision
@@ -203,16 +195,10 @@ class SimpleStateUpdatingValidationNode:
                     routing_decision["error_count"] > 0
                     or routing_decision["invalid_count"] > 0
                 ):
-                    print(
-                        f"[{self.name}] Strict mode: routing to agent due to failures"
-                    )
                     return self.agent_node
 
             elif self.validation_mode == ValidationMode.PERMISSIVE:
                 if routing_decision["valid_count"] == 0:
-                    print(
-                        f"[{self.name}] Permissive mode: no valid tools, routing to agent"
-                    )
                     return self.agent_node
 
             # Get valid tools
@@ -224,10 +210,8 @@ class SimpleStateUpdatingValidationNode:
             sends = self._create_send_branches(state, valid_results)
 
             if sends:
-                print(f"[{self.name}] Created {len(sends)} Send branches")
                 return sends
-            else:
-                return self.agent_node
+            return self.agent_node
 
         return validation_router
 
@@ -266,7 +250,7 @@ class SimpleStateUpdatingValidationNode:
         """Validate a single tool call."""
         tool_name = tool_call.get("name", "unknown")
         tool_id = tool_call.get("id", f"call_{id(tool_call)}")
-        tool_args = tool_call.get("args", {})
+        tool_call.get("args", {})
 
         # Check if tool exists
         if tool_name not in available_tools:
@@ -374,10 +358,6 @@ class MockState:
 
 def test_validation_node():
     """Test the validation node functionality."""
-
-    print("🧪 Testing StateUpdatingValidationNode Core Functionality")
-    print("=" * 60)
-
     # Create validation node
     node = SimpleStateUpdatingValidationNode(
         name="test_validator",
@@ -386,17 +366,11 @@ def test_validation_node():
         track_error_tools=True,
     )
 
-    print(f"✅ Created validation node: {node.name}")
-    print(f"   Mode: {node.validation_mode}")
-
     # Get both functions
     node_func = node.create_node_function()
     router_func = node.create_router_function()
 
-    print(f"✅ Created node function and router function")
-
     # Test scenario 1: Valid tools
-    print(f"\n📝 Test 1: Valid Tools")
     state1 = MockState()
     state1.tools = [MockTool("search"), MockTool("calculator")]
     state1.tool_routes = {"search": "langchain_tool", "calculator": "function"}
@@ -412,26 +386,18 @@ def test_validation_node():
 
     # Run validation (state update)
     updated_state1 = node_func(state1)
-    print(f"  ✅ State updated")
 
     # Check validation results
     if updated_state1.validation_state:
-        summary1 = updated_state1.validation_state.get_routing_decision()
-        print(
-            f"     Valid: {summary1['valid_count']}, Errors: {summary1['error_count']}"
-        )
+        updated_state1.validation_state.get_routing_decision()
 
     # Run router
     routing_result1 = router_func(updated_state1)
-    print(f"  🔀 Router result: {type(routing_result1).__name__}")
     if isinstance(routing_result1, list):
-        print(f"     Created {len(routing_result1)} Send branches")
         for send in routing_result1:
-            tool_name = send.arg.get("name", "unknown")
-            print(f"       - {tool_name} → {send.node}")
+            send.arg.get("name", "unknown")
 
     # Test scenario 2: Invalid tools
-    print(f"\n📝 Test 2: Invalid Tools")
     state2 = MockState()
     state2.tools = [MockTool("search")]
     state2.tool_routes = {"search": "langchain_tool"}
@@ -443,19 +409,13 @@ def test_validation_node():
     state2.messages.append(ai_msg2)
 
     updated_state2 = node_func(state2)
-    print(f"  ✅ State updated")
 
     if updated_state2.validation_state:
-        summary2 = updated_state2.validation_state.get_routing_decision()
-        print(
-            f"     Valid: {summary2['valid_count']}, Errors: {summary2['error_count']}"
-        )
+        updated_state2.validation_state.get_routing_decision()
 
-    routing_result2 = router_func(updated_state2)
-    print(f"  🔀 Router result: {routing_result2}")
+    router_func(updated_state2)
 
     # Test scenario 3: Mixed tools
-    print(f"\n📝 Test 3: Mixed Valid/Invalid Tools")
     state3 = MockState()
     state3.tools = [MockTool("search"), MockTool("writer")]
     state3.tool_routes = {"search": "langchain_tool", "writer": "pydantic_model"}
@@ -471,24 +431,16 @@ def test_validation_node():
     state3.messages.append(ai_msg3)
 
     updated_state3 = node_func(state3)
-    print(f"  ✅ State updated")
 
     if updated_state3.validation_state:
-        summary3 = updated_state3.validation_state.get_routing_decision()
-        print(
-            f"     Valid: {summary3['valid_count']}, Errors: {summary3['error_count']}"
-        )
+        updated_state3.validation_state.get_routing_decision()
 
     routing_result3 = router_func(updated_state3)
-    print(f"  🔀 Router result: {type(routing_result3).__name__}")
     if isinstance(routing_result3, list):
-        print(f"     Created {len(routing_result3)} Send branches")
         for send in routing_result3:
-            tool_name = send.arg.get("name", "unknown")
-            print(f"       - {tool_name} → {send.node}")
+            send.arg.get("name", "unknown")
 
     # Test validation modes
-    print(f"\n⚙️ Testing Validation Modes")
 
     def create_mixed_state():
         state = MockState()
@@ -505,7 +457,6 @@ def test_validation_node():
         return state
 
     # STRICT mode
-    print(f"\n🔒 STRICT Mode:")
     strict_node = SimpleStateUpdatingValidationNode(
         validation_mode=ValidationMode.STRICT
     )
@@ -515,10 +466,8 @@ def test_validation_node():
     state = create_mixed_state()
     state = strict_func(state)
     result = strict_router(state)
-    print(f"   Result: {result} (should route to agent due to any failure)")
 
     # PERMISSIVE mode
-    print(f"\n🔓 PERMISSIVE Mode:")
     permissive_node = SimpleStateUpdatingValidationNode(
         validation_mode=ValidationMode.PERMISSIVE
     )
@@ -528,17 +477,8 @@ def test_validation_node():
     state = create_mixed_state()
     state = permissive_func(state)
     result = permissive_router(state)
-    print(f"   Result: {type(result).__name__} (should route valid tools)")
     if isinstance(result, list):
-        print(f"   Routes {len(result)} valid tools")
-
-    print(f"\n✅ All tests completed!")
-    print(f"\n💡 Key Concepts Demonstrated:")
-    print("   ✓ Dual functionality: state updates + dynamic routing")
-    print("   ✓ Validation modes: STRICT, PARTIAL, PERMISSIVE")
-    print("   ✓ Error tracking and state management")
-    print("   ✓ Tool route mapping and Send branch creation")
-    print("   ✓ Dynamic router behavior based on validation state")
+        pass
 
 
 if __name__ == "__main__":

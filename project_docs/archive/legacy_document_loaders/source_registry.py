@@ -1,4 +1,4 @@
-"""Source Type Registry for Document Loader Engine
+"""Source Type Registry for Document Loader Engine.
 
 This module implements the source type registry for the document loader engine.
 It provides a centralized registry for managing document source types and their mappings.
@@ -9,21 +9,12 @@ import logging
 import threading
 
 # For now, using these placeholder imports
-from source_implementation import (
-    BaseSource,
-    CloudSource,
-    DatabaseSource,
-    LoaderStrategy,
-    LocalSource,
-    PathAnalysisResult,
-    RemoteSource,
-    SourceMetadata,
-    SourcePattern,
-)
-
+from source_implementation import (BaseSource, CloudSource, DatabaseSource,
+                                   LoaderStrategy, LocalSource,
+                                   PathAnalysisResult, RemoteSource,
+                                   SourceMetadata, SourcePattern)
 
 # Import from path analysis module - will use when it's available
-# from path_analysis_implementation import PathAnalysisResult, PathType, FileCategory
 
 
 logger = logging.getLogger(__name__)
@@ -196,7 +187,7 @@ class SourceTypeRegistry:
             return source_class()
 
         except Exception as e:
-            logger.error(f"Error creating source instance for {source_type}: {e}")
+            logger.exception(f"Error creating source instance for {source_type}: {e}")
             return None
 
     def get_source_type(self, source_type: str) -> SourceMetadata | None:
@@ -544,10 +535,7 @@ class SourceTypeRegistry:
                 logger.warning(f"Custom matcher failed: {e}")
 
         # Normalize score
-        if total_checks > 0:
-            score = score / total_checks
-        else:
-            score = 0.0
+        score = score / total_checks if total_checks > 0 else 0.0
 
         # Apply priority boost
         priority = getattr(pattern, "priority", 0)

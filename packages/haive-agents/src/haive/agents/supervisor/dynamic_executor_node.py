@@ -10,13 +10,14 @@ from typing import Any, Dict, Optional, Union
 from langchain_core.messages import BaseMessage
 from pydantic import BaseModel
 
+
 logger = logging.getLogger(__name__)
 
 
 class DynamicExecutorNode:
     """Node that dynamically executes agents by name with proper state handling."""
 
-    def __init__(self, agent_registry: Dict[str, Any]):
+    def __init__(self, agent_registry: dict[str, Any]):
         """Initialize with agent registry.
 
         Args:
@@ -26,9 +27,9 @@ class DynamicExecutorNode:
 
     async def __call__(
         self,
-        state: Union[Dict[str, Any], BaseModel],
-        config: Optional[Dict[str, Any]] = None,
-    ) -> Dict[str, Any]:
+        state: dict[str, Any] | BaseModel,
+        config: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
         """Execute the targeted agent with proper state extraction.
 
         This follows the pattern from AgentNode:
@@ -47,7 +48,7 @@ class DynamicExecutorNode:
 
             # Preserve actual BaseMessage objects (critical!)
             if hasattr(state, "messages"):
-                messages = getattr(state, "messages")
+                messages = state.messages
                 if hasattr(messages, "root"):
                     state_dict["messages"] = messages.root
                 else:
@@ -89,7 +90,7 @@ class DynamicExecutorNode:
                 # Try calling directly
                 result = await agent(agent_input, config)
 
-            logger.info(f"Agent execution complete")
+            logger.info("Agent execution complete")
 
             # Process result
             update = self._process_agent_result(result, state_dict, target_agent_name)
@@ -97,7 +98,7 @@ class DynamicExecutorNode:
             return update
 
         except Exception as e:
-            logger.error(f"Error executing agent {target_agent_name}: {e}")
+            logger.exception(f"Error executing agent {target_agent_name}: {e}")
             import traceback
 
             traceback.print_exc()
@@ -108,7 +109,7 @@ class DynamicExecutorNode:
                 "agent_execution_failed": True,
             }
 
-    def _prepare_agent_input(self, agent: Any, state: Dict[str, Any]) -> Dict[str, Any]:
+    def _prepare_agent_input(self, agent: Any, state: dict[str, Any]) -> dict[str, Any]:
         """Prepare input for agent based on its state schema.
 
         Following AgentNode pattern:
@@ -169,8 +170,8 @@ class DynamicExecutorNode:
         return agent_input
 
     def _process_agent_result(
-        self, result: Any, state: Dict[str, Any], agent_name: str
-    ) -> Dict[str, Any]:
+        self, result: Any, state: dict[str, Any], agent_name: str
+    ) -> dict[str, Any]:
         """Process agent result and create state update.
 
         Following EngineNode pattern for result wrapping.
@@ -201,7 +202,7 @@ class DynamicExecutorNode:
         elif isinstance(result, BaseMessage):
             logger.info("Result is a BaseMessage, appending to messages")
             current_messages = state.get("messages", [])
-            update["messages"] = current_messages + [result]
+            update["messages"] = [*current_messages, result]
 
         # If result is a string (raw response)
         elif isinstance(result, str):
@@ -209,7 +210,7 @@ class DynamicExecutorNode:
             from langchain_core.messages import AIMessage
 
             current_messages = state.get("messages", [])
-            update["messages"] = current_messages + [AIMessage(content=result)]
+            update["messages"] = [*current_messages, AIMessage(content=result)]
 
         # Store raw result for inspection
         update["last_agent_result"] = result
@@ -217,7 +218,7 @@ class DynamicExecutorNode:
         return update
 
 
-def create_dynamic_executor_node(agent_registry: Dict[str, Any]) -> DynamicExecutorNode:
+def create_dynamic_executor_node(agent_registry: dict[str, Any]) -> DynamicExecutorNode:
     """Factory function to create a dynamic executor node.
 
     Args:

@@ -9,7 +9,6 @@ from typing import Any, Dict, List, Optional
 from unittest.mock import MagicMock, Mock, patch
 
 import pytest
-
 from haive.core.engine.document.loaders.sources.business_sources import (
     BusinessDataType,
     BusinessPlatform,

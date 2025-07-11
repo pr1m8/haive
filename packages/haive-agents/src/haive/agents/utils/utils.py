@@ -3,6 +3,7 @@ import base64
 
 from langchain_core.runnables import chain
 
+
 # Some javascript we will run on each step
 # to take a screenshot of the page, select the
 # elements to annotate, and add bounding boxes
@@ -12,7 +13,6 @@ with open("src/haive/agents/web_nav/utils/mark.js") as f:
 
 @chain
 async def mark_page(page):
-    # print(page)
     await page.evaluate(mark_page_script)
     for _ in range(10):
         try:
@@ -32,7 +32,6 @@ async def mark_page(page):
 
 def parse(text: str) -> dict:
     action_prefix = "Action: "
-    print(text)
     if not text.strip().split("\n")[-1].startswith(action_prefix):
         return {"action": "retry", "args": f"Could not parse LLM Output: {text}"}
     action_block = text.strip().split("\n")[-1]

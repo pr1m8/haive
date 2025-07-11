@@ -1,4 +1,4 @@
-"""Document-based Loaders for Haive Framework
+"""Document-based Loaders for Haive Framework.
 
 This module implements document-based loaders for various file formats including
 PDF, Word, Excel, PowerPoint, and other document types. It builds on the source
@@ -13,13 +13,8 @@ from pydantic import FilePath, HttpUrl
 
 # Import path analysis for auto-detection
 from .path_analysis_implementation import analyze_path_comprehensive
-from .source_implementation import (
-    CredentialManager,
-    LocalSource,
-    RemoteSource,
-    auto_source,
-    registry,
-)
+from .source_implementation import (CredentialManager, LocalSource,
+                                    RemoteSource, auto_source, registry)
 
 
 @auto_source
@@ -69,10 +64,7 @@ class PDFSource(LocalSource):
         """Create a PDF loader with the specified strategy."""
         # If no strategy specified, choose based on document characteristics
         if not strategy_name:
-            if self.ocr_enabled:
-                strategy_name = "ocr"
-            else:
-                strategy_name = "fast"
+            strategy_name = "ocr" if self.ocr_enabled else "fast"
 
         # Create the appropriate loader
         if strategy_name == "fast":
@@ -110,7 +102,8 @@ class PDFSource(LocalSource):
     def create_ocr_loader(self):
         """Create an UnstructuredPDFLoader with OCR capabilities."""
         try:
-            from langchain_community.document_loaders import UnstructuredPDFLoader
+            from langchain_community.document_loaders import \
+                UnstructuredPDFLoader
 
             return UnstructuredPDFLoader(
                 str(self.file_path),
@@ -184,9 +177,8 @@ class WordDocumentSource(LocalSource):
     def create_unstructured_loader(self):
         """Create an UnstructuredWordDocumentLoader for comprehensive parsing."""
         try:
-            from langchain_community.document_loaders import (
-                UnstructuredWordDocumentLoader,
-            )
+            from langchain_community.document_loaders import \
+                UnstructuredWordDocumentLoader
 
             return UnstructuredWordDocumentLoader(str(self.file_path), mode="elements")
         except ImportError:
@@ -239,7 +231,8 @@ class ExcelSource(LocalSource):
     def create_unstructured_loader(self):
         """Create an UnstructuredExcelLoader for comprehensive parsing."""
         try:
-            from langchain_community.document_loaders import UnstructuredExcelLoader
+            from langchain_community.document_loaders import \
+                UnstructuredExcelLoader
 
             return UnstructuredExcelLoader(str(self.file_path), mode="elements")
         except ImportError:
@@ -249,8 +242,8 @@ class ExcelSource(LocalSource):
     def create_pandas_loader(self):
         """Create a DataFrameLoader using pandas for Excel files."""
         try:
-            from langchain_community.document_loaders import DataFrameLoader
             import pandas as pd
+            from langchain_community.document_loaders import DataFrameLoader
 
             # Read Excel file into pandas DataFrame
             if self.sheet_name:
@@ -296,9 +289,8 @@ class PowerPointSource(LocalSource):
     def create_unstructured_loader(self):
         """Create an UnstructuredPowerPointLoader for presentations."""
         try:
-            from langchain_community.document_loaders import (
-                UnstructuredPowerPointLoader,
-            )
+            from langchain_community.document_loaders import \
+                UnstructuredPowerPointLoader
 
             return UnstructuredPowerPointLoader(str(self.file_path), mode="elements")
         except ImportError:
@@ -365,12 +357,14 @@ class HTMLSource(LocalSource):
     def create_unstructured_loader(self):
         """Create an UnstructuredHTMLLoader for better HTML parsing."""
         try:
-            from langchain_community.document_loaders import UnstructuredHTMLLoader
+            from langchain_community.document_loaders import \
+                UnstructuredHTMLLoader
 
             if self.file_path:
                 return UnstructuredHTMLLoader(str(self.file_path))
             if self.url:
-                from langchain_community.document_loaders import UnstructuredURLLoader
+                from langchain_community.document_loaders import \
+                    UnstructuredURLLoader
 
                 return UnstructuredURLLoader(urls=[str(self.url)])
             raise ValueError("Either file_path or url must be provided")
@@ -415,14 +409,15 @@ class ImageSource(LocalSource):
     def create_ocr_loader(self):
         """Create an UnstructuredImageLoader for OCR."""
         try:
-            from langchain_community.document_loaders import UnstructuredImageLoader
+            from langchain_community.document_loaders import \
+                UnstructuredImageLoader
 
             return UnstructuredImageLoader(str(self.file_path), mode="elements")
         except ImportError:
             # If unstructured is not available, try a simpler approach
             try:
-                from PIL import Image
                 import pytesseract
+                from PIL import Image
 
                 def extract_text_with_tesseract():
                     try:
@@ -491,7 +486,8 @@ class OpenDocumentSource(LocalSource):
     def create_unstructured_loader(self):
         """Create an UnstructuredODTLoader for OpenDocument formats."""
         try:
-            from langchain_community.document_loaders import UnstructuredODTLoader
+            from langchain_community.document_loaders import \
+                UnstructuredODTLoader
 
             return UnstructuredODTLoader(str(self.file_path), mode="elements")
         except ImportError:
@@ -525,7 +521,8 @@ class EPubSource(LocalSource):
     def create_unstructured_loader(self):
         """Create an UnstructuredEPubLoader for e-books."""
         try:
-            from langchain_community.document_loaders import UnstructuredEPubLoader
+            from langchain_community.document_loaders import \
+                UnstructuredEPubLoader
 
             return UnstructuredEPubLoader(str(self.file_path), mode="elements")
         except ImportError:
@@ -559,7 +556,8 @@ class RTFSource(LocalSource):
     def create_unstructured_loader(self):
         """Create an UnstructuredRTFLoader for rich text documents."""
         try:
-            from langchain_community.document_loaders import UnstructuredRTFLoader
+            from langchain_community.document_loaders import \
+                UnstructuredRTFLoader
 
             return UnstructuredRTFLoader(str(self.file_path), mode="elements")
         except ImportError:
@@ -603,7 +601,8 @@ class EmailSource(LocalSource):
     def create_unstructured_loader(self):
         """Create an UnstructuredEmailLoader."""
         try:
-            from langchain_community.document_loaders import UnstructuredEmailLoader
+            from langchain_community.document_loaders import \
+                UnstructuredEmailLoader
 
             return UnstructuredEmailLoader(str(self.file_path), mode="elements")
         except ImportError:
@@ -615,7 +614,8 @@ class EmailSource(LocalSource):
     def create_outlook_loader(self):
         """Create an OutlookMessageLoader for .msg files."""
         try:
-            from langchain_community.document_loaders import OutlookMessageLoader
+            from langchain_community.document_loaders import \
+                OutlookMessageLoader
 
             return OutlookMessageLoader(str(self.file_path))
         except ImportError:
@@ -662,7 +662,7 @@ class DirectorySource(LocalSource):
             def loader_factory(file_path: str):
                 """Determine the appropriate loader based on file extension."""
                 path_obj = Path(file_path)
-                ext = path_obj.suffix.lower()
+                path_obj.suffix.lower()
 
                 # Create document source based on file extension
                 try:
@@ -703,7 +703,8 @@ class DirectorySource(LocalSource):
     def create_pdf_directory_loader(self):
         """Create a PyPDFDirectoryLoader for PDF directories."""
         try:
-            from langchain_community.document_loaders import PyPDFDirectoryLoader
+            from langchain_community.document_loaders import \
+                PyPDFDirectoryLoader
 
             return PyPDFDirectoryLoader(
                 str(self.directory_path),

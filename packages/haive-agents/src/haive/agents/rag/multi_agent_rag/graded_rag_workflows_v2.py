@@ -1,11 +1,10 @@
-"""
-Graded RAG Workflows V2 - Using Enhanced State Schemas
+"""Graded RAG Workflows V2 - Using Enhanced State Schemas.
 
 This version uses state schemas with built-in configuration support,
 providing a cleaner approach to managing agent-specific parameters.
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from haive.agents.multi.base import ExecutionMode, MultiAgent
 from haive.agents.rag.multi_agent_rag.enhanced_state_schemas import (
@@ -23,9 +22,7 @@ from haive.agents.simple import SimpleAgent
 
 
 class FullyGradedRAGAgentV2(MultiAgent, StateConfigMixin):
-    """
-    Fully Graded RAG V2 - Uses enhanced state schema with configuration support.
-    """
+    """Fully Graded RAG V2 - Uses enhanced state schema with configuration support."""
 
     def __init__(self, relevance_threshold: float = 0.5, **kwargs):
         # Create agents
@@ -117,13 +114,13 @@ class FullyGradedRAGAgentV2(MultiAgent, StateConfigMixin):
         }
 
     def build_custom_graph(self):
-        """Build the custom graph with state initialization"""
+        """Build the custom graph with state initialization."""
         # In a real implementation, you would initialize state here
         # For now, return None to use default
-        return None
+        return
 
-    async def ainvoke(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Override to inject configuration into state"""
+    async def ainvoke(self, inputs: dict[str, Any]) -> dict[str, Any]:
+        """Override to inject configuration into state."""
         # Ensure state has our configuration
         if "relevance_threshold" not in inputs:
             inputs["relevance_threshold"] = self._initial_config["relevance_threshold"]
@@ -134,11 +131,9 @@ class FullyGradedRAGAgentV2(MultiAgent, StateConfigMixin):
 
 
 class MultiCriteriaGradedRAGAgentV2(MultiAgent, StateConfigMixin):
-    """
-    Multi-Criteria Graded RAG V2 - Configuration stored in state schema.
-    """
+    """Multi-Criteria Graded RAG V2 - Configuration stored in state schema."""
 
-    def __init__(self, grading_criteria: Optional[List[str]] = None, **kwargs):
+    def __init__(self, grading_criteria: list[str] | None = None, **kwargs):
         if grading_criteria is None:
             grading_criteria = [
                 "relevance",
@@ -195,8 +190,8 @@ class MultiCriteriaGradedRAGAgentV2(MultiAgent, StateConfigMixin):
             "workflow_type": "multi_criteria_graded_rag",
         }
 
-    async def ainvoke(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Override to inject configuration"""
+    async def ainvoke(self, inputs: dict[str, Any]) -> dict[str, Any]:
+        """Override to inject configuration."""
         if "grading_criteria" not in inputs:
             inputs["grading_criteria"] = self._initial_config["grading_criteria"]
         if "workflow_type" not in inputs:
@@ -207,7 +202,7 @@ class MultiCriteriaGradedRAGAgentV2(MultiAgent, StateConfigMixin):
 
 # Example of how to use with specialized workflows
 class FLAREAgentV2Example(MultiAgent, StateConfigMixin):
-    """FLARE Agent V2 example using enhanced state schema"""
+    """FLARE Agent V2 example using enhanced state schema."""
 
     def __init__(
         self,
@@ -238,27 +233,25 @@ class FLAREAgentV2Example(MultiAgent, StateConfigMixin):
         }
 
     def build_custom_graph(self):
-        """Build custom graph"""
-        return None
+        """Build custom graph."""
+        return
 
 
 # Helper function to create properly configured agents
 def create_graded_rag_agent(
     workflow_type: str = "fully_graded",
     relevance_threshold: float = 0.5,
-    grading_criteria: Optional[List[str]] = None,
+    grading_criteria: list[str] | None = None,
     **kwargs,
 ) -> MultiAgent:
-    """Factory function to create graded RAG agents with proper configuration"""
-
+    """Factory function to create graded RAG agents with proper configuration."""
     if workflow_type == "fully_graded":
         return FullyGradedRAGAgentV2(relevance_threshold=relevance_threshold, **kwargs)
-    elif workflow_type == "multi_criteria":
+    if workflow_type == "multi_criteria":
         return MultiCriteriaGradedRAGAgentV2(
             grading_criteria=grading_criteria, **kwargs
         )
-    else:
-        raise ValueError(f"Unknown workflow type: {workflow_type}")
+    raise ValueError(f"Unknown workflow type: {workflow_type}")
 
 
 # Example usage showing the clean interface

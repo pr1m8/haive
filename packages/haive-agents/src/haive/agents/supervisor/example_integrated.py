@@ -11,20 +11,20 @@ This example demonstrates:
 import asyncio
 from typing import Any, Dict
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage
 from rich.console import Console
 
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
 from haive.agents.supervisor.integrated_supervisor import IntegratedDynamicSupervisor
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 console = Console()
 
 
 async def demonstrate_integrated_supervisor():
     """Complete demonstration of integrated dynamic supervisor."""
-
     console.print(
         "\n[bold blue]🚀 Integrated Dynamic Multi-Agent Supervisor Demo[/bold blue]\n"
     )
@@ -125,7 +125,7 @@ async def demonstrate_integrated_supervisor():
             }
 
             # Run supervisor (this would trigger coordination)
-            result = await supervisor.ainvoke(state)
+            await supervisor.ainvoke(state)
             console.print(f"[green]✅ Request {i} processed[/green]")
 
             # Show coordination status
@@ -203,7 +203,6 @@ async def demonstrate_integrated_supervisor():
 
 async def demonstrate_dynamic_choice_model_integration():
     """Demonstrate DynamicChoiceModel integration specifically."""
-
     console.print("\n[bold blue]🎯 DynamicChoiceModel Integration Demo[/bold blue]\n")
 
     supervisor = IntegratedDynamicSupervisor(
@@ -244,7 +243,7 @@ async def demonstrate_dynamic_choice_model_integration():
                 console.print(f"❌ Choice validation failed: {e}")
 
     # Demonstrate dynamic removal
-    console.print(f"\n[yellow]Removing calculator agent...[/yellow]")
+    console.print("\n[yellow]Removing calculator agent...[/yellow]")
     await supervisor.unregister_agent("calculator")
 
     if supervisor.registry_manager:
@@ -258,7 +257,6 @@ async def demonstrate_dynamic_choice_model_integration():
 
 async def demonstrate_tool_routing():
     """Demonstrate tool-based routing to agents."""
-
     console.print("\n[bold blue]🔧 Tool-Based Routing Demo[/bold blue]\n")
 
     supervisor = IntegratedDynamicSupervisor(
@@ -311,7 +309,6 @@ async def demonstrate_tool_routing():
 
 async def main():
     """Run all integrated supervisor demonstrations."""
-
     console.print(
         "[bold magenta]Integrated Dynamic Multi-Agent Supervisor Examples[/bold magenta]"
     )

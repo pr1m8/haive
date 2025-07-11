@@ -2,7 +2,6 @@
 """PostgreSQL store wrapper implementations."""
 
 import logging
-from typing import Any, Dict, Optional
 
 from langgraph.store.base import BaseStore
 from langgraph.store.postgres import PostgresStore
@@ -12,6 +11,7 @@ from ..base import SerializableStoreWrapper
 from ..connection import ConnectionManager
 from ..embeddings import EmbeddingAdapter
 from ..types import StoreType
+
 
 logger = logging.getLogger(__name__)
 

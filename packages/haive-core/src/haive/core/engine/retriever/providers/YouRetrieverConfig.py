@@ -1,5 +1,4 @@
-"""
-You.com Retriever implementation for the Haive framework.
+"""You.com Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the You.com retriever,
 which retrieves web search results using You.com's search API. You.com
@@ -35,8 +34,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.YOU)
 class YouRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for You.com retriever in the Haive framework.
+    """Configuration for You.com retriever in the Haive framework.
 
     This retriever searches the web using You.com's API and returns
     AI-enhanced search results and summaries.
@@ -79,7 +77,7 @@ class YouRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None, description="You.com API key (auto-resolved from YOU_API_KEY)"
     )
 
@@ -116,17 +114,17 @@ class YouRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         default=True, description="Whether to enable spell checking for queries"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for You.com retriever."""
         return {
             "query": (str, Field(description="Search query for You.com")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for You.com retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list, description="Web search results from You.com"
                 ),
@@ -134,8 +132,7 @@ class YouRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a You.com retriever from this configuration.
+        """Create a You.com retriever from this configuration.
 
         Returns:
             YouRetriever: Instantiated retriever ready for web search.

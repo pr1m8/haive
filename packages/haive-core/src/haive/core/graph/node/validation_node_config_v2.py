@@ -17,12 +17,11 @@ Key improvements:
 import logging
 from typing import Any, Dict, List, Optional, Sequence, Union
 
+from haive.core.graph.node.base_node_config import BaseNodeConfig
+from haive.core.graph.node.types import CommandGoto, NodeType
 from langchain_core.messages import AIMessage, BaseMessage, ToolMessage
 from langgraph.types import Command, Send
 from pydantic import BaseModel, Field, ValidationError
-
-from haive.core.graph.node.types import CommandGoto, NodeType
-from haive.core.graph.node.base_node_config import BaseNodeConfig
 
 logger = logging.getLogger(__name__)
 

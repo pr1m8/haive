@@ -8,7 +8,8 @@
 
 **Solution**: Documented the issue in docstrings and provided workarounds in documentation.
 
-**Code**: 
+**Code**:
+
 ```python
 # Broken:
 @classmethod
@@ -21,7 +22,7 @@ state.documents.append(new_doc)
 
 ## Issue 2: Placeholder Documentation Throughout
 
-**Problem**: All READMEs and __init__.py files had only TODO placeholders.
+**Problem**: All READMEs and **init**.py files had only TODO placeholders.
 
 **Root Cause**: Module was developed without documentation.
 
@@ -34,6 +35,7 @@ state.documents.append(new_doc)
 **Root Cause**: Lack of overview documentation.
 
 **Solution**: Created detailed module overview explaining:
+
 - Document transformation capabilities
 - Information extraction features
 - Knowledge graph construction

@@ -1,14 +1,10 @@
-"""Tests for Enhanced RAG Workflows
+"""Tests for Enhanced RAG Workflows.
 
 Tests the new multi-agent RAG workflows with state management,
 callable nodes, and compatibility features.
 """
 
 import pytest
-from haive.core.fixtures.documents import conversation_documents
-from haive.core.schema.prebuilt.rag_state import MultiAgentRAGState
-from langchain_core.messages import HumanMessage
-
 from haive.agents.rag.multi_agent_rag.enhanced_workflows import (
     CorrectiveRAGAgent,
     DocumentGradingAgent,
@@ -16,6 +12,9 @@ from haive.agents.rag.multi_agent_rag.enhanced_workflows import (
     SelfRAGAgent,
     create_enhanced_rag_workflow,
 )
+from haive.core.fixtures.documents import conversation_documents
+from haive.core.schema.prebuilt.rag_state import MultiAgentRAGState
+from langchain_core.messages import HumanMessage
 
 
 class TestRAGState:
@@ -279,28 +278,19 @@ class TestIntegration:
 
 if __name__ == "__main__":
     # Run a quick test
-    print("Testing Enhanced RAG Workflows...")
 
     # Test basic state
-    print("1. Testing RAG State...")
     test = TestRAGState()
     test.test_rag_state_basic()
     test.test_document_grading()
     test.test_requery_logic()
-    print("   ✅ RAG State tests passed")
 
     # Test agents
-    print("2. Testing Document Grading Agent...")
     test_grading = TestDocumentGradingAgent()
     test_grading.test_grading_agent_creation()
-    print("   ✅ Document Grading Agent tests passed")
 
     # Test factory
-    print("3. Testing Workflow Factory...")
     test_factory = TestWorkflowFactory()
     test_factory.test_create_crag_workflow()
     test_factory.test_create_hyde_workflow()
     test_factory.test_create_self_rag_workflow()
-    print("   ✅ Workflow Factory tests passed")
-
-    print("\n🎉 All basic tests passed! Run with pytest for full test suite.")

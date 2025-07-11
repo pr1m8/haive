@@ -9,11 +9,10 @@ from pathlib import Path
 # Add the source path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../src"))
 
-from langchain_core.messages import HumanMessage
-
 from haive.agents.react.agent import ReactAgent
 from haive.agents.supervisor.registry_supervisor import RegistrySupervisor
 from haive.agents.tools import BaseTool
+from langchain_core.messages import HumanMessage
 
 
 class RealResearchTool(BaseTool):
@@ -74,18 +73,13 @@ def save_state_history(agent_name: str, state_data: dict, test_phase: str):
             default=str,
         )
 
-    print(f"📁 State history saved: {filepath}")
     return filepath
 
 
 async def test_real_registry_supervisor():
     """Test with REAL ReactAgents and save state history."""
 
-    print("🚀 Testing Dynamic Registry Supervisor with REAL ReactAgents")
-    print("=" * 60)
-
     # Create REAL ReactAgent instances
-    print("\n📋 Creating REAL ReactAgents...")
 
     research_agent = ReactAgent(
         name="research_specialist",
@@ -105,20 +99,13 @@ async def test_real_registry_supervisor():
         tools=[RealWritingTool()],
     )
 
-    print(f"✅ Created {research_agent.name} with {len(research_agent.tools)} tools")
-    print(f"✅ Created {coding_agent.name} with {len(coding_agent.tools)} tools")
-    print(f"✅ Created {writing_agent.name} with {len(writing_agent.tools)} tools")
 
     # Create REAL supervisor
-    print(f"\n🎯 Creating REAL RegistrySupervisor...")
     supervisor = RegistrySupervisor(name="dynamic_supervisor")
 
     # Populate registry with real agents
-    print(f"\n📝 Populating registry with REAL agents...")
     supervisor.populate_registry(agents=[research_agent, coding_agent, writing_agent])
 
-    print(f"✅ Registry populated with {len(supervisor.agent_registry)} agents")
-    print(f"✅ Total tools aggregated: {len(supervisor.tools)}")
 
     # Save initial state
     initial_state = {
@@ -129,8 +116,6 @@ async def test_real_registry_supervisor():
     save_state_history("supervisor", initial_state, "initial_setup")
 
     # Test 1: Real research task
-    print(f"\n🔬 TEST 1: Real Research Task")
-    print("-" * 30)
 
     research_input = {
         "messages": [
@@ -139,10 +124,8 @@ async def test_real_registry_supervisor():
             )
         ]
     }
-    print(f"INPUT: {research_input['messages'][0].content}")
 
     research_result = await supervisor.ainvoke(research_input)
-    print(f"OUTPUT: {research_result}")
 
     # Save research state
     research_state = {
@@ -153,8 +136,6 @@ async def test_real_registry_supervisor():
     save_state_history("supervisor", research_state, "research_test")
 
     # Test 2: Real coding task
-    print(f"\n💻 TEST 2: Real Coding Task")
-    print("-" * 30)
 
     coding_input = {
         "messages": [
@@ -163,10 +144,8 @@ async def test_real_registry_supervisor():
             )
         ]
     }
-    print(f"INPUT: {coding_input['messages'][0].content}")
 
     coding_result = await supervisor.ainvoke(coding_input)
-    print(f"OUTPUT: {coding_result}")
 
     # Save coding state
     coding_state = {
@@ -177,8 +156,6 @@ async def test_real_registry_supervisor():
     save_state_history("supervisor", coding_state, "coding_test")
 
     # Test 3: Real writing task
-    print(f"\n✍️ TEST 3: Real Writing Task")
-    print("-" * 30)
 
     writing_input = {
         "messages": [
@@ -187,10 +164,8 @@ async def test_real_registry_supervisor():
             )
         ]
     }
-    print(f"INPUT: {writing_input['messages'][0].content}")
 
     writing_result = await supervisor.ainvoke(writing_input)
-    print(f"OUTPUT: {writing_result}")
 
     # Save writing state
     writing_state = {
@@ -201,8 +176,6 @@ async def test_real_registry_supervisor():
     save_state_history("supervisor", writing_state, "writing_test")
 
     # Test 4: Dynamic agent addition
-    print(f"\n⚡ TEST 4: Dynamic Agent Addition")
-    print("-" * 40)
 
     class RealAnalysisTool(BaseTool):
         name: str = "analysis_tool"
@@ -218,16 +191,12 @@ async def test_real_registry_supervisor():
         tools=[RealAnalysisTool()],
     )
 
-    print(f"✅ Created new REAL agent: {analysis_agent.name}")
 
     # Add to registry dynamically
     supervisor.agent_registry["data_analyst"] = analysis_agent
     supervisor.tools.extend(analysis_agent.tools)
     supervisor._update_supervisor_tools()
 
-    print(f"✅ Dynamically added to registry")
-    print(f"📊 New registry size: {len(supervisor.agent_registry)} agents")
-    print(f"🔧 New tool count: {len(supervisor.tools)} tools")
 
     # Test with new agent
     analysis_input = {
@@ -237,10 +206,8 @@ async def test_real_registry_supervisor():
             )
         ]
     }
-    print(f"INPUT: {analysis_input['messages'][0].content}")
 
     analysis_result = await supervisor.ainvoke(analysis_input)
-    print(f"OUTPUT: {analysis_result}")
 
     # Save dynamic addition state
     dynamic_state = {
@@ -253,16 +220,12 @@ async def test_real_registry_supervisor():
     save_state_history("supervisor", dynamic_state, "dynamic_addition")
 
     # Final verification
-    print(f"\n🎯 FINAL VERIFICATION")
-    print("=" * 30)
 
-    print(f"📋 Total Agents in Registry: {len(supervisor.agent_registry)}")
     for name, agent in supervisor.agent_registry.items():
-        print(f"  ✓ {name}: {agent.description}")
+        pass")
 
-    print(f"\n🔧 Total Tools Available: {len(supervisor.tools)}")
     for tool in supervisor.tools:
-        print(f"  ✓ {tool.name}: {tool.description}")
+        pass")
 
     # Save final state
     final_state = {
@@ -275,11 +238,6 @@ async def test_real_registry_supervisor():
     }
     save_state_history("supervisor", final_state, "final_verification")
 
-    print(f"\n✅ ALL TESTS COMPLETED WITH REAL AGENTS")
-    print(
-        f"✅ STATE HISTORY SAVED TO: /home/will/Projects/haive/backend/haive/packages/haive-agents/resources/state_history/"
-    )
-    print(f"✅ DYNAMIC SUPERVISOR FULLY FUNCTIONAL")
 
 
 if __name__ == "__main__":

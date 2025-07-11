@@ -4,12 +4,13 @@ This module provides the core classes for pattern definition, registration,
 and application in graph-based workflows.
 """
 
-import logging
 from collections.abc import Callable
+import logging
 from typing import Any, Literal
 
 from langgraph.graph import END
 from pydantic import BaseModel, Field
+
 
 logger = logging.getLogger(__name__)
 
@@ -65,10 +66,7 @@ class ComponentRequirement(BaseModel):
             return True
 
         # For dict component types
-        if isinstance(component, dict) and component.get("type") == self.type:
-            return True
-
-        return False
+        return bool(isinstance(component, dict) and component.get("type") == self.type)
 
 
 class ParameterDefinition(BaseModel):
@@ -120,7 +118,7 @@ class ParameterDefinition(BaseModel):
             return False, f"Value must be one of {self.choices}"
 
         # Check numeric constraints
-        if isinstance(value, (int, float)):
+        if isinstance(value, int | float):
             if self.min_value is not None and value < self.min_value:
                 return False, f"Value must be >= {self.min_value}"
             if self.max_value is not None and value > self.max_value:
@@ -261,7 +259,9 @@ class GraphPattern(BaseModel):
                     graph.applied_patterns.append(self.name)
                 return result
             except Exception as e:
-                logger.error(f"Error in overridden apply method for {self.name}: {e}")
+                logger.exception(
+                    f"Error in overridden apply method for {self.name}: {e}"
+                )
                 raise
 
         if self.apply_func is None:
@@ -284,7 +284,7 @@ class GraphPattern(BaseModel):
                 graph.applied_patterns.append(self.name)
             return result
         except Exception as e:
-            logger.error(f"Error applying pattern {self.name}: {e}")
+            logger.exception(f"Error applying pattern {self.name}: {e}")
             raise
 
     def to_dict(self) -> dict[str, Any]:

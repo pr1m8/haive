@@ -1,5 +1,4 @@
-"""
-DocArray Retriever implementation for the Haive framework.
+"""DocArray Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the DocArray retriever,
 which uses DocArray's vector search capabilities for document retrieval.
@@ -34,8 +33,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.DOC_ARRAY)
 class DocArrayRetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for DocArray retriever in the Haive framework.
+    """Configuration for DocArray retriever in the Haive framework.
 
     This retriever uses DocArray's vector search capabilities to provide
     efficient document similarity search with support for multimodal data.
@@ -86,7 +84,7 @@ class DocArrayRetrieverConfig(BaseRetrieverConfig):
     )
 
     # Documents to index
-    documents: List[Document] = Field(
+    documents: list[Document] = Field(
         default_factory=list, description="Documents to index for DocArray retrieval"
     )
 
@@ -101,18 +99,18 @@ class DocArrayRetrieverConfig(BaseRetrieverConfig):
     )
 
     # Embedding configuration
-    embedding_model: Optional[str] = Field(
+    embedding_model: str | None = Field(
         default=None,
         description="Embedding model for vectorization (e.g., 'sentence-transformers/all-MiniLM-L6-v2')",
     )
 
     # Persistence configuration
-    persist_path: Optional[str] = Field(
+    persist_path: str | None = Field(
         default=None, description="Path to persist the DocumentArray index"
     )
 
     # DocArray specific parameters
-    embedding_dimensions: Optional[int] = Field(
+    embedding_dimensions: int | None = Field(
         default=None, ge=1, le=4096, description="Embedding vector dimensions"
     )
 
@@ -129,17 +127,17 @@ class DocArrayRetrieverConfig(BaseRetrieverConfig):
         default=True, description="Whether to normalize embeddings"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for DocArray retriever."""
         return {
             "query": (str, Field(description="Query for DocArray similarity search")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for DocArray retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list, description="Documents from DocArray search"
                 ),
@@ -147,8 +145,7 @@ class DocArrayRetrieverConfig(BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a DocArray retriever from this configuration.
+        """Create a DocArray retriever from this configuration.
 
         Returns:
             DocArrayRetriever: Instantiated retriever ready for multimodal search.

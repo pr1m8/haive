@@ -11,9 +11,7 @@ E = TypeVar("E", bound=Enum)
 
 
 class _DynEnumMeta(type):
-    """
-    Metaclass for managing DynamicEnum initialization and schema enforcement.
-    """
+    """Metaclass for managing DynamicEnum initialization and schema enforcement."""
 
     def __new__(mcls, name, bases, ns, **kwargs):
         cls = super().__new__(mcls, name, bases, ns, **kwargs)
@@ -25,14 +23,12 @@ class _DynEnumMeta(type):
 
 
 class DynamicEnum(str, metaclass=_DynEnumMeta):
-    """
-    A runtime-extensible enum string type for Pydantic validation.
-    """
+    """A runtime-extensible enum string type for Pydantic validation."""
 
     __abstract__ = True
     START_VALUES: ClassVar[Iterable[str]]
     _values: ClassVar[set[str]]
-    _enum_type: ClassVar[Type[Enum]]
+    _enum_type: ClassVar[type[Enum]]
 
     # ─── Enum Lifecycle ─── #
     @classmethod
@@ -60,7 +56,7 @@ class DynamicEnum(str, metaclass=_DynEnumMeta):
         return tuple(sorted(cls._values))
 
     @classmethod
-    def enum_type(cls) -> Type[Enum]:
+    def enum_type(cls) -> type[Enum]:
         return cls._enum_type
 
     # ─── Pydantic Core Schema Hook ─── #

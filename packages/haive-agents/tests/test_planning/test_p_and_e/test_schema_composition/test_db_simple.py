@@ -5,7 +5,6 @@ import os
 import uuid
 
 import psycopg2
-
 from haive.agents.conversation.collaberative.agent import CollaborativeConversation
 
 

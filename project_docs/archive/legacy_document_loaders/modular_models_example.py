@@ -10,21 +10,10 @@ import os
 import tempfile
 
 from document_models import (  # Base models; Enums; Configuration models; Utility functions
-    ChunkingOptions,
-    ChunkingStrategy,
-    Document,
-    DocumentCollection,
-    DocumentFormat,
-    DocumentSourceType,
-    DocumentState,
-    LoadingOptions,
-    LoadingStrategy,
-    ProcessingStage,
-    chunks_to_langchain,
-    documents_to_langchain,
-    lc_documents_to_document_collection,
-)
-
+    ChunkingOptions, ChunkingStrategy, Document, DocumentCollection,
+    DocumentFormat, DocumentSourceType, DocumentState, LoadingOptions,
+    LoadingStrategy, ProcessingStage, chunks_to_langchain,
+    documents_to_langchain, lc_documents_to_document_collection)
 
 # Try to import langchain for demonstration
 try:
@@ -153,7 +142,7 @@ def example_document_collections():
     # Create and add documents
     file_paths = create_sample_files()
 
-    for i, path in enumerate(file_paths):
+    for _i, path in enumerate(file_paths):
         with open(path) as f:
             content = f.read()
 

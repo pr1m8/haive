@@ -1,5 +1,4 @@
-"""
-Multi-Vector Retriever implementation for the Haive framework.
+"""Multi-Vector Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Multi-Vector retriever,
 which stores multiple vectors per document to enable more nuanced and accurate
@@ -32,8 +31,7 @@ from haive.core.engine.vectorstore.vectorstore import VectorStoreConfig
 
 @BaseRetrieverConfig.register(RetrieverType.MULTI_VECTOR)
 class MultiVectorRetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for Multi-Vector retriever in the Haive framework.
+    """Configuration for Multi-Vector retriever in the Haive framework.
 
     This retriever stores multiple vectors per document to enable more nuanced
     and accurate retrieval by representing different aspects of each document.
@@ -84,7 +82,7 @@ class MultiVectorRetrieverConfig(BaseRetrieverConfig):
         description="Type of document store: 'in_memory', 'file_system'",
     )
 
-    docstore_path: Optional[str] = Field(
+    docstore_path: str | None = Field(
         default=None,
         description="Path for file system document store (required if docstore_type='file_system')",
     )
@@ -104,7 +102,7 @@ class MultiVectorRetrieverConfig(BaseRetrieverConfig):
         description="Type of search to perform: 'similarity', 'mmr'",
     )
 
-    search_kwargs: Dict[str, Any] = Field(
+    search_kwargs: dict[str, Any] = Field(
         default_factory=dict,
         description="Additional search parameters for the vector store",
     )
@@ -115,7 +113,7 @@ class MultiVectorRetrieverConfig(BaseRetrieverConfig):
     )
 
     @validator("docstore_type")
-    def validate_docstore_type(cls, v):
+    def validate_docstore_type(self, v):
         """Validate document store type."""
         valid_types = ["in_memory", "file_system"]
         if v not in valid_types:
@@ -123,7 +121,7 @@ class MultiVectorRetrieverConfig(BaseRetrieverConfig):
         return v
 
     @validator("indexing_strategy")
-    def validate_indexing_strategy(cls, v):
+    def validate_indexing_strategy(self, v):
         """Validate indexing strategy."""
         valid_strategies = ["summary", "chunks", "hypothetical"]
         if v not in valid_strategies:
@@ -133,7 +131,7 @@ class MultiVectorRetrieverConfig(BaseRetrieverConfig):
         return v
 
     @validator("search_type")
-    def validate_search_type(cls, v):
+    def validate_search_type(self, v):
         """Validate search type."""
         valid_types = ["similarity", "mmr"]
         if v not in valid_types:
@@ -141,7 +139,7 @@ class MultiVectorRetrieverConfig(BaseRetrieverConfig):
         return v
 
     @validator("docstore_path")
-    def validate_docstore_path(cls, v, values):
+    def validate_docstore_path(self, v, values):
         """Validate docstore path is provided when needed."""
         docstore_type = values.get("docstore_type", "")
         if docstore_type == "file_system" and not v:
@@ -150,17 +148,17 @@ class MultiVectorRetrieverConfig(BaseRetrieverConfig):
             )
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Multi-Vector retriever."""
         return {
             "query": (str, Field(description="Query for multi-vector retrieval")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Multi-Vector retriever."""
         return {
             "documents": (
-                List[Any],  # List[Document] but avoiding import
+                list[Any],  # List[Document] but avoiding import
                 Field(
                     default_factory=list,
                     description="Documents retrieved via multi-vector search",
@@ -169,8 +167,7 @@ class MultiVectorRetrieverConfig(BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a Multi-Vector retriever from this configuration.
+        """Create a Multi-Vector retriever from this configuration.
 
         Returns:
             MultiVectorRetriever: Instantiated retriever ready for multi-vector retrieval.

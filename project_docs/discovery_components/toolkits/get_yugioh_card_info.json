@@ -7,7 +7,7 @@
     "description": "Retrieve detailed Yu-Gi-Oh! card info using name, archetype, attribute, level, etc.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.802430",
+    "timestamp": "2025-07-10T19:45:29.022579",
     "schema": {
       "title": "GetCardInfoInput",
       "description": "Input model for querying Yu-Gi-Oh! card information with various filters.\n\nAttributes:\n    name (Optional[str]): Filter by exact card name.\n    fname (Optional[str]): Fuzzy search by name fragment.\n    archetype (Optional[str]): Filter by card archetype.\n    attribute (Optional[str]): Filter by card attribute (DARK, LIGHT, etc).\n    race (Optional[str]): Filter by card race/type (Warrior, Dragon, etc).\n    level (Optional[int]): Filter by card level or rank.\n    cardset (Optional[str]): Filter by card set name.\n    format (Optional[str]): Filter by card format (TCG, OCG, Speed Duel, etc).\n    misc (Optional[bool]): Include additional metadata in the response.",
@@ -76,7 +76,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.802430",
+      "timestamp": "2025-07-10T19:45:29.022579",
       "category": "toolkits"
     }
   },

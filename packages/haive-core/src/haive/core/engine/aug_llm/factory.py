@@ -1,5 +1,4 @@
-"""
-Factory for creating LLM chain runnables from AugLLMConfig.
+"""Factory for creating LLM chain runnables from AugLLMConfig.
 
 This module provides a specialized factory implementation that transforms
 AugLLMConfig configurations into executable LLM chain runnables. It enforces
@@ -23,10 +22,7 @@ import logging
 from typing import Any, Dict, Optional, Type
 
 from langchain_core.messages import SystemMessage
-from langchain_core.output_parsers import (
-    PydanticOutputParser,
-    StrOutputParser,
-)
+from langchain_core.output_parsers import PydanticOutputParser, StrOutputParser
 from langchain_core.output_parsers.openai_tools import PydanticToolsParser
 from langchain_core.prompts import (
     ChatPromptTemplate,
@@ -39,14 +35,14 @@ from pydantic import BaseModel
 
 from haive.core.logging.rich_logger import LogLevel, get_logger
 
+
 # Get logger for this module
 logger = get_logger(__name__)
 logger.set_level(LogLevel.WARNING)
 
 
 class AugLLMFactory:
-    """
-    Factory for creating structured LLM runnables from AugLLMConfig with flexible message handling.
+    """Factory for creating structured LLM runnables from AugLLMConfig with flexible message handling.
 
     This factory class takes an AugLLMConfig instance and transforms it into an
     executable LLM chain runnable, applying any runtime configuration overrides
@@ -85,9 +81,8 @@ class AugLLMFactory:
         >>> summary = summarizer.invoke("Long text to summarize...")
     """
 
-    def __init__(self, aug_config: Any, config_params: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the factory with an AugLLMConfig.
+    def __init__(self, aug_config: Any, config_params: Dict[str, Any] | None = None):
+        """Initialize the factory with an AugLLMConfig.
 
         Args:
             aug_config: Configuration for the LLM chain
@@ -218,10 +213,7 @@ class AugLLMFactory:
             self.aug_config._handle_chat_template_messages_placeholder()
 
         # Handle BaseModel tools for format instructions if flag was set
-        if (
-            "use_tool_for_format_instructions" in self.config_params
-            and self.config_params["use_tool_for_format_instructions"]
-        ):
+        if self.config_params.get("use_tool_for_format_instructions"):
             self.aug_config._process_tools()
 
         # Debug summary
@@ -267,8 +259,7 @@ class AugLLMFactory:
         )
 
     def create_runnable(self) -> Runnable:
-        """
-        Create the complete runnable chain with proper message handling.
+        """Create the complete runnable chain with proper message handling.
 
         Assembles a fully configured runnable chain based on the AugLLMConfig
         settings and any runtime overrides. This method performs several key steps:
@@ -378,8 +369,7 @@ class AugLLMFactory:
         return runnable_chain
 
     def _initialize_llm_with_tools(self, llm: Runnable) -> Runnable:
-        """
-        Configure LLM with tools based on configuration.
+        """Configure LLM with tools based on configuration.
 
         This method handles the complex process of binding tools to an LLM, including:
         1. Processing different tool types (BaseModel, BaseTool, callables)
@@ -426,15 +416,16 @@ class AugLLMFactory:
 
                         # If using v2 structured output, ensure proper field names
                         if (
-                            self.aug_config.structured_output_version == "v2"
-                            and tool == self.aug_config.structured_output_model
+                            (
+                                self.aug_config.structured_output_version == "v2"
+                                and tool == self.aug_config.structured_output_model
+                            )
+                            and self.aug_config.output_field_name
+                            and hasattr(tool, "__name__")
                         ):
-                            if self.aug_config.output_field_name and hasattr(
-                                tool, "__name__"
-                            ):
-                                logger.info(
-                                    f"Using custom output field: {self.aug_config.output_field_name}"
-                                )
+                            logger.info(
+                                f"Using custom output field: {self.aug_config.output_field_name}"
+                            )
 
                     # Case 2: Tool is a BaseTool instance or needs instantiation
                     elif isinstance(tool, BaseTool) or (
@@ -482,7 +473,7 @@ class AugLLMFactory:
                                 f"Failed to resolve tool {i+1}: {tool} - {e}"
                             )
                             failed_tools.append(
-                                (tool, f"Tool resolution failed: {str(e)}")
+                                (tool, f"Tool resolution failed: {e!s}")
                             )
                             continue
 
@@ -501,8 +492,8 @@ class AugLLMFactory:
                             (tool, f"Unrecognized tool type: {tool_type}")
                         )
                 except Exception as e:
-                    logger.error(f"Unexpected error processing tool {i+1}: {e}")
-                    failed_tools.append((tool, f"Unexpected error: {str(e)}"))
+                    logger.exception(f"Unexpected error processing tool {i+1}: {e}")
+                    failed_tools.append((tool, f"Unexpected error: {e!s}"))
 
         # Log any failed tools
         if failed_tools:
@@ -548,7 +539,7 @@ class AugLLMFactory:
             try:
                 return llm.bind_tools(tool_instances, **bind_kwargs)
             except Exception as e:
-                logger.error(f"Error binding tools: {e}")
+                logger.exception(f"Error binding tools: {e}")
                 # Try with fewer kwargs in case of compatibility issues
                 try:
                     # Simplified binding with just tool_choice
@@ -556,8 +547,7 @@ class AugLLMFactory:
                         return llm.bind_tools(
                             tool_instances, tool_choice=bind_kwargs["tool_choice"]
                         )
-                    else:
-                        return llm.bind_tools(tool_instances)
+                    return llm.bind_tools(tool_instances)
                 except Exception as e2:
                     logger.failure(f"Failed simplified tool binding: {e2}")
                     return llm
@@ -568,7 +558,7 @@ class AugLLMFactory:
             try:
                 return llm.with_tools(tool_instances, **bind_kwargs)
             except Exception as e:
-                logger.error(f"Error with fallback tool binding: {e}")
+                logger.exception(f"Error with fallback tool binding: {e}")
                 # Very simplified binding attempt
                 try:
                     return llm.with_tools(tool_instances)
@@ -580,8 +570,7 @@ class AugLLMFactory:
         return llm
 
     def _configure_structured_output(self, llm: Runnable) -> Runnable:
-        """
-        Configure structured output parsing based on configuration.
+        """Configure structured output parsing based on configuration.
 
         This method sets up the structured output handling based on the configuration
         in AugLLMConfig. It supports multiple approaches to structured output:
@@ -621,7 +610,7 @@ class AugLLMFactory:
             return llm
 
         # ✅ Handle v1 structured output with traditional parsing
-        elif (
+        if (
             self.aug_config.structured_output_model
             and self.aug_config.structured_output_version == "v1"
         ):
@@ -636,23 +625,21 @@ class AugLLMFactory:
                     )
                     logger.success("Successfully configured v1 structured output")
                     return configured_llm
-                else:
-                    logger.warning(
-                        "with_structured_output not available - falling back to parser"
-                    )
+                logger.warning(
+                    "with_structured_output not available - falling back to parser"
+                )
             except Exception as e:
-                logger.error(f"Failed to configure structured output: {e}")
+                logger.exception(f"Failed to configure structured output: {e}")
 
             # Fallback to PydanticOutputParser for v1
             if self.aug_config.output_parser:
                 logger.warning("Using existing output parser for v1")
                 return llm | self.aug_config.output_parser
-            else:
-                logger.warning("Creating PydanticOutputParser for v1")
-                parser = PydanticOutputParser(
-                    pydantic_object=self.aug_config.structured_output_model
-                )
-                return llm | parser
+            logger.warning("Creating PydanticOutputParser for v1")
+            parser = PydanticOutputParser(
+                pydantic_object=self.aug_config.structured_output_model
+            )
+            return llm | parser
 
         # ✅ Handle explicit pydantic tools (NOT structured output, separate use case)
         elif (
@@ -665,9 +652,8 @@ class AugLLMFactory:
             )
             if isinstance(self.aug_config.output_parser, PydanticToolsParser):
                 return llm | self.aug_config.output_parser
-            else:
-                parser = PydanticToolsParser(tools=self.aug_config.pydantic_tools)
-                return llm | parser
+            parser = PydanticToolsParser(tools=self.aug_config.pydantic_tools)
+            return llm | parser
 
         # ✅ Handle custom output parser
         elif self.aug_config.output_parser:
@@ -681,8 +667,7 @@ class AugLLMFactory:
         return llm
 
     def _build_chain(self, llm: Runnable) -> Runnable:
-        """
-        Build the complete chain with prompt template and pre/post processing.
+        """Build the complete chain with prompt template and pre/post processing.
 
         This method assembles the final runnable chain by combining the configured LLM
         with prompt templates and optional pre/post processing functions. It handles
@@ -776,7 +761,7 @@ class AugLLMFactory:
 
         return chain
 
-    def _generate_schema_instructions(self, model: Type[BaseModel]) -> str:
+    def _generate_schema_instructions(self, model: type[BaseModel]) -> str:
         """Generate schema-based instructions for a model.
 
         Args:
@@ -801,7 +786,7 @@ class AugLLMFactory:
 The output should be valid JSON that conforms to the {model.__name__} schema.
 """
 
-    def _create_pydantic_model_tool(self, model: Type[BaseModel]) -> BaseTool:
+    def _create_pydantic_model_tool(self, model: type[BaseModel]) -> BaseTool:
         """Create a tool from a Pydantic model for structured output.
 
         Args:
@@ -825,7 +810,7 @@ The output should be valid JSON that conforms to the {model.__name__} schema.
                 # Return as dict for JSON serialization
                 return result.dict() if hasattr(result, "dict") else result.model_dump()
             except Exception as e:
-                return {"error": f"Failed to create {model_name}: {str(e)}"}
+                return {"error": f"Failed to create {model_name}: {e!s}"}
 
         # Get parameter schema from model
         if hasattr(model, "schema"):

@@ -1,5 +1,4 @@
-"""
-Neo4j Vector Store implementation for the Haive framework.
+"""Neo4j Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the Neo4j vector store,
 which combines graph database capabilities with vector similarity search.
@@ -35,8 +34,7 @@ from haive.core.engine.vectorstore.types import VectorStoreType
 
 @BaseVectorStoreConfig.register(VectorStoreType.NEO4J)
 class Neo4jVectorStoreConfig(BaseVectorStoreConfig):
-    """
-    Configuration for Neo4j vector store in the Haive framework.
+    """Configuration for Neo4j vector store in the Haive framework.
 
     This vector store uses Neo4j graph database with vector search
     capabilities for knowledge graphs and semantic search.
@@ -77,7 +75,7 @@ class Neo4jVectorStoreConfig(BaseVectorStoreConfig):
 
     username: str = Field(default="neo4j", description="Neo4j username")
 
-    password: Optional[str] = Field(
+    password: str | None = Field(
         default=None, description="Neo4j password (auto-resolved from NEO4J_PASSWORD)"
     )
 
@@ -124,7 +122,7 @@ class Neo4jVectorStoreConfig(BaseVectorStoreConfig):
     )
 
     @validator("url")
-    def validate_url(cls, v):
+    def validate_url(self, v):
         """Validate Neo4j URL format."""
         valid_schemes = ["bolt://", "neo4j://", "bolt+s://", "neo4j+s://"]
         if not any(v.startswith(scheme) for scheme in valid_schemes):
@@ -132,7 +130,7 @@ class Neo4jVectorStoreConfig(BaseVectorStoreConfig):
         return v
 
     @validator("search_type")
-    def validate_search_type(cls, v):
+    def validate_search_type(self, v):
         """Validate search type is supported."""
         valid_types = ["vector", "hybrid"]
         if v not in valid_types:
@@ -140,7 +138,7 @@ class Neo4jVectorStoreConfig(BaseVectorStoreConfig):
         return v
 
     @validator("distance_strategy")
-    def validate_distance_strategy(cls, v):
+    def validate_distance_strategy(self, v):
         """Validate distance strategy is supported."""
         valid_strategies = ["cosine", "euclidean"]
         if v not in valid_strategies:
@@ -149,27 +147,26 @@ class Neo4jVectorStoreConfig(BaseVectorStoreConfig):
             )
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Neo4j vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Neo4j vector store."""
         return {
             "ids": (
-                List[str],
+                list[str],
                 Field(description="IDs of the added documents in Neo4j"),
             ),
         }
 
     def instantiate(self):
-        """
-        Create a Neo4j vector store from this configuration.
+        """Create a Neo4j vector store from this configuration.
 
         Returns:
             Neo4jVector: Instantiated Neo4j vector store.
@@ -185,7 +182,7 @@ class Neo4jVectorStoreConfig(BaseVectorStoreConfig):
                 from langchain_community.vectorstores import Neo4jVector
             except ImportError:
                 raise ImportError(
-                    "Neo4j requires neo4j package. " "Install with: pip install neo4j"
+                    "Neo4j requires neo4j package. Install with: pip install neo4j"
                 )
 
         # Validate embedding

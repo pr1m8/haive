@@ -6,9 +6,8 @@ This module contains loaders for social media platforms, forums, and community s
 import logging
 from typing import List, Optional, Sequence
 
-from langchain_core.document_loaders.base import BaseLoader
-
 from haive.core.engine.document.loaders.sources.implementation import WebSource
+from langchain_core.document_loaders.base import BaseLoader
 
 logger = logging.getLogger(__name__)
 

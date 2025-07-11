@@ -5,13 +5,16 @@
 After analyzing the current multi-agent implementation and testing various approaches, we've identified:
 
 ### Current Issues
+
 1. **Type Safety Loss**: Agents expect specific state types (e.g., `PlannerState`) but receive generic combined states
 2. **Schema Composition Problems**: `AgentSchemaComposer` creates namespace conflicts and breaks agent expectations
 3. **State Transfer Complexity**: No clear mechanism for passing data between agents
 4. **Field Ownership Ambiguity**: Unclear who owns shared fields like `messages`
 
 ### Root Cause
+
 The fundamental issue is trying to flatten all agent schemas into a single schema, which creates:
+
 - Namespace collisions (multiple agents with `task` field)
 - Type mismatches (agent expects `PlannerState`, gets `CombinedState`)
 - Complex field mapping logic that's error-prone
@@ -19,6 +22,7 @@ The fundamental issue is trying to flatten all agent schemas into a single schem
 ## Recommended Solution: Meta Agent State Pattern
 
 Based on our exploration, the **Meta Agent State** pattern provides the best balance of:
+
 - ✅ **Type Safety**: Each agent maintains its typed state
 - ✅ **Flexibility**: Dynamic agent registration
 - ✅ **Clear Ownership**: Explicit shared vs. private state
@@ -31,13 +35,13 @@ class MetaAgentState(StateSchema):
     # Shared state all agents can access
     messages: List[BaseMessage]
     shared_context: Dict[str, Any]
-    
+
     # Agent-specific states (typed but stored as dicts)
     agent_states: Dict[str, Dict[str, Any]]
-    
+
     # Type registry for validation
     agent_schemas: Dict[str, Type[StateSchema]]
-    
+
     # Provides type-safe projections
     def get_agent_view(self, agent_name: str) -> AgentStateView
     def update_from_agent(self, agent_name: str, state: StateSchema)
@@ -53,6 +57,7 @@ class MetaAgentState(StateSchema):
 ## Implementation Approach
 
 ### Phase 1: Update AgentNodeV2
+
 Modify `agent_node_v2.py` to work with MetaAgentState:
 
 ```python
@@ -60,18 +65,19 @@ class MetaAwareAgentNode(AgentNodeConfig):
     def __call__(self, state: MetaAgentState, config: Optional[ConfigLike]) -> Command:
         # 1. Get typed view for agent
         agent_view = state.get_agent_view(self.agent.name)
-        
+
         # 2. Execute agent with proper typed state
         result = self.agent.invoke(agent_view.agent_state.model_dump())
-        
+
         # 3. Update meta state
         state.update_from_agent(self.agent.name, result)
-        
+
         # 4. Return Command with goto
         return Command(update=state.model_dump(), goto=next_node)
 ```
 
 ### Phase 2: State Transfer Rules
+
 Define explicit transfer mappings:
 
 ```python
@@ -84,6 +90,7 @@ STATE_TRANSFERS = {
 ```
 
 ### Phase 3: Multi-Agent Base Update
+
 Update the multi-agent base to use MetaAgentState:
 
 ```python

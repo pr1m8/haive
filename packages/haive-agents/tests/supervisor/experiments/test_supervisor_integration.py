@@ -4,13 +4,12 @@ These tests verify the complete supervisor functionality without mocks,
 testing actual agent registration, tool synchronization, and execution.
 """
 
-import pickle
 from datetime import datetime
+import pickle
 from typing import Any, Dict, List
 
-import pytest
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import AIMessage, HumanMessage
+import pytest
 
 from haive.agents.experiments.supervisor import (
     AgentMetadata,
@@ -22,6 +21,7 @@ from haive.agents.experiments.supervisor import (
 )
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 # Test fixtures for real engines
@@ -104,7 +104,7 @@ class TestSupervisorStateModels:
         assert len(state.agents) == 0
         assert len(state.tools) == 0
         assert len(state.tool_mappings) == 0
-        assert state.auto_sync_tools == True
+        assert state.auto_sync_tools
         assert state.max_history_size == 100
         assert isinstance(state.execution_context.total_steps, int)
 
@@ -156,7 +156,7 @@ class TestSupervisorStateModels:
         assert len(state.execution_history) == 2
         assert "timestamp" in state.execution_history[0]
         assert state.execution_history[0]["agent"] == "test1"
-        assert state.execution_history[1]["success"] == False
+        assert not state.execution_history[1]["success"]
 
 
 class TestSupervisorTools:
@@ -276,12 +276,12 @@ class TestBaseSupervisor:
         assert len(supervisor.get_state().agents) == 1
 
         success = supervisor.unregister_agent("test_agent")
-        assert success == True
+        assert success
         assert len(supervisor.get_state().agents) == 0
 
         # Try removing non-existent agent
         success = supervisor.unregister_agent("nonexistent")
-        assert success == False
+        assert not success
 
     def test_agent_status_retrieval(self, supervisor_engine, research_agent):
         """Test getting agent status information."""
@@ -336,7 +336,7 @@ class TestDynamicSupervisor:
 
         assert isinstance(supervisor.get_state(), DynamicSupervisorState)
         state = supervisor.get_state()
-        assert state.can_create_agents == True
+        assert state.can_create_agents
         assert state.max_agents == 10
 
     def test_agent_template_management(self, supervisor_engine):
@@ -378,12 +378,12 @@ class TestDynamicSupervisor:
         # Disable creation
         supervisor.enable_agent_creation(False)
         state = supervisor.get_state()
-        assert state.can_create_agents == False
+        assert not state.can_create_agents
 
         # Re-enable
         supervisor.enable_agent_creation(True)
         state = supervisor.get_state()
-        assert state.can_create_agents == True
+        assert state.can_create_agents
 
 
 class TestStateValidators:

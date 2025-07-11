@@ -3,14 +3,13 @@
 import logging
 from typing import Optional
 
-from langgraph.graph import StateGraph
-from pydantic import ConfigDict
-from rich.console import Console
-
 from haive.core.graph.common.types import ConfigLike, StateLike
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.graph.state_graph.conversion.langgraph import convert_to_langgraph
 from haive.core.graph.state_graph.schema_mixin import GraphSchemaMixin
+from langgraph.graph import StateGraph
+from pydantic import ConfigDict
+from rich.console import Console
 
 logger = logging.getLogger(__name__)
 console = Console()

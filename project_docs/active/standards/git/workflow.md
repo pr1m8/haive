@@ -7,6 +7,7 @@
 ## 🚨 Mandatory Git Safety Protocol
 
 ### Before ANY Work
+
 ```bash
 # ALWAYS run these FIRST before any work
 git status                              # See current state
@@ -26,6 +27,7 @@ git stash push -m "Safety backup before work"
 ## 🔄 Standard Git Workflow
 
 ### 1. Start New Work
+
 ```bash
 # Update from remote (if collaborative)
 git fetch origin
@@ -38,6 +40,7 @@ git checkout -b fix/issue-description
 ```
 
 ### 2. Work Incrementally
+
 ```bash
 # Stage specific files (never use git add .)
 git add specific_files.py
@@ -48,6 +51,7 @@ git commit -m "feat(component): specific change with context"
 ```
 
 ### 3. Pre-commit Checks
+
 ```bash
 # MANDATORY before committing
 poetry run pytest                      # All tests pass
@@ -59,6 +63,7 @@ poetry run python -c "from haive.core import *; print('Imports OK')"
 ```
 
 ### 4. Final Verification
+
 ```bash
 # Review changes before push
 git log --oneline -3                   # Review recent commits
@@ -71,6 +76,7 @@ git push -u origin feature/description
 ## 📝 Commit Message Standards
 
 ### Format
+
 ```
 <type>(<scope>): <description>
 
@@ -80,6 +86,7 @@ git push -u origin feature/description
 ```
 
 ### Types
+
 - **feat**: New feature
 - **fix**: Bug fix
 - **docs**: Documentation changes
@@ -89,6 +96,7 @@ git push -u origin feature/description
 - **chore**: Maintenance tasks
 
 ### Examples
+
 ```bash
 # ✅ CORRECT - Detailed commit with context
 git commit -m "feat(haive-core): add enhanced tool management with validation
@@ -122,6 +130,7 @@ Ref: [MEM-002-B] Memory Methodology v2.0"
 ```
 
 ### Anti-patterns
+
 ```bash
 # ❌ WRONG - Vague, unclear commits
 git commit -m "fix stuff"              # No context
@@ -133,6 +142,7 @@ git commit -m "temp"                   # Temporary commits pollute history
 ## 🌿 Branch Naming Standards
 
 ### Naming Convention
+
 ```bash
 # ✅ CORRECT - Descriptive with memory references
 feature/mem-008-enhanced-testing       # Feature with memory reference
@@ -147,6 +157,7 @@ docs/update-memory-methodology
 ```
 
 ### Branch Types
+
 - **feature/**: New functionality
 - **fix/**: Bug fixes
 - **docs/**: Documentation updates
@@ -157,6 +168,7 @@ docs/update-memory-methodology
 ## 🚨 Git Disaster Recovery
 
 ### When User Makes a Mess
+
 ```bash
 # Check what disaster occurred
 git status --porcelain
@@ -174,6 +186,7 @@ git clean -fd  # Remove untracked files
 ```
 
 ### Backup Strategy
+
 ```bash
 # Before major changes
 git stash push -m "Work in progress backup"
@@ -190,6 +203,7 @@ git reset --hard HEAD@{n}  # Restore to specific state
 ## 🔍 Code Review Process
 
 ### Before Creating PR
+
 ```bash
 # Self-review checklist
 git diff --name-only origin/main...HEAD  # Files changed
@@ -203,6 +217,7 @@ poetry run mypy .
 ```
 
 ### PR Creation
+
 ```bash
 # Create PR with gh CLI
 gh pr create --title "feat(scope): clear description" --body "$(cat <<'EOF'
@@ -228,12 +243,14 @@ EOF
 ## 📊 Git Quality Metrics
 
 ### Commit Quality
+
 - **Descriptive messages**: Clear intent and context
 - **Atomic commits**: One logical change per commit
 - **Test coverage**: All commits include tests
 - **No broken commits**: Each commit builds successfully
 
 ### Branch Management
+
 - **Clean history**: No merge commits in feature branches
 - **Rebased features**: Keep linear history
 - **Deleted branches**: Remove after merge
@@ -242,6 +259,7 @@ EOF
 ## 🛡️ Protection Protocols
 
 ### Pre-work Safety
+
 ```bash
 # MANDATORY safety checks
 git status    # Current state
@@ -251,6 +269,7 @@ git branch -v # Current branch
 ```
 
 ### During Work
+
 ```bash
 # Incremental commits
 git add specific_file.py
@@ -262,6 +281,7 @@ git diff
 ```
 
 ### Post-work Cleanup
+
 ```bash
 # Final verification
 git log --oneline -5
@@ -275,6 +295,7 @@ git push -u origin feature/branch-name
 ## 🎯 Advanced Git Patterns
 
 ### Interactive Rebase
+
 ```bash
 # Clean up commit history before PR
 git rebase -i HEAD~3
@@ -287,6 +308,7 @@ git rebase -i HEAD~3
 ```
 
 ### Conflict Resolution
+
 ```bash
 # When merge conflicts occur
 git status  # See conflicted files
@@ -300,6 +322,7 @@ git merge --abort
 ```
 
 ### Stash Management
+
 ```bash
 # Named stashes
 git stash push -m "work in progress on feature X"
@@ -317,6 +340,7 @@ git stash drop stash@{1}
 ## 🔄 Release Workflow
 
 ### Version Tagging
+
 ```bash
 # Create release tag
 git tag -a v1.2.0 -m "Release version 1.2.0"
@@ -330,6 +354,7 @@ git checkout v1.2.0
 ```
 
 ### Hotfix Process
+
 ```bash
 # Create hotfix branch from main
 git checkout main

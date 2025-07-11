@@ -11,11 +11,10 @@ import json
 import logging
 import sys
 
-from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig
-from haive.core.models.vectorstore.base import VectorStoreConfig
-
 from haive.agents.research.open_perplexity.agent import ResearchAgent
 from haive.agents.research.open_perplexity.config import ResearchAgentConfig
+from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig
+from haive.core.models.vectorstore.base import VectorStoreConfig
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -81,7 +80,7 @@ def run_research(text_path: str, **kwargs) -> None:
             f.write(report)
         logging.info(f"Report saved to {output_path}")
     else:
-        print(report)
+        pass
 
 
 def visualize_state(
@@ -116,15 +115,12 @@ def visualize_state(
                         )
                         return
                     state = state_data[step]
-                    print(f"Visualizing state at step {step} of {len(state_data)-1}")
                 else:
                     # Default to the last state
                     state = state_data[-1]
-                    print(f"Visualizing final state (step {len(state_data)-1})")
             else:
                 # Single state
                 state = state_data
-                print("Visualizing single state")
 
         except json.JSONDecodeError:
             logging.exception(f"Failed to parse JSON from {state_path}")
@@ -142,7 +138,6 @@ def visualize_state(
         report = agent.generate_markdown_report(state)
         with open(output_md, "w", encoding="utf-8") as f:
             f.write(report)
-        print(f"\nMarkdown report saved to {output_md}")
 
 
 def main():

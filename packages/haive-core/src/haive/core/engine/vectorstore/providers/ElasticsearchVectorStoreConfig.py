@@ -1,5 +1,4 @@
-"""
-Elasticsearch Vector Store implementation for the Haive framework.
+"""Elasticsearch Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the Elasticsearch vector store,
 which combines traditional text search with vector similarity search capabilities.
@@ -34,8 +33,7 @@ from haive.core.engine.vectorstore.types import VectorStoreType
 
 @BaseVectorStoreConfig.register(VectorStoreType.ELASTICSEARCH)
 class ElasticsearchVectorStoreConfig(BaseVectorStoreConfig):
-    """
-    Configuration for Elasticsearch vector store in the Haive framework.
+    """Configuration for Elasticsearch vector store in the Haive framework.
 
     This vector store uses Elasticsearch for hybrid search combining
     traditional text search with vector similarity capabilities.
@@ -75,16 +73,15 @@ class ElasticsearchVectorStoreConfig(BaseVectorStoreConfig):
         default="http://localhost:9200", description="Elasticsearch cluster URL"
     )
 
-    # Authentication (optional)
-    username: Optional[str] = Field(
+    username: str | None = Field(
         default=None, description="Username for Elasticsearch authentication"
     )
 
-    password: Optional[str] = Field(
+    password: str | None = Field(
         default=None, description="Password for Elasticsearch authentication"
     )
 
-    api_key: Optional[str] = Field(
+    api_key: str | None = Field(
         default=None, description="API key for Elasticsearch authentication"
     )
 
@@ -141,12 +138,12 @@ class ElasticsearchVectorStoreConfig(BaseVectorStoreConfig):
         default=True, description="Whether to verify SSL certificates"
     )
 
-    ca_certs: Optional[str] = Field(
+    ca_certs: str | None = Field(
         default=None, description="Path to CA certificates file"
     )
 
     @validator("distance_strategy")
-    def validate_distance_strategy(cls, v):
+    def validate_distance_strategy(self, v):
         """Validate distance strategy is supported."""
         valid_strategies = ["cosine", "euclidean", "dot_product", "max_inner_product"]
         if v not in valid_strategies:
@@ -156,30 +153,29 @@ class ElasticsearchVectorStoreConfig(BaseVectorStoreConfig):
         return v
 
     @validator("elasticsearch_url")
-    def validate_elasticsearch_url(cls, v):
+    def validate_elasticsearch_url(self, v):
         """Basic validation of Elasticsearch URL."""
         if not v.startswith(("http://", "https://")):
             raise ValueError("elasticsearch_url must start with http:// or https://")
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Elasticsearch vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Elasticsearch vector store."""
         return {
-            "ids": (List[str], Field(description="Document IDs in Elasticsearch")),
+            "ids": (list[str], Field(description="Document IDs in Elasticsearch")),
         }
 
     def instantiate(self):
-        """
-        Create an Elasticsearch vector store from this configuration.
+        """Create an Elasticsearch vector store from this configuration.
 
         Returns:
             ElasticsearchStore: Instantiated Elasticsearch vector store.
@@ -298,7 +294,7 @@ class ElasticsearchVectorStoreConfig(BaseVectorStoreConfig):
             except Exception as e:
                 import warnings
 
-                warnings.warn(f"Could not create index: {e}")
+                warnings.warn(f"Could not create index: {e}", stacklevel=2)
 
         # Create Elasticsearch vector store
         return ElasticsearchStore(**kwargs)

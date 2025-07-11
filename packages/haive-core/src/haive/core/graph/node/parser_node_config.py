@@ -4,13 +4,12 @@ import json
 import logging
 from typing import Any, Dict, List, Optional, Type, Union
 
+from haive.core.graph.common.types import ConfigLike, NodeType, StateLike
+from haive.core.graph.node.base_config import NodeConfig
 from langchain_core.messages import AIMessage, BaseMessage, ToolMessage
 from langchain_core.output_parsers import PydanticOutputParser
 from langgraph.types import Command
 from pydantic import BaseModel, Field
-
-from haive.core.graph.common.types import ConfigLike, NodeType, StateLike
-from haive.core.graph.node.base_config import NodeConfig
 
 # Configure logger with rich handler
 logger = logging.getLogger(__name__)
@@ -438,12 +437,16 @@ class ParserNodeConfig(NodeConfig):
             # Determine field name for the result using proper naming utilities
             if isinstance(tool_class, type) and issubclass(tool_class, BaseModel):
                 from haive.core.schema.field_utils import get_field_info_from_model
+
                 field_info = get_field_info_from_model(tool_class)
-                field_name = field_info['field_name']
+                field_name = field_info["field_name"]
             else:
                 # Fallback for non-Pydantic models
                 field_name = (
-                    tool_name.lower().replace("response", "").replace("result", "").strip()
+                    tool_name.lower()
+                    .replace("response", "")
+                    .replace("result", "")
+                    .strip()
                 )
                 if not field_name:
                     field_name = "parsed_result"

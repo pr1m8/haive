@@ -1,5 +1,4 @@
-"""
-InMemory Vector Store implementation for the Haive framework.
+"""InMemory Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the InMemory vector store,
 which provides simple in-memory vector operations for development and testing.
@@ -34,8 +33,7 @@ from haive.core.engine.vectorstore.types import VectorStoreType
 
 @BaseVectorStoreConfig.register(VectorStoreType.IN_MEMORY)
 class InMemoryVectorStoreConfig(BaseVectorStoreConfig):
-    """
-    Configuration for InMemory vector store in the Haive framework.
+    """Configuration for InMemory vector store in the Haive framework.
 
     This vector store uses simple in-memory storage with cosine similarity
     for development and testing purposes.
@@ -66,27 +64,26 @@ class InMemoryVectorStoreConfig(BaseVectorStoreConfig):
         ... )
     """
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for InMemory vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for InMemory vector store."""
         return {
             "ids": (
-                List[str],
+                list[str],
                 Field(description="IDs of the added documents in InMemory store"),
             ),
         }
 
     def instantiate(self):
-        """
-        Create an InMemory vector store from this configuration.
+        """Create an InMemory vector store from this configuration.
 
         Returns:
             InMemoryVectorStore: Instantiated InMemory vector store.

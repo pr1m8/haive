@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Final verification that all workflows are properly implemented"""
+"""Final verification that all workflows are properly implemented."""
 
 from haive.agents.rag.multi_agent_rag.specialized_workflows import (
     AdaptiveThresholdRAGAgent,
@@ -10,9 +10,6 @@ from haive.agents.rag.multi_agent_rag.specialized_workflows import (
 
 
 def main():
-    print("=" * 60)
-    print("FINAL VERIFICATION - Specialized RAG Workflows")
-    print("=" * 60)
 
     results = []
 
@@ -61,30 +58,19 @@ def main():
         results.append(("❌", "Adaptive Threshold", str(e)))
 
     # Print results
-    print("\nRESULTS:")
-    print("-" * 60)
     for status, name, details in results:
-        print(f"{status} {name}: {details}")
+        pass
 
     # Summary
     successful = sum(1 for s, _, _ in results if s == "✅")
     total = len(results)
 
-    print("\n" + "=" * 60)
-    print(f"SUMMARY: {successful}/{total} workflows successfully created")
-    print("=" * 60)
 
     if successful == total:
-        print("\n🎉 ALL WORKFLOWS IMPLEMENTED SUCCESSFULLY! 🎉")
-        print("\nKey Features:")
-        print("- FLARE: Forward-looking retrieval with uncertainty detection")
-        print("- Dynamic RAG: Add/remove retrievers based on performance")
-        print("- Debate RAG: Multi-perspective reasoning through debate")
-        print("- Adaptive Threshold: Dynamic threshold adjustment")
 
     return successful == total
 
 
 if __name__ == "__main__":
     success = main()
-    exit(0 if success else 1)
+    sys.exit(0 if success else 1)

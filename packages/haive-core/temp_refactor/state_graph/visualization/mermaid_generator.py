@@ -1,16 +1,14 @@
-"""
-Mermaid diagram generator for the state graph system.
+"""Mermaid diagram generator for the state graph system.
 
 This module provides the MermaidGenerator class for generating
 Mermaid flowchart diagrams from graphs.
 """
 
-from typing import Any, Dict, List, Optional, Set
+from typing import Any
 
 
 class MermaidGenerator:
-    """
-    Enhanced Mermaid diagram generator for graphs.
+    """Enhanced Mermaid diagram generator for graphs.
 
     This class provides advanced Mermaid diagram generation for graphs,
     with improved subgraph handling and customization options.
@@ -35,14 +33,13 @@ class MermaidGenerator:
         cls,
         graph: Any,
         include_subgraphs: bool = True,
-        highlight_nodes: Optional[List[str]] = None,
+        highlight_nodes: list[str] | None = None,
         highlight_color: str = "#FF69B4",
         theme: str = "default",
         max_depth: int = 2,
         show_node_type: bool = True,
     ) -> str:
-        """
-        Generate a Mermaid diagram for a graph.
+        """Generate a Mermaid diagram for a graph.
 
         Args:
             graph: Graph object to visualize
@@ -175,16 +172,15 @@ class MermaidGenerator:
     def _add_subgraphs_to_diagram(
         cls,
         graph: Any,
-        lines: List[str],
-        processed_nodes: Set[str],
+        lines: list[str],
+        processed_nodes: set[str],
         get_safe_node_id: callable,
-        node_type_classes: Dict[str, str],
+        node_type_classes: dict[str, str],
         max_depth: int,
         current_depth: int,
         show_node_type: bool,
     ) -> None:
-        """
-        Add subgraphs to the diagram.
+        """Add subgraphs to the diagram.
 
         Args:
             graph: Graph object
@@ -286,14 +282,13 @@ class MermaidGenerator:
     def _add_nodes_to_diagram(
         cls,
         graph: Any,
-        lines: List[str],
-        processed_nodes: Set[str],
+        lines: list[str],
+        processed_nodes: set[str],
         get_safe_node_id: callable,
-        node_type_classes: Dict[str, str],
+        node_type_classes: dict[str, str],
         show_node_type: bool,
     ) -> None:
-        """
-        Add regular nodes to the diagram.
+        """Add regular nodes to the diagram.
 
         Args:
             graph: Graph object
@@ -336,14 +331,13 @@ class MermaidGenerator:
     def _add_edges_to_diagram(
         cls,
         graph: Any,
-        lines: List[str],
-        processed_edges: Set[str],
+        lines: list[str],
+        processed_edges: set[str],
         get_safe_node_id: callable,
         START: str,
         END: str,
     ) -> None:
-        """
-        Add edges to the diagram.
+        """Add edges to the diagram.
 
         Args:
             graph: Graph object
@@ -370,14 +364,13 @@ class MermaidGenerator:
     def _add_branches_to_diagram(
         cls,
         graph: Any,
-        lines: List[str],
-        processed_edges: Set[str],
+        lines: list[str],
+        processed_edges: set[str],
         get_safe_node_id: callable,
         START: str,
         END: str,
     ) -> None:
-        """
-        Add branches to the diagram.
+        """Add branches to the diagram.
 
         Args:
             graph: Graph object
@@ -440,15 +433,14 @@ class MermaidGenerator:
     @classmethod
     def _add_highlights_to_diagram(
         cls,
-        lines: List[str],
-        highlight_nodes: List[str],
-        processed_nodes: Set[str],
+        lines: list[str],
+        highlight_nodes: list[str],
+        processed_nodes: set[str],
         get_safe_node_id: callable,
         start_id: str,
         end_id: str,
     ) -> None:
-        """
-        Add highlights to the diagram.
+        """Add highlights to the diagram.
 
         Args:
             lines: List of Mermaid code lines
@@ -471,8 +463,7 @@ class MermaidGenerator:
 
     @classmethod
     def _get_node_type(cls, graph: Any, node_name: str, node: Any) -> str:
-        """
-        Get the node type as a string.
+        """Get the node type as a string.
 
         Args:
             graph: Graph containing the node

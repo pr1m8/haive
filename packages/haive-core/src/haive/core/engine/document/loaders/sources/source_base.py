@@ -8,9 +8,8 @@ and metadata needed by loaders.
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel, Field, SecretStr
-
 from haive.core.common.mixins.secure_config import SecureConfigMixin
+from pydantic import BaseModel, Field, SecretStr
 
 
 class BaseSource(BaseModel, ABC):
@@ -21,21 +20,19 @@ class BaseSource(BaseModel, ABC):
     """
 
     # Source identification
-    source_type: Optional[str] = Field(None, description="Type identifier for registry")
-    source_id: Optional[str] = Field(
-        None, description="Unique identifier for this source"
-    )
+    source_type: str | None = Field(None, description="Type identifier for registry")
+    source_id: str | None = Field(None, description="Unique identifier for this source")
 
     # Metadata
-    description: Optional[str] = Field(None, description="Human-readable description")
-    metadata: Dict[str, Any] = Field(
+    description: str | None = Field(None, description="Human-readable description")
+    metadata: dict[str, Any] = Field(
         default_factory=dict, description="Additional metadata"
     )
-    tags: List[str] = Field(default_factory=list, description="Tags for categorization")
+    tags: list[str] = Field(default_factory=list, description="Tags for categorization")
 
     # Configuration for associated loaders
-    preferred_loader: Optional[str] = Field(None, description="Preferred loader name")
-    loader_config: Dict[str, Any] = Field(
+    preferred_loader: str | None = Field(None, description="Preferred loader name")
+    loader_config: dict[str, Any] = Field(
         default_factory=dict, description="Config for loaders"
     )
 
@@ -46,18 +43,16 @@ class BaseSource(BaseModel, ABC):
         Returns:
             True if source is valid and accessible
         """
-        pass
 
     @abstractmethod
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         """Get kwargs to pass to the document loader.
 
         Returns:
             Dictionary of kwargs for the loader
         """
-        pass
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Convert source to dictionary for serialization."""
         return self.model_dump(exclude_none=True)
 
@@ -69,8 +64,8 @@ class LocalSource(BaseSource):
     encoding: str = Field("utf-8", description="File encoding")
 
     # File metadata
-    file_size: Optional[int] = Field(None, description="File size in bytes")
-    last_modified: Optional[str] = Field(None, description="Last modified timestamp")
+    file_size: int | None = Field(None, description="File size in bytes")
+    last_modified: str | None = Field(None, description="Last modified timestamp")
 
     def validate_source(self) -> bool:
         """Check if file exists and is readable."""
@@ -82,7 +77,7 @@ class LocalSource(BaseSource):
         except Exception:
             return False
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         """Get kwargs for local file loaders."""
         kwargs = {
             "file_path": self.file_path,
@@ -98,12 +93,12 @@ class DirectorySource(BaseSource):
     directory_path: str = Field(..., description="Path to directory")
     glob_pattern: str = Field("**/*", description="File glob pattern")
     recursive: bool = Field(True, description="Recursive search")
-    exclude_patterns: List[str] = Field(
+    exclude_patterns: list[str] = Field(
         default_factory=list, description="Patterns to exclude"
     )
 
     # Directory metadata
-    file_count: Optional[int] = Field(None, description="Number of files found")
+    file_count: int | None = Field(None, description="Number of files found")
 
     def validate_source(self) -> bool:
         """Check if directory exists."""
@@ -115,7 +110,7 @@ class DirectorySource(BaseSource):
         except Exception:
             return False
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         """Get kwargs for directory loaders."""
         kwargs = {
             "path": self.directory_path,
@@ -134,19 +129,17 @@ class RemoteSource(BaseSource, SecureConfigMixin):
     """
 
     url: str = Field(..., description="Remote URL")
-    headers: Dict[str, str] = Field(default_factory=dict, description="HTTP headers")
+    headers: dict[str, str] = Field(default_factory=dict, description="HTTP headers")
     timeout: int = Field(30, description="Request timeout in seconds")
 
     # For SecureConfigMixin - these enable automatic credential resolution
     provider: str = Field("generic", description="Provider name for credentials")
-    api_key: Optional[SecretStr] = Field(None, description="API key if required")
+    api_key: SecretStr | None = Field(None, description="API key if required")
 
     # Additional auth options
-    auth_type: Optional[str] = Field(
-        None, description="Auth type: bearer, basic, oauth"
-    )
-    username: Optional[str] = Field(None, description="Username for basic auth")
-    password: Optional[SecretStr] = Field(None, description="Password for basic auth")
+    auth_type: str | None = Field(None, description="Auth type: bearer, basic, oauth")
+    username: str | None = Field(None, description="Username for basic auth")
+    password: SecretStr | None = Field(None, description="Password for basic auth")
 
     def validate_source(self) -> bool:
         """Validate URL format and optionally test connectivity."""
@@ -158,7 +151,7 @@ class RemoteSource(BaseSource, SecureConfigMixin):
         except Exception:
             return False
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         """Get kwargs for remote loaders."""
         kwargs = {
             "url": self.url,
@@ -188,23 +181,23 @@ class RemoteSource(BaseSource, SecureConfigMixin):
 class DatabaseSource(BaseSource, SecureConfigMixin):
     """Base class for database sources."""
 
-    connection_string: Optional[str] = Field(None, description="Full connection string")
+    connection_string: str | None = Field(None, description="Full connection string")
 
     # Connection components (alternative to connection string)
-    host: Optional[str] = Field(None, description="Database host")
-    port: Optional[int] = Field(None, description="Database port")
-    database: Optional[str] = Field(None, description="Database name")
-    username: Optional[str] = Field(None, description="Database username")
-    password: Optional[SecretStr] = Field(None, description="Database password")
+    host: str | None = Field(None, description="Database host")
+    port: int | None = Field(None, description="Database port")
+    database: str | None = Field(None, description="Database name")
+    username: str | None = Field(None, description="Database username")
+    password: SecretStr | None = Field(None, description="Database password")
 
     # Query configuration
-    query: Optional[str] = Field(None, description="SQL query to execute")
-    table_name: Optional[str] = Field(None, description="Table to load from")
-    schema_name: Optional[str] = Field(None, description="Schema name")
+    query: str | None = Field(None, description="SQL query to execute")
+    table_name: str | None = Field(None, description="Table to load from")
+    schema_name: str | None = Field(None, description="Schema name")
 
     # For SecureConfigMixin - DatabaseSource uses password instead of api_key
     provider: str = Field("database", description="Database provider")
-    api_key: Optional[SecretStr] = Field(None, description="Not used for databases")
+    api_key: SecretStr | None = Field(None, description="Not used for databases")
 
     def validate_source(self) -> bool:
         """Basic validation of connection parameters."""
@@ -212,27 +205,24 @@ class DatabaseSource(BaseSource, SecureConfigMixin):
             return bool(self.connection_string)
         return bool(self.host and self.database)
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         """Get kwargs for database loaders."""
         kwargs = {}
 
         # Use connection string or build it
         if self.connection_string:
             kwargs["connection_string"] = self.connection_string
+        elif self.username and self.password:
+            pwd = self.password.get_secret_value() if self.password else ""
+            conn_str = f"{self.provider}://{self.username}:{pwd}@{self.host}"
+            if self.port:
+                conn_str += f":{self.port}"
+            conn_str += f"/{self.database}"
+            kwargs["connection_string"] = conn_str
         else:
-            # Build connection string from components
-            # This is a simplified example - real implementation would vary by DB type
-            if self.username and self.password:
-                pwd = self.password.get_secret_value() if self.password else ""
-                conn_str = f"{self.provider}://{self.username}:{pwd}@{self.host}"
-                if self.port:
-                    conn_str += f":{self.port}"
-                conn_str += f"/{self.database}"
-                kwargs["connection_string"] = conn_str
-            else:
-                kwargs["host"] = self.host
-                kwargs["port"] = self.port
-                kwargs["database"] = self.database
+            kwargs["host"] = self.host
+            kwargs["port"] = self.port
+            kwargs["database"] = self.database
 
         if self.query:
             kwargs["query"] = self.query
@@ -252,21 +242,19 @@ class CloudSource(RemoteSource):
     """
 
     bucket_name: str = Field(..., description="Bucket/container name")
-    object_key: Optional[str] = Field(None, description="Specific object key")
-    prefix: Optional[str] = Field(None, description="Object prefix for listing")
-    region: Optional[str] = Field(None, description="Cloud region")
+    object_key: str | None = Field(None, description="Specific object key")
+    prefix: str | None = Field(None, description="Object prefix for listing")
+    region: str | None = Field(None, description="Cloud region")
 
     # Cloud-specific auth (in addition to SecureConfigMixin)
-    access_key_id: Optional[str] = Field(None, description="Access key ID")
-    secret_access_key: Optional[SecretStr] = Field(
-        None, description="Secret access key"
-    )
-    session_token: Optional[SecretStr] = Field(None, description="Session token")
+    access_key_id: str | None = Field(None, description="Access key ID")
+    secret_access_key: SecretStr | None = Field(None, description="Secret access key")
+    session_token: SecretStr | None = Field(None, description="Session token")
 
     # Override provider default with cloud-specific values
     provider: str = Field("aws", description="Cloud provider: aws, gcp, azure")
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         """Get kwargs for cloud storage loaders."""
         # Start with base remote kwargs
         kwargs = super().get_loader_kwargs()
@@ -297,9 +285,9 @@ class CloudSource(RemoteSource):
 # Specialized source types can be created by extending these base classes
 __all__ = [
     "BaseSource",
-    "LocalSource",
-    "DirectorySource",
-    "RemoteSource",
-    "DatabaseSource",
     "CloudSource",
+    "DatabaseSource",
+    "DirectorySource",
+    "LocalSource",
+    "RemoteSource",
 ]

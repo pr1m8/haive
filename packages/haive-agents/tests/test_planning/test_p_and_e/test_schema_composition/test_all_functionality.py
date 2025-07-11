@@ -11,29 +11,18 @@ sys.path.append("/home/will/Projects/haive/backend/haive/packages/haive-agents/s
 
 def test_imports():
     """Test that all main imports work."""
-    print("🧪 Testing Core Imports...")
 
     try:
         # Core schema imports
-        from haive.core.schema import SchemaComposer, StateSchema
-        from haive.core.schema.prebuilt import MessagesState, ToolState
-        from haive.core.schema.prebuilt.messages import (
-            MessagesStateWithTokenUsage,
-            TokenUsage,
-            TokenUsageMixin,
-        )
 
-        print("✅ All core imports successful")
         return True
     except Exception as e:
-        print(f"❌ Import failed: {e}")
         traceback.print_exc()
         return False
 
 
 def test_state_schema_methods():
     """Test StateSchema has all expected methods."""
-    print("\n🧪 Testing StateSchema Methods...")
 
     try:
         from haive.core.schema import StateSchema
@@ -67,7 +56,6 @@ def test_state_schema_methods():
                 missing_methods.append(method)
 
         if missing_methods:
-            print(f"❌ Missing methods: {missing_methods}")
             return False
 
         # Test properties
@@ -78,21 +66,17 @@ def test_state_schema_methods():
                 missing_props.append(prop)
 
         if missing_props:
-            print(f"❌ Missing properties: {missing_props}")
             return False
 
-        print("✅ StateSchema methods and properties verified")
         return True
 
     except Exception as e:
-        print(f"❌ StateSchema test failed: {e}")
         traceback.print_exc()
         return False
 
 
 def test_schema_composer_methods():
     """Test SchemaComposer has all expected methods."""
-    print("\n🧪 Testing SchemaComposer Methods...")
 
     try:
         from haive.core.schema import SchemaComposer
@@ -118,21 +102,17 @@ def test_schema_composer_methods():
                 missing_methods.append(method)
 
         if missing_methods:
-            print(f"❌ Missing methods: {missing_methods}")
             return False
 
-        print("✅ SchemaComposer methods verified")
         return True
 
     except Exception as e:
-        print(f"❌ SchemaComposer test failed: {e}")
         traceback.print_exc()
         return False
 
 
 def test_messages_state_methods():
     """Test MessagesState has all expected methods."""
-    print("\n🧪 Testing MessagesState Methods...")
 
     try:
         from haive.core.schema.prebuilt import MessagesState
@@ -159,21 +139,17 @@ def test_messages_state_methods():
                 missing_methods.append(method)
 
         if missing_methods:
-            print(f"❌ Missing methods: {missing_methods}")
             return False
 
-        print("✅ MessagesState methods verified")
         return True
 
     except Exception as e:
-        print(f"❌ MessagesState test failed: {e}")
         traceback.print_exc()
         return False
 
 
 def test_token_usage_functionality():
     """Test token usage components work."""
-    print("\n🧪 Testing Token Usage Functionality...")
 
     try:
         from haive.core.schema.prebuilt.messages import (
@@ -199,18 +175,15 @@ def test_token_usage_functionality():
         assert hasattr(token_state, "add_message")
         assert hasattr(token_state, "get_token_usage_summary")
 
-        print("✅ Token usage functionality verified")
         return True
 
     except Exception as e:
-        print(f"❌ Token usage test failed: {e}")
         traceback.print_exc()
         return False
 
 
 def test_engine_management():
     """Test engine management functionality."""
-    print("\n🧪 Testing Engine Management...")
 
     try:
         from haive.core.schema import SchemaComposer, StateSchema
@@ -229,18 +202,15 @@ def test_engine_management():
         assert hasattr(composer, "engines")
         assert hasattr(composer, "engines_by_type")
 
-        print("✅ Engine management verified")
         return True
 
     except Exception as e:
-        print(f"❌ Engine management test failed: {e}")
         traceback.print_exc()
         return False
 
 
 def test_backward_compatibility():
     """Test that existing patterns still work."""
-    print("\n🧪 Testing Backward Compatibility...")
 
     try:
         from haive.core.schema import SchemaComposer
@@ -253,18 +223,15 @@ def test_backward_compatibility():
         state = schema()
         assert state is not None
 
-        print("✅ Backward compatibility verified")
         return True
 
     except Exception as e:
-        print(f"❌ Backward compatibility test failed: {e}")
         traceback.print_exc()
         return False
 
 
 def test_agent_integration():
     """Test that agents work with new schema system."""
-    print("\n🧪 Testing Agent Integration...")
 
     try:
         # Test we can import agents
@@ -275,18 +242,15 @@ def test_agent_integration():
         assert Agent is not None
         assert TokenTrackingAgent is not None
 
-        print("✅ Agent integration verified")
         return True
 
     except Exception as e:
-        print(f"❌ Agent integration test failed: {e}")
         traceback.print_exc()
         return False
 
 
 def test_modular_imports():
     """Test that modular imports work."""
-    print("\n🧪 Testing Modular Imports...")
 
     try:
         # Test new modular structure imports
@@ -296,19 +260,15 @@ def test_modular_imports():
         assert EngineComposerMixin is not None
         assert FieldManagerMixin is not None
 
-        print("✅ Modular imports verified")
         return True
 
     except Exception as e:
-        print(f"❌ Modular imports test failed: {e}")
         traceback.print_exc()
         return False
 
 
 def run_all_tests():
     """Run all test suites."""
-    print("🚀 Running Comprehensive Schema System Test Suite")
-    print("=" * 60)
 
     tests = [
         test_imports,
@@ -332,22 +292,13 @@ def run_all_tests():
             else:
                 failed += 1
         except Exception as e:
-            print(f"❌ Test {test.__name__} crashed: {e}")
             failed += 1
 
-    print("\n" + "=" * 60)
-    print("📊 TEST RESULTS SUMMARY")
-    print("=" * 60)
-    print(f"✅ Passed: {passed}")
-    print(f"❌ Failed: {failed}")
-    print(
-        f"📈 Success Rate: {passed}/{passed + failed} ({100 * passed / (passed + failed):.1f}%)"
-    )
 
     if failed == 0:
-        print("\n🎉 ALL TESTS PASSED! Schema system is working correctly.")
+        pass.")
     else:
-        print(f"\n⚠️  {failed} tests failed. Need to fix issues before proceeding.")
+        passg.")
 
     return failed == 0
 

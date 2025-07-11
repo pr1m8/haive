@@ -3,9 +3,8 @@
 import asyncio
 from unittest.mock import AsyncMock, Mock
 
-import pytest
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage
+import pytest
 
 from haive.agents.simple.agent import SimpleAgent
 from haive.agents.supervisor.dynamic_state import (
@@ -13,6 +12,7 @@ from haive.agents.supervisor.dynamic_state import (
     DynamicSupervisorState,
 )
 from haive.agents.supervisor.dynamic_supervisor import DynamicSupervisorAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 class TestDynamicSupervisorAgent:

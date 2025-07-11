@@ -1,4 +1,4 @@
-"""Decomposer - TODO: Add brief description
+"""Decomposer - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

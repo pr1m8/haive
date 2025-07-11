@@ -1,21 +1,15 @@
+from collections.abc import Callable, Sequence
 from typing import (
     Any,
-    Callable,
     Dict,
     Optional,
     Protocol,
-    Sequence,
     Type,
     Union,
     runtime_checkable,
 )
 
-from langchain_core.tools import BaseTool, StructuredTool
-from langchain_core.tools.base import BaseToolkit
 from pydantic import BaseModel
-
-from haive.core.engine.agent.agent import Agent
-from haive.core.engine.base import Engine
 
 # ============================================================================
 # Group 1: Input and Output Schema Protocol
@@ -24,10 +18,10 @@ from haive.core.engine.base import Engine
 
 @runtime_checkable
 class IOSchemaAware(Protocol):
-    """Protocol for objects that have input/output schemas"""
+    """Protocol for objects that have input/output schemas."""
 
-    input_schema: Optional[Type[BaseModel]]
-    output_schema: Optional[Type[BaseModel]]
+    input_schema: type[BaseModel] | None
+    output_schema: type[BaseModel] | None
 
 
 # ============================================================================
@@ -37,9 +31,9 @@ class IOSchemaAware(Protocol):
 
 @runtime_checkable
 class StateSchemaAware(Protocol):
-    """Protocol for objects that have state schema"""
+    """Protocol for objects that have state schema."""
 
-    state_schema: Optional[Type[BaseModel]]
+    state_schema: type[BaseModel] | None
 
 
 # ============================================================================
@@ -49,13 +43,12 @@ class StateSchemaAware(Protocol):
 
 @runtime_checkable
 class FullSchemaAware(IOSchemaAware, StateSchemaAware, Protocol):
-    """Protocol for objects that have all schema types"""
+    """Protocol for objects that have all schema types."""
 
     # Inherits:
     # - input_schema: Optional[Type[BaseModel]]
     # - output_schema: Optional[Type[BaseModel]]
     # - state_schema: Optional[Type[BaseModel]]
-    pass
 
 
 # ============================================================================
@@ -65,14 +58,14 @@ class FullSchemaAware(IOSchemaAware, StateSchemaAware, Protocol):
 
 @runtime_checkable
 class IOFieldAware(Protocol):
-    """Protocol for objects that can provide input/output field definitions"""
+    """Protocol for objects that can provide input/output field definitions."""
 
-    def get_input_fields(self) -> Dict[str, Any]:
-        """Get input field definitions"""
+    def get_input_fields(self) -> dict[str, Any]:
+        """Get input field definitions."""
         ...
 
-    def get_output_fields(self) -> Dict[str, Any]:
-        """Get output field definitions"""
+    def get_output_fields(self) -> dict[str, Any]:
+        """Get output field definitions."""
         ...
 
 
@@ -83,7 +76,7 @@ class IOFieldAware(Protocol):
 
 @runtime_checkable
 class CompleteSchemaAware(FullSchemaAware, IOFieldAware, Protocol):
-    """Protocol for objects that have both schemas and field methods"""
+    """Protocol for objects that have both schemas and field methods."""
 
     # Inherits from FullSchemaAware:
     # - input_schema: Optional[Type[BaseModel]]
@@ -93,4 +86,3 @@ class CompleteSchemaAware(FullSchemaAware, IOFieldAware, Protocol):
     # Inherits from IOFieldAware:
     # - get_input_fields(self) -> Dict[str, Any]
     # - get_output_fields(self) -> Dict[str, Any]
-    pass

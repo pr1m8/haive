@@ -1,5 +1,4 @@
-"""
-Zep Cloud Retriever implementation for the Haive framework.
+"""Zep Cloud Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Zep Cloud retriever,
 which retrieves conversation history and memory from Zep's cloud-hosted
@@ -35,8 +34,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.ZEP_CLOUD)
 class ZepCloudRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for Zep Cloud retriever in the Haive framework.
+    """Configuration for Zep Cloud retriever in the Haive framework.
 
     This retriever searches conversational memory stored in Zep Cloud and returns
     relevant chat history and context for AI applications.
@@ -87,7 +85,7 @@ class ZepCloudRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None, description="Zep Cloud API key (auto-resolved from ZEP_API_KEY)"
     )
 
@@ -118,30 +116,30 @@ class ZepCloudRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         description="Lambda parameter for MMR search (diversity vs relevance)",
     )
 
-    metadata_filter: Optional[Dict[str, Any]] = Field(
+    metadata_filter: dict[str, Any] | None = Field(
         default=None, description="Metadata filters for search"
     )
 
     # Cloud-specific parameters
-    user_id: Optional[str] = Field(
+    user_id: str | None = Field(
         default=None, description="User ID for multi-user memory isolation"
     )
 
-    project_id: Optional[str] = Field(
+    project_id: str | None = Field(
         default=None, description="Project ID for organizing memory across projects"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Zep Cloud retriever."""
         return {
             "query": (str, Field(description="Search query for conversation memory")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Zep Cloud retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list,
                     description="Conversation history from Zep Cloud",
@@ -150,8 +148,7 @@ class ZepCloudRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a Zep Cloud retriever from this configuration.
+        """Create a Zep Cloud retriever from this configuration.
 
         Returns:
             ZepCloudRetriever: Instantiated retriever ready for cloud memory search.

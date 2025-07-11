@@ -1,4 +1,5 @@
 # Navigation Hierarchy Design 🗺️
+
 **Status**: 🟡 In Progress  
 **Last Updated**: January 7, 2025  
 **Session ID**: navigation_restructure_20250107
@@ -12,6 +13,7 @@
 ## 📐 **URL Structure**
 
 ### **Pattern**:
+
 ```
 /api/haive/                          # Root level
 ├── {package}/                       # Package level (core, agents, tools)
@@ -23,9 +25,10 @@
 ```
 
 ### **Examples**:
+
 ```
 ✅ /api/haive/index.html                    # Main API hub
-✅ /api/haive/core/index.html               # Core package overview  
+✅ /api/haive/core/index.html               # Core package overview
 ✅ /api/haive/core/engine/index.html        # Engine module overview
 ✅ /api/haive/core/engine/base.html         # Base submodule docs
 ✅ /api/haive/agents/simple/structured.html # Agent implementation
@@ -34,13 +37,15 @@
 ## 🏗️ **Implementation Details**
 
 ### **Files Created**:
-- `restructure_navigation.py` - Generates complete hierarchy  
+
+- `restructure_navigation.py` - Generates complete hierarchy
 - `api/haive/index.rst` - Main entry point with package grid
 - `api/haive/core/` - Complete core package structure
 - `api/haive/agents/` - Complete agents package structure
 - All module and submodule index files
 
 ### **Grid Card System**:
+
 ```rst
 .. grid:: 1 2 2 3
    :gutter: 3
@@ -48,7 +53,7 @@
    .. grid-item-card:: 🏗️ **Haive Core**
       :link: core/index
       :link-type: doc
-      
+
       Core infrastructure and utilities
 ```
 
@@ -63,22 +68,26 @@
 ## ⚠️ **Current Issues**
 
 ### **Sidebar Overwhelm**
+
 - **Problem**: All 4 levels expanded by default
 - **Impact**: Extremely long navigation tree
 - **User Feedback**: "can't see the forest for the trees"
 
 ### **Content Depth**
+
 - **Problem**: New structure focuses on navigation, loses API detail
 - **User Preference**: "preferred the old UI for the schemas"
 - **Missing**: Rich autosummary content with class/function listings
 
 ### **Build Integration**
+
 - **Problem**: Competing with autosummary and legacy structures
 - **Status**: 3 different API documentation systems active
 
 ## 🔧 **Planned Improvements**
 
 ### **Sidebar Configuration**:
+
 ```python
 # Target configuration for better UX
 html_theme_options = {
@@ -89,6 +98,7 @@ html_theme_options = {
 ```
 
 ### **Content Enhancement**:
+
 - Integrate autosummary content into hierarchy
 - Add class/function previews in module cards
 - Maintain discovery AND reference functionality
@@ -105,11 +115,13 @@ html_theme_options = {
 ## 🎨 **Visual Design**
 
 ### **Current Grid Cards**:
+
 - Clean, minimal styling
 - Package icons (🏗️ Core, 🤖 Agents, 🔧 Tools)
 - Module descriptions and submodule counts
 
 ### **Planned Enhancement**:
+
 - Apply showcase CSS for gradient backgrounds
 - Hover animations and glass morphism effects
 - Better typography and spacing
@@ -133,7 +145,7 @@ docs/source/api/haive/
 │   │   ├── base.rst         # Submodule documentation
 │   │   └── aug_llm.rst      # Submodule documentation
 │   └── schema/
-│       ├── index.rst        # Schema module overview  
+│       ├── index.rst        # Schema module overview
 │       └── state_schema.rst # Submodule documentation
 └── agents/
     ├── index.rst            # Agents package overview
@@ -144,7 +156,8 @@ docs/source/api/haive/
 
 ---
 
-**Next Steps**: 
+**Next Steps**:
+
 1. Fix build system to enable testing
 2. Apply showcase CSS for beautiful visuals
 3. Integrate autosummary content for depth

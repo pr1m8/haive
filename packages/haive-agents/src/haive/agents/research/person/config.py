@@ -2,10 +2,11 @@
 
 from typing import Any
 
+from pydantic import Field
+
 from haive.core.engine.agent.agent import AgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AnthropicLLMConfig
-from pydantic import Field
 
 
 class PersonResearchAgentConfig(AgentConfig):

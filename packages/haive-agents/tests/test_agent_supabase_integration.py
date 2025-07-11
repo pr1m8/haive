@@ -3,14 +3,15 @@
 import asyncio
 import os
 
-import pytest
 from dotenv import load_dotenv
+from langgraph.graph import END
+import pytest
+
+from haive.agents.base import Agent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.persistence.supabase_config import SupabaseCheckpointerConfig
 from haive.core.persistence.types import CheckpointerMode
-from langgraph.graph import END
 
-from haive.agents.base import Agent
 
 # Load environment variables
 load_dotenv()
@@ -27,7 +28,6 @@ class TestSupabaseAgent(Agent):
 
     def setup_agent(self):
         """Setup hook."""
-        pass
 
     def build_graph(self) -> BaseGraph:
         """Build a simple test graph."""
@@ -41,7 +41,7 @@ class TestSupabaseAgent(Agent):
             messages = state.get("messages", [])
             count = state.get("count", 0)
             new_message = f"Processed message {count + 1}"
-            return {"messages": messages + [new_message], "count": count + 1}
+            return {"messages": [*messages, new_message], "count": count + 1}
 
         graph.add_node("process", process_message)
         graph.add_edge("process", END)

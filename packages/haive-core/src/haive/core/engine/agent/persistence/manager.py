@@ -22,6 +22,7 @@ from haive.core.config.auth_runnable import HaiveRunnableConfigManager
 # Import Haive-specific utilities
 from haive.core.engine.agent.persistence.types import CheckpointerType
 
+
 # Set up logging
 logger = logging.getLogger(__name__)
 
@@ -154,7 +155,7 @@ class PersistenceManager:
             return checkpointer
 
         except Exception as e:
-            logger.error(f"Failed to set up PostgreSQL checkpointer: {e}")
+            logger.exception(f"Failed to set up PostgreSQL checkpointer: {e}")
             logger.warning("Falling back to memory checkpointer")
             return MemorySaver()
 
@@ -183,7 +184,7 @@ class PersistenceManager:
         encoded_pass = urllib.parse.quote_plus(str(db_pass))
 
         # Format the connection URI
-        uri = f"postgresql://{db_user}:{encoded_pass}" f"@{db_host}:{db_port}/{db_name}"
+        uri = f"postgresql://{db_user}:{encoded_pass}@{db_host}:{db_port}/{db_name}"
 
         # Add SSL mode if specified
         if ssl_mode:
@@ -230,7 +231,7 @@ class PersistenceManager:
             logger.info("PostgreSQL tables created successfully")
             return True
         except Exception as e:
-            logger.error(f"Error during checkpointer setup: {e}")
+            logger.exception(f"Error during checkpointer setup: {e}")
             return False
 
     def ensure_pool_open(self):
@@ -255,7 +256,7 @@ class PersistenceManager:
                     self.pool_opened = True
                 return True
 
-            elif hasattr(conn, "_opened"):
+            if hasattr(conn, "_opened"):
                 # Older versions use _opened attribute
                 if not conn._opened:
                     logger.info("Opening PostgreSQL connection pool (legacy)")
@@ -263,10 +264,9 @@ class PersistenceManager:
                     self.pool_opened = True
                 return True
 
-            else:
-                # Not a pool or unknown implementation
-                logger.debug("Unknown pool implementation, assuming already open")
-                return True
+            # Not a pool or unknown implementation
+            logger.debug("Unknown pool implementation, assuming already open")
+            return True
 
         except Exception as e:
             logger.error(f"Error ensuring pool is open: {e}", exc_info=True)
@@ -289,10 +289,9 @@ class PersistenceManager:
             if hasattr(pool, "is_open") and pool.is_open():
                 logger.debug("Closing PostgreSQL connection pool")
                 # We don't actually close the pool unless explicitly needed
-                # pool.close()
                 self.pool_opened = False
         except Exception as e:
-            logger.error(f"Error closing pool: {e}")
+            logger.exception(f"Error closing pool: {e}")
 
     def register_thread(self, thread_id, auth_info=None):
         """Register a thread in the PostgreSQL database, including user context from Supabase.
@@ -367,7 +366,7 @@ class PersistenceManager:
         cursor.execute(
             """
             SELECT EXISTS (
-                SELECT FROM information_schema.tables 
+                SELECT FROM information_schema.tables
                 WHERE table_name = 'threads'
             );
         """
@@ -399,10 +398,10 @@ class PersistenceManager:
         """
         cursor.execute(
             """
-            INSERT INTO threads (thread_id, last_access, metadata, user_id) 
-            VALUES (%s, CURRENT_TIMESTAMP, %s, %s) 
-            ON CONFLICT (thread_id) 
-            DO UPDATE SET 
+            INSERT INTO threads (thread_id, last_access, metadata, user_id)
+            VALUES (%s, CURRENT_TIMESTAMP, %s, %s)
+            ON CONFLICT (thread_id)
+            DO UPDATE SET
                 last_access = CURRENT_TIMESTAMP,
                 metadata = threads.metadata || %s::jsonb,
                 user_id = COALESCE(%s, threads.user_id)
@@ -434,10 +433,10 @@ class PersistenceManager:
         """
         cursor.execute(
             """
-            INSERT INTO threads (thread_id, last_access, metadata) 
-            VALUES (%s, CURRENT_TIMESTAMP, %s) 
-            ON CONFLICT (thread_id) 
-            DO UPDATE SET 
+            INSERT INTO threads (thread_id, last_access, metadata)
+            VALUES (%s, CURRENT_TIMESTAMP, %s)
+            ON CONFLICT (thread_id)
+            DO UPDATE SET
                 last_access = CURRENT_TIMESTAMP,
                 metadata = threads.metadata || %s::jsonb
         """,
@@ -565,88 +564,83 @@ class PersistenceManager:
             self.ensure_pool_open()
 
             # Query threads
-            with self.checkpointer.conn.connection() as conn:
-                with conn.cursor() as cursor:
-                    # First check if the threads table exists
-                    cursor.execute(
-                        """
+            with self.checkpointer.conn.connection() as conn, conn.cursor() as cursor:
+                # First check if the threads table exists
+                cursor.execute(
+                    """
                         SELECT EXISTS (
-                            SELECT FROM information_schema.tables 
+                            SELECT FROM information_schema.tables
                             WHERE table_name = 'threads'
                         );
                     """
-                    )
-                    table_exists = cursor.fetchone()[0]
+                )
+                table_exists = cursor.fetchone()[0]
 
-                    if not table_exists:
-                        logger.debug("Threads table does not exist yet")
-                        return []
+                if not table_exists:
+                    logger.debug("Threads table does not exist yet")
+                    return []
 
-                    # Build the query based on filters
-                    if thread_id:
-                        logger.debug(f"Filtering by thread_id={thread_id}")
-                        query = """
+                # Build the query based on filters
+                if thread_id:
+                    logger.debug(f"Filtering by thread_id={thread_id}")
+                    query = """
                             SELECT thread_id, metadata, user_id, created_at, last_access
                             FROM threads
                             WHERE thread_id = %s
                             LIMIT 1
                         """
-                        params = (thread_id,)
-                    elif user_id:
-                        logger.debug(
-                            f"Filtering by user_id={user_id} (type: {type(user_id).__name__})"
-                        )
-                        query = """
+                    params = (thread_id,)
+                elif user_id:
+                    logger.debug(
+                        f"Filtering by user_id={user_id} (type: {type(user_id).__name__})"
+                    )
+                    query = """
                             SELECT thread_id, metadata, user_id, created_at, last_access
                             FROM threads
                             WHERE user_id = %s
                             ORDER BY last_access DESC
                             LIMIT %s OFFSET %s
                         """
-                        params = (user_id, limit, offset)
-                    else:
-                        logger.debug(
-                            f"No filters, fetching all threads with limit={limit}, offset={offset}"
-                        )
-                        query = """
+                    params = (user_id, limit, offset)
+                else:
+                    logger.debug(
+                        f"No filters, fetching all threads with limit={limit}, offset={offset}"
+                    )
+                    query = """
                             SELECT thread_id, metadata, user_id, created_at, last_access
                             FROM threads
                             ORDER BY last_access DESC
                             LIMIT %s OFFSET %s
                         """
-                        params = (limit, offset)
+                    params = (limit, offset)
 
-                    # Execute the query
-                    cursor.execute(query, params)
-                    results = cursor.fetchall()
+                # Execute the query
+                cursor.execute(query, params)
+                results = cursor.fetchall()
 
-                    if user_id:
-                        logger.debug(
-                            f"Found {len(results)} threads for user_id={user_id}"
-                        )
+                if user_id:
+                    logger.debug(f"Found {len(results)} threads for user_id={user_id}")
 
-                        # For debugging purposes
-                        if logger.isEnabledFor(logging.DEBUG):
-                            cursor.execute("SELECT COUNT(*) FROM threads")
-                            total = cursor.fetchone()[0]
-                            logger.debug(f"Total threads in database: {total}")
+                    # For debugging purposes
+                    if logger.isEnabledFor(logging.DEBUG):
+                        cursor.execute("SELECT COUNT(*) FROM threads")
+                        total = cursor.fetchone()[0]
+                        logger.debug(f"Total threads in database: {total}")
 
-                            cursor.execute(
-                                "SELECT thread_id, user_id FROM threads LIMIT 5"
-                            )
-                            sample_threads = cursor.fetchall()
-                            logger.debug(f"Sample threads: {sample_threads}")
+                        cursor.execute("SELECT thread_id, user_id FROM threads LIMIT 5")
+                        sample_threads = cursor.fetchall()
+                        logger.debug(f"Sample threads: {sample_threads}")
 
-                    # Process results
-                    threads = []
-                    for result in results:
-                        thread_id, metadata, user_id, created_at, last_access = result
-                        thread_info = self._process_thread_result(
-                            thread_id, metadata, user_id, created_at, last_access
-                        )
-                        threads.append(thread_info)
+                # Process results
+                threads = []
+                for result in results:
+                    thread_id, metadata, user_id, created_at, last_access = result
+                    thread_info = self._process_thread_result(
+                        thread_id, metadata, user_id, created_at, last_access
+                    )
+                    threads.append(thread_info)
 
-                    return threads
+                return threads
 
         except Exception as e:
             logger.error(f"Error listing threads: {e}", exc_info=True)
@@ -723,41 +717,39 @@ class PersistenceManager:
             self.ensure_pool_open()
 
             # Delete thread
-            with self.checkpointer.conn.connection() as conn:
-                with conn.cursor() as cursor:
-                    # First check if the threads table exists
-                    cursor.execute(
-                        """
+            with self.checkpointer.conn.connection() as conn, conn.cursor() as cursor:
+                # First check if the threads table exists
+                cursor.execute(
+                    """
                         SELECT EXISTS (
-                            SELECT FROM information_schema.tables 
+                            SELECT FROM information_schema.tables
                             WHERE table_name = 'threads'
                         );
                     """
-                    )
-                    table_exists = cursor.fetchone()[0]
+                )
+                table_exists = cursor.fetchone()[0]
 
-                    if not table_exists:
-                        logger.debug("Threads table does not exist, nothing to delete")
-                        return True
+                if not table_exists:
+                    logger.debug("Threads table does not exist, nothing to delete")
+                    return True
 
-                    # Delete the thread
-                    cursor.execute(
-                        """
+                # Delete the thread
+                cursor.execute(
+                    """
                         DELETE FROM threads
                         WHERE thread_id = %s
                         RETURNING thread_id
                     """,
-                        (thread_id,),
-                    )
+                    (thread_id,),
+                )
 
-                    # Check if any rows were affected
-                    deleted = cursor.fetchone()
-                    if deleted:
-                        logger.info(f"Thread {thread_id} deleted from PostgreSQL")
-                        return True
-                    else:
-                        logger.debug(f"Thread {thread_id} not found in database")
-                        return False
+                # Check if any rows were affected
+                deleted = cursor.fetchone()
+                if deleted:
+                    logger.info(f"Thread {thread_id} deleted from PostgreSQL")
+                    return True
+                logger.debug(f"Thread {thread_id} not found in database")
+                return False
 
         except Exception as e:
             logger.warning(f"Error deleting thread: {e}", exc_info=True)

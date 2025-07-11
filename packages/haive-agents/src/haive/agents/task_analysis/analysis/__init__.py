@@ -1,4 +1,4 @@
-"""Analysis - TODO: Add brief description
+"""Analysis - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

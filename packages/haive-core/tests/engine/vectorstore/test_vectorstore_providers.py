@@ -9,13 +9,12 @@ and can be instantiated.
 import unittest
 from typing import List, Type
 
-from langchain_core.vectorstores import VectorStore
-
 from haive.core.engine.vectorstore.vectorstore import (
     VectorStoreConfig,
     VectorStoreProvider,
     VectorStoreProviderRegistry,
 )
+from langchain_core.vectorstores import VectorStore
 
 
 class TestVectorStoreProviders(unittest.TestCase):

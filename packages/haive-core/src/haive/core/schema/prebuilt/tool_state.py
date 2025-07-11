@@ -1,11 +1,12 @@
 import logging
 from typing import Any, Dict, List, Optional
 
+from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
+from haive.core.schema.prebuilt.messages.messages_with_token_usage import (
+    MessagesStateWithTokenUsage,
+)
 from langchain_core.tools import BaseTool
 from pydantic import Field, computed_field, model_validator
-
-from haive.core.schema.prebuilt.messages.messages_with_token_usage import MessagesStateWithTokenUsage
-from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
 
 logger = logging.getLogger(__name__)
 
@@ -13,9 +14,9 @@ logger = logging.getLogger(__name__)
 class ToolState(ToolRouteMixin, MessagesStateWithTokenUsage):
     """State schema for tool-based agents with tool management and token tracking.
 
-    ToolState combines ToolRouteMixin and MessagesStateWithTokenUsage to provide specialized 
-    functionality for agents that use tools. It provides robust tool management infrastructure 
-    for tool registration, categorization, routing, and execution while maintaining token 
+    ToolState combines ToolRouteMixin and MessagesStateWithTokenUsage to provide specialized
+    functionality for agents that use tools. It provides robust tool management infrastructure
+    for tool registration, categorization, routing, and execution while maintaining token
     tracking for all messages.
 
     This schema serves as the foundation for tool-using agent states in the Haive framework,
@@ -294,7 +295,7 @@ class ToolState(ToolRouteMixin, MessagesStateWithTokenUsage):
         # Use the mixin's method if available
         if hasattr(super(), "_get_tool_name"):
             return super()._get_tool_name(tool, index)
-        
+
         # Fallback to local implementation
         if hasattr(tool, "name"):
             return tool.name
@@ -347,9 +348,9 @@ class ToolState(ToolRouteMixin, MessagesStateWithTokenUsage):
         }
 
         # Handle case where tool_routes might not exist in composed schemas
-        if not hasattr(self, 'tool_routes'):
+        if not hasattr(self, "tool_routes"):
             return {}
-            
+
         return {
             tool_name: legacy_mapping.get(route, "tool_node")
             for tool_name, route in self.tool_routes.items()

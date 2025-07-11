@@ -1,17 +1,18 @@
 import operator
 from typing import Annotated, Any, Dict, List, Literal, Optional, Union
 
-from haive.core.schema.prebuilt.messages_state import MessagesState
 from langchain_core.messages import HumanMessage
 from pydantic import Field, computed_field, model_validator
+
+from haive.core.schema.prebuilt.messages_state import MessagesState
 
 from .models import Reflection, TreeNode
 
 
 def update_nodes(
-    existing: Optional[Dict[str, TreeNode]] = None,
-    updates: Optional[Dict[str, TreeNode]] = None,
-) -> Dict[str, TreeNode]:
+    existing: dict[str, TreeNode] | None = None,
+    updates: dict[str, TreeNode] | None = None,
+) -> dict[str, TreeNode]:
     """Custom reducer for tree nodes."""
     if existing is None:
         existing = {}
@@ -28,10 +29,10 @@ class LATSState(MessagesState):
     """State for Language Agent Tree Search."""
 
     # Tree structure
-    nodes: Annotated[Dict[str, TreeNode], update_nodes] = Field(
+    nodes: Annotated[dict[str, TreeNode], update_nodes] = Field(
         default_factory=dict, description="All nodes in the search tree, keyed by ID"
     )
-    root_id: Optional[str] = Field(default=None, description="Root node ID")
+    root_id: str | None = Field(default=None, description="Root node ID")
 
     # Search parameters
     max_depth: int = Field(default=5, description="Maximum tree depth")
@@ -45,20 +46,20 @@ class LATSState(MessagesState):
     )
 
     # Current search state
-    current_node_id: Optional[str] = Field(
+    current_node_id: str | None = Field(
         default=None, description="Node being processed"
     )
-    candidate_nodes: List[TreeNode] = Field(
+    candidate_nodes: list[TreeNode] = Field(
         default_factory=list, description="Nodes to evaluate"
     )
 
     # Results
-    best_solution_id: Optional[str] = Field(default=None)
+    best_solution_id: str | None = Field(default=None)
     should_terminate: bool = Field(default=False)
-    termination_reason: Optional[str] = None
+    termination_reason: str | None = None
 
     # Tool integration
-    tools: List[Dict[str, Any]] = Field(default_factory=list)
+    tools: list[dict[str, Any]] = Field(default_factory=list)
 
     @computed_field
     @property
@@ -116,7 +117,7 @@ class LATSState(MessagesState):
         max_depth_reached = max((n.depth for n in self.nodes.values()), default=0)
 
         stats = [
-            f"Tree Statistics:",
+            "Tree Statistics:",
             f"  - Total nodes: {total_nodes}",
             f"  - Solved nodes: {solved_nodes}",
             f"  - Max depth reached: {max_depth_reached}/{self.max_depth}",
@@ -137,15 +138,13 @@ class LATSState(MessagesState):
             return False
         if self.rollouts_completed >= self.max_rollouts:
             return False
-        if any(n.is_solved and n.value > 0.9 for n in self.nodes.values()):
-            return False
-        return True
+        return not any(n.is_solved and n.value > 0.9 for n in self.nodes.values())
 
-    def get_node(self, node_id: str) -> Optional[TreeNode]:
+    def get_node(self, node_id: str) -> TreeNode | None:
         """Get a node by ID."""
         return self.nodes.get(node_id)
 
-    def get_best_leaf_to_expand(self) -> Optional[str]:
+    def get_best_leaf_to_expand(self) -> str | None:
         """Find the best leaf node to expand using UCT."""
         if not self.root_id:
             return None

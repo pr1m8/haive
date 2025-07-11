@@ -6,6 +6,7 @@ from pydantic import BaseModel, ConfigDict, Field, PrivateAttr
 
 from haive.core.registry.base import AbstractRegistry
 
+
 T = TypeVar("T")
 
 
@@ -39,7 +40,7 @@ class SerializableModel(BaseModel, metaclass=SerializableModelMetaclass):
         default_factory=lambda: str(uuid4()), description="Unique identifier"
     )
     name: str = Field(..., description="Name of the model")
-    description: Optional[str] = Field(default=None, description="Optional description")
+    description: str | None = Field(default=None, description="Optional description")
     created_at: datetime = Field(
         default_factory=datetime.now, description="Creation timestamp"
     )
@@ -48,8 +49,8 @@ class SerializableModel(BaseModel, metaclass=SerializableModelMetaclass):
     )
 
     # Class variables
-    _registry: ClassVar[Optional[AbstractRegistry]] = None
-    _registry_mapping: ClassVar[Dict[str, Type["SerializableModel"]]] = {}
+    _registry: ClassVar[AbstractRegistry | None] = None
+    _registry_mapping: ClassVar[dict[str, type["SerializableModel"]]] = {}
     __abstract__: ClassVar[bool] = True
 
     # Private attributes
@@ -96,14 +97,14 @@ class SerializableModel(BaseModel, metaclass=SerializableModelMetaclass):
         return None
 
     @classmethod
-    def list_all(cls) -> List[str]:
+    def list_all(cls) -> list[str]:
         """List all instances of this type from the registry."""
         if cls._registry is not None:
             return cls._registry.list(cls.__name__)
         return []
 
     @classmethod
-    def get_all(cls) -> Dict[str, "SerializableModel"]:
+    def get_all(cls) -> dict[str, "SerializableModel"]:
         """Get all instances of this type from the registry."""
         if cls._registry is not None:
             return cls._registry.get_all(cls.__name__)

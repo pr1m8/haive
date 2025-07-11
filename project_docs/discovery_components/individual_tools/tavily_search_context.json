@@ -7,7 +7,7 @@
     "description": "Generate search context for Retrieval Augmented Generation (RAG) applications.\n\n    This tool retrieves relevant context information from the web based on a search query,\n    specifically formatted for use in RAG applications. It provides more comprehensive\n    context than standard search responses.\n\n    Args:\n        query (str): The search query string.\n        search_depth (Literal[\"basic\", \"advanced\"]): Search depth, either 'basic' or 'advanced'.\n            Default is 'basic'.\n        topic (Literal[\"general\", \"news\"]): The topic category for search context.\n            Default is 'general'.\n        days (int): How recent the information should be in days. Default is 3.\n        max_results (int): Maximum number of results to return. Default is 5.\n        include_domains (Sequence[str]): Specific domains to include in search.\n            Default is empty list.\n        exclude_domains (Sequence[str]): Specific domains to exclude from search.\n            Default is empty list.\n        max_tokens (int): Maximum number of tokens to return in the context. Default is 4000.\n        **kwargs: Additional arguments to pass to the Tavily API.\n\n    Returns:\n        str: The search context formatted for RAG applications.\n\n    Raises:\n        Exception: If the API request fails.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.756805",
+    "timestamp": "2025-07-10T19:45:28.985703",
     "schema": {
       "description": "Generate search context for Retrieval Augmented Generation (RAG) applications.\n\nThis tool retrieves relevant context information from the web based on a search query,\nspecifically formatted for use in RAG applications. It provides more comprehensive\ncontext than standard search responses.\n\nArgs:\n    query (str): The search query string.\n    search_depth (Literal[\"basic\", \"advanced\"]): Search depth, either 'basic' or 'advanced'.\n        Default is 'basic'.\n    topic (Literal[\"general\", \"news\"]): The topic category for search context.\n        Default is 'general'.\n    days (int): How recent the information should be in days. Default is 3.\n    max_results (int): Maximum number of results to return. Default is 5.\n    include_domains (Sequence[str]): Specific domains to include in search.\n        Default is empty list.\n    exclude_domains (Sequence[str]): Specific domains to exclude from search.\n        Default is empty list.\n    max_tokens (int): Maximum number of tokens to return in the context. Default is 4000.\n    **kwargs: Additional arguments to pass to the Tavily API.\n\nReturns:\n    str: The search context formatted for RAG applications.\n\nRaises:\n    Exception: If the API request fails.",
       "properties": {
@@ -84,7 +84,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.756805",
+      "timestamp": "2025-07-10T19:45:28.985703",
       "category": "individual_tools"
     }
   },

@@ -1,5 +1,4 @@
-"""
-LangGraph conversion utilities for Haive graphs.
+"""LangGraph conversion utilities for Haive graphs.
 
 This module provides functions to convert Haive graphs to and from LangGraph objects.
 """
@@ -19,10 +18,9 @@ console = Console()
 
 
 def convert_to_langgraph(
-    graph: Any, state_schema: Optional[Type[BaseModel]] = None
+    graph: Any, state_schema: type[BaseModel] | None = None
 ) -> StateGraph:
-    """
-    Convert a Haive graph to a LangGraph StateGraph.
+    """Convert a Haive graph to a LangGraph StateGraph.
 
     Args:
         graph: Haive graph instance (BaseGraph or SchemaGraph)
@@ -97,8 +95,7 @@ def convert_to_langgraph(
 
 
 def extract_callable(node: Any, node_name: str) -> Any:
-    """
-    Extract a callable from a node.
+    """Extract a callable from a node.
 
     Args:
         node: Node object
@@ -140,8 +137,7 @@ def extract_callable(node: Any, node_name: str) -> Any:
 
 
 def create_parameter_aware_wrapper(func: Any) -> Any:
-    """
-    Create a wrapper that adapts to the function's parameter count.
+    """Create a wrapper that adapts to the function's parameter count.
 
     Args:
         func: Function to wrap
@@ -156,10 +152,7 @@ def create_parameter_aware_wrapper(func: Any) -> Any:
     def wrapper(state, config=None):
         try:
             # Call with appropriate number of parameters
-            if param_count == 1:
-                result = func(state)
-            else:
-                result = func(state, config)
+            result = func(state) if param_count == 1 else func(state, config)
 
             # Special handling for Command objects
             if isinstance(result, Command):
@@ -168,7 +161,7 @@ def create_parameter_aware_wrapper(func: Any) -> Any:
 
             return result
         except Exception as e:
-            logger.error(f"Error calling function: {e}")
+            logger.exception(f"Error calling function: {e}")
             return state
 
     return wrapper

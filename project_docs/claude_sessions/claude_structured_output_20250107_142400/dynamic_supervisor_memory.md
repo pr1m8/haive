@@ -12,11 +12,13 @@
 **Key Insight**: Mirror how `tool_node` works in SimpleAgent but for agents:
 
 **Tool Node Pattern:**
+
 - Reads `engine.tools` at runtime
-- Takes tool name from state  
+- Takes tool name from state
 - Gets tool by name, creates runnable, invokes
 
 **Agent Node Pattern:**
+
 - Reads `state.agents` at runtime
 - Takes agent name from state
 - Gets agent by name, creates runnable, invokes task
@@ -24,6 +26,7 @@
 ### 3-Node Supervisor Architecture
 
 **ReactAgent with 3 destinations:**
+
 1. `supervisor` → reasoning node, sets routing in state
 2. `agent_execution` → generic node that executes any agent from state
 3. `add_agent` → adds new agent to state registry
@@ -32,13 +35,15 @@
 ### State-Based Tool Generation
 
 **Model validators sync tools from state to supervisor:**
-- Tools created from `state.agents` 
+
+- Tools created from `state.agents`
 - Dynamic choice model validates agent names (like args schema)
 - Tools automatically update when agents added/removed
 
 ## 🧠 Core Understanding: What We've Recovered
 
 ### The Problem with Pre-compiled Tools
+
 - **LangGraph's Static Approach**: Pre-compiled handoff tools with `Send`/`Command` don't allow runtime changes
 - **Static Example**: https://langchain-ai.github.io/langgraph/tutorials/multi_agent/agent_supervisor/#4-create-delegation-tasks
 - **Limitation**: Tools are compiled into the graph structure, preventing dynamic agent addition
@@ -70,21 +75,25 @@ User's vision: "there should really only be 3 nodes that supervisor can go to"
 ## 📋 TASK HIERARCHY & IMPLEMENTATION PLAN
 
 ### Phase 1: State Structure & Inheritance
+
 1. **Proper State Inheritance** - Use MessagesState + ToolState (not just StateSchema)
 2. **Agent Registry in State** - `agents: Dict[str, AgentInfo]`, `active_agents: Set[str]`
 3. **Routing Fields** - `next_agent: Optional[str]`, `agent_task: str`, `agent_response: Optional[str]`
 
 ### Phase 2: Model Validators & Tool Sync
+
 1. **Model Validators** - Sync tools from `state.agents` to supervisor engine
 2. **Dynamic Choice Model** - Validates agent names like args schema
 3. **Tool Generation** - Create handoff tools dynamically from state
 
 ### Phase 3: Agent Execution Node
+
 1. **Generic Agent Node** - Mirrors tool_node pattern
 2. **Agent Lookup** - Get agent from `state.agents[state.next_agent]`
 3. **Dynamic Execution** - Create runnable, invoke with task
 
 ### Phase 4: 3-Node Graph & Testing
+
 1. **Graph Structure** - supervisor → (agent_execution | add_agent | END)
 2. **Test Setup** - tavily_search_tool + 2 domain tools = 3 agents
 3. **Active/Inactive** - 2 active agents, 1 inactive placeholder
@@ -104,16 +113,16 @@ class SupervisorState(MessagesState):  # Inherit from MessagesState
     # Agent registry
     agents: Dict[str, AgentInfo] = Field(default_factory=dict)
     active_agents: Set[str] = Field(default_factory=set)
-    
+
     # Routing control
     next_agent: Optional[str] = Field(default=None)
     agent_task: str = Field(default="")
     agent_response: Optional[str] = Field(default=None)
-    
+
     # Choice model for validation
     agent_choice_model: DynamicChoiceModel = Field(
         default_factory=lambda: DynamicChoiceModel(
-            model_name="AgentChoice", 
+            model_name="AgentChoice",
             include_end=True
         )
     )
@@ -130,7 +139,7 @@ def sync_tools_from_agents(self):
     # Update choice model with available agents
     for agent_name in self.agents.keys():
         self.agent_choice_model.add_option(agent_name)
-    
+
     # Generate tools from agents (happens in supervisor setup)
     return self
 
@@ -153,11 +162,11 @@ async def agent_execution_node(self, state: SupervisorState) -> Dict[str, Any]:
     agent_name = state.next_agent
     if not agent_name or agent_name not in state.agents:
         return {"agent_response": f"Error: Agent '{agent_name}' not found"}
-    
+
     # Get agent from state (like tool_node gets tools from engine.tools)
     agent_info = state.agents[agent_name]
     agent = agent_info["agent"]  # or agent_info.agent depending on structure
-    
+
     try:
         # Create runnable and invoke with task
         result = await agent.arun(state.agent_task)
@@ -183,7 +192,7 @@ agents_config = {
     },
     "math_agent": {
         "tools": [add_tool, multiply_tool],
-        "description": "Mathematical calculations specialist", 
+        "description": "Mathematical calculations specialist",
         "active": True
     },
     "planning_agent": {
@@ -195,15 +204,15 @@ agents_config = {
 ```
 
 ```python
-@model_validator(mode="after") 
+@model_validator(mode="after")
 def setup_dynamic_supervisor(self):
     """Setup supervisor with state-based tool synchronization."""
     # Update choice model with available agents
     self._sync_choice_model_with_registry()
-    
+
     # Create tools that read from state
     self._update_available_tools()
-    
+
     # Tools automatically sync when state changes
     return self
 ```
@@ -220,11 +229,11 @@ def _create_agent_choice_tool(self):
         # Get current choice model from state
         ChoiceModel = self.agent_choice_model.current_model
         available_options = self.agent_choice_model.option_names
-        
+
         # Validate choice
         validated_choice = ChoiceModel(choice=chosen_agent)
         return f"Chosen: {validated_choice.choice}"
-    
+
     return choose_agent
 ```
 
@@ -236,13 +245,13 @@ def _create_agent_choice_tool(self):
 class AgentRegistry:
     def __init__(self):
         self.agents = {}  # name -> {'agent': agent, 'description': str}
-    
+
     def register(self, name: str, agent: Any, description: str):
         self.agents[name] = {
             'agent': agent,  # Serializable agent instance
             'description': description
         }
-    
+
     def get(self, name: str) -> Any:
         return self.agents.get(name, {}).get('agent')
 ```
@@ -257,11 +266,11 @@ class AgentRegistry:
 class DynamicSupervisor(ReactAgent):
     agent_registry: AgentRegistry = Field(default_factory=AgentRegistry)
     agent_choice_model: DynamicChoiceModel = Field(default=None)
-    
+
     @model_validator(mode="after")
     def setup_supervisor(self):
         self._sync_fields_from_engine()
-        self._setup_schemas() 
+        self._setup_schemas()
         self._build_initial_graph()
         return self
 ```
@@ -279,7 +288,7 @@ def add(a: int, b: int) -> int:
 
 math_engine = AugLLMConfig(
     name="math_engine",
-    model="gpt-4", 
+    model="gpt-4",
     tools=[add, multiply],
     system_message="You are a math specialist."
 ).create()
@@ -311,6 +320,7 @@ planning_engine = create_structured_output_engine(
 ### 1. Tool Node Pattern is the Key
 
 **Discovery**: How `tool_node` works in Haive reveals the pattern:
+
 - `tool_node` gets tools from `engine.tools` at runtime
 - If `engine.tools` is updated, `tool_node` automatically uses new tools
 - Same pattern applies to our agent execution node
@@ -318,12 +328,14 @@ planning_engine = create_structured_output_engine(
 ### 2. State Flow Through System
 
 **Understanding**: State flows through the system with model validators syncing changes:
+
 - State updated → model validator triggered → tools recompiled → new capabilities available
 - This enables true dynamic behavior without graph recompilation
 
 ### 3. LangGraph vs Haive Approach
 
 **Comparison**:
+
 - **LangGraph**: Pre-compiled tools with Send/Command patterns
 - **Haive**: Runtime tool resolution from engine state
 - **Advantage**: Haive's approach naturally supports dynamic updates
@@ -335,28 +347,28 @@ planning_engine = create_structured_output_engine(
 ```python
 class Clean3NodeSupervisor(ReactAgent):
     agent_registry: AgentRegistry = Field(default_factory=AgentRegistry)
-    
+
     def build_graph(self) -> BaseGraph:
         graph = BaseGraph()
-        
+
         # The 3 nodes
         graph.add_node("supervisor", self._supervisor_node)
-        graph.add_node("execute", self._execute_agent_node) 
+        graph.add_node("execute", self._execute_agent_node)
         graph.add_node("add", self._add_agent_node)
-        
+
         # Routing logic
         graph.add_conditional_edges(
             "supervisor",
             self._route_supervisor,
             {
                 "execute": "execute",
-                "add": "add", 
+                "add": "add",
                 "end": END
             }
         )
-        
+
         return graph.compile()
-    
+
     def _route_supervisor(self, state: SupervisorState) -> Literal["execute", "add", "end"]:
         """Route based on state fields."""
         if state.agent_to_execute:
@@ -374,18 +386,18 @@ class EnhancedAgentRegistry:
     def __init__(self):
         self.agents = {}
         self.active_agents = set()
-    
+
     def activate_agent(self, name: str) -> bool:
         """Activate dormant agent."""
         if name in self.agents and name not in self.active_agents:
             self.active_agents.add(name)
             return True
         return False
-    
+
     def get_active_agents(self) -> Dict[str, Any]:
         """Get only active agents."""
         return {
-            name: info 
+            name: info
             for name, info in self.agents.items()
             if name in self.active_agents
         }
@@ -396,7 +408,7 @@ class EnhancedAgentRegistry:
 ### Working Code Examples
 
 1. **`test_registry_setup.py`**: Basic registry pattern with real agents
-2. **`three_agent_inactive_test.py`**: Agent activation logic demonstration  
+2. **`three_agent_inactive_test.py`**: Agent activation logic demonstration
 3. **`agent_execution_node_pattern.py`**: Core execution node pattern
 4. **`clean_three_node_supervisor.py`**: Clean 3-node implementation
 5. **`integrated_supervisor_with_handoff.py`**: Full integration example
@@ -448,19 +460,19 @@ class EnhancedAgentRegistry:
 ✅ **Dynamic Choice Model**: Validated agent selection with runtime updates  
 ✅ **Model Validators**: Proper Pydantic pattern for state synchronization  
 ✅ **Agent Registry**: Serializable agent storage and retrieval  
-✅ **3-Node Architecture**: Clean supervisor → execute/add/END routing  
+✅ **3-Node Architecture**: Clean supervisor → execute/add/END routing
 
 ### What Doesn't Work
 
 ❌ **Pre-compiled Handoff Tools**: LangGraph's Send/Command patterns are too static  
 ❌ **Using `__init__` with Pydantic**: Breaks validation and state management  
-❌ **Static Tool Lists**: Can't add agents dynamically  
+❌ **Static Tool Lists**: Can't add agents dynamically
 
 ### Critical Insights
 
 🔑 **State-Based Routing**: Tools and routing read from state, enabling true dynamic behavior  
 🔑 **Runtime Tool Resolution**: Like tool_node, agent execution reads from state at runtime  
-🔑 **Model Validator Pattern**: `@model_validator(mode="after")` is the key to state sync  
+🔑 **Model Validator Pattern**: `@model_validator(mode="after")` is the key to state sync
 
 ## 📚 KEY SOURCES & REFERENCES
 
@@ -529,12 +541,15 @@ class EnhancedAgentRegistry:
 ## ✅ COMPONENT PROGRESS
 
 ### Component 1: AgentInfo & State Foundation ✅ COMPLETE
+
 **Files Created:**
+
 - `agent_info.py` - AgentInfo class with agent metadata
-- `supervisor_state.py` - SupervisorState inheriting from MessagesState  
+- `supervisor_state.py` - SupervisorState inheriting from MessagesState
 - `test_component_1_state.py` - Tests with real agents
 
 **What Works:**
+
 - ✅ AgentInfo holds real SimpleAgent instances + metadata
 - ✅ SupervisorState with agent registry (add/remove/activate/deactivate)
 - ✅ Real agents: search_agent (tavily), math_agent (add/multiply), planning_agent (create_plan)
@@ -546,13 +561,16 @@ class EnhancedAgentRegistry:
 **Test Results:** All tests pass with real SimpleAgent instances
 
 ### Component 2: Choice Model + Tool Generation ✅ COMPLETE & FIXED
+
 **Files Created:**
+
 - `component_2_tools.py` - SupervisorStateWithTools class
 - `test_component_2_tools.py` - Tests for tool generation
 - `quick_test.py` - Component validation tests
 - `debug_validation.py` - Validation debugging
 
 **What Works:**
+
 - ✅ DynamicChoiceModel syncs with agents in state via model validators
 - ✅ Tools generated dynamically: `handoff_to_X`, `choose_agent`
 - ✅ **Field validation FIXED** - Uses `@model_validator(mode="after")` with `validate_assignment=True`
@@ -563,6 +581,7 @@ class EnhancedAgentRegistry:
 - ✅ Real tool objects created and executable with correct names
 
 **Critical Fixes Applied:**
+
 1. **Validation Fix**: Replaced `@field_validator` with `@model_validator(mode="after")` for proper instance access
 2. **Tool Creation Fix**: Fixed `tool()` decorator usage - removed unsupported `name` parameter
 3. **Assignment Validation**: Added `model_config = {"validate_assignment": True}` for runtime validation
@@ -570,13 +589,16 @@ class EnhancedAgentRegistry:
 **Test Results:** ✅ All validation tests pass, tools generate with correct names
 
 ### Component 3: Agent Execution Node ✅ COMPLETE & TESTED
+
 **Files Created:**
+
 - `component_3_agent_execution.py` - AgentExecutionNode and SyncAgentExecutionNode classes
 - `test_component_3_agent_execution.py` - Tests for agent execution (interrupted during testing)
 
 **What Works:**
+
 - ✅ AgentExecutionNode class mirrors tool_node pattern perfectly
-- ✅ Reads state.next_agent and state.agent_task at runtime  
+- ✅ Reads state.next_agent and state.agent_task at runtime
 - ✅ Gets agent from state.agents[agent_name] (like tool_node gets tools)
 - ✅ Executes agent.arun(task) or agent.invoke(task)
 - ✅ Returns proper state updates (clears routing, sets response)
@@ -585,7 +607,8 @@ class EnhancedAgentRegistry:
 - ✅ Proper error handling and logging
 
 **What Works:**
-- ✅ AgentExecutionNode mirrors tool_node pattern perfectly  
+
+- ✅ AgentExecutionNode mirrors tool_node pattern perfectly
 - ✅ Reads state.next_agent and state.agent_task at runtime
 - ✅ Gets agent from state.agents[agent_name] (like tool_node gets tools)
 - ✅ Executes agent.arun(task) or agent.invoke(task) successfully
@@ -596,37 +619,43 @@ class EnhancedAgentRegistry:
 - ✅ Integration with fixed validation system
 
 **Test Results:** ✅ All core functionality verified:
+
 - Math agent execution: 10+20 = 30 ✅
-- Sync execution node works ✅  
+- Sync execution node works ✅
 - Factory function works ✅
 - State updates work correctly ✅
 - Validation integration works ✅
 
 ### Component 4: Dynamic Supervisor ⚠️ IN PROGRESS - APPROACH PIVOT
+
 **Files Created:**
+
 - `component_4_dynamic_supervisor.py` - Initial ReactAgent approach (failed)
 - `test_component_4_supervisor.py` - Tests for supervisor
 
 **What We Learned:**
+
 - ❌ **ReactAgent inheritance approach too complex**
   - Generic typing `ReactAgent[SupervisorStateWithTools]` not supported
   - Unknown Agent API caused method errors (`_sync_fields_from_engine` doesn't exist)
   - Complex setup lifecycle conflicts with our dynamic requirements
 - ✅ **All our individual components (1, 2, 3) work perfectly**
   - State management ✅
-  - Dynamic tool generation ✅  
+  - Dynamic tool generation ✅
   - Agent execution pattern ✅
 
 **Approach Pivot Decision:**
+
 - **Before**: Extend ReactAgent with complex overrides and internal method calls
 - **After**: Use SimpleAgent + manual graph building (Option B)
-- **Rationale**: 
+- **Rationale**:
   - Simpler and more predictable
   - We control the entire flow
   - Less dependency on internal Agent API
   - Our components already work independently
 
 **Next Steps:**
+
 1. Study SimpleAgent API and lifecycle
 2. Check MultiAgentBase_Guide.md for patterns
 3. Build clean 3-node graph: supervisor → agent_execution | END
@@ -643,6 +672,7 @@ class EnhancedAgentRegistry:
 ### Immediate Next Steps:
 
 #### Priority 1: Complete Component 3 Testing (Agent Execution Node)
+
 - **Goal**: Verify agent execution node works with real agents and fixed validation
 - **Tasks**:
   1. Run Component 3 tests with fixed validation system
@@ -651,6 +681,7 @@ class EnhancedAgentRegistry:
   4. Test error handling (inactive agents, nonexistent agents)
 
 #### Priority 2: Component 4 - ReactAgent Integration
+
 - **Goal**: Create dynamic supervisor using ReactAgent as base with state-based tools
 - **Tasks**:
   1. Create DynamicSupervisor class extending ReactAgent
@@ -658,7 +689,8 @@ class EnhancedAgentRegistry:
   3. Add dynamic tool syncing from state.agents
   4. Test supervisor reasoning with choice tools
 
-#### Priority 3: Component 5 - 3-Node Graph Architecture  
+#### Priority 3: Component 5 - 3-Node Graph Architecture
+
 - **Goal**: Implement supervisor → (agent_execution | add_agent | END) flow
 - **Tasks**:
   1. Build graph with 3 destination nodes
@@ -667,8 +699,9 @@ class EnhancedAgentRegistry:
   4. Test full dynamic routing
 
 ### Working Files Status:
+
 - ✅ `agent_info.py` - AgentInfo class (Component 1)
-- ✅ `supervisor_state.py` - Base state with MessagesState inheritance (Component 1)  
+- ✅ `supervisor_state.py` - Base state with MessagesState inheritance (Component 1)
 - ✅ `component_2_tools.py` - Dynamic tool generation with FIXED validation (Component 2)
 - ✅ `component_3_agent_execution.py` - Agent execution node built (Component 3)
 - ⚠️ Component 3 tests - Need to complete with fixed validation
@@ -676,6 +709,7 @@ class EnhancedAgentRegistry:
 - 🔄 Component 5 - 3-node graph (Next)
 
 ### Key Achievements:
+
 - ✅ **Validation System Fixed**: Deep understanding of Pydantic `@model_validator(mode="after")` timing
 - ✅ **Tool Generation Working**: Proper `tool()` decorator usage with correct names
 - ✅ **State-based Architecture**: Tools and validation read from `state.agents` at runtime
@@ -683,6 +717,7 @@ class EnhancedAgentRegistry:
 - ✅ **Real Agent Integration**: All components tested with tavily_search + math + planning agents
 
 ### Critical Lessons Learned:
+
 1. **Pydantic Validation Timing**: Field validators run during construction, model validators run after all fields set
 2. **Runtime vs Construction Validation**: Use `validate_assignment=True` + model validators for runtime changes
 3. **Tool Decorator Patterns**: Manual name setting required for dynamic tool generation

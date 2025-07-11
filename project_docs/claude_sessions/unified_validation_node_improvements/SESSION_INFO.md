@@ -7,6 +7,7 @@
 ## Problem Summary
 
 The original UnifiedValidationNodeConfig had this incorrect pattern:
+
 ```python
 def __init__(self, **kwargs):
     """Initialize with default node type."""
@@ -29,6 +30,7 @@ Created UnifiedValidationNodeConfigV2 following proper Pydantic patterns:
 ## Key Changes
 
 ### Before (Incorrect):
+
 ```python
 def __init__(self, **kwargs):
     if 'node_type' not in kwargs:
@@ -37,6 +39,7 @@ def __init__(self, **kwargs):
 ```
 
 ### After (Correct):
+
 ```python
 node_type: NodeType = Field(
     default=NodeType.CALLABLE,
@@ -53,6 +56,7 @@ node_type: NodeType = Field(
 ## Verification
 
 All tests pass:
+
 - Basic instantiation ✓
 - Pydantic model validation ✓
 - Parallel execution with Send objects ✓

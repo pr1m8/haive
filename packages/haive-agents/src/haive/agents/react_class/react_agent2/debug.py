@@ -110,9 +110,6 @@ def fix_tool_messages(messages: list[Any]) -> list[Any]:
         )
 
         if is_tool_message:
-            print("--------------------------------")
-            print(msg)
-            print("--------------------------------")
             # Get tool name
             tool_name = None
             if isinstance(msg, ToolMessage):
@@ -257,7 +254,7 @@ def create_debug_tool_node(tools: list[Any]):
                             tool_args = args_str
                             logger.debug(f"Using non-string arguments: {tool_args}")
                     except json.JSONDecodeError as e:
-                        logger.error(f"Failed to parse arguments JSON: {e}")
+                        logger.exception(f"Failed to parse arguments JSON: {e}")
                         tool_args = {"raw_arguments": args_str}
                 else:
                     logger.warning("No arguments found, using empty dict")
@@ -287,10 +284,11 @@ def create_debug_tool_node(tools: list[Any]):
             # Execute the tool
             try:
                 logger.debug(f"Executing {tool_name} with args: {tool_args}")
-                if isinstance(tool_args, dict):
-                    result = tool(**tool_args)
-                else:
-                    result = tool(tool_args)
+                result = (
+                    tool(**tool_args)
+                    if isinstance(tool_args, dict)
+                    else tool(tool_args)
+                )
 
                 logger.debug(f"Tool result: {result}")
 
@@ -310,7 +308,7 @@ def create_debug_tool_node(tools: list[Any]):
 
             except Exception as e:
                 error_msg = f"Error executing tool '{tool_name}': {e!s}"
-                logger.error(error_msg)
+                logger.exception(error_msg)
 
                 # Create error message
                 tool_message = ToolMessage(

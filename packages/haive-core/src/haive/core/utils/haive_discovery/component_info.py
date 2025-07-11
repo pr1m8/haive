@@ -1,6 +1,4 @@
-"""
-Component information data model with serialization support.
-"""
+"""Component information data model with serialization support."""
 
 import json
 import logging
@@ -20,16 +18,16 @@ class ComponentInfo:
     class_name: str
     description: str
     source_code: str
-    env_vars: List[str]
-    schema: Dict[str, Any]
-    metadata: Dict[str, Any]
+    env_vars: list[str]
+    schema: dict[str, Any]
+    metadata: dict[str, Any]
     timestamp: str
 
     # Tool and engine creation results
-    tool_instance: Optional[Any] = None
-    engine_config: Optional[Any] = None
+    tool_instance: Any | None = None
+    engine_config: Any | None = None
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary, handling non-serializable fields."""
         data = {
             "name": self.name,
@@ -47,14 +45,14 @@ class ComponentInfo:
             data["schema"] = self._make_json_serializable(self.schema)
         except Exception as e:
             logger.debug(f"Could not serialize schema for {self.name}: {e}")
-            data["schema"] = {"error": f"Schema not serializable: {str(e)}"}
+            data["schema"] = {"error": f"Schema not serializable: {e!s}"}
 
         # Handle metadata serialization
         try:
             data["metadata"] = self._make_json_serializable(self.metadata)
         except Exception as e:
             logger.debug(f"Could not serialize metadata for {self.name}: {e}")
-            data["metadata"] = {"error": f"Metadata not serializable: {str(e)}"}
+            data["metadata"] = {"error": f"Metadata not serializable: {e!s}"}
 
         # Add tool info if available
         if self.tool_instance:
@@ -71,7 +69,7 @@ class ComponentInfo:
             except Exception as e:
                 logger.debug(f"Could not serialize engine config for {self.name}: {e}")
                 data["engine_config"] = {
-                    "error": f"Engine config not serializable: {str(e)}"
+                    "error": f"Engine config not serializable: {e!s}"
                 }
 
         return data
@@ -83,10 +81,10 @@ class ComponentInfo:
         if current_depth > max_depth:
             return f"<Max depth {max_depth} reached>"
 
-        if obj is None or isinstance(obj, (str, int, float, bool)):
+        if obj is None or isinstance(obj, str | int | float | bool):
             return obj
 
-        if isinstance(obj, (list, tuple)):
+        if isinstance(obj, list | tuple):
             return [
                 self._make_json_serializable(item, max_depth, current_depth + 1)
                 for item in obj
@@ -101,7 +99,7 @@ class ComponentInfo:
                         value, max_depth, current_depth + 1
                     )
                 except Exception as e:
-                    result[str_key] = f"<Error serializing value: {str(e)}>"
+                    result[str_key] = f"<Error serializing value: {e!s}>"
             return result
 
         # Handle objects with __dict__

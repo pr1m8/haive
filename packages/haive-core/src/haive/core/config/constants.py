@@ -1,5 +1,4 @@
-"""
-Path constants for the Haive framework.
+"""Path constants for the Haive framework.
 
 This module handles path resolution for the polyrepo structure where
 packages like haive-core are in the packages/ directory.
@@ -8,6 +7,7 @@ packages like haive-core are in the packages/ directory.
 import logging
 import os
 from pathlib import Path
+
 
 logger = logging.getLogger(__name__)
 
@@ -88,28 +88,27 @@ create_directories()
 
 # Expose constants
 __all__ = [
-    "ROOT_DIR",
-    "PACKAGES_DIR",
-    "HAIVE_CORE_PACKAGE_DIR",
-    "HAIVE_AGENTS_PACKAGE_DIR",
-    "HAIVE_GAMES_PACKAGE_DIR",
-    "HAIVE_TOOLS_PACKAGE_DIR",
-    "HAIVE_CORE_DIR",
-    "HAIVE_AGENTS_DIR",
-    "HAIVE_GAMES_DIR",
-    "HAIVE_TOOLS_DIR",
-    "RESOURCES_DIR",
-    "CACHE_DIR",
-    "GRAPH_IMAGES_DIR",
-    "EMBEDDINGS_CACHE_DIR",
-    "PROJECTS_DIR",
-    "DOCUMENTS_DIR",
-    "VECTORSTORE_DIR",
     "AGENTS_DIR",
+    "CACHE_DIR",
+    "DOCUMENTS_DIR",
+    "EMBEDDINGS_CACHE_DIR",
+    "GRAPH_IMAGES_DIR",
+    "HAIVE_AGENTS_DIR",
+    "HAIVE_AGENTS_PACKAGE_DIR",
+    "HAIVE_CORE_DIR",
+    "HAIVE_CORE_PACKAGE_DIR",
+    "HAIVE_GAMES_DIR",
+    "HAIVE_GAMES_PACKAGE_DIR",
+    "HAIVE_TOOLS_DIR",
+    "HAIVE_TOOLS_PACKAGE_DIR",
+    "PACKAGES_DIR",
+    "PROJECTS_DIR",
+    "RESOURCES_DIR",
+    "ROOT_DIR",
+    "VECTORSTORE_DIR",
 ]
 
 # Debug output
 if os.environ.get("HAIVE_DEBUG_PATHS"):
     for name, path in {k: globals()[k] for k in __all__}.items():
         logger.info(f"{name}: {path}")
-        print(f"{name}: {path}")

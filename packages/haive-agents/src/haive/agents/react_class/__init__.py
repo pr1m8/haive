@@ -1,4 +1,4 @@
-"""React Class - TODO: Add brief description
+"""React Class - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

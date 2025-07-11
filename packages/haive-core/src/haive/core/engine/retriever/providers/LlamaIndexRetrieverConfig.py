@@ -1,5 +1,4 @@
-"""
-LlamaIndex Retriever implementation for the Haive framework.
+"""LlamaIndex Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the LlamaIndex retriever,
 which integrates LlamaIndex's retrieval capabilities with LangChain.
@@ -34,8 +33,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.LLAMA_INDEX)
 class LlamaIndexRetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for LlamaIndex retriever in the Haive framework.
+    """Configuration for LlamaIndex retriever in the Haive framework.
 
     This retriever integrates LlamaIndex's retrieval capabilities with LangChain,
     enabling the use of LlamaIndex's sophisticated indexing and query mechanisms.
@@ -86,12 +84,12 @@ class LlamaIndexRetrieverConfig(BaseRetrieverConfig):
     )
 
     # Index configuration
-    index_path: Optional[str] = Field(
+    index_path: str | None = Field(
         default=None,
         description="Path to a persisted LlamaIndex index (if loading existing index)",
     )
 
-    documents: List[Document] = Field(
+    documents: list[Document] = Field(
         default_factory=list, description="Documents to index (if creating new index)"
     )
 
@@ -128,26 +126,26 @@ class LlamaIndexRetrieverConfig(BaseRetrieverConfig):
     )
 
     # Advanced parameters
-    embed_model: Optional[str] = Field(
+    embed_model: str | None = Field(
         default=None,
         description="Embedding model for LlamaIndex (e.g., 'local:BAAI/bge-small-en-v1.5')",
     )
 
-    llm_model: Optional[str] = Field(
+    llm_model: str | None = Field(
         default=None, description="LLM model for LlamaIndex query processing"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for LlamaIndex retriever."""
         return {
             "query": (str, Field(description="Query for LlamaIndex retrieval")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for LlamaIndex retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list,
                     description="Documents from LlamaIndex retrieval",
@@ -156,8 +154,7 @@ class LlamaIndexRetrieverConfig(BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a LlamaIndex retriever from this configuration.
+        """Create a LlamaIndex retriever from this configuration.
 
         Returns:
             LlamaIndexRetriever: Instantiated retriever ready for LlamaIndex-powered search.

@@ -1,14 +1,13 @@
 import logging
 from typing import Any, Dict, List, Optional, Union
 
+from haive.agents.multi.enhanced_base import MultiAgentBase
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.agent_schema_composer import BuildMode
 from langgraph.graph import END
 from langgraph.prebuilt import ToolNode
 from langgraph.types import Send
-
-from haive.agents.multi.enhanced_base import MultiAgentBase
-from haive.agents.simple.agent import SimpleAgent
 
 from .models import CandidateActions, Reflection, SelectionDecision, TreeNode
 from .prompts import (
@@ -64,7 +63,7 @@ tool_node = ToolNode(tools=["tavily_search_results_json"])
 
 
 # Workflow nodes
-def process_initial_response(state: LATSState) -> Dict[str, Any]:
+def process_initial_response(state: LATSState) -> dict[str, Any]:
     """Process initial response and create root node."""
     # Get the last message (initial response)
     if state.messages:
@@ -90,7 +89,7 @@ def process_initial_response(state: LATSState) -> Dict[str, Any]:
     return {}
 
 
-def execute_tool_calls(state: LATSState) -> Union[Dict[str, Any], List[Send]]:
+def execute_tool_calls(state: LATSState) -> dict[str, Any] | list[Send]:
     """Execute tool calls for nodes that need them."""
     sends = []
 
@@ -123,7 +122,7 @@ def execute_tool_calls(state: LATSState) -> Union[Dict[str, Any], List[Send]]:
     return sends if sends else {}
 
 
-def process_expansion(state: LATSState) -> Dict[str, Any]:
+def process_expansion(state: LATSState) -> dict[str, Any]:
     """Process expansion results into new nodes."""
     if not state.messages:
         return {}
@@ -141,7 +140,7 @@ def process_expansion(state: LATSState) -> Dict[str, Any]:
         new_nodes = {}
         candidate_nodes = []
 
-        for i, candidate_data in enumerate(result.get("candidates", [])):
+        for _i, candidate_data in enumerate(result.get("candidates", [])):
             node = TreeNode(
                 parent_id=parent_id,
                 messages=[{"role": "assistant", "content": str(candidate_data)}],
@@ -170,7 +169,7 @@ def process_expansion(state: LATSState) -> Dict[str, Any]:
     return {}
 
 
-def evaluate_candidates(state: LATSState) -> List[Send]:
+def evaluate_candidates(state: LATSState) -> list[Send]:
     """Send candidates for reflection."""
     sends = []
 
@@ -194,7 +193,7 @@ def evaluate_candidates(state: LATSState) -> List[Send]:
     return sends
 
 
-def process_reflection(state: LATSState) -> Dict[str, Any]:
+def process_reflection(state: LATSState) -> dict[str, Any]:
     """Process reflection results and update node scores."""
     if not state.messages or not state.current_node_id:
         return {}
@@ -233,8 +232,8 @@ def process_reflection(state: LATSState) -> Dict[str, Any]:
 
 
 def backpropagate(
-    nodes: Dict[str, TreeNode], node_id: str, reward: float
-) -> Dict[str, TreeNode]:
+    nodes: dict[str, TreeNode], node_id: str, reward: float
+) -> dict[str, TreeNode]:
     """Backpropagate reward up the tree."""
     updated = {}
     current_id = node_id
@@ -287,14 +286,13 @@ def should_continue_search(state: LATSState) -> str:
 
 # Create LATS system
 def create_lats(
-    tools: List[Any],
+    tools: list[Any],
     max_depth: int = 5,
     max_rollouts: int = 10,
     n_candidates: int = 5,
     **kwargs,
 ) -> MultiAgentBase:
     """Create a Language Agent Tree Search system."""
-
     # Create tool node with provided tools
     tool_node = ToolNode(tools=tools)
 

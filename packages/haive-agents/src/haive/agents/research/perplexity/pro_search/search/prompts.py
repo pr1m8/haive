@@ -1,11 +1,11 @@
 # perplexity_search_prompts.py
-"""
-Chat prompt templates for Perplexity-style search workflow.
+"""Chat prompt templates for Perplexity-style search workflow.
 These prompts guide the LLM through reasoning, query generation, and synthesis.
 """
 
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+
 
 # ============================================================================
 # Query Understanding and Reasoning Prompt
@@ -201,7 +201,7 @@ follow_up_prompt = ChatPromptTemplate.from_messages(
 # Conversational Search Prompts (for chat continuity)
 # ============================================================================
 
-CONVERSATIONAL_SEARCH_SYSTEM = """You are a helpful search assistant engaged in an ongoing conversation. 
+CONVERSATIONAL_SEARCH_SYSTEM = """You are a helpful search assistant engaged in an ongoing conversation.
 
 You have access to search capabilities and should:
 1. Understand queries in the context of the conversation
@@ -260,8 +260,9 @@ error_recovery_prompt = ChatPromptTemplate.from_messages(
 
 def create_reasoning_aug_llm(llm_config):
     """Create AugLLMConfig for query reasoning step."""
-    from haive.core.engine.aug_llm import AugLLMConfig
     from perplexity_search_models import QueryReasoning
+
+    from haive.core.engine.aug_llm import AugLLMConfig
 
     return AugLLMConfig(
         llm_config=llm_config,
@@ -282,8 +283,9 @@ def create_reasoning_aug_llm(llm_config):
 
 def create_query_generation_aug_llm(llm_config):
     """Create AugLLMConfig for query generation step."""
-    from haive.core.engine.aug_llm import AugLLMConfig
     from perplexity_search_models import QueryBatch
+
+    from haive.core.engine.aug_llm import AugLLMConfig
 
     return AugLLMConfig(
         llm_config=llm_config,
@@ -297,8 +299,9 @@ def create_query_generation_aug_llm(llm_config):
 
 def create_synthesis_aug_llm(llm_config):
     """Create AugLLMConfig for synthesis step."""
-    from haive.core.engine.aug_llm import AugLLMConfig
     from perplexity_search_models import SearchSynthesis
+
+    from haive.core.engine.aug_llm import AugLLMConfig
 
     return AugLLMConfig(
         llm_config=llm_config,

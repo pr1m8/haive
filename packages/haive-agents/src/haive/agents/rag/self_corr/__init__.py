@@ -1,4 +1,4 @@
-"""Self Corr - TODO: Add brief description
+"""Self Corr - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

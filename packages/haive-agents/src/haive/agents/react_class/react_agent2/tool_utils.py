@@ -1,13 +1,14 @@
 # src/haive/agents/react/tool_utils.py
 
+from collections.abc import Callable
 import json
 import logging
-import uuid
-from collections.abc import Callable
 from typing import Any
+import uuid
 
 from langchain_core.messages import AIMessage, ToolMessage
 from langchain_core.tools import BaseTool
+
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -85,10 +86,7 @@ def create_custom_tool_node(tools: list[BaseTool]) -> Callable:
         logger.debug("Custom tool node called")
 
         # Convert state to dict if needed
-        if hasattr(state, "model_dump"):
-            state_dict = state.model_dump()
-        else:
-            state_dict = dict(state)
+        state_dict = state.model_dump() if hasattr(state, "model_dump") else dict(state)
 
         # Create a fresh copy to avoid mutation issues
         updated_state = state_dict.copy()
@@ -170,7 +168,7 @@ def create_custom_tool_node(tools: list[BaseTool]) -> Callable:
 
             except Exception as e:
                 error_msg = f"Error executing tool '{tool_name}': {e!s}"
-                logger.error(error_msg)
+                logger.exception(error_msg)
 
                 # Create an error message
                 error_tool_msg = ToolMessage(
@@ -219,7 +217,6 @@ def fix_tool_messages(messages: list[Any]) -> list[Any]:
             isinstance(msg, dict) and msg.get("type") == "ai"
         ):
             tool_calls = []
-            print(f"  msg: {msg}")
             # Handle AIMessage
             if isinstance(msg, AIMessage):
                 if hasattr(msg, "tool_calls") and msg.tool_calls:

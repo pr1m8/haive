@@ -21,13 +21,11 @@ MODULES_TO_SCAN = [
     ("langchain_community.tools", "__call__"),
     ("haive.tak.tools", "__call__"),
     ("haive.tak.toolkits", "__call__"),
-    # ("langchain_text_splitters", None),
 ]
 
 
-@pytest.mark.parametrize("module_path, method_required", MODULES_TO_SCAN)
+@pytest.mark.parametrize(("module_path", "method_required"), MODULES_TO_SCAN)
 def test_discovery_and_metadata(module_path, method_required):
-    print(f"\n🔍 Scanning: {module_path} ({method_required or 'all classes'})")
     classes = discover_classes(module_path, method_required=method_required)
     assert classes, f"No classes found in {module_path}"
 
@@ -39,15 +37,11 @@ def test_discovery_and_metadata(module_path, method_required):
         assert "class_name" in meta
         assert isinstance(meta["arg_schema"], dict)
         assert isinstance(meta["docstring"], str)
-        print(f"✅ {meta['class_name']} from {mod}")
         if meta.get("env_required"):
-            print(
-                f"🔐 Requires: {meta['env_required']}, missing: {meta['env_missing']}"
-            )
+            pass
 
     # Export results to JSON
     module_tag = module_path.replace(".", "_")
     output_path = os.path.join(EXPORT_DIR, f"{module_tag}_metadata.json")
     with open(output_path, "w") as f:
         json.dump(results, f, indent=2)
-    print(f"\n📦 Metadata exported to: {output_path}")

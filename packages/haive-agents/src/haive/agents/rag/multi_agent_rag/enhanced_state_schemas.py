@@ -1,5 +1,4 @@
-"""
-Enhanced State Schemas with Configuration Support
+"""Enhanced State Schemas with Configuration Support.
 
 This module provides state schemas that include configuration fields,
 solving the issue of storing agent-specific configuration in a clean way.
@@ -7,21 +6,20 @@ solving the issue of storing agent-specific configuration in a clean way.
 
 from typing import Any, Dict, List, Optional
 
-from haive.core.schema.prebuilt.rag_state import RAGState
-from pydantic import Field
-
 from haive.agents.rag.multi_agent_rag.grading_components import (
     AnswerGrade,
     DocumentGrade,
     HallucinationGrade,
 )
+from haive.core.schema.prebuilt.rag_state import RAGState
+from pydantic import Field
 
 
 class ConfigurableRAGState(RAGState):
-    """Base RAG state with configuration support"""
+    """Base RAG state with configuration support."""
 
     # Configuration fields
-    config: Dict[str, Any] = Field(
+    config: dict[str, Any] = Field(
         default_factory=dict, description="Agent configuration parameters"
     )
 
@@ -43,45 +41,45 @@ class ConfigurableRAGState(RAGState):
 
 
 class GradedRAGState(ConfigurableRAGState):
-    """RAG state with grading information and configuration"""
+    """RAG state with grading information and configuration."""
 
     # Query analysis
     query_type: str = ""
     query_complexity: str = ""
-    key_entities: List[str] = []
+    key_entities: list[str] = []
 
     # Document grading
-    document_grades: List[DocumentGrade] = []
-    priority_ranking: Dict[str, float] = {}
-    filtered_documents: List[str] = []
+    document_grades: list[DocumentGrade] = []
+    priority_ranking: dict[str, float] = {}
+    filtered_documents: list[str] = []
 
     # Answer grading
-    answer_grade: Optional[AnswerGrade] = None
-    hallucination_grade: Optional[HallucinationGrade] = None
+    answer_grade: AnswerGrade | None = None
+    hallucination_grade: HallucinationGrade | None = None
 
     # Pipeline metrics
     overall_score: float = 0.0
-    improvement_suggestions: List[str] = []
+    improvement_suggestions: list[str] = []
 
     # Grading configuration
-    grading_criteria: List[str] = Field(
+    grading_criteria: list[str] = Field(
         default_factory=lambda: ["relevance", "accuracy", "completeness"],
         description="Criteria to use for grading",
     )
-    grading_weights: Dict[str, float] = Field(
+    grading_weights: dict[str, float] = Field(
         default_factory=dict, description="Weights for different grading criteria"
     )
 
 
 class FLAREState(ConfigurableRAGState):
-    """FLARE state with configuration support"""
+    """FLARE state with configuration support."""
 
     current_generation: str = ""
-    uncertainty_tokens: List[str] = []
-    active_retrieval_points: List[int] = []
-    generation_segments: List[str] = []
-    confidence_scores: List[float] = []
-    retrieval_triggers: List[str] = []
+    uncertainty_tokens: list[str] = []
+    active_retrieval_points: list[int] = []
+    generation_segments: list[str] = []
+    confidence_scores: list[float] = []
+    retrieval_triggers: list[str] = []
 
     # FLARE configuration
     uncertainty_threshold: float = Field(
@@ -93,12 +91,12 @@ class FLAREState(ConfigurableRAGState):
 
 
 class DynamicRAGState(ConfigurableRAGState):
-    """Dynamic RAG state with configuration support"""
+    """Dynamic RAG state with configuration support."""
 
-    active_retrievers: Dict[str, Dict[str, Any]] = {}
-    retriever_performance: Dict[str, float] = {}
-    document_sources: Dict[str, List[str]] = {}
-    retriever_configurations: Dict[str, Any] = {}
+    active_retrievers: dict[str, dict[str, Any]] = {}
+    retriever_performance: dict[str, float] = {}
+    document_sources: dict[str, list[str]] = {}
+    retriever_configurations: dict[str, Any] = {}
     adaptive_threshold: float = 0.7
 
     # Dynamic RAG configuration
@@ -114,19 +112,19 @@ class DynamicRAGState(ConfigurableRAGState):
 
 
 class DebateRAGState(ConfigurableRAGState):
-    """Debate RAG state with configuration support"""
+    """Debate RAG state with configuration support."""
 
-    debate_positions: Dict[str, str] = {}
-    arguments_by_position: Dict[str, List[str]] = {}
-    evidence_by_position: Dict[str, List[str]] = {}
+    debate_positions: dict[str, str] = {}
+    arguments_by_position: dict[str, list[str]] = {}
+    evidence_by_position: dict[str, list[str]] = {}
     debate_rounds: int = 0
-    synthesis_attempts: List[str] = []
+    synthesis_attempts: list[str] = []
     consensus_reached: bool = False
     final_answer: str = ""
-    debate_winner: Optional[str] = None
+    debate_winner: str | None = None
 
     # Debate configuration
-    position_names: List[str] = Field(
+    position_names: list[str] = Field(
         default_factory=list, description="Names of debate positions"
     )
     max_debate_rounds: int = Field(default=3, description="Maximum rounds of debate")
@@ -139,11 +137,11 @@ class DebateRAGState(ConfigurableRAGState):
 
 
 class AdaptiveThresholdRAGState(DynamicRAGState):
-    """Adaptive threshold state extending Dynamic RAG state"""
+    """Adaptive threshold state extending Dynamic RAG state."""
 
     # Additional fields specific to adaptive threshold
     query_complexity_score: float = 0.0
-    threshold_adjustments: List[float] = []
+    threshold_adjustments: list[float] = []
     retrieval_rounds: int = 0
 
     # Adaptive configuration
@@ -164,7 +162,7 @@ def create_configured_state(
     workflow_type: str,
     **config_kwargs
 ) -> ConfigurableRAGState:
-    """Create a state instance with configuration"""
+    """Create a state instance with configuration."""
     # Extract fields that belong to the state class
     state_fields = {}
     config_fields = {}
@@ -188,10 +186,10 @@ def create_configured_state(
 
 # Example usage in MultiAgent classes
 class StateConfigMixin:
-    """Mixin to help MultiAgent classes work with configured states"""
+    """Mixin to help MultiAgent classes work with configured states."""
 
-    def get_state_config(self, state: ConfigurableRAGState) -> Dict[str, Any]:
-        """Extract configuration from state"""
+    def get_state_config(self, state: ConfigurableRAGState) -> dict[str, Any]:
+        """Extract configuration from state."""
         config = state.config.copy()
 
         # Add standard fields if they exist
@@ -202,7 +200,7 @@ class StateConfigMixin:
         return config
 
     def update_state_config(self, state: ConfigurableRAGState, **updates) -> None:
-        """Update configuration in state"""
+        """Update configuration in state."""
         for key, value in updates.items():
             if hasattr(state, key):
                 setattr(state, key, value)

@@ -1,5 +1,4 @@
-"""
-Wikipedia Retriever implementation for the Haive framework.
+"""Wikipedia Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Wikipedia retriever, which
 retrieves articles from Wikipedia based on search queries.
@@ -30,8 +29,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.WIKIPEDIA)
 class WikipediaRetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for Wikipedia retriever in the Haive framework.
+    """Configuration for Wikipedia retriever in the Haive framework.
 
     This retriever searches Wikipedia for articles matching the query and returns
     their content as documents.
@@ -81,24 +79,23 @@ class WikipediaRetrieverConfig(BaseRetrieverConfig):
         default=False, description="Whether to load all available metadata"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Wikipedia retriever."""
         return {
             "query": (str, Field(description="Search query for Wikipedia articles")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Wikipedia retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(default_factory=list, description="Wikipedia articles"),
             ),
         }
 
     def instantiate(self):
-        """
-        Create a Wikipedia retriever from this configuration.
+        """Create a Wikipedia retriever from this configuration.
 
         Returns:
             WikipediaRetriever: Instantiated retriever ready for document retrieval.

@@ -1,16 +1,14 @@
 """Simple supervisor test with 3 executor agents - 2 active, 1 in registry."""
 
 import pytest
-from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.messages import HumanMessage
-
 from haive.agents.experiments.supervisor import BaseSupervisor
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from langchain_core.messages import HumanMessage
 
 
 def test_supervisor_with_three_executors():
     """Test supervisor with 3 executor agents: 2 active, 1 in registry."""
-
     # Create supervisor
     supervisor_config = AugLLMConfig()
     supervisor = BaseSupervisor(name="test_supervisor", engine=supervisor_config)
@@ -65,14 +63,9 @@ def test_supervisor_with_three_executors():
     assert retrieved_executor.name == "executor"
     assert retrieved_calculator.name == "calculator"
 
-    print("✅ Successfully created supervisor with 3 executor agents")
-    print(f"✅ Registry contains: {list(state.agents.keys())}")
-    print(f"✅ Tools created: {list(state.tool_mappings.keys())}")
-
 
 def test_supervisor_status_reporting():
     """Test supervisor can report status of all agents."""
-
     supervisor = BaseSupervisor(name="status_supervisor", engine=AugLLMConfig())
 
     # Add agents
@@ -96,12 +89,9 @@ def test_supervisor_status_reporting():
     assert all_status["total_agents"] == 3
     assert len(all_status["agents"]) == 3
 
-    print("✅ Status reporting works correctly")
-
 
 def test_supervisor_tool_execution_simulation():
     """Test that supervisor tools can be executed."""
-
     supervisor = BaseSupervisor(name="exec_supervisor", engine=AugLLMConfig())
 
     # Register agents
@@ -123,13 +113,9 @@ def test_supervisor_tool_execution_simulation():
     assert "planner: Task planning" in result
     assert "executor: Task execution" in result
 
-    print("✅ Tool execution works")
-    print(f"✅ List agents result: {result}")
-
 
 def test_supervisor_state_synchronization():
     """Test that state synchronization validators work."""
-
     supervisor = BaseSupervisor(name="sync_supervisor", engine=AugLLMConfig())
 
     # Add agent
@@ -151,12 +137,9 @@ def test_supervisor_state_synchronization():
     assert "handoff_to_test_agent" not in updated_state.tool_mappings
     assert len(updated_state.agents) == 0
 
-    print("✅ State synchronization works correctly")
-
 
 if __name__ == "__main__":
     test_supervisor_with_three_executors()
     test_supervisor_status_reporting()
     test_supervisor_tool_execution_simulation()
     test_supervisor_state_synchronization()
-    print("\n🎉 All supervisor tests passed!")

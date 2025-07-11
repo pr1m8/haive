@@ -7,8 +7,7 @@ R = TypeVar("R")
 
 @runtime_checkable
 class SerializableCallable(Protocol):
-    """
-    Protocol for callables that can be serialized to and from importable strings.
+    """Protocol for callables that can be serialized to and from importable strings.
 
     Limitations:
     - Works only with top-level functions or class/static methods.
@@ -29,15 +28,11 @@ class SerializableCallable(Protocol):
             return False
 
         # Reject instance methods (bound methods)
-        if hasattr(func, "__self__") and not isinstance(func.__self__, type):
-            return False
-
-        return True
+        return not (hasattr(func, "__self__") and not isinstance(func.__self__, type))
 
     @classmethod
     def serialize(cls, func: Callable[P, R]) -> str:
-        """
-        Convert a callable to a string path.
+        """Convert a callable to a string path.
 
         Example:
             my.module.my_function
@@ -52,8 +47,7 @@ class SerializableCallable(Protocol):
 
     @classmethod
     def deserialize(cls, path: str) -> Callable[..., Any]:
-        """
-        Convert an importable string path back into a callable.
+        """Convert an importable string path back into a callable.
 
         Supports nested attributes, e.g.:
             my.module.Class.method

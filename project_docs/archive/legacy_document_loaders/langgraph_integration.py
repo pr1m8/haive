@@ -4,19 +4,17 @@ This module demonstrates how to integrate the document loader system with LangGr
 for production use, including proper error handling, authentication, and multi-source loading.
 """
 
-from concurrent.futures import ThreadPoolExecutor, as_completed
 import logging
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any
 
 from langgraph.graph import StateGraph
 from pydantic import BaseModel, Field, validator
 
 # Import our document loader components
-from .auto_loader_factory import analyze_path_and_suggest_loader, create_document_loader
-from .source_implementation import (
-    CredentialManager,
-)
-
+from .auto_loader_factory import (analyze_path_and_suggest_loader,
+                                  create_document_loader)
+from .source_implementation import CredentialManager
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -279,7 +277,12 @@ def load_single_source(
 
         # Determine if error is recoverable
         recoverable = False
-        if "auth" in str(e).lower() or "credentials" in str(e).lower() or "timeout" in str(e).lower() or "connection" in str(e).lower():
+        if (
+            "auth" in str(e).lower()
+            or "credentials" in str(e).lower()
+            or "timeout" in str(e).lower()
+            or "connection" in str(e).lower()
+        ):
             recoverable = True
 
         return LoaderError(
@@ -291,8 +294,7 @@ def load_single_source(
 
 
 def load_documents_parallel(state: DocumentLoaderState) -> DocumentLoaderState:
-    """Load documents from all pending sources in parallel.
-    """
+    """Load documents from all pending sources in parallel."""
     documents = state.documents.copy()
     errors = state.errors.copy()
     completed_sources = state.completed_sources.copy()
@@ -354,8 +356,7 @@ def load_documents_parallel(state: DocumentLoaderState) -> DocumentLoaderState:
 
 
 def load_documents_sequential(state: DocumentLoaderState) -> DocumentLoaderState:
-    """Load documents from all pending sources sequentially.
-    """
+    """Load documents from all pending sources sequentially."""
     documents = state.documents.copy()
     errors = state.errors.copy()
     completed_sources = state.completed_sources.copy()
@@ -391,8 +392,7 @@ def load_documents_sequential(state: DocumentLoaderState) -> DocumentLoaderState
 
 
 def retry_failed_sources(state: DocumentLoaderState) -> DocumentLoaderState:
-    """Retry loading sources that had recoverable errors.
-    """
+    """Retry loading sources that had recoverable errors."""
     pending_sources = state.pending_sources.copy()
     errors = []
 
@@ -470,8 +470,7 @@ def check_for_retries(state: DocumentLoaderState) -> str:
 
 # Create the document loader graph
 def create_document_loader_graph() -> Any:
-    """Create a LangGraph for document loading with error handling and retries.
-    """
+    """Create a LangGraph for document loading with error handling and retries."""
     workflow = StateGraph(DocumentLoaderState)
 
     # Add nodes

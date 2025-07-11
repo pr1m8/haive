@@ -68,17 +68,16 @@ import logging
 from enum import Enum
 from typing import Any, Callable, Dict, List, Optional, Tuple, Type, Union
 
-from langchain_core.documents import Document
-from langchain_core.retrievers import BaseRetriever
-from langchain_core.runnables import RunnableConfig
-from langchain_core.vectorstores import VectorStore
-from pydantic import ConfigDict, Field, field_validator
-
 from haive.core.engine.base import EngineType, InvokableEngine
 from haive.core.models.embeddings.base import (
     BaseEmbeddingConfig,
     HuggingFaceEmbeddingConfig,
 )
+from langchain_core.documents import Document
+from langchain_core.retrievers import BaseRetriever
+from langchain_core.runnables import RunnableConfig
+from langchain_core.vectorstores import VectorStore
+from pydantic import ConfigDict, Field, field_validator
 
 logger = logging.getLogger(__name__)
 
