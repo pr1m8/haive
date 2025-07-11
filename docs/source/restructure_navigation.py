@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Restructure documentation navigation to use haive as root with consistent module-based pattern.
+"""Restructure documentation navigation to use haive as root with consistent module-based pattern.
 
 Navigation structure:
 /api/haive/
@@ -18,10 +17,11 @@ Navigation structure:
 """
 
 import os
-import shutil
 from pathlib import Path
-from typing import Dict, List, Set
+import shutil
 import textwrap
+from typing import Dict, List, Set
+
 
 # Paths
 DOCS_SOURCE = Path("/home/will/Projects/haive/backend/haive/docs/source/api")
@@ -34,9 +34,25 @@ HAIVE_STRUCTURE = {
         "description": "Core infrastructure and utilities",
         "icon": "🏗️",
         "modules": {
-            "engine": ["base", "aug_llm", "document", "agent", "embedding", "retriever", "vectorstore", "tool"],
+            "engine": [
+                "base",
+                "aug_llm",
+                "document",
+                "agent",
+                "embedding",
+                "retriever",
+                "vectorstore",
+                "tool",
+            ],
             "schema": ["state_schema", "schema_composer", "compatibility", "prebuilt"],
-            "graph": ["state_graph", "node", "patterns", "routers", "branches", "utils"],
+            "graph": [
+                "state_graph",
+                "node",
+                "patterns",
+                "routers",
+                "branches",
+                "utils",
+            ],
             "persistence": ["store", "handlers", "factory"],
             "registry": ["base", "decorators", "manager"],
             "common": ["mixins", "models", "types"],
@@ -46,8 +62,8 @@ HAIVE_STRUCTURE = {
             "runtime": ["base", "extension"],
             "types": [],
             "ui": [],
-            "utils": []
-        }
+            "utils": [],
+        },
     },
     "agents": {
         "title": "Agents",
@@ -56,14 +72,35 @@ HAIVE_STRUCTURE = {
         "modules": {
             "base": ["mixins"],
             "simple": ["structured", "v2"],
-            "conversation": ["base", "collaborative", "debate", "directed", "round_robin", "social_media"],
-            "rag": ["base", "adaptive_rag", "self_rag", "multi_strategy", "hyde", "db_rag"],
+            "conversation": [
+                "base",
+                "collaborative",
+                "debate",
+                "directed",
+                "round_robin",
+                "social_media",
+            ],
+            "rag": [
+                "base",
+                "adaptive_rag",
+                "self_rag",
+                "multi_strategy",
+                "hyde",
+                "db_rag",
+            ],
             "react": [],
-            "reasoning_and_critique": ["lats", "reflection", "reflexion", "tot", "mcts", "self_discover"],
+            "reasoning_and_critique": [
+                "lats",
+                "reflection",
+                "reflexion",
+                "tot",
+                "mcts",
+                "self_discover",
+            ],
             "multi": ["sequential"],
             "planning": ["plan_and_execute", "llm_compiler", "rewoo"],
-            "research": ["person", "storm", "perplexity"]
-        }
+            "research": ["person", "storm", "perplexity"],
+        },
     },
     "tools": {
         "title": "Tools",
@@ -75,33 +112,33 @@ HAIVE_STRUCTURE = {
             "data": [],
             "math": [],
             "search": [],
-            "utility": []
-        }
+            "utility": [],
+        },
     },
     "games": {
         "title": "Games",
         "description": "Game environments for agents",
         "icon": "🎮",
-        "modules": {}
+        "modules": {},
     },
     "dataflow": {
         "title": "Dataflow",
         "description": "Data processing pipelines",
         "icon": "🔄",
-        "modules": {}
+        "modules": {},
     },
     "prebuilt": {
         "title": "Prebuilt",
         "description": "Pre-configured solutions",
         "icon": "📦",
-        "modules": {}
+        "modules": {},
     },
     "mcp": {
         "title": "MCP",
         "description": "Model Context Protocol integration",
         "icon": "🔌",
-        "modules": {}
-    }
+        "modules": {},
+    },
 }
 
 
@@ -110,13 +147,15 @@ def create_haive_root_index() -> str:
     # Create package grid
     grid_items = []
     for package_name, package_info in HAIVE_STRUCTURE.items():
-        grid_items.append(f"""
+        grid_items.append(
+            f"""
    .. grid-item-card:: {package_info['icon']} **Haive {package_info['title']}**
       :link: {package_name}/index
       :link-type: doc
-      
-      {package_info['description']}""")
-    
+
+      {package_info['description']}"""
+        )
+
     content = f"""Haive API Reference
 ===================
 
@@ -133,7 +172,7 @@ Packages
    :maxdepth: 4
    :caption: API Reference
    :hidden:
-   
+
    core/index
    agents/index
    tools/index
@@ -148,11 +187,11 @@ Navigation
 The API documentation is organized hierarchically:
 
 - **haive** (root)
-  
+
   - **core** → engine → base, aug_llm, document...
   - **agents** → simple → structured, v2...
   - **tools** → search, math, api...
-  
+
 Each level provides both an overview and direct access to submodules.
 
 Quick Links
@@ -165,7 +204,7 @@ Quick Links
     return content
 
 
-def create_package_index(package_name: str, package_info: Dict) -> str:
+def create_package_index(package_name: str, package_info: dict) -> str:
     """Create index page for a package (e.g., haive/core/index.rst)."""
     # Create module grid
     grid_items = []
@@ -173,14 +212,16 @@ def create_package_index(package_name: str, package_info: Dict) -> str:
         module_title = module_name.replace("_", " ").title()
         submodule_count = len(submodules)
         desc = f"{submodule_count} submodules" if submodule_count > 0 else "Core module"
-        
-        grid_items.append(f"""
+
+        grid_items.append(
+            f"""
    .. grid-item-card:: **{module_title}**
       :link: {module_name}/index
       :link-type: doc
-      
-      {desc}""")
-    
+
+      {desc}"""
+        )
+
     content = f"""Haive {package_info['title']}
 {'=' * (6 + len(package_info['title']))}
 
@@ -197,8 +238,8 @@ Modules
    :maxdepth: 3
    :caption: {package_info['title']} Modules
    :hidden:
-   
-{chr(10).join(f'   {module}/index' for module in package_info["modules"].keys())}
+
+{chr(10).join(f'   {module}/index' for module in package_info["modules"])}
 
 Module Path
 -----------
@@ -215,7 +256,7 @@ Package Structure
 This package contains the following module hierarchy:
 
 """
-    
+
     # Add module tree
     for module_name, submodules in package_info["modules"].items():
         content += f"\n**{module_name}**\n"
@@ -224,27 +265,31 @@ This package contains the following module hierarchy:
                 content += f"  - {submodule}\n"
         else:
             content += "  - *(no submodules)*\n"
-    
+
     return content
 
 
-def create_module_index(package_name: str, module_name: str, submodules: List[str]) -> str:
+def create_module_index(
+    package_name: str, module_name: str, submodules: list[str]
+) -> str:
     """Create index page for a module (e.g., haive/core/engine/index.rst)."""
     module_title = module_name.replace("_", " ").title()
-    
+
     # Create submodule grid if there are submodules
     grid_content = ""
     if submodules:
         grid_items = []
         for submodule in submodules:
             submodule_title = submodule.replace("_", " ").title()
-            grid_items.append(f"""
+            grid_items.append(
+                f"""
    .. grid-item-card:: **{submodule_title}**
       :link: {submodule}
       :link-type: doc
-      
-      haive.{package_name}.{module_name}.{submodule}""")
-        
+
+      haive.{package_name}.{module_name}.{submodule}"""
+            )
+
         grid_content = f"""
 Submodules
 ----------
@@ -253,10 +298,10 @@ Submodules
    :gutter: 3
 {"".join(grid_items)}
 """
-    
+
     # Toctree
     toctree_entries = submodules if submodules else []
-    
+
     content = f"""{module_title}
 {'=' * len(module_title)}
 
@@ -275,7 +320,7 @@ Module Documentation
 .. toctree::
    :maxdepth: 2
    :hidden:
-   
+
 {chr(10).join(f'   {sub}' for sub in toctree_entries)}
 
 Import
@@ -287,14 +332,16 @@ Import
    # or
    import haive.{package_name}.{module_name}
 """
-    
+
     return content
 
 
-def create_submodule_doc(package_name: str, module_name: str, submodule_name: str) -> str:
+def create_submodule_doc(
+    package_name: str, module_name: str, submodule_name: str
+) -> str:
     """Create documentation for a submodule (e.g., haive/core/engine/base.rst)."""
     title = f"haive.{package_name}.{module_name}.{submodule_name}"
-    
+
     content = f"""{title}
 {'=' * len(title)}
 
@@ -328,7 +375,7 @@ Examples
 .. code-block:: python
 
    from haive.{package_name}.{module_name}.{submodule_name} import *
-   
+
    # Your code here
 
 See Also
@@ -337,7 +384,7 @@ See Also
 - :doc:`/api/haive/{package_name}/index` - Package overview
 - :doc:`/api/haive/{package_name}/{module_name}/index` - Module overview
 """
-    
+
     return content
 
 
@@ -346,38 +393,36 @@ def restructure_docs():
     # Create haive root directory
     haive_dir = DOCS_SOURCE / "haive"
     haive_dir.mkdir(parents=True, exist_ok=True)
-    
+
     # Create root index
     root_index = create_haive_root_index()
     (haive_dir / "index.rst").write_text(root_index)
-    print(f"Created {haive_dir}/index.rst")
-    
+
     # Create package directories and documentation
     for package_name, package_info in HAIVE_STRUCTURE.items():
         package_dir = haive_dir / package_name
         package_dir.mkdir(parents=True, exist_ok=True)
-        
+
         # Create package index
         package_index = create_package_index(package_name, package_info)
         (package_dir / "index.rst").write_text(package_index)
-        print(f"Created {package_dir}/index.rst")
-        
+
         # Create module directories
         for module_name, submodules in package_info["modules"].items():
             module_dir = package_dir / module_name
             module_dir.mkdir(parents=True, exist_ok=True)
-            
+
             # Create module index
             module_index = create_module_index(package_name, module_name, submodules)
             (module_dir / "index.rst").write_text(module_index)
-            print(f"Created {module_dir}/index.rst")
-            
+
             # Create submodule documentation
             for submodule_name in submodules:
-                submodule_doc = create_submodule_doc(package_name, module_name, submodule_name)
+                submodule_doc = create_submodule_doc(
+                    package_name, module_name, submodule_name
+                )
                 (module_dir / f"{submodule_name}.rst").write_text(submodule_doc)
-                print(f"Created {module_dir}/{submodule_name}.rst")
-    
+
     # Update the main API index to point to the new structure
     api_index_content = """API Reference
 =============
@@ -385,7 +430,7 @@ def restructure_docs():
 .. toctree::
    :maxdepth: 5
    :caption: Haive API
-   
+
    haive/index
 
 Legacy Documentation
@@ -397,7 +442,7 @@ The previous package-based documentation is still available:
    :maxdepth: 2
    :caption: Legacy Links
    :hidden:
-   
+
    haive-core
    haive-agents
    haive-tools
@@ -406,22 +451,9 @@ The previous package-based documentation is still available:
    haive-prebuilt
    haive-mcp
 """
-    
+
     (DOCS_SOURCE / "index.rst").write_text(api_index_content)
-    print(f"Updated {DOCS_SOURCE}/index.rst")
 
 
 if __name__ == "__main__":
-    print("Restructuring documentation with haive as root...")
     restructure_docs()
-    print("\nDone! New navigation structure created.")
-    print("\nThe new structure is:")
-    print("  /api/haive/ (root)")
-    print("    /core/ (package)")
-    print("      /engine/ (module)")
-    print("        /base.html (submodule)")
-    print("        /aug_llm.html (submodule)")
-    print("    /agents/ (package)")
-    print("      /simple/ (module)")
-    print("        /structured.html (submodule)")
-    print("\nRun: poetry run sphinx-build -b html docs/source docs/build/html")

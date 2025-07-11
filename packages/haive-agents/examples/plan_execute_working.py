@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Working Plan and Execute example.
+"""Working Plan and Execute example.
 
 This demonstrates a simpler approach that avoids the serialization issues.
 """
@@ -13,6 +12,7 @@ from langchain_core.tools import tool
 
 from haive.agents.react import ReactAgent
 from haive.agents.simple import SimpleAgent
+
 
 # Load environment variables
 load_dotenv()
@@ -36,10 +36,7 @@ def is_prime(n: int) -> bool:
     """Check if a number is prime."""
     if n < 2:
         return False
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
+    return all(n % i != 0 for i in range(2, int(n**0.5) + 1))
 
 
 @tool
@@ -60,13 +57,12 @@ def get_nth_prime(n: int) -> int:
 
 
 async def main():
-    print("\n🚀 Starting Working Plan and Execute Demo\n")
 
     # Create a simple planning agent
     planner = SimpleAgent(
         name="planner",
         system_prompt="""You are a planning agent. When given a task, create a step-by-step plan.
-        
+
 Format your plan as:
 1. First step
 2. Second step
@@ -86,16 +82,12 @@ Be specific and break down complex calculations into simple steps.""",
 
     # Test query
     query = "Calculate the sum of the first 5 prime numbers"
-    print(f"📋 Query: {query}\n")
 
     try:
         # Step 1: Create plan
-        print("📝 Creating plan...")
         plan_result = await planner.arun(query)
-        print(f"Plan:\n{plan_result}\n")
 
         # Step 2: Execute plan
-        print("🔧 Executing plan...")
         execution_prompt = f"""Execute this plan step by step:
 
 {plan_result}
@@ -104,16 +96,12 @@ Original task: {query}
 
 Use the available tools to complete each step and provide the final answer."""
 
-        result = await executor.arun(execution_prompt)
-        print(f"\n✅ Result: {result}\n")
+        await executor.arun(execution_prompt)
 
-    except Exception as e:
-        print(f"\n❌ Error: {e}\n")
+    except Exception:
         import traceback
 
         traceback.print_exc()
-
-    print("🎉 Demo completed!")
 
 
 if __name__ == "__main__":

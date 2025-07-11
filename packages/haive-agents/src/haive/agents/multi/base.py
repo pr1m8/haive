@@ -1,6 +1,5 @@
 # haive/agents/multi/base.py
-"""
-Base multi-agent implementation with branching and conditional routing support.
+"""Base multi-agent implementation with branching and conditional routing support.
 
 This module provides an abstract base class for multi-agent systems that can:
 - Execute agents in sequence, parallel, or with conditional branching
@@ -24,6 +23,7 @@ from typing import (
     Union,
 )
 
+from haive.agents.base.agent import Agent
 from haive.core.engine.base import EngineType
 from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
@@ -34,8 +34,6 @@ from langgraph.graph import END, START
 from pydantic import BaseModel, Field, PrivateAttr, model_validator
 from rich.console import Console
 from rich.tree import Tree
-
-from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 console = Console()
@@ -51,8 +49,7 @@ class ExecutionMode(str, Enum):
 
 
 class MultiAgent(Agent):
-    """
-    Abstract base class for multi-agent systems with branching support.
+    """Abstract base class for multi-agent systems with branching support.
 
     This class provides:
     - Automatic schema composition from child agents
@@ -82,20 +79,20 @@ class MultiAgent(Agent):
     )
 
     # Branching configuration
-    branches: Dict[str, Dict[str, Any]] = Field(
+    branches: dict[str, dict[str, Any]] = Field(
         default_factory=dict,
         description="Branch configurations keyed by source node name",
     )
 
     # Private state management
-    _agent_private_states: Dict[str, Type[BaseModel]] = PrivateAttr(
+    _agent_private_states: dict[str, type[BaseModel]] = PrivateAttr(
         default_factory=dict
     )
-    _agent_node_mapping: Dict[str, str] = PrivateAttr(default_factory=dict)
+    _agent_node_mapping: dict[str, str] = PrivateAttr(default_factory=dict)
 
     @model_validator(mode="before")
     @classmethod
-    def validate_agents(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+    def validate_agents(cls, values: dict[str, Any]) -> dict[str, Any]:
         """Ensure agents list is not empty."""
         if isinstance(values, dict):
             agents = values.get("agents", [])
@@ -165,13 +162,12 @@ class MultiAgent(Agent):
 
     def add_conditional_edge(
         self,
-        source_agent: Union[str, Agent],
-        condition: Callable[[Any], Union[str, bool]],
-        destinations: Dict[Union[str, bool], Union[str, Agent]],
-        default: Optional[Union[str, Agent]] = None,
+        source_agent: str | Agent,
+        condition: Callable[[Any], str | bool],
+        destinations: dict[str | bool, str | Agent],
+        default: str | Agent | None = None,
     ) -> None:
-        """
-        Add a conditional edge between agents.
+        """Add a conditional edge between agents.
 
         Args:
             source_agent: Source agent or its name/id
@@ -197,7 +193,7 @@ class MultiAgent(Agent):
             ),
         }
 
-    def _get_node_name(self, agent: Union[str, Agent]) -> str:
+    def _get_node_name(self, agent: str | Agent) -> str:
         """Get the node name for an agent."""
         if isinstance(agent, str):
             # Could be agent name or id
@@ -205,10 +201,9 @@ class MultiAgent(Agent):
                 if getattr(a, "name", None) == agent or getattr(a, "id", None) == agent:
                     return self._get_agent_node_name(a)
             return agent  # Assume it's a node name
-        elif isinstance(agent, Agent):
+        if isinstance(agent, Agent):
             return self._get_agent_node_name(agent)
-        else:
-            raise ValueError(f"Invalid agent reference: {agent}")
+        raise ValueError(f"Invalid agent reference: {agent}")
 
     def _get_agent_node_name(self, agent: Agent) -> str:
         """Get the unique node name for an agent."""
@@ -285,12 +280,10 @@ class MultiAgent(Agent):
                         END if i == len(node_names) - 1 else node_names[i + 1],
                     ),
                 )
+            elif i == len(node_names) - 1:
+                graph.add_edge(node_name, END)
             else:
-                # Normal sequential edge
-                if i == len(node_names) - 1:
-                    graph.add_edge(node_name, END)
-                else:
-                    graph.add_edge(node_name, node_names[i + 1])
+                graph.add_edge(node_name, node_names[i + 1])
 
     def _build_parallel_graph(self, graph: BaseGraph) -> None:
         """Build a parallel execution graph."""
@@ -351,8 +344,7 @@ class MultiAgent(Agent):
 
     @abstractmethod
     def build_custom_graph(self, graph: BaseGraph) -> BaseGraph:
-        """
-        Build a custom graph - must be implemented by subclasses if using CUSTOM mode.
+        """Build a custom graph - must be implemented by subclasses if using CUSTOM mode.
 
         Args:
             graph: The graph to build on
@@ -364,7 +356,7 @@ class MultiAgent(Agent):
             "Subclasses must implement build_custom_graph for CUSTOM mode"
         )
 
-    def get_agent_by_name(self, name: str) -> Optional[Agent]:
+    def get_agent_by_name(self, name: str) -> Agent | None:
         """Get an agent by name or id."""
         for agent in self.agents:
             if (

@@ -1,4 +1,4 @@
-"""Compatibility-Enhanced Multi-Agent Base
+"""Compatibility-Enhanced Multi-Agent Base.
 
 This module extends the multi-agent base with built-in compatibility checking,
 ensuring agents are compatible before building workflows and providing
@@ -10,14 +10,13 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any
 
+from haive.agents.base.agent import Agent
 from haive.core.schema.compatibility import (
     CompatibilityChecker,
     FieldMapper,
     TypeAnalyzer,
     check_compatibility,
 )
-
-from haive.agents.base.agent import Agent
 
 from .base import ExecutionMode, MultiAgent
 
@@ -84,7 +83,7 @@ class CompatibilityEnhancedMultiAgent(MultiAgent):
 
         super().__init__(**kwargs)
 
-    def add_agent(self, agent: Agent, check_compatibility: bool = None) -> None:
+    def add_agent(self, agent: Agent, check_compatibility: bool | None = None) -> None:
         """Add an agent to the multi-agent system with automatic compatibility checking.
 
         Args:
@@ -194,7 +193,7 @@ class CompatibilityEnhancedMultiAgent(MultiAgent):
             }
 
         except Exception as e:
-            logger.error(
+            logger.exception(
                 f"Error checking compatibility between {source_agent.name} and {target_agent.name}: {e}"
             )
             return {
@@ -229,7 +228,7 @@ class CompatibilityEnhancedMultiAgent(MultiAgent):
             }
 
         except Exception as e:
-            logger.error(
+            logger.exception(
                 f"Error checking state schema compatibility for {agent.name}: {e}"
             )
             return {
@@ -319,7 +318,7 @@ class CompatibilityEnhancedMultiAgent(MultiAgent):
                 # Could add more adapter types here
 
             except Exception as e:
-                logger.error(
+                logger.exception(
                     f"Failed to apply adapter {adapter_spec['type']} to {agent.name}: {e}"
                 )
 
@@ -405,7 +404,7 @@ class CompatibilityEnhancedMultiAgent(MultiAgent):
             for source, target, result in incompatible_pairs:
                 logger.warning(f"  {source} -> {target}: score {result['score']:.2f}")
 
-    def get_compatibility_report(self, detailed: bool = None) -> dict[str, Any]:
+    def get_compatibility_report(self, detailed: bool | None = None) -> dict[str, Any]:
         """Generate a comprehensive compatibility report."""
         if detailed is None:
             detailed = self.compatibility_report_level == "detailed"

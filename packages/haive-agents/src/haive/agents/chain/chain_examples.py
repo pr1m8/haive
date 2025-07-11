@@ -1,12 +1,7 @@
-"""Examples of using the flexible ChainAgent
+"""Examples of using the flexible ChainAgent.
 
 Shows different ways to create chains from various node types.
 """
-
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
-from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate
 
 from haive.agents.chain.chain_agent import (
     ChainAgent,
@@ -15,12 +10,15 @@ from haive.agents.chain.chain_agent import (
 )
 from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
 
 
 # Example 1: Simple sequential chain from mixed node types
 def example_sequential_mixed():
     """Create a chain from different node types."""
-
     llm_config = AzureLLMConfig(
         deployment_name="gpt-4",
         azure_endpoint="${AZURE_OPENAI_API_BASE}",
@@ -61,7 +59,6 @@ def example_sequential_mixed():
 # Example 2: Using from_mapping for more complex flows
 def example_mapped_flow():
     """Create a complex flow using mapping syntax."""
-
     # Define nodes
     nodes = {
         "input": lambda s: {"processed_input": s.get("input", "")},
@@ -93,7 +90,6 @@ def example_mapped_flow():
 # Example 3: Building a chain incrementally
 def example_incremental_building():
     """Build a chain step by step."""
-
     chain = ChainAgent(name="Incremental Chain")
 
     # Add nodes one by one
@@ -125,7 +121,6 @@ def example_incremental_building():
 # Example 4: Nested chains
 def example_nested_chains():
     """Create chains that contain other chains."""
-
     # Create a sub-chain for processing
     processing_chain = sequential_chain(
         lambda s: {"preprocessed": True},
@@ -150,7 +145,6 @@ def example_nested_chains():
 # Example 5: RAG Router using ChainAgent
 def example_rag_router_simplified():
     """Create a RAG router using the simplified ChainAgent approach."""
-
     llm_config = AzureLLMConfig(
         deployment_name="gpt-4",
         azure_endpoint="${AZURE_OPENAI_API_BASE}",
@@ -172,7 +166,8 @@ def example_rag_router_simplified():
     simple_rag = SimpleRAGAgent.from_documents(docs, llm_config)
 
     # Create complex RAG (mock)
-    complex_rag = lambda s: {"response": "Complex RAG response"}
+    def complex_rag(s):
+        return {"response": "Complex RAG response"}
 
     # Use conditional_chain helper
     router = conditional_chain(
@@ -188,7 +183,6 @@ def example_rag_router_simplified():
 # Example 6: Using engines directly
 def example_engines_as_nodes():
     """Show how engines can be used directly as nodes."""
-
     llm_config = AzureLLMConfig(
         deployment_name="gpt-4",
         azure_endpoint="${AZURE_OPENAI_API_BASE}",

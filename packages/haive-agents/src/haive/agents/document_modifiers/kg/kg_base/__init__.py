@@ -70,6 +70,7 @@ Note:
 
 from haive.agents.document_modifiers.kg.kg_base.models import GraphTransformer
 
+
 __all__ = ["GraphTransformer"]
 
 # Example usage available in the example module

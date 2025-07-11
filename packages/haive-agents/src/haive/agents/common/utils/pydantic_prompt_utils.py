@@ -51,12 +51,12 @@ class PydanticPromptConfig(BaseModel):
     custom_instructions: str | None = Field(
         default=None, description="Additional custom instructions"
     )
-    field_priorities: Dict[str, int] | None = Field(
+    field_priorities: dict[str, int] | None = Field(
         default=None, description="Priority ordering for fields (1=highest)"
     )
 
 
-def analyze_pydantic_field(field_info: Any, field_name: str) -> Dict[str, Any]:
+def analyze_pydantic_field(field_info: Any, field_name: str) -> dict[str, Any]:
     """Analyze a Pydantic field to extract information for prompt generation.
 
     Args:
@@ -97,7 +97,7 @@ def analyze_pydantic_field(field_info: Any, field_name: str) -> Dict[str, Any]:
     return analysis
 
 
-def analyze_type_annotation(annotation: Type) -> Dict[str, Any]:
+def analyze_type_annotation(annotation: type) -> dict[str, Any]:
     """Analyze a type annotation to extract useful information.
 
     Args:
@@ -129,7 +129,7 @@ def analyze_type_annotation(annotation: Type) -> Dict[str, Any]:
             args = get_args(annotation)
 
     # Handle List types
-    if origin is list or origin is List:
+    if origin is list or origin is list:
         type_info["is_list"] = True
         if args:
             annotation = args[0]
@@ -153,7 +153,7 @@ def analyze_type_annotation(annotation: Type) -> Dict[str, Any]:
 
 
 def generate_field_description(
-    field_analysis: Dict[str, Any], style: PromptStyle
+    field_analysis: dict[str, Any], style: PromptStyle
 ) -> str:
     """Generate a description for a field based on analysis and style.
 
@@ -210,11 +210,12 @@ def generate_field_description(
 
         return "\n".join(parts)
 
-    elif style == PromptStyle.NATURAL:
-        if desc:
-            base = f"Provide {desc.lower()}"
-        else:
-            base = f"Provide the {name.replace('_', ' ')}"
+    if style == PromptStyle.NATURAL:
+        base = (
+            f"Provide {desc.lower()}"
+            if desc
+            else f"Provide the {name.replace('_', ' ')}"
+        )
 
         if type_info["is_enum"] and type_info["enum_values"]:
             values = ", ".join(f"'{v}'" for v in type_info["enum_values"])
@@ -225,7 +226,7 @@ def generate_field_description(
 
         return base
 
-    elif style == PromptStyle.STRUCTURED:
+    if style == PromptStyle.STRUCTURED:
         parts = [f"{name}:"]
         if desc:
             parts.append(f"  Description: {desc}")
@@ -237,13 +238,12 @@ def generate_field_description(
             parts.append("  (Optional)")
         return "\n".join(parts)
 
-    else:
-        # Default fallback
-        return f"{name}: {desc or 'No description'}"
+    # Default fallback
+    return f"{name}: {desc or 'No description'}"
 
 
 def create_pydantic_prompt(
-    model_class: Type[BaseModel],
+    model_class: type[BaseModel],
     config: PydanticPromptConfig,
     base_instruction: str = "Generate content with the following structure:",
 ) -> ChatPromptTemplate:
@@ -315,7 +315,7 @@ def create_pydantic_prompt(
     )
 
 
-def create_example_from_model(model_class: Type[BaseModel]) -> str:
+def create_example_from_model(model_class: type[BaseModel]) -> str:
     """Create an example output from a Pydantic model.
 
     Args:
@@ -356,7 +356,7 @@ def create_example_from_model(model_class: Type[BaseModel]) -> str:
 
 
 def create_parsing_prompt(
-    model_class: Type[BaseModel], content_field: str = "content"
+    model_class: type[BaseModel], content_field: str = "content"
 ) -> ChatPromptTemplate:
     """Create a prompt for parsing content into a Pydantic model.
 
@@ -397,9 +397,9 @@ Focus on accuracy and completeness of the extracted information."""
 
 
 def create_generation_and_parsing_prompts(
-    model_class: Type[BaseModel],
+    model_class: type[BaseModel],
     generation_instruction: str = "Generate comprehensive content about the topic:",
-    config: Optional[PydanticPromptConfig] = None,
+    config: PydanticPromptConfig | None = None,
 ) -> tuple[ChatPromptTemplate, ChatPromptTemplate]:
     """Create both generation and parsing prompts for structured output pattern.
 
@@ -430,7 +430,7 @@ def create_generation_and_parsing_prompts(
 
 
 def quick_pydantic_prompt(
-    model_class: Type[BaseModel],
+    model_class: type[BaseModel],
     style: PromptStyle = PromptStyle.DESCRIPTIVE,
     use_json: bool = False,
 ) -> ChatPromptTemplate:

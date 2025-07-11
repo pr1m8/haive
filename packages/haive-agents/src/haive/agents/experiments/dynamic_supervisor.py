@@ -9,11 +9,10 @@ that can select and execute agents based on runtime decisions.
 import logging
 from typing import Any, Dict, List, Optional, Set, Type
 
-from haive.core.schema.prebuilt.messages_state import MessagesState
-from pydantic import BaseModel, Field, computed_field
-
 from haive.agents.base.agent import Agent
 from haive.agents.react.agent import ReactAgent
+from haive.core.schema.prebuilt.messages_state import MessagesState
+from pydantic import BaseModel, Field, computed_field
 
 logger = logging.getLogger(__name__)
 
@@ -27,26 +26,26 @@ class SupervisorState(MessagesState):
     """State schema for dynamic supervisor agent."""
 
     # Agent registry information
-    agent_registry: Dict[str, Dict[str, Any]] = Field(
+    agent_registry: dict[str, dict[str, Any]] = Field(
         default_factory=dict,
         description="Registry of available agents with their metadata",
     )
 
     # Current execution state
-    current_agent_name: Optional[str] = Field(
+    current_agent_name: str | None = Field(
         default=None, description="Name of the currently selected agent"
     )
 
-    current_task: Optional[str] = Field(
+    current_task: str | None = Field(
         default=None, description="Current task being executed"
     )
 
     # Execution tracking
-    execution_history: List[Dict[str, Any]] = Field(
+    execution_history: list[dict[str, Any]] = Field(
         default_factory=list, description="History of agent executions with results"
     )
 
-    completed_agents: Set[str] = Field(
+    completed_agents: set[str] = Field(
         default_factory=set, description="Set of agents that have completed their tasks"
     )
 
@@ -63,7 +62,7 @@ class SupervisorState(MessagesState):
 
     @computed_field
     @property
-    def available_agents(self) -> List[str]:
+    def available_agents(self) -> list[str]:
         """Get list of available agent names from registry."""
         return list(self.agent_registry.keys())
 
@@ -84,8 +83,8 @@ class AgentRegistryEntry(BaseModel):
 
     name: str = Field(description="Unique name for the agent")
     description: str = Field(description="What this agent does")
-    agent_class: Type[Agent] = Field(description="Agent class to instantiate")
-    config: Dict[str, Any] = Field(
+    agent_class: type[Agent] = Field(description="Agent class to instantiate")
+    config: dict[str, Any] = Field(
         default_factory=dict, description="Configuration for agent instantiation"
     )
     capabilities: list[str] = Field(
@@ -99,16 +98,16 @@ class AgentRegistry:
     """Registry for managing available agents."""
 
     def __init__(self):
-        self._registry: Dict[str, AgentRegistryEntry] = {}
-        self._instances: Dict[str, Agent] = {}  # Cache
+        self._registry: dict[str, AgentRegistryEntry] = {}
+        self._instances: dict[str, Agent] = {}  # Cache
 
     def register(
         self,
         name: str,
         description: str,
-        agent_class: Type[Agent],
-        config: Optional[Dict[str, Any]] = None,
-        capabilities: Optional[list[str]] = None,
+        agent_class: type[Agent],
+        config: Dict[str, Any] | None = None,
+        capabilities: list[str] | None = None,
     ) -> None:
         """Register an agent with the registry."""
         entry = AgentRegistryEntry(
@@ -129,7 +128,7 @@ class AgentRegistry:
                 del self._instances[name]
             logger.info(f"Unregistered agent: {name}")
 
-    def list_agents(self) -> Dict[str, Dict[str, Any]]:
+    def list_agents(self) -> dict[str, dict[str, Any]]:
         """List all registered agents with their metadata."""
         return {
             name: {
@@ -139,7 +138,7 @@ class AgentRegistry:
             for name, entry in self._registry.items()
         }
 
-    def instantiate_agent(self, name: str) -> Optional[Agent]:
+    def instantiate_agent(self, name: str) -> Agent | None:
         """Instantiate an agent from the registry."""
         entry = self._registry.get(name)
         if not entry:
@@ -155,10 +154,10 @@ class AgentRegistry:
             self._instances[name] = agent
             return agent
         except Exception as e:
-            logger.error(f"Failed to instantiate agent '{name}': {e}")
+            logger.exception(f"Failed to instantiate agent '{name}': {e}")
             return None
 
-    def to_state_format(self) -> Dict[str, Dict[str, Any]]:
+    def to_state_format(self) -> dict[str, dict[str, Any]]:
         """Convert registry to format suitable for SupervisorState."""
         return {
             name: {
@@ -174,10 +173,11 @@ class AgentRegistry:
 # DYNAMIC TOOLS FOR AGENT EXECUTION
 # ============================================================================
 
-from langchain_core.messages import AIMessage, HumanMessage
+from typing import Annotated
+
+from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 from langgraph.prebuilt import InjectedState
-from typing_extensions import Annotated
 
 
 def create_dynamic_handoff_tool(supervisor_instance, agent_name: str):
@@ -206,7 +206,7 @@ def create_dynamic_handoff_tool(supervisor_instance, agent_name: str):
 
             # Create input for the agent
             agent_input = {
-                "messages": state.get("messages", []) + [HumanMessage(content=task)]
+                "messages": [*state.get("messages", []), HumanMessage(content=task)]
             }
 
             # Execute the agent
@@ -224,31 +224,16 @@ def create_dynamic_handoff_tool(supervisor_instance, agent_name: str):
 
             # Update execution history
             if hasattr(state, "execution_history"):
-                state["execution_history"] = state.get("execution_history", []) + [
-                    {
-                        "agent_name": agent_name,
-                        "task": task,
-                        "result": response,
-                        "success": True,
-                    }
-                ]
+                state["execution_history"] = [*state.get("execution_history", []), {"agent_name": agent_name, "task": task, "result": response, "success": True}]
 
             return f"Agent {agent_name} completed task. Result: {response}"
 
         except Exception as e:
-            error_msg = f"Error executing {agent_name}: {str(e)}"
+            error_msg = f"Error executing {agent_name}: {e!s}"
 
             # Update execution history with error
             if hasattr(state, "execution_history"):
-                state["execution_history"] = state.get("execution_history", []) + [
-                    {
-                        "agent_name": agent_name,
-                        "task": task,
-                        "result": None,
-                        "success": False,
-                        "error": str(e),
-                    }
-                ]
+                state["execution_history"] = [*state.get("execution_history", []), {"agent_name": agent_name, "task": task, "result": None, "success": False, "error": str(e)}]
 
             return error_msg
 
@@ -297,7 +282,7 @@ def create_forward_message_tool(supervisor_name: str = "supervisor"):
             return f"Forwarding from {from_agent}: {content}"
 
         except Exception as e:
-            return f"Error forwarding message from {from_agent}: {str(e)}"
+            return f"Error forwarding message from {from_agent}: {e!s}"
 
     forward_message.name = "forward_message"
     return forward_message
@@ -328,7 +313,7 @@ def create_list_agents_tool(supervisor_instance):
             return result
 
         except Exception as e:
-            return f"Error listing agents: {str(e)}"
+            return f"Error listing agents: {e!s}"
 
     list_agents.name = "list_agents"
     return list_agents
@@ -348,14 +333,13 @@ class DynamicSupervisorAgent(ReactAgent):
     """
 
     # Override state schema
-    state_schema: Type[SupervisorState] = SupervisorState
+    state_schema: type[SupervisorState] = SupervisorState
 
     # Agent registry
     agent_registry: AgentRegistry = Field(default_factory=AgentRegistry)
 
     def setup_agent(self):
         """Setup supervisor with dynamic agent tools."""
-
         # Create dynamic tools based on registry
         self.tools = self._create_dynamic_tools()
 
@@ -381,7 +365,7 @@ class DynamicSupervisorAgent(ReactAgent):
         )
 
         # Create handoff tools for each registered agent
-        for agent_name in self.agent_registry.list_agents().keys():
+        for agent_name in self.agent_registry.list_agents():
             handoff_tool = create_dynamic_handoff_tool(self, agent_name)
             tools.append(handoff_tool)
 
@@ -418,7 +402,6 @@ Available tools:
     def _sync_registry_to_state(self):
         """Sync agent registry to state format."""
         # This will be used when the state is created
-        pass
 
     def _create_end_supervision_tool(self):
         """Create tool for ending supervision."""
@@ -442,8 +425,8 @@ Available tools:
         self,
         name: str,
         description: str,
-        agent_class: Type[Agent],
-        config: Optional[Dict[str, Any]] = None,
+        agent_class: type[Agent],
+        config: Dict[str, Any] | None = None,
     ):
         """Dynamically add an agent to the registry and update tools."""
         self.agent_registry.register(name, description, agent_class, config)
@@ -522,15 +505,12 @@ def test_supervisor_basic():
 
     supervisor = DynamicSupervisorAgent(name="Test Supervisor", agent_registry=registry)
 
-    print(f"Supervisor created: {supervisor.name}")
-    print(f"Available agents: {list(registry.list_agents().keys())}")
 
     return supervisor
 
 
 def test_dynamic_tools():
     """Test dynamic tool creation and handoff functionality."""
-    print("\n=== Testing Dynamic Tools ===")
 
     # Create supervisor
     registry = create_test_registry()
@@ -539,17 +519,14 @@ def test_dynamic_tools():
     )
 
     # Check tools were created
-    print(f"Created {len(supervisor.tools)} tools:")
     for tool in supervisor.tools:
-        print(f"  - {tool.name}: {tool.description}")
+        pass
 
     # Test list_agents tool
     list_tool = next(t for t in supervisor.tools if t.name == "list_agents")
     agents_result = list_tool.invoke({})
-    print(f"\nList agents result:\n{agents_result}")
 
     # Test adding a new agent dynamically
-    print(f"\n=== Testing Dynamic Agent Addition ===")
     from haive.agents.simple.agent import SimpleAgent
 
     supervisor.add_agent_to_registry(
@@ -559,24 +536,20 @@ def test_dynamic_tools():
         config={"name": "Calculator Agent"},
     )
 
-    print(f"After adding calculator_agent, tools count: {len(supervisor.tools)}")
 
     # Verify handoff tool was created
     handoff_tools = [t for t in supervisor.tools if t.name.startswith("handoff_to_")]
-    print(f"Handoff tools: {[t.name for t in handoff_tools]}")
 
     # Test the new handoff tool
     calc_handoff = next(
         t for t in supervisor.tools if t.name == "handoff_to_calculator_agent"
     )
-    print(f"Calculator handoff tool created: {calc_handoff.name}")
 
     return supervisor
 
 
 def test_supervisor_workflow():
     """Test a complete supervisor workflow."""
-    print("\n=== Testing Complete Workflow ===")
 
     supervisor = test_dynamic_tools()
 
@@ -594,36 +567,25 @@ def test_supervisor_workflow():
         t for t in supervisor.tools if t.name == "handoff_to_research_agent"
     )
 
-    print(f"\nTesting handoff to research_agent...")
     try:
         # This would normally be called by the graph, but we'll test directly
         result = research_handoff.invoke(
             {"task": "Research the latest developments in AI", "_state": test_state}
         )
-        print(f"Handoff result: {result}")
     except Exception as e:
-        print(f"Handoff test encountered expected error (missing state injection): {e}")
-        print("This is normal - the state injection happens during graph execution")
 
     return supervisor
 
 
 if __name__ == "__main__":
     # Run comprehensive tests
-    print("=== Dynamic Supervisor Comprehensive Test ===")
 
     # Basic test
     supervisor = test_supervisor_basic()
-    print("✓ Basic supervisor test completed!")
 
     # Dynamic tools test
     supervisor = test_dynamic_tools()
-    print("✓ Dynamic tools test completed!")
 
     # Workflow test
     supervisor = test_supervisor_workflow()
-    print("✓ Workflow test completed!")
 
-    print("\n=== All Tests Completed Successfully ===")
-    print(f"Final supervisor has {len(supervisor.tools)} tools available")
-    print("The supervisor can now dynamically handoff to agents without recompilation!")

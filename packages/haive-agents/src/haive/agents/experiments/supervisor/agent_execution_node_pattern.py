@@ -1,5 +1,4 @@
-"""
-Core pattern for dynamic agent execution in supervisors.
+"""Core pattern for dynamic agent execution in supervisors.
 
 This demonstrates the key insight: instead of pre-compiled handoff tools,
 use a general agent execution node that can run any agent dynamically.
@@ -7,24 +6,25 @@ use a general agent execution node that can run any agent dynamically.
 
 from typing import Any, Dict, Literal, Optional
 
+from pydantic import Field
+
 from haive.core.graph import BaseGraph
 from haive.core.schema import StateSchema
-from pydantic import Field
 
 
 class SupervisorState(StateSchema):
     """State that includes agent routing information."""
 
-    messages: List[Dict[str, Any]] = Field(default_factory=list)
-    agent_route: Optional[str] = Field(default=None)  # Which agent to execute
-    agent_task: Optional[str] = Field(default=None)  # Task for the agent
-    agent_response: Optional[str] = Field(default=None)  # Response from agent
+    messages: List[dict[str, Any]] = Field(default_factory=list)
+    agent_route: str | None = Field(default=None)  # Which agent to execute
+    agent_task: str | None = Field(default=None)  # Task for the agent
+    agent_response: str | None = Field(default=None)  # Response from agent
 
 
 class AgentExecutionNodePattern:
     """Pattern for building supervisors with dynamic agent execution."""
 
-    def __init__(self, agent_registry: Dict[str, Any]):
+    def __init__(self, agent_registry: dict[str, Any]):
         self.agent_registry = agent_registry
 
     def build_graph(self) -> BaseGraph:
@@ -53,7 +53,7 @@ class AgentExecutionNodePattern:
 
         return graph.compile()
 
-    async def supervisor_node(self, state: SupervisorState) -> Dict[str, Any]:
+    async def supervisor_node(self, state: SupervisorState) -> dict[str, Any]:
         """Supervisor analyzes and sets routing."""
         # Supervisor logic here:
         # - Analyze task
@@ -68,7 +68,7 @@ class AgentExecutionNodePattern:
 
         return {"state": state}
 
-    async def agent_execution_node(self, state: SupervisorState) -> Dict[str, Any]:
+    async def agent_execution_node(self, state: SupervisorState) -> dict[str, Any]:
         """Execute ANY agent based on routing - this is the key pattern!"""
         if not state.agent_route:
             return {"state": state}
@@ -84,7 +84,7 @@ class AgentExecutionNodePattern:
             result = await agent.arun(state.agent_task)
             state.agent_response = result
         except Exception as e:
-            state.agent_response = f"Error: {str(e)}"
+            state.agent_response = f"Error: {e!s}"
 
         # Clear routing for next iteration
         state.agent_route = None
@@ -98,10 +98,9 @@ class AgentExecutionNodePattern:
         """Routing logic."""
         if state.agent_route:
             return "execute_agent"
-        elif state.agent_response and "DONE" in state.agent_response:
+        if state.agent_response and "DONE" in state.agent_response:
             return "end"
-        else:
-            return "continue"
+        return "continue"
 
 
 # Key insight comparison:

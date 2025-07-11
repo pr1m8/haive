@@ -1,12 +1,12 @@
-"""
-Comprehensive mock handler for Sphinx documentation build.
+"""Comprehensive mock handler for Sphinx documentation build.
 Handles missing imports gracefully to allow documentation generation.
 """
 
+import logging
 import sys
 import types
 from unittest.mock import MagicMock
-import logging
+
 
 logger = logging.getLogger(__name__)
 
@@ -14,11 +14,10 @@ logger = logging.getLogger(__name__)
 EXTERNAL_DEPENDENCIES = [
     # LangChain providers
     "langchain_google_vertexai",
-    "langchain_cerebras", 
+    "langchain_cerebras",
     "langchain_cohere",
     "langchain_ai21",
     "langchain_openlm",
-    
     # Cloud/API services
     "google.generativeai",
     "google.cloud",
@@ -26,7 +25,6 @@ EXTERNAL_DEPENDENCIES = [
     "azure.identity",
     "boto3",
     "supabase",
-    
     # Tools and integrations
     "nlpcloud",
     "elevenlabs",
@@ -56,7 +54,6 @@ EXTERNAL_DEPENDENCIES = [
     "newspaper3k",
     "arxiv",
     "python_decouple",
-    
     # Database drivers
     "pymongo",
     "psycopg2",
@@ -64,7 +61,6 @@ EXTERNAL_DEPENDENCIES = [
     "weaviate",
     "qdrant_client",
     "pinecone",
-    
     # ML/Data libraries that might be optional
     "transformers",
     "sentence_transformers",
@@ -78,7 +74,6 @@ EXTERNAL_DEPENDENCIES = [
     "matplotlib",
     "plotly",
     "streamlit",
-    
     # Other optional dependencies
     "beautifulsoup4",
     "lxml",
@@ -94,34 +89,37 @@ EXTERNAL_DEPENDENCIES = [
     "cv2",
 ]
 
+
 def mock_missing_modules():
     """Mock all missing external modules."""
     for module_name in EXTERNAL_DEPENDENCIES:
         if module_name not in sys.modules:
             # Create a mock module
             mock_module = types.ModuleType(module_name)
-            
+
             # Add common attributes that might be accessed
             mock_module.__version__ = "0.0.0"
             mock_module.__file__ = f"<mock:{module_name}>"
-            
+
             # Create a mock class that can be instantiated
             class MockClass:
                 def __init__(self, *args, **kwargs):
                     pass
+
                 def __getattr__(self, name):
                     return MagicMock()
-            
+
             # Add the mock class as a common name pattern
-            setattr(mock_module, "Client", MockClass)
-            setattr(mock_module, "API", MockClass)
+            mock_module.Client = MockClass
+            mock_module.API = MockClass
             setattr(mock_module, module_name.split(".")[-1].title(), MockClass)
-            
+
             # Make the module itself callable and return MagicMock for any attribute
             mock_module.__getattr__ = lambda name: MagicMock()
-            
+
             sys.modules[module_name] = mock_module
             logger.debug(f"Mocked module: {module_name}")
+
 
 # Comprehensive list of missing Haive modules to mock
 # Based on analysis of documentation build warnings
@@ -129,12 +127,12 @@ MISSING_HAIVE_MODULES = [
     # Agent submodules (55+ modules)
     "haive.agents.base.agent",
     "haive.agents.base.mixins",
-    "haive.agents.base.mixins.state_mixin", 
+    "haive.agents.base.mixins.state_mixin",
     "haive.agents.base.mixins.execution_mixin",
     "haive.agents.rag.base",
     "haive.agents.rag.adaptive_rag",
     "haive.agents.rag.filtered",
-    "haive.agents.rag.hyde", 
+    "haive.agents.rag.hyde",
     "haive.agents.rag.self_corr",
     "haive.agents.rag.self_rag2",
     "haive.agents.rag.llm_rag",
@@ -170,8 +168,7 @@ MISSING_HAIVE_MODULES = [
     "haive.agents.simple.structured",
     "haive.agents.sequential.agent",
     "haive.agents.sequential.config",
-
-    # Game modules (25+ modules) 
+    # Game modules (25+ modules)
     "haive.games.base.agent",
     "haive.games.base.config",
     "haive.games.base.factory",
@@ -179,7 +176,7 @@ MISSING_HAIVE_MODULES = [
     "haive.games.base.state_manager",
     "haive.games.base.utils",
     "haive.games.base_v2",
-    "haive.games.framework", 
+    "haive.games.framework",
     "haive.games.core",
     "haive.games.components",
     "haive.games.board_games",
@@ -208,10 +205,9 @@ MISSING_HAIVE_MODULES = [
     "haive.games.cards.blackjack",
     "haive.games.cards.poker",
     "haive.games.cards.uno",
-
     # Tool modules (20+ modules)
     "haive.tools.base",
-    "haive.tools.core", 
+    "haive.tools.core",
     "haive.tools.individual",
     "haive.tools.utils",
     "haive.tools.utility",
@@ -229,7 +225,6 @@ MISSING_HAIVE_MODULES = [
     "haive.tools.tools.python",
     "haive.tools.tools.utility",
     "haive.tools.tools.web",
-
     # Core utility modules (5 modules)
     "haive.core.utils.discovery",
     "haive.core.utils.type_helpers",
@@ -258,7 +253,6 @@ VIRTUAL_HAIVE_MODULES = {
         "Calculator": type("Calculator", (), {}),
         "MathTool": type("MathTool", (), {}),
     },
-    
     # Games that don't exist but are referenced
     "haive.games.board_games": {
         "Chess": type("Chess", (), {}),
@@ -277,12 +271,12 @@ VIRTUAL_HAIVE_MODULES = {
         "Board": type("Board", (), {}),
         "Deck": type("Deck", (), {}),
     },
-    
     # Fix conversation module issues
     "haive.agents.conversation.directed.state": {
         "DirectedConversationState": type("DirectedConversationState", (), {}),
     },
 }
+
 
 def create_missing_haive_modules():
     """Create mock modules for all missing Haive modules."""
@@ -290,30 +284,30 @@ def create_missing_haive_modules():
         if module_path not in sys.modules:
             # Create the module
             module = types.ModuleType(module_path)
-            
+
             # Add common attributes based on module type
             if "agent" in module_path:
-                setattr(module, "Agent", type("Agent", (), {}))
-                setattr(module, "BaseAgent", type("BaseAgent", (), {}))
+                module.Agent = type("Agent", (), {})
+                module.BaseAgent = type("BaseAgent", (), {})
             elif "tool" in module_path:
-                setattr(module, "Tool", type("Tool", (), {}))
-                setattr(module, "BaseTool", type("BaseTool", (), {}))
+                module.Tool = type("Tool", (), {})
+                module.BaseTool = type("BaseTool", (), {})
             elif "game" in module_path:
-                setattr(module, "Game", type("Game", (), {}))
-                setattr(module, "BaseGame", type("BaseGame", (), {}))
-            
+                module.Game = type("Game", (), {})
+                module.BaseGame = type("BaseGame", (), {})
+
             # Add generic attributes
-            setattr(module, "Config", type("Config", (), {}))
-            setattr(module, "State", type("State", (), {}))
-            setattr(module, "Factory", type("Factory", (), {}))
-            
+            module.Config = type("Config", (), {})
+            module.State = type("State", (), {})
+            module.Factory = type("Factory", (), {})
+
             # Make module callable and return MagicMock for any attribute
             module.__getattr__ = lambda name: MagicMock()
-            
+
             # Register the module
             sys.modules[module_path] = module
             logger.debug(f"Created missing Haive module: {module_path}")
-            
+
             # Also create parent modules if needed
             parts = module_path.split(".")
             for i in range(1, len(parts)):
@@ -323,27 +317,29 @@ def create_missing_haive_modules():
                     parent_module.__getattr__ = lambda name: MagicMock()
                     sys.modules[parent_path] = parent_module
 
+
 def create_virtual_modules():
     """Create virtual modules for missing haive submodules."""
     for module_path, contents in VIRTUAL_HAIVE_MODULES.items():
         if module_path not in sys.modules:
             # Create the module
             module = types.ModuleType(module_path)
-            
+
             # Add the contents
             for name, obj in contents.items():
                 setattr(module, name, obj)
-            
+
             # Register the module
             sys.modules[module_path] = module
             logger.debug(f"Created virtual module: {module_path}")
-            
+
             # Also create parent modules if needed
             parts = module_path.split(".")
             for i in range(1, len(parts)):
                 parent_path = ".".join(parts[:i])
                 if parent_path not in sys.modules:
                     sys.modules[parent_path] = types.ModuleType(parent_path)
+
 
 # Mock specific problematic imports
 def mock_specific_imports():
@@ -355,12 +351,13 @@ def mock_specific_imports():
             langchain.llms = MagicMock()
         if not hasattr(langchain, "chat_models"):
             langchain.chat_models = MagicMock()
-    
+
     # Mock pydantic v1/v2 compatibility
     if "pydantic" in sys.modules:
         pydantic = sys.modules["pydantic"]
         if not hasattr(pydantic, "v1"):
             pydantic.v1 = pydantic
+
 
 # Run all mocking functions
 def initialize_mocks():
@@ -369,7 +366,10 @@ def initialize_mocks():
     create_missing_haive_modules()  # Add the comprehensive mock system
     create_virtual_modules()
     mock_specific_imports()
-    logger.info(f"Documentation mocks initialized: {len(MISSING_HAIVE_MODULES) + len(EXTERNAL_DEPENDENCIES)} modules mocked")
+    logger.info(
+        f"Documentation mocks initialized: {len(MISSING_HAIVE_MODULES) + len(EXTERNAL_DEPENDENCIES)} modules mocked"
+    )
+
 
 # Initialize on import
 initialize_mocks()

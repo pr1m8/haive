@@ -41,11 +41,12 @@ from haive.agents.dynamic_supervisor.state import (
     SupervisorStateWithTools,
 )
 
+
 __version__ = "1.0.0"
 __all__ = [
+    "AgentInfo",
     "DynamicSupervisorAgent",
     "SupervisorState",
-    "SupervisorStateWithTools",
     "SupervisorStateV2",
-    "AgentInfo",
+    "SupervisorStateWithTools",
 ]

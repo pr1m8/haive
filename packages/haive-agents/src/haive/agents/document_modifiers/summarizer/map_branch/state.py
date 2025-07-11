@@ -1,4 +1,4 @@
-"""State for the summarizer agent"""
+"""State for the summarizer agent."""
 
 import operator
 from typing import Annotated
@@ -19,7 +19,7 @@ class InputState(BaseModel):
         Accepts:
         - List[str]
         - List[Document]
-        - Mixed
+        - Mixed.
         """
         if not isinstance(v, list):
             raise TypeError("Expected a list for 'contents'")
@@ -38,23 +38,19 @@ class InputState(BaseModel):
 
 
 class OutputState(BaseModel):
-    """Output state for the summarizer agent"""
+    """Output state for the summarizer agent."""
 
-    # summary: str = Field(default="",description="The summary of the documents")
-    # summary_documents: List[Document] = Field(default_factory=list,description="The summary documents of the documents")
     final_summary: str = Field(
         default="", description="The final summary of the documents"
     )
 
 
 class SummaryState(InputState, OutputState):
-    """State for the summarizer agent - we use the operator.add to combine the summaries"""
+    """State for the summarizer agent - we use the operator.add to combine the summaries."""
 
-    # contents: List[str] = Field(default_factory=list,description="The contents of the documents")
     summaries: Annotated[list, operator.add] = Field(
         default_factory=list, description="The summaries of the documents"
     )
     collapsed_summaries: list[Document] = Field(
         default_factory=list, description="The collapsed summaries of the documents"
     )
-    # final_summary: str = Field(default="",description="The final summary of the documents")

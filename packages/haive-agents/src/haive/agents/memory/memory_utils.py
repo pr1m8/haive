@@ -209,7 +209,9 @@ def retrieve_memories(
     """
     # Default filter by user ID
     if filter_fn is None:
-        filter_fn = lambda doc: doc.metadata.get("user_id") == user_id
+
+        def filter_fn(doc):
+            return doc.metadata.get("user_id") == user_id
 
     try:
         # Search for relevant documents
@@ -222,7 +224,7 @@ def retrieve_memories(
         return memory_strings
 
     except Exception as e:
-        logger.error(f"Error retrieving memories: {e}")
+        logger.exception(f"Error retrieving memories: {e}")
         return []
 
 

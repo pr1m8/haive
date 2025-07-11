@@ -36,6 +36,7 @@ These modules are failing to import during documentation build:
    - No centralized API module
 
 ### Additional Known Issues
+
 - **haive.agents.conversation.collaborative** (misspelled - should be "collaborative")
 - **haive.agents.reasoning_and_critique.mcts** - Import path issue
 - **haive.tools.code** - ❌ CONFIRMED: Does not exist (code tools are in `toolkits/dev/`)
@@ -65,6 +66,7 @@ haive-tools/src/haive/tools/
 ## Current Documentation Structure
 
 ### Working Well ✅
+
 - Main navigation with beautiful gradients
 - Agent gallery with code examples
 - Agent showcase with interactive cards
@@ -73,6 +75,7 @@ haive-tools/src/haive/tools/
 - CSS styling and overrides
 
 ### Issues to Fix ❌
+
 1. Import failures causing build warnings
 2. Long build times (needs optimization)
 3. CSS file redundancy (15+ CSS files)

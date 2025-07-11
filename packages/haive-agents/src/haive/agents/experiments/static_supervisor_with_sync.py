@@ -8,6 +8,9 @@ import logging
 import pickle
 from typing import Any, Dict, List, Literal, Optional
 
+from haive.agents.base.agent import Agent
+from haive.agents.react.agent import ReactAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.graph.node.tool_node_config import ToolNodeConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.state_schema import StateSchema
@@ -16,10 +19,6 @@ from langchain_core.tools import BaseTool, tool
 from langgraph.graph import END, START
 from langgraph_supervisor import create_forward_message_tool, create_handoff_tool
 from pydantic import BaseModel, Field, model_validator
-
-from haive.agents.base.agent import Agent
-from haive.agents.react.agent import ReactAgent
-from haive.agents.simple.agent import SimpleAgent
 
 logger = logging.getLogger(__name__)
 
@@ -51,22 +50,22 @@ class SupervisorReactState(StateSchema):
     """State schema for ReactAgent-based supervisor with agent registry."""
 
     # Inherit messages from ReactAgent
-    messages: List[Any] = Field(default_factory=list)
+    messages: list[Any] = Field(default_factory=list)
 
     # Agent registry stored in state
-    registered_agents: Dict[str, AgentEntry] = Field(
+    registered_agents: dict[str, AgentEntry] = Field(
         default_factory=dict,
         description="Registered agents stored as serialized entries",
     )
 
     # Tool mappings synchronized with agents
-    handoff_tools: Dict[str, BaseTool] = Field(
+    handoff_tools: dict[str, BaseTool] = Field(
         default_factory=dict, description="Handoff tools mapped to agent names"
     )
 
     # Current execution context
-    current_agent: Optional[str] = Field(None, description="Currently active agent")
-    last_handoff_result: Optional[Any] = Field(
+    current_agent: str | None = Field(None, description="Currently active agent")
+    last_handoff_result: Any | None = Field(
         None, description="Result from last handoff"
     )
 
@@ -211,7 +210,7 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
 
         return graph
 
-    def _execute_tool_or_agent(self, state: SupervisorReactState) -> Dict[str, Any]:
+    def _execute_tool_or_agent(self, state: SupervisorReactState) -> dict[str, Any]:
         """Execute tools or agent handoffs based on the tool call.
 
         This replaces the standard tool node behavior to handle agent handoffs
@@ -248,7 +247,7 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
         return {"messages": tool_messages}
 
     def _execute_agent_handoff(
-        self, state: SupervisorReactState, agent_name: str, tool_call: Dict
+        self, state: SupervisorReactState, agent_name: str, tool_call: dict
     ) -> str:
         """Execute handoff to a specific agent from state."""
         try:
@@ -277,22 +276,22 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
             return f"Result from {agent_name}: {response}"
 
         except Exception as e:
-            error_msg = f"Error executing agent {agent_name}: {str(e)}"
-            logger.error(error_msg)
+            error_msg = f"Error executing agent {agent_name}: {e!s}"
+            logger.exception(error_msg)
             return error_msg
 
     def _execute_regular_tool(
-        self, state: SupervisorReactState, tool_name: str, tool_call: Dict
+        self, state: SupervisorReactState, tool_name: str, tool_call: dict
     ) -> str:
         """Execute regular supervisor tools."""
         try:
             # Get tools
-            tools_dict = {t.name: t for t in self._update_engine_tools() or []}
+            {t.name: t for t in self._update_engine_tools() or []}
 
             if tool_name == "list_agents":
                 tool = self._create_list_agents_tool()
                 return tool.invoke({})
-            elif tool_name == "forward_message":
+            if tool_name == "forward_message":
                 # Get message from args
                 message = tool_call.get("args", {}).get("message", "")
                 return f"Message forwarded: {message}"
@@ -300,15 +299,9 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
                 return f"Unknown tool: {tool_name}"
 
         except Exception as e:
-            return f"Error executing tool {tool_name}: {str(e)}"
+            return f"Error executing tool {tool_name}: {e!s}"
 
 
 # Example usage
 if __name__ == "__main__":
     # This demonstrates the structure - would need proper engine setup
-    print("StaticSupervisor created - inherits from ReactAgent")
-    print("Key features:")
-    print("- Uses ReactAgent's looping behavior")
-    print("- Modifies tool node to execute agents from state")
-    print("- Model validator ensures tools stay synced with agents")
-    print("- Agents are serialized and stored in state")

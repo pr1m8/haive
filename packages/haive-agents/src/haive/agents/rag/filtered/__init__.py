@@ -1,4 +1,4 @@
-"""Filtered - TODO: Add brief description
+"""Filtered - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

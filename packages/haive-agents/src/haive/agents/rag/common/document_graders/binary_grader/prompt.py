@@ -1,5 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate
 
+
 RAG_DOCUMENT_GRADE_BINARY = ChatPromptTemplate.from_messages(
     [
         (

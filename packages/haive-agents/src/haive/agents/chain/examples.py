@@ -1,15 +1,9 @@
-"""Examples of using DeclarativeChainAgent to build complex RAG flows
+"""Examples of using DeclarativeChainAgent to build complex RAG flows.
 
 Shows how to recreate our complex agents using declarative specifications.
 """
 
 from typing import Any, Dict
-
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
-from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate
-from pydantic import BaseModel, Field
 
 from haive.agents.chain.declarative_chain import (
     BranchSpec,
@@ -23,12 +17,16 @@ from haive.agents.rag.hyde.agent_v2 import HyDERAGAgentV2
 from haive.agents.rag.multi_query.agent import MultiQueryRAGAgent
 from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
+from pydantic import BaseModel, Field
 
 
 # Example 1: Recreate Agentic RAG Router using declarative chain
 def create_agentic_router_declarative(documents: list[Document]):
     """Create an agentic RAG router using declarative chain building."""
-
     llm_config = AzureLLMConfig(
         deployment_name="gpt-4",
         azure_endpoint="${AZURE_OPENAI_API_BASE}",
@@ -109,15 +107,14 @@ def create_agentic_router_declarative(documents: list[Document]):
 # Example 2: Recreate Query Planning RAG using declarative chain
 def create_query_planning_declarative(documents: list[Document]):
     """Create a query planning RAG using declarative chain building."""
-
-    llm_config = AzureLLMConfig(
+    AzureLLMConfig(
         deployment_name="gpt-4",
         azure_endpoint="${AZURE_OPENAI_API_BASE}",
         api_key="${AZURE_OPENAI_API_KEY}",
     )
 
     # Define nodes as callables
-    def create_plan(state: Dict[str, Any]) -> Dict[str, Any]:
+    def create_plan(state: dict[str, Any]) -> dict[str, Any]:
         """Create query execution plan."""
         # Simplified - would use LLM to decompose query
         return {
@@ -125,7 +122,7 @@ def create_query_planning_declarative(documents: list[Document]):
             "current_index": 0,
         }
 
-    def execute_sub_query(state: Dict[str, Any]) -> Dict[str, Any]:
+    def execute_sub_query(state: dict[str, Any]) -> dict[str, Any]:
         """Execute one sub-query."""
         sub_queries = state.get("sub_queries", [])
         current_index = state.get("current_index", 0)
@@ -146,7 +143,7 @@ def create_query_planning_declarative(documents: list[Document]):
 
         return {"continue_loop": False}
 
-    def synthesize_results(state: Dict[str, Any]) -> Dict[str, Any]:
+    def synthesize_results(state: dict[str, Any]) -> dict[str, Any]:
         """Synthesize all sub-query results."""
         sub_results = state.get("sub_results", [])
         return {
@@ -180,7 +177,6 @@ def create_query_planning_declarative(documents: list[Document]):
 # Example 3: Recreate Self-Reflective RAG using declarative chain
 def create_self_reflective_declarative(documents: list[Document]):
     """Create a self-reflective RAG using declarative chain building."""
-
     llm_config = AzureLLMConfig(
         deployment_name="gpt-4",
         azure_endpoint="${AZURE_OPENAI_API_BASE}",
@@ -200,7 +196,7 @@ def create_self_reflective_declarative(documents: list[Document]):
     )
 
     # Reflection nodes
-    def reflect_and_critique(state: Dict[str, Any]) -> Dict[str, Any]:
+    def reflect_and_critique(state: dict[str, Any]) -> dict[str, Any]:
         """Reflect on answer quality."""
         # Simplified - would use LLM to critique
         quality_score = 0.7  # Mock score
@@ -212,13 +208,13 @@ def create_self_reflective_declarative(documents: list[Document]):
             "needs_improvement": quality_score < 0.85 and iterations < 3,
         }
 
-    def improve_answer(state: Dict[str, Any]) -> Dict[str, Any]:
+    def improve_answer(state: dict[str, Any]) -> dict[str, Any]:
         """Improve the answer based on critique."""
         # Simplified - would use LLM to improve
         current = state.get("current_answer", "")
         return {"current_answer": f"{current} [Improved]", "improvement_made": True}
 
-    def finalize_answer(state: Dict[str, Any]) -> Dict[str, Any]:
+    def finalize_answer(state: dict[str, Any]) -> dict[str, Any]:
         """Finalize the answer."""
         return {
             "final_response": state.get("current_answer", ""),
@@ -252,7 +248,6 @@ def create_self_reflective_declarative(documents: list[Document]):
 # Example 4: Using raw ChainSpec for maximum control
 def create_complex_flow_from_spec():
     """Create a complex flow using raw ChainSpec."""
-
     # Define nodes
     nodes = [
         NodeSpec(
@@ -310,7 +305,6 @@ def create_complex_flow_from_spec():
 # Example 5: Simplified syntax with method chaining
 def create_rag_with_fallback():
     """Create a RAG with fallback strategies."""
-
     return (
         ChainBuilder("RAG with Fallback")
         # Try primary RAG

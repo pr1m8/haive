@@ -1,16 +1,10 @@
-"""Agentic RAG Router using ChainAgent
+"""Agentic RAG Router using ChainAgent.
 
 Simplified version using the new ChainAgent approach.
 """
 
 from enum import Enum
 from typing import Any, Dict, List, Optional
-
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
-from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate
-from pydantic import BaseModel, Field
 
 from haive.agents.chain import ChainAgent, flow_with_edges
 from haive.agents.rag.flare.agent import FLARERAGAgent
@@ -19,6 +13,11 @@ from haive.agents.rag.hyde.agent_v2 import HyDERAGAgentV2
 from haive.agents.rag.multi_query.agent import MultiQueryRAGAgent
 from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
+from pydantic import BaseModel, Field
 
 
 class RAGStrategy(str, Enum):
@@ -40,8 +39,8 @@ class StrategyDecision(BaseModel):
 
 
 def create_agentic_rag_router_chain(
-    documents: List[Document],
-    llm_config: Optional[LLMConfig] = None,
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
     name: str = "Agentic RAG Router",
 ) -> ChainAgent:
     """Create an agentic RAG router using ChainAgent.
@@ -64,7 +63,7 @@ def create_agentic_rag_router_chain(
                     "system",
                     """Select the best RAG strategy:
             - simple: Basic queries, direct lookup
-            - multi_query: Complex queries needing multiple perspectives  
+            - multi_query: Complex queries needing multiple perspectives
             - hyde: Abstract queries needing expansion
             - fusion: High-quality results through fusion
             - flare: Iterative refinement needed""",
@@ -94,7 +93,7 @@ def create_agentic_rag_router_chain(
                     """Original query: {query}
             Selected strategy: {strategy}
             RAG response: {response}
-            
+
             Create a comprehensive final response.""",
                 ),
             ]
@@ -133,10 +132,9 @@ def create_agentic_rag_router_chain(
 
 # Even simpler version with just a few strategies
 def create_simple_rag_router_chain(
-    documents: List[Document], llm_config: Optional[LLMConfig] = None
+    documents: list[Document], llm_config: LLMConfig | None = None
 ) -> ChainAgent:
     """Ultra-simple RAG router with just basic routing."""
-
     if not llm_config:
         llm_config = AzureLLMConfig(
             deployment_name="gpt-4",
@@ -169,7 +167,7 @@ def create_simple_rag_router_chain(
 
 # Integration with multi-agent
 def create_agentic_router_multi_agent(
-    documents: List[Document], llm_config: Optional[LLMConfig] = None
+    documents: list[Document], llm_config: LLMConfig | None = None
 ) -> "ChainMultiAgent":
     """Create as a multi-agent system."""
     from haive.agents.chain.multi_integration import ChainMultiAgent
@@ -182,7 +180,7 @@ def create_agentic_router_multi_agent(
 
 
 # I/O schema for compatibility
-def get_agentic_router_chain_io_schema() -> Dict[str, List[str]]:
+def get_agentic_router_chain_io_schema() -> dict[str, list[str]]:
     """Get I/O schema for the chain version."""
     return {
         "inputs": ["query", "context", "messages"],

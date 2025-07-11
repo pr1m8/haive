@@ -3,10 +3,10 @@
 import asyncio
 from typing import Any, Dict, Optional
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.tools import tool
 
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 @tool
@@ -17,7 +17,6 @@ def add(a: int, b: int) -> int:
 
 async def test_simple_pattern():
     """Test the basic pattern of dynamic agent execution."""
-
     # Create a simple math agent
     math_engine = AugLLMConfig(
         name="math_engine",
@@ -42,21 +41,17 @@ async def test_simple_pattern():
             result = await agent.arun(task)
             return f"Success: {result}"
         except Exception as e:
-            return f"Error: {str(e)}"
+            return f"Error: {e!s}"
 
     # Test execution
-    print("Testing agent execution node pattern...")
 
     # Test 1: Execute existing agent
-    result1 = await execute_agent("math_agent", "What is 5 + 3?")
-    print(f"\nTest 1 - Existing agent: {result1}")
+    await execute_agent("math_agent", "What is 5 + 3?")
 
     # Test 2: Try non-existent agent
-    result2 = await execute_agent("missing_agent", "Do something")
-    print(f"\nTest 2 - Missing agent: {result2}")
+    await execute_agent("missing_agent", "Do something")
 
     # Test 3: Add new agent dynamically
-    print("\nAdding new agent dynamically...")
 
     simple_engine = AugLLMConfig(
         name="simple_engine",
@@ -69,10 +64,7 @@ async def test_simple_pattern():
     # Add to registry dynamically
     agent_registry["simple_agent"] = simple_agent
 
-    result3 = await execute_agent("simple_agent", "Say hello!")
-    print(f"\nTest 3 - Dynamically added agent: {result3}")
-
-    print("\n✅ Pattern validated: Agents can be added/executed dynamically!")
+    await execute_agent("simple_agent", "Say hello!")
 
 
 if __name__ == "__main__":

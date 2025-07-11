@@ -1,4 +1,4 @@
-"""Adaptive Rag - TODO: Add brief description
+"""Adaptive Rag - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

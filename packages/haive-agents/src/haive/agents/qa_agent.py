@@ -1,8 +1,9 @@
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
 from pydantic import BaseModel, Field
 
 from haive.agents.simple.agent import SimpleAgentConfig
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+
 
 qa_system_prompt = """
 You are a highly intelligent AI assistant specializing in **retrieval-augmented generation (RAG)**. Your task is to generate **structured, diverse, and contextually relevant** questions and answers from a given text.
@@ -57,6 +58,7 @@ from langchain_core.documents import Document
 from langchain_core.messages import BaseMessage
 from langchain_core.prompts import ChatPromptTemplate
 
+
 # Define the union type for contents
 ContentType = Annotated[
     str
@@ -97,19 +99,16 @@ qa_aug_llm_config = AugLLMConfig(
     llm=AzureLLMConfig(model="gpt-4o"),
     structured_output_model=QAs,
     prompt_template=qa_prompt_template,
-    # system_prompt=qa_system_prompt
 )
 
 qa_agent_config = SimpleAgentConfig.from_aug_llm(aug_llm=qa_aug_llm_config)
 qa_agent = qa_agent_config.build_agent()
-# qa_agent.setup_workflow()
 
 # Example usage
 
 from langchain_community.document_loaders import WebBaseLoader
 
+
 document = WebBaseLoader("https://en.wikipedia.org/wiki/Differential_geometry").load()
 
 qas = qa_agent.run(input_data={"contents": document})
-
-print(qas)

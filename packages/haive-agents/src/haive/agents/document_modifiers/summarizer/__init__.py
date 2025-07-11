@@ -15,6 +15,6 @@ except ImportError:
     IterativeSummarizer = None
 
 __all__ = [
-    'SummarizerAgent',
-    'IterativeSummarizer',
+    "IterativeSummarizer",
+    "SummarizerAgent",
 ]

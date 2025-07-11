@@ -31,11 +31,6 @@ import os
 from typing import Any
 
 from dotenv import load_dotenv
-from haive.core.engine.agent.agent import AgentConfig
-from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_neo4j import Neo4jGraph
-from pydantic import BaseModel, Field, field_validator
-
 from haive.agents.rag.db_rag.graph_db.engines import (
     correct_cypher_aug_llm_config,
     generate_final_aug_llm_config,
@@ -44,6 +39,10 @@ from haive.agents.rag.db_rag.graph_db.engines import (
     validate_cypher_aug_llm_config,
 )
 from haive.agents.rag.db_rag.graph_db.state import InputState, OutputState, OverallState
+from haive.core.engine.agent.agent import AgentConfig
+from haive.core.engine.aug_llm import AugLLMConfig
+from langchain_neo4j import Neo4jGraph
+from pydantic import BaseModel, Field, field_validator
 
 # Try to load environment variables from .env file if it exists
 load_dotenv(".env")
@@ -131,10 +130,8 @@ class GraphDBConfig(BaseModel):
                 refresh_schema=True,
                 enhanced_schema=self.enhanced_schema,
             )
-            print(f"✅ Successfully connected to Neo4j at {self.graph_db_uri}")
             return graph_db
-        except Exception as e:
-            print(f"🚨 Error connecting to Neo4j: {e}")
+        except Exception:
             return None
 
     def get_graph_db_schema(self) -> dict | None:
@@ -312,7 +309,7 @@ class GraphDBRAGConfig(AgentConfig):
 
     @field_validator("engines")
     def validate_engines(
-        cls, engines: dict[str, AugLLMConfig]
+        self, engines: dict[str, AugLLMConfig]
     ) -> dict[str, AugLLMConfig]:
         """Validate that all required engines are present.
 

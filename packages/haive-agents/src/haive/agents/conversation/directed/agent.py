@@ -3,16 +3,17 @@
 Uses structured output models for robust speaker selection and interaction tracking.
 """
 
-import re
 from enum import Enum
+import re
 from typing import Any, Literal
 
-from haive.core.logging.rich_logger import LogLevel, get_logger
 from langchain_core.messages import AIMessage, BaseMessage, SystemMessage
 from pydantic import BaseModel, Field
 
 from haive.agents.conversation.base.agent import BaseConversationAgent
 from haive.agents.conversation.directed.state import DirectedState
+from haive.core.logging.rich_logger import LogLevel, get_logger
+
 
 logger = get_logger(__name__)
 logger.set_level(LogLevel.WARNING)
@@ -200,7 +201,7 @@ class DirectedConversation(BaseConversationAgent):
             return []
 
         last_message = state.messages[-1]
-        if not isinstance(last_message, (AIMessage, BaseMessage)) or not hasattr(
+        if not isinstance(last_message, AIMessage | BaseMessage) or not hasattr(
             last_message, "content"
         ):
             return []
@@ -413,17 +414,18 @@ class DirectedConversation(BaseConversationAgent):
             messages = base_input.get("messages", [])
 
             # Insert before the last message
-            if messages:
-                messages = messages[:-1] + [mention_msg] + messages[-1:]
-            else:
-                messages = [mention_msg]
+            messages = (
+                [*messages[:-1], mention_msg, *messages[-1:]]
+                if messages
+                else [mention_msg]
+            )
             base_input["messages"] = messages
 
         return base_input
 
     @staticmethod
     def _sanitize_name_for_openai(name: str) -> str:
-        """Sanitize a name to be compatible with OpenAI's API requirements.
+        r"""Sanitize a name to be compatible with OpenAI's API requirements.
 
         OpenAI's name field must match the pattern '^[^\\s<|\\\\/>]+$'
         This means no spaces, <, |, \\, /, or >
@@ -469,9 +471,8 @@ class DirectedConversation(BaseConversationAgent):
         if student_names is None:
             student_names = ["Alice", "Bob", "Charlie"]
 
-        from haive.core.engine.aug_llm import AugLLMConfig
-
         from haive.agents.simple.agent import SimpleAgent
+        from haive.core.engine.aug_llm import AugLLMConfig
 
         # Sanitize all names for OpenAI API
         teacher_name_sanitized = cls._sanitize_name_for_openai(teacher_name)

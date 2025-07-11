@@ -2,11 +2,11 @@
 
 from typing import Dict, List, Optional, Set
 
-from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from langchain_core.tools import tool
 from pydantic import Field, field_validator, model_validator
 
 from haive.agents.experiments.supervisor.supervisor_state import SupervisorState
+from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 
 
 class SupervisorStateWithTools(SupervisorState):
@@ -21,7 +21,7 @@ class SupervisorStateWithTools(SupervisorState):
     )
 
     # Generated tools (for tracking)
-    generated_tools: List[str] = Field(
+    generated_tools: list[str] = Field(
         default_factory=list, description="Names of tools generated from agents"
     )
 
@@ -31,8 +31,6 @@ class SupervisorStateWithTools(SupervisorState):
     @model_validator(mode="after")
     def sync_choice_model_and_tools(self):
         """Sync choice model with agents and generate tools."""
-        print("🔧 Syncing choice model and generating tools...")
-
         # Update choice model with available agents
         self._update_choice_model()
 
@@ -43,8 +41,6 @@ class SupervisorStateWithTools(SupervisorState):
 
     def _update_choice_model(self):
         """Update choice model with current agents."""
-        print("🔄 Updating choice model...")
-
         # Remove existing agent options (keep END)
         current_options = self.agent_choice_model.option_names.copy()
         for option in current_options:
@@ -52,28 +48,21 @@ class SupervisorStateWithTools(SupervisorState):
                 self.agent_choice_model.remove_option_by_name(option)
 
         # Add current agents
-        for agent_name in self.agents.keys():
+        for agent_name in self.agents:
             self.agent_choice_model.add_option(agent_name)
-            print(f"  ➕ Added choice option: {agent_name}")
 
     def _generate_tools_from_agents(self):
         """Generate tools from current agents."""
-        print("🔨 Generating tools from agents...")
-
         self.generated_tools.clear()
 
         # Create handoff tools for each agent
-        for agent_name, agent_info in self.agents.items():
+        for agent_name, _agent_info in self.agents.items():
             tool_name = f"handoff_to_{agent_name}"
             self.generated_tools.append(tool_name)
-            print(f"  🔧 Generated tool: {tool_name} - {agent_info.description}")
 
         # Add choice validation tool
         choice_tool_name = "choose_agent"
         self.generated_tools.append(choice_tool_name)
-        print(f"  🔧 Generated tool: {choice_tool_name}")
-
-        print(f"✅ Generated {len(self.generated_tools)} tools total")
 
     @model_validator(mode="after")
     def validate_agent_routing(self):
@@ -81,7 +70,7 @@ class SupervisorStateWithTools(SupervisorState):
         # Validate next_agent exists in registry
         if self.next_agent is not None and self.next_agent != "END":
             if self.next_agent not in self.agents:
-                available = list(self.agents.keys()) + ["END"]
+                available = [*list(self.agents.keys()), "END"]
                 raise ValueError(
                     f"Agent '{self.next_agent}' not found in registry. Available: {available}"
                 )
@@ -99,11 +88,11 @@ class SupervisorStateWithTools(SupervisorState):
                 self.set_routing(agent_name, task_description)
 
                 # Get agent and execute (for now, just return routing info)
-                agent = agent_info.get_agent()
+                agent_info.get_agent()
                 return f"Task routed to {agent_name}: {task_description}"
 
             except Exception as e:
-                return f"Error routing to {agent_name}: {str(e)}"
+                return f"Error routing to {agent_name}: {e!s}"
 
         # Create tool with proper name and description
         handoff_tool.__name__ = f"handoff_to_{agent_name}"
@@ -119,7 +108,6 @@ class SupervisorStateWithTools(SupervisorState):
         def choose_agent(task_description: str, reasoning: str = "") -> str:
             """Choose which agent should handle a task using validated selection."""
             try:
-                print(f"🤔 Choosing agent for: {task_description}")
 
                 # Simple heuristic-based selection
                 task_lower = task_description.lower()
@@ -143,7 +131,7 @@ class SupervisorStateWithTools(SupervisorState):
                         chosen_agent = "planning_agent"
                 elif self.active_agents:
                     # Fallback to first active agent
-                    chosen_agent = list(self.active_agents)[0]
+                    chosen_agent = next(iter(self.active_agents))
 
                 # Validate choice using choice model
                 ChoiceModel = self.agent_choice_model.current_model
@@ -156,8 +144,7 @@ class SupervisorStateWithTools(SupervisorState):
                 return result
 
             except Exception as e:
-                print(f"❌ Error choosing agent: {e}")
-                return f"Error choosing agent: {str(e)}"
+                return f"Error choosing agent: {e!s}"
 
         return tool(
             choose_agent,
@@ -169,7 +156,7 @@ class SupervisorStateWithTools(SupervisorState):
         tools = []
 
         # Create handoff tools for each agent
-        for agent_name in self.agents.keys():
+        for agent_name in self.agents:
             handoff_tool = self.create_handoff_tool(agent_name)
             tools.append(handoff_tool)
 

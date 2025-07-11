@@ -3,15 +3,14 @@
 
 from typing import Any, List
 
+from haive.agents.experiments.supervisor.test_registry_setup import AgentRegistry
+from haive.agents.react.agent import ReactAgent
 from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 from langgraph_supervisor import create_forward_message_tool, create_handoff_tool
 from pydantic import Field, model_validator
-
-from haive.agents.experiments.supervisor.test_registry_setup import AgentRegistry
-from haive.agents.react.agent import ReactAgent
 
 
 class IntegratedSupervisorWithHandoff(ReactAgent):
@@ -34,8 +33,6 @@ class IntegratedSupervisorWithHandoff(ReactAgent):
     def setup_integrated_supervisor(self) -> "IntegratedSupervisorWithHandoff":
         """Setup supervisor with choice model + proper handoff/forward tools."""
 
-        print("🔧 Setting up integrated supervisor with handoff tools...")
-
         # Update choice model with available agents
         self._sync_choice_model_with_registry()
 
@@ -45,11 +42,10 @@ class IntegratedSupervisorWithHandoff(ReactAgent):
         choice_tool = self._create_agent_choice_tool()
         list_tool = self._create_list_agents_tool()
 
-        all_tools = handoff_tools + [forward_tool, choice_tool, list_tool]
+        all_tools = [*handoff_tools, forward_tool, choice_tool, list_tool]
 
-        print(f"Created {len(all_tools)} tools:")
         for tool in all_tools:
-            print(f"  - {tool.name}")
+            pass
 
         # Create integrated supervisor engine
         supervisor_engine = AugLLMConfig(
@@ -60,7 +56,7 @@ class IntegratedSupervisorWithHandoff(ReactAgent):
 WORKFLOW:
 1. Use list_agents to see available agents
 2. Use choose_agent to make a structured decision about which agent to use
-3. Use transfer_to_<agent_name> to handoff control to the chosen agent  
+3. Use transfer_to_<agent_name> to handoff control to the chosen agent
 4. Use forward_message to relay agent responses back to the user
 
 Tools available:
@@ -76,21 +72,18 @@ Always follow this structured workflow for proper agent coordination.""",
         self.engine = supervisor_engine
         self.engines["main"] = supervisor_engine
 
-        print("✅ Integrated supervisor setup complete!")
         return self
 
     def _sync_choice_model_with_registry(self) -> None:
         """Sync choice model options with available agents in registry."""
         available_agents = self.agent_registry.list_available()
 
-        print(f"Syncing choice model with {len(available_agents)} agents...")
 
         # Add each agent as an option to the choice model
-        for agent_name in available_agents.keys():
+        for agent_name in available_agents:
             self.agent_choice_model.add_option(agent_name)
-            print(f"  Added choice option: {agent_name}")
 
-    def _create_handoff_tools(self) -> List[Any]:
+    def _create_handoff_tools(self) -> list[Any]:
         """Create proper handoff tools for each agent using langgraph_supervisor."""
         handoff_tools = []
 
@@ -103,7 +96,6 @@ Always follow this structured workflow for proper agent coordination.""",
                 description=f"Transfer control to {agent_name}: {description}",
             )
             handoff_tools.append(handoff_tool)
-            print(f"Created handoff tool: {handoff_tool.name}")
 
         return handoff_tools
 
@@ -125,13 +117,11 @@ Always follow this structured workflow for proper agent coordination.""",
                 The name of the chosen agent (validated) and next steps
             """
             try:
-                print(f"🤔 Making agent choice for task: {task_description}")
 
                 # Get current choice model
                 ChoiceModel = self.agent_choice_model.current_model
                 available_options = self.agent_choice_model.option_names
 
-                print(f"Available options: {available_options}")
 
                 # Simple heuristics for agent selection
                 task_lower = task_description.lower()
@@ -167,22 +157,18 @@ Always follow this structured workflow for proper agent coordination.""",
                 # Validate choice using the dynamic model
                 try:
                     validated_choice = ChoiceModel(choice=chosen_agent)
-                    print(f"✅ Validated choice: {validated_choice.choice}")
 
                     if validated_choice.choice == "END":
                         return f"Task complete or no suitable agent found. Chosen: {validated_choice.choice}"
-                    else:
-                        return f"Chosen agent: {validated_choice.choice}. Next: Use transfer_to_{validated_choice.choice} to handoff control."
+                    return f"Chosen agent: {validated_choice.choice}. Next: Use transfer_to_{validated_choice.choice} to handoff control."
 
                 except Exception as validation_error:
-                    print(f"❌ Choice validation failed: {validation_error}")
                     # Fall back to END
                     fallback_choice = ChoiceModel(choice="END")
                     return f"Validation failed, ending task. Chosen: {fallback_choice.choice}"
 
             except Exception as e:
-                print(f"❌ Error in choose_agent: {e}")
-                return f"Error choosing agent: {str(e)}"
+                return f"Error choosing agent: {e!s}"
 
         return choose_agent
 
@@ -216,9 +202,6 @@ Always follow this structured workflow for proper agent coordination.""",
         # Add to engine tools (this is the dynamic part!)
         if self.engine and hasattr(self.engine, "tools"):
             self.engine.tools.append(new_handoff_tool)
-            print(
-                f"✅ Added {name} to registry, choice model, and created handoff tool: {new_handoff_tool.name}"
-            )
 
     def remove_agent_from_registry(self, name: str) -> bool:
         """Remove agent from registry, choice model, and handoff tools."""
@@ -234,9 +217,6 @@ Always follow this structured workflow for proper agent coordination.""",
             ]
             removed_tool = len(self.engine.tools) < original_count
 
-            print(
-                f"🗑️ Removed {name}: choice_model={removed_from_choice}, tool={removed_tool}"
-            )
             return removed_from_choice and removed_tool
 
         return removed_from_choice
@@ -244,7 +224,6 @@ Always follow this structured workflow for proper agent coordination.""",
 
 def test_integrated_supervisor():
     """Test the integrated supervisor with proper handoff tools."""
-    print("🚀 Testing Integrated Supervisor with Handoff Tools")
 
     # Import here to avoid circular imports
     from haive.agents.experiments.supervisor.test_registry_setup import (
@@ -266,14 +245,10 @@ def test_integrated_supervisor():
         name="integrated_supervisor", agent_registry=registry
     )
 
-    print("\\n=== Testing Choice Model ===")
     test_choice = supervisor.agent_choice_model.test_model("math_agent")
-    print(f"Choice model test: {test_choice}")
 
-    print("\\n=== Testing Tools ===")
     if hasattr(supervisor.engine, "tools"):
         tool_names = [getattr(t, "name", "unknown") for t in supervisor.engine.tools]
-        print(f"Available tools: {tool_names}")
 
         # Check for expected tools
         expected_tools = [
@@ -285,19 +260,17 @@ def test_integrated_supervisor():
         ]
         for expected in expected_tools:
             if expected in tool_names:
-                print(f"  ✅ {expected}")
+                pass")
             else:
-                print(f"  ❌ Missing: {expected}")
+                pass")
 
-    print("\\n=== Testing Supervisor Workflow ===")
     try:
         result = supervisor.invoke(
             {"messages": [HumanMessage("I need to calculate 25 * 8")]}
         )
-        print(f"Supervisor result: {result}")
 
     except Exception as e:
-        print(f"Error in supervisor test: {e}")
+        pass
 
     return supervisor
 

@@ -1,4 +1,4 @@
-"""Corrective RAG (CRAG) Agent
+"""Corrective RAG (CRAG) Agent.
 
 Self-correcting retrieval with quality assessment.
 Implements architecture from rag-architectures-flows.md:
@@ -7,15 +7,14 @@ Retrieval → Relevance Check → Knowledge Refinement/Web Search/Combine
 
 from typing import List, Optional
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
-from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate
-
 from haive.agents.multi.base import ConditionalAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.rag.common.document_graders.models import DocumentGrade
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
 
 DOCUMENT_GRADER_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -59,8 +58,8 @@ class CorrectiveRAGAgent(ConditionalAgent):
     @classmethod
     def from_documents(
         cls,
-        documents: List[Document],
-        llm_config: Optional[LLMConfig] = None,
+        documents: list[Document],
+        llm_config: LLMConfig | None = None,
         relevance_threshold: float = 0.7,
         **kwargs
     ):

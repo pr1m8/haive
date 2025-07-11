@@ -1,7 +1,3 @@
-from haive.core.engine.agent.agent import AgentConfig
-from haive.core.engine.aug_llm import AugLLMConfig
-from pydantic import Field
-
 from haive.agents.document_modifiers.summarizer.iterative_refinement.engines import (
     initial_summary_aug_llm,
     refine_summary_aug_llm,
@@ -11,6 +7,9 @@ from haive.agents.document_modifiers.summarizer.iterative_refinement.state impor
     IterativeSummarizerOutput,
     IterativeSummarizerState,
 )
+from haive.core.engine.agent.agent import AgentConfig
+from haive.core.engine.aug_llm import AugLLMConfig
+from pydantic import Field
 
 
 class IterativeSummarizerConfig(AgentConfig):

@@ -1,5 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate
 
+
 RAG_HYDE_GENERATION = ChatPromptTemplate.from_messages(
     [
         (

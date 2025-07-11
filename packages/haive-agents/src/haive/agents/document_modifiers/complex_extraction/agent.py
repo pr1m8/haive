@@ -47,11 +47,10 @@ See Also:
     - :class:`~haive.agents.document_modifiers.complex_extraction.models.RetryStrategy`: Retry strategy configuration
 """
 
-import logging
 from collections.abc import Callable, Sequence
+import logging
 from typing import Any, Dict, List, Optional, Union
 
-from haive.core.engine.agent.agent import Agent, register_agent
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import (
     AIMessage,
@@ -78,6 +77,8 @@ from haive.agents.document_modifiers.complex_extraction.utils import (
     default_aggregator,
     encode,
 )
+from haive.core.engine.agent.agent import Agent, register_agent
+
 
 logger = logging.getLogger(__name__)
 
@@ -200,7 +201,6 @@ class ComplexExtractionAgent(Agent[ComplexExtractionAgentConfig]):
 
         # Call parent init
         super().__init__(config)
-        # self.app = encode | self.app | decode
 
     def _setup_extraction_tool(self) -> None:
         """Set up the extraction tool based on the provided model.
@@ -218,7 +218,7 @@ class ComplexExtractionAgent(Agent[ComplexExtractionAgentConfig]):
         # Create a tool from the extraction model
         extract_name = f"extract_{self.extraction_model.__name__}"
 
-        def extract_func(text: str) -> Dict[str, Any]:
+        def extract_func(text: str) -> dict[str, Any]:
             """Extract structured data according to the schema.
 
             This is a placeholder function that defines the interface for
@@ -248,14 +248,14 @@ class ComplexExtractionAgent(Agent[ComplexExtractionAgentConfig]):
 
     def _bind_validator_with_retries(
         self,
-        llm: Union[
-            Runnable[Sequence[AnyMessage], AIMessage],
-            Runnable[Sequence[BaseMessage], BaseMessage],
-        ],
+        llm: (
+            Runnable[Sequence[AnyMessage], AIMessage]
+            | Runnable[Sequence[BaseMessage], BaseMessage]
+        ),
         *,
         validator: ValidationNode,
         retry_strategy: RetryStrategy,
-        tool_choice: Optional[str] = None,
+        tool_choice: str | None = None,
     ) -> StateGraph:
         """Bind a tool validator with retry logic and return the graph builder.
 
@@ -291,7 +291,7 @@ class ComplexExtractionAgent(Agent[ComplexExtractionAgentConfig]):
         builder = StateGraph(self.state_schema)
 
         # Function to extract messages from state
-        def dedict(x: Any) -> List[BaseMessage]:
+        def dedict(x: Any) -> list[BaseMessage]:
             """Extract messages from state.
 
             Utility function to extract the messages list from various state formats.
@@ -330,7 +330,7 @@ class ComplexExtractionAgent(Agent[ComplexExtractionAgentConfig]):
         )
 
         # Function to count initial messages
-        def count_messages(state: Any) -> Dict[str, Any]:
+        def count_messages(state: Any) -> dict[str, Any]:
             """Count initial messages in state.
 
             Tracks the number of messages present at the start of processing
@@ -354,7 +354,7 @@ class ComplexExtractionAgent(Agent[ComplexExtractionAgentConfig]):
         # Set up message selection and validation
         select_messages = retry_strategy.get("aggregate_messages") or default_aggregator
 
-        def select_generated_messages(state: Any) -> List[BaseMessage]:
+        def select_generated_messages(state: Any) -> list[BaseMessage]:
             """Select only messages generated in this run.
 
             Filters out initial messages to return only those generated
@@ -372,7 +372,7 @@ class ComplexExtractionAgent(Agent[ComplexExtractionAgentConfig]):
                 selected = state.messages[state.initial_num_messages :]
             return [select_messages(selected)]
 
-        def endict_validator_output(x: Sequence[AnyMessage]) -> Dict[str, Any]:
+        def endict_validator_output(x: Sequence[AnyMessage]) -> dict[str, Any]:
             """Format validator output for the graph.
 
             Converts validator output into the expected state format,
@@ -435,8 +435,6 @@ class ComplexExtractionAgent(Agent[ComplexExtractionAgentConfig]):
         builder.add_edge(START, "encode")
         builder.add_edge("encode", "count_messages")
         builder.add_edge("count_messages", "llm")
-        # builder.add_edge("llm", "decode")
-        # builder.add_edge("decode", "finalizer")
         builder.add_edge("finalizer", "decode")
         builder.add_edge("decode", END)
 
@@ -509,7 +507,6 @@ class ComplexExtractionAgent(Agent[ComplexExtractionAgentConfig]):
         builder.add_conditional_edges(
             "validator", route_validation, ["finalizer", "fallback"]
         )
-        # builder.add_edge("finalizer", END)
 
         # Return the builder (not compiled)
         return builder
@@ -518,8 +515,8 @@ class ComplexExtractionAgent(Agent[ComplexExtractionAgentConfig]):
         self,
         llm: BaseChatModel,
         *,
-        tools: List[Tool],
-        tool_choice: Optional[str] = None,
+        tools: list[Tool],
+        tool_choice: str | None = None,
         max_attempts: int = 3,
     ) -> StateGraph:
         """Bind a validator with JSONPatch-based retries.
@@ -640,7 +637,7 @@ class ComplexExtractionAgent(Agent[ComplexExtractionAgentConfig]):
 
         # Create format error function
         def format_exception(
-            error: BaseException, call: Dict[str, Any], schema: type[BaseModel]
+            error: BaseException, call: dict[str, Any], schema: type[BaseModel]
         ) -> str:
             """Format validation error for JSONPatch correction.
 
@@ -666,7 +663,7 @@ class ComplexExtractionAgent(Agent[ComplexExtractionAgentConfig]):
 
         # Create validator and retry strategy
         validator = ValidationNode(
-            tools + [PatchFunctionParameters],
+            [*tools, PatchFunctionParameters],
             format_error=format_exception,
         )
 
@@ -688,8 +685,8 @@ class ComplexExtractionAgent(Agent[ComplexExtractionAgentConfig]):
         self,
         llm: BaseChatModel,
         *,
-        tools: List[Tool],
-        tool_choice: Optional[str] = None,
+        tools: list[Tool],
+        tool_choice: str | None = None,
         max_attempts: int = 3,
     ) -> StateGraph:
         """Bind a validator with standard retries (no JSONPatch).
@@ -776,10 +773,9 @@ class ComplexExtractionAgent(Agent[ComplexExtractionAgentConfig]):
                     self.graph._edges["finalizer"].remove("decode")
                 self.graph._edges["finalizer"].append("state_wrapper")
                 self.graph.add_edge("state_wrapper", "decode")
-        # self.app = deddict
         # Note: We don't compile the graph here - that's done by the parent in compile()
 
-    def extract_node(self, state: Any) -> Dict[str, Any]:
+    def extract_node(self, state: Any) -> dict[str, Any]:
         """Main extraction node function.
 
         Processes the current state through the extraction pipeline, invoking
@@ -838,7 +834,7 @@ class ComplexExtractionAgent(Agent[ComplexExtractionAgentConfig]):
                         updated_messages.append(result)
                         updates["messages"] = updated_messages
                     else:
-                        updates["messages"] = list(state.messages) + [result]
+                        updates["messages"] = [*list(state.messages), result]
 
                 return updates
             except Exception as e:
@@ -852,8 +848,8 @@ class ComplexExtractionAgent(Agent[ComplexExtractionAgentConfig]):
         return state
 
     def run(
-        self, input_data: Union[str, List[str], Dict[str, Any], BaseModel], **kwargs
-    ) -> Dict[str, Any]:
+        self, input_data: str | list[str] | dict[str, Any] | BaseModel, **kwargs
+    ) -> dict[str, Any]:
         """Run the extraction agent on input data.
 
         Processes the input through the extraction pipeline, handling various
@@ -902,12 +898,9 @@ class ComplexExtractionAgent(Agent[ComplexExtractionAgentConfig]):
         if isinstance(input_data, str) or (
             isinstance(input_data, list) and all(isinstance(i, str) for i in input_data)
         ):
-            # messages = self._prepare_extraction_messages(input_data)
 
             # Create state with messages
-            # input_state = {
             ##    "messages": messages
-            # }
 
             # Run the graph with the input state
             result = super().run(input_data, **kwargs)
@@ -934,10 +927,9 @@ class ComplexExtractionAgent(Agent[ComplexExtractionAgentConfig]):
         return result
 
     # def compile(self):
-    # self.app = dec
     def _prepare_extraction_messages(
-        self, input_data: Union[str, List[str], Dict[str, Any], BaseModel]
-    ) -> List[BaseMessage]:
+        self, input_data: str | list[str] | dict[str, Any] | BaseModel
+    ) -> list[BaseMessage]:
         """Prepare messages for extraction.
 
         Converts various input formats into a standardized list of BaseMessage

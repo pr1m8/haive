@@ -22,11 +22,9 @@ Example:
 import logging
 import re
 
+from haive.agents.document_modifiers.tnt.state import TaxonomyGenerationState
 from langchain_core.documents import Document
 
-from haive.agents.document_modifiers.tnt.state import TaxonomyGenerationState
-
-# from haive.core.utils.doc_utils import format_docs,format_taxonomy
 logger = logging.getLogger(__name__)
 
 

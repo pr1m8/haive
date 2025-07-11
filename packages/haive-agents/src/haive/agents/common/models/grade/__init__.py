@@ -47,20 +47,21 @@ from haive.agents.common.models.grade.qualitative import QualitativeGrade
 from haive.agents.common.models.grade.rubric import RubricCriterion, RubricGrade
 from haive.agents.common.models.grade.scale import ScaleGrade
 
+
 __all__ = [
-    # Base classes
-    "GradeType",
-    "Grade",
     # Concrete grade models
     "BinaryGrade",
+    "CompositeGrade",
+    "Grade",
+    # Base classes
+    "GradeType",
+    "LetterGrade",
     "NumericGrade",
     "PercentageGrade",
-    "LetterGrade",
-    "RubricGrade",
-    "RubricCriterion",
     "QualitativeGrade",
+    "RubricCriterion",
+    "RubricGrade",
     "ScaleGrade",
-    "CompositeGrade",
 ]
 
 # Version info

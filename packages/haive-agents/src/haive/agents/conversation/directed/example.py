@@ -3,11 +3,10 @@
 
 import logging
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
-
 from haive.agents.conversation.directed.agent import DirectedConversation
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 
 # Set logging
 logging.getLogger("haive").setLevel(logging.WARNING)
@@ -15,8 +14,6 @@ logging.getLogger("haive").setLevel(logging.WARNING)
 
 def example_classroom_discussion():
     """Classroom-style directed conversation."""
-    print("=== Classroom Discussion Example ===\n")
-
     classroom = DirectedConversation.create_classroom(
         teacher_name="Ms. Johnson",
         student_names=["Alex", "Sarah", "Mike", "Emma"],
@@ -29,18 +26,13 @@ def example_classroom_discussion():
     )
 
     # Display conversation
-    print(f"Topic: {classroom.topic}\n")
     for msg in result.get("messages", []):
         if isinstance(msg, AIMessage) and hasattr(msg, "name"):
-            print(f"\n{msg.name}: {msg.content}")
-        elif isinstance(msg, SystemMessage):
-            print(f"\n[{msg.content}]")
+            pass
 
 
 def example_team_meeting():
     """Team meeting with directed questions and responses."""
-    print("\n\n=== Team Meeting Example ===\n")
-
     participants = {
         "Manager": SimpleAgent(
             name="Manager",
@@ -104,7 +96,6 @@ def example_team_meeting():
     )
 
     # Display key interactions
-    print("\nMeeting Transcript:\n")
     for msg in result.get("messages", []):
         if isinstance(msg, AIMessage) and hasattr(msg, "name"):
             # Highlight mentions
@@ -114,13 +105,10 @@ def example_team_meeting():
                     content = str(content).replace(
                         f"@{participant}", f"**@{participant}**"
                     )
-            print(f"\n{msg.name}: {content}")
 
 
 def example_customer_support():
     """Customer support scenario with directed escalation."""
-    print("\n\n=== Customer Support Example ===\n")
-
     support_team = {
         "Bot": SimpleAgent(
             name="SupportBot",
@@ -178,17 +166,13 @@ def example_customer_support():
     )
 
     # Display support flow
-    print("\nSupport Conversation Flow:\n")
     for msg in result.get("messages", []):
         if isinstance(msg, AIMessage) and hasattr(msg, "name"):
-            indent = "  " if msg.name != "SupportBot" else ""
-            print(f"\n{indent}[{msg.name}]: {msg.content}")
+            pass
 
 
 def example_interactive_story():
     """Interactive storytelling with character interactions."""
-    print("\n\n=== Interactive Story Example ===\n")
-
     characters = {
         "Narrator": SimpleAgent(
             name="Narrator",
@@ -243,17 +227,13 @@ def example_interactive_story():
     result = story.run({}, debug=True)
 
     # Display story
-    print("\nThe Quest Begins...\n")
     for msg in result.get("messages", []):
         if isinstance(msg, AIMessage) and hasattr(msg, "name"):
             if msg.name == "Narrator":
-                print(f"\n*{msg.content}*\n")
+                pass
             else:
-                print(f'\n{msg.name}: "{msg.content}"')
+                pass
 
 
 if __name__ == "__main__":
     example_classroom_discussion()
-    # example_team_meeting()
-    # example_customer_support()
-    # example_interactive_story()

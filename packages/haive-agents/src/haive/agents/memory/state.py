@@ -1,6 +1,7 @@
+from pydantic import ConfigDict, Field
+
 from agents.react.memory.models import KnowledgeTriple, MemoryItem
 from agents.react.react.state import ReactAgentState
-from pydantic import ConfigDict, Field
 
 
 class MemoryAgentState(ReactAgentState):

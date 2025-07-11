@@ -1,4 +1,4 @@
-"""Agentic RAG Router with ReAct Pattern Agents
+"""Agentic RAG Router with ReAct Pattern Agents.
 
 Implementation of autonomous RAG routing using ReAct (Reason + Act) patterns.
 Provides intelligent agent selection, strategy planning, and execution coordination.
@@ -7,15 +7,6 @@ Provides intelligent agent selection, strategy planning, and execution coordinat
 import logging
 from enum import Enum
 from typing import Any, Dict, List, Optional, Union
-
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
-from haive.core.schema.prebuilt.rag_state import RAGState
-from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate
-from langgraph.graph import END, START
-from pydantic import BaseModel, Field
 
 from haive.agents.base.agent import Agent
 from haive.agents.multi.base import ConditionalAgent, SequentialAgent
@@ -26,6 +17,14 @@ from haive.agents.rag.hyde.agent_v2 import HyDERAGAgentV2
 from haive.agents.rag.multi_query.agent import MultiQueryRAGAgent
 from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+from haive.core.schema.prebuilt.rag_state import RAGState
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
+from langgraph.graph import END, START
+from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
 
@@ -62,20 +61,20 @@ class ReActPlan(BaseModel):
     """Complete ReAct planning result."""
 
     query_analysis: str = Field(description="Analysis of the input query")
-    reasoning_chain: List[ReasoningStep] = Field(description="Chain of reasoning steps")
+    reasoning_chain: list[ReasoningStep] = Field(description="Chain of reasoning steps")
 
     # Strategy selection
     selected_strategy: RAGStrategy = Field(description="Selected RAG strategy")
     strategy_confidence: float = Field(
         ge=0.0, le=1.0, description="Confidence in strategy selection"
     )
-    fallback_strategies: List[RAGStrategy] = Field(
+    fallback_strategies: list[RAGStrategy] = Field(
         description="Fallback strategies if primary fails"
     )
 
     # Execution planning
-    execution_steps: List[str] = Field(description="Planned execution steps")
-    success_criteria: List[str] = Field(description="Criteria for successful execution")
+    execution_steps: list[str] = Field(description="Planned execution steps")
+    success_criteria: list[str] = Field(description="Criteria for successful execution")
     failure_handling: str = Field(description="How to handle execution failures")
 
     # Resource estimation
@@ -83,9 +82,9 @@ class ReActPlan(BaseModel):
         ge=0.0, le=1.0, description="Estimated query complexity"
     )
     estimated_time: float = Field(description="Estimated processing time")
-    resource_requirements: Dict[str, Any] = Field(description="Required resources")
+    resource_requirements: dict[str, Any] = Field(description="Required resources")
 
-    planning_metadata: Dict[str, Any] = Field(
+    planning_metadata: dict[str, Any] = Field(
         description="Additional planning metadata"
     )
 
@@ -114,14 +113,14 @@ class ExecutionResult(BaseModel):
 
     # Content
     final_response: str = Field(description="Final generated response")
-    supporting_evidence: List[str] = Field(description="Key supporting evidence")
-    source_documents: List[Document] = Field(description="Source documents used")
+    supporting_evidence: list[str] = Field(description="Key supporting evidence")
+    source_documents: list[Document] = Field(description="Source documents used")
 
     # Error handling
-    errors_encountered: List[str] = Field(description="Any errors during execution")
+    errors_encountered: list[str] = Field(description="Any errors during execution")
     fallback_used: bool = Field(description="Whether fallback strategy was used")
 
-    execution_metadata: Dict[str, Any] = Field(description="Execution statistics")
+    execution_metadata: dict[str, Any] = Field(description="Execution statistics")
 
 
 class AgenticRouterResult(BaseModel):
@@ -139,7 +138,7 @@ class AgenticRouterResult(BaseModel):
 
     # Strategy analytics
     primary_strategy: RAGStrategy = Field(description="Primary strategy selected")
-    strategies_considered: List[RAGStrategy] = Field(
+    strategies_considered: list[RAGStrategy] = Field(
         description="All strategies considered"
     )
     strategy_switch_count: int = Field(description="Number of strategy switches")
@@ -147,7 +146,7 @@ class AgenticRouterResult(BaseModel):
     # Performance analytics
     total_processing_time: float = Field(description="Total processing time")
     efficiency_score: float = Field(ge=0.0, le=1.0, description="Processing efficiency")
-    resource_utilization: Dict[str, float] = Field(
+    resource_utilization: dict[str, float] = Field(
         description="Resource utilization metrics"
     )
 
@@ -160,7 +159,7 @@ class AgenticRouterResult(BaseModel):
         ge=0.0, le=1.0, description="Strength of supporting evidence"
     )
 
-    processing_metadata: Dict[str, Any] = Field(
+    processing_metadata: dict[str, Any] = Field(
         description="Complete processing metadata"
     )
 
@@ -353,18 +352,18 @@ class AgenticRAGRouterAgent(Agent):
     """
 
     name: str = "Agentic RAG Router"
-    documents: List[Document] = Field(description="Documents for RAG strategies")
+    documents: list[Document] = Field(description="Documents for RAG strategies")
     llm_config: LLMConfig = Field(description="LLM configuration")
     autonomy_level: str = Field(default="high", description="Autonomy level")
 
     # Engines for different stages (initialized in setup_agent)
-    planning_engine: Optional[AugLLMConfig] = Field(
+    planning_engine: AugLLMConfig | None = Field(
         default=None, description="Engine for ReAct planning"
     )
-    synthesis_engine: Optional[AugLLMConfig] = Field(
+    synthesis_engine: AugLLMConfig | None = Field(
         default=None, description="Engine for result synthesis"
     )
-    strategy_agents: Optional[Dict[RAGStrategy, Agent]] = Field(
+    strategy_agents: dict[RAGStrategy, Agent] | None = Field(
         default=None, description="RAG strategy agents"
     )
 
@@ -409,7 +408,7 @@ class AgenticRAGRouterAgent(Agent):
         self.engines["planning"] = self.planning_engine
         self.engines["synthesis"] = self.synthesis_engine
 
-    def plan_react_strategy(self, state: RAGState) -> Dict[str, Any]:
+    def plan_react_strategy(self, state: RAGState) -> dict[str, Any]:
         """Plan RAG strategy using ReAct reasoning."""
         query = state.query
         context = getattr(state, "context", "")
@@ -445,13 +444,13 @@ class AgenticRAGRouterAgent(Agent):
             "reasoning_steps": len(react_plan.reasoning_chain),
         }
 
-    def execute_simple_strategy(self, state: RAGState) -> Dict[str, Any]:
+    def execute_simple_strategy(self, state: RAGState) -> dict[str, Any]:
         """Execute simple RAG strategy."""
         logger.info("Executing simple RAG strategy")
         result = self.strategy_agents[RAGStrategy.SIMPLE].run({"query": state.query})
         return self._process_strategy_result(state, result, RAGStrategy.SIMPLE)
 
-    def execute_multi_query_strategy(self, state: RAGState) -> Dict[str, Any]:
+    def execute_multi_query_strategy(self, state: RAGState) -> dict[str, Any]:
         """Execute multi-query RAG strategy."""
         logger.info("Executing multi-query RAG strategy")
         result = self.strategy_agents[RAGStrategy.MULTI_QUERY].run(
@@ -459,27 +458,27 @@ class AgenticRAGRouterAgent(Agent):
         )
         return self._process_strategy_result(state, result, RAGStrategy.MULTI_QUERY)
 
-    def execute_hyde_strategy(self, state: RAGState) -> Dict[str, Any]:
+    def execute_hyde_strategy(self, state: RAGState) -> dict[str, Any]:
         """Execute HyDE RAG strategy."""
         logger.info("Executing HyDE RAG strategy")
         result = self.strategy_agents[RAGStrategy.HYDE].run({"query": state.query})
         return self._process_strategy_result(state, result, RAGStrategy.HYDE)
 
-    def execute_fusion_strategy(self, state: RAGState) -> Dict[str, Any]:
+    def execute_fusion_strategy(self, state: RAGState) -> dict[str, Any]:
         """Execute fusion RAG strategy."""
         logger.info("Executing fusion RAG strategy")
         result = self.strategy_agents[RAGStrategy.FUSION].run({"query": state.query})
         return self._process_strategy_result(state, result, RAGStrategy.FUSION)
 
-    def execute_flare_strategy(self, state: RAGState) -> Dict[str, Any]:
+    def execute_flare_strategy(self, state: RAGState) -> dict[str, Any]:
         """Execute FLARE RAG strategy."""
         logger.info("Executing FLARE RAG strategy")
         result = self.strategy_agents[RAGStrategy.FLARE].run({"query": state.query})
         return self._process_strategy_result(state, result, RAGStrategy.FLARE)
 
     def _process_strategy_result(
-        self, state: RAGState, result: Dict[str, Any], strategy: RAGStrategy
-    ) -> Dict[str, Any]:
+        self, state: RAGState, result: dict[str, Any], strategy: RAGStrategy
+    ) -> dict[str, Any]:
         """Process the result from a strategy execution."""
         return {
             "execution_result": result,
@@ -489,7 +488,7 @@ class AgenticRAGRouterAgent(Agent):
             "messages": state.messages,
         }
 
-    def synthesize_agentic_result(self, state: RAGState) -> Dict[str, Any]:
+    def synthesize_agentic_result(self, state: RAGState) -> dict[str, Any]:
         """Synthesize final agentic routing result."""
         query = state.query
         react_plan = getattr(state, "react_plan", None)
@@ -547,16 +546,15 @@ class AgenticRAGRouterAgent(Agent):
 
         if selected_strategy == RAGStrategy.SIMPLE:
             return "execute_simple"
-        elif selected_strategy == RAGStrategy.MULTI_QUERY:
+        if selected_strategy == RAGStrategy.MULTI_QUERY:
             return "execute_multi_query"
-        elif selected_strategy == RAGStrategy.HYDE:
+        if selected_strategy == RAGStrategy.HYDE:
             return "execute_hyde"
-        elif selected_strategy == RAGStrategy.FUSION:
+        if selected_strategy == RAGStrategy.FUSION:
             return "execute_fusion"
-        elif selected_strategy == RAGStrategy.FLARE:
+        if selected_strategy == RAGStrategy.FLARE:
             return "execute_flare"
-        else:
-            return "execute_simple"  # Default fallback
+        return "execute_simple"  # Default fallback
 
     def build_graph(self) -> BaseGraph:
         """Build the agentic RAG router graph with conditional edges."""
@@ -602,8 +600,8 @@ class AgenticRAGRouterAgent(Agent):
     @classmethod
     def from_documents(
         cls,
-        documents: List[Document],
-        llm_config: Optional[LLMConfig] = None,
+        documents: list[Document],
+        llm_config: LLMConfig | None = None,
         autonomy_level: str = "high",
         **kwargs,
     ):
@@ -635,8 +633,8 @@ class AgenticRAGRouterAgent(Agent):
 
 # Factory function
 def create_agentic_rag_router_agent(
-    documents: List[Document],
-    llm_config: Optional[LLMConfig] = None,
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
     routing_mode: str = "autonomous",
     **kwargs,
 ) -> AgenticRAGRouterAgent:
@@ -667,7 +665,7 @@ def create_agentic_rag_router_agent(
 
 
 # I/O schema for compatibility
-def get_agentic_rag_router_io_schema() -> Dict[str, List[str]]:
+def get_agentic_rag_router_io_schema() -> dict[str, list[str]]:
     """Get I/O schema for Agentic RAG Router agents."""
     return {
         "inputs": ["query", "context", "previous_results", "messages"],

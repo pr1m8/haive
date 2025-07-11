@@ -5,6 +5,7 @@ Evidence-based planning pattern that separates planning from execution for compl
 ## Overview
 
 ReWOO implements a planning approach where:
+
 1. **Plan First**: Create a complete plan with evidence requirements
 2. **Collect Evidence**: Systematically gather information based on dependencies
 3. **Reason**: Use collected evidence to reach conclusions

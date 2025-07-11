@@ -1,8 +1,7 @@
 # ============================================================================
 # LTM AGENT - Long-Term Memory Agent
 # ============================================================================
-"""
-Long-Term Memory Agent implementation following Haive patterns.
+"""Long-Term Memory Agent implementation following Haive patterns.
 
 This agent integrates LangMem functionality within the Haive framework,
 providing memory extraction, processing, and tool-based memory management.
@@ -12,6 +11,7 @@ import logging
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
+from haive.agents.base.agent import Agent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.models.llm.base import LLMConfig
@@ -19,8 +19,6 @@ from langchain_core.messages import AIMessage, AnyMessage, HumanMessage
 from langgraph.graph import END, START
 from langgraph.types import Command
 from pydantic import BaseModel, Field
-
-from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 
@@ -38,7 +36,7 @@ class LTMState(BaseModel):
     """
 
     # Core message state (required by LangGraph)
-    messages: List[AnyMessage] = Field(
+    messages: list[AnyMessage] = Field(
         default_factory=list, description="Conversation messages"
     )
 
@@ -52,21 +50,21 @@ class LTMState(BaseModel):
     )
 
     # Memory data
-    extracted_memories: List[Dict[str, Any]] = Field(
+    extracted_memories: list[dict[str, Any]] = Field(
         default_factory=list, description="Extracted memories from conversation"
     )
-    knowledge_graph: Optional[Dict[str, Any]] = Field(
+    knowledge_graph: Dict[str, Any] | None = Field(
         default=None, description="Extracted knowledge graph entities and relationships"
     )
-    categories: List[str] = Field(
+    categories: list[str] = Field(
         default_factory=list, description="Memory categories from TNT classification"
     )
-    consolidated_memories: List[Dict[str, Any]] = Field(
+    consolidated_memories: list[dict[str, Any]] = Field(
         default_factory=list, description="Consolidated and refined memories"
     )
 
     # Processing results
-    processing_errors: List[str] = Field(
+    processing_errors: list[str] = Field(
         default_factory=list, description="Any errors encountered during processing"
     )
     tool_calls_needed: bool = Field(
@@ -99,10 +97,10 @@ class LTMState(BaseModel):
     )
 
     # Metadata
-    processing_started_at: Optional[datetime] = Field(
+    processing_started_at: datetime | None = Field(
         default=None, description="When processing started"
     )
-    processing_completed_at: Optional[datetime] = Field(
+    processing_completed_at: datetime | None = Field(
         default=None, description="When processing completed"
     )
 
@@ -193,14 +191,14 @@ class LTMAgent(Agent):
     enable_reflection: bool = Field(
         default=True, description="Enable background reflection"
     )
-    ltm_llm_config: Optional[LLMConfig] = Field(
+    ltm_llm_config: LLMConfig | None = Field(
         default=None, description="LLM configuration for memory processing"
     )
 
     def __init__(
         self,
         name: str = "LTM Agent",
-        llm_config: Optional[LLMConfig] = None,
+        llm_config: LLMConfig | None = None,
         enable_kg_processing: bool = True,
         enable_categorization: bool = True,
         enable_consolidation: bool = True,
@@ -312,15 +310,14 @@ class LTMAgent(Agent):
     # NODE IMPLEMENTATIONS - Phase 1
     # ============================================================================
 
-    def extract_memories_node(self, state: LTMState) -> Dict[str, Any]:
+    def extract_memories_node(self, state: LTMState) -> dict[str, Any]:
         """Extract memories using LangMem memory manager (Phase 2 implementation)."""
         logger.info("Executing LangMem memory extraction...")
 
         try:
             # Import LangMem components
-            from langmem import create_memory_manager
-
             from haive.agents.ltm.memory_schemas import DEFAULT_MEMORY_SCHEMAS
+            from langmem import create_memory_manager
 
             if not state.messages:
                 return {
@@ -385,14 +382,14 @@ class LTMAgent(Agent):
             }
 
         except Exception as e:
-            logger.error(f"LangMem memory extraction failed: {e}")
+            logger.exception(f"LangMem memory extraction failed: {e}")
             return {
-                "processing_errors": [f"Extraction failed: {str(e)}"],
+                "processing_errors": [f"Extraction failed: {e!s}"],
                 "processing_stage": "error",
             }
 
     def _calculate_extraction_quality(
-        self, memories: List[Dict], messages: List
+        self, memories: list[dict], messages: list
     ) -> float:
         """Calculate quality score for extracted memories."""
         if not memories:
@@ -413,7 +410,7 @@ class LTMAgent(Agent):
         ratio_quality = min(1.0, actual_ratio / expected_ratio)
 
         # Bonus for schema diversity
-        schema_types = set(m.get("schema", "Unknown") for m in memories)
+        schema_types = set(m.get("schema", "Unknown") for m in memories}
         diversity_bonus = min(0.2, len(schema_types) * 0.05)
 
         # Penalty for errors or low confidence
@@ -422,7 +419,7 @@ class LTMAgent(Agent):
         final_quality = min(1.0, ratio_quality + diversity_bonus) * avg_confidence
         return round(final_quality, 2)
 
-    def complete_processing_node(self, state: LTMState) -> Dict[str, Any]:
+    def complete_processing_node(self, state: LTMState) -> dict[str, Any]:
         """Complete processing (Phase 1 implementation)."""
         logger.info("Completing LTM processing...")
 
@@ -432,7 +429,7 @@ class LTMAgent(Agent):
             "processing_quality": state.extraction_quality,
         }
 
-    def handle_errors_node(self, state: LTMState) -> Dict[str, Any]:
+    def handle_errors_node(self, state: LTMState) -> dict[str, Any]:
         """Handle processing errors."""
         logger.error(f"Handling LTM processing errors: {state.processing_errors}")
 
@@ -447,7 +444,7 @@ class LTMAgent(Agent):
     # UTILITY METHODS
     # ============================================================================
 
-    def get_processing_summary(self, state: LTMState) -> Dict[str, Any]:
+    def get_processing_summary(self, state: LTMState) -> dict[str, Any]:
         """Get summary of processing results."""
         return {
             "stage": state.processing_stage,

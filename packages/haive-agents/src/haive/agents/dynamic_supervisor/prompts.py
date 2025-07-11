@@ -15,6 +15,7 @@ Functions:
 
 from typing import TYPE_CHECKING, Dict, List
 
+
 if TYPE_CHECKING:
     from haive.agents.dynamic_supervisor.models import AgentInfo
 
@@ -92,7 +93,7 @@ The task requires {capability} because {reason}. We would need an agent that can
 For now, I'm unable to complete this task without the {capability} capability."""
 
 
-def format_supervisor_prompt(agents: Dict[str, "AgentInfo"]) -> str:
+def format_supervisor_prompt(agents: dict[str, "AgentInfo"]) -> str:
     """Format the supervisor system prompt with current agents.
 
     Args:
@@ -111,7 +112,7 @@ def format_supervisor_prompt(agents: Dict[str, "AgentInfo"]) -> str:
     return SUPERVISOR_SYSTEM_PROMPT.format(agent_list=agent_list)
 
 
-def format_agent_list(agents: Dict[str, "AgentInfo"]) -> str:
+def format_agent_list(agents: dict[str, "AgentInfo"]) -> str:
     """Format agent list for inclusion in prompts.
 
     Creates a formatted list showing agent names, descriptions,
@@ -151,7 +152,7 @@ def format_agent_list(agents: Dict[str, "AgentInfo"]) -> str:
 
 
 def format_missing_capability(
-    task: str, capability: str, reason: str, requirements: List[str]
+    task: str, capability: str, reason: str, requirements: list[str]
 ) -> str:
     """Format a missing capability message.
 

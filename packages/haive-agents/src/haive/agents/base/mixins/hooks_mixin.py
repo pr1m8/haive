@@ -6,13 +6,14 @@ Provides a flexible hooks system that can be used by both single and multi agent
 with support for different hook points and graph-aware modifications.
 """
 
-import logging
 from collections.abc import Callable
+import logging
 from typing import Any, Generic, TypeVar
 
 from pydantic import PrivateAttr
 
 from haive.agents.base.types import HookContext, HookPoint, TState
+
 
 logger = logging.getLogger(__name__)
 
@@ -139,7 +140,7 @@ class HooksMixin(Generic[TState]):
                     if not hook_entry["condition"](self, context):
                         continue
                 except Exception as e:
-                    logger.error(f"Hook condition error: {e}")
+                    logger.exception(f"Hook condition error: {e}")
                     continue
 
             # Run hook
@@ -163,7 +164,9 @@ class HooksMixin(Generic[TState]):
                     self._hook_results[f"{point.value}:{hook_name}"] = hook_result
 
             except Exception as e:
-                logger.error(f"Hook '{hook_entry['name']}' error at {point.value}: {e}")
+                logger.exception(
+                    f"Hook '{hook_entry['name']}' error at {point.value}: {e}"
+                )
                 if logger.isEnabledFor(logging.DEBUG):
                     logger.exception("Full hook error:")
 

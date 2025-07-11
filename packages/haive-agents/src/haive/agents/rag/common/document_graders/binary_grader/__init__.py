@@ -1,4 +1,4 @@
-"""Binary Grader - TODO: Add brief description
+"""Binary Grader - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

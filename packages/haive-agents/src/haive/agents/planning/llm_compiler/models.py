@@ -6,9 +6,10 @@ integrating with the base Step and Plan models from the plan_and_execute agent.
 
 from typing import Any
 
-from agents.plan_and_execute.models import Plan, Step
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel, Field
+
+from agents.plan_and_execute.models import Plan, Step
 
 
 class TaskDependency(BaseModel):
@@ -199,7 +200,7 @@ class CompilerPlan(Plan):
         description: str,
         tool_name: str,
         arguments: dict[str, Any],
-        dependencies: list[int | TaskDependency] = None,
+        dependencies: list[int | TaskDependency] | None = None,
     ) -> CompilerStep:
         """Add a new compiler step to the plan.
 

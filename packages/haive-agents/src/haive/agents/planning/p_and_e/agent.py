@@ -1,19 +1,9 @@
 # src/haive/agents/plan_and_execute/agents.py
-"""
-Plan and Execute Agent implementation.
-"""
+"""Plan and Execute Agent implementation."""
 
 import logging
 from datetime import datetime
 from typing import Any, Dict, List, Optional
-
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from langchain_core.tools import BaseTool
-from langgraph.graph import END, START
-from langgraph.types import Command
-from pydantic import Field
 
 from haive.agents.base.agent import Agent
 from haive.agents.planning.p_and_e.models import Act, Plan, Response
@@ -23,6 +13,13 @@ from haive.agents.planning.p_and_e.prompts import (
     replan_prompt,
 )
 from haive.agents.planning.p_and_e.state import PlanExecuteState
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from langchain_core.tools import BaseTool
+from langgraph.graph import END, START
+from langgraph.types import Command
+from pydantic import Field
 
 logger = logging.getLogger(__name__)
 
@@ -63,7 +60,7 @@ def route_after_evaluation(state: PlanExecuteState) -> str:
                     state.final_answer = act.action.response
                     state.completed_at = datetime.now()
                     return END
-                elif isinstance(act.action, Plan):
+                if isinstance(act.action, Plan):
                     return "create_plan"
 
     # Default to continuing execution
@@ -71,9 +68,7 @@ def route_after_evaluation(state: PlanExecuteState) -> str:
 
 
 class PlanAndExecuteAgent(Agent):
-    """
-    Plan and Execute agent that orchestrates planning, execution, and replanning.
-    """
+    """Plan and Execute agent that orchestrates planning, execution, and replanning."""
 
     # Set schemas
     state_schema: type = Field(default=PlanExecuteState)
@@ -82,7 +77,7 @@ class PlanAndExecuteAgent(Agent):
     )  # Enable schema composition with prebuilt base
 
     # Tools available to the agent
-    tools: List[BaseTool] = Field(
+    tools: list[BaseTool] = Field(
         default_factory=list, description="List of tools available to this agent"
     )
 

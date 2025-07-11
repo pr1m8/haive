@@ -92,6 +92,7 @@ result = await debate.arun(enable_audience_voting=True)
 ## Debate Formats
 
 ### Traditional Debate
+
 - Opening statements (2 min each)
 - Main arguments (3 rounds, 3 min each)
 - Rebuttals (2 rounds, 2 min each)
@@ -99,6 +100,7 @@ result = await debate.arun(enable_audience_voting=True)
 - Optional judge evaluation
 
 ### Oxford Debate
+
 - Motion announcement
 - Opening statements by first speakers
 - Second speaker arguments
@@ -107,6 +109,7 @@ result = await debate.arun(enable_audience_voting=True)
 - Audience/judge voting
 
 ### Parliamentary Debate
+
 - Government vs. Opposition format
 - Points of information allowed
 - Prime Minister and Leader of Opposition roles
@@ -114,6 +117,7 @@ result = await debate.arun(enable_audience_voting=True)
 - Speaker of the House moderation
 
 ### Lincoln-Douglas Debate
+
 - Value-based philosophical arguments
 - Affirmative and Negative positions
 - Cross-examination periods
@@ -162,21 +166,21 @@ class DebateState(ConversationState):
     pro_agents: List[str]
     con_agents: List[str]
     judge_agent: Optional[str]
-    
+
     # Debate phases
     current_phase: DebatePhase
     completed_phases: List[DebatePhase]
-    
+
     # Argument tracking
     pro_arguments: List[Argument]
     con_arguments: List[Argument]
     rebuttals: Dict[str, List[Rebuttal]]
-    
+
     # Scoring
     argument_scores: Dict[str, float]
     position_scores: Dict[str, float]
     debate_winner: Optional[str]
-    
+
     # Evidence tracking
     citations: List[Citation]
     fact_checks: Dict[str, bool]
@@ -189,29 +193,29 @@ class DebateState(ConversationState):
 ```python
 class CustomScoringDebate(DebateConversation):
     """Debate with custom scoring logic."""
-    
+
     def score_argument(self, argument: Argument, position: str) -> float:
         """Custom argument scoring based on multiple factors."""
         base_score = 5.0
-        
+
         # Evidence bonus
         if argument.has_citations:
             base_score += 2.0
-        
+
         # Length penalty (encourage conciseness)
         if len(argument.content.split()) > 500:
             base_score -= 1.0
-        
+
         # Logical structure bonus
         if self.has_clear_premises(argument):
             base_score += 1.5
-        
+
         # Rebuttal consideration
         rebuttal_score = self.calculate_rebuttal_impact(argument)
         base_score -= rebuttal_score
-        
+
         return max(0, min(10, base_score))
-    
+
     def determine_winner(self, state: DebateState) -> str:
         """Custom winner determination logic."""
         # Weight different criteria
@@ -221,10 +225,10 @@ class CustomScoringDebate(DebateConversation):
             "evidence_strength": 0.2,
             "persuasiveness": 0.1
         }
-        
+
         pro_score = self.calculate_weighted_score("pro", weights)
         con_score = self.calculate_weighted_score("con", weights)
-        
+
         return "pro" if pro_score > con_score else "con"
 ```
 
@@ -252,23 +256,23 @@ debate = DebateConversation(
 ```python
 class AdaptiveDebate(DebateConversation):
     """Debate that adapts based on argument quality."""
-    
+
     def should_extend_phase(self, state: DebateState) -> bool:
         """Extend phase if arguments are particularly engaging."""
         recent_scores = state.argument_scores[-3:]
         avg_score = sum(recent_scores) / len(recent_scores)
-        
+
         # Extend if high-quality exchange
         return avg_score > 8.0
-    
+
     def select_next_speaker(self, state: DebateState) -> str:
         """Prioritize speakers who haven't addressed key points."""
         unaddressed_points = self.find_unaddressed_arguments(state)
-        
+
         if unaddressed_points:
             # Select speaker best suited to address gaps
             return self.match_speaker_to_points(unaddressed_points, state)
-        
+
         return super().select_next_speaker(state)
 ```
 
@@ -299,17 +303,17 @@ research_debate = DebateConversation(
 ```python
 class InteractiveDebate(DebateConversation):
     """Debate with audience participation."""
-    
+
     def __init__(self, *args, audience_agents=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.audience_agents = audience_agents or []
         self.audience_reactions = []
-    
+
     async def after_argument(self, argument: Argument, state: DebateState):
         """Collect audience reactions after each argument."""
         reactions = await self.poll_audience(argument)
         self.audience_reactions.append(reactions)
-        
+
         # Adjust debate flow based on audience engagement
         if reactions["confusion_level"] > 0.7:
             # Request clarification
@@ -319,30 +323,35 @@ class InteractiveDebate(DebateConversation):
 ## Best Practices
 
 ### 1. Topic Selection
+
 - Choose clear, debatable resolutions
 - Avoid overly broad or narrow topics
 - Ensure both sides have viable arguments
 - Frame as clear propositions
 
 ### 2. Participant Preparation
+
 - Assign clear position instructions
 - Provide relevant background knowledge
 - Set argument quality expectations
 - Define evidence standards
 
 ### 3. Format Configuration
+
 - Match format to topic complexity
 - Allow sufficient time per phase
 - Balance argument and rebuttal time
 - Consider audience and purpose
 
 ### 4. Scoring Fairness
+
 - Use consistent evaluation criteria
 - Weight multiple factors
 - Consider argument quality over quantity
 - Account for position difficulty
 
 ### 5. Evidence Standards
+
 - Require citations for factual claims
 - Enable fact-checking when possible
 - Track evidence quality
@@ -377,6 +386,7 @@ class InteractiveDebate(DebateConversation):
 ## Example Outputs
 
 The module includes several example debate outputs in the `outputs/` directory:
+
 - [Simple Debate](outputs/simple_debate.md) - Basic two-agent debate
 - [Oxford Debate](outputs/oxford_debate.md) - Formal Oxford-style team debate
 - [Panel Debate](outputs/panel_debate.md) - Multi-participant panel format
@@ -392,6 +402,7 @@ The module includes several example debate outputs in the `outputs/` directory:
 ## Examples
 
 See the [example.py](example.py) file for complete working examples including:
+
 - Basic debate setup
 - Oxford-style debates
 - Custom scoring systems

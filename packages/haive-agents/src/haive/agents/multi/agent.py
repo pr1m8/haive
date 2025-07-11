@@ -9,6 +9,7 @@ enabling seamless composition of multiple agents with various coordination patte
 import logging
 from typing import Any, Literal
 
+from haive.agents.base.agent import Agent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.graph.state_graph.components.node import Node
 from haive.core.schema.agent_schema_composer import AgentSchemaComposer
@@ -16,8 +17,6 @@ from langgraph.graph import END
 from langgraph.graph.graph import CompiledGraph
 from langgraph.types import Command
 from pydantic import Field, PrivateAttr, model_validator
-
-from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 
@@ -745,7 +744,6 @@ class MultiAgent(Agent):
         # Build schema kwargs - only pass what StateGraph expects
         schema_kwargs = {}
 
-        # CRITICAL: state_schema is required
         if self.state_schema:
             schema_kwargs["state_schema"] = self.state_schema
         else:
@@ -777,9 +775,9 @@ class MultiAgent(Agent):
 
             langgraph = self.graph.to_langgraph(**schema_kwargs)
         except Exception as e:
-            logger.error(f"Failed to convert graph to langgraph: {e}")
-            logger.error(f"Schema kwargs were: {list(schema_kwargs.keys())}")
-            logger.error(f"State schema type: {type(self.state_schema)}")
+            logger.exception(f"Failed to convert graph to langgraph: {e}")
+            logger.exception(f"Schema kwargs were: {list(schema_kwargs.keys())}")
+            logger.exception(f"State schema type: {type(self.state_schema)}")
             raise
 
         # Now compile the LangGraph StateGraph with checkpointer and runtime config

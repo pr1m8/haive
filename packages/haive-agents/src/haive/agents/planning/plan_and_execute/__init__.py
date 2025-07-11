@@ -1,4 +1,4 @@
-"""Plan And Execute - TODO: Add brief description
+"""Plan And Execute - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

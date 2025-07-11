@@ -21,7 +21,7 @@ class SQLQueryOutput(BaseModel):
     )
 
     @field_validator("query", mode="before")
-    def validate_sql_syntax(cls, query: str) -> str:
+    def validate_sql_syntax(self, query: str) -> str:
         """Ensure the query starts with a valid SQL keyword."""
         valid_keywords = ["SELECT", "WITH"]
         if not any(query.strip().upper().startswith(kw) for kw in valid_keywords):

@@ -11,7 +11,7 @@ The base conversation system provides the foundation for all conversation agent 
 ```
 BaseConversationAgent (Abstract)
 ├── Speaker Selection Logic
-├── Agent Execution & Error Handling  
+├── Agent Execution & Error Handling
 ├── Extension Hooks for Customization
 └── Graph-Based Workflow Integration
 
@@ -52,7 +52,7 @@ from haive.agents.simple import SimpleAgent
 state = create_conversation_state(
     participants=[
         SimpleAgent(name="Alice"),
-        SimpleAgent(name="Bob"), 
+        SimpleAgent(name="Bob"),
         SimpleAgent(name="Charlie")
     ],
     topic="Future of AI",
@@ -73,18 +73,18 @@ from typing import Optional
 
 class CustomConversationAgent(BaseConversationAgent[ConversationState]):
     """Custom conversation agent with specialized behavior."""
-    
+
     def select_next_speaker(self, state: ConversationState) -> Optional[str]:
         """Custom speaker selection logic."""
         # Simple round-robin selection
         if state.remaining_speakers_this_round:
             return state.remaining_speakers_this_round[0]
         return None
-    
+
     def should_end_conversation(self, state: ConversationState) -> bool:
         """Custom termination conditions."""
         return (
-            state.should_end_by_rounds or 
+            state.should_end_by_rounds or
             len(state.messages) > 50 or
             state.conversation_ended
         )
@@ -96,7 +96,7 @@ async def run_custom_conversation():
         participants=[alice, bob, charlie],
         initial_state=state
     )
-    
+
     result = await agent.arun("Let's discuss the future of AI")
     return result
 ```
@@ -112,13 +112,13 @@ class ConversationState(MessagesState):
     speakers: List[str]                      # All participant names
     turn_count: int                          # Auto-incremented via reducer
     speaker_history: List[str]               # Auto-appended via reducer
-    
+
     # Configuration
     max_rounds: int                          # Round limit
     topic: Optional[str]                     # Conversation topic
     conversation_ended: bool                 # Termination flag
     mode: str                               # Conversation mode identifier
-    
+
     # Computed properties (automatic)
     round_number: int                        # Current round (calculated)
     current_round_speakers: List[str]        # Speakers in current round
@@ -163,7 +163,7 @@ state = create_conversation_state(
 # With custom configuration
 state = create_conversation_state(
     participants=[expert1, expert2],
-    topic="Technical discussion", 
+    topic="Technical discussion",
     mode="expert_panel",
     config={
         "timeout_seconds": 300,
@@ -212,7 +212,7 @@ For detailed API documentation, see the [API Reference](../../../../docs/source/
 ## See Also
 
 - [Round Robin Conversation](../round_robin/README.md) - Sequential turn-taking
-- [Debate Conversation](../debate/README.md) - Structured argumentative dialogue  
+- [Debate Conversation](../debate/README.md) - Structured argumentative dialogue
 - [Directed Conversation](../directed/README.md) - Moderator-controlled flow
 - [Collaborative Conversation](../collaberative/README.md) - Team-based problem solving
 - [Social Media Conversation](../social_media/README.md) - Platform-style interactions

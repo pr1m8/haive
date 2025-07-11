@@ -1,11 +1,3 @@
-from haive.core.engine.agent.agent import Agent, register_agent
-from haive.core.engine.aug_llm import compose_runnable
-from langchain_core.documents import Document
-from langchain_experimental.graph_transformers import LLMGraphTransformer
-from langchain_neo4j.graphs.graph_document import GraphDocument, Relationship
-from langgraph.graph import END, START
-from langgraph.types import Command, Send
-
 from haive.agents.document_modifiers.kg.kg_base.models import GraphTransformer
 from haive.agents.document_modifiers.kg.kg_map_merge.config import ParallelKGAgentConfig
 from haive.agents.document_modifiers.kg.kg_map_merge.engines import (
@@ -14,6 +6,13 @@ from haive.agents.document_modifiers.kg.kg_map_merge.engines import (
     schema_extraction_engine,
 )
 from haive.agents.document_modifiers.kg.kg_map_merge.state import ParallelKGState
+from haive.core.engine.agent.agent import Agent, register_agent
+from haive.core.engine.aug_llm import compose_runnable
+from langchain_core.documents import Document
+from langchain_experimental.graph_transformers import LLMGraphTransformer
+from langchain_neo4j.graphs.graph_document import GraphDocument, Relationship
+from langgraph.graph import END, START
+from langgraph.types import Command, Send
 
 
 @register_agent(ParallelKGAgentConfig)
@@ -95,27 +94,17 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
             node_types = schema_result.node_types
             relationship_types = schema_result.relationship_types
 
-            print(
-                f"Extracted {len(node_types)} node types and {len(relationship_types)} relationship types"
-            )
-            print(f"Node types: {', '.join([nt.name for nt in node_types])}")
-            print(
-                f"Relationship types: {', '.join([rt.name for rt in relationship_types])}"
-            )
-
             # Update state with extracted schema
             return Command(
                 update={
                     "node_types": node_types,
                     "relationship_types": relationship_types,
-                    # "node_types_str": node_types,
                     # "relationship_types_str": relationship_types
                 },
                 goto="distribute_documents",
             )
 
-        except Exception as e:
-            print(f"Error during schema extraction: {e}")
+        except Exception:
             # Fallback to empty schema
             return Command(
                 update={"node_types": [], "relationship_types": []},
@@ -124,8 +113,6 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
 
     def distribute_documents(self, state: ParallelKGState):
         """Set up the state for parallel document processing."""
-        print(f"Preparing to process {len(state.contents)} documents")
-
         # We don't need to update the state here, just proceed to map_documents
         return Command(goto=self.map_documents(state))
 
@@ -149,7 +136,6 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
                 )
             )
 
-        print(f"Mapping {len(sends)} documents for parallel processing")
         if not sends:
             # If no documents to process, go to END
             return Command(goto=END)
@@ -167,12 +153,7 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
             index = state["index"]
 
             # Convert to string if it's a Document
-            if isinstance(content, Document):
-                content_str = content.page_content
-            else:
-                content_str = content
-
-            print(f"Processing document {index + 1}: {content_str[:50]}...")
+            (content.page_content if isinstance(content, Document) else content)
 
             graph_doc = self.graph_transformer.transform_documents(
                 documents=[content],
@@ -183,7 +164,6 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
             return {"graph_document": graph_doc, "index": index, "processed": True}
 
         except Exception as e:
-            print(f"Error processing document {state.get('index', '?')}: {e}")
             return {"index": state.get("index"), "processed": True, "error": str(e)}
 
     def distribute_graph_document_pairs(self, state: ParallelKGState):
@@ -226,25 +206,20 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
                             pairs.append((i, None))
 
                     update["pairs_to_merge"] = pairs
-                    print(
-                        f"All documents processed. Created {len(pairs)} pairs for merging."
-                    )
                 elif len(valid_graphs) == 1:
                     # If only one graph, set it as the final result
                     update["merged_graph"] = valid_graphs[0]
-                    print("Only one graph was generated, no merging needed.")
                 else:
-                    print("No valid graphs were generated.")
+                    pass
 
             return Command(update=update)
 
         # If no graph_document but we have an error, just update the state
         if "error" in state:
-            print(f"Document processing error: {state['error']}")
             return Command(update={"processing_errors": state["error"]})
+        return None
 
         # No change
-        # return Command()
 
     def route_after_collection(self, state: ParallelKGState):
         """Determine next steps after document collection.
@@ -330,8 +305,6 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
                     )
                 )
 
-        print(f"Created {len(sends)} merge pair tasks for round {state.merge_round}")
-
         if not sends:
             if valid_graphs:
                 # If no pairs but we have graphs, use the first one
@@ -350,8 +323,6 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
             graph1 = state["graph1"]
             graph2 = state["graph2"]
             pair_index = state["pair_index"]
-
-            print(f"Merging pair {pair_index + 1}")
 
             # Format node and relationship information for the prompt
             existing_nodes = "\n".join(
@@ -449,8 +420,7 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
 
             return {"merged_graph": merged_graph, "pair_index": pair_index}
 
-        except Exception as e:
-            print(f"Error merging pair: {e}")
+        except Exception:
             # In case of error, return the first graph
             return {"merged_graph": state["graph1"], "pair_index": state["pair_index"]}
 
@@ -516,9 +486,6 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
                         pairs.append((i, None))
 
                 update["pairs_to_merge"] = pairs
-                print(
-                    f"Created {len(pairs)} pairs for merging in round {state.merge_round}"
-                )
                 return Command(update=update, goto="map_merge_pairs")
             if len(valid_graphs) == 1:
                 # Only one graph, no merging needed
@@ -536,9 +503,6 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
                 # We're done merging
                 if valid_results:
                     update["merged_graph"] = valid_results[0]
-                    print(
-                        f"Merging complete. Final graph has {len(valid_results[0].nodes)} nodes and {len(valid_results[0].relationships)} relationships"
-                    )
                 return Command(update=update, goto="finalize_graph")
             # More merging needed
             # Create new pairs
@@ -555,9 +519,6 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
             update["merged_results"] = []  # Reset for new round
             update["merge_round"] = state.merge_round + 1
 
-            print(
-                f"Starting merge round {state.merge_round + 1} with {len(pairs)} pairs"
-            )
             return Command(update=update, goto="map_merge_pairs")
 
         # Not all pairs merged yet, continue collecting
@@ -590,12 +551,6 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
             for rel in final_graph.relationships:
                 relationship_types.add(rel.type)
 
-            print(
-                f"Final graph contains {len(final_graph.nodes)} nodes and {len(final_graph.relationships)} relationships"
-            )
-            print(f"Node types: {', '.join(sorted(node_types))}")
-            print(f"Relationship types: {', '.join(sorted(relationship_types))}")
-
             return Command(
                 update={
                     "merged_graph": final_graph,
@@ -603,7 +558,6 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
                     "extracted_relationship_types": sorted(relationship_types),
                 }
             )
-        print("No graphs were generated")
         return Command(update={"merged_graph": None})
 
     def setup_workflow(self):
@@ -611,25 +565,18 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
         # Add nodes to the graph
         self.graph.add_node("extract_schema", self.extract_schema)
         self.graph.add_node("distribute_documents", self.distribute_documents)
-        # self.graph.add_node("map_documents", self.map_documents)
         self.graph.add_node("process_document", self.process_document)
         self.graph.add_node(
             "distribute_graph_document_pairs", self.distribute_graph_document_pairs
         )
-        # self.graph.add_node("map_merge_pairs", self.map_merge_pairs)
         self.graph.add_node("merge_pair", self.merge_pair)
         self.graph.add_node("collect_merged", self.collect_merged)
-        # self.graph.add_node("continue_merging", self.continue_merging)
         self.graph.add_node("finalize_graph", self.finalize_graph)
 
         # Set conditional entry point to match the diagram
         # self.graph.set_conditional_entry_point(
         #    self.initialize_workflow,
-        #    {
-        #          "extract_schema": "extract_schema",
         #        "distribute_documents": "distribute_documents"
-        #    }
-        # )
 
         # Core flow paths
         self.graph.add_edge("extract_schema", "distribute_documents")
@@ -642,9 +589,7 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
             },
         )
         # First map-reduce pattern for document processing
-        # self.graph.add_edge("distribute_documents", "map_documents")
         # Note: map_documents returns Send objects to process_document
-        # self.graph.add_edge("process_document", "collect_documents")
         self.graph.add_conditional_edges(
             "distribute_documents", self.map_documents, ["process_document"]
         )
@@ -652,8 +597,6 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
             "distribute_graph_document_pairs", self.map_merge_pairs, ["merge_pair"]
         )
         # Document collection flow
-        # self.graph.add_edge("collect_documents", "collect_documents")  # For collecting multiple documents
-        # self.graph.add_conditional_edges("process_document",self.m,['collect_documents'])
         self.graph.add_conditional_edges(
             "process_document",
             lambda state: (
@@ -670,7 +613,6 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
         # Second map-reduce pattern for merging graph fragments
         # Note: map_merge_pairs returns Send objects to merge_pair
         self.graph.add_edge("merge_pair", "collect_merged")
-        # self.graph.add_edge("collect_merged", "continue_merging")
 
         # Merging flow management
         self.graph.add_conditional_edges(
@@ -682,7 +624,6 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
                 else "finalize_graph"
             ),
             {
-                # "collect_merged": "collect_merged",    # More merges to collect
                 "distribute_graph_document_pairs": "distribute_graph_document_pairs",  # Start another merge round
                 "finalize_graph": "finalize_graph",  # Merging complete
             },
@@ -690,5 +631,3 @@ class StructuredKGAgent(Agent[ParallelKGAgentConfig]):
 
         # Final paths
         self.graph.add_edge("finalize_graph", END)
-
-        print("Workflow setup complete")

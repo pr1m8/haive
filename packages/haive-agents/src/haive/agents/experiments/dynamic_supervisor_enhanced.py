@@ -10,6 +10,7 @@ from haive.agents.experiments.dynamic_supervisor import DynamicSupervisorAgent
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -22,7 +23,7 @@ def create_agent_management_tools(supervisor_instance):
         description: str,
         agent_type: str = "simple",
         system_message: str = "",
-        capabilities: Optional[str] = None,
+        capabilities: str | None = None,
     ) -> str:
         """Create and register a new agent in the supervisor's registry.
 
@@ -74,8 +75,8 @@ def create_agent_management_tools(supervisor_instance):
             return f"Successfully created and registered agent '{name}' with handoff tool 'handoff_to_{name}'"
 
         except Exception as e:
-            logger.error(f"Error creating agent {name}: {e}")
-            return f"Error creating agent: {str(e)}"
+            logger.exception(f"Error creating agent {name}: {e}")
+            return f"Error creating agent: {e!s}"
 
     @tool
     def remove_agent(name: str) -> str:
@@ -95,13 +96,13 @@ def create_agent_management_tools(supervisor_instance):
             return f"Successfully removed agent '{name}' and its handoff tool."
 
         except Exception as e:
-            return f"Error removing agent: {str(e)}"
+            return f"Error removing agent: {e!s}"
 
     @tool
     def modify_agent(
         name: str,
-        description: Optional[str] = None,
-        system_message: Optional[str] = None,
+        description: str | None = None,
+        system_message: str | None = None,
     ) -> str:
         """Modify an existing agent's configuration.
 
@@ -135,7 +136,7 @@ def create_agent_management_tools(supervisor_instance):
             return f"Successfully modified agent '{name}'"
 
         except Exception as e:
-            return f"Error modifying agent: {str(e)}"
+            return f"Error modifying agent: {e!s}"
 
     @tool
     def analyze_task_and_suggest_agent(task: str) -> str:
@@ -265,8 +266,6 @@ Always think step-by-step about the best approach before acting."""
 if __name__ == "__main__":
     import asyncio
 
-    from haive.core.engine import AugLLMEngine
-
     async def demo_self_modifying_supervisor():
         # Create self-modifying supervisor
         supervisor = SelfModifyingSupervisor(
@@ -284,20 +283,7 @@ if __name__ == "__main__":
             },
         )
 
-        print("🤖 Self-Modifying Supervisor Demo")
-        print("=" * 50)
-        print(f"Initial agents: {list(supervisor.agent_registry.list_agents().keys())}")
-        print(f"Initial tools: {len(supervisor.tools)}")
-
         # Simulate a task that requires a specialized agent
-        task = "I need help writing a Python script to analyze sales data and create visualizations"
-
-        print(f"\n📋 Task: {task}")
-        print("\nSupervisor will:")
-        print("1. Analyze the task")
-        print("2. Realize it needs specialized agents")
-        print("3. Create appropriate agents")
-        print("4. Delegate the work")
 
         # In actual use, the supervisor would handle this autonomously
         # through its tool calls during execution
@@ -306,4 +292,3 @@ if __name__ == "__main__":
 
     # Run demo
     supervisor = asyncio.run(demo_self_modifying_supervisor())
-    print(f"\n✅ Supervisor ready with {len(supervisor.tools)} tools")

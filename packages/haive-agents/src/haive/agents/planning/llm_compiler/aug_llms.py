@@ -1,8 +1,10 @@
 """Configuration for the LLMCompiler agent using AugLLMConfig system."""
 
+from langchain_core.prompts import ChatPromptTemplate
+
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
-from langchain_core.prompts import ChatPromptTemplate
+
 
 # Base planner prompt template
 planner_prompt = ChatPromptTemplate.from_messages(
@@ -81,7 +83,7 @@ Example plan format:
 Thought: The previous plan found GDP and population data but failed to calculate the ratio correctly.
 
 {next_idx}. math(problem="properly format GDP from ${{1}} to a number")
-{next_idx_plus_one}. math(problem="properly format population from ${{2}} to a number") 
+{next_idx_plus_one}. math(problem="properly format population from ${{2}} to a number")
 {next_idx_plus_two}. math(problem="divide ${{3}} by ${{4}}")
 {next_idx_plus_three}. join()
 <END_OF_PLAN>

@@ -8,13 +8,14 @@ import asyncio
 import os
 
 from dotenv import load_dotenv
-from haive.core.engine import AugLLMConfig
 from langchain_community.tools.tavily_search import TavilySearchResults
 
 from haive.agents.planning import PlanAndExecuteAgent
 from haive.agents.planning.p_and_e.models import Act, Plan
 from haive.agents.react import ReactAgent
 from haive.agents.simple import SimpleAgent
+from haive.core.engine import AugLLMConfig
+
 
 # Load environment variables
 load_dotenv()
@@ -24,7 +25,6 @@ if not os.getenv("OPENAI_API_KEY"):
     raise ValueError("Please set OPENAI_API_KEY in your .env file")
 
 if not os.getenv("TAVILY_API_KEY"):
-    print("Warning: TAVILY_API_KEY not set. Using mock search for demo.")
     # Create a mock search tool for demo
     from langchain_core.tools import tool
 
@@ -41,9 +41,6 @@ else:
 
 async def main():
     """Run the Plan and Execute agent with real LLM calls."""
-
-    print("🚀 Starting Plan and Execute Agent Demo\n")
-
     # Create engines for each agent
     planner_engine = AugLLMConfig(
         name="planner",
@@ -84,7 +81,7 @@ Results So Far: {results}
 
 Decide whether to:
 1. Continue with the next step
-2. Create a new plan 
+2. Create a new plan
 3. Provide the final answer
 
 Be critical about whether the objective has been achieved.""",
@@ -125,26 +122,15 @@ Be critical about whether the objective has been achieved.""",
     ]
 
     for query in queries:
-        print(f"\n{'='*60}")
-        print(f"📋 Query: {query}")
-        print(f"{'='*60}\n")
 
         try:
             # Run the agent
-            result = await plan_execute_agent.arun(query)
+            await plan_execute_agent.arun(query)
 
-            print(f"\n✅ Final Result:")
-            print(f"{'-'*40}")
-            print(result)
-            print(f"{'-'*40}\n")
-
-        except Exception as e:
-            print(f"\n❌ Error: {e}")
+        except Exception:
             import traceback
 
             traceback.print_exc()
-
-    print("\n🎉 Demo completed!")
 
 
 if __name__ == "__main__":

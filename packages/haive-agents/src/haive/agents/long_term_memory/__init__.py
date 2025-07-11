@@ -1,4 +1,4 @@
-"""Long Term Memory - TODO: Add brief description
+"""Long Term Memory - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

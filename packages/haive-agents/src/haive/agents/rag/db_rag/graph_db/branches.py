@@ -1,5 +1,7 @@
-from haive.core.graph.branches import Branch
 from langgraph.graph import END
+
+from haive.core.graph.branches import Branch
+
 
 # Define the Guardrails Branch
 guardrails_branch = Branch(

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Elegant Plan & Execute using the clean MultiAgentBase structure you wanted.
+"""Elegant Plan & Execute using the clean MultiAgentBase structure you wanted.
 
 This shows the elegant approach:
 MultiAgentBase(
@@ -13,8 +12,6 @@ MultiAgentBase(
 
 import asyncio
 
-from haive.core.schema.agent_schema_composer import BuildMode
-from haive.tools.tools.search_tools import tavily_qna
 from langgraph.graph import END
 
 from haive.agents.multi.enhanced_base import MultiAgentBase
@@ -25,12 +22,11 @@ from haive.agents.planning.p_and_e.engines import (
 )
 from haive.agents.planning.p_and_e.state import PlanExecuteState
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.schema.agent_schema_composer import BuildMode
+from haive.tools.tools.search_tools import tavily_qna
 
 
 async def main():
-    print("=" * 70)
-    print("ELEGANT MULTIAGENTBASE STRUCTURE")
-    print("=" * 70)
 
     # Create engines with tools
     planner_engine = create_planner_aug_llm_config(model_name="gpt-4o-mini")
@@ -44,24 +40,16 @@ async def main():
     executor = SimpleAgent(name="executor", engine=executor_engine)
     replanner = SimpleAgent(name="replanner", engine=replanner_engine)
 
-    print(f"Agents:")
-    print(f"  - {planner.name}: {len(planner_engine.tools)} tools")
-    print(f"  - {executor.name}: {len(executor_engine.tools)} tools")
-    print(f"  - {replanner.name}: {len(replanner_engine.tools)} tools")
-
     # Define routing functions
     def route_after_execution(state) -> str:
         if hasattr(state, "plan") and state.plan and state.plan.is_complete:
             return "replanner"
-        elif hasattr(state, "should_replan") and state.should_replan:
-            return "replanner"
-        else:
-            return "executor"
+        return "executor"
 
     def route_after_replan(state) -> str:
         if hasattr(state, "final_answer") and state.final_answer:
             return END
-        elif hasattr(state, "plan") and state.plan:
+        if hasattr(state, "plan") and state.plan:
             return "executor"
         return END
 
@@ -81,17 +69,7 @@ async def main():
         name="Elegant Plan & Execute",
     )
 
-    print(f"\n🎯 ELEGANT SYSTEM CREATED:")
-    print(f"   Name: {system.name}")
-    print(f"   Agents: {len(system.agents)}")
-    print(f"   Branches: {len(system.branches)}")
-    print(f"   Schema: {system.state_schema_override.__name__}")
-    print(f"   Build Mode: {system.schema_build_mode}")
-
     # Test routing works
-    print(f"\n{'='*50}")
-    print("TESTING ROUTING")
-    print(f"{'='*50}")
 
     from haive.agents.planning.p_and_e.models import Plan, PlanStep
 
@@ -117,29 +95,13 @@ async def main():
     replanner_route = system.branches[1][1]
 
     # Test routing
-    route = executor_route(test_state)
-    print(f"Incomplete plan: {route}")
+    executor_route(test_state)
 
     test_state.plan.steps[0].status = "completed"
-    route = executor_route(test_state)
-    print(f"Complete plan: {route}")
+    executor_route(test_state)
 
     test_state.final_answer = "Done"
-    route = replanner_route(test_state)
-    print(f"With final answer: {route}")
-
-    print(f"\n{'='*70}")
-    print("✅ SUCCESS - ELEGANT STRUCTURE WORKING!")
-    print(f"{'='*70}")
-
-    print(f"\n🎯 This is exactly what you wanted:")
-    print(f"   MultiAgentBase(")
-    print(f"       agents=[planner, executor, replanner],")
-    print(f"       branches=[(source, condition, destinations), ...],")
-    print(f"       state_schema_override=PlanExecuteState,")
-    print(f"       schema_build_mode=BuildMode.PARALLEL")
-    print(f"   )")
-    print(f"\n✅ Clean, elegant, and working with shared fields!")
+    replanner_route(test_state)
 
 
 if __name__ == "__main__":

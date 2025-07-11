@@ -1,16 +1,13 @@
 # examples/conversation/collaborative_example.py
-"""
-Examples for collaborative conversation patterns where participants build shared content.
-"""
+"""Examples for collaborative conversation patterns where participants build shared content."""
 
 import logging
 
+from haive.agents.conversation.collaberative.agent import CollaborativeConversation
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.messages import AIMessage, SystemMessage
-
-from haive.agents.conversation.collaberative.agent import CollaborativeConversation
-from haive.agents.simple.agent import SimpleAgent
 
 # Set logging
 logging.getLogger("haive").setLevel(logging.WARNING)
@@ -18,7 +15,6 @@ logging.getLogger("haive").setLevel(logging.WARNING)
 
 def example_brainstorming_session():
     """Collaborative brainstorming for a new product."""
-    print("=== Brainstorming Session ===\n")
 
     # Create brainstorming session
     session = CollaborativeConversation.create_brainstorming_session(
@@ -41,21 +37,16 @@ def example_brainstorming_session():
     )
 
     # Display final document
-    print("📄 Final Brainstorming Document:\n")
-    print("=" * 60)
     if "shared_document" in result:
-        print(result["shared_document"])
+        pass
 
     # Show contribution summary
-    print("\n" + "=" * 60)
-    print("📊 Contribution Summary:")
     for speaker, count in result.get("contribution_count", {}).items():
-        print(f"  - {speaker}: {count} contributions")
+        pass
 
 
 def example_code_review():
     """Collaborative code review session."""
-    print("\n\n=== Code Review Session ===\n")
 
     # Create code review
     review = CollaborativeConversation.create_code_review(
@@ -75,15 +66,12 @@ def example_code_review():
     )
 
     # Display code review document
-    print("🔍 Code Review Results:\n")
-    print("-" * 60)
     if "shared_document" in result:
-        print(result["shared_document"])
+        pass
 
 
 def example_project_planning():
     """Collaborative project planning session."""
-    print("\n\n=== Project Planning Session ===\n")
 
     # Create project planning team
     team = {
@@ -156,15 +144,12 @@ def example_project_planning():
     )
 
     # Display project plan
-    print("📋 Project Plan Document:\n")
-    print("*" * 60)
     if "shared_document" in result:
-        print(result["shared_document"])
+        pass
 
 
 def example_research_paper():
     """Collaborative research paper writing."""
-    print("\n\n=== Research Paper Collaboration ===\n")
 
     # Research team
     researchers = {
@@ -230,21 +215,16 @@ def example_research_paper():
     result = paper.invoke({}, config={"configurable": {"recursion_limit": 50}})
 
     # Display research paper
-    print("📚 Research Paper Draft:\n")
-    print("─" * 70)
     if "shared_document" in result:
         # Show just first few sections for brevity
         lines = result["shared_document"].split("\n")
-        for i, line in enumerate(lines[:50]):  # First 50 lines
-            print(line)
+        for _i, line in enumerate(lines[:50]):  # First 50 lines
+            pass
         if len(lines) > 50:
-            print("\n... [Document continues] ...")
-            print(f"\nTotal document length: {len(lines)} lines")
 
 
 def example_creative_writing():
     """Collaborative story writing."""
-    print("\n\n=== Collaborative Story Writing ===\n")
 
     # Writing team
     writers = {
@@ -306,22 +286,13 @@ def example_creative_writing():
     result = story.invoke({}, config={"configurable": {"recursion_limit": 50}})
 
     # Display story
-    print("📖 Collaborative Story:\n")
-    print("~" * 60)
     if "shared_document" in result:
         # Show opening sections
         sections = result["shared_document"].split("\n## ")
         if len(sections) > 1:
-            print(sections[0])  # Title
-            print("\n## " + sections[1])  # First section
             if len(sections) > 2:
-                print("\n## " + sections[2])  # Second section
-            print("\n... [Story continues] ...")
+                pass  # Second section
 
 
 if __name__ == "__main__":
     example_brainstorming_session()
-    # example_code_review()
-    # example_project_planning()
-    # example_research_paper()
-    # example_creative_writing()

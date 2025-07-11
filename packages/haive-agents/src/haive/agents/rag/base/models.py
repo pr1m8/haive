@@ -5,7 +5,6 @@ class Query(BaseModel):
     question: str = Field(
         ..., description="The question to search the RAG database with."
     )
-    # context: str = Field(..., description="The context to search the RAG database with.")
 
 
 # Data model

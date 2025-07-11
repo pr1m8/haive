@@ -6,11 +6,12 @@ documents into knowledge graphs using LLM-based extraction techniques.
 
 from typing import Any, List, Optional, Union
 
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import BaseDocumentTransformer, Document
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_experimental.graph_transformers import LLMGraphTransformer
 from langchain_neo4j.graphs.graph_document import GraphDocument
+
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 
 class GraphTransformer(BaseDocumentTransformer):
@@ -63,17 +64,17 @@ class GraphTransformer(BaseDocumentTransformer):
 
     def transform_documents(
         self,
-        documents: List[Document],
+        documents: list[Document],
         llm_config: LLMConfig = AzureLLMConfig(),
-        allowed_nodes: List[str] = None,
-        allowed_relationships: Union[List[str], List[tuple[str, str, str]]] = None,
-        prompt: Optional[ChatPromptTemplate] = None,
+        allowed_nodes: list[str] | None = None,
+        allowed_relationships: list[str] | list[tuple[str, str, str]] | None = None,
+        prompt: ChatPromptTemplate | None = None,
         strict_mode: bool = True,
-        node_properties: Union[bool, List[str]] = False,
-        relationship_properties: Union[bool, List[str]] = False,
+        node_properties: bool | list[str] = False,
+        relationship_properties: bool | list[str] = False,
         ignore_tool_usage: bool = True,
         additional_instructions: str = "",
-    ) -> List[GraphDocument]:
+    ) -> list[GraphDocument]:
         """Transform documents into knowledge graphs using LLM-based extraction.
 
         Processes a list of documents and extracts entities, relationships, and

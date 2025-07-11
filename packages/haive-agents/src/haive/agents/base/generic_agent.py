@@ -1,4 +1,4 @@
-"""Generic Agent Base Class with Enhanced Typing and Auto-Configuration
+"""Generic Agent Base Class with Enhanced Typing and Auto-Configuration.
 
 This module provides a generic agent base class that addresses key pain points:
 - Type-safe generic parameters for input/output types
@@ -12,6 +12,7 @@ import logging
 from abc import ABC
 from typing import (
     Any,
+    Callable,
     ClassVar,
     Dict,
     Generic,
@@ -100,19 +101,19 @@ class GenericAgent(Agent, Generic[TInput, TOutput, TState]):
     """
 
     # Class-level type registries for subclass configuration
-    _input_type: ClassVar[Optional[Type[BaseModel]]] = None
-    _output_type: ClassVar[Optional[Type[BaseModel]]] = None
-    _state_type: ClassVar[Optional[Type[BaseModel]]] = None
+    _input_type: ClassVar[type[BaseModel] | None] = None
+    _output_type: ClassVar[type[BaseModel] | None] = None
+    _state_type: ClassVar[type[BaseModel] | None] = None
     _auto_configure: ClassVar[bool] = True
 
     # Enhanced type annotations for schemas
-    input_schema: Optional[Type[TInput]] = Field(
+    input_schema: type[TInput] | None = Field(
         default=None, description="Typed input schema derived from generic parameters"
     )
-    output_schema: Optional[Type[TOutput]] = Field(
+    output_schema: type[TOutput] | None = Field(
         default=None, description="Typed output schema derived from generic parameters"
     )
-    state_schema: Optional[Type[TState]] = Field(
+    state_schema: type[TState] | None = Field(
         default=None, description="Typed state schema derived from generic parameters"
     )
 
@@ -225,7 +226,7 @@ class GenericAgent(Agent, Generic[TInput, TOutput, TState]):
             for field_name, field_type in hints.items():
                 if (
                     hasattr(field_type, "__origin__")
-                    and field_type.__origin__ in (Dict, dict)
+                    and field_type.__origin__ in (dict, dict)
                     and len(getattr(field_type, "__args__", [])) >= 2
                 ):
 
@@ -292,7 +293,7 @@ class GenericAgent(Agent, Generic[TInput, TOutput, TState]):
         self._input_adapter = self._create_input_adapter()
         self._output_adapter = self._create_output_adapter()
 
-    def _create_input_adapter(self) -> Optional[callable]:
+    def _create_input_adapter(self) -> Callable[..., Any] | None:
         """Create adapter for converting input data to typed format."""
         if not self.input_schema:
             return None
@@ -301,9 +302,9 @@ class GenericAgent(Agent, Generic[TInput, TOutput, TState]):
             """Adapt input data to the required input type."""
             if isinstance(data, self.input_schema):
                 return data
-            elif isinstance(data, dict):
+            if isinstance(data, dict):
                 return self.input_schema(**data)
-            elif hasattr(data, "model_dump"):
+            if hasattr(data, "model_dump"):
                 return self.input_schema(**data.model_dump())
             else:
                 # Try to wrap in a generic field
@@ -311,7 +312,7 @@ class GenericAgent(Agent, Generic[TInput, TOutput, TState]):
 
         return adapt_input
 
-    def _create_output_adapter(self) -> Optional[callable]:
+    def _create_output_adapter(self) -> Callable[..., Any] | None:
         """Create adapter for converting output data to typed format."""
         if not self.output_schema:
             return None
@@ -320,9 +321,9 @@ class GenericAgent(Agent, Generic[TInput, TOutput, TState]):
             """Adapt output data to the required output type."""
             if isinstance(data, self.output_schema):
                 return data
-            elif isinstance(data, dict):
+            if isinstance(data, dict):
                 return self.output_schema(**data)
-            elif hasattr(data, "model_dump"):
+            if hasattr(data, "model_dump"):
                 return self.output_schema(**data.model_dump())
             else:
                 # Try to wrap in a generic field
@@ -332,8 +333,8 @@ class GenericAgent(Agent, Generic[TInput, TOutput, TState]):
 
     def invoke(
         self,
-        input_data: Union[TInput, dict, Any],
-        config: Optional[RunnableConfig] = None,
+        input_data: TInput | dict | Any,
+        config: RunnableConfig | None = None,
     ) -> TOutput:
         """Type-safe invoke method with automatic input/output conversion.
 
@@ -368,7 +369,7 @@ class GenericAgent(Agent, Generic[TInput, TOutput, TState]):
         return result
 
     async def ainvoke(
-        self, input_data: Union[TInput, dict, Any], config: Optional[dict] = None
+        self, input_data: TInput | dict | Any, config: dict | None = None
     ) -> TOutput:
         """Type-safe async invoke method with automatic input/output conversion.
 
@@ -441,7 +442,7 @@ class GenericAgent(Agent, Generic[TInput, TOutput, TState]):
             raise ValueError("No state schema defined")
         return self.state_schema(**kwargs)
 
-    def get_type_info(self) -> Dict[str, Any]:
+    def get_type_info(self) -> dict[str, Any]:
         """Get information about the agent's type parameters and schemas.
 
         Returns:
@@ -493,7 +494,7 @@ class GenericAgent(Agent, Generic[TInput, TOutput, TState]):
             logger.debug(f"Compatibility check failed: {e}")
             return False
 
-    def create_adapter_for(self, target: "GenericAgent") -> Optional[callable]:
+    def create_adapter_for(self, target: "GenericAgent") -> Callable[..., Any] | None:
         """Create an adapter function for compatibility with another agent.
 
         Args:
@@ -534,11 +535,11 @@ class GenericAgent(Agent, Generic[TInput, TOutput, TState]):
 
 
 def create_typed_agent(
-    input_type: Type[TInput],
-    output_type: Type[TOutput],
-    state_type: Optional[Type[TState]] = None,
+    input_type: type[TInput],
+    output_type: type[TOutput],
+    state_type: type[TState] | None = None,
     name: str = "TypedAgent",
-) -> Type[GenericAgent[TInput, TOutput, TState]]:
+) -> type[GenericAgent[TInput, TOutput, TState]]:
     """Create a generic agent class with specified types.
 
     Args:
@@ -562,7 +563,7 @@ def create_typed_agent(
     return TypedAgent
 
 
-def auto_type_agent(agent_class: Type) -> Type[GenericAgent]:
+def auto_type_agent(agent_class: type) -> type[GenericAgent]:
     """Automatically add generic typing to an existing agent class.
 
     Args:

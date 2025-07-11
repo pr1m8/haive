@@ -83,7 +83,6 @@ class Agent(BaseModel, ABC):
         Returns:
             BaseGraph: The graph representation of this agent
         """
-        pass
 
     def compile(self, **kwargs) -> CompiledGraph:
         """Compile this agent to an executable LangGraph instance.
@@ -204,7 +203,7 @@ class Agent(BaseModel, ABC):
 
     def __repr__(self) -> str:
         """Detailed string representation of the agent."""
-        capabilities = list(k for k, v in self.get_capabilities().items() if v)
+        capabilities = list(k for k, v in self.get_capabilities().items() if v]
         return (
             f"{self.__class__.__name__}("
             f"name='{self.name}', "

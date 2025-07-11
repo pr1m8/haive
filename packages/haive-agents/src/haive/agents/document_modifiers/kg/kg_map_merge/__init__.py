@@ -1,4 +1,4 @@
-"""Kg Map Merge - TODO: Add brief description
+"""Kg Map Merge - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

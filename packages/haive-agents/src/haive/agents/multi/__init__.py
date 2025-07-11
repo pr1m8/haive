@@ -55,18 +55,17 @@ from haive.agents.multi.base import (
     SequentialAgent,
 )
 
+
 # Future implementations
-# from haive.agents.multi.haive import Haive, create_haive
-# from haive.agents.multi.supervisor import SupervisorAgent
 
 __all__ = [
+    "ConditionalAgent",
+    "ExecutionMode",
     # Base classes
     "MultiAgent",
-    "ExecutionMode",
+    "ParallelAgent",
     # Concrete implementations
     "SequentialAgent",
-    "ParallelAgent",
-    "ConditionalAgent",
     # Future
     # "SupervisorAgent",
     # "Haive",

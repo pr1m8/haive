@@ -1,5 +1,4 @@
-"""
-Typed agent base classes with clear separation of concerns.
+"""Typed agent base classes with clear separation of concerns.
 
 This module provides a cleaner agent hierarchy that matches the state schema
 hierarchy, with better separation between different types of agents.
@@ -32,7 +31,6 @@ from pydantic import BaseModel, Field
 
 if TYPE_CHECKING:
     from haive.core.engine.base import Engine
-    from haive.core.graph import BaseGraph
 
 
 # Type variables for state schemas
@@ -45,15 +43,14 @@ TState = TypeVar("TState", bound=EngineState)
 
 
 class BaseExecutor(ABC, Generic[TState]):
-    """
-    Base class for all executors (not necessarily agents).
+    """Base class for all executors (not necessarily agents).
 
     Executors are components that process state but don't necessarily
     have LLM capabilities. This includes tool executors, data processors,
     routers, validators, etc.
     """
 
-    def __init__(self, name: str, state_schema: Type[TState], **kwargs):
+    def __init__(self, name: str, state_schema: type[TState], **kwargs):
         self.name = name
         self.state_schema = state_schema
         self.config = kwargs
@@ -61,24 +58,21 @@ class BaseExecutor(ABC, Generic[TState]):
     @abstractmethod
     async def execute(self, state: TState) -> TState:
         """Execute the processing logic."""
-        pass
 
-    def get_required_engines(self) -> List[str]:
+    def get_required_engines(self) -> list[str]:
         """Get list of required engine names."""
         return []
 
     def validate_state(self, state: TState) -> bool:
         """Validate that state has required components."""
         # Check required engines
-        for engine_name in self.get_required_engines():
-            if not state.get_engine(engine_name):
-                return False
-        return True
+        return all(
+            state.get_engine(engine_name) for engine_name in self.get_required_engines()
+        )
 
 
 class ToolExecutor(BaseExecutor[ToolExecutorState]):
-    """
-    Executor for tool-based workflows without LLM.
+    """Executor for tool-based workflows without LLM.
 
     Executes tools based on predefined plans or rules.
     """
@@ -107,36 +101,34 @@ class ToolExecutor(BaseExecutor[ToolExecutorState]):
 
         return state
 
-    def _find_tool(self, state: ToolExecutorState, tool_name: str) -> Optional[Any]:
+    def _find_tool(self, state: ToolExecutorState, tool_name: str) -> Any | None:
         """Find a tool by name."""
         for tool in state.tools:
             if hasattr(tool, "name") and tool.name == tool_name:
                 return tool
         return None
 
-    async def _execute_tool(self, tool: Any, inputs: Dict[str, Any]) -> Any:
+    async def _execute_tool(self, tool: Any, inputs: dict[str, Any]) -> Any:
         """Execute a single tool."""
         # Tool execution logic
         if hasattr(tool, "ainvoke"):
             return await tool.ainvoke(inputs)
-        elif hasattr(tool, "invoke"):
+        if hasattr(tool, "invoke"):
             return tool.invoke(inputs)
-        else:
-            return {"error": "Tool not executable"}
+        return {"error": "Tool not executable"}
 
 
 class DataProcessor(BaseExecutor[DataProcessingState]):
-    """
-    Executor for data processing workflows.
+    """Executor for data processing workflows.
 
     Processes data through various transformation engines.
     """
 
-    def __init__(self, name: str, required_engines: List[str], **kwargs):
+    def __init__(self, name: str, required_engines: list[str], **kwargs):
         super().__init__(name, DataProcessingState, **kwargs)
         self.required_engines = required_engines
 
-    def get_required_engines(self) -> List[str]:
+    def get_required_engines(self) -> list[str]:
         """Get list of required engine names."""
         return self.required_engines
 
@@ -158,13 +150,12 @@ class DataProcessor(BaseExecutor[DataProcessingState]):
         state.processed_data = current_data
         return state
 
-    async def _process_with_engine(self, engine: "Engine", data: Any) -> Any:
+    async def _process_with_engine(self, engine: Engine, data: Any) -> Any:
         """Process data with a specific engine."""
         # Engine-specific processing
         if hasattr(engine, "process"):
             return await engine.process(data)
-        else:
-            return data
+        return data
 
 
 # ============================================================================
@@ -173,8 +164,7 @@ class DataProcessor(BaseExecutor[DataProcessingState]):
 
 
 class BaseAgent(BaseExecutor[AgentState]):
-    """
-    Base class for agents with primary decision-making engine.
+    """Base class for agents with primary decision-making engine.
 
     Agents are executors that have a primary engine (usually LLM)
     for making decisions.
@@ -183,8 +173,8 @@ class BaseAgent(BaseExecutor[AgentState]):
     def __init__(
         self,
         name: str,
-        primary_engine: Optional["Engine"] = None,
-        state_schema: Type[AgentState] = AgentState,
+        primary_engine: Engine | None = None,
+        state_schema: type[AgentState] = AgentState,
         **kwargs,
     ):
         super().__init__(name, state_schema, **kwargs)
@@ -210,9 +200,8 @@ class BaseAgent(BaseExecutor[AgentState]):
         return state
 
     @abstractmethod
-    async def run_engine(self, engine: "Engine", state: AgentState) -> Any:
+    async def run_engine(self, engine: Engine, state: AgentState) -> Any:
         """Run the primary engine with state."""
-        pass
 
     def update_state_with_result(self, state: AgentState, result: Any) -> AgentState:
         """Update state with engine result."""
@@ -222,13 +211,12 @@ class BaseAgent(BaseExecutor[AgentState]):
 
 
 class LLMAgent(BaseAgent):
-    """
-    Standard LLM-based agent.
+    """Standard LLM-based agent.
 
     Uses an LLM engine for conversation and decision making.
     """
 
-    async def run_engine(self, engine: "Engine", state: AgentState) -> Any:
+    async def run_engine(self, engine: Engine, state: AgentState) -> Any:
         """Run LLM engine."""
         # Prepare input from state
         messages = getattr(state, "messages", [])
@@ -236,8 +224,7 @@ class LLMAgent(BaseAgent):
         # Run engine
         if hasattr(engine, "ainvoke"):
             return await engine.ainvoke({"messages": messages})
-        else:
-            return engine.invoke({"messages": messages})
+        return engine.invoke({"messages": messages})
 
     def update_state_with_result(self, state: AgentState, result: Any) -> AgentState:
         """Update state with LLM result."""
@@ -251,8 +238,7 @@ class LLMAgent(BaseAgent):
 
 
 class WorkflowAgent(BaseAgent):
-    """
-    Agent that can modify its own workflow graph.
+    """Agent that can modify its own workflow graph.
 
     This agent can inspect results and dynamically modify its
     execution graph.
@@ -261,8 +247,8 @@ class WorkflowAgent(BaseAgent):
     def __init__(
         self,
         name: str,
-        primary_engine: Optional["Engine"] = None,
-        initial_graph: Optional[Dict[str, Any]] = None,
+        primary_engine: Engine | None = None,
+        initial_graph: dict[str, Any] | None = None,
         **kwargs,
     ):
         super().__init__(name, primary_engine, WorkflowState, **kwargs)
@@ -291,15 +277,14 @@ class WorkflowAgent(BaseAgent):
 
     async def determine_graph_modifications(
         self, state: WorkflowState
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Determine what graph modifications to make."""
         # Override in subclasses
         return {}
 
 
 class MetaAgent(WorkflowAgent):
-    """
-    Agent that can spawn and manage other agents.
+    """Agent that can spawn and manage other agents.
 
     This is for advanced scenarios where agents need to dynamically
     create and coordinate other agents.
@@ -308,8 +293,8 @@ class MetaAgent(WorkflowAgent):
     def __init__(
         self,
         name: str,
-        primary_engine: Optional["Engine"] = None,
-        agent_factory: Optional[Dict[str, Type[BaseAgent]]] = None,
+        primary_engine: Engine | None = None,
+        agent_factory: dict[str, type[BaseAgent]] | None = None,
         **kwargs,
     ):
         super().__init__(name, primary_engine, **kwargs)
@@ -343,7 +328,6 @@ class MetaAgent(WorkflowAgent):
     async def spawn_agents(self, state: MetaAgentState) -> None:
         """Spawn new sub-agents."""
         # Override in subclasses
-        pass
 
     async def execute_sub_agents(self, state: MetaAgentState) -> None:
         """Execute active sub-agents."""
@@ -383,13 +367,12 @@ class MetaAgent(WorkflowAgent):
 
 
 class ReactiveAgent(LLMAgent):
-    """
-    Agent that reacts to specific patterns or triggers.
+    """Agent that reacts to specific patterns or triggers.
 
     Useful for monitoring, alerting, or event-driven workflows.
     """
 
-    def __init__(self, name: str, triggers: List[Dict[str, Any]], **kwargs):
+    def __init__(self, name: str, triggers: list[dict[str, Any]], **kwargs):
         super().__init__(name, **kwargs)
         self.triggers = triggers
 
@@ -403,7 +386,7 @@ class ReactiveAgent(LLMAgent):
 
         return await super().execute(state)
 
-    def check_triggers(self, state: AgentState) -> List[str]:
+    def check_triggers(self, state: AgentState) -> list[str]:
         """Check which triggers are activated."""
         triggered = []
 
@@ -413,7 +396,7 @@ class ReactiveAgent(LLMAgent):
 
         return triggered
 
-    def evaluate_trigger(self, trigger: Dict[str, Any], state: AgentState) -> bool:
+    def evaluate_trigger(self, trigger: dict[str, Any], state: AgentState) -> bool:
         """Evaluate a single trigger."""
         # Simple pattern matching on messages
         pattern = trigger.get("pattern")
@@ -426,8 +409,7 @@ class ReactiveAgent(LLMAgent):
 
 
 class AdaptiveAgent(WorkflowAgent):
-    """
-    Agent that adapts its behavior based on performance.
+    """Agent that adapts its behavior based on performance.
 
     Tracks its own performance and modifies strategy accordingly.
     """
@@ -435,14 +417,14 @@ class AdaptiveAgent(WorkflowAgent):
     def __init__(
         self,
         name: str,
-        performance_metrics: List[str],
+        performance_metrics: list[str],
         adaptation_threshold: float = 0.7,
         **kwargs,
     ):
         super().__init__(name, **kwargs)
         self.performance_metrics = performance_metrics
         self.adaptation_threshold = adaptation_threshold
-        self.performance_history: List[Dict[str, float]] = []
+        self.performance_history: list[dict[str, float]] = []
 
     async def execute(self, state: WorkflowState) -> WorkflowState:
         """Execute with performance tracking."""
@@ -459,12 +441,12 @@ class AdaptiveAgent(WorkflowAgent):
 
         return state
 
-    def calculate_performance(self, state: WorkflowState) -> Dict[str, float]:
+    def calculate_performance(self, state: WorkflowState) -> dict[str, float]:
         """Calculate performance metrics."""
         # Override in subclasses
         return {}
 
-    def needs_adaptation(self, metrics: Dict[str, float]) -> bool:
+    def needs_adaptation(self, metrics: dict[str, float]) -> bool:
         """Check if adaptation is needed."""
         # Simple threshold check
         avg_performance = sum(metrics.values()) / len(metrics) if metrics else 0
@@ -473,7 +455,6 @@ class AdaptiveAgent(WorkflowAgent):
     async def adapt_strategy(self, state: WorkflowState) -> None:
         """Adapt the agent's strategy."""
         # Override in subclasses
-        pass
 
 
 # ============================================================================
@@ -482,8 +463,7 @@ class AdaptiveAgent(WorkflowAgent):
 
 
 def create_executor(executor_type: str, name: str, **kwargs) -> BaseExecutor:
-    """
-    Factory to create appropriate executor.
+    """Factory to create appropriate executor.
 
     Args:
         executor_type: Type of executor
@@ -495,17 +475,15 @@ def create_executor(executor_type: str, name: str, **kwargs) -> BaseExecutor:
     """
     if executor_type == "tool":
         return ToolExecutor(name, **kwargs)
-    elif executor_type == "data":
+    if executor_type == "data":
         return DataProcessor(name, **kwargs)
-    else:
-        raise ValueError(f"Unknown executor type: {executor_type}")
+    raise ValueError(f"Unknown executor type: {executor_type}")
 
 
 def create_agent(
-    agent_type: str, name: str, engine: Optional["Engine"] = None, **kwargs
+    agent_type: str, name: str, engine: Engine | None = None, **kwargs
 ) -> BaseAgent:
-    """
-    Factory to create appropriate agent.
+    """Factory to create appropriate agent.
 
     Args:
         agent_type: Type of agent
@@ -518,13 +496,12 @@ def create_agent(
     """
     if agent_type == "llm":
         return LLMAgent(name, engine, **kwargs)
-    elif agent_type == "workflow":
+    if agent_type == "workflow":
         return WorkflowAgent(name, engine, **kwargs)
-    elif agent_type == "meta":
+    if agent_type == "meta":
         return MetaAgent(name, engine, **kwargs)
-    elif agent_type == "reactive":
+    if agent_type == "reactive":
         return ReactiveAgent(name, engine, **kwargs)
-    elif agent_type == "adaptive":
+    if agent_type == "adaptive":
         return AdaptiveAgent(name, engine, **kwargs)
-    else:
-        return BaseAgent(name, engine, **kwargs)
+    return BaseAgent(name, engine, **kwargs)

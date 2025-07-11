@@ -1,4 +1,4 @@
-"""Round Robin Conversation - Sequential Turn-Based Multi-Agent Dialogue.
+r"""Round Robin Conversation - Sequential Turn-Based Multi-Agent Dialogue.
 
 A simple turn-based conversation agent where participants speak in sequence with
 automatic round tracking and progress management. The round robin conversation
@@ -29,38 +29,38 @@ Core Components:
 
 Usage Patterns:
     Basic round robin conversation::\n
-    
+
         from haive.agents.conversation import RoundRobinConversation
         from haive.agents.simple import SimpleAgent
-        
+
         # Create participants
         alice = SimpleAgent(name="Alice")
         bob = SimpleAgent(name="Bob")
         charlie = SimpleAgent(name="Charlie")
-        
+
         # Create conversation
         conversation = RoundRobinConversation(
             participants=[alice, bob, charlie],
             topic="The future of AI",
             max_rounds=3
         )
-        
+
         # Run the conversation
         result = await conversation.arun()
-        
+
         # Access conversation data
         messages = result["messages"]
         final_state = result["conversation_state"]
-        
+
     Factory method for quick setup::\n
-    
+
         # Create a simple round-robin conversation
         conversation = RoundRobinConversation.create_simple(
             participants=["Alice", "Bob", "Charlie"],
             topic="The future of AI",
             max_rounds=3
         )
-        
+
         # Run the conversation
         result = await conversation.arun()
 
@@ -110,13 +110,15 @@ __license__ = "MIT"
 
 # Type imports for better IDE support
 from typing import (
+    TYPE_CHECKING,
     Any,
     Dict,
     List,
     Optional,
-    TYPE_CHECKING,
 )
+
 from typing_extensions import TypeAlias
+
 
 if TYPE_CHECKING:
     from haive.agents.conversation.base.agent import BaseConversationAgent
@@ -125,57 +127,56 @@ if TYPE_CHECKING:
 # Core imports
 from haive.agents.conversation.round_robin.agent import RoundRobinConversation
 
+
 # Type aliases for round robin conversations
 RoundRobinParticipant: TypeAlias = Any  # Agent with conversation capabilities
-RoundRobinResult: TypeAlias = Dict[str, Any]  # Conversation result data
+RoundRobinResult: TypeAlias = dict[str, Any]  # Conversation result data
 
 # Define public API
 __all__ = [
-    # Version information
-    "__version__",
-    "__author__",
-    "__license__",
-    
     # Core classes
     "RoundRobinConversation",
-    
     # Type aliases
     "RoundRobinParticipant",
     "RoundRobinResult",
-    
+    "__author__",
+    "__license__",
+    # Version information
+    "__version__",
     # Utility functions
     "create_round_robin_conversation",
 ]
 
+
 # Utility functions
 def create_round_robin_conversation(
-    participants: List[RoundRobinParticipant],
+    participants: list[RoundRobinParticipant],
     topic: str,
     max_rounds: int = 3,
     **kwargs: Any
 ) -> RoundRobinConversation:
-    """Create a round robin conversation with participants.
-    
+    r"""Create a round robin conversation with participants.
+
     Args:
         participants: List of participant agents
         topic: Conversation topic
         max_rounds: Maximum number of rounds
         **kwargs: Additional configuration options
-        
+
     Returns:
         Configured RoundRobinConversation instance
-        
+
     Examples:
         Basic round robin conversation::\n
-        
+
             conversation = create_round_robin_conversation(
                 participants=[alice, bob, charlie],
                 topic="Future of AI",
                 max_rounds=5
             )
-            
+
         With custom configuration::\n
-        
+
             conversation = create_round_robin_conversation(
                 participants=[expert1, expert2, expert3],
                 topic="Technical discussion",
@@ -184,11 +185,9 @@ def create_round_robin_conversation(
             )
     """
     return RoundRobinConversation(
-        participants=participants,
-        topic=topic,
-        max_rounds=max_rounds,
-        **kwargs
+        participants=participants, topic=topic, max_rounds=max_rounds, **kwargs
     )
+
 
 # Add convenience functions to global namespace
 create_round_robin_conversation.__module__ = __name__

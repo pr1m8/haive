@@ -20,7 +20,7 @@ from test_utils import create_test_agents
 # Define state for LangGraph
 class DynamicSupervisorState(TypedDict):
     messages: Annotated[Sequence[BaseMessage], operator.add]
-    agents: Dict[str, AgentInfo]
+    agents: dict[str, AgentInfo]
     active_agents: set
     next_agent: str
     agent_task: str
@@ -28,7 +28,7 @@ class DynamicSupervisorState(TypedDict):
     generated_tools: list
 
 
-async def supervisor_reasoning_node(state: DynamicSupervisorState) -> Dict[str, Any]:
+async def supervisor_reasoning_node(state: DynamicSupervisorState) -> dict[str, Any]:
     """Supervisor that reasons about which agent to use."""
     # Get the last user message
     user_message = None
@@ -78,15 +78,13 @@ async def supervisor_reasoning_node(state: DynamicSupervisorState) -> Dict[str, 
     }
 
 
-async def agent_execution_node(state: DynamicSupervisorState) -> Dict[str, Any]:
+async def agent_execution_node(state: DynamicSupervisorState) -> dict[str, Any]:
     """Execute the selected agent - mirrors tool_node pattern."""
     agent_name = state.get("next_agent")
     task = state.get("agent_task")
 
     if not agent_name or not task:
         return {"agent_response": "No agent or task specified"}
-
-    print(f"\n🎯 Executing {agent_name} with task: {task}")
 
     # Get agent from state (like tool_node gets tools)
     agent_info = state["agents"].get(agent_name)
@@ -124,8 +122,8 @@ async def agent_execution_node(state: DynamicSupervisorState) -> Dict[str, Any]:
 
         traceback.print_exc()
         return {
-            "agent_response": f"Error executing {agent_name}: {str(e)}",
-            "messages": [AIMessage(content=f"Error with {agent_name}: {str(e)}")],
+            "agent_response": f"Error executing {agent_name}: {e!s}",
+            "messages": [AIMessage(content=f"Error with {agent_name}: {e!s}")],
             "next_agent": "",
             "agent_task": "",
         }
@@ -140,17 +138,13 @@ def route_supervisor(state: DynamicSupervisorState) -> Literal["execute", "end"]
 
 async def test_dynamic_supervisor():
     """Test the complete dynamic supervisor."""
-    print("\n=== 🚀 Dynamic Supervisor Test ===\n")
-
     # Create test agents
     agents_dict = await create_test_agents()
 
-    print("1. Created agents:")
-    for name, info in agents_dict.items():
-        print(f"   - {name}: {info.description} (active: {info.active})")
+    for _name, _info in agents_dict.items():
+        pass
 
     # Build the supervisor graph
-    print("\n2. Building dynamic supervisor graph...")
     workflow = StateGraph(DynamicSupervisorState)
 
     # Add the 3 core nodes
@@ -166,10 +160,8 @@ async def test_dynamic_supervisor():
 
     # Compile
     app = workflow.compile()
-    print("   ✅ Graph compiled!")
 
     # Test 1: Math calculation
-    print("\n3. Test: Math calculation")
     state1 = {
         "messages": [HumanMessage(content="Please calculate 25 + 15 for me")],
         "agents": agents_dict,
@@ -180,11 +172,9 @@ async def test_dynamic_supervisor():
         "generated_tools": [],
     }
 
-    result1 = await app.ainvoke(state1)
-    print(f"   Final response: {result1.get('agent_response', 'No response')}")
+    await app.ainvoke(state1)
 
     # Test 2: Search task
-    print("\n4. Test: Search query")
     state2 = {
         "messages": [
             HumanMessage(content="Search for information about Python decorators")
@@ -199,10 +189,9 @@ async def test_dynamic_supervisor():
 
     result2 = await app.ainvoke(state2)
     if result2.get("agent_response"):
-        print(f"   Response preview: {result2['agent_response'][:150]}...")
+        pass
 
     # Test 3: Dynamic agent addition
-    print("\n5. Test: Activating planning agent")
     # Activate the planning agent
     agents_dict["planning_agent"].activate()
 
@@ -222,11 +211,9 @@ async def test_dynamic_supervisor():
         "generated_tools": [],
     }
 
-    result3 = await app.ainvoke(state3)
-    print(f"   Planning response: {result3.get('agent_response', 'No response')}")
+    await app.ainvoke(state3)
 
     # Test 4: Inactive agent handling
-    print("\n6. Test: Inactive agent")
     state4 = {
         "messages": [HumanMessage(content="Please organize my day")],
         "agents": agents_dict,
@@ -240,15 +227,7 @@ async def test_dynamic_supervisor():
         "generated_tools": [],
     }
 
-    result4 = await app.ainvoke(state4)
-    print(f"   Response: {result4['messages'][-1].content}")
-
-    print("\n✅ Dynamic supervisor test complete!")
-    print("\n🎉 Key achievements:")
-    print("   - Dynamic agent routing based on task analysis")
-    print("   - Agent execution using state-based lookup (like tool_node)")
-    print("   - Runtime agent activation/deactivation")
-    print("   - Proper error handling for inactive agents")
+    await app.ainvoke(state4)
 
 
 if __name__ == "__main__":

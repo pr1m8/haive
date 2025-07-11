@@ -1,4 +1,4 @@
-"""Branched RAG using ChainAgent
+"""Branched RAG using ChainAgent.
 
 RAG system that branches into multiple specialized retrieval paths based on query type,
 then merges results for comprehensive answers.
@@ -7,13 +7,12 @@ then merges results for comprehensive answers.
 from enum import Enum
 from typing import Any, Dict, List, Literal, Optional
 
+from haive.agents.chain import ChainAgent, flow_with_edges
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
-
-from haive.agents.chain import ChainAgent, flow_with_edges
 
 
 class QueryType(str, Enum):
@@ -29,7 +28,7 @@ class QueryClassification(BaseModel):
     """Query classification result."""
 
     primary_type: QueryType = Field(description="Primary query type")
-    secondary_type: Optional[QueryType] = Field(
+    secondary_type: QueryType | None = Field(
         default=None, description="Secondary type if applicable"
     )
     complexity: Literal["simple", "medium", "complex"] = Field(
@@ -42,7 +41,7 @@ class BranchResult(BaseModel):
     """Result from a retrieval branch."""
 
     branch_type: str = Field(description="Type of branch")
-    retrieved_docs: List[str] = Field(description="Retrieved documents")
+    retrieved_docs: list[str] = Field(description="Retrieved documents")
     branch_answer: str = Field(description="Answer from this branch")
     relevance_score: float = Field(ge=0.0, le=1.0, description="Relevance score")
 
@@ -51,20 +50,19 @@ class MergedResult(BaseModel):
     """Final merged result."""
 
     primary_answer: str = Field(description="Primary answer")
-    supporting_evidence: List[str] = Field(
+    supporting_evidence: list[str] = Field(
         description="Supporting evidence from branches"
     )
     confidence_score: float = Field(ge=0.0, le=1.0, description="Overall confidence")
-    sources_used: List[str] = Field(description="Sources used")
+    sources_used: list[str] = Field(description="Sources used")
 
 
 def create_branched_rag_chain(
-    documents: List[Document],
-    llm_config: Optional[LLMConfig] = None,
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
     name: str = "Branched RAG",
 ) -> ChainAgent:
     """Create a branched RAG system using ChainAgent."""
-
     if not llm_config:
         llm_config = AzureLLMConfig(
             deployment_name="gpt-4",
@@ -84,7 +82,7 @@ def create_branched_rag_chain(
             - analytical: Requiring analysis, comparison, or reasoning
             - creative: Seeking ideas, brainstorming, or creative solutions
             - procedural: Looking for step-by-step instructions or processes
-            
+
             Complexity: simple (direct lookup), medium (some analysis), complex (multi-step reasoning)""",
                 ),
                 ("human", "Query: {query}"),
@@ -95,9 +93,9 @@ def create_branched_rag_chain(
     )
 
     # Step 2: Factual retrieval branch
-    def factual_branch(state: Dict[str, Any]) -> Dict[str, Any]:
+    def factual_branch(state: dict[str, Any]) -> dict[str, Any]:
         """Factual information retrieval branch."""
-        classification = state.get("classification", {})
+        state.get("classification", {})
         query = state.get("query", "")
 
         # Focus on exact facts and specific information
@@ -132,7 +130,7 @@ def create_branched_rag_chain(
                     "human",
                     """Query: {query}
             Available context: {documents_context}
-            
+
             Provide analytical insights and reasoning.""",
                 ),
             ]
@@ -140,7 +138,7 @@ def create_branched_rag_chain(
         output_key="analytical_answer",
     )
 
-    def analytical_processor(state: Dict[str, Any]) -> Dict[str, Any]:
+    def analytical_processor(state: dict[str, Any]) -> dict[str, Any]:
         """Process analytical branch results."""
         analytical_answer = state.get("analytical_answer", "")
 
@@ -163,7 +161,7 @@ def create_branched_rag_chain(
                     "human",
                     """Query: {query}
             Context for inspiration: {documents_context}
-            
+
             Provide creative and innovative responses.""",
                 ),
             ]
@@ -171,7 +169,7 @@ def create_branched_rag_chain(
         output_key="creative_answer",
     )
 
-    def creative_processor(state: Dict[str, Any]) -> Dict[str, Any]:
+    def creative_processor(state: dict[str, Any]) -> dict[str, Any]:
         """Process creative branch results."""
         creative_answer = state.get("creative_answer", "")
 
@@ -194,7 +192,7 @@ def create_branched_rag_chain(
                     "human",
                     """Query: {query}
             Available procedures: {documents_context}
-            
+
             Provide clear, step-by-step instructions.""",
                 ),
             ]
@@ -202,7 +200,7 @@ def create_branched_rag_chain(
         output_key="procedural_answer",
     )
 
-    def procedural_processor(state: Dict[str, Any]) -> Dict[str, Any]:
+    def procedural_processor(state: dict[str, Any]) -> dict[str, Any]:
         """Process procedural branch results."""
         procedural_answer = state.get("procedural_answer", "")
 
@@ -216,7 +214,7 @@ def create_branched_rag_chain(
         }
 
     # Step 6: Context preparation for branches
-    def prepare_context(state: Dict[str, Any]) -> Dict[str, Any]:
+    def prepare_context(state: dict[str, Any]) -> dict[str, Any]:
         """Prepare document context for branches."""
         context = "\n\n".join([doc.page_content for doc in documents[:5]])
         return {"documents_context": context}
@@ -235,13 +233,13 @@ def create_branched_rag_chain(
                     "human",
                     """Original Query: {query}
             Query Classification: {classification}
-            
+
             Branch Results:
             - Factual: {factual_result}
             - Analytical: {analytical_result}
             - Creative: {creative_result}
             - Procedural: {procedural_result}
-            
+
             Create a comprehensive, well-structured response.""",
                 ),
             ]
@@ -260,7 +258,7 @@ def create_branched_rag_chain(
                     "human",
                     """Query: {query}
             Merged Analysis: {merged_result}
-            
+
             Provide a clear, comprehensive response.""",
                 ),
             ]
@@ -305,10 +303,9 @@ def create_branched_rag_chain(
 
 
 def create_adaptive_branched_rag(
-    documents: List[Document], llm_config: Optional[LLMConfig] = None
+    documents: list[Document], llm_config: LLMConfig | None = None
 ) -> ChainAgent:
     """Create an adaptive branched RAG that selects branches based on query type."""
-
     if not llm_config:
         llm_config = AzureLLMConfig(
             deployment_name="gpt-4",
@@ -377,7 +374,7 @@ def create_adaptive_branched_rag(
     )
 
     # Context preparation
-    def add_context(state: Dict[str, Any]) -> Dict[str, Any]:
+    def add_context(state: dict[str, Any]) -> dict[str, Any]:
         context = "\n\n".join([doc.page_content for doc in documents[:3]])
         return {"context": context}
 
@@ -406,10 +403,9 @@ def create_adaptive_branched_rag(
 
 
 def create_parallel_branched_rag(
-    documents: List[Document], llm_config: Optional[LLMConfig] = None
+    documents: list[Document], llm_config: LLMConfig | None = None
 ) -> ChainAgent:
     """Create a parallel branched RAG that runs all branches simultaneously."""
-
     if not llm_config:
         llm_config = AzureLLMConfig(
             deployment_name="gpt-4",
@@ -418,7 +414,7 @@ def create_parallel_branched_rag(
         )
 
     # Context preparation
-    def prepare_context(state: Dict[str, Any]) -> Dict[str, Any]:
+    def prepare_context(state: dict[str, Any]) -> dict[str, Any]:
         context = "\n\n".join([doc.page_content for doc in documents[:5]])
         return {"context": context}
 
@@ -471,7 +467,7 @@ def create_parallel_branched_rag(
             Factual: {factual_response}
             Analytical: {analytical_response}
             Creative: {creative_response}
-            
+
             Create final response.""",
                 ),
             ]
@@ -500,7 +496,7 @@ def create_parallel_branched_rag(
 
 
 # I/O schema
-def get_branched_rag_io_schema() -> Dict[str, List[str]]:
+def get_branched_rag_io_schema() -> dict[str, list[str]]:
     """Get I/O schema for branched RAG."""
     return {
         "inputs": ["query", "context", "messages"],

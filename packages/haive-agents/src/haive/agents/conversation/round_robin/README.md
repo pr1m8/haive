@@ -147,31 +147,31 @@ The round-robin conversation leverages the base `ConversationState` with automat
 ```python
 class CustomRoundRobinAgent(RoundRobinConversation):
     """Extended round-robin with custom features."""
-    
+
     def should_skip_speaker(self, speaker: str, state: ConversationState) -> bool:
         """Conditionally skip speakers based on context."""
         # Skip if speaker has been inactive
         if self.is_speaker_inactive(speaker):
             return True
-        
+
         # Skip if topic expertise doesn't match
         if not self.matches_expertise(speaker, state.topic):
             return True
-            
+
         return False
-    
+
     def format_speaker_prompt(self, speaker: str, state: ConversationState) -> str:
         """Customize prompts for each speaker."""
         base_prompt = super().format_speaker_prompt(speaker, state)
-        
+
         # Add round context
         round_info = f"\n[Round {state.round_number} of {state.max_rounds}]"
-        
+
         # Add previous speaker context
         if state.speaker_history:
             prev_speaker = state.speaker_history[-1]
             round_info += f"\n[Following {prev_speaker}'s comments]"
-        
+
         return base_prompt + round_info
 ```
 
@@ -205,32 +205,32 @@ logging.basicConfig(level=logging.INFO)
 
 class AnalyticsRoundRobin(RoundRobinConversation):
     """Round-robin with conversation analytics."""
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.turn_times = []
         self.response_lengths = []
-    
+
     async def execute_agent(self, agent, input_data, state):
         """Track execution metrics."""
         import time
-        
+
         start_time = time.time()
         response = await super().execute_agent(agent, input_data, state)
         execution_time = time.time() - start_time
-        
+
         # Record metrics
         self.turn_times.append(execution_time)
         self.response_lengths.append(len(response.split()))
-        
+
         # Log turn info
         logger.info(
             f"Turn {state.turn_count}: {agent.name} "
             f"({execution_time:.2f}s, {len(response.split())} words)"
         )
-        
+
         return response
-    
+
     def get_analytics(self):
         """Get conversation analytics."""
         return {
@@ -267,26 +267,31 @@ resumed_conversation = RoundRobinConversation.load_from_store(
 ## Best Practices
 
 ### 1. Participant Selection
+
 - Choose participants with complementary perspectives
 - Ensure agents have distinct personalities or expertise
 - Consider participant count vs. round limit
 
 ### 2. Topic Framing
+
 - Provide clear, engaging topics
 - Include enough context for meaningful discussion
 - Consider topic complexity vs. round limit
 
 ### 3. Round Configuration
+
 - 3-5 rounds for focused discussions
 - 5-10 rounds for exploratory conversations
 - Adjust based on participant count
 
 ### 4. Response Quality
+
 - Set minimum response lengths if needed
 - Provide clear instructions to participants
 - Consider adding quality checks
 
 ### 5. Error Handling
+
 - Implement fallbacks for agent failures
 - Consider skip strategies for unavailable agents
 - Log errors without breaking conversation flow
@@ -316,6 +321,7 @@ resumed_conversation = RoundRobinConversation.load_from_store(
 ## Examples
 
 See the [example.py](example.py) file for a complete working example with:
+
 - Basic round-robin setup
 - Progress tracking
 - Custom termination conditions

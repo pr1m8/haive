@@ -34,6 +34,7 @@ All newly created documentation pages are being truncated at exactly 101 lines, 
 ## Current Hypothesis
 
 The issue appears to be related to:
+
 - Sphinx build configuration problem
 - Furo theme compatibility issue
 - Some system-level issue with the build process

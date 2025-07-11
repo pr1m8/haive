@@ -2,11 +2,6 @@
 
 import asyncio
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
-from haive.tools.tools.search_tools import tavily_search_tool
-from langchain_core.messages import HumanMessage
-
 from haive.agents.experiments.supervisor.agent_info import AgentInfo
 from haive.agents.experiments.supervisor.component_2_tools import (
     SupervisorStateWithTools,
@@ -16,11 +11,14 @@ from haive.agents.experiments.supervisor.dynamic_supervisor_agent import (
 )
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+from haive.tools.tools.search_tools import tavily_search_tool
+from langchain_core.messages import HumanMessage
 
 
 async def test_debug_simple():
     """Debug supervisor that delegates to ReactAgent with search tool."""
-    print("🔧 Debug supervisor with ReactAgent delegation...")
 
     # Create ReactAgent with tavily search tool
     search_engine = AugLLMConfig(
@@ -59,41 +57,29 @@ async def test_debug_simple():
         name="debug_supervisor", engine=supervisor_engine
     )
 
-    print(f"✅ Created supervisor: {supervisor.name}")
-    print(f"✅ Created ReactAgent: {search_agent.name}")
-    print(f"📋 State agents: {list(state.agents.keys())}")
-    print(f"🔧 State generated tools: {len(state.generated_tools)}")
 
     # Test the full workflow
-    print("\n1. Testing supervisor delegation to ReactAgent...")
     try:
         # The state has the agents and generates tools dynamically
         result = await supervisor.arun(state, debug=False)
-        print(f"   Result type: {type(result)}")
 
         # Check if the ReactAgent was called and returned a human message
         if hasattr(result, "messages") and result.messages:
             last_msg = result.messages[-1]
-            print(f"   Last message type: {type(last_msg)}")
-            print(
-                f"   Last message content: {getattr(last_msg, 'content', 'No content')[:100]}..."
-            )
 
             # Check if it's a human message from agent execution
             if hasattr(last_msg, "content") and "France" in str(last_msg.content):
-                print("   ✅ Successfully got search results from ReactAgent!")
+                pass")
             else:
-                print("   ⚠️  No search results found in response")
+                passse")
         else:
-            print("   ❌ No messages in result")
+            pass")
 
     except Exception as e:
-        print(f"   ❌ Error: {e}")
         import traceback
 
         traceback.print_exc()
 
-    print("\n🎉 Debug ReactAgent delegation complete!")
 
 
 if __name__ == "__main__":

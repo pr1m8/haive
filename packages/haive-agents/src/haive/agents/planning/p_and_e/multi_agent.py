@@ -1,12 +1,11 @@
-"""
-Plan and Execute Multi-Agent System using Configurable Base.
+"""Plan and Execute Multi-Agent System using Configurable Base.
 
 This module demonstrates how to use the configurable multi-agent base
 for building Plan and Execute workflows with branches.
 """
 
-import logging
 from datetime import datetime
+import logging
 from typing import Any, List
 
 from langgraph.graph import END
@@ -20,6 +19,7 @@ from haive.agents.multi.configurable_base import (
 from haive.agents.planning.p_and_e.models import Act, ExecutionResult, Plan, Response
 from haive.agents.planning.p_and_e.state import PlanExecuteState
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -28,13 +28,12 @@ class PlanAndExecuteAgent(ConfigurableMultiAgent):
 
     def __init__(
         self,
-        agents: List[Any],  # [planner, executor, replanner]
-        branches: List[AgentBranch] = None,
+        agents: list[Any],  # [planner, executor, replanner]
+        branches: list[AgentBranch] | None = None,
         state_schema=None,
         **kwargs
     ):
-        """
-        Initialize Plan and Execute multi-agent.
+        """Initialize Plan and Execute multi-agent.
 
         Args:
             agents: List of [planner, executor, replanner] agents
@@ -42,7 +41,6 @@ class PlanAndExecuteAgent(ConfigurableMultiAgent):
             state_schema: Optional state schema override
             **kwargs: Additional arguments
         """
-
         if len(agents) != 3:
             raise ValueError(
                 "PlanAndExecuteAgent requires exactly 3 agents: [planner, executor, replanner]"
@@ -124,7 +122,7 @@ class PlanAndExecuteAgent(ConfigurableMultiAgent):
         """Prepare the next execution step."""
         if not state.plan:
             return Command(
-                update={"errors": state.errors + ["No plan available for execution"]}
+                update={"errors": [*state.errors, "No plan available for execution"]}
             )
 
         next_step = state.plan.next_step
@@ -144,7 +142,7 @@ class PlanAndExecuteAgent(ConfigurableMultiAgent):
 
         if not state.messages:
             return Command(
-                update={"errors": state.errors + ["No execution result received"]}
+                update={"errors": [*state.errors, "No execution result received"]}
             )
 
         last_message = state.messages[-1]
@@ -163,7 +161,7 @@ class PlanAndExecuteAgent(ConfigurableMultiAgent):
 
         return Command(
             update={
-                "execution_results": state.execution_results + [execution_result],
+                "execution_results": [*state.execution_results, execution_result],
                 "plan": state.plan,
                 "current_step_id": None,
             }
@@ -191,20 +189,20 @@ class PlanAndExecuteAgent(ConfigurableMultiAgent):
                     }
                 )
 
-            elif isinstance(act.action, Plan):
+            if isinstance(act.action, Plan):
                 return Command(
                     update={
                         "plan": act.action,
                         "replan_count": state.replan_count + 1,
-                        "replan_history": state.replan_history
-                        + [
+                        "replan_history": [
+                            *state.replan_history,
                             {
                                 "timestamp": datetime.now().isoformat(),
                                 "reason": "New plan from replanner",
                                 "old_plan_progress": (
                                     state.plan.progress_percentage if state.plan else 0
                                 ),
-                            }
+                            },
                         ],
                     }
                 )
@@ -253,7 +251,7 @@ def create_plan_execute_system(planner_agent, executor_agent, replanner_agent):
 
 
 def create_custom_plan_execute_system(
-    planner_agent, executor_agent, replanner_agent, custom_branches: List[AgentBranch]
+    planner_agent, executor_agent, replanner_agent, custom_branches: list[AgentBranch]
 ):
     """Create Plan and Execute system with custom branches."""
     return PlanAndExecuteAgent(

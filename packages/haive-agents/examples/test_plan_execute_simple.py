@@ -1,6 +1,4 @@
-"""
-Test the simplified Plan and Execute Agent implementation.
-"""
+"""Test the simplified Plan and Execute Agent implementation."""
 
 import asyncio
 import os
@@ -14,9 +12,7 @@ from haive.agents.simple import SimpleAgent
 
 async def main():
     """Run the Plan and Execute agent example with debug output."""
-
     # Create the individual agents
-    print("Creating individual agents...")
 
     # Mock engine for testing
     class MockEngine:
@@ -54,7 +50,6 @@ async def main():
     )
 
     # Create the Plan and Execute agent
-    print("Creating Plan and Execute agent...")
     agent = PlanAndExecuteAgent(
         planner=planner,
         executor=executor,
@@ -66,29 +61,18 @@ async def main():
     # Test query
     query = "What are 3 key benefits of renewable energy?"
 
-    print(f"\n{'='*60}")
-    print(f"Query: {query}")
-    print(f"{'='*60}")
-
     start_time = datetime.now()
 
     try:
         # Run the agent with debug=True
-        result = await agent.arun(query, debug=True)
+        await agent.arun(query, debug=True)
 
         # Display results
-        print(f"\n{'='*60}")
-        print("FINAL RESULT:")
-        print(f"{'='*60}")
-        print(result)
 
         # Show execution time
-        elapsed = (datetime.now() - start_time).total_seconds()
-        print(f"\n{'='*60}")
-        print(f"Execution time: {elapsed:.2f} seconds")
+        (datetime.now() - start_time).total_seconds()
 
-    except Exception as e:
-        print(f"\nError: {e}")
+    except Exception:
         import traceback
 
         traceback.print_exc()

@@ -12,6 +12,7 @@ from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from haive.agents.multi.agent import MultiAgent
 from haive.agents.simple.agent import SimpleAgent
 
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -44,9 +45,9 @@ class ResearchAgent(SimpleAgent):
             query = human_message.content
             research_results = (
                 f"Research findings for '{query}':\n"
-                + "1. Found relevant information source A\n"
-                + "2. Found relevant information source B\n"
-                + "3. Key insight: This is simulated research"
+                "1. Found relevant information source A\n"
+                "2. Found relevant information source B\n"
+                "3. Key insight: This is simulated research"
             )
 
             # Add to shared state
@@ -55,7 +56,7 @@ class ResearchAgent(SimpleAgent):
 
             # Add response
             response = f"I've researched '{query}' and found some relevant information."
-            new_messages = messages + [AIMessage(content=response)]
+            new_messages = [*messages, AIMessage(content=response)]
 
             return {"messages": new_messages, "shared_state": shared_state}
 
@@ -94,12 +95,12 @@ class WritingAgent(SimpleAgent):
             # Generate response based on research
             response = (
                 f"Based on the research:\n\n{research_results}\n\n"
-                + "Here's a well-crafted response to your query:\n\n"
-                + "The answer to your question is that this is a demonstration "
-                + "of how multiple agents can collaborate by sharing state."
+                "Here's a well-crafted response to your query:\n\n"
+                "The answer to your question is that this is a demonstration "
+                "of how multiple agents can collaborate by sharing state."
             )
 
-            new_messages = messages + [AIMessage(content=response)]
+            new_messages = [*messages, AIMessage(content=response)]
 
             return {"messages": new_messages, "shared_state": shared_state}
 

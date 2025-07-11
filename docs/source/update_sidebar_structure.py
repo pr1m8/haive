@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
-"""
-Update the main index.rst and sidebar to properly integrate the new haive-based navigation.
-"""
+"""Update the main index.rst and sidebar to properly integrate the new haive-based navigation."""
 
 from pathlib import Path
 
+
 DOCS_SOURCE = Path("/home/will/Projects/haive/backend/haive/docs/source")
+
 
 def update_main_index():
     """Update the main documentation index.rst to feature the new API structure."""
-    
     main_index_content = """Haive Documentation
 ===================
 
@@ -21,37 +20,37 @@ Welcome to the Haive framework documentation.
    .. grid-item-card:: 🚀 **Getting Started**
       :link: introduction/index
       :link-type: doc
-      
+
       Installation, quickstart guide, and basic concepts
 
    .. grid-item-card:: 📚 **API Reference**
       :link: api/haive/index
       :link-type: doc
-      
+
       Complete API documentation organized by package and module
 
    .. grid-item-card:: 🤖 **Agent Gallery**
       :link: agents/gallery
       :link-type: doc
-      
+
       Explore pre-built agents and their capabilities
 
    .. grid-item-card:: 🛠️ **Tools Library**
       :link: tools/index
       :link-type: doc
-      
+
       Browse available tools and integrations
 
    .. grid-item-card:: 🎮 **Games**
       :link: games/index
       :link-type: doc
-      
+
       Interactive environments and demonstrations
 
    .. grid-item-card:: 📖 **Reference**
       :link: reference/index
       :link-type: doc
-      
+
       Technical documentation and architecture
 
 .. toctree::
@@ -81,9 +80,9 @@ What's New
 ----------
 
 .. note::
-   
-   **New Navigation Structure!** 
-   
+
+   **New Navigation Structure!**
+
    The API documentation now uses a hierarchical structure with Haive as the root.
    Navigate through packages → modules → submodules for better organization.
 
@@ -94,43 +93,16 @@ Latest Updates
 - Added contextual navigation that changes based on your location
 - Improved module discovery and documentation generation
 """
-    
+
     (DOCS_SOURCE / "index.rst").write_text(main_index_content)
-    print(f"Updated {DOCS_SOURCE}/index.rst")
 
 
 def create_conf_sidebar_config():
     """Create a configuration snippet for conf.py to set up proper sidebar."""
-    
-    config_snippet = '''
-# Sidebar configuration for new structure
-html_theme_options = {
-    "navigation_with_keys": True,
-    "sidebar_hide_name": False,
-    "navigation_depth": 4,
-    "show_nav_level": 1,
-    "show_toc_level": 2,
-}
-
-# Add custom CSS for enhanced navigation
-html_css_files = [
-    'modern.css',
-    'sidebar-fix.css',
-    'games-showcase.css',
-    'better-navigation.css',
-    'api-gallery.css',
-    'interactive-examples.css',
-    'haive-navigation.css',  # New navigation styles
-]
-'''
-    
-    print("\nAdd this to conf.py for enhanced navigation:")
-    print(config_snippet)
 
 
 def create_navigation_css():
     """Create CSS for the new navigation structure."""
-    
     css_content = """/* Haive Navigation Enhancements */
 
 /* Highlight the current package in sidebar */
@@ -224,24 +196,18 @@ code.docutils.literal {
     }
 }
 """
-    
+
     css_path = DOCS_SOURCE / "_static" / "haive-navigation.css"
     css_path.write_text(css_content)
-    print(f"Created {css_path}")
 
 
 if __name__ == "__main__":
-    print("Updating documentation structure...")
-    
+
     # Update main index
     update_main_index()
-    
+
     # Create navigation CSS
     create_navigation_css()
-    
+
     # Show config snippet
     create_conf_sidebar_config()
-    
-    print("\nDone! Next steps:")
-    print("1. Add the configuration snippet to conf.py")
-    print("2. Rebuild docs: poetry run sphinx-build -b html docs/source docs/build/html")

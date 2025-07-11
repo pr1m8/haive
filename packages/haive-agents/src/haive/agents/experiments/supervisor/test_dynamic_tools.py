@@ -1,15 +1,13 @@
-"""
-Test dynamic tool updates with a working supervisor.
+"""Test dynamic tool updates with a working supervisor.
 
 This creates a minimal working example that can actually run.
 """
 
 import asyncio
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from langchain_core.tools import tool
-from pydantic import Field, model_validator
 
 
 class MockAgent:
@@ -29,8 +27,8 @@ class DynamicToolSupervisor:
     """Supervisor that can dynamically update its tools."""
 
     def __init__(self):
-        self.agents: Dict[str, MockAgent] = {}
-        self.tools: Dict[str, Any] = {}
+        self.agents: dict[str, MockAgent] = {}
+        self.tools: dict[str, Any] = {}
         self._create_base_tools()
         self._sync_count = 0
 
@@ -38,7 +36,7 @@ class DynamicToolSupervisor:
         """Create base tools that are always available."""
 
         @tool
-        def list_agents() -> List[str]:
+        def list_agents() -> list[str]:
             """List all registered agents."""
             if not self.agents:
                 return ["No agents registered"]
@@ -52,7 +50,7 @@ class DynamicToolSupervisor:
             return len(self.agents)
 
         @tool
-        def sync_status() -> Dict[str, Any]:
+        def sync_status() -> dict[str, Any]:
             """Get sync status information."""
             return {
                 "total_agents": len(self.agents),
@@ -123,10 +121,9 @@ class DynamicToolSupervisor:
         # Handle tools that need input vs those that don't
         if input_data is not None:
             return tool_func.invoke(input_data)
-        else:
-            return tool_func.invoke({})
+        return tool_func.invoke({})
 
-    def get_tool_descriptions(self) -> Dict[str, str]:
+    def get_tool_descriptions(self) -> dict[str, str]:
         """Get all tool names and descriptions."""
         descriptions = {}
         for name, tool_func in self.tools.items():
@@ -137,73 +134,42 @@ class DynamicToolSupervisor:
 # Test the dynamic tools
 def test_dynamic_tools():
     """Test dynamic tool registration and execution."""
-
-    print("=== Testing Dynamic Tool Updates ===\n")
-
     # Create supervisor
     supervisor = DynamicToolSupervisor()
 
     # Test 1: Initial state
-    print("1. Initial state:")
-    print(f"   Tools: {list(supervisor.tools.keys())}")
-    result = supervisor.execute_tool("list_agents")
-    print(f"   Agents: {result}\n")
+    supervisor.execute_tool("list_agents")
 
     # Test 2: Register first agent
-    print("2. Register math agent:")
-    msg = supervisor.register_agent("math_agent", "mathematical calculations")
-    print(f"   {msg}")
-    print(f"   Tools: {list(supervisor.tools.keys())}")
-    result = supervisor.execute_tool("list_agents")
-    print(f"   Agents: {result}\n")
+    supervisor.register_agent("math_agent", "mathematical calculations")
+    supervisor.execute_tool("list_agents")
 
     # Test 3: Execute math agent
-    print("3. Execute math agent:")
-    result = supervisor.execute_tool("execute_math_agent", "calculate 5 + 3")
-    print(f"   Result: {result}\n")
+    supervisor.execute_tool("execute_math_agent", "calculate 5 + 3")
 
     # Test 4: Register more agents
-    print("4. Register search and writer agents:")
     supervisor.register_agent("search_agent", "web searching")
     supervisor.register_agent("writer_agent", "content writing")
-    print(f"   Tools: {list(supervisor.tools.keys())}")
-    result = supervisor.execute_tool("agent_count")
-    print(f"   Agent count: {result}\n")
+    supervisor.execute_tool("agent_count")
 
     # Test 5: Get sync status
-    print("5. Check sync status:")
-    result = supervisor.execute_tool("sync_status")
-    print(f"   Status: {result}\n")
+    supervisor.execute_tool("sync_status")
 
     # Test 6: Execute multiple agents
-    print("6. Execute multiple agents:")
     for agent_name in ["math_agent", "search_agent", "writer_agent"]:
         tool_name = f"execute_{agent_name}"
-        result = supervisor.execute_tool(tool_name, "do something")
-        print(f"   {tool_name}: {result}")
-    print()
+        supervisor.execute_tool(tool_name, "do something")
 
     # Test 7: Unregister an agent
-    print("7. Unregister math agent:")
-    msg = supervisor.unregister_agent("math_agent")
-    print(f"   {msg}")
-    print(f"   Remaining tools: {list(supervisor.tools.keys())}\n")
+    supervisor.unregister_agent("math_agent")
 
     # Test 8: Try to execute unregistered agent
-    print("8. Try to execute unregistered agent:")
-    result = supervisor.execute_tool("execute_math_agent", {"task": "calculate"})
-    print(f"   Result: {result}\n")
+    supervisor.execute_tool("execute_math_agent", {"task": "calculate"})
 
     # Test 9: Get all tool descriptions
-    print("9. All tool descriptions:")
     descriptions = supervisor.get_tool_descriptions()
-    for name, desc in descriptions.items():
-        print(f"   {name}: {desc}")
-
-    print("\n✅ Dynamic tool test complete!")
-    print(
-        f"   Final state: {len(supervisor.agents)} agents, {len(supervisor.tools)} tools"
-    )
+    for _name, _desc in descriptions.items():
+        pass
 
 
 # Test with state validation
@@ -247,7 +213,7 @@ class ValidatedDynamicSupervisor(DynamicToolSupervisor):
         self.validate_state()
         return result
 
-    def get_validation_report(self) -> Dict[str, Any]:
+    def get_validation_report(self) -> dict[str, Any]:
         """Get validation status report."""
         return {
             "valid": self.state_valid,
@@ -262,34 +228,23 @@ class ValidatedDynamicSupervisor(DynamicToolSupervisor):
 
 def test_validated_supervisor():
     """Test supervisor with state validation."""
-
-    print("\n=== Testing Validated Dynamic Supervisor ===\n")
-
     supervisor = ValidatedDynamicSupervisor()
 
     # Add agents
     supervisor.register_agent("agent1", "capability1")
     supervisor.register_agent("agent2", "capability2")
 
-    print("After registration:")
-    report = supervisor.get_validation_report()
-    print(f"  Validation: {report}\n")
+    supervisor.get_validation_report()
 
     # Manually break sync (simulate error)
-    print("Simulating sync error (removing agent without tool):")
     del supervisor.agents["agent1"]  # Remove agent but not tool
     supervisor.validate_state()
-    report = supervisor.get_validation_report()
-    print(f"  Validation: {report}\n")
+    supervisor.get_validation_report()
 
     # Fix by removing orphaned tool
-    print("Fixing by removing orphaned tool:")
     del supervisor.tools["execute_agent1"]
     supervisor.validate_state()
-    report = supervisor.get_validation_report()
-    print(f"  Validation: {report}\n")
-
-    print("✅ Validation test complete!")
+    supervisor.get_validation_report()
 
 
 if __name__ == "__main__":

@@ -1,5 +1,4 @@
-"""
-Clean implementation of dynamic supervisor with agent execution node.
+"""Clean implementation of dynamic supervisor with agent execution node.
 
 Key insight: Instead of pre-compiled handoff tools that are fixed at graph compile time,
 we use a general agent_execution_node that can execute any agent based on state routing.
@@ -9,6 +8,8 @@ import asyncio
 from datetime import datetime
 from typing import Annotated, Any, Dict, List, Literal, Optional
 
+from haive.agents.react.agent import ReactAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
@@ -19,16 +20,13 @@ from langchain_core.tools import tool
 from langgraph.graph import END
 from pydantic import BaseModel, Field, model_validator
 
-from haive.agents.react.agent import ReactAgent
-from haive.agents.simple.agent import SimpleAgent
-
 
 class AgentRegistry:
     """Registry for managing agents dynamically."""
 
     def __init__(self):
-        self.agents: Dict[str, Any] = {}
-        self.metadata: Dict[str, Dict[str, Any]] = {}
+        self.agents: dict[str, Any] = {}
+        self.metadata: dict[str, dict[str, Any]] = {}
         self.active_agents: set = set()
 
     def register(
@@ -36,7 +34,7 @@ class AgentRegistry:
         name: str,
         agent: Any,
         description: str,
-        capabilities: List[str],
+        capabilities: list[str],
         active: bool = True,
     ):
         """Register an agent with metadata."""
@@ -56,13 +54,13 @@ class AgentRegistry:
             return True
         return False
 
-    def get_active_agent(self, name: str) -> Optional[Any]:
+    def get_active_agent(self, name: str) -> Any | None:
         """Get agent if active."""
         if name in self.active_agents:
             return self.agents[name]
         return None
 
-    def find_by_capability(self, capability: str) -> List[str]:
+    def find_by_capability(self, capability: str) -> list[str]:
         """Find agents with a capability."""
         return [
             name
@@ -74,18 +72,18 @@ class AgentRegistry:
 class SupervisorState(StateSchema):
     """State for dynamic supervisor."""
 
-    messages: List[Dict[str, Any]] = Field(default_factory=list)
+    messages: list[dict[str, Any]] = Field(default_factory=list)
     current_task: str = Field(default="")
-    agent_route: Optional[str] = Field(default=None)  # Key field for routing
-    agent_response: Optional[str] = Field(default=None)
-    required_capabilities: List[str] = Field(default_factory=list)
+    agent_route: str | None = Field(default=None)  # Key field for routing
+    agent_response: str | None = Field(default=None)
+    required_capabilities: list[str] = Field(default_factory=list)
 
 
 class DynamicSupervisor(ReactAgent):
     """Supervisor using agent execution node pattern."""
 
     registry: AgentRegistry = Field(default_factory=AgentRegistry)
-    choice_model: Optional[DynamicChoiceModel] = Field(default=None)
+    choice_model: DynamicChoiceModel | None = Field(default=None)
 
     @model_validator(mode="after")
     def setup_supervisor(self):
@@ -99,14 +97,14 @@ class DynamicSupervisor(ReactAgent):
         active = list(self.registry.active_agents)
         if active:
             self.choice_model = DynamicChoiceModel.from_choices(
-                active + ["none"], name="AgentSelection"
+                [*active, "none"], name="AgentSelection"
             )
 
     def _setup_tools(self):
         """Create supervisor tools."""
 
         @tool
-        def analyze_task(task: str) -> Dict[str, Any]:
+        def analyze_task(task: str) -> dict[str, Any]:
             """Analyze task to determine required capabilities."""
             caps = []
             if "search" in task.lower() or "find" in task.lower():
@@ -118,7 +116,7 @@ class DynamicSupervisor(ReactAgent):
             return {"task": task, "capabilities": caps}
 
         @tool
-        def check_capability(capability: str) -> Dict[str, Any]:
+        def check_capability(capability: str) -> dict[str, Any]:
             """Check which agents have a capability."""
             agents = self.registry.find_by_capability(capability)
             active = [a for a in agents if a in self.registry.active_agents]
@@ -169,13 +167,10 @@ class DynamicSupervisor(ReactAgent):
 
         return graph.compile()
 
-    async def _supervisor_node(self, state: SupervisorState) -> Dict[str, Any]:
+    async def _supervisor_node(self, state: SupervisorState) -> dict[str, Any]:
         """Supervisor analyzes and decides routing."""
         # Get current task
-        if state.messages:
-            task = state.messages[-1].get("content", "")
-        else:
-            task = state.current_task
+        task = state.messages[-1].get("content", "") if state.messages else state.current_task
 
         # Use LLM to decide
         prompt = f"""
@@ -187,7 +182,7 @@ Active agents: {list(self.registry.active_agents)}
 
 Steps:
 1. Use analyze_task to understand requirements
-2. Use check_capability to see available agents  
+2. Use check_capability to see available agents
 3. If needed agent is inactive, use activate_agent
 4. Use select_agent to route the task
 5. Set state.agent_route to the selected agent name
@@ -210,7 +205,7 @@ If you can handle it yourself, don't select any agent.
         state.current_task = task
         return {"state": state}
 
-    async def _agent_execution_node(self, state: SupervisorState) -> Dict[str, Any]:
+    async def _agent_execution_node(self, state: SupervisorState) -> dict[str, Any]:
         """Execute ANY agent based on routing - the key pattern!"""
         if not state.agent_route:
             return {"state": state}
@@ -232,7 +227,7 @@ If you can handle it yourself, don't select any agent.
                 {"role": "assistant", "content": result, "agent": state.agent_route}
             )
         except Exception as e:
-            state.agent_response = f"Error: {str(e)}"
+            state.agent_response = f"Error: {e!s}"
 
         # Clear routing for next iteration
         state.agent_route = None
@@ -249,8 +244,6 @@ If you can handle it yourself, don't select any agent.
 # Example usage
 async def demo_dynamic_supervisor():
     """Demonstrate the dynamic supervisor pattern."""
-
-    print("=== Dynamic Supervisor Demo ===\n")
 
     # Create agents
     @tool
@@ -326,34 +319,17 @@ async def demo_dynamic_supervisor():
         active=False,  # STARTS INACTIVE!
     )
 
-    print(f"Initial state:")
-    print(f"  Active: {list(supervisor.registry.active_agents)}")
-    print(f"  Inactive: writer_agent\n")
 
     # Test 1: Math task (active agent)
-    print("Test 1: Math calculation")
     result1 = await supervisor.arun("Calculate 25 * 4")
-    print(f"  Result: {result1}\n")
 
     # Test 2: Writing task (needs activation)
-    print("Test 2: Writing task (requires activation)")
     result2 = await supervisor.arun("Write a haiku about coding")
-    print(f"  Result: {result2}\n")
 
-    print(f"Final state:")
-    print(f"  Active: {list(supervisor.registry.active_agents)}")
 
-    print("\n✅ Key Pattern Demonstrated:")
-    print("- Single agent_execution_node handles ANY agent")
-    print("- Agents can be added/activated at runtime")
-    print("- No pre-compiled handoff tools needed!")
 
 
 if __name__ == "__main__":
     # For testing, you can run this directly
-    print("Dynamic Supervisor Pattern Implementation")
-    print("This demonstrates the key insight: using an agent execution node")
-    print("instead of pre-compiled handoff tools for true dynamic behavior.")
 
     # Uncomment to run the demo:
-    # asyncio.run(demo_dynamic_supervisor())

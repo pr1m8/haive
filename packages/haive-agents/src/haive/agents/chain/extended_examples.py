@@ -1,7 +1,5 @@
 """Examples using ExtendedChainAgent for super easy chain building."""
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 
@@ -13,11 +11,12 @@ from haive.agents.chain.extended_chain import (
 )
 from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
 
 
 def example_simple_sequential():
     """Simplest possible chain - just list the nodes."""
-
     # Just list your nodes - that's it!
     my_chain = chain(
         lambda s: {"step": 1},
@@ -30,7 +29,6 @@ def example_simple_sequential():
 
 def example_with_agents_and_engines():
     """Mix different node types effortlessly."""
-
     llm_config = AzureLLMConfig(
         deployment_name="gpt-4",
         azure_endpoint="${AZURE_OPENAI_API_BASE}",
@@ -49,7 +47,8 @@ def example_with_agents_and_engines():
     docs = [Document(page_content="Test document")]
     rag_agent = SimpleRAGAgent.from_documents(docs, llm_config)
 
-    post_processor = lambda s: {"final": s.get("response", "")}
+    def post_processor(s):
+        return {"final": s.get("response", "")}
 
     # Just chain them together!
     my_chain = chain(
@@ -61,7 +60,6 @@ def example_with_agents_and_engines():
 
 def example_custom_edges():
     """Use custom edges with easy syntax."""
-
     nodes = [
         lambda s: {"value": 1},  # 0
         lambda s: {"value": 2},  # 1
@@ -84,12 +82,17 @@ def example_custom_edges():
 def example_with_branching():
     """Easy branching syntax."""
 
-    classifier = lambda s: {
-        "type": "complex" if len(s.get("input", "")) > 50 else "simple"
-    }
-    simple_processor = lambda s: {"result": "Simple processing"}
-    complex_processor = lambda s: {"result": "Complex processing"}
-    finalizer = lambda s: {"output": s.get("result", "")}
+    def classifier(s):
+        return {"type": "complex" if len(s.get("input", "")) > 50 else "simple"}
+
+    def simple_processor(s):
+        return {"result": "Simple processing"}
+
+    def complex_processor(s):
+        return {"result": "Complex processing"}
+
+    def finalizer(s):
+        return {"output": s.get("result", "")}
 
     # Method 1: Using branch() method
     my_chain = (
@@ -119,7 +122,8 @@ def example_with_branching():
 def example_with_loop():
     """Easy loop creation."""
 
-    counter = lambda s: {"count": s.get("count", 0) + 1}
+    def counter(s):
+        return {"count": s.get("count", 0) + 1}
 
     # Create a chain with a loop
     my_chain = ExtendedChainAgent.from_list([counter]).loop(
@@ -131,7 +135,6 @@ def example_with_loop():
 
 def example_rag_router_super_simple():
     """RAG router in the simplest possible way."""
-
     llm_config = AzureLLMConfig(
         deployment_name="gpt-4",
         azure_endpoint="${AZURE_OPENAI_API_BASE}",
@@ -153,7 +156,9 @@ def example_rag_router_super_simple():
     )
 
     simple_rag = SimpleRAGAgent.from_documents(docs, llm_config)
-    complex_rag = lambda s: {"response": "Complex RAG response"}
+
+    def complex_rag(s):
+        return {"response": "Complex RAG response"}
 
     # Build the router
     router = chain_with_edges(
@@ -166,7 +171,6 @@ def example_rag_router_super_simple():
 
 def example_start_and_end():
     """Using START and END explicitly."""
-
     nodes = [
         lambda s: {"initialized": True},
         lambda s: {"processed": True},
@@ -188,9 +192,14 @@ def example_operator_chaining():
     """Using operator syntax for chaining."""
 
     # This would need more implementation, but shows the idea
-    input_node = lambda s: {"data": s.get("input", "")}
-    process_node = lambda s: {"processed": True}
-    output_node = lambda s: {"result": "Done"}
+    def input_node(s):
+        return {"data": s.get("input", "")}
+
+    def process_node(s):
+        return {"processed": True}
+
+    def output_node(s):
+        return {"result": "Done"}
 
     # Using >> operator
     my_chain = ChainBuilder(input_node) >> process_node >> output_node
@@ -200,7 +209,6 @@ def example_operator_chaining():
 
 def example_mixed_indices_and_names():
     """Mix numeric indices and node names."""
-
     llm_config = AzureLLMConfig(
         deployment_name="gpt-4",
         azure_endpoint="${AZURE_OPENAI_API_BASE}",
@@ -217,7 +225,8 @@ def example_mixed_indices_and_names():
         name="analyzer",  # Named node
     )
 
-    processor = lambda s: {"processed": True}  # Unnamed - will be node_1
+    def processor(s):
+        return {"processed": True}  # Unnamed - will be node_1
 
     my_chain = chain_with_edges(
         [analyzer, processor], "analyzer->1", "1->end"  # Mix name and index

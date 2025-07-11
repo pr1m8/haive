@@ -1,13 +1,14 @@
 import math
 import re
 
-import numexpr
 from agents.llm_compiler.models import ExecuteCode
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import StructuredTool
 from langchain_openai import ChatOpenAI
+import numexpr
+
 
 _MATH_DESCRIPTION = (
     "math(problem: str, context: Optional[list[str]]) -> float:\n"

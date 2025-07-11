@@ -3,7 +3,7 @@ from typing_extensions import TypedDict
 
 
 class BBox(TypedDict):
-    """Bounding box for the action to take"""
+    """Bounding box for the action to take."""
 
     x: float = Field(..., description="The x coordinate of the bounding box")
     y: float = Field(..., description="The y coordinate of the bounding box")

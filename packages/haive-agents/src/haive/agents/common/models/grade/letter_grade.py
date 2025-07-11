@@ -7,9 +7,8 @@ for plus/minus modifiers and customizable grading scales.
 from enum import Enum
 from typing import Any
 
-from pydantic import Field, field_validator
-
 from haive.agents.common.models.grade.base import Grade, GradeType
+from pydantic import Field, field_validator
 
 
 class LetterValue(str, Enum):

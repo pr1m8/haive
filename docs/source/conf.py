@@ -4,10 +4,20 @@ Configuration for building documentation for the Haive namespaced monorepo.
 Uses Google-style docstrings and works with poetry/nox build system.
 """
 
+import logging
 import sys
 import warnings
 from datetime import datetime
 from pathlib import Path
+
+# Set up logging for debugging
+log_file = Path(__file__).parent / "sphinx_debug.log"
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[logging.FileHandler(str(log_file)), logging.StreamHandler()],
+)
+logger = logging.getLogger(__name__)
 
 # Suppress specific warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -21,10 +31,19 @@ sys.path.insert(0, str(project_root))
 # Add all haive package source directories to sys.path
 packages_dir = project_root / "packages"
 if packages_dir.exists():
+    logger.info(f"Found packages directory: {packages_dir}")
     for package_dir in packages_dir.glob("haive-*"):
         src_dir = package_dir / "src"
         if src_dir.exists():
+            logger.info(f"Adding to sys.path: {src_dir}")
             sys.path.insert(0, str(src_dir))
+            # Try to import the package
+            package_name = package_dir.name.replace("-", ".")
+            try:
+                __import__(package_name)
+                logger.info(f"Successfully imported {package_name}")
+            except Exception as e:
+                logger.exception(f"Failed to import {package_name}: {e}")
 
 # Ensure the main haive package is discoverable
 main_haive_path = packages_dir / "haive-core" / "src"
@@ -147,12 +166,12 @@ html_static_path = ["_static"]
 
 # Enhanced CSS for better styling and syntax highlighting
 html_css_files = [
-    "haive-docs-enhanced.css",      # Comprehensive styling fixes
-    "api-showcase.css",             # Beautiful gradient cards (enhanced)
+    "haive-docs-enhanced.css",  # Comprehensive styling fixes
+    "api-showcase.css",  # Beautiful gradient cards (enhanced)
 ]
 
 html_js_files = [
-    "agent-visualization.js",     # Agent demos
+    "agent-visualization.js",  # Agent demos
 ]
 
 # Disable showcase files - they override all pages
@@ -167,7 +186,7 @@ html_theme_options = {
     # SIMPLIFIED Colors - Fix white-on-white issues
     "light_css_variables": {
         "color-brand-primary": "#0f62fe",
-        "color-brand-content": "#4589ff", 
+        "color-brand-content": "#4589ff",
         "color-foreground-primary": "#161616",  # Dark text on light bg
         "color-foreground-secondary": "#525252",
         "color-background-primary": "#ffffff",
@@ -224,47 +243,48 @@ autodoc_typehints_format = "short"
 autodoc_class_signature = "separated"
 autodoc_type_aliases = {
     # Simplify common Haive types
-    'Agent': 'haive.agents.base.Agent',
-    'StateSchema': 'haive.core.schema.StateSchema',
-    'Engine': 'haive.core.engine.Engine',
-    'Tool': 'haive.core.tools.Tool',
+    "Agent": "haive.agents.base.Agent",
+    "StateSchema": "haive.core.schema.StateSchema",
+    "Engine": "haive.core.engine.Engine",
+    "Tool": "haive.core.tools.Tool",
 }
 
 # Mock imports for missing modules
 autodoc_mock_imports = [
     # Known missing modules that don't exist
-    'haive.tools.api',
-    'haive.tools.utility', 
-    'haive.tools.code',
-    'haive.agents.rag.self_rag',
-    'haive.core.schema.compatibility',
-    'haive.agents.planning.llm_compiler',
-    'haive.agents.reasoning_and_critique.reflection',  # Should be reflexion
-    'haive.agents.conversation.collaborative',  # Typo: should be collaberative
-    'haive.agents.supervisor',  # Various supervisor imports fail
-    
+    "haive.tools.api",
+    "haive.tools.utility",
+    "haive.tools.code",
+    "haive.agents.rag.self_rag",
+    "haive.core.schema.compatibility",
+    "haive.agents.planning.llm_compiler",
+    "haive.agents.reasoning_and_critique.reflection",  # Should be reflexion
+    "haive.agents.conversation.collaborative",  # Typo: should be collaberative
+    "haive.agents.supervisor",  # Various supervisor imports fail
     # Additional missing modules from latest build
-    'haive.tools.search',
-    'haive.tools.math',
-    'haive.tools.data',
-    'haive.core.engine.loaders',
-    
+    "haive.tools.search",
+    "haive.tools.math",
+    "haive.tools.data",
+    "haive.core.engine.loaders",
     # Document modifiers that are failing
-    'haive.agents.document_modifiers.kg',
-    'haive.agents.document_modifiers.kg.kg_base',
-    'haive.agents.document_modifiers.kg.kg_iterative_refinement',
-    'haive.agents.document_modifiers.kg.kg_map_merge',
-    'haive.agents.document_modifiers.summarizer',
-    'haive.agents.document_modifiers.summarizer.iterative_refinement',
-    
+    "haive.agents.document_modifiers.kg",
+    "haive.agents.document_modifiers.kg.kg_base",
+    "haive.agents.document_modifiers.kg.kg_iterative_refinement",
+    "haive.agents.document_modifiers.kg.kg_map_merge",
+    "haive.agents.document_modifiers.summarizer",
+    "haive.agents.document_modifiers.summarizer.iterative_refinement",
+    # Broad wildcards for problematic modules
+    "haive.agents.rag.db_rag",
+    "haive.agents.reasoning_and_critique",
+    "haive.agents.research",
+    "haive.core.engine.document",
     # Persistence modules that don't exist
-    'haive.core.persistence.create_checkpointer',
-    'haive.core.persistence.create_memory_checkpointer',
-    'haive.core.persistence.create_postgres_checkpointer',
-    
+    "haive.core.persistence.create_checkpointer",
+    "haive.core.persistence.create_memory_checkpointer",
+    "haive.core.persistence.create_postgres_checkpointer",
     # Only mock if they cause issues during build
-    'torch',
-    'tensorflow',
+    "torch",
+    "tensorflow",
 ]
 
 # Autosummary - fixed configuration for proper documentation generation
@@ -277,26 +297,29 @@ autosummary_filename_map = {}
 # Make autosummary work properly with our module structure
 autosummary_mock_imports = autodoc_mock_imports
 
+
 # Tell autosummary to treat these as modules
 def autosummary_get_type(app, obj, parent):
     """Force certain patterns to be recognized as modules."""
-    if obj and hasattr(obj, '__name__'):
+    if obj and hasattr(obj, "__name__"):
         name = obj.__name__
         # Force haive.core.* submodules to be treated as modules
-        if name.startswith('haive.core.') and '.' in name[11:]:
-            return 'module'
-        # Force haive.agents.* submodules to be treated as modules  
-        if name.startswith('haive.agents.') and '.' in name[13:]:
-            return 'module'
+        if name.startswith("haive.core.") and "." in name[11:]:
+            return "module"
+        # Force haive.agents.* submodules to be treated as modules
+        if name.startswith("haive.agents.") and "." in name[13:]:
+            return "module"
         # Force haive.tools.* submodules to be treated as modules
-        if name.startswith('haive.tools.') and '.' in name[12:]:
-            return 'module'
+        if name.startswith("haive.tools.") and "." in name[12:]:
+            return "module"
     return None
+
 
 # Fix module import issues
 import warnings
-warnings.filterwarnings('ignore', category=UserWarning, module='sphinx')
-warnings.filterwarnings('ignore', category=DeprecationWarning)
+
+warnings.filterwarnings("ignore", category=UserWarning, module="sphinx")
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 # Enable recursive module discovery
 autodoc_default_options = {
@@ -310,9 +333,9 @@ autodoc_default_options = {
 
 # Force autosummary to generate proper module files
 autosummary_context = {
-    'fullname': lambda name: name,
-    'module': lambda name: name,
-    'objname': lambda name: name.split('.')[-1],
+    "fullname": lambda name: name,
+    "module": lambda name: name,
+    "objname": lambda name: name.split(".")[-1],
 }
 
 # Napoleon (Google docstrings) - optimized settings
@@ -331,17 +354,17 @@ napoleon_use_keyword = True
 napoleon_preprocess_types = True
 napoleon_type_aliases = {
     # Haive-specific type aliases
-    'Agent': 'haive.agents.base.Agent',
-    'StateSchema': 'haive.core.schema.StateSchema',
-    'Engine': 'haive.core.engine.Engine',
-    'Tool': 'haive.core.tools.Tool',
-    'Graph': 'haive.core.graph.BaseGraph',
-    'RunnableConfig': 'Dict[str, Any]',
+    "Agent": "haive.agents.base.Agent",
+    "StateSchema": "haive.core.schema.StateSchema",
+    "Engine": "haive.core.engine.Engine",
+    "Tool": "haive.core.tools.Tool",
+    "Graph": "haive.core.graph.BaseGraph",
+    "RunnableConfig": "Dict[str, Any]",
 }
 napoleon_attr_annotations = True
 napoleon_custom_sections = [
-    ('Type Parameters', 'params_style'),
-    ('State Schema', 'params_style'),
+    ("Type Parameters", "params_style"),
+    ("State Schema", "params_style"),
 ]
 
 # Copy button
@@ -449,6 +472,22 @@ def skip_submodules(app, what, name, obj, skip, options):  # noqa: PLR0913
 
 def setup(app):
     """Setup function for custom modifications."""
+    logger.info("Running Sphinx setup function")
+
+    # Log what packages we're documenting
+    logger.info(f"Package names configured: {package_names}")
+
+    # Test import haive.games specifically
+    try:
+        import haive.games
+
+        logger.info(f"haive.games imported successfully from: {haive.games.__file__}")
+        logger.info(
+            f"haive.games.__all__ = {getattr(haive.games, '__all__', 'NOT DEFINED')}"
+        )
+    except Exception as e:
+        logger.exception(f"Failed to import haive.games: {type(e).__name__}: {e}")
+
     # Ensure directories exist
     static_dir = conf_dir / "_static"
     static_dir.mkdir(exist_ok=True)
@@ -456,31 +495,33 @@ def setup(app):
     # Create images directory if it doesn't exist
     images_dir = static_dir / "images"
     images_dir.mkdir(exist_ok=True)
-    
+
     # Add monorepo import failure handler
     def handle_import_failure(app, what, name, obj, options, lines):
         """Handle import failures gracefully with helpful messages."""
         if name in autodoc_mock_imports:
-            if 'haive.tools.api' in name:
-                lines.insert(0, '.. warning::')
-                lines.insert(1, '')
-                lines.insert(2, '   This module has been reorganized. API tools are now in:')
-                lines.insert(3, '   ``haive.tools.toolkits.{service_name}``')
-                lines.insert(4, '')
-            elif 'haive.tools.code' in name:
-                lines.insert(0, '.. warning::')
-                lines.insert(1, '') 
-                lines.insert(2, '   Code tools have moved to:')
-                lines.insert(3, '   ``haive.tools.toolkits.dev``')
-                lines.insert(4, '')
-            elif 'haive.tools.utility' in name:
-                lines.insert(0, '.. warning::')
-                lines.insert(1, '')
-                lines.insert(2, '   Utility tools are now in individual modules:')
-                lines.insert(3, '   ``haive.tools.tools.{tool_name}``')
-                lines.insert(4, '')
-    
-    app.connect('autodoc-process-docstring', handle_import_failure)
+            if "haive.tools.api" in name:
+                lines.insert(0, ".. warning::")
+                lines.insert(1, "")
+                lines.insert(
+                    2, "   This module has been reorganized. API tools are now in:"
+                )
+                lines.insert(3, "   ``haive.tools.toolkits.{service_name}``")
+                lines.insert(4, "")
+            elif "haive.tools.code" in name:
+                lines.insert(0, ".. warning::")
+                lines.insert(1, "")
+                lines.insert(2, "   Code tools have moved to:")
+                lines.insert(3, "   ``haive.tools.toolkits.dev``")
+                lines.insert(4, "")
+            elif "haive.tools.utility" in name:
+                lines.insert(0, ".. warning::")
+                lines.insert(1, "")
+                lines.insert(2, "   Utility tools are now in individual modules:")
+                lines.insert(3, "   ``haive.tools.tools.{tool_name}``")
+                lines.insert(4, "")
+
+    app.connect("autodoc-process-docstring", handle_import_failure)
 
     # Create minimal custom files if they don't exist
     modern_css = static_dir / "modern.css"

@@ -1,14 +1,13 @@
 import operator
 from typing import Annotated, Literal
 
+from haive.agents.document_modifiers.complex_extraction.utils import (
+    add_or_overwrite_messages,
+)
 from langchain_core.messages import AnyMessage
 
 # from
 from pydantic import BaseModel, Field
-
-from haive.agents.document_modifiers.complex_extraction.utils import (
-    add_or_overwrite_messages,
-)
 
 
 class ComplexExtractionInput(BaseModel):
@@ -41,6 +40,3 @@ class ComplexExtractionState(ComplexExtractionInput, ComplexExtractionOutput):
     input_format: Literal["list", "dict"] = Field(
         default="list", description="The format of the input to the complex extraction."
     )
-    # extraction_schema: Optional[BaseModel] = Field(default=None,description="The schema of the complex extraction.")
-    # extraction_schema_name: Optional[str] = Field(default=None,description="The name of the extraction schema.")
-    # extracted_data: Optional[list[AnyMessage]] = Field(default=[],description="The data to be extracted from the conversation history.")

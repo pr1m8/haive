@@ -53,7 +53,7 @@ POSTGRES_CONNECTION_STRING=postgresql://postgres.zkssazqhwcetsnbiuqik:[REDACTED]
 ### 1. Agent Initialization Flow
 
 ```
-Agent.__init__() 
+Agent.__init__()
 ├── [agent.py:261] complete_agent_setup() validator
 ├── [agent.py:272] setup_agent() - subclass hook
 ├── [agent.py:275] _setup_schemas() - generate schemas
@@ -106,16 +106,16 @@ def _generate_default_thread_id(self) -> str:
         getattr(self, "name", "UnnamedAgent"),
         self.__class__.__name__,
     ]
-    
+
     # Add engine type if available
     if hasattr(self, "engine_type"):
         identity_components.append(str(self.engine_type))
-    
+
     # Add engine name if available
     if hasattr(self, "engine") and self.engine:
         if hasattr(self.engine, "name"):
             identity_components.append(self.engine.name)
-    
+
     # Add conversation-specific details
     if hasattr(self, "topic"):
         identity_components.append(str(self.topic))
@@ -124,19 +124,20 @@ def _generate_default_thread_id(self) -> str:
     if hasattr(self, "participant_agents") and self.participant_agents:
         participant_names = sorted([name for name in self.participant_agents.keys()])
         identity_components.append(",".join(participant_names))
-    
+
     # Create stable hash
     identity_string = ":".join(identity_components)
     hash_digest = hashlib.md5(identity_string.encode()).hexdigest()
-    
+
     # Final thread_id format
     agent_name = getattr(self, "name", "agent")
     thread_id = f"{agent_name}_{hash_digest[:8]}"
-    
+
     return thread_id
 ```
 
 ### Thread ID Examples
+
 Based on agent configuration:
 
 ```bash
@@ -192,7 +193,7 @@ CREATE TABLE checkpoints (
 );
 ```
 
-#### 2. `checkpoint_blobs` Table  
+#### 2. `checkpoint_blobs` Table
 
 **Purpose**: Stores large binary data separate from main checkpoints  
 **Created by**: LangGraph PostgresSaver.setup()
@@ -268,6 +269,7 @@ PostgresSaver.put() [LangGraph internals]
 ## Data Storage Process
 
 ### 1. Agent Initialization
+
 ```python
 # Agent creates persistence config
 self.persistence = PostgresCheckpointerConfig(
@@ -286,6 +288,7 @@ self.persistence = PostgresCheckpointerConfig(
 ```
 
 ### 2. Thread Registration
+
 **Location**: `handlers.py:656-731`
 
 ```python
@@ -296,6 +299,7 @@ def register_thread_if_needed(checkpointer, thread_id, metadata=None):
 ```
 
 ### 3. State Checkpointing
+
 Each agent interaction creates a checkpoint:
 
 ```python
@@ -340,33 +344,37 @@ checkpoint_data = {
 ## Thread ID vs Names Explanation
 
 ### Current System: Hash-Based IDs
+
 - **Thread ID**: `"Simple Agent_a1b2c3d4"`
 - **Purpose**: Unique identifier for database storage
 - **Benefits**: Consistent, collision-resistant, programmatically generated
 
 ### Why Not Human-Readable Names?
+
 1. **Collision Risk**: "ChatBot" could have multiple instances
 2. **Special Characters**: Names might contain SQL-unsafe characters
 3. **Length Limits**: Very long names could exceed database limits
 4. **Consistency**: Hash ensures same config = same ID always
 
 ### Thread Metadata Storage
+
 Human-readable information is stored in the `metadata` field:
 
 ```json
 {
-    "agent_name": "Simple Agent",
-    "agent_class": "SimpleAgent", 
-    "topic": "Customer Support Chat",
-    "speakers": ["user", "assistant"],
-    "created_by": "user_123",
-    "description": "Customer support conversation about billing"
+  "agent_name": "Simple Agent",
+  "agent_class": "SimpleAgent",
+  "topic": "Customer Support Chat",
+  "speakers": ["user", "assistant"],
+  "created_by": "user_123",
+  "description": "Customer support conversation about billing"
 }
 ```
 
 ## Conversation vs Agent Threads
 
 ### Single Agent Threads
+
 ```python
 thread_id = "Simple Agent_a1b2c3d4"
 metadata = {
@@ -377,10 +385,11 @@ metadata = {
 ```
 
 ### Conversation Agent Threads
+
 ```python
 thread_id = "Conversation Agent_e5f6g7h8"
 metadata = {
-    "agent_name": "Conversation Agent", 
+    "agent_name": "Conversation Agent",
     "topic": "Product Strategy Discussion",
     "speakers": ["alice", "bob", "charlie"],
     "participant_agents": ["ResearchAgent", "AnalysisAgent"]
@@ -388,6 +397,7 @@ metadata = {
 ```
 
 ### Multi-Agent System Threads
+
 ```python
 thread_id = "Multi Agent System_i9j0k1l2"
 metadata = {
@@ -402,37 +412,42 @@ metadata = {
 ## Data Retrieval Patterns
 
 ### By Thread ID (Exact Match)
+
 ```sql
-SELECT * FROM checkpoints 
+SELECT * FROM checkpoints
 WHERE thread_id = 'Simple Agent_a1b2c3d4'
 ORDER BY created_at DESC;
 ```
 
 ### By Agent Name Pattern
+
 ```sql
-SELECT DISTINCT thread_id, metadata 
-FROM threads 
+SELECT DISTINCT thread_id, metadata
+FROM threads
 WHERE thread_id LIKE 'Simple Agent_%';
 ```
 
 ### By Metadata Search
+
 ```sql
-SELECT thread_id, metadata 
-FROM threads 
+SELECT thread_id, metadata
+FROM threads
 WHERE metadata->>'topic' = 'Customer Support Chat';
 ```
 
 ### Recent Conversations
+
 ```sql
-SELECT thread_id, metadata, last_access 
-FROM threads 
-ORDER BY last_access DESC 
+SELECT thread_id, metadata, last_access
+FROM threads
+ORDER BY last_access DESC
 LIMIT 10;
 ```
 
 ## Persistence Configuration Options
 
 ### Full History Mode
+
 ```python
 storage_mode = CheckpointStorageMode.FULL
 # Stores complete conversation history
@@ -440,7 +455,8 @@ storage_mode = CheckpointStorageMode.FULL
 # Higher storage usage
 ```
 
-### Shallow Mode  
+### Shallow Mode
+
 ```python
 storage_mode = CheckpointStorageMode.SHALLOW
 # Only stores latest state
@@ -449,12 +465,13 @@ storage_mode = CheckpointStorageMode.SHALLOW
 ```
 
 ### Sync vs Async
+
 ```python
 # Synchronous (default)
 mode = CheckpointerMode.SYNC
 checkpointer = config.create_checkpointer()
 
-# Asynchronous  
+# Asynchronous
 mode = CheckpointerMode.ASYNC
 checkpointer = await config.create_async_checkpointer()
 ```
@@ -462,6 +479,7 @@ checkpointer = await config.create_async_checkpointer()
 ## Connection Pool Management
 
 ### Per-Agent Isolation
+
 Each agent gets its own connection pool to prevent conflicts:
 
 ```python
@@ -474,11 +492,12 @@ connection_kwargs = {
 ```
 
 ### Pool Configuration
+
 ```python
 pool = ConnectionPool(
     conninfo=connection_string,
     min_size=1,      # Minimum connections
-    max_size=2,      # Maximum connections  
+    max_size=2,      # Maximum connections
     max_lifetime=1800,  # 30 minutes
     kwargs=connection_kwargs
 )
@@ -487,43 +506,47 @@ pool = ConnectionPool(
 ## Debugging and Monitoring
 
 ### Check Active Threads
+
 ```sql
-SELECT 
+SELECT
     thread_id,
     metadata->>'agent_name' as agent_name,
     metadata->>'topic' as topic,
     created_at,
     last_access
-FROM threads 
+FROM threads
 ORDER BY last_access DESC;
 ```
 
 ### Checkpoint Count by Thread
+
 ```sql
-SELECT 
+SELECT
     thread_id,
     COUNT(*) as checkpoint_count,
     MAX(created_at) as latest_checkpoint
-FROM checkpoints 
+FROM checkpoints
 GROUP BY thread_id
 ORDER BY checkpoint_count DESC;
 ```
 
 ### Storage Usage
+
 ```sql
-SELECT 
+SELECT
     thread_id,
     COUNT(*) as checkpoint_count,
     pg_size_pretty(SUM(length(checkpoint::text))) as checkpoint_size,
     pg_size_pretty(SUM(length(metadata::text))) as metadata_size
-FROM checkpoints 
+FROM checkpoints
 GROUP BY thread_id
 ORDER BY SUM(length(checkpoint::text)) DESC;
 ```
 
 ### Recent Activity
+
 ```sql
-SELECT 
+SELECT
     c.thread_id,
     t.metadata->>'agent_name' as agent_name,
     COUNT(*) as recent_checkpoints,
@@ -538,18 +561,21 @@ ORDER BY latest_activity DESC;
 ## Best Practices
 
 ### Thread Management
+
 1. **Let the system generate thread IDs** - they're designed for consistency
 2. **Use metadata for human-readable information** - store names, topics, descriptions
 3. **Monitor thread proliferation** - clean up old/unused threads periodically
 4. **Use meaningful agent names** - they become part of the thread ID
 
 ### Performance Optimization
+
 1. **Use shallow mode for high-volume agents** - reduces storage overhead
 2. **Implement thread cleanup** - remove old conversations to maintain performance
 3. **Monitor connection pools** - ensure proper resource management
 4. **Index metadata fields** - for faster searching by topic/name
 
 ### Error Handling
+
 1. **Graceful fallback to memory** - if Supabase connection fails
 2. **Connection retry logic** - handle temporary network issues
 3. **Pool management** - ensure connections are properly released
@@ -560,7 +586,7 @@ ORDER BY latest_activity DESC;
 The Haive persistence system uses a sophisticated thread ID generation mechanism that prioritizes consistency and uniqueness over human readability. While the thread IDs look cryptic (`Simple Agent_a1b2c3d4`), they serve important technical purposes:
 
 - **Consistency**: Same agent config always gets same thread ID
-- **Uniqueness**: Prevents conflicts between similar agents  
+- **Uniqueness**: Prevents conflicts between similar agents
 - **Persistence**: Conversations continue across restarts
 - **Database Safety**: Avoids special character issues
 

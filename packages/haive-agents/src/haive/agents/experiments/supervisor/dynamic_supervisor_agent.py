@@ -9,14 +9,6 @@ This agent implements the supervisor pattern with:
 import logging
 from typing import Any, Literal
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import AzureLLMConfig
-from langchain_core.messages import AIMessage
-from langgraph.graph import END, START
-from pydantic import Field
-
 from haive.agents.base.agent import Agent
 
 # Import our working components
@@ -26,6 +18,13 @@ from haive.agents.experiments.supervisor.component_2_tools import (
 from haive.agents.experiments.supervisor.component_3_agent_execution import (
     create_agent_execution_node,
 )
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.models.llm.base import AzureLLMConfig
+from langchain_core.messages import AIMessage
+from langgraph.graph import END, START
+from pydantic import Field
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +34,7 @@ SUPERVISOR_SYSTEM_MESSAGE = """You are an intelligent task supervisor that route
 Available agents:
 {agent_list}
 
-You have access to handoff tools that let you delegate work to the appropriate agents. 
+You have access to handoff tools that let you delegate work to the appropriate agents.
 Look at the available tools and use the one that best matches the user's request.
 
 When routing:

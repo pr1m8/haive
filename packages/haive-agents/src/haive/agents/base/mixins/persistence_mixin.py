@@ -85,7 +85,6 @@ class PersistenceMixin:
         """
         # Set up default runnable config with recursion limit 100
         if not self.runnable_config:
-            import uuid
 
             self.runnable_config = {
                 "configurable": {
@@ -177,7 +176,7 @@ class PersistenceMixin:
                     f"Using memory persistence fallback for {getattr(self, 'name', 'Agent')}"
                 )
             except Exception as e2:
-                logger.error(f"Failed to set up memory persistence fallback: {e2}")
+                logger.exception(f"Failed to set up memory persistence fallback: {e2}")
                 self.persistence = None
 
     def _setup_checkpointer_from_fields(self) -> None:
@@ -209,7 +208,7 @@ class PersistenceMixin:
             )
 
         except Exception as e:
-            logger.error(f"Failed to set up checkpointer: {e}")
+            logger.exception(f"Failed to set up checkpointer: {e}")
             # Set up memory fallback
             try:
                 from langgraph.checkpoint.memory import MemorySaver
@@ -217,7 +216,7 @@ class PersistenceMixin:
                 self.checkpointer = MemorySaver()
                 logger.debug("Using MemorySaver fallback")
             except ImportError:
-                logger.error("Could not import MemorySaver, persistence disabled")
+                logger.exception("Could not import MemorySaver, persistence disabled")
                 self.checkpointer = None
 
     def _setup_async_checkpointer_from_fields(self) -> None:
@@ -226,7 +225,6 @@ class PersistenceMixin:
             return
 
         try:
-            from haive.core.persistence.handlers import setup_async_checkpointer
 
             # Create a minimal config-like object for the handler
             class PersistenceConfig:
@@ -234,7 +232,7 @@ class PersistenceMixin:
                     self.persistence = persistence
                     self.checkpoint_mode = checkpoint_mode
 
-            temp_config = PersistenceConfig(self.persistence, "async")
+            PersistenceConfig(self.persistence, "async")
 
             # Note: This would need to be called in an async context
             # For now, we'll set a flag to set it up later
@@ -245,7 +243,7 @@ class PersistenceMixin:
             )
 
         except Exception as e:
-            logger.error(f"Failed to prepare async checkpointer setup: {e}")
+            logger.exception(f"Failed to prepare async checkpointer setup: {e}")
 
     def _setup_store_from_fields(self) -> None:
         """Set up store using the add_store field."""
@@ -315,7 +313,7 @@ class PersistenceMixin:
             )
 
         except Exception as e:
-            logger.error(f"Failed to set up async checkpointer: {e}")
+            logger.exception(f"Failed to set up async checkpointer: {e}")
 
     def get_persistence_config(self) -> dict[str, Any]:
         """Get the current persistence configuration as a serializable dict."""
@@ -387,9 +385,8 @@ class PersistenceMixin:
             identity_components.append(str(self.engine_type))
 
         # Add engine name if available
-        if hasattr(self, "engine") and self.engine:
-            if hasattr(self.engine, "name"):
-                identity_components.append(self.engine.name)
+        if hasattr(self, "engine") and self.engine and hasattr(self.engine, "name"):
+            identity_components.append(self.engine.name)
 
         # Add conversation-specific details for conversation agents
         if hasattr(self, "topic"):
@@ -398,9 +395,7 @@ class PersistenceMixin:
             identity_components.append(",".join(sorted(self.speakers)))
         if hasattr(self, "participant_agents") and self.participant_agents:
             # Add participant agent names
-            participant_names = sorted(
-                [name for name in self.participant_agents.keys()]
-            )
+            participant_names = sorted(self.participant_agents.keys())
             identity_components.append(",".join(participant_names))
 
         # Create a stable hash

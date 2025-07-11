@@ -1,4 +1,4 @@
-"""Adaptive RAG with Tools Integration Agents
+"""Adaptive RAG with Tools Integration Agents.
 
 Implementation of adaptive RAG with tool integration and ReAct patterns.
 Includes Google Search integration, tool selection, and dynamic routing based on query needs.
@@ -8,6 +8,10 @@ import logging
 from enum import Enum
 from typing import Any, Dict, List, Optional, Union
 
+from haive.agents.base.agent import Agent
+from haive.agents.multi.base import ConditionalAgent, SequentialAgent
+from haive.agents.rag.base.agent import BaseRAGAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
@@ -16,11 +20,6 @@ from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field
-
-from haive.agents.base.agent import Agent
-from haive.agents.multi.base import ConditionalAgent, SequentialAgent
-from haive.agents.rag.base.agent import BaseRAGAgent
-from haive.agents.simple.agent import SimpleAgent
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +51,7 @@ class ToolSelection(BaseModel):
     """Tool selection analysis and recommendations."""
 
     primary_tool: ToolType = Field(description="Primary tool to use")
-    fallback_tools: List[ToolType] = Field(
+    fallback_tools: list[ToolType] = Field(
         description="Fallback tools if primary fails"
     )
 
@@ -63,7 +62,7 @@ class ToolSelection(BaseModel):
     specificity: float = Field(ge=0.0, le=1.0, description="How specific the query is")
 
     tool_justification: str = Field(description="Why these tools were selected")
-    search_terms: List[str] = Field(
+    search_terms: list[str] = Field(
         description="Optimized search terms for external tools"
     )
     expected_result_type: str = Field(description="Expected type of results")
@@ -90,9 +89,9 @@ class SearchResult(BaseModel):
     )
 
     # Content
-    documents: List[Document] = Field(description="Retrieved documents")
-    source_urls: List[str] = Field(description="Source URLs for web results")
-    search_metadata: Dict[str, Any] = Field(description="Additional search metadata")
+    documents: list[Document] = Field(description="Retrieved documents")
+    source_urls: list[str] = Field(description="Source URLs for web results")
+    search_metadata: dict[str, Any] = Field(description="Additional search metadata")
 
     # Analysis
     content_freshness: float = Field(
@@ -111,7 +110,7 @@ class AdaptiveToolsResult(BaseModel):
     final_response: str = Field(description="Final generated response")
 
     # Tool usage analytics
-    tools_used: List[ToolType] = Field(description="All tools used")
+    tools_used: list[ToolType] = Field(description="All tools used")
     primary_tool_success: bool = Field(description="Whether primary tool succeeded")
     fallback_used: bool = Field(description="Whether fallback tools were needed")
 
@@ -133,9 +132,9 @@ class AdaptiveToolsResult(BaseModel):
 
     # ReAct tracking
     react_iterations: int = Field(description="Number of ReAct cycles")
-    reasoning_steps: List[str] = Field(description="Reasoning steps taken")
+    reasoning_steps: list[str] = Field(description="Reasoning steps taken")
 
-    processing_metadata: Dict[str, Any] = Field(description="Processing statistics")
+    processing_metadata: dict[str, Any] = Field(description="Processing statistics")
 
 
 # Enhanced prompts for tool-integrated adaptive RAG
@@ -147,7 +146,7 @@ TOOL_SELECTION_PROMPT = ChatPromptTemplate.from_messages(
 
 **AVAILABLE TOOLS:**
 1. **Google Search**: Current events, recent information, web-scale factual lookup
-2. **Local Retrieval**: Document-specific queries, known corpus information  
+2. **Local Retrieval**: Document-specific queries, known corpus information
 3. **Wikipedia**: General factual information, encyclopedic knowledge
 4. **ArXiv**: Academic research, scientific papers, technical information
 5. **Direct Answer**: Common knowledge that doesn't require external lookup
@@ -286,7 +285,6 @@ Focus on creating the most accurate and complete response possible.""",
 
 def create_tool_selector_callable(llm_config: LLMConfig):
     """Create callable function for tool selection."""
-
     selection_engine = AugLLMConfig(
         llm_config=llm_config,
         prompt_template=TOOL_SELECTION_PROMPT,
@@ -294,7 +292,7 @@ def create_tool_selector_callable(llm_config: LLMConfig):
         output_key="tool_selection",
     )
 
-    def select_tools(state: Dict[str, Any]) -> Dict[str, Any]:
+    def select_tools(state: dict[str, Any]) -> dict[str, Any]:
         """Select optimal tools for the query."""
         query = getattr(state, "query", "")
         context = getattr(state, "context", "")
@@ -337,7 +335,6 @@ def create_tool_selector_callable(llm_config: LLMConfig):
 
 def create_google_search_callable(llm_config: LLMConfig):
     """Create callable function for Google search integration."""
-
     search_engine = AugLLMConfig(
         llm_config=llm_config,
         prompt_template=GOOGLE_SEARCH_PROMPT,
@@ -345,7 +342,7 @@ def create_google_search_callable(llm_config: LLMConfig):
         output_key="search_result",
     )
 
-    def perform_google_search(state: Dict[str, Any]) -> Dict[str, Any]:
+    def perform_google_search(state: dict[str, Any]) -> dict[str, Any]:
         """Perform Google search and process results."""
         query = getattr(state, "query", "")
         search_terms = getattr(state, "search_terms", [query])
@@ -353,9 +350,9 @@ def create_google_search_callable(llm_config: LLMConfig):
         # Mock Google search for now (in real implementation, integrate with Google Search API)
         mock_search_results = f"""
         Search Results for "{search_terms[0]}":
-        
+
         1. Recent article from authoritative source about {query}
-        2. Wikipedia entry providing background information  
+        2. Wikipedia entry providing background information
         3. News article with current developments
         4. Academic paper with technical details
         5. Expert blog post with analysis
@@ -389,7 +386,6 @@ def create_google_search_callable(llm_config: LLMConfig):
 
 def create_adaptive_synthesis_callable(llm_config: LLMConfig):
     """Create callable function for adaptive synthesis."""
-
     synthesis_engine = AugLLMConfig(
         llm_config=llm_config,
         prompt_template=ADAPTIVE_SYNTHESIS_PROMPT,
@@ -397,7 +393,7 @@ def create_adaptive_synthesis_callable(llm_config: LLMConfig):
         output_key="adaptive_result",
     )
 
-    def synthesize_adaptive_response(state: Dict[str, Any]) -> Dict[str, Any]:
+    def synthesize_adaptive_response(state: dict[str, Any]) -> dict[str, Any]:
         """Synthesize final response from all sources."""
         query = getattr(state, "query", "")
 
@@ -508,8 +504,8 @@ class AdaptiveToolsRAGAgent(SequentialAgent):
     @classmethod
     def from_documents(
         cls,
-        documents: List[Document],
-        llm_config: Optional[LLMConfig] = None,
+        documents: list[Document],
+        llm_config: LLMConfig | None = None,
         enable_google_search: bool = True,
         enable_local_retrieval: bool = True,
         **kwargs,
@@ -573,8 +569,8 @@ class AdaptiveToolsRAGAgent(SequentialAgent):
 
 # Factory function
 def create_adaptive_tools_rag_agent(
-    documents: List[Document],
-    llm_config: Optional[LLMConfig] = None,
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
     tools_mode: str = "full",
     **kwargs,
 ) -> AdaptiveToolsRAGAgent:
@@ -606,7 +602,7 @@ def create_adaptive_tools_rag_agent(
 
 
 # I/O schema for compatibility
-def get_adaptive_tools_rag_io_schema() -> Dict[str, List[str]]:
+def get_adaptive_tools_rag_io_schema() -> dict[str, list[str]]:
     """Get I/O schema for Adaptive Tools RAG agents."""
     return {
         "inputs": ["query", "context", "messages"],

@@ -6,7 +6,7 @@ from haive_agents.memory_agent.memory_utils import (
     save_unstructured_memories,
     save_structured_memories,
     retrieve_memories
-)
+).
 
 __all__ = [
     'MemoryAgent',

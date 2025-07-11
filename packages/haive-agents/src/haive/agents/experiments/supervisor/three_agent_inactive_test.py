@@ -1,5 +1,4 @@
-"""
-Three-agent supervisor test with inactive agent activation.
+"""Three-agent supervisor test with inactive agent activation.
 
 This test demonstrates:
 1. Supervisor starts with 2 active agents (research, math)
@@ -12,15 +11,15 @@ This test demonstrates:
 import asyncio
 from typing import Any, Dict, List, Optional
 
-from haive.core.engine import AugLLMConfig
-from haive.core.llm import LLMConfig
-from haive.core.schema import StateSchema
-from haive.tools.tools.search_tools import tavily_search_tool
 from langchain_core.tools import tool
 from pydantic import Field, model_validator
 
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine import AugLLMConfig
+from haive.core.llm import LLMConfig
+from haive.core.schema import StateSchema
+from haive.tools.tools.search_tools import tavily_search_tool
 
 
 # Mock langgraph_supervisor tools until real implementation is available
@@ -34,7 +33,7 @@ def create_handoff_tool(target_agent_name: str, target_agent: Any, description: 
             result = asyncio.run(target_agent.arun(task))
             return f"{target_agent_name} response: {result}"
         except Exception as e:
-            return f"Error executing {target_agent_name}: {str(e)}"
+            return f"Error executing {target_agent_name}: {e!s}"
 
     transfer_tool.__name__ = f"transfer_to_{target_agent_name}"
     return transfer_tool
@@ -99,7 +98,7 @@ class EnhancedAgentRegistry:
             return True
         return False
 
-    def get_active_agents(self) -> Dict[str, Any]:
+    def get_active_agents(self) -> dict[str, Any]:
         """Get only active agents."""
         return {
             name: info
@@ -107,7 +106,7 @@ class EnhancedAgentRegistry:
             if name in self.active_agents
         }
 
-    def get_inactive_agents(self) -> Dict[str, Any]:
+    def get_inactive_agents(self) -> dict[str, Any]:
         """Get inactive agents."""
         return {
             name: info
@@ -122,17 +121,17 @@ class EnhancedAgentRegistry:
 
 # Supervisor State with capability tracking
 class SupervisorState(StateSchema):
-    messages: List[str] = Field(default_factory=list)
+    messages: list[str] = Field(default_factory=list)
     current_task: str = Field(default="")
-    required_capabilities: List[str] = Field(default_factory=list)
-    missing_capabilities: List[str] = Field(default_factory=list)
-    activation_history: List[Dict[str, Any]] = Field(default_factory=list)
+    required_capabilities: list[str] = Field(default_factory=list)
+    missing_capabilities: list[str] = Field(default_factory=list)
+    activation_history: list[dict[str, Any]] = Field(default_factory=list)
 
 
 # Dynamic Supervisor with Activation Logic
 class DynamicActivationSupervisor(ReactAgent):
     agent_registry: EnhancedAgentRegistry = Field(default_factory=EnhancedAgentRegistry)
-    capability_model: Optional[DynamicChoiceModel] = Field(default=None)
+    capability_model: DynamicChoiceModel | None = Field(default=None)
 
     @model_validator(mode="after")
     def setup_activation_supervisor(self):
@@ -177,7 +176,7 @@ class DynamicActivationSupervisor(ReactAgent):
 
         # Add capability check tool
         @tool
-        def check_required_capabilities(task_description: str) -> Dict[str, Any]:
+        def check_required_capabilities(task_description: str) -> dict[str, Any]:
             """Analyze task and identify required capabilities."""
             capabilities = []
 
@@ -219,8 +218,7 @@ class DynamicActivationSupervisor(ReactAgent):
                 # Update tools after activation
                 self._update_available_tools()
                 return f"Successfully activated {agent_name} for {capability}"
-            else:
-                return f"Agent {agent_name} is already active or doesn't exist"
+            return f"Agent {agent_name} is already active or doesn't exist"
 
         # Add all tools to engine
         if hasattr(self, "engine") and self.engine:
@@ -238,9 +236,7 @@ class DynamicActivationSupervisor(ReactAgent):
 
 async def test_dynamic_activation():
     """Test supervisor activating dormant agents as needed."""
-
     # Create specialized agents
-    print("Creating specialized agents...")
 
     # 1. Research Agent with Tavily
     research_engine = AugLLMConfig(
@@ -268,7 +264,7 @@ async def test_dynamic_activation():
     class Essay(BaseModel):
         title: str
         introduction: str
-        body_paragraphs: List[str]
+        body_paragraphs: list[str]
         conclusion: str
         word_count: int
 
@@ -285,13 +281,12 @@ async def test_dynamic_activation():
     )
 
     # Create supervisor
-    print("\nCreating dynamic supervisor...")
     supervisor_engine = AugLLMConfig(
         name="supervisor_engine",
         model="gpt-4",
         tools=[],  # Tools added dynamically
         system_message="""You are a dynamic supervisor that manages specialized agents.
-        
+
 Your workflow:
 1. Analyze the task to identify required capabilities
 2. Check which agents are currently active
@@ -309,7 +304,6 @@ Important: Always check required capabilities before attempting to route tasks."
     )
 
     # Register agents (essay writer is INACTIVE)
-    print("\nRegistering agents...")
     supervisor.agent_registry.register(
         "research_agent",
         research_agent,
@@ -329,32 +323,17 @@ Important: Always check required capabilities before attempting to route tasks."
     # Update supervisor tools after registration
     supervisor._update_available_tools()
 
-    print("\nInitial state:")
-    print(f"Active agents: {list(supervisor.agent_registry.active_agents)}")
-    print(
-        f"Inactive agents: {list(supervisor.agent_registry.get_inactive_agents().keys())}"
-    )
-
     # Test 1: Task that only needs active agents
-    print("\n--- Test 1: Math-only task ---")
-    result1 = await supervisor.arun(
+    await supervisor.arun(
         "Calculate the compound interest on $10,000 at 5% for 10 years"
     )
-    print(f"Result: {result1}")
 
     # Test 2: Task that requires inactive agent
-    print("\n--- Test 2: Task requiring essay writer (inactive) ---")
-    result2 = await supervisor.arun(
+    await supervisor.arun(
         "Research the benefits of renewable energy and write a short essay about it"
     )
-    print(f"Result: {result2}")
 
     # Check final state
-    print("\n--- Final State ---")
-    print(f"Active agents: {list(supervisor.agent_registry.active_agents)}")
-    print(
-        f"Activation history: {supervisor.state.activation_history if hasattr(supervisor.state, 'activation_history') else 'N/A'}"
-    )
 
 
 if __name__ == "__main__":

@@ -6,6 +6,7 @@
 ## Overview
 
 The Haive codebase has unique challenges:
+
 - Monorepo with multiple packages
 - Tools organized in non-standard ways (`toolkits/` vs direct imports)
 - Distributed examples throughout modules
@@ -47,7 +48,7 @@ autodoc_mock_imports = [
     'haive.agents.rag.self_rag',
     'haive.core.schema.compatibility',
     'haive.agents.planning.llm_compiler',
-    
+
     # External dependencies that might not be installed
     'langchain_community',
     'langgraph',
@@ -86,7 +87,7 @@ logger = logging.getLogger(__name__)
 
 class HaiveModuleDocumenter(ModuleDocumenter):
     """Custom documenter that understands Haive's structure."""
-    
+
     def import_object(self):
         """Import with fallback for reorganized modules."""
         try:
@@ -101,11 +102,11 @@ class HaiveModuleDocumenter(ModuleDocumenter):
 
 class HaiveToolDocumenter(ClassDocumenter):
     """Special handling for tool classes."""
-    
+
     def add_content(self, more_content, no_docstring=False):
         """Add tool-specific information."""
         super().add_content(more_content, no_docstring)
-        
+
         # Add tool metadata if available
         if hasattr(self.object, '_tool_metadata'):
             self.add_line('', '<autodoc>')
@@ -257,10 +258,10 @@ TState = TypeVar('TState', bound=StateSchema)
 
 class Agent(Generic[TState]):
     """Base class for all Haive agents.
-    
+
     This class provides the foundation for building conversational and task-oriented
     agents. It handles state management, graph compilation, and execution flow.
-    
+
     Args:
         name: Unique identifier for the agent instance.
         engine: Language model engine configuration or instance.
@@ -273,30 +274,30 @@ class Agent(Generic[TState]):
         interrupt_before: List of node names to pause execution before.
         interrupt_after: List of node names to pause execution after.
         debug: Enable debug logging and execution tracing.
-        
+
     Attributes:
         name: Agent's unique identifier.
         graph: Compiled state graph representing the agent's workflow.
         state_schema: Pydantic model defining state structure.
         tools: Dictionary of available tools mapped by name.
-        
+
     Type Parameters:
         TState: State schema type, must inherit from StateSchema.
-        
+
     Raises:
         ConfigurationError: If engine or state schema configuration is invalid.
         ToolError: If tool initialization fails.
-        
+
     Examples:
         Basic usage with default state:
-        
+
         >>> agent = Agent(name="assistant")
         >>> response = await agent.arun("Hello!")
         >>> print(response)
         'Hello! How can I help you today?'
-        
+
         Custom state schema:
-        
+
         >>> class MyState(StateSchema):
         ...     context: str = ""
         ...     history: List[str] = Field(default_factory=list)
@@ -305,25 +306,25 @@ class Agent(Generic[TState]):
         ...     name="contextual",
         ...     state_schema=MyState
         ... )
-        
+
         With tools:
-        
+
         >>> agent = Agent(
         ...     name="researcher",
         ...     tools=["web_search", "calculator"]
         ... )
-        
+
     Note:
         Agents are stateful and maintain conversation context. Use the
         `config` parameter with a `thread_id` to maintain state across
         multiple interactions.
-        
+
     See Also:
         - :class:`SimpleAgent`: Basic conversational agent
         - :class:`ReactAgent`: Agent with reasoning and tool use
         - :class:`MultiAgent`: Orchestrator for multiple agents
     """
-    
+
     def __init__(
         self,
         name: str,
@@ -336,11 +337,11 @@ class Agent(Generic[TState]):
         debug: bool = False
     ) -> None:
         """Initialize the agent.
-        
+
         See class docstring for detailed parameter descriptions.
         """
         pass
-        
+
     async def arun(
         self,
         input: Union[str, Dict[str, Any]],
@@ -349,26 +350,26 @@ class Agent(Generic[TState]):
         **kwargs: Any
     ) -> Any:
         """Execute the agent asynchronously.
-        
+
         Args:
             input: User input as string or structured dictionary.
             config: Runtime configuration including thread_id for state.
             **kwargs: Additional arguments passed to the graph execution.
-            
+
         Returns:
             Agent's response. Type depends on output schema configuration.
-            
+
         Raises:
             ExecutionError: If graph execution fails.
             TimeoutError: If execution exceeds configured timeout.
-            
+
         Examples:
             Simple execution:
-            
+
             >>> response = await agent.arun("What's the weather?")
-            
+
             With conversation state:
-            
+
             >>> config = {"configurable": {"thread_id": "user123"}}
             >>> await agent.arun("My name is Alice", config=config)
             >>> response = await agent.arun("What's my name?", config=config)
@@ -455,38 +456,38 @@ def check_docstring_coverage(package_path):
         'functions': {'total': 0, 'documented': 0},
         'methods': {'total': 0, 'documented': 0},
     }
-    
+
     for py_file in Path(package_path).rglob('*.py'):
         if '__pycache__' in str(py_file):
             continue
-            
+
         with open(py_file) as f:
             try:
                 tree = ast.parse(f.read())
             except:
                 continue
-                
+
         # Check module docstring
         stats['modules']['total'] += 1
         if ast.get_docstring(tree):
             stats['modules']['documented'] += 1
-            
+
         # Walk the AST
         for node in ast.walk(tree):
             if isinstance(node, ast.ClassDef):
                 stats['classes']['total'] += 1
                 if ast.get_docstring(node):
                     stats['classes']['documented'] += 1
-                    
+
             elif isinstance(node, ast.FunctionDef):
                 if node.name.startswith('_') and not node.name.startswith('__'):
                     continue  # Skip private methods
-                    
+
                 category = 'methods' if isinstance(node, ast.AsyncFunctionDef) else 'functions'
                 stats[category]['total'] += 1
                 if ast.get_docstring(node):
                     stats[category]['documented'] += 1
-                    
+
     return stats
 ```
 

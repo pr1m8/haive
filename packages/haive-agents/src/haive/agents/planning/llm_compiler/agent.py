@@ -1,4 +1,4 @@
-"""LLM Compiler Agent Implementation
+"""LLM Compiler Agent Implementation.
 
 This implementation follows the LLM Compiler architecture from the paper by Kim et al.,
 focusing on parallelizable task execution through a DAG structure.
@@ -105,16 +105,10 @@ class LLMCompilerAgent(AgentArchitecture):
             else:
                 plan = self.parser.parse(str(result))
 
-            print(f"Generated plan with {len(plan.steps)} steps")
-
             # Update state
             return {"plan": plan}
 
-        except Exception as e:
-            import traceback
-
-            print(f"Error generating plan: {e}")
-            print(traceback.format_exc())
+        except Exception:
 
             # Create a fallback plan
             plan = self._create_fallback_plan(state.query)
@@ -241,8 +235,6 @@ class LLMCompilerAgent(AgentArchitecture):
             # No steps to execute, might be done or stuck
             return {}
 
-        print(f"Executing {len(executable_steps)} steps in parallel")
-
         # Track new results from this execution round
         new_results = {}
 
@@ -270,7 +262,6 @@ class LLMCompilerAgent(AgentArchitecture):
 
                 except Exception as e:
                     error_msg = f"Error executing step {step_id}: {e!s}"
-                    print(error_msg)
                     new_results[step_id] = error_msg
 
         # Update results in state
@@ -346,15 +337,9 @@ class LLMCompilerAgent(AgentArchitecture):
                 message = AIMessage(content=output.action.response)
                 return {"messages": [message], "done": True}
             # Replan
-            feedback = output.action.feedback
-            print(f"Replanning with feedback: {feedback}")
             return {"replan": True, "replan_count": state.replan_count + 1}
 
-        except Exception as e:
-            import traceback
-
-            print(f"Error in joiner: {e}")
-            print(traceback.format_exc())
+        except Exception:
 
             # Default to providing a simple response
             response = self._generate_fallback_response(state)
@@ -455,7 +440,6 @@ class LLMCompilerAgent(AgentArchitecture):
         self.graph.add_edge(START, "planner")
 
         # Compile the graph
-        # self.graph = self.graph.compile()
 
         # Visualize if configured
 
@@ -476,7 +460,6 @@ class LLMCompilerAgent(AgentArchitecture):
         initial_state = CompilerState(query=query)
 
         # Run the agent
-        print(f"Running query: {query}")
         final_state = self.app.ainvoke(
             initial_state, config=self.config.runnable_config, debug=True
         )
@@ -507,7 +490,6 @@ class LLMCompilerAgent(AgentArchitecture):
         initial_state = CompilerState(query=query)
 
         # Run the agent
-        print(f"Running query asynchronously: {query}")
         final_state = await self.app.ainvoke(
             initial_state, config=self.config.runnable_config, debug=True
         )

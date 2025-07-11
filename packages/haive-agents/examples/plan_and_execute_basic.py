@@ -14,6 +14,7 @@ from haive.agents.planning.p_and_e.models import Act, Plan
 from haive.agents.react import ReactAgent
 from haive.agents.simple import SimpleAgent
 
+
 # Load environment variables
 load_dotenv()
 
@@ -37,9 +38,6 @@ def calculate(expression: str) -> str:
 
 async def main():
     """Run the most basic Plan and Execute example."""
-
-    print("🚀 Starting Basic Plan and Execute Demo\n")
-
     # Create agents with the simplest configuration
     planner = SimpleAgent(
         name="planner",
@@ -73,24 +71,14 @@ async def main():
     # Simple query
     query = "Calculate the sum of the first 5 prime numbers"
 
-    print(f"📋 Query: {query}\n")
-
     try:
         # Run with simple string input
-        result = await agent.arun(query)
+        await agent.arun(query)
 
-        print(f"\n✅ Final Result:")
-        print(f"{'-'*40}")
-        print(result)
-        print(f"{'-'*40}")
-
-    except Exception as e:
-        print(f"\n❌ Error: {e}")
+    except Exception:
         import traceback
 
         traceback.print_exc()
-
-    print("\n🎉 Demo completed!")
 
 
 if __name__ == "__main__":

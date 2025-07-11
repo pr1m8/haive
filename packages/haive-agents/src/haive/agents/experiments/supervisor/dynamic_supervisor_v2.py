@@ -11,12 +11,12 @@ No fancy features - just the core dynamic tooling pattern.
 
 from typing import Any, Dict, List, Optional
 
-from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
-from haive.core.schema import StateSchema
 from langchain_core.tools import tool
 from pydantic import Field, model_validator
 
 from haive.agents.react.agent import ReactAgent
+from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
+from haive.core.schema import StateSchema
 
 
 class SupervisorState(StateSchema):
@@ -24,34 +24,34 @@ class SupervisorState(StateSchema):
 
     # Core state
     current_task: str = Field(default="")
-    agent_to_execute: Optional[str] = Field(default=None)
+    agent_to_execute: str | None = Field(default=None)
     agent_task: str = Field(default="")
-    agent_response: Optional[str] = Field(default=None)
+    agent_response: str | None = Field(default=None)
 
     # Registry tracking
-    available_agents: Dict[str, str] = Field(
+    available_agents: dict[str, str] = Field(
         default_factory=dict
     )  # name -> description
-    execution_history: List[Dict[str, Any]] = Field(default_factory=list)
+    execution_history: list[dict[str, Any]] = Field(default_factory=list)
 
 
 class AgentRegistry:
     """Simple registry for holding agents."""
 
     def __init__(self):
-        self.agents: Dict[str, Any] = {}
-        self.descriptions: Dict[str, str] = {}
+        self.agents: dict[str, Any] = {}
+        self.descriptions: dict[str, str] = {}
 
     def register(self, name: str, agent: Any, description: str):
         """Register an agent with description."""
         self.agents[name] = agent
         self.descriptions[name] = description
 
-    def get(self, name: str) -> Optional[Any]:
+    def get(self, name: str) -> Any | None:
         """Get agent by name."""
         return self.agents.get(name)
 
-    def list_available(self) -> Dict[str, str]:
+    def list_available(self) -> dict[str, str]:
         """List all available agents with descriptions."""
         return self.descriptions.copy()
 
@@ -69,13 +69,11 @@ class DynamicSupervisorV2(ReactAgent):
 
     # Core components
     agent_registry: AgentRegistry = Field(default_factory=AgentRegistry)
-    agent_choice_model: Optional[DynamicChoiceModel] = Field(default=None)
+    agent_choice_model: DynamicChoiceModel | None = Field(default=None)
 
     @model_validator(mode="after")
     def setup_dynamic_supervisor(self):
         """Set up supervisor with dynamic tool creation."""
-        print("🔧 Setting up dynamic supervisor v2...")
-
         # Initialize choice model
         self.agent_choice_model = DynamicChoiceModel(
             model_name="AgentChoice", include_end=True
@@ -84,13 +82,10 @@ class DynamicSupervisorV2(ReactAgent):
         # Build initial tools (will be updated when agents are added)
         self._rebuild_tools()
 
-        print("✅ Dynamic supervisor v2 setup complete!")
         return self
 
     def _rebuild_tools(self):
         """Rebuild all tools based on current registry state."""
-        print("🔨 Rebuilding tools from registry...")
-
         # Get available agents
         available_agents = self.agent_registry.list_available()
 
@@ -101,7 +96,7 @@ class DynamicSupervisorV2(ReactAgent):
                 self.agent_choice_model.remove_option_by_name(existing_name)
 
         # Add new agents
-        for agent_name in available_agents.keys():
+        for agent_name in available_agents:
             self.agent_choice_model.add_option(agent_name)
 
         # Create dynamic tools
@@ -121,9 +116,8 @@ class DynamicSupervisorV2(ReactAgent):
         # 4. Execution status tool
         tools.append(self._create_execution_status_tool())
 
-        print(f"Created {len(tools)} dynamic tools:")
-        for tool in tools:
-            print(f"  - {tool.name}")
+        for _tool in tools:
+            pass
 
         # Update engine tools if we have an engine
         if hasattr(self, "engine") and self.engine:
@@ -177,7 +171,6 @@ class DynamicSupervisorV2(ReactAgent):
                 The chosen agent name and next steps
             """
             try:
-                print(f"🤔 Choosing agent for task: {task_description}")
 
                 # Get current choice model
                 if not self.agent_choice_model:
@@ -185,8 +178,6 @@ class DynamicSupervisorV2(ReactAgent):
 
                 ChoiceModel = self.agent_choice_model.current_model
                 available_options = self.agent_choice_model.option_names
-
-                print(f"Available options: {available_options}")
 
                 # Simple heuristic-based selection
                 task_lower = task_description.lower()
@@ -214,12 +205,10 @@ class DynamicSupervisorV2(ReactAgent):
 
                 if validated_choice.choice == "END":
                     return f"Task complete or no suitable agent found. Chosen: {validated_choice.choice}"
-                else:
-                    return f"Chosen agent: {validated_choice.choice}. Use handoff_to_{validated_choice.choice} to execute."
+                return f"Chosen agent: {validated_choice.choice}. Use handoff_to_{validated_choice.choice} to execute."
 
             except Exception as e:
-                print(f"❌ Error in choose_agent: {e}")
-                return f"Error choosing agent: {str(e)}"
+                return f"Error choosing agent: {e!s}"
 
         return choose_agent
 
@@ -236,7 +225,6 @@ class DynamicSupervisorV2(ReactAgent):
                 Result from the agent execution
             """
             try:
-                print(f"🔄 Handing off to {agent_name}: {task_description}")
 
                 # Get the agent
                 agent = self.agent_registry.get(agent_name)
@@ -267,7 +255,6 @@ class DynamicSupervisorV2(ReactAgent):
                 return f"{agent_name} response: {response}"
 
             except Exception as e:
-                print(f"❌ Error in handoff to {agent_name}: {e}")
 
                 # Record failure
                 self.state.execution_history.append(
@@ -279,7 +266,7 @@ class DynamicSupervisorV2(ReactAgent):
                     }
                 )
 
-                return f"Error executing {agent_name}: {str(e)}"
+                return f"Error executing {agent_name}: {e!s}"
 
         # Set dynamic name and use tool decorator
         handoff_tool.__name__ = f"handoff_to_{agent_name}"
@@ -302,7 +289,6 @@ class DynamicSupervisorV2(ReactAgent):
                 Formatted response from the agent
             """
             try:
-                print(f"📤 Forwarding to {agent_name}: {message}")
 
                 # Get the agent
                 agent = self.agent_registry.get(agent_name)
@@ -328,8 +314,7 @@ class DynamicSupervisorV2(ReactAgent):
                 return f"Forwarded to {agent_name}: {response}"
 
             except Exception as e:
-                print(f"❌ Error forwarding to {agent_name}: {e}")
-                return f"Error forwarding to {agent_name}: {str(e)}"
+                return f"Error forwarding to {agent_name}: {e!s}"
 
         # Set dynamic name
         forward_tool.__name__ = f"forward_to_{agent_name}"
@@ -361,8 +346,6 @@ class DynamicSupervisorV2(ReactAgent):
 
     def add_agent(self, name: str, agent: Any, description: str):
         """Add agent to registry and rebuild tools."""
-        print(f"➕ Adding agent: {name}")
-
         # Register the agent
         self.agent_registry.register(name, agent, description)
 
@@ -372,12 +355,8 @@ class DynamicSupervisorV2(ReactAgent):
         # Update state
         self.state.available_agents = self.agent_registry.list_available()
 
-        print(f"✅ Agent {name} added and tools rebuilt")
-
     def remove_agent(self, name: str) -> bool:
         """Remove agent from registry and rebuild tools."""
-        print(f"➖ Removing agent: {name}")
-
         # Remove from registry
         if self.agent_registry.remove(name):
             # Rebuild tools without the removed agent
@@ -386,8 +365,5 @@ class DynamicSupervisorV2(ReactAgent):
             # Update state
             self.state.available_agents = self.agent_registry.list_available()
 
-            print(f"✅ Agent {name} removed and tools rebuilt")
             return True
-        else:
-            print(f"❌ Agent {name} not found")
-            return False
+        return False

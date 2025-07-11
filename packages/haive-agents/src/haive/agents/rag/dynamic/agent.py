@@ -1,12 +1,11 @@
 import logging
 import time
 
+from haive.agents.rag.base.agent import BaseRAGAgent
+from haive.agents.rag.dynamic.config import DynamicRAGConfig
 from haive.core.engine.agent.agent import register_agent
 from haive.core.graph import DynamicGraph
 from langgraph.graph import END, START
-
-from haive.agents.rag.base.agent import BaseRAGAgent
-from haive.agents.rag.dynamic.config import DynamicRAGConfig
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +28,7 @@ class DynamicRAGAgent(BaseRAGAgent):
                 self.retrievers[name] = source_config.create_retriever()
                 logger.info(f"Initialized data source: {name}")
             except Exception as e:
-                logger.error(f"Failed to initialize data source {name}: {e}")
+                logger.exception(f"Failed to initialize data source {name}: {e}")
 
     def _init_router(self):
         """Initialize the query router."""
@@ -110,7 +109,7 @@ class DynamicRAGAgent(BaseRAGAgent):
             }
 
         except Exception as e:
-            logger.error(f"Error in query routing: {e}")
+            logger.exception(f"Error in query routing: {e}")
 
             # Fall back to default source
             if (
@@ -166,7 +165,7 @@ class DynamicRAGAgent(BaseRAGAgent):
                         source_documents[source_name] = docs
                         source_metrics[source_name] = metrics
                     except Exception as e:
-                        logger.error(f"Error in parallel retrieval: {e}")
+                        logger.exception(f"Error in parallel retrieval: {e}")
 
         else:
             # Sequential retrieval
@@ -184,7 +183,7 @@ class DynamicRAGAgent(BaseRAGAgent):
                             "document_count": len(docs),
                         }
                     except Exception as e:
-                        logger.error(f"Error retrieving from {source_name}: {e}")
+                        logger.exception(f"Error retrieving from {source_name}: {e}")
                         source_documents[source_name] = []
                         source_metrics[source_name] = {"error": str(e)}
 
@@ -199,7 +198,7 @@ class DynamicRAGAgent(BaseRAGAgent):
 
         # If only one source has results, use them directly
         if len(source_documents) == 1:
-            source_name = list(source_documents.keys())[0]
+            source_name = next(iter(source_documents.keys()))
             return {"retrieved_documents": source_documents[source_name]}
 
         # Flatten all documents
@@ -254,7 +253,7 @@ class DynamicRAGAgent(BaseRAGAgent):
             return {"retrieved_documents": list(unique_docs.values())}
 
         except Exception as e:
-            logger.error(f"Error in result merging: {e}")
+            logger.exception(f"Error in result merging: {e}")
             # Fall back to all documents
             return {"retrieved_documents": all_docs}
 

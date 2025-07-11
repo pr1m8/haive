@@ -11,7 +11,6 @@ class BaseRAGInputState(BaseModel):
 class BaseRAGOutputState(BaseModel):
     """Output state for RAG agents."""
 
-    # answer:str = Field(default="", description="The generation of the RAG search.")
     retrieved_documents: list[Document] | list[str] | None = Field(
         default=[], description="The results of the RAG search."
     )

@@ -1,12 +1,12 @@
+from langchain_core.documents import Document
+from langchain_neo4j.graphs.graph_document import GraphDocument
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
-from langchain_core.documents import Document
-from langchain_neo4j.graphs.graph_document import GraphDocument
 
 from haive.agents.document_modifiers.kg.kg_map_merge.agent import StructuredKGAgent
 from haive.agents.document_modifiers.kg.kg_map_merge.config import ParallelKGAgentConfig
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 
 def visualize_graph(
@@ -14,7 +14,6 @@ def visualize_graph(
 ):
     """Visualize the graph document using NetworkX and matplotlib."""
     if not graph_document:
-        print("No graph to visualize")
         return
 
     # Create a NetworkX graph
@@ -101,10 +100,9 @@ def visualize_graph(
     plt.savefig(output_file, format="png", dpi=300, bbox_inches="tight")
     plt.close()
 
-    print(f"Graph visualization saved to {output_file}")
-
 
 from langchain_community.graphs.graph_document import GraphDocument, Node, Relationship
+
 
 a = GraphDocument(
     nodes=[

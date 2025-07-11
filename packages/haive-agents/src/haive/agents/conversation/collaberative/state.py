@@ -4,9 +4,8 @@
 import operator
 from typing import Literal
 
-from pydantic import Field
-
 from haive.agents.conversation.base.state import ConversationState
+from pydantic import Field
 
 
 def merge_document_sections(

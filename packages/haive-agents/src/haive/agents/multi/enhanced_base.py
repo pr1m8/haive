@@ -17,18 +17,18 @@ and state management.
 
 Example:
     Sequential multi-agent system::
-    
+
         agents = [planner, executor, validator]
         multi_agent = MultiAgentBase(
             agents=agents,
             name="sequential_pipeline"
         )
-        
+
     Conditional branching system::
-    
+
         def route_condition(state) -> str:
             return "success" if state.validation_passed else "retry"
-            
+
         multi_agent = MultiAgentBase(
             agents=[processor, validator, retrier],
             branches=[
@@ -47,6 +47,7 @@ See Also:
 import logging
 from typing import Any, Callable, Dict, List, Optional, Type, Union
 
+from haive.agents.base.agent import Agent
 from haive.core.graph.node.agent_node import AgentNodeConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.agent_schema_composer import AgentSchemaComposer, BuildMode
@@ -54,14 +55,12 @@ from haive.core.schema.state_schema import StateSchema
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field, field_validator, validator
 
-from haive.agents.base.agent import Agent
-
 logger = logging.getLogger(__name__)
 
 
 class AgentList(list):
     """List of agents with dict-like access by name."""
-    
+
     def __getitem__(self, key):
         """Get agent by index (int) or name (str)."""
         if isinstance(key, str):
@@ -72,13 +71,13 @@ class AgentList(list):
             raise KeyError(f"Agent '{key}' not found")
         # Normal list access by index
         return super().__getitem__(key)
-    
+
     def __contains__(self, key):
         """Check if agent exists by name (str) or object (Agent)."""
         if isinstance(key, str):
             return any(agent.name == key for agent in self)
         return super().__contains__(key)
-    
+
     def get(self, key: str, default=None):
         """Get agent by name with optional default."""
         try:
@@ -95,7 +94,7 @@ class MultiAgentBase(Agent):
     management. It extends the base Agent class while orchestrating multiple sub-agents.
 
     The system supports various orchestration patterns:
-    
+
     - **Sequential**: Agents execute in order (default behavior)
     - **Conditional**: Dynamic routing based on state conditions
     - **Parallel Schema**: Isolated field namespaces for complex state management
@@ -115,17 +114,17 @@ class MultiAgentBase(Agent):
 
     Example:
         Sequential execution (default)::
-        
+
             multi_agent = MultiAgentBase(
                 agents=[agent1, agent2, agent3],
                 name="sequential_pipeline"
             )
 
         Conditional branching::
-        
+
             def route_condition(state) -> str:
                 return "success" if state.is_valid else "retry"
-            
+
             multi_agent = MultiAgentBase(
                 agents=[processor, validator, retrier],
                 branches=[
@@ -137,7 +136,7 @@ class MultiAgentBase(Agent):
             )
 
         Parallel schema composition::
-        
+
             multi_agent = MultiAgentBase(
                 agents=[planner, executor, replanner],
                 schema_build_mode=BuildMode.PARALLEL,
@@ -156,11 +155,13 @@ class MultiAgentBase(Agent):
     """
 
     # Core configuration
-    agents: AgentList = Field(default_factory=AgentList, description="List of agents to orchestrate")
-    branches: Optional[List[tuple]] = Field(
+    agents: AgentList = Field(
+        default_factory=AgentList, description="List of agents to orchestrate"
+    )
+    branches: list[tuple] | None = Field(
         default=None, description="Conditional routing branches"
     )
-    state_schema_override: Optional[Type[StateSchema]] = Field(
+    state_schema_override: type[StateSchema] | None = Field(
         default=None, description="Optional state schema override"
     )
     schema_build_mode: BuildMode = Field(
@@ -172,13 +173,13 @@ class MultiAgentBase(Agent):
     include_meta: bool = Field(
         default=True, description="Include meta state for coordination"
     )
-    entry_points: Optional[List[Union[str, Agent]]] = Field(
+    entry_points: list[str | Agent] | None = Field(
         default=None, description="Entry points for the multi-agent system"
     )
-    finish_points: Optional[List[Union[str, Agent]]] = Field(
+    finish_points: list[str | Agent] | None = Field(
         default=None, description="Finish points for the multi-agent system"
     )
-    workflow_nodes: Optional[Dict[str, Callable]] = Field(
+    workflow_nodes: dict[str, Callable] | None = Field(
         default_factory=dict, description="Custom workflow nodes"
     )
     create_missing_nodes: bool = Field(
@@ -186,10 +187,10 @@ class MultiAgentBase(Agent):
     )
 
     # State tracking
-    agent_node_mapping: Dict[str, str] = Field(default_factory=dict)
-    conditional_edges: List[Dict[str, Any]] = Field(default_factory=list)
+    agent_node_mapping: dict[str, str] = Field(default_factory=dict)
+    conditional_edges: list[dict[str, Any]] = Field(default_factory=list)
 
-    @field_validator('agents', mode='before')
+    @field_validator("agents", mode="before")
     @classmethod
     def convert_to_agent_list(cls, v):
         """Convert regular list to AgentList."""
@@ -200,12 +201,12 @@ class MultiAgentBase(Agent):
     def _auto_detect_agents(self) -> AgentList:
         """Auto-detect agents from individual agent fields."""
         detected_agents = AgentList()
-        
+
         # Get all fields that are Agent instances
-        for field_name, field_value in self.__dict__.items():
+        for _field_name, field_value in self.__dict__.items():
             if isinstance(field_value, Agent):
                 detected_agents.append(field_value)
-        
+
         return detected_agents
 
     def model_post_init(self, __context: Any) -> None:
@@ -214,7 +215,7 @@ class MultiAgentBase(Agent):
         # Auto-compose agents from individual agent fields if not provided
         if not self.agents:
             self.agents = self._auto_detect_agents()
-            
+
         # Validate agents
         if not self.agents:
             raise ValueError("MultiAgentBase requires at least one agent")
@@ -260,10 +261,10 @@ class MultiAgentBase(Agent):
 
     def add_conditional_edges(
         self,
-        source_agent: Union[str, Agent],
+        source_agent: str | Agent,
         condition: Callable[[Any], Any],
-        destinations: Union[str, List[str], Dict[Any, Union[str, Agent]]],
-        default: Union[str, Agent, None] = END,
+        destinations: str | list[str] | dict[Any, str | Agent],
+        default: str | Agent | None = END,
     ) -> None:
         """Add conditional edges between agents with simple API.
 
@@ -282,10 +283,10 @@ class MultiAgentBase(Agent):
 
         Example:
             Simple conditional routing::
-            
+
                 def route_condition(state):
                     return "success" if state.is_valid else "retry"
-                
+
                 multi_agent.add_conditional_edges(
                     source_agent=validator,
                     condition=route_condition,
@@ -310,11 +311,8 @@ class MultiAgentBase(Agent):
             }
         )
 
-    def add_edge(
-        self, source_agent: Union[str, Agent], target_agent: Union[str, Agent]
-    ) -> None:
-        """
-        Add a simple edge between agents.
+    def add_edge(self, source_agent: str | Agent, target_agent: str | Agent) -> None:
+        """Add a simple edge between agents.
 
         Args:
             source_agent: Source agent
@@ -329,7 +327,7 @@ class MultiAgentBase(Agent):
             }
         )
 
-    def _get_agent_node_name(self, agent: Union[str, Agent]) -> str:
+    def _get_agent_node_name(self, agent: str | Agent) -> str:
         """Get the node name for an agent."""
         if isinstance(agent, str):
             if agent in [START, END, "START", "END"]:
@@ -359,23 +357,23 @@ class MultiAgentBase(Agent):
 
         return self.agent_node_mapping[base_name]
 
-    def _normalize_destination(self, dest: Union[str, Agent]) -> str:
+    def _normalize_destination(self, dest: str | Agent) -> str:
         """Normalize destination to node name."""
-        if dest == END or dest == "END":
+        if dest in (END, "END"):
             return END
-        if dest == START or dest == "START":
+        if dest in (START, "START"):
             return START
         return self._get_agent_node_name(dest)
 
-    def _serialize_engine_for_state(self, engine: Any) -> Dict[str, Any]:
+    def _serialize_engine_for_state(self, engine: Any) -> dict[str, Any]:
         """Serialize an engine to a dict that can be stored in state and serialized by msgpack.
-        
+
         The agent node can model validate this dict back to an engine if needed.
         """
         if not hasattr(engine, "model_dump"):
             # Not a Pydantic model, try to convert to dict
             return {"name": str(engine), "type": "unknown"}
-        
+
         try:
             # Get base serialization with mode='json' to handle SecretStr and other special types
             engine_dict = engine.model_dump(
@@ -384,16 +382,16 @@ class MultiAgentBase(Agent):
                 exclude_none=True,
                 exclude_unset=True,  # Don't include unset fields
             )
-            
+
             # Handle fields that contain Pydantic classes or other non-serializable objects
             # These fields typically contain ModelMetaclass objects
             fields_to_clean = [
                 "tools",
-                "schemas", 
+                "schemas",
                 "pydantic_tools",
                 "structured_output_model",
             ]
-            
+
             for field in fields_to_clean:
                 if field in engine_dict:
                     value = engine_dict[field]
@@ -420,9 +418,9 @@ class MultiAgentBase(Agent):
                     else:
                         # For other types, remove them
                         engine_dict[field] = None
-            
+
             return engine_dict
-            
+
         except Exception as e:
             logger.warning(
                 f"Failed to serialize engine {getattr(engine, 'name', 'unknown')}: {e}"
@@ -436,13 +434,13 @@ class MultiAgentBase(Agent):
 
     def _prepare_input(self, input_data: Any) -> Any:
         """Prepare input data for the multi-agent system.
-        
+
         For PARALLEL mode, we don't pass engines through state to avoid
         serialization issues. Each agent will use its own engines.
         """
         # Call parent's _prepare_input first
         prepared = super()._prepare_input(input_data)
-        
+
         # Ensure prepared is a dict
         if hasattr(prepared, "model_dump"):
             prepared_dict = prepared.model_dump()
@@ -450,7 +448,7 @@ class MultiAgentBase(Agent):
             prepared_dict = prepared
         else:
             prepared_dict = {"messages": []}
-        
+
         # For PARALLEL mode, explicitly remove engine and engines fields
         # to avoid abstract class instantiation issues
         if self.schema_build_mode == BuildMode.PARALLEL:
@@ -460,7 +458,7 @@ class MultiAgentBase(Agent):
             logger.debug(
                 "Removed engine fields from state for PARALLEL mode to avoid serialization issues"
             )
-        
+
         # Convert back to state schema if needed
         if self.state_schema and not isinstance(prepared, self.state_schema):
             try:
@@ -468,29 +466,29 @@ class MultiAgentBase(Agent):
             except Exception as e:
                 logger.warning(f"Could not convert to state schema: {e}")
                 return prepared_dict
-        
+
         return prepared
 
     def build_graph(self) -> BaseGraph:
         """Build the execution graph using the configured agents and routing logic.
-        
+
         This method creates the complete execution graph by:
-        
+
         1. Adding all agents as nodes with proper configuration
         2. Adding custom workflow nodes for state processing
         3. Setting up entry points for execution flow
         4. Processing conditional edges for dynamic routing
         5. Creating sequential flow if no explicit routing is defined
         6. Configuring finish points for completion
-        
+
         The graph building process handles both simple sequential execution and
         complex conditional routing patterns, automatically normalizing destinations
         and creating the appropriate edge types.
-        
+
         Returns:
             BaseGraph: Compiled graph ready for execution with all nodes, edges,
                 and routing logic properly configured
-                
+
         Note:
             This method is called automatically during agent execution setup.
             The resulting graph uses the advanced BaseGraph functionality for
@@ -555,13 +553,15 @@ class MultiAgentBase(Agent):
             # Track which agents have explicit outgoing edges
             agents_with_edges = set()
             for edge_config in self.conditional_edges:
-                agents_with_edges.add(self._get_agent_node_name(edge_config["source_agent"]))
-            
+                agents_with_edges.add(
+                    self._get_agent_node_name(edge_config["source_agent"])
+                )
+
             # Add sequential edges for agents without explicit routing
             for i in range(len(self.agents) - 1):
                 current_node = self._get_agent_node_name(self.agents[i])
                 next_node = self._get_agent_node_name(self.agents[i + 1])
-                
+
                 # Only add sequential edge if no explicit edge exists
                 if current_node not in agents_with_edges:
                     graph.add_edge(current_node, next_node)
@@ -579,29 +579,29 @@ class MultiAgentBase(Agent):
 
 
 def create_sequential_multi_agent(
-    agents: List[Agent],
+    agents: list[Agent],
     name: str = "Sequential Multi-Agent",
-    state_schema: Optional[Type[StateSchema]] = None,
+    state_schema: type[StateSchema] | None = None,
     **kwargs,
 ) -> MultiAgentBase:
     """Create a simple sequential multi-agent system.
-    
+
     This convenience function creates a MultiAgentBase configured for sequential
     execution where agents run in the order provided. The system uses SEQUENCE
     schema build mode for unified state management.
-    
+
     Args:
         agents: List of agents to execute in sequence
         name: Name for the multi-agent system
         state_schema: Optional state schema override
         **kwargs: Additional configuration options for MultiAgentBase
-        
+
     Returns:
         MultiAgentBase: Configured sequential multi-agent system
-        
+
     Example:
         Create a simple pipeline::
-        
+
             agents = [preprocessor, analyzer, summarizer]
             pipeline = create_sequential_multi_agent(
                 agents=agents,
@@ -618,41 +618,41 @@ def create_sequential_multi_agent(
 
 
 def create_branching_multi_agent(
-    agents: List[Agent],
-    branches: List[tuple],
+    agents: list[Agent],
+    branches: list[tuple],
     name: str = "Branching Multi-Agent",
-    state_schema: Optional[Type[StateSchema]] = None,
+    state_schema: type[StateSchema] | None = None,
     **kwargs,
 ) -> MultiAgentBase:
     """Create a multi-agent system with conditional branching.
-    
+
     This convenience function creates a MultiAgentBase configured for conditional
     execution with branching logic. The system uses SEQUENCE schema build mode
     by default for unified state management.
-    
+
     Args:
         agents: List of agents involved in the branching system
         branches: List of branch tuples defining conditional routing
         name: Name for the multi-agent system
         state_schema: Optional state schema override
         **kwargs: Additional configuration options for MultiAgentBase
-        
+
     Returns:
         MultiAgentBase: Configured branching multi-agent system
-        
+
     Example:
         Create a system with conditional routing::
-        
+
             def route_condition(state):
                 return "success" if state.is_valid else "retry"
-            
+
             branches = [
                 (validator, route_condition, {
                     "success": "END",
                     "retry": processor
                 })
             ]
-            
+
             system = create_branching_multi_agent(
                 agents=[processor, validator],
                 branches=branches,
@@ -674,12 +674,11 @@ def create_plan_execute_multi_agent(
     executor_agent: Agent,
     replanner_agent: Agent,
     name: str = "Plan and Execute System",
-    state_schema: Optional[Type[StateSchema]] = None,
+    state_schema: type[StateSchema] | None = None,
     schema_build_mode: BuildMode = BuildMode.PARALLEL,
     **kwargs,
 ) -> MultiAgentBase:
     """Create a Plan and Execute multi-agent system with proper routing."""
-
     # Import PlanExecuteState here to avoid circular imports
     from haive.agents.planning.p_and_e.state import PlanExecuteState
 
@@ -692,17 +691,14 @@ def create_plan_execute_multi_agent(
         if hasattr(state, "plan") and state.plan:
             if state.plan.is_complete:
                 return "replanner"
-            elif hasattr(state, "should_replan") and state.should_replan:
-                return "replanner"
-            else:
-                return "executor"
+            return "executor"
         return "replanner"
 
     def route_after_replan(state) -> str:
         """Route after replanning decision."""
         if hasattr(state, "final_answer") and state.final_answer:
             return END
-        elif hasattr(state, "plan") and state.plan:
+        if hasattr(state, "plan") and state.plan:
             return "executor"
         return END
 

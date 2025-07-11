@@ -35,9 +35,6 @@ Example:
         >>> }
 """
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.output_parsers import StrOutputParser
-
 from haive.agents.rag.db_rag.sql_rag.models import (
     GradeAnswer,
     GradeHallucinations,
@@ -55,6 +52,8 @@ from haive.agents.rag.db_rag.sql_rag.prompts import (
     HALLUCINATION_CHECK_PROMPT,
     VALIDATE_SQL_PROMPT,
 )
+from haive.core.engine.aug_llm import AugLLMConfig
+from langchain_core.output_parsers import StrOutputParser
 
 # Engine for analyzing queries
 analyze_query_aug_llm_config = AugLLMConfig(
@@ -259,11 +258,11 @@ by replacing specific engines.
 
 Example:
     Using defaults::
-    
+
         >>> config = SQLRAGConfig(engines=default_sql_engines)
-        
+
     Customizing specific engine::
-    
+
         >>> custom_engines = {
         ...     **default_sql_engines,
         ...     "generate_sql": my_custom_sql_generator

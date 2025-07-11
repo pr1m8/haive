@@ -7,7 +7,6 @@ import asyncio
 import os
 
 from dotenv import load_dotenv
-from haive.core.engine import AugLLMConfig
 from langchain_core.tools import tool
 
 from haive.agents.multi.enhanced_base import MultiAgentBase
@@ -15,6 +14,8 @@ from haive.agents.planning.p_and_e.models import Act, Plan, PlanStep
 from haive.agents.planning.p_and_e.state import PlanExecuteState
 from haive.agents.react import ReactAgent
 from haive.agents.simple import SimpleAgent
+from haive.core.engine import AugLLMConfig
+
 
 # Load environment variables
 load_dotenv()
@@ -42,42 +43,31 @@ def create_plan_execute_branches(planner, executor, replanner):
 
     def should_continue(state) -> str:
         """Decide whether to continue executing or replan."""
-        print(f"\n🔄 Routing decision after executor...")
-
         # Check if we have a plan
         if not hasattr(state, "plan") or not state.plan:
-            print("  → No plan found, going to replanner")
             return "replanner"
 
         # Check if plan is complete
         if hasattr(state.plan, "is_complete") and state.plan.is_complete:
-            print("  → Plan is complete, going to replanner")
             return "replanner"
 
         # Check if we should replan
         if hasattr(state, "should_replan") and state.should_replan:
-            print("  → Should replan flag set, going to replanner")
             return "replanner"
 
-        print("  → Continuing execution")
         return "executor"
 
     def should_end(state) -> str:
         """Decide whether to end or continue."""
-        print(f"\n🔄 Routing decision after replanner...")
-
         # Check for final answer
         if hasattr(state, "final_answer") and state.final_answer:
-            print("  → Final answer found, ending")
             return "END"
 
         # Check if plan has next steps
         if hasattr(state, "plan") and state.plan:
             if hasattr(state.plan, "next_step") and state.plan.next_step:
-                print("  → Plan has next steps, going to executor")
                 return "executor"
 
-        print("  → No next steps, ending")
         return "END"
 
     return [
@@ -88,9 +78,6 @@ def create_plan_execute_branches(planner, executor, replanner):
 
 async def main():
     """Run a simple Plan and Execute example."""
-
-    print("🚀 Starting Simple Plan and Execute Demo\n")
-
     # Create simple agents
     planner = SimpleAgent(
         name="planner",
@@ -141,24 +128,14 @@ Decide whether to continue, create a new plan, or provide the final answer.""",
     # Simple test query
     query = "Calculate the sum of the first 5 prime numbers"
 
-    print(f"📋 Query: {query}\n")
-
     try:
         # Run the system
-        result = await plan_execute_system.arun({"objective": query})
+        await plan_execute_system.arun({"objective": query})
 
-        print(f"\n✅ Final Result:")
-        print(f"{'-'*40}")
-        print(result)
-        print(f"{'-'*40}")
-
-    except Exception as e:
-        print(f"\n❌ Error: {e}")
+    except Exception:
         import traceback
 
         traceback.print_exc()
-
-    print("\n🎉 Demo completed!")
 
 
 if __name__ == "__main__":

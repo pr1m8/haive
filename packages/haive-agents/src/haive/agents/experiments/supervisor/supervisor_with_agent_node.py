@@ -1,5 +1,4 @@
-"""
-Supervisor with a single agent execution node.
+"""Supervisor with a single agent execution node.
 
 Instead of creating tools for each agent, we have:
 1. Tools that set the agent name in state
@@ -10,6 +9,8 @@ import asyncio
 from datetime import datetime
 from typing import Any, Dict, List, Literal, Optional
 
+from haive.agents.react.agent import ReactAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema import StateSchema
@@ -18,18 +19,15 @@ from langchain_core.tools import tool
 from langgraph.graph import END
 from pydantic import Field, model_validator
 
-from haive.agents.react.agent import ReactAgent
-from haive.agents.simple.agent import SimpleAgent
-
 
 class SupervisorState(StateSchema):
     """State that tracks agent routing."""
 
-    messages: List[Any] = Field(default_factory=list)
-    selected_agent: Optional[str] = Field(default=None)  # Which agent to execute
-    agent_task: Optional[str] = Field(default=None)  # Task for the agent
-    agent_response: Optional[str] = Field(default=None)  # Response from agent
-    available_agents: Dict[str, Any] = Field(default_factory=dict)  # Agent registry
+    messages: list[Any] = Field(default_factory=list)
+    selected_agent: str | None = Field(default=None)  # Which agent to execute
+    agent_task: str | None = Field(default=None)  # Task for the agent
+    agent_response: str | None = Field(default=None)  # Response from agent
+    available_agents: dict[str, Any] = Field(default_factory=dict)  # Agent registry
 
 
 class AgentExecutionNode:
@@ -38,7 +36,7 @@ class AgentExecutionNode:
     def __init__(self, name: str = "agent_execution_node"):
         self.name = name
 
-    async def __call__(self, state: SupervisorState) -> Dict[str, Any]:
+    async def __call__(self, state: SupervisorState) -> dict[str, Any]:
         """Execute the selected agent from state."""
         # Check if we have an agent selected
         if not state.selected_agent:
@@ -95,7 +93,7 @@ class AgentExecutionNode:
             )
 
         except Exception as e:
-            state.agent_response = f"Error executing {state.selected_agent}: {str(e)}"
+            state.agent_response = f"Error executing {state.selected_agent}: {e!s}"
 
         # Clear selection for next iteration
         state.selected_agent = None
@@ -105,8 +103,7 @@ class AgentExecutionNode:
 
 
 class SupervisorWithAgentNode(ReactAgent):
-    """
-    Supervisor that uses a single agent execution node.
+    """Supervisor that uses a single agent execution node.
 
     Tools only set the agent selection in state.
     The agent node handles actual execution.
@@ -142,7 +139,7 @@ class SupervisorWithAgentNode(ReactAgent):
             return f"Selected writer_agent for: {task}"
 
         @tool
-        def list_available_agents() -> List[str]:
+        def list_available_agents() -> list[str]:
             """List all available agents."""
             # In real implementation, this would check state.available_agents
             return ["math_agent", "search_agent", "writer_agent"]
@@ -191,15 +188,12 @@ class SupervisorWithAgentNode(ReactAgent):
 
         return graph.compile()
 
-    async def _supervisor_node(self, state: SupervisorState) -> Dict[str, Any]:
+    async def _supervisor_node(self, state: SupervisorState) -> dict[str, Any]:
         """Supervisor analyzes task and selects agent."""
         # Get current task from messages
         if state.messages:
             last_msg = state.messages[-1]
-            if isinstance(last_msg, dict):
-                task = last_msg.get("content", "")
-            else:
-                task = str(last_msg)
+            task = last_msg.get("content", "") if isinstance(last_msg, dict) else str(last_msg)
         else:
             task = ""
 
@@ -252,8 +246,6 @@ Important: After using a select tool, set state.selected_agent and state.agent_t
 async def demo_agent_node_pattern():
     """Demonstrate the agent node pattern."""
 
-    print("=== Agent Node Pattern Demo ===\n")
-
     # Create agents
     @tool
     def multiply(a: int, b: int) -> int:
@@ -295,32 +287,16 @@ async def demo_agent_node_pattern():
     )
 
     # Test routing
-    print("Test 1: Math task")
     initial_state.messages = [{"role": "user", "content": "Calculate 7 * 8"}]
     result = await supervisor.graph.ainvoke(initial_state)
-    print(f"Result: {result.get('agent_response', 'No response')}\n")
 
-    print("Test 2: Search task")
     initial_state.messages = [
         {"role": "user", "content": "Find information about Python"}
     ]
     result = await supervisor.graph.ainvoke(initial_state)
-    print(f"Result: {result.get('agent_response', 'No response')}\n")
 
-    print("✅ Key Pattern:")
-    print("- Tools just set state.selected_agent")
-    print("- Agent node reads state and executes the agent")
-    print("- Agents can be added/removed from state.available_agents dynamically!")
 
 
 if __name__ == "__main__":
-    print("Agent Execution Node Pattern")
-    print("One node executes any agent based on state routing\n")
 
     # Show the pattern
-    print("Pattern flow:")
-    print("1. Supervisor tools set state.selected_agent = 'agent_name'")
-    print("2. Agent node reads state.selected_agent")
-    print("3. Agent node gets agent from state.available_agents")
-    print("4. Agent node creates runnable and invokes with task")
-    print("5. Response goes back to state.agent_response")

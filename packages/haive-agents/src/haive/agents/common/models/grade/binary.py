@@ -6,9 +6,8 @@ yes/no, correct/incorrect, and similar binary evaluations.
 
 from typing import Any
 
-from pydantic import Field, field_validator
-
 from haive.agents.common.models.grade.base import Grade, GradeType
+from pydantic import Field, field_validator
 
 
 class BinaryGrade(Grade):
@@ -112,7 +111,7 @@ class BinaryGrade(Grade):
                 f"Cannot convert string '{v}' to binary grade. Use 'pass'/'fail', 'yes'/'no', etc."
             )
 
-        if isinstance(v, (int, float)):
+        if isinstance(v, int | float):
             # Convert numbers: 0 = False, non-zero = True
             return bool(v)
 

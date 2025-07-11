@@ -25,7 +25,6 @@ logger = logging.getLogger(__name__)
 
 def debug_print(message: str):
     """Helper function to print and log debug messages."""
-    print(f"[DEBUG] {message}")
     logger.debug(message)
 
 
@@ -52,7 +51,7 @@ class Prediction(BaseModel):
     args: list[str] | None = None
 
     @field_validator("args", mode="before")
-    def ensure_args(cls, v):
+    def ensure_args(self, v):
         """Ensures args is a list."""
         if v is None:
             return []
@@ -63,7 +62,7 @@ class Prediction(BaseModel):
 # WebNavState Class
 # -----------------------------------------------------------------------------
 class WebNavState(BaseModel):
-    """Web Navigation State Model with Playwright Support"""
+    """Web Navigation State Model with Playwright Support."""
 
     page_url: str | None = Field(
         default=None, description="URL of the Playwright page."
@@ -91,7 +90,7 @@ class WebNavState(BaseModel):
     )
 
     @field_validator("prediction", mode="before")
-    def ensure_prediction(cls, v):
+    def ensure_prediction(self, v):
         """Ensures prediction is either None or a valid object."""
         debug_print(f"Validating prediction: {v}")
         if isinstance(v, list) and len(v) == 0:
@@ -212,9 +211,6 @@ class WebNavAgent(Agent[WebNavAgentConfig]):
     def update_scratchpad(self, state):
         """Updates the scratchpad with the latest observation and agent's reasoning."""
         debug_print("Updating scratchpad")
-        print(
-            f"Scratchpad: {state.get('scratchpad') if isinstance(state, dict) else getattr(state, 'scratchpad', [])}"
-        )
 
         # Extract scratchpad
         scratchpad = []
@@ -294,11 +290,7 @@ class WebNavAgent(Agent[WebNavAgentConfig]):
         # Create a dictionary with the same fields as the input state
         state_dict = {}
         for field in dir(state):
-            if (
-                not field.startswith("_")
-                and field != "scratchpad"
-                and field != "observation"
-            ):
+            if not field.startswith("_") and field not in {"scratchpad", "observation"}:
                 try:
                     state_dict[field] = getattr(state, field)
                 except:
@@ -314,14 +306,12 @@ class WebNavAgent(Agent[WebNavAgentConfig]):
         playwright = await async_playwright().start()
         self.browser = await playwright.chromium.launch(
             headless=True,
-            # executable_path="/mnt/c/Program Files (x86)/BraveSoftware/Brave-Browser/Application/brave.exe",
             args=[
                 "--no-sandbox",  # Disable sandboxing for WSL compatibility
                 "--disable-setuid-sandbox",  # Further sandbox disable
                 "--disable-gpu",  # WSL doesn't support GPU acceleration properly
                 # "--disable-dev-shm-usage",  # Avoid crashes due to limited /dev/shm
                 "--disable-software-rasterizer",  # Prevent software rendering crashes
-                # "--remote-debugging-port=9222",  # Enable remote debugging
                 # 3"--disable-background-networking",  # Reduce Brave network calls
                 "--disable-default-apps",  # Start with a blank slate
                 # "--disable-extensions",  # Ensure no extension interference
@@ -330,18 +320,13 @@ class WebNavAgent(Agent[WebNavAgentConfig]):
                 "--disable-renderer-backgrounding",  # Keep tabs active
                 # "--disable-background-timer-throttling",  # Prevent timeouts
                 # "--disable-backgrounding-occluded-windows",  # Keep processes alive
-                # "--disable-breakpad",  # Disable Brave crash reporting (unnecessary)
                 # "--disable-component-extensions-with-background-pages",  # Prevent auto-running extensions
                 # "--disable-sync",  # Avoid syncing issues
                 # "--disable-ipc-flooding-protection",  # Prevent Playwright issues
-                # "--disable-features=site-per-process",  # Prevent multi-process site management
                 # "--enable-automation",  # Ensure Playwright isn't blocked
-                # "--password-store=basic",  # Avoid Brave password manager interference
                 # "--use-mock-keychain",  # Prevent keychain authentication popups
-                # "--window-size=1920,1080",  # Set a large window size
                 "--ignore-certificate-errors",  # Bypass SSL issues
             ],
-            # headless=False  # Show browser window
         )
 
         self.page = await self.browser.new_page()
@@ -371,10 +356,9 @@ class WebNavAgent(Agent[WebNavAgentConfig]):
         try:
             screenshot_bytes = await self.page.screenshot()
             plain_base64 = base64.b64encode(screenshot_bytes).decode("utf-8")
-            # self.screenshots.append(plain_base64)
             return plain_base64
         except Exception as e:
-            logger.error(f"Error capturing screenshot: {e}")
+            logger.exception(f"Error capturing screenshot: {e}")
             return ""
 
     # -------------------------------------------------------------------------
@@ -448,7 +432,7 @@ class WebNavAgent(Agent[WebNavAgentConfig]):
             }
 
         except Exception as e:
-            logger.error(f"Error in annotate_page: {e}")
+            logger.exception(f"Error in annotate_page: {e}")
 
             # Try to get a screenshot even if annotation failed
             screenshot = ""
@@ -546,7 +530,7 @@ class WebNavAgent(Agent[WebNavAgentConfig]):
             return f"Clicked element {bbox_id} at ({x}, {y})"
 
         except (ValueError, IndexError, KeyError) as e:
-            logger.error(f"Error clicking element: {e}")
+            logger.exception(f"Error clicking element: {e}")
             return f"Error clicking element: {e}"
 
     async def tool_type(self, state: dict[str, Any]) -> str:
@@ -619,10 +603,10 @@ class WebNavAgent(Agent[WebNavAgentConfig]):
                 return f"Typed '{text_content}' in element {bbox_id}"
 
             except (ValueError, IndexError, KeyError) as e:
-                logger.error(f"Error typing text: {e}")
+                logger.exception(f"Error typing text: {e}")
                 return f"Error typing text: {e}"
         except Exception as e:
-            logger.error(f"Unexpected error in tool_type: {e}")
+            logger.exception(f"Unexpected error in tool_type: {e}")
             return f"Unexpected error in tool_type: {e!s}"
 
     async def tool_scroll(self, state: dict[str, Any]) -> str:
@@ -660,7 +644,7 @@ class WebNavAgent(Agent[WebNavAgentConfig]):
             return f"Scrolled element {target_id} {direction}"
 
         except Exception as e:
-            logger.error(f"Error scrolling: {e}")
+            logger.exception(f"Error scrolling: {e}")
             return f"Error scrolling: {e}"
 
     async def tool_wait(self, state: dict[str, Any]) -> str:
@@ -679,7 +663,7 @@ class WebNavAgent(Agent[WebNavAgentConfig]):
             await self.page.wait_for_load_state("networkidle")
             return f"Navigated back to {self.page.url}"
         except Exception as e:
-            logger.error(f"Error navigating back: {e}")
+            logger.exception(f"Error navigating back: {e}")
             return f"Error navigating back: {e}"
 
     async def tool_to_google(self, state: dict[str, Any]) -> str:
@@ -692,7 +676,7 @@ class WebNavAgent(Agent[WebNavAgentConfig]):
             await self.page.wait_for_load_state("networkidle")
             return "Navigated to Google homepage"
         except Exception as e:
-            logger.error(f"Error navigating to Google: {e}")
+            logger.exception(f"Error navigating to Google: {e}")
             return f"Error navigating to Google: {e}"
 
     async def tool_answer(self, state: dict[str, Any]) -> str:
@@ -739,7 +723,7 @@ class WebNavAgent(Agent[WebNavAgentConfig]):
 
         async for event in event_stream:
             prediction = event.get("prediction", {})
-            observation = event.get("observation", "")
+            event.get("observation", "")
             action = prediction.get("action", "") if prediction else ""
 
             # Display progress
@@ -748,8 +732,6 @@ class WebNavAgent(Agent[WebNavAgentConfig]):
             if prediction and "args" in prediction:
                 step_str += f": {prediction['args']}"
             steps.append(step_str)
-            print("\n".join(steps))
-            print(f"Latest observation: {observation}")
 
             # Show screenshot only if show_images is True
             if show_images and "img" in event and event["img"]:
@@ -781,10 +763,9 @@ async def run_web_navigator():
     agent = WebNavAgent(config)
 
     try:
-        result = await agent.run(
+        await agent.run(
             "How far is Toronto Pearson airport from 1289 Queen Street West, Toronto?"
         )
-        print(f"Final answer: {result}")
     finally:
         await agent.close()
 

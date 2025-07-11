@@ -1,5 +1,4 @@
-"""
-Static supervisor with dynamically updating tools.
+"""Static supervisor with dynamically updating tools.
 
 Start simple: Fixed graph structure, but tools can be added/removed/updated
 using model validators to sync after changes.
@@ -9,6 +8,8 @@ import asyncio
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Set
 
+from haive.agents.react.agent import ReactAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema import StateSchema
@@ -16,16 +17,13 @@ from langchain_core.messages import HumanMessage
 from langchain_core.tools import BaseTool, tool
 from pydantic import Field, field_validator, model_validator
 
-from haive.agents.react.agent import ReactAgent
-from haive.agents.simple.agent import SimpleAgent
-
 
 class AgentRegistry:
     """Simple registry for agents."""
 
     def __init__(self):
-        self.agents: Dict[str, Any] = {}
-        self.metadata: Dict[str, Dict[str, Any]] = {}
+        self.agents: dict[str, Any] = {}
+        self.metadata: dict[str, dict[str, Any]] = {}
 
     def register(self, name: str, agent: Any, description: str):
         """Register an agent."""
@@ -40,11 +38,11 @@ class AgentRegistry:
         self.agents.pop(name, None)
         self.metadata.pop(name, None)
 
-    def get_agent(self, name: str) -> Optional[Any]:
+    def get_agent(self, name: str) -> Any | None:
         """Get an agent by name."""
         return self.agents.get(name)
 
-    def list_agents(self) -> List[str]:
+    def list_agents(self) -> list[str]:
         """List all registered agents."""
         return list(self.agents.keys())
 
@@ -52,9 +50,9 @@ class AgentRegistry:
 class SupervisorState(StateSchema):
     """State that validates and syncs tools."""
 
-    messages: List[Dict[str, Any]] = Field(default_factory=list)
-    available_agents: Set[str] = Field(default_factory=set)
-    last_sync: Optional[datetime] = Field(default=None)
+    messages: list[dict[str, Any]] = Field(default_factory=list)
+    available_agents: set[str] = Field(default_factory=set)
+    last_sync: datetime | None = Field(default=None)
 
     @model_validator(mode="after")
     def sync_available_agents(self):
@@ -67,8 +65,8 @@ class StaticSupervisorWithDynamicTools(ReactAgent):
     """Static supervisor that can update its tools dynamically."""
 
     agent_registry: AgentRegistry = Field(default_factory=AgentRegistry)
-    agent_choice_model: Optional[DynamicChoiceModel] = Field(default=None)
-    _tool_cache: Dict[str, BaseTool] = {}
+    agent_choice_model: DynamicChoiceModel | None = Field(default=None)
+    _tool_cache: dict[str, BaseTool] = {}
 
     @model_validator(mode="after")
     def setup_supervisor(self):
@@ -83,13 +81,13 @@ class StaticSupervisorWithDynamicTools(ReactAgent):
         """Create tools that are always available."""
 
         @tool
-        def list_available_agents() -> List[str]:
+        def list_available_agents() -> list[str]:
             """List all available agents."""
             agents = self.agent_registry.list_agents()
             return agents if agents else ["No agents registered"]
 
         @tool
-        def check_agent_status(agent_name: str) -> Dict[str, Any]:
+        def check_agent_status(agent_name: str) -> dict[str, Any]:
             """Check the status of a specific agent."""
             if agent_name in self.agent_registry.agents:
                 metadata = self.agent_registry.metadata.get(agent_name, {})
@@ -131,9 +129,8 @@ class StaticSupervisorWithDynamicTools(ReactAgent):
         self._update_choice_model()
 
         # Log sync
-        print(f"🔄 Synced tools. Total tools: {len(self.engine.tools)}")
-        for t in self.engine.tools:
-            print(f"   - {t.name}")
+        for _t in self.engine.tools:
+            pass
 
     def _create_agent_tool(self, agent_name: str) -> BaseTool:
         """Create an execution tool for a specific agent."""
@@ -154,7 +151,7 @@ class StaticSupervisorWithDynamicTools(ReactAgent):
                 result = asyncio.run(agent.arun(task))
                 return f"{agent_name} result: {result}"
             except Exception as e:
-                return f"{agent_name} error: {str(e)}"
+                return f"{agent_name} error: {e!s}"
 
         # Set dynamic name and description
         agent_tool.__name__ = f"execute_{agent_name}"
@@ -176,13 +173,11 @@ class StaticSupervisorWithDynamicTools(ReactAgent):
         """Register a new agent and sync tools."""
         self.agent_registry.register(name, agent, description)
         self._sync_agent_tools()
-        print(f"✅ Registered agent: {name}")
 
     def unregister_agent(self, name: str):
         """Unregister an agent and sync tools."""
         self.agent_registry.unregister(name)
         self._sync_agent_tools()
-        print(f"❌ Unregistered agent: {name}")
 
     async def arun(self, input_text: str) -> str:
         """Override arun to ensure tools are synced."""
@@ -193,15 +188,12 @@ class StaticSupervisorWithDynamicTools(ReactAgent):
 # Demo the pattern
 async def demo_static_dynamic_tools():
     """Demonstrate static supervisor with dynamic tool updates."""
-
-    print("=== Static Supervisor with Dynamic Tools Demo ===\n")
-
     # Create supervisor first
     supervisor_engine = AugLLMConfig(
         name="supervisor_engine",
         model="gpt-4",
         tools=[],  # Tools will be added dynamically
-        system_message="""You are a task supervisor. 
+        system_message="""You are a task supervisor.
 Use list_available_agents to see what agents are available.
 Use execute_[agent_name] tools to delegate tasks to specific agents.
 Always check available agents before trying to execute.""",
@@ -211,11 +203,8 @@ Always check available agents before trying to execute.""",
         name="supervisor", engine=supervisor_engine
     )
 
-    print("Initial state - no agents registered\n")
-
     # Test 1: Try to list agents when none registered
-    result1 = await supervisor.arun("What agents are available?")
-    print(f"Test 1 - No agents: {result1}\n")
+    await supervisor.arun("What agents are available?")
 
     # Create and register math agent
     @tool
@@ -232,18 +221,15 @@ Always check available agents before trying to execute.""",
 
     math_agent = SimpleAgent(name="math_agent", engine=math_engine)
 
-    print("\n📌 Registering math agent...")
     supervisor.register_agent(
         "math_agent", math_agent, "Handles mathematical calculations"
     )
 
     # Test 2: List agents after registration
-    result2 = await supervisor.arun("What agents are available now?")
-    print(f"\nTest 2 - After math agent: {result2}\n")
+    await supervisor.arun("What agents are available now?")
 
     # Test 3: Use the math agent
-    result3 = await supervisor.arun("Calculate 15 + 27")
-    print(f"\nTest 3 - Math calculation: {result3}\n")
+    await supervisor.arun("Calculate 15 + 27")
 
     # Create and register search agent
     search_engine = AugLLMConfig(
@@ -254,31 +240,19 @@ Always check available agents before trying to execute.""",
 
     search_agent = SimpleAgent(name="search_agent", engine=search_engine)
 
-    print("\n📌 Registering search agent...")
     supervisor.register_agent("search_agent", search_agent, "Searches for information")
 
     # Test 4: Use multiple agents
-    result4 = await supervisor.arun(
-        "Search for the population of Tokyo and add 1000 to it"
-    )
-    print(f"\nTest 4 - Multi-agent task: {result4}\n")
+    await supervisor.arun("Search for the population of Tokyo and add 1000 to it")
 
     # Test 5: Unregister an agent
-    print("\n📌 Unregistering math agent...")
     supervisor.unregister_agent("math_agent")
 
-    result5 = await supervisor.arun(
-        "What agents are available after removing math agent?"
-    )
-    print(f"\nTest 5 - After unregistering: {result5}\n")
-
-    print("✅ Demo complete! Tools were dynamically updated throughout.")
+    await supervisor.arun("What agents are available after removing math agent?")
 
 
 if __name__ == "__main__":
     # For testing
-    print("Static Supervisor with Dynamic Tools")
-    print("This shows how to update tools dynamically even with a static graph.\n")
 
     # Run the demo
     asyncio.run(demo_static_dynamic_tools())
