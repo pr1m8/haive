@@ -10,14 +10,12 @@ import logging
 import os
 import sys
 
-
 # Suppress the noisy supabase logging
 logging.getLogger("hpack").setLevel(logging.ERROR)
 logging.getLogger("httpx").setLevel(logging.ERROR)
 logging.getLogger("urllib3").setLevel(logging.ERROR)
 
 from rich.console import Console
-
 
 console = Console()
 

@@ -1,98 +1,84 @@
-"""Debug the schema composition issue."""
+#!/usr/bin/env python3
+"""Debug schema composition issue with AugLLMConfig."""
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.schema.prebuilt.llm_state import LLMState
-from haive.core.schema.schema_composer import SchemaComposer
+from haive.core.engine.aug_llm.config import AugLLMConfig
+from haive.core.schema.composer import SchemaComposer
 from langchain_core.prompts import ChatPromptTemplate
 
+# Create a simple prompt template
+simple_prompt = ChatPromptTemplate.from_messages([
+    ("system", "You are a helpful assistant"),
+    ("human", "{query}")
+])
 
-def debug_schema_composition():
-    """Debug how schemas are being composed."""
-    # Create engine with prompt template
-    prompt = ChatPromptTemplate.from_messages(
-        [("system", "You are a helpful assistant."), ("human", "{query}")]
-    )
+# Create AugLLMConfig
+config = AugLLMConfig(
+    prompt_template=simple_prompt,
+    temperature=0.7
+)
 
-    engine = AugLLMConfig(name="test_engine", prompt_template=prompt)
+print("=== Debugging Schema Composition ===")
+print(f"AugLLMConfig engine_type: {config.engine_type}")
+print(f"AugLLMConfig has tools: {hasattr(config, 'tools') and config.tools}")
 
-    # Create schema composer
-    composer = SchemaComposer(base_state_schema=LLMState)
+# Create composer and detect base class
+composer = SchemaComposer(name="TestSchema")
 
-    # Add the engine and extract fields from it
-    composer.add_fields_from_engine(engine)
+# Add the config to components
+print("\nAdding AugLLMConfig to composer...")
+composer.add_fields_from_components([config])
 
-    # Compose the state schema
-    state_schema = composer.build()
+# Check what base class was detected
+print(f"\nDetected base class: {composer.detected_base_class}")
+print(f"Has messages: {composer.has_messages}")
+print(f"Has tools: {composer.has_tools}")
 
+# Build the schema
+print("\nBuilding schema...")
+schema = composer.build()
 
-    # Check __input_fields__
-    if hasattr(state_schema, "__input_fields__"):
-        for engine_name, fields in state_schema.__input_fields__.items():
-            pass
+print("\n=== Schema Fields ===")
+for field_name, field_info in schema.__fields__.items():
+    default_value = field_info.default
+    if default_value is ...:
+        print(f"❌ {field_name}: PydanticUndefined (...)")
     else:
-        pass
+        print(f"✓ {field_name}: {type(default_value).__name__} = {default_value}")
 
-    # Check composer state
+print("\n=== Schema MRO ===")
+for cls in schema.__mro__:
+    print(f"  - {cls.__name__}")
 
-    # Debug engine input fields access
-    if hasattr(engine, "prompt_template") and engine.prompt_template:
+# Try to instantiate the schema
+print("\n=== Creating Instance ===")
+try:
+    instance = schema()
+    print("✓ Successfully created instance")
+    
+    # Check field values
+    print("\n=== Instance Field Values ===")
+    for field_name in schema.__fields__.keys():
+        value = getattr(instance, field_name)
+        if value is ...:
+            print(f"❌ {field_name}: PydanticUndefined (...)")
+        else:
+            print(f"✓ {field_name}: {type(value).__name__}")
+            
+except Exception as e:
+    print(f"❌ Failed to create instance: {e}")
+    import traceback
+    traceback.print_exc()
 
-    # Check if engine can be called to get input fields some other way
-    engine_attrs = [
-        attr
-        for attr in dir(engine)
-        if "input" in attr.lower() and not attr.startswith("_")
-    ]
-
-    # Test calling get_input_fields directly
-    try:
-        input_fields = engine.get_input_fields()
-        if hasattr(input_fields, "items"):
-            pass
-
-        # Check if query is wrongly in base class fields
-        for field_name in input_fields:
-            in_composer_fields = field_name in composer.fields
-            in_base_class_fields = field_name in composer.base_class_fields
-
-    except Exception as e:
-        pass
-
-    # Derive input schema
-    input_schema = state_schema.derive_input_schema()
-
-    # DEBUG: Check what derive_input_schema() actually uses for input_fields
-    if hasattr(state_schema, "__input_fields__"):
-
-        # Simulate what derive_input_schema does
-        input_fields = []
-        for engine_inputs in state_schema.__input_fields__.values():
-            input_fields.extend(engine_inputs)
-
-    if hasattr(state_schema, "__engine_io_mappings__"):
-        pass
-
-    # Test creating instances
-
-    # Test input schema creation
-    try:
-        input_instance = input_schema(query="hello")
-    except Exception as e:
-        pass")
-
-    # Test state schema creation with just input data
-    try:
-        # This should fail because engine is required
-        state_instance = state_schema(query="hello")
-    except Exception as e:
-        pass")
-
-    # Test state schema creation with engine
-    try:
-        state_instance = state_schema(query="hello", engine=engine)
-    except Exception as e:
-        pass")
-
-
-if __name__ == "__main__":
-    debug_schema_composition()
+# Test the from_components class method
+print("\n\n=== Testing from_components class method ===")
+try:
+    schema_class = SchemaComposer.from_components([config], name="DirectSchema")
+    print(f"✓ Created schema class: {schema_class.__name__}")
+    
+    instance2 = schema_class()
+    print("✓ Successfully created instance from from_components")
+    
+except Exception as e:
+    print(f"❌ Failed with from_components: {e}")
+    import traceback
+    traceback.print_exc()

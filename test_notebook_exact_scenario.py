@@ -52,7 +52,7 @@ try:
     try:
         graph = StateGraph(LLMState)
     except Exception as e:
-        pass")
+        pass
 
     # Test creating a custom state that inherits from LLMState
     try:
@@ -62,14 +62,14 @@ try:
 
         graph = StateGraph(CustomState)
     except Exception as e:
-        pass")
+        pass
 
     # Test what SimpleAgent v2 actually creates
     try:
         agent = SimpleAgentV2(name="test")
         graph = StateGraph(agent.state_schema)
     except Exception as e:
-        pass")
+        pass
 
 except Exception as e:
     import traceback

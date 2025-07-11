@@ -2,10 +2,9 @@
 """Test building documentation for haive.games specifically."""
 
 import os
-from pathlib import Path
 import subprocess
 import sys
-
+from pathlib import Path
 
 # Set up environment
 project_root = Path(__file__).parent

@@ -226,6 +226,10 @@ claude-code-sdk = "^0.0.14"
 terminal-controller = "^0.1.9"
 nbstripout = "^0.8.1"
 pymarkdownlnt = "^0.9.30"
+pyannotate = "^1.2.0"
+autotyping = "^24.9.0"
+monkeytype = "^23.3.0"
+yapf = "^0.43.0"
 
 
 [tool.poetry.group.docs.dependencies]
