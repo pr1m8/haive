@@ -18,7 +18,7 @@ try:
     for name, hint in hints.items():
         pass
 except Exception as e:
-    pass")
+    pass
 
 # Test 2: Type hints with imported class
 
@@ -34,7 +34,7 @@ try:
     for name, hint in hints.items():
         pass
 except Exception as e:
-    pass")
+    pass
 
 # Test 3: Simulate LangGraph's namespace issue
 
@@ -74,11 +74,13 @@ class ForwardRefConfig(BaseModel):
     exec_namespace2,
 )
 
+print(exec_namespace2)
+
 try:
     # This will also fail because BaseOutputParser still isn't available
     hints = get_type_hints(exec_namespace2["ForwardRefConfig"])
 except NameError as e:
-
+    pass
 # Test 5: The real solution - import in the namespace
 
 exec_namespace3 = {"BaseOutputParser": BaseOutputParser}
@@ -98,7 +100,7 @@ try:
     for name, hint in hints.items():
         pass
 except Exception as e:
-    pass")
+    pass
 
 # Test 6: What happens in our actual code
 
@@ -118,3 +120,4 @@ try:
     # LangGraph creates a new namespace and tries to evaluate types
     hints = get_type_hints(TestState, localns={"TestState": TestState})
 except NameError as e:
+    
