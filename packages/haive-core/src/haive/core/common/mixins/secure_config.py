@@ -37,7 +37,6 @@ from typing import Optional
 
 from pydantic import SecretStr, field_validator
 
-
 logger = logging.getLogger(__name__)
 
 

@@ -4,16 +4,15 @@ This module provides the core graph data structures without
 additional functionality, which is added via mixins.
 """
 
-from datetime import datetime
 import logging
-from typing import Any, Dict, List, Optional, Tuple
 import uuid
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
 
 from pydantic import BaseModel, Field
 
 from haive.core.graph.branches.branch import Branch
 from haive.core.graph.common.types import NodeType
-
 
 # Setup logging
 logger = logging.getLogger(__name__)

@@ -7,17 +7,17 @@ All agent implementations conform to the protocol interfaces for consistent API 
 
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
 import asyncio
-from collections.abc import AsyncGenerator, Generator
-from datetime import datetime
 import json
 import logging
 import os
-from pathlib import Path
 import time
-from typing import Any, Dict, Generic, Optional, Type, TypeVar, Union
 import uuid
+from abc import ABC, abstractmethod
+from collections.abc import AsyncGenerator, Generator
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, Generic, Optional, Type, TypeVar, Union
 
 from langchain_core.messages import HumanMessage
 from langchain_core.runnables import RunnableConfig
@@ -42,7 +42,6 @@ from haive.core.persistence.handlers import (
 from haive.core.persistence.types import CheckpointerMode
 from haive.core.schema.schema_composer import SchemaComposer
 from haive.core.utils.pydantic_utils import ensure_json_serializable
-
 
 # Rich UI imports - handle gracefully if not available
 try:

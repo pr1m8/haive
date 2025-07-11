@@ -6,12 +6,13 @@ This test verifies that token tracking works end-to-end with real LLM calls.
 import asyncio
 
 from haive.agents.simple.agent import SimpleAgent
+from langchain_core.messages import AIMessage
+
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.prebuilt.llm_state import LLMState
 from haive.core.schema.prebuilt.messages.messages_with_token_usage import (
     MessagesStateWithTokenUsage,
 )
-from langchain_core.messages import AIMessage
 
 
 async def test_simple_agent_real_token_tracking():

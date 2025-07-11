@@ -31,6 +31,8 @@ Typical usage example:
 # Import common mixins
 from haive.core.common.mixins import (
     IdentifierMixin as IDMixin,  # Alias for backward compatibility
+)
+from haive.core.common.mixins import (
     MetadataMixin,
     RichLoggerMixin,
     SerializationMixin,
@@ -43,7 +45,6 @@ from haive.core.common.models import DynamicChoiceModel, NamedList
 
 # Import common types
 from haive.core.common.types import DictStrAny, JsonType, StrOrPath
-
 
 # Export all these symbols when using star imports
 __all__ = [

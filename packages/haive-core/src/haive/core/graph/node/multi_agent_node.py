@@ -8,12 +8,13 @@ import logging
 from typing import Any, Dict, List, Optional, Type, TypeVar, Union
 
 from haive.agents.base.agent import Agent
-from haive.core.graph.common.types import ConfigLike, NodeType, StateLike
-from haive.core.graph.node.base_node_config import BaseNodeConfig
-from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
 from langchain_core.messages import BaseMessage
 from langgraph.types import Command
 from pydantic import BaseModel, Field, model_validator
+
+from haive.core.graph.common.types import ConfigLike, NodeType, StateLike
+from haive.core.graph.node.base_node_config import BaseNodeConfig
+from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
 
 logger = logging.getLogger(__name__)
 

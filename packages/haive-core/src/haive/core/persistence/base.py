@@ -14,12 +14,13 @@ a unified API for state persistence.
 from abc import ABC, abstractmethod
 from typing import Any, Generic, TypeVar
 
+from pydantic import BaseModel, Field
+
 from haive.core.persistence.types import (
     CheckpointerMode,
     CheckpointerType,
     CheckpointStorageMode,
 )
-from pydantic import BaseModel, Field
 
 # Type variable for different connection types
 T = TypeVar("T")

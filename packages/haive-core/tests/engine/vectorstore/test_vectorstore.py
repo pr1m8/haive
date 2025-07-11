@@ -2,13 +2,14 @@
 
 import logging
 
+from langchain_core.documents import Document
+from langchain_core.vectorstores import InMemoryVectorStore
+
 from haive.core.engine.vectorstore.vectorstore import (
     VectorStoreConfig,
     VectorStoreProvider,
 )
 from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig
-from langchain_core.documents import Document
-from langchain_core.vectorstores import InMemoryVectorStore
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)

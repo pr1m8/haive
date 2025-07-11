@@ -7,7 +7,6 @@ allowing for controlled request rates to prevent API throttling and manage costs
 import logging
 from typing import Any
 
-
 logger = logging.getLogger(__name__)
 
 

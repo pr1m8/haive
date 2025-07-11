@@ -4,12 +4,6 @@ from datetime import datetime
 from typing import Any, Dict, List
 
 import pytest
-from haive.core.schema.prebuilt.messages.messages_state import (
-    MessageList,
-    MessageRound,
-    MessagesState,
-    ToolCallInfo,
-)
 from langchain_core.messages import (
     AIMessage,
     BaseMessage,
@@ -18,6 +12,13 @@ from langchain_core.messages import (
     ToolMessage,
 )
 from langgraph.graph import add_messages
+
+from haive.core.schema.prebuilt.messages.messages_state import (
+    MessageList,
+    MessageRound,
+    MessagesState,
+    ToolCallInfo,
+)
 
 
 class TestMessageListBasics:

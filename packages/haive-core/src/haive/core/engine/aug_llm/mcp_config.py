@@ -15,12 +15,10 @@ from pydantic import Field, model_validator
 from haive.core.common.mixins import MCPMixin, ToolRouteMixin
 from haive.core.engine.aug_llm.config import AugLLMConfig
 
-
 if TYPE_CHECKING:
     from haive.mcp.config import MCPConfig
 
 import logging
-
 
 logger = logging.getLogger(__name__)
 

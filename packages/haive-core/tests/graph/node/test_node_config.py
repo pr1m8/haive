@@ -1,8 +1,9 @@
 import logging
 
+from langgraph.graph import END
+
 from haive.core.engine.base import EngineType
 from haive.core.graph.node.config import NodeConfig
-from langgraph.graph import END
 
 # Configure logging for this test file
 logger = logging.getLogger(__name__)

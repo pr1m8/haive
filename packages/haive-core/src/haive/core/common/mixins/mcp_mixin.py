@@ -49,7 +49,6 @@ from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel, Field, PrivateAttr
 
-
 # Type checking imports
 if TYPE_CHECKING:
     from haive.mcp.config import MCPConfig

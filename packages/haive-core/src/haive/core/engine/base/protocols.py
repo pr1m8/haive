@@ -8,7 +8,6 @@ that implement common behaviors.
 
 from typing import Protocol, TypeVar, runtime_checkable
 
-
 # Type variables
 I = TypeVar("I")  # Input type
 O = TypeVar("O")  # Output type

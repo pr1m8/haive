@@ -12,7 +12,6 @@ from typing import Any, Dict, List, Optional, Union
 from langchain_core.runnables import RunnableConfig
 from pydantic import BaseModel
 
-
 logger = logging.getLogger(__name__)
 
 

@@ -1,14 +1,13 @@
 """Analyzers for retriever and vector store components."""
 
-from datetime import datetime
 import importlib
 import inspect
 import logging
+from datetime import datetime
 from typing import Any, Dict, Optional
 
 from haive.core.utils.haive_discovery.base_analyzer import ComponentAnalyzer
 from haive.core.utils.haive_discovery.component_info import ComponentInfo
-
 
 logger = logging.getLogger(__name__)
 

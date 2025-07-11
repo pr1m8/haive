@@ -28,13 +28,12 @@ Typical usage example:
     ```
 """
 
-from datetime import datetime
-from enum import Enum
 import logging
 import os
 import sys
+from datetime import datetime
+from enum import Enum
 from typing import Any, Dict, Optional
-
 
 # Try to import rich for enhanced console output
 try:

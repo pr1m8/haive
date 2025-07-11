@@ -1,9 +1,9 @@
 from typing import Any, Optional, TypeVar, Union
 
-from haive.core.engine.output_parser.types import OutputParserType
-
 # from langchain_core.output_parsers
 from pydantic import BaseModel, Field
+
+from haive.core.engine.output_parser.types import OutputParserType
 
 # class OutputParsingInputSchema(BaseModel):
 """
@@ -20,10 +20,11 @@ from datetime import datetime
 from enum import Enum
 from typing import Dict, List, Type
 
-from haive.core.engine.base import EngineType, InvokableEngine
-from haive.core.registry.decorators import register_component
 from langchain_core.messages import BaseMessage
 from langchain_core.runnables import RunnableConfig
+
+from haive.core.engine.base import EngineType, InvokableEngine
+from haive.core.registry.decorators import register_component
 
 logger = logging.getLogger(__name__)
 

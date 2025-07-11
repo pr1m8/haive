@@ -1,6 +1,12 @@
 import unittest
 from typing import Any, Optional
 
+from haive_agents_dep.simple.agent import SimpleAgent
+
+# Import SimpleAgentConfig and SimpleAgent
+from haive_agents_dep.simple.config import SimpleAgentConfig
+from pydantic import Field, create_model
+
 from haive.core.config.runnable import RunnableConfigManager
 
 # Import agent components
@@ -16,11 +22,6 @@ from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from haive.core.graph.schema.SchemaComposer import SchemaComposer
 from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig
 from haive.core.models.llm.base import AzureLLMConfig
-from haive_agents_dep.simple.agent import SimpleAgent
-
-# Import SimpleAgentConfig and SimpleAgent
-from haive_agents_dep.simple.config import SimpleAgentConfig
-from pydantic import Field, create_model
 
 # Sample schema model for testing - using create_model to avoid constructor issues
 TestStateModel = create_model(

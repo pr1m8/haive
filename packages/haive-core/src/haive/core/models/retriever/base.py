@@ -1,12 +1,11 @@
-from enum import Enum
 import logging
+from enum import Enum
 from typing import Any, ClassVar
 
 from langchain_core.retrievers import BaseRetriever
 from pydantic import BaseModel, Field
 
 from haive.core.models.vectorstore.base import VectorStoreConfig
-
 
 # Set up logging
 logger = logging.getLogger(__name__)

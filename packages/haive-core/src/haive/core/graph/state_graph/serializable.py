@@ -12,9 +12,10 @@ import uuid
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple, Union
 
+from pydantic import BaseModel, ConfigDict, Field
+
 from haive.core.graph.common.references import CallableReference
 from haive.core.utils.serialization import ensure_json_serializable
-from pydantic import BaseModel, ConfigDict, Field
 
 # Get logger
 logger = logging.getLogger(__name__)

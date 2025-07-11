@@ -11,7 +11,6 @@ from collections import Counter, deque
 from datetime import datetime
 from typing import Any, Deque, Dict, List
 
-from haive.core.logging.control import logging_control
 from rich import box
 from rich.console import Console
 from rich.layout import Layout
@@ -19,6 +18,8 @@ from rich.live import Live
 from rich.panel import Panel
 from rich.table import Table
 from rich.text import Text
+
+from haive.core.logging.control import logging_control
 
 try:
     from prompt_toolkit import prompt

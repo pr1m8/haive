@@ -1,12 +1,11 @@
 # src/haive/core/router/Router.py
 
-from collections.abc import Callable
 import logging
+from collections.abc import Callable
 from typing import Any
 
 from langchain_core.messages import AIMessage
 from pydantic import BaseModel, Field
-
 
 # Set up logging
 logger = logging.getLogger(__name__)

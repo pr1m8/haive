@@ -8,7 +8,6 @@ from langgraph.graph import END, START
 from haive.core.graph.common.types import NodeLike
 from haive.core.graph.state_graph.pattern.base import GraphPattern
 
-
 logger = logging.getLogger(__name__)
 
 

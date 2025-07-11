@@ -23,10 +23,11 @@ providing a consistent Haive configuration interface with flexible compression o
 
 from typing import Any, Dict, List, Optional, Tuple, Type
 
+from pydantic import Field, validator
+
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.engine.retriever.retriever import BaseRetrieverConfig
 from haive.core.engine.retriever.types import RetrieverType
-from pydantic import Field, validator
 
 
 @BaseRetrieverConfig.register(RetrieverType.CONTEXTUAL_COMPRESSION)

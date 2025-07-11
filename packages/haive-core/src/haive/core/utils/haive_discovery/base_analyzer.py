@@ -1,15 +1,14 @@
 """Base analyzer class and common functionality for component analysis."""
 
-from abc import ABC, abstractmethod
 import inspect
 import logging
 import re
+from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional, Type
 
 from pydantic import BaseModel, ConfigDict, create_model
 
 from haive.core.utils.haive_discovery.component_info import ComponentInfo
-
 
 logger = logging.getLogger(__name__)
 

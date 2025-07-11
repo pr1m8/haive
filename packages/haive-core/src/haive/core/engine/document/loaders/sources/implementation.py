@@ -4,16 +4,15 @@ This module provides enhanced source type implementations adapted from the origi
 project_notes with proper integration into the Haive document engine framework.
 """
 
-from abc import ABC, abstractmethod
-from enum import Enum
 import logging
 import os
+from abc import ABC, abstractmethod
+from enum import Enum
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 from urllib.parse import urlparse
 
 from pydantic import BaseModel, Field
-
 
 logger = logging.getLogger(__name__)
 

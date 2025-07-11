@@ -8,8 +8,9 @@ coordination information, and workflow state in multi-agent systems.
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from haive.core.schema.state_schema import StateSchema
 from pydantic import BaseModel, Field
+
+from haive.core.schema.state_schema import StateSchema
 
 
 class AgentExecutionInfo(BaseModel):

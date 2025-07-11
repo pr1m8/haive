@@ -3,11 +3,12 @@
 import logging
 from typing import Any, Optional, Union
 
-from haive.core.engine.base import EngineType, NonInvokableEngine
-from haive.core.models.embeddings.base import BaseEmbeddingConfig
 from langchain_core.embeddings import Embeddings
 from langchain_core.runnables import RunnableConfig
 from pydantic import BaseModel, ConfigDict, Field, create_model, field_validator
+
+from haive.core.engine.base import EngineType, NonInvokableEngine
+from haive.core.models.embeddings.base import BaseEmbeddingConfig
 
 logger = logging.getLogger(__name__)
 

@@ -181,8 +181,8 @@ class TypesenseVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
             ValueError: If configuration is invalid.
         """
         try:
-            from langchain_community.vectorstores import Typesense
             import typesense
+            from langchain_community.vectorstores import Typesense
         except ImportError:
             raise ImportError(
                 "Typesense requires typesense package. "

@@ -39,9 +39,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-from haive.core.engine.document.config import LoaderPreference
 from langchain_core.documents import Document
 from pydantic import BaseModel, Field
+
+from haive.core.engine.document.config import LoaderPreference
 
 from .path_analyzer import PathAnalyzer, SourceInfo
 from .sources.enhanced_registry import enhanced_registry

@@ -14,7 +14,6 @@ from haive.core.engine.base import InvokableEngine, NonInvokableEngine
 from haive.core.graph.node.config import NodeConfig
 from haive.core.graph.node.types import NodeType
 
-
 logger = logging.getLogger(__name__)
 
 

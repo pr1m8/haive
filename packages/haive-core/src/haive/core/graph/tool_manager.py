@@ -2,8 +2,9 @@
 
 from typing import Any
 
-from haive.core.graph.ToolManager import ToolManager as CoreToolManager
 from pydantic import BaseModel, Field
+
+from haive.core.graph.ToolManager import ToolManager as CoreToolManager
 
 
 class ToolManager(BaseModel):

@@ -1,4 +1,5 @@
 import pytest
+
 from haive.core.types.advanced_registry import (
     ComponentSpec,
     Lowercaser,

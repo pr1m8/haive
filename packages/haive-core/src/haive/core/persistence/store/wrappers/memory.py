@@ -9,7 +9,6 @@ from langgraph.store.memory import InMemoryStore
 from ..base import SerializableStoreWrapper
 from ..embeddings import EmbeddingAdapter
 
-
 logger = logging.getLogger(__name__)
 
 

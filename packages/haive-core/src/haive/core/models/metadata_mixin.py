@@ -10,7 +10,6 @@ from typing import Any
 
 from haive.core.models.metadata import get_model_metadata
 
-
 logger = logging.getLogger(__name__)
 
 

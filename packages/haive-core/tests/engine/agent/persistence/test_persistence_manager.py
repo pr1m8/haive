@@ -4,13 +4,14 @@ import urllib.parse
 import uuid
 from datetime import datetime
 
+from langgraph.checkpoint.memory import MemorySaver
+from langgraph.checkpoint.postgres import PostgresSaver
+
 # Import the module to test
 from haive.core.engine.agent.persistence.manager import (
     CheckpointerType,
     PersistenceManager,
 )
-from langgraph.checkpoint.memory import MemorySaver
-from langgraph.checkpoint.postgres import PostgresSaver
 
 
 class TestPersistenceManager:

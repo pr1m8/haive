@@ -7,13 +7,14 @@ import sys
 
 sys.path.insert(0, "/home/will/Projects/haive/backend/haive")
 
+from pydantic import BaseModel, Field
+
 from haive.core.schema.field_utils import (
     camel_to_snake_case,
     create_field_name_from_model,
     field_name,
     get_field_info_from_model,
 )
-from pydantic import BaseModel, Field
 
 
 # Test models

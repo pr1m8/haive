@@ -9,6 +9,12 @@ import logging
 from typing import Any, List, Optional, Union
 
 import pytest
+from langchain_core.messages import AIMessage, HumanMessage
+from langgraph.types import Command, Send
+from pydantic import Field
+from rich.console import Console
+from rich.panel import Panel
+from rich.pretty import Pretty
 
 # Import branch system
 from haive.core.graph.branches import (
@@ -26,12 +32,6 @@ from haive.core.graph.branches import (
 from haive.core.graph.branches.dynamic import DynamicMapping
 from haive.core.graph.branches.send_mapping import SendGenerator, SendMapping
 from haive.core.schema.state_schema import StateSchema
-from langchain_core.messages import AIMessage, HumanMessage
-from langgraph.types import Command, Send
-from pydantic import Field
-from rich.console import Console
-from rich.panel import Panel
-from rich.pretty import Pretty
 
 # Setup logging
 logger = logging.getLogger("branch_tests")

@@ -8,13 +8,14 @@ relationships and transformation details.
 import time
 from typing import Any, Dict, List, Optional, Union
 
+from langchain.schema import Document
+from pydantic import BaseModel, Field
+
 from haive.core.common.config.runnable import RunnableConfig
 from haive.core.engine.base.base import InvokableEngine
 from haive.core.engine.base.types import EngineType
 from haive.core.engine.document.config import ProcessedDocument
 from haive.core.schema.prebuilt.document_state import DocumentState
-from langchain.schema import Document
-from pydantic import BaseModel, Field
 
 from .types import DocTransformerType
 

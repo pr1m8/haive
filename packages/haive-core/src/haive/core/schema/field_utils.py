@@ -85,13 +85,13 @@ logger = logging.getLogger(__name__)
 
 def camel_to_snake_case(name: str) -> str:
     """Convert CamelCase to snake_case.
-    
+
     Args:
         name: CamelCase string to convert
-        
+
     Returns:
         snake_case version of the string
-        
+
     Examples:
         >>> camel_to_snake_case("QueryRefinementResponse")
         'query_refinement_response'
@@ -101,23 +101,24 @@ def camel_to_snake_case(name: str) -> str:
         'api_key'
     """
     # Handle sequences of uppercase letters (like "APIKey" -> "api_key")
-    name = re.sub('([A-Z]+)([A-Z][a-z])', r'\1_\2', name)
+    name = re.sub("([A-Z]+)([A-Z][a-z])", r"\1_\2", name)
     # Handle normal CamelCase (like "QueryRefinement" -> "query_refinement")
-    name = re.sub('([a-z0-9])([A-Z])', r'\1_\2', name)
+    name = re.sub("([a-z0-9])([A-Z])", r"\1_\2", name)
     return name.lower()
 
 
-def create_field_name_from_model(model_class: Type[BaseModel], 
-                                remove_suffixes: bool = False) -> str:
+def create_field_name_from_model(
+    model_class: Type[BaseModel], remove_suffixes: bool = False
+) -> str:
     """Create a proper field name from a Pydantic model class.
-    
+
     Args:
         model_class: The Pydantic model class
         remove_suffixes: Whether to remove common suffixes like "Response", "Result"
-        
+
     Returns:
         A properly formatted snake_case field name
-        
+
     Examples:
         >>> class QueryRefinementResponse(BaseModel): pass
         >>> create_field_name_from_model(QueryRefinementResponse)
@@ -126,120 +127,123 @@ def create_field_name_from_model(model_class: Type[BaseModel],
         'query_refinement'
     """
     class_name = model_class.__name__
-    
+
     # Convert to snake_case
     field_name = camel_to_snake_case(class_name)
-    
+
     # Remove common suffixes if requested
     if remove_suffixes:
-        suffixes_to_remove = ['_response', '_result', '_output', '_data']
+        suffixes_to_remove = ["_response", "_result", "_output", "_data"]
         for suffix in suffixes_to_remove:
             if field_name.endswith(suffix):
-                field_name = field_name[:-len(suffix)]
+                field_name = field_name[: -len(suffix)]
                 break
-    
+
     # Ensure we have a valid field name
-    if not field_name or field_name == '_':
-        field_name = 'parsed_result'
-    
+    if not field_name or field_name == "_":
+        field_name = "parsed_result"
+
     return field_name
 
 
 def get_field_info_from_model(model_class: Type[BaseModel]) -> Dict[str, Any]:
     """Get field info from a model class, checking for annotations.
-    
+
     This function looks for field integration annotations on the model class
     and returns field information for schema integration.
-    
+
     Args:
         model_class: The Pydantic model class
-        
+
     Returns:
         Dictionary with field configuration for schema integration
     """
     result = {}
-    
+
     # Check for custom field name annotation
-    field_name = getattr(model_class, '__field_name__', None)
+    field_name = getattr(model_class, "__field_name__", None)
     if field_name:
-        result['field_name'] = field_name
+        result["field_name"] = field_name
     else:
         # Use auto-generated field name
-        result['field_name'] = create_field_name_from_model(model_class)
-    
+        result["field_name"] = create_field_name_from_model(model_class)
+
     # Check for field description
-    field_description = getattr(model_class, '__field_description__', None)
+    field_description = getattr(model_class, "__field_description__", None)
     if field_description:
-        result['description'] = field_description
+        result["description"] = field_description
     else:
-        result['description'] = f"Parsed {model_class.__name__}"
-    
+        result["description"] = f"Parsed {model_class.__name__}"
+
     # Check for field type override
-    field_type = getattr(model_class, '__field_type__', None)
+    field_type = getattr(model_class, "__field_type__", None)
     if field_type:
-        result['field_type'] = field_type
+        result["field_type"] = field_type
     else:
-        result['field_type'] = Optional[model_class]
-    
+        result["field_type"] = Optional[model_class]
+
     # Check for other field configuration
-    field_config = getattr(model_class, '__field_config__', {})
+    field_config = getattr(model_class, "__field_config__", {})
     result.update(field_config)
-    
+
     return result
 
 
 # Decorators for adding field info to models
 def field_name(name: str):
     """Simple decorator to set the field name for schema integration.
-    
+
     Args:
         name: The field name to use in schema integration
-        
+
     Examples:
         >>> @field_name("query_refinement")
         ... class QueryRefinementResponse(BaseModel):
         ...     pass
     """
+
     def decorator(cls):
         cls.__field_name__ = name
         return cls
-    
+
     return decorator
 
 
 def field_description(description: str):
     """Decorator to set the field description for schema integration.
-    
+
     Args:
         description: The field description to use
-        
+
     Examples:
         >>> @field_description("Refined query results")
         ... class QueryRefinementResponse(BaseModel):
         ...     pass
     """
+
     def decorator(cls):
         cls.__field_description__ = description
         return cls
-    
+
     return decorator
 
 
 def field_config(**config):
     """Decorator to set field configuration for schema integration.
-    
+
     Args:
         **config: Field configuration options
-        
+
     Examples:
         >>> @field_config(required=True, default=None)
         ... class QueryRefinementResponse(BaseModel):
         ...     pass
     """
+
     def decorator(cls):
         cls.__field_config__ = config
         return cls
-    
+
     return decorator
 
 

@@ -6,7 +6,6 @@ from pydantic import BaseModel, ConfigDict, Field, PrivateAttr
 
 from haive.core.registry.base import AbstractRegistry
 
-
 T = TypeVar("T")
 
 

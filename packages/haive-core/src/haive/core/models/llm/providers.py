@@ -34,9 +34,9 @@ from __future__ import annotations
 from collections.abc import Iterator
 from typing import Optional, TypeVar
 
-from haive.core.models.llm.engine import (EngineRegistry, LLMEngine,
-                                          LLMEngineConfig)
 from pydantic import Field
+
+from haive.core.models.llm.engine import EngineRegistry, LLMEngine, LLMEngineConfig
 
 # Type variables for provider-specific types
 TOpenAIConfig = TypeVar("TOpenAIConfig", bound="OpenAIConfig")

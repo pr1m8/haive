@@ -4,16 +4,15 @@ This module provides operations for adding, removing, and managing
 branches (conditional routing) in a graph.
 """
 
-from datetime import datetime
 import logging
-from typing import Any, Callable, Dict, List, Optional, Union
 import uuid
+from datetime import datetime
+from typing import Any, Callable, Dict, List, Optional, Union
 
 from haive.core.graph.branches.branch import Branch
 from haive.core.graph.branches.types import BranchMode, ComparisonType
 from haive.core.graph.common.references import CallableReference
 from haive.core.graph.state_graph.base.graph_base import GraphBase
-
 
 # Set up logging
 logger = logging.getLogger(__name__)

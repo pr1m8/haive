@@ -8,14 +8,14 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Dict, Optional, Union
 
-# Direct import - simpler approach
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.schema.prebuilt.tool_state import ToolState
-
 # Import BaseOutputParser for type resolution in LangGraph
 # This ensures it's available when LangGraph evaluates type hints
 from langchain_core.output_parsers.base import BaseOutputParser
 from pydantic import Field, computed_field, field_validator, model_validator
+
+# Direct import - simpler approach
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.schema.prebuilt.tool_state import ToolState
 
 # Model-specific context lengths (approximate)
 MODEL_CONTEXT_LENGTHS = {

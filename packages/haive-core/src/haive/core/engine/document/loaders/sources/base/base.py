@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 from enum import Enum
 from typing import Union
 
-from haive.core.engine.loaders.sources.types import SourceType
 from pydantic import (
     AnyUrl,
     BaseModel,
@@ -12,6 +11,8 @@ from pydantic import (
     FilePath,
     HttpUrl,
 )
+
+from haive.core.engine.loaders.sources.types import SourceType
 
 
 # from langchain_core.documents import Document

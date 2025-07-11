@@ -163,8 +163,7 @@ def main(args: List[str] | None = None):
     try:
         if command in ["interactive", "i", "cli"]:
             # Launch interactive CLI
-            from haive.core.logging.interactive_cli import \
-                InteractiveLoggingCLI
+            from haive.core.logging.interactive_cli import InteractiveLoggingCLI
 
             cli = InteractiveLoggingCLI()
             cli.run()
@@ -216,18 +215,15 @@ def main(args: List[str] | None = None):
             elif preset == "haive-only":
                 logging_control.haive_only()
             elif preset == "development":
-                from haive.core.logging.auto_config import \
-                    auto_configure_logging
+                from haive.core.logging.auto_config import auto_configure_logging
 
                 auto_configure_logging(preset="development")
             elif preset == "production":
-                from haive.core.logging.auto_config import \
-                    auto_configure_logging
+                from haive.core.logging.auto_config import auto_configure_logging
 
                 auto_configure_logging(preset="minimal")
             elif preset == "verbose":
-                from haive.core.logging.auto_config import \
-                    auto_configure_logging
+                from haive.core.logging.auto_config import auto_configure_logging
 
                 auto_configure_logging(preset="verbose")
 

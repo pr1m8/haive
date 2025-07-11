@@ -10,14 +10,15 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Optional
 
-from haive.core.logging.formatters import FileFormatter, RichFormatter
-from haive.core.logging.handlers import RichConsoleHandler, RotatingFileHandler
 from rich.console import Console
 from rich.logging import RichHandler
 from rich.panel import Panel
 from rich.text import Text
 from rich.theme import Theme
 from rich.traceback import install as install_rich_traceback
+
+from haive.core.logging.formatters import FileFormatter, RichFormatter
+from haive.core.logging.handlers import RichConsoleHandler, RotatingFileHandler
 
 
 class LoggingManager:

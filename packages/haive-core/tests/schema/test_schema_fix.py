@@ -6,9 +6,10 @@ import sys
 sys.path.insert(0, "/home/will/Projects/haive/backend/haive")
 
 from haive.agents.simple.agent_v2 import SimpleAgentV2
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
+
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 # Define test models

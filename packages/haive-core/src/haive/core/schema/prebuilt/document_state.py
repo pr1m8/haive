@@ -11,16 +11,20 @@ Version: 1.0.0
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
-from haive.core.engine.document.config import (ChunkingStrategy,
-                                               DocumentFormat, DocumentInput,
-                                               DocumentOutput,
-                                               DocumentSourceType,
-                                               LoaderPreference,
-                                               ProcessedDocument,
-                                               ProcessingStrategy)
-from haive.core.schema import StateSchema
 from langchain_core.documents import Document
 from pydantic import BaseModel, Field
+
+from haive.core.engine.document.config import (
+    ChunkingStrategy,
+    DocumentFormat,
+    DocumentInput,
+    DocumentOutput,
+    DocumentSourceType,
+    LoaderPreference,
+    ProcessedDocument,
+    ProcessingStrategy,
+)
+from haive.core.schema import StateSchema
 
 
 class DocumentEngineInputSchema(StateSchema):

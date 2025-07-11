@@ -7,7 +7,6 @@ from pydantic import Field
 from haive.core.engine.agent.persistence.base import CheckpointerConfig
 from haive.core.engine.agent.persistence.types import CheckpointerType
 
-
 logger = logging.getLogger(__name__)
 
 # Check MongoDB support

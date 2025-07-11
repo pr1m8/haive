@@ -59,19 +59,28 @@ code, providing appropriate interfaces for each context.
 
 # Base persistence classes
 from haive.core.persistence.base import CheckpointerConfig
+
 # Factory functions
-from haive.core.persistence.factory import (acreate_postgres_checkpointer,
-                                            create_postgres_checkpointer)
+from haive.core.persistence.factory import (
+    acreate_postgres_checkpointer,
+    create_postgres_checkpointer,
+)
+
 # Handler utilities
 from haive.core.persistence.handlers import setup_checkpointer
+
 # Persistence implementations
 from haive.core.persistence.memory import MemoryCheckpointerConfig
 from haive.core.persistence.postgres_config import PostgresCheckpointerConfig
 from haive.core.persistence.sqlite_config import SQLiteCheckpointerConfig
 from haive.core.persistence.supabase_config import SupabaseCheckpointerConfig
+
 # Type definitions
-from haive.core.persistence.types import (CheckpointerMode, CheckpointerType,
-                                          CheckpointStorageMode)
+from haive.core.persistence.types import (
+    CheckpointerMode,
+    CheckpointerType,
+    CheckpointStorageMode,
+)
 
 __all__ = [
     "CheckpointStorageMode",

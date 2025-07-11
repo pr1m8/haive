@@ -1,5 +1,5 @@
-from abc import ABC
 import logging
+from abc import ABC
 from typing import Any, ClassVar, Dict, List, Optional, Tuple, Type
 
 from langgraph.graph import END, START
@@ -7,7 +7,6 @@ from pydantic import Field
 
 from haive.core.graph.common.types import NodeLike
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
-
 
 logger = logging.getLogger(__name__)
 

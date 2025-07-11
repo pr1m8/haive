@@ -8,14 +8,6 @@ implementation. It serves as a bridge between the old and new architectures.
 
 from typing import Any, Dict, List, Optional, Union
 
-from haive.core.schema.prebuilt.messages.utils import (
-    MessageRound,
-    ToolCallInfo,
-    extract_tool_calls,
-    inject_state_into_tool_calls,
-    is_real_human_message,
-    is_tool_error,
-)
 from langchain_core.messages import (
     AIMessage,
     BaseMessage,
@@ -25,6 +17,15 @@ from langchain_core.messages import (
 )
 from langgraph.graph import END
 from langgraph.types import Send
+
+from haive.core.schema.prebuilt.messages.utils import (
+    MessageRound,
+    ToolCallInfo,
+    extract_tool_calls,
+    inject_state_into_tool_calls,
+    is_real_human_message,
+    is_tool_error,
+)
 
 
 class MessagesStateAdapter:

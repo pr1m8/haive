@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import List
 
 import pytest
+from langchain_core.documents import Document
+
 from haive.core.engine.document.config import LoaderPreference
 from haive.core.engine.document.loaders.auto_loader import (
     AutoLoader,
@@ -15,7 +17,6 @@ from haive.core.engine.document.loaders.auto_loader import (
     load_document,
 )
 from haive.core.engine.document.loaders.sources.source_types import SourceCategory
-from langchain_core.documents import Document
 
 
 class TestBasicDocumentLoading:

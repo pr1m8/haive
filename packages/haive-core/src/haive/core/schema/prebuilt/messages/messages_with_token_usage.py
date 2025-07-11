@@ -6,10 +6,11 @@ This should be used as the base for all conversational agents that need token aw
 
 from typing import Dict, List, Union
 
-from haive.core.schema.prebuilt.messages.token_usage_mixin import TokenUsageMixin
-from haive.core.schema.prebuilt.messages_state import MessagesState
 from langchain_core.messages import AIMessage, AnyMessage, messages_from_dict
 from pydantic import model_validator
+
+from haive.core.schema.prebuilt.messages.token_usage_mixin import TokenUsageMixin
+from haive.core.schema.prebuilt.messages_state import MessagesState
 
 
 class MessagesStateWithTokenUsage(MessagesState, TokenUsageMixin):

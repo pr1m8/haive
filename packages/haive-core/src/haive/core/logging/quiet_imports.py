@@ -31,7 +31,6 @@ except ImportError:
 # Set environment for quiet logging
 import os
 
-
 os.environ["HAIVE_LOG_QUIET"] = "1"
 
 

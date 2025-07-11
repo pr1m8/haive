@@ -5,7 +5,6 @@ from pydantic import BaseModel, Field, model_validator
 
 from haive.core.common.mixins.getter_mixin import GetterMixin
 
-
 T = TypeVar("T")
 
 

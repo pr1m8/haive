@@ -11,7 +11,6 @@ from pydantic import Field
 from .enhanced_registry import enhanced_registry, register_source
 from .source_types import LoaderCapability, RemoteSource, SourceCategory
 
-
 # =============================================================================
 # Missing Web Loader
 # =============================================================================

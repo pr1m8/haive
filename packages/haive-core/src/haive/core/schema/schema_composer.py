@@ -125,7 +125,11 @@ class SchemaComposer:
     like from_components() for simplified schema creation from a list of components.
     """
 
-    def __init__(self, name: str = "ComposedSchema", base_state_schema: Optional[Type[StateSchema]] = None):
+    def __init__(
+        self,
+        name: str = "ComposedSchema",
+        base_state_schema: Optional[Type[StateSchema]] = None,
+    ):
         """Initialize a new SchemaComposer.
 
         Args:
@@ -139,12 +143,12 @@ class SchemaComposer:
                 composer = SchemaComposer(name="ConversationState")
                 composer.add_field("messages", List[BaseMessage], default_factory=list)
                 schema_class = composer.build()
-                
+
             Using a custom base schema::
-            
+
                 from haive.core.schema.prebuilt import MessagesStateWithTokenUsage
                 composer = SchemaComposer(
-                    name="TokenAwareState", 
+                    name="TokenAwareState",
                     base_state_schema=MessagesStateWithTokenUsage
                 )
         """
@@ -177,7 +181,7 @@ class SchemaComposer:
         self.detected_base_class = base_state_schema
         self.custom_base_schema = base_state_schema is not None
         self.base_class_fields = set()
-        
+
         # If custom base schema provided, extract its fields
         if base_state_schema and hasattr(base_state_schema, "model_fields"):
             self.base_class_fields = set(base_state_schema.model_fields.keys())
@@ -219,10 +223,12 @@ class SchemaComposer:
         5. Default to StateSchema
         """
         logger.debug("Detecting base class requirements")
-        
+
         # If custom base schema was provided, skip detection
         if self.custom_base_schema:
-            logger.debug(f"Using custom base schema: {self.detected_base_class.__name__}")
+            logger.debug(
+                f"Using custom base schema: {self.detected_base_class.__name__}"
+            )
             return
 
         # Check current fields first
@@ -301,7 +307,7 @@ class SchemaComposer:
         # Determine base class with proper priority
         # NEW LOGIC: Always use LLMState as foundation for LLM engines
         has_llm_engine = False
-        
+
         # Check for LLM engines in components or current engines
         if components:
             for component in components:
@@ -315,18 +321,20 @@ class SchemaComposer:
                     if engine_type_str == "llm":
                         has_llm_engine = True
                         break
-        
+
         # Also check current engines
         for engine_name in self.engines_by_type.get("llm", []):
             has_llm_engine = True
             break
-            
+
         # Priority: LLMState for LLM engines (includes messages + tools + token tracking)
         if has_llm_engine:
             from haive.core.schema.prebuilt.llm_state import LLMState
 
             base_class = LLMState
-            logger.debug("Using LLMState as base class (found LLM engine - includes messages, tools, and token tracking)")
+            logger.debug(
+                "Using LLMState as base class (found LLM engine - includes messages, tools, and token tracking)"
+            )
         elif self.has_tools:
             from haive.core.schema.prebuilt.tool_state import ToolState
 
@@ -334,10 +342,14 @@ class SchemaComposer:
             logger.debug("Using ToolState as base class (found tools without LLM)")
         elif self.has_messages:
             # Use token-aware messages state for better tracking
-            from haive.core.schema.prebuilt.messages.messages_with_token_usage import MessagesStateWithTokenUsage
+            from haive.core.schema.prebuilt.messages.messages_with_token_usage import (
+                MessagesStateWithTokenUsage,
+            )
 
             base_class = MessagesStateWithTokenUsage
-            logger.debug("Using MessagesStateWithTokenUsage as base class (found messages without LLM/tools)")
+            logger.debug(
+                "Using MessagesStateWithTokenUsage as base class (found messages without LLM/tools)"
+            )
         else:
             from haive.core.schema.state_schema import StateSchema
 
@@ -402,27 +414,30 @@ class SchemaComposer:
 
     def resolve_engine_types(self) -> Dict[str, type]:
         """Resolve engine types from added engines for generic typing.
-        
+
         Returns:
             Dictionary mapping engine names to their concrete types
         """
         resolved_types = {}
-        
+
         for engine_name, engine in self.engines.items():
             if engine is not None:
                 resolved_types[engine_name] = type(engine)
-                logger.debug(f"Resolved engine '{engine_name}' to type {type(engine).__name__}")
-        
+                logger.debug(
+                    f"Resolved engine '{engine_name}' to type {type(engine).__name__}"
+                )
+
         return resolved_types
 
     def get_engine_union_type(self):
         """Get a Union type of all concrete engine types."""
         from typing import Union
+
         from haive.core.engine.base import Engine
-        
+
         resolved_types = self.resolve_engine_types()
         unique_types = list(set(resolved_types.values()))
-        
+
         if not unique_types:
             return Engine  # Fallback to base Engine type
         elif len(unique_types) == 1:
@@ -432,50 +447,51 @@ class SchemaComposer:
 
     def build_with_engine_generics(self, name: str = None) -> Type[StateSchema]:
         """Build a StateSchema with resolved engine generics.
-        
+
         Args:
             name: Optional name for the schema class
-            
+
         Returns:
             StateSchema class with concrete engine types
         """
         from typing import Dict
+
         from haive.core.schema.state_schema import StateSchema
-        
+
         # Resolve engine types
         engine_union_type = self.get_engine_union_type()
         engines_dict_type = Dict[str, engine_union_type]
-        
+
         # Build the schema with generic resolution
         schema_class = self.build()
-        
+
         # Create a concrete version with resolved generics
         class_name = name or f"{schema_class.__name__}WithResolvedEngines"
-        
+
         # Create type annotations for the resolved schema
         resolved_annotations = {
-            'engine': Optional[engine_union_type],
-            'engines': engines_dict_type,
+            "engine": Optional[engine_union_type],
+            "engines": engines_dict_type,
         }
-        
+
         # Add existing field annotations
-        if hasattr(schema_class, '__annotations__'):
+        if hasattr(schema_class, "__annotations__"):
             resolved_annotations.update(schema_class.__annotations__)
-        
+
         # Create the resolved schema class
         resolved_schema = type(
             class_name,
             (schema_class,),
             {
-                '__annotations__': resolved_annotations,
-                '__module__': schema_class.__module__,
-            }
+                "__annotations__": resolved_annotations,
+                "__module__": schema_class.__module__,
+            },
         )
-        
+
         logger.debug(f"Built schema with resolved engine generics: {class_name}")
         logger.debug(f"Engine type: {engine_union_type}")
         logger.debug(f"Engines type: {engines_dict_type}")
-        
+
         return resolved_schema
 
     def update_engine_provider(
@@ -746,33 +762,33 @@ class SchemaComposer:
 
     def add_standard_field(self, field_name: str, **kwargs) -> "SchemaComposer":
         """Add a standard field from the field registry.
-        
+
         Args:
             field_name: Name of the standard field (e.g., 'messages', 'context')
             **kwargs: Additional arguments to pass to the field factory
-            
+
         Returns:
             Self for chaining
         """
         from haive.core.schema.field_registry import StandardFields
-        
+
         # Get the field factory method
         field_method = getattr(StandardFields, field_name, None)
         if not field_method:
             raise ValueError(f"Unknown standard field: {field_name}")
-        
+
         # Get the field definition
         field_def = field_method(**kwargs)
-        
+
         # Get metadata but filter out unsupported keys
-        metadata = getattr(field_def, 'metadata', {})
+        metadata = getattr(field_def, "metadata", {})
         supported_metadata = {}
-        
+
         # Only pass metadata that add_field supports
         for key, value in metadata.items():
-            if key in ['input_for', 'output_from', 'source']:
+            if key in ["input_for", "output_from", "source"]:
                 supported_metadata[key] = value
-        
+
         # Add using the field definition
         self.add_field(
             name=field_def.name,
@@ -780,11 +796,11 @@ class SchemaComposer:
             default=field_def.default,
             default_factory=field_def.default_factory,
             description=field_def.description,
-            shared=getattr(field_def, 'shared', False),
-            reducer=getattr(field_def, 'reducer', None),
-            **supported_metadata
+            shared=getattr(field_def, "shared", False),
+            reducer=getattr(field_def, "reducer", None),
+            **supported_metadata,
         )
-        
+
         return self
 
     def add_fields_from_dict(self, fields_dict: Dict[str, Any]) -> "SchemaComposer":
@@ -1245,13 +1261,16 @@ class SchemaComposer:
         # 2. Process structured output model if available
         if has_structured_output and hasattr(engine, "structured_output_model"):
             model = engine.structured_output_model
-            
+
             # Use proper field naming utilities
             from haive.core.schema.field_utils import get_field_info_from_model
+
             field_info_dict = get_field_info_from_model(model)
-            model_name = field_info_dict['field_name']
-            
-            logger.debug(f"Found structured_output_model in {source}: {model.__name__} -> {model_name}")
+            model_name = field_info_dict["field_name"]
+
+            logger.debug(
+                f"Found structured_output_model in {source}: {model.__name__} -> {model_name}"
+            )
 
             # Store structured model
             self.structured_models[model_name] = model
@@ -1475,7 +1494,7 @@ class SchemaComposer:
 
                 # Use the enhanced MessageList from StandardFields
                 messages_field = StandardFields.messages(use_enhanced=True)
-                
+
                 self.add_field(
                     name=messages_field.name,
                     field_type=messages_field.field_type,
@@ -1526,12 +1545,15 @@ class SchemaComposer:
             logger.debug(f"Engine {engine_name} has {len(tool_routes)} tool routes")
 
             # Add tool_routes field if not present and not in base class
-            if "tool_routes" not in self.fields and "tool_routes" not in self.base_class_fields:
+            if (
+                "tool_routes" not in self.fields
+                and "tool_routes" not in self.base_class_fields
+            ):
                 from haive.core.schema.field_registry import StandardFields
 
                 # Use StandardFields to get the tool_routes field definition
                 tool_routes_field = StandardFields.tool_routes()
-                
+
                 self.add_field(
                     name=tool_routes_field.name,
                     field_type=tool_routes_field.field_type,
@@ -2628,10 +2650,10 @@ class SchemaComposer:
 
     @classmethod
     def from_components(
-        cls, 
-        components: List[Any], 
+        cls,
+        components: List[Any],
         name: str = "ComposedSchema",
-        base_state_schema: Optional[Type[StateSchema]] = None
+        base_state_schema: Optional[Type[StateSchema]] = None,
     ) -> Type[StateSchema]:
         """Create and build a StateSchema directly from a list of components.
 
@@ -2668,7 +2690,7 @@ class SchemaComposer:
 
             # Use the schema
             state = ConversationState()
-            
+
             # With custom base schema for token tracking
             from haive.core.schema.prebuilt import MessagesStateWithTokenUsage
             TokenAwareState = SchemaComposer.from_components(

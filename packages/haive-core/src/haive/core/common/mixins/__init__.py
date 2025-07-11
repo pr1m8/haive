@@ -44,7 +44,6 @@ from haive.core.common.mixins.structured_output_mixin import StructuredOutputMix
 from haive.core.common.mixins.tool_list_mixin import ToolListMixin
 from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
 
-
 __all__ = [
     # Main mixins
     "CheckpointerMixin",

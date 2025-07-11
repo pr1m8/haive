@@ -18,7 +18,6 @@ from pydantic import BaseModel
 from haive.core.common.types.protocols.general_protocols import Nameable
 from haive.core.schema.state_schema import StateSchema
 
-
 # Generic type that can be string, dict with name key, or any object with name attribute
 OptionItem = TypeVar("OptionItem", str, dict[str, Any], Nameable)
 ToolLike = Sequence[

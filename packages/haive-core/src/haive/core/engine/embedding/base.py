@@ -1,7 +1,7 @@
 """Base embedding engine configuration and registry."""
 
-from abc import abstractmethod
 import logging
+from abc import abstractmethod
 from typing import Any, Dict, Optional, Type, Union
 
 from pydantic import Field, SecretStr
@@ -10,7 +10,6 @@ from haive.core.common.mixins.secure_config import SecureConfigMixin
 from haive.core.engine.base import InvokableEngine
 from haive.core.engine.base.types import EngineType
 from haive.core.engine.embedding.types import EmbeddingType
-
 
 logger = logging.getLogger(__name__)
 

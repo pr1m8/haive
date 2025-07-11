@@ -24,10 +24,11 @@ import json
 import logging
 from typing import Any
 
+from pydantic import BaseModel, SecretStr
+
 from haive.core.persistence.memory import MemoryCheckpointerConfig
 from haive.core.persistence.postgres_config import PostgresCheckpointerConfig
 from haive.core.persistence.types import CheckpointerMode, CheckpointStorageMode
-from pydantic import BaseModel, SecretStr
 
 logger = logging.getLogger(__name__)
 

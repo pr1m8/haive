@@ -86,7 +86,6 @@ from langchain_core.messages import AnyMessage
 from langchain_core.prompts import BasePromptTemplate
 from pydantic import BaseModel, field_validator
 
-
 if TYPE_CHECKING:
     from haive.core.engine.prompt_template import PromptTemplateEngine
 

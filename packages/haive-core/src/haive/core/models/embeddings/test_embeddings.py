@@ -7,12 +7,24 @@ that they are properly registered and can be instantiated.
 import unittest
 
 from haive.core.models.embeddings import (  # Base; Cloud providers; Local providers; Factory function
-    AnyscaleEmbeddingConfig, AzureEmbeddingConfig, BaseEmbeddingConfig,
-    BedrockEmbeddingConfig, CloudflareEmbeddingConfig, CohereEmbeddingConfig,
-    EmbeddingProvider, FastEmbedEmbeddingConfig, HuggingFaceEmbeddingConfig,
-    JinaEmbeddingConfig, LlamaCppEmbeddingConfig, OllamaEmbeddingConfig,
-    OpenAIEmbeddingConfig, SentenceTransformerEmbeddingConfig,
-    VertexAIEmbeddingConfig, VoyageAIEmbeddingConfig, create_embeddings)
+    AnyscaleEmbeddingConfig,
+    AzureEmbeddingConfig,
+    BaseEmbeddingConfig,
+    BedrockEmbeddingConfig,
+    CloudflareEmbeddingConfig,
+    CohereEmbeddingConfig,
+    EmbeddingProvider,
+    FastEmbedEmbeddingConfig,
+    HuggingFaceEmbeddingConfig,
+    JinaEmbeddingConfig,
+    LlamaCppEmbeddingConfig,
+    OllamaEmbeddingConfig,
+    OpenAIEmbeddingConfig,
+    SentenceTransformerEmbeddingConfig,
+    VertexAIEmbeddingConfig,
+    VoyageAIEmbeddingConfig,
+    create_embeddings,
+)
 
 
 class TestEmbeddingProviders(unittest.TestCase):

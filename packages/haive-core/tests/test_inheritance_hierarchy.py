@@ -8,6 +8,8 @@ And that SchemaComposer detects the appropriate base class.
 
 import asyncio
 
+from langchain_core.tools import tool
+
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.prebuilt.llm_state import LLMState
 from haive.core.schema.prebuilt.messages.messages_with_token_usage import (
@@ -16,7 +18,6 @@ from haive.core.schema.prebuilt.messages.messages_with_token_usage import (
 from haive.core.schema.prebuilt.messages_state import MessagesState
 from haive.core.schema.prebuilt.tool_state import ToolState
 from haive.core.schema.schema_composer import SchemaComposer
-from langchain_core.tools import tool
 
 
 def test_inheritance_hierarchy():

@@ -82,7 +82,6 @@ from typing import (
     overload,
 )
 
-from haive.core.logging.rich_logger import RichLogger, get_logger
 from langchain_core.messages import BaseMessage
 from langchain_core.runnables import RunnableConfig
 from pydantic import BaseModel, Field, create_model, field_validator, model_validator
@@ -100,6 +99,8 @@ from typing_extensions import (
     TypeGuard,
 )
 
+from haive.core.logging.rich_logger import RichLogger, get_logger
+
 # Get logger instance
 logger = get_logger(__name__)
 
@@ -107,14 +108,14 @@ if TYPE_CHECKING:
     from haive.core.schema.schema_manager import StateSchemaManager
 
 # Import Engine at runtime for type resolution in postponed annotations
-# This is needed because with __future__ annotations, type hints become strings
-# and LangGraph's get_type_hints() needs Engine in the global namespace
-from haive.core.engine.base import Engine
-
 # Also import BaseOutputParser for type resolution
 # This is needed because AugLLMConfig has output_parser: Optional[BaseOutputParser]
 # and LangGraph evaluates all nested type hints when processing state schemas
 from langchain_core.output_parsers.base import BaseOutputParser
+
+# This is needed because with __future__ annotations, type hints become strings
+# and LangGraph's get_type_hints() needs Engine in the global namespace
+from haive.core.engine.base import Engine
 
 # Type variables for generic state schema
 T = TypeVar("T", bound=BaseModel)

@@ -1,9 +1,10 @@
 import logging
 
-from haive.core.models.retriever.base import RetrieverConfig, RetrieverType
-from haive.core.models.vectorstore.base import VectorStoreConfig
 from langchain_core.retrievers import BaseRetriever
 from pydantic import Field
+
+from haive.core.models.retriever.base import RetrieverConfig, RetrieverType
+from haive.core.models.vectorstore.base import VectorStoreConfig
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -33,8 +34,7 @@ class TimeWeightedRetrieverConfig(RetrieverConfig):
             raise ValueError("vector_store_config is required")
 
         # Import the specific retriever class
-        from langchain_community.retrievers import \
-            TimeWeightedVectorStoreRetriever
+        from langchain_community.retrievers import TimeWeightedVectorStoreRetriever
 
         # Create the vector store
         vector_store = self.vector_store_config.create_vectorstore()

@@ -2,14 +2,13 @@
 
 import json
 import logging
-from typing import Any, Dict, List, Optional, Tuple
 import urllib.parse
+from typing import Any, Dict, List, Optional, Tuple
 
 from pydantic import Field, model_validator
 
 from haive.core.engine.agent.persistence.base import CheckpointerConfig
 from haive.core.engine.agent.persistence.types import CheckpointerType
-
 
 # Check if PostgreSQL dependencies are installed
 try:

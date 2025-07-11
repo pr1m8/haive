@@ -4,10 +4,10 @@ This module provides utilities for generating and displaying Mermaid diagrams
 in different environments, with fallback mechanisms.
 """
 
-from enum import Enum
 import os
 import subprocess
 import tempfile
+from enum import Enum
 from typing import Optional
 
 

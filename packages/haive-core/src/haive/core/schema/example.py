@@ -9,6 +9,9 @@ including state creation, dynamic composition, reducers, and real-world patterns
 import operator
 from typing import Any, Dict, List, Optional, Tuple
 
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
+from pydantic import Field, validator
+
 from haive.core.schema import (
     FieldDefinition,
     FieldExtractor,
@@ -23,8 +26,6 @@ from haive.core.schema import (
     validate_schema,
 )
 from haive.core.schema.ui import SchemaUI
-from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
-from pydantic import Field, validator
 
 
 def example_basic_state_creation():

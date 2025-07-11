@@ -9,7 +9,6 @@ their implementing classes, allowing dynamic discovery and resolution.
 import importlib
 import logging
 
-
 logger = logging.getLogger(__name__)
 
 # Global registry mapping config classes to agent classes

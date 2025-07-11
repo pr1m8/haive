@@ -6,6 +6,5 @@ This allows running the logging module directly:
 
 from haive.core.logging.cli import main
 
-
 if __name__ == "__main__":
     main()

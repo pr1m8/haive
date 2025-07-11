@@ -7,8 +7,9 @@ and other structured data files.
 import logging
 from typing import Any, Dict, Optional
 
-from haive.core.engine.document.loaders.sources.implementation import LocalFileSource
 from langchain_core.document_loaders.base import BaseLoader
+
+from haive.core.engine.document.loaders.sources.implementation import LocalFileSource
 
 logger = logging.getLogger(__name__)
 

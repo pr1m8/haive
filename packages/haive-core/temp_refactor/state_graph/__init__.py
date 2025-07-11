@@ -6,6 +6,8 @@ and executing graphs with consistent interfaces, serialization support,
 and dynamic composition.
 """
 
+from langgraph.graph import END, START
+
 from haive.core.graph.state_graph.base import (
     BranchResultType,
     BranchType,
@@ -22,7 +24,6 @@ from haive.core.graph.state_graph.mixins import (
 )
 from haive.core.graph.state_graph.schema_graph import SchemaGraph
 from haive.core.graph.state_graph.visualization import MermaidGenerator
-from langgraph.graph import END, START
 
 __all__ = [
     # Main graph classes

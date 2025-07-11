@@ -9,8 +9,8 @@ This module tests the rate limiting mixin including:
 from typing import Optional
 from unittest.mock import Mock, patch
 
-from pydantic import BaseModel, Field
 import pytest
+from pydantic import BaseModel, Field
 
 from haive.core.models.llm.rate_limiting_mixin import RateLimitingMixin
 

@@ -2,8 +2,9 @@
 
 from typing import Any
 
-from haive.core.graph.state_graph.state_graph import StateGraphSerializable
 from pydantic import BaseModel, Field
+
+from haive.core.graph.state_graph.state_graph import StateGraphSerializable
 
 
 class StateGraph(BaseModel):

@@ -53,7 +53,6 @@ from haive.core.engine.base import EngineType, InvokableEngine
 from haive.core.engine.retriever.types import RetrieverType
 from haive.core.engine.vectorstore.vectorstore import VectorStoreConfig
 
-
 logger = logging.getLogger(__name__)
 
 

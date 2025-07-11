@@ -12,7 +12,6 @@ from haive.core.engine.base.base import Engine
 from haive.core.engine.base.types import EngineType
 from haive.core.registry.base import AbstractRegistry
 
-
 logger = logging.getLogger(__name__)
 
 

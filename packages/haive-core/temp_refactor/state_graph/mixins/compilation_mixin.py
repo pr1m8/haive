@@ -11,7 +11,6 @@ from pydantic import Field
 
 from haive.core.graph.state_graph.base.graph_state import CompilationState
 
-
 logger = logging.getLogger(__name__)
 
 

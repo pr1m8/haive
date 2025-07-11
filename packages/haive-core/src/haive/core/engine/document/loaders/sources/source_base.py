@@ -8,8 +8,9 @@ and metadata needed by loaders.
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional
 
-from haive.core.common.mixins.secure_config import SecureConfigMixin
 from pydantic import BaseModel, Field, SecretStr
+
+from haive.core.common.mixins.secure_config import SecureConfigMixin
 
 
 class BaseSource(BaseModel, ABC):

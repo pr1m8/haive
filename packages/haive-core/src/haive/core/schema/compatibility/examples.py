@@ -7,6 +7,10 @@ schema compatibility system in the Haive framework.
 
 from typing import Any, Dict, List, Optional, Tuple
 
+from langchain_core.documents import Document
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
+from pydantic import BaseModel, Field
+
 # Import compatibility module components
 from haive.core.schema.compatibility import (
     CompatibilityChecker,
@@ -22,9 +26,6 @@ from haive.core.schema.compatibility import (
     merge_schemas,
     register_converter,
 )
-from langchain_core.documents import Document
-from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
-from pydantic import BaseModel, Field
 
 
 # Example 1: Basic Schema Compatibility Check

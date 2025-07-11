@@ -21,8 +21,9 @@ from typing import (
     get_origin,
 )
 
-from haive.core.schema.state_schema import StateSchema
 from pydantic import BaseModel, Field, PrivateAttr, field_validator, model_validator
+
+from haive.core.schema.state_schema import StateSchema
 
 if TYPE_CHECKING:
     from haive.core.engine.base import Engine

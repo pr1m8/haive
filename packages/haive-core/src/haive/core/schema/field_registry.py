@@ -14,9 +14,10 @@ Key benefits:
 
 from typing import Any, Dict, List, Optional, Type, TypeVar, Union
 
-from haive.core.schema.field_definition import FieldDefinition
 from langchain_core.messages import BaseMessage
 from pydantic import BaseModel, Field
+
+from haive.core.schema.field_definition import FieldDefinition
 
 # Type variables for generics
 T = TypeVar("T")

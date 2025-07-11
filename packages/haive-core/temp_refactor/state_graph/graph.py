@@ -8,12 +8,13 @@ the components into a complete graph implementation.
 import logging
 from typing import Any, Callable, Dict, List, Optional
 
+from pydantic import Field
+
 from haive.core.graph.common.types import NodeType
 from haive.core.graph.state_graph.base.graph_base import GraphBase
 from haive.core.graph.state_graph.mixins.compilation_mixin import CompilationMixin
 from haive.core.graph.state_graph.mixins.schema_mixin import SchemaMixin
 from haive.core.graph.state_graph.mixins.validation_mixin import ValidationMixin
-from pydantic import Field
 
 # Set up logging
 logger = logging.getLogger(__name__)

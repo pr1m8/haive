@@ -3,14 +3,15 @@ from __future__ import annotations
 from enum import Enum
 from typing import Any
 
-from haive.core.models.embeddings.base import (
-    BaseEmbeddingConfig,
-    HuggingFaceEmbeddingConfig,
-)
 from langchain_core.documents import Document
 from langchain_core.retrievers import BaseRetriever
 from langchain_core.vectorstores import VectorStore
 from pydantic import BaseModel, Field
+
+from haive.core.models.embeddings.base import (
+    BaseEmbeddingConfig,
+    HuggingFaceEmbeddingConfig,
+)
 
 
 class VectorStoreProvider(str, Enum):

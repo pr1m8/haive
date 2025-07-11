@@ -6,7 +6,6 @@ from pydantic import BaseModel, Field
 
 from haive.core.engine.agent.persistence.types import CheckpointerType
 
-
 logger = logging.getLogger(__name__)
 
 

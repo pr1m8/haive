@@ -16,7 +16,6 @@ from haive.core.models.llm.base import AzureLLMConfig
 from haive.core.schema.state_schema import StateSchema
 from haive.core.schema.ui import SchemaUI
 
-
 # Set up logging for tests
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

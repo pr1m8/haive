@@ -17,7 +17,6 @@ from typing import (
 
 from pydantic import BaseModel, Field, field_validator, model_validator
 
-
 T = TypeVar("T")
 
 

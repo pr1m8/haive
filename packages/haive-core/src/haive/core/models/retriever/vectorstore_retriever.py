@@ -1,14 +1,15 @@
 import logging
 from typing import Any, Dict
 
+from langchain_core.retrievers import BaseRetriever
+from pydantic import Field
+
 from haive.core.models.embeddings.base import (
     BaseEmbeddingConfig,
     HuggingFaceEmbeddingConfig,
 )
 from haive.core.models.retriever.base import RetrieverConfig, RetrieverType
 from haive.core.models.vectorstore.base import VectorStoreConfig
-from langchain_core.retrievers import BaseRetriever
-from pydantic import Field
 
 # Set up logging
 logger = logging.getLogger(__name__)

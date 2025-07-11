@@ -6,11 +6,12 @@ import logging
 from contextlib import contextmanager
 from typing import Any, TypeVar
 
-from haive.core.logging.manager import get_logging_manager
 from rich.console import Console
 from rich.panel import Panel
 from rich.text import Text
 from rich.traceback import Traceback
+
+from haive.core.logging.manager import get_logging_manager
 
 T = TypeVar("T")
 
