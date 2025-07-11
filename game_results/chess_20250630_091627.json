@@ -1,7 +1,0 @@
-{
-  "game": "chess",
-  "timestamp": "20250630_091627",
-  "success": false,
-  "error": "Error in chess: Agent.run() missing 1 required positional argument: 'input_data'",
-  "result": {}
-}

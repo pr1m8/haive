@@ -1,7 +1,0 @@
-{
-  "game": "tic_tac_toe",
-  "timestamp": "20250630_091626",
-  "success": false,
-  "error": "Error in tic_tac_toe: Agent.run() missing 1 required positional argument: 'input_data'",
-  "result": {}
-}
