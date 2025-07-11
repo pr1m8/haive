@@ -10,11 +10,12 @@ This implementation follows the standard LangGraph Plan and Execute pattern with
 
 from typing import List, Literal
 
+from haive.core.schema.prebuilt.messages.messages_state import MessagesState
+from pydantic import BaseModel, Field
+
 from haive.agents.multi.enhanced_base import BuildMode, MultiAgentBase
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
-from haive.core.schema.prebuilt.messages.messages_state import MessagesState
-from pydantic import BaseModel, Field
 
 # ============================================================================
 # SIMPLE MODELS (following LangGraph pattern)

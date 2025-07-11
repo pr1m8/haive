@@ -3,7 +3,6 @@
 import logging
 from typing import Any
 
-from haive.agents.react_class.react_v2.config import ReactAgentConfig
 from haive.core.engine.agent.agent import Agent, register_agent
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from langchain_core.messages import AIMessage
@@ -13,6 +12,8 @@ from langgraph.prebuilt.tool_node import ToolNode
 from langgraph.pregel import RetryPolicy
 from langgraph.types import Send
 from pydantic import BaseModel
+
+from haive.agents.react_class.react_v2.config import ReactAgentConfig
 
 # Set up logging
 logger = logging.getLogger(__name__)

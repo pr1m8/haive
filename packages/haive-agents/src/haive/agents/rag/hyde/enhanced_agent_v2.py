@@ -11,6 +11,13 @@ This version integrates the new enhanced prompt system with:
 from enum import Enum
 from typing import Any, Dict, List, Optional, Union
 
+from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
+from pydantic import BaseModel, Field, model_validator
+
 from haive.agents.base.agent import Agent
 from haive.agents.common.utils.pydantic_prompt_utils import (
     PromptStyle,
@@ -32,12 +39,6 @@ from haive.agents.rag.common.query_constructors.hyde.enhanced_prompts import (
 )
 from haive.agents.rag.models import HyDEResult, HypotheticalDocument
 from haive.agents.simple.agent import SimpleAgent
-from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
-from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate
-from pydantic import BaseModel, Field, model_validator
 
 
 class HyDEGenerationMode(str, Enum):

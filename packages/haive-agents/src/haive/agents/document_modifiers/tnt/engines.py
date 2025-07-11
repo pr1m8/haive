@@ -19,7 +19,6 @@ Example:
         result = llm.invoke({"content": "text to summarize"})
 """
 
-from haive.agents.document_modifiers.tnt.utils import parse_summary, parse_taxonomy
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import (
@@ -28,6 +27,8 @@ from langchain_core.prompts import (
     PromptTemplate,
     SystemMessagePromptTemplate,
 )
+
+from haive.agents.document_modifiers.tnt.utils import parse_summary, parse_taxonomy
 
 # System Message: Provides instructions and context
 SUMMARY_SYSTEM_MESSAGE = SystemMessagePromptTemplate(

@@ -21,7 +21,6 @@ from .execution_mixin import ExecutionMixin
 from .persistence_mixin import PersistenceMixin
 from .state_mixin import StateMixin
 
-
 __all__ = [
     "ExecutionMixin",
     "PersistenceMixin",

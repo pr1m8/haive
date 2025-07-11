@@ -12,7 +12,6 @@ from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
-
 # ============================================================================
 # BASIC MEMORY SCHEMA (from LangMem)
 # ============================================================================

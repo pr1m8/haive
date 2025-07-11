@@ -32,11 +32,12 @@ def test_agent_with_supabase_config():
         return True
 
     try:
-        from haive.agents.base import Agent
         from haive.core.graph.state_graph.base_graph2 import BaseGraph
         from haive.core.persistence.supabase_config import SupabaseCheckpointerConfig
         from haive.core.persistence.types import CheckpointerMode
         from langgraph.graph import END
+
+        from haive.agents.base import Agent
 
         # Create a test agent class
         class TestAgent(Agent):
@@ -106,9 +107,10 @@ def test_agent_store_integration():
         return True
 
     try:
-        from haive.agents.base import Agent
         from haive.core.graph.state_graph.base_graph2 import BaseGraph
         from haive.core.persistence.supabase_config import SupabaseCheckpointerConfig
+
+        from haive.agents.base import Agent
 
         class StoreTestAgent(Agent):
             def setup_agent(self):
@@ -151,8 +153,9 @@ def test_agent_store_integration():
 def test_agent_persistence_fields():
     """Test that agent persistence fields are properly set."""
     try:
-        from haive.agents.base import Agent
         from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
+        from haive.agents.base import Agent
 
         class FieldTestAgent(Agent):
             def setup_agent(self):
@@ -193,9 +196,10 @@ def test_agent_factory_pattern():
         return True
 
     try:
-        from haive.agents.base import Agent
         from haive.core.graph.state_graph.base_graph2 import BaseGraph
         from haive.core.persistence.supabase_config import SupabaseCheckpointerConfig
+
+        from haive.agents.base import Agent
 
         class FactoryAgent(Agent):
             def setup_agent(self):

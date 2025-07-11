@@ -3,15 +3,16 @@ from collections.abc import Callable, Sequence
 from typing import TypedDict
 
 import jsonpatch
-from haive.agents.document_modifiers.complex_extraction.models import (
-    PatchFunctionParameters,
-)
 from langchain_core.messages import AIMessage, AnyMessage, BaseMessage, ToolCall
 from langchain_core.prompt_values import PromptValue
 from langchain_core.runnables import Runnable
 from langgraph.graph import add_messages
 from langgraph.types import Command
 from pydantic import BaseModel
+
+from haive.agents.document_modifiers.complex_extraction.models import (
+    PatchFunctionParameters,
+)
 
 
 def encode(state: BaseModel) -> dict:

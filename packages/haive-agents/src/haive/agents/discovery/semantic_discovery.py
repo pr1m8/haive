@@ -12,13 +12,26 @@ Key Features:
 - Context-aware component matching
 """
 
-from abc import ABC, abstractmethod
 import asyncio
+import logging
+from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum
-import logging
 from typing import Any, Dict, List, Optional, Protocol, Tuple, Union
 
+from haive.core.registry import (
+    CapabilityCategory,
+    ComponentAnalyzer,
+    ComponentMetadata,
+    ComponentType,
+    EnhancedComponentRegistry,
+    create_component_registry,
+)
+from haive.core.utils.haive_discovery import (
+    UnifiedHaiveDiscovery,
+    discover_tools,
+    get_all_tools,
+)
 from langchain_community.vectorstores import Chroma
 from langchain_core.documents import Document
 from langchain_core.embeddings import Embeddings
@@ -34,20 +47,6 @@ from haive.agents.discovery.selection_strategies import (
     EnsembleSelectionStrategy,
     SemanticSelectionStrategy,
 )
-from haive.core.registry import (
-    CapabilityCategory,
-    ComponentAnalyzer,
-    ComponentMetadata,
-    ComponentType,
-    EnhancedComponentRegistry,
-    create_component_registry,
-)
-from haive.core.utils.haive_discovery import (
-    UnifiedHaiveDiscovery,
-    discover_tools,
-    get_all_tools,
-)
-
 
 logger = logging.getLogger(__name__)
 

@@ -245,10 +245,11 @@ def test_conversation_agent_with_new_id():
     )
 
     try:
+        from haive.core.engine.aug_llm import AugLLMConfig
+
         from haive.agents.conversation.collaberative.agent import (
             CollaborativeConversation,
         )
-        from haive.core.engine.aug_llm import AugLLMConfig
 
         # Create fresh participant agents with unique names
         timestamp = datetime.now().strftime("%H%M%S")

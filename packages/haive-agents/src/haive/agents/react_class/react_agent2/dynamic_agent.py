@@ -2,16 +2,8 @@
 
 """Dynamic React Agent - an extension of React agent with tool selection capabilities."""
 import logging
-from typing import Any
 import uuid
-
-from langchain_core.documents import Document
-from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
-from langchain_core.tools import BaseTool
-from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
-from langgraph.checkpoint.memory import MemorySaver
-from langgraph.graph import END
-from pydantic import BaseModel, Field
+from typing import Any
 
 from agents.react_agent2.agent2 import ReactAgent
 from agents.react_agent2.config2 import ReactAgentConfig
@@ -20,7 +12,13 @@ from haive.core.engine.agent.agent import register_agent
 from haive.core.graph.branches import Branch
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from haive.core.models.vectorstore.base import VectorStoreConfig
-
+from langchain_core.documents import Document
+from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
+from langchain_core.tools import BaseTool
+from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
+from langgraph.checkpoint.memory import MemorySaver
+from langgraph.graph import END
+from pydantic import BaseModel, Field
 
 # Set up logging
 logger = logging.getLogger(__name__)

@@ -6,14 +6,15 @@ Just list your nodes and define the flow. That's it.
 import logging
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
-from haive.agents.base.agent import Agent
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.engine.base import Engine
 from haive.core.graph.node.base_config import NodeConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langgraph.graph import END, START
 from pydantic import Field
+
+from haive.agents.base.agent import Agent
+from haive.agents.simple.agent import SimpleAgent
 
 logger = logging.getLogger(__name__)
 

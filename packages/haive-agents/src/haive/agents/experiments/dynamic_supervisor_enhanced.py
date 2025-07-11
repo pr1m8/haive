@@ -10,7 +10,6 @@ from haive.agents.experiments.dynamic_supervisor import DynamicSupervisorAgent
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
 
-
 logger = logging.getLogger(__name__)
 
 

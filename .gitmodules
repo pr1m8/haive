@@ -1,17 +1,17 @@
 [submodule "packages/haive-games"]
     path = packages/haive-games
     url = https://github.com/pr1m8/haive-games.git
-    branch = vzn/dav
+	branch = vzn/dav
 
 [submodule "packages/haive-prebuilt"]
     path = packages/haive-prebuilt
     url = https://github.com/pr1m8/haive-prebuilt.git
-    branch = vzn/dav
+	branch = vzn/dav
 
 [submodule "packages/haive-mcp"]
 	path = packages/haive-mcp
 	url = https://github.com/pr1m8/haive-mcp.git
-    branch = vzn/dav
+	branch = vzn/dav
 
 [submodule "packages/haive-dataflow"]
 	path = packages/haive-dataflow

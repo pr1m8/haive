@@ -2,11 +2,6 @@ import operator
 from enum import Enum
 from typing import Annotated, List, Protocol, runtime_checkable
 
-from haive.agents.base.agent import Agent
-from haive.agents.react.agent import ReactAgent
-
-# from haive.agents.rag.base.agent import SimpleRAGAgent
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.common.mixins.getter_mixin import GetterMixin
 from haive.core.engine.aug_llm import AugLLMConfig
 
@@ -28,6 +23,12 @@ from pydantic import (
     field_validator,
     model_validator,
 )
+
+from haive.agents.base.agent import Agent
+from haive.agents.react.agent import ReactAgent
+
+# from haive.agents.rag.base.agent import SimpleRAGAgent
+from haive.agents.simple.agent import SimpleAgent
 
 
 @tool

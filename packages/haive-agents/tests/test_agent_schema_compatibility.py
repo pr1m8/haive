@@ -11,12 +11,7 @@ Tests for:
 from typing import Any, Dict, List, Optional
 from unittest.mock import Mock, patch
 
-from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
-from pydantic import BaseModel, Field
 import pytest
-
-from haive.agents.multi.base import SequentialAgent
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.agent_composer import AgentSchemaComposer
 from haive.core.schema.auto_compatibility import AutoCompatibilitySystem
@@ -26,6 +21,11 @@ from haive.core.schema.enhanced_schema_composer import (
     SeparationStrategy,
 )
 from haive.core.schema.state import MessagesState, StateSchema, ToolState
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
+from pydantic import BaseModel, Field
+
+from haive.agents.multi.base import SequentialAgent
+from haive.agents.simple.agent import SimpleAgent
 
 
 # Test Schemas

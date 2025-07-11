@@ -2,12 +2,13 @@
 
 from typing import Any, Dict
 
-from haive.agents.experiments.supervisor.agent_info import AgentInfo
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from haive.tools.tools.search_tools import tavily_search_tool
 from langchain_core.tools import tool
+
+from haive.agents.experiments.supervisor.agent_info import AgentInfo
+from haive.agents.simple.agent import SimpleAgent
 
 
 # Create test tools

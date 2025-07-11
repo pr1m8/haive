@@ -11,6 +11,19 @@ The system builds on the existing haive.core.utils.discovery infrastructure
 while adding intelligent, context-aware discovery capabilities.
 """
 
+# Re-export component registry items from core
+from haive.core.registry import (
+    CapabilityCategory,
+    CapabilityIndex,
+    ComponentAnalyzer,
+    ComponentMetadata,
+    ComponentType,
+    EnhancedComponentRegistry,
+    RegistrySearcher,
+    create_component_registry,
+    register_component_batch,
+)
+
 from haive.agents.discovery.dynamic_tool_selector import (
     ContextAwareSelector,
     DynamicToolSelector,
@@ -36,19 +49,6 @@ from haive.agents.discovery.semantic_discovery import (
     SemanticDiscoveryEngine,
     ToolSelectionStrategy,
     VectorBasedToolSelector,
-)
-
-# Re-export component registry items from core
-from haive.core.registry import (
-    CapabilityCategory,
-    CapabilityIndex,
-    ComponentAnalyzer,
-    ComponentMetadata,
-    ComponentType,
-    EnhancedComponentRegistry,
-    RegistrySearcher,
-    create_component_registry,
-    register_component_batch,
 )
 
 __all__ = [

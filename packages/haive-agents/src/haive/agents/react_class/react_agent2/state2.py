@@ -4,10 +4,9 @@
 from collections.abc import Sequence
 from typing import Any, Optional
 
+from haive.core.utils.message_utils import has_tool_calls
 from langchain_core.messages import BaseMessage
 from pydantic import BaseModel, Field
-
-from haive.core.utils.message_utils import has_tool_calls
 
 
 class ReactAgentState(BaseModel):

@@ -14,7 +14,6 @@ from haive.agents.planning.p_and_e.models import Act, Plan
 from haive.agents.react import ReactAgent
 from haive.agents.simple import SimpleAgent
 
-
 # Load environment variables
 load_dotenv()
 

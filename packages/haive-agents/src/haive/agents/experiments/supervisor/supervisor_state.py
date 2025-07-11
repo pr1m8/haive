@@ -2,10 +2,10 @@
 
 from typing import Dict, List, Optional
 
+from haive.core.schema.prebuilt.messages_state import MessagesState
 from pydantic import Field, field_validator
 
 from haive.agents.experiments.supervisor.agent_info import AgentInfo
-from haive.core.schema.prebuilt.messages_state import MessagesState
 
 
 class SupervisorState(MessagesState):

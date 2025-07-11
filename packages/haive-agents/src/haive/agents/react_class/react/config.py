@@ -1,9 +1,10 @@
 from typing import Any, Literal
 
-from haive.agents.react_class.react.state import ReactAgentState
-from haive.agents.simple.config import SimpleAgentConfig
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel, Field, model_validator
+
+from haive.agents.react_class.react.state import ReactAgentState
+from haive.agents.simple.config import SimpleAgentConfig
 
 
 class ReactAgentConfig(SimpleAgentConfig):

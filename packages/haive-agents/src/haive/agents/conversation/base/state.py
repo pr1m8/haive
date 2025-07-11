@@ -62,12 +62,10 @@ from __future__ import annotations
 import operator
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 
-from pydantic import Field, computed_field
-from typing_extensions import TypeAlias
-
 from haive.core.logging.rich_logger import LogLevel, get_logger
 from haive.core.schema.prebuilt.messages_state import MessagesState
-
+from pydantic import Field, computed_field
+from typing_extensions import TypeAlias
 
 if TYPE_CHECKING:
     pass

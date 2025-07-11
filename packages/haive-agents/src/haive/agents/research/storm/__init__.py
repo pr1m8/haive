@@ -21,7 +21,6 @@ is not yet complete.
 # For now, we'll only export the config class since it exists
 from haive.agents.research.storm.config import STORMAgentConfig
 
-
 __all__ = [
     "STORMAgentConfig",
 ]

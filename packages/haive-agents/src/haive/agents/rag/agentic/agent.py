@@ -11,7 +11,6 @@ proper Haive base agent infrastructure:
 
 from typing import Any, Dict, List, Literal, Optional
 
-from haive.agents.react.agent import ReactAgent
 from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.engine.retriever import BaseRetrieverConfig
@@ -24,6 +23,8 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.tools import BaseTool, StructuredTool
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field, computed_field, model_validator
+
+from haive.agents.react.agent import ReactAgent
 
 
 # Structured output models for agentic RAG

@@ -10,13 +10,14 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any
 
-from haive.agents.base.agent import Agent
 from haive.core.schema.compatibility import (
     CompatibilityChecker,
     FieldMapper,
     TypeAnalyzer,
     check_compatibility,
 )
+
+from haive.agents.base.agent import Agent
 
 from .base import ExecutionMode, MultiAgent
 

@@ -106,8 +106,9 @@ class RecompileMetaState(MetaStateSchema, RecompileMixin):
 
 def test_recompile_mixin():
     """Test the RecompileMixin with any generic agent."""
-    from haive.agents.simple.agent import SimpleAgent
     from haive.core.engine.aug_llm import AugLLMConfig
+
+    from haive.agents.simple.agent import SimpleAgent
 
     # Create any agent - don't define model in AugLLMConfig
     config = AugLLMConfig()  # Use defaults

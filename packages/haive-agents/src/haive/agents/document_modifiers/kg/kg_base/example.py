@@ -7,9 +7,10 @@ knowledge graphs from documents with various configurations.
 
 from typing import List
 
-from haive.agents.document_modifiers.kg.kg_base.models import GraphTransformer
 from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.documents import Document
+
+from haive.agents.document_modifiers.kg.kg_base.models import GraphTransformer
 
 
 def basic_example() -> None:

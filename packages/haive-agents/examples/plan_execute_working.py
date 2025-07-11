@@ -13,7 +13,6 @@ from langchain_core.tools import tool
 from haive.agents.react import ReactAgent
 from haive.agents.simple import SimpleAgent
 
-
 # Load environment variables
 load_dotenv()
 

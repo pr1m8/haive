@@ -2,7 +2,6 @@
 
 from langchain_core.prompts import ChatPromptTemplate
 
-
 MAP_PROMPT = ChatPromptTemplate.from_messages(
     [("human", "Write a concise summary of the following:\\n\\n{context}")]
 )

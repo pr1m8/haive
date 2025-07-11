@@ -7,13 +7,14 @@ execution phases, join points, and optimal execution strategies.
 from enum import Enum
 from typing import Any
 
+from haive.core.common.structures.tree import AutoTree
+from pydantic import BaseModel, ConfigDict, Field
+
 from haive.agents.common.models.task_analysis.base import (
     DependencyNode,
     Task,
     TaskStep,
 )
-from haive.core.common.structures.tree import AutoTree
-from pydantic import BaseModel, ConfigDict, Field
 
 
 class ExecutionStrategy(str, Enum):

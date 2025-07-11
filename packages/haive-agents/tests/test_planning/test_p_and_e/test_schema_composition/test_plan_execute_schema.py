@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 """Test schema composition with PlanAndExecuteAgent using hybrid PlanExecuteState."""
 
+from langchain_core.messages import HumanMessage
+
 from haive.agents.planning.p_and_e.agent import PlanAndExecuteAgent
 from haive.agents.planning.p_and_e.state import PlanExecuteState
-from langchain_core.messages import HumanMessage
 
 # Create PlanAndExecuteAgent
 agent = PlanAndExecuteAgent(name="test_p_and_e")

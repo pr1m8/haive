@@ -3,6 +3,8 @@
 
 from typing import List
 
+from haive.core.engine.aug_llm import AugLLMConfig
+
 from haive.agents.multi.base import SequentialAgent
 from haive.agents.reasoning_and_critique.self_discover.v2.models import (
     AdaptedModules,
@@ -20,7 +22,6 @@ from haive.agents.reasoning_and_critique.self_discover.v2.state import (
     SelfDiscoveryState,
 )
 from haive.agents.simple.agent import SimpleAgent
-from haive.core.engine.aug_llm import AugLLMConfig
 
 # Create AugLLM configs for each step
 select_engine = AugLLMConfig(

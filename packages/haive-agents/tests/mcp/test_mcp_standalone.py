@@ -4,8 +4,6 @@ import asyncio
 import json
 from pathlib import Path
 
-# Use direct imports from haive
-from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.core.engine.vectorstore.vectorstore import (
     VectorStoreConfig,
     VectorStoreProvider,
@@ -13,6 +11,9 @@ from haive.core.engine.vectorstore.vectorstore import (
 from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.documents import Document
+
+# Use direct imports from haive
+from haive.agents.rag.base.agent import BaseRAGAgent
 
 
 def create_mcp_documents():

@@ -7,17 +7,18 @@ principle of separation of concerns.
 
 from typing import Any, Dict, List, Optional
 
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
+from pydantic import Field
+
 from haive.agents.base.agent import Agent
 from haive.agents.multi.base import SequentialAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.rag.models import HyDEResult
 from haive.agents.rag.utils.structured_output_enhancer import create_hyde_enhancer
 from haive.agents.simple.agent import SimpleAgent
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
-from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate
-from pydantic import Field
 
 # Improved HyDE generation prompt based on LangChain best practices
 ENHANCED_HYDE_PROMPT = ChatPromptTemplate.from_messages(

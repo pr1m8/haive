@@ -1,10 +1,9 @@
 from typing import Any
 
+from haive.core.graph.branches import Branch
 from langchain_core.messages import AIMessage
 from langgraph.graph import END
 from langgraph.types import Command, Send
-
-from haive.core.graph.branches import Branch
 
 
 class ToTBranch(Branch):

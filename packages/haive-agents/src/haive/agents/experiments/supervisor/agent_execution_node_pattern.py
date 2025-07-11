@@ -6,10 +6,9 @@ use a general agent execution node that can run any agent dynamically.
 
 from typing import Any, Dict, Literal, Optional
 
-from pydantic import Field
-
 from haive.core.graph import BaseGraph
 from haive.core.schema import StateSchema
+from pydantic import Field
 
 
 class SupervisorState(StateSchema):

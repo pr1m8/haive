@@ -15,13 +15,14 @@ import asyncio
 import uuid
 from typing import List
 
-# Import both V1 and V2 agents
-from haive.agents.simple.agent import SimpleAgent  # V1
-from haive.agents.simple.agent_v2 import SimpleAgentV2  # V2
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
+
+# Import both V1 and V2 agents
+from haive.agents.simple.agent import SimpleAgent  # V1
+from haive.agents.simple.agent_v2 import SimpleAgentV2  # V2
 
 # Try to import ReactAgent
 try:

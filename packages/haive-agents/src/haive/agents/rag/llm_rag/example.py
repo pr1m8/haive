@@ -10,13 +10,14 @@ import logging
 import uuid
 from pathlib import Path
 
-from haive.agents.rag.llm_rag.agent import LLMRAGAgent
-from haive.agents.rag.llm_rag.config import LLMRAGConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.engine.retriever import VectorStoreRetrieverConfig
 from haive.core.engine.vectorstore import VectorStoreConfig, VectorStoreProvider
 from langchain.schema import Document
 from langchain_core.prompts import ChatPromptTemplate
+
+from haive.agents.rag.llm_rag.agent import LLMRAGAgent
+from haive.agents.rag.llm_rag.config import LLMRAGConfig
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)

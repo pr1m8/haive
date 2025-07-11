@@ -6,7 +6,6 @@ from collections.abc import Callable
 from datetime import datetime
 from typing import Any, Literal
 
-from haive.agents.simple.agent import SimpleAgent, SimpleAgentConfig, SimpleAgentState
 from haive.core.config.runnable import RunnableConfigManager
 from haive.core.engine.agent.agent import register_agent
 from haive.core.engine.aug_llm import AugLLMConfig
@@ -23,6 +22,8 @@ from langgraph.prebuilt import ToolNode
 from langgraph.store.base import BaseStore
 from langgraph.types import Checkpointer, Command, Send
 from pydantic import BaseModel, Field
+
+from haive.agents.simple.agent import SimpleAgent, SimpleAgentConfig, SimpleAgentState
 
 # Set up logging
 logger = logging.getLogger(__name__)

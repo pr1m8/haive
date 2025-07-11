@@ -2,10 +2,11 @@
 """Test individual agent serialization issue."""
 
 
-from haive.agents.react.agent import ReactAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
+
+from haive.agents.react.agent import ReactAgent
 
 
 # Define tool

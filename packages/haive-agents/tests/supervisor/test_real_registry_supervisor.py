@@ -9,10 +9,11 @@ from pathlib import Path
 # Add the source path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../src"))
 
+from langchain_core.messages import HumanMessage
+
 from haive.agents.react.agent import ReactAgent
 from haive.agents.supervisor.registry_supervisor import RegistrySupervisor
 from haive.agents.tools import BaseTool
-from langchain_core.messages import HumanMessage
 
 
 class RealResearchTool(BaseTool):

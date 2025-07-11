@@ -47,7 +47,6 @@ from haive.agents.common.models.grade.qualitative import QualitativeGrade
 from haive.agents.common.models.grade.rubric import RubricCriterion, RubricGrade
 from haive.agents.common.models.grade.scale import ScaleGrade
 
-
 __all__ = [
     # Concrete grade models
     "BinaryGrade",

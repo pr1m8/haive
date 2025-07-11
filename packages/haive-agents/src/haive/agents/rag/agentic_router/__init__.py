@@ -10,7 +10,6 @@ from .agent import (
     get_agentic_rag_router_io_schema,
 )
 
-
 __all__ = [
     "AgenticRAGRouterAgent",
     "create_agentic_rag_router_agent",

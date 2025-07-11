@@ -3,7 +3,6 @@ import uuid
 from collections.abc import Sequence
 from typing import Annotated, Literal
 
-from haive.agents.react_class.react_agent2.state2 import ReactAgentState
 from haive.core.config.runnable import RunnableConfigManager
 from haive.core.engine.agent.agent import Agent, AgentConfig, register_agent
 from haive.core.engine.aug_llm import AugLLMConfig
@@ -18,6 +17,8 @@ from langgraph.graph import END, add_messages
 from langgraph.prebuilt import ToolNode
 from langgraph.types import Send
 from pydantic import BaseModel, Field
+
+from haive.agents.react_class.react_agent2.state2 import ReactAgentState
 
 # Set up logging
 logger = logging.getLogger(__name__)

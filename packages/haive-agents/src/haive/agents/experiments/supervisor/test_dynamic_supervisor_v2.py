@@ -1,14 +1,14 @@
 """Test the dynamic supervisor v2 with basic setup."""
 
-from haive.agents.experiments.supervisor.dynamic_supervisor_v2 import (
-    DynamicSupervisorV2,
-)
-from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 
-from haive.core.engine import AugLLMConfig
+from haive.agents.experiments.supervisor.dynamic_supervisor_v2 import (
+    DynamicSupervisorV2,
+)
+from haive.agents.simple.agent import SimpleAgent
 
 
 # Create basic test tools

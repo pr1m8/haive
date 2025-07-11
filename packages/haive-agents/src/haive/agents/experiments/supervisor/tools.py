@@ -9,7 +9,8 @@ from typing import Any, Callable, Dict, List, Optional, Type
 
 from langchain_core.tools import BaseTool, tool
 from langgraph_supervisor import create_forward_message_tool, create_handoff_tool
-from pydantic import BaseModel as LangchainBaseModel, Field as LangchainField
+from pydantic import BaseModel as LangchainBaseModel
+from pydantic import Field as LangchainField
 
 from haive.agents.experiments.supervisor.state_models import (
     AgentMetadata,
@@ -17,7 +18,6 @@ from haive.agents.experiments.supervisor.state_models import (
     SupervisorState,
     ToolMapping,
 )
-
 
 logger = logging.getLogger(__name__)
 

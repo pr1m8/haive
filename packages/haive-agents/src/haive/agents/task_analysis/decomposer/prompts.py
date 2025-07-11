@@ -2,7 +2,6 @@
 
 from langchain_core.prompts import ChatPromptTemplate
 
-
 TASK_DECOMPOSITION_PROMPT = ChatPromptTemplate.from_messages(
     [
         (

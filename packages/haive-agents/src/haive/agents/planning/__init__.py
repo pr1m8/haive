@@ -40,7 +40,6 @@ See Also:
 
 from haive.agents.planning.plan_and_execute_multi import PlanAndExecuteAgent
 
-
 __all__ = [
     "PlanAndExecuteAgent",
 ]

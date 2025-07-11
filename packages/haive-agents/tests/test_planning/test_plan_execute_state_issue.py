@@ -13,6 +13,9 @@ sys.path.insert(0, "/home/will/Projects/haive/backend/haive")
 
 from typing import Any, Dict, List, Optional
 
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
+from pydantic import Field
+
 from haive.agents.base.agent import Agent
 
 # Import the models and state
@@ -21,8 +24,6 @@ from haive.agents.planning.p_and_e.state import PlanExecuteState
 
 # Import agents
 from haive.agents.simple.agent import SimpleAgent
-from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
-from pydantic import Field
 
 # Skip LLM for now, focus on state issues
 

@@ -17,9 +17,10 @@ Example:
 import operator
 from typing import Annotated
 
-from haive.agents.document_modifiers.tnt.models import Doc
 from langchain_core.documents import Document
 from pydantic import BaseModel, Field
+
+from haive.agents.document_modifiers.tnt.models import Doc
 
 
 class TaxonomyGenerationState(BaseModel):

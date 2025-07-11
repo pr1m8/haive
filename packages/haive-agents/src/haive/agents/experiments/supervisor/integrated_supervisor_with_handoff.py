@@ -3,14 +3,15 @@
 
 from typing import Any, List
 
-from haive.agents.experiments.supervisor.test_registry_setup import AgentRegistry
-from haive.agents.react.agent import ReactAgent
 from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 from langgraph_supervisor import create_forward_message_tool, create_handoff_tool
 from pydantic import Field, model_validator
+
+from haive.agents.experiments.supervisor.test_registry_setup import AgentRegistry
+from haive.agents.react.agent import ReactAgent
 
 
 class IntegratedSupervisorWithHandoff(ReactAgent):

@@ -2,13 +2,14 @@ import re
 from datetime import datetime
 from typing import Any, Dict, List, Literal, Optional
 
+from pydantic import BaseModel, Field, field_validator, model_validator
+
 from haive.agents.memory.models.base import BaseMemoryModel
 from haive.agents.memory.models.episodic.mixins import (
     PerformanceMetrics,
     TaskExecution,
     TemporalMixin,
 )
-from pydantic import BaseModel, Field, field_validator, model_validator
 
 
 class EpisodicMemory(BaseMemoryModel, TemporalMixin):

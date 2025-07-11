@@ -12,10 +12,6 @@ from typing import Any, Dict, List, Literal, Optional
 from unittest.mock import MagicMock, Mock, patch
 
 import pytest
-from haive.agents.base.agent import Agent
-from haive.agents.multi.base import MultiAgent, SequentialAgent
-from haive.agents.react.agent import ReactAgent
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.engine.base import EngineRetriever
 from haive.core.graph.base_graph import END, START, BaseGraph
@@ -25,6 +21,11 @@ from langchain_core.documents import Document
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, ToolMessage
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field, field_validator, model_validator
+
+from haive.agents.base.agent import Agent
+from haive.agents.multi.base import MultiAgent, SequentialAgent
+from haive.agents.react.agent import ReactAgent
+from haive.agents.simple.agent import SimpleAgent
 
 
 # Enhanced Multi-Agent with Conditional Routing

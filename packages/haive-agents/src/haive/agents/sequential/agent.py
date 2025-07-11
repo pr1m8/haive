@@ -4,12 +4,13 @@
 from collections.abc import Sequence
 from typing import Any
 
-from haive.agents.base.agent import Agent
 from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.schema_composer import SchemaComposer
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field, model_validator
+
+from haive.agents.base.agent import Agent
 
 
 class SequentialAgent(Agent):

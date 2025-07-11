@@ -4,6 +4,7 @@
 import os
 
 import psycopg
+
 from src.haive.agents.conversation.collaberative.agent import CollaborativeConversation
 
 

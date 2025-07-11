@@ -6,5 +6,4 @@ Uses structured output models for memory management.
 
 from .agent import MemoryAwareRAGAgent, MemoryRetrievalAgent
 
-
 __all__ = ["MemoryAwareRAGAgent", "MemoryRetrievalAgent"]

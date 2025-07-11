@@ -34,6 +34,12 @@ Example:
 import logging
 from typing import Any, Dict, List, Optional, Union
 
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from langchain_core.messages import BaseMessage
+from pydantic import Field
+
 # Tools handle agent execution directly - no separate node needed
 from haive.agents.dynamic_supervisor.prompts import format_supervisor_prompt
 from haive.agents.dynamic_supervisor.state import (
@@ -41,11 +47,6 @@ from haive.agents.dynamic_supervisor.state import (
     SupervisorStateWithTools,
 )
 from haive.agents.react.agent import ReactAgent
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from langchain_core.messages import BaseMessage
-from pydantic import Field
 
 logger = logging.getLogger(__name__)
 

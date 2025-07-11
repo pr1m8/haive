@@ -1,7 +1,5 @@
-from langchain_core.prompts import ChatPromptTemplate
-
 from haive.core.engine.aug_llm import AugLLMConfig
-
+from langchain_core.prompts import ChatPromptTemplate
 
 rag_base_prompt = """You are an assistant for question-answering tasks.
 Use the following pieces of retrieved context to answer the question.

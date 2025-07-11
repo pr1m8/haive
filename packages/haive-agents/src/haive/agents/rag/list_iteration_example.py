@@ -6,7 +6,6 @@ or documents through RAG agents.
 
 from typing import Any, Dict, List
 
-from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.list_iteration_node import (
     ListIterationNodeConfig,
@@ -16,6 +15,8 @@ from haive.core.graph.node.list_iteration_node import (
 from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
+
+from haive.agents.rag.simple.agent import SimpleRAGAgent
 
 
 # Example 1: Process multiple queries through a RAG agent

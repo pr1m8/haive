@@ -1,5 +1,8 @@
 # src/haive/agents/task_analysis/context/engine.py
 
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+
 from haive.agents.task_analysis.context.models import (
     ContextDomain,
     ContextFlow,
@@ -11,9 +14,6 @@ from haive.agents.task_analysis.context.prompts import (
     CONTEXT_OPTIMIZATION_PROMPT,
     DOMAIN_EXPERTISE_PROMPT,
 )
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
-
 
 # Main context analysis engine
 ContextAnalyzerEngine = AugLLMConfig(

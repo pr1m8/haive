@@ -1,10 +1,9 @@
 import operator
 from typing import Annotated, Any, Dict, List, Literal, Optional, Union
 
+from haive.core.schema.prebuilt.messages_state import MessagesState
 from langchain_core.messages import BaseMessage, HumanMessage
 from pydantic import Field, computed_field, model_validator
-
-from haive.core.schema.prebuilt.messages_state import MessagesState
 
 from .models import Candidate, ScoredCandidate
 

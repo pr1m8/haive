@@ -2,6 +2,8 @@
 
 import asyncio
 
+from langchain_core.messages import HumanMessage
+
 from haive.agents.experiments.supervisor.component_2_tools import (
     SupervisorStateWithTools,
 )
@@ -9,7 +11,6 @@ from haive.agents.experiments.supervisor.dynamic_supervisor_agent import (
     create_supervisor_agent,
 )
 from haive.agents.experiments.supervisor.test_utils import create_test_agents
-from langchain_core.messages import HumanMessage
 
 
 async def test_supervisor_agent():

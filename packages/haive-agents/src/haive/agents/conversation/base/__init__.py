@@ -118,8 +118,9 @@ from typing import (
 from typing_extensions import NotRequired, TypeAlias, TypedDict
 
 if TYPE_CHECKING:
-    from haive.agents.base.agent import Agent
     from langchain_core.messages import BaseMessage
+
+    from haive.agents.base.agent import Agent
 
 # Core imports
 from haive.agents.conversation.base.agent import BaseConversationAgent
@@ -197,9 +198,10 @@ def _initialize_base_conversation_module() -> None:
 
     # Validate critical dependencies
     try:
-        from haive.agents.base.agent import Agent
         from haive.core.schema.prebuilt.messages_state import MessagesState
         from langchain_core.messages import BaseMessage
+
+        from haive.agents.base.agent import Agent
     except ImportError as e:
         raise ImportError(
             f"Critical base conversation dependencies missing: {e.name}. "

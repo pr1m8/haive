@@ -5,6 +5,10 @@ callable nodes, and compatibility features.
 """
 
 import pytest
+from haive.core.fixtures.documents import conversation_documents
+from haive.core.schema.prebuilt.rag_state import MultiAgentRAGState
+from langchain_core.messages import HumanMessage
+
 from haive.agents.rag.multi_agent_rag.enhanced_workflows import (
     CorrectiveRAGAgent,
     DocumentGradingAgent,
@@ -12,9 +16,6 @@ from haive.agents.rag.multi_agent_rag.enhanced_workflows import (
     SelfRAGAgent,
     create_enhanced_rag_workflow,
 )
-from haive.core.fixtures.documents import conversation_documents
-from haive.core.schema.prebuilt.rag_state import MultiAgentRAGState
-from langchain_core.messages import HumanMessage
 
 
 class TestRAGState:

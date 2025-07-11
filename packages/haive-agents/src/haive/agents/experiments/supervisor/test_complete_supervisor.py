@@ -3,6 +3,10 @@
 import asyncio
 from typing import Any, Dict, Literal
 
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from langchain_core.messages import AIMessage, HumanMessage
+from langgraph.graph import END
+
 # Import our working components
 from haive.agents.experiments.supervisor.component_2_tools import (
     SupervisorStateWithTools,
@@ -11,9 +15,6 @@ from haive.agents.experiments.supervisor.component_3_agent_execution import (
     create_agent_execution_node,
 )
 from haive.agents.experiments.supervisor.test_utils import create_test_agents
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from langchain_core.messages import AIMessage, HumanMessage
-from langgraph.graph import END
 
 
 async def supervisor_node(state: SupervisorStateWithTools) -> dict[str, Any]:

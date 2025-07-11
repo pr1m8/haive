@@ -11,10 +11,11 @@ import json
 import logging
 import sys
 
-from haive.agents.research.open_perplexity.agent import ResearchAgent
-from haive.agents.research.open_perplexity.config import ResearchAgentConfig
 from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig
 from haive.core.models.vectorstore.base import VectorStoreConfig
+
+from haive.agents.research.open_perplexity.agent import ResearchAgent
+from haive.agents.research.open_perplexity.config import ResearchAgentConfig
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"

@@ -1,5 +1,8 @@
 # src/haive/agents/task_analysis/complexity/engine.py
 
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+
 from haive.agents.task_analysis.complexity.models import (
     ComplexityFactors,
     ComplexityVector,
@@ -9,9 +12,6 @@ from haive.agents.task_analysis.complexity.prompts import (
     COMPLEXITY_COMPARISON_PROMPT,
     COMPLEXITY_FACTORS_PROMPT,
 )
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
-
 
 # Main complexity assessment engine
 ComplexityAssessorEngine = AugLLMConfig(

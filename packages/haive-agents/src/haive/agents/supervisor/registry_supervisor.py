@@ -7,12 +7,13 @@ Uses DynamicChoiceModel for selection and all agents are ReactAgents.
 import logging
 from typing import Any, Dict, List, Literal, Optional, Union
 
-from haive.agents.react.agent import ReactAgent
 from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, ToolMessage
 from langchain_core.tools import BaseTool
 from pydantic import Field, PrivateAttr
+
+from haive.agents.react.agent import ReactAgent
 
 logger = logging.getLogger(__name__)
 

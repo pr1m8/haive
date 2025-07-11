@@ -6,6 +6,11 @@ Tests all RAG agent implementations to ensure they work correctly.
 from typing import List
 
 import pytest
+from haive.core.fixtures.documents import conversation_documents
+from haive.core.models.llm.base import AzureLLMConfig
+from langchain_core.documents import Document
+from langchain_core.messages import AIMessage, HumanMessage
+
 from haive.agents.rag.adaptive.agent import AdaptiveRAGAgent
 
 # Import all RAG agents
@@ -15,10 +20,6 @@ from haive.agents.rag.hyde.agent_v2 import HyDERAGAgentV2
 from haive.agents.rag.memory_aware.agent import MemoryAwareRAGAgent
 from haive.agents.rag.multi_query.agent import MultiQueryRAGAgent
 from haive.agents.rag.simple.agent import SimpleRAGAgent
-from haive.core.fixtures.documents import conversation_documents
-from haive.core.models.llm.base import AzureLLMConfig
-from langchain_core.documents import Document
-from langchain_core.messages import AIMessage, HumanMessage
 
 
 class TestAllRAGWorkflows:

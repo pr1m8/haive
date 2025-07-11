@@ -6,12 +6,11 @@ documents into knowledge graphs using LLM-based extraction techniques.
 
 from typing import Any, List, Optional, Union
 
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import BaseDocumentTransformer, Document
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_experimental.graph_transformers import LLMGraphTransformer
 from langchain_neo4j.graphs.graph_document import GraphDocument
-
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 
 class GraphTransformer(BaseDocumentTransformer):

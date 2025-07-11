@@ -1,16 +1,14 @@
 # src/haive/agents/simple/routing_agent.py
 
-from collections.abc import Callable
 import logging
-
-from langgraph.graph import END
-from pydantic import BaseModel, Field
+from collections.abc import Callable
 
 from agents.simple.agent import SimpleAgent, SimpleAgentConfig, SimpleAgentSchema
 from haive.core.engine.agent.agent import register_agent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
-
+from langgraph.graph import END
+from pydantic import BaseModel, Field
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -160,9 +158,8 @@ def create_routing_agent(
 
 # Example usage
 if __name__ == "__main__":
-    from langchain_core.prompts import ChatPromptTemplate
-
     from haive.core.models.llm.base import AzureLLMConfig
+    from langchain_core.prompts import ChatPromptTemplate
 
     # Main engine
     main_engine = AugLLMConfig(

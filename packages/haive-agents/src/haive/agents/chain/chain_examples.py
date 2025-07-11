@@ -3,6 +3,11 @@
 Shows different ways to create chains from various node types.
 """
 
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
+
 from haive.agents.chain.chain_agent import (
     ChainAgent,
     conditional_chain,
@@ -10,10 +15,6 @@ from haive.agents.chain.chain_agent import (
 )
 from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.agents.simple.agent import SimpleAgent
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
-from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate
 
 
 # Example 1: Simple sequential chain from mixed node types

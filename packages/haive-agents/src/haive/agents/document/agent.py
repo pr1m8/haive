@@ -39,7 +39,6 @@ See Also:
 import logging
 from typing import Any, Dict, List, Optional, Union
 
-from haive.agents.base.agent import Agent
 from haive.core.engine.document import DocumentEngine, DocumentEngineConfig
 from haive.core.engine.document.config import (
     ChunkingStrategy,
@@ -54,6 +53,8 @@ from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field, field_validator
+
+from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 

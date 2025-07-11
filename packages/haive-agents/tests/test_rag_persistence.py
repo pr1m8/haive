@@ -13,8 +13,9 @@ def test_base_rag_agent():
     """Test Base RAG agent with minimal configuration."""
 
     try:
-        from haive.agents.rag.base.agent import BaseRAGAgent
         from langchain_core.messages import HumanMessage
+
+        from haive.agents.rag.base.agent import BaseRAGAgent
 
         # Create minimal RAG agent
         timestamp = datetime.now().strftime("%H%M%S")
@@ -51,8 +52,9 @@ def test_simple_rag_agent():
     """Test Simple RAG agent."""
 
     try:
-        from haive.agents.rag.simple.agent import SimpleRAGAgent
         from langchain_core.messages import HumanMessage
+
+        from haive.agents.rag.simple.agent import SimpleRAGAgent
 
         timestamp = datetime.now().strftime("%H%M%S")
 
@@ -89,8 +91,9 @@ def verify_message_quality():
     """Verify messages flow properly and make sense."""
 
     try:
-        from haive.agents.simple.agent import SimpleAgent
         from langchain_core.messages import HumanMessage
+
+        from haive.agents.simple.agent import SimpleAgent
 
         timestamp = datetime.now().strftime("%H%M%S")
 

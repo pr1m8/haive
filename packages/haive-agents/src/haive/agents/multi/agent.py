@@ -9,7 +9,6 @@ enabling seamless composition of multiple agents with various coordination patte
 import logging
 from typing import Any, Literal
 
-from haive.agents.base.agent import Agent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.graph.state_graph.components.node import Node
 from haive.core.schema.agent_schema_composer import AgentSchemaComposer
@@ -17,6 +16,8 @@ from langgraph.graph import END
 from langgraph.graph.graph import CompiledGraph
 from langgraph.types import Command
 from pydantic import Field, PrivateAttr, model_validator
+
+from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 

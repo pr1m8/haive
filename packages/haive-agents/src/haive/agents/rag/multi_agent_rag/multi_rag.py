@@ -7,10 +7,11 @@ with conditional routing, sequential processing, and parallel execution patterns
 from collections.abc import Callable
 from typing import Any
 
-from haive.agents.multi.base import ConditionalAgent, ParallelAgent, SequentialAgent
 from haive.core.fixtures.documents import conversation_documents
 from haive.core.schema.compatibility import check_compatibility
 from langchain_core.documents import Document
+
+from haive.agents.multi.base import ConditionalAgent, ParallelAgent, SequentialAgent
 
 from .agents import (
     SIMPLE_RAG_AGENT,

@@ -6,8 +6,9 @@ yes/no, correct/incorrect, and similar binary evaluations.
 
 from typing import Any
 
-from haive.agents.common.models.grade.base import Grade, GradeType
 from pydantic import Field, field_validator
+
+from haive.agents.common.models.grade.base import Grade, GradeType
 
 
 class BinaryGrade(Grade):

@@ -6,11 +6,12 @@ including engine configurations, algorithm parameters, and state schema.
 
 from typing import TypeVar
 
-from haive.agents.reasoning_and_critique.tot.state import TOTInput, TOTOutput, TOTState
 from haive.core.engine.agent.agent import AgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from pydantic import BaseModel, ConfigDict, Field, create_model
+
+from haive.agents.reasoning_and_critique.tot.state import TOTInput, TOTOutput, TOTState
 
 # Generic type variable for solution content
 T = TypeVar("T")

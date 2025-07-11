@@ -5,17 +5,15 @@ to process multiple research topics in sequence.
 
 import logging
 import os
-from pathlib import Path
 import sys
 import time
-
+from pathlib import Path
 
 # Add the parent directory to the path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent.parent))
 
 from agents.open_perplexity.agent import ResearchAgent
 from agents.open_perplexity.config import ResearchAgentConfig
-
 
 # Set up logging
 logging.basicConfig(

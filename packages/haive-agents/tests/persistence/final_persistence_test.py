@@ -41,8 +41,9 @@ def test_persistence_fixes():
 
     # Test 1: Simple agent
     try:
-        from haive.agents.simple.agent import SimpleAgent
         from langchain_core.messages import HumanMessage
+
+        from haive.agents.simple.agent import SimpleAgent
 
         agent = SimpleAgent(
             name="FinalTestSimple",

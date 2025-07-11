@@ -5,8 +5,13 @@ Run with: poetry run pytest packages/haive-agents/tests/rag/multi_agent_rag/test
 
 from typing import Any
 
-from langchain_core.documents import Document
 import pytest
+from haive.core.fixtures.documents import (
+    conversation_documents,
+    news_documents,
+    technical_documents,
+)
+from langchain_core.documents import Document
 
 from haive.agents.rag.common.document_graders.models import (
     DocumentBinaryResponse,
@@ -17,11 +22,6 @@ from haive.agents.rag.multi_agent_rag import (
     IterativeDocumentGradingAgent,
     MultiAgentRAGState,
     RAGOperationType,
-)
-from haive.core.fixtures.documents import (
-    conversation_documents,
-    news_documents,
-    technical_documents,
 )
 
 

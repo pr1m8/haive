@@ -6,10 +6,6 @@ This version properly embeds the hypothetical document for retrieval.
 
 from typing import Any, Dict, List, Optional
 
-from haive.agents.base.agent import Agent
-from haive.agents.multi.base import SequentialAgent
-from haive.agents.rag.base.agent import BaseRAGAgent
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.agent_node import AgentNodeConfig
 from haive.core.graph.node.engine_node import EngineNodeConfig
@@ -19,6 +15,11 @@ from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
 from pydantic import Field
+
+from haive.agents.base.agent import Agent
+from haive.agents.multi.base import SequentialAgent
+from haive.agents.rag.base.agent import BaseRAGAgent
+from haive.agents.simple.agent import SimpleAgent
 
 HYDE_GENERATION_PROMPT = ChatPromptTemplate.from_messages(
     [

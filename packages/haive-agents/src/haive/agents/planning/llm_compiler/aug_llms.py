@@ -1,10 +1,8 @@
 """Configuration for the LLMCompiler agent using AugLLMConfig system."""
 
-from langchain_core.prompts import ChatPromptTemplate
-
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
-
+from langchain_core.prompts import ChatPromptTemplate
 
 # Base planner prompt template
 planner_prompt = ChatPromptTemplate.from_messages(

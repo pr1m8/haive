@@ -5,12 +5,13 @@ This example demonstrates how to create a multi-agent system with:
 2. A react agent with an add tool
 """
 
-from haive.agents.multi.agent import MultiAgent
-from haive.agents.react.agent import ReactAgent
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage
 from pydantic import BaseModel, Field
+
+from haive.agents.multi.agent import MultiAgent
+from haive.agents.react.agent import ReactAgent
+from haive.agents.simple.agent import SimpleAgent
 
 
 # Define the Plan model

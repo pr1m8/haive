@@ -9,6 +9,7 @@ from typing import Any, Dict, List, Optional
 from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
+
 from haive.agents.discovery.semantic_discovery import (
     CapabilityMatcher,
     ComponentMetadata,

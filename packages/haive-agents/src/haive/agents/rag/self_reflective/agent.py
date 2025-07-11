@@ -8,7 +8,6 @@ import logging
 from enum import Enum
 from typing import Any, Dict, List, Optional, Union
 
-from haive.agents.base.agent import Agent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.list_iteration_node import create_list_iteration_node
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
@@ -17,6 +16,8 @@ from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field
+
+from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 

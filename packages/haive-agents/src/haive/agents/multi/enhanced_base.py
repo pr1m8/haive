@@ -47,13 +47,14 @@ See Also:
 import logging
 from typing import Any, Callable, Dict, List, Optional, Type, Union
 
-from haive.agents.base.agent import Agent
 from haive.core.graph.node.agent_node import AgentNodeConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.agent_schema_composer import AgentSchemaComposer, BuildMode
 from haive.core.schema.state_schema import StateSchema
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field, field_validator, validator
+
+from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 

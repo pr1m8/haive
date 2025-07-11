@@ -6,7 +6,6 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field, computed_field
 
-
 # ============================================================================
 # ENUMS - Fundamental Reasoning Categories
 # ============================================================================

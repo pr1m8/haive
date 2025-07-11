@@ -12,7 +12,6 @@ from langchain_core.tools import tool
 
 from haive.agents.planning import PlanAndExecuteAgent
 
-
 # Load environment variables
 load_dotenv()
 

@@ -1,6 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate
 
-
 RAG_DOCUMENT_GRADE_COMPREHENSIVE = ChatPromptTemplate.from_messages(
     [
         (

@@ -21,7 +21,6 @@ import logging
 from langchain_core.documents import Document
 from pydantic import BaseModel, Field
 
-
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("tnt-llm")
 

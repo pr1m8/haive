@@ -21,8 +21,8 @@ Example:
         result = await agent.ainvoke({"query": "Recent developments in AI safety"})
 """
 
+from haive.agents.research.open_perplexity import ResearchAgent as OpenPerplexityAgent
 from haive.agents.research.open_perplexity import (
-    ResearchAgent as OpenPerplexityAgent,
     ResearchAgentConfig as OpenPerplexityConfig,
 )
 
@@ -31,7 +31,6 @@ from haive.agents.research.person import PersonResearchAgent
 
 # Import STORM config (agent implementation is still in development)
 from haive.agents.research.storm import STORMAgentConfig
-
 
 __all__ = [
     "OpenPerplexityAgent",

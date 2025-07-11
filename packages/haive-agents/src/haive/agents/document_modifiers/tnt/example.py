@@ -1,14 +1,12 @@
 from haive.agents.document_modifiers.tnt.agent import TaxonomyAgent, TaxonomyAgentConfig
 from haive.agents.document_modifiers.tnt.state import TaxonomyGenerationState
 
-
 # Instantiate and visualize
 agent = TaxonomyAgent(TaxonomyAgentConfig())
 agent.visualize_graph()
 from langchain_community.document_loaders import WebBaseLoader
 
 from haive.agents.document_modifiers.tnt.models import Doc
-
 
 tutorial_doc = WebBaseLoader(
     "https://langchain-ai.github.io/langgraph/tutorials/tnt-llm/tnt-llm/"

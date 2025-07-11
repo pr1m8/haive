@@ -12,7 +12,6 @@ from haive.haive.agents.simple.factory import create_simple_agent
 from haive.haive.core.engine.aug_llm import AugLLMConfig
 from haive.haive.core.models.llm.base import AzureLLMConfig
 
-
 # Configure detailed logging
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"

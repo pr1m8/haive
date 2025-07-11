@@ -3,8 +3,12 @@
 Run with: poetry run pytest packages/haive-agents/tests/rag/multi_agent_rag/test_haive_queries.py -v
 """
 
-from langchain_core.documents import Document
 import pytest
+from haive.core.fixtures.documents import (
+    news_documents,
+    technical_documents,
+)
+from langchain_core.documents import Document
 
 from haive.agents.rag.multi_agent_rag import (
     BaseRAGMultiAgent,
@@ -13,10 +17,6 @@ from haive.agents.rag.multi_agent_rag import (
     MultiAgentRAGState,
     SimpleRAGAgent,
     SimpleRAGAnswerAgent,
-)
-from haive.core.fixtures.documents import (
-    news_documents,
-    technical_documents,
 )
 
 

@@ -4,18 +4,17 @@ This implementation integrates with the MultiAgent base class and uses
 dynamic agent execution without graph rebuilding.
 """
 
-from datetime import datetime
 import logging
+from datetime import datetime
 from typing import Any, Dict, List, Literal, Optional, Union
 
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from langchain_core.runnables import RunnableConfig
 from pydantic import Field, PrivateAttr
 
 from haive.agents.base.agent import Agent
 from haive.agents.multi.agent import MultiAgent
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-
 
 logger = logging.getLogger(__name__)
 

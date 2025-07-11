@@ -11,10 +11,11 @@ sys.path.insert(
 
 import json
 
-from haive.agents.react.agent import ReactAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 from langchain_core.tools import tool
+
+from haive.agents.react.agent import ReactAgent
 
 
 @tool

@@ -7,10 +7,11 @@ state handling and dynamic agent execution without graph rebuilding.
 import logging
 from typing import Any, Dict, List, Optional, Union
 
-from haive.agents.react.agent import ReactAgent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 from pydantic import Field
+
+from haive.agents.react.agent import ReactAgent
 
 from .dynamic_executor_node import create_dynamic_executor_node
 from .dynamic_state import DynamicSupervisorState

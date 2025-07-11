@@ -154,8 +154,9 @@ from typing_extensions import (
 )
 
 if TYPE_CHECKING:
-    from haive.agents.base.agent import Agent
     from haive.core.schema import StateSchema
+
+    from haive.agents.base.agent import Agent
 
 # Core conversation agent imports
 from haive.agents.conversation.base.agent import BaseConversationAgent
@@ -267,8 +268,9 @@ def _initialize_conversation_module() -> None:
 
     # Validate critical dependencies
     try:
-        from haive.agents.base.agent import Agent
         from haive.core.schema import StateSchema
+
+        from haive.agents.base.agent import Agent
     except ImportError as e:
         raise ImportError(
             f"Critical conversation dependencies missing: {e.name}. "

@@ -6,5 +6,4 @@ Based on the pattern from rag-architectures-flows.md.
 
 from .agent import StepBackQueryGeneratorAgent, StepBackRAGAgent
 
-
 __all__ = ["StepBackQueryGeneratorAgent", "StepBackRAGAgent"]

@@ -7,12 +7,13 @@ optional judging/scoring capabilities.
 
 from typing import Any, Literal
 
-from haive.agents.conversation.base.agent import BaseConversationAgent
-from haive.agents.conversation.debate.state import DebateState
 from haive.core.logging.rich_logger import LogLevel, get_logger
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from langgraph.types import Command
 from pydantic import BaseModel, Field, model_validator
+
+from haive.agents.conversation.base.agent import BaseConversationAgent
+from haive.agents.conversation.debate.state import DebateState
 
 logger = get_logger(__name__)
 logger.set_level(LogLevel.INFO)
@@ -717,8 +718,9 @@ Let us begin! {next(iter(self.debate_positions.keys()))}, please present your op
         **kwargs,
     ) -> "DebateConversation":
         """Create a simple two-sided debate conversation."""
-        from haive.agents.simple.agent import SimpleAgent
         from haive.core.engine.aug_llm import AugLLMConfig
+
+        from haive.agents.simple.agent import SimpleAgent
 
         name_a, pos_a = position_a
         name_b, pos_b = position_b

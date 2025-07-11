@@ -89,11 +89,12 @@ if __name__ == "__main__":
     apply_state_serialization_fix()
 
     # Test with actual agents
+    from haive.core.engine.aug_llm import AugLLMConfig
+    from langchain_core.tools import tool
+
     from haive.agents.multi.base import SequentialAgent
     from haive.agents.react.agent import ReactAgent
     from haive.agents.simple.agent import SimpleAgent
-    from haive.core.engine.aug_llm import AugLLMConfig
-    from langchain_core.tools import tool
 
     @tool
     def add(a: int, b: int) -> int:

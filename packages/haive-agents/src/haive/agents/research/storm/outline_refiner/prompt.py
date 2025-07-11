@@ -1,6 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate
 
-
 refine_outline_prompt = ChatPromptTemplate.from_messages(
     [
         (

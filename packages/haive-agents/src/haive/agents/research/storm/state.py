@@ -1,10 +1,11 @@
 from typing import List, TypedDict
 
+from pydantic import BaseModel, Field, computed_field
+
 from haive.agents.research.storm.generate_perspectives.models import Editor
 from haive.agents.research.storm.interview.models import InterviewState
 from haive.agents.research.storm.outline_generator.models import Outline
 from haive.agents.research.storm.section_writer.models import WikiSection
-from pydantic import BaseModel, Field, computed_field
 
 
 class TopicState(BaseModel):

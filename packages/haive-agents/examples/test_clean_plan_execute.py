@@ -10,6 +10,8 @@ This shows the proper way:
 
 import asyncio
 
+from haive.core.schema.agent_schema_composer import BuildMode
+from haive.tools.tools.search_tools import tavily_qna
 from langgraph.graph import END
 
 from haive.agents.multi.enhanced_base import MultiAgentBase
@@ -21,8 +23,6 @@ from haive.agents.planning.p_and_e.engines import (
 from haive.agents.planning.p_and_e.state import PlanExecuteState
 from haive.agents.react_class.react_agent.agent import ReactAgent, ReactAgentConfig
 from haive.agents.simple.agent import SimpleAgent
-from haive.core.schema.agent_schema_composer import BuildMode
-from haive.tools.tools.search_tools import tavily_qna
 
 
 async def main():

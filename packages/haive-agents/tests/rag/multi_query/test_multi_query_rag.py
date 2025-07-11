@@ -4,10 +4,11 @@ Tests the MultiQueryRAGAgent with query expansion.
 """
 
 import pytest
-from haive.agents.rag.multi_query.agent import MultiQueryRAGAgent
 from haive.core.fixtures.documents import conversation_documents
 from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.documents import Document
+
+from haive.agents.rag.multi_query.agent import MultiQueryRAGAgent
 
 
 class TestMultiQueryRAGAgent:

@@ -10,7 +10,6 @@ from .agent import (
     SpeculativeRAGAgent,
 )
 
-
 __all__ = [
     "HypothesisGeneratorAgent",
     "ParallelVerificationAgent",

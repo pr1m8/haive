@@ -6,13 +6,14 @@ https://langchain-ai.github.io/langgraph/tutorials/plan-and-execute/plan-and-exe
 
 from typing import List, Literal, Union
 
-from haive.agents.multi.enhanced_base import BuildMode, MultiAgentBase
-from haive.agents.react.agent import ReactAgent
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.schema.prebuilt.messages.messages_state import MessagesState
 from langchain_core.messages import BaseMessage
 from langgraph.graph import END
 from pydantic import BaseModel, Field
+
+from haive.agents.multi.enhanced_base import BuildMode, MultiAgentBase
+from haive.agents.react.agent import ReactAgent
+from haive.agents.simple.agent import SimpleAgent
 
 # ============================================================================
 # MODELS (following official LangGraph tutorial)

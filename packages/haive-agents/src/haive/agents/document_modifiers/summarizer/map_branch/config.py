@@ -1,3 +1,7 @@
+from haive.core.engine.agent.agent import AgentConfig
+from haive.core.engine.aug_llm import AugLLMConfig
+from pydantic import Field
+
 from haive.agents.document_modifiers.summarizer.map_branch.engines import (
     map_aug_llm_config,
     reduce_augllm_config,
@@ -7,9 +11,6 @@ from haive.agents.document_modifiers.summarizer.map_branch.state import (
     OutputState,
     SummaryState,
 )
-from haive.core.engine.agent.agent import AgentConfig
-from haive.core.engine.aug_llm import AugLLMConfig
-from pydantic import Field
 
 
 class SummarizerAgentConfig(AgentConfig):

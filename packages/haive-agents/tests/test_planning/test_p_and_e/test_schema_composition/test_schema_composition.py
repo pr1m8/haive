@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 """Test schema composition with SimpleAgent and planner engine."""
 
+from haive.core.engine.aug_llm import AugLLMConfig
+from langchain_core.messages import HumanMessage
+
 from haive.agents.planning.p_and_e.models import Plan
 from haive.agents.planning.p_and_e.prompts import planner_prompt
 from haive.agents.simple.agent import SimpleAgent
-from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.messages import HumanMessage
 
 
 def test_schema_composition():

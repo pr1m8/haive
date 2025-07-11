@@ -3,12 +3,13 @@
 
 from typing import Any, List
 
-from haive.agents.react.agent import ReactAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage
 from pydantic import Field, model_validator
 from test_registry_setup import AgentRegistry, create_test_agents
 from test_route_tools import create_list_agents_tool, create_route_tools
+
+from haive.agents.react.agent import ReactAgent
 
 
 class BasicSupervisor(ReactAgent):

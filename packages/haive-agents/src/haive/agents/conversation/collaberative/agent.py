@@ -3,14 +3,13 @@
 
 from typing import Any, Literal
 
+from haive.core.logging.rich_logger import LogLevel, get_logger
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from langgraph.types import Command
 from pydantic import Field
 
 from haive.agents.conversation.base.agent import BaseConversationAgent
 from haive.agents.conversation.collaberative.state import CollaborativeState
-from haive.core.logging.rich_logger import LogLevel, get_logger
-
 
 logger = get_logger(__name__)
 logger.set_level(LogLevel.WARNING)
@@ -385,8 +384,9 @@ The final document has been compiled."""
         if sections is None:
             sections = ["Problem Statement", "Ideas", "Evaluation", "Action Items"]
 
-        from haive.agents.simple.agent import SimpleAgent
         from haive.core.engine.aug_llm import AugLLMConfig
+
+        from haive.agents.simple.agent import SimpleAgent
 
         agents = {}
         for name in participants:
@@ -438,8 +438,9 @@ The final document has been compiled."""
             reviewers: Dictionary mapping reviewer names to expertise
             **kwargs: Additional configuration
         """
-        from haive.agents.simple.agent import SimpleAgent
         from haive.core.engine.aug_llm import AugLLMConfig
+
+        from haive.agents.simple.agent import SimpleAgent
 
         agents = {}
         for name, expertise in reviewers.items():

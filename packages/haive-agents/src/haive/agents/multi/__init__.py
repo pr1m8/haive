@@ -55,7 +55,6 @@ from haive.agents.multi.base import (
     SequentialAgent,
 )
 
-
 # Future implementations
 
 __all__ = [

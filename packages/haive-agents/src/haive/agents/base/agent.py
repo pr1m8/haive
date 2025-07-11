@@ -11,11 +11,6 @@ import re
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Literal
 
-# Import mixins
-from haive.agents.base.mixins.execution_mixin import ExecutionMixin
-from haive.agents.base.mixins.persistence_mixin import PersistenceMixin
-from haive.agents.base.mixins.state_mixin import StateMixin
-from haive.agents.base.serialization_mixin import SerializationMixin
 from haive.core.engine.base import Engine, EngineType, InvokableEngine
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.schema_composer import SchemaComposer
@@ -30,6 +25,12 @@ from rich.console import Console
 from rich.logging import RichHandler
 from rich.table import Table
 from rich.tree import Tree
+
+# Import mixins
+from haive.agents.base.mixins.execution_mixin import ExecutionMixin
+from haive.agents.base.mixins.persistence_mixin import PersistenceMixin
+from haive.agents.base.mixins.state_mixin import StateMixin
+from haive.agents.base.serialization_mixin import SerializationMixin
 
 # Configure rich logging
 logging.basicConfig(

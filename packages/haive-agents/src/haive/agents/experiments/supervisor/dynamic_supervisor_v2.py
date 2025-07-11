@@ -11,12 +11,12 @@ No fancy features - just the core dynamic tooling pattern.
 
 from typing import Any, Dict, List, Optional
 
+from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
+from haive.core.schema import StateSchema
 from langchain_core.tools import tool
 from pydantic import Field, model_validator
 
 from haive.agents.react.agent import ReactAgent
-from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
-from haive.core.schema import StateSchema
 
 
 class SupervisorState(StateSchema):

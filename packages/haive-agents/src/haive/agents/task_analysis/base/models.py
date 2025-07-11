@@ -1,11 +1,10 @@
 # src/haive/agents/task_analysis/base/models.py
 
+import uuid
 from enum import Enum
 from typing import Any, Union
-import uuid
 
 from pydantic import BaseModel, Field
-
 
 # ============================================================================
 # ENUMS

@@ -6,14 +6,13 @@ Provides a flexible hooks system that can be used by both single and multi agent
 with support for different hook points and graph-aware modifications.
 """
 
-from collections.abc import Callable
 import logging
+from collections.abc import Callable
 from typing import Any, Generic, TypeVar
 
 from pydantic import PrivateAttr
 
 from haive.agents.base.types import HookContext, HookPoint, TState
-
 
 logger = logging.getLogger(__name__)
 

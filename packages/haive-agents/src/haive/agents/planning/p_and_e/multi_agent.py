@@ -4,8 +4,8 @@ This module demonstrates how to use the configurable multi-agent base
 for building Plan and Execute workflows with branches.
 """
 
-from datetime import datetime
 import logging
+from datetime import datetime
 from typing import Any, List
 
 from langgraph.graph import END
@@ -18,7 +18,6 @@ from haive.agents.multi.configurable_base import (
 )
 from haive.agents.planning.p_and_e.models import Act, ExecutionResult, Plan, Response
 from haive.agents.planning.p_and_e.state import PlanExecuteState
-
 
 logger = logging.getLogger(__name__)
 

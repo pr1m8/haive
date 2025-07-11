@@ -6,10 +6,11 @@ Uses core fixtures - no mocks.
 """
 
 import pytest
+from haive.core.fixtures.documents import conversation_documents
+
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.rag.simple import SimpleRAGAgent
 from haive.agents.simple.agent import SimpleAgent
-from haive.core.fixtures.documents import conversation_documents
 
 
 class TestSimpleRAGAgent:

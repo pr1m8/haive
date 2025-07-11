@@ -3,7 +3,6 @@ from typing import Any, Generic, TypeVar
 
 from pydantic import BaseModel, Field
 
-
 # Type variable for the database connection object
 T = TypeVar("T")
 

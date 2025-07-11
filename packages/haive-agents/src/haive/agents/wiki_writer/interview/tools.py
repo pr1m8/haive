@@ -1,6 +1,5 @@
-from langchain_core.tools import tool
-
 from haive.core.tools.search_tools import tavily_search
+from langchain_core.tools import tool
 
 
 @tool

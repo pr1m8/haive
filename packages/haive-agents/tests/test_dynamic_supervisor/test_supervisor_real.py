@@ -1,7 +1,9 @@
 """Test dynamic supervisor with real agents (no mocks)."""
 
-from langchain_core.messages import HumanMessage
 import pytest
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+from langchain_core.messages import HumanMessage
 
 from haive.agents.dynamic_supervisor import (
     AgentInfo,
@@ -11,8 +13,6 @@ from haive.agents.dynamic_supervisor import (
 )
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
 
 
 def create_test_agents():

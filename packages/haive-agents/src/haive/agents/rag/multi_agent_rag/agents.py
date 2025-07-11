@@ -7,6 +7,8 @@ using the multi-agent framework. Each agent focuses on a specific aspect of the 
 from collections.abc import Callable
 from typing import Any
 
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.fixtures.documents import conversation_documents
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 
@@ -19,11 +21,8 @@ from haive.agents.rag.common.document_graders.binary_grader.prompt import (
 )
 from haive.agents.rag.common.document_graders.models import DocumentBinaryResponse
 from haive.agents.simple.agent import SimpleAgent
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.fixtures.documents import conversation_documents
 
 from .state import DocumentGradingResult, MultiAgentRAGState, RAGOperationType
-
 
 # ============================================================================
 # PROMPT TEMPLATES

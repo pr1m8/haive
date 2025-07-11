@@ -5,14 +5,15 @@ Uses SequentialAgent to compose BaseRAG with answer generation.
 
 from typing import List, Optional
 
-from haive.agents.multi.base import SequentialAgent
-from haive.agents.rag.base.agent import BaseRAGAgent
-from haive.agents.rag.common.answer_generators.prompts import RAG_ANSWER_STANDARD
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 from langchain_core.messages import HumanMessage
+
+from haive.agents.multi.base import SequentialAgent
+from haive.agents.rag.base.agent import BaseRAGAgent
+from haive.agents.rag.common.answer_generators.prompts import RAG_ANSWER_STANDARD
+from haive.agents.simple.agent import SimpleAgent
 
 
 class SimpleRAGAgent(SequentialAgent):

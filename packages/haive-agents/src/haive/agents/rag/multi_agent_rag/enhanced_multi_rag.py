@@ -6,6 +6,9 @@ providing automatic compatibility checking and adaptation.
 
 from typing import Any
 
+from haive.core.fixtures.documents import conversation_documents
+from langchain_core.documents import Document
+
 from haive.agents.multi.compatibility_enhanced_base import (
     CompatibilityEnhancedConditionalAgent,
     CompatibilityEnhancedMultiAgent,
@@ -14,8 +17,6 @@ from haive.agents.multi.compatibility_enhanced_base import (
     CompatibilityMode,
     create_compatible_multi_agent,
 )
-from haive.core.fixtures.documents import conversation_documents
-from langchain_core.documents import Document
 
 from .agents import (
     SIMPLE_RAG_AGENT,

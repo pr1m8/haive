@@ -2,8 +2,9 @@ from datetime import datetime
 from typing import Dict, List, Literal, Optional
 from uuid import UUID, uuid4
 
-from haive.agents.memory.models.meta import MemoryValidationMeta
 from pydantic import BaseModel, Field
+
+from haive.agents.memory.models.meta import MemoryValidationMeta
 
 
 class BaseMemoryModel(BaseModel, metaclass=MemoryValidationMeta):

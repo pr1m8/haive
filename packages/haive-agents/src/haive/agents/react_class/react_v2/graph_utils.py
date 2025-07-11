@@ -1,12 +1,10 @@
 # src/haive/agents/react/graph_utils.py
 
-from collections.abc import Callable
 import logging
-
-from langchain_core.tools import BaseTool
+from collections.abc import Callable
 
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
-
+from langchain_core.tools import BaseTool
 
 logger = logging.getLogger(__name__)
 

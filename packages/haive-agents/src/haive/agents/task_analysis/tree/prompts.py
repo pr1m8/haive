@@ -2,7 +2,6 @@
 
 from langchain_core.prompts import ChatPromptTemplate
 
-
 TREE_STRUCTURE_ANALYSIS_PROMPT = ChatPromptTemplate.from_messages(
     [
         (

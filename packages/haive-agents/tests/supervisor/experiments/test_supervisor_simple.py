@@ -1,10 +1,11 @@
 """Simple supervisor test with 3 executor agents - 2 active, 1 in registry."""
 
 import pytest
-from haive.agents.experiments.supervisor import BaseSupervisor
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage
+
+from haive.agents.experiments.supervisor import BaseSupervisor
+from haive.agents.simple.agent import SimpleAgent
 
 
 def test_supervisor_with_three_executors():

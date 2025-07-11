@@ -3,9 +3,13 @@
 This module provides tests for the document loader agents and their specialized variants.
 """
 
-from pathlib import Path
 import tempfile
 import unittest
+from pathlib import Path
+
+from haive.core.engine.base import EngineType
+from haive.core.engine.document_loader import DocumentLoaderOutput
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
 from haive.agents.document_loader import (
     DirectoryLoaderAgent,
@@ -13,9 +17,6 @@ from haive.agents.document_loader import (
     FileLoaderAgent,
     WebLoaderAgent,
 )
-from haive.core.engine.base import EngineType
-from haive.core.engine.document_loader import DocumentLoaderOutput
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
 
 class DocumentLoaderAgentTest(unittest.TestCase):

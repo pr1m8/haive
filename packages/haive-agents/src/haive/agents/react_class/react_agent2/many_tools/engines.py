@@ -1,7 +1,8 @@
-from haive.agents.react_class.react_agent2.many_tools.models import QueryForTools
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+
+from haive.agents.react_class.react_agent2.many_tools.models import QueryForTools
 
 tool_query_system_messagege = SystemMessage(
     "Given this conversation, generate a query for additional tools. "

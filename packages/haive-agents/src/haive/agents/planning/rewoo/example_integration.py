@@ -5,13 +5,14 @@ This demonstrates the integration without reimplementing the existing agent.
 
 from typing import Any
 
+from haive.core.graph import END, START, BaseGraph
+from haive.core.tools import tool
+
 from haive.agents.planning.rewoo.models import (
     EvidenceStatus,
     ReWOOPlan,
 )
 from haive.agents.planning.rewoo.state import ReWOOState
-from haive.core.graph import END, START, BaseGraph
-from haive.core.tools import tool
 
 
 # Example tools

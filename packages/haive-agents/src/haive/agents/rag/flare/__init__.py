@@ -6,5 +6,4 @@ Uses structured output models for planning and uncertainty detection.
 
 from .agent import ActiveRetrievalAgent, FLAREPlannerAgent, FLARERAGAgent
 
-
 __all__ = ["ActiveRetrievalAgent", "FLAREPlannerAgent", "FLARERAGAgent"]

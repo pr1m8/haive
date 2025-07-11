@@ -4,10 +4,10 @@ Tests the improved CorrectiveRAGAgentV2 with proper document grading.
 """
 
 import pytest
-
-from haive.agents.rag.corrective.agent_v2 import CorrectiveRAGAgentV2
 from haive.core.fixtures.documents import conversation_documents
 from haive.core.models.llm.base import AzureLLMConfig
+
+from haive.agents.rag.corrective.agent_v2 import CorrectiveRAGAgentV2
 
 
 class TestCorrectiveRAGAgentV2:

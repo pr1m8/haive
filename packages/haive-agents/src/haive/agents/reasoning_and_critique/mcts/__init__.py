@@ -30,7 +30,6 @@ from haive.agents.reasoning_and_critique.mcts.utils import (
     print_tree_stats,
 )
 
-
 __all__ = [
     "MCTSAgent",
     "MCTSAgentConfig",

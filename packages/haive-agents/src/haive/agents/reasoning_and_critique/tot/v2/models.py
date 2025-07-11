@@ -1,11 +1,10 @@
-from datetime import datetime
 import json
-from typing import Any, Dict, Generic, List, Literal, Optional, TypeVar, Union
 import uuid
+from datetime import datetime
+from typing import Any, Dict, Generic, List, Literal, Optional, TypeVar, Union
 
 from langchain_core.messages import BaseMessage
 from pydantic import BaseModel, Field, field_validator
-
 
 # Generic type for candidate content
 T = TypeVar("T")

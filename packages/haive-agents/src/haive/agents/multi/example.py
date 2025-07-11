@@ -12,7 +12,6 @@ from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from haive.agents.multi.agent import MultiAgent
 from haive.agents.simple.agent import SimpleAgent
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

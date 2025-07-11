@@ -2,11 +2,12 @@
 
 import asyncio
 
-from haive.agents.react.agent import ReactAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from haive.tools.tools.search_tools import tavily_search_tool
 from langchain_core.messages import HumanMessage
+
+from haive.agents.react.agent import ReactAgent
 
 
 async def test_minimal_flow():

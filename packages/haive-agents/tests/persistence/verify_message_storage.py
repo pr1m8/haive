@@ -15,8 +15,9 @@ sys.path.insert(0, "/home/will/Projects/haive/backend/haive/packages/haive-agent
 def test_message_persistence():
     """Test that messages are actually persisted and retrievable."""
 
-    from haive.agents.simple.agent import SimpleAgent
     from langchain_core.messages import HumanMessage
+
+    from haive.agents.simple.agent import SimpleAgent
 
     timestamp = datetime.now().strftime("%H%M%S")
     thread_id = f"msg_test_{timestamp}"

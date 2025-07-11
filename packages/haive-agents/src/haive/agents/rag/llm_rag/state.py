@@ -1,9 +1,10 @@
+from pydantic import Field
+
 from haive.agents.rag.base.state import (
     BaseRAGInputState,
     BaseRAGOutputState,
     BaseRAGState,
 )
-from pydantic import Field
 
 
 class LLMRAGInputState(BaseRAGInputState):

@@ -7,7 +7,6 @@ from pydantic import BaseModel, Field
 
 from haive.agents.react_class.react_agent2.agent2 import create_react_agent
 
-
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

@@ -11,7 +11,6 @@ from .agent import (
     SelfRouteRAGAgent,
 )
 
-
 __all__ = [
     "IterativePlannerAgent",
     "QueryAnalyzerAgent",

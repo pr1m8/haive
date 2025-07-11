@@ -11,15 +11,15 @@ This test demonstrates:
 import asyncio
 from typing import Any, Dict, List, Optional
 
+from haive.core.engine import AugLLMConfig
+from haive.core.llm import LLMConfig
+from haive.core.schema import StateSchema
+from haive.tools.tools.search_tools import tavily_search_tool
 from langchain_core.tools import tool
 from pydantic import Field, model_validator
 
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
-from haive.core.engine import AugLLMConfig
-from haive.core.llm import LLMConfig
-from haive.core.schema import StateSchema
-from haive.tools.tools.search_tools import tavily_search_tool
 
 
 # Mock langgraph_supervisor tools until real implementation is available

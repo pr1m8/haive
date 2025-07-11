@@ -28,7 +28,6 @@ Example:
 
 from langchain_core.prompts import ChatPromptTemplate
 
-
 # Prompt for analyzing a natural language query
 ANALYZE_QUERY_SYSTEM_PROMPT = """
 You are a SQL expert who analyzes user questions to determine what tables and columns are needed to answer them.

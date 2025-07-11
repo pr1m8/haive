@@ -7,11 +7,10 @@ Run with: poetry run pytest packages/haive-agents/tests/ltm/test_basic.py -v
 
 import logging
 
-from langchain_core.messages import AIMessage, HumanMessage
 import pytest
+from langchain_core.messages import AIMessage, HumanMessage
 
 from haive.agents.ltm.agent import LTMAgent, LTMState
-
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)

@@ -3,11 +3,12 @@
 from collections.abc import Callable
 from typing import Any
 
+from haive.core.common.structures.tree import AutoTree
+
 from haive.agents.task_analysis.base.models import (
     ActionStep,
     TaskNode,
 )
-from haive.core.common.structures.tree import AutoTree
 
 
 class TaskTree(AutoTree[TaskNode]):

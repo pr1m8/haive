@@ -7,10 +7,11 @@ with different problem types.
 import asyncio
 import logging
 
-from haive.agents.reasoning_and_critique.tot.agent import ToTAgent
-from haive.agents.reasoning_and_critique.tot.config import TOTAgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
+
+from haive.agents.reasoning_and_critique.tot.agent import ToTAgent
+from haive.agents.reasoning_and_critique.tot.config import TOTAgentConfig
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)

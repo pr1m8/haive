@@ -1,13 +1,12 @@
 import uuid
 
+from agents.long_term_memory.models import KnowledgeTriple
+from haive.core.models.vectorstore.base import VectorStoreConfig
+from haive.core.utils.runnable_config_utils import get_user_id
 from langchain_core.documents import Document
 from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import tool
 from pydantic import BaseModel
-
-from agents.long_term_memory.models import KnowledgeTriple
-from haive.core.models.vectorstore.base import VectorStoreConfig
-from haive.core.utils.runnable_config_utils import get_user_id
 
 
 @tool

@@ -6,16 +6,15 @@ This script shows the actual compiled graph structure for Plan & Execute.
 
 import os
 
-
 os.environ["NO_COLOR"] = "1"  # Disable color output for clarity
 
 import logging
 
-from haive.agents.multi.enhanced_base import create_plan_execute_multi_agent
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.agent_schema_composer import BuildMode
 
+from haive.agents.multi.enhanced_base import create_plan_execute_multi_agent
+from haive.agents.simple.agent import SimpleAgent
 
 # Silence most logs for clarity
 logging.getLogger().setLevel(logging.ERROR)

@@ -6,9 +6,10 @@ answer quality, and hallucination detection.
 
 from typing import Any, Dict, List
 
-from haive.agents.simple import SimpleAgent
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
+
+from haive.agents.simple import SimpleAgent
 
 # ===== MODELS =====
 

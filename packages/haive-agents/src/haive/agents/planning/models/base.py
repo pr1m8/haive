@@ -13,10 +13,10 @@ Key Design Principles:
 
 from __future__ import annotations
 
+import uuid
 from datetime import datetime
 from enum import Enum
 from typing import Any, Dict, List, Optional, Set, TypeVar, Union
-import uuid
 
 from pydantic import (
     BaseModel,
@@ -26,7 +26,6 @@ from pydantic import (
     field_validator,
     model_validator,
 )
-
 
 # ============================================================================
 # ENUMS

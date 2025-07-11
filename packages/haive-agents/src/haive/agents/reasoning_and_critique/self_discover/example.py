@@ -3,11 +3,12 @@
 import json
 import logging
 
+from langchain_core.prompts import ChatPromptTemplate
+
 from haive.agents.reasoning_and_critique.self_discover.agent2 import (
     SelfDiscoverAgent,
     create_self_discover_agent,
 )
-from langchain_core.prompts import ChatPromptTemplate
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)

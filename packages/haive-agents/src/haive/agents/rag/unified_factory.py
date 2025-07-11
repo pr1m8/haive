@@ -4,16 +4,15 @@ Create any RAG agent using either traditional or ChainAgent approach.
 Integrates with multi-agent system.
 """
 
-from enum import Enum
 import logging
+from enum import Enum
 from typing import Any, Dict, List, Literal, Optional, Union
 
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 
 from haive.agents.base.agent import Agent
 from haive.agents.chain import ChainAgent
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
-
 
 logger = logging.getLogger(__name__)
 

@@ -3,8 +3,9 @@
 from typing import Any, Dict
 from unittest.mock import Mock, patch
 
-from pydantic import BaseModel, Field
 import pytest
+from haive.core.engine.aug_llm import AugLLMConfig
+from pydantic import BaseModel, Field
 
 from haive.agents.document_modifiers.complex_extraction.agent import (
     ComplexExtractionAgent,
@@ -12,7 +13,6 @@ from haive.agents.document_modifiers.complex_extraction.agent import (
 from haive.agents.document_modifiers.complex_extraction.config import (
     ComplexExtractionAgentConfig,
 )
-from haive.core.engine.aug_llm import AugLLMConfig
 
 
 class PersonInfo(BaseModel):

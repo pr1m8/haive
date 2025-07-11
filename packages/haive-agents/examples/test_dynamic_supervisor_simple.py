@@ -1,10 +1,11 @@
 """Simple test of the cleaned up dynamic supervisor implementation."""
 
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+
 from haive.agents.dynamic_supervisor import (
     DynamicSupervisorAgent,
 )
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
 
 
 class MockAgent:

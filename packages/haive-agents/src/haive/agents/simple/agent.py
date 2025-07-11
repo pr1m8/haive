@@ -3,7 +3,6 @@
 import logging
 from typing import Any, Optional
 
-from haive.agents.base.agent import Agent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.node.parser_node_config_v2 import ParserNodeConfigV2
@@ -18,6 +17,8 @@ from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
 from langgraph.graph import END, START
 from langgraph.types import Command
 from pydantic import BaseModel, Field, field_validator
+
+from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 

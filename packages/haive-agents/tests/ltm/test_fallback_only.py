@@ -7,8 +7,9 @@ Run with: poetry run python packages/haive-agents/tests/ltm/test_fallback_only.p
 import logging
 import sys
 
-from haive.agents.ltm.agent import LTMAgent, LTMState
 from langchain_core.messages import AIMessage, HumanMessage
+
+from haive.agents.ltm.agent import LTMAgent, LTMState
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)

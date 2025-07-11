@@ -15,7 +15,6 @@ from haive.core.engine.vectorstore import VectorStoreConfig
 from haive.core.models.embeddings.base import OpenAIEmbeddingConfig
 from haive.core.models.llm.base import AzureLLMConfig
 
-
 # Set up logging
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"

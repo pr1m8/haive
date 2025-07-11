@@ -9,12 +9,13 @@ This example demonstrates how to use the PlanAndExecuteAgent to:
 import asyncio
 import logging
 
+from haive.core.llm import AugLLMConfig
+from haive.tools.tools.search_tools import tavily_search
+
 from haive.agents.planning.plan_and_execute import (
     PlanAndExecuteAgent,
     create_plan_and_execute_agent,
 )
-from haive.core.llm import AugLLMConfig
-from haive.tools.tools.search_tools import tavily_search
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)

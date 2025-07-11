@@ -3,7 +3,6 @@ from typing import Any
 
 from playwright.async_api import Page
 
-
 # Set up logging
 logger = logging.getLogger(__name__)
 

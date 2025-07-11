@@ -86,9 +86,10 @@ def test_thread_continuation():
     """Test continuing conversations on existing thread IDs."""
     try:
 
-        from haive.agents.simple.agent import SimpleAgent
         from haive.core.engine.aug_llm import AugLLMConfig
         from langchain_core.messages import HumanMessage
+
+        from haive.agents.simple.agent import SimpleAgent
 
         # Create a simple agent with persistence
         agent = SimpleAgent(
@@ -136,9 +137,10 @@ def test_react_agent_persistence():
     """Test React agent with persistence and tool usage."""
     try:
 
-        from haive.agents.react.agent import ReactAgent
         from haive.core.engine.aug_llm import AugLLMConfig
         from langchain_core.messages import HumanMessage
+
+        from haive.agents.react.agent import ReactAgent
 
         # Create React agent with basic tools
         react_agent = ReactAgent(

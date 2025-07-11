@@ -1,17 +1,15 @@
 # haive/core/engine/agent/mixins/state_mixin.py
 
-from datetime import datetime
 import json
 import logging
 import os
-from typing import Any
 import uuid
-
-from langchain_core.runnables import RunnableConfig
+from datetime import datetime
+from typing import Any
 
 from haive.core.persistence.handlers import ensure_pool_open
 from haive.core.utils.pydantic_utils import ensure_json_serializable
-
+from langchain_core.runnables import RunnableConfig
 
 logger = logging.getLogger(__name__)
 
