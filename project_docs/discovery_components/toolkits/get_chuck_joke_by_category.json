@@ -7,7 +7,7 @@
     "description": "Get a random Chuck Norris joke from a specified category",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.830241",
+    "timestamp": "2025-07-10T19:45:29.042991",
     "schema": {
       "description": "Fetch a random Chuck Norris joke from a specific category.\n\nArgs:\n    category (str): The joke category to filter by (use get_available_categories\n        to see available options).\n\nReturns:\n    Joke: A random Chuck Norris joke from the specified category.\n\nRaises:\n    requests.RequestException: If the API request fails or the category is invalid.",
       "properties": {
@@ -35,7 +35,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.830241",
+      "timestamp": "2025-07-10T19:45:29.042991",
       "category": "toolkits"
     }
   },

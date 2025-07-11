@@ -1,15 +1,16 @@
 from __future__ import annotations
 
+from enum import Enum
 import importlib
 import inspect
 import logging
 import os
-from enum import Enum
 from pathlib import Path
 from typing import Any, Callable, Dict, Iterator, List, Optional, Type, Union
 
 from langchain_core.documents import Document
 from pydantic import BaseModel, Field, field_validator
+
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -68,7 +69,6 @@ class SourceType(str, Enum):
     CHM = "chm"
     PPTX = "pptx"
     PPT = "ppt"
-    TOML = "toml"
     PNG = "png"
     JPG = "jpg"
     JPEG = "jpeg"

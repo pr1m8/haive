@@ -58,12 +58,6 @@ import logging
 import os
 from typing import Any, Literal, Optional, cast
 
-# Import agent base classes
-from haive.core.engine.agent.agent import Agent, register_agent
-from langchain_core.runnables import RunnableConfig
-from langgraph.graph import END, START, StateGraph
-from pydantic import create_model
-
 # Import agent specific modules
 from haive.agents.research.person.config import PersonResearchAgentConfig
 from haive.agents.research.person.models import Queries, ReflectionOutput
@@ -83,6 +77,12 @@ from haive.agents.research.person.utils import (
     format_all_notes,
     get_config_from_runnable_config,
 )
+
+# Import agent base classes
+from haive.core.engine.agent.agent import Agent, register_agent
+from langchain_core.runnables import RunnableConfig
+from langgraph.graph import END, START, StateGraph
+from pydantic import create_model
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -269,7 +269,7 @@ class PersonResearchAgent(Agent[PersonResearchAgentConfig]):
         )
 
         # Return queries
-        query_list = [query for query in results.queries]
+        query_list = list(results.queries)
         return {"search_queries": query_list}
 
     async def research_person(
@@ -409,7 +409,7 @@ class PersonResearchAgent(Agent[PersonResearchAgentConfig]):
             # Create dynamic model
             dynamic_model = create_model("DynamicExtractionModel", **fields)
         except Exception as e:
-            logger.error(f"Error creating dynamic model: {e}")
+            logger.exception(f"Error creating dynamic model: {e}")
             dynamic_model = None
 
         # Extract schema fields using structured output if possible
@@ -439,7 +439,7 @@ class PersonResearchAgent(Agent[PersonResearchAgentConfig]):
 
                 return {"info": result_dict}
             except Exception as e:
-                logger.error(f"Error using structured output: {e}")
+                logger.exception(f"Error using structured output: {e}")
 
         # Fallback: use free-form extraction and parse the result
         try:
@@ -471,7 +471,7 @@ class PersonResearchAgent(Agent[PersonResearchAgentConfig]):
             # If no JSON found, create a basic structure
             return {"info": {"error": "Could not extract structured data"}}
         except Exception as e:
-            logger.error(f"Error in fallback extraction: {e}")
+            logger.exception(f"Error in fallback extraction: {e}")
             return {"info": {"error": f"Extraction failed: {e!s}"}}
 
     def route_from_reflection(

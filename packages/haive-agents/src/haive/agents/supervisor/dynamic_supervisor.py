@@ -11,8 +11,6 @@ import time
 from typing import Any, Callable, Dict, List, Optional, Union
 from uuid import uuid4
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
@@ -33,6 +31,9 @@ from haive.agents.supervisor.dynamic_state import (
     SupervisorDecision,
 )
 from haive.agents.supervisor.registry import AgentRegistry
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
 
 logger = logging.getLogger(__name__)
 console = Console()
@@ -59,7 +60,7 @@ class DynamicSupervisorAgent(ReactAgent):
     def __init__(
         self,
         name: str = "dynamic_supervisor",
-        engine: Optional[AugLLMConfig] = None,
+        engine: AugLLMConfig | None = None,
         auto_rebuild_graph: bool = True,
         max_execution_history: int = 100,
         enable_parallel_execution: bool = False,
@@ -119,9 +120,8 @@ class DynamicSupervisorAgent(ReactAgent):
                 hasattr(agent, "engine")
                 and agent.engine
                 and hasattr(agent.engine, "tools")
-            ):
-                if agent.engine.tools:
-                    agent_tools.extend(agent.engine.tools)
+            ) and agent.engine.tools:
+                agent_tools.extend(agent.engine.tools)
 
             # Add tools to aggregated set with agent mapping
             for tool in agent_tools:
@@ -172,9 +172,9 @@ class DynamicSupervisorAgent(ReactAgent):
     async def register_agent(
         self,
         agent: Agent,
-        capability_description: Optional[str] = None,
-        execution_config: Optional[Dict[str, Any]] = None,
-        rebuild_graph: bool = None,
+        capability_description: str | None = None,
+        execution_config: dict[str, Any] | None = None,
+        rebuild_graph: bool | None = None,
     ) -> bool:
         """Register an agent with enhanced configuration.
 
@@ -219,7 +219,7 @@ class DynamicSupervisorAgent(ReactAgent):
         return success
 
     async def unregister_agent(
-        self, agent_name: str, rebuild_graph: bool = None
+        self, agent_name: str, rebuild_graph: bool | None = None
     ) -> bool:
         """Unregister an agent with graph rebuilding.
 
@@ -252,7 +252,7 @@ class DynamicSupervisorAgent(ReactAgent):
         return success
 
     async def update_agent_config(
-        self, agent_name: str, config_updates: Dict[str, Any]
+        self, agent_name: str, config_updates: dict[str, Any]
     ) -> bool:
         """Update agent execution configuration at runtime.
 
@@ -333,14 +333,13 @@ class DynamicSupervisorAgent(ReactAgent):
 
         # Log new routing destinations for debugging
         available_agents = self.agent_registry.get_available_agents()
-        logger.debug(f"New routing destinations: {available_agents + ['__end__']}")
+        logger.debug(f"New routing destinations: {[*available_agents, '__end__']}")
 
     def _create_enhanced_supervisor_node(self) -> Callable:
         """Create enhanced supervisor node with reasoning and context."""
 
         async def supervisor_node(state: DynamicSupervisorState, config=None) -> dict:
             """Enhanced supervisor node with decision reasoning."""
-
             # Update performance monitoring
             self._performance_monitor.start_decision()
 
@@ -384,7 +383,7 @@ class DynamicSupervisorAgent(ReactAgent):
                 # Update state
                 updates = {
                     "current_decision": decision,
-                    "routing_decisions": state.routing_decisions + [decision],
+                    "routing_decisions": [*state.routing_decisions, decision],
                 }
 
                 # Update registered agents in state
@@ -401,18 +400,18 @@ class DynamicSupervisorAgent(ReactAgent):
                 return updates
 
             except Exception as e:
-                logger.error(f"Supervisor decision failed: {e}")
+                logger.exception(f"Supervisor decision failed: {e}")
                 self._performance_monitor.end_decision("ERROR")
 
                 error_decision = SupervisorDecision(
                     target_agent="END",
-                    reasoning=f"Error in decision making: {str(e)}",
+                    reasoning=f"Error in decision making: {e!s}",
                     confidence=0.0,
                 )
 
                 return {
                     "current_decision": error_decision,
-                    "routing_decisions": state.routing_decisions + [error_decision],
+                    "routing_decisions": [*state.routing_decisions, error_decision],
                 }
 
         return supervisor_node
@@ -422,7 +421,6 @@ class DynamicSupervisorAgent(ReactAgent):
 
         async def coordinator_node(state: DynamicSupervisorState, config=None) -> dict:
             """Coordinate agent execution based on decision."""
-
             if not state.current_decision:
                 return {"conversation_complete": True}
 
@@ -448,7 +446,7 @@ class DynamicSupervisorAgent(ReactAgent):
                 "execution_queue": (
                     [target_agent]
                     if not self.enable_parallel_execution
-                    else state.execution_queue + [target_agent]
+                    else [*state.execution_queue, target_agent]
                 ),
             }
 
@@ -459,7 +457,6 @@ class DynamicSupervisorAgent(ReactAgent):
 
         async def adapter_node(state: DynamicSupervisorState, config=None) -> dict:
             """Adapt agent responses based on configuration."""
-
             if not state.current_execution or not state.current_execution.success:
                 return {}
 
@@ -479,7 +476,6 @@ class DynamicSupervisorAgent(ReactAgent):
 
     def _add_agent_nodes(self, graph: BaseGraph) -> None:
         """Add registered agents as graph nodes."""
-
         for agent_name in self.agent_registry.get_available_agents():
             agent_wrapper = self._create_enhanced_agent_wrapper(agent_name)
             graph.add_node(agent_name, agent_wrapper)
@@ -491,10 +487,9 @@ class DynamicSupervisorAgent(ReactAgent):
 
     def _setup_conditional_routing(self, graph: BaseGraph) -> None:
         """Setup conditional routing from coordinator."""
-
         # Get current available agents for destinations
         available_agents = self.agent_registry.get_available_agents()
-        routing_destinations = available_agents + ["__end__"]
+        routing_destinations = [*available_agents, "__end__"]
 
         def routing_condition(state: DynamicSupervisorState) -> str:
             """Determine routing destination dynamically."""
@@ -506,7 +501,7 @@ class DynamicSupervisorAgent(ReactAgent):
                 if target == "END":
                     return "__end__"
                 # ✅ Check against CURRENT registry state, not static list
-                elif self.agent_registry.is_agent_registered(target):
+                if self.agent_registry.is_agent_registered(target):
                     return target
 
             return "__end__"
@@ -520,7 +515,6 @@ class DynamicSupervisorAgent(ReactAgent):
 
         async def agent_wrapper(state: DynamicSupervisorState, config=None) -> dict:
             """Execute agent with enhanced tracking and error handling."""
-
             async with self._execution_lock:
                 agent = self.agent_registry.get_agent(agent_name)
                 if not agent:
@@ -582,7 +576,7 @@ class DynamicSupervisorAgent(ReactAgent):
                         "agent_execution_history": state.agent_execution_history,
                     }
 
-                except asyncio.TimeoutError:
+                except TimeoutError:
                     error_result = AgentExecutionResult(
                         agent_name=agent_name,
                         success=False,
@@ -608,14 +602,13 @@ class DynamicSupervisorAgent(ReactAgent):
                     state.add_execution_result(error_result)
                     state.increment_retry_count(agent_name)
 
-                    logger.error(f"Agent {agent_name} execution failed: {e}")
+                    logger.exception(f"Agent {agent_name} execution failed: {e}")
                     return {"current_execution": error_result}
 
         return agent_wrapper
 
-    async def _analyze_input(self, state: DynamicSupervisorState) -> Dict[str, Any]:
+    async def _analyze_input(self, state: DynamicSupervisorState) -> dict[str, Any]:
         """Analyze input messages for context and requirements."""
-
         if not state.messages:
             return {"type": "empty", "complexity": "simple"}
 
@@ -651,9 +644,8 @@ class DynamicSupervisorAgent(ReactAgent):
 
     def _get_available_agents_with_context(
         self, state: DynamicSupervisorState
-    ) -> Dict[str, Dict[str, Any]]:
+    ) -> dict[str, dict[str, Any]]:
         """Get available agents with performance context."""
-
         agents_context = {}
 
         for agent_name in self.agent_registry.get_available_agents():
@@ -675,12 +667,11 @@ class DynamicSupervisorAgent(ReactAgent):
     def _create_enhanced_decision_prompt(
         self,
         state: DynamicSupervisorState,
-        input_analysis: Dict[str, Any],
-        available_agents: Dict[str, Dict[str, Any]],
-        tool_info: Dict[str, Any] = None,
+        input_analysis: dict[str, Any],
+        available_agents: dict[str, dict[str, Any]],
+        tool_info: dict[str, Any] | None = None,
     ) -> ChatPromptTemplate:
         """Create enhanced prompt with reasoning and context."""
-
         # Build agent descriptions with performance data and tool information
         agent_descriptions = []
         for agent_name, context in available_agents.items():
@@ -736,7 +727,7 @@ class DynamicSupervisorAgent(ReactAgent):
             for decision in recent_decisions:
                 context_text += f"- {decision.target_agent}: {decision.reasoning}\n"
 
-        system_prompt = f"""You are an intelligent supervisor managing a dynamic team of AI agents. 
+        system_prompt = f"""You are an intelligent supervisor managing a dynamic team of AI agents.
 Your task is to analyze the user's request and select the most appropriate agent or end the conversation.
 
 INPUT ANALYSIS:
@@ -773,10 +764,9 @@ Provide a JSON response with:
         )
 
     def _parse_decision_response(
-        self, response: Any, available_agents: Dict[str, Any]
-    ) -> Dict[str, Any]:
+        self, response: Any, available_agents: dict[str, Any]
+    ) -> dict[str, Any]:
         """Parse LLM decision response."""
-
         content = getattr(response, "content", str(response))
 
         try:
@@ -805,7 +795,7 @@ Provide a JSON response with:
 
         # Fallback to simple parsing
         content_upper = content.upper()
-        for agent_name in available_agents.keys():
+        for agent_name in available_agents:
             if agent_name.upper() in content_upper:
                 return {
                     "target": agent_name,
@@ -823,7 +813,6 @@ Provide a JSON response with:
         self, supervisor_state: DynamicSupervisorState, agent: Agent
     ) -> Any:
         """Prepare enhanced state for agent execution."""
-
         # Try to use agent's specific state schema
         if hasattr(agent, "state_schema") and agent.state_schema:
             try:
@@ -847,9 +836,8 @@ Provide a JSON response with:
         # Fallback to basic state
         return type("State", (), {"messages": supervisor_state.messages})()
 
-    def get_performance_summary(self) -> Dict[str, Any]:
+    def get_performance_summary(self) -> dict[str, Any]:
         """Get comprehensive performance summary."""
-
         if not hasattr(self, "_state") or not self._state:
             return {"error": "No state available"}
 
@@ -874,7 +862,6 @@ Provide a JSON response with:
 
     def print_supervisor_dashboard(self) -> None:
         """Print comprehensive supervisor dashboard."""
-
         if not hasattr(self, "_state") or not self._state:
             console.print("[red]No state available[/red]")
             return

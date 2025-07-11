@@ -1,4 +1,4 @@
-"""Person - TODO: Add brief description
+"""Person - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 
@@ -24,6 +24,7 @@ from haive.agents.research.person.state import (
     PersonResearchOutputState,
     PersonResearchState,
 )
+
 
 __all__ = [
     "Person",

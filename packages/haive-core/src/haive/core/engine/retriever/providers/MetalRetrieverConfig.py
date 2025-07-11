@@ -1,5 +1,4 @@
-"""
-Metal Retriever implementation for the Haive framework.
+"""Metal Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Metal retriever,
 which uses Metal's vector search infrastructure for high-performance
@@ -35,8 +34,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.METAL)
 class MetalRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for Metal retriever in the Haive framework.
+    """Configuration for Metal retriever in the Haive framework.
 
     This retriever uses Metal's vector search infrastructure to provide
     high-performance similarity search with managed scaling and reliability.
@@ -83,11 +81,11 @@ class MetalRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     index_id: str = Field(..., description="Metal index ID for the vector collection")
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None, description="Metal API key (auto-resolved from METAL_API_KEY)"
     )
 
-    metal_client_id: Optional[SecretStr] = Field(
+    metal_client_id: SecretStr | None = Field(
         default=None, description="Metal client ID (auto-resolved from METAL_CLIENT_ID)"
     )
 
@@ -101,7 +99,7 @@ class MetalRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         default=10, ge=1, le=100, description="Number of documents to retrieve"
     )
 
-    filters: Optional[Dict[str, Any]] = Field(
+    filters: dict[str, Any] | None = Field(
         default=None, description="Metadata filters for search results"
     )
 
@@ -115,25 +113,25 @@ class MetalRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # Metal-specific parameters
-    namespace: Optional[str] = Field(
+    namespace: str | None = Field(
         default=None, description="Metal namespace for partitioning data"
     )
 
-    top_k: Optional[int] = Field(
+    top_k: int | None = Field(
         default=None, description="Alias for k parameter (for compatibility)"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Metal retriever."""
         return {
             "query": (str, Field(description="Vector search query for Metal")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Metal retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list,
                     description="Documents from Metal vector search",
@@ -142,8 +140,7 @@ class MetalRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a Metal retriever from this configuration.
+        """Create a Metal retriever from this configuration.
 
         Returns:
             MetalRetriever: Instantiated retriever ready for vector search.

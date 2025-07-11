@@ -7,7 +7,7 @@
     "description": "Filter Rick and Morty characters using the REST API with optional parameters.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.801285",
+    "timestamp": "2025-07-10T19:45:29.021561",
     "schema": {
       "description": "Input schema for filtering Rick and Morty characters.\n\nThis model defines optional parameters that can be used to filter\nthe characters returned by the Rick and Morty API.\n\nAttributes:\n    name (Optional[str]): Filter by character name (case-insensitive, partial matches).\n    status (Optional[str]): Filter by character status (\"alive\", \"dead\", or \"unknown\").\n    species (Optional[str]): Filter by character species (e.g., \"Human\", \"Alien\").\n    gender (Optional[str]): Filter by character gender (\"male\", \"female\", \"genderless\", \"unknown\").",
       "properties": {
@@ -82,7 +82,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.801285",
+      "timestamp": "2025-07-10T19:45:29.021561",
       "category": "toolkits"
     }
   },

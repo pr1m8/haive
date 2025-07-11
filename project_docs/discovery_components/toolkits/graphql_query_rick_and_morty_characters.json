@@ -7,7 +7,7 @@
     "description": "Query Rick and Morty characters using GraphQL endpoint with optional page and name filter.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.802015",
+    "timestamp": "2025-07-10T19:45:29.022142",
     "schema": {
       "description": "Input schema for the GraphQL character query.\n\nThis model defines the parameters that can be passed to the GraphQL API\nwhen querying for Rick and Morty characters.\n\nAttributes:\n    name (Optional[str]): Character name to filter results by.\n    page (Optional[int]): Page number for paginated results.",
       "properties": {
@@ -56,7 +56,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.802015",
+      "timestamp": "2025-07-10T19:45:29.022142",
       "category": "toolkits"
     }
   },

@@ -24,8 +24,7 @@ console = Console()
 
 
 class HaiveDebugger:
-    """
-    Centralized debugging and visualization interface for the Haive framework.
+    """Centralized debugging and visualization interface for the Haive framework.
 
     Provides:
     - Standardized logging setup
@@ -197,10 +196,10 @@ class HaiveDebugger:
                 )
             except Exception as e:
                 self.console.print(
-                    f"[bold red]Error generating visualization: {str(e)}[/bold red]"
+                    f"[bold red]Error generating visualization: {e!s}[/bold red]"
                 )
 
-    def display_state(self, state: Dict[str, Any]):
+    def display_state(self, state: dict[str, Any]):
         """Display the current state of a graph or agent."""
         self.console.print("[bold yellow]Current State:[/bold yellow]")
 
@@ -213,7 +212,7 @@ class HaiveDebugger:
                 formatted_state[key] = f"{len(value)} messages"
             elif isinstance(value, BaseModel):
                 formatted_state[key] = f"{type(value).__name__}(...)"
-            elif isinstance(value, (list, dict)) and len(str(value)) > 100:
+            elif isinstance(value, list | dict) and len(str(value)) > 100:
                 if isinstance(value, list):
                     formatted_state[key] = f"list with {len(value)} items"
                 else:
@@ -242,8 +241,7 @@ class HaiveDebugger:
             )
 
     def trace_execution(self, enabled: bool = True):
-        """
-        Decorator to trace function execution for debugging.
+        """Decorator to trace function execution for debugging.
 
         @debugger.trace_execution()
         def my_function(arg1, arg2):
@@ -258,7 +256,7 @@ class HaiveDebugger:
                 # Get function info
                 func_name = func.__name__
                 module_name = func.__module__
-                signature = f"{func_name}({', '.join([repr(a) for a in args] + [f'{k}={repr(v)}' for k, v in kwargs.items()])})"
+                signature = f"{func_name}({', '.join([repr(a) for a in args] + [f'{k}={v!r}' for k, v in kwargs.items()])})"
 
                 # Log entry
                 self.logger.debug(f"TRACE ENTER: {module_name}.{signature}")
@@ -293,8 +291,8 @@ class HaiveDebugger:
                     elapsed = end_time - start_time
 
                     # Log error
-                    self.logger.error(
-                        f"TRACE ERROR: {module_name}.{func_name} - {type(e).__name__}: {str(e)} [{elapsed:.4f}s]"
+                    self.logger.exception(
+                        f"TRACE ERROR: {module_name}.{func_name} - {type(e).__name__}: {e!s} [{elapsed:.4f}s]"
                     )
 
                     # Record error trace
@@ -303,7 +301,7 @@ class HaiveDebugger:
                             "function": f"{module_name}.{func_name}",
                             "args": args,
                             "kwargs": kwargs,
-                            "error": f"{type(e).__name__}: {str(e)}",
+                            "error": f"{type(e).__name__}: {e!s}",
                             "elapsed": elapsed,
                             "success": False,
                         }
@@ -354,8 +352,7 @@ class HaiveDebugger:
         self.console.print(table)
 
     def capture_output(self, func, *args, **kwargs):
-        """
-        Capture the console output of a function execution.
+        """Capture the console output of a function execution.
 
         Returns both the function result and the captured output.
         """
@@ -366,9 +363,7 @@ class HaiveDebugger:
         return result, captured_output
 
     def watch_object(self, obj, name=None):
-        """
-        Register an object for tracking changes between operations.
-        """
+        """Register an object for tracking changes between operations."""
         obj_name = name or type(obj).__name__
         obj_hash = id(obj)
 
@@ -389,9 +384,7 @@ class HaiveDebugger:
         return (obj_hash, obj_name, snapshot)
 
     def check_watched_object(self, watch_info):
-        """
-        Check for changes in a watched object.
-        """
+        """Check for changes in a watched object."""
         obj_hash, obj_name, prev_snapshot = watch_info
 
         # Try to find the object by its id

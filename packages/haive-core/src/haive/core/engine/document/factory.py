@@ -8,8 +8,6 @@ import logging
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
-from langchain_core.document_loaders.base import BaseLoader
-
 from haive.core.engine.document.loaders.sources.implementation import (
     CredentialManager,
     EnhancedSource,
@@ -19,13 +17,12 @@ from haive.core.engine.document.loaders.sources.implementation import (
 from haive.core.engine.document.loaders.strategy import (
     create_loader as create_strategy_loader,
 )
-from haive.core.engine.document.loaders.strategy import (
-    strategy_registry,
-)
+from haive.core.engine.document.loaders.strategy import strategy_registry
 from haive.core.engine.document.path_analysis import (
     PathAnalysisResult,
     analyze_path_comprehensive,
 )
+from langchain_core.document_loaders.base import BaseLoader
 
 logger = logging.getLogger(__name__)
 

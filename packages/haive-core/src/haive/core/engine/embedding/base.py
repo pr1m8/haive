@@ -1,7 +1,7 @@
 """Base embedding engine configuration and registry."""
 
-import logging
 from abc import abstractmethod
+import logging
 from typing import Any, Dict, Optional, Type, Union
 
 from pydantic import Field, SecretStr
@@ -11,10 +11,11 @@ from haive.core.engine.base import InvokableEngine
 from haive.core.engine.base.types import EngineType
 from haive.core.engine.embedding.types import EmbeddingType
 
+
 logger = logging.getLogger(__name__)
 
 # Global registry to avoid Pydantic conflicts
-_EMBEDDING_REGISTRY: Dict[str, Type["BaseEmbeddingConfig"]] = {}
+_EMBEDDING_REGISTRY: dict[str, type["BaseEmbeddingConfig"]] = {}
 
 
 class BaseEmbeddingConfig(SecureConfigMixin, InvokableEngine):
@@ -66,17 +67,17 @@ class BaseEmbeddingConfig(SecureConfigMixin, InvokableEngine):
     model: str = Field(
         ..., description="Model name/identifier for the embedding provider"
     )
-    dimensions: Optional[int] = Field(
+    dimensions: int | None = Field(
         default=None, description="Output dimensions for the embeddings (if supported)"
     )
-    
+
     # API key field for SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None, description="API key for the embedding provider"
     )
 
     @classmethod
-    def register(cls, embedding_type: Union[str, EmbeddingType]) -> Any:
+    def register(cls, embedding_type: str | EmbeddingType) -> Any:
         """Register an embedding configuration class.
 
         This decorator registers embedding configuration classes with the global
@@ -99,8 +100,8 @@ class BaseEmbeddingConfig(SecureConfigMixin, InvokableEngine):
         """
 
         def decorator(
-            config_cls: Type["BaseEmbeddingConfig"],
-        ) -> Type["BaseEmbeddingConfig"]:
+            config_cls: type["BaseEmbeddingConfig"],
+        ) -> type["BaseEmbeddingConfig"]:
             type_str = str(
                 embedding_type.value
                 if hasattr(embedding_type, "value")
@@ -116,8 +117,8 @@ class BaseEmbeddingConfig(SecureConfigMixin, InvokableEngine):
 
     @classmethod
     def get_config_class(
-        cls, embedding_type: Union[str, EmbeddingType]
-    ) -> Optional[Type["BaseEmbeddingConfig"]]:
+        cls, embedding_type: str | EmbeddingType
+    ) -> type["BaseEmbeddingConfig"] | None:
         """Get the configuration class for a specific embedding type.
 
         Args:
@@ -140,7 +141,7 @@ class BaseEmbeddingConfig(SecureConfigMixin, InvokableEngine):
         return _EMBEDDING_REGISTRY.get(type_str)
 
     @classmethod
-    def list_registered_types(cls) -> Dict[str, Type["BaseEmbeddingConfig"]]:
+    def list_registered_types(cls) -> dict[str, type["BaseEmbeddingConfig"]]:
         """List all registered embedding configuration types.
 
         Returns:
@@ -188,7 +189,7 @@ class BaseEmbeddingConfig(SecureConfigMixin, InvokableEngine):
         """
         raise NotImplementedError("Subclasses must implement instantiate()")
 
-    def get_input_fields(self) -> Dict[str, tuple]:
+    def get_input_fields(self) -> dict[str, tuple]:
         """Define the input schema for this embedding configuration.
 
         Returns:
@@ -203,7 +204,7 @@ class BaseEmbeddingConfig(SecureConfigMixin, InvokableEngine):
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, tuple]:
+    def get_output_fields(self) -> dict[str, tuple]:
         """Define the output schema for this embedding configuration.
 
         Returns:
@@ -228,7 +229,7 @@ class BaseEmbeddingConfig(SecureConfigMixin, InvokableEngine):
         if not self.model:
             raise ValueError("Model name is required")
 
-    def create_runnable(self, runnable_config: Optional[Dict[str, Any]] = None) -> Any:
+    def create_runnable(self, runnable_config: dict[str, Any] | None = None) -> Any:
         """Create a runnable embedding instance.
 
         This method is required by the InvokableEngine interface and provides
@@ -243,7 +244,7 @@ class BaseEmbeddingConfig(SecureConfigMixin, InvokableEngine):
         """
         return self.instantiate()
 
-    def get_provider_info(self) -> Dict[str, Any]:
+    def get_provider_info(self) -> dict[str, Any]:
         """Get information about this embedding provider.
 
         Returns:

@@ -1,12 +1,11 @@
-"""
-Simple test to verify SchemaComposer fixes work.
-"""
+"""Simple test to verify SchemaComposer fixes work."""
 
 from rich.console import Console
 
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.engine.retriever import BaseRetrieverConfig
 from haive.core.schema.schema_composer import SchemaComposer
+
 
 console = Console()
 

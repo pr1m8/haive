@@ -29,10 +29,9 @@ import uuid
 from datetime import datetime
 from typing import Any, Dict, Generic, List, Optional, TypeVar, Union
 
+from haive.core.graph.common.types import ConfigLike, NodeOutput, NodeType, StateLike
 from langgraph.types import RetryPolicy
 from pydantic import BaseModel, Field
-
-from haive.core.graph.common.types import ConfigLike, NodeOutput, NodeType, StateLike
 
 # Type variables for generic parameters
 T = TypeVar("T", bound=StateLike)

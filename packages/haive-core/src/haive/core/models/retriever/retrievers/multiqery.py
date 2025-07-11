@@ -1,11 +1,10 @@
 import logging
-from typing import Any, Optional
-
-from langchain_core.retrievers import BaseRetriever
-from pydantic import Field
+from typing import Any
 
 from haive.core.models.retriever.base import RetrieverConfig, RetrieverType
 from haive.core.models.vectorstore.base import VectorStoreConfig
+from langchain_core.retrievers import BaseRetriever
+from pydantic import Field
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -15,10 +14,10 @@ logger.setLevel(logging.DEBUG)
 class MultiQueryRetrieverConfig(RetrieverConfig):
     """Configuration for multi-query retrievers."""
 
-    vector_store_config: Optional[VectorStoreConfig] = Field(
+    vector_store_config: VectorStoreConfig | None = Field(
         default=None, description="Configuration for the vector store"
     )
-    llm_config: Optional[Any] = Field(
+    llm_config: Any | None = Field(
         default=None, description="Configuration for the LLM"
     )
     query_count: int = Field(

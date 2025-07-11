@@ -1,10 +1,14 @@
-"""Simple Enhanced Multi-Agent RAG Workflows
+"""Simple Enhanced Multi-Agent RAG Workflows.
 
 Clean implementation of advanced RAG patterns without complex dependencies.
 """
 
 from typing import Optional
 
+from haive.agents.base.agent import Agent
+from haive.agents.multi.base import SequentialAgent
+from haive.agents.rag.base.agent import SimpleRAGAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.callable_node import (
     CallableNodeConfig,
@@ -16,11 +20,6 @@ from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.prebuilt.rag_state import MultiAgentRAGState
 from langchain_core.documents import Document
 from langgraph.graph import END, START
-
-from haive.agents.base.agent import Agent
-from haive.agents.multi.base import SequentialAgent
-from haive.agents.rag.base.agent import SimpleRAGAgent
-from haive.agents.simple.agent import SimpleAgent
 
 
 class DocumentGradingAgent(Agent):
@@ -69,7 +68,7 @@ class RequeryDecisionAgent(Agent):
 class SimpleCorrectiveRAGAgent(SequentialAgent):
     """Simple Corrective RAG implementation using sequential processing."""
 
-    def __init__(self, documents: Optional[list[Document]] = None, **kwargs):
+    def __init__(self, documents: list[Document] | None = None, **kwargs):
         # Create retrieval agent
         from haive.core.fixtures.documents import conversation_documents
 
@@ -94,7 +93,7 @@ class SimpleCorrectiveRAGAgent(SequentialAgent):
 class SimpleHYDERAGAgent(SequentialAgent):
     """Simple HYDE RAG agent that generates hypothetical documents before retrieval."""
 
-    def __init__(self, documents: Optional[list[Document]] = None, **kwargs):
+    def __init__(self, documents: list[Document] | None = None, **kwargs):
         # Create hypothesis generator
         from langchain_core.prompts import ChatPromptTemplate
 
@@ -132,7 +131,7 @@ class SimpleHYDERAGAgent(SequentialAgent):
 
 
 def create_simple_rag_workflow(
-    workflow_type: str = "crag", documents: Optional[list[Document]] = None, **kwargs
+    workflow_type: str = "crag", documents: list[Document] | None = None, **kwargs
 ) -> Agent:
     """Factory function to create simple RAG workflows.
 
@@ -146,10 +145,9 @@ def create_simple_rag_workflow(
     """
     if workflow_type.lower() == "crag":
         return SimpleCorrectiveRAGAgent(documents=documents, **kwargs)
-    elif workflow_type.lower() == "hyde":
+    if workflow_type.lower() == "hyde":
         return SimpleHYDERAGAgent(documents=documents, **kwargs)
-    else:
-        raise ValueError(f"Unknown workflow type: {workflow_type}")
+    raise ValueError(f"Unknown workflow type: {workflow_type}")
 
 
 __all__ = [

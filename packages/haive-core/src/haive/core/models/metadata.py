@@ -1,12 +1,11 @@
-"""
-Model metadata utilities for LLM configurations.
+"""Model metadata utilities for LLM configurations.
 
 This module provides utilities for downloading, caching, and accessing
 model metadata from LiteLLM's model_prices_and_context_window.json.
 """
 
 from dataclasses import dataclass
-from typing import Any, Dict, Optional
+from typing import Any
 
 
 @dataclass
@@ -18,8 +17,8 @@ class ModelMetadata:
     """
 
     name: str
-    provider: Optional[str] = None
-    metadata: Dict[str, Any] = None
+    provider: str | None = None
+    metadata: dict[str, Any] = None
 
     def __post_init__(self):
         if self.metadata is None:
@@ -31,7 +30,7 @@ class ModelMetadata:
         return self.metadata.get("context_window", 2048)
 
     @property
-    def pricing(self) -> Dict[str, float]:
+    def pricing(self) -> dict[str, float]:
         """Get the pricing information for this model."""
         return {
             "input": self.metadata.get("input_cost_per_token", 0.0),
@@ -43,7 +42,7 @@ import json
 import logging
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any
 
 import requests
 
@@ -63,18 +62,18 @@ def _ensure_cache_dir():
     cache_dir.mkdir(parents=True, exist_ok=True)
 
 
-def _load_metadata_from_cache() -> Dict[str, Any]:
+def _load_metadata_from_cache() -> dict[str, Any]:
     """Load metadata from cache file."""
     try:
         if _METADATA_CACHE_FILE.exists():
-            with open(_METADATA_CACHE_FILE, "r") as f:
+            with open(_METADATA_CACHE_FILE) as f:
                 return json.load(f)
     except Exception as e:
         logger.warning(f"Failed to load metadata from cache: {e}")
     return {}
 
 
-def _save_metadata_to_cache(metadata: Dict[str, Any]) -> None:
+def _save_metadata_to_cache(metadata: dict[str, Any]) -> None:
     """Save metadata to cache file."""
     try:
         _ensure_cache_dir()
@@ -84,7 +83,7 @@ def _save_metadata_to_cache(metadata: Dict[str, Any]) -> None:
         logger.warning(f"Failed to save metadata to cache: {e}")
 
 
-def _download_metadata() -> Dict[str, Any]:
+def _download_metadata() -> dict[str, Any]:
     """Download metadata from LiteLLM's repository."""
     try:
         response = requests.get(_METADATA_URL, timeout=10)
@@ -97,10 +96,9 @@ def _download_metadata() -> Dict[str, Any]:
 
 
 def get_model_metadata(
-    model_name: str, provider: Optional[str] = None, force_refresh: bool = False
-) -> Dict[str, Any]:
-    """
-    Get metadata for a specific model with improved matching.
+    model_name: str, provider: str | None = None, force_refresh: bool = False
+) -> dict[str, Any]:
+    """Get metadata for a specific model with improved matching.
 
     This function tries to find the most relevant model metadata based on the
     model name and provider, with multiple fallback strategies.
@@ -167,7 +165,7 @@ def get_model_metadata(
     # 3. Best match search - check for model name contained within keys
     # Priority: provider+model > model > model base version
     candidates = []
-    for key in _MODEL_METADATA_CACHE.keys():
+    for key in _MODEL_METADATA_CACHE:
         if key == "sample_spec":
             continue
 
@@ -182,19 +180,16 @@ def get_model_metadata(
             if (
                 _MODEL_METADATA_CACHE[key]["litellm_provider"].lower()
                 == normalized_provider
-            ):
-                if normalized_model in key.lower():
-                    # Add with high score (internal provider match)
-                    candidates.append((key, 90 + len(normalized_model)))
-        else:
-            # No provider specified, or provider doesn't match prefix
-            if normalized_model in key.lower():
-                # Add with medium score (model name match)
-                candidates.append((key, 50 + len(normalized_model)))
-            # Base model check (without version)
-            elif any(segment in key.lower() for segment in normalized_model.split("-")):
-                # Add with lower score (partial match)
-                candidates.append((key, 20))
+            ) and normalized_model in key.lower():
+                # Add with high score (internal provider match)
+                candidates.append((key, 90 + len(normalized_model)))
+        elif normalized_model in key.lower():
+            # Add with medium score (model name match)
+            candidates.append((key, 50 + len(normalized_model)))
+        # Base model check (without version)
+        elif any(segment in key.lower() for segment in normalized_model.split("-")):
+            # Add with lower score (partial match)
+            candidates.append((key, 20))
 
     # Return best match if we have candidates
     if candidates:

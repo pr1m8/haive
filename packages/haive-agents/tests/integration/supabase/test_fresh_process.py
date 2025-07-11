@@ -18,12 +18,12 @@ import psycopg
 async def run_test():
     thread_id = f"fresh_{datetime.now().strftime('%Y%m%d_%H%M%S_%f')}"
     print(f"Thread ID: {thread_id}")
-    
+
     # Create and run agent
     try:
         engine = AugLLMConfig()
         agent = SimpleAgent(engine=engine, name="Fresh Test")
-        
+
         result = agent.run(
             {'messages': [HumanMessage(content="Test message for Supabase.")]},
             config={'configurable': {'thread_id': thread_id}}
@@ -32,10 +32,10 @@ async def run_test():
     except Exception as e:
         print(f"❌ Agent error: {e}")
         return None
-    
+
     # Wait and check
     await asyncio.sleep(2)
-    
+
     conn_string = os.getenv("POSTGRES_CONNECTION_STRING")
     async with await psycopg.AsyncConnection.connect(conn_string) as conn:
         async with conn.cursor() as cur:
@@ -58,27 +58,21 @@ else:
 with open("_temp_test.py", "w") as f:
     f.write(test_script)
 
-print("🧪 Running test in fresh process...")
-print("=" * 60)
 
 # Run in subprocess
 try:
     result = subprocess.run(
         [sys.executable, "_temp_test.py"],
-        capture_output=True,
+        check=False, capture_output=True,
         text=True,
         env={**os.environ},
     )
 
-    print("STDOUT:")
-    print(result.stdout)
 
     if result.stderr and "prepared statement" not in result.stderr:
-        print("\nSTDERR:")
-        print(result.stderr)
 
     # Clean up
     os.remove("_temp_test.py")
 
 except Exception as e:
-    print(f"Error: {e}")
+    pass

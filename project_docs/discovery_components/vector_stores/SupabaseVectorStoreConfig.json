@@ -11,7 +11,7 @@
       "SUPABASE_API_KEY",
       "SUPABASE_SERVICE_KEY"
     ],
-    "timestamp": "2025-07-05T11:38:19.792365",
+    "timestamp": "2025-07-10T19:45:39.378009",
     "schema": {
       "properties": {
         "data": {
@@ -58,7 +58,7 @@
         "SUPABASE_API_KEY",
         "SUPABASE_SERVICE_KEY"
       ],
-      "timestamp": "2025-07-05T11:38:19.792365",
+      "timestamp": "2025-07-10T19:45:39.378009",
       "category": "vector_stores"
     }
   },

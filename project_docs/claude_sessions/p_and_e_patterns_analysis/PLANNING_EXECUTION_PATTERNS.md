@@ -21,7 +21,7 @@ self.engines["planner"] = AugLLMConfig(
 
 # Execution Engine (with tools)
 self.engines["executor"] = AugLLMConfig(
-    name="executor", 
+    name="executor",
     prompt_template=executor_prompt,
     tools=self.tools,  # Tools available for execution
 )
@@ -42,14 +42,15 @@ self.engines["replanner"] = AugLLMConfig(
 The p_and_e agent demonstrates sophisticated use of Pydantic models for structured outputs:
 
 #### Plan Model
+
 ```python
 class Plan(BaseModel):
     """Complete execution plan with steps and metadata."""
-    
+
     objective: str = Field(description="The main objective")
     steps: List[PlanStep] = Field(description="Ordered list of steps")
     total_steps: int = Field(description="Total number of steps")
-    
+
     @computed_field
     @property
     def next_step(self) -> Optional[PlanStep]:
@@ -63,6 +64,7 @@ class Plan(BaseModel):
 ```
 
 #### Union Type for Decision Making
+
 ```python
 class Response(BaseModel):
     """Response to user with final answer."""
@@ -85,25 +87,25 @@ The state schema demonstrates advanced patterns for derived state:
 ```python
 class PlanExecuteState(MessagesState):
     """Main state schema for Plan and Execute system."""
-    
+
     # Core state
     plan: Optional[Plan] = Field(default=None)
     execution_results: List[ExecutionResult] = Field(default_factory=list)
-    
+
     @computed_field
     @property
     def plan_status(self) -> str:
         """Get formatted plan status for executor."""
         if not self.plan:
             return "No plan available"
-        
+
         lines = [
             f"Objective: {self.plan.objective}",
             f"Progress: {self.plan.progress_percentage:.1f}%",
             f"Completed: {len(self.plan.completed_steps)}",
         ]
         return "\n".join(lines)
-    
+
     @computed_field
     @property
     def should_replan(self) -> bool:
@@ -157,10 +159,10 @@ The p_and_e agent demonstrates clean tool integration:
 class PlanAndExecuteAgent(Agent):
     # Tools available to the agent
     tools: List[BaseTool] = Field(
-        default_factory=list, 
+        default_factory=list,
         description="List of tools available to this agent"
     )
-    
+
     def setup_agent(self) -> None:
         # Only executor engine gets tools
         self.engines["executor"] = AugLLMConfig(
@@ -180,18 +182,18 @@ def check_plan_complete(state: PlanExecuteState) -> str:
     """Check if plan execution is complete or needs more steps."""
     if not state.plan:
         return "create_plan"
-    
+
     if state.plan.is_complete:
         return "evaluate_progress"
-    
+
     if state.plan.has_failures and not state.plan.next_step:
         return "evaluate_progress"
-    
+
     # Periodic evaluation
     completed_count = len(state.plan.completed_steps)
     if completed_count > 0 and completed_count % 3 == 0:
         return "evaluate_progress"
-    
+
     return "execute_step"
 
 # In build_graph()
@@ -200,7 +202,7 @@ graph.add_conditional_edges(
     check_plan_complete,
     {
         "execute_step": "execute_step",
-        "evaluate_progress": "evaluate_progress", 
+        "evaluate_progress": "evaluate_progress",
         "create_plan": "create_plan",
     }
 )
@@ -209,32 +211,37 @@ graph.add_conditional_edges(
 ## Key Design Principles
 
 ### 1. Separation of Concerns
+
 - **Planner**: Focuses on creating structured plans
 - **Executor**: Handles tool usage and step execution
 - **Replanner**: Makes strategic decisions about continuation
 
 ### 2. Type Safety Throughout
+
 - All outputs are strongly typed with Pydantic models
 - Union types enable flexible decision making
 - Computed fields derive state without redundancy
 
 ### 3. Progressive Enhancement
+
 - Start with basic state (MessagesState)
 - Add domain-specific fields
 - Use computed fields for derived values
 
 ### 4. Tool Routing Patterns
+
 ```python
 # Tool types and their routing:
 tool_routes = {
     "calculate": "langchain_tool",     # Goes to tool_node
-    "search": "langchain_tool",         # Goes to tool_node  
+    "search": "langchain_tool",         # Goes to tool_node
     "analyze": "pydantic_model",        # Goes to parser_node
     "default": "main_engine"            # Stays in engine
 }
 ```
 
 ### 5. State Management Best Practices
+
 - Use `Field(default_factory=list)` for mutable defaults
 - Implement validators for data consistency
 - Use `@computed_field` for derived properties
@@ -242,13 +249,13 @@ tool_routes = {
 
 ## Comparison with SimpleAgent
 
-| Aspect | SimpleAgent | Plan & Execute Agent |
-|--------|-------------|---------------------|
-| Engines | Single engine | Multiple specialized engines |
-| Output | Single structured output | Multiple output types (Plan, Act, Response) |
-| Flow | Linear with optional tools | Complex orchestration with loops |
-| State | Basic with tool routing | Rich state with execution tracking |
-| Tools | All tools on single engine | Tools assigned to specific engines |
+| Aspect  | SimpleAgent                | Plan & Execute Agent                        |
+| ------- | -------------------------- | ------------------------------------------- |
+| Engines | Single engine              | Multiple specialized engines                |
+| Output  | Single structured output   | Multiple output types (Plan, Act, Response) |
+| Flow    | Linear with optional tools | Complex orchestration with loops            |
+| State   | Basic with tool routing    | Rich state with execution tracking          |
+| Tools   | All tools on single engine | Tools assigned to specific engines          |
 
 ## Implementation Checklist
 
@@ -282,26 +289,28 @@ When building a SimpleAgent-based agent with these patterns:
 ## Advanced Patterns
 
 ### Dynamic Schema Modification (from SimpleAgent)
+
 ```python
 def _modify_engine_schema(self) -> None:
     """Modify engine's output schema to include structured fields."""
     composer = SchemaComposer(name=f"Enhanced{current_output_schema.__name__}")
-    
+
     # Add enhanced messages field
     composer.add_standard_field("messages", use_enhanced=True)
-    
+
     # Add structured output field
     composer.add_field(
         name=field_name,
         field_type=Optional[self.structured_output_model],
         default=None,
     )
-    
+
     # Override engine's output schema
     self.engine.output_schema = composer.build()
 ```
 
 ### Validation Node Pattern (from SimpleAgent)
+
 ```python
 validation_config = ValidationNodeConfigV2(
     name="validation",
@@ -315,6 +324,7 @@ validation_config = ValidationNodeConfigV2(
 ## Summary
 
 The p_and_e agent demonstrates sophisticated patterns for:
+
 - Multi-phase agent workflows
 - Structured decision making with Union types
 - Advanced state management with computed fields

@@ -1,5 +1,4 @@
-"""
-Chroma Vector Store implementation for the Haive framework.
+"""Chroma Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the Chroma vector store,
 which is an open-source embedding database designed for AI applications.
@@ -32,8 +31,7 @@ from haive.core.engine.vectorstore.types import VectorStoreType
 
 @BaseVectorStoreConfig.register(VectorStoreType.CHROMA)
 class ChromaVectorStoreConfig(BaseVectorStoreConfig):
-    """
-    Configuration for Chroma vector store in the Haive framework.
+    """Configuration for Chroma vector store in the Haive framework.
 
     This vector store uses Chroma for efficient semantic search with
     persistent storage and metadata filtering capabilities.
@@ -69,12 +67,12 @@ class ChromaVectorStoreConfig(BaseVectorStoreConfig):
     """
 
     # Chroma-specific configuration
-    persist_directory: Optional[str] = Field(
+    persist_directory: str | None = Field(
         default=None,
         description="Directory to persist the database. If None, data will be ephemeral",
     )
 
-    collection_metadata: Dict[str, Any] = Field(
+    collection_metadata: dict[str, Any] = Field(
         default_factory=dict, description="Metadata to associate with the collection"
     )
 
@@ -84,16 +82,16 @@ class ChromaVectorStoreConfig(BaseVectorStoreConfig):
     )
 
     # ChromaDB settings
-    chroma_settings: Optional[Dict[str, Any]] = Field(
+    chroma_settings: dict[str, Any] | None = Field(
         default=None, description="Additional ChromaDB settings"
     )
 
     # HTTP settings (for client-server mode)
-    chroma_server_host: Optional[str] = Field(
+    chroma_server_host: str | None = Field(
         default=None, description="Chroma server host for HTTP client mode"
     )
 
-    chroma_server_port: Optional[int] = Field(
+    chroma_server_port: int | None = Field(
         default=None, description="Chroma server port for HTTP client mode"
     )
 
@@ -102,31 +100,30 @@ class ChromaVectorStoreConfig(BaseVectorStoreConfig):
     )
 
     @validator("distance_metric")
-    def validate_distance_metric(cls, v):
+    def validate_distance_metric(self, v):
         """Validate distance metric is supported."""
         valid_metrics = ["cosine", "l2", "ip"]
         if v not in valid_metrics:
             raise ValueError(f"distance_metric must be one of {valid_metrics}, got {v}")
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Chroma vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Chroma vector store."""
         return {
-            "ids": (List[str], Field(description="IDs of the added documents")),
+            "ids": (list[str], Field(description="IDs of the added documents")),
         }
 
     def instantiate(self):
-        """
-        Create a Chroma vector store from this configuration.
+        """Create a Chroma vector store from this configuration.
 
         Returns:
             Chroma: Instantiated Chroma vector store.
@@ -169,7 +166,6 @@ class ChromaVectorStoreConfig(BaseVectorStoreConfig):
                 )
 
         # Map distance metric to Chroma's expected format
-        metric_mapping = {"cosine": "cosine", "l2": "l2", "ip": "ip"}
 
         # Prepare kwargs
         kwargs = {

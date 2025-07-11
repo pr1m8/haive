@@ -80,7 +80,7 @@ class ComplexityVector(BaseModel):
     @field_validator(
         "structural", "execution", "knowledge", "integration", "uncertainty"
     )
-    def validate_scores(cls, v):
+    def validate_scores(self, v):
         """Ensure scores are within valid range."""
         return round(v, 1)
 

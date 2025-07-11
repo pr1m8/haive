@@ -13,6 +13,7 @@ from typing import List
 
 from rich.console import Console
 
+
 # Mock classes for testing without full haive setup
 console = Console()
 logging.basicConfig(level=logging.INFO)
@@ -67,7 +68,6 @@ class MockMultiAgent:
 
     def setup_agent(self):
         """Mock setup."""
-        pass
 
     def build_graph(self):
         """Mock graph building."""
@@ -80,7 +80,7 @@ class CompatibilityTester:
     def __init__(self):
         self.test_agents = self._create_test_agents()
 
-    def _create_test_agents(self) -> List[MockAgent]:
+    def _create_test_agents(self) -> list[MockAgent]:
         """Create test agents."""
         return [
             MockAgent("research_agent", "ReactAgent"),
@@ -272,9 +272,9 @@ class CompatibilityTester:
 
         # Test in traditional multi-agent
         console.print("ReactAgent in traditional multi-agent:")
-        traditional_system = MockMultiAgent(
+        MockMultiAgent(
             name="traditional_with_react",
-            agents=[react_agent] + self.test_agents[:1],  # Just one additional
+            agents=[react_agent, *self.test_agents[:1]],  # Just one additional
             execution_mode="sequence",
         )
         console.print(f"   ✅ ReactAgent integrated: {react_agent.name}")
@@ -360,7 +360,6 @@ class CompatibilityTester:
 
 async def run_compatibility_tests():
     """Run all compatibility tests."""
-
     console.print("[bold magenta]Dynamic Supervisor Compatibility Tests[/bold magenta]")
     console.print("=" * 60)
 

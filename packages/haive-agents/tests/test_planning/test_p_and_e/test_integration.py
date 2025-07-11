@@ -1,15 +1,15 @@
 # tests/test_planning/test_p_and_e/test_integration.py
 """Integration tests for Plan and Execute agent."""
 
-import pytest
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
+import pytest
 
 from haive.agents.planning.p_and_e.agent import PlanAndExecuteAgent
 from haive.agents.planning.p_and_e.models import Plan, PlanStep
 from haive.agents.planning.p_and_e.state import PlanExecuteState
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 # Test tools that return predictable results
@@ -43,16 +43,14 @@ class TestPlanAndExecuteIntegration:
     @pytest.mark.skip(reason="Requires LLM connection")
     def test_agent_simple_execution(self):
         """Test agent executing a simple task."""
-        agent = PlanAndExecuteAgent(name="test_agent", tools=[get_weather])
+        PlanAndExecuteAgent(name="test_agent", tools=[get_weather])
 
-        state = PlanExecuteState(
+        PlanExecuteState(
             messages=[HumanMessage(content="What's the weather in Tokyo?")]
         )
 
         # This would run the full agent
-        # result = agent.run(state)
         # assert result.final_answer is not None
-        # assert "tokyo" in result.final_answer.lower()
 
     def test_state_initialization_flow(self):
         """Test the flow of state initialization and updates."""

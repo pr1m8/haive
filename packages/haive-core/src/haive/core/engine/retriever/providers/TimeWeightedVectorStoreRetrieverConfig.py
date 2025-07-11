@@ -1,5 +1,4 @@
-"""
-Time-Weighted Vector Store Retriever implementation for the Haive framework.
+"""Time-Weighted Vector Store Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Time-Weighted Vector Store retriever,
 which combines vector similarity search with time-based scoring to prioritize recent
@@ -32,8 +31,7 @@ from haive.core.engine.vectorstore.vectorstore import VectorStoreConfig
 
 @BaseRetrieverConfig.register(RetrieverType.TIME_WEIGHTED)
 class TimeWeightedVectorStoreRetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for Time-Weighted Vector Store retriever in the Haive framework.
+    """Configuration for Time-Weighted Vector Store retriever in the Haive framework.
 
     This retriever combines vector similarity search with time-based scoring to
     prioritize recent documents while maintaining semantic relevance.
@@ -115,13 +113,13 @@ class TimeWeightedVectorStoreRetrieverConfig(BaseRetrieverConfig):
         default="similarity", description="Type of initial search: 'similarity', 'mmr'"
     )
 
-    search_kwargs: Dict[str, Any] = Field(
+    search_kwargs: dict[str, Any] = Field(
         default_factory=dict,
         description="Additional search parameters for the vector store",
     )
 
     @validator("fetch_k")
-    def validate_fetch_k(cls, v, values):
+    def validate_fetch_k(self, v, values):
         """Validate that fetch_k is greater than or equal to k."""
         k = values.get("k", 4)
         if v < k:
@@ -129,14 +127,14 @@ class TimeWeightedVectorStoreRetrieverConfig(BaseRetrieverConfig):
         return v
 
     @validator("search_type")
-    def validate_search_type(cls, v):
+    def validate_search_type(self, v):
         """Validate search type."""
         valid_types = ["similarity", "mmr"]
         if v not in valid_types:
             raise ValueError(f"search_type must be one of {valid_types}, got {v}")
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Time-Weighted retriever."""
         return {
             "query": (
@@ -145,11 +143,11 @@ class TimeWeightedVectorStoreRetrieverConfig(BaseRetrieverConfig):
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Time-Weighted retriever."""
         return {
             "documents": (
-                List[Any],  # List[Document] but avoiding import
+                list[Any],  # List[Document] but avoiding import
                 Field(
                     default_factory=list,
                     description="Documents ranked by combined similarity and recency",
@@ -158,8 +156,7 @@ class TimeWeightedVectorStoreRetrieverConfig(BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a Time-Weighted Vector Store retriever from this configuration.
+        """Create a Time-Weighted Vector Store retriever from this configuration.
 
         Returns:
             TimeWeightedVectorStoreRetriever: Instantiated retriever ready for time-weighted retrieval.

@@ -1,14 +1,15 @@
 # src/haive/core/persistence/store/factory.py
 """Store factory for creating store instances."""
 
-import logging
 from contextlib import asynccontextmanager, contextmanager
-from typing import Any, Dict, Optional, Union
+import logging
+from typing import Any
 
 from .base import SerializableStoreWrapper
 from .types import StoreConfig, StoreType
 from .wrappers.memory import MemoryStoreWrapper
 from .wrappers.postgres import AsyncPostgresStoreWrapper, PostgresStoreWrapper
+
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +18,7 @@ class StoreFactory:
     """Factory for creating store instances."""
 
     @staticmethod
-    def create(config: Union[StoreConfig, Dict[str, Any]]) -> SerializableStoreWrapper:
+    def create(config: StoreConfig | dict[str, Any]) -> SerializableStoreWrapper:
         """Create a store wrapper from configuration.
 
         Args:
@@ -33,16 +34,15 @@ class StoreFactory:
         # Create appropriate wrapper
         if config.type == StoreType.MEMORY:
             return MemoryStoreWrapper(config=config)
-        elif config.type == StoreType.POSTGRES_SYNC:
+        if config.type == StoreType.POSTGRES_SYNC:
             return PostgresStoreWrapper(config=config)
-        elif config.type == StoreType.POSTGRES_ASYNC:
+        if config.type == StoreType.POSTGRES_ASYNC:
             return AsyncPostgresStoreWrapper(config=config)
-        else:
-            raise ValueError(f"Unknown store type: {config.type}")
+        raise ValueError(f"Unknown store type: {config.type}")
 
     @staticmethod
     @contextmanager
-    def create_with_lifecycle(config: Union[StoreConfig, Dict[str, Any]]):
+    def create_with_lifecycle(config: StoreConfig | dict[str, Any]):
         """Create store with lifecycle management.
 
         Args:
@@ -60,7 +60,7 @@ class StoreFactory:
 
     @staticmethod
     @asynccontextmanager
-    async def create_async_with_lifecycle(config: Union[StoreConfig, Dict[str, Any]]):
+    async def create_async_with_lifecycle(config: StoreConfig | dict[str, Any]):
         """Create async store with lifecycle management.
 
         Args:
@@ -79,7 +79,7 @@ class StoreFactory:
 
 # Convenience functions
 def create_store(
-    store_type: Union[str, StoreType] = StoreType.MEMORY, **kwargs
+    store_type: str | StoreType = StoreType.MEMORY, **kwargs
 ) -> SerializableStoreWrapper:
     """Create a store with simplified parameters.
 

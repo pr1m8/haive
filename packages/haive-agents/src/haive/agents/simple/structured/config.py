@@ -1,9 +1,8 @@
+from haive.agents import tools
+from haive.agents.simple.config import SimpleAgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.output_parsers import PydanticOutputParser
 from pydantic import BaseModel, Field, model_validator
-
-from haive.agents import tools
-from haive.agents.simple.config import SimpleAgentConfig
 
 
 class StructuredOutputAgentConfig(SimpleAgentConfig):

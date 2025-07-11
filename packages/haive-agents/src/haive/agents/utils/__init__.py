@@ -1,4 +1,4 @@
-"""Utils - TODO: Add brief description
+"""Utils - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

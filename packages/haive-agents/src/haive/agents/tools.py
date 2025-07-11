@@ -3,6 +3,7 @@ import logging
 import platform
 from typing import Any
 
+
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -40,7 +41,7 @@ async def click(state: dict[str, Any]) -> dict[str, Any]:
         x, y = bbox["x"], bbox["y"]
         logger.debug(f"Clicking at coordinates: ({x}, {y})")
     except (ValueError, IndexError, KeyError) as e:
-        logger.error(f"Error processing bbox: {e}")
+        logger.exception(f"Error processing bbox: {e}")
         return {"message": f"Error processing bbox: {e}"}
 
     await page.mouse.click(x, y)
@@ -84,7 +85,7 @@ async def type_text(state: dict[str, Any]) -> dict[str, Any]:
         x, y = bbox["x"], bbox["y"]
         logger.debug(f"Typing at coordinates: ({x}, {y})")
     except (ValueError, IndexError, KeyError) as e:
-        logger.error(f"Error processing bbox for typing: {e}")
+        logger.exception(f"Error processing bbox for typing: {e}")
         return {"message": f"Error processing bbox for typing: {e}"}
 
     await page.mouse.click(x, y)
@@ -145,7 +146,7 @@ async def scroll(state: dict[str, Any]) -> dict[str, Any]:
             await page.mouse.wheel(0, scroll_direction)
             logger.debug(f"Scrolled element {target_id} {direction}")
     except Exception as e:
-        logger.error(f"Failed to scroll: {e!s}")
+        logger.exception(f"Failed to scroll: {e!s}")
         return {"message": f"Failed to scroll: {e!s}"}
 
     page_url = page.url

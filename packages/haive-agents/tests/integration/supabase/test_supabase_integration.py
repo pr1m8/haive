@@ -1,15 +1,15 @@
 """Pytest-compatible Supabase integration tests."""
 
 import asyncio
-import os
 from datetime import datetime
+import os
 
+from langchain_core.messages import HumanMessage
 import psycopg
 import pytest
-from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.messages import HumanMessage
 
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 class TestSupabaseIntegration:
@@ -50,12 +50,11 @@ class TestSupabaseIntegration:
         try:
             async with await psycopg.AsyncConnection.connect(
                 supabase_connection_string
-            ) as conn:
-                async with conn.cursor() as cur:
-                    # Simple connectivity test
-                    await cur.execute("SELECT 1")
-                    result = await cur.fetchone()
-                    assert result[0] == 1
+            ) as conn, conn.cursor() as cur:
+                # Simple connectivity test
+                await cur.execute("SELECT 1")
+                result = await cur.fetchone()
+                assert result[0] == 1
         except Exception as e:
             pytest.fail(f"Database connectivity failed: {e}")
 
@@ -71,9 +70,9 @@ class TestSupabaseIntegration:
                 async with conn.cursor() as cur:
                     await cur.execute(
                         """
-                        SELECT table_name 
-                        FROM information_schema.tables 
-                        WHERE table_schema = 'public' 
+                        SELECT table_name
+                        FROM information_schema.tables
+                        WHERE table_schema = 'public'
                         AND table_name = ANY(%s)
                     """,
                         (required_tables,),
@@ -131,7 +130,7 @@ class TestSupabaseIntegration:
         agent1 = SimpleAgent(engine=engine, name="Agent 1")
 
         try:
-            result1 = agent1.run(
+            agent1.run(
                 {"messages": [HumanMessage(content="Hello, remember this: banana")]},
                 config=agent_config,
             )

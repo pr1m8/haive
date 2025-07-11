@@ -6,7 +6,6 @@ Tests the source-loader-engine relationship and auto-detection.
 from pathlib import Path
 
 import pytest
-
 from haive.core.engine.document.loaders.auto_factory import (
     analyze_document_source,
     create_loader,

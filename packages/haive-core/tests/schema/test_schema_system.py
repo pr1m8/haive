@@ -14,14 +14,6 @@ import operator
 from datetime import datetime
 from typing import Annotated, Any, Dict, List
 
-from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
-from langgraph.graph import add_messages
-from pydantic import BaseModel, Field
-from rich.console import Console
-from rich.logging import RichHandler
-from rich.panel import Panel
-from rich.syntax import Syntax
-
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.engine.embeddings import EmbeddingsEngineConfig
 from haive.core.engine.retriever import BaseRetrieverConfig, RetrieverType
@@ -29,6 +21,13 @@ from haive.core.engine.vectorstore import VectorStoreConfig, VectorStoreProvider
 from haive.core.schema.schema_composer import SchemaComposer
 from haive.core.schema.schema_manager import StateSchemaManager
 from haive.core.schema.state_schema import StateSchema
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
+from langgraph.graph import add_messages
+from pydantic import BaseModel, Field
+from rich.console import Console
+from rich.logging import RichHandler
+from rich.panel import Panel
+from rich.syntax import Syntax
 
 # Set up rich logging
 console = Console()

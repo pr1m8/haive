@@ -1,12 +1,13 @@
 from typing import Annotated, TypedDict
 
+from langchain_core.messages import AnyMessage
+
 from agents.wiki_writer.interview.models import Editor
 from agents.wiki_writer.interview.utils import (
     add_messages,
     update_editor,
     update_references,
 )
-from langchain_core.messages import AnyMessage
 
 
 class InterviewState(TypedDict):

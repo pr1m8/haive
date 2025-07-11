@@ -39,9 +39,9 @@ class AgentMetrics(BaseModel):
     successful_calls: int = 0
     failed_calls: int = 0
     average_response_time: float = 0.0
-    last_used: Optional[datetime] = None
+    last_used: datetime | None = None
     error_rate: float = 0.0
-    specialization_score: Dict[str, float] = Field(default_factory=dict)
+    specialization_score: dict[str, float] = Field(default_factory=dict)
 
 
 class PrebuiltAgent:
@@ -50,7 +50,7 @@ class PrebuiltAgent:
     def __init__(
         self,
         name: str,
-        capabilities: List[str],
+        capabilities: list[str],
         specialization: str,
         initial_status: AgentStatus = AgentStatus.INACTIVE,
         resource_cost: int = 1,
@@ -68,7 +68,7 @@ class PrebuiltAgent:
         # Simulate different response times for different agents
         self.base_response_time = random.uniform(0.1, 0.5)
 
-    async def ainvoke(self, state: Dict[str, Any]) -> Dict[str, Any]:
+    async def ainvoke(self, state: dict[str, Any]) -> dict[str, Any]:
         """Process request with simulated work."""
         start_time = datetime.now()
 
@@ -114,9 +114,9 @@ class PrebuiltAgent:
             elapsed = (datetime.now() - start_time).total_seconds()
             self._update_metrics(elapsed, success=True)
 
-            return {"messages": messages + [response]}
+            return {"messages": [*messages, response]}
 
-        except Exception as e:
+        except Exception:
             self.metrics.failed_calls += 1
             self._update_metrics(0, success=False)
             raise
@@ -143,7 +143,7 @@ class PrebuiltAgent:
             f"🤖 {self.name}: Processed request using {self.specialization}",
         )
 
-    def _determine_used_capabilities(self, message) -> List[str]:
+    def _determine_used_capabilities(self, message) -> list[str]:
         """Determine which capabilities were used."""
         if not message:
             return []
@@ -205,7 +205,7 @@ class AgentPool:
     """Manages a pool of prebuilt agents."""
 
     def __init__(self, resource_limit: int = 10):
-        self.agents: Dict[str, PrebuiltAgent] = {}
+        self.agents: dict[str, PrebuiltAgent] = {}
         self.resource_limit = resource_limit
         self.current_resource_usage = 0
 
@@ -247,7 +247,7 @@ class AgentPool:
         )
         return True
 
-    def get_active_agents(self) -> List[PrebuiltAgent]:
+    def get_active_agents(self) -> list[PrebuiltAgent]:
         """Get all active agents."""
         return [
             agent
@@ -255,7 +255,7 @@ class AgentPool:
             if agent.status == AgentStatus.ACTIVE
         ]
 
-    def get_best_agent_for_task(self, task_description: str) -> Optional[PrebuiltAgent]:
+    def get_best_agent_for_task(self, task_description: str) -> PrebuiltAgent | None:
         """Find best active agent for a task."""
         active_agents = self.get_active_agents()
         if not active_agents:
@@ -420,31 +420,19 @@ async def create_prebuilt_agent_pool() -> AgentPool:
 async def test_advanced_dynamic_supervisor():
     """Test advanced scenarios with prebuilt agent pool."""
 
-    print("\n" + "=" * 80)
-    print("🧪 ADVANCED DYNAMIC SUPERVISOR TEST - PREBUILT AGENT POOL")
-    print("=" * 80 + "\n")
-
     # Import the fixed supervisor
     try:
         from dynamic_supervisor_fixed import DynamicSupervisorFixed
     except ImportError:
-        print("❌ Could not import DynamicSupervisorFixed")
         return False
 
     # Create agent pool
-    print("[Step 1] Creating prebuilt agent pool")
     pool = await create_prebuilt_agent_pool()
 
-    print(f"\n📊 Agent Pool Status:")
-    print(f"   Total agents: {len(pool.agents)}")
-    print(f"   Active agents: {len(pool.get_active_agents())}")
-    print(f"   Resource usage: {pool.current_resource_usage}/{pool.resource_limit}")
 
     active_names = [agent.name for agent in pool.get_active_agents()]
-    print(f"   Active: {active_names}")
 
     # Create supervisor
-    print("\n[Step 2] Creating Dynamic Supervisor with active agents")
     supervisor = DynamicSupervisorFixed(
         name="advanced_supervisor", auto_rebuild_graph=True
     )
@@ -455,10 +443,8 @@ async def test_advanced_dynamic_supervisor():
             agent, f"{agent.specialization}: {', '.join(agent.capabilities)}"
         )
 
-    print(f"✅ Registered {len(supervisor.get_registered_agents())} active agents")
 
     # Test 1: Basic routing to specialized agents
-    print("\n[Test 1] Testing initial routing to specialized agents")
 
     test_requests = [
         "Research the latest AI developments",
@@ -469,14 +455,11 @@ async def test_advanced_dynamic_supervisor():
     ]
 
     for request in test_requests:
-        print(f"\n📤 Request: '{request}'")
 
         # Find best agent
         best_agent = pool.get_best_agent_for_task(request)
         if best_agent:
-            print(
-                f"   Best agent: {best_agent.name} (confidence: {best_agent.can_handle(request):.2f})"
-            )
+            pass
 
         try:
             result = await supervisor.ainvoke(
@@ -487,25 +470,19 @@ async def test_advanced_dynamic_supervisor():
             )
 
             if response:
-                print(f"   ✅ Response: {response.content[:100]}...")
                 if hasattr(response, "additional_kwargs"):
                     agent_used = response.additional_kwargs.get("agent", "unknown")
-                    print(f"   Agent used: {agent_used}")
         except Exception as e:
-            print(f"   ❌ Error: {e}")
+            pass")
 
     # Test 2: Dynamic activation based on demand
-    print("\n\n[Test 2] Dynamic agent activation based on demand")
 
     # Request requiring technical writing (not currently active)
-    print("\n📤 Request: 'Write technical documentation for our API'")
 
     # Activate technical writer
-    print("   Activating writer_technical...")
     if pool.activate_agent("writer_technical"):
         technical_writer = pool.agents["writer_technical"]
         supervisor.register_agent(technical_writer, "Technical writing specialist")
-        print("   ✅ Technical writer activated and registered")
 
     # Now test the request
     result = await supervisor.ainvoke(
@@ -515,24 +492,14 @@ async def test_advanced_dynamic_supervisor():
             ]
         }
     )
-    print(
-        f"   Response: {result.get('messages', [])[-1].content if result.get('messages') else 'No response'}"
-    )
 
     # Test 3: Resource management and agent swapping
-    print("\n\n[Test 3] Resource management - swapping agents")
 
-    print(
-        f"\n📊 Current resource usage: {pool.current_resource_usage}/{pool.resource_limit}"
-    )
 
     # Try to activate a high-cost agent (should fail due to resources)
-    print("\n   Attempting to activate planner_strategic (cost: 2)...")
     if not pool.activate_agent("planner_strategic"):
-        print("   ❌ Failed - insufficient resources")
 
         # Deactivate a lower-priority agent
-        print("   Deactivating summarizer_expert to free resources...")
         pool.deactivate_agent("summarizer_expert")
         supervisor.unregister_agent("summarizer_expert")
 
@@ -540,7 +507,6 @@ async def test_advanced_dynamic_supervisor():
         if pool.activate_agent("planner_strategic"):
             planner = pool.agents["planner_strategic"]
             supervisor.register_agent(planner, "Strategic planning")
-            print("   ✅ Planner activated after freeing resources")
 
     # Test planning request
     result = await supervisor.ainvoke(
@@ -552,15 +518,10 @@ async def test_advanced_dynamic_supervisor():
             ]
         }
     )
-    print(
-        f"   Response: {result.get('messages', [])[-1].content if result.get('messages') else 'No response'}"
-    )
 
     # Test 4: Performance-based agent selection
-    print("\n\n[Test 4] Performance tracking and agent selection")
 
     # Simulate multiple requests to build performance metrics
-    print("\n   Sending multiple requests to build performance data...")
 
     requests = [
         "Analyze sales data from Q4",
@@ -574,21 +535,15 @@ async def test_advanced_dynamic_supervisor():
         try:
             await supervisor.ainvoke({"messages": [HumanMessage(content=request)]})
             if i % 5 == 0:
-                print(f"   Processed {i+1}/{len(requests)} requests...")
+                pass
         except:
             pass  # Some may fail randomly
 
     # Display performance metrics
-    print("\n📊 Agent Performance Metrics:")
     for agent in pool.get_active_agents():
         if agent.metrics.total_calls > 0:
-            print(f"\n   {agent.name}:")
-            print(f"     Total calls: {agent.metrics.total_calls}")
-            print(f"     Success rate: {(1 - agent.metrics.error_rate) * 100:.1f}%")
-            print(f"     Avg response time: {agent.metrics.average_response_time:.2f}s")
 
     # Test 5: Complex multi-agent workflow
-    print("\n\n[Test 5] Complex multi-agent workflow")
 
     # Activate QA specialist for comprehensive workflow
     if pool.current_resource_usage + 2 <= pool.resource_limit:
@@ -604,8 +559,6 @@ async def test_advanced_dynamic_supervisor():
     4. Develop test cases
     """
 
-    print(f"\n📤 Complex request requiring multiple agents:")
-    print(complex_request)
 
     # This would ideally trigger multiple agents in sequence
     result = await supervisor.ainvoke(
@@ -613,27 +566,16 @@ async def test_advanced_dynamic_supervisor():
     )
 
     # Show final agent pool status
-    print("\n\n📊 Final Agent Pool Status:")
-    print(f"   Total agents: {len(pool.agents)}")
-    print(f"   Active agents: {len(pool.get_active_agents())}")
-    print(f"   Resource usage: {pool.current_resource_usage}/{pool.resource_limit}")
 
-    print("\n   Agent Status Summary:")
     for agent_name, agent in pool.agents.items():
         status_icon = "🟢" if agent.status == AgentStatus.ACTIVE else "⚫"
         calls = agent.metrics.total_calls
-        print(f"   {status_icon} {agent_name}: {agent.status} ({calls} calls)")
 
-    print("\n✅ Advanced test completed successfully!")
     return True
 
 
 async def test_edge_cases_advanced():
     """Test edge cases with advanced scenarios."""
-
-    print("\n\n" + "=" * 80)
-    print("🧪 ADVANCED EDGE CASES")
-    print("=" * 80 + "\n")
 
     from dynamic_supervisor_fixed import DynamicSupervisorFixed
 
@@ -641,7 +583,6 @@ async def test_edge_cases_advanced():
     supervisor = DynamicSupervisorFixed(name="edge_supervisor")
 
     # Edge case 1: Agent at max capacity
-    print("[Edge Case 1] Agent at maximum capacity")
 
     busy_agent = pool.agents["coder_senior"]
     busy_agent.status = AgentStatus.ACTIVE
@@ -653,12 +594,10 @@ async def test_edge_cases_advanced():
         await supervisor.ainvoke(
             {"messages": [HumanMessage(content="Write some code")]}
         )
-        print("   ❌ Should have failed due to capacity")
     except Exception as e:
-        print(f"   ✅ Correctly failed: {e}")
+        pass")
 
     # Edge case 2: All agents inactive
-    print("\n[Edge Case 2] All agents become inactive during operation")
 
     # Start with active agents
     for agent in pool.get_active_agents()[:2]:
@@ -670,19 +609,15 @@ async def test_edge_cases_advanced():
             pool.agents[agent_name].status = AgentStatus.MAINTENANCE
 
     try:
-        result = await supervisor.ainvoke(
+        await supervisor.ainvoke(
             {"messages": [HumanMessage(content="Do something")]}
         )
-        print("   ✅ Handled gracefully")
     except Exception as e:
-        print(f"   Error: {e}")
+        pass
 
-    print("\n✅ Edge cases handled!")
 
 
 if __name__ == "__main__":
-    print("🚀 Advanced Dynamic Supervisor Test Suite")
-    print("Testing with sophisticated prebuilt agent pool\n")
 
     # Run main advanced test
     asyncio.run(test_advanced_dynamic_supervisor())
@@ -690,10 +625,3 @@ if __name__ == "__main__":
     # Run edge cases
     asyncio.run(test_edge_cases_advanced())
 
-    print("\n🎉 All advanced tests completed!")
-    print("\nKey Insights:")
-    print("1. ✅ Dynamic activation/deactivation works seamlessly")
-    print("2. ✅ Resource management prevents overload")
-    print("3. ✅ Performance metrics guide agent selection")
-    print("4. ✅ Complex workflows can adapt to available agents")
-    print("5. ✅ System remains stable with agent pool changes")

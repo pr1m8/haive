@@ -3,6 +3,7 @@
 ## What We've Discovered
 
 ### 1. Core Issues
+
 - **AgentSchemaComposer** flattens schemas incorrectly - loses type safety
 - **MultiAgent** in agents/multi/base.py uses this flawed approach
 - **AgentNodeV2** tries to handle projection but it's incomplete
@@ -11,16 +12,19 @@
 ### 2. Key Insights
 
 #### Graph Recompilation
+
 - BaseGraph2 has `needs_recompile()` and recompilation tracking
 - Dynamic tool routing requires recompilation checks
 - Agents can change at runtime and graph needs to recompile
 
 #### Meta Agent Concept
+
 - **MetaAgentState** should contain agents IN the state
 - Not just references, but actual agent instances
 - Enables dynamic agent management with recompilation
 
 #### Prebuilt Schemas Found
+
 1. **MetaStateSchema** (in prebuilt/meta_state.py)
    - Contains single agent
    - Has execute_agent() method
@@ -80,8 +84,9 @@
 ## Memory Checkpoint
 
 This is where we are - the prebuilt schemas are incorrect for true multi-agent systems. They either:
+
 - Only handle single agents (MetaStateSchema)
-- Use flawed schema composition (MultiAgentStateSchema)  
+- Use flawed schema composition (MultiAgentStateSchema)
 - Don't contain agents (MetaAgentState)
 
 We need to rebuild these properly.

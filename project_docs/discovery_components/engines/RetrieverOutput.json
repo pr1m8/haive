@@ -7,7 +7,7 @@
     "description": "Schema for retriever output.",
     "source_code": "class RetrieverOutput(BaseModel):\n    \"\"\"Schema for retriever output.\"\"\"\n\n    retrieved_documents: Optional[Sequence[Document]] = Field(\n        default_factory=list, description=\"Retrieved documents\"\n    )\n\n    model_config = ConfigDict(extra=\"allow\")\n\n    @field_validator(\"retrieved_documents\", mode=\"before\")\n    @classmethod\n    def validate_documents(cls, v):\n        \"\"\"Validate that the documents are a list.\"\"\"\n        if v is None:\n            return []\n        return v\n",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:22.061876",
+    "timestamp": "2025-07-10T19:45:40.788286",
     "schema": {
       "properties": {
         "data": {
@@ -46,7 +46,7 @@
       "has_tool": true,
       "has_engine_config": true,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:22.061876",
+      "timestamp": "2025-07-10T19:45:40.788286",
       "category": "engines"
     }
   },

@@ -141,21 +141,13 @@ def print_tree_stats(result: dict[str, Any]) -> None:
         result: Result from an MCTS agent run
     """
     if "nodes" not in result:
-        print("No search tree found in result")
         return
 
     nodes = result["nodes"]
 
-    print("=== MCTS Tree Statistics ===")
-    print(f"Total nodes: {len(nodes.nodes)}")
-    print(f"Tree height: {nodes.get_tree_height()}")
-    print(f"Steps taken: {result.get('current_step', 0)}")
 
     # Get best solution
     best_solution = nodes.get_best_solution()
     if best_solution:
-        print(f"Best solution found: {best_solution.is_solved}")
-        print(f"Best solution score: {best_solution.value:.2f}")
-        print(f"Best solution visits: {best_solution.visits}")
     else:
-        print("No solution found")
+        pass

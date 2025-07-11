@@ -1,11 +1,10 @@
 import logging
-from typing import Any, Dict, List, Optional
-
-from langchain_core.retrievers import BaseRetriever
-from pydantic import Field
+from typing import Any
 
 from haive.core.models.retriever.base import RetrieverConfig, RetrieverType
 from haive.core.models.vectorstore.base import VectorStoreConfig
+from langchain_core.retrievers import BaseRetriever
+from pydantic import Field
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -15,16 +14,16 @@ logger.setLevel(logging.DEBUG)
 class SelfQueryRetrieverConfig(RetrieverConfig):
     """Configuration for self-query retrievers."""
 
-    vector_store_config: Optional[VectorStoreConfig] = Field(
+    vector_store_config: VectorStoreConfig | None = Field(
         default=None, description="Configuration for the vector store"
     )
-    llm_config: Optional[Any] = Field(
+    llm_config: Any | None = Field(
         default=None, description="Configuration for the LLM"
     )
     document_contents: str = Field(
         default="", description="Description of document contents"
     )
-    metadata_field_info: List[Dict[str, Any]] = Field(
+    metadata_field_info: list[dict[str, Any]] = Field(
         default_factory=list, description="Information about metadata fields"
     )
 

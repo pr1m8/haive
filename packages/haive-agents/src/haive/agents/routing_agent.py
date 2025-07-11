@@ -1,14 +1,16 @@
 # src/haive/agents/simple/routing_agent.py
 
-import logging
 from collections.abc import Callable
+import logging
+
+from langgraph.graph import END
+from pydantic import BaseModel, Field
 
 from agents.simple.agent import SimpleAgent, SimpleAgentConfig, SimpleAgentSchema
 from haive.core.engine.agent.agent import register_agent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
-from langgraph.graph import END
-from pydantic import BaseModel, Field
+
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -55,7 +57,7 @@ class RoutingAgent(SimpleAgent):
         """Set up the workflow with routing."""
         # Use DynamicGraph to build the workflow
         gb = DynamicGraph(
-            components=[self.config.engine] + list(self.config.handlers.values()),
+            components=[self.config.engine, *list(self.config.handlers.values())],
             state_schema=self.state_schema,
         )
 
@@ -63,7 +65,7 @@ class RoutingAgent(SimpleAgent):
         gb.add_node(name=self.config.node_name, config=self.config.engine)
 
         # Set main node's default route
-        main_default = self.config.default_routes.get(self.config.node_name, END)
+        self.config.default_routes.get(self.config.node_name, END)
 
         # Add handlers
         for name, handler in self.config.handlers.items():
@@ -158,8 +160,9 @@ def create_routing_agent(
 
 # Example usage
 if __name__ == "__main__":
-    from haive.core.models.llm.base import AzureLLMConfig
     from langchain_core.prompts import ChatPromptTemplate
+
+    from haive.core.models.llm.base import AzureLLMConfig
 
     # Main engine
     main_engine = AugLLMConfig(
@@ -228,12 +231,6 @@ if __name__ == "__main__":
 
     # Run with a question
     result = agent.run("What is the capital of France?")
-    print(
-        f"Question result: {result.get('route_history', [])} -> {result.get('output', '')}"
-    )
 
     # Run with a task
     result = agent.run("Can you help me create a workout plan?")
-    print(
-        f"Task result: {result.get('route_history', [])} -> {result.get('output', '')}"
-    )

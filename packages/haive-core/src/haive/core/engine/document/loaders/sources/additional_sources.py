@@ -2,7 +2,7 @@
 
 This module implements additional loaders from langchain_community including:
 - Academic and research platforms
-- News and media sources  
+- News and media sources
 - API documentation sources
 - Knowledge management systems
 - Collaboration tools
@@ -17,16 +17,15 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import Field
 
-from .enhanced_registry import enhanced_registry, register_source, register_bulk_source
+from .enhanced_registry import enhanced_registry, register_bulk_source, register_source
 from .source_types import (
     CredentialType,
-    LoaderCapability,
-    RemoteSource,
-    LocalFileSource,
     DatabaseSource,
+    LoaderCapability,
+    LocalFileSource,
+    RemoteSource,
     SourceCategory,
 )
-
 
 # =============================================================================
 # Academic and Research Sources
@@ -52,7 +51,7 @@ from .source_types import (
 )
 class BiorxivSource(RemoteSource):
     """bioRxiv preprint source."""
-    
+
     source_type: str = "biorxiv"
     query: str = Field(..., description="Search query")
     max_results: int = Field(10, description="Maximum results")
@@ -77,7 +76,7 @@ class BiorxivSource(RemoteSource):
 )
 class MedrxivSource(RemoteSource):
     """medRxiv medical preprint source."""
-    
+
     source_type: str = "medrxiv"
     query: str = Field(..., description="Search query")
     max_results: int = Field(10, description="Maximum results")
@@ -102,7 +101,7 @@ class MedrxivSource(RemoteSource):
 )
 class SSRNSource(RemoteSource):
     """SSRN research paper source."""
-    
+
     source_type: str = "ssrn"
     paper_id: Optional[str] = Field(None, description="SSRN paper ID")
     query: Optional[str] = Field(None, description="Search query")
@@ -134,7 +133,7 @@ class SSRNSource(RemoteSource):
 )
 class NewsAPISource(RemoteSource):
     """News API aggregator source."""
-    
+
     source_type: str = "news_api"
     query: str = Field(..., description="Search query")
     sources: Optional[List[str]] = Field(None, description="News sources")
@@ -160,7 +159,7 @@ class NewsAPISource(RemoteSource):
 )
 class HackerNewsSearchSource(RemoteSource):
     """Hacker News search source."""
-    
+
     source_type: str = "hackernews_search"
     query: str = Field(..., description="Search query")
     search_type: str = Field("story", description="story, comment, or all")
@@ -188,7 +187,7 @@ class HackerNewsSearchSource(RemoteSource):
 )
 class GuardianSource(RemoteSource):
     """The Guardian news source."""
-    
+
     source_type: str = "the_guardian"
     query: str = Field(..., description="Search query")
     section: Optional[str] = Field(None, description="News section")
@@ -219,7 +218,7 @@ class GuardianSource(RemoteSource):
 )
 class PostmanCollectionSource(LocalFileSource):
     """Postman collection source."""
-    
+
     source_type: str = "postman_collection"
     category: SourceCategory = SourceCategory.DEVELOPMENT_VCS
 
@@ -244,7 +243,7 @@ class PostmanCollectionSource(LocalFileSource):
 )
 class SwaggerAPISource(LocalFileSource):
     """Swagger/OpenAPI documentation source."""
-    
+
     source_type: str = "swagger_api"
     category: SourceCategory = SourceCategory.DEVELOPMENT_VCS
 
@@ -270,7 +269,7 @@ class SwaggerAPISource(LocalFileSource):
 )
 class GitLabSource(RemoteSource):
     """GitLab repository source."""
-    
+
     source_type: str = "gitlab"
     project_id: str = Field(..., description="GitLab project ID")
     branch: str = Field("main", description="Branch name")
@@ -295,15 +294,18 @@ class GitLabSource(RemoteSource):
     },
     default_loader="roam",
     description="Roam Research knowledge graph loader",
-    capabilities=[LoaderCapability.STRUCTURED_DATA, LoaderCapability.METADATA_EXTRACTION],
+    capabilities=[
+        LoaderCapability.STRUCTURED_DATA,
+        LoaderCapability.METADATA_EXTRACTION,
+    ],
     priority=7,
 )
 class RoamResearchSource(LocalFileSource):
     """Roam Research export source."""
-    
+
     source_type: str = "roam_research"
     category: SourceCategory = SourceCategory.KNOWLEDGE_PERSONAL
-    
+
 
 @register_source(
     name="logseq",
@@ -318,12 +320,15 @@ class RoamResearchSource(LocalFileSource):
     },
     default_loader="logseq",
     description="Logseq knowledge management loader",
-    capabilities=[LoaderCapability.STRUCTURED_DATA, LoaderCapability.METADATA_EXTRACTION],
+    capabilities=[
+        LoaderCapability.STRUCTURED_DATA,
+        LoaderCapability.METADATA_EXTRACTION,
+    ],
     priority=7,
 )
 class LogseqSource(LocalFileSource):
     """Logseq knowledge base source."""
-    
+
     source_type: str = "logseq"
     category: SourceCategory = SourceCategory.KNOWLEDGE_PERSONAL
 
@@ -346,7 +351,7 @@ class LogseqSource(LocalFileSource):
 )
 class DendronSource(LocalFileSource):
     """Dendron note-taking source."""
-    
+
     source_type: str = "dendron"
     category: SourceCategory = SourceCategory.KNOWLEDGE_PERSONAL
 
@@ -377,7 +382,7 @@ class DendronSource(LocalFileSource):
 )
 class LinkedInSource(RemoteSource):
     """LinkedIn social media source."""
-    
+
     source_type: str = "linkedin"
     profile_url: Optional[str] = Field(None, description="Profile URL")
     company_url: Optional[str] = Field(None, description="Company page URL")
@@ -404,7 +409,7 @@ class LinkedInSource(RemoteSource):
 )
 class FacebookSource(RemoteSource):
     """Facebook social media source."""
-    
+
     source_type: str = "facebook"
     page_id: Optional[str] = Field(None, description="Facebook page ID")
     group_id: Optional[str] = Field(None, description="Facebook group ID")
@@ -431,7 +436,7 @@ class FacebookSource(RemoteSource):
 )
 class InstagramSource(RemoteSource):
     """Instagram social media source."""
-    
+
     source_type: str = "instagram"
     username: str = Field(..., description="Instagram username")
     include_stories: bool = Field(False, description="Include stories")
@@ -461,7 +466,7 @@ class InstagramSource(RemoteSource):
 )
 class AsciiDocSource(LocalFileSource):
     """AsciiDoc documentation source."""
-    
+
     source_type: str = "asciidoc"
     category: SourceCategory = SourceCategory.FILE_DOCUMENT
 
@@ -485,7 +490,7 @@ class AsciiDocSource(LocalFileSource):
 )
 class OrgModeSource(LocalFileSource):
     """Org-mode document source."""
-    
+
     source_type: str = "org_mode"
     category: SourceCategory = SourceCategory.FILE_DOCUMENT
 
@@ -510,7 +515,7 @@ class OrgModeSource(LocalFileSource):
 )
 class TextileSource(LocalFileSource):
     """Textile markup source."""
-    
+
     source_type: str = "textile"
     category: SourceCategory = SourceCategory.FILE_DOCUMENT
 
@@ -541,7 +546,7 @@ class TextileSource(LocalFileSource):
 )
 class StripeSource(RemoteSource):
     """Stripe payment platform source."""
-    
+
     source_type: str = "stripe"
     resource_type: str = Field("charges", description="Stripe resource type")
     limit: int = Field(100, description="Number of records")
@@ -568,7 +573,7 @@ class StripeSource(RemoteSource):
 )
 class SquareSource(RemoteSource):
     """Square payment platform source."""
-    
+
     source_type: str = "square"
     location_id: str = Field(..., description="Square location ID")
     object_type: str = Field("payments", description="Object type to load")
@@ -600,7 +605,7 @@ class SquareSource(RemoteSource):
 )
 class VimeoSource(RemoteSource):
     """Vimeo video platform source."""
-    
+
     source_type: str = "vimeo"
     video_id: Optional[str] = Field(None, description="Specific video ID")
     channel_id: Optional[str] = Field(None, description="Channel ID")
@@ -627,7 +632,7 @@ class VimeoSource(RemoteSource):
 )
 class TwitchSource(RemoteSource):
     """Twitch streaming platform source."""
-    
+
     source_type: str = "twitch"
     channel_name: str = Field(..., description="Twitch channel name")
     include_chat: bool = Field(True, description="Include chat messages")
@@ -654,12 +659,15 @@ class TwitchSource(RemoteSource):
     description="Microsoft OneNote notebook loader",
     requires_credentials=True,
     credential_type=CredentialType.OAUTH,
-    capabilities=[LoaderCapability.STRUCTURED_DATA, LoaderCapability.COLLABORATIVE_EDITING],
+    capabilities=[
+        LoaderCapability.STRUCTURED_DATA,
+        LoaderCapability.COLLABORATIVE_EDITING,
+    ],
     priority=8,
 )
 class OneNoteSource(RemoteSource):
     """Microsoft OneNote source."""
-    
+
     source_type: str = "onenote"
     notebook_id: Optional[str] = Field(None, description="Specific notebook ID")
     section_id: Optional[str] = Field(None, description="Specific section ID")
@@ -683,7 +691,7 @@ class OneNoteSource(RemoteSource):
 )
 class AppleNotesSource(LocalFileSource):
     """Apple Notes source."""
-    
+
     source_type: str = "apple_notes"
     category: SourceCategory = SourceCategory.BUSINESS_PRODUCTIVITY
 
@@ -714,7 +722,7 @@ class AppleNotesSource(LocalFileSource):
 )
 class LookerSource(RemoteSource):
     """Looker BI platform source."""
-    
+
     source_type: str = "looker"
     dashboard_id: Optional[str] = Field(None, description="Dashboard ID")
     look_id: Optional[str] = Field(None, description="Look ID")
@@ -741,7 +749,7 @@ class LookerSource(RemoteSource):
 )
 class MetabaseSource(RemoteSource):
     """Metabase analytics source."""
-    
+
     source_type: str = "metabase"
     question_id: Optional[int] = Field(None, description="Question ID")
     collection_id: Optional[int] = Field(None, description="Collection ID")
@@ -773,7 +781,7 @@ class MetabaseSource(RemoteSource):
 )
 class ZendeskSource(RemoteSource):
     """Zendesk support platform source."""
-    
+
     source_type: str = "zendesk"
     subdomain: str = Field(..., description="Zendesk subdomain")
     ticket_status: str = Field("all", description="Ticket status filter")
@@ -800,7 +808,7 @@ class ZendeskSource(RemoteSource):
 )
 class FreshdeskSource(RemoteSource):
     """Freshdesk support source."""
-    
+
     source_type: str = "freshdesk"
     domain: str = Field(..., description="Freshdesk domain")
     ticket_filter: Optional[str] = Field(None, description="Ticket filter")
@@ -832,7 +840,7 @@ class FreshdeskSource(RemoteSource):
 )
 class ClickHouseSource(DatabaseSource):
     """ClickHouse database source."""
-    
+
     source_type: str = "clickhouse"
     cluster: Optional[str] = Field(None, description="ClickHouse cluster")
 
@@ -856,7 +864,7 @@ class ClickHouseSource(DatabaseSource):
 )
 class DuckDBSource(DatabaseSource):
     """DuckDB analytical database source."""
-    
+
     source_type: str = "duckdb"
     database_path: str = Field(":memory:", description="Database file path")
 
@@ -886,10 +894,10 @@ class DuckDBSource(DatabaseSource):
 )
 class TesseractOCRSource(LocalFileSource):
     """Tesseract OCR source for images."""
-    
+
     source_type: str = "tesseract_ocr"
     language: str = Field("eng", description="OCR language")
-    
+
 
 @register_source(
     name="camelot_tables",
@@ -911,7 +919,7 @@ class TesseractOCRSource(LocalFileSource):
 )
 class CamelotTablesSource(LocalFileSource):
     """Camelot PDF table extraction source."""
-    
+
     source_type: str = "camelot_tables"
     pages: str = Field("all", description="Pages to extract tables from")
 
@@ -940,9 +948,11 @@ class CamelotTablesSource(LocalFileSource):
 )
 class OpenStreetMapSource(RemoteSource):
     """OpenStreetMap geographic data source."""
-    
+
     source_type: str = "openstreetmap"
-    bbox: List[float] = Field(..., description="Bounding box [min_lon, min_lat, max_lon, max_lat]")
+    bbox: List[float] = Field(
+        ..., description="Bounding box [min_lon, min_lat, max_lon, max_lat]"
+    )
     tags: Optional[Dict[str, str]] = Field(None, description="OSM tags to filter")
 
 
@@ -972,7 +982,7 @@ class OpenStreetMapSource(RemoteSource):
 )
 class SteamSource(RemoteSource):
     """Steam gaming platform source."""
-    
+
     source_type: str = "steam"
     app_id: Optional[int] = Field(None, description="Steam app ID")
     user_id: Optional[str] = Field(None, description="Steam user ID")
@@ -1004,7 +1014,7 @@ class SteamSource(RemoteSource):
 )
 class AlphaVantageSource(RemoteSource):
     """Alpha Vantage financial data source."""
-    
+
     source_type: str = "alpha_vantage"
     symbol: str = Field(..., description="Stock symbol")
     function: str = Field("TIME_SERIES_DAILY", description="API function")
@@ -1034,7 +1044,7 @@ class AlphaVantageSource(RemoteSource):
 )
 class MQTTSource(RemoteSource):
     """MQTT IoT messaging source."""
-    
+
     source_type: str = "mqtt"
     broker_host: str = Field(..., description="MQTT broker host")
     topic: str = Field(..., description="MQTT topic to subscribe")
@@ -1065,7 +1075,7 @@ class MQTTSource(RemoteSource):
 )
 class SECEdgarSource(RemoteSource):
     """SEC EDGAR filings source."""
-    
+
     source_type: str = "sec_edgar"
     ticker: str = Field(..., description="Company ticker symbol")
     filing_type: str = Field("10-K", description="Filing type (10-K, 10-Q, 8-K)")
@@ -1096,7 +1106,7 @@ class SECEdgarSource(RemoteSource):
 )
 class PyPISource(RemoteSource):
     """PyPI package repository source."""
-    
+
     source_type: str = "pypi"
     package_name: str = Field(..., description="Python package name")
     include_readme: bool = Field(True, description="Include README content")
@@ -1121,7 +1131,7 @@ class PyPISource(RemoteSource):
 )
 class NPMSource(RemoteSource):
     """NPM package registry source."""
-    
+
     source_type: str = "npm"
     package_name: str = Field(..., description="NPM package name")
     include_readme: bool = Field(True, description="Include README content")
@@ -1153,7 +1163,7 @@ class NPMSource(RemoteSource):
 )
 class TogglSource(RemoteSource):
     """Toggl time tracking source."""
-    
+
     source_type: str = "toggl"
     workspace_id: str = Field(..., description="Toggl workspace ID")
     start_date: datetime = Field(..., description="Start date for time entries")
@@ -1186,7 +1196,7 @@ class TogglSource(RemoteSource):
 )
 class OpenWeatherSource(RemoteSource):
     """OpenWeather API source."""
-    
+
     source_type: str = "openweather"
     location: str = Field(..., description="Location for weather data")
     forecast_days: int = Field(1, description="Number of forecast days")
@@ -1213,12 +1223,15 @@ class OpenWeatherSource(RemoteSource):
     description="Etherscan blockchain explorer loader",
     requires_credentials=True,
     credential_type=CredentialType.API_KEY,
-    capabilities=[LoaderCapability.BLOCKCHAIN_DATA, LoaderCapability.TRANSACTION_HISTORY],
+    capabilities=[
+        LoaderCapability.BLOCKCHAIN_DATA,
+        LoaderCapability.TRANSACTION_HISTORY,
+    ],
     priority=7,
 )
 class EtherscanSource(RemoteSource):
     """Etherscan blockchain explorer source."""
-    
+
     source_type: str = "etherscan"
     address: str = Field(..., description="Ethereum address")
     network: str = Field("mainnet", description="Ethereum network")
@@ -1250,7 +1263,7 @@ class EtherscanSource(RemoteSource):
 )
 class GoogleCalendarSource(RemoteSource):
     """Google Calendar source."""
-    
+
     source_type: str = "google_calendar"
     calendar_id: str = Field("primary", description="Calendar ID")
     time_min: Optional[datetime] = Field(None, description="Start time")
@@ -1260,31 +1273,50 @@ class GoogleCalendarSource(RemoteSource):
 # Register all sources on import
 __all__ = [
     # Academic
-    "BiorxivSource", "MedrxivSource", "SSRNSource",
+    "BiorxivSource",
+    "MedrxivSource",
+    "SSRNSource",
     # News
-    "NewsAPISource", "HackerNewsSearchSource", "GuardianSource",
+    "NewsAPISource",
+    "HackerNewsSearchSource",
+    "GuardianSource",
     # Developer
-    "PostmanCollectionSource", "SwaggerAPISource", "GitLabSource",
+    "PostmanCollectionSource",
+    "SwaggerAPISource",
+    "GitLabSource",
     # Knowledge
-    "RoamResearchSource", "LogseqSource", "DendronSource",
+    "RoamResearchSource",
+    "LogseqSource",
+    "DendronSource",
     # Social
-    "LinkedInSource", "FacebookSource", "InstagramSource",
+    "LinkedInSource",
+    "FacebookSource",
+    "InstagramSource",
     # File formats
-    "AsciiDocSource", "OrgModeSource", "TextileSource",
+    "AsciiDocSource",
+    "OrgModeSource",
+    "TextileSource",
     # Business
-    "StripeSource", "SquareSource",
+    "StripeSource",
+    "SquareSource",
     # Media
-    "VimeoSource", "TwitchSource",
+    "VimeoSource",
+    "TwitchSource",
     # Productivity
-    "OneNoteSource", "AppleNotesSource",
+    "OneNoteSource",
+    "AppleNotesSource",
     # Analytics
-    "LookerSource", "MetabaseSource",
+    "LookerSource",
+    "MetabaseSource",
     # Support
-    "ZendeskSource", "FreshdeskSource",
+    "ZendeskSource",
+    "FreshdeskSource",
     # Database
-    "ClickHouseSource", "DuckDBSource",
+    "ClickHouseSource",
+    "DuckDBSource",
     # OCR
-    "TesseractOCRSource", "CamelotTablesSource",
+    "TesseractOCRSource",
+    "CamelotTablesSource",
     # Geographic
     "OpenStreetMapSource",
     # Gaming
@@ -1296,7 +1328,8 @@ __all__ = [
     # Legal
     "SECEdgarSource",
     # Package repos
-    "PyPISource", "NPMSource",
+    "PyPISource",
+    "NPMSource",
     # Time tracking
     "TogglSource",
     # Weather

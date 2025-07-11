@@ -10,7 +10,7 @@ sharing, and seamlessly integrate with Haive's embedding system.
 """
 
 from enum import Enum
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 from pydantic import BaseModel, Field, PrivateAttr
 
@@ -49,32 +49,30 @@ class StoreConfig(BaseModel):
     """
 
     type: StoreType = Field(default=StoreType.MEMORY, description="Store backend type")
-    namespace_prefix: Optional[str] = Field(
+    namespace_prefix: str | None = Field(
         default=None, description="Optional prefix for all namespaces"
     )
-    connection_id: Optional[str] = Field(
+    connection_id: str | None = Field(
         default=None, description="Unique ID for connection sharing"
     )
 
     # Connection settings
-    connection_params: Dict[str, Any] = Field(
+    connection_params: dict[str, Any] = Field(
         default_factory=dict, description="Backend-specific connection parameters"
     )
 
     # Embedding configuration
-    embedding_provider: Optional[str] = Field(
+    embedding_provider: str | None = Field(
         default=None,
         description="Embedding provider string (e.g., 'openai:text-embedding-3-small')",
     )
-    embedding_dims: Optional[int] = Field(
-        default=None, description="Embedding dimensions"
-    )
-    embedding_fields: Optional[List[str]] = Field(
+    embedding_dims: int | None = Field(default=None, description="Embedding dimensions")
+    embedding_fields: list[str] | None = Field(
         default=None, description="Fields to embed from stored values"
     )
 
     # Pool configuration
-    pool_config: Optional[Dict[str, Any]] = Field(
+    pool_config: dict[str, Any] | None = Field(
         default=None, description="Connection pool configuration"
     )
 

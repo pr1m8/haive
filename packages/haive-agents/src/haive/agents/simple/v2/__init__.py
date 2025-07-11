@@ -1,4 +1,4 @@
-"""V2 - TODO: Add brief description
+"""V2 - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

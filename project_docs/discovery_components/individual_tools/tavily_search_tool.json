@@ -7,7 +7,7 @@
     "description": "Query Tavily Search API with full configurability for comprehensive search results.\n\n    This tool provides complete access to all Tavily search options and returns structured\n    search results with customizable content types and filtering options.\n\n    Args:\n        query (str): The search query string.\n        max_results (Optional[int]): Maximum number of results to return. Default is 5.\n        include_answer (Optional[bool]): Include short answer in response. Default is True.\n        include_raw_content (Optional[bool]): Include raw content of the search results.\n            Default is False.\n        include_images (Optional[bool]): Include images in the response. Default is False.\n        search_depth (Optional[str]): Search depth, either 'basic' or 'advanced'.\n            Default is 'advanced'.\n        include_domains (Optional[List[str]]): Specific domains to include in search.\n            Default is empty list.\n        exclude_domains (Optional[List[str]]): Specific domains to exclude in search.\n            Default is empty list.\n        verbose (Optional[bool]): Log the tool's progress. Default is False.\n\n    Returns:\n        Dict: The search results in a structured format including titles, URLs, and optionally\n            raw content, images, and direct answers.\n\n    Raises:\n        Exception: If the API request fails or if invalid parameters are provided.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.757576",
+    "timestamp": "2025-07-10T19:45:28.986491",
     "schema": {
       "description": "Query Tavily Search API with full configurability for comprehensive search results.\n\nThis tool provides complete access to all Tavily search options and returns structured\nsearch results with customizable content types and filtering options.\n\nArgs:\n    query (str): The search query string.\n    max_results (Optional[int]): Maximum number of results to return. Default is 5.\n    include_answer (Optional[bool]): Include short answer in response. Default is True.\n    include_raw_content (Optional[bool]): Include raw content of the search results.\n        Default is False.\n    include_images (Optional[bool]): Include images in the response. Default is False.\n    search_depth (Optional[str]): Search depth, either 'basic' or 'advanced'.\n        Default is 'advanced'.\n    include_domains (Optional[List[str]]): Specific domains to include in search.\n        Default is empty list.\n    exclude_domains (Optional[List[str]]): Specific domains to exclude in search.\n        Default is empty list.\n    verbose (Optional[bool]): Log the tool's progress. Default is False.\n\nReturns:\n    Dict: The search results in a structured format including titles, URLs, and optionally\n        raw content, images, and direct answers.\n\nRaises:\n    Exception: If the API request fails or if invalid parameters are provided.",
       "properties": {
@@ -137,7 +137,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.757576",
+      "timestamp": "2025-07-10T19:45:28.986491",
       "category": "individual_tools"
     }
   },

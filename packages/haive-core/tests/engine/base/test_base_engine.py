@@ -2,8 +2,6 @@
 
 
 import pytest
-from pydantic import BaseModel
-
 from haive.core.engine.base import (
     Engine,
     EngineRegistry,
@@ -11,6 +9,7 @@ from haive.core.engine.base import (
     InvokableEngine,
     NonInvokableEngine,
 )
+from pydantic import BaseModel
 
 
 class TestModel(BaseModel):

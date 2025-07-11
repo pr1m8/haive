@@ -1,14 +1,13 @@
-"""
-Interactive CLI for Haive Logging System
+"""Interactive CLI for Haive Logging System.
 
 Provides a rich, interactive command-line interface with auto-completion,
 debugging tools, and real-time log monitoring.
 """
 
-# Core imports
 import logging
 import os
 import time
+# Core imports
 from collections import defaultdict, deque
 from datetime import datetime
 
@@ -29,7 +28,6 @@ try:
     RICH_AVAILABLE = True
 except ImportError:
     RICH_AVAILABLE = False
-    print("Warning: Rich not available. Install with: pip install rich")
 
 # Prompt toolkit imports
 try:
@@ -50,9 +48,6 @@ try:
     PROMPT_TOOLKIT_AVAILABLE = True
 except ImportError:
     PROMPT_TOOLKIT_AVAILABLE = False
-    print(
-        "Warning: Prompt toolkit not available. Install with: pip install prompt-toolkit"
-    )
 
 # Readchar for simple key input
 try:
@@ -77,9 +72,7 @@ class LogLevelValidator(Validator):
 
 
 class InteractiveLoggingCLI:
-    """
-    Interactive CLI for managing logging with rich UI and debugging features.
-    """
+    """Interactive CLI for managing logging with rich UI and debugging features."""
 
     def __init__(self):
         self.console = Console() if RICH_AVAILABLE else None
@@ -100,7 +93,6 @@ class InteractiveLoggingCLI:
 
     def _setup_prompt_session(self):
         """Setup prompt toolkit session with completions."""
-
         # Command completions
         commands = [
             "help",
@@ -296,7 +288,7 @@ class InteractiveLoggingCLI:
 [yellow]Presets:[/yellow]
   preset <name>     Apply preset (debug, normal, quiet, silent, haive-only)
   debug             Enable debug mode
-  
+
 [yellow]Monitoring:[/yellow]
   monitor           Start real-time log monitoring
   ui                Launch interactive UI
@@ -318,13 +310,9 @@ class InteractiveLoggingCLI:
             """
             self.console.print(Panel(help_text, title="Help", border_style="blue"))
         else:
-            print("\nHaive Logging CLI Commands:")
-            print("  help, status, quit, level, module, suppress, filter, etc.")
-            print("  Type 'help' for full command list\n")
 
     def handle_command(self, command: str) -> bool:
-        """
-        Handle a single command.
+        """Handle a single command.
 
         Returns:
             bool: True to continue, False to exit
@@ -340,17 +328,13 @@ class InteractiveLoggingCLI:
             if cmd in ["quit", "exit"]:
                 return False
 
-            elif cmd == "help":
+            if cmd == "help":
                 self.show_help()
 
             elif cmd == "status":
                 if RICH_AVAILABLE:
                     self.console.print(self._create_status_table())
                 else:
-                    print(f"Level: {logging_control.current_level}")
-                    print(
-                        f"Suppressed: {', '.join(logging_control._suppressed_modules)}"
-                    )
 
             elif cmd == "level" and args:
                 level = args[0].upper()
@@ -463,9 +447,6 @@ class InteractiveLoggingCLI:
     def monitor_logs(self):
         """Real-time log monitoring with rich display."""
         if not RICH_AVAILABLE:
-            print(
-                "Rich library required for monitoring. Install with: pip install rich"
-            )
             return
 
         self.console.print("[cyan]Starting log monitor... Press Ctrl+C to stop[/cyan]")
@@ -584,8 +565,6 @@ class InteractiveLoggingCLI:
                 )
             )
         else:
-            print("\nHaive Interactive Logging CLI")
-            print("Type 'help' for commands, 'quit' to exit\n")
 
         # Start log capture
         self._capture_logs()

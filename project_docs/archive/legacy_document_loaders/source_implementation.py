@@ -1,4 +1,4 @@
-"""Source Type System for Haive Document Loaders
+"""Source Type System for Haive Document Loaders.
 
 This module implements the source type system that forms the bridge between
 path analysis and document loaders. It provides base classes for different
@@ -14,19 +14,10 @@ import logging
 import os
 from pathlib import Path
 import re
-from typing import (
-    Any,
-    Literal,
-    Protocol,
-)
+from typing import Any, Literal, Protocol
 from urllib.parse import urlparse
 
-from pydantic import (
-    BaseModel,
-    Field,
-    FilePath,
-    HttpUrl,
-)
+from pydantic import BaseModel, Field, FilePath, HttpUrl
 
 
 # Import from path analysis module (commented out for now)
@@ -36,7 +27,6 @@ from pydantic import (
 #     FileCategory,
 #     DatabaseType,
 #     CloudProvider
-# )
 
 
 logger = logging.getLogger(__name__)
@@ -304,9 +294,7 @@ class CredentialProvider(Protocol):
 class EnvironmentCredentialProvider:
     """Provides credentials from environment variables."""
 
-    def __init__(
-        self, prefix: str = "HAIVE_", env_map: dict[str, str] | None = None
-    ):
+    def __init__(self, prefix: str = "HAIVE_", env_map: dict[str, str] | None = None):
         self.prefix = prefix
         self.env_map = env_map or {}
 
@@ -741,31 +729,28 @@ class PatternDetector:
             field_name_lower = field_name.lower()
 
             # URL fields
-            if hasattr(field_info, "annotation"):
-                if (
-                    str(field_info.annotation) == "HttpUrl"
-                    or "url" in str(field_info.annotation).lower()
-                ):
-                    # Infer domain from field name
-                    for service, domains in cls.NAME_TO_DOMAIN.items():
-                        if service in field_name_lower:
-                            patterns.append(SourcePattern(domain_patterns=domains))
+            if hasattr(field_info, "annotation") and (
+                str(field_info.annotation) == "HttpUrl"
+                or "url" in str(field_info.annotation).lower()
+            ):
+                # Infer domain from field name
+                for service, domains in cls.NAME_TO_DOMAIN.items():
+                    if service in field_name_lower:
+                        patterns.append(SourcePattern(domain_patterns=domains))
 
             # File path fields
-            if hasattr(field_info, "annotation"):
-                if (
-                    str(field_info.annotation) == "FilePath"
-                    or "path" in field_name_lower
-                ):
-                    # Infer file type from field name
-                    if "pdf" in field_name_lower:
-                        patterns.append(SourcePattern(file_extensions=[".pdf"]))
-                    elif "csv" in field_name_lower:
-                        patterns.append(SourcePattern(file_extensions=[".csv"]))
-                    elif "json" in field_name_lower:
-                        patterns.append(SourcePattern(file_extensions=[".json"]))
-                    elif "text" in field_name_lower or "txt" in field_name_lower:
-                        patterns.append(SourcePattern(file_extensions=[".txt"]))
+            if hasattr(field_info, "annotation") and (
+                str(field_info.annotation) == "FilePath" or "path" in field_name_lower
+            ):
+                # Infer file type from field name
+                if "pdf" in field_name_lower:
+                    patterns.append(SourcePattern(file_extensions=[".pdf"]))
+                elif "csv" in field_name_lower:
+                    patterns.append(SourcePattern(file_extensions=[".csv"]))
+                elif "json" in field_name_lower:
+                    patterns.append(SourcePattern(file_extensions=[".json"]))
+                elif "text" in field_name_lower or "txt" in field_name_lower:
+                    patterns.append(SourcePattern(file_extensions=[".txt"]))
 
         return patterns
 
@@ -1297,10 +1282,7 @@ class DynamicSourceRegistry:
                 logger.warning(f"Custom matcher failed: {e}")
 
         # Normalize score
-        if total_checks > 0:
-            score = score / total_checks
-        else:
-            score = 0.0
+        score = score / total_checks if total_checks > 0 else 0.0
 
         # Apply priority boost
         if pattern.priority > 0:
@@ -1816,7 +1798,6 @@ def analyze_and_load(
         Tuple of (loaded_documents, metadata)
     """
     # Mock for now - replace with actual path analysis
-    # analysis_result = analyze_path_comprehensive(path)
     analysis_result = PathAnalysisResult(
         original_path=path,
         is_file=True,
@@ -1848,7 +1829,6 @@ def analyze_and_load(
     loader = source.create_loader()
 
     # In a real implementation, we would actually load documents here
-    # documents = loader.load()
 
     # For now, return a mock result
     documents = ["Mock document 1", "Mock document 2"]
@@ -1870,14 +1850,8 @@ def analyze_and_load(
 
 def list_registered_sources():
     """List all registered source types."""
-    print(f"Registered Sources: {len(registry.source_classes)}")
-    for source_type, metadata in registry.source_metadata.items():
-        print(
-            f"  - {source_type}: {metadata.category} ({len(metadata.loader_strategies)} loaders)"
-        )
-        print(f"    Description: {metadata.description.strip()}")
+    for _source_type, metadata in registry.source_metadata.items():
         if metadata.patterns:
-            print(f"    Patterns: {len(metadata.patterns)}")
             for pattern in metadata.patterns[:2]:  # Show first 2 patterns
                 parts = []
                 if pattern.file_extensions:
@@ -1886,25 +1860,15 @@ def list_registered_sources():
                     parts.append(f"domains={pattern.domain_patterns}")
                 if pattern.scheme_patterns:
                     parts.append(f"schemes={pattern.scheme_patterns}")
-                print(f"      - {', '.join(parts)}")
 
         if metadata.loader_strategies:
-            print(f"    Loaders: {len(metadata.loader_strategies)}")
-            for loader in metadata.loader_strategies[:2]:  # Show first 2 loaders
-                print(
-                    f"      - {loader.strategy_name}: {loader.loader_class} (speed={loader.speed}, quality={loader.quality})"
-                )
-
-        print()
+            for _loader in metadata.loader_strategies[:2]:  # Show first 2 loaders
+                pass
 
 
 def test_source_matching(paths):
     """Test source matching with different paths."""
-    print("\nTesting Source Matching:")
-    print("=" * 60)
-
     for path in paths:
-        print(f"\nAnalyzing: {path}")
 
         # Mock analysis result - replace with actual path analysis
         analysis_result = PathAnalysisResult(
@@ -1945,30 +1909,23 @@ def test_source_matching(paths):
         matches = registry.find_matching_sources(analysis_result)
 
         if matches:
-            print(f"Matches found: {len(matches)}")
-            for source_type, confidence in matches[:3]:  # Show top 3
+            for source_type, _confidence in matches[:3]:  # Show top 3
                 metadata = registry.source_metadata[source_type]
-                print(
-                    f"  - {source_type}: confidence={confidence:.2f}, category={metadata.category}"
-                )
 
                 # Try to create a source instance
                 source = registry.create_source_instance(source_type, analysis_result)
                 if source:
-                    print(f"    Created source instance: {source.__class__.__name__}")
 
                     # Get available loader strategies
-                    strategies = [s.strategy_name for s in metadata.loader_strategies]
-                    print(f"    Available loaders: {strategies}")
+                    [s.strategy_name for s in metadata.loader_strategies]
 
                     # Create a loader (mock)
                     try:
-                        loader = source.create_loader()
-                        print(f"    Created loader: {loader}")
-                    except Exception as e:
-                        print(f"    Error creating loader: {e}")
+                        source.create_loader()
+                    except Exception:
+                        pass
         else:
-            print("No matches found")
+            pass
 
 
 if __name__ == "__main__":

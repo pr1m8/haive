@@ -3,9 +3,6 @@
 import logging
 from typing import Any, Literal
 
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.schema.schema_composer import SchemaComposer
 from langgraph.graph import END, START
 from langgraph.types import Command, Send
 from pydantic import Field
@@ -43,6 +40,10 @@ from haive.agents.task_analysis.tree.engines import (
     TreeStructureAnalyzerEngine,
 )
 from haive.agents.task_analysis.tree.models import TaskTree
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.schema.schema_composer import SchemaComposer
+
 
 logger = logging.getLogger(__name__)
 
@@ -111,7 +112,7 @@ def route_after_analysis(state: dict[str, Any]) -> str:
 def route_final_decision(state: dict[str, Any]) -> str:
     """Make final routing decision."""
     execution_plan = state.get("execution_plan")
-    integrated_analysis = state.get("integrated_analysis")
+    state.get("integrated_analysis")
 
     if not execution_plan:
         return "__end__"
@@ -192,7 +193,7 @@ def parallel_analysis_orchestrator(
                 "max_depth": tree_summary["max_depth"],
                 "max_breadth": len(task_tree.get_parallel_groups()),
                 "total_nodes": tree_summary["total_tasks"],
-                "leaf_nodes": len([n for n in task_node.get_all_steps()]),
+                "leaf_nodes": len(list(task_node.get_all_steps())),
                 "balance_factor": 0.8,  # Simplified
             },
         )

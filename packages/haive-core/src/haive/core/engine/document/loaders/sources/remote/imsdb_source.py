@@ -5,9 +5,7 @@ from haive.core.engine.loaders.sources.types import SourceType
 
 
 class ImsdbSource(URLSource):
-    """
-    A source that is an Imsdb source.
-    """
+    """A source that is an Imsdb source."""
 
     source_type: SourceType = Field(default=SourceType.IMSDB)
     url_prefix: str = Field(default="https://www.imsdb.com/")

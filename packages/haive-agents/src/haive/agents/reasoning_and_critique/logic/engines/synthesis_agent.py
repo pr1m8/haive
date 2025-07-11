@@ -1,9 +1,8 @@
 # src/haive/agents/reasoning/synthesis_agent.py
 
+from haive.agents.reasoning_and_critique.logic.models import ReasoningReport
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-
-from haive.agents.reasoning_and_critique.logic.models import ReasoningReport
 
 REASONING_SYNTHESIS_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -23,7 +22,7 @@ Your role is to:
 
 ### Dialectical Synthesis
 - Thesis: Initial position
-- Antithesis: Contradicting position  
+- Antithesis: Contradicting position
 - Synthesis: Higher truth incorporating both
 
 ### Convergent Integration
@@ -224,5 +223,4 @@ def create_synthesis_agent():
         prompt_template=REASONING_SYNTHESIS_PROMPT,
         structured_output_model=ReasoningReport,
         temperature=0.5,
-        # model="gpt-4o"
     )

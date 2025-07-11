@@ -7,8 +7,7 @@ def check_interfaces(
 ) -> Union[
     bool, Dict[str, Dict[str, bool]], Tuple[Dict[str, Set[str]], Dict[str, Set[str]]]
 ]:
-    """
-    Check if an object implements specified interfaces with optional parameter checking.
+    """Check if an object implements specified interfaces with optional parameter checking.
 
     Args:
         obj: The object to inspect
@@ -72,13 +71,13 @@ def check_interfaces(
     if return_mode == "all":
         return all(r["exists"] and r["signature_ok"] for r in results.values())
 
-    elif return_mode == "any":
+    if return_mode == "any":
         return any(r["exists"] and r["signature_ok"] for r in results.values())
 
-    elif return_mode == "dict":
+    if return_mode == "dict":
         return results
 
-    elif return_mode == "detailed":
+    if return_mode == "detailed":
         present = {}
         missing = {}
 
@@ -93,5 +92,4 @@ def check_interfaces(
 
         return present, missing
 
-    else:
-        raise ValueError(f"Invalid return_mode: {return_mode}")
+    raise ValueError(f"Invalid return_mode: {return_mode}")

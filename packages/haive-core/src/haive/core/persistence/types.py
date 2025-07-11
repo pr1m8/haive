@@ -10,7 +10,6 @@ and backward compatibility mappings for evolving terminology.
 """
 
 from enum import Enum
-from typing import Dict
 
 
 class CheckpointerType(str, Enum):
@@ -140,7 +139,7 @@ class ConnectionOptions:
     """
 
     @staticmethod
-    def get_postgres_ssl_modes() -> Dict[str, str]:
+    def get_postgres_ssl_modes() -> dict[str, str]:
         """Get valid PostgreSQL SSL connection modes with descriptions.
 
         This method returns a dictionary of valid SSL mode options for PostgreSQL

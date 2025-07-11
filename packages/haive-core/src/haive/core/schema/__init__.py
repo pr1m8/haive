@@ -38,7 +38,7 @@ Core Components:
         Includes type inference, reducer resolution, and field creation.
 
 Prebuilt Schemas:
-    BasicAgentState: Simple state with common agent fields
+    # BasicAgentState: Simple state with common agent fields (Module doesn't exist)
     MessagesState: State optimized for conversation handling
     ToolState: State with built-in tool management
     TokenUsage: Token tracking and cost calculation utilities
@@ -98,16 +98,7 @@ __author__ = "Haive Team"
 __license__ = "MIT"
 
 # Type imports for better IDE support
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Dict,
-    List,
-    Optional,
-    Type,
-    Union,
-)
+from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional, Type, Union
 
 if TYPE_CHECKING:
     from pydantic import BaseModel
@@ -128,16 +119,14 @@ from haive.core.schema.field_utils import (
     infer_field_type,
     resolve_reducer,
 )
-from haive.core.schema.multi_agent_state_schema import (
-    MultiAgentSchemaComposer,
-)
+from haive.core.schema.multi_agent_state_schema import MultiAgentSchemaComposer
 from haive.core.schema.multi_agent_state_schema import MultiAgentStateSchema
 from haive.core.schema.multi_agent_state_schema import (
     MultiAgentStateSchema as PrebuiltMultiAgentStateSchema,
 )
 
 # Prebuilt state schemas
-from haive.core.schema.prebuilt.basic_agent_state import BasicAgentState
+# from haive.core.schema.prebuilt.basic_agent_state import BasicAgentState  # Module doesn't exist
 
 # Token usage and messages utilities
 from haive.core.schema.prebuilt.messages import (
@@ -163,8 +152,8 @@ try:
 except ImportError:
     # Fallback to original location for backward compatibility
     from haive.core.schema.schema_composer import (
-        SchemaComposer,  # type: ignore[attr-defined]
-    )
+        SchemaComposer,
+    )  # type: ignore[attr-defined]
 
 # Type aliases for better API clarity
 SchemaType: "TypeAlias" = Type[StateSchema]
@@ -199,7 +188,7 @@ __all__ = [
     "get_common_reducers",
     "resolve_reducer",
     # Prebuilt schemas
-    "BasicAgentState",
+    # "BasicAgentState",  # Module doesn't exist
     "MessagesState",
     "ToolState",
     # Token usage utilities
@@ -366,7 +355,7 @@ def create_agent_state(
     elif include_tools:
         composer.set_base_schema(ToolState)
     else:
-        composer.set_base_schema(BasicAgentState)
+        composer.set_base_schema(MessagesState)
 
     # Add custom fields
     if custom_fields:

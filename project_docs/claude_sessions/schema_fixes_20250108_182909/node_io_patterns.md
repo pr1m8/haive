@@ -3,17 +3,21 @@
 ## Key Insights
 
 ### Tool Node Pattern
+
 - **Input**: AIMessage with tool_calls (in messages field)
 - **Output**: ToolMessages appended to messages field
 - **Key Point**: Always works with the 'messages' field (or whatever the messages_key is set to)
 
 ### Validation Node V2 Pattern
+
 - **Input**: AIMessage with tool_calls (in messages field)
 - **Output**: Validation results, but routes differently based on validation outcome
 - **Key Point**: Also works primarily with the messages field
 
 ### Common Pattern
+
 Most nodes follow this pattern:
+
 1. Read from messages field (List[BaseMessage])
 2. Process the last message or all messages
 3. Either append new messages or update other fields

@@ -37,12 +37,12 @@ Examples:
 """
 
 import os
-from typing import Any, List, Optional, Type
-
-from pydantic import Field
+from typing import Any
 
 from haive.core.models.llm.provider_types import LLMProvider
-from haive.core.models.llm.providers.base import BaseLLMProvider, ProviderImportError
+from haive.core.models.llm.providers.base import (BaseLLMProvider,
+                                                  ProviderImportError)
+from pydantic import Field
 
 
 class GeminiProvider(BaseLLMProvider):
@@ -95,21 +95,21 @@ class GeminiProvider(BaseLLMProvider):
     )
 
     # Gemini specific parameters
-    temperature: Optional[float] = Field(
+    temperature: float | None = Field(
         default=None, ge=0, le=1, description="Sampling temperature"
     )
-    max_output_tokens: Optional[int] = Field(
+    max_output_tokens: int | None = Field(
         default=None, ge=1, description="Maximum tokens to generate"
     )
-    top_p: Optional[float] = Field(
+    top_p: float | None = Field(
         default=None, ge=0, le=1, description="Nucleus sampling parameter"
     )
-    top_k: Optional[int] = Field(
+    top_k: int | None = Field(
         default=None, ge=1, description="Top-k sampling parameter"
     )
-    n: Optional[int] = Field(default=None, ge=1, description="Number of responses")
+    n: int | None = Field(default=None, ge=1, description="Number of responses")
 
-    def _get_chat_class(self) -> Type[Any]:
+    def _get_chat_class(self) -> type[Any]:
         """Get the Gemini chat class.
 
         Returns:
@@ -172,7 +172,7 @@ class GeminiProvider(BaseLLMProvider):
 
         return params
 
-    def _get_api_key_param_name(self) -> Optional[str]:
+    def _get_api_key_param_name(self) -> str | None:
         """Get the parameter name for API key.
 
         Returns:
@@ -181,7 +181,7 @@ class GeminiProvider(BaseLLMProvider):
         return "google_api_key"
 
     @classmethod
-    def get_models(cls) -> List[str]:
+    def get_models(cls) -> list[str]:
         """Get available Gemini models.
 
         Returns:
@@ -247,22 +247,22 @@ class VertexAIProvider(BaseLLMProvider):
     )
 
     # Vertex AI specific parameters
-    project: Optional[str] = Field(default=None, description="Google Cloud project ID")
+    project: str | None = Field(default=None, description="Google Cloud project ID")
     location: str = Field(default="us-central1", description="Google Cloud region")
-    temperature: Optional[float] = Field(
+    temperature: float | None = Field(
         default=None, ge=0, le=1, description="Sampling temperature"
     )
-    max_output_tokens: Optional[int] = Field(
+    max_output_tokens: int | None = Field(
         default=None, ge=1, description="Maximum tokens to generate"
     )
-    top_p: Optional[float] = Field(
+    top_p: float | None = Field(
         default=None, ge=0, le=1, description="Nucleus sampling parameter"
     )
-    top_k: Optional[int] = Field(
+    top_k: int | None = Field(
         default=None, ge=1, description="Top-k sampling parameter"
     )
 
-    def _get_chat_class(self) -> Type[Any]:
+    def _get_chat_class(self) -> type[Any]:
         """Get the Vertex AI chat class.
 
         Returns:
@@ -350,7 +350,7 @@ class VertexAIProvider(BaseLLMProvider):
         return params
 
     @classmethod
-    def get_models(cls) -> List[str]:
+    def get_models(cls) -> list[str]:
         """Get available Vertex AI models.
 
         Returns:

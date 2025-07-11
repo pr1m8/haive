@@ -48,7 +48,7 @@ def apply_pattern_to_graph(
 
         return result
     except Exception as e:
-        logger.error(f"Error applying pattern {pattern_name}: {e}")
+        logger.exception(f"Error applying pattern {pattern_name}: {e}")
         raise
 
 
@@ -98,7 +98,7 @@ def create_pattern_node_config(
     try:
         from haive.core.graph.node.config import NodeConfig
     except ImportError:
-        logger.error(
+        logger.exception(
             "Cannot import NodeConfig, integration with NodeFactory unavailable"
         )
         raise ImportError("NodeConfig not available")
@@ -129,7 +129,7 @@ def create_pattern_node_config(
                 result[key] = value
             return result
         except Exception as e:
-            logger.error(f"Error in pattern node {node_name}: {e}")
+            logger.exception(f"Error in pattern node {node_name}: {e}")
             return {"error": str(e)}
 
     # Create node config
@@ -319,4 +319,3 @@ def register_integrations():
 
 
 # Uncomment to auto-register when module is imported
-# register_integrations()

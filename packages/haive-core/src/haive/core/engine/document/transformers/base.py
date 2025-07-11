@@ -7,14 +7,13 @@ such as HTML conversion, document reordering, deduplication, and more.
 
 from typing import Any, Dict, List, Optional, Tuple, Type, Union
 
-from langchain_core.documents import Document
-from langchain_core.runnables import RunnableConfig
-from pydantic import ConfigDict, Field
-
 from haive.core.engine.base import EngineType, InvokableEngine
 from haive.core.engine.document.transformers.types import DocTransformerType
 from haive.core.models.embeddings.base import BaseEmbeddingConfig
 from haive.core.registry.decorators import register_component
+from langchain_core.documents import Document
+from langchain_core.runnables import RunnableConfig
+from pydantic import ConfigDict, Field
 
 
 @register_component(registry_getter="engine", auto_register=True)

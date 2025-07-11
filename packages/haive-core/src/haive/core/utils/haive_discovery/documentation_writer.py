@@ -1,14 +1,13 @@
-"""
-Documentation writer for saving discovered components.
-"""
+"""Documentation writer for saving discovered components."""
 
+from datetime import datetime
 import json
 import logging
-from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional
 
 from haive.core.utils.haive_discovery.component_info import ComponentInfo
+
 
 logger = logging.getLogger(__name__)
 
@@ -18,10 +17,10 @@ class DocumentationWriter:
 
     def save_to_project_docs(
         self,
-        components: List[ComponentInfo],
-        project_root: Optional[str] = None,
+        components: list[ComponentInfo],
+        project_root: str | None = None,
         subfolder: str = "component_discovery",
-    ) -> Dict[str, str]:
+    ) -> dict[str, str]:
         """Save components to timestamped project documentation with separate files for each type."""
         if project_root is None:
             project_root = self._find_project_root()
@@ -76,9 +75,9 @@ class DocumentationWriter:
         self,
         type_dir: Path,
         comp_type: str,
-        components: List[ComponentInfo],
+        components: list[ComponentInfo],
         timestamp: str,
-        saved_files: Dict[str, str],
+        saved_files: dict[str, str],
     ):
         """Save JSON file for a component type."""
         json_file = type_dir / f"{comp_type}_{timestamp}.json"
@@ -94,7 +93,7 @@ class DocumentationWriter:
                         {
                             "name": comp.name,
                             "component_type": comp.component_type,
-                            "error": f"Serialization failed: {str(e)}",
+                            "error": f"Serialization failed: {e!s}",
                         }
                     )
 
@@ -102,15 +101,15 @@ class DocumentationWriter:
                 json.dump(component_dicts, f, indent=2, default=str)
             saved_files[f"{comp_type}_json"] = str(json_file)
         except Exception as e:
-            logger.error(f"Failed to save {comp_type} JSON file: {e}")
+            logger.exception(f"Failed to save {comp_type} JSON file: {e}")
 
     def _save_type_markdown(
         self,
         type_dir: Path,
         comp_type: str,
-        components: List[ComponentInfo],
+        components: list[ComponentInfo],
         timestamp: str,
-        saved_files: Dict[str, str],
+        saved_files: dict[str, str],
     ):
         """Save Markdown file for a component type."""
         md_file = type_dir / f"{comp_type}_{timestamp}.md"
@@ -135,10 +134,10 @@ class DocumentationWriter:
 
             saved_files[f"{comp_type}_md"] = str(md_file)
         except Exception as e:
-            logger.error(f"Failed to save {comp_type} markdown file: {e}")
+            logger.exception(f"Failed to save {comp_type} markdown file: {e}")
 
     def _write_type_summary(
-        self, file, comp_type: str, components: List[ComponentInfo]
+        self, file, comp_type: str, components: list[ComponentInfo]
     ):
         """Write type-specific summary information."""
         if comp_type == "tool":
@@ -156,9 +155,9 @@ class DocumentationWriter:
     def _save_generated_tools(
         self,
         docs_dir: Path,
-        components: List[ComponentInfo],
+        components: list[ComponentInfo],
         timestamp: str,
-        saved_files: Dict[str, str],
+        saved_files: dict[str, str],
     ):
         """Save generated tools information."""
         # Group tools by source type
@@ -217,14 +216,14 @@ class DocumentationWriter:
                     json.dump(tool_data, f, indent=2, default=str)
                 saved_files[source_type] = str(tools_file)
             except Exception as e:
-                logger.error(f"Failed to save {source_type} file: {e}")
+                logger.exception(f"Failed to save {source_type} file: {e}")
 
     def _save_engine_configs(
         self,
         docs_dir: Path,
-        components: List[ComponentInfo],
+        components: list[ComponentInfo],
         timestamp: str,
-        saved_files: Dict[str, str],
+        saved_files: dict[str, str],
     ):
         """Save engine configuration files."""
         # Group by engine type
@@ -249,15 +248,15 @@ class DocumentationWriter:
                     json.dump(configs, f, indent=2, default=str)
                 saved_files[f"{engine_type}_engines"] = str(engine_file)
             except Exception as e:
-                logger.error(f"Failed to save {engine_type} engine configs: {e}")
+                logger.exception(f"Failed to save {engine_type} engine configs: {e}")
 
     def _save_summary(
         self,
         docs_dir: Path,
-        components: List[ComponentInfo],
-        by_type: Dict[str, List[ComponentInfo]],
+        components: list[ComponentInfo],
+        by_type: dict[str, list[ComponentInfo]],
         timestamp: str,
-        saved_files: Dict[str, str],
+        saved_files: dict[str, str],
     ):
         """Save overall summary file."""
         summary_file = docs_dir / f"discovery_summary_{timestamp}.md"
@@ -283,20 +282,18 @@ class DocumentationWriter:
 
             saved_files["summary"] = str(summary_file)
         except Exception as e:
-            logger.error(f"Failed to save summary: {e}")
+            logger.exception(f"Failed to save summary: {e}")
 
     def _print_file_locations(
-        self, docs_dir: Path, by_type: Dict[str, List[ComponentInfo]], timestamp: str
+        self, docs_dir: Path, by_type: dict[str, list[ComponentInfo]], timestamp: str
     ):
         """Print file locations to console."""
-        print(f"\n📁 Documentation saved to: {docs_dir}")
-        print("\n📄 Generated files:")
-        for comp_type in by_type.keys():
+        for comp_type in by_type:
             type_dir = docs_dir / comp_type
             if type_dir.exists():
-                print(f"  📂 {comp_type}/")
                 for file in type_dir.glob(f"*{timestamp}*"):
-                    print(f"    • {file.name}")
+                    logger.info(f"File: {file}")
+                    # TODO: Print file locations
 
     def _find_project_root(self) -> str:
         """Find project root by looking for common markers."""

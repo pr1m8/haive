@@ -99,4 +99,4 @@ The research agent follows a multi-stage workflow:
 
 ## Extension
 
-To add new document loaders, implement them using the Langchain document loader interface. 
+To add new document loaders, implement them using the Langchain document loader interface.

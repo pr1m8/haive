@@ -30,24 +30,15 @@ Typical usage:
 
 import logging
 import uuid
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    Generic,
-    Optional,
-    TypeVar,
-    Union,
-)
-
-from langgraph.graph import END
-from langgraph.types import Command, Send
-from pydantic import BaseModel, Field, model_validator
+from typing import Any, Callable, Dict, Generic, Optional, TypeVar, Union
 
 from haive.core.graph.branches.types import BranchMode, BranchResult, ComparisonType
 from haive.core.graph.common.field_utils import extract_field, get_last_message_content
 from haive.core.graph.common.references import CallableReference
 from haive.core.graph.common.types import ConfigLike, NodeOutput, StateLike
+from langgraph.graph import END
+from langgraph.types import Command, Send
+from pydantic import BaseModel, Field, model_validator
 
 # Set up logging
 logger = logging.getLogger(__name__)

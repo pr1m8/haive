@@ -1,32 +1,18 @@
-"""
-Test module for embedding providers.
+"""Test module for embedding providers.
 
 This module contains tests for the embedding providers to ensure
 that they are properly registered and can be instantiated.
 """
 
 import unittest
-from typing import List, Type
 
 from haive.core.models.embeddings import (  # Base; Cloud providers; Local providers; Factory function
-    AnyscaleEmbeddingConfig,
-    AzureEmbeddingConfig,
-    BaseEmbeddingConfig,
-    BedrockEmbeddingConfig,
-    CloudflareEmbeddingConfig,
-    CohereEmbeddingConfig,
-    EmbeddingProvider,
-    FastEmbedEmbeddingConfig,
-    HuggingFaceEmbeddingConfig,
-    JinaEmbeddingConfig,
-    LlamaCppEmbeddingConfig,
-    OllamaEmbeddingConfig,
-    OpenAIEmbeddingConfig,
-    SentenceTransformerEmbeddingConfig,
-    VertexAIEmbeddingConfig,
-    VoyageAIEmbeddingConfig,
-    create_embeddings,
-)
+    AnyscaleEmbeddingConfig, AzureEmbeddingConfig, BaseEmbeddingConfig,
+    BedrockEmbeddingConfig, CloudflareEmbeddingConfig, CohereEmbeddingConfig,
+    EmbeddingProvider, FastEmbedEmbeddingConfig, HuggingFaceEmbeddingConfig,
+    JinaEmbeddingConfig, LlamaCppEmbeddingConfig, OllamaEmbeddingConfig,
+    OpenAIEmbeddingConfig, SentenceTransformerEmbeddingConfig,
+    VertexAIEmbeddingConfig, VoyageAIEmbeddingConfig, create_embeddings)
 
 
 class TestEmbeddingProviders(unittest.TestCase):
@@ -36,8 +22,8 @@ class TestEmbeddingProviders(unittest.TestCase):
         """Test that all providers have proper string values."""
         # Verify all providers have non-empty string values
         for provider in EmbeddingProvider:
-            self.assertIsInstance(provider.value, str)
-            self.assertTrue(provider.value)  # Non-empty string
+            assert isinstance(provider.value, str)
+            assert provider.value  # Non-empty string
 
     def test_config_classes_exist(self):
         """Test that all config classes exist for each provider."""
@@ -67,12 +53,12 @@ class TestEmbeddingProviders(unittest.TestCase):
 
         # Verify we have a config class for each implemented provider
         for provider, config_class in provider_to_config.items():
-            self.assertTrue(issubclass(config_class, BaseEmbeddingConfig))
+            assert issubclass(config_class, BaseEmbeddingConfig)
 
             # Check that the provider attribute is correctly set
             params = default_params.get(config_class, {})
             config_instance = config_class(**params)
-            self.assertEqual(config_instance.provider, provider)
+            assert config_instance.provider == provider
 
     def test_factory_function(self):
         """Test that the factory function works with all config classes."""
@@ -92,7 +78,7 @@ class TestEmbeddingProviders(unittest.TestCase):
             # This will fail if the necessary packages aren't installed
             # We catch the exception to make the test pass in environments without all dependencies
             embeddings = create_embeddings(config)
-            self.assertIsNotNone(embeddings)
+            assert embeddings is not None
         except (ImportError, ModuleNotFoundError):
             # Skip test if the required packages aren't installed
             self.skipTest("HuggingFace embeddings package not available")

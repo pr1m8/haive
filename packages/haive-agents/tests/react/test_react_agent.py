@@ -89,14 +89,14 @@ class TestReactAgent(unittest.TestCase):
             agent = ReactAgent(self.agent_config)
 
             # Verify tools were prepared
-            self.assertEqual(len(agent.tools), 2)
+            assert len(agent.tools) == 2
 
             # Verify tool mapping was created
-            self.assertIn("calc_add", agent.tool_mapping)
-            self.assertIn("echo_message", agent.tool_mapping)
+            assert "calc_add" in agent.tool_mapping
+            assert "echo_message" in agent.tool_mapping
 
             # Verify version
-            self.assertEqual(agent.version, "v1")
+            assert agent.version == "v1"
 
     def test_setup_workflow(self):
         """Test workflow setup."""
@@ -113,36 +113,26 @@ class TestReactAgent(unittest.TestCase):
             ), patch.object(DynamicGraph, "set_entry_point"):
 
                 # Print out complete mock call details
-                print("Mock add_node call details:")
                 for i, call in enumerate(mock_add_node.call_args_list):
-                    print(f"Call {i}:")
-                    print("  args:", call.args)
-                    print("  kwargs:", call.kwargs)
 
                 # Call setup workflow
                 try:
                     agent.setup_workflow()
                 except Exception as e:
-                    print(f"Exception during setup_workflow: {e}")
                     import traceback
 
                     traceback.print_exc()
                     raise
 
                 # Print out call count and args
-                print(f"Number of add_node calls: {mock_add_node.call_count}")
-                print("Full call arguments:")
                 for call in mock_add_node.call_args_list:
-                    print(call)
+                    pass
 
                 # Capture node names with safe extraction
                 node_names = []
                 for call in mock_add_node.call_args_list:
                     try:
                         # Try different ways of extracting node name
-                        print("Attempting to extract node name:")
-                        print("  Call args:", call.args)
-                        print("  Call kwargs:", call.kwargs)
 
                         # Try different extraction methods
                         if call.args:
@@ -151,18 +141,16 @@ class TestReactAgent(unittest.TestCase):
                             elif hasattr(call.args[0], "name"):
                                 node_names.append(call.args[0].name)
                             else:
-                                print(f"Could not extract name from: {call.args[0]}")
+                                pass
 
                         if call.kwargs and "name" in call.kwargs:
                             node_names.append(call.kwargs["name"])
 
                     except Exception as e:
-                        print(f"Error extracting node name: {e}")
+                        pass
 
                 # Verify calls were made
-                self.assertTrue(
-                    mock_add_node.called, "No nodes were added to the graph"
-                )
+                assert mock_add_node.called, "No nodes were added to the graph"
 
                 # Check that necessary nodes were added
                 expected_nodes = [
@@ -173,11 +161,9 @@ class TestReactAgent(unittest.TestCase):
                     "iteration_check",
                 ]
 
-                print("Extracted node names:", node_names)
-                print("Expected nodes:", expected_nodes)
 
                 for node in expected_nodes:
-                    self.assertIn(node, node_names, f"Node {node} not found in graph")
+                    assert node in node_names, f"Node {node} not found in graph"
 
     def test_run_with_string_input(self):
         """Test running the agent with a string input."""
@@ -203,13 +189,13 @@ class TestReactAgent(unittest.TestCase):
 
                 # Verify run was called with properly formatted input
                 args, kwargs = mock_run.call_args
-                self.assertIsInstance(args[0], dict)
-                self.assertIn("messages", args[0])
-                self.assertIsInstance(args[0]["messages"][0], HumanMessage)
+                assert isinstance(args[0], dict)
+                assert "messages" in args[0]
+                assert isinstance(args[0]["messages"][0], HumanMessage)
 
                 # Check result
-                self.assertIn("messages", result)
-                self.assertEqual(len(result["messages"]), 3)
+                assert "messages" in result
+                assert len(result["messages"]) == 3
 
     def test_arun(self):
         """Test asynchronous running of the agent."""
@@ -244,7 +230,7 @@ class TestReactAgent(unittest.TestCase):
                 mock_arun.assert_called_once()
 
                 # Check result
-                self.assertIn("messages", result)
+                assert "messages" in result
 
     def test_runnable_config_integration(self):
         """Test integration with RunnableConfigManager."""
@@ -261,13 +247,9 @@ class TestReactAgent(unittest.TestCase):
             agent.runnable_config = runnable_config
 
             # Verify the config is properly set
-            self.assertEqual(
-                agent.runnable_config["configurable"]["thread_id"], "test_thread_1"
-            )
-            self.assertEqual(
-                agent.runnable_config["configurable"]["user_id"], "test_user_1"
-            )
-            self.assertEqual(agent.runnable_config["configurable"]["temperature"], 0.5)
+            assert agent.runnable_config["configurable"]["thread_id"] == "test_thread_1"
+            assert agent.runnable_config["configurable"]["user_id"] == "test_user_1"
+            assert agent.runnable_config["configurable"]["temperature"] == 0.5
 
     def test_tool_execution(self):
         """Test tool execution logic."""
@@ -293,10 +275,10 @@ class TestReactAgent(unittest.TestCase):
         result = executor(state)
 
         # Verify results
-        self.assertEqual(len(result["messages"]), 1)
-        self.assertEqual(len(result["tool_results"]), 1)
-        self.assertEqual(result["tool_results"][0]["result"], "8")
-        self.assertEqual(result["current_iteration"], 1)
+        assert len(result["messages"]) == 1
+        assert len(result["tool_results"]) == 1
+        assert result["tool_results"][0]["result"] == "8"
+        assert result["current_iteration"] == 1
 
 
 if __name__ == "__main__":

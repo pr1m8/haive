@@ -81,8 +81,6 @@ from typing import (
     Union,
 )
 
-from pydantic import BaseModel, create_model
-
 from haive.core.schema.field_definition import FieldDefinition
 from haive.core.schema.field_utils import (
     create_field,
@@ -90,6 +88,7 @@ from haive.core.schema.field_utils import (
     resolve_reducer,
 )
 from haive.core.schema.state_schema import StateSchema
+from pydantic import BaseModel, create_model
 
 if TYPE_CHECKING:
     from haive.core.schema.schema_composer import SchemaComposer

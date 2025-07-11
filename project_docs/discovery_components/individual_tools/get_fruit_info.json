@@ -7,7 +7,7 @@
     "description": "Fetch nutrition and detailed information about a specific fruit using its name from the Fruityvice API",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.773296",
+    "timestamp": "2025-07-10T19:45:28.996358",
     "schema": {
       "$defs": {
         "FruitNameInput": {
@@ -49,7 +49,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.773296",
+      "timestamp": "2025-07-10T19:45:28.996358",
       "category": "individual_tools"
     }
   },

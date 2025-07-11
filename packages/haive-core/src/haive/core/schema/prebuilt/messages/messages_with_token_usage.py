@@ -4,13 +4,12 @@ This module provides THE standard messages state schema with automatic token tra
 This should be used as the base for all conversational agents that need token awareness.
 """
 
-from typing import Dict, Union, List
-from pydantic import model_validator
-
-from langchain_core.messages import AnyMessage, AIMessage, messages_from_dict
+from typing import Dict, List, Union
 
 from haive.core.schema.prebuilt.messages.token_usage_mixin import TokenUsageMixin
 from haive.core.schema.prebuilt.messages_state import MessagesState
+from langchain_core.messages import AIMessage, AnyMessage, messages_from_dict
+from pydantic import model_validator
 
 
 class MessagesStateWithTokenUsage(MessagesState, TokenUsageMixin):
@@ -61,7 +60,7 @@ class MessagesStateWithTokenUsage(MessagesState, TokenUsageMixin):
         for message in self.messages:
             # Track tokens for any message type that might have usage data
             self.track_message_tokens(message)
-        
+
         return self
 
     def add_message(self, message: Union[AnyMessage, Dict]) -> None:

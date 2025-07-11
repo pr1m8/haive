@@ -1,4 +1,4 @@
-"""Query Planning Agentic RAG Agent
+"""Query Planning Agentic RAG Agent.
 
 Implementation of query planning RAG with structured decomposition and execution.
 Provides intelligent query analysis, planning, and multi-stage retrieval strategies.
@@ -8,6 +8,8 @@ import logging
 from enum import Enum
 from typing import Any, Dict, List, Optional, Union
 
+from haive.agents.base.agent import Agent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
@@ -15,9 +17,6 @@ from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field
-
-from haive.agents.base.agent import Agent
-from haive.agents.simple.agent import SimpleAgent
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +48,7 @@ class SubQuery(BaseModel):
     query_text: str = Field(description="The sub-query text")
     query_type: QueryType = Field(description="Type of this sub-query")
 
-    dependencies: List[str] = Field(description="IDs of sub-queries this depends on")
+    dependencies: list[str] = Field(description="IDs of sub-queries this depends on")
     priority: int = Field(ge=1, le=10, description="Priority level (1=highest)")
 
     expected_info: str = Field(description="What information this should retrieve")
@@ -69,9 +68,9 @@ class QueryPlan(BaseModel):
     primary_intent: str = Field(description="Primary intent of the query")
 
     # Decomposition
-    sub_queries: List[SubQuery] = Field(description="Decomposed sub-queries")
-    execution_order: List[str] = Field(description="Order to execute sub-queries")
-    parallel_groups: List[List[str]] = Field(
+    sub_queries: list[SubQuery] = Field(description="Decomposed sub-queries")
+    execution_order: list[str] = Field(description="Order to execute sub-queries")
+    parallel_groups: list[list[str]] = Field(
         description="Groups that can run in parallel"
     )
 
@@ -83,7 +82,7 @@ class QueryPlan(BaseModel):
     # Resource planning
     estimated_time: float = Field(description="Estimated total execution time")
     estimated_retrievals: int = Field(description="Estimated number of retrievals")
-    resource_requirements: Dict[str, Any] = Field(description="Required resources")
+    resource_requirements: dict[str, Any] = Field(description="Required resources")
 
     planning_confidence: float = Field(ge=0.0, le=1.0, description="Confidence in plan")
     planning_rationale: str = Field(description="Rationale for this plan")
@@ -103,7 +102,7 @@ class SubQueryResult(BaseModel):
     # Results
     answer: str = Field(description="Answer to the sub-query")
     confidence: float = Field(ge=0.0, le=1.0, description="Confidence in answer")
-    supporting_documents: List[Document] = Field(description="Supporting documents")
+    supporting_documents: list[Document] = Field(description="Supporting documents")
 
     # Quality metrics
     relevance_score: float = Field(ge=0.0, le=1.0, description="Relevance of results")
@@ -111,7 +110,7 @@ class SubQueryResult(BaseModel):
         ge=0.0, le=1.0, description="Completeness of answer"
     )
 
-    metadata: Dict[str, Any] = Field(description="Additional metadata")
+    metadata: dict[str, Any] = Field(description="Additional metadata")
 
 
 class QueryPlanningResult(BaseModel):
@@ -130,7 +129,7 @@ class QueryPlanningResult(BaseModel):
     )
 
     # Execution analytics
-    sub_query_results: List[SubQueryResult] = Field(description="All sub-query results")
+    sub_query_results: list[SubQueryResult] = Field(description="All sub-query results")
     total_execution_time: float = Field(description="Total execution time")
     total_retrievals: int = Field(description="Total documents retrieved")
 
@@ -144,10 +143,10 @@ class QueryPlanningResult(BaseModel):
     synthesis_quality: float = Field(ge=0.0, le=1.0, description="Quality of synthesis")
 
     # Process insights
-    bottlenecks: List[str] = Field(description="Identified bottlenecks")
-    improvements: List[str] = Field(description="Suggested improvements")
+    bottlenecks: list[str] = Field(description="Identified bottlenecks")
+    improvements: list[str] = Field(description="Suggested improvements")
 
-    execution_metadata: Dict[str, Any] = Field(description="Execution metadata")
+    execution_metadata: dict[str, Any] = Field(description="Execution metadata")
 
 
 # Enhanced prompts for query planning
@@ -333,20 +332,20 @@ class QueryPlanningRAGAgent(Agent):
     """
 
     name: str = "Query Planning RAG Agent"
-    documents: List[Document] = Field(description="Documents for retrieval")
+    documents: list[Document] = Field(description="Documents for retrieval")
     llm_config: LLMConfig = Field(description="LLM configuration")
     planning_depth: int = Field(
         default=3, description="Maximum depth of query decomposition"
     )
 
     # Engines for different stages (initialized in setup_agent)
-    planning_engine: Optional[AugLLMConfig] = Field(
+    planning_engine: AugLLMConfig | None = Field(
         default=None, description="Engine for query planning"
     )
-    execution_engine: Optional[AugLLMConfig] = Field(
+    execution_engine: AugLLMConfig | None = Field(
         default=None, description="Engine for sub-query execution"
     )
-    synthesis_engine: Optional[AugLLMConfig] = Field(
+    synthesis_engine: AugLLMConfig | None = Field(
         default=None, description="Engine for result synthesis"
     )
 
@@ -384,8 +383,8 @@ class QueryPlanningRAGAgent(Agent):
     @classmethod
     def from_documents(
         cls,
-        documents: List[Document],
-        llm_config: Optional[LLMConfig] = None,
+        documents: list[Document],
+        llm_config: LLMConfig | None = None,
         planning_depth: int = 3,
         **kwargs,
     ):
@@ -414,7 +413,7 @@ class QueryPlanningRAGAgent(Agent):
             **kwargs,
         )
 
-    def create_query_plan(self, state: Dict[str, Any]) -> Dict[str, Any]:
+    def create_query_plan(self, state: dict[str, Any]) -> dict[str, Any]:
         """Create a query execution plan."""
         query = state.get("query", "")
         context = state.get("context", "")
@@ -438,7 +437,7 @@ class QueryPlanningRAGAgent(Agent):
             "results_by_id": {},
         }
 
-    def execute_sub_query(self, state: Dict[str, Any]) -> Dict[str, Any]:
+    def execute_sub_query(self, state: dict[str, Any]) -> dict[str, Any]:
         """Execute the current sub-query."""
         query_plan = state.get("query_plan")
         current_idx = state.get("current_sub_query_idx", 0)
@@ -484,7 +483,7 @@ class QueryPlanningRAGAgent(Agent):
             results_by_id[query_id] = sub_result
 
         except Exception as e:
-            logger.error(f"Sub-query execution failed: {e}")
+            logger.exception(f"Sub-query execution failed: {e}")
             # Create failed result
             failed_result = SubQueryResult(
                 query_id=query_id,
@@ -492,7 +491,7 @@ class QueryPlanningRAGAgent(Agent):
                 execution_successful=False,
                 execution_time=0.0,
                 retrieval_count=0,
-                answer=f"Execution failed: {str(e)}",
+                answer=f"Execution failed: {e!s}",
                 confidence=0.0,
                 supporting_documents=[],
                 relevance_score=0.0,
@@ -509,7 +508,7 @@ class QueryPlanningRAGAgent(Agent):
             "current_sub_query_idx": current_idx + 1,
         }
 
-    def should_continue_execution(self, state: Dict[str, Any]) -> str:
+    def should_continue_execution(self, state: dict[str, Any]) -> str:
         """Determine if more sub-queries should be executed."""
         query_plan = state.get("query_plan")
         current_idx = state.get("current_sub_query_idx", 0)
@@ -519,10 +518,9 @@ class QueryPlanningRAGAgent(Agent):
             and current_idx < self.planning_depth
         ):
             return "execute_sub_query"
-        else:
-            return "synthesize_results"
+        return "synthesize_results"
 
-    def synthesize_results(self, state: Dict[str, Any]) -> Dict[str, Any]:
+    def synthesize_results(self, state: dict[str, Any]) -> dict[str, Any]:
         """Synthesize sub-query results into final answer."""
         query = state.get("query", "")
         query_plan = state.get("query_plan")
@@ -599,8 +597,8 @@ class QueryPlanningRAGAgent(Agent):
 
 # Factory function
 def create_query_planning_rag_agent(
-    documents: List[Document],
-    llm_config: Optional[LLMConfig] = None,
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
     planning_mode: str = "comprehensive",
     **kwargs,
 ) -> QueryPlanningRAGAgent:
@@ -629,7 +627,7 @@ def create_query_planning_rag_agent(
 
 
 # I/O schema for compatibility
-def get_query_planning_rag_io_schema() -> Dict[str, List[str]]:
+def get_query_planning_rag_io_schema() -> dict[str, list[str]]:
     """Get I/O schema for Query Planning RAG agents."""
     return {
         "inputs": ["query", "context", "messages"],

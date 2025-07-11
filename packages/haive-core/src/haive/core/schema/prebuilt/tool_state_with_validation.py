@@ -4,8 +4,6 @@ import logging
 import time
 from typing import Any, Callable, Dict, List, Optional, Set, Union
 
-from pydantic import Field, model_validator
-
 from haive.core.schema.prebuilt.tool_state import ToolState
 from haive.core.schema.prebuilt.tools.validation_state import (
     RouteRecommendation,
@@ -13,6 +11,7 @@ from haive.core.schema.prebuilt.tools.validation_state import (
     ValidationStateManager,
     ValidationStatus,
 )
+from pydantic import Field, model_validator
 
 logger = logging.getLogger(__name__)
 

@@ -4,19 +4,18 @@ import json
 import logging
 import random
 import time
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 # Check if PostgreSQL is available
 try:
-    from langgraph.checkpoint.postgres import ShallowPostgresSaver
-    from langgraph.checkpoint.postgres.aio import AsyncShallowPostgresSaver
-
     from haive.core.persistence.postgres_saver_override import (
         AsyncPostgresSaverNoPreparedStatements as AsyncPostgresSaver,
     )
     from haive.core.persistence.postgres_saver_override import (
         PostgresSaverNoPreparedStatements as PostgresSaver,
     )
+    from langgraph.checkpoint.postgres import ShallowPostgresSaver
+    from langgraph.checkpoint.postgres.aio import AsyncShallowPostgresSaver
 
     POSTGRES_AVAILABLE = True
 except ImportError:
@@ -28,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 def create_postgres_checkpointer(config: PostgresCheckpointerConfig) -> Any:
-    """
-    Create a PostgreSQL checkpointer with retry logic.
+    """Create a PostgreSQL checkpointer with retry logic.
 
     Args:
         config: PostgreSQL checkpointer configuration
@@ -94,10 +92,9 @@ def create_postgres_checkpointer(config: PostgresCheckpointerConfig) -> Any:
 
         # Create appropriate PostgresSaver
         checkpointer = None
-        if config.shallow_mode:
-            checkpointer = ShallowPostgresSaver(pool)
-        else:
-            checkpointer = PostgresSaver(pool)
+        checkpointer = (
+            ShallowPostgresSaver(pool) if config.shallow_mode else PostgresSaver(pool)
+        )
 
         # Initialize tables if needed
         if config.setup_needed:
@@ -105,14 +102,14 @@ def create_postgres_checkpointer(config: PostgresCheckpointerConfig) -> Any:
                 checkpointer.setup()
                 config.setup_needed = False
             except Exception as e:
-                logger.error(f"Error setting up PostgreSQL tables: {e}")
+                logger.exception(f"Error setting up PostgreSQL tables: {e}")
 
         # Store in class cache
         PostgresCheckpointerConfig._sync_checkpointers[config_key] = checkpointer
         return checkpointer
 
     except Exception as e:
-        logger.error(f"Error creating PostgreSQL checkpointer: {e}")
+        logger.exception(f"Error creating PostgreSQL checkpointer: {e}")
         logger.warning("Falling back to memory checkpointer")
         from langgraph.checkpoint.memory import MemorySaver
 
@@ -120,8 +117,7 @@ def create_postgres_checkpointer(config: PostgresCheckpointerConfig) -> Any:
 
 
 async def acreate_postgres_checkpointer(config: PostgresCheckpointerConfig) -> Any:
-    """
-    Create an asynchronous PostgreSQL checkpointer with retry logic.
+    """Create an asynchronous PostgreSQL checkpointer with retry logic.
 
     Args:
         config: PostgreSQL checkpointer configuration
@@ -205,14 +201,16 @@ async def acreate_postgres_checkpointer(config: PostgresCheckpointerConfig) -> A
                 await async_checkpointer.setup()
                 config.setup_needed = False
             except Exception as e:
-                logger.error(f"Error setting up PostgreSQL tables asynchronously: {e}")
+                logger.exception(
+                    f"Error setting up PostgreSQL tables asynchronously: {e}"
+                )
 
         # Store in class cache
         PostgresCheckpointerConfig._async_checkpointers[config_key] = async_checkpointer
         return async_checkpointer
 
     except Exception as e:
-        logger.error(f"Error creating async PostgreSQL checkpointer: {e}")
+        logger.exception(f"Error creating async PostgreSQL checkpointer: {e}")
         logger.warning("Falling back to memory checkpointer")
         from langgraph.checkpoint.memory import MemorySaver
 
@@ -222,10 +220,9 @@ async def acreate_postgres_checkpointer(config: PostgresCheckpointerConfig) -> A
 def register_postgres_thread(
     config: PostgresCheckpointerConfig,
     thread_id: str,
-    metadata: Optional[Dict[str, Any]] = None,
+    metadata: dict[str, Any] | None = None,
 ) -> None:
-    """
-    Register a thread in the PostgreSQL database with retry logic.
+    """Register a thread in the PostgreSQL database with retry logic.
 
     Args:
         config: PostgreSQL checkpointer configuration
@@ -257,29 +254,28 @@ def register_postgres_thread(
             try:
                 pool.open()
             except Exception as e:
-                logger.error(f"Could not open pool for thread registration: {e}")
+                logger.exception(f"Could not open pool for thread registration: {e}")
                 return
 
         # Register thread with retry mechanism
         for retry in range(config.max_retries):
             try:
-                with pool.connection() as conn:
-                    with conn.cursor() as cursor:
-                        # Get threads table columns
-                        cursor.execute(
-                            """
+                with pool.connection() as conn, conn.cursor() as cursor:
+                    # Get threads table columns
+                    cursor.execute(
+                        """
                             SELECT EXISTS (
-                                SELECT FROM information_schema.tables 
+                                SELECT FROM information_schema.tables
                                 WHERE table_name = 'threads'
                             );
                         """
-                        )
-                        table_exists = cursor.fetchone()[0]
+                    )
+                    table_exists = cursor.fetchone()[0]
 
-                        # Create threads table if needed
-                        if not table_exists:
-                            cursor.execute(
-                                """
+                    # Create threads table if needed
+                    if not table_exists:
+                        cursor.execute(
+                            """
                                 CREATE TABLE IF NOT EXISTS threads (
                                     thread_id VARCHAR(255) PRIMARY KEY,
                                     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -287,45 +283,45 @@ def register_postgres_thread(
                                     metadata JSONB DEFAULT '{}'::jsonb
                                 );
                             """
-                            )
+                        )
 
-                        # Check columns
-                        cursor.execute(
-                            """
-                            SELECT column_name FROM information_schema.columns 
+                    # Check columns
+                    cursor.execute(
+                        """
+                            SELECT column_name FROM information_schema.columns
                             WHERE table_name = 'threads';
                         """
-                        )
-                        columns = [row[0] for row in cursor.fetchall()]
+                    )
+                    columns = [row[0] for row in cursor.fetchall()]
 
-                        # Convert metadata to JSON
-                        metadata_json = "{}"
-                        if metadata:
-                            metadata_json = json.dumps(metadata)
+                    # Convert metadata to JSON
+                    metadata_json = "{}"
+                    if metadata:
+                        metadata_json = json.dumps(metadata)
 
-                        # Insert thread with appropriate columns
-                        if "metadata" in columns:
-                            cursor.execute(
-                                """
-                                INSERT INTO threads (thread_name, metadata, last_access) 
-                                VALUES (%s, %s, CURRENT_TIMESTAMP) 
-                                ON CONFLICT (thread_name) 
-                                DO UPDATE SET 
+                    # Insert thread with appropriate columns
+                    if "metadata" in columns:
+                        cursor.execute(
+                            """
+                                INSERT INTO threads (thread_name, metadata, last_access)
+                                VALUES (%s, %s, CURRENT_TIMESTAMP)
+                                ON CONFLICT (thread_name)
+                                DO UPDATE SET
                                     last_access = CURRENT_TIMESTAMP,
                                     metadata = COALESCE(threads.metadata, '{}'::jsonb) || %s::jsonb
                             """,
-                                (thread_id, metadata_json, metadata_json),
-                            )
-                        else:
-                            cursor.execute(
-                                """
-                                INSERT INTO threads (thread_id, last_access) 
-                                VALUES (%s, CURRENT_TIMESTAMP) 
-                                ON CONFLICT (thread_id) 
+                            (thread_id, metadata_json, metadata_json),
+                        )
+                    else:
+                        cursor.execute(
+                            """
+                                INSERT INTO threads (thread_id, last_access)
+                                VALUES (%s, CURRENT_TIMESTAMP)
+                                ON CONFLICT (thread_id)
                                 DO UPDATE SET last_access = CURRENT_TIMESTAMP
                             """,
-                                (thread_id,),
-                            )
+                            (thread_id,),
+                        )
 
                 logger.info(f"Thread {thread_id} registered in PostgreSQL")
                 break
@@ -339,19 +335,18 @@ def register_postgres_thread(
                     )
                     time.sleep(delay)
                 else:
-                    logger.error(f"All thread registration attempts failed: {e}")
+                    logger.exception(f"All thread registration attempts failed: {e}")
 
     except Exception as e:
-        logger.error(f"Error in thread registration: {e}")
+        logger.exception(f"Error in thread registration: {e}")
 
 
 async def aregister_postgres_thread(
     config: PostgresCheckpointerConfig,
     thread_id: str,
-    metadata: Optional[Dict[str, Any]] = None,
+    metadata: dict[str, Any] | None = None,
 ) -> None:
-    """
-    Asynchronously register a thread in the PostgreSQL database.
+    """Asynchronously register a thread in the PostgreSQL database.
 
     Args:
         config: PostgreSQL checkpointer configuration
@@ -381,23 +376,22 @@ async def aregister_postgres_thread(
         # Register thread with retry mechanism
         for retry in range(config.max_retries):
             try:
-                async with pool.connection() as conn:
-                    async with conn.cursor() as cursor:
-                        # Check if threads table exists
-                        await cursor.execute(
-                            """
+                async with pool.connection() as conn, conn.cursor() as cursor:
+                    # Check if threads table exists
+                    await cursor.execute(
+                        """
                             SELECT EXISTS (
-                                SELECT FROM information_schema.tables 
+                                SELECT FROM information_schema.tables
                                 WHERE table_name = 'threads'
                             );
                         """
-                        )
-                        table_exists = (await cursor.fetchone())[0]
+                    )
+                    table_exists = (await cursor.fetchone())[0]
 
-                        # Create threads table if needed
-                        if not table_exists:
-                            await cursor.execute(
-                                """
+                    # Create threads table if needed
+                    if not table_exists:
+                        await cursor.execute(
+                            """
                                 CREATE TABLE IF NOT EXISTS threads (
                                     thread_id VARCHAR(255) PRIMARY KEY,
                                     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -405,45 +399,45 @@ async def aregister_postgres_thread(
                                     metadata JSONB DEFAULT '{}'::jsonb
                                 );
                             """
-                            )
+                        )
 
-                        # Get columns
-                        await cursor.execute(
-                            """
-                            SELECT column_name FROM information_schema.columns 
+                    # Get columns
+                    await cursor.execute(
+                        """
+                            SELECT column_name FROM information_schema.columns
                             WHERE table_name = 'threads';
                         """
-                        )
-                        columns = [row[0] for row in await cursor.fetchall()]
+                    )
+                    columns = [row[0] for row in await cursor.fetchall()]
 
-                        # Convert metadata to JSON
-                        metadata_json = "{}"
-                        if metadata:
-                            metadata_json = json.dumps(metadata)
+                    # Convert metadata to JSON
+                    metadata_json = "{}"
+                    if metadata:
+                        metadata_json = json.dumps(metadata)
 
-                        # Insert thread with appropriate columns
-                        if "metadata" in columns:
-                            await cursor.execute(
-                                """
-                                INSERT INTO threads (thread_id, metadata, last_access) 
-                                VALUES (%s, %s, CURRENT_TIMESTAMP) 
-                                ON CONFLICT (thread_id) 
-                                DO UPDATE SET 
+                    # Insert thread with appropriate columns
+                    if "metadata" in columns:
+                        await cursor.execute(
+                            """
+                                INSERT INTO threads (thread_id, metadata, last_access)
+                                VALUES (%s, %s, CURRENT_TIMESTAMP)
+                                ON CONFLICT (thread_id)
+                                DO UPDATE SET
                                     last_access = CURRENT_TIMESTAMP,
                                     metadata = COALESCE(threads.metadata, '{}'::jsonb) || %s::jsonb
                             """,
-                                (thread_id, metadata_json, metadata_json),
-                            )
-                        else:
-                            await cursor.execute(
-                                """
-                                INSERT INTO threads (thread_id, last_access) 
-                                VALUES (%s, CURRENT_TIMESTAMP) 
-                                ON CONFLICT (thread_id) 
+                            (thread_id, metadata_json, metadata_json),
+                        )
+                    else:
+                        await cursor.execute(
+                            """
+                                INSERT INTO threads (thread_id, last_access)
+                                VALUES (%s, CURRENT_TIMESTAMP)
+                                ON CONFLICT (thread_id)
                                 DO UPDATE SET last_access = CURRENT_TIMESTAMP
                             """,
-                                (thread_id,),
-                            )
+                            (thread_id,),
+                        )
 
                 logger.info(
                     f"Thread {thread_id} registered asynchronously in PostgreSQL"
@@ -459,20 +453,21 @@ async def aregister_postgres_thread(
                     )
                     await asyncio.sleep(delay)
                 else:
-                    logger.error(f"All async thread registration attempts failed: {e}")
+                    logger.exception(
+                        f"All async thread registration attempts failed: {e}"
+                    )
 
     except Exception as e:
-        logger.error(f"Error in async thread registration: {e}")
+        logger.exception(f"Error in async thread registration: {e}")
 
 
 def put_postgres_checkpoint(
     config: PostgresCheckpointerConfig,
-    runnable_config: Dict[str, Any],
+    runnable_config: dict[str, Any],
     data: Any,
-    metadata: Optional[Dict[str, Any]] = None,
-) -> Dict[str, Any]:
-    """
-    Store a checkpoint in the PostgreSQL database with retry logic.
+    metadata: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Store a checkpoint in the PostgreSQL database with retry logic.
 
     Args:
         config: PostgreSQL checkpointer configuration
@@ -531,7 +526,7 @@ def put_postgres_checkpoint(
                 )
                 time.sleep(delay)
             else:
-                logger.error(f"All checkpoint storage attempts failed: {e}")
+                logger.exception(f"All checkpoint storage attempts failed: {e}")
                 return config_dict
 
     # Should not reach here
@@ -540,12 +535,11 @@ def put_postgres_checkpoint(
 
 async def aput_postgres_checkpoint(
     config: PostgresCheckpointerConfig,
-    runnable_config: Dict[str, Any],
+    runnable_config: dict[str, Any],
     data: Any,
-    metadata: Optional[Dict[str, Any]] = None,
-) -> Dict[str, Any]:
-    """
-    Asynchronously store a checkpoint in the PostgreSQL database with retry logic.
+    metadata: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Asynchronously store a checkpoint in the PostgreSQL database with retry logic.
 
     Args:
         config: PostgreSQL checkpointer configuration
@@ -627,7 +621,7 @@ async def aput_postgres_checkpoint(
                     )
                     return next_config
                 except TypeError as te:
-                    logger.error(f"Type error in aput: {te}")
+                    logger.exception(f"Type error in aput: {te}")
                     # Try with simpler arguments if TypeError (could be API mismatch)
                     logger.info("Trying simplified aput call")
                     next_config = await checkpointer.aput(
@@ -644,11 +638,11 @@ async def aput_postgres_checkpoint(
                 if config.retry_jitter:
                     delay *= 0.5 + random.random()
                 logger.warning(
-                    f"Async checkpoint storage attempt {retry+1} failed: {str(e)}. Retrying in {delay:.2f}s"
+                    f"Async checkpoint storage attempt {retry+1} failed: {e!s}. Retrying in {delay:.2f}s"
                 )
                 await asyncio.sleep(delay)
             else:
-                logger.error(f"All async checkpoint storage attempts failed: {str(e)}")
+                logger.exception(f"All async checkpoint storage attempts failed: {e!s}")
                 return config_dict
 
     # Should not reach here
@@ -656,10 +650,9 @@ async def aput_postgres_checkpoint(
 
 
 def get_postgres_checkpoint(
-    config: PostgresCheckpointerConfig, runnable_config: Dict[str, Any]
-) -> Optional[Any]:
-    """
-    Retrieve a checkpoint from the PostgreSQL database with retry logic.
+    config: PostgresCheckpointerConfig, runnable_config: dict[str, Any]
+) -> Any | None:
+    """Retrieve a checkpoint from the PostgreSQL database with retry logic.
 
     Args:
         config: PostgreSQL checkpointer configuration
@@ -701,7 +694,7 @@ def get_postgres_checkpoint(
                 )
                 time.sleep(delay)
             else:
-                logger.error(f"All checkpoint retrieval attempts failed: {e}")
+                logger.exception(f"All checkpoint retrieval attempts failed: {e}")
                 return None
 
     # Should not reach here
@@ -709,10 +702,9 @@ def get_postgres_checkpoint(
 
 
 async def aget_postgres_checkpoint(
-    config: PostgresCheckpointerConfig, runnable_config: Dict[str, Any]
-) -> Optional[Any]:
-    """
-    Asynchronously retrieve a checkpoint from the PostgreSQL database with retry logic.
+    config: PostgresCheckpointerConfig, runnable_config: dict[str, Any]
+) -> Any | None:
+    """Asynchronously retrieve a checkpoint from the PostgreSQL database with retry logic.
 
     Args:
         config: PostgreSQL checkpointer configuration
@@ -771,37 +763,36 @@ async def aget_postgres_checkpoint(
                     return result["channel_values"]
 
                 return result
-            else:
-                # Try with aget_tuple
-                if hasattr(checkpointer, "aget_tuple") and callable(
-                    checkpointer.aget_tuple
-                ):
-                    logger.debug("Trying aget_tuple method")
-                    tuple_result = await checkpointer.aget_tuple(config_dict)
-                    if tuple_result and hasattr(tuple_result, "checkpoint"):
-                        result = tuple_result.checkpoint
-                        if result and "channel_values" in result:
-                            return result["channel_values"]
-                        return result
+            # Try with aget_tuple
+            if hasattr(checkpointer, "aget_tuple") and callable(
+                checkpointer.aget_tuple
+            ):
+                logger.debug("Trying aget_tuple method")
+                tuple_result = await checkpointer.aget_tuple(config_dict)
+                if tuple_result and hasattr(tuple_result, "checkpoint"):
+                    result = tuple_result.checkpoint
+                    if result and "channel_values" in result:
+                        return result["channel_values"]
+                    return result
 
-                # Fallback to sync get for MemorySaver
-                logger.info("No async get methods, using synchronous get")
-                result = checkpointer.get(config_dict)
-                if result and "channel_values" in result:
-                    return result["channel_values"]
-                return result
+            # Fallback to sync get for MemorySaver
+            logger.info("No async get methods, using synchronous get")
+            result = checkpointer.get(config_dict)
+            if result and "channel_values" in result:
+                return result["channel_values"]
+            return result
         except Exception as e:
             if retry < config.max_retries - 1:
                 delay = config.retry_delay * (config.retry_backoff**retry)
                 if config.retry_jitter:
                     delay *= 0.5 + random.random()
                 logger.warning(
-                    f"Async checkpoint retrieval attempt {retry+1} failed: {str(e)}. Retrying in {delay:.2f}s"
+                    f"Async checkpoint retrieval attempt {retry+1} failed: {e!s}. Retrying in {delay:.2f}s"
                 )
                 await asyncio.sleep(delay)
             else:
-                logger.error(
-                    f"All async checkpoint retrieval attempts failed: {str(e)}"
+                logger.exception(
+                    f"All async checkpoint retrieval attempts failed: {e!s}"
                 )
                 return None
 
@@ -810,8 +801,7 @@ async def aget_postgres_checkpoint(
 
 
 def close_postgres_pool(config: PostgresCheckpointerConfig) -> None:
-    """
-    Close any connection pools created by a specific configuration.
+    """Close any connection pools created by a specific configuration.
 
     Args:
         config: PostgreSQL checkpointer configuration
@@ -825,20 +815,16 @@ def close_postgres_pool(config: PostgresCheckpointerConfig) -> None:
             if hasattr(pool, "is_open") and pool.is_open():
                 logger.info(f"Closing PostgreSQL connection pool for {config_key}")
                 pool.close()
-            elif hasattr(pool, "_opened") and pool._opened:
-                logger.info(f"Closing PostgreSQL connection pool for {config_key}")
-                pool.close()
 
             # Remove from caches
             PostgresCheckpointerConfig._sync_pools.pop(config_key, None)
             PostgresCheckpointerConfig._sync_checkpointers.pop(config_key, None)
         except Exception as e:
-            logger.error(f"Error closing PostgreSQL connection pool: {e}")
+            logger.exception(f"Error closing PostgreSQL connection pool: {e}")
 
 
 async def aclose_postgres_pool(config: PostgresCheckpointerConfig) -> None:
-    """
-    Asynchronously close any connection pools created by a specific configuration.
+    """Asynchronously close any connection pools created by a specific configuration.
 
     Args:
         config: PostgreSQL checkpointer configuration
@@ -866,7 +852,7 @@ async def aclose_postgres_pool(config: PostgresCheckpointerConfig) -> None:
             PostgresCheckpointerConfig._async_pools.pop(config_key, None)
             PostgresCheckpointerConfig._async_checkpointers.pop(config_key, None)
         except Exception as e:
-            logger.error(f"Error closing async PostgreSQL connection pool: {e}")
+            logger.exception(f"Error closing async PostgreSQL connection pool: {e}")
 
 
 def close_all_postgres_pools() -> None:
@@ -877,11 +863,8 @@ def close_all_postgres_pools() -> None:
             if hasattr(pool, "is_open") and pool.is_open():
                 logger.info(f"Closing PostgreSQL connection pool for {key}")
                 pool.close()
-            elif hasattr(pool, "_opened") and pool._opened:
-                logger.info(f"Closing PostgreSQL connection pool for {key}")
-                pool.close()
         except Exception as e:
-            logger.error(f"Error closing PostgreSQL connection pool: {e}")
+            logger.exception(f"Error closing PostgreSQL connection pool: {e}")
 
     # Clear caches
     PostgresCheckpointerConfig._sync_pools.clear()
@@ -904,7 +887,7 @@ async def aclose_all_postgres_pools() -> None:
                 logger.info(f"Closing async PostgreSQL connection pool for {key}")
                 await pool.close()
         except Exception as e:
-            logger.error(f"Error closing async PostgreSQL connection pool: {e}")
+            logger.exception(f"Error closing async PostgreSQL connection pool: {e}")
 
     # Clear caches
     PostgresCheckpointerConfig._async_pools.clear()

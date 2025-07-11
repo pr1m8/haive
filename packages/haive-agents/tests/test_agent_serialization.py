@@ -18,20 +18,19 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.tools import tool
-
 from haive.agents.multi.agent import MultiAgent, MultiAgentState
 from haive.agents.react.agent import ReactAgent
 
 # Import necessary components
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from langchain_core.tools import tool
 
 
 # Define a test tool and model for structured output
 @tool
 def add(a: int, b: int) -> int:
-    """Returns the sum of two numbers"""
+    """Returns the sum of two numbers."""
     return a + b
 
 
@@ -57,8 +56,8 @@ def try_pickle_serialization(obj: Any, name: str) -> bool:
         )
         return True
     except Exception as e:
-        logger.error(f"✗ Failed to pickle {name}: {type(e).__name__}: {e}")
-        logger.error(traceback.format_exc())
+        logger.exception(f"✗ Failed to pickle {name}: {type(e).__name__}: {e}")
+        logger.exception(traceback.format_exc())
         return False
 
 
@@ -97,7 +96,9 @@ def try_json_serialization(obj: Any, name: str) -> bool:
         )
         return True
     except Exception as e:
-        logger.error(f"✗ Failed to serialize {name} to JSON: {type(e).__name__}: {e}")
+        logger.exception(
+            f"✗ Failed to serialize {name} to JSON: {type(e).__name__}: {e}"
+        )
         return False
 
 
@@ -115,7 +116,7 @@ def try_model_dump(obj: Any, name: str) -> bool:
         logger.warning(f"Object {name} doesn't have model_dump method")
         return False
     except Exception as e:
-        logger.error(f"✗ Failed to dump {name}: {type(e).__name__}: {e}")
+        logger.exception(f"✗ Failed to dump {name}: {type(e).__name__}: {e}")
         return False
 
 
@@ -130,7 +131,7 @@ def check_problematic_fields(data: dict[str, Any], name: str, path: str = "") ->
         # Check for problematic types
         if callable(value):
             logger.warning(f"Problematic field in {name}: {current_path} is callable")
-        elif isinstance(value, (type, type(None).__class__)):
+        elif isinstance(value, type | type(None).__class__):
             logger.warning(f"Problematic field in {name}: {current_path} is a type")
         elif hasattr(value, "__class__") and value.__class__.__module__ not in [
             "builtins",
@@ -267,7 +268,7 @@ def test_specific_problematic_fields():
             pickle.dumps(simple_agent.graph)
             logger.info("✓ Graph is picklable")
         except Exception as e:
-            logger.error(f"✗ Graph is not picklable: {type(e).__name__}: {e}")
+            logger.exception(f"✗ Graph is not picklable: {type(e).__name__}: {e}")
 
     # Test _state_instance field
     if hasattr(simple_agent, "_state_instance"):
@@ -276,7 +277,9 @@ def test_specific_problematic_fields():
             pickle.dumps(simple_agent._state_instance)
             logger.info("✓ _state_instance is picklable")
         except Exception as e:
-            logger.error(f"✗ _state_instance is not picklable: {type(e).__name__}: {e}")
+            logger.exception(
+                f"✗ _state_instance is not picklable: {type(e).__name__}: {e}"
+            )
 
     # Test structured_output_model field
     if hasattr(simple_agent, "structured_output_model"):
@@ -285,7 +288,7 @@ def test_specific_problematic_fields():
             pickle.dumps(simple_agent.structured_output_model)
             logger.info("✓ structured_output_model is picklable")
         except Exception as e:
-            logger.error(
+            logger.exception(
                 f"✗ structured_output_model is not picklable: {type(e).__name__}: {e}"
             )
 
@@ -315,7 +318,7 @@ def test_langgraph_serialization():
             logger.info("LangGraph memory checkpointer uses msgpack")
 
     except ImportError:
-        logger.error("Could not import LangGraph checkpoint components")
+        logger.exception("Could not import LangGraph checkpoint components")
 
 
 if __name__ == "__main__":

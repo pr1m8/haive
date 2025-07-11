@@ -1,4 +1,4 @@
-"""Modular RAG using ChainAgent
+"""Modular RAG using ChainAgent.
 
 Build configurable RAG pipelines with modular components.
 """
@@ -6,13 +6,12 @@ Build configurable RAG pipelines with modular components.
 from enum import Enum
 from typing import Any, Dict, List, Literal, Optional
 
+from haive.agents.chain import ChainAgent, flow_with_edges
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
-
-from haive.agents.chain import ChainAgent, flow_with_edges
 
 
 class RAGModule(str, Enum):
@@ -29,7 +28,7 @@ class RAGModule(str, Enum):
 class ModularConfig(BaseModel):
     """Configuration for modular RAG."""
 
-    modules: List[RAGModule] = Field(description="Modules to include")
+    modules: list[RAGModule] = Field(description="Modules to include")
     routing_strategy: Literal["sequential", "conditional", "parallel"] = Field(
         default="sequential"
     )
@@ -37,13 +36,12 @@ class ModularConfig(BaseModel):
 
 
 def create_modular_rag(
-    documents: List[Document],
+    documents: list[Document],
     config: ModularConfig,
-    llm_config: Optional[LLMConfig] = None,
+    llm_config: LLMConfig | None = None,
     name: str = "Modular RAG",
 ) -> ChainAgent:
     """Create a modular RAG system with configurable components."""
-
     if not llm_config:
         llm_config = AzureLLMConfig(
             deployment_name="gpt-4",
@@ -71,7 +69,7 @@ def create_modular_rag(
     # Document Filtering Module
     if RAGModule.DOCUMENT_FILTERING in config.modules:
 
-        def filter_documents(state: Dict[str, Any]) -> Dict[str, Any]:
+        def filter_documents(state: dict[str, Any]) -> dict[str, Any]:
             query = state.get("expanded_query") or state.get("query", "")
 
             # Simple relevance filtering (mock)
@@ -102,7 +100,7 @@ def create_modular_rag(
                         "human",
                         """Query: {query}
                 Documents: {filtered_documents}
-                
+
                 Rank by relevance and provide top 3.""",
                     ),
                 ]
@@ -122,7 +120,7 @@ def create_modular_rag(
                         "human",
                         """Query: {query}
                 Context: {ranked_context}
-                
+
                 Provide comprehensive answer.""",
                     ),
                 ]
@@ -134,9 +132,9 @@ def create_modular_rag(
     # Answer Verification Module
     if RAGModule.ANSWER_VERIFICATION in config.modules:
 
-        def verify_answer(state: Dict[str, Any]) -> Dict[str, Any]:
+        def verify_answer(state: dict[str, Any]) -> dict[str, Any]:
             answer = state.get("generated_answer", "")
-            context = state.get("ranked_context", "")
+            state.get("ranked_context", "")
 
             # Simple verification (mock)
             is_supported = len(answer) > 10 and "context" not in answer.lower()
@@ -166,7 +164,7 @@ def create_modular_rag(
                         """Original Query: {query}
                 Generated Answer: {generated_answer}
                 Verification: {verification_result}
-                
+
                 Create final response.""",
                     ),
                 ]
@@ -189,15 +187,15 @@ def create_modular_rag(
     # Build chain based on routing strategy
     if config.routing_strategy == "sequential":
         return ChainAgent(*nodes, name=name)
-    elif config.routing_strategy == "conditional":
+    if config.routing_strategy == "conditional":
         # Add simple conditional routing
         return flow_with_edges(nodes, *[f"{i}->{i+1}" for i in range(len(nodes) - 1)])
-    else:  # parallel - simplified
-        return ChainAgent(*nodes, name=name)
+    # parallel - simplified
+    return ChainAgent(*nodes, name=name)
 
 
 def create_simple_modular_rag(
-    documents: List[Document], llm_config: Optional[LLMConfig] = None
+    documents: list[Document], llm_config: LLMConfig | None = None
 ) -> ChainAgent:
     """Create a simple modular RAG with basic modules."""
     config = ModularConfig(
@@ -211,7 +209,7 @@ def create_simple_modular_rag(
 
 
 def create_comprehensive_modular_rag(
-    documents: List[Document], llm_config: Optional[LLMConfig] = None
+    documents: list[Document], llm_config: LLMConfig | None = None
 ) -> ChainAgent:
     """Create a comprehensive modular RAG with all modules."""
     config = ModularConfig(
@@ -229,9 +227,9 @@ def create_comprehensive_modular_rag(
 
 
 def create_custom_modular_rag(
-    documents: List[Document],
-    modules: List[str],
-    llm_config: Optional[LLMConfig] = None,
+    documents: list[Document],
+    modules: list[str],
+    llm_config: LLMConfig | None = None,
 ) -> ChainAgent:
     """Create a custom modular RAG with specified modules."""
     config = ModularConfig(modules=[RAGModule(module) for module in modules])

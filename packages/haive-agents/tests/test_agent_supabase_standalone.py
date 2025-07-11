@@ -19,32 +19,24 @@ load_dotenv()
 def test_agent_import():
     """Test that we can import the agent classes."""
     try:
-        from haive.core.persistence.supabase_config import SupabaseCheckpointerConfig
-        from haive.core.persistence.types import CheckpointerMode
 
-        from haive.agents.base import Agent
-
-        print("✅ Agent and Supabase imports successful")
         return True
 
     except Exception as e:
-        print(f"❌ Import test failed: {e}")
         return False
 
 
 def test_agent_with_supabase_config():
     """Test creating agent with Supabase configuration."""
     if not os.getenv("POSTGRES_CONNECTION_STRING"):
-        print("⚠️  Skipping agent Supabase test - no POSTGRES_CONNECTION_STRING")
         return True
 
     try:
+        from haive.agents.base import Agent
         from haive.core.graph.state_graph.base_graph2 import BaseGraph
         from haive.core.persistence.supabase_config import SupabaseCheckpointerConfig
         from haive.core.persistence.types import CheckpointerMode
         from langgraph.graph import END
-
-        from haive.agents.base import Agent
 
         # Create a test agent class
         class TestAgent(Agent):
@@ -99,11 +91,9 @@ def test_agent_with_supabase_config():
         assert agent.persistence is not None
         assert agent.runnable_config["configurable"]["recursion_limit"] == 100
 
-        print("✅ Agent with Supabase configuration test passed")
         return True
 
     except Exception as e:
-        print(f"❌ Agent Supabase test failed: {e}")
         import traceback
 
         traceback.print_exc()
@@ -113,14 +103,12 @@ def test_agent_with_supabase_config():
 def test_agent_store_integration():
     """Test agent with store integration."""
     if not os.getenv("POSTGRES_CONNECTION_STRING"):
-        print("⚠️  Skipping agent store test - no POSTGRES_CONNECTION_STRING")
         return True
 
     try:
+        from haive.agents.base import Agent
         from haive.core.graph.state_graph.base_graph2 import BaseGraph
         from haive.core.persistence.supabase_config import SupabaseCheckpointerConfig
-
-        from haive.agents.base import Agent
 
         class StoreTestAgent(Agent):
             def setup_agent(self):
@@ -154,20 +142,17 @@ def test_agent_store_integration():
         assert agent.persistence is not None
         assert agent.add_store is True
 
-        print("✅ Agent store integration test passed")
         return True
 
     except Exception as e:
-        print(f"❌ Agent store integration test failed: {e}")
         return False
 
 
 def test_agent_persistence_fields():
     """Test that agent persistence fields are properly set."""
     try:
-        from haive.core.graph.state_graph.base_graph2 import BaseGraph
-
         from haive.agents.base import Agent
+        from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
         class FieldTestAgent(Agent):
             def setup_agent(self):
@@ -196,25 +181,21 @@ def test_agent_persistence_fields():
         assert agent.add_store is True
         assert agent.runnable_config["configurable"]["recursion_limit"] == 100
 
-        print("✅ Agent persistence fields test passed")
         return True
 
     except Exception as e:
-        print(f"❌ Agent persistence fields test failed: {e}")
         return False
 
 
 def test_agent_factory_pattern():
     """Test factory pattern for creating agents with Supabase."""
     if not os.getenv("POSTGRES_CONNECTION_STRING"):
-        print("⚠️  Skipping factory pattern test - no POSTGRES_CONNECTION_STRING")
         return True
 
     try:
+        from haive.agents.base import Agent
         from haive.core.graph.state_graph.base_graph2 import BaseGraph
         from haive.core.persistence.supabase_config import SupabaseCheckpointerConfig
-
-        from haive.agents.base import Agent
 
         class FactoryAgent(Agent):
             def setup_agent(self):
@@ -248,17 +229,14 @@ def test_agent_factory_pattern():
         assert agent.persistence is not None
         assert agent.runnable_config["configurable"]["thread_id"] == "factory_thread"
 
-        print("✅ Agent factory pattern test passed")
         return True
 
     except Exception as e:
-        print(f"❌ Agent factory pattern test failed: {e}")
         return False
 
 
 def main():
     """Run all agent tests."""
-    print("🧪 Running Agent Supabase Standalone Tests\n")
 
     results = []
     results.append(test_agent_import())
@@ -270,12 +248,11 @@ def main():
     passed = sum(results)
     total = len(results)
 
-    print(f"\n📊 Test Results: {passed}/{total} tests passed")
 
     if passed == total:
-        print("🎉 All agent Supabase tests passed!")
+        pass!")
     else:
-        print("⚠️  Some tests failed or were skipped")
+        passed")
 
     return passed == total
 

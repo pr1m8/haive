@@ -1,5 +1,4 @@
-"""
-LLM Provider Types Module.
+"""LLM Provider Types Module.
 
 This module defines the supported LLM providers as an enumeration,
 ensuring consistent identification and type safety when configuring LLM models.
@@ -22,8 +21,7 @@ from enum import Enum
 
 
 class LLMProvider(str, Enum):
-    """
-    Enumeration of supported LLM providers.
+    """Enumeration of supported LLM providers.
 
     This enum inherits from str to allow string comparison and serialization
     while maintaining type safety and providing autocompletion support.

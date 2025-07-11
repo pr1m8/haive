@@ -1,23 +1,24 @@
 # src/haive/agents/mcts/agent.py
 
-import logging
 from collections import defaultdict
+import logging
 from typing import Any
 
-from agents.mcts.config import MCTSAgentConfig
-from agents.mcts.models import NodeData, Reflection
-from agents.mcts.state import MCTSAgentState
-from haive.core.engine.agent.agent import Agent, register_agent
-from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from langchain_core.messages import AIMessage
 from langchain_core.output_parsers.openai_tools import (
     JsonOutputToolsParser,
     PydanticToolsParser,
 )
-from langchain_core.runnables import RunnableConfig
-from langchain_core.runnables import chain as as_runnable
+from langchain_core.runnables import RunnableConfig, chain as as_runnable
 from langgraph.graph import END
 from langgraph.prebuilt import ToolNode
+
+from haive.agents.reasoning_and_critique.mcts.config import MCTSAgentConfig
+from haive.agents.reasoning_and_critique.mcts.models import NodeData, Reflection
+from haive.agents.reasoning_and_critique.mcts.state import MCTSAgentState
+from haive.core.engine.agent.agent import Agent, register_agent
+from haive.core.graph.dynamic_graph_builder import DynamicGraph
+
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -159,7 +160,7 @@ class MCTSAgent(Agent[MCTSAgentConfig]):
                 tool_responses.append(tool_resp["messages"][0])
 
             # Combine messages
-            output_messages = [res] + tool_responses
+            output_messages = [res, *tool_responses]
 
             # Perform reflection
             reflection = self.reflection_chain.invoke(
@@ -193,7 +194,7 @@ class MCTSAgent(Agent[MCTSAgentConfig]):
             return updated_state
 
         except Exception as e:
-            logger.error(f"Error in generate_initial_response: {e!s}")
+            logger.exception(f"Error in generate_initial_response: {e!s}")
             return {
                 "error": f"Error generating initial response: {e!s}",
                 "status": "error",
@@ -342,7 +343,7 @@ class MCTSAgent(Agent[MCTSAgentConfig]):
             return updated_state
 
         except Exception as e:
-            logger.error(f"Error in expand node: {e!s}")
+            logger.exception(f"Error in expand node: {e!s}")
             return {"error": f"Error expanding search tree: {e!s}", "status": "error"}
 
     def _should_continue(self, state: MCTSAgentState) -> str:
@@ -370,11 +371,8 @@ class MCTSAgent(Agent[MCTSAgentConfig]):
     # def run(self, input_data: Union[str, Dict[str, Any]]) -> Dict[str, Any]:
     # """Run the agent with the provided input."""
     # if isinstance(input_data, str):
-    # input_data = {"input": input_data}
 
     # Initialize nodes store if needed
     # if "nodes" not in input_data:
-    # input_data["nodes"] = MCTSNodes()
 
     # Call superclass run method
-    # return super().run(input_data)

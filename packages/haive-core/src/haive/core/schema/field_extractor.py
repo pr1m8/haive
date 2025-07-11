@@ -59,10 +59,9 @@ from typing import (
     TypeVar,
 )
 
-from pydantic import BaseModel, Field
-
 from haive.core.schema.field_definition import FieldDefinition
 from haive.core.schema.field_utils import extract_type_metadata, infer_field_type
+from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
 
@@ -356,23 +355,26 @@ class FieldExtractor:
         ):
             try:
                 model = engine.structured_output_model
-                
+
                 # Use proper field naming utilities
                 from haive.core.schema.field_utils import get_field_info_from_model
-                field_info_dict = get_field_info_from_model(model)
-                model_name = field_info_dict['field_name']
-                field_description = field_info_dict.get('description', f"Output in {model.__name__} format")
-                field_type = field_info_dict.get('field_type', Optional[model])
 
-                print(f"FIELD_EXTRACTOR: Found structured_output_model in {engine_name}: {model.__name__} -> {model_name}")
+                field_info_dict = get_field_info_from_model(model)
+                model_name = field_info_dict["field_name"]
+                field_description = field_info_dict.get(
+                    "description", f"Output in {model.__name__} format"
+                )
+                field_type = field_info_dict.get("field_type", Optional[model])
+
+                print(
+                    f"FIELD_EXTRACTOR: Found structured_output_model in {engine_name}: {model.__name__} -> {model_name}"
+                )
                 logger.info(
                     f"Found structured_output_model in {engine_name}: {model.__name__} -> {model_name}"
                 )
 
                 # Add a single field for the entire model
-                field_info = Field(
-                    default=None, description=field_description
-                )
+                field_info = Field(default=None, description=field_description)
 
                 # Create a field definition
                 field_def = FieldDefinition(

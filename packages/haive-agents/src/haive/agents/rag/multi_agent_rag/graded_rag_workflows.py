@@ -1,13 +1,8 @@
-"""
-Graded RAG Workflows - RAG with comprehensive grading and evaluation
+"""Graded RAG Workflows - RAG with comprehensive grading and evaluation.
 
 This module implements RAG workflows with integrated document grading,
 answer quality assessment, and hallucination detection.
 """
-
-from typing import Dict, List, Optional
-
-from haive.core.schema.prebuilt.rag_state import RAGState
 
 from haive.agents.multi.base import ExecutionMode, MultiAgent
 from haive.agents.rag.multi_agent_rag.grading_components import (
@@ -21,33 +16,33 @@ from haive.agents.rag.multi_agent_rag.grading_components import (
     create_query_analyzer,
 )
 from haive.agents.simple import SimpleAgent
+from haive.core.schema.prebuilt.rag_state import RAGState
 
 
 class GradedRAGState(RAGState):
-    """RAG state with grading information"""
+    """RAG state with grading information."""
 
     # Query analysis
     query_type: str = ""
     query_complexity: str = ""
-    key_entities: List[str] = []
+    key_entities: list[str] = []
 
     # Document grading
-    document_grades: List[DocumentGrade] = []
-    priority_ranking: Dict[str, float] = {}
-    filtered_documents: List[str] = []
+    document_grades: list[DocumentGrade] = []
+    priority_ranking: dict[str, float] = {}
+    filtered_documents: list[str] = []
 
     # Answer grading
-    answer_grade: Optional[AnswerGrade] = None
-    hallucination_grade: Optional[HallucinationGrade] = None
+    answer_grade: AnswerGrade | None = None
+    hallucination_grade: HallucinationGrade | None = None
 
     # Pipeline metrics
     overall_score: float = 0.0
-    improvement_suggestions: List[str] = []
+    improvement_suggestions: list[str] = []
 
 
 class FullyGradedRAGAgent(MultiAgent):
-    """
-    Fully Graded RAG - comprehensive grading at every step of the RAG pipeline.
+    """Fully Graded RAG - comprehensive grading at every step of the RAG pipeline.
     Includes query analysis, document grading, prioritization, answer quality,
     and hallucination detection.
     """
@@ -160,13 +155,12 @@ class FullyGradedRAGAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for graded RAG workflow"""
-        return None  # Use default sequential execution
+        """Build the custom graph for graded RAG workflow."""
+        return  # Use default sequential execution
 
 
 class AdaptiveGradedRAGAgent(MultiAgent):
-    """
-    Adaptive Graded RAG - adjusts grading thresholds based on query complexity
+    """Adaptive Graded RAG - adjusts grading thresholds based on query complexity
     and document availability.
     """
 
@@ -213,7 +207,7 @@ class AdaptiveGradedRAGAgent(MultiAgent):
             - Query complexity
             - Number of retrieved documents
             - Initial relevance distribution
-            
+
             Adjust thresholds to ensure adequate document coverage
             while maintaining quality.
             """,
@@ -258,17 +252,16 @@ class AdaptiveGradedRAGAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for adaptive graded RAG"""
-        return None
+        """Build the custom graph for adaptive graded RAG."""
+        return
 
 
 class MultiCriteriaGradedRAGAgent(MultiAgent):
-    """
-    Multi-Criteria Graded RAG - uses multiple grading criteria and perspectives
+    """Multi-Criteria Graded RAG - uses multiple grading criteria and perspectives
     to evaluate documents and answers.
     """
 
-    def __init__(self, grading_criteria: Optional[List[str]] = None, **kwargs):
+    def __init__(self, grading_criteria: list[str] | None = None, **kwargs):
         if grading_criteria is None:
             grading_criteria = [
                 "relevance",
@@ -283,12 +276,12 @@ class MultiCriteriaGradedRAGAgent(MultiAgent):
             name="multi_criteria_grader",
             instructions=f"""
             Grade documents across multiple criteria: {', '.join(grading_criteria)}
-            
+
             For each criterion:
             - Provide a score (0.0-1.0)
             - Give specific reasoning
             - Note strengths and weaknesses
-            
+
             Calculate composite score with weighted average.
             """,
             output_schema={
@@ -330,7 +323,7 @@ class MultiCriteriaGradedRAGAgent(MultiAgent):
             - Provide complete coverage
             - Express clearly and concisely
             - Cite authoritative sources
-            
+
             Note which criteria might be compromised and why.
             """,
             output_schema={
@@ -353,13 +346,12 @@ class MultiCriteriaGradedRAGAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for multi-criteria graded RAG"""
-        return None
+        """Build the custom graph for multi-criteria graded RAG."""
+        return
 
 
 class ReflexiveGradedRAGAgent(MultiAgent):
-    """
-    Reflexive Graded RAG - uses grading feedback to improve its own performance
+    """Reflexive Graded RAG - uses grading feedback to improve its own performance
     through self-reflection and strategy adjustment.
     """
 
@@ -391,7 +383,7 @@ class ReflexiveGradedRAGAgent(MultiAgent):
             - Modify grading thresholds
             - Change answer generation approach
             - Update document filtering criteria
-            
+
             Implement changes that address identified issues.
             """,
             output_schema={
@@ -430,5 +422,5 @@ class ReflexiveGradedRAGAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for reflexive graded RAG"""
-        return None
+        """Build the custom graph for reflexive graded RAG."""
+        return

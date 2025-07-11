@@ -7,14 +7,13 @@ import traceback
 from datetime import datetime
 from typing import Any, Callable, Dict, Optional
 
-from langchain_core.messages import BaseMessage
-from langgraph.types import Command, Send
-from pydantic import BaseModel
-
 from haive.core.config.runnable import RunnableConfigManager
 from haive.core.engine.base import EngineType
 from haive.core.graph.node.config import NodeConfig
 from haive.core.graph.node.registry import register_node_processor
+from langchain_core.messages import BaseMessage
+from langgraph.types import Command, Send
+from pydantic import BaseModel
 
 # Setup detailed logging
 logger = logging.getLogger(__name__)
@@ -22,8 +21,7 @@ logger = logging.getLogger(__name__)
 
 # Common utility functions used by processors
 def process_state(state: Any) -> Any:
-    """
-    Process state into a standardized format, preserving BaseModels by default.
+    """Process state into a standardized format, preserving BaseModels by default.
 
     Args:
         state: The state to process
@@ -41,18 +39,17 @@ def process_state(state: Any) -> Any:
     # Handle different state types
     if isinstance(state, dict):
         return state.copy()  # Make a copy to avoid modifying the original
-    elif hasattr(state, "__dict__"):  # Object with __dict__
+    if hasattr(state, "__dict__"):  # Object with __dict__
         # Filter out private attributes
         return {k: v for k, v in state.__dict__.items() if not k.startswith("_")}
-    else:
-        # Unknown state type - wrap as value
-        logger.debug(f"Unknown state type {type(state).__name__}, wrapping as 'value'")
-        return {"value": state}
+    # Unknown state type - wrap as value
+    logger.debug(f"Unknown state type {type(state).__name__}, wrapping as 'value'")
+    return {"value": state}
 
 
 def merge_configs(
-    base_config: Optional[Dict[str, Any]], override_config: Optional[Dict[str, Any]]
-) -> Optional[Dict[str, Any]]:
+    base_config: dict[str, Any] | None, override_config: dict[str, Any] | None
+) -> dict[str, Any] | None:
     """Merge two configs with smart handling."""
     logger.debug(
         f"Merging configs: base={base_config is not None}, override={override_config is not None}"
@@ -61,9 +58,9 @@ def merge_configs(
     # Handle None cases
     if base_config is None and override_config is None:
         return None
-    elif base_config is None:
+    if base_config is None:
         return override_config
-    elif override_config is None:
+    if override_config is None:
         return base_config
 
     # Use RunnableConfigManager for proper merging
@@ -75,8 +72,8 @@ def merge_configs(
 
 
 def ensure_engine_id_targeting(
-    config: Dict[str, Any], engine_id: str
-) -> Dict[str, Any]:
+    config: dict[str, Any], engine_id: str
+) -> dict[str, Any]:
     """Ensure config includes targeting for a specific engine ID."""
     logger.debug(f"Ensuring engine ID targeting for: {engine_id}")
 
@@ -96,8 +93,8 @@ def ensure_engine_id_targeting(
 
 
 def apply_config_overrides(
-    config: Dict[str, Any], engine_id: Optional[str], overrides: Dict[str, Any]
-) -> Dict[str, Any]:
+    config: dict[str, Any], engine_id: str | None, overrides: dict[str, Any]
+) -> dict[str, Any]:
     """Apply node-specific configuration overrides."""
     logger.debug(f"Applying config overrides: {list(overrides.keys())}")
 
@@ -129,8 +126,7 @@ def apply_config_overrides(
 
 
 def extract_input(state: Any, config: NodeConfig) -> Any:
-    """
-    Extract input based on configuration.
+    """Extract input based on configuration.
 
     Args:
         state: The current state (can be BaseModel or dict)
@@ -197,7 +193,7 @@ def extract_input(state: Any, config: NodeConfig) -> Any:
         if mapped_input:
             # If only one mapping exists and one value extracted, return the value directly
             if len(config.input_mapping) == 1 and len(mapped_input) == 1:
-                single_value = list(mapped_input.values())[0]
+                single_value = next(iter(mapped_input.values()))
                 logger.debug(
                     f"Returning single mapped value: {type(single_value).__name__}"
                 )
@@ -219,7 +215,7 @@ def extract_input(state: Any, config: NodeConfig) -> Any:
             logger.debug("No mapping for retriever, using direct query from BaseModel")
             return state.query
         # From dict
-        elif isinstance(state, dict) and "query" in state:
+        if isinstance(state, dict) and "query" in state:
             logger.debug(
                 f"No mapping for retriever, using direct query: {state['query']}"
             )
@@ -235,7 +231,7 @@ def extract_input(state: Any, config: NodeConfig) -> Any:
             )
             return messages
         # From dict
-        elif isinstance(state, dict) and "messages" in state:
+        if isinstance(state, dict) and "messages" in state:
             logger.debug(f"Using direct messages (count: {len(state['messages'])})")
             return state["messages"]
 
@@ -254,7 +250,7 @@ def extract_input(state: Any, config: NodeConfig) -> Any:
                 if not attr.startswith("_") and not callable(getattr(state, attr))
             ]
             missing_attrs = [
-                k for k in config.input_mapping.keys() if k not in available_attrs
+                k for k in config.input_mapping if k not in available_attrs
             ]
             if missing_attrs:
                 logger.error(
@@ -264,7 +260,7 @@ def extract_input(state: Any, config: NodeConfig) -> Any:
                     f"Available attributes: {available_attrs[:10]}{'...' if len(available_attrs) > 10 else ''}"
                 )
         elif isinstance(state, dict):
-            missing_keys = [k for k in config.input_mapping.keys() if k not in state]
+            missing_keys = [k for k in config.input_mapping if k not in state]
             if missing_keys:
                 logger.error(
                     f"State is missing these keys defined in mapping: {missing_keys}"
@@ -277,8 +273,7 @@ def extract_input(state: Any, config: NodeConfig) -> Any:
 
 
 def process_output(result: Any, config: NodeConfig, original_state: Any) -> Any:
-    """
-    Process output according to configuration, preserving BaseModels when appropriate.
+    """Process output according to configuration, preserving BaseModels when appropriate.
 
     Args:
         result: The result from the node function
@@ -391,7 +386,7 @@ def process_output(result: Any, config: NodeConfig, original_state: Any) -> Any:
                     updates.answer = ""
                     logger.debug("Initialized empty answer field")
             except AttributeError as e:
-                logger.error(f"Cannot update BaseModel: {e}")
+                logger.exception(f"Cannot update BaseModel: {e}")
                 # Fall back to dictionary if we can't update the model
                 updates = {
                     output_key: result,
@@ -433,7 +428,7 @@ def process_output(result: Any, config: NodeConfig, original_state: Any) -> Any:
                                 f"Mapped {output_key} → {state_key} in BaseModel"
                             )
                         except AttributeError as e:
-                            logger.error(
+                            logger.exception(
                                 f"Cannot set attribute {state_key} on BaseModel: {e}"
                             )
             else:
@@ -459,29 +454,26 @@ def process_output(result: Any, config: NodeConfig, original_state: Any) -> Any:
                                 logger.debug(
                                     f"Mapped document list directly to {state_key}"
                                 )
+        elif is_original_model and updates is not None:
+            # For BaseModel, try to set each result key as an attribute
+            for key, value in result.items():
+                try:
+                    setattr(updates, key, value)
+                    logger.debug(f"Set BaseModel attribute: {key}")
+                except AttributeError:
+                    logger.warning(f"Could not set attribute '{key}' on BaseModel")
         else:
-            # No mapping
-            if is_original_model and updates is not None:
-                # For BaseModel, try to set each result key as an attribute
-                for key, value in result.items():
-                    try:
-                        setattr(updates, key, value)
-                        logger.debug(f"Set BaseModel attribute: {key}")
-                    except AttributeError:
-                        logger.warning(f"Could not set attribute '{key}' on BaseModel")
-            else:
-                # Update dictionary directly
-                logger.debug("No mapping - updating with all result keys")
-                updates.update(result)
+            # Update dictionary directly
+            logger.debug("No mapping - updating with all result keys")
+            updates.update(result)
 
     elif isinstance(result, BaseModel):
         logger.debug(f"Result is BaseModel: {result.__class__.__name__}")
 
         # Get model as dict
-        if hasattr(result, "model_dump"):
-            result_dict = result.model_dump()
-        else:
-            result_dict = result.dict()
+        result_dict = (
+            result.model_dump() if hasattr(result, "model_dump") else result.dict()
+        )
 
         logger.debug(f"Model keys: {list(result_dict.keys())}")
 
@@ -501,7 +493,7 @@ def process_output(result: Any, config: NodeConfig, original_state: Any) -> Any:
                                 f"Mapped {output_key} → {state_key} in BaseModel"
                             )
                         except AttributeError as e:
-                            logger.error(
+                            logger.exception(
                                 f"Cannot set attribute {state_key} on BaseModel: {e}"
                             )
             else:
@@ -522,25 +514,22 @@ def process_output(result: Any, config: NodeConfig, original_state: Any) -> Any:
                             logger.warning(
                                 f"Could not set attribute '{key}' on BaseModel"
                             )
+        elif config.output_mapping:
+            logger.debug("Applying output mapping")
+            for output_key, state_key in config.output_mapping.items():
+                if output_key in result_dict:
+                    updates[state_key] = result_dict[output_key]
+                    logger.debug(f"Mapped {output_key} → {state_key}")
+                else:
+                    logger.warning(f"Output key '{output_key}' not found in model")
         else:
-            # Dictionary state handling
-            # Apply output mapping if exists
-            if config.output_mapping:
-                logger.debug("Applying output mapping")
-                for output_key, state_key in config.output_mapping.items():
-                    if output_key in result_dict:
-                        updates[state_key] = result_dict[output_key]
-                        logger.debug(f"Mapped {output_key} → {state_key}")
-                    else:
-                        logger.warning(f"Output key '{output_key}' not found in model")
-            else:
-                # No mapping - add the model under its class name
-                updates[model_name] = result
-                logger.debug(f"Added model as {model_name}")
+            # No mapping - add the model under its class name
+            updates[model_name] = result
+            logger.debug(f"Added model as {model_name}")
 
-                # Also add individual model fields to the state
-                updates.update(result_dict)
-                logger.debug("Added all model fields to state")
+            # Also add individual model fields to the state
+            updates.update(result_dict)
+            logger.debug("Added all model fields to state")
 
         # Special handling for BaseMessage subtypes
         if isinstance(result, BaseMessage):
@@ -716,7 +705,7 @@ def handle_command_pattern(result: Any, config: NodeConfig) -> Any:
                             f"Called callable update, got type: {type(update_data).__name__}"
                         )
                     except Exception as e:
-                        logger.error(f"Error calling update(): {e}")
+                        logger.exception(f"Error calling update(): {e}")
                         update_data = {"error": str(e)}
                 else:
                     # Use as attribute
@@ -740,10 +729,10 @@ def handle_command_pattern(result: Any, config: NodeConfig) -> Any:
         return result
 
     # Handle Send objects
-    elif isinstance(result, Send):
+    if isinstance(result, Send):
         logger.debug(f"Result is a Send object: node={result.node}")
         return result
-    elif isinstance(result, list) and all(isinstance(item, Send) for item in result):
+    if isinstance(result, list) and all(isinstance(item, Send) for item in result):
         logger.debug(f"Result is a list of Send objects: count={len(result)}")
         return result
 
@@ -775,7 +764,7 @@ def handle_command_pattern(result: Any, config: NodeConfig) -> Any:
 def create_error_result(e: Exception, config: NodeConfig) -> Any:
     """Create standardized error result."""
     logger = logging.getLogger("error_handling")
-    logger.debug(f"Creating error result for: {type(e).__name__}: {str(e)}")
+    logger.debug(f"Creating error result for: {type(e).__name__}: {e!s}")
 
     # Create error data
     error_data = {
@@ -863,8 +852,8 @@ class InvokableNodeProcessor:
                 return handle_command_pattern(processed_output, config)
 
             except Exception as e:
-                logger.error(f"Error in invokable node {config.name}: {str(e)}")
-                logger.error(traceback.format_exc())
+                logger.exception(f"Error in invokable node {config.name}: {e!s}")
+                logger.exception(traceback.format_exc())
 
                 # Create error result
                 return create_error_result(e, config)
@@ -959,8 +948,8 @@ class AsyncInvokableNodeProcessor:
                     return handle_command_pattern(processed_output, config)
 
                 except Exception as e:
-                    logger.error(f"Error in async invocation: {str(e)}")
-                    logger.error(traceback.format_exc())
+                    logger.exception(f"Error in async invocation: {e!s}")
+                    logger.exception(traceback.format_exc())
 
                     # Try the sync method if ainvoke failed
                     if hasattr(engine, "invoke") and callable(engine.invoke):
@@ -976,13 +965,12 @@ class AsyncInvokableNodeProcessor:
 
                         # Handle command pattern
                         return handle_command_pattern(processed_output, config)
-                    else:
-                        # Re-raise the original error
-                        raise
+                    # Re-raise the original error
+                    raise
 
             except Exception as e:
-                logger.error(f"Error in async invokable node {config.name}: {str(e)}")
-                logger.error(traceback.format_exc())
+                logger.exception(f"Error in async invokable node {config.name}: {e!s}")
+                logger.exception(traceback.format_exc())
 
                 # Create error result
                 return create_error_result(e, config)
@@ -1032,7 +1020,7 @@ class CallableNodeProcessor:
 
                 # For callable functions, we assume they might directly return Command/Send
                 # so we don't process the output further unless it's a dict
-                if isinstance(result, (Command, Send)) or (
+                if isinstance(result, Command | Send) or (
                     isinstance(result, list)
                     and all(isinstance(x, Send) for x in result)
                 ):
@@ -1046,8 +1034,8 @@ class CallableNodeProcessor:
                 return handle_command_pattern(processed_output, config)
 
             except Exception as e:
-                logger.error(f"Error in callable node {config.name}: {str(e)}")
-                logger.error(traceback.format_exc())
+                logger.exception(f"Error in callable node {config.name}: {e!s}")
+                logger.exception(traceback.format_exc())
 
                 # Create error result
                 return create_error_result(e, config)
@@ -1107,7 +1095,7 @@ class AsyncNodeProcessor:
                 logger.debug(f"Async function returned: {type(result).__name__}")
 
                 # Handle Command/Send directly
-                if isinstance(result, (Command, Send)) or (
+                if isinstance(result, Command | Send) or (
                     isinstance(result, list)
                     and all(isinstance(x, Send) for x in result)
                 ):
@@ -1121,8 +1109,8 @@ class AsyncNodeProcessor:
                 return handle_command_pattern(processed_output, config)
 
             except Exception as e:
-                logger.error(f"Error in async node {config.name}: {str(e)}")
-                logger.error(traceback.format_exc())
+                logger.exception(f"Error in async node {config.name}: {e!s}")
+                logger.exception(traceback.format_exc())
 
                 # Create error result
                 return create_error_result(e, config)
@@ -1189,8 +1177,8 @@ class MappingNodeProcessor:
                 return result
 
             except Exception as e:
-                logger.error(f"Error in mapping node {config.name}: {str(e)}")
-                logger.error(traceback.format_exc())
+                logger.exception(f"Error in mapping node {config.name}: {e!s}")
+                logger.exception(traceback.format_exc())
 
                 # For mapping nodes, return empty list on error
                 logger.debug("Returning empty list due to error")
@@ -1227,8 +1215,8 @@ class GenericNodeProcessor:
                 return handle_command_pattern(result, config)
 
             except Exception as e:
-                logger.error(f"Error in generic node {config.name}: {str(e)}")
-                logger.error(traceback.format_exc())
+                logger.exception(f"Error in generic node {config.name}: {e!s}")
+                logger.exception(traceback.format_exc())
 
                 # Create error result
                 return create_error_result(e, config)

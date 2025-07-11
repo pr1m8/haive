@@ -1,5 +1,4 @@
-"""
-Tavily Search API Retriever implementation for the Haive framework.
+"""Tavily Search API Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Tavily Search API retriever, which
 retrieves web search results using the Tavily search API service.
@@ -31,8 +30,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.TAVILY_SEARCH_API)
 class TavilySearchAPIRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for Tavily Search API retriever in the Haive framework.
+    """Configuration for Tavily Search API retriever in the Haive framework.
 
     This retriever searches the web using the Tavily Search API and returns
     web search results as documents. It requires a Tavily API key.
@@ -67,7 +65,7 @@ class TavilySearchAPIRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None, description="Tavily API key (auto-resolved from TAVILY_API_KEY)"
     )
 
@@ -84,11 +82,11 @@ class TavilySearchAPIRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         description="Maximum number of search results to retrieve",
     )
 
-    include_domains: Optional[List[str]] = Field(
+    include_domains: list[str] | None = Field(
         default=None, description="List of domains to include in search results"
     )
 
-    exclude_domains: Optional[List[str]] = Field(
+    exclude_domains: list[str] | None = Field(
         default=None, description="List of domains to exclude from search results"
     )
 
@@ -100,17 +98,17 @@ class TavilySearchAPIRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         default=False, description="Whether to include raw content from web pages"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Tavily Search API retriever."""
         return {
             "query": (str, Field(description="Web search query")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Tavily Search API retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list, description="Web search results from Tavily"
                 ),
@@ -118,8 +116,7 @@ class TavilySearchAPIRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a Tavily Search API retriever from this configuration.
+        """Create a Tavily Search API retriever from this configuration.
 
         Returns:
             TavilySearchAPIRetriever: Instantiated retriever ready for web search.

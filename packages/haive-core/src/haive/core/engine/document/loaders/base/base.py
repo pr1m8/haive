@@ -3,13 +3,14 @@
 This module provides base classes for document loaders used by the document engine.
 """
 
-import logging
 from abc import ABC, abstractmethod
+import logging
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
 from langchain_core.documents import Document
 from pydantic import BaseModel
+
 
 # Removed unused imports
 
@@ -20,7 +21,7 @@ class BaseDocumentLoader(ABC):
     """Abstract base class for document loaders."""
 
     def __init__(
-        self, source: Union[str, Path], loader_options: Optional[Dict[str, Any]] = None
+        self, source: str | Path, loader_options: dict[str, Any] | None = None
     ):
         """Initialize the loader.
 
@@ -32,28 +33,26 @@ class BaseDocumentLoader(ABC):
         self.loader_options = loader_options or {}
 
     @abstractmethod
-    def load(self) -> List[Document]:
+    def load(self) -> list[Document]:
         """Load documents from the source.
 
         Returns:
             List of loaded documents
         """
-        pass
 
     @abstractmethod
-    def lazy_load(self) -> List[Document]:
+    def lazy_load(self) -> list[Document]:
         """Lazily load documents from the source.
 
         Returns:
             Iterator of loaded documents
         """
-        pass
 
 
 class SimpleDocumentLoader(BaseDocumentLoader):
     """Simple document loader for basic file types."""
 
-    def load(self) -> List[Document]:
+    def load(self) -> list[Document]:
         """Load documents from the source."""
         try:
             if isinstance(self.source, dict):
@@ -73,21 +72,20 @@ class SimpleDocumentLoader(BaseDocumentLoader):
 
             if source_path.is_file():
                 return self._load_file(source_path)
-            elif source_path.is_dir():
+            if source_path.is_dir():
                 return self._load_directory(source_path)
-            else:
-                # Assume it's a URL or other remote source
-                return self._load_remote(str(self.source))
+            # Assume it's a URL or other remote source
+            return self._load_remote(str(self.source))
 
         except Exception as e:
-            logger.error(f"Failed to load from {self.source}: {e}")
+            logger.exception(f"Failed to load from {self.source}: {e}")
             return []
 
-    def lazy_load(self) -> List[Document]:
+    def lazy_load(self) -> list[Document]:
         """Lazily load documents (same as load for this simple implementation)."""
         return self.load()
 
-    def _load_file(self, file_path: Path) -> List[Document]:
+    def _load_file(self, file_path: Path) -> list[Document]:
         """Load a single file."""
         try:
             # Read file content
@@ -99,7 +97,7 @@ class SimpleDocumentLoader(BaseDocumentLoader):
                 ".html",
                 ".csv",
             ]:
-                with open(file_path, "r", encoding="utf-8") as f:
+                with open(file_path, encoding="utf-8") as f:
                     content = f.read()
             else:
                 # For binary files, just include metadata
@@ -116,10 +114,10 @@ class SimpleDocumentLoader(BaseDocumentLoader):
             return [Document(page_content=content, metadata=metadata)]
 
         except Exception as e:
-            logger.error(f"Failed to load file {file_path}: {e}")
+            logger.exception(f"Failed to load file {file_path}: {e}")
             return []
 
-    def _load_directory(self, dir_path: Path) -> List[Document]:
+    def _load_directory(self, dir_path: Path) -> list[Document]:
         """Load all files from a directory."""
         documents = []
 
@@ -157,10 +155,10 @@ class SimpleDocumentLoader(BaseDocumentLoader):
             return documents
 
         except Exception as e:
-            logger.error(f"Failed to load directory {dir_path}: {e}")
+            logger.exception(f"Failed to load directory {dir_path}: {e}")
             return []
 
-    def _load_remote(self, url: str) -> List[Document]:
+    def _load_remote(self, url: str) -> list[Document]:
         """Load from a remote URL (placeholder implementation)."""
         try:
             if url.startswith(("http://", "https://")):
@@ -185,7 +183,7 @@ class SimpleDocumentLoader(BaseDocumentLoader):
                     logger.warning("requests library not available for URL loading")
                     return []
                 except Exception as e:
-                    logger.error(f"Failed to load URL {url}: {e}")
+                    logger.exception(f"Failed to load URL {url}: {e}")
                     return []
             else:
                 # Handle other protocols as text
@@ -198,14 +196,14 @@ class SimpleDocumentLoader(BaseDocumentLoader):
                 return [Document(page_content=content, metadata=metadata)]
 
         except Exception as e:
-            logger.error(f"Failed to load remote source {url}: {e}")
+            logger.exception(f"Failed to load remote source {url}: {e}")
             return []
 
 
 class TextDocumentLoader(BaseDocumentLoader):
     """Document loader for plain text input."""
 
-    def load(self) -> List[Document]:
+    def load(self) -> list[Document]:
         """Load documents from text input."""
         content = str(self.source)
         metadata = {
@@ -216,50 +214,40 @@ class TextDocumentLoader(BaseDocumentLoader):
 
         return [Document(page_content=content, metadata=metadata)]
 
-    def lazy_load(self) -> List[Document]:
+    def lazy_load(self) -> list[Document]:
         """Lazily load documents (same as load for text)."""
         return self.load()
 
 
 class LoaderConfig(ABC):
-    """
-    Config for a loader (legacy interface).
-    """
+    """Config for a loader (legacy interface)."""
 
     # loader
     @abstractmethod
-    def load(self, input: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Load the data from the input.
-        """
+    def load(self, input: dict[str, Any]) -> dict[str, Any]:
+        """Load the data from the input."""
         raise NotImplementedError("Subclasses must implement this method.")
 
     @classmethod
     def from_config(cls, config: BaseModel) -> "LoaderConfig":
-        """
-        Create a loader from a config.
-        """
+        """Create a loader from a config."""
         return cls(**config.model_dump())
 
     @classmethod
-    def from_dict(cls, config: Dict) -> "LoaderConfig":
-        """
-        Create a loader from a dict.
-        """
+    def from_dict(cls, config: dict) -> "LoaderConfig":
+        """Create a loader from a dict."""
         return cls(**config)
 
     @classmethod
     def create_runnable(cls, config: BaseModel) -> "LoaderConfig":
-        """
-        Create a runnable from a config.
-        """
+        """Create a runnable from a config."""
         return cls.from_config(config)
 
 
 # Export base classes
 __all__ = [
     "BaseDocumentLoader",
+    "LoaderConfig",  # Legacy
     "SimpleDocumentLoader",
     "TextDocumentLoader",
-    "LoaderConfig",  # Legacy
 ]

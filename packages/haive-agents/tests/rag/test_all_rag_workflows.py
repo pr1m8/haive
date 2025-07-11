@@ -1,4 +1,4 @@
-"""Comprehensive Test Suite for All RAG Workflows
+"""Comprehensive Test Suite for All RAG Workflows.
 
 Tests all RAG agent implementations to ensure they work correctly.
 """
@@ -6,11 +6,6 @@ Tests all RAG agent implementations to ensure they work correctly.
 from typing import List
 
 import pytest
-from haive.core.fixtures.documents import conversation_documents
-from haive.core.models.llm.base import AzureLLMConfig
-from langchain_core.documents import Document
-from langchain_core.messages import AIMessage, HumanMessage
-
 from haive.agents.rag.adaptive.agent import AdaptiveRAGAgent
 
 # Import all RAG agents
@@ -20,6 +15,10 @@ from haive.agents.rag.hyde.agent_v2 import HyDERAGAgentV2
 from haive.agents.rag.memory_aware.agent import MemoryAwareRAGAgent
 from haive.agents.rag.multi_query.agent import MultiQueryRAGAgent
 from haive.agents.rag.simple.agent import SimpleRAGAgent
+from haive.core.fixtures.documents import conversation_documents
+from haive.core.models.llm.base import AzureLLMConfig
+from langchain_core.documents import Document
+from langchain_core.messages import AIMessage, HumanMessage
 
 
 class TestAllRAGWorkflows:
@@ -70,7 +69,6 @@ class TestAllRAGWorkflows:
 
         assert result is not None
         assert "retrieved_documents" in result
-        print("✅ BaseRAGAgent test passed")
 
     def test_simple_rag_agent(self, test_documents, llm_config):
         """Test SimpleRAGAgent workflow."""
@@ -83,7 +81,6 @@ class TestAllRAGWorkflows:
         assert result is not None
         # Should have both retrieval and answer generation
         assert len(agent.agents) == 2
-        print("✅ SimpleRAGAgent test passed")
 
     def test_corrective_rag_agent(self, test_documents, llm_config):
         """Test CorrectiveRAGAgentV2 with document grading."""
@@ -99,7 +96,6 @@ class TestAllRAGWorkflows:
         result2 = agent.run({"query": "What is quantum computing?"})
         assert result2 is not None
 
-        print("✅ CorrectiveRAGAgentV2 test passed")
 
     def test_hyde_rag_agent(self, test_documents, llm_config):
         """Test HyDERAGAgentV2 with hypothetical document generation."""
@@ -112,7 +108,6 @@ class TestAllRAGWorkflows:
         assert result is not None
         # Should generate hypothetical document first
         assert len(agent.agents) == 3
-        print("✅ HyDERAGAgentV2 test passed")
 
     def test_multi_query_rag_agent(self, test_documents, llm_config):
         """Test MultiQueryRAGAgent with query expansion."""
@@ -126,7 +121,6 @@ class TestAllRAGWorkflows:
         # Should have query expansion
         if "query_variations" in result:
             assert isinstance(result["query_variations"], dict)
-        print("✅ MultiQueryRAGAgent test passed")
 
     def test_adaptive_rag_agent(self, test_documents, llm_config):
         """Test AdaptiveRAGAgent with complexity routing."""
@@ -144,7 +138,6 @@ class TestAllRAGWorkflows:
         )
         assert result2 is not None
 
-        print("✅ AdaptiveRAGAgent test passed")
 
     def test_memory_aware_rag_agent(self, test_documents, llm_config):
         """Test MemoryAwareRAGAgent with conversation history."""
@@ -162,7 +155,6 @@ class TestAllRAGWorkflows:
         result = agent.run({"messages": messages, "query": "Tell me more about it"})
 
         assert result is not None
-        print("✅ MemoryAwareRAGAgent test passed")
 
     def test_rag_comparison(self, test_documents, llm_config):
         """Compare different RAG strategies on the same query."""
@@ -181,14 +173,13 @@ class TestAllRAGWorkflows:
         results = {}
         for name, agent in agents.items():
             try:
-                result = agent.run({"query": query})
+                agent.run({"query": query})
                 results[name] = "✅ Success"
             except Exception as e:
                 results[name] = f"❌ Failed: {str(e)[:50]}"
 
-        print("\nRAG Strategy Comparison:")
         for name, status in results.items():
-            print(f"  {name}: {status}")
+            pass
 
         # At least some should succeed
         success_count = sum(1 for r in results.values() if "Success" in r)
@@ -205,17 +196,15 @@ class TestAllRAGWorkflows:
         # Test SimpleRAG with edge cases
         try:
             agent1 = SimpleRAGAgent.from_documents(empty_docs, llm_config)
-            result1 = agent1.run({"query": "test"})
-            print("✅ SimpleRAG handles empty documents")
+            agent1.run({"query": "test"})
         except Exception as e:
-            print(f"⚠️  SimpleRAG with empty docs: {e}")
+            passe}")
 
         try:
             agent2 = SimpleRAGAgent.from_documents(single_doc, llm_config)
-            result2 = agent2.run({"query": "test"})
-            print("✅ SimpleRAG handles single document")
+            agent2.run({"query": "test"})
         except Exception as e:
-            print(f"⚠️  SimpleRAG with single doc: {e}")
+            passe}")
 
 
 if __name__ == "__main__":

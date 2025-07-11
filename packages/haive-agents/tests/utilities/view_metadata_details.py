@@ -12,7 +12,6 @@ def view_metadata_details():
     """View detailed metadata from checkpoints."""
     conn_string = os.environ.get("POSTGRES_CONNECTION_STRING")
     if not conn_string:
-        print("❌ POSTGRES_CONNECTION_STRING not set")
         return
 
     try:
@@ -21,7 +20,7 @@ def view_metadata_details():
                 # Get recent checkpoints with metadata
                 cur.execute(
                     """
-                    SELECT 
+                    SELECT
                         thread_id,
                         checkpoint_ns,
                         checkpoint_id,
@@ -38,8 +37,6 @@ def view_metadata_details():
 
                 checkpoints = cur.fetchall()
 
-                print(f"\n📊 Test Checkpoints Found: {len(checkpoints)}")
-                print("=" * 80)
 
                 for cp in checkpoints:
                     thread_id = cp[0]
@@ -47,18 +44,12 @@ def view_metadata_details():
                     checkpoint_id = cp[2]
                     parent_id = cp[3]
                     cp_type = cp[4]
-                    checkpoint_data = cp[5]
+                    cp[5]
                     metadata = cp[6]
 
-                    print(f"\n🔍 Thread: {thread_id}")
-                    print(f"   Checkpoint ID: {checkpoint_id}")
-                    print(f"   Parent ID: {parent_id}")
-                    print(f"   Type: {cp_type}")
-                    print(f"   Namespace: {checkpoint_ns}")
 
                     # Parse and display metadata
                     if metadata:
-                        print("\n   📋 METADATA:")
                         try:
                             meta_dict = (
                                 json.loads(metadata)
@@ -68,26 +59,19 @@ def view_metadata_details():
 
                             # Check for step number
                             if "step" in meta_dict:
-                                print(f"      Step: {meta_dict['step']}")
+                                pass
 
                             # Check for langgraph metadata
                             if "langgraph_node" in meta_dict:
-                                print(f"      Node: {meta_dict['langgraph_node']}")
+                                pass
                             if "langgraph_triggers" in meta_dict:
-                                print(
-                                    f"      Triggers: {meta_dict['langgraph_triggers']}"
-                                )
+                                pass
                             if "langgraph_checkpoint_ns" in meta_dict:
-                                print(
-                                    f"      LG Namespace: {meta_dict['langgraph_checkpoint_ns']}"
-                                )
+                                pass
 
                             # Check for writes (where errors might be)
                             if "writes" in meta_dict:
                                 writes = meta_dict["writes"]
-                                print(
-                                    f"      Writes: {list(writes.keys()) if isinstance(writes, dict) else 'present'}"
-                                )
 
                                 # Look for process_response in writes
                                 for node_name, node_data in writes.items():
@@ -101,9 +85,6 @@ def view_metadata_details():
                                             and "contributions" in process_resp
                                         ):
                                             contribs = process_resp["contributions"]
-                                            print(
-                                                f"      → {node_name} has {len(contribs)} contributions"
-                                            )
 
                                             # Check for errors in contributions
                                             error_count = 0
@@ -118,28 +99,20 @@ def view_metadata_details():
                                                         in content.lower()
                                                     ):
                                                         error_count += 1
-                                                        print(
-                                                            f"         ❌ Prepared statement error from {contrib[0]}"
-                                                        )
                                                     elif "error" in content.lower():
                                                         error_count += 1
-                                                        print(
-                                                            f"         ❌ Error from {contrib[0]}: {content[:50]}..."
-                                                        )
 
                                             if error_count == 0:
-                                                print(
-                                                    f"         ✅ No errors in contributions"
-                                                )
+                                                pass
 
                             # Check for errors in metadata
                             if "error" in meta_dict:
-                                print(f"      ❌ ERROR: {meta_dict['error']}")
+                                pass")
 
                             # Show other keys
                             other_keys = [
                                 k
-                                for k in meta_dict.keys()
+                                for k in meta_dict
                                 if k
                                 not in [
                                     "step",
@@ -151,20 +124,17 @@ def view_metadata_details():
                                 ]
                             ]
                             if other_keys:
-                                print(f"      Other keys: {other_keys[:5]}...")
+                                pass
 
                         except Exception as e:
-                            print(f"      ⚠️  Error parsing metadata: {e}")
-                            print(f"      Raw metadata type: {type(metadata)}")
                     else:
-                        print("   📋 No metadata")
+                        passa")
 
-                    print("-" * 80)
 
                 # Get summary stats
                 cur.execute(
                     """
-                    SELECT 
+                    SELECT
                         COUNT(*) as total,
                         COUNT(DISTINCT thread_id) as unique_threads,
                         COUNT(CASE WHEN metadata::text LIKE '%prepared statement%' THEN 1 END) as ps_errors,
@@ -176,14 +146,9 @@ def view_metadata_details():
 
                 stats = cur.fetchone()
 
-                print(f"\n📊 SUMMARY STATS (Test Threads):")
-                print(f"   Total checkpoints: {stats[0]}")
-                print(f"   Unique threads: {stats[1]}")
-                print(f"   Prepared statement errors: {stats[2]}")
-                print(f"   Total errors: {stats[3]}")
 
     except Exception as e:
-        print(f"❌ Database error: {e}")
+        pass")
 
 
 if __name__ == "__main__":

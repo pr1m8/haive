@@ -1,5 +1,4 @@
-"""
-Tests for AgentConfig with the new IO-to-State schema composition approach.
+"""Tests for AgentConfig with the new IO-to-State schema composition approach.
 
 These tests verify that the AgentConfig correctly composes state schemas from
 input and output schemas, rather than deriving input/output schemas from state schemas.
@@ -17,6 +16,7 @@ from haive.core.models.llm.base import AzureLLMConfig
 from haive.core.schema.state_schema import StateSchema
 from haive.core.schema.ui import SchemaUI
 
+
 # Set up logging for tests
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -25,17 +25,17 @@ logger = logging.getLogger(__name__)
 class CustomInputSchema(BaseModel):
     """Custom input schema for testing."""
 
-    messages: List[BaseMessage] = Field(default_factory=list)
+    messages: list[BaseMessage] = Field(default_factory=list)
     query: str = Field(default="", description="User query")
-    context: List[str] = Field(default_factory=list, description="Context documents")
+    context: list[str] = Field(default_factory=list, description="Context documents")
 
 
 class CustomOutputSchema(BaseModel):
     """Custom output schema for testing."""
 
-    messages: List[BaseMessage] = Field(default_factory=list)
+    messages: list[BaseMessage] = Field(default_factory=list)
     response: str = Field(default="", description="Generated response")
-    sources: List[Dict[str, Any]] = Field(
+    sources: list[dict[str, Any]] = Field(
         default_factory=list, description="Source documents"
     )
     confidence: float = Field(default=0.0, description="Confidence score")
@@ -85,8 +85,6 @@ def test_agent_io_to_state_composition():
 
     # Our implementation uses composition rather than inheritance
     # So we shouldn't expect the state schema to be a subclass of input/output schemas
-    # assert issubclass(state_schema, CustomInputSchema)
-    # assert issubclass(state_schema, CustomOutputSchema)
 
     # Display schema with SchemaUI if available
     try:

@@ -8,9 +8,9 @@ agent pattern works correctly with real agent implementations.
 from typing import Any, Dict, List
 from unittest.mock import MagicMock, Mock
 
-import pytest
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 from pydantic import ValidationError
+import pytest
 
 from haive.core.graph.node.meta_agent_node import MetaAgentNodeConfig
 from haive.core.schema.prebuilt.meta_state import MetaStateSchema
@@ -26,7 +26,7 @@ class MockAgent:
         self.engine = self.engines["main"]
         self.call_count = 0
 
-    def run(self, input_data: Dict[str, Any], **config) -> Dict[str, Any]:
+    def run(self, input_data: dict[str, Any], **config) -> dict[str, Any]:
         """Mock run method."""
         self.call_count += 1
 
@@ -37,14 +37,14 @@ class MockAgent:
         response = AIMessage(content=f"Response from {self.name}")
 
         return {
-            "messages": messages + [response],
+            "messages": [*messages, response],
             "agent_response": f"Processed by {self.name}",
             "call_count": self.call_count,
         }
 
     def invoke(
-        self, input_data: Dict[str, Any], config: Dict[str, Any] = None
-    ) -> Dict[str, Any]:
+        self, input_data: dict[str, Any], config: dict[str, Any] | None = None
+    ) -> dict[str, Any]:
         """Mock invoke method."""
         return self.run(input_data, **(config or {}))
 
@@ -302,10 +302,7 @@ class TestMetaAgentNodeConfig:
         assert hasattr(result, "update") or hasattr(result, "arg")
 
         # The result should contain updated state
-        if hasattr(result, "update"):
-            update_data = result.update
-        else:
-            update_data = result.arg
+        update_data = result.update if hasattr(result, "update") else result.arg
 
         assert update_data["execution_status"] == "completed"
         assert "agent_output" in update_data
@@ -321,10 +318,7 @@ class TestMetaAgentNodeConfig:
         result = node(meta_state)
 
         # Should get a result with error information
-        if hasattr(result, "update"):
-            update_data = result.update
-        else:
-            update_data = result.arg
+        update_data = result.update if hasattr(result, "update") else result.arg
 
         assert update_data["execution_status"] == "error"
         assert update_data["error_info"] is not None
@@ -405,7 +399,7 @@ class TestMetaStateIntegration:
             agent=parent_agent, messages=[HumanMessage(content="Parent message")]
         )
 
-        child_state = MetaStateSchema(
+        MetaStateSchema(
             agent=child_agent, messages=[HumanMessage(content="Child message")]
         )
 

@@ -7,7 +7,7 @@
     "description": "Estimate the average age of a person based on their first name, with optional country filtering.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.760139",
+    "timestamp": "2025-07-10T19:45:28.988486",
     "schema": {
       "description": "Estimate the average age of a person based on their first name.\n\nThis function queries the Agify.io API to get an age estimation based on the provided\nfirst name. The estimation can be optionally filtered by country.\n\nArgs:\n    name (str): The first name to estimate age for.\n    country_id (Optional[str], optional): Two-letter country code (ISO 3166-1 alpha-2)\n        to filter results by country. Defaults to None (worldwide data).\n\nReturns:\n    AgifyResponse: Object containing the age estimation and related metadata.\n\nRaises:\n    requests.RequestException: If the API request fails.",
       "properties": {
@@ -47,7 +47,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.760139",
+      "timestamp": "2025-07-10T19:45:28.988486",
       "category": "individual_tools"
     }
   },

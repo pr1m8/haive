@@ -1,5 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
+
 # Initial response prompt
 initial_prompt = ChatPromptTemplate.from_messages(
     [

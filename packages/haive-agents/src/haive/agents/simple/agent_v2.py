@@ -1,5 +1,4 @@
-"""
-SimpleAgent V2 - Uses V2 validation node + router system.
+"""SimpleAgent V2 - Uses V2 validation node + router system.
 
 This version uses the V2 validation system that can properly:
 1. Add ToolMessages to state for Pydantic model validation
@@ -14,8 +13,9 @@ Key improvements over V1:
 """
 
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Literal, Optional, Union
 
+from haive.agents.base.agent import Agent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.node.parser_node_config import ParserNodeConfig
@@ -27,13 +27,13 @@ from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.models.llm.base import LLMConfig
 from haive.core.schema.schema_composer import SchemaComposer
 from langchain_core.messages import AIMessage
+
+# Import BaseOutputParser to ensure it's available for LangGraph type evaluation
 from langchain_core.output_parsers.base import BaseOutputParser
 from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
 from langgraph.graph import END, START
 from langgraph.types import Command
-from pydantic import BaseModel, Field, field_validator
-
-from haive.agents.base.agent import Agent
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 logger = logging.getLogger(__name__)
 
@@ -89,7 +89,7 @@ class SimpleAgentV2(Agent):
     structured_output_model: type[BaseModel] | None = Field(
         default=None, description="Structured output model"
     )
-    structured_output_version: int | str | None = Field(
+    structured_output_version: Literal["v1", "v2"] | None = Field(
         default=None, description="Structured output version"
     )
 
@@ -115,11 +115,10 @@ class SimpleAgentV2(Agent):
     # NON-SYNCED FIELDS (same as V1)
     # ========================================================================
 
-    output_parser: BaseOutputParser | None = Field(
-        default=None, description="Output parser"
-    )
+    # Note: In agent context, output parsing is handled by parser nodes,
+    # not by storing parser instances. These fields track configuration only.
     output_parser_field: str | None = Field(
-        default=None, description="Output parser field name"
+        default=None, description="Output parser field name", exclude=True
     )
 
     # ========================================================================
@@ -285,8 +284,10 @@ class SimpleAgentV2(Agent):
             or getattr(self.engine, "structured_output_model", None)
         )
 
-        # Check for output parser
-        has_output_parser = self.output_parser is not None
+        # Check for output parser in engine (not in agent)
+        has_output_parser = bool(
+            getattr(self.engine, "output_parser", None) is not None
+        )
 
         # Check for pydantic tools
         tool_routes = self.get_tool_routes()
@@ -414,13 +415,13 @@ class SimpleAgentV2(Agent):
         """Override to ensure state includes required fields."""
         compiled = super().create_runnable(runnable_config)
 
-        # Wrap to inject required state fields
+        # Wrap to inject additional state fields (engine is now handled in _prepare_input)
         original_ainvoke = compiled.ainvoke
 
         async def wrapped_ainvoke(input_data, config=None):
-            # Ensure required fields are in state
+            # Ensure additional state fields are available
             if isinstance(input_data, dict):
-                if "engine_name" not in input_data:
+                if "engine_name" not in input_data and self.engine:
                     input_data["engine_name"] = self.engine.name
                 if "tool_routes" not in input_data:
                     input_data["tool_routes"] = self.get_tool_routes()

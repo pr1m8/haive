@@ -1,12 +1,11 @@
-"""
-Dynamic Choice Model Builder with Protocol-based Generic Options Support
+"""Dynamic Choice Model Builder with Protocol-based Generic Options Support.
 
 Uses Protocol to ensure options have extractable names, making it flexible for
 strings, dicts, BaseModels, or any custom class with a name attribute.
 """
 
-import logging
 from enum import Enum
+import logging
 from typing import (
     Any,
     Dict,
@@ -35,23 +34,23 @@ from rich.tree import Tree
 
 from haive.core.common.types.protocols.general_protocols import Nameable
 
+
 console = Console()
 logger = logging.getLogger(__name__)
 
 
 # Generic type that can be string, dict with name key, or any object with name attribute
-OptionItem = TypeVar("OptionItem", str, Dict[str, Any], Nameable)
+OptionItem = TypeVar("OptionItem", str, dict[str, Any], Nameable)
 
 
 class DynamicChoiceModel(BaseModel, Generic[OptionItem]):
-    """
-    Dynamic choice model builder that is itself a BaseModel.
+    """Dynamic choice model builder that is itself a BaseModel.
     Can be called to generate new choice models with current options.
     Supports strings, dicts with name keys, or any object with name attribute.
     """
 
     # Core configuration
-    options: List[OptionItem] = Field(
+    options: list[OptionItem] = Field(
         default_factory=list, description="Current options list"
     )
     name_field: str = Field(
@@ -63,8 +62,8 @@ class DynamicChoiceModel(BaseModel, Generic[OptionItem]):
     )
 
     # Private attributes (Pydantic v2 style)
-    _current_model: Optional[Type[BaseModel]] = PrivateAttr(default=None)
-    _option_names: List[str] = PrivateAttr(default_factory=list)
+    _current_model: type[BaseModel] | None = PrivateAttr(default=None)
+    _option_names: list[str] = PrivateAttr(default_factory=list)
     _model_counter: int = PrivateAttr(default=0)
 
     class Config:
@@ -76,25 +75,24 @@ class DynamicChoiceModel(BaseModel, Generic[OptionItem]):
         self._debug_print_initial()
 
     def _extract_name_from_option(self, option: OptionItem) -> str:
-        """Extract name from an option regardless of its type"""
+        """Extract name from an option regardless of its type."""
         if isinstance(option, str):
             return option
-        elif isinstance(option, dict):
+        if isinstance(option, dict):
             name = option.get(self.name_field)
             if name is None:
                 raise ValueError(
                     f"Dict option missing '{self.name_field}' key: {option}"
                 )
             return str(name)
-        elif hasattr(option, self.name_field):
+        if hasattr(option, self.name_field):
             # Works for BaseModel, dataclass, or any object with name attribute
             return str(getattr(option, self.name_field))
-        else:
-            # Fallback to string representation
-            return str(option)
+        # Fallback to string representation
+        return str(option)
 
-    def _extract_option_names(self) -> List[str]:
-        """Extract all option names"""
+    def _extract_option_names(self) -> list[str]:
+        """Extract all option names."""
         names = []
 
         for option in self.options:
@@ -112,7 +110,7 @@ class DynamicChoiceModel(BaseModel, Generic[OptionItem]):
         return names
 
     def _regenerate_model(self) -> None:
-        """Generate new choice model with current options"""
+        """Generate new choice model with current options."""
         self._option_names = self._extract_option_names()
         self._model_counter += 1
 
@@ -143,24 +141,24 @@ class DynamicChoiceModel(BaseModel, Generic[OptionItem]):
 
         logger.debug(f"Generated model {model_name} with options: {valid_options}")
 
-    def __call__(self) -> Type[BaseModel]:
-        """Make the builder callable to return current choice model"""
+    def __call__(self) -> type[BaseModel]:
+        """Make the builder callable to return current choice model."""
         if self._current_model is None:
             self._regenerate_model()
         return self._current_model
 
     @property
-    def current_model(self) -> Type[BaseModel]:
-        """Get current choice model"""
+    def current_model(self) -> type[BaseModel]:
+        """Get current choice model."""
         return self()
 
     @property
-    def option_names(self) -> List[str]:
-        """Get current option names"""
+    def option_names(self) -> list[str]:
+        """Get current option names."""
         return self._option_names.copy()
 
     def add_option(self, option: OptionItem) -> None:
-        """Add a new option and regenerate model"""
+        """Add a new option and regenerate model."""
         if option not in self.options:
             self.options.append(option)
             self._regenerate_model()
@@ -172,7 +170,7 @@ class DynamicChoiceModel(BaseModel, Generic[OptionItem]):
             console.print(f"[yellow]Option '{name}' already exists[/yellow]")
 
     def remove_option(self, option: OptionItem) -> bool:
-        """Remove an option and regenerate model"""
+        """Remove an option and regenerate model."""
         name = self._extract_name_from_option(option)
 
         if name == "END" and self.include_end:
@@ -183,7 +181,7 @@ class DynamicChoiceModel(BaseModel, Generic[OptionItem]):
         for i, existing_option in enumerate(self.options):
             existing_name = self._extract_name_from_option(existing_option)
             if existing_name == name:
-                removed_option = self.options.pop(i)
+                self.options.pop(i)
                 self._regenerate_model()
                 console.print(f"[red]➖ Removed option:[/red] {name}")
                 self._debug_print_change("REMOVE", name)
@@ -193,7 +191,7 @@ class DynamicChoiceModel(BaseModel, Generic[OptionItem]):
         return False
 
     def remove_option_by_name(self, name: str) -> bool:
-        """Remove option by name string"""
+        """Remove option by name string."""
         if name == "END" and self.include_end:
             console.print("[red]Cannot remove END option when include_end=True[/red]")
             return False
@@ -211,11 +209,11 @@ class DynamicChoiceModel(BaseModel, Generic[OptionItem]):
         return False
 
     def validate_choice(self, choice: str) -> bool:
-        """Test if a choice would be valid"""
+        """Test if a choice would be valid."""
         return choice in self._option_names
 
-    def test_model(self, test_choice: str) -> Optional[BaseModel]:
-        """Test the model with a choice and return instance if valid"""
+    def test_model(self, test_choice: str) -> BaseModel | None:
+        """Test the model with a choice and return instance if valid."""
         console.print(f"\n[blue]🧪 Testing choice: '{test_choice}'[/blue]")
 
         try:
@@ -230,7 +228,7 @@ class DynamicChoiceModel(BaseModel, Generic[OptionItem]):
             return None
 
     def _debug_print_initial(self) -> None:
-        """Print initial state"""
+        """Print initial state."""
         panel_content = f"""
 [bold]Options:[/bold] {', '.join(self._option_names)}
 [bold]Include END:[/bold] {self.include_end}
@@ -244,7 +242,7 @@ class DynamicChoiceModel(BaseModel, Generic[OptionItem]):
         )
 
     def _debug_print_change(self, action: str, option_name: str) -> None:
-        """Print state after change"""
+        """Print state after change."""
         action_color = "green" if action == "ADD" else "red"
         action_emoji = "➕" if action == "ADD" else "➖"
 
@@ -272,7 +270,7 @@ class DynamicChoiceModel(BaseModel, Generic[OptionItem]):
         console.print(Panel(tree, title="State Change", expand=False))
 
     def print_full_state(self) -> None:
-        """Print comprehensive state information"""
+        """Print comprehensive state information."""
         table = Table(title="🔍 Dynamic Choice Model State")
         table.add_column("Property", style="cyan", no_wrap=True)
         table.add_column("Value", style="green")
@@ -299,7 +297,7 @@ class DynamicChoiceModel(BaseModel, Generic[OptionItem]):
         console.print(table)
 
     def interactive_demo(self) -> None:
-        """Interactive demo mode"""
+        """Interactive demo mode."""
         console.print("\n[bold blue]🎮 Interactive Demo Mode[/bold blue]")
         console.print("Commands:")
         console.print("  add <option>     - Add string option")
@@ -316,9 +314,9 @@ class DynamicChoiceModel(BaseModel, Generic[OptionItem]):
 
                 if cmd.lower() == "quit":
                     break
-                elif cmd.lower() == "state":
+                if cmd.lower() == "state":
                     continue  # Will print state at top of loop
-                elif cmd.startswith("add "):
+                if cmd.startswith("add "):
                     option = cmd[4:].strip()
                     self.add_option(option)  # Add as string
                 elif cmd.startswith("remove "):

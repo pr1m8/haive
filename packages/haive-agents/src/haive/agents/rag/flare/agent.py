@@ -1,4 +1,4 @@
-"""FLARE (Forward-Looking Active REtrieval) RAG Agents
+"""FLARE (Forward-Looking Active REtrieval) RAG Agents.
 
 Implementation of FLARE RAG with forward-looking retrieval and iterative generation.
 Uses structured output models for planning and managing active retrieval decisions.
@@ -9,6 +9,10 @@ import re
 from enum import Enum
 from typing import Any, Dict, List, Optional, Union
 
+from haive.agents.base.agent import Agent
+from haive.agents.multi.base import ConditionalAgent, SequentialAgent
+from haive.agents.rag.base.agent import BaseRAGAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
@@ -17,11 +21,6 @@ from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field
-
-from haive.agents.base.agent import Agent
-from haive.agents.multi.base import ConditionalAgent, SequentialAgent
-from haive.agents.rag.base.agent import BaseRAGAgent
-from haive.agents.simple.agent import SimpleAgent
 
 logger = logging.getLogger(__name__)
 
@@ -56,13 +55,13 @@ class FLAREPlan(BaseModel):
     confidence_in_current: ConfidenceLevel = Field(
         description="Confidence in current generation"
     )
-    uncertainty_tokens: List[str] = Field(description="Tokens indicating uncertainty")
+    uncertainty_tokens: list[str] = Field(description="Tokens indicating uncertainty")
 
     # Retrieval planning
     retrieval_decision: RetrievalDecision = Field(
         description="Whether to retrieve more information"
     )
-    retrieval_queries: List[str] = Field(description="Specific queries for retrieval")
+    retrieval_queries: list[str] = Field(description="Specific queries for retrieval")
     retrieval_justification: str = Field(description="Why retrieval is needed")
 
     # Generation planning
@@ -80,7 +79,7 @@ class FLAREPlan(BaseModel):
         ge=0.0, le=1.0, description="Sufficiency of current evidence"
     )
 
-    planning_metadata: Dict[str, Any] = Field(
+    planning_metadata: dict[str, Any] = Field(
         description="Additional planning metadata"
     )
 
@@ -99,7 +98,7 @@ class FLAREResult(BaseModel):
     )
 
     # Retrieval analytics
-    retrieval_queries_used: List[str] = Field(description="All retrieval queries used")
+    retrieval_queries_used: list[str] = Field(description="All retrieval queries used")
     documents_retrieved: int = Field(description="Total documents retrieved")
     retrieval_efficiency: float = Field(
         ge=0.0, le=1.0, description="Retrieval efficiency score"
@@ -117,12 +116,12 @@ class FLAREResult(BaseModel):
     )
 
     # Iteration details
-    iteration_history: List[Dict[str, Any]] = Field(
+    iteration_history: list[dict[str, Any]] = Field(
         description="History of each iteration"
     )
-    retrieval_decisions: List[str] = Field(description="Retrieval decisions made")
+    retrieval_decisions: list[str] = Field(description="Retrieval decisions made")
 
-    processing_metadata: Dict[str, Any] = Field(description="Processing statistics")
+    processing_metadata: dict[str, Any] = Field(description="Processing statistics")
 
 
 # Enhanced prompts for FLARE
@@ -237,7 +236,6 @@ Focus on natural, evidence-based progression toward complete answer.""",
 
 def create_flare_planner_callable(llm_config: LLMConfig):
     """Create callable function for FLARE planning."""
-
     planning_engine = AugLLMConfig(
         llm_config=llm_config,
         prompt_template=FLARE_PLANNING_PROMPT,
@@ -245,7 +243,7 @@ def create_flare_planner_callable(llm_config: LLMConfig):
         output_key="flare_plan",
     )
 
-    def plan_flare_iteration(state: Dict[str, Any]) -> Dict[str, Any]:
+    def plan_flare_iteration(state: dict[str, Any]) -> dict[str, Any]:
         """Plan the next FLARE iteration."""
         query = getattr(state, "query", "")
         generation_so_far = getattr(state, "generation_so_far", "")
@@ -303,11 +301,11 @@ def create_flare_planner_callable(llm_config: LLMConfig):
 
 
 def create_active_retrieval_callable(
-    documents: List[Document], embedding_model: Optional[str] = None
+    documents: list[Document], embedding_model: str | None = None
 ):
     """Create callable function for active retrieval."""
 
-    def active_retrieve(state: Dict[str, Any]) -> Dict[str, Any]:
+    def active_retrieve(state: dict[str, Any]) -> dict[str, Any]:
         """Perform active retrieval based on FLARE plan."""
         retrieval_queries = getattr(state, "retrieval_queries", [])
 
@@ -387,8 +385,8 @@ class ActiveRetrievalAgent(Agent):
     """Agent that performs active retrieval based on FLARE plans."""
 
     name: str = "Active Retrieval"
-    documents: List[Document] = Field(description="Documents for retrieval")
-    embedding_model: Optional[str] = Field(default=None, description="Embedding model")
+    documents: list[Document] = Field(description="Documents for retrieval")
+    embedding_model: str | None = Field(default=None, description="Embedding model")
 
     def build_graph(self) -> BaseGraph:
         """Build active retrieval graph."""
@@ -413,8 +411,8 @@ class FLARERAGAgent(SequentialAgent):
     @classmethod
     def from_documents(
         cls,
-        documents: List[Document],
-        llm_config: Optional[LLMConfig] = None,
+        documents: list[Document],
+        llm_config: LLMConfig | None = None,
         max_iterations: int = 5,
         confidence_threshold: float = 0.7,
         **kwargs,
@@ -493,8 +491,8 @@ class FLARERAGAgent(SequentialAgent):
 
 # Factory function
 def create_flare_rag_agent(
-    documents: List[Document],
-    llm_config: Optional[LLMConfig] = None,
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
     flare_mode: str = "adaptive",
     **kwargs,
 ) -> FLARERAGAgent:
@@ -526,7 +524,7 @@ def create_flare_rag_agent(
 
 
 # I/O schema for compatibility
-def get_flare_rag_io_schema() -> Dict[str, List[str]]:
+def get_flare_rag_io_schema() -> dict[str, list[str]]:
     """Get I/O schema for FLARE RAG agents."""
     return {
         "inputs": [

@@ -5,12 +5,11 @@ Send mapping functionality for routing and state transformation.
 import logging
 from typing import Any, Callable, Dict, List, Optional
 
-from pydantic import BaseModel, Field
-
 from haive.core.graph.common.field_utils import extract_field
 
 # Import from common utilities
 from haive.core.graph.common.types import StateLike
+from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
 

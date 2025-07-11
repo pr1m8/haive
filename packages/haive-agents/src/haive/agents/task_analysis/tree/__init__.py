@@ -1,4 +1,4 @@
-"""Tree - TODO: Add brief description
+"""Tree - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

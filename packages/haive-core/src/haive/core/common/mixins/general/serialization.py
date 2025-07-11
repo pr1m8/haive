@@ -54,7 +54,7 @@ class SerializationMixin(BaseModel):
     it provides a complete solution for model persistence.
     """
 
-    def to_dict(self, exclude_private: bool = True) -> Dict[str, Any]:
+    def to_dict(self, exclude_private: bool = True) -> dict[str, Any]:
         """Convert to dictionary with options.
 
         This method converts the model to a dictionary, with the option
@@ -96,7 +96,7 @@ class SerializationMixin(BaseModel):
         return json.dumps(data, default=str, **kwargs)
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]):
+    def from_dict(cls, data: dict[str, Any]):
         """Create instance from dictionary.
 
         This class method creates a model instance from a dictionary,

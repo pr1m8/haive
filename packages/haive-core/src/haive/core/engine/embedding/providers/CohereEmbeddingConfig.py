@@ -57,21 +57,21 @@ class CohereEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     # Cohere-specific fields
-    input_type: Optional[str] = Field(
+    input_type: str | None = Field(
         default=None,
         description="Input type for embeddings (search_document, search_query, classification, clustering)",
     )
-    truncate: Optional[str] = Field(
+    truncate: str | None = Field(
         default=None,
         description="How to handle inputs longer than max length (NONE, START, END)",
     )
     max_retries: int = Field(
         default=3, description="Maximum number of retries for API calls"
     )
-    request_timeout: Optional[float] = Field(
+    request_timeout: float | None = Field(
         default=None, description="Timeout for API requests in seconds"
     )
-    base_url: Optional[str] = Field(
+    base_url: str | None = Field(
         default=None, description="Base URL for Cohere API (for custom endpoints)"
     )
 
@@ -81,6 +81,7 @@ class CohereEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     @validator("model")
+    @classmethod
     def validate_model(cls, v):
         """Validate the Cohere model name."""
         valid_models = {
@@ -104,6 +105,7 @@ class CohereEmbeddingConfig(BaseEmbeddingConfig):
         return v
 
     @validator("input_type")
+    @classmethod
     def validate_input_type(cls, v):
         """Validate input type."""
         if v is None:
@@ -122,6 +124,7 @@ class CohereEmbeddingConfig(BaseEmbeddingConfig):
         return v
 
     @validator("truncate")
+    @classmethod
     def validate_truncate(cls, v):
         """Validate truncate parameter."""
         if v is None:

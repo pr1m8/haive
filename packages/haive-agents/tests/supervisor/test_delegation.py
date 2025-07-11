@@ -10,6 +10,9 @@ import asyncio
 import logging
 from typing import List
 
+from haive.agents.react.agent import ReactAgent
+from haive.agents.simple.agent import SimpleAgent
+from haive.agents.supervisor.agent_v2 import SupervisorAgent, SupervisorState
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import LLMConfig
 from langchain_core.messages import AIMessage, HumanMessage
@@ -17,10 +20,6 @@ from langchain_core.tools import tool
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
-
-from haive.agents.react.agent import ReactAgent
-from haive.agents.simple.agent import SimpleAgent
-from haive.agents.supervisor.agent_v2 import SupervisorAgent, SupervisorState
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -41,23 +40,22 @@ def python_repl(code: str) -> str:
         # Simple mock calculation
         if "compound interest" in code.lower():
             return "Compound Interest Result: $16,288.95 after 10 years"
-        elif "area" in code.lower() and "circle" in code.lower():
+        if "area" in code.lower() and "circle" in code.lower():
             return "Circle Area Result: 78.54 square units"
         else:
             return f"Executed: {code}\nResult: Calculation completed successfully"
     except Exception as e:
-        return f"Error: {str(e)}"
+        return f"Error: {e!s}"
 
 
 def create_research_agent() -> ReactAgent:
     """Create research agent following LangGraph tutorial pattern."""
-
     llm_config = LLMConfig(provider="openai", model="gpt-4", temperature=0.1)
 
     engine_config = AugLLMConfig(
         llm_config=llm_config,
         system_message="""You are a research assistant. Your role is to search for information and provide comprehensive research results.
-        
+
 When given a research task:
 1. Use the tavily_search tool to find relevant information
 2. Synthesize the findings into a clear, informative response
@@ -75,7 +73,6 @@ Focus on being thorough and accurate in your research.""",
 
 def create_math_agent() -> ReactAgent:
     """Create math agent following LangGraph tutorial pattern."""
-
     llm_config = LLMConfig(provider="openai", model="gpt-4", temperature=0)
 
     engine_config = AugLLMConfig(
@@ -99,7 +96,6 @@ Focus on precision and clarity in your mathematical solutions.""",
 
 def create_supervisor() -> SupervisorAgent:
     """Create supervisor agent following LangGraph tutorial pattern."""
-
     llm_config = LLMConfig(provider="openai", model="gpt-4", temperature=0.1)
 
     supervisor_engine = AugLLMConfig(
@@ -112,7 +108,6 @@ def create_supervisor() -> SupervisorAgent:
 
 async def test_basic_delegation():
     """Test basic delegation following LangGraph tutorial tasks."""
-
     console.print(
         Panel(
             "🧪 Testing Basic Delegation (LangGraph Tutorial Pattern)",
@@ -194,7 +189,6 @@ async def test_basic_delegation():
                 status_style = "green"
             else:
                 status = "❌ FAIL"
-                status_style = "red"
 
             results_table.add_row(
                 test_case["name"], test_case["expected_worker"], next_agent, status
@@ -209,7 +203,7 @@ async def test_basic_delegation():
                 console.print(f"[dim]Response: {last_message.content[:100]}...[/dim]")
 
         except Exception as e:
-            console.print(f"[red]❌ Test failed: {str(e)}[/red]")
+            console.print(f"[red]❌ Test failed: {e!s}[/red]"]")
             results_table.add_row(
                 test_case["name"], test_case["expected_worker"], "ERROR", "❌ ERROR"
             )
@@ -220,7 +214,6 @@ async def test_basic_delegation():
 
 async def test_multi_turn_conversation():
     """Test multi-turn conversation with state preservation."""
-
     console.print(Panel("💬 Testing Multi-Turn Conversation", style="bold green"))
 
     # Create system
@@ -267,12 +260,11 @@ async def test_multi_turn_conversation():
                     )
 
         except Exception as e:
-            console.print(f"[red]❌ Turn failed: {str(e)}[/red]")
+            console.print(f"[red]❌ Turn failed: {e!s}[/red]"]")
 
 
 async def test_error_handling():
     """Test error handling and fallback mechanisms."""
-
     console.print(Panel("🛡️ Testing Error Handling", style="bold yellow"))
 
     supervisor = create_supervisor()
@@ -303,19 +295,18 @@ async def test_error_handling():
         console.print(f"[cyan]No agents available, routed to:[/cyan] {next_agent2}")
 
     except Exception as e:
-        console.print(f"[red]Error handling test failed: {str(e)}[/red]")
+        console.print(f"[red]Error handling test failed: {e!s}[/red]")
 
 
 def main():
     """Main test runner."""
-
     console.print(
         Panel(
             """
 🏗️ Haive Supervisor Delegation Test Suite
 
 Following LangGraph Tutorial Pattern:
-- Supervisor analyzes requests  
+- Supervisor analyzes requests
 - Sets 'next' field for routing
 - Workers execute and return to supervisor
 - Simple state with messages + next
@@ -339,7 +330,7 @@ Using Haive Architecture:
             console.print(Panel("🎉 All tests completed!", style="bold green"))
 
         except Exception as e:
-            console.print(f"[red]❌ Test suite failed: {str(e)}[/red]")
+            console.print(f"[red]❌ Test suite failed: {e!s}[/red]"]")
             logger.error("Test suite failed", exc_info=True)
 
     asyncio.run(run_all_tests())

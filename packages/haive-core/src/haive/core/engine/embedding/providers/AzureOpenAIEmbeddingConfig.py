@@ -80,7 +80,7 @@ class AzureOpenAIEmbeddingConfig(BaseEmbeddingConfig):
     max_retries: int = Field(
         default=3, description="Maximum number of retries for API calls"
     )
-    request_timeout: Optional[float] = Field(
+    request_timeout: float | None = Field(
         default=None, description="Timeout for API requests in seconds"
     )
 
@@ -90,6 +90,7 @@ class AzureOpenAIEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     @validator("azure_endpoint")
+    @classmethod
     def validate_azure_endpoint(cls, v):
         """Validate Azure OpenAI endpoint format."""
         if not v:
@@ -107,6 +108,7 @@ class AzureOpenAIEmbeddingConfig(BaseEmbeddingConfig):
         return v
 
     @validator("deployment_name")
+    @classmethod
     def validate_deployment_name(cls, v):
         """Validate deployment name."""
         if not v or not v.strip():
@@ -114,6 +116,7 @@ class AzureOpenAIEmbeddingConfig(BaseEmbeddingConfig):
         return v.strip()
 
     @validator("api_version")
+    @classmethod
     def validate_api_version(cls, v):
         """Validate API version format."""
         if not v:

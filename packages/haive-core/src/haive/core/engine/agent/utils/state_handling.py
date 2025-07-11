@@ -1,7 +1,6 @@
 # src/haive.core/engine/agent/utils/state_handling.py
 
-"""
-State handling utilities for agent inputs and outputs.
+"""State handling utilities for agent inputs and outputs.
 
 This module provides functions for processing and transforming state data
 during agent execution, focusing on output extraction and state validation.
@@ -13,12 +12,12 @@ from typing import Any, Dict, List, Optional, Union
 from langchain_core.runnables import RunnableConfig
 from pydantic import BaseModel
 
+
 logger = logging.getLogger(__name__)
 
 
-def extract_output(output_data: Any, output_schema=None) -> Dict[str, Any]:
-    """
-    Extract and validate output from agent result.
+def extract_output(output_data: Any, output_schema=None) -> dict[str, Any]:
+    """Extract and validate output from agent result.
 
     Args:
         output_data: Agent output data
@@ -46,7 +45,7 @@ def extract_output(output_data: Any, output_schema=None) -> Dict[str, Any]:
             validated = output_schema(**processed_output)
             if hasattr(validated, "model_dump"):
                 return validated.model_dump()
-            elif hasattr(validated, "dict"):
+            if hasattr(validated, "dict"):
                 return validated.dict()
             return validated
         except Exception as e:
@@ -55,9 +54,8 @@ def extract_output(output_data: Any, output_schema=None) -> Dict[str, Any]:
     return processed_output
 
 
-def extract_state_snapshot(snapshot: Any) -> Dict[str, Any]:
-    """
-    Extract state values from a state snapshot.
+def extract_state_snapshot(snapshot: Any) -> dict[str, Any]:
+    """Extract state values from a state snapshot.
 
     Args:
         snapshot: State snapshot from checkpointer
@@ -72,12 +70,12 @@ def extract_state_snapshot(snapshot: Any) -> Dict[str, Any]:
     if hasattr(snapshot, "values"):
         # Standard StateSnapshot
         return snapshot.values if hasattr(snapshot.values, "items") else {}
-    elif hasattr(snapshot, "channel_values") and snapshot.channel_values:
+    if hasattr(snapshot, "channel_values") and snapshot.channel_values:
         # Alternative attribute name in some versions
         return (
             snapshot.channel_values if hasattr(snapshot.channel_values, "items") else {}
         )
-    elif isinstance(snapshot, dict):
+    if isinstance(snapshot, dict):
         # Dictionary state
         return snapshot
 
@@ -86,7 +84,7 @@ def extract_state_snapshot(snapshot: Any) -> Dict[str, Any]:
         if hasattr(snapshot, "model_dump"):
             # Pydantic v2
             return snapshot.model_dump()
-        elif hasattr(snapshot, "dict"):
+        if hasattr(snapshot, "dict"):
             # Pydantic v1
             return snapshot.dict()
     except Exception:
@@ -99,13 +97,12 @@ def extract_state_snapshot(snapshot: Any) -> Dict[str, Any]:
 
 def prepare_merged_input(
     input_data: Any,
-    previous_state: Optional[Any] = None,
-    runtime_config: Optional[Dict[str, Any]] = None,
+    previous_state: Any | None = None,
+    runtime_config: dict[str, Any] | None = None,
     input_schema=None,
     state_schema=None,
 ) -> Any:
-    """
-    Process input data and merge with previous state if available.
+    """Process input data and merge with previous state if available.
 
     Args:
         input_data: Input data in various formats
@@ -182,10 +179,9 @@ def prepare_merged_input(
 
 
 def process_input(
-    input_data: Union[str, List[str], Dict[str, Any], BaseModel], input_schema=None
-) -> Dict[str, Any]:
-    """
-    Process input for the agent based on the input schema.
+    input_data: str | list[str] | dict[str, Any] | BaseModel, input_schema=None
+) -> dict[str, Any]:
+    """Process input for the agent based on the input schema.
 
     Args:
         input_data: Input in various formats
@@ -210,7 +206,7 @@ def process_input(
 
         # Add to other input fields based on schema
         for field_name, field_info in schema_fields.items():
-            if field_name != "messages" and field_name != "__runnable_config__":
+            if field_name not in {"messages", "__runnable_config__"}:
                 # Only add to text fields
                 field_type = getattr(field_info, "annotation", None) or getattr(
                     field_info, "type_", None
@@ -234,7 +230,7 @@ def process_input(
         return prepared_input
 
     # Handle list of strings
-    elif isinstance(input_data, list) and all(
+    if isinstance(input_data, list) and all(
         isinstance(item, str) for item in input_data
     ):
         # Create messages list
@@ -246,7 +242,7 @@ def process_input(
         # Join strings for other text fields
         joined_text = "\n".join(input_data)
         for field_name, field_info in schema_fields.items():
-            if field_name != "messages" and field_name != "__runnable_config__":
+            if field_name not in {"messages", "__runnable_config__"}:
                 # Only add to text fields
                 field_type = getattr(field_info, "annotation", None) or getattr(
                     field_info, "type_", None
@@ -270,7 +266,7 @@ def process_input(
         return prepared_input
 
     # Handle dictionary input
-    elif isinstance(input_data, dict):
+    if isinstance(input_data, dict):
         # Create a copy to avoid modifying the original
         input_dict = input_data.copy()
 
@@ -299,7 +295,7 @@ def process_input(
         return input_dict
 
     # Handle Pydantic model input
-    elif isinstance(input_data, BaseModel):
+    if isinstance(input_data, BaseModel):
         # Convert to dict
         if hasattr(input_data, "model_dump"):
             # Pydantic v2
@@ -361,8 +357,7 @@ def process_input(
 def save_state_history(
     app: Any, state_filename: str, runnable_config: RunnableConfig
 ) -> bool:
-    """
-    Save the current agent state to a JSON file.
+    """Save the current agent state to a JSON file.
 
     Args:
         app: Compiled agent application
@@ -398,5 +393,5 @@ def save_state_history(
         logger.info(f"State history saved to: {state_filename}")
         return True
     except Exception as e:
-        logger.error(f"Error saving state history: {str(e)}")
+        logger.exception(f"Error saving state history: {e!s}")
         return False

@@ -11,6 +11,7 @@ This guide provides a repeatable process for enhancing game modules with compreh
 ### Step 1: Initial Assessment
 
 1. **Check existing files**:
+
    ```bash
    ls -la packages/haive-games/src/haive/games/{game_name}/
    ```
@@ -18,7 +19,7 @@ This guide provides a repeatable process for enhancing game modules with compreh
 2. **Identify what exists**:
    - [ ] README.md
    - [ ] example.py
-   - [ ] __init__.py
+   - [ ] **init**.py
    - [ ] agent.py
    - [ ] state.py
    - [ ] config.py
@@ -42,32 +43,34 @@ Each game README should follow this structure:
 ## Overview
 
 {2-3 paragraphs explaining:
+
 - What the game is
 - Key mechanics and rules
 - Why it's interesting for AI agents
 - Unique challenges or features}
 
 ## Architecture
-
 ```
+
 {GameName}Agent (extends GameAgent)
 ├── State Management
-│   ├── {GameName}State
-│   ├── Move Validation
-│   └── Win Condition Detection
+│ ├── {GameName}State
+│ ├── Move Validation
+│ └── Win Condition Detection
 ├── Player Configuration
-│   ├── Agent Engines
-│   ├── Strategies
-│   └── Skill Levels
+│ ├── Agent Engines
+│ ├── Strategies
+│ └── Skill Levels
 ├── Game Flow
-│   ├── Turn Management
-│   ├── Phase Transitions
-│   └── Time Control
+│ ├── Turn Management
+│ ├── Phase Transitions
+│ └── Time Control
 └── Visualization
-    ├── Board/State Display
-    ├── Move History
-    └── Analysis Output
-```
+├── Board/State Display
+├── Move History
+└── Analysis Output
+
+````
 
 ## Key Features
 
@@ -80,7 +83,7 @@ Each game README should follow this structure:
 
 ```bash
 pip install haive-games
-```
+````
 
 ## Quick Start
 
@@ -110,18 +113,23 @@ print(f"Winner: {result.winner}")
 ## Game Rules
 
 ### Objective
+
 {Clear statement of how to win}
 
 ### Setup
+
 {Initial game state}
 
 ### Gameplay
+
 {Turn structure and allowed actions}
 
 ### Special Rules
+
 {Any unique mechanics}
 
 ### Winning Conditions
+
 {All ways the game can end}
 
 ## State Management
@@ -133,7 +141,7 @@ class {GameName}State(GameState):
     # State fields
     {field1}: {Type} = Field(...)
     {field2}: {Type} = Field(...)
-    
+
     # Computed properties
     @property
     def {property_name}(self) -> {Type}:
@@ -142,8 +150,8 @@ class {GameName}State(GameState):
 
 ### State Fields
 
-| Field | Type | Description |
-|-------|------|-------------|
+| Field      | Type     | Description   |
+| ---------- | -------- | ------------- |
 | `{field1}` | `{Type}` | {Description} |
 | `{field2}` | `{Type}` | {Description} |
 
@@ -226,16 +234,19 @@ class {GameName}State(GameState):
 ### Common Issues
 
 #### {Issue 1}
+
 **Problem**: {Description}
 **Solution**: {Solution with code}
 
 #### {Issue 2}
+
 **Problem**: {Description}
 **Solution**: {Solution with code}
 
 ## Examples
 
 For comprehensive examples, see [example.py](example.py) which demonstrates:
+
 - Basic gameplay
 - Advanced strategies
 - Tournament setup
@@ -246,26 +257,27 @@ For comprehensive examples, see [example.py](example.py) which demonstrates:
 
 ### Classes
 
-| Class | Description |
-|-------|-------------|
-| `{GameName}Agent` | Main game agent |
-| `{GameName}State` | Game state representation |
-| `{GameName}Config` | Configuration parameters |
-| `{GameName}StateManager` | Game logic handler |
+| Class                    | Description               |
+| ------------------------ | ------------------------- |
+| `{GameName}Agent`        | Main game agent           |
+| `{GameName}State`        | Game state representation |
+| `{GameName}Config`       | Configuration parameters  |
+| `{GameName}StateManager` | Game logic handler        |
 
 ### Key Methods
 
-| Method | Description |
-|--------|-------------|
-| `agent.run()` | Run complete game |
-| `manager.is_valid_move()` | Validate move |
+| Method                    | Description         |
+| ------------------------- | ------------------- |
+| `agent.run()`             | Run complete game   |
+| `manager.is_valid_move()` | Validate move       |
 | `state.get_legal_moves()` | Get available moves |
 
 ## Related Modules
 
 - [Game Framework](../framework/README.md) - Base framework
 - [{Similar Game}](../{similar_game}/README.md) - Similar mechanics
-```
+
+````
 
 ### Step 3: Example.py Enhancement Pattern
 
@@ -331,18 +343,18 @@ def main():
         example_visualization,
         example_integration
     ]
-    
+
     for example in examples:
         example()
         input("\nPress Enter for next example...")
 
 if __name__ == "__main__":
     main()
-```
+````
 
-### Step 4: Code Organization (__init__.py)
+### Step 4: Code Organization (**init**.py)
 
-Enhance __init__.py with proper exports and type hints:
+Enhance **init**.py with proper exports and type hints:
 
 ```python
 """
@@ -369,7 +381,7 @@ if TYPE_CHECKING:
 # Public API
 __all__ = [
     "{GameName}Agent",
-    "{GameName}Config", 
+    "{GameName}Config",
     "{GameName}State",
     "create_{game_name}_game",
 ]
@@ -386,21 +398,24 @@ def create_{game_name}_game(**kwargs) -> {GameName}Agent:
 Ensure all modules have proper type hints:
 
 1. **Import typing modules**:
+
    ```python
    from typing import List, Dict, Optional, Tuple, Union, Any
    from typing import TYPE_CHECKING, TypeAlias
    ```
 
 2. **Add type aliases**:
+
    ```python
    BoardType: TypeAlias = List[List[Optional[str]]]
    MoveType: TypeAlias = Tuple[int, int]
    ```
 
 3. **Add validators**:
+
    ```python
    from pydantic import validator, Field
-   
+
    @validator("move")
    def validate_move(cls, v):
        # Validation logic
@@ -420,11 +435,11 @@ class Test{GameName}Logic:
     def test_initial_state(self):
         """Test initial game setup."""
         pass
-    
+
     def test_valid_moves(self):
         """Test move validation."""
         pass
-    
+
     def test_win_conditions(self):
         """Test all win scenarios."""
         pass
@@ -435,6 +450,7 @@ class Test{GameName}Logic:
 For each game module, ensure:
 
 ### Documentation
+
 - [ ] README.md follows template (400+ lines)
 - [ ] example.py has 6-8 comprehensive examples
 - [ ] All classes have docstrings
@@ -442,6 +458,7 @@ For each game module, ensure:
 - [ ] Complex logic has inline comments
 
 ### Code Quality
+
 - [ ] Type hints on all functions
 - [ ] Proper error handling
 - [ ] Input validation
@@ -449,6 +466,7 @@ For each game module, ensure:
 - [ ] No code duplication
 
 ### Features
+
 - [ ] Complete game rules implemented
 - [ ] All win conditions handled
 - [ ] Move validation works
@@ -456,6 +474,7 @@ For each game module, ensure:
 - [ ] Visualization included
 
 ### Testing
+
 - [ ] Unit tests for game logic
 - [ ] Integration tests for full games
 - [ ] Edge cases covered
@@ -484,23 +503,23 @@ def check_game_module(game_path: Path):
         "models.py",
         "state_manager.py"
     ]
-    
+
     missing = []
     for file in required_files:
         if not (game_path / file).exists():
             missing.append(file)
-    
+
     # Check file sizes
     if (game_path / "README.md").exists():
         readme_size = (game_path / "README.md").stat().st_size
         if readme_size < 10000:  # Less than ~400 lines
             print(f"  ⚠️  README.md seems too short ({readme_size} bytes)")
-    
+
     return missing
 
 def main():
     games_dir = Path("packages/haive-games/src/haive/games")
-    
+
     for game_dir in games_dir.iterdir():
         if game_dir.is_dir() and not game_dir.name.startswith("_"):
             print(f"\n📁 {game_dir.name}")
@@ -524,6 +543,7 @@ Prioritize games by:
 4. **Dependencies**: Base games before variants
 
 Suggested order:
+
 1. Tic-Tac-Toe (simple, complete example)
 2. Connect4 (grid-based)
 3. Chess (complex, important)
@@ -536,6 +556,7 @@ Suggested order:
 ## Time Management
 
 Allocate time per game:
+
 - Simple games (Tic-Tac-Toe, Nim): 30-45 minutes
 - Medium games (Connect4, Checkers): 45-60 minutes
 - Complex games (Chess, Poker, Monopoly): 60-90 minutes
@@ -543,6 +564,7 @@ Allocate time per game:
 ## Version Control
 
 Commit after each game:
+
 ```bash
 git add packages/haive-games/src/haive/games/{game_name}/
 git commit -m "feat: Enhance {game_name} module with comprehensive docs and examples"
@@ -551,6 +573,7 @@ git commit -m "feat: Enhance {game_name} module with comprehensive docs and exam
 ## Validation
 
 After enhancement, verify:
+
 1. Run example.py successfully
 2. README renders correctly
 3. All imports work

@@ -403,6 +403,3 @@ def get_random_sample(n: int = 10):
 
 
 # Example usage:
-# conversation_docs = get_documents_by_category('conversation')
-# sample_docs = get_random_sample(15)
-# all_docs = comprehensive_test_documents

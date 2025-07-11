@@ -11,37 +11,72 @@ Version: 1.0.0
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
-from langchain_core.documents import Document
-from pydantic import Field
-
-from haive.core.engine.document.config import (
-    ChunkingStrategy,
-    DocumentFormat,
-    DocumentInput,
-    DocumentOutput,
-    DocumentSourceType,
-    LoaderPreference,
-    ProcessedDocument,
-    ProcessingStrategy,
-)
+from haive.core.engine.document.config import (ChunkingStrategy,
+                                               DocumentFormat, DocumentInput,
+                                               DocumentOutput,
+                                               DocumentSourceType,
+                                               LoaderPreference,
+                                               ProcessedDocument,
+                                               ProcessingStrategy)
 from haive.core.schema import StateSchema
+from langchain_core.documents import Document
+from pydantic import BaseModel, Field
 
 
 class DocumentEngineInputSchema(StateSchema):
-    """Input schema for document engine operations.
+    """Defines the input state for document loading and processing.
 
-    This schema defines the input state for document loading and processing,
-    supporting various source types and configuration options.
+    This schema supports various source types and configurations, providing a flexible
+    interface for document ingestion workflows.
+
+    Attributes:
+        source (Optional[Union[str, Path, Dict[str, Any]]]): The primary source
+            to process, which can be a file path, URL, or a configuration dictionary.
+        sources (Optional[List[Union[str, Path, Dict[str, Any]]]]): A list of
+            sources for bulk processing.
+        source_type (Optional[DocumentSourceType]): The explicit type of the source
+            (e.g., FILE, URL). If not provided, it will be auto-detected.
+        loader_name (Optional[str]): The specific loader to use for processing.
+            If not provided, a loader will be auto-selected.
+        loader_preference (LoaderPreference): The preference for auto-selecting a
+            loader, balancing speed and quality. Defaults to BALANCED.
+        processing_strategy (ProcessingStrategy): The strategy for document
+            processing. Defaults to ENHANCED.
+        chunking_strategy (ChunkingStrategy): The strategy for chunking documents.
+            Defaults to RECURSIVE.
+        chunk_size (int): The size of chunks in characters. Defaults to 1000.
+        chunk_overlap (int): The overlap between chunks in characters. Defaults to 200.
+        recursive (bool): Whether to recursively process directories. Defaults to True.
+        max_documents (Optional[int]): The maximum number of documents to load.
+        use_async (bool): Whether to use asynchronous loading when available.
+            Defaults to False.
+        parallel_processing (bool): Whether to enable parallel processing for
+            supported operations. Defaults to True.
+        max_workers (int): The maximum number of worker threads for parallel
+            processing. Defaults to 4.
+        include_patterns (List[str]): Glob patterns for files to include.
+        exclude_patterns (List[str]): Glob patterns for files to exclude.
+        loader_options (Dict[str, Any]): Additional options specific to the loader.
+        processing_options (Dict[str, Any]): Additional options for processing.
+        enable_caching (bool): Whether to enable document caching. Defaults to False.
+        cache_ttl (int): The time-to-live for the cache in seconds. Defaults to 3600.
 
     Examples:
-        Basic file loading::
+        Loading a single PDF file with default settings:
+
+        .. code-block:: python
+
+            from haive.core.engine.document.config import DocumentSourceType
+            from haive.core.schema.prebuilt.document_state import DocumentEngineInputSchema
 
             state = DocumentEngineInputSchema(
                 source="/path/to/document.pdf",
                 source_type=DocumentSourceType.FILE
             )
 
-        Web scraping with options::
+        Scraping a website with custom loader and processing options:
+
+        .. code-block:: python
 
             state = DocumentEngineInputSchema(
                 source="https://example.com",
@@ -50,7 +85,11 @@ class DocumentEngineInputSchema(StateSchema):
                 processing_options={"extract_links": True}
             )
 
-        Bulk loading configuration::
+        Configuring a bulk loading operation with a preference for quality:
+
+        .. code-block:: python
+
+            from haive.core.engine.document.config import LoaderPreference, ChunkingStrategy
 
             state = DocumentEngineInputSchema(
                 sources=["/path/to/doc1.pdf", "/path/to/doc2.docx"],
@@ -150,33 +189,50 @@ class DocumentEngineInputSchema(StateSchema):
 
 
 class DocumentEngineOutputSchema(StateSchema):
-    """Output schema for document engine operations.
+    """Defines the output state from document loading and processing.
 
-    This schema defines the output state from document loading and processing,
-    containing loaded documents, metadata, and processing statistics.
+    This schema contains the loaded documents, metadata, and processing statistics,
+    providing a comprehensive overview of the operation's results.
+
+    Attributes:
+        documents (List[ProcessedDocument]): A list of processed documents.
+        raw_documents (List[Document]): A list of raw LangChain Document objects.
+        total_documents (int): The total number of documents processed.
+        successful_documents (int): The number of documents successfully processed.
+        failed_documents (int): The number of documents that failed to process.
+        operation_time (float): The total time for the operation in seconds.
+        average_processing_time (float): The average processing time per document.
+        original_source (Optional[str]): The original source path or URL.
+        source_type (Optional[DocumentSourceType]): The detected or specified source type.
+        loader_names (List[str]): The names of the loaders used.
+        processing_strategy (Optional[ProcessingStrategy]): The processing strategy used.
+        chunking_strategy (Optional[ChunkingStrategy]): The chunking strategy used.
+        total_chunks (int): The total number of chunks created.
+        total_characters (int): The total character count across all documents.
+        total_words (int): The estimated total word count.
+        errors (List[Dict[str, Any]]): A list of errors encountered during processing.
+        warnings (List[Dict[str, Any]]): A list of warnings generated.
+        metadata (Dict[str, Any]): Additional metadata about the operation.
 
     Examples:
-        Successful loading result::
+        Inspecting the output of a successful loading operation:
 
-            output = DocumentEngineOutputSchema(
-                documents=[ProcessedDocument(...)],
-                total_documents=10,
-                successful_documents=10,
-                operation_time=5.2
-            )
+        .. code-block:: python
 
-        Partial success with errors::
+            # Assuming 'output' is an instance of DocumentEngineOutputSchema
+            if output.successful_documents > 0:
+                print(f"Successfully loaded {output.successful_documents} documents.")
+                print(f"Total chunks created: {output.total_chunks}")
+                print(f"First document content: {output.documents[0].content[:100]}")
 
-            output = DocumentEngineOutputSchema(
-                documents=[...],
-                total_documents=10,
-                successful_documents=8,
-                failed_documents=2,
-                errors=[
-                    {"source": "bad.pdf", "error": "Corrupted file"},
-                    {"source": "missing.docx", "error": "File not found"}
-                ]
-            )
+        Handling partial success with errors:
+
+        .. code-block:: python
+
+            if output.failed_documents > 0:
+                print(f"Failed to load {output.failed_documents} documents.")
+                for error in output.errors:
+                    print(f"Source: {error['source']}, Error: {error['error']}")
     """
 
     # Loaded documents
@@ -253,10 +309,14 @@ class DocumentEngineOutputSchema(StateSchema):
     )
 
     def add_document(self, document: ProcessedDocument) -> None:
-        """Add a processed document to the output.
+        """Adds a processed document to the output state.
+
+        This method appends a processed document to the output state and updates
+        various statistics, such as total documents, successful documents, and
+        chunk/character/word counts.
 
         Args:
-            document: ProcessedDocument to add
+            document (ProcessedDocument): The processed document to add.
         """
         self.documents.append(document)
         self.total_documents += 1
@@ -271,17 +331,20 @@ class DocumentEngineOutputSchema(StateSchema):
     def add_error(
         self, source: str, error: str, details: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Add an error to the output.
+        """Adds an error record to the output state.
+
+        This method is used to log errors encountered during document processing,
+        providing a structured way to track failures.
 
         Args:
-            source: Source that caused the error
-            error: Error message
-            details: Optional additional error details
+            source (str): The source that caused the error (e.g., file path or URL).
+            error (str): A description of the error.
+            details (Optional[Dict[str, Any]]): Additional details about the error.
         """
         error_entry = {
             "source": source,
             "error": error,
-            "timestamp": None,  # Would be set by the engine
+            "timestamp": None,  # This would be set by the processing engine
         }
         if details:
             error_entry.update(details)
@@ -291,7 +354,11 @@ class DocumentEngineOutputSchema(StateSchema):
         self.total_documents += 1
 
     def calculate_statistics(self) -> None:
-        """Calculate aggregate statistics from loaded documents."""
+        """Calculates aggregate statistics from the loaded documents.
+
+        This method updates the output state with summary statistics, such as
+        average processing time and total counts for chunks, characters, and words.
+        """
         if self.successful_documents > 0:
             self.average_processing_time = (
                 self.operation_time / self.successful_documents
@@ -303,84 +370,74 @@ class DocumentEngineOutputSchema(StateSchema):
         self.total_words = sum(doc.word_count for doc in self.documents)
 
 
-class DocumentState(StateSchema):
-    """Complete document processing state.
+class DocumentWorkflowSchema(BaseModel):
+    """Manages the state of a document processing workflow.
 
-    This schema combines input and output states for complete document
-    processing workflows, maintaining the full context of document operations.
+    This schema tracks the progress and metadata of a multi-step document
+    processing workflow.
 
-    Examples:
-        Complete workflow state::
-
-            state = DocumentState(
-                # Input configuration
-                source="/documents/",
-                source_type=DocumentSourceType.DIRECTORY,
-                recursive=True,
-
-                # Processing results
-                documents=[...],
-                total_documents=50,
-                successful_documents=48,
-
-                # Workflow metadata
-                processing_stage="completed",
-                last_processed_index=50
-            )
+    Attributes:
+        processing_stage (str): The current stage of the processing workflow
+            (e.g., "initialized", "loading", "chunking", "completed").
+        last_processed_index (int): The index of the last document processed,
+            useful for resuming workflows.
+        workflow_metadata (Dict[str, Any]): A dictionary for storing any
+            additional metadata related to the workflow.
     """
 
-    # Input state (inherited from DocumentEngineInputSchema)
-    source: Optional[Union[str, Path, Dict[str, Any]]] = Field(
-        default=None, description="Primary source to process"
-    )
-
-    sources: Optional[List[Union[str, Path, Dict[str, Any]]]] = Field(
-        default=None, description="Multiple sources for bulk processing"
-    )
-
-    source_type: Optional[DocumentSourceType] = Field(
-        default=None, description="Source type"
-    )
-
-    loader_preference: LoaderPreference = Field(
-        default=LoaderPreference.BALANCED, description="Loader preference"
-    )
-
-    processing_strategy: ProcessingStrategy = Field(
-        default=ProcessingStrategy.ENHANCED, description="Processing strategy"
-    )
-
-    # Output state (inherited from DocumentEngineOutputSchema)
-    documents: List[ProcessedDocument] = Field(
-        default_factory=list,
-        description="Processed documents",
-        shared=True,  # Shared across workflow nodes
-    )
-
-    raw_documents: List[Document] = Field(
-        default_factory=list, description="Raw langchain documents", shared=True
-    )
-
-    total_documents: int = Field(default=0, description="Total documents", shared=True)
-
-    successful_documents: int = Field(
-        default=0, description="Successful documents", shared=True
-    )
-
-    errors: List[Dict[str, Any]] = Field(
-        default_factory=list, description="Processing errors", shared=True
-    )
-
-    # Workflow state
     processing_stage: str = Field(
-        default="initialized", description="Current processing stage", shared=True
+        default="initialized", description="Current processing stage"
     )
 
     last_processed_index: int = Field(
-        default=0, description="Index of last processed document", shared=True
+        default=0, description="Index of last processed document"
     )
 
-    # Additional workflow metadata
     workflow_metadata: Dict[str, Any] = Field(
-        default_factory=dict, description="Workflow-specific metadata", shared=True
+        default_factory=dict, description="Workflow-specific metadata"
     )
+
+
+class DocumentState(DocumentEngineInputSchema, DocumentEngineOutputSchema):
+    """Represents the complete state of a document processing workflow.
+
+    This schema combines the input, output, and workflow states to provide a
+    full picture of a document processing operation. It inherits all attributes
+    from `DocumentEngineInputSchema` and `DocumentEngineOutputSchema`.
+
+    Attributes:
+        workflow (DocumentWorkflowSchema): The state of the processing workflow.
+
+    Examples:
+        Initializing a complete workflow state and executing a step:
+
+        .. code-block:: python
+
+            from haive.core.engine.document.config import DocumentSourceType
+            from haive.core.schema.prebuilt.document_state import DocumentState, DocumentWorkflowSchema
+
+            # Initial state for processing a directory
+            state = DocumentState(
+                source="/path/to/documents/",
+                source_type=DocumentSourceType.DIRECTORY,
+                recursive=True,
+                workflow=DocumentWorkflowSchema(processing_stage="loading")
+            )
+
+            # After processing, the state might look like this:
+            # state.total_documents = 50
+            # state.successful_documents = 48
+            # state.workflow.processing_stage = "completed"
+    """
+
+    workflow: DocumentWorkflowSchema = Field(default_factory=DocumentWorkflowSchema)
+
+    class Config:
+        """Pydantic configuration for the DocumentState schema.
+
+        Attributes:
+            arbitrary_types_allowed (bool): Allows Pydantic to handle arbitrary types,
+                which is useful for complex data structures like `langchain_core.documents.Document`.
+        """
+
+        arbitrary_types_allowed = True

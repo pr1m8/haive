@@ -38,6 +38,7 @@ if graph.needs_recompile():
 ### What Triggers Recompilation?
 
 **Requires Recompilation** ✅:
+
 - `add_node()` / `remove_node()`
 - `add_edge()` / `remove_edge()`
 - `add_conditional_edges()`
@@ -46,6 +47,7 @@ if graph.needs_recompile():
 - Any structural graph changes
 
 **Does NOT Require Recompilation** ❌:
+
 - `interrupt_before` / `interrupt_after`
 - Checkpointer configuration
 - Thread configuration
@@ -56,6 +58,7 @@ if graph.needs_recompile():
 ## Recompilation Detection Methods
 
 ### 1. Simple Flag Check
+
 ```python
 # Most basic check
 if graph.needs_recompile():
@@ -63,6 +66,7 @@ if graph.needs_recompile():
 ```
 
 ### 2. Detailed Compilation Info
+
 ```python
 info = graph.get_compilation_info()
 # Returns:
@@ -77,6 +81,7 @@ info = graph.get_compilation_info()
 ```
 
 ### 3. Specific Change Detection
+
 ```python
 # Check for schema changes
 if graph.needs_recompile_for_schemas():
@@ -102,21 +107,21 @@ from haive.core.common.mixins import RecompilationMixin
 
 class RecompilableAgent(RecompilationMixin, SimpleAgent):
     """Agent that tracks when tools change"""
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._tool_route_hash = self._compute_tool_hash()
-    
+
     def add_tool_dynamically(self, tool, route="tool_node"):
         """Add tool and mark for recompilation"""
         self.engine.add_tool(tool, route)
         self._mark_needs_recompile(f"Tool added: {tool.name}")
-    
+
     def needs_recompilation(self) -> bool:
         """Check if tools changed"""
         current_hash = self._compute_tool_hash()
         return current_hash != self._tool_route_hash
-    
+
     def recompile_if_needed(self):
         """Recompile graph if tools changed"""
         if self.needs_recompilation():
@@ -160,41 +165,41 @@ import hashlib
 
 class RecompilationMixin:
     """Mix this into any component needing recompilation tracking"""
-    
+
     def __init__(self):
         self._state_hash: Optional[str] = None
         self._needs_recompile: bool = False
         self._recompile_reason: Optional[str] = None
         self._change_callbacks: List[Callable] = []
-    
+
     def _compute_state_hash(self) -> str:
         """Override to compute current state hash"""
         raise NotImplementedError
-    
+
     def needs_recompilation(self) -> bool:
         """Check if recompilation needed"""
         if self._needs_recompile:
             return True
-        
+
         current_hash = self._compute_state_hash()
         return current_hash != self._state_hash
-    
+
     def mark_compiled(self, reason: Optional[str] = None):
         """Mark as compiled and update hash"""
         self._state_hash = self._compute_state_hash()
         self._needs_recompile = False
         self._recompile_reason = None
-        
+
     def _mark_needs_recompile(self, reason: str):
         """Mark for recompilation with reason"""
         self._needs_recompile = True
         self._recompile_reason = reason
         self._notify_change("recompile_needed", reason=reason)
-    
+
     def register_change_callback(self, callback: Callable):
         """Register callback for changes"""
         self._change_callbacks.append(callback)
-    
+
     def _notify_change(self, change_type: str, **kwargs):
         """Notify observers of changes"""
         for callback in self._change_callbacks:
@@ -208,12 +213,12 @@ class MyDynamicComponent(RecompilationMixin):
     def __init__(self):
         super().__init__()
         self.items = []
-    
+
     def _compute_state_hash(self) -> str:
         """Hash current items"""
         state_str = str(sorted(self.items))
         return hashlib.md5(state_str.encode()).hexdigest()
-    
+
     def add_item(self, item):
         """Add item and mark for recompilation"""
         self.items.append(item)
@@ -231,7 +236,7 @@ graph.start_batch_mode()
 # Make multiple changes
 for i in range(10):
     graph.add_node(f"node_{i}", node_funcs[i])
-    
+
 for i in range(9):
     graph.add_edge(f"node_{i}", f"node_{i+1}")
 
@@ -264,20 +269,20 @@ class BatchToolManager(DynamicToolRouteMixin):
 ```python
 class LazyCompiledGraph:
     """Only compile when actually needed"""
-    
+
     def __init__(self, graph: BaseGraph):
         self.graph = graph
         self._compiled = None
         self._last_hash = None
-    
+
     def get_or_compile(self) -> CompiledGraph:
         """Get compiled graph, recompiling if needed"""
         current_hash = self.graph._compute_state_hash()
-        
+
         if self._compiled is None or current_hash != self._last_hash:
             self._compiled = self.graph.to_langgraph().compile()
             self._last_hash = current_hash
-            
+
         return self._compiled
 ```
 
@@ -286,14 +291,14 @@ class LazyCompiledGraph:
 ```python
 class GraphChangeLogger:
     """Log all graph changes"""
-    
+
     def __init__(self, graph: BaseGraph):
         self.graph = graph
         self.change_log = []
-        
+
         # Register for changes
         graph.register_change_callback(self.on_change)
-    
+
     def on_change(self, change_type: str, **kwargs):
         """Log changes"""
         self.change_log.append({
@@ -308,31 +313,32 @@ class GraphChangeLogger:
 ```python
 class MultiAgentSystem:
     """Manage recompilation across multiple agents"""
-    
+
     def __init__(self):
         self.agents: Dict[str, RecompilableAgent] = {}
-        
+
     def add_tool_to_all(self, tool, route="tool_node"):
         """Add tool to all agents"""
         for agent in self.agents.values():
             agent.add_tool_dynamically(tool, route)
-    
+
     def recompile_all_if_needed(self) -> Dict[str, bool]:
         """Recompile all agents that need it"""
         results = {}
-        
+
         for name, agent in self.agents.items():
             if agent.needs_recompilation():
                 results[name] = agent.recompile_if_needed()
             else:
                 results[name] = False
-                
+
         return results
 ```
 
 ## Best Practices
 
 ### 1. Always Check Before Compiling
+
 ```python
 # Good
 if graph.needs_recompile():
@@ -343,6 +349,7 @@ compiled = graph.to_langgraph()  # Compiles every time
 ```
 
 ### 2. Track Recompilation Reasons
+
 ```python
 # Good - provides context
 graph._mark_needs_recompile("Added error handling node")
@@ -352,6 +359,7 @@ graph._mark_needs_recompile("Changes made")
 ```
 
 ### 3. Use Batch Operations
+
 ```python
 # Good - single recompilation
 with graph.batch_operations():
@@ -366,6 +374,7 @@ for node in nodes:
 ```
 
 ### 4. Implement Proper Hash Functions
+
 ```python
 def _compute_state_hash(self) -> str:
     """Good hash function"""
@@ -376,7 +385,7 @@ def _compute_state_hash(self) -> str:
         "tool_routes": sorted(self.tool_routes.items()),
         "schema": str(self.state_schema)
     }
-    
+
     state_str = json.dumps(state, sort_keys=True)
     return hashlib.sha256(state_str.encode()).hexdigest()
 ```

@@ -1,11 +1,9 @@
-"""
-Advanced field mapping with path resolution and transformations.
-"""
+"""Advanced field mapping with path resolution and transformations."""
 
 from __future__ import annotations
 
-import re
 from dataclasses import dataclass, field
+import re
 from typing import Any, Callable, Dict, List, Optional, Set, Tuple, Union
 
 from haive.core.schema.compatibility.types import ConversionContext, FieldInfo
@@ -17,21 +15,20 @@ class FieldMapping:
 
     source_path: str  # Can be nested: "user.profile.name"
     target_field: str
-    transformer: Optional[Callable[[Any], Any]] = None
-    condition: Optional[Callable[[Dict[str, Any]], bool]] = None
+    transformer: Callable[[Any], Any] | None = None
+    condition: Callable[[dict[str, Any]], bool] | None = None
     default_value: Any = None
-    default_factory: Optional[Callable[[], Any]] = None
-    validator: Optional[Callable[[Any], bool]] = None
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    default_factory: Callable[[], Any] | None = None
+    validator: Callable[[Any], bool] | None = None
+    metadata: dict[str, Any] = field(default_factory=dict)
 
     # Path patterns
     is_computed: bool = False  # No source, generated value
     is_aggregate: bool = False  # Multiple sources to one target
-    aggregator: Optional[Callable[[List[Any]], Any]] = None
+    aggregator: Callable[[list[Any]], Any] | None = None
 
-    def apply(self, source_data: Dict[str, Any]) -> Tuple[bool, Any]:
-        """
-        Apply mapping to source data.
+    def apply(self, source_data: dict[str, Any]) -> tuple[bool, Any]:
+        """Apply mapping to source data.
 
         Returns:
             Tuple of (success, value)
@@ -42,10 +39,9 @@ class FieldMapping:
 
         # Handle computed fields
         if self.is_computed:
-            if self.default_factory:
-                value = self.default_factory()
-            else:
-                value = self.default_value
+            value = (
+                self.default_factory() if self.default_factory else self.default_value
+            )
 
         # Handle aggregate fields
         elif self.is_aggregate and self.aggregator:
@@ -88,7 +84,7 @@ class FieldMapping:
 
         return True, value
 
-    def _extract_path_value(self, data: Dict[str, Any], path: str) -> Any:
+    def _extract_path_value(self, data: dict[str, Any], path: str) -> Any:
         """Extract value from nested path."""
         # Handle array notation: messages[0].content
         array_pattern = re.compile(r"(\w+)\[(\d+)\]")
@@ -99,7 +95,7 @@ class FieldMapping:
         current = data
         parts = path.split(".")
 
-        for i, part in enumerate(parts):
+        for _i, part in enumerate(parts):
             if current is None:
                 return None
 
@@ -157,17 +153,17 @@ class FieldMapper:
     """Manages field mappings between schemas."""
 
     def __init__(self):
-        self.mappings: Dict[str, FieldMapping] = {}
-        self._source_index: Dict[str, Set[str]] = {}  # source -> targets
+        self.mappings: dict[str, FieldMapping] = {}
+        self._source_index: dict[str, set[str]] = {}  # source -> targets
 
     def add_mapping(
         self,
-        source: Union[str, List[str]],
+        source: str | list[str],
         target: str,
-        transformer: Optional[Callable[[Any], Any]] = None,
-        condition: Optional[Callable[[Dict[str, Any]], bool]] = None,
+        transformer: Callable[[Any], Any] | None = None,
+        condition: Callable[[dict[str, Any]], bool] | None = None,
         default: Any = None,
-        validator: Optional[Callable[[Any], bool]] = None,
+        validator: Callable[[Any], bool] | None = None,
     ) -> FieldMapping:
         """Add a field mapping."""
         # Handle multiple sources (aggregate)
@@ -207,7 +203,7 @@ class FieldMapper:
         self,
         target: str,
         generator: Callable[[], Any],
-        condition: Optional[Callable[[Dict[str, Any]], bool]] = None,
+        condition: Callable[[dict[str, Any]], bool] | None = None,
     ) -> FieldMapping:
         """Add a computed field with no source."""
         mapping = FieldMapping(
@@ -223,9 +219,9 @@ class FieldMapper:
 
     def add_aggregate_field(
         self,
-        sources: List[str],
+        sources: list[str],
         target: str,
-        aggregator: Callable[[List[Any]], Any],
+        aggregator: Callable[[list[Any]], Any],
         default: Any = None,
     ) -> FieldMapping:
         """Add an aggregate field from multiple sources."""
@@ -249,13 +245,12 @@ class FieldMapper:
 
     def map_data(
         self,
-        source_data: Dict[str, Any],
-        target_fields: Optional[Set[str]] = None,
+        source_data: dict[str, Any],
+        target_fields: set[str] | None = None,
         include_unmapped: bool = False,
-        context: Optional[ConversionContext] = None,
-    ) -> Dict[str, Any]:
-        """
-        Map source data to target schema.
+        context: ConversionContext | None = None,
+    ) -> dict[str, Any]:
+        """Map source data to target schema.
 
         Args:
             source_data: Source data dictionary
@@ -296,21 +291,20 @@ class FieldMapper:
 
         return result
 
-    def get_mapping_for_target(self, target_field: str) -> Optional[FieldMapping]:
+    def get_mapping_for_target(self, target_field: str) -> FieldMapping | None:
         """Get mapping for a target field."""
         return self.mappings.get(target_field)
 
-    def get_targets_for_source(self, source_field: str) -> Set[str]:
+    def get_targets_for_source(self, source_field: str) -> set[str]:
         """Get all target fields that use a source field."""
         return self._source_index.get(source_field, set())
 
     def validate_mappings(
         self,
-        source_fields: Set[str],
-        target_fields: Set[str],
-    ) -> Tuple[bool, List[str]]:
-        """
-        Validate that mappings are complete and valid.
+        source_fields: set[str],
+        target_fields: set[str],
+    ) -> tuple[bool, list[str]]:
+        """Validate that mappings are complete and valid.
 
         Returns:
             Tuple of (is_valid, issues)
@@ -340,7 +334,7 @@ class FieldMapper:
 
         return len(issues) == 0, issues
 
-    def to_dict(self) -> Dict[str, Dict[str, Any]]:
+    def to_dict(self) -> dict[str, dict[str, Any]]:
         """Export mappings as dictionary."""
         return {
             target: {
@@ -357,11 +351,10 @@ class FieldMapper:
 
 # Convenience function
 def create_mapping(
-    mappings: Dict[str, Union[str, Tuple[str, Callable]]],
-    computed_fields: Optional[Dict[str, Callable]] = None,
+    mappings: dict[str, str | tuple[str, Callable]],
+    computed_fields: dict[str, Callable] | None = None,
 ) -> FieldMapper:
-    """
-    Create a field mapper from simple mapping dict.
+    """Create a field mapper from simple mapping dict.
 
     Args:
         mappings: Dict of target -> source or (source, transformer)

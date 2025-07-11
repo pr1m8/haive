@@ -1,5 +1,4 @@
-"""
-Logging Configuration Module.
+"""Logging Configuration Module.
 
 This module provides utilities for configuring and managing logging throughout the Haive
 framework. It includes customizable log levels, formatters, and specialized logging
@@ -29,12 +28,13 @@ Typical usage example:
     ```
 """
 
+from datetime import datetime
+from enum import Enum
 import logging
 import os
 import sys
-from datetime import datetime
-from enum import Enum
 from typing import Any, Dict, Optional
+
 
 # Try to import rich for enhanced console output
 try:
@@ -52,8 +52,7 @@ except ImportError:
 
 
 class LogLevel(str, Enum):
-    """
-    Logging level enumeration.
+    """Logging level enumeration.
 
     This enum defines standard logging levels plus a SILENT level
     for suppressing most log output. Since it inherits from str,
@@ -77,8 +76,7 @@ class LogLevel(str, Enum):
 
 
 class LogFormat(str, Enum):
-    """
-    Log output format enumeration.
+    """Log output format enumeration.
 
     This enum defines available formatting options for log output.
     It inherits from str for easy use in string contexts.
@@ -97,8 +95,7 @@ class LogFormat(str, Enum):
 
 
 class GameLogger:
-    """
-    Enhanced logger for game agents with rich formatting and game-specific methods.
+    """Enhanced logger for game agents with rich formatting and game-specific methods.
 
     This logger extends standard Python logging with game-specific logging methods
     and support for rich console output. It provides specialized methods for logging
@@ -123,10 +120,9 @@ class GameLogger:
         level: LogLevel = LogLevel.INFO,
         format: LogFormat = LogFormat.RICH if RICH_AVAILABLE else LogFormat.SIMPLE,
         enable_file_logging: bool = False,
-        log_file: Optional[str] = None,
+        log_file: str | None = None,
     ):
-        """
-        Initialize the game logger with the specified configuration.
+        """Initialize the game logger with the specified configuration.
 
         Args:
             name: Logger name (usually module or game name)
@@ -144,14 +140,13 @@ class GameLogger:
         )
 
         # Performance tracking
-        self._operation_starts: Dict[str, float] = {}
+        self._operation_starts: dict[str, float] = {}
 
         # Set up the logger
         self._setup_logger()
 
     def _setup_logger(self) -> None:
-        """
-        Set up the logging configuration based on the current settings.
+        """Set up the logging configuration based on the current settings.
 
         This method configures the underlying Python logger with appropriate
         handlers and formatters based on the format and level settings.
@@ -210,8 +205,7 @@ class GameLogger:
             self.logger.addHandler(file_handler)
 
     def set_level(self, level: LogLevel) -> None:
-        """
-        Change the logging level at runtime.
+        """Change the logging level at runtime.
 
         Args:
             level: New logging level to use
@@ -225,8 +219,7 @@ class GameLogger:
     # Game-specific logging methods
 
     def turn_start(self, player_name: str, turn_number: int, **kwargs) -> None:
-        """
-        Log the start of a player's turn.
+        """Log the start of a player's turn.
 
         Args:
             player_name: Name of the player whose turn is starting
@@ -247,8 +240,7 @@ class GameLogger:
                     self.logger.info(f"  {key}: {value}")
 
     def dice_roll(self, player_name: str, die1: int, die2: int, total: int) -> None:
-        """
-        Log a dice roll event.
+        """Log a dice roll event.
 
         Args:
             player_name: Name of the player who rolled
@@ -266,8 +258,7 @@ class GameLogger:
     def player_move(
         self, player_name: str, from_pos: int, to_pos: int, passed_go: bool = False
     ) -> None:
-        """
-        Log player movement on the game board.
+        """Log player movement on the game board.
 
         Args:
             player_name: Name of the player who moved
@@ -293,11 +284,10 @@ class GameLogger:
         action: str,
         player_name: str,
         property_name: str,
-        amount: Optional[int] = None,
+        amount: int | None = None,
         **kwargs,
     ) -> None:
-        """
-        Log property-related actions.
+        """Log property-related actions.
 
         Args:
             action: Type of action (e.g., "buy", "rent", "mortgage")
@@ -340,8 +330,7 @@ class GameLogger:
             self.logger.info(msg)
 
     def game_event(self, event_type: str, description: str, **kwargs) -> None:
-        """
-        Log a general game event.
+        """Log a general game event.
 
         Args:
             event_type: Type of event
@@ -362,8 +351,7 @@ class GameLogger:
     def decision(
         self, player_name: str, decision_type: str, choice: str, reasoning: str = ""
     ) -> None:
-        """
-        Log a player decision.
+        """Log a player decision.
 
         Args:
             player_name: Name of the player making the decision
@@ -382,9 +370,8 @@ class GameLogger:
             if reasoning and self.logger.level <= logging.DEBUG:
                 self.logger.debug(f"  Reasoning: {reasoning}")
 
-    def game_state_summary(self, state: Dict[str, Any]) -> None:
-        """
-        Display a summary of the current game state.
+    def game_state_summary(self, state: dict[str, Any]) -> None:
+        """Display a summary of the current game state.
 
         This method produces a rich table or formatted log output
         showing the current state of all players.
@@ -427,8 +414,7 @@ class GameLogger:
                 )
 
     def performance_start(self, operation: str) -> None:
-        """
-        Start timing an operation for performance tracking.
+        """Start timing an operation for performance tracking.
 
         Call this at the beginning of an operation you want to time.
 
@@ -440,8 +426,7 @@ class GameLogger:
         self._operation_starts[operation] = time.time()
 
     def performance_end(self, operation: str) -> None:
-        """
-        End timing an operation and log the duration.
+        """End timing an operation and log the duration.
 
         Call this at the end of an operation you started timing with
         performance_start(). The duration is only logged at DEBUG level.
@@ -463,8 +448,7 @@ class GameLogger:
 
     # Standard logging methods that delegate to the underlying logger
     def debug(self, msg: str, **kwargs) -> None:
-        """
-        Log a debug message.
+        """Log a debug message.
 
         Args:
             msg: Message to log
@@ -473,8 +457,7 @@ class GameLogger:
         self.logger.debug(msg, **kwargs)
 
     def info(self, msg: str, **kwargs) -> None:
-        """
-        Log an info message.
+        """Log an info message.
 
         Args:
             msg: Message to log
@@ -483,8 +466,7 @@ class GameLogger:
         self.logger.info(msg, **kwargs)
 
     def warning(self, msg: str, **kwargs) -> None:
-        """
-        Log a warning message.
+        """Log a warning message.
 
         Args:
             msg: Message to log
@@ -493,8 +475,7 @@ class GameLogger:
         self.logger.warning(msg, **kwargs)
 
     def error(self, msg: str, **kwargs) -> None:
-        """
-        Log an error message.
+        """Log an error message.
 
         Args:
             msg: Message to log
@@ -503,8 +484,7 @@ class GameLogger:
         self.logger.error(msg, **kwargs)
 
     def critical(self, msg: str, **kwargs) -> None:
-        """
-        Log a critical message.
+        """Log a critical message.
 
         Args:
             msg: Message to log
@@ -514,10 +494,9 @@ class GameLogger:
 
 
 def get_game_logger(
-    name: str, level: Optional[str] = None, format: Optional[str] = None
+    name: str, level: str | None = None, format: str | None = None
 ) -> GameLogger:
-    """
-    Get a configured game logger instance.
+    """Get a configured game logger instance.
 
     This function creates a GameLogger with settings from environment variables
     or the provided parameters. Environment variables take precedence over

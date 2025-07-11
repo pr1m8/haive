@@ -3,39 +3,45 @@
 ## Work Completed
 
 ### Main Module
+
 - ✅ Fixed README.md with comprehensive overview
-- ✅ Fixed __init__.py with proper module docstring
+- ✅ Fixed **init**.py with proper module docstring
 - ✅ Documented all submodules and their purposes
 
-### Base Module  
-- ✅ Fixed base/__init__.py docstring
+### Base Module
+
+- ✅ Fixed base/**init**.py docstring
 - ✅ Enhanced DocumentModifierState with full docstrings
 - ✅ Created comprehensive README.md
 - ✅ Documented known issues with class methods
 
 ### TNT Module
+
 - ✅ Created full README.md explaining Taxonomy and Topic generation
-- ✅ Fixed __init__.py with detailed docstring
+- ✅ Fixed **init**.py with detailed docstring
 - ✅ Provided multiple usage examples
 - ✅ Documented the multi-stage process
 
 ## Modules Still Needing Documentation
 
 ### Complex Extraction
+
 - Needs README.md update
-- __init__.py needs proper docstring
+- **init**.py needs proper docstring
 - Already has good docstrings in agent.py
 
 ### Knowledge Graph (KG)
+
 - kg_base needs documentation
 - kg_iterative_refinement needs README
-- kg_map_merge needs README  
-- Each needs __init__.py fixes
+- kg_map_merge needs README
+- Each needs **init**.py fixes
 
 ### Summarizer
+
 - map_branch needs README
 - iterative_refinement needs README
-- Both need __init__.py fixes
+- Both need **init**.py fixes
 
 ## Key Insights Discovered
 

@@ -1,5 +1,4 @@
-"""
-Grading Components for RAG Workflows
+"""Grading Components for RAG Workflows.
 
 This module provides reusable grading agents for document relevance,
 answer quality, and hallucination detection.
@@ -7,45 +6,44 @@ answer quality, and hallucination detection.
 
 from typing import Any, Dict, List
 
+from haive.agents.simple import SimpleAgent
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
-
-from haive.agents.simple import SimpleAgent
 
 # ===== MODELS =====
 
 
 class DocumentGrade(BaseModel):
-    """Grade for a retrieved document"""
+    """Grade for a retrieved document."""
 
     document_id: str
     relevance_score: float = Field(ge=0.0, le=1.0)
     is_relevant: bool
     reasoning: str
-    key_information: List[str] = []
+    key_information: list[str] = []
 
 
 class AnswerGrade(BaseModel):
-    """Grade for generated answer quality"""
+    """Grade for generated answer quality."""
 
     completeness_score: float = Field(ge=0.0, le=1.0)
     accuracy_score: float = Field(ge=0.0, le=1.0)
     clarity_score: float = Field(ge=0.0, le=1.0)
     overall_score: float = Field(ge=0.0, le=1.0)
-    strengths: List[str] = []
-    weaknesses: List[str] = []
-    suggestions: List[str] = []
+    strengths: list[str] = []
+    weaknesses: list[str] = []
+    suggestions: list[str] = []
 
 
 class HallucinationGrade(BaseModel):
-    """Grade for hallucination detection"""
+    """Grade for hallucination detection."""
 
     has_hallucination: bool
     hallucination_score: float = Field(ge=0.0, le=1.0)
-    hallucination_types: List[str] = []
-    specific_issues: List[str] = []
-    supported_claims: List[str] = []
-    unsupported_claims: List[str] = []
+    hallucination_types: list[str] = []
+    specific_issues: list[str] = []
+    supported_claims: list[str] = []
+    unsupported_claims: list[str] = []
 
 
 # ===== PROMPT TEMPLATES =====
@@ -181,7 +179,7 @@ Analyze for hallucinations:
 
 
 def create_document_grader(name: str = "document_grader") -> SimpleAgent:
-    """Create a document relevance grading agent"""
+    """Create a document relevance grading agent."""
     return SimpleAgent(
         name=name,
         instructions="""Evaluate document relevance to queries using systematic criteria.
@@ -198,7 +196,7 @@ def create_document_grader(name: str = "document_grader") -> SimpleAgent:
 
 
 def create_answer_grader(name: str = "answer_grader") -> SimpleAgent:
-    """Create an answer quality grading agent"""
+    """Create an answer quality grading agent."""
     return SimpleAgent(
         name=name,
         instructions="""Evaluate generated answers across multiple quality dimensions.
@@ -217,7 +215,7 @@ def create_answer_grader(name: str = "answer_grader") -> SimpleAgent:
 
 
 def create_hallucination_grader(name: str = "hallucination_grader") -> SimpleAgent:
-    """Create a hallucination detection agent"""
+    """Create a hallucination detection agent."""
     return SimpleAgent(
         name=name,
         instructions="""Detect hallucinations by comparing generated answers against source documents.
@@ -270,7 +268,7 @@ Provide:
 
 
 def create_priority_ranker(name: str = "priority_ranker") -> SimpleAgent:
-    """Create a document priority ranking agent"""
+    """Create a document priority ranking agent."""
     return SimpleAgent(
         name=name,
         instructions="""Prioritize retrieved documents based on relevance, quality, and usefulness.
@@ -321,7 +319,7 @@ Provide comprehensive analysis including:
 
 
 def create_query_analyzer(name: str = "query_analyzer") -> SimpleAgent:
-    """Create a query analysis agent"""
+    """Create a query analysis agent."""
     return SimpleAgent(
         name=name,
         instructions="""Analyze queries to understand intent, complexity, and information needs.
@@ -343,7 +341,7 @@ def create_query_analyzer(name: str = "query_analyzer") -> SimpleAgent:
 
 
 class CompositeGradingAgent:
-    """Combines multiple grading components for comprehensive evaluation"""
+    """Combines multiple grading components for comprehensive evaluation."""
 
     def __init__(self):
         self.document_grader = create_document_grader()
@@ -353,10 +351,9 @@ class CompositeGradingAgent:
         self.query_analyzer = create_query_analyzer()
 
     async def grade_rag_pipeline(
-        self, query: str, documents: List[Dict[str, Any]], answer: str
-    ) -> Dict[str, Any]:
-        """Perform comprehensive grading of entire RAG pipeline"""
-
+        self, query: str, documents: list[dict[str, Any]], answer: str
+    ) -> dict[str, Any]:
+        """Perform comprehensive grading of entire RAG pipeline."""
         # Analyze query
         query_analysis = await self.query_analyzer.ainvoke({"query": query})
 
@@ -395,9 +392,9 @@ class CompositeGradingAgent:
         }
 
     def _calculate_overall_score(
-        self, document_grades: List[Dict], answer_grade: Dict, hallucination_grade: Dict
+        self, document_grades: list[dict], answer_grade: dict, hallucination_grade: dict
     ) -> float:
-        """Calculate overall pipeline score"""
+        """Calculate overall pipeline score."""
         # Average document relevance
         doc_score = (
             sum(g.get("relevance_score", 0) for g in document_grades)

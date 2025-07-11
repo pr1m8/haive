@@ -7,7 +7,7 @@
     "description": "Get the cover image URL from an OpenLibrary ID (for book or author)",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.852617",
+    "timestamp": "2025-07-10T19:45:29.070551",
     "schema": {
       "description": "Input schema for the cover image retrieval tool.\n\nAttributes:\n    olid: The OpenLibrary ID for a book or author.\n    is_author: Boolean flag indicating if the OLID is for an author.",
       "properties": {
@@ -42,7 +42,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.852617",
+      "timestamp": "2025-07-10T19:45:29.070551",
       "category": "toolkits"
     }
   },

@@ -1,13 +1,12 @@
 import logging
 from typing import Any, Dict, List, Literal, Optional, Union
 
+from haive.agents.multi.enhanced_base import MultiAgentBase
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.agent_schema_composer import BuildMode
 from langgraph.graph import END
 from langgraph.types import Send
-
-from haive.agents.multi.enhanced_base import MultiAgentBase
-from haive.agents.simple.agent import SimpleAgent
 
 from .models import (
     Candidate,
@@ -54,7 +53,7 @@ controller = SimpleAgent(name="controller", engine=control_engine)
 
 
 # Custom workflow nodes for ToT-specific logic
-def expansion_workflow(state: ToTState) -> Dict[str, Any]:
+def expansion_workflow(state: ToTState) -> dict[str, Any]:
     """Process expansion results and create candidates."""
     # This is called after the expansion agent runs
     # The expansion agent's result should be in the last message
@@ -80,7 +79,7 @@ def expansion_workflow(state: ToTState) -> Dict[str, Any]:
     return {}
 
 
-def scoring_workflow(state: ToTState) -> Dict[str, Any]:
+def scoring_workflow(state: ToTState) -> dict[str, Any]:
     """Process all candidates for scoring."""
     # Score all candidates
     scored = []
@@ -113,7 +112,7 @@ def scoring_workflow(state: ToTState) -> Dict[str, Any]:
     }
 
 
-def control_workflow(state: ToTState) -> Dict[str, Any]:
+def control_workflow(state: ToTState) -> dict[str, Any]:
     """Process control results and update state."""
     # This is called after the control agent runs
     if state.messages and hasattr(state.messages[-1], "content"):
@@ -172,7 +171,7 @@ def route_after_control_post(state: ToTState) -> str:
     return "controller"
 
 
-def should_continue_search(state: ToTState) -> Union[str, List[Send]]:
+def should_continue_search(state: ToTState) -> str | list[Send]:
     """After control, decide whether to continue search."""
     if state.should_terminate:
         return END
@@ -206,7 +205,6 @@ def create_tree_of_thoughts(
     **kwargs
 ) -> MultiAgentBase:
     """Create a Tree of Thoughts multi-agent system."""
-
     # Define branches for routing
     branches = [
         (expander, route_after_expansion, {"scoring_prep": "scoring_prep"}),
@@ -248,11 +246,11 @@ def create_tree_of_thoughts(
 # Convenience function for common use case
 def solve_with_tot(
     problem: str,
-    problem_type: Optional[str] = None,
+    problem_type: str | None = None,
     max_depth: int = 5,
     beam_size: int = 3,
     **kwargs
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Solve a problem using Tree of Thoughts."""
     system = create_tree_of_thoughts(max_depth=max_depth, beam_size=beam_size, **kwargs)
 

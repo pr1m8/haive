@@ -7,22 +7,26 @@ The haive-core package contains multiple validation node implementations that ha
 ## Validation Node Implementations
 
 ### 1. ValidationNodeConfig (Original)
+
 **File**: `validation_node_config.py`
 **Type**: Conditional edge function (not a real node)
 **Status**: Legacy, has limitations
 
 **Purpose**:
+
 - Original validation implementation using LangGraph's `ValidationNode`
 - Used as a conditional edge function for routing
 - Validates tool calls and determines routing
 
 **Key Features**:
+
 - Syncs tools/schemas from engines
 - Routes based on tool types (pydantic_model, langchain_tool, etc.)
 - Creates ToolMessages for Pydantic validation
 - Extensive logging and debugging
 
 **Limitations**:
+
 - Acts as conditional edge, not a proper node
 - Cannot reliably update state (messages added don't persist)
 - Complex routing logic mixed with validation
@@ -33,27 +37,32 @@ The haive-core package contains multiple validation node implementations that ha
 ---
 
 ### 2. ValidationNodeV2 + validation_router_v2
+
 **Files**: `validation_node_v2.py`, `validation_router_v2.py`  
 **Type**: Proper node + conditional router
 **Status**: Improved but still two-step
 
 **Purpose**:
+
 - Separates validation (node) from routing (conditional edge)
 - ValidationNodeV2 updates state with ToolMessages
 - validation_router_v2 makes routing decisions
 
 **Key Features**:
+
 - Proper node that can update state via Command
 - Creates ToolMessages for Pydantic models
 - Cleaner separation of concerns
 - Schema-aware I/O support
 
 **Flow**:
+
 1. ValidationNodeV2 processes tool calls, adds ToolMessages
 2. Routes to validation_router node
 3. validation_router_v2 reads updated state, makes routing decisions
 
 **Limitations**:
+
 - Still requires two components
 - Extra step in the graph
 - Router is still a conditional edge
@@ -63,21 +72,25 @@ The haive-core package contains multiple validation node implementations that ha
 ---
 
 ### 3. ValidationNodeConfigV2
+
 **File**: `validation_node_config_v2.py`
 **Type**: Proper node with Command-based routing
 **Status**: Simplified V2 approach
 
 **Purpose**:
+
 - Single node that validates and routes using Command objects
 - Direct improvement over original ValidationNodeConfig
 
 **Key Features**:
+
 - Uses Command with update and goto
 - Simpler than V2 + router approach
 - Direct routing without conditional edges
 - Less flexible than full V2 implementation
 
 **Limitations**:
+
 - Less feature-rich than other implementations
 - Limited extensibility
 
@@ -86,16 +99,19 @@ The haive-core package contains multiple validation node implementations that ha
 ---
 
 ### 4. UnifiedValidationNode
+
 **File**: `unified_validation_node.py`
 **Type**: Modern unified node with Command/Send support
 **Status**: Current recommended approach
 
 **Purpose**:
+
 - Unified validation and routing in a single node
 - Supports both Command goto and Send for parallel execution
 - Proper Pydantic patterns
 
 **Key Features**:
+
 - Single node handles everything
 - Parallel tool execution via Send objects
 - Clean Pydantic implementation
@@ -103,6 +119,7 @@ The haive-core package contains multiple validation node implementations that ha
 - Configurable behavior
 
 **Advantages**:
+
 - Most modern implementation
 - Supports parallel tool execution
 - Clean, maintainable code
@@ -113,16 +130,19 @@ The haive-core package contains multiple validation node implementations that ha
 ---
 
 ### 5. ValidationNodeWithRouting
+
 **File**: `validation_node_with_routing.py`
 **Type**: Extended validation with routing state
 **Status**: Feature-rich but complex
 
 **Purpose**:
+
 - Extends ValidationNodeConfig with routing state
 - Integrates with ValidationRoutingState system
 - Provides detailed validation tracking
 
 **Key Features**:
+
 - Comprehensive validation state tracking
 - Tool message updates
 - Routing state for conditional branching
@@ -130,6 +150,7 @@ The haive-core package contains multiple validation node implementations that ha
 - Detailed error messages
 
 **Limitations**:
+
 - Very complex implementation
 - Depends on external ValidationRoutingState
 - Still based on legacy ValidationNodeConfig
@@ -139,16 +160,19 @@ The haive-core package contains multiple validation node implementations that ha
 ---
 
 ### 6. StateUpdatingValidationNode
+
 **File**: `state_updating_validation_node.py`
 **Type**: Node + router factory pattern
 **Status**: Alternative approach
 
 **Purpose**:
+
 - Updates state with validation results
 - Provides separate router function
 - Supports different validation modes
 
 **Key Features**:
+
 - Validation modes (STRICT, PARTIAL, PERMISSIVE)
 - Separate node and router functions
 - Tracks error tools
@@ -158,16 +182,19 @@ The haive-core package contains multiple validation node implementations that ha
 
 ---
 
-### 7. RoutingValidationNode  
+### 7. RoutingValidationNode
+
 **File**: `routing_validation_node.py`
 **Type**: Validation node that returns Send objects
 **Status**: Specialized for Send-based routing
 
 **Purpose**:
+
 - Creates Send objects for parallel routing
 - Direct routing without intermediate steps
 
 **Key Features**:
+
 - Returns Send objects directly
 - Supports partial success routing
 - Clean implementation
@@ -177,16 +204,19 @@ The haive-core package contains multiple validation node implementations that ha
 ---
 
 ### 8. StatefulValidationNode
+
 **File**: `stateful_validation_node.py`
 **Type**: Validation with history tracking
 **Status**: Specialized for validation analytics
 
 **Purpose**:
+
 - Tracks validation history and statistics
 - Pattern-based routing decisions
 - Analytics and monitoring
 
 **Key Features**:
+
 - Validation history with limits
 - Statistics calculation
 - Pattern-based routing
@@ -231,6 +261,7 @@ graph.add_node("validation", validation_node)
 If you're using legacy ValidationNodeConfig:
 
 1. **Replace conditional edge with node**:
+
    ```python
    # Old
    graph.add_conditional_edge(
@@ -238,7 +269,7 @@ If you're using legacy ValidationNodeConfig:
        validation_node_config,
        {...}
    )
-   
+
    # New
    graph.add_node("validation", unified_validation_node)
    graph.add_edge("agent", "validation")
@@ -263,16 +294,16 @@ If you're using legacy ValidationNodeConfig:
 
 ### Key Differences Summary
 
-| Feature | Original | V2 | Unified | Stateful |
-|---------|----------|----|---------|-----------|
-| Node Type | Conditional Edge | Node + Router | Single Node | Single Node |
-| State Updates | Unreliable | Via Command | Via Command | Via Command |
-| Routing | Mixed with validation | Separate router | Integrated | Pattern-based |
-| Tool Messages | Attempts to create | Creates properly | Creates properly | Creates properly |
-| Parallel Execution | No | No | Yes (Send) | No |
-| Validation History | No | No | No | Yes |
-| Complexity | High | Medium | Low | Medium |
-| Recommended | No | Sometimes | Yes | Special cases |
+| Feature            | Original              | V2               | Unified          | Stateful         |
+| ------------------ | --------------------- | ---------------- | ---------------- | ---------------- |
+| Node Type          | Conditional Edge      | Node + Router    | Single Node      | Single Node      |
+| State Updates      | Unreliable            | Via Command      | Via Command      | Via Command      |
+| Routing            | Mixed with validation | Separate router  | Integrated       | Pattern-based    |
+| Tool Messages      | Attempts to create    | Creates properly | Creates properly | Creates properly |
+| Parallel Execution | No                    | No               | Yes (Send)       | No               |
+| Validation History | No                    | No               | No               | Yes              |
+| Complexity         | High                  | Medium           | Low              | Medium           |
+| Recommended        | No                    | Sometimes        | Yes              | Special cases    |
 
 ## Best Practices
 

@@ -1,4 +1,4 @@
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar, Optional
 
 from haive.core.registry.base import AbstractRegistry
 
@@ -17,9 +17,9 @@ class PatternRegistry(AbstractRegistry[PatternDefinition]):
 
     def __init__(self):
         """Initialize the registry."""
-        self.patterns: Dict[str, PatternDefinition] = {}
-        self.pattern_ids: Dict[str, PatternDefinition] = {}
-        self.pattern_types: Dict[str, List[str]] = {}
+        self.patterns: dict[str, PatternDefinition] = {}
+        self.pattern_ids: dict[str, PatternDefinition] = {}
+        self.pattern_types: dict[str, list[str]] = {}
 
     def register(self, item: PatternDefinition) -> PatternDefinition:
         """Register a pattern in the registry."""
@@ -33,19 +33,19 @@ class PatternRegistry(AbstractRegistry[PatternDefinition]):
 
         return item
 
-    def get(self, item_type: Any, name: str) -> Optional[PatternDefinition]:
+    def get(self, item_type: Any, name: str) -> PatternDefinition | None:
         """Get a pattern by name."""
         return self.patterns.get(name)
 
-    def find_by_id(self, id: str) -> Optional[PatternDefinition]:
+    def find_by_id(self, id: str) -> PatternDefinition | None:
         """Find a pattern by ID."""
         return self.pattern_ids.get(id)
 
-    def list(self, item_type: Any) -> List[str]:
+    def list(self, item_type: Any) -> list[str]:
         """List all pattern names."""
         return list(self.patterns.keys())
 
-    def get_all(self, item_type: Any) -> Dict[str, PatternDefinition]:
+    def get_all(self, item_type: Any) -> dict[str, PatternDefinition]:
         """Get all patterns."""
         return self.patterns
 
@@ -55,11 +55,11 @@ class PatternRegistry(AbstractRegistry[PatternDefinition]):
         self.pattern_ids.clear()
         self.pattern_types.clear()
 
-    def list_by_type(self, pattern_type: str) -> List[str]:
+    def list_by_type(self, pattern_type: str) -> builtins.list[str]:
         """List patterns of a specific type."""
         return self.pattern_types.get(pattern_type, [])
 
-    def get_by_type(self, pattern_type: str) -> Dict[str, PatternDefinition]:
+    def get_by_type(self, pattern_type: str) -> dict[str, PatternDefinition]:
         """Get all patterns of a specific type."""
         return {
             name: self.patterns[name]

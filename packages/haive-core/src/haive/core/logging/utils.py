@@ -1,26 +1,22 @@
 # src/haive/core/logging/utils.py
 
-"""
-Utility functions for the Haive logging system.
-"""
+"""Utility functions for the Haive logging system."""
 
 import logging
 from contextlib import contextmanager
-from typing import Any, Dict, Optional, TypeVar
+from typing import Any, TypeVar
 
+from haive.core.logging.manager import get_logging_manager
 from rich.console import Console
 from rich.panel import Panel
 from rich.text import Text
 from rich.traceback import Traceback
 
-from haive.core.logging.manager import get_logging_manager
-
 T = TypeVar("T")
 
 
-def get_logger(name: str, component: Optional[str] = None) -> logging.Logger:
-    """
-    Get a logger with Haive Rich formatting.
+def get_logger(name: str, component: str | None = None) -> logging.Logger:
+    """Get a logger with Haive Rich formatting.
 
     Args:
         name: Logger name (usually __name__)
@@ -34,8 +30,7 @@ def get_logger(name: str, component: Optional[str] = None) -> logging.Logger:
 
 
 def setup_project_logging(**kwargs) -> None:
-    """
-    Setup project-wide logging with Rich formatting.
+    """Setup project-wide logging with Rich formatting.
 
     Args:
         **kwargs: Arguments passed to LoggingManager.setup_project_logging()
@@ -46,12 +41,11 @@ def setup_project_logging(**kwargs) -> None:
 
 def log_exception(
     exception: Exception,
-    context: Optional[Dict[str, Any]] = None,
+    context: dict[str, Any] | None = None,
     component: str = "System",
-    console: Optional[Console] = None,
+    console: Console | None = None,
 ) -> None:
-    """
-    Log an exception with Rich formatting and context.
+    """Log an exception with Rich formatting and context.
 
     Args:
         exception: Exception to log
@@ -104,9 +98,8 @@ def log_exception(
 
 
 @contextmanager
-def log_context(logger: logging.Logger, context: Dict[str, Any]):
-    """
-    Context manager that adds context to all log messages within the block.
+def log_context(logger: logging.Logger, context: dict[str, Any]):
+    """Context manager that adds context to all log messages within the block.
 
     Args:
         logger: Logger to add context to

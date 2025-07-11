@@ -1,5 +1,4 @@
-"""
-Google Vertex AI Search Retriever implementation for the Haive framework.
+"""Google Vertex AI Search Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Google Vertex AI Search retriever,
 which uses Google Cloud's Vertex AI Search (formerly Enterprise Search) service.
@@ -35,8 +34,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.GOOGLE_VERTEX_AI_SEARCH)
 class GoogleVertexAISearchRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for Google Vertex AI Search retriever in the Haive framework.
+    """Configuration for Google Vertex AI Search retriever in the Haive framework.
 
     This retriever uses Google Cloud Vertex AI Search to provide ML-powered
     enterprise search with natural language understanding.
@@ -97,7 +95,7 @@ class GoogleVertexAISearchRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig
     )
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None,
         description="Service account key path (auto-resolved from GOOGLE_APPLICATION_CREDENTIALS)",
     )
@@ -113,38 +111,38 @@ class GoogleVertexAISearchRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig
     )
 
     # Advanced search parameters
-    filter_expression: Optional[str] = Field(
+    filter_expression: str | None = Field(
         default=None, description="Filter expression for search results"
     )
 
-    order_by: Optional[str] = Field(
+    order_by: str | None = Field(
         default=None, description="Order by expression for result ranking"
     )
 
-    boost_spec: Optional[Dict[str, Any]] = Field(
+    boost_spec: dict[str, Any] | None = Field(
         default=None, description="Boost specification for custom ranking"
     )
 
     # Query expansion and spell correction
-    query_expansion_spec: Optional[Dict[str, Any]] = Field(
+    query_expansion_spec: dict[str, Any] | None = Field(
         default=None, description="Query expansion configuration"
     )
 
-    spell_correction_spec: Optional[Dict[str, Any]] = Field(
+    spell_correction_spec: dict[str, Any] | None = Field(
         default=None, description="Spell correction configuration"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Google Vertex AI Search retriever."""
         return {
             "query": (str, Field(description="Search query for Vertex AI Search")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Google Vertex AI Search retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list, description="Documents from Vertex AI Search"
                 ),
@@ -152,8 +150,7 @@ class GoogleVertexAISearchRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig
         }
 
     def instantiate(self):
-        """
-        Create a Google Vertex AI Search retriever from this configuration.
+        """Create a Google Vertex AI Search retriever from this configuration.
 
         Returns:
             GoogleVertexAISearchRetriever: Instantiated retriever ready for enterprise search.

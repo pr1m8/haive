@@ -5,9 +5,7 @@ from haive.core.engine.loaders.sources.types import SourceType
 
 
 class BlackboardSource(URLSource):
-    """
-    A source that is a Blackboard source.
-    """
+    """A source that is a Blackboard source."""
 
     source_type: SourceType = Field(default=SourceType.BLACKBOARD)
     url_prefix: str = Field(default="https://blackboard.com/")

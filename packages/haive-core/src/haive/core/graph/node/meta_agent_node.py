@@ -32,8 +32,8 @@ Example:
 
 from __future__ import annotations
 
-import traceback
 from datetime import datetime
+import traceback
 from typing import Any, Dict, List, Optional, Union
 
 from langgraph.types import Command, Send
@@ -43,6 +43,7 @@ from haive.core.graph.common.types import ConfigLike, StateLike
 from haive.core.graph.node.base_config import NodeConfig
 from haive.core.graph.node.types import NodeType
 from haive.core.logging.rich_logger import LogLevel, get_logger
+
 
 # Get module logger
 logger = get_logger(__name__)
@@ -124,16 +125,16 @@ class MetaAgentNodeConfig(NodeConfig):
     )
 
     # Custom configuration
-    custom_input_fields: List[str] = Field(
+    custom_input_fields: list[str] = Field(
         default_factory=list, description="Additional fields to include in agent input"
     )
 
-    exclude_fields: List[str] = Field(
+    exclude_fields: list[str] = Field(
         default_factory=list, description="Fields to exclude from agent input"
     )
 
     # Execution control
-    max_execution_time: Optional[float] = Field(
+    max_execution_time: float | None = Field(
         default=None, description="Maximum execution time in seconds"
     )
 
@@ -143,8 +144,8 @@ class MetaAgentNodeConfig(NodeConfig):
     )
 
     def __call__(
-        self, state: StateLike, config: Optional[ConfigLike] = None
-    ) -> Union[Command, Send]:
+        self, state: StateLike, config: ConfigLike | None = None
+    ) -> Command | Send:
         """Execute the embedded agent from meta state.
 
         Args:
@@ -208,34 +209,34 @@ class MetaAgentNodeConfig(NodeConfig):
             and hasattr(state, "agent_output")
         )
 
-    def _extract_agent(self, state: StateLike) -> Optional[Any]:
+    def _extract_agent(self, state: StateLike) -> Any | None:
         """Extract the embedded agent from meta state."""
         if hasattr(state, self.agent_field):
             return getattr(state, self.agent_field)
         return None
 
     def _prepare_agent_input(
-        self, state: StateLike, config: Optional[ConfigLike] = None
-    ) -> Dict[str, Any]:
+        self, state: StateLike, config: ConfigLike | None = None
+    ) -> dict[str, Any]:
         """Prepare input data for the embedded agent based on configuration."""
         logger.debug(f"Preparing agent input using strategy: {self.input_preparation}")
 
         if self.input_preparation == "auto":
             return self._prepare_auto_input(state)
-        elif self.input_preparation == "agent_input":
+        if self.input_preparation == "agent_input":
             return getattr(state, "agent_input", {})
-        elif self.input_preparation == "messages":
+        if self.input_preparation == "messages":
             return {"messages": getattr(state, "messages", [])}
-        elif self.input_preparation == "full_state":
+        if self.input_preparation == "full_state":
             return state.model_dump() if hasattr(state, "model_dump") else dict(state)
-        elif self.input_preparation == "custom":
+        if self.input_preparation == "custom":
             return self._prepare_custom_input(state, config)
         else:
             raise ValueError(
                 f"Unknown input preparation strategy: {self.input_preparation}"
             )
 
-    def _prepare_auto_input(self, state: StateLike) -> Dict[str, Any]:
+    def _prepare_auto_input(self, state: StateLike) -> dict[str, Any]:
         """Automatically prepare input from meta state."""
         input_data = {}
 
@@ -264,16 +265,16 @@ class MetaAgentNodeConfig(NodeConfig):
         return input_data
 
     def _prepare_custom_input(
-        self, state: StateLike, config: Optional[ConfigLike] = None
-    ) -> Dict[str, Any]:
+        self, state: StateLike, config: ConfigLike | None = None
+    ) -> dict[str, Any]:
         """Prepare custom input - override this method for custom logic."""
         # Default implementation uses auto strategy
         logger.warning("Custom input preparation not implemented, falling back to auto")
         return self._prepare_auto_input(state)
 
     def _prepare_execution_config(
-        self, state: StateLike, config: Optional[ConfigLike] = None
-    ) -> Dict[str, Any]:
+        self, state: StateLike, config: ConfigLike | None = None
+    ) -> dict[str, Any]:
         """Prepare execution configuration for the embedded agent."""
         execution_config = {}
 
@@ -295,9 +296,9 @@ class MetaAgentNodeConfig(NodeConfig):
         self,
         state: StateLike,
         agent: Any,
-        agent_input: Dict[str, Any],
-        execution_config: Dict[str, Any],
-    ) -> Dict[str, Any]:
+        agent_input: dict[str, Any],
+        execution_config: dict[str, Any],
+    ) -> dict[str, Any]:
         """Execute the embedded agent and return execution result."""
         logger.info(f"Executing embedded agent with input: {list(agent_input.keys())}")
 
@@ -338,7 +339,9 @@ class MetaAgentNodeConfig(NodeConfig):
             end_time = datetime.now()
             execution_time = (end_time - start_time).total_seconds()
 
-            logger.error(f"❌ Agent execution failed after {execution_time:.2f}s: {e}")
+            logger.exception(
+                f"❌ Agent execution failed after {execution_time:.2f}s: {e}"
+            )
 
             # Create error result
             execution_result = {
@@ -356,28 +359,27 @@ class MetaAgentNodeConfig(NodeConfig):
             # Handle error based on error handling strategy
             if self.error_handling == "raise":
                 raise
-            elif self.error_handling == "capture":
+            if self.error_handling == "capture":
                 # Return error result for capturing in state
                 return execution_result
-            elif self.error_handling == "ignore":
+            if self.error_handling == "ignore":
                 # Log and return empty result
                 logger.warning("Ignoring agent execution error per configuration")
                 return {"status": "ignored", "error": str(e)}
-            elif self.error_handling == "custom":
+            if self.error_handling == "custom":
                 return self._handle_custom_error(state, e, execution_result)
-            else:
-                # Default to capture
-                return execution_result
+            # Default to capture
+            return execution_result
 
     def _handle_custom_error(
-        self, state: StateLike, error: Exception, execution_result: Dict[str, Any]
-    ) -> Dict[str, Any]:
+        self, state: StateLike, error: Exception, execution_result: dict[str, Any]
+    ) -> dict[str, Any]:
         """Handle custom error - override this method for custom logic."""
         logger.warning("Custom error handling not implemented, falling back to capture")
         return execution_result
 
     def _handle_agent_output(
-        self, state: StateLike, execution_result: Dict[str, Any]
+        self, state: StateLike, execution_result: dict[str, Any]
     ) -> StateLike:
         """Handle agent execution output and update meta state."""
         logger.debug(f"Handling agent output using strategy: {self.output_handling}")
@@ -391,19 +393,16 @@ class MetaAgentNodeConfig(NodeConfig):
 
         if self.output_handling == "merge":
             return self._merge_output(updated_state, execution_result)
-        elif self.output_handling == "replace":
+        if self.output_handling == "replace":
             return self._replace_output(updated_state, execution_result)
-        elif self.output_handling == "append":
+        if self.output_handling == "append":
             return self._append_output(updated_state, execution_result)
-        elif self.output_handling == "custom":
+        if self.output_handling == "custom":
             return self._handle_custom_output(updated_state, execution_result)
-        else:
-            raise ValueError(
-                f"Unknown output handling strategy: {self.output_handling}"
-            )
+        raise ValueError(f"Unknown output handling strategy: {self.output_handling}")
 
     def _merge_output(
-        self, state: StateLike, execution_result: Dict[str, Any]
+        self, state: StateLike, execution_result: dict[str, Any]
     ) -> StateLike:
         """Merge agent output back to meta state."""
         result = execution_result.get("result", {})
@@ -414,32 +413,28 @@ class MetaAgentNodeConfig(NodeConfig):
                 # Merge dictionaries
                 current_output = getattr(state, "agent_output", {})
                 merged_output = {**current_output, **result}
-                setattr(state, "agent_output", merged_output)
+                state.agent_output = merged_output
             else:
                 # Store non-dict results
-                setattr(state, "agent_output", {"result": result})
+                state.agent_output = {"result": result}
 
         # Update execution status
         if hasattr(state, "execution_status"):
-            setattr(state, "execution_status", execution_result["status"])
+            state.execution_status = execution_result["status"]
 
         # Update last execution result
         if hasattr(state, "last_execution_result"):
-            setattr(state, "last_execution_result", execution_result)
+            state.last_execution_result = execution_result
 
         # Handle error info
         if execution_result["status"] == "error" and hasattr(state, "error_info"):
-            setattr(
-                state,
-                "error_info",
-                {
-                    "error": execution_result.get("error"),
-                    "error_type": execution_result.get("error_type"),
-                    "timestamp": execution_result.get("end_time"),
-                },
-            )
+            state.error_info = {
+                "error": execution_result.get("error"),
+                "error_type": execution_result.get("error_type"),
+                "timestamp": execution_result.get("end_time"),
+            }
         elif hasattr(state, "error_info"):
-            setattr(state, "error_info", None)
+            state.error_info = None
 
         # Sync messages if requested and available
         if (
@@ -454,22 +449,22 @@ class MetaAgentNodeConfig(NodeConfig):
         if self.update_execution_history and hasattr(state, "execution_history"):
             history = getattr(state, "execution_history", [])
             history.append(execution_result)
-            setattr(state, "execution_history", history)
+            state.execution_history = history
 
         logger.debug("✅ Successfully merged agent output to meta state")
         return state
 
     def _replace_output(
-        self, state: StateLike, execution_result: Dict[str, Any]
+        self, state: StateLike, execution_result: dict[str, Any]
     ) -> StateLike:
         """Replace agent_output field with new output."""
         result = execution_result.get("result", {})
 
         if hasattr(state, "agent_output"):
             if isinstance(result, dict):
-                setattr(state, "agent_output", result)
+                state.agent_output = result
             else:
-                setattr(state, "agent_output", {"result": result})
+                state.agent_output = {"result": result}
 
         # Update other fields similar to merge
         self._update_execution_metadata(state, execution_result)
@@ -478,13 +473,13 @@ class MetaAgentNodeConfig(NodeConfig):
         return state
 
     def _append_output(
-        self, state: StateLike, execution_result: Dict[str, Any]
+        self, state: StateLike, execution_result: dict[str, Any]
     ) -> StateLike:
         """Append output to execution history only."""
         if self.update_execution_history and hasattr(state, "execution_history"):
             history = getattr(state, "execution_history", [])
             history.append(execution_result)
-            setattr(state, "execution_history", history)
+            state.execution_history = history
 
         # Update execution status and metadata
         self._update_execution_metadata(state, execution_result)
@@ -493,37 +488,33 @@ class MetaAgentNodeConfig(NodeConfig):
         return state
 
     def _handle_custom_output(
-        self, state: StateLike, execution_result: Dict[str, Any]
+        self, state: StateLike, execution_result: dict[str, Any]
     ) -> StateLike:
         """Handle custom output - override this method for custom logic."""
         logger.warning("Custom output handling not implemented, falling back to merge")
         return self._merge_output(state, execution_result)
 
     def _update_execution_metadata(
-        self, state: StateLike, execution_result: Dict[str, Any]
+        self, state: StateLike, execution_result: dict[str, Any]
     ) -> None:
         """Update execution metadata in the state."""
         if hasattr(state, "execution_status"):
-            setattr(state, "execution_status", execution_result["status"])
+            state.execution_status = execution_result["status"]
 
         if hasattr(state, "last_execution_result"):
-            setattr(state, "last_execution_result", execution_result)
+            state.last_execution_result = execution_result
 
         # Handle error info
         if execution_result["status"] == "error" and hasattr(state, "error_info"):
-            setattr(
-                state,
-                "error_info",
-                {
-                    "error": execution_result.get("error"),
-                    "error_type": execution_result.get("error_type"),
-                    "timestamp": execution_result.get("end_time"),
-                },
-            )
+            state.error_info = {
+                "error": execution_result.get("error"),
+                "error_type": execution_result.get("error_type"),
+                "timestamp": execution_result.get("end_time"),
+            }
         elif hasattr(state, "error_info"):
-            setattr(state, "error_info", None)
+            state.error_info = None
 
-    def _create_response(self, updated_state: StateLike) -> Union[Command, Send]:
+    def _create_response(self, updated_state: StateLike) -> Command | Send:
         """Create the appropriate response with updated state."""
         # Convert state to update dictionary
         if hasattr(updated_state, "model_dump"):
@@ -535,23 +526,21 @@ class MetaAgentNodeConfig(NodeConfig):
         if self.use_send and self.command_goto:
             logger.debug(f"Creating Send to {self.command_goto}")
             return Send(node=self.command_goto, arg=update_dict)
-        else:
-            logger.debug(f"Creating Command with goto={self.command_goto}")
-            return Command(update=update_dict, goto=self.command_goto)
+        logger.debug(f"Creating Command with goto={self.command_goto}")
+        return Command(update=update_dict, goto=self.command_goto)
 
     def _handle_execution_error(
-        self, state: StateLike, error: Exception, config: Optional[ConfigLike] = None
-    ) -> Union[Command, Send]:
+        self, state: StateLike, error: Exception, config: ConfigLike | None = None
+    ) -> Command | Send:
         """Handle errors that occur during node execution."""
         logger.error(f"Meta agent node execution failed: {error}")
 
         # Create error state update
         error_update = {}
 
-        if hasattr(state, "model_dump"):
-            error_update = state.model_dump()
-        else:
-            error_update = dict(state)
+        error_update = (
+            state.model_dump() if hasattr(state, "model_dump") else dict(state)
+        )
 
         # Update error information
         error_update.update(
@@ -569,8 +558,7 @@ class MetaAgentNodeConfig(NodeConfig):
         # Return error response
         if self.use_send and self.command_goto:
             return Send(node=self.command_goto, arg=error_update)
-        else:
-            return Command(update=error_update, goto=self.command_goto)
+        return Command(update=error_update, goto=self.command_goto)
 
     def __repr__(self) -> str:
         """String representation of the meta agent node."""

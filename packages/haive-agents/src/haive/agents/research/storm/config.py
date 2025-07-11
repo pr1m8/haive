@@ -1,73 +1,86 @@
 # src/haive/agents/research/storm/config.py
 
 # NOTE: The following imports are placeholders - these modules are not yet implemented
-# from haive.agents.sequence.config import SequenceAgentConfig
-# from haive.agents.research.storm.interview.config import InterviewAgentConfig
-# from haive.agents.research.storm.research.config import ResearchAgentConfig
-# from haive.agents.research.storm.writing.config import WritingAgentConfig
+
+from typing import Any
 
 from pydantic import BaseModel, Field
-from typing import Optional, Any
+
 
 # Placeholder config classes until the actual implementations are ready
 class SequenceAgentConfig(BaseModel):
-    """Placeholder for SequenceAgentConfig"""
+    """Placeholder for SequenceAgentConfig."""
+
     name: str = "sequence_agent"
     default_agent_configs: bool = True
     agent_configs: list = Field(default_factory=list)
 
+
 class ResearchAgentConfig(BaseModel):
-    """Placeholder for ResearchAgentConfig"""
+    """Placeholder for ResearchAgentConfig."""
+
     name: str = "research_agent"
-    llm_config: Optional[Any] = None
+    llm_config: Any | None = None
     topic: str = ""
-    
+
     def build_agent(self):
-        """Placeholder build method"""
-        return type('Agent', (), {'config': self})()
+        """Placeholder build method."""
+        return type("Agent", (), {"config": self})()
+
 
 class InterviewAgentConfig(BaseModel):
-    """Placeholder for InterviewAgentConfig"""
+    """Placeholder for InterviewAgentConfig."""
+
     name: str = "interview_agent"
-    llm_config: Optional[Any] = None
+    llm_config: Any | None = None
     max_turns: int = 5
     num_perspectives: int = 3
-    
+
     def build_agent(self):
-        """Placeholder build method"""
-        return type('Agent', (), {'config': self})()
+        """Placeholder build method."""
+        return type("Agent", (), {"config": self})()
+
 
 class WritingAgentConfig(BaseModel):
-    """Placeholder for WritingAgentConfig"""
+    """Placeholder for WritingAgentConfig."""
+
     name: str = "writing_agent"
-    llm_config: Optional[Any] = None
-    retriever_config: Optional[Any] = None
-    
+    llm_config: Any | None = None
+    retriever_config: Any | None = None
+
     def build_agent(self):
-        """Placeholder build method"""
-        return type('Agent', (), {'config': self})()
+        """Placeholder build method."""
+        return type("Agent", (), {"config": self})()
+
 
 # Placeholder LLM config until we can import the real one
 class AzureLLMConfig(BaseModel):
-    """Placeholder for AzureLLMConfig"""
+    """Placeholder for AzureLLMConfig."""
+
     model: str = "gpt-4o"
+
 
 # Placeholder retriever configs
 class BaseRetrieverConfig(BaseModel):
-    """Placeholder for BaseRetrieverConfig"""
+    """Placeholder for BaseRetrieverConfig."""
+
     name: str = "retriever"
 
+
 class VectorStoreRetrieverConfig(BaseRetrieverConfig):
-    """Placeholder for VectorStoreRetrieverConfig"""
-    vector_store_config: Optional[Any] = None
+    """Placeholder for VectorStoreRetrieverConfig."""
+
+    vector_store_config: Any | None = None
     k: int = 4
     search_type: str = "similarity"
 
+
 class VectorStoreConfig(BaseModel):
-    """Placeholder for VectorStoreConfig"""
+    """Placeholder for VectorStoreConfig."""
+
     name: str = "vector_store"
     vector_store_provider: str = "InMemory"
-    embedding_model: Optional[Any] = None
+    embedding_model: Any | None = None
 
 
 class STORMAgentConfig(SequenceAgentConfig):

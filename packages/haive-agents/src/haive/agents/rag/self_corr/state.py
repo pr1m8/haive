@@ -1,9 +1,8 @@
 from typing import Any
 
+from haive.agents.rag.base.config import BaseRAGState
 from langchain_core.documents import Document
 from pydantic import Field
-
-from haive.agents.rag.base.config import BaseRAGState
 
 
 class SelfCorrectiveRAGState(BaseRAGState):

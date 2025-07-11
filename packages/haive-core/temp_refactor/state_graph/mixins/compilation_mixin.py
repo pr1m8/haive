@@ -1,5 +1,4 @@
-"""
-Compilation tracking mixin for the state graph system.
+"""Compilation tracking mixin for the state graph system.
 
 This module provides the CompilationMixin class for tracking when a
 graph needs to be recompiled due to changes.
@@ -12,23 +11,22 @@ from pydantic import Field
 
 from haive.core.graph.state_graph.base.graph_state import CompilationState
 
+
 logger = logging.getLogger(__name__)
 
 
 class CompilationMixin:
-    """
-    Mixin that adds compilation tracking to a graph.
+    """Mixin that adds compilation tracking to a graph.
 
     This mixin adds methods to track graph changes and determine
     when recompilation is needed.
     """
 
     _compilation_state: CompilationState = Field(default_factory=CompilationState)
-    _compiled_graph: Optional[Any] = None
+    _compiled_graph: Any | None = None
 
     def needs_recompilation(self) -> bool:
-        """
-        Check if the graph needs recompilation.
+        """Check if the graph needs recompilation.
 
         Returns:
             True if recompilation is needed, False otherwise
@@ -45,8 +43,7 @@ class CompilationMixin:
         self._compiled_graph = None
 
     def track_schema_change(self, field_name: str) -> None:
-        """
-        Track a change to the schema.
+        """Track a change to the schema.
 
         Args:
             field_name: Name of the changed schema field
@@ -55,8 +52,7 @@ class CompilationMixin:
         self._compiled_graph = None
 
     def track_node_change(self, node_name: str, change_type: str) -> None:
-        """
-        Track a node addition, update, or removal.
+        """Track a node addition, update, or removal.
 
         Args:
             node_name: Name of the changed node
@@ -66,8 +62,7 @@ class CompilationMixin:
         self._compiled_graph = None
 
     def track_edge_change(self, source: str, target: str, change_type: str) -> None:
-        """
-        Track an edge addition or removal.
+        """Track an edge addition or removal.
 
         Args:
             source: Source node name
@@ -78,8 +73,7 @@ class CompilationMixin:
         self._compiled_graph = None
 
     def track_branch_change(self, branch_id: str, change_type: str) -> None:
-        """
-        Track a branch addition, update, or removal.
+        """Track a branch addition, update, or removal.
 
         Args:
             branch_id: ID of the changed branch
@@ -88,9 +82,8 @@ class CompilationMixin:
         self._compilation_state.track_branch_change(branch_id, change_type)
         self._compiled_graph = None
 
-    def get_compilation_status(self) -> Dict[str, Any]:
-        """
-        Get compilation status information.
+    def get_compilation_status(self) -> dict[str, Any]:
+        """Get compilation status information.
 
         Returns:
             Dictionary with compilation status information
@@ -98,8 +91,7 @@ class CompilationMixin:
         return self._compilation_state.get_change_summary()
 
     def compile(self, force: bool = False) -> Any:
-        """
-        Compile the graph to a runnable form if needed.
+        """Compile the graph to a runnable form if needed.
 
         Args:
             force: Force recompilation even if not needed
@@ -143,12 +135,10 @@ class CompilationMixin:
             self.mark_as_compiled()
 
             return self._compiled_graph
-        else:
-            raise NotImplementedError("Graph must implement to_langgraph() method")
+        raise NotImplementedError("Graph must implement to_langgraph() method")
 
     def get_or_compile(self) -> Any:
-        """
-        Get the compiled graph, compiling if needed.
+        """Get the compiled graph, compiling if needed.
 
         Returns:
             Compiled graph
@@ -157,9 +147,8 @@ class CompilationMixin:
             return self.compile()
         return self._compiled_graph
 
-    def invoke(self, input_value: Any, config: Optional[Any] = None) -> Any:
-        """
-        Invoke the graph with input.
+    def invoke(self, input_value: Any, config: Any | None = None) -> Any:
+        """Invoke the graph with input.
 
         Automatically handles compilation if needed.
 

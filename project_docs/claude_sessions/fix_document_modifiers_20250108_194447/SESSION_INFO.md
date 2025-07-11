@@ -22,8 +22,9 @@
 ## Initial Findings
 
 The document_modifiers module is severely under-documented:
+
 - Main README has only TODOs
-- __init__.py has placeholder docstring
+- **init**.py has placeholder docstring
 - Submodules: tnt, base, summarizer, complex_extraction, kg
 - No clear module purpose or architecture documented
 

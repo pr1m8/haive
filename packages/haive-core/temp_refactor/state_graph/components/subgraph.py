@@ -1,5 +1,4 @@
-"""
-Subgraph component for the state graph system.
+"""Subgraph component for the state graph system.
 
 This module provides the Subgraph class for encapsulating a subgraph
 within a parent graph.
@@ -7,17 +6,15 @@ within a parent graph.
 
 from typing import Any, Dict, List, Optional, TypeVar
 
-from pydantic import BaseModel, Field
-
 from haive.core.graph.state_graph.base.graph_base import GraphBase
+from pydantic import BaseModel, Field
 
 # Type variable for the state type
 T = TypeVar("T")
 
 
 class Subgraph(BaseModel):
-    """
-    Wrapper for a subgraph in a parent graph.
+    """Wrapper for a subgraph in a parent graph.
 
     This class encapsulates a subgraph and provides methods for
     interfacing between the parent graph and the subgraph.
@@ -25,19 +22,18 @@ class Subgraph(BaseModel):
 
     name: str
     graph: GraphBase
-    input_mapping: Dict[str, str] = Field(default_factory=dict)
-    output_mapping: Dict[str, str] = Field(default_factory=dict)
-    metadata: Dict[str, Any] = Field(default_factory=dict)
+    input_mapping: dict[str, str] = Field(default_factory=dict)
+    output_mapping: dict[str, str] = Field(default_factory=dict)
+    metadata: dict[str, Any] = Field(default_factory=dict)
 
     # Interface nodes
-    entry_nodes: List[str] = Field(default_factory=list)
-    exit_nodes: List[str] = Field(default_factory=list)
+    entry_nodes: list[str] = Field(default_factory=list)
+    exit_nodes: list[str] = Field(default_factory=list)
 
     model_config = {"arbitrary_types_allowed": True}
 
-    def __call__(self, state: Any, config: Optional[Any] = None) -> Any:
-        """
-        Make the subgraph callable for use in the parent graph.
+    def __call__(self, state: Any, config: Any | None = None) -> Any:
+        """Make the subgraph callable for use in the parent graph.
 
         Args:
             state: State from the parent graph
@@ -50,10 +46,9 @@ class Subgraph(BaseModel):
         subgraph_state = self._map_inputs(state)
 
         # Create a compiled version of the subgraph
-        if hasattr(self.graph, "compile"):
-            compiled_graph = self.graph.compile()
-        else:
-            compiled_graph = self.graph
+        compiled_graph = (
+            self.graph.compile() if hasattr(self.graph, "compile") else self.graph
+        )
 
         # Invoke the subgraph
         result = compiled_graph.invoke(subgraph_state, config)
@@ -62,8 +57,7 @@ class Subgraph(BaseModel):
         return self._map_outputs(result, state)
 
     def _map_inputs(self, parent_state: Any) -> Any:
-        """
-        Map parent state to subgraph state.
+        """Map parent state to subgraph state.
 
         Args:
             parent_state: State from parent graph
@@ -87,7 +81,7 @@ class Subgraph(BaseModel):
 
             return subgraph_state
 
-        elif hasattr(parent_state, "__dict__"):
+        if hasattr(parent_state, "__dict__"):
             # Object state
             from copy import deepcopy
 
@@ -101,13 +95,11 @@ class Subgraph(BaseModel):
 
             return subgraph_state
 
-        else:
-            # Fallback for other types
-            return parent_state
+        # Fallback for other types
+        return parent_state
 
     def _map_outputs(self, subgraph_result: Any, parent_state: Any) -> Any:
-        """
-        Map subgraph result to parent state format.
+        """Map subgraph result to parent state format.
 
         Args:
             subgraph_result: Result from subgraph
@@ -132,7 +124,7 @@ class Subgraph(BaseModel):
 
             return result
 
-        elif hasattr(parent_state, "__dict__") and hasattr(subgraph_result, "__dict__"):
+        if hasattr(parent_state, "__dict__") and hasattr(subgraph_result, "__dict__"):
             # Object state
             from copy import deepcopy
 
@@ -151,22 +143,19 @@ class Subgraph(BaseModel):
 
             return result
 
-        else:
-            # Fallback for other types
-            return subgraph_result
+        # Fallback for other types
+        return subgraph_result
 
     def get_graph(self) -> GraphBase:
-        """
-        Get the underlying graph.
+        """Get the underlying graph.
 
         Returns:
             Graph object
         """
         return self.graph
 
-    def get_node_names(self) -> List[str]:
-        """
-        Get list of node names in the subgraph.
+    def get_node_names(self) -> list[str]:
+        """Get list of node names in the subgraph.
 
         Returns:
             List of node names
@@ -174,8 +163,7 @@ class Subgraph(BaseModel):
         return list(self.graph.nodes.keys())
 
     def is_compiled(self) -> bool:
-        """
-        Check if the subgraph is compiled.
+        """Check if the subgraph is compiled.
 
         Returns:
             True if compiled, False otherwise
@@ -187,8 +175,7 @@ class Subgraph(BaseModel):
         return False
 
     def needs_recompilation(self) -> bool:
-        """
-        Check if the subgraph needs recompilation.
+        """Check if the subgraph needs recompilation.
 
         Returns:
             True if recompilation is needed, False otherwise

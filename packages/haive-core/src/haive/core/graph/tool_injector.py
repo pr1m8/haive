@@ -1,12 +1,13 @@
 # src/haive/core/graph/tool_injector.py
 
+from collections.abc import Callable
 import functools
 import inspect
-from collections.abc import Callable
 from typing import Any, TypeVar, get_type_hints
 
 from langchain_core.tools import BaseTool, tool
 from langgraph.prebuilt.tool_node import InjectedState, InjectedStore
+
 
 F = TypeVar("F", bound=Callable[..., Any])
 

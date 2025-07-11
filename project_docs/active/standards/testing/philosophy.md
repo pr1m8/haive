@@ -7,16 +7,19 @@
 ## 🎯 Core Testing Principles
 
 ### 1. ABSOLUTE NO MOCKS
+
 - **Always use real components** - Real LLMs, real tools, real APIs
 - **Never mock internal logic** - Test actual behavior, not simulated responses
 - **Mock only external dependencies** - Third-party APIs, file systems, network calls
 
 ### 2. Test Behavior, Not Implementation
+
 - **Focus on outcomes** - What the code does, not how it does it
 - **Descriptive test names** - `test_agent_maintains_state_across_multiple_turns`
 - **Clear assertions** - Test meaningful results, not internal state
 
 ### 3. Real Integration Testing
+
 - **Use actual state files** - Save real conversation histories
 - **Test with real engines** - Use configured LLM providers
 - **Validate real workflows** - End-to-end agent interactions
@@ -47,6 +50,7 @@ fake_api = FakeAPI()                        # ❌ NO FAKE APIs
 ## ✅ Required Testing Patterns
 
 ### Real Component Testing
+
 ```python
 def test_react_agent_with_real_llm_and_tools():
     """Test ReactAgent with actual LLM and real tools."""
@@ -68,6 +72,7 @@ def test_react_agent_with_real_llm_and_tools():
 ```
 
 ### Real Integration Testing
+
 ```python
 def test_agent_tool_integration_real_apis():
     """Test real agent with real tool integration."""
@@ -89,6 +94,7 @@ def test_agent_tool_integration_real_apis():
 ```
 
 ### Real Error Handling
+
 ```python
 def test_real_error_handling_with_invalid_tool():
     """Test how agent handles real tool errors."""
@@ -106,6 +112,7 @@ def test_real_error_handling_with_invalid_tool():
 ## 📝 Test Structure Standards
 
 ### Descriptive Test Names
+
 ```python
 # ✅ CORRECT - Clear, descriptive names
 def test_simple_agent_maintains_conversation_state_across_multiple_turns():
@@ -122,6 +129,7 @@ def test_agent_handles_invalid_configuration_gracefully():
 ```
 
 ### Test Organization
+
 ```python
 import pytest
 from haive.core.agent import ReactAgent
@@ -148,6 +156,7 @@ class TestReactAgent:
 ## 🔧 Testing Tools and Commands
 
 ### Running Tests
+
 ```bash
 # Run tests for specific package
 poetry run pytest packages/haive-agents/tests/
@@ -166,6 +175,7 @@ poetry run pytest -k "not mock" -v
 ```
 
 ### Test Configuration
+
 ```python
 # conftest.py - Test configuration
 import pytest
@@ -190,35 +200,38 @@ def real_calculator():
 ## 📊 Quality Metrics
 
 ### Test Coverage Requirements
+
 - **Unit Tests**: >90% line coverage
 - **Integration Tests**: All critical workflows
 - **End-to-End Tests**: Complete user scenarios
 - **Error Handling**: All exception paths
 
 ### Test Quality Indicators
+
 - **No mocks**: 100% real component usage
 - **Descriptive names**: Clear test intent
 - **Real data**: Actual state files and responses
 - **Comprehensive assertions**: Meaningful validations
 
 ### Performance Testing
+
 ```python
 def test_agent_response_time_under_load():
     """Test agent performance with concurrent requests."""
     agent = ReactAgent(name="perf_test", model="gpt-4")
-    
+
     import asyncio
     import time
-    
+
     async def send_request():
         return await agent.arun("Hello!")
-    
+
     # Test concurrent requests
     start_time = time.time()
     tasks = [send_request() for _ in range(10)]
     results = await asyncio.gather(*tasks)
     end_time = time.time()
-    
+
     # Verify performance
     assert len(results) == 10
     assert all(result for result in results)
@@ -228,6 +241,7 @@ def test_agent_response_time_under_load():
 ## 🚨 Common Anti-Patterns to Avoid
 
 ### 1. Enhanced/Artificial Scenarios
+
 ```python
 # ❌ WRONG - Enhanced/artificial scenarios
 def test_enhanced_agent_with_super_powers():
@@ -236,6 +250,7 @@ def test_enhanced_agent_with_super_powers():
 ```
 
 ### 2. Bypassing Logic
+
 ```python
 # ❌ WRONG - Cheating/bypassing logic
 def test_agent_bypassing_validation():
@@ -244,6 +259,7 @@ def test_agent_bypassing_validation():
 ```
 
 ### 3. Artificial Success
+
 ```python
 # ❌ WRONG - Artificial success scenarios
 def test_agent_always_succeeds():
@@ -254,6 +270,7 @@ def test_agent_always_succeeds():
 ## 🎯 Test Development Workflow
 
 ### 1. Test-Driven Development
+
 ```python
 # Write test first
 def test_new_agent_processes_user_input():
@@ -271,6 +288,7 @@ class NewAgent:
 ```
 
 ### 2. Real Component Integration
+
 ```python
 # Always use real components in tests
 @pytest.fixture
@@ -284,17 +302,18 @@ def real_agent():
 ```
 
 ### 3. State History Validation
+
 ```python
 def test_agent_saves_real_state_history():
     """Test that agent saves actual conversation state."""
     agent = ReactAgent(name="state_test", model="gpt-4")
-    
+
     # First interaction
     result1 = agent.process("My name is Alice")
-    
+
     # Second interaction
     result2 = agent.process("What's my name?")
-    
+
     # Verify real state persistence
     assert "alice" in result2.response.lower()
     assert len(agent.conversation_history) == 4  # 2 user + 2 assistant
@@ -304,6 +323,7 @@ def test_agent_saves_real_state_history():
 ## 🔄 Continuous Testing
 
 ### Pre-commit Testing
+
 ```bash
 # Always run before committing
 poetry run pytest --cov=haive --cov-fail-under=90
@@ -315,6 +335,7 @@ poetry run pytest tests/integration/ -v
 ```
 
 ### CI/CD Testing
+
 ```yaml
 # .github/workflows/test.yml
 name: Test Suite

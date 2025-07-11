@@ -1,5 +1,4 @@
-"""
-Graph validation mixin for the state graph system.
+"""Graph validation mixin for the state graph system.
 
 This module provides the ValidationMixin class for validating graph
 structure and integrity.
@@ -14,8 +13,7 @@ console = Console()
 
 
 class ValidationMixin:
-    """
-    Mixin for graph validation functionality.
+    """Mixin for graph validation functionality.
 
     Provides methods for validating graph integrity, detecting cycles,
     finding orphaned nodes, and ensuring paths to END.
@@ -29,14 +27,13 @@ class ValidationMixin:
     allow_cycles: bool = False
     require_end_path: bool = True
 
-    def validate_graph(self) -> List[str]:
-        """
-        Perform comprehensive validation of the graph.
+    def validate_graph(self) -> list[str]:
+        """Perform comprehensive validation of the graph.
 
         Returns:
             List of validation issues (empty if valid)
         """
-        issues: List[str] = []
+        issues: list[str] = []
 
         # Check for circular references only if cycles are not allowed
         if not self.allow_cycles:
@@ -93,7 +90,7 @@ class ValidationMixin:
 
     # Abstract methods that must be implemented
 
-    def analyze_cycles(self) -> List[List[str]]:
+    def analyze_cycles(self) -> list[list[str]]:
         """Find all cycles in the graph."""
         cycles = []
         visited = set()
@@ -104,7 +101,7 @@ class ValidationMixin:
             if node in path_set:
                 # Found a cycle, extract it
                 cycle_start = path.index(node)
-                cycles.append(path[cycle_start:] + [node])
+                cycles.append([*path[cycle_start:], node])
                 return
 
             if node in visited:
@@ -139,7 +136,7 @@ class ValidationMixin:
 
         return cycles
 
-    def find_orphan_nodes(self) -> List[str]:
+    def find_orphan_nodes(self) -> list[str]:
         """Find nodes with no incoming or outgoing edges."""
         orphans = []
 
@@ -182,7 +179,7 @@ class ValidationMixin:
 
         return orphans
 
-    def find_dangling_edges(self) -> List[Tuple[str, str]]:
+    def find_dangling_edges(self) -> list[tuple[str, str]]:
         """Find edges pointing to non-existent nodes."""
         dangling = []
 
@@ -213,7 +210,7 @@ class ValidationMixin:
 
         return dangling
 
-    def find_unreachable_nodes(self) -> List[str]:
+    def find_unreachable_nodes(self) -> list[str]:
         """Find nodes that can't be reached from START."""
         # Get all nodes reachable from START
         reachable = set()
@@ -248,7 +245,7 @@ class ValidationMixin:
             if node not in reachable and self.nodes[node] is not None
         ]
 
-    def find_nodes_without_end_path(self) -> List[str]:
+    def find_nodes_without_end_path(self) -> list[str]:
         """Find nodes that can't reach END."""
         # For each node, check if there's a path to END
         no_end_path = []
@@ -304,8 +301,4 @@ class ValidationMixin:
                 return True
 
         # Check for branches from START
-        for branch in self.branches.values():
-            if branch.source_node == "START":
-                return True
-
-        return False
+        return any(branch.source_node == "START" for branch in self.branches.values())

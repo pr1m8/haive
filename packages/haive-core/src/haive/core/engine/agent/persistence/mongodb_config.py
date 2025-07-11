@@ -7,6 +7,7 @@ from pydantic import Field
 from haive.core.engine.agent.persistence.base import CheckpointerConfig
 from haive.core.engine.agent.persistence.types import CheckpointerType
 
+
 logger = logging.getLogger(__name__)
 
 # Check MongoDB support
@@ -53,7 +54,7 @@ class MongoDBCheckpointerConfig(CheckpointerConfig):
                 collection=self.collection,
             )
         except Exception as e:
-            logger.error(f"Error creating MongoDB checkpointer: {e}")
+            logger.exception(f"Error creating MongoDB checkpointer: {e}")
             logger.warning("Falling back to memory checkpointer")
             from langgraph.checkpoint.memory import MemorySaver
 
@@ -77,7 +78,7 @@ class MongoDBCheckpointerConfig(CheckpointerConfig):
                 collection=self.collection,
             )
         except Exception as e:
-            logger.error(f"Error creating async MongoDB checkpointer: {e}")
+            logger.exception(f"Error creating async MongoDB checkpointer: {e}")
             logger.warning("Falling back to memory checkpointer")
             from langgraph.checkpoint.memory import MemorySaver
 

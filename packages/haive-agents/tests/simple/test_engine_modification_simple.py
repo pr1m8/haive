@@ -94,11 +94,6 @@ def test_basic_engine_modification_flow():
     assert hasattr(v2_engine, "pydantic_tools"), "V2 should have pydantic_tools"
     assert TaskResult in v2_engine.pydantic_tools, "TaskResult should be in tools"
 
-    print("✅ All basic engine modification tests passed!")
-    print("✅ V1 engines naturally have structured fields")
-    print("✅ V2 engines only have messages but provide model via tools")
-    print("✅ Parser can find structured models via direct lookup")
-
 
 def test_mock_simple_agent_without_modification():
     """Test a mock SimpleAgent that doesn't modify engine schema."""
@@ -202,13 +197,7 @@ def test_mock_simple_agent_without_modification():
     assert "messages" in v2_fields, "V2 should have messages"
     assert "completed" not in v2_fields, "V2 should NOT have structured fields"
 
-    print("✅ Mock agent tests passed!")
-    print("✅ V1 agent works without engine modification")
-    print("✅ V2 agent works without engine modification")
-    print("✅ Parser can find models in both cases")
-
 
 if __name__ == "__main__":
     test_basic_engine_modification_flow()
     test_mock_simple_agent_without_modification()
-    print("\n🎉 All tests passed! Engine modification appears unnecessary!")

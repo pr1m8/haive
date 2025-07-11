@@ -1,20 +1,18 @@
-"""Loader Strategy System for Document Loader Engine
+"""Loader Strategy System for Document Loader Engine.
 
 This module implements the loader strategy system for the document loader engine.
 It provides classes for managing document loader strategies and factory methods
 for creating loaders.
 """
 
-from enum import Enum
 import importlib
 import logging
+from enum import Enum
 from typing import Any, Literal
 
 from pydantic import BaseModel, Field
-
 # Import from source implementation (placeholder for now)
 from source_implementation import BaseSource, PathAnalysisResult
-
 
 logger = logging.getLogger(__name__)
 
@@ -157,17 +155,17 @@ class LoaderStrategy(BaseModel):
             return loader
 
         except ImportError as e:
-            logger.error(f"Failed to import loader module {self.module_path}: {e}")
+            logger.exception(f"Failed to import loader module {self.module_path}: {e}")
             raise ImportError(f"Loader module not found: {self.module_path}") from e
 
         except AttributeError as e:
-            logger.error(
+            logger.exception(
                 f"Failed to find loader class {self.loader_class} in module {self.module_path}: {e}"
             )
             raise ValueError(f"Loader class not found: {self.loader_class}") from e
 
         except Exception as e:
-            logger.error(f"Failed to create loader instance: {e}")
+            logger.exception(f"Failed to create loader instance: {e}")
             raise
 
     def calculate_suitability(
@@ -317,8 +315,8 @@ class LoaderRegistry:
     def register_strategy(
         self,
         strategy: LoaderStrategy,
-        source_types: list[str] = None,
-        file_extensions: list[str] = None,
+        source_types: list[str] | None = None,
+        file_extensions: list[str] | None = None,
     ) -> None:
         """Register a loader strategy.
 
@@ -396,7 +394,7 @@ class LoaderRegistry:
         self,
         source: BaseSource,
         analysis: PathAnalysisResult,
-        preferences: dict[str, Any] = None,
+        preferences: dict[str, Any] | None = None,
     ) -> LoaderStrategy | None:
         """Select the best loader strategy for a source.
 
@@ -455,8 +453,8 @@ def create_loader(
     source: BaseSource,
     analysis: PathAnalysisResult,
     strategy_name: str | None = None,
-    options: dict[str, Any] = None,
-    preferences: dict[str, Any] = None,
+    options: dict[str, Any] | None = None,
+    preferences: dict[str, Any] | None = None,
 ) -> Any:
     """Create a loader for a source.
 

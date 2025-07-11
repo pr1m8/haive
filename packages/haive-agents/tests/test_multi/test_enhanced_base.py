@@ -1,5 +1,4 @@
-"""
-Test file for the new MultiAgentBase with no mocks - using real agents.
+"""Test file for the new MultiAgentBase with no mocks - using real agents.
 
 This test file demonstrates the new MultiAgentBase functionality with:
 - Sequential multi-agent flows
@@ -12,11 +11,9 @@ This test file demonstrates the new MultiAgentBase functionality with:
 
 from typing import Any, Dict, List
 
-import pytest
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.schema.agent_schema_composer import BuildMode
 from langchain_core.messages import AIMessage, HumanMessage
 from langgraph.graph import END
+import pytest
 
 from haive.agents.multi.enhanced_base import (
     MultiAgentBase,
@@ -26,6 +23,8 @@ from haive.agents.multi.enhanced_base import (
 )
 from haive.agents.planning.p_and_e.state import PlanExecuteState
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.schema.agent_schema_composer import BuildMode
 
 
 @pytest.fixture
@@ -122,8 +121,7 @@ class TestMultiAgentBaseBranches:
                 last_msg = state.messages[-1]
                 if "continue" in str(last_msg.content).lower():
                     return "continue"
-                else:
-                    return "finish"
+                return "finish"
             return "finish"
 
         branches = [
@@ -218,13 +216,13 @@ class TestMultiAgentBaseAdvanced:
         """Test create_missing_nodes parameter (matches base_graph2)."""
         system = MultiAgentBase(agents=[simple_agent_1], create_missing_nodes=True)
 
-        assert system.create_missing_nodes == True
+        assert system.create_missing_nodes
 
         system2 = MultiAgentBase(
             agents=[simple_agent_1], create_missing_nodes=False  # Default
         )
 
-        assert system2.create_missing_nodes == False
+        assert not system2.create_missing_nodes
 
     def test_custom_state_schema(self, simple_agent_1, simple_agent_2):
         """Test using custom state schema."""

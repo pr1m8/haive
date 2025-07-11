@@ -1,5 +1,5 @@
 def generate(state):
-    """Generate answer
+    """Generate answer.
 
     Args:
         state (dict): The current graph state
@@ -7,7 +7,6 @@ def generate(state):
     Returns:
         state (dict): New key added to state, generation, that contains LLM generation
     """
-    print("---GENERATE---")
     question = state["question"]
     documents = state["documents"]
 

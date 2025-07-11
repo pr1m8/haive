@@ -1,10 +1,11 @@
-import json
-import uuid
 from datetime import datetime
+import json
 from typing import Any, Dict, Generic, List, Literal, Optional, TypeVar, Union
+import uuid
 
 from langchain_core.messages import BaseMessage
 from pydantic import BaseModel, Field, field_validator
+
 
 # Generic type for candidate content
 T = TypeVar("T")
@@ -15,9 +16,9 @@ class Candidate(BaseModel, Generic[T]):
 
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     content: T  # Can be str, dict, BaseModel, BaseMessage, etc.
-    metadata: Dict[str, Any] = Field(default_factory=dict)
+    metadata: dict[str, Any] = Field(default_factory=dict)
     depth: int = 0
-    parent_id: Optional[str] = None
+    parent_id: str | None = None
     expansion_index: int = 0
     created_at: datetime = Field(default_factory=datetime.now)
 
@@ -26,7 +27,7 @@ class Candidate(BaseModel, Generic[T]):
     def validate_content(cls, v: Any) -> Any:
         """Convert various types to a consistent format."""
         # If it's already processed, return as-is
-        if isinstance(v, (str, dict, BaseModel)):
+        if isinstance(v, str | dict | BaseModel):
             return v
 
         # Convert BaseMessage to dict representation
@@ -40,7 +41,7 @@ class Candidate(BaseModel, Generic[T]):
         # Convert other objects to dict if possible
         if hasattr(v, "dict"):
             return v.dict()
-        elif hasattr(v, "__dict__"):
+        if hasattr(v, "__dict__"):
             return v.__dict__
 
         # Default: convert to string
@@ -50,12 +51,11 @@ class Candidate(BaseModel, Generic[T]):
         """Get string representation of content for prompts."""
         if isinstance(self.content, str):
             return self.content
-        elif isinstance(self.content, dict):
+        if isinstance(self.content, dict):
             return json.dumps(self.content, indent=2)
-        elif isinstance(self.content, BaseModel):
+        if isinstance(self.content, BaseModel):
             return self.content.model_dump_json(indent=2)
-        else:
-            return str(self.content)
+        return str(self.content)
 
     def __str__(self) -> str:
         """String representation for use in prompts."""
@@ -70,7 +70,7 @@ class ScoredCandidate(Candidate[T], Generic[T]):
 
     score: float = Field(description="Evaluation score")
     feedback: str = Field(description="Evaluation feedback/reasoning")
-    scoring_metadata: Dict[str, Any] = Field(
+    scoring_metadata: dict[str, Any] = Field(
         default_factory=dict, description="Additional scoring information"
     )
 
@@ -110,7 +110,7 @@ class ScoredCandidate(Candidate[T], Generic[T]):
 class CandidateGeneration(BaseModel):
     """Output from expansion agent."""
 
-    candidates: List[Dict[str, Any]] = Field(
+    candidates: list[dict[str, Any]] = Field(
         description="List of generated candidate solutions"
     )
     reasoning: str = Field(description="Overall reasoning for this expansion")
@@ -124,17 +124,17 @@ class CandidateEvaluation(BaseModel):
 
     score: float = Field(ge=0, le=1)
     feedback: str
-    strengths: List[str] = Field(default_factory=list)
-    weaknesses: List[str] = Field(default_factory=list)
+    strengths: list[str] = Field(default_factory=list)
+    weaknesses: list[str] = Field(default_factory=list)
     confidence: float = Field(default=0.8, ge=0, le=1)
 
 
 class SearchControl(BaseModel):
     """Output from control/pruning agent."""
 
-    selected_indices: List[int] = Field(description="Indices of candidates to keep")
+    selected_indices: list[int] = Field(description="Indices of candidates to keep")
     should_terminate: bool
-    termination_reason: Optional[str] = None
+    termination_reason: str | None = None
     next_strategy: Literal["explore", "exploit", "refine", "terminate"] = Field(
         default="explore"
     )

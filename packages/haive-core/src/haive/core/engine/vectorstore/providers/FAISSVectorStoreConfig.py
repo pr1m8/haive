@@ -1,5 +1,4 @@
-"""
-FAISS Vector Store implementation for the Haive framework.
+"""FAISS Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the FAISS (Facebook AI Similarity Search)
 vector store, which is a library for efficient similarity search and clustering of dense vectors.
@@ -24,17 +23,15 @@ a consistent Haive configuration interface.
 
 from typing import Any, Dict, List, Optional, Tuple, Type
 
-from langchain_core.documents import Document
-from pydantic import Field, validator
-
 from haive.core.engine.vectorstore.base import BaseVectorStoreConfig
 from haive.core.engine.vectorstore.types import VectorStoreType
+from langchain_core.documents import Document
+from pydantic import Field, validator
 
 
 @BaseVectorStoreConfig.register(VectorStoreType.FAISS)
 class FAISSVectorStoreConfig(BaseVectorStoreConfig):
-    """
-    Configuration for FAISS vector store in the Haive framework.
+    """Configuration for FAISS vector store in the Haive framework.
 
     This vector store uses Facebook AI Similarity Search for extremely fast
     and scalable vector similarity search operations.
@@ -76,11 +73,11 @@ class FAISSVectorStoreConfig(BaseVectorStoreConfig):
     """
 
     # Storage configuration
-    index_path: Optional[str] = Field(
+    index_path: str | None = Field(
         default=None, description="Path to save/load the FAISS index"
     )
 
-    docstore_path: Optional[str] = Field(
+    docstore_path: str | None = Field(
         default=None, description="Path to save/load the document store"
     )
 
@@ -119,7 +116,7 @@ class FAISSVectorStoreConfig(BaseVectorStoreConfig):
     )
 
     @validator("index_type")
-    def validate_index_type(cls, v):
+    def validate_index_type(self, v):
         """Validate index type is supported."""
         valid_types = ["Flat", "IVFFlat", "HNSW", "LSH"]
         if v not in valid_types:
@@ -127,31 +124,30 @@ class FAISSVectorStoreConfig(BaseVectorStoreConfig):
         return v
 
     @validator("distance_metric")
-    def validate_distance_metric(cls, v):
+    def validate_distance_metric(self, v):
         """Validate distance metric is supported."""
         valid_metrics = ["l2", "cosine", "inner_product"]
         if v not in valid_metrics:
             raise ValueError(f"distance_metric must be one of {valid_metrics}, got {v}")
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for FAISS vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for FAISS vector store."""
         return {
-            "ids": (List[str], Field(description="IDs of the added documents")),
+            "ids": (list[str], Field(description="IDs of the added documents")),
         }
 
     def instantiate(self):
-        """
-        Create a FAISS vector store from this configuration.
+        """Create a FAISS vector store from this configuration.
 
         Returns:
             FAISS: Instantiated FAISS vector store.
@@ -221,13 +217,13 @@ class FAISSVectorStoreConfig(BaseVectorStoreConfig):
 
                 # This would require additional GPU setup logic
                 # For now, we'll use the default CPU implementation
-                pass
             except ImportError:
                 import warnings
 
                 warnings.warn(
                     "GPU support requested but faiss-gpu not installed. "
-                    "Falling back to CPU implementation."
+                    "Falling back to CPU implementation.",
+                    stacklevel=2,
                 )
 
         # Create FAISS instance

@@ -1,23 +1,23 @@
-from typing import Any, Dict, Generic, Iterable, List, Optional, TypeVar, Union
+from collections.abc import Iterable
+from typing import Any, Dict, Generic, List, Optional, TypeVar, Union
 
 from pydantic import BaseModel, Field, model_validator
 
-# from .getter_mixin import GetterMixin
 from haive.core.common.mixins.getter_mixin import GetterMixin
+
 
 T = TypeVar("T")
 
 
 class NamedDict(BaseModel, Generic[T], GetterMixin[T]):
-    """
-    A dictionary that automatically builds keys from object names.
+    """A dictionary that automatically builds keys from object names.
 
     This class combines dictionary-like access with attributes extraction
     and rich lookup capabilities from GetterMixin.
     """
 
-    values: Dict[str, T] = Field(default_factory=dict)
-    name_attrs: List[str] = Field(default=["name", "__name__"])
+    values: dict[str, T] = Field(default_factory=dict)
+    name_attrs: list[str] = Field(default=["name", "__name__"])
 
     model_config = {"arbitrary_types_allowed": True}
 
@@ -34,7 +34,7 @@ class NamedDict(BaseModel, Generic[T], GetterMixin[T]):
             return {"values": data}
 
         # Convert list/iterable to dictionary
-        if isinstance(data, (list, tuple, set)):
+        if isinstance(data, list | tuple | set):
             # Get name attributes from data if available
             name_attrs = (
                 data.get("name_attrs", ["name", "__name__"])
@@ -57,9 +57,8 @@ class NamedDict(BaseModel, Generic[T], GetterMixin[T]):
         return data
 
     @staticmethod
-    def _extract_key(obj: Any, attrs: List[str]) -> Optional[str]:
-        """
-        Extract a key from an object using the specified attributes.
+    def _extract_key(obj: Any, attrs: list[str]) -> str | None:
+        """Extract a key from an object using the specified attributes.
 
         Args:
             obj: Object to extract key from
@@ -116,7 +115,7 @@ class NamedDict(BaseModel, Generic[T], GetterMixin[T]):
         return iter(self.values.values())
 
     # Implement GetterMixin abstract method
-    def _get_items(self) -> List[T]:
+    def _get_items(self) -> list[T]:
         """Get all items in the dictionary."""
         return list(self.values.values())
 
@@ -127,9 +126,8 @@ class NamedDict(BaseModel, Generic[T], GetterMixin[T]):
             return self.values[key]
         return default
 
-    def add(self, item: T, key: Optional[str] = None) -> str:
-        """
-        Add an item with automatic or explicit key.
+    def add(self, item: T, key: str | None = None) -> str:
+        """Add an item with automatic or explicit key.
 
         Args:
             item: Item to add
@@ -151,9 +149,8 @@ class NamedDict(BaseModel, Generic[T], GetterMixin[T]):
         self.values[key] = item
         return key
 
-    def update(self, items: Union[Dict[str, T], Iterable[T]]) -> None:
-        """
-        Update with dictionary or iterable.
+    def update(self, items: dict[str, T] | Iterable[T]) -> None:
+        """Update with dictionary or iterable.
 
         Args:
             items: Dictionary or iterable of items to add
@@ -164,7 +161,7 @@ class NamedDict(BaseModel, Generic[T], GetterMixin[T]):
             for item in items:
                 self.add(item)
 
-    def keys(self) -> List[str]:
+    def keys(self) -> list[str]:
         """Get all keys."""
         return list(self.values.keys())
 
@@ -172,7 +169,7 @@ class NamedDict(BaseModel, Generic[T], GetterMixin[T]):
         """Get all key-value pairs."""
         return self.values.items()
 
-    def values_list(self) -> List[T]:
+    def values_list(self) -> list[T]:
         """Get all values as a list."""
         return list(self.values.values())
 
@@ -186,8 +183,7 @@ class NamedDict(BaseModel, Generic[T], GetterMixin[T]):
 
     # Attribute access
     def __getattr__(self, name: str) -> Any:
-        """
-        Allow attribute access for keys.
+        """Allow attribute access for keys.
 
         Also supports dynamic get_by_X methods.
         """
@@ -205,6 +201,6 @@ class NamedDict(BaseModel, Generic[T], GetterMixin[T]):
 
         raise AttributeError(f"{self.__class__.__name__} has no attribute '{name}'")
 
-    def to_dict(self) -> Dict[str, T]:
+    def to_dict(self) -> dict[str, T]:
         """Convert to plain dictionary."""
         return dict(self.values)

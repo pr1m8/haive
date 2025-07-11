@@ -34,10 +34,9 @@ Usage:
 import inspect
 from typing import Any, Callable, Dict, List, Optional, Sequence, Type, Union
 
+from haive.core.common.structures.named_dict import NamedDict
 from langchain_core.tools import BaseTool, BaseToolkit, StructuredTool
 from pydantic import BaseModel, Field, model_validator
-
-from haive.core.common.structures.named_dict import NamedDict
 
 
 class ToolList(NamedDict):
@@ -58,24 +57,22 @@ class ToolList(NamedDict):
     """
 
     # Override default name attributes to include function names
-    name_attrs: List[str] = Field(default=["name", "__name__", "func_name"])
+    name_attrs: list[str] = Field(default=["name", "__name__", "func_name"])
 
     # Define tool types field
-    tool_types: Dict[str, str] = Field(
+    tool_types: dict[str, str] = Field(
         default_factory=dict, description="Type information for each tool"
     )
 
     # Define tools field for clear typing and validation
     tools: Sequence[
-        Union[
-            Type[BaseTool],
-            Type[BaseModel],
-            Callable,
-            StructuredTool,
-            BaseModel,
-            BaseTool,
-            BaseToolkit,
-        ]
+        type[BaseTool]
+        | type[BaseModel]
+        | Callable
+        | StructuredTool
+        | BaseModel
+        | BaseTool
+        | BaseToolkit
     ] = Field(
         default_factory=list,
         description="The tools to use (BaseTool, BaseToolkit, BaseModel, or Callable)",
@@ -114,7 +111,7 @@ class ToolList(NamedDict):
             Processed data with expanded tools.
         """
         # If this is a sequence without proper names, convert to dictionary form
-        if isinstance(data, (list, tuple)):
+        if isinstance(data, list | tuple):
             # Expand toolkits and extract tools
             expanded_tools = []
 
@@ -124,8 +121,8 @@ class ToolList(NamedDict):
                     try:
                         toolkit_tools = tool.get_tools()
                         expanded_tools.extend(toolkit_tools)
-                    except Exception as e:
-                        print(f"Error extracting tools from toolkit: {e}")
+                    except Exception:
+                        pass
                 else:
                     expanded_tools.append(tool)
 
@@ -136,7 +133,7 @@ class ToolList(NamedDict):
         if (
             isinstance(data, dict)
             and "tools" in data
-            and isinstance(data["tools"], (list, tuple))
+            and isinstance(data["tools"], list | tuple)
         ):
             # Extract the tools
             tools_list = data["tools"]
@@ -148,8 +145,8 @@ class ToolList(NamedDict):
                     try:
                         toolkit_tools = tool.get_tools()
                         expanded_tools.extend(toolkit_tools)
-                    except Exception as e:
-                        print(f"Error extracting tools from toolkit: {e}")
+                    except Exception:
+                        pass
                 else:
                     expanded_tools.append(tool)
 
@@ -248,10 +245,7 @@ class ToolList(NamedDict):
 
                 try:
                     # Instantiate if it's a class
-                    if tool_type == "toolkit_class":
-                        toolkit = tool()
-                    else:
-                        toolkit = tool
+                    toolkit = tool() if tool_type == "toolkit_class" else tool
 
                     # Get tools from the toolkit
                     toolkit_tools = toolkit.get_tools()
@@ -263,13 +257,13 @@ class ToolList(NamedDict):
                     # Add the toolkit's tools
                     for t in toolkit_tools:
                         self.add(t)
-                except Exception as e:
-                    print(f"Error processing toolkit {name}: {str(e)}")
+                except Exception:
+                    pass
 
         # Update tools list to match values
         self.tools = list(self.values.values())
 
-    def add(self, tool: Any, key: Optional[str] = None) -> str:
+    def add(self, tool: Any, key: str | None = None) -> str:
         """Add a tool with automatic or explicit key.
 
         This method adds a tool to the collection, automatically expanding
@@ -291,8 +285,8 @@ class ToolList(NamedDict):
                     added_key = self.add(t)
                     added_keys.append(added_key)
                 return added_keys[0] if added_keys else ""
-            except Exception as e:
-                print(f"Error extracting tools from toolkit: {e}")
+            except Exception:
+                pass
 
         # Use parent add method for normal tools
         tool_key = super().add(tool, key)
@@ -315,15 +309,15 @@ class ToolList(NamedDict):
             items: Dictionary or sequence of tools to add.
         """
         # Expand toolkits if this is a sequence
-        if isinstance(items, (list, tuple)):
+        if isinstance(items, list | tuple):
             expanded_items = []
             for item in items:
                 if isinstance(item, BaseToolkit):
                     try:
                         toolkit_tools = item.get_tools()
                         expanded_items.extend(toolkit_tools)
-                    except Exception as e:
-                        print(f"Error extracting tools from toolkit: {e}")
+                    except Exception:
+                        pass
                 else:
                     expanded_items.append(item)
 
@@ -344,7 +338,7 @@ class ToolList(NamedDict):
         # Process toolkits but keep model classes as classes
         self._process_tool_types()
 
-    def get_tool_type(self, name: str) -> Optional[str]:
+    def get_tool_type(self, name: str) -> str | None:
         """Get type of a specific tool.
 
         Args:
@@ -355,7 +349,7 @@ class ToolList(NamedDict):
         """
         return self.tool_types.get(name)
 
-    def get_by_tool_type(self, tool_type: str) -> List[Any]:
+    def get_by_tool_type(self, tool_type: str) -> list[Any]:
         """Get all tools of a specified type.
 
         Args:
@@ -370,7 +364,7 @@ class ToolList(NamedDict):
                 result.append(self.values[name])
         return result
 
-    def get_tool_type_mapping(self) -> Dict[str, List[str]]:
+    def get_tool_type_mapping(self) -> dict[str, list[str]]:
         """Get mapping of tool types to tool names.
 
         Returns:
@@ -383,7 +377,7 @@ class ToolList(NamedDict):
             result[tool_type].append(name)
         return result
 
-    def get_tool(self, name: str) -> Optional[Any]:
+    def get_tool(self, name: str) -> Any | None:
         """Get a tool by name.
 
         Args:
@@ -394,7 +388,7 @@ class ToolList(NamedDict):
         """
         return self.get(name)
 
-    def get_tool_info(self, name: str) -> Dict[str, Any]:
+    def get_tool_info(self, name: str) -> dict[str, Any]:
         """Get comprehensive information about a tool.
 
         This method retrieves detailed information about a tool,
@@ -443,7 +437,7 @@ class ToolList(NamedDict):
 
         return info
 
-    def get_model_classes(self) -> Dict[str, Type[BaseModel]]:
+    def get_model_classes(self) -> dict[str, type[BaseModel]]:
         """Get all model classes in the tool list.
 
         Returns:
@@ -455,7 +449,7 @@ class ToolList(NamedDict):
                 result[name] = self.values[name]
         return result
 
-    def get_model_instances(self) -> Dict[str, BaseModel]:
+    def get_model_instances(self) -> dict[str, BaseModel]:
         """Get all model instances in the tool list.
 
         Returns:
@@ -467,7 +461,7 @@ class ToolList(NamedDict):
                 result[name] = self.values[name]
         return result
 
-    def get_tools_by_category(self) -> Dict[str, Dict[str, Any]]:
+    def get_tools_by_category(self) -> dict[str, dict[str, Any]]:
         """Get tools organized by category.
 
         Returns:
@@ -495,7 +489,7 @@ class ToolList(NamedDict):
 
         return categories
 
-    def to_list(self) -> List[Any]:
+    def to_list(self) -> list[Any]:
         """Convert to a simple list of tools.
 
         Returns:

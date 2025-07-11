@@ -1,5 +1,4 @@
-"""
-Quiet imports - suppress all rich print output.
+"""Quiet imports - suppress all rich print output.
 
 Usage:
     import haive.core.logging.quiet_imports  # This silences rich print
@@ -31,6 +30,7 @@ except ImportError:
 
 # Set environment for quiet logging
 import os
+
 
 os.environ["HAIVE_LOG_QUIET"] = "1"
 

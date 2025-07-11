@@ -1491,21 +1491,10 @@ def print_collection_summary():
     """Print a summary of all document collections."""
     collections = get_all_document_collections()
 
-    print("Haive Test Document Collections Summary")
-    print("=" * 50)
-
     total_docs = 0
     for _name, collection in collections.items():
         doc_count = len(collection["documents"])
         total_docs += doc_count
-
-        print(f"\n{collection['name'].upper()}")
-        print(f"Description: {collection['description']}")
-        print(f"Documents: {doc_count}")
-        print(f"Categories: {', '.join(collection['metadata'].get('categories', []))}")
-        print(f"Use Cases: {', '.join(collection['metadata'].get('use_cases', []))}")
-
-    print(f"\nTOTAL DOCUMENTS: {total_docs}")
 
 
 # Example usage
@@ -1514,12 +1503,9 @@ if __name__ == "__main__":
 
     # Example: Get all conversation documents
     conv_docs = get_collection_by_name("conversation_flow")
-    print(f"\nConversation Flow Documents: {len(conv_docs['documents'])}")
 
     # Example: Get all technical documents
     tech_docs = get_documents_by_category("tech")
-    print(f"Technical Documents: {len(tech_docs)}")
 
     # Example: Get a flat list of all documents
     all_docs = get_all_documents_flat()
-    print(f"Total Documents (flat): {len(all_docs)}")

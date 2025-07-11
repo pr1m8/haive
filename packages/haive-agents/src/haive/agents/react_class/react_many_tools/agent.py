@@ -3,17 +3,16 @@ import time
 from typing import Any
 
 import numpy as np
+from haive.agents.rag.base.agent import BaseRAGAgent
+from haive.agents.rag.llm_rag.agent import LLMRAGAgent
+from haive.agents.react_class.react.agent import ReactAgent
+from haive.agents.react_class.react_many_tools.config import ReactManyToolsConfig
 from haive.core.engine.agent.agent import register_agent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from langchain_core.documents import Document
 from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
 from langgraph.types import Command
-
-from haive.agents.rag.base.agent import BaseRAGAgent
-from haive.agents.rag.llm_rag.agent import LLMRAGAgent
-from haive.agents.react_class.react.agent import ReactAgent
-from haive.agents.react_class.react_many_tools.config import ReactManyToolsConfig
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +56,7 @@ class ReactManyToolsAgent(ReactAgent):
                 else:
                     self.has_answer_generation = False
             except Exception as e:
-                logger.error(f"Error initializing RAG agent: {e}")
+                logger.exception(f"Error initializing RAG agent: {e}")
                 self.rag_agent = None
 
         # If we have a retriever config, use that directly
@@ -67,7 +66,7 @@ class ReactManyToolsAgent(ReactAgent):
                 self._retriever = self.config.retriever_config.create_runnable()
                 self.has_answer_generation = False
             except Exception as e:
-                logger.error(f"Error initializing retriever: {e}")
+                logger.exception(f"Error initializing retriever: {e}")
                 self._retriever = None
 
     @property
@@ -82,7 +81,7 @@ class ReactManyToolsAgent(ReactAgent):
                 try:
                     self._retriever = self.config.retriever_config.create_runnable()
                 except Exception as e:
-                    logger.error(f"Error creating retriever: {e}")
+                    logger.exception(f"Error creating retriever: {e}")
                     # Return a dummy retriever
                     self._retriever = lambda x: []
             else:
@@ -273,7 +272,7 @@ class ReactManyToolsAgent(ReactAgent):
             )
 
         except Exception as e:
-            logger.error(f"Error retrieving documents: {e!s}")
+            logger.exception(f"Error retrieving documents: {e!s}")
             return Command(
                 update={"error": f"Error retrieving documents: {e!s}"},
                 goto="add_system",
@@ -375,7 +374,7 @@ class ReactManyToolsAgent(ReactAgent):
             return Command(update={"answer": answer}, goto="add_system")
 
         except Exception as e:
-            logger.error(f"Error generating answer: {e}")
+            logger.exception(f"Error generating answer: {e}")
             return Command(
                 update={"answer": f"Error generating answer: {e}"}, goto="add_system"
             )
@@ -504,7 +503,7 @@ class ReactManyToolsAgent(ReactAgent):
             ]
 
         except Exception as e:
-            logger.error(f"Error in semantic tool filtering: {e}")
+            logger.exception(f"Error in semantic tool filtering: {e}")
             return self._filter_tools_keyword(query)
 
     def _filter_tools_categorical(self, query: str) -> list[str]:

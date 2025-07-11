@@ -7,7 +7,7 @@
     "description": "Fetch air quality station details from OpenAQ by location ID. Requires an API key.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.758018",
+    "timestamp": "2025-07-10T19:45:28.987057",
     "schema": {
       "description": "Fetch detailed information about an air quality monitoring location from OpenAQ.\n\nThis function retrieves comprehensive metadata about a specific air quality\nmonitoring station identified by its location ID, including its coordinates,\navailable parameters, and other attributes.\n\nArgs:\n    location_id (int): The OpenAQ location ID to fetch data for.\n    api_key (Optional[str]): The OpenAQ API key. If not provided, will look for\n        OPENAQ_API_KEY in environment variables.\n\nReturns:\n    dict: A dictionary containing detailed information about the location,\n        including geographical coordinates, available parameters, and metadata.\n\nRaises:\n    ValueError: If no API key is provided or found in environment variables.\n    requests.RequestException: If the API request fails.",
       "properties": {
@@ -47,7 +47,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.758018",
+      "timestamp": "2025-07-10T19:45:28.987057",
       "category": "individual_tools"
     }
   },

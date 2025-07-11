@@ -8,8 +8,6 @@ import uuid
 from datetime import datetime
 from typing import Any, Callable, Dict, List, Literal, Optional, Union
 
-from pydantic import BaseModel, Field
-
 from haive.core.graph.common.types import ConfigLike, NodeOutput, NodeType, StateLike
 from haive.core.graph.state_graph.components.base_component import ComponentRegistry
 from haive.core.graph.state_graph.components.branch_manager import BranchManager
@@ -17,6 +15,7 @@ from haive.core.graph.state_graph.components.edge_manager import EdgeManager
 from haive.core.graph.state_graph.components.node_manager import NodeManager
 from haive.core.graph.state_graph.validation_mixin import ValidationMixin
 from haive.core.logging.rich_logger import get_logger
+from pydantic import BaseModel, Field
 
 logger = get_logger(__name__)
 

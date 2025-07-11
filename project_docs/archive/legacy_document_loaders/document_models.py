@@ -8,13 +8,12 @@ and operations, designed to be used as prebuilt components in the Haive framewor
 from __future__ import annotations
 
 import datetime
+import uuid
 from enum import Enum
 from typing import Any, ClassVar
-import uuid
 
 from langchain_core.documents import Document as LCDocument
 from pydantic import BaseModel, Field, validator
-
 
 # ===== Base Enums =====
 
@@ -440,7 +439,7 @@ class DocumentSource(BaseDocumentModel):
     last_processed: datetime.datetime | None = None
 
     @validator("source_type", pre=True)
-    def set_source_type(cls, v, values):
+    def set_source_type(self, v, values):
         """Validate and set source type based on path if not provided."""
         if v != DocumentSourceType.UNKNOWN:
             return v
@@ -466,7 +465,7 @@ class DocumentSource(BaseDocumentModel):
         return DocumentSourceType.UNKNOWN
 
     @validator("format", pre=True)
-    def set_format(cls, v, values):
+    def set_format(self, v, values):
         """Validate and set format based on path if not provided."""
         if v != DocumentFormat.UNKNOWN:
             return v
@@ -1239,9 +1238,7 @@ class DocumentState(BaseDocumentModel):
         """
         return [doc for doc in self.documents if doc.source_path == source_path]
 
-    def get_documents_by_format(
-        self, format: DocumentFormat | str
-    ) -> list[Document]:
+    def get_documents_by_format(self, format: DocumentFormat | str) -> list[Document]:
         """Get all documents of a specific format.
 
         Args:

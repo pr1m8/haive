@@ -37,27 +37,15 @@ import logging
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
-from typing import (
-    Any,
-    Dict,
-    List,
-    Optional,
-    Tuple,
-    Union,
-)
+from typing import Any, Dict, List, Optional, Tuple, Union
 
+from haive.core.engine.document.config import LoaderPreference
 from langchain_core.documents import Document
 from pydantic import BaseModel, Field
 
-from haive.core.engine.document.config import LoaderPreference
-
 from .path_analyzer import PathAnalyzer, SourceInfo
 from .sources.enhanced_registry import enhanced_registry
-from .sources.source_types import (
-    BaseSource,
-    LoaderCapability,
-    SourceCategory,
-)
+from .sources.source_types import BaseSource, LoaderCapability, SourceCategory
 
 logger = logging.getLogger(__name__)
 
@@ -106,7 +94,7 @@ class LoadingResult(BaseModel):
         for individual source results in bulk operations.
     """
 
-    documents: List[Document] = Field(
+    documents: list[Document] = Field(
         description="List of successfully loaded Document objects"
     )
     source_info: SourceInfo = Field(
@@ -116,10 +104,10 @@ class LoadingResult(BaseModel):
     loading_time: float = Field(
         ge=0.0, description="Total time taken for loading operation in seconds"
     )
-    metadata: Dict[str, Any] = Field(
+    metadata: dict[str, Any] = Field(
         default_factory=dict, description="Additional metadata from loading process"
     )
-    errors: List[str] = Field(
+    errors: list[str] = Field(
         default_factory=list, description="List of error messages encountered"
     )
 
@@ -194,17 +182,17 @@ class BulkLoadingResult(BaseModel):
     total_documents: int = Field(
         ge=0, description="Total number of documents successfully loaded"
     )
-    results: List[LoadingResult] = Field(
+    results: list[LoadingResult] = Field(
         description="List of individual LoadingResult objects for each source"
     )
-    failed_sources: List[Tuple[str, str]] = Field(
+    failed_sources: list[tuple[str, str]] = Field(
         default_factory=list,
         description="List of (source, error) tuples for failed sources",
     )
     total_time: float = Field(
         ge=0.0, description="Total elapsed time for the bulk operation in seconds"
     )
-    summary: Dict[str, Any] = Field(
+    summary: dict[str, Any] = Field(
         default_factory=dict, description="Dictionary containing aggregate statistics"
     )
 
@@ -300,7 +288,7 @@ class AutoLoaderConfig(BaseModel):
     enable_metadata: bool = Field(
         default=True, description="Extract metadata from documents"
     )
-    credential_manager: Optional[Any] = Field(
+    credential_manager: Any | None = Field(
         default=None, description="Custom credential manager"
     )
 
@@ -415,9 +403,9 @@ class AutoLoader:
 
     def __init__(
         self,
-        config: Optional[AutoLoaderConfig] = None,
-        registry: Optional[Any] = None,
-        path_analyzer: Optional[PathAnalyzer] = None,
+        config: AutoLoaderConfig | None = None,
+        registry: Any | None = None,
+        path_analyzer: PathAnalyzer | None = None,
     ):
         """Initialize the AutoLoader with optional configuration and components.
 
@@ -467,7 +455,7 @@ class AutoLoader:
         self.config = config or AutoLoaderConfig()
         self.registry = registry or enhanced_registry
         self.path_analyzer = path_analyzer or PathAnalyzer()
-        self._cache: Dict[str, Tuple[List[Document], datetime]] = {}
+        self._cache: dict[str, tuple[list[Document], datetime]] = {}
 
         logger.info(f"AutoLoader initialized with {self.config.preference} preference")
 
@@ -502,10 +490,10 @@ class AutoLoader:
             )
             return source_info
         except Exception as e:
-            logger.error(f"Failed to detect source for {path_or_url}: {e}")
+            logger.exception(f"Failed to detect source for {path_or_url}: {e}")
             raise ValueError(f"Could not detect source type for: {path_or_url}") from e
 
-    def get_best_loader(self, source_info: SourceInfo) -> Tuple[str, Dict[str, Any]]:
+    def get_best_loader(self, source_info: SourceInfo) -> tuple[str, dict[str, Any]]:
         """Get the best loader for a source based on preferences.
 
         Args:
@@ -540,7 +528,7 @@ class AutoLoader:
             return loader_name, loader_config
 
         except Exception as e:
-            logger.error(f"Failed to get loader for {source_info.source_type}: {e}")
+            logger.exception(f"Failed to get loader for {source_info.source_type}: {e}")
             raise ValueError(
                 f"No suitable loader found for {source_info.source_type}"
             ) from e
@@ -594,12 +582,12 @@ class AutoLoader:
             return source_instance
 
         except Exception as e:
-            logger.error(f"Failed to create source instance: {e}")
+            logger.exception(f"Failed to create source instance: {e}")
             raise ValueError(
                 f"Could not create source for {source_info.source_type}"
             ) from e
 
-    def _get_from_cache(self, cache_key: str) -> Optional[List[Document]]:
+    def _get_from_cache(self, cache_key: str) -> list[Document] | None:
         """Get documents from cache if available and not expired."""
         if not self.config.enable_caching:
             return None
@@ -609,19 +597,18 @@ class AutoLoader:
             if (datetime.now() - timestamp).seconds < self.config.cache_ttl:
                 logger.debug(f"Cache hit for {cache_key}")
                 return documents
-            else:
-                # Remove expired cache entry
-                del self._cache[cache_key]
+            # Remove expired cache entry
+            del self._cache[cache_key]
 
         return None
 
-    def _save_to_cache(self, cache_key: str, documents: List[Document]) -> None:
+    def _save_to_cache(self, cache_key: str, documents: list[Document]) -> None:
         """Save documents to cache."""
         if self.config.enable_caching:
             self._cache[cache_key] = (documents, datetime.now())
             logger.debug(f"Cached {len(documents)} documents for {cache_key}")
 
-    def load(self, path_or_url: str, **kwargs) -> List[Document]:
+    def load(self, path_or_url: str, **kwargs) -> list[Document]:
         """Load documents from any source with automatic detection and optimization.
 
         This is the primary interface for single-source document loading. The method
@@ -765,12 +752,14 @@ class AutoLoader:
 
         except Exception as e:
             loading_time = (datetime.now() - start_time).total_seconds()
-            logger.error(f"Failed to load {path_or_url} after {loading_time:.2f}s: {e}")
+            logger.exception(
+                f"Failed to load {path_or_url} after {loading_time:.2f}s: {e}"
+            )
             raise
 
     def load_documents(
-        self, sources: List[Union[str, Dict[str, Any]]], **kwargs
-    ) -> List[Document]:
+        self, sources: list[str | dict[str, Any]], **kwargs
+    ) -> list[Document]:
         """Load documents from multiple sources with standard langchain interface.
 
         This method implements the standard langchain convention for loading documents
@@ -961,7 +950,7 @@ class AutoLoader:
             )
 
     def load_bulk(
-        self, sources: List[Union[str, Dict[str, Any]]], **kwargs
+        self, sources: list[str | dict[str, Any]], **kwargs
     ) -> BulkLoadingResult:
         """Load documents from multiple sources concurrently.
 
@@ -1079,7 +1068,7 @@ class AutoLoader:
             summary=summary,
         )
 
-    def load_all(self, path_or_url: str, **kwargs) -> List[Document]:
+    def load_all(self, path_or_url: str, **kwargs) -> list[Document]:
         """Load all documents from a source recursively.
 
         This method uses the "scrape_all" capability of sources to load
@@ -1132,10 +1121,10 @@ class AutoLoader:
             return documents
 
         except Exception as e:
-            logger.error(f"Failed to load_all from {path_or_url}: {e}")
+            logger.exception(f"Failed to load_all from {path_or_url}: {e}")
             raise
 
-    async def aload(self, path_or_url: str, **kwargs) -> List[Document]:
+    async def aload(self, path_or_url: str, **kwargs) -> list[Document]:
         """Asynchronously load documents from any source.
 
         Args:
@@ -1160,7 +1149,7 @@ class AutoLoader:
         return await loop.run_in_executor(None, self.load, path_or_url, **kwargs)
 
     async def aload_bulk(
-        self, sources: List[Union[str, Dict[str, Any]]], **kwargs
+        self, sources: list[str | dict[str, Any]], **kwargs
     ) -> BulkLoadingResult:
         """Asynchronously load documents from multiple sources.
 
@@ -1176,8 +1165,8 @@ class AutoLoader:
         return await loop.run_in_executor(None, self.load_bulk, sources, **kwargs)
 
     async def aload_documents(
-        self, sources: List[Union[str, Dict[str, Any]]], **kwargs
-    ) -> List[Document]:
+        self, sources: list[str | dict[str, Any]], **kwargs
+    ) -> list[Document]:
         """Asynchronously load documents from multiple sources (standard langchain plural method name).
 
         This is the async version of load_documents() that takes a list of sources
@@ -1211,7 +1200,7 @@ class AutoLoader:
 
     def _load_with_retry(
         self, loader_instance: Any, source_type: str
-    ) -> List[Document]:
+    ) -> list[Document]:
         """Load documents with retry logic.
 
         Tries multiple loading methods in this order:
@@ -1263,14 +1252,14 @@ class AutoLoader:
                     )
                     asyncio.sleep(min(2**attempt, 10))  # Exponential backoff
                 else:
-                    logger.error(
+                    logger.exception(
                         f"All {self.config.retry_attempts + 1} attempts failed for {source_type}"
                     )
 
         raise last_exception
 
     def _enrich_documents_metadata(
-        self, documents: List[Document], source_info: SourceInfo, loader_name: str
+        self, documents: list[Document], source_info: SourceInfo, loader_name: str
     ) -> None:
         """Enrich documents with additional metadata."""
         base_metadata = {
@@ -1286,7 +1275,7 @@ class AutoLoader:
                 doc.metadata = {}
             doc.metadata.update(base_metadata)
 
-    def get_supported_sources(self) -> Dict[str, Any]:
+    def get_supported_sources(self) -> dict[str, Any]:
         """Get information about all supported source types.
 
         Returns:
@@ -1301,7 +1290,7 @@ class AutoLoader:
         """
         return self.registry.get_all_source_info()
 
-    def get_capabilities(self, source_type: str) -> List[LoaderCapability]:
+    def get_capabilities(self, source_type: str) -> list[LoaderCapability]:
         """Get capabilities for a specific source type.
 
         Args:
@@ -1345,14 +1334,14 @@ class AutoLoader:
             source_class(**credentials)
             return True
         except Exception as e:
-            logger.error(f"Credential validation failed for {source_type}: {e}")
+            logger.exception(f"Credential validation failed for {source_type}: {e}")
             return False
 
 
 # Convenience functions for common use cases
 
 
-def load_document(path_or_url: str, **kwargs) -> List[Document]:
+def load_document(path_or_url: str, **kwargs) -> list[Document]:
     """Convenience function to load documents automatically.
 
     Args:
@@ -1374,7 +1363,7 @@ def load_document(path_or_url: str, **kwargs) -> List[Document]:
     return loader.load(path_or_url, **kwargs)
 
 
-def load_documents_bulk(sources: List[str], **kwargs) -> List[Document]:
+def load_documents_bulk(sources: list[str], **kwargs) -> list[Document]:
     """Convenience function to load multiple documents.
 
     Args:
@@ -1406,7 +1395,7 @@ def load_documents_bulk(sources: List[str], **kwargs) -> List[Document]:
     return all_documents
 
 
-async def aload_document(path_or_url: str, **kwargs) -> List[Document]:
+async def aload_document(path_or_url: str, **kwargs) -> list[Document]:
     """Convenience function to load documents asynchronously.
 
     Args:
@@ -1434,10 +1423,10 @@ default_loader = AutoLoader()
 __all__ = [
     "AutoLoader",
     "AutoLoaderConfig",
-    "LoadingResult",
     "BulkLoadingResult",
-    "load_document",
-    "load_documents_bulk",
+    "LoadingResult",
     "aload_document",
     "default_loader",
+    "load_document",
+    "load_documents_bulk",
 ]

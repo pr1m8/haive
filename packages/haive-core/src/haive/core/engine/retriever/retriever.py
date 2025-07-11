@@ -53,6 +53,7 @@ from haive.core.engine.base import EngineType, InvokableEngine
 from haive.core.engine.retriever.types import RetrieverType
 from haive.core.engine.vectorstore.vectorstore import VectorStoreConfig
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -61,16 +62,14 @@ class RetrieverInput(BaseModel):
     """Schema for retriever input."""
 
     query: str = Field(description="Query string for retrieval")
-    k: Optional[int] = Field(
-        default=None, description="Number of documents to retrieve"
-    )
-    filter: Optional[Dict[str, Any]] = Field(
+    k: int | None = Field(default=None, description="Number of documents to retrieve")
+    filter: Dict[str, Any] | None = Field(
         default=None, description="Filter criteria for retrieval"
     )
-    search_type: Optional[str] = Field(
+    search_type: str | None = Field(
         default=None, description="Type of search to perform"
     )
-    score_threshold: Optional[float] = Field(
+    score_threshold: float | None = Field(
         default=None, description="Minimum similarity score threshold"
     )
 
@@ -80,7 +79,7 @@ class RetrieverInput(BaseModel):
 class RetrieverOutput(BaseModel):
     """Schema for retriever output."""
 
-    retrieved_documents: Optional[Sequence[Document]] = Field(
+    retrieved_documents: Sequence[Document] | None = Field(
         default_factory=list, description="Retrieved documents"
     )
 
@@ -142,40 +141,41 @@ class BaseRetrieverConfig(InvokableEngine[RetrieverInput, RetrieverOutput]):
     search_type: str = Field(
         default="similarity", description="Search type ('similarity', 'mmr', etc.)"
     )
-    search_kwargs: Dict[str, Any] = Field(
+    search_kwargs: dict[str, Any] = Field(
         default_factory=dict, description="Additional search parameters"
     )
     k: int = Field(default=4, description="Number of documents to retrieve")
-    filter: Optional[Dict[str, Any]] = Field(
+    filter: Dict[str, Any] | None = Field(
         default=None, description="Filter to apply to vector store search"
     )
 
     # Schema definitions
-    input_schema: Type[BaseModel] = Field(
+    input_schema: type[BaseModel] = Field(
         default=RetrieverInput,
         description="Input schema for this retriever",
         exclude=True,
     )
-    output_schema: Type[BaseModel] = Field(
+    output_schema: type[BaseModel] = Field(
         default=RetrieverOutput,
         description="Output schema for this retriever",
         exclude=True,
     )
 
     # Registry for retriever types
-    _registry: ClassVar[Dict[RetrieverType, Type["BaseRetrieverConfig"]]] = {}
+    _registry: ClassVar[dict[RetrieverType, type["BaseRetrieverConfig"]]] = {}
     _initialized: ClassVar[bool] = False
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     @field_validator("engine_type")
+    @classmethod
     def validate_engine_type(cls, v):
         """Validate that the engine type is RETRIEVER."""
         if v != EngineType.RETRIEVER:
             raise ValueError("engine_type must be RETRIEVER")
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions from the RetrieverInput model.
 
         Returns:
@@ -186,7 +186,7 @@ class BaseRetrieverConfig(InvokableEngine[RetrieverInput, RetrieverOutput]):
             fields[name] = (field_info.annotation, field_info.default)
         return fields
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions from the RetrieverOutput model.
 
         Returns:
@@ -198,10 +198,9 @@ class BaseRetrieverConfig(InvokableEngine[RetrieverInput, RetrieverOutput]):
         return fields
 
     def create_runnable(
-        self, runnable_config: Optional[RunnableConfig] = None
+        self, runnable_config: RunnableConfig | None = None
     ) -> BaseRetriever:
-        """
-        Create a retriever with runtime configuration applied.
+        """Create a retriever with runtime configuration applied.
 
         This method creates a retriever instance with the current configuration,
         applying any runtime overrides specified in the runnable_config. It extracts
@@ -279,8 +278,8 @@ class BaseRetrieverConfig(InvokableEngine[RetrieverInput, RetrieverOutput]):
         raise NotImplementedError("Subclasses must implement instantiate method")
 
     def apply_runnable_config(
-        self, runnable_config: Optional[RunnableConfig] = None
-    ) -> Dict[str, Any]:
+        self, runnable_config: RunnableConfig | None = None
+    ) -> dict[str, Any]:
         """Extract parameters from runnable_config relevant to this retriever.
 
         Args:
@@ -328,7 +327,7 @@ class BaseRetrieverConfig(InvokableEngine[RetrieverInput, RetrieverOutput]):
     @classmethod
     def get_config_class(
         cls, retriever_type: RetrieverType
-    ) -> Type["BaseRetrieverConfig"]:
+    ) -> type["BaseRetrieverConfig"]:
         """Get the appropriate config class for the retriever type.
 
         Args:
@@ -470,15 +469,16 @@ class VectorStoreRetrieverConfig(BaseRetrieverConfig):
         default="similarity", description="Search type: 'similarity', 'mmr', etc."
     )
 
-    search_kwargs: Dict[str, Any] = Field(
+    search_kwargs: dict[str, Any] = Field(
         default_factory=dict, description="Additional search parameters"
     )
 
-    filter: Optional[Dict[str, Any]] = Field(
+    filter: Dict[str, Any] | None = Field(
         default=None, description="Filter to apply to vector store search"
     )
 
     @field_validator("retriever_type")
+    @classmethod
     def validate_retriever_type(cls, v):
         """Validate that the retriever type is VECTOR_STORE."""
         if v != RetrieverType.VECTOR_STORE:
@@ -486,8 +486,7 @@ class VectorStoreRetrieverConfig(BaseRetrieverConfig):
         return v
 
     def instantiate(self) -> BaseRetriever:
-        """
-        Create a VectorStoreRetriever instance based on this configuration.
+        """Create a VectorStoreRetriever instance based on this configuration.
 
         This method creates a retriever that uses the configured vector store as its
         document source. It sets up the appropriate search parameters based on the
@@ -529,27 +528,25 @@ class VectorStoreRetrieverConfig(BaseRetrieverConfig):
             retriever = self.vector_store_config.create_retriever(
                 search_type=self.search_type,
                 search_kwargs=search_kwargs,
-                # prompt_template=self.prompt_template,
                 **extra_kwargs,
             )
 
             return retriever
         except Exception as e:
-            logger.error(f"Error creating retriever: {str(e)}")
-            raise ValueError(f"Failed to create retriever: {str(e)}") from e
+            logger.exception(f"Error creating retriever: {e!s}")
+            raise ValueError(f"Failed to create retriever: {e!s}") from e
 
 
 # Convenience factory functions
 
 
 def create_retriever_config(
-    retriever_type: Union[RetrieverType, str],
+    retriever_type: RetrieverType | str,
     name: str,
-    description: Optional[str] = None,
+    description: str | None = None,
     **kwargs,
 ) -> BaseRetrieverConfig:
-    """
-    Factory function to create the appropriate retriever configuration.
+    """Factory function to create the appropriate retriever configuration.
 
     This function serves as a central factory for creating retriever configurations
     of any type supported by the system. It automatically determines the correct
@@ -614,8 +611,7 @@ def create_retriever_config(
 def create_retriever_from_vectorstore(
     vector_store_config: VectorStoreConfig, **kwargs
 ) -> BaseRetriever:
-    """
-    Create a retriever directly from a vector store configuration.
+    """Create a retriever directly from a vector store configuration.
 
     This convenience function creates a VectorStoreRetrieverConfig and instantiates
     a retriever from it in a single operation. It's a shortcut for the common case

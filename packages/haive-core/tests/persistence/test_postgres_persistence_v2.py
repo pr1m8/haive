@@ -6,7 +6,6 @@ import os
 import uuid
 
 import pytest
-
 # Configure rich logging
 from rich.logging import RichHandler
 from rich.traceback import install as install_rich_traceback
@@ -24,18 +23,12 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-from haive.core.persistence.handlers import (
-    ensure_pool_open,
-    register_thread_if_needed,
-    setup_checkpointer,
-)
-
+from haive.core.persistence.handlers import (ensure_pool_open,
+                                             register_thread_if_needed,
+                                             setup_checkpointer)
 # Import the modules
-from haive.core.persistence.types import (
-    CheckpointMode,
-    PostgresCheckpointerConfig,
-    SyncMode,
-)
+from haive.core.persistence.types import (CheckpointMode,
+                                          PostgresCheckpointerConfig, SyncMode)
 
 
 # Test fixtures

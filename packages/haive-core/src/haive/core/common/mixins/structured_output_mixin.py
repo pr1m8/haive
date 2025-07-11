@@ -1,5 +1,4 @@
-"""
-Mixin for handling structured output in LLM configurations.
+"""Mixin for handling structured output in LLM configurations.
 
 This mixin provides functionality to configure and manage structured output models
 with support for both v1 (parser-based) and v2 (tool-based) approaches.
@@ -12,14 +11,12 @@ from pydantic import BaseModel
 
 if TYPE_CHECKING:
     from langchain_core.output_parsers import BaseOutputParser
-    from langchain_core.prompts import BasePromptTemplate
 
 StructuredOutputVersion = Literal["v1", "v2"]
 
 
 class StructuredOutputMixin:
-    """
-    Mixin to provide structured output functionality for LLM configurations.
+    """Mixin to provide structured output functionality for LLM configurations.
 
     This mixin adds support for:
     - Configuring structured output models with v1 (parser) or v2 (tool) approaches
@@ -29,30 +26,29 @@ class StructuredOutputMixin:
 
     # These fields must be defined by subclasses
     # We use type annotations to indicate expected types
-    structured_output_model: Optional[Type[BaseModel]]
-    structured_output_version: Optional[StructuredOutputVersion]
+    structured_output_model: type[BaseModel] | None
+    structured_output_version: StructuredOutputVersion | None
     include_format_instructions: bool
     output_parser: Optional["BaseOutputParser"]
-    parser_type: Optional[str]
-    partial_variables: Dict[str, Any]
-    tools: List[Any]
-    pydantic_tools: List[Type[BaseModel]]
+    parser_type: str | None
+    partial_variables: dict[str, Any]
+    tools: list[Any]
+    pydantic_tools: list[type[BaseModel]]
     force_tool_use: bool
-    force_tool_choice: Optional[Union[bool, str, List[str]]]
+    force_tool_choice: bool | str | list[str] | None
     tool_choice_mode: str
-    bind_tools_kwargs: Dict[str, Any]
-    _tool_name_mapping: Dict[str, str]
-    _format_instructions_text: Optional[str]
+    bind_tools_kwargs: dict[str, Any]
+    _tool_name_mapping: dict[str, str]
+    _format_instructions_text: str | None
     _is_processing_validation: bool
 
     def with_structured_output(
         self,
-        model: Type[BaseModel],
+        model: type[BaseModel],
         include_instructions: bool = True,
         version: str = "v2",
     ) -> "StructuredOutputMixin":
-        """
-        Configure with Pydantic structured output.
+        """Configure with Pydantic structured output.
 
         Args:
             model: The Pydantic model to use for structured output

@@ -13,21 +13,21 @@ SimpleAgent's key innovation is **dynamic schema modification** to incorporate s
 ```python
 class SimpleAgent(Agent):
     """Simple agent that modifies its engine to include structured output schema."""
-    
+
     # The key field - structured output model
     structured_output_model: type[BaseModel] | None = Field(
         default=None, description="Structured output model"
     )
-    
+
     def _modify_engine_schema(self) -> None:
         """MODIFY the engine's output schema to include structured output fields."""
-        
+
         # Create schema composer
         composer = SchemaComposer(name=f"Enhanced{current_output_schema.__name__}")
-        
+
         # Add enhanced messages field
         composer.add_standard_field("messages", use_enhanced=True)
-        
+
         # Add structured output field with smart naming
         field_name = (
             self.structured_output_model.__name__.lower()
@@ -37,14 +37,14 @@ class SimpleAgent(Agent):
         )
         if not field_name:
             field_name = "structured_result"
-        
+
         composer.add_field(
             name=field_name,
             field_type=Optional[self.structured_output_model],
             default=None,
             description=f"Structured output of type {self.structured_output_model.__name__}"
         )
-        
+
         # Override engine's output schema
         self.engine.output_schema = composer.build()
 ```
@@ -81,13 +81,13 @@ def _needs_parser_node(self) -> bool:
     # 3. Pydantic tool models
     has_structured_output = bool(self.structured_output_model)
     has_output_parser = self.output_parser is not None
-    
+
     tool_routes = self.get_tool_routes()
     pydantic_tools = [
-        tool for tool, route in tool_routes.items() 
+        tool for tool, route in tool_routes.items()
         if route == "pydantic_model"
     ]
-    
+
     return has_structured_output or has_output_parser or len(pydantic_tools) > 0
 ```
 
@@ -99,15 +99,15 @@ SimpleAgent uses a ValidationNodeConfigV2 for intelligent routing:
 def build_graph(self) -> BaseGraph:
     """Build the agent graph with proper state initialization."""
     graph = BaseGraph(name=self.name)
-    
+
     # Track available nodes
     available_nodes = []
-    
+
     # Add main agent node
     engine_node = EngineNodeConfig(name="agent_node", engine=self.engine)
     graph.add_node("agent_node", engine_node)
     available_nodes.append("agent_node")
-    
+
     # Add tool node if needed
     if self._needs_tool_node():
         tool_config = ToolNodeConfig(
@@ -116,7 +116,7 @@ def build_graph(self) -> BaseGraph:
         )
         graph.add_node("tool_node", tool_config)
         available_nodes.append("tool_node")
-    
+
     # Add parser node if needed
     if self._needs_parser_node():
         parser_config = ParserNodeConfigV2(
@@ -125,7 +125,7 @@ def build_graph(self) -> BaseGraph:
         )
         graph.add_node("parse_output", parser_config)
         available_nodes.append("parse_output")
-    
+
     # Create validation node with available nodes
     validation_config = ValidationNodeConfigV2(
         name="validation",
@@ -135,7 +135,7 @@ def build_graph(self) -> BaseGraph:
         available_nodes=available_nodes,
     )
     graph.add_node("validation", validation_config)
-    
+
     # Routing logic
     if self._has_force_tool_use():
         # Force tools - always go to validation
@@ -143,20 +143,21 @@ def build_graph(self) -> BaseGraph:
     else:
         # Conditional routing based on tool calls
         graph.add_conditional_edges(
-            "agent_node", has_tool_calls, 
+            "agent_node", has_tool_calls,
             {True: "validation", False: END}
         )
-    
+
     # Store metadata for state initialization
     graph.metadata["available_nodes"] = available_nodes
     graph.metadata["tool_routes"] = self.get_tool_routes()
-    
+
     return graph
 ```
 
 ## Tool Type Patterns
 
 ### 1. LangChain Tools
+
 Standard LangChain BaseTool implementations:
 
 ```python
@@ -171,6 +172,7 @@ def search_web(query: str) -> str:
 ```
 
 ### 2. Pydantic Model Tools
+
 Tools that return structured data:
 
 ```python
@@ -193,6 +195,7 @@ def analyze_data(data: str) -> AnalysisResult:
 ```
 
 ### 3. Engine-Internal Tools
+
 Tools that stay within the engine:
 
 ```python
@@ -203,6 +206,7 @@ Tools that stay within the engine:
 ## Structured Output Patterns
 
 ### 1. Simple Structured Output
+
 ```python
 class TaskResult(BaseModel):
     completed: bool
@@ -216,11 +220,12 @@ agent = SimpleAgent(
 ```
 
 ### 2. Complex Nested Outputs
+
 ```python
 class Step(BaseModel):
     action: str
     reasoning: str
-    
+
 class PlanResult(BaseModel):
     objective: str
     steps: List[Step]
@@ -233,10 +238,11 @@ agent = SimpleAgent(
 ```
 
 ### 3. Union Type Outputs
+
 ```python
 class Success(BaseModel):
     result: str
-    
+
 class Failure(BaseModel):
     error: str
     retry_suggestions: List[str]
@@ -258,9 +264,9 @@ SimpleAgent automatically registers engines for node discovery:
 def _register_engine_in_registry(self) -> None:
     """Register the engine in EngineRegistry so other nodes can find it."""
     from haive.core.engine.base import EngineRegistry
-    
+
     registry = EngineRegistry.get_instance()
-    
+
     if not registry.find(self.engine.name):
         registry.register(self.engine)
         logger.info(f"Registered engine '{self.engine.name}'")
@@ -274,22 +280,23 @@ SimpleAgent ensures proper state initialization with tool routes:
 def create_runnable(self, runnable_config=None) -> Any:
     """Override to ensure state is properly initialized."""
     compiled = super().create_runnable(runnable_config)
-    
+
     # Ensure initial state has tool_routes and available_nodes
     initial_values = {}
-    
+
     if "tool_routes" in self.graph.metadata:
         initial_values["tool_routes"] = self.graph.metadata["tool_routes"]
-    
+
     if "available_nodes" in self.graph.metadata:
         initial_values["available_nodes"] = self.graph.metadata["available_nodes"]
-    
+
     return compiled
 ```
 
 ## Convenience Patterns
 
 ### 1. Field Syncing
+
 SimpleAgent provides convenience fields that sync to the engine:
 
 ```python
@@ -302,6 +309,7 @@ agent = SimpleAgent(
 ```
 
 ### 2. Factory Methods
+
 ```python
 # From engine
 agent = SimpleAgent.from_engine(
@@ -319,12 +327,15 @@ agent = SimpleAgent.create_with_tools(
 ## Best Practices
 
 ### 1. Structured Output Naming
+
 SimpleAgent intelligently names output fields:
+
 - `AnalysisResult` -> `analysis` field
 - `ResponseModel` -> `model` field (strips "Response")
 - `Result` -> `structured_result` field (fallback)
 
 ### 2. Tool Organization
+
 ```python
 # Group tools by type for clarity
 langchain_tools = [search_web, fetch_data]
@@ -337,6 +348,7 @@ agent = SimpleAgent(
 ```
 
 ### 3. Prompt Engineering with Structured Output
+
 ```python
 prompt = ChatPromptTemplate.from_messages([
     ("system", "You are an analysis agent. Always structure your response."),
@@ -352,6 +364,7 @@ agent = SimpleAgent(
 ## Common Patterns
 
 ### 1. Analysis Agent
+
 ```python
 class Analysis(BaseModel):
     summary: str
@@ -371,12 +384,13 @@ agent = SimpleAgent(
 ```
 
 ### 2. Decision Agent
+
 ```python
 class Decision(BaseModel):
     choice: Literal["approve", "reject", "review"]
     reasoning: str
     confidence: float
-    
+
 agent = SimpleAgent(
     structured_output_model=Decision,
     force_tool_use=True  # Always use validation
@@ -384,6 +398,7 @@ agent = SimpleAgent(
 ```
 
 ### 3. Multi-Step Agent
+
 ```python
 class StepResult(BaseModel):
     step_number: int
@@ -400,6 +415,7 @@ agent = SimpleAgent(
 ## Summary
 
 SimpleAgent provides a clean interface for building agents with:
+
 - Automatic schema modification for structured outputs
 - Intelligent tool routing based on tool types
 - Automatic node creation based on requirements

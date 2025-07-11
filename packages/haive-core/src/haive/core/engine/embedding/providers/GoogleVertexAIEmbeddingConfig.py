@@ -1,6 +1,6 @@
 """Google Vertex AI embedding configuration."""
 
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import Field, validator
 
@@ -67,20 +67,18 @@ class GoogleVertexAIEmbeddingConfig(BaseEmbeddingConfig):
     location: str = Field(
         default="us-central1", description="Google Cloud location/region"
     )
-    task_type: Optional[str] = Field(
+    task_type: str | None = Field(
         default=None,
         description="Task type for embeddings (RETRIEVAL_QUERY, RETRIEVAL_DOCUMENT, etc.)",
     )
-    title: Optional[str] = Field(
-        default=None, description="Title for the embedding task"
-    )
-    credentials_path: Optional[str] = Field(
+    title: str | None = Field(default=None, description="Title for the embedding task")
+    credentials_path: str | None = Field(
         default=None, description="Path to service account credentials JSON file"
     )
     max_retries: int = Field(
         default=3, description="Maximum number of retries for API calls"
     )
-    request_timeout: Optional[float] = Field(
+    request_timeout: float | None = Field(
         default=None, description="Timeout for API requests in seconds"
     )
 
@@ -90,6 +88,7 @@ class GoogleVertexAIEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     @validator("model")
+    @classmethod
     def validate_model(cls, v):
         """Validate the Vertex AI model name."""
         valid_models = {
@@ -112,6 +111,7 @@ class GoogleVertexAIEmbeddingConfig(BaseEmbeddingConfig):
         return v
 
     @validator("task_type")
+    @classmethod
     def validate_task_type(cls, v):
         """Validate task type."""
         if v is None:
@@ -131,6 +131,7 @@ class GoogleVertexAIEmbeddingConfig(BaseEmbeddingConfig):
         return v
 
     @validator("location")
+    @classmethod
     def validate_location(cls, v):
         """Validate Google Cloud location."""
         if not v or not v.strip():
@@ -138,6 +139,7 @@ class GoogleVertexAIEmbeddingConfig(BaseEmbeddingConfig):
         return v.strip()
 
     @validator("project")
+    @classmethod
     def validate_project(cls, v):
         """Validate Google Cloud project ID."""
         if not v or not v.strip():

@@ -7,7 +7,7 @@
     "description": "Send a SPARQL query to the CitySDK Linked Data API to retrieve structured city information.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.803007",
+    "timestamp": "2025-07-10T19:45:29.023398",
     "schema": {
       "description": "Input schema for the CitySDK Linked Data SPARQL query tool.\n\nArgs:\n    query: SPARQL query to execute against the CitySDK Linked Data endpoint",
       "properties": {
@@ -36,7 +36,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.803007",
+      "timestamp": "2025-07-10T19:45:29.023398",
       "category": "toolkits"
     }
   },

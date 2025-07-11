@@ -11,17 +11,17 @@ with support for model metadata, context windows, and capabilities.
 
 import logging
 import os
-from typing import Any, Dict, List, Optional, Sequence, Union
-
-from langchain.chat_models.base import BaseChatModel
-from langchain_core.messages import AnyMessage, BaseMessage
-from pydantic import BaseModel, Field, SecretStr, field_validator, model_validator
+from collections.abc import Sequence
+from typing import Any, Dict, List, Optional, Union
 
 # Import the mixins
 from haive.core.common.mixins.secure_config import SecureConfigMixin
 from haive.core.models.llm.provider_types import LLMProvider
 from haive.core.models.llm.rate_limiting_mixin import RateLimitingMixin
 from haive.core.models.metadata_mixin import ModelMetadataMixin
+from langchain.chat_models.base import BaseChatModel
+from langchain_core.messages import AnyMessage
+from pydantic import BaseModel, Field, SecretStr, field_validator, model_validator
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.WARNING)
@@ -110,7 +110,7 @@ class LLMConfig(SecureConfigMixin, ModelMetadataMixin, RateLimitingMixin, BaseMo
 
     provider: LLMProvider = Field(description="The provider of the LLM.")
     model: str = Field(..., description="The model to be used, e.g., gpt-4.")
-    name: Optional[str] = Field(
+    name: str | None = Field(
         default=None, description="Friendly display name for this model."
     )
     api_key: SecretStr = Field(
@@ -119,26 +119,26 @@ class LLMConfig(SecureConfigMixin, ModelMetadataMixin, RateLimitingMixin, BaseMo
     cache_enabled: bool = Field(
         default=True, description="Enable or disable response caching."
     )
-    cache_ttl: Optional[int] = Field(
+    cache_ttl: int | None = Field(
         default=300, description="Time-to-live for cache (in seconds)."
     )
-    extra_params: Optional[Dict[str, Any]] = Field(
+    extra_params: dict[str, Any] | None = Field(
         default_factory=dict, description="Optional extra parameters."
     )
     debug: bool = Field(default=False, description="Enable detailed debug output.")
 
     # Rate limiting fields (from RateLimitingMixin)
-    requests_per_second: Optional[float] = Field(
+    requests_per_second: float | None = Field(
         default=None,
         description="Maximum number of requests per second. None means no limit.",
         ge=0,
     )
-    tokens_per_second: Optional[int] = Field(
+    tokens_per_second: int | None = Field(
         default=None,
         description="Maximum number of tokens per second. None means no limit.",
         ge=0,
     )
-    tokens_per_minute: Optional[int] = Field(
+    tokens_per_minute: int | None = Field(
         default=None,
         description="Maximum number of tokens per minute. None means no limit.",
         ge=0,
@@ -151,25 +151,23 @@ class LLMConfig(SecureConfigMixin, ModelMetadataMixin, RateLimitingMixin, BaseMo
     retry_delay: float = Field(
         default=1.0, description="Base delay between retries in seconds.", ge=0
     )
-    check_every_n_seconds: Optional[float] = Field(
+    check_every_n_seconds: float | None = Field(
         default=None,
         description="How often to check rate limits. None uses default.",
         ge=0,
     )
-    burst_size: Optional[int] = Field(
+    burst_size: int | None = Field(
         default=None,
         description="Maximum burst size for rate limiting. None uses default.",
         ge=1,
     )
 
     model_config = {"arbitrary_types_allowed": True}
-    model_alias: Optional[str] = Field(default=None, description="Alias for the model.")
+    model_alias: str | None = Field(default=None, description="Alias for the model.")
 
     @model_validator(mode="after")
     def set_default_name(self) -> "LLMConfig":
-        """
-        Set a default name for the model if not provided.
-        """
+        """Set a default name for the model if not provided."""
         if self.name is None:
             # Default to model ID if no name provided
             self.name = self.model
@@ -177,9 +175,7 @@ class LLMConfig(SecureConfigMixin, ModelMetadataMixin, RateLimitingMixin, BaseMo
 
     @model_validator(mode="after")
     def load_model_metadata(self) -> "LLMConfig":
-        """
-        Load and validate model metadata after initialization.
-        """
+        """Load and validate model metadata after initialization."""
         logger.debug(f"Loading metadata for {self.model} from {self.provider}")
 
         # Check model capabilities after initialization
@@ -222,7 +218,7 @@ class LLMConfig(SecureConfigMixin, ModelMetadataMixin, RateLimitingMixin, BaseMo
                             f"[yellow]{key}[/yellow] (list, {len(value)} items)"
                         )
                         for i, item in enumerate(value):
-                            if isinstance(item, (dict, list)):
+                            if isinstance(item, dict | list):
                                 sub_branch = branch.add(f"[blue]Item {i}[/blue]")
                                 _add_dict_to_tree(sub_branch, item)
                             else:
@@ -278,9 +274,8 @@ class LLMConfig(SecureConfigMixin, ModelMetadataMixin, RateLimitingMixin, BaseMo
 
         console.print(Panel(info_text, title=f"[bold]{self.model} Summary[/bold]"))
 
-    def format_metadata_for_display(self) -> Dict[str, Any]:
-        """
-        Format metadata for structured display or comparison.
+    def format_metadata_for_display(self) -> dict[str, Any]:
+        """Format metadata for structured display or comparison.
 
         Returns:
             Dictionary with formatted metadata
@@ -353,10 +348,9 @@ class LLMConfig(SecureConfigMixin, ModelMetadataMixin, RateLimitingMixin, BaseMo
     def get_num_tokens_from_messages(
         self,
         messages: Sequence[AnyMessage],
-        tools: Optional[Sequence[Dict[str, Any]]] = None,
+        tools: Sequence[dict[str, Any]] | None = None,
     ) -> int:
-        """
-        Count tokens in a sequence of messages.
+        """Count tokens in a sequence of messages.
 
         This method instantiates the model temporarily to count tokens,
         preserving the serializability of the configuration object.
@@ -386,15 +380,14 @@ class LLMConfig(SecureConfigMixin, ModelMetadataMixin, RateLimitingMixin, BaseMo
             llm = self.instantiate()
             if hasattr(llm, "get_num_tokens_from_messages"):
                 return llm.get_num_tokens_from_messages(messages, tools=tools)
-            else:
-                # Fallback: estimate based on string length if method not available
-                total_content = ""
-                for msg in messages:
-                    if hasattr(msg, "content"):
-                        total_content += str(msg.content) + " "
+            # Fallback: estimate based on string length if method not available
+            total_content = ""
+            for msg in messages:
+                if hasattr(msg, "content"):
+                    total_content += str(msg.content) + " "
 
-                # Rough estimation: ~4 characters per token
-                return len(total_content) // 4
+            # Rough estimation: ~4 characters per token
+            return len(total_content) // 4
         except Exception as e:
             logger.warning(f"Error counting tokens from messages: {e}")
             # Fallback estimation
@@ -405,8 +398,7 @@ class LLMConfig(SecureConfigMixin, ModelMetadataMixin, RateLimitingMixin, BaseMo
             return len(total_content) // 4
 
     def get_num_tokens(self, text: str) -> int:
-        """
-        Count tokens in a single text string.
+        """Count tokens in a single text string.
 
         This method instantiates the model temporarily to count tokens,
         preserving the serializability of the configuration object.
@@ -429,9 +421,8 @@ class LLMConfig(SecureConfigMixin, ModelMetadataMixin, RateLimitingMixin, BaseMo
             llm = self.instantiate()
             if hasattr(llm, "get_num_tokens"):
                 return llm.get_num_tokens(text)
-            else:
-                # Fallback: rough estimation based on string length
-                return len(text) // 4
+            # Fallback: rough estimation based on string length
+            return len(text) // 4
         except Exception as e:
             logger.warning(f"Error counting tokens from text: {e}")
             # Fallback estimation: ~4 characters per token
@@ -440,12 +431,11 @@ class LLMConfig(SecureConfigMixin, ModelMetadataMixin, RateLimitingMixin, BaseMo
     def estimate_cost_from_messages(
         self,
         messages: Sequence[AnyMessage],
-        tools: Optional[Sequence[Dict[str, Any]]] = None,
+        tools: Sequence[dict[str, Any]] | None = None,
         include_output_estimate: bool = True,
-        estimated_output_tokens: Optional[int] = None,
-    ) -> Dict[str, float]:
-        """
-        Estimate the cost of processing messages with this model.
+        estimated_output_tokens: int | None = None,
+    ) -> dict[str, float]:
+        """Estimate the cost of processing messages with this model.
 
         This method combines token counting with pricing metadata to estimate costs
         before making API calls, helping with budget management and cost optimization.
@@ -517,10 +507,9 @@ class LLMConfig(SecureConfigMixin, ModelMetadataMixin, RateLimitingMixin, BaseMo
         self,
         text: str,
         include_output_estimate: bool = True,
-        estimated_output_tokens: Optional[int] = None,
-    ) -> Dict[str, float]:
-        """
-        Estimate the cost of processing a single text string.
+        estimated_output_tokens: int | None = None,
+    ) -> dict[str, float]:
+        """Estimate the cost of processing a single text string.
 
         Args:
             text: Raw text string to estimate cost for
@@ -578,11 +567,10 @@ class LLMConfig(SecureConfigMixin, ModelMetadataMixin, RateLimitingMixin, BaseMo
     def check_context_window_fit(
         self,
         messages: Sequence[AnyMessage],
-        tools: Optional[Sequence[Dict[str, Any]]] = None,
+        tools: Sequence[dict[str, Any]] | None = None,
         reserve_output_tokens: int = 1000,
-    ) -> Dict[str, Union[bool, int]]:
-        """
-        Check if messages fit within the model's context window.
+    ) -> dict[str, bool | int]:
+        """Check if messages fit within the model's context window.
 
         This method helps prevent "context length exceeded" errors by validating
         message length before making API calls.
@@ -704,9 +692,7 @@ class AzureLLMConfig(LLMConfig):
         return v
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate Azure OpenAI Chat model with robust error handling.
-        """
+        """Instantiate Azure OpenAI Chat model with robust error handling."""
         from langchain_openai import AzureChatOpenAI
 
         # Debug output
@@ -742,9 +728,9 @@ class AzureLLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            logger.error(f"Failed to instantiate Azure OpenAI model: {str(e)}")
+            logger.exception(f"Failed to instantiate Azure OpenAI model: {e!s}")
             raise RuntimeError(
-                f"Failed to instantiate Azure OpenAI model: {str(e)}"
+                f"Failed to instantiate Azure OpenAI model: {e!s}"
             ) from e
 
 
@@ -767,7 +753,7 @@ class OpenAILLMConfig(LLMConfig):
         return v
 
     @classmethod
-    def get_models(cls) -> List[str]:
+    def get_models(cls) -> list[str]:
         """Get all available OpenAI models."""
         from openai import OpenAI
 
@@ -775,9 +761,7 @@ class OpenAILLMConfig(LLMConfig):
         return client.models.list().data
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate OpenAI Chat model.
-        """
+        """Instantiate OpenAI Chat model."""
         from langchain_openai import OpenAIChat
 
         # Validate API key
@@ -796,7 +780,7 @@ class OpenAILLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(f"Failed to instantiate OpenAI model: {str(e)}") from e
+            raise RuntimeError(f"Failed to instantiate OpenAI model: {e!s}") from e
 
 
 class AnthropicLLMConfig(LLMConfig):
@@ -832,7 +816,7 @@ class AnthropicLLMConfig(LLMConfig):
         return v
 
     @classmethod
-    def get_models(cls) -> List[str]:
+    def get_models(cls) -> list[str]:
         """Get all available Anthropic models."""
         from anthropic import Anthropic
 
@@ -840,9 +824,7 @@ class AnthropicLLMConfig(LLMConfig):
         return client.models.list().data
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate Anthropic Chat model.
-        """
+        """Instantiate Anthropic Chat model."""
         from langchain_anthropic import ChatAnthropic
 
         # Validate API key
@@ -861,9 +843,7 @@ class AnthropicLLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(
-                f"Failed to instantiate Anthropic model: {str(e)}"
-            ) from e
+            raise RuntimeError(f"Failed to instantiate Anthropic model: {e!s}") from e
 
 
 class GeminiLLMConfig(LLMConfig):
@@ -886,9 +866,7 @@ class GeminiLLMConfig(LLMConfig):
         return v
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate Google Gemini Chat model.
-        """
+        """Instantiate Google Gemini Chat model."""
         from langchain_google_genai import ChatGoogleGenerativeAI
 
         # Validate API key
@@ -907,7 +885,7 @@ class GeminiLLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(f"Failed to instantiate Gemini model: {str(e)}") from e
+            raise RuntimeError(f"Failed to instantiate Gemini model: {e!s}") from e
 
 
 class DeepSeekLLMConfig(LLMConfig):
@@ -921,7 +899,7 @@ class DeepSeekLLMConfig(LLMConfig):
     )
 
     @classmethod
-    def get_models(cls) -> List[str]:
+    def get_models(cls) -> list[str]:
         """Get all available DeepSeek models."""
         from deepseek import DeepSeekAPI
 
@@ -929,9 +907,7 @@ class DeepSeekLLMConfig(LLMConfig):
         return client.get_models()
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate DeepSeek Chat model.
-        """
+        """Instantiate DeepSeek Chat model."""
         from langchain_deepseek import ChatDeepSeek
 
         # Validate API key
@@ -950,7 +926,7 @@ class DeepSeekLLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(f"Failed to instantiate DeepSeek model: {str(e)}") from e
+            raise RuntimeError(f"Failed to instantiate DeepSeek model: {e!s}") from e
 
 
 class MistralLLMConfig(LLMConfig):
@@ -975,7 +951,7 @@ class MistralLLMConfig(LLMConfig):
         return v
 
     @classmethod
-    def get_models(cls) -> List[str]:
+    def get_models(cls) -> list[str]:
         """Get all available Mistral models."""
         from mistralai import Mistral
 
@@ -983,9 +959,7 @@ class MistralLLMConfig(LLMConfig):
         return client.models.list()
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate Mistral Chat model.
-        """
+        """Instantiate Mistral Chat model."""
         from langchain_mistralai import ChatMistralAI
 
         # Validate API key
@@ -1004,7 +978,7 @@ class MistralLLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(f"Failed to instantiate Mistral model: {str(e)}") from e
+            raise RuntimeError(f"Failed to instantiate Mistral model: {e!s}") from e
 
 
 class GroqLLMConfig(LLMConfig):
@@ -1027,9 +1001,7 @@ class GroqLLMConfig(LLMConfig):
         return v
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate Groq Chat model.
-        """
+        """Instantiate Groq Chat model."""
         from langchain_groq import ChatGroq
 
         # Validate API key
@@ -1048,7 +1020,7 @@ class GroqLLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(f"Failed to instantiate Groq model: {str(e)}") from e
+            raise RuntimeError(f"Failed to instantiate Groq model: {e!s}") from e
 
 
 class CohereLLMConfig(LLMConfig):
@@ -1071,9 +1043,7 @@ class CohereLLMConfig(LLMConfig):
         return v
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate Cohere Chat model.
-        """
+        """Instantiate Cohere Chat model."""
         from langchain_cohere import ChatCohere
 
         # Validate API key
@@ -1092,7 +1062,7 @@ class CohereLLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(f"Failed to instantiate Cohere model: {str(e)}") from e
+            raise RuntimeError(f"Failed to instantiate Cohere model: {e!s}") from e
 
 
 class TogetherAILLMConfig(LLMConfig):
@@ -1117,9 +1087,7 @@ class TogetherAILLMConfig(LLMConfig):
         return v
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate Together AI Chat model.
-        """
+        """Instantiate Together AI Chat model."""
         from langchain_together import ChatTogether
 
         # Validate API key
@@ -1138,9 +1106,7 @@ class TogetherAILLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(
-                f"Failed to instantiate Together AI model: {str(e)}"
-            ) from e
+            raise RuntimeError(f"Failed to instantiate Together AI model: {e!s}") from e
 
 
 class FireworksAILLMConfig(LLMConfig):
@@ -1165,9 +1131,7 @@ class FireworksAILLMConfig(LLMConfig):
         return v
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate Fireworks AI Chat model.
-        """
+        """Instantiate Fireworks AI Chat model."""
         from langchain_fireworks import ChatFireworks
 
         # Validate API key
@@ -1187,7 +1151,7 @@ class FireworksAILLMConfig(LLMConfig):
             )
         except Exception as e:
             raise RuntimeError(
-                f"Failed to instantiate Fireworks AI model: {str(e)}"
+                f"Failed to instantiate Fireworks AI model: {e!s}"
             ) from e
 
 
@@ -1213,9 +1177,7 @@ class PerplexityLLMConfig(LLMConfig):
         return v
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate Perplexity AI Chat model.
-        """
+        """Instantiate Perplexity AI Chat model."""
         from langchain_community.chat_models import ChatPerplexity
 
         # Validate API key
@@ -1234,9 +1196,7 @@ class PerplexityLLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(
-                f"Failed to instantiate Perplexity model: {str(e)}"
-            ) from e
+            raise RuntimeError(f"Failed to instantiate Perplexity model: {e!s}") from e
 
 
 class HuggingFaceLLMConfig(LLMConfig):
@@ -1248,7 +1208,7 @@ class HuggingFaceLLMConfig(LLMConfig):
         default_factory=lambda: SecretStr(os.getenv("HUGGING_FACE_API_KEY", "")),
         description="API key for Hugging Face.",
     )
-    endpoint_url: Optional[str] = Field(
+    endpoint_url: str | None = Field(
         default=None, description="Optional Hugging Face Inference Endpoint URL"
     )
 
@@ -1262,9 +1222,7 @@ class HuggingFaceLLMConfig(LLMConfig):
         return v
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate Hugging Face model.
-        """
+        """Instantiate Hugging Face model."""
         try:
             from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
         except ImportError:
@@ -1292,19 +1250,18 @@ class HuggingFaceLLMConfig(LLMConfig):
                     **(self.extra_params or {}),
                     **kwargs,
                 )
-            else:
-                from langchain_huggingface import HuggingFaceEndpoint
+            from langchain_huggingface import HuggingFaceEndpoint
 
-                return HuggingFaceEndpoint(
-                    repo_id=self.model,
-                    huggingfacehub_api_token=self.get_api_key(),
-                    cache=self.cache_enabled,
-                    **(self.extra_params or {}),
-                    **kwargs,
-                )
+            return HuggingFaceEndpoint(
+                repo_id=self.model,
+                huggingfacehub_api_token=self.get_api_key(),
+                cache=self.cache_enabled,
+                **(self.extra_params or {}),
+                **kwargs,
+            )
         except Exception as e:
             raise RuntimeError(
-                f"Failed to instantiate Hugging Face model: {str(e)}"
+                f"Failed to instantiate Hugging Face model: {e!s}"
             ) from e
 
 
@@ -1328,9 +1285,7 @@ class AI21LLMConfig(LLMConfig):
         return v
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate AI21 Chat model.
-        """
+        """Instantiate AI21 Chat model."""
         try:
             from langchain_ai21 import ChatAI21
         except ImportError:
@@ -1355,7 +1310,7 @@ class AI21LLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(f"Failed to instantiate AI21 model: {str(e)}") from e
+            raise RuntimeError(f"Failed to instantiate AI21 model: {e!s}") from e
 
 
 class AlephAlphaLLMConfig(LLMConfig):
@@ -1378,9 +1333,7 @@ class AlephAlphaLLMConfig(LLMConfig):
         return v
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate Aleph Alpha Chat model.
-        """
+        """Instantiate Aleph Alpha Chat model."""
         from langchain_community.chat_models import ChatAlephAlpha
 
         # Validate API key
@@ -1399,9 +1352,7 @@ class AlephAlphaLLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(
-                f"Failed to instantiate Aleph Alpha model: {str(e)}"
-            ) from e
+            raise RuntimeError(f"Failed to instantiate Aleph Alpha model: {e!s}") from e
 
 
 class GooseAILLMConfig(LLMConfig):
@@ -1424,9 +1375,7 @@ class GooseAILLMConfig(LLMConfig):
         return v
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate GooseAI Chat model.
-        """
+        """Instantiate GooseAI Chat model."""
         try:
             from langchain_community.chat_models import ChatGooseAI
         except ImportError:
@@ -1451,7 +1400,7 @@ class GooseAILLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(f"Failed to instantiate GooseAI model: {str(e)}") from e
+            raise RuntimeError(f"Failed to instantiate GooseAI model: {e!s}") from e
 
 
 class MosaicMLLLMConfig(LLMConfig):
@@ -1474,9 +1423,7 @@ class MosaicMLLLMConfig(LLMConfig):
         return v
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate MosaicML Chat model.
-        """
+        """Instantiate MosaicML Chat model."""
         from langchain_community.chat_models import ChatMosaicML
 
         # Validate API key
@@ -1495,7 +1442,7 @@ class MosaicMLLLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(f"Failed to instantiate MosaicML model: {str(e)}") from e
+            raise RuntimeError(f"Failed to instantiate MosaicML model: {e!s}") from e
 
 
 class NLPCloudLLMConfig(LLMConfig):
@@ -1520,9 +1467,7 @@ class NLPCloudLLMConfig(LLMConfig):
         return v
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate NLP Cloud Chat model.
-        """
+        """Instantiate NLP Cloud Chat model."""
         try:
             from langchain_community.llms import ChatNLPCloud
         except ImportError:
@@ -1547,9 +1492,7 @@ class NLPCloudLLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(
-                f"Failed to instantiate NLP Cloud model: {str(e)}"
-            ) from e
+            raise RuntimeError(f"Failed to instantiate NLP Cloud model: {e!s}") from e
 
 
 class OpenLMLLMConfig(LLMConfig):
@@ -1572,9 +1515,7 @@ class OpenLMLLMConfig(LLMConfig):
         return v
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate OpenLM Chat model.
-        """
+        """Instantiate OpenLM Chat model."""
         from langchain_community.chat_models import ChatOpenLM
 
         # Validate API key
@@ -1593,7 +1534,7 @@ class OpenLMLLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(f"Failed to instantiate OpenLM model: {str(e)}") from e
+            raise RuntimeError(f"Failed to instantiate OpenLM model: {e!s}") from e
 
 
 class PetalsLLMConfig(LLMConfig):
@@ -1604,9 +1545,7 @@ class PetalsLLMConfig(LLMConfig):
     # No API key needed for Petals distributed inference
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate Petals Chat model.
-        """
+        """Instantiate Petals Chat model."""
         from langchain_community.chat_models import ChatPetals
 
         try:
@@ -1617,7 +1556,7 @@ class PetalsLLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(f"Failed to instantiate Petals model: {str(e)}") from e
+            raise RuntimeError(f"Failed to instantiate Petals model: {e!s}") from e
 
 
 class ReplicateLLMConfig(LLMConfig):
@@ -1643,9 +1582,7 @@ class ReplicateLLMConfig(LLMConfig):
         return v
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate Replicate Chat model.
-        """
+        """Instantiate Replicate Chat model."""
         from langchain_community.chat_models import ChatReplicate
 
         # Validate API key
@@ -1664,9 +1601,7 @@ class ReplicateLLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(
-                f"Failed to instantiate Replicate model: {str(e)}"
-            ) from e
+            raise RuntimeError(f"Failed to instantiate Replicate model: {e!s}") from e
 
 
 class VertexAILLMConfig(LLMConfig):
@@ -1674,7 +1609,7 @@ class VertexAILLMConfig(LLMConfig):
 
     provider: LLMProvider = LLMProvider.VERTEX_AI
     model: str = Field(default="gemini-1.5-pro", description="Vertex AI model name.")
-    project: Optional[str] = Field(default="", description="Google Cloud Project ID.")
+    project: str | None = Field(default="", description="Google Cloud Project ID.")
     location: str = Field(
         default="us-central1", description="Google Cloud region/location."
     )
@@ -1690,9 +1625,7 @@ class VertexAILLMConfig(LLMConfig):
         return v
 
     def instantiate(self, **kwargs) -> Any:
-        """
-        Instantiate Google Vertex AI Chat model.
-        """
+        """Instantiate Google Vertex AI Chat model."""
         try:
             from langchain_google_vertexai import ChatVertexAI
         except ImportError:
@@ -1718,9 +1651,7 @@ class VertexAILLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(
-                f"Failed to instantiate Vertex AI model: {str(e)}"
-            ) from e
+            raise RuntimeError(f"Failed to instantiate Vertex AI model: {e!s}") from e
 
 
 class BedrockLLMConfig(LLMConfig):
@@ -1744,11 +1675,11 @@ class BedrockLLMConfig(LLMConfig):
         default_factory=lambda: os.getenv("AWS_DEFAULT_REGION", "us-east-1"),
         description="AWS region name.",
     )
-    aws_access_key_id: Optional[SecretStr] = Field(
+    aws_access_key_id: SecretStr | None = Field(
         default_factory=lambda: SecretStr(os.getenv("AWS_ACCESS_KEY_ID", "")),
         description="AWS access key ID.",
     )
-    aws_secret_access_key: Optional[SecretStr] = Field(
+    aws_secret_access_key: SecretStr | None = Field(
         default_factory=lambda: SecretStr(os.getenv("AWS_SECRET_ACCESS_KEY", "")),
         description="AWS secret access key.",
     )
@@ -1784,7 +1715,7 @@ class BedrockLLMConfig(LLMConfig):
 
             return ChatBedrock(**params)
         except Exception as e:
-            raise RuntimeError(f"Failed to instantiate Bedrock model: {str(e)}") from e
+            raise RuntimeError(f"Failed to instantiate Bedrock model: {e!s}") from e
 
 
 class NVIDIALLMConfig(LLMConfig):
@@ -1798,7 +1729,7 @@ class NVIDIALLMConfig(LLMConfig):
         default_factory=lambda: SecretStr(os.getenv("NVIDIA_API_KEY", "")),
         description="API key for NVIDIA AI Endpoints.",
     )
-    base_url: Optional[str] = Field(
+    base_url: str | None = Field(
         default="https://api.nvcf.nvidia.com/v2/nvcf/pexec/functions",
         description="NVIDIA API base URL.",
     )
@@ -1828,7 +1759,7 @@ class NVIDIALLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(f"Failed to instantiate NVIDIA model: {str(e)}") from e
+            raise RuntimeError(f"Failed to instantiate NVIDIA model: {e!s}") from e
 
 
 class OllamaLLMConfig(LLMConfig):
@@ -1860,7 +1791,7 @@ class OllamaLLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(f"Failed to instantiate Ollama model: {str(e)}") from e
+            raise RuntimeError(f"Failed to instantiate Ollama model: {e!s}") from e
 
 
 class LlamaCppLLMConfig(LLMConfig):
@@ -1869,9 +1800,7 @@ class LlamaCppLLMConfig(LLMConfig):
     provider: LLMProvider = LLMProvider.LLAMACPP
     model: str = Field(description="Path to the GGUF model file.", alias="model_path")
     n_ctx: int = Field(default=2048, description="Context window size.")
-    n_threads: Optional[int] = Field(
-        default=None, description="Number of threads to use."
-    )
+    n_threads: int | None = Field(default=None, description="Number of threads to use.")
     n_gpu_layers: int = Field(
         default=0, description="Number of layers to offload to GPU."
     )
@@ -1900,9 +1829,7 @@ class LlamaCppLLMConfig(LLMConfig):
 
             return ChatLlamaCpp(**params)
         except Exception as e:
-            raise RuntimeError(
-                f"Failed to instantiate Llama.cpp model: {str(e)}"
-            ) from e
+            raise RuntimeError(f"Failed to instantiate Llama.cpp model: {e!s}") from e
 
 
 class UpstageLLMConfig(LLMConfig):
@@ -1939,7 +1866,7 @@ class UpstageLLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(f"Failed to instantiate Upstage model: {str(e)}") from e
+            raise RuntimeError(f"Failed to instantiate Upstage model: {e!s}") from e
 
 
 class DatabricksLLMConfig(LLMConfig):
@@ -1985,9 +1912,7 @@ class DatabricksLLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(
-                f"Failed to instantiate Databricks model: {str(e)}"
-            ) from e
+            raise RuntimeError(f"Failed to instantiate Databricks model: {e!s}") from e
 
 
 class WatsonxLLMConfig(LLMConfig):
@@ -2044,7 +1969,7 @@ class WatsonxLLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(f"Failed to instantiate Watson.x model: {str(e)}") from e
+            raise RuntimeError(f"Failed to instantiate Watson.x model: {e!s}") from e
 
 
 class XAILLMConfig(LLMConfig):
@@ -2085,7 +2010,7 @@ class XAILLMConfig(LLMConfig):
                 **kwargs,
             )
         except Exception as e:
-            raise RuntimeError(f"Failed to instantiate xAI model: {str(e)}") from e
+            raise RuntimeError(f"Failed to instantiate xAI model: {e!s}") from e
 
 
 # TODO: CONVERT OT LIST AND ADD SUPP FOR GEMINI
@@ -2115,7 +2040,4 @@ model_list = client.models.list()  # Returns ModelList object
 model_names = [model.id for model in model_list.data]
 print(model_names)  # Output: ['mistral-ocr-2505', 'mistral-small-2503', ...]
 """
-# print(AnthropicLLMConfig.get_models()[:10])
-# print(OpenAILLMConfig.get_models()[:10])
-# print(MistralLLMConfig.get_models(),type(MistralLLMConfig.get_models()))
 # print(DeepSeekLLMConfig.get_models()) -> deepseek-chat,deepseek-reasoner

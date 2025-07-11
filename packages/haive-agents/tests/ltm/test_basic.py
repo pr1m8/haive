@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Basic test for LTM Agent Phase 1 implementation.
+"""Basic test for LTM Agent Phase 1 implementation.
 
 This tests the basic structure and memory extraction flow.
 Run with: poetry run pytest packages/haive-agents/tests/ltm/test_basic.py -v
@@ -8,10 +7,11 @@ Run with: poetry run pytest packages/haive-agents/tests/ltm/test_basic.py -v
 
 import logging
 
-import pytest
 from langchain_core.messages import AIMessage, HumanMessage
+import pytest
 
 from haive.agents.ltm.agent import LTMAgent, LTMState
+
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -25,9 +25,9 @@ def test_ltm_basic_structure():
 
     # Verify initialization
     assert agent.name == "Test LTM Agent"
-    assert agent.enable_kg_processing == True
-    assert agent.enable_categorization == True
-    assert agent.enable_consolidation == True
+    assert agent.enable_kg_processing
+    assert agent.enable_categorization
+    assert agent.enable_consolidation
 
 
 def test_ltm_state_schema():
@@ -43,7 +43,7 @@ def test_ltm_state_schema():
     # Verify state
     assert len(state.messages) == 2
     assert state.processing_stage == "extract"
-    assert state.processing_complete == False
+    assert not state.processing_complete
     assert len(state.extracted_memories) == 0
     assert state.extraction_quality == 0.0
 
@@ -59,19 +59,19 @@ def test_condition_functions():
 
     # Test with empty state
     empty_state = LTMState()
-    assert extraction_succeeded(empty_state) == False
-    assert has_processing_errors(empty_state) == False
-    assert needs_kg_processing(empty_state) == False
-    assert processing_complete(empty_state) == False
+    assert not extraction_succeeded(empty_state)
+    assert not has_processing_errors(empty_state)
+    assert not needs_kg_processing(empty_state)
+    assert not processing_complete(empty_state)
 
     # Test with memories
     state_with_memories = LTMState(extracted_memories=[{"id": "1"}, {"id": "2"}])
-    assert extraction_succeeded(state_with_memories) == True
-    assert needs_kg_processing(state_with_memories) == True
+    assert extraction_succeeded(state_with_memories)
+    assert needs_kg_processing(state_with_memories)
 
     # Test with errors
     state_with_errors = LTMState(processing_errors=["Some error"])
-    assert has_processing_errors(state_with_errors) == True
+    assert has_processing_errors(state_with_errors)
 
 
 def test_ltm_graph_building():

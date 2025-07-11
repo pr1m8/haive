@@ -29,8 +29,8 @@ Usage:
     ```
 """
 
-import uuid
 from typing import Optional
+import uuid
 from uuid import UUID
 
 from pydantic import (
@@ -64,12 +64,12 @@ class IdentifierMixin(BaseModel):
         default_factory=lambda: str(uuid.uuid4()),
         description="Unique identifier for this object",
     )
-    name: Optional[str] = Field(
+    name: str | None = Field(
         default=None, description="Human-readable name for this object"
     )
 
     # Private attribute for UUID object
-    _uuid_obj: Optional[UUID] = PrivateAttr(default=None)
+    _uuid_obj: UUID | None = PrivateAttr(default=None)
 
     @field_validator("id")
     @classmethod
@@ -92,7 +92,7 @@ class IdentifierMixin(BaseModel):
 
     @field_validator("name")
     @classmethod
-    def validate_name(cls, v: Optional[str]) -> Optional[str]:
+    def validate_name(cls, v: str | None) -> str | None:
         """Validate and clean the name field.
 
         Args:
@@ -216,10 +216,7 @@ class IdentifierMixin(BaseModel):
             return True
 
         # Check name (case-insensitive)
-        if self.name and self.name.lower() == id_or_name.lower():
-            return True
-
-        return False
+        return bool(self.name and self.name.lower() == id_or_name.lower())
 
     def identifier_info(self) -> dict[str, str]:
         """Get comprehensive identifier information.

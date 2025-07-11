@@ -7,7 +7,7 @@
     "description": "A wrapper around Eleven Labs Text2Speech. Useful for when you need to convert text to speech. It supports more than 30 languages, including English, German, Polish, Spanish, Italian, French, Portuguese, and Hindi. ",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.738244",
+    "timestamp": "2025-07-10T19:45:28.970198",
     "schema": {
       "properties": {
         "kwargs": {
@@ -31,7 +31,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.738244",
+      "timestamp": "2025-07-10T19:45:28.970198",
       "category": "individual_tools"
     }
   },

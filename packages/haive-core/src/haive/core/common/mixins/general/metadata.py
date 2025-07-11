@@ -32,7 +32,7 @@ Usage:
     ```
 """
 
-from typing import Any, Dict
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -48,7 +48,7 @@ class MetadataMixin(BaseModel):
         metadata: Dictionary containing arbitrary metadata.
     """
 
-    metadata: Dict[str, Any] = Field(
+    metadata: dict[str, Any] = Field(
         default_factory=dict, description="Arbitrary metadata"
     )
 
@@ -95,7 +95,7 @@ class MetadataMixin(BaseModel):
         """
         return self.metadata.pop(key, None)
 
-    def update_metadata(self, updates: Dict[str, Any]) -> None:
+    def update_metadata(self, updates: dict[str, Any]) -> None:
         """Update multiple metadata fields.
 
         Args:

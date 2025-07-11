@@ -1,5 +1,4 @@
-"""
-Tests for composing state schemas from input and output schemas.
+"""Tests for composing state schemas from input and output schemas.
 
 These tests verify that the SchemaComposer can correctly create a state schema
 by combining existing input and output schemas, rather than deriving them from a state schema.
@@ -17,17 +16,17 @@ from haive.core.schema.state_schema import StateSchema
 class SampleInputSchema(BaseModel):
     """Input schema for testing."""
 
-    messages: List[BaseMessage] = Field(default_factory=list)
+    messages: list[BaseMessage] = Field(default_factory=list)
     query: str = Field(default="")
-    context: Dict[str, Any] = Field(default_factory=dict)
+    context: dict[str, Any] = Field(default_factory=dict)
 
 
 class SampleOutputSchema(BaseModel):
     """Output schema for testing."""
 
-    messages: List[BaseMessage] = Field(default_factory=list)
+    messages: list[BaseMessage] = Field(default_factory=list)
     response: str = Field(default="")
-    sources: List[Dict[str, Any]] = Field(default_factory=list)
+    sources: list[dict[str, Any]] = Field(default_factory=list)
 
 
 def test_compose_state_from_io_schemas():
@@ -98,7 +97,6 @@ def test_compose_state_directly():
     composer = SchemaComposer(name="DirectComposedSchema")
 
     # Add some field definitions to the composer
-    from typing import List
 
     from langchain_core.messages import BaseMessage
 
@@ -115,7 +113,7 @@ def test_compose_state_directly():
     # Add messages field with reducer
     composer.add_field(
         name="messages",
-        field_type=List[BaseMessage],
+        field_type=list[BaseMessage],
         default_factory=list,
         description="Messages for conversation",
         reducer=reducer,

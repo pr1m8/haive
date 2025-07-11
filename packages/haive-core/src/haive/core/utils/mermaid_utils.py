@@ -1,14 +1,13 @@
-"""
-Mermaid diagram utilities for Haive.
+"""Mermaid diagram utilities for Haive.
 
 This module provides utilities for generating and displaying Mermaid diagrams
 in different environments, with fallback mechanisms.
 """
 
+from enum import Enum
 import os
 import subprocess
 import tempfile
-from enum import Enum
 from typing import Optional
 
 
@@ -24,8 +23,7 @@ class Environment(str, Enum):
 
 
 def detect_environment() -> Environment:
-    """
-    Detect the current execution environment.
+    """Detect the current execution environment.
 
     Returns:
         Environment enum indicating the detected environment
@@ -69,11 +67,8 @@ def detect_environment() -> Environment:
         return Environment.UNKNOWN
 
 
-def mermaid_to_png(
-    mermaid_code: str, output_path: Optional[str] = None
-) -> Optional[str]:
-    """
-    Convert Mermaid diagram code to a PNG file.
+def mermaid_to_png(mermaid_code: str, output_path: str | None = None) -> str | None:
+    """Convert Mermaid diagram code to a PNG file.
 
     Args:
         mermaid_code: Mermaid diagram code as string
@@ -102,7 +97,6 @@ def mermaid_to_png(
                 ["mmdc", "-i", mmd_path, "-o", output_path, "-b", "transparent"],
                 check=True,
                 stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
             )
             return output_path
         except (subprocess.SubprocessError, FileNotFoundError):
@@ -119,14 +113,10 @@ def mermaid_to_png(
                     ],
                     check=True,
                     stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE,
                 )
                 return output_path
             except (subprocess.SubprocessError, FileNotFoundError):
                 # If both fail, use a web-based approach with base64 encoding
-                print(
-                    "Warning: Mermaid CLI not found. Using online rendering fallback."
-                )
 
                 # Create an HTML file with the diagram embedded
                 with open(output_path.replace(".png", ".html"), "w") as f:
@@ -149,7 +139,6 @@ def mermaid_to_png(
                     """
                     )
 
-                print(f"HTML diagram saved as: {output_path.replace('.png', '.html')}")
                 return None
     finally:
         # Clean up the temporary file
@@ -161,12 +150,11 @@ def mermaid_to_png(
 
 def display_mermaid(
     mermaid_code: str,
-    output_path: Optional[str] = None,
+    output_path: str | None = None,
     save_png: bool = False,
     width: str = "100%",
 ) -> None:
-    """
-    Display a Mermaid diagram in the current environment.
+    """Display a Mermaid diagram in the current environment.
 
     This function detects the current environment and uses the appropriate
     method to display the diagram, with fallbacks for each environment.
@@ -244,25 +232,15 @@ def display_mermaid(
                 png_path = mermaid_to_png(mermaid_code, output_path)
                 if png_path and os.path.exists(png_path):
                     display(Image(png_path, width=width))
-                    print(f"Diagram saved as: {png_path}")
                     return
 
             # Final approach: Just show the Mermaid code
-            print("Unable to render Mermaid diagram. Displaying code:")
-            print(f"```mermaid\n{mermaid_code}\n```")
 
         except ImportError:
             # If IPython is not available, fall back to terminal mode
-            print("Mermaid diagram code:")
-            print(f"```mermaid\n{mermaid_code}\n```")
+            pass
 
-    else:
-        # Terminal or unknown environment
-        print("Mermaid diagram code:")
-        print(f"```mermaid\n{mermaid_code}\n```")
-
-        # Save to PNG if requested
-        if save_png or output_path:
-            png_path = mermaid_to_png(mermaid_code, output_path)
-            if png_path:
-                print(f"Diagram saved as: {png_path}")
+    elif save_png or output_path:
+        png_path = mermaid_to_png(mermaid_code, output_path)
+        if png_path:
+            pass

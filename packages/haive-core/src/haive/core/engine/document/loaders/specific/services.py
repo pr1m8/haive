@@ -8,13 +8,12 @@ import logging
 from pathlib import Path
 from typing import List, Optional
 
-from langchain_core.document_loaders.base import BaseLoader
-
 from haive.core.engine.document.loaders.sources.implementation import (
     CredentialType,
     EnhancedSource,
     SourceType,
 )
+from langchain_core.document_loaders.base import BaseLoader
 
 logger = logging.getLogger(__name__)
 

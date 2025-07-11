@@ -1,5 +1,4 @@
-"""
-Amazon OpenSearch Vector Store implementation for the Haive framework.
+"""Amazon OpenSearch Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the Amazon OpenSearch Service vector store,
 which is AWS's managed version of OpenSearch with enhanced features.
@@ -33,8 +32,7 @@ from haive.core.engine.vectorstore.types import VectorStoreType
 
 @BaseVectorStoreConfig.register(VectorStoreType.AMAZON_OPENSEARCH)
 class AmazonOpenSearchVectorStoreConfig(BaseVectorStoreConfig):
-    """
-    Configuration for Amazon OpenSearch Service vector store in the Haive framework.
+    """Configuration for Amazon OpenSearch Service vector store in the Haive framework.
 
     This vector store uses AWS's managed OpenSearch Service for scalable vector search
     with additional AWS-specific features and authentication options.
@@ -97,17 +95,17 @@ class AmazonOpenSearchVectorStoreConfig(BaseVectorStoreConfig):
         default=True, description="Whether to use AWS IAM authentication"
     )
 
-    aws_access_key_id: Optional[str] = Field(
+    aws_access_key_id: str | None = Field(
         default=None,
         description="AWS access key ID (uses default credentials if not provided)",
     )
 
-    aws_secret_access_key: Optional[str] = Field(
+    aws_secret_access_key: str | None = Field(
         default=None,
         description="AWS secret access key (uses default credentials if not provided)",
     )
 
-    aws_session_token: Optional[str] = Field(
+    aws_session_token: str | None = Field(
         default=None, description="AWS session token for temporary credentials"
     )
 
@@ -185,7 +183,7 @@ class AmazonOpenSearchVectorStoreConfig(BaseVectorStoreConfig):
     )
 
     @validator("opensearch_url")
-    def validate_opensearch_url(cls, v):
+    def validate_opensearch_url(self, v):
         """Validate Amazon OpenSearch URL format."""
         if not v.startswith("https://"):
             raise ValueError("Amazon OpenSearch URL must use HTTPS")
@@ -196,7 +194,7 @@ class AmazonOpenSearchVectorStoreConfig(BaseVectorStoreConfig):
         return v
 
     @validator("engine")
-    def validate_engine(cls, v, values):
+    def validate_engine(self, v, values):
         """Validate vector engine is supported, considering AOSS limitations."""
         is_aoss = values.get("is_aoss", False)
         if is_aoss:
@@ -210,7 +208,7 @@ class AmazonOpenSearchVectorStoreConfig(BaseVectorStoreConfig):
         return v
 
     @validator("aws_region")
-    def validate_aws_region(cls, v):
+    def validate_aws_region(self, v):
         """Validate AWS region format."""
         import re
 
@@ -219,7 +217,7 @@ class AmazonOpenSearchVectorStoreConfig(BaseVectorStoreConfig):
         return v
 
     @validator("index_name")
-    def validate_index_name(cls, v):
+    def validate_index_name(self, v):
         """Validate index name format."""
         if not v or len(v.strip()) == 0:
             raise ValueError("index_name cannot be empty")
@@ -231,27 +229,26 @@ class AmazonOpenSearchVectorStoreConfig(BaseVectorStoreConfig):
             )
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Amazon OpenSearch vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Amazon OpenSearch vector store."""
         return {
             "ids": (
-                List[str],
+                list[str],
                 Field(description="IDs of the added documents in Amazon OpenSearch"),
             ),
         }
 
     def instantiate(self):
-        """
-        Create an Amazon OpenSearch Service vector store from this configuration.
+        """Create an Amazon OpenSearch Service vector store from this configuration.
 
         Returns:
             OpenSearchVectorSearch: Instantiated Amazon OpenSearch vector store.

@@ -14,10 +14,12 @@
 ## Key Issues Found
 
 ### Issue 1: EngineType Serialization
+
 - engine_type is being serialized as string representation 'EngineType.LLM'
 - Should be serialized as enum value 'llm'
 
 ### Issue 2: tool_routes Missing
+
 - SequentialAgentState doesn't have tool_routes field
 - tool_types computed property tries to access it
 - Likely a schema composition issue

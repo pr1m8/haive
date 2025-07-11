@@ -1,5 +1,4 @@
-"""
-Pydantic model utilities for serialization, visualization, and code generation.
+"""Pydantic model utilities for serialization, visualization, and code generation.
 
 This module provides standalone functions for visualizing, comparing, and
 generating code from Pydantic BaseModel classes and instances, without
@@ -7,17 +6,13 @@ requiring inheritance from specialized base classes.
 """
 
 import inspect
-import json
-from typing import Any, Optional, Type, Union, get_args, get_origin
+from typing import Any, Union, get_args, get_origin
 
 from pydantic import BaseModel
 
 
-def display_model(
-    model: Union[Type[BaseModel], BaseModel], title: Optional[str] = None
-) -> None:
-    """
-    Display a Pydantic model or instance with clear formatting.
+def display_model(model: type[BaseModel] | BaseModel, title: str | None = None) -> None:
+    """Display a Pydantic model or instance with clear formatting.
 
     Args:
         model: Model class or instance to display
@@ -65,12 +60,10 @@ def display_model(
                     field_str = (
                         f"{field_name}: {type_str} = {default_str} → {value_str}"
                     )
+                elif hasattr(field_info, "description") and field_info.description:
+                    field_str = f"{field_name}: {type_str} = {default_str} # {field_info.description}"
                 else:
-                    # Get description if available
-                    if hasattr(field_info, "description") and field_info.description:
-                        field_str = f"{field_name}: {type_str} = {default_str} # {field_info.description}"
-                    else:
-                        field_str = f"{field_name}: {type_str} = {default_str}"
+                    field_str = f"{field_name}: {type_str} = {default_str}"
 
                 fields_node.add(field_str)
 
@@ -84,10 +77,9 @@ def display_model(
 
 
 def print_model_simple(
-    model: Union[Type[BaseModel], BaseModel], title: Optional[str] = None
+    model: type[BaseModel] | BaseModel, title: str | None = None
 ) -> None:
-    """
-    Simple print fallback when rich is not available.
+    """Simple print fallback when rich is not available.
 
     Args:
         model: Model class or instance to display
@@ -96,36 +88,25 @@ def print_model_simple(
     is_class = isinstance(model, type)
     model_class = model if is_class else model.__class__
 
-    print(
-        f"--- {title or model_class.__name__} {'Schema' if is_class else 'Instance'} ---"
-    )
-    print(f"{'class' if is_class else 'instance of'} {model_class.__name__}:")
-    print("  Fields:")
-
     if hasattr(model_class, "model_fields"):  # Pydantic v2
         for field_name, field_info in model_class.model_fields.items():
             if field_name.startswith("__"):
                 continue
 
-            type_str = format_type_annotation(field_info.annotation)
-            default_str = format_default_value(field_info)
+            format_type_annotation(field_info.annotation)
+            format_default_value(field_info)
 
             if not is_class and hasattr(model, field_name):
                 value = getattr(model, field_name)
-                value_str = format_value(value)
-                print(f"    {field_name}: {type_str} = {default_str} → {value_str}")
+                format_value(value)
+            elif hasattr(field_info, "description") and field_info.description:
+                pass
             else:
-                if hasattr(field_info, "description") and field_info.description:
-                    print(
-                        f"    {field_name}: {type_str} = {default_str} # {field_info.description}"
-                    )
-                else:
-                    print(f"    {field_name}: {type_str} = {default_str}")
+                pass
 
 
-def model_to_code(model_class: Type[BaseModel]) -> str:
-    """
-    Generate Python code representation of a Pydantic model.
+def model_to_code(model_class: type[BaseModel]) -> str:
+    """Generate Python code representation of a Pydantic model.
 
     Args:
         model_class: Model class to convert to code
@@ -171,9 +152,7 @@ def model_to_code(model_class: Type[BaseModel]) -> str:
                 if default is ...:
                     field_str = f"{field_name}: {type_str} = Field(...)"
                 else:
-                    field_str = (
-                        f"{field_name}: {type_str} = Field(default={repr(default)}"
-                    )
+                    field_str = f"{field_name}: {type_str} = Field(default={default!r}"
 
             # Add description if available
             if hasattr(field_info, "description") and field_info.description:
@@ -188,9 +167,8 @@ def model_to_code(model_class: Type[BaseModel]) -> str:
     return "\n".join(lines)
 
 
-def display_code(model_class: Type[BaseModel], title: Optional[str] = None) -> None:
-    """
-    Display Python code representation of a Pydantic model.
+def display_code(model_class: type[BaseModel], title: str | None = None) -> None:
+    """Display Python code representation of a Pydantic model.
 
     Args:
         model_class: Model class to display
@@ -211,18 +189,16 @@ def display_code(model_class: Type[BaseModel], title: Optional[str] = None) -> N
         console.print(panel)
     except ImportError:
         # Fall back to simple print
-        print(f"--- {title or model_class.__name__} Code ---")
-        print(code)
+        pass
 
 
 def compare_models(
-    model1: Type[BaseModel],
-    model2: Type[BaseModel],
-    title1: Optional[str] = None,
-    title2: Optional[str] = None,
+    model1: type[BaseModel],
+    model2: type[BaseModel],
+    title1: str | None = None,
+    title2: str | None = None,
 ) -> None:
-    """
-    Compare two Pydantic models side by side.
+    """Compare two Pydantic models side by side.
 
     Args:
         model1: First model to compare
@@ -267,29 +243,24 @@ def compare_models(
         console.print(table)
     except ImportError:
         # Fall back to simple print
-        print(f"--- Model Comparison: {title1} vs {title2} ---")
         fields1 = getattr(model1, "model_fields", {})
         fields2 = getattr(model2, "model_fields", {})
 
-        print("Fields in both:")
         for field in set(fields1.keys()) & set(fields2.keys()):
             if not field.startswith("__"):
-                print(f"  {field}")
+                pass
 
-        print(f"Fields only in {title1}:")
         for field in set(fields1.keys()) - set(fields2.keys()):
             if not field.startswith("__"):
-                print(f"  {field}")
+                pass
 
-        print(f"Fields only in {title2}:")
         for field in set(fields2.keys()) - set(fields1.keys()):
             if not field.startswith("__"):
-                print(f"  {field}")
+                pass
 
 
-def pretty_print(model_instance: BaseModel, title: Optional[str] = None) -> None:
-    """
-    Pretty print a Pydantic model instance.
+def pretty_print(model_instance: BaseModel, title: str | None = None) -> None:
+    """Pretty print a Pydantic model instance.
 
     Args:
         model_instance: Model instance to print
@@ -299,8 +270,7 @@ def pretty_print(model_instance: BaseModel, title: Optional[str] = None) -> None
 
 
 def format_type_annotation(type_annotation: Any) -> str:
-    """
-    Format type annotation for display.
+    """Format type annotation for display.
 
     Args:
         type_annotation: The type annotation to format
@@ -351,11 +321,11 @@ def format_type_annotation(type_annotation: Any) -> str:
         if args:
             return f"List[{format_type_annotation(args[0])}]"
         return "List"
-    elif origin is dict or str(origin) == "typing.Dict":
+    if origin is dict or str(origin) == "typing.Dict":
         if len(args) == 2:
             return f"Dict[{format_type_annotation(args[0])}, {format_type_annotation(args[1])}]"
         return "Dict"
-    elif origin is Union or str(origin) == "typing.Union":
+    if origin is Union or str(origin) == "typing.Union":
         # Handle Optional (Union with None)
         if len(args) == 2 and (type(None) in args):
             non_none_type = args[0] if args[1] is type(None) else args[1]
@@ -374,8 +344,7 @@ def format_type_annotation(type_annotation: Any) -> str:
 
 
 def format_default_value(field_info: Any) -> str:
-    """
-    Format default value for display.
+    """Format default value for display.
 
     Args:
         field_info: The field info to format
@@ -390,18 +359,16 @@ def format_default_value(field_info: Any) -> str:
         ):
             factory_name = getattr(field_info.default_factory, "__name__", "factory")
             return f"default_factory={factory_name}"
-        else:
-            default = field_info.default
-            if default is ...:
-                return "required"
-            return f"default={repr(default)}"
+        default = field_info.default
+        if default is ...:
+            return "required"
+        return f"default={default!r}"
     except Exception as e:
-        return f"<error formatting default: {str(e)}>"
+        return f"<error formatting default: {e!s}>"
 
 
 def format_value(value: Any) -> str:
-    """
-    Format a value for display.
+    """Format a value for display.
 
     Args:
         value: The value to format
@@ -412,19 +379,19 @@ def format_value(value: Any) -> str:
     try:
         if value is None:
             return "None"
-        elif isinstance(value, str):
+        if isinstance(value, str):
             if len(value) > 50:
                 return f'"{value[:47]}..."'
             return f'"{value}"'
-        elif isinstance(value, (int, float, bool)):
+        if isinstance(value, int | float | bool):
             return str(value)
-        elif isinstance(value, list):
+        if isinstance(value, list):
             if not value:
                 return "[]"
             if len(value) > 3:
                 return f"[{', '.join(format_value(v) for v in value[:2])}, ... ({len(value)} items)]"
             return f"[{', '.join(format_value(v) for v in value)}]"
-        elif isinstance(value, dict):
+        if isinstance(value, dict):
             if not value:
                 return "{}"
             if len(value) > 3:
@@ -433,17 +400,16 @@ def format_value(value: Any) -> str:
             return (
                 f"{{{', '.join(f'{k}: {format_value(v)}' for k, v in value.items())}}}"
             )
-        elif hasattr(value, "model_dump"):  # Pydantic v2
+        if hasattr(value, "model_dump"):  # Pydantic v2
             class_name = value.__class__.__name__
             return f"{class_name}(...)"
         return str(value)
     except Exception as e:
-        return f"<error formatting value: {str(e)}>"
+        return f"<error formatting value: {e!s}>"
 
 
 def format_field_info(field_info: Any) -> str:
-    """
-    Format field info for comparison display.
+    """Format field info for comparison display.
 
     Args:
         field_info: The field info to format
@@ -468,12 +434,11 @@ def format_field_info(field_info: Any) -> str:
 
         return f"{type_str} ({default_str})"
     except Exception as e:
-        return f"<error formatting field: {str(e)}>"
+        return f"<error formatting field: {e!s}>"
 
 
 def schema_to_code(schema: Any) -> str:
-    """
-    Generate Python code for a schema (possibly ComposedSchema).
+    """Generate Python code for a schema (possibly ComposedSchema).
 
     Args:
         schema: The schema to convert to code

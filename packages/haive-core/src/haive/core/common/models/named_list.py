@@ -2,14 +2,13 @@
 # NAMED LIST TYPE
 # ============================================================================
 
+from collections.abc import Iterator, Sequence
 from typing import (
     Any,
     Dict,
     Generic,
-    Iterator,
     List,
     Optional,
-    Sequence,
     TypeVar,
     Union,
     get_args,
@@ -17,14 +16,13 @@ from typing import (
 )
 
 from pydantic import BaseModel, Field, field_validator, model_validator
-from pydantic._internal._typing_extra import eval_type_lenient
+
 
 T = TypeVar("T")
 
 
 class NamedList(BaseModel, Generic[T]):
-    """
-    A list that can contain instances, string references, or mixed.
+    """A list that can contain instances, string references, or mixed.
 
     Supports multiple input formats:
     - [instance1, instance2] - direct instances
@@ -36,15 +34,15 @@ class NamedList(BaseModel, Generic[T]):
     """
 
     items: Sequence[T] = Field(default_factory=list, description="The resolved items")
-    names: List[str] = Field(
+    names: list[str] = Field(
         default_factory=list, description="Names of items (in order)"
     )
-    name_map: Dict[str, T] = Field(
+    name_map: dict[str, T] = Field(
         default_factory=dict, description="Name to instance mapping"
     )
 
     # Reference resolution
-    registry: Optional[Dict[str, T]] = Field(
+    registry: dict[str, T] | None = Field(
         default=None, exclude=True, description="Registry for resolving references"
     )
     allow_unresolved: bool = Field(
@@ -52,7 +50,7 @@ class NamedList(BaseModel, Generic[T]):
     )
 
     # Track what needs resolution
-    unresolved_refs: List[str] = Field(default_factory=list, exclude=True)
+    unresolved_refs: list[str] = Field(default_factory=list, exclude=True)
     input_format: str = Field(default="list", exclude=True)
 
     @field_validator("items", mode="before")
@@ -82,7 +80,7 @@ class NamedList(BaseModel, Generic[T]):
 
         if isinstance(original_items, dict):
             self.process_dict_input(original_items)
-        elif isinstance(original_items, (list, tuple)):
+        elif isinstance(original_items, list | tuple):
             self.process_list_input(original_items)
         else:
             # Single item
@@ -93,7 +91,7 @@ class NamedList(BaseModel, Generic[T]):
 
         return self
 
-    def process_dict_input(self, items_dict: Dict[str, Union[T, str]]) -> None:
+    def process_dict_input(self, items_dict: dict[str, T | str]) -> None:
         """Process dictionary input format."""
         self.input_format = "dict"
 
@@ -110,7 +108,7 @@ class NamedList(BaseModel, Generic[T]):
                 self.names.append(name)
                 self.name_map[name] = item
 
-    def process_list_input(self, items_list: Sequence[Union[T, str]]) -> None:
+    def process_list_input(self, items_list: Sequence[T | str]) -> None:
         """Process list/tuple input format."""
         self.input_format = "list"
 
@@ -128,7 +126,7 @@ class NamedList(BaseModel, Generic[T]):
                 self.names.append(name)
                 self.name_map[name] = item
 
-    def process_single_item(self, item: Union[T, str], default_name: str) -> None:
+    def process_single_item(self, item: T | str, default_name: str) -> None:
         """Process single item input."""
         if isinstance(item, str):
             self.unresolved_refs.append(item)
@@ -145,14 +143,13 @@ class NamedList(BaseModel, Generic[T]):
         # Try to get name from item
         if hasattr(item, "name") and item.name:
             return str(item.name)
-        elif hasattr(item, "id") and item.id:
+        if hasattr(item, "id") and item.id:
             return str(item.id)
-        elif hasattr(item, "__name__"):
+        if hasattr(item, "__name__"):
             return item.__name__
-        else:
-            # Fallback to class name + index
-            class_name = item.__class__.__name__.lower()
-            return f"{class_name}_{index}"
+        # Fallback to class name + index
+        class_name = item.__class__.__name__.lower()
+        return f"{class_name}_{index}"
 
     def resolve_references(self) -> None:
         """Resolve string references to actual instances."""
@@ -186,13 +183,13 @@ class NamedList(BaseModel, Generic[T]):
             if i < len(self.items) and self.items[i] is None
         ]
 
-    def set_registry(self, registry: Dict[str, T]) -> "NamedList[T]":
+    def set_registry(self, registry: dict[str, T]) -> "NamedList[T]":
         """Set the registry for resolving references and attempt resolution."""
         self.registry = registry
         self.resolve_references()
         return self
 
-    def resolve_with_registry(self, registry: Dict[str, T]) -> "NamedList[T]":
+    def resolve_with_registry(self, registry: dict[str, T]) -> "NamedList[T]":
         """Resolve references using provided registry (convenience method)."""
         return self.set_registry(registry)
 
@@ -206,18 +203,17 @@ class NamedList(BaseModel, Generic[T]):
     def __iter__(self) -> Iterator[T]:
         return iter([item for item in self.items if item is not None])
 
-    def __getitem__(self, key: Union[int, str]) -> T:
+    def __getitem__(self, key: int | str) -> T:
         if isinstance(key, str):
             # Access by name
             if key in self.name_map:
                 return self.name_map[key]
             raise KeyError(f"No item with name '{key}'")
-        else:
-            # Access by index (skip None items)
-            valid_items = [item for item in self.items if item is not None]
-            return valid_items[key]
+        # Access by index (skip None items)
+        valid_items = [item for item in self.items if item is not None]
+        return valid_items[key]
 
-    def __setitem__(self, key: Union[int, str], value: T) -> None:
+    def __setitem__(self, key: int | str, value: T) -> None:
         if isinstance(key, str):
             # Set by name
             if key in self.names:
@@ -236,7 +232,7 @@ class NamedList(BaseModel, Generic[T]):
                 name = self.names[actual_index]
                 self.name_map[name] = value
 
-    def append(self, item: T, name: Optional[str] = None) -> None:
+    def append(self, item: T, name: str | None = None) -> None:
         """Add an item to the list."""
         if name is None:
             name = self._generate_name(item, len(self.items))
@@ -245,12 +241,12 @@ class NamedList(BaseModel, Generic[T]):
         self.names.append(name)
         self.name_map[name] = item
 
-    def remove(self, item: Union[T, str]) -> None:
+    def remove(self, item: T | str) -> None:
         """Remove an item by instance or name."""
         if isinstance(item, str):
             # Remove by name
             if item in self.name_map:
-                instance = self.name_map[item]
+                self.name_map[item]
                 index = self.names.index(item)
                 del self.items[index]
                 del self.names[index]
@@ -268,23 +264,23 @@ class NamedList(BaseModel, Generic[T]):
             except ValueError:
                 raise ValueError("Item not in list")
 
-    def get(self, name: str, default: Optional[T] = None) -> Optional[T]:
+    def get(self, name: str, default: T | None = None) -> T | None:
         """Get item by name with default."""
         return self.name_map.get(name, default)
 
-    def keys(self) -> List[str]:
+    def keys(self) -> list[str]:
         """Get all names."""
         return [name for i, name in enumerate(self.names) if self.items[i] is not None]
 
-    def values(self) -> List[T]:
+    def values(self) -> list[T]:
         """Get all instances."""
         return [item for item in self.items if item is not None]
 
-    def to_dict(self) -> Dict[str, T]:
+    def to_dict(self) -> dict[str, T]:
         """Convert to dictionary mapping names to instances."""
         return {name: item for name, item in self.name_map.items() if item is not None}
 
-    def to_list(self) -> List[T]:
+    def to_list(self) -> list[T]:
         """Convert to simple list of instances."""
         return self.values()
 
@@ -292,7 +288,7 @@ class NamedList(BaseModel, Generic[T]):
         """Check if there are unresolved references."""
         return len(self.unresolved_refs) > 0 or any(item is None for item in self.items)
 
-    def get_unresolved_references(self) -> List[str]:
+    def get_unresolved_references(self) -> list[str]:
         """Get list of unresolved references."""
         return self.unresolved_refs.copy()
 
@@ -326,8 +322,7 @@ class NamedList(BaseModel, Generic[T]):
 
         if unresolved:
             return f"NamedList({resolved_count}/{total_count} resolved, unresolved: {unresolved})"
-        else:
-            return f"NamedList({self.keys()})"
+        return f"NamedList({self.keys()})"
 
     def __str__(self) -> str:
         return f"NamedList({list(self.keys())})"
@@ -339,8 +334,8 @@ class NamedList(BaseModel, Generic[T]):
 
 
 def create_named_list(
-    items: Union[List[T], Dict[str, T], T],
-    registry: Optional[Dict[str, T]] = None,
+    items: list[T] | dict[str, T] | T,
+    registry: dict[str, T] | None = None,
     allow_unresolved: bool = False,
 ) -> NamedList[T]:
     """Convenience function to create a NamedList."""
@@ -363,7 +358,7 @@ if __name__ == "__main__":
     rag_agent = MockAgent("rag")
     answer_agent = MockAgent("answer")
     format_agent = MockAgent("format")
-    
+
     # Registry for resolution
     registry = {
         "rag": rag_agent,

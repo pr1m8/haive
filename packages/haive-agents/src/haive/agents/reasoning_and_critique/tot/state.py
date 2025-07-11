@@ -2,11 +2,10 @@
 
 from typing import Annotated, Any
 
+from haive.agents.reasoning_and_critique.tot.models import Candidate
 from langchain_core.messages import BaseMessage
 from langgraph.graph import add_messages
 from pydantic import BaseModel, ConfigDict, Field, field_validator
-
-from haive.agents.reasoning_and_critique.tot.models import Candidate
 
 
 class TOTInput(BaseModel):

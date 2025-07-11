@@ -1,5 +1,4 @@
-"""
-Comprehensive Path/URL Analysis Module for Haive Framework
+"""Comprehensive Path/URL Analysis Module for Haive Framework.
 
 This module provides a robust analysis system that determines the nature, type,
 and properties of various path and URL inputs using Pydantic v2, typing, urllib, and pathlib.
@@ -399,12 +398,10 @@ class BasePathAnalyzer(ABC):
     @abstractmethod
     def can_analyze(self, path: str) -> bool:
         """Check if this analyzer can handle the given path."""
-        pass
 
     @abstractmethod
-    def analyze(self, path: str, result: "PathAnalysisResult") -> None:
+    def analyze(self, path: str, result: PathAnalysisResult) -> None:
         """Perform analysis and update the result object."""
-        pass
 
 
 class PathType(str, Enum):

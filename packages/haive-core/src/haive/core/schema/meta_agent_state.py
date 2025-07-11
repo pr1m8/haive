@@ -1,6 +1,5 @@
 # haive/core/schema/meta_agent_state.py
-"""
-Meta agent state for multi-agent coordination.
+"""Meta agent state for multi-agent coordination.
 
 This module provides a state schema that enables agents to share metadata,
 coordination information, and workflow state in multi-agent systems.
@@ -9,9 +8,8 @@ coordination information, and workflow state in multi-agent systems.
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel, Field
-
 from haive.core.schema.state_schema import StateSchema
+from pydantic import BaseModel, Field
 
 
 class AgentExecutionInfo(BaseModel):
@@ -19,25 +17,22 @@ class AgentExecutionInfo(BaseModel):
 
     agent_id: str = Field(description="ID of the agent")
     agent_name: str = Field(description="Name of the agent")
-    started_at: Optional[datetime] = Field(
+    started_at: datetime | None = Field(
         default=None, description="When execution started"
     )
-    completed_at: Optional[datetime] = Field(
+    completed_at: datetime | None = Field(
         default=None, description="When execution completed"
     )
     status: str = Field(
         default="pending",
         description="Execution status: pending, running, completed, failed",
     )
-    error: Optional[str] = Field(default=None, description="Error message if failed")
-    output: Optional[Any] = Field(
-        default=None, description="Output produced by the agent"
-    )
+    error: str | None = Field(default=None, description="Error message if failed")
+    output: Any | None = Field(default=None, description="Output produced by the agent")
 
 
 class MetaAgentState(StateSchema):
-    """
-    Meta state for multi-agent coordination.
+    """Meta state for multi-agent coordination.
 
     This state provides shared fields for coordinating multiple agents including:
     - Tracking which agent is currently active
@@ -47,39 +42,39 @@ class MetaAgentState(StateSchema):
     """
 
     # Core coordination fields
-    active_agent_id: Optional[str] = Field(
+    active_agent_id: str | None = Field(
         default=None, description="ID of the currently active agent"
     )
 
-    active_agent_name: Optional[str] = Field(
+    active_agent_name: str | None = Field(
         default=None, description="Name of the currently active agent"
     )
 
     # Agent outputs and history
-    agent_outputs: Dict[str, Any] = Field(
+    agent_outputs: dict[str, Any] = Field(
         default_factory=dict, description="Outputs from each agent keyed by agent ID"
     )
 
-    agent_execution_history: List[AgentExecutionInfo] = Field(
+    agent_execution_history: list[AgentExecutionInfo] = Field(
         default_factory=list, description="History of agent executions"
     )
 
     # Workflow management
-    workflow_metadata: Dict[str, Any] = Field(
+    workflow_metadata: dict[str, Any] = Field(
         default_factory=dict, description="Metadata about the current workflow"
     )
 
-    workflow_stage: Optional[str] = Field(
+    workflow_stage: str | None = Field(
         default=None, description="Current stage of the workflow"
     )
 
     # Shared context
-    shared_context: Dict[str, Any] = Field(
+    shared_context: dict[str, Any] = Field(
         default_factory=dict, description="Shared context accessible to all agents"
     )
 
     # Error handling
-    last_error: Optional[str] = Field(
+    last_error: str | None = Field(
         default=None, description="Last error that occurred in the workflow"
     )
 
@@ -90,7 +85,7 @@ class MetaAgentState(StateSchema):
         default=True, description="Whether the workflow should continue"
     )
 
-    next_agent_hint: Optional[str] = Field(
+    next_agent_hint: str | None = Field(
         default=None, description="Hint for which agent should execute next"
     )
 
@@ -156,7 +151,7 @@ class MetaAgentState(StateSchema):
                 exec_info.error = error
                 break
 
-    def get_agent_output(self, agent_id: str) -> Optional[Any]:
+    def get_agent_output(self, agent_id: str) -> Any | None:
         """Get the output from a specific agent."""
         return self.agent_outputs.get(agent_id)
 
@@ -169,14 +164,14 @@ class MetaAgentState(StateSchema):
         return self.shared_context.get(key, default)
 
     def update_workflow_stage(
-        self, stage: str, metadata: Optional[Dict[str, Any]] = None
+        self, stage: str, metadata: dict[str, Any] | None = None
     ) -> None:
         """Update the current workflow stage."""
         self.workflow_stage = stage
         if metadata:
             self.workflow_metadata.update(metadata)
 
-    def signal_stop(self, reason: Optional[str] = None) -> None:
+    def signal_stop(self, reason: str | None = None) -> None:
         """Signal that the workflow should stop."""
         self.should_continue = False
         if reason:

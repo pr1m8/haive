@@ -7,7 +7,7 @@
     "description": "Search the web using DuckDuckGo and get summarized results as text.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.737911",
+    "timestamp": "2025-07-10T19:45:28.969844",
     "schema": {
       "description": "Input for the DuckDuckGo search tool.",
       "properties": {
@@ -36,7 +36,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.737911",
+      "timestamp": "2025-07-10T19:45:28.969844",
       "category": "individual_tools"
     }
   },

@@ -1,5 +1,4 @@
-"""
-Redis Vector Store implementation for the Haive framework.
+"""Redis Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the Redis vector store,
 which combines in-memory caching with vector similarity search capabilities.
@@ -34,8 +33,7 @@ from haive.core.engine.vectorstore.types import VectorStoreType
 
 @BaseVectorStoreConfig.register(VectorStoreType.REDIS)
 class RedisVectorStoreConfig(BaseVectorStoreConfig):
-    """
-    Configuration for Redis vector store in the Haive framework.
+    """Configuration for Redis vector store in the Haive framework.
 
     This vector store uses Redis for ultra-fast in-memory vector
     similarity search with caching capabilities.
@@ -75,15 +73,15 @@ class RedisVectorStoreConfig(BaseVectorStoreConfig):
     )
 
     # Alternative connection parameters
-    host: Optional[str] = Field(
+    host: str | None = Field(
         default=None, description="Redis host (alternative to redis_url)"
     )
 
-    port: Optional[int] = Field(
+    port: int | None = Field(
         default=None, description="Redis port (alternative to redis_url)"
     )
 
-    password: Optional[str] = Field(default=None, description="Redis password")
+    password: str | None = Field(default=None, description="Redis password")
 
     db: int = Field(default=0, ge=0, description="Redis database number")
 
@@ -150,7 +148,7 @@ class RedisVectorStoreConfig(BaseVectorStoreConfig):
     )
 
     @validator("distance_metric")
-    def validate_distance_metric(cls, v):
+    def validate_distance_metric(self, v):
         """Validate distance metric is supported."""
         valid_metrics = ["COSINE", "L2", "IP"]
         if v not in valid_metrics:
@@ -158,7 +156,7 @@ class RedisVectorStoreConfig(BaseVectorStoreConfig):
         return v
 
     @validator("vector_algorithm")
-    def validate_vector_algorithm(cls, v):
+    def validate_vector_algorithm(self, v):
         """Validate vector algorithm is supported."""
         valid_algorithms = ["HNSW", "FLAT"]
         if v not in valid_algorithms:
@@ -167,24 +165,23 @@ class RedisVectorStoreConfig(BaseVectorStoreConfig):
             )
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Redis vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Redis vector store."""
         return {
-            "ids": (List[str], Field(description="Redis document IDs")),
+            "ids": (list[str], Field(description="Redis document IDs")),
         }
 
     def instantiate(self):
-        """
-        Create a Redis vector store from this configuration.
+        """Create a Redis vector store from this configuration.
 
         Returns:
             Redis: Instantiated Redis vector store.
@@ -197,7 +194,7 @@ class RedisVectorStoreConfig(BaseVectorStoreConfig):
             from langchain_community.vectorstores.redis import Redis
         except ImportError:
             raise ImportError(
-                "Redis requires redis package. " "Install with: pip install redis"
+                "Redis requires redis package. Install with: pip install redis"
             )
 
         # Validate embedding

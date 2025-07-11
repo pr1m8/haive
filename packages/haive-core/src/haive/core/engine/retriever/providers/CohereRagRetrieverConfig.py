@@ -1,5 +1,4 @@
-"""
-Cohere RAG Retriever implementation for the Haive framework.
+"""Cohere RAG Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Cohere RAG retriever,
 which uses Cohere's Retrieval-Augmented Generation API for document retrieval
@@ -35,8 +34,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.COHERE_RAG)
 class CohereRagRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for Cohere RAG retriever in the Haive framework.
+    """Configuration for Cohere RAG retriever in the Haive framework.
 
     This retriever uses Cohere's RAG API to provide enterprise-grade retrieval
     with built-in re-ranking, citations, and optimized performance.
@@ -91,7 +89,7 @@ class CohereRagRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None, description="Cohere API key (auto-resolved from COHERE_API_KEY)"
     )
 
@@ -101,7 +99,7 @@ class CohereRagRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # Cohere RAG configuration
-    connectors: List[Dict[str, Any]] = Field(
+    connectors: list[dict[str, Any]] = Field(
         default_factory=list,
         description="Cohere connector configurations for data sources",
     )
@@ -138,7 +136,7 @@ class CohereRagRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         default="accurate", description="Citation quality: 'fast', 'accurate'"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Cohere RAG retriever."""
         return {
             "query": (
@@ -147,11 +145,11 @@ class CohereRagRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Cohere RAG retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list,
                     description="Documents with citations from Cohere RAG",
@@ -160,8 +158,7 @@ class CohereRagRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a Cohere RAG retriever from this configuration.
+        """Create a Cohere RAG retriever from this configuration.
 
         Returns:
             CohereRagRetriever: Instantiated retriever ready for RAG operations.

@@ -1,10 +1,9 @@
+from collections.abc import Callable, Sequence
 from typing import (
     Any,
-    Callable,
     Dict,
     List,
     Optional,
-    Sequence,
     Tuple,
     Type,
     TypeVar,
@@ -19,30 +18,34 @@ from pydantic import BaseModel
 from haive.core.common.types.protocols.general_protocols import Nameable
 from haive.core.schema.state_schema import StateSchema
 
+
 # Generic type that can be string, dict with name key, or any object with name attribute
-OptionItem = TypeVar("OptionItem", str, Dict[str, Any], Nameable)
+OptionItem = TypeVar("OptionItem", str, dict[str, Any], Nameable)
 ToolLike = Sequence[
-    Union[Tool, Type[BaseTool], BaseModel, Callable, StructuredTool, BaseToolkit]
+    Tool | type[BaseTool] | BaseModel | Callable | StructuredTool | BaseToolkit
 ]
-# NodeLike = Union[Callable]
 
 # Core type definitions
 # CHECK:
-# NodeLike = Union[Callable[[StateLike, Optional[ConfigLike]], NodeOutput],NodeConfig]
 NodeLike = TypeVar("NodeLike", bound=Any)
 NodeOutput = TypeVar(
     "NodeOutput",
-    bound=Union[
-        Command, Send, List[Send], str, Type[BaseModel], BaseModel, Dict[str, Any], Send
-    ],
+    bound=Command
+    | Send
+    | list[Send]
+    | str
+    | type[BaseModel]
+    | BaseModel
+    | dict[str, Any]
+    | Send,
 )
 StateLike = TypeVar(
-    "StateLike", bound=Union[Dict[str, Any], Type[BaseModel], BaseModel, StateSchema]
+    "StateLike", bound=dict[str, Any] | type[BaseModel] | BaseModel | StateSchema
 )
 ConfigLike = TypeVar(
-    "ConfigLike", bound=Union[RunnableConfig, Dict[str, Any], Type[BaseModel]]
+    "ConfigLike", bound=RunnableConfig | dict[str, Any] | type[BaseModel]
 )
-NodeCallable = Callable[[StateLike, Optional[ConfigLike]], NodeOutput]
-BaseEdge = Union[Tuple[str, str], Tuple[NodeLike, NodeLike]]
-StateType = Union[Dict[str, Any], BaseModel, StateSchema]
-ConfigType = Union[RunnableConfig, Dict[str, Any], BaseModel]
+NodeCallable = Callable[[StateLike, ConfigLike | None], NodeOutput]
+BaseEdge = Union[tuple[str, str], tuple[NodeLike, NodeLike]]
+StateType = Union[dict[str, Any], BaseModel, StateSchema]
+ConfigType = Union[RunnableConfig, dict[str, Any], BaseModel]

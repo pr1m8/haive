@@ -7,7 +7,7 @@
     "description": "This tool allows you to perform a search on up-to-date news and historical news. If you needs news from more than 48 hours ago, you can estimate the number of hours back to search.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.761087",
+    "timestamp": "2025-07-10T19:45:28.989286",
     "schema": {
       "description": "Input for the AskNews Search tool.",
       "properties": {
@@ -49,7 +49,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.761087",
+      "timestamp": "2025-07-10T19:45:28.989286",
       "category": "individual_tools"
     }
   },

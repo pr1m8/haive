@@ -1,9 +1,5 @@
 from typing import List
 
-from langchain_core.messages import BaseMessage
-from langgraph.graph import add_messages
-from pydantic import Field
-
 from haive.core.engine.agent.agent import Agent, register_agent
 from haive.core.engine.agent.config import AgentConfig
 from haive.core.engine.agent.persistence.postgres_config import (
@@ -11,6 +7,9 @@ from haive.core.engine.agent.persistence.postgres_config import (
 )
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.state_schema import StateSchema
+from langchain_core.messages import BaseMessage
+from langgraph.graph import add_messages
+from pydantic import Field
 
 
 # Create a proper state schema with serializable reducers

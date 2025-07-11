@@ -6,15 +6,12 @@ connection string detection and query optimization.
 """
 
 from enum import Enum
-from typing import Any, Dict, List, Optional
+from typing import Any
 from urllib.parse import urlparse
 
 from pydantic import Field, validator
 
-from .enhanced_registry import (
-    enhanced_registry,
-    register_database_source,
-)
+from .enhanced_registry import enhanced_registry, register_database_source
 from .source_types import BaseSource, LoaderCapability
 
 
@@ -84,7 +81,7 @@ class TextSplitterType(str, Enum):
 # =============================================================================
 
 
-def detect_database_type(connection_string: str) -> Optional[DatabaseType]:
+def detect_database_type(connection_string: str) -> DatabaseType | None:
     """Auto-detect database type from connection string."""
     connection_patterns = {
         # SQL databases
@@ -124,7 +121,7 @@ def detect_database_type(connection_string: str) -> Optional[DatabaseType]:
     return None
 
 
-def extract_database_metadata(connection_string: str) -> Dict[str, Any]:
+def extract_database_metadata(connection_string: str) -> dict[str, Any]:
     """Extract metadata from database connection string."""
     try:
         parsed = urlparse(connection_string)
@@ -152,16 +149,16 @@ class DatabaseSource(BaseSource):
     """Base class for database sources."""
 
     connection_string: str = Field(..., description="Database connection string")
-    query: Optional[str] = Field(None, description="SQL query to execute")
-    table_name: Optional[str] = Field(None, description="Table name to query")
+    query: str | None = Field(None, description="SQL query to execute")
+    table_name: str | None = Field(None, description="Table name to query")
 
     # Query configuration
     query_type: QueryType = QueryType.SELECT
-    limit: Optional[int] = Field(None, ge=1, description="Maximum rows to return")
+    limit: int | None = Field(None, ge=1, description="Maximum rows to return")
 
     # Processing options
-    include_columns: Optional[List[str]] = Field(None, description="Columns to include")
-    exclude_columns: Optional[List[str]] = Field(None, description="Columns to exclude")
+    include_columns: list[str] | None = Field(None, description="Columns to include")
+    exclude_columns: list[str] | None = Field(None, description="Columns to exclude")
 
     # Loading strategy
     loading_strategy: LoadingStrategy = Field(
@@ -179,13 +176,13 @@ class DatabaseSource(BaseSource):
     include_system_tables: bool = Field(
         False, description="Include system/metadata tables"
     )
-    table_pattern: Optional[str] = Field(
+    table_pattern: str | None = Field(
         None, description="Regex pattern for table names to include"
     )
-    exclude_tables: List[str] = Field(
+    exclude_tables: list[str] = Field(
         default_factory=list, description="Tables to exclude from bulk operations"
     )
-    max_tables: Optional[int] = Field(
+    max_tables: int | None = Field(
         None, ge=1, description="Maximum number of tables to process"
     )
 
@@ -197,7 +194,7 @@ class DatabaseSource(BaseSource):
     chunk_overlap: int = Field(
         200, ge=0, description="Chunk overlap for text splitting"
     )
-    separators: Optional[List[str]] = Field(
+    separators: list[str] | None = Field(
         None, description="Custom separators for splitting"
     )
 
@@ -206,7 +203,7 @@ class DatabaseSource(BaseSource):
     retry_attempts: int = Field(3, ge=1, description="Number of retry attempts")
 
     @validator("connection_string")
-    def validate_connection_string(cls, v):
+    def validate_connection_string(self, v):
         """Validate connection string format."""
         if not v or not isinstance(v, str):
             raise ValueError("Connection string must be a non-empty string")
@@ -218,16 +215,16 @@ class DatabaseSource(BaseSource):
         return v
 
     @property
-    def database_type(self) -> Optional[DatabaseType]:
+    def database_type(self) -> DatabaseType | None:
         """Auto-detect database type from connection string."""
         return detect_database_type(self.connection_string)
 
     @property
-    def database_metadata(self) -> Dict[str, Any]:
+    def database_metadata(self) -> dict[str, Any]:
         """Extract metadata from connection string."""
         return extract_database_metadata(self.connection_string)
 
-    def get_text_splitter_config(self) -> Dict[str, Any]:
+    def get_text_splitter_config(self) -> dict[str, Any]:
         """Get text splitter configuration for load_and_split."""
         config = {"chunk_size": self.chunk_size, "chunk_overlap": self.chunk_overlap}
 
@@ -249,16 +246,15 @@ class DatabaseSource(BaseSource):
         """Get the appropriate loading method based on strategy."""
         if self.loading_strategy == LoadingStrategy.LOAD_AND_SPLIT:
             return "load_and_split"
-        elif self.loading_strategy == LoadingStrategy.LAZY_LOAD:
+        if self.loading_strategy == LoadingStrategy.LAZY_LOAD:
             return "lazy_load"
-        elif self.loading_strategy == LoadingStrategy.FETCH_ALL:
+        if self.loading_strategy == LoadingStrategy.FETCH_ALL:
             return "fetch_all"
-        elif self.loading_strategy == LoadingStrategy.SCRAPE_ALL:
+        if self.loading_strategy == LoadingStrategy.SCRAPE_ALL:
             return "scrape_all"
-        else:
-            return "load"
+        return "load"
 
-    def get_fetch_all_config(self) -> Dict[str, Any]:
+    def get_fetch_all_config(self) -> dict[str, Any]:
         """Get configuration for fetch_all/scrape_all operations."""
         config = {
             "fetch_all_tables": self.fetch_all_tables,
@@ -275,7 +271,7 @@ class DatabaseSource(BaseSource):
 
         return config
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         """Get loader arguments for database sources."""
         kwargs = {"connection_string": self.connection_string, "timeout": self.timeout}
 
@@ -348,10 +344,10 @@ class PostgreSQLSource(DatabaseSource):
     """PostgreSQL database source."""
 
     # PostgreSQL-specific options
-    schema_name: Optional[str] = Field(None, description="Database schema name")
+    schema_name: str | None = Field(None, description="Database schema name")
     use_prepared_statements: bool = Field(True, description="Use prepared statements")
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_loader_kwargs()
 
         if self.schema_name:
@@ -386,7 +382,7 @@ class MySQLSource(DatabaseSource):
     charset: str = Field("utf8mb4", description="Character set")
     autocommit: bool = Field(True, description="Auto-commit transactions")
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_loader_kwargs()
         kwargs.update({"charset": self.charset, "autocommit": self.autocommit})
         return kwargs
@@ -413,9 +409,9 @@ class SQLiteSource(DatabaseSource):
 
     # SQLite-specific options
     check_same_thread: bool = Field(False, description="Check same thread")
-    isolation_level: Optional[str] = Field(None, description="Isolation level")
+    isolation_level: str | None = Field(None, description="Isolation level")
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_loader_kwargs()
         kwargs.update(
             {
@@ -461,12 +457,10 @@ class MongoDBSource(DatabaseSource):
 
     # MongoDB-specific options
     collection_name: str = Field(..., description="Collection name")
-    filter_criteria: Optional[Dict[str, Any]] = Field(
-        None, description="MongoDB filter"
-    )
-    field_names: Optional[List[str]] = Field(None, description="Fields to include")
+    filter_criteria: dict[str, Any] | None = Field(None, description="MongoDB filter")
+    field_names: list[str] | None = Field(None, description="Fields to include")
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_loader_kwargs()
 
         # Replace generic query with MongoDB-specific parameters
@@ -508,7 +502,7 @@ class CassandraSource(DatabaseSource):
     keyspace: str = Field(..., description="Keyspace name")
     consistency_level: str = Field("ONE", description="Consistency level")
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_loader_kwargs()
         kwargs.update(
             {"keyspace": self.keyspace, "consistency_level": self.consistency_level}
@@ -542,12 +536,12 @@ class ElasticsearchSource(DatabaseSource):
 
     # Elasticsearch-specific options
     index_name: str = Field(..., description="Index name")
-    query_body: Optional[Dict[str, Any]] = Field(
+    query_body: dict[str, Any] | None = Field(
         None, description="Elasticsearch query body"
     )
     scroll_size: int = Field(1000, ge=1, description="Scroll size for pagination")
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_loader_kwargs()
 
         # Replace generic query with Elasticsearch-specific parameters
@@ -591,11 +585,11 @@ class Neo4jSource(DatabaseSource):
     """Neo4j graph database source."""
 
     # Neo4j-specific options
-    cypher_query: Optional[str] = Field(None, description="Cypher query")
-    node_label: Optional[str] = Field(None, description="Node label to query")
-    relationship_type: Optional[str] = Field(None, description="Relationship type")
+    cypher_query: str | None = Field(None, description="Cypher query")
+    node_label: str | None = Field(None, description="Node label to query")
+    relationship_type: str | None = Field(None, description="Relationship type")
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_loader_kwargs()
 
         # Use Cypher query if provided, otherwise generic query
@@ -629,10 +623,10 @@ class ArangoDBSource(DatabaseSource):
 
     # ArangoDB-specific options
     database_name: str = Field(..., description="Database name")
-    collection_name: Optional[str] = Field(None, description="Collection name")
-    aql_query: Optional[str] = Field(None, description="AQL query")
+    collection_name: str | None = Field(None, description="Collection name")
+    aql_query: str | None = Field(None, description="AQL query")
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_loader_kwargs()
 
         kwargs.update(
@@ -679,10 +673,10 @@ class BigQuerySource(DatabaseSource):
 
     # BigQuery-specific options
     project_id: str = Field(..., description="Google Cloud project ID")
-    dataset_id: Optional[str] = Field(None, description="Dataset ID")
+    dataset_id: str | None = Field(None, description="Dataset ID")
     use_legacy_sql: bool = Field(False, description="Use legacy SQL")
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_loader_kwargs()
 
         kwargs.update(
@@ -718,12 +712,12 @@ class SnowflakeSource(DatabaseSource):
 
     # Snowflake-specific options
     account: str = Field(..., description="Snowflake account")
-    warehouse: Optional[str] = Field(None, description="Warehouse name")
-    database: Optional[str] = Field(None, description="Database name")
-    schema: Optional[str] = Field(None, description="Schema name")
-    role: Optional[str] = Field(None, description="Role name")
+    warehouse: str | None = Field(None, description="Warehouse name")
+    database: str | None = Field(None, description="Database name")
+    schema: str | None = Field(None, description="Schema name")
+    role: str | None = Field(None, description="Role name")
 
-    def get_loader_kwargs(self) -> Dict[str, Any]:
+    def get_loader_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_loader_kwargs()
 
         kwargs.update(
@@ -744,7 +738,7 @@ class SnowflakeSource(DatabaseSource):
 # =============================================================================
 
 
-def get_database_sources_statistics() -> Dict[str, Any]:
+def get_database_sources_statistics() -> dict[str, Any]:
     """Get statistics about database sources."""
     registry = enhanced_registry
 
@@ -812,14 +806,7 @@ def validate_database_sources() -> bool:
         if source_name not in registry._sources:
             missing.append(source_name)
 
-    if missing:
-        print(f"Missing database sources: {missing}")
-        return False
-
-    print(
-        f"✅ All {len(required_database_sources)} essential database sources registered!"
-    )
-    return True
+    return not missing
 
 
 def test_connection_string_detection():
@@ -834,11 +821,8 @@ def test_connection_string_detection():
         "snowflake://account/database": DatabaseType.SNOWFLAKE,
     }
 
-    print("🔍 Testing connection string detection:")
-    for conn_str, expected_type in test_connections.items():
-        detected = detect_database_type(conn_str)
-        status = "✅" if detected == expected_type else "❌"
-        print(f"  {status} {conn_str} → {detected}")
+    for conn_str, _expected_type in test_connections.items():
+        detect_database_type(conn_str)
 
     return all(
         detect_database_type(conn) == expected
@@ -850,5 +834,4 @@ def test_connection_string_detection():
 if __name__ == "__main__":
     validate_database_sources()
     stats = get_database_sources_statistics()
-    print(f"Database Sources Statistics: {stats}")
     test_connection_string_detection()

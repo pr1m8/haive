@@ -1,10 +1,13 @@
 # MCP Screenshot Server Setup Instructions for Agent
 
 ## Objective
+
 Set up an MCP (Model Context Protocol) screenshot server that allows Claude Desktop to take screenshots of localhost:8003 documentation pages for visual analysis.
 
 ## Prerequisites Check
+
 Before starting, verify these requirements:
+
 - [ ] Claude Desktop app is installed
 - [ ] Node.js is installed (`node --version`)
 - [ ] NPM is working (`npm --version`)
@@ -13,6 +16,7 @@ Before starting, verify these requirements:
 ## Step 1: Locate Claude Desktop Configuration
 
 ### For macOS Users:
+
 ```bash
 # Navigate to Claude Desktop config directory
 cd ~/Library/Application\ Support/Claude/
@@ -22,6 +26,7 @@ ls -la claude_desktop_config.json
 ```
 
 ### For Windows Users:
+
 ```bash
 # Navigate using Windows Run command (Windows + R)
 # Type: %APPDATA%\Claude
@@ -33,6 +38,7 @@ dir claude_desktop_config.json
 ```
 
 ### For Linux Users:
+
 ```bash
 # Navigate to Claude Desktop config directory
 cd ~/.config/Claude/
@@ -46,12 +52,14 @@ ls -la claude_desktop_config.json
 Choose one of these options:
 
 ### Option A: Basic Screenshot Server (Recommended)
+
 ```bash
 # Install the screenshot MCP server globally
 npm install -g @sethbang/mcp-screenshot-server
 ```
 
 ### Option B: Browser-based Screenshot Server (More Features)
+
 ```bash
 # Install browser automation server
 npm install -g browser-use-mcp-server
@@ -62,15 +70,13 @@ npm install -g browser-use-mcp-server
 Create or edit the `claude_desktop_config.json` file:
 
 ### For Basic Screenshot Server:
+
 ```json
 {
   "mcpServers": {
     "screenshot": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@sethbang/mcp-screenshot-server"
-      ],
+      "args": ["-y", "@sethbang/mcp-screenshot-server"],
       "env": {
         "HOST": "localhost"
       }
@@ -80,15 +86,13 @@ Create or edit the `claude_desktop_config.json` file:
 ```
 
 ### For Browser-based Server:
+
 ```json
 {
   "mcpServers": {
     "browser": {
       "command": "npx",
-      "args": [
-        "-y", 
-        "browser-use-mcp-server"
-      ],
+      "args": ["-y", "browser-use-mcp-server"],
       "env": {
         "HOST": "localhost",
         "PORT": "8000"
@@ -137,12 +141,14 @@ poetry run sphinx-autobuild source _build/html --port 8003 --host 0.0.0.0 --igno
 ### If MCP server isn't detected:
 
 1. **Check configuration file syntax**
+
    ```bash
    # Validate JSON syntax
    python -c "import json; print(json.load(open('claude_desktop_config.json')))"
    ```
 
 2. **Check MCP server installation**
+
    ```bash
    # Verify screenshot server is installed
    npx @sethbang/mcp-screenshot-server --help
@@ -161,6 +167,7 @@ poetry run sphinx-autobuild source _build/html --port 8003 --host 0.0.0.0 --igno
 ### If localhost:8003 is not accessible:
 
 1. **Verify server is running**
+
    ```bash
    curl -I http://localhost:8003/
    ```
@@ -204,11 +211,12 @@ Once set up, try these commands in Claude Desktop:
 ✅ Claude Desktop shows MCP tools available  
 ✅ Can request and receive screenshots of localhost:8003  
 ✅ Documentation pages are visually accessible through Claude  
-✅ Can analyze documentation styling and layout issues  
+✅ Can analyze documentation styling and layout issues
 
 ## Next Steps
 
 After setup, you can:
+
 1. Ask for screenshots of specific documentation pages
 2. Get visual feedback on styling changes
 3. Identify white-on-white text issues

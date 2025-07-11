@@ -9,6 +9,7 @@ Welcome to the Haive AI Agent Framework documentation. This README serves as you
 ## 🚀 Quick Start
 
 **New to Haive?** Start here:
+
 - [Getting Started](quick_start/README.md) - First-time setup and overview
 - [Development Setup](quick_start/development_setup.md) - Environment configuration
 - [Create Your First Agent](quick_start/first_agent.md) - Step-by-step tutorial
@@ -16,6 +17,7 @@ Welcome to the Haive AI Agent Framework documentation. This README serves as you
 ## 📁 Documentation Structure
 
 ### 🏗️ Active Development
+
 Current development documentation, regularly updated:
 
 - **[Architecture](active/architecture/README.md)** - System design and technical architecture
@@ -42,6 +44,7 @@ Current development documentation, regularly updated:
   - [Git](active/standards/git/) - Git workflows
 
 ### 🧠 Claude Sessions
+
 Claude Code working memory and session tracking:
 
 - **[Active Sessions](sessions/active/README.md)** - Current work sessions
@@ -52,6 +55,7 @@ Claude Code working memory and session tracking:
 - **[Session Archive](sessions/archive/README.md)** - Completed sessions
 
 ### 🤖 Generated Documentation
+
 Auto-generated documentation and discovery:
 
 - **[Discovery](generated/discovery/README.md)** - Component discovery reports
@@ -63,6 +67,7 @@ Auto-generated documentation and discovery:
 - **[Metrics](generated/metrics/README.md)** - Performance metrics
 
 ### 📚 Reference Materials
+
 Reference documentation and resources:
 
 - **[API Reference](reference/api/README.md)** - API documentation
@@ -71,6 +76,7 @@ Reference documentation and resources:
 - **[Troubleshooting](reference/troubleshooting/README.md)** - Common problems
 
 ### 🗄️ Archive
+
 Historical documentation and deprecated content:
 
 - **[Archive](archive/README.md)** - Historical content
@@ -81,17 +87,20 @@ Historical documentation and deprecated content:
 ## 🎯 Common Tasks
 
 ### For Developers
+
 - **Starting a new agent**: See [Agent Development](active/implementation/agent_development/)
 - **Adding tools**: See [Tool Integration](active/implementation/tool_integration/)
 - **Testing approaches**: See [Testing Standards](active/standards/testing/)
 - **Code style**: See [Coding Standards](active/standards/coding/)
 
 ### For Architects
+
 - **System design**: See [Architecture](active/architecture/)
 - **Performance analysis**: See [Analysis](active/analysis/performance/)
 - **Compatibility studies**: See [Analysis](active/analysis/compatibility/)
 
 ### For Claude Code
+
 - **Session management**: See [Active Sessions](sessions/active/)
 - **Progress tracking**: See [Current Sprint](sessions/active/current_sprint.md)
 - **Issue tracking**: See [Current Issues](sessions/active/current_issues.md)
@@ -99,11 +108,13 @@ Historical documentation and deprecated content:
 ## 📊 Documentation Health
 
 ### Recent Changes
+
 - **2025-01-09**: Major reorganization - improved structure and navigation
 - **2025-01-09**: Removed 6.7MB of duplicate files
 - **2025-01-09**: Created modular memory system
 
 ### Statistics
+
 - **File Count**: ~261 files (reduced from 348)
 - **Storage**: ~9.2MB (reduced from 15.9MB)
 - **Organization**: Hierarchical structure with clear navigation
@@ -111,11 +122,13 @@ Historical documentation and deprecated content:
 ## 🔧 Maintenance
 
 ### For Contributors
+
 - **Add new documentation**: Follow [Documentation Standards](active/standards/documentation/)
 - **Update existing docs**: Maintain cross-references and navigation
 - **File organization**: Keep files in appropriate categories
 
 ### For Maintainers
+
 - **Regular cleanup**: Monthly review of generated content
 - **Link validation**: Quarterly check of all cross-references
 - **Structure evolution**: Adapt organization as project grows

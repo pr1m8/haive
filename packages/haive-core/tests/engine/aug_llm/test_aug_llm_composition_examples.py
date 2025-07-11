@@ -3,20 +3,19 @@
 import logging
 import os
 import pprint
-from typing import (
-    Any,
-)
+from typing import Any
 
-import pytest
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
+import pytest
 
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from haive.core.schema.schema_composer import SchemaComposer
 from haive.core.schema.state_schema import StateSchema
+
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -181,44 +180,28 @@ def auto_detect_state_schema(aug_llm_configs, name="AutoDetectedStateSchema"):
 # Pretty print schema information
 def print_schema_info(schema_cls):
     """Print detailed information about a schema class."""
-    print(f"\n{'-'*10} Schema: {schema_cls.__name__} {'-'*10}")
-    print(f"Base class: {schema_cls.__base__.__name__}")
-
     # Print fields with annotations and defaults
-    print("\nFields:")
-    for name, field_info in schema_cls.model_fields.items():
-        field_type = field_info.annotation
+    for _name, field_info in schema_cls.model_fields.items():
         default = field_info.default
         if default is ...:
             default = "Required (no default)"
-        print(f"  - {name}: {field_type}")
-        print(f"      Default: {default}")
         if field_info.description:
-            print(f"      Description: {field_info.description}")
+            pass
 
     # Print StateSchema specific attributes
     if issubclass(schema_cls, StateSchema):
-        print("\nStateSchema attributes:")
-        print(f"  Shared fields: {schema_cls.__shared_fields__}")
-        print(f"  Reducer fields: {list(schema_cls.__reducer_fields__.keys())}")
 
         # Show reducer implementations
         if schema_cls.__reducer_fields__:
-            print("\nReducer implementations:")
-            for field, reducer in schema_cls.__reducer_fields__.items():
-                reducer_name = (
-                    reducer.__name__ if hasattr(reducer, "__name__") else str(reducer)
-                )
-                print(f"  {field}: {reducer_name}")
+            for _field, reducer in schema_cls.__reducer_fields__.items():
+                (reducer.__name__ if hasattr(reducer, "__name__") else str(reducer))
 
     # Create an example instance
     try:
         instance = schema_cls()
-        print("\nExample instance (defaults):")
-        instance_dict = instance.model_dump()
-        pprint.pprint(instance_dict, indent=2, width=80)
-    except Exception as e:
-        print(f"Couldn't create instance: {e}")
+        instance.model_dump()
+    except Exception:
+        pass
 
 
 # Skip tests if API keys aren't available
@@ -297,11 +280,11 @@ def complex_chat_prompt():
             SystemMessage(
                 content="""
         You are a specialized assistant with varied capabilities.
-        
+
         When analyzing content, provide detailed breakdowns.
         When summarizing, be concise and focus on key points.
         When explaining, use simple language and examples.
-        
+
         Always format your responses clearly using markdown when appropriate.
         """
             ),
@@ -335,10 +318,10 @@ def qa_prompt():
         [
             SystemMessage(
                 content="""
-        You are a question answering assistant. Answer the question based only on the 
-        provided content. If the content doesn't contain the answer, say 'I don't have 
+        You are a question answering assistant. Answer the question based only on the
+        provided content. If the content doesn't contain the answer, say 'I don't have
         enough information to answer this question.'
-        
+
         Keep your answers concise and to the point.
         """
             ),
@@ -346,7 +329,7 @@ def qa_prompt():
                 content="""
         Content:
         {content}
-        
+
         Question: {question}
         """
             ),
@@ -404,10 +387,6 @@ def test_auto_detect_schema_from_configs(
     sample_article,
 ):
     """Test automatic schema detection from AugLLMConfig objects."""
-    print("\n" + "=" * 50)
-    print("Testing Automatic Schema Detection from AugLLMConfig Objects")
-    print("=" * 50)
-
     # First, let's create a variety of AugLLMConfig objects with different capabilities
 
     # 1. Simple chat assistant
@@ -447,7 +426,6 @@ def test_auto_detect_schema_from_configs(
     )
 
     # Step 1: Analyze individual prompt templates
-    print("\n" + "=" * 20 + " Prompt Template Analysis " + "=" * 20)
 
     all_configs = [
         chat_assistant,
@@ -458,13 +436,10 @@ def test_auto_detect_schema_from_configs(
     ]
 
     for config in all_configs:
-        name = config.name
         prompt = config.prompt_template
 
-        print(f"\nAnalyzing template for: {name}")
         if prompt:
             variables = analyze_prompt_template(prompt)
-            print(f"  Required variables: {variables}")
 
             # Test creating input with these variables
             input_data = {}
@@ -480,19 +455,14 @@ def test_auto_detect_schema_from_configs(
                 else:
                     input_data[var] = f"Test value for {var}"
 
-            print(f"  Sample input data: {list(input_data.keys())}")
-
         # Show structured output model if available
         if (
             hasattr(config, "structured_output_model")
             and config.structured_output_model
         ):
-            model = config.structured_output_model
-            print(f"  Structured output model: {model.__name__}")
-            print(f"  Model fields: {list(model.model_fields.keys())}")
+            pass
 
     # Step 2: Auto-detect a state schema from all configs
-    print("\n" + "=" * 20 + " Auto-detected State Schema " + "=" * 20)
 
     # Use our utility to auto-detect schema
     detected_schema = auto_detect_state_schema(all_configs, name="DetectedStateSchema")
@@ -501,7 +471,6 @@ def test_auto_detect_schema_from_configs(
     print_schema_info(detected_schema)
 
     # Step 3: Test the detected schema with data
-    print("\n" + "=" * 20 + " Testing Detected Schema " + "=" * 20)
 
     # Create an instance
     state = detected_schema(
@@ -517,11 +486,8 @@ def test_auto_detect_schema_from_configs(
     )
 
     # Print the state
-    print("\nState instance:")
-    pprint.pprint(state.model_dump(), indent=2, width=80)
 
     # Verify schema supports reducer operations
-    print("\nTesting reducer functionality:")
 
     # Update with new messages
     state.update(
@@ -534,26 +500,20 @@ def test_auto_detect_schema_from_configs(
     )
 
     # Print updated messages
-    print("\nAfter adding messages:")
-    for i, msg in enumerate(state.messages):
-        role = msg.__class__.__name__.replace("Message", "")
-        print(f"  {i+1}. {role}: {msg.content[:50]}...")
+    for _i, msg in enumerate(state.messages):
+        msg.__class__.__name__.replace("Message", "")
 
     # Step 4: Compare with schema from SchemaComposer
-    print("\n" + "=" * 20 + " Comparison with SchemaComposer " + "=" * 20)
 
     composer_schema = SchemaComposer.from_components(
         all_configs,
         name="ComposerStateSchema",
-        # include_messages=True,
-        # include_runnable_config=True
     )
 
     # Print details about this schema
     print_schema_info(composer_schema)
 
     # Step 5: Test with different combinations
-    print("\n" + "=" * 20 + " Testing Different AugLLMConfig Combinations " + "=" * 20)
 
     # Test with just the first three configs
     subset_schema = auto_detect_state_schema(
@@ -561,20 +521,16 @@ def test_auto_detect_schema_from_configs(
     )
 
     # Print fields in this schema
-    print("\nFields in subset schema:")
-    for name, field_info in subset_schema.model_fields.items():
-        print(f"  - {name}: {field_info.annotation}")
+    for _name, _field_info in subset_schema.model_fields.items():
+        pass
 
     # Create an instance of this schema too
-    subset_instance = subset_schema(
+    subset_schema(
         messages=[HumanMessage(content="Testing the subset schema")],
         name="Jane Smith",
         age=30,
         context=[SystemMessage(content="Context for subset")],
     )
-
-    print("\nSubset schema instance:")
-    pprint.pprint(subset_instance.model_dump(), indent=2, width=80)
 
     # Schema auto-detection works correctly if these assertions pass
     assert "messages" in detected_schema.model_fields
@@ -584,4 +540,3 @@ def test_auto_detect_schema_from_configs(
     assert "messages" in detected_schema.__reducer_fields__
 
     # No error means test passed
-    print("\nTest completed successfully!")

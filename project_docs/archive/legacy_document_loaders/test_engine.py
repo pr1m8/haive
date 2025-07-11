@@ -4,27 +4,20 @@ This module provides integration tests for the document loader engine.
 It tests the functionality of the engine with various source types.
 """
 
-from pathlib import Path
 import tempfile
 import unittest
+from pathlib import Path
 from unittest import mock
 
 # Import engine and factory
-from engine import (
-    DocumentLoaderEngine,
-    create_directory_loader_engine,
-    create_document_loader_engine,
-    create_file_loader_engine,
-    create_web_loader_engine,
-)
-
+from engine import (DocumentLoaderEngine, create_directory_loader_engine,
+                    create_document_loader_engine, create_file_loader_engine,
+                    create_web_loader_engine)
 # Import configuration
 from engine_config import DocumentLoaderConfig, DocumentLoaderOutput
-
 # Import path analyzer
 # Import from source to loader mapping
 from source_loader_mapping import initialize_registries
-
 
 # Import source and loader registry
 
@@ -85,18 +78,18 @@ class DocumentLoaderEngineTest(unittest.TestCase):
         """Test engine creation with various configurations."""
         # Create engine with default config
         engine = create_document_loader_engine()
-        self.assertIsInstance(engine, DocumentLoaderEngine)
+        assert isinstance(engine, DocumentLoaderEngine)
 
         # Create engine with custom config dict
         engine = create_document_loader_engine({"max_documents": 10})
-        self.assertIsInstance(engine, DocumentLoaderEngine)
-        self.assertEqual(engine.config.max_documents, 10)
+        assert isinstance(engine, DocumentLoaderEngine)
+        assert engine.config.max_documents == 10
 
         # Create engine with custom config object
         config = DocumentLoaderConfig(max_documents=20)
         engine = create_document_loader_engine(config)
-        self.assertIsInstance(engine, DocumentLoaderEngine)
-        self.assertEqual(engine.config.max_documents, 20)
+        assert isinstance(engine, DocumentLoaderEngine)
+        assert engine.config.max_documents == 20
 
     def test_input_output_schema(self):
         """Test that input and output schemas are properly defined."""
@@ -104,101 +97,99 @@ class DocumentLoaderEngineTest(unittest.TestCase):
 
         # Check input fields
         input_fields = engine.get_input_fields()
-        self.assertIn("source", input_fields)
-        self.assertIn("loader_name", input_fields)
-        self.assertIn("loader_options", input_fields)
-        self.assertIn("include_metadata", input_fields)
-        self.assertIn("include_patterns", input_fields)
-        self.assertIn("exclude_patterns", input_fields)
+        assert "source" in input_fields
+        assert "loader_name" in input_fields
+        assert "loader_options" in input_fields
+        assert "include_metadata" in input_fields
+        assert "include_patterns" in input_fields
+        assert "exclude_patterns" in input_fields
 
         # Check output fields
         output_fields = engine.get_output_fields()
-        self.assertIn("documents", output_fields)
-        self.assertIn("total_documents", output_fields)
-        self.assertIn("operation_time", output_fields)
-        self.assertIn("source_type", output_fields)
-        self.assertIn("loader_name", output_fields)
-        self.assertIn("original_source", output_fields)
-        self.assertIn("errors", output_fields)
-        self.assertIn("has_errors", output_fields)
+        assert "documents" in output_fields
+        assert "total_documents" in output_fields
+        assert "operation_time" in output_fields
+        assert "source_type" in output_fields
+        assert "loader_name" in output_fields
+        assert "original_source" in output_fields
+        assert "errors" in output_fields
+        assert "has_errors" in output_fields
 
         # Check derived schemas
         input_schema = engine.derive_input_schema()
         output_schema = engine.derive_output_schema()
 
-        self.assertTrue(hasattr(input_schema, "model_validate"))
-        self.assertTrue(hasattr(output_schema, "model_validate"))
+        assert hasattr(input_schema, "model_validate")
+        assert hasattr(output_schema, "model_validate")
 
         # Test schema validation
         valid_input = {"source": "/path/to/file.txt", "loader_name": "text_loader"}
         input_instance = input_schema.model_validate(valid_input)
-        self.assertEqual(input_instance.source, "/path/to/file.txt")
-        self.assertEqual(input_instance.loader_name, "text_loader")
+        assert input_instance.source == "/path/to/file.txt"
+        assert input_instance.loader_name == "text_loader"
 
     def test_file_loader_engine_creation(self):
         """Test file loader engine creation with various options."""
         # Create engine for a specific file
         engine = create_file_loader_engine(file_path=self.text_file)
-        self.assertIsInstance(engine, DocumentLoaderEngine)
+        assert isinstance(engine, DocumentLoaderEngine)
 
         # Create engine with explicit loader
         engine = create_file_loader_engine(
             file_path=self.text_file, loader_name="text_loader"
         )
-        self.assertIsInstance(engine, DocumentLoaderEngine)
-        self.assertEqual(engine.config.loader_name, "text_loader")
+        assert isinstance(engine, DocumentLoaderEngine)
+        assert engine.config.loader_name == "text_loader"
 
         # Create engine with file extension only
         engine = create_file_loader_engine(file_extension=".txt")
-        self.assertIsInstance(engine, DocumentLoaderEngine)
-        self.assertEqual(engine.config.loader_options["file_extension"], ".txt")
+        assert isinstance(engine, DocumentLoaderEngine)
+        assert engine.config.loader_options["file_extension"] == ".txt"
 
         # Create engine with custom options
         engine = create_file_loader_engine(
             file_path=self.text_file, encoding="utf-8", autodetect_encoding=True
         )
-        self.assertIsInstance(engine, DocumentLoaderEngine)
-        self.assertEqual(engine.config.loader_options["encoding"], "utf-8")
-        self.assertEqual(engine.config.loader_options["autodetect_encoding"], True)
+        assert isinstance(engine, DocumentLoaderEngine)
+        assert engine.config.loader_options["encoding"] == "utf-8"
+        assert engine.config.loader_options["autodetect_encoding"] == True
 
     def test_web_loader_engine_creation(self):
         """Test web loader engine creation with various options."""
         # Create engine for a URL
         engine = create_web_loader_engine(url="https://example.com")
-        self.assertIsInstance(engine, DocumentLoaderEngine)
+        assert isinstance(engine, DocumentLoaderEngine)
 
         # Create engine with dynamic loading
         engine = create_web_loader_engine(dynamic_loading=True)
-        self.assertIsInstance(engine, DocumentLoaderEngine)
-        self.assertEqual(engine.config.loader_name, "playwright_loader")
+        assert isinstance(engine, DocumentLoaderEngine)
+        assert engine.config.loader_name == "playwright_loader"
 
         # Create engine with recursive loading
         engine = create_web_loader_engine(recursive=True, max_depth=2)
-        self.assertIsInstance(engine, DocumentLoaderEngine)
-        self.assertEqual(engine.config.loader_name, "recursive_url_loader")
-        self.assertEqual(engine.config.loader_options["max_depth"], 2)
+        assert isinstance(engine, DocumentLoaderEngine)
+        assert engine.config.loader_name == "recursive_url_loader"
+        assert engine.config.loader_options["max_depth"] == 2
 
         # Create engine with custom headers
         engine = create_web_loader_engine(
             url="https://example.com", headers={"User-Agent": "Test Agent"}
         )
-        self.assertIsInstance(engine, DocumentLoaderEngine)
-        self.assertEqual(
-            engine.config.loader_options["headers"]["User-Agent"], "Test Agent"
-        )
+        assert isinstance(engine, DocumentLoaderEngine)
+        assert engine.config.loader_options["headers"]["User-Agent"] == "Test Agent"
 
     def test_directory_loader_engine_creation(self):
         """Test directory loader engine creation with various options."""
         # Create engine for a directory
         engine = create_directory_loader_engine(directory_path=self.test_dir)
-        self.assertIsInstance(engine, DocumentLoaderEngine)
+        assert isinstance(engine, DocumentLoaderEngine)
 
         # Create engine with glob pattern
         engine = create_directory_loader_engine(
             directory_path=self.test_dir, glob_pattern="*.txt"
         )
-        self.assertIsInstance(engine, DocumentLoaderEngine)
-        self.assertEqual(engine.config.loader_options["glob"], "*.txt")
+        assert isinstance(engine, DocumentLoaderEngine)
+        assert engine.config.loader_options["glob"] == "*.txt"
 
         # Create engine with include/exclude extensions
         engine = create_directory_loader_engine(
@@ -206,11 +197,9 @@ class DocumentLoaderEngineTest(unittest.TestCase):
             include_extensions=[".txt", ".md"],
             exclude_extensions=[".html"],
         )
-        self.assertIsInstance(engine, DocumentLoaderEngine)
-        self.assertEqual(
-            engine.config.loader_options["include_extensions"], [".txt", ".md"]
-        )
-        self.assertEqual(engine.config.loader_options["exclude_extensions"], [".html"])
+        assert isinstance(engine, DocumentLoaderEngine)
+        assert engine.config.loader_options["include_extensions"] == [".txt", ".md"]
+        assert engine.config.loader_options["exclude_extensions"] == [".html"]
 
     def test_create_runnable(self):
         """Test the create_runnable method."""
@@ -218,15 +207,15 @@ class DocumentLoaderEngineTest(unittest.TestCase):
 
         # Create runnable with no config
         runnable = engine.create_runnable()
-        self.assertIs(runnable, engine)
+        assert runnable is engine
 
         # Create runnable with config
         runnable_config = {"max_documents": 50}
 
         # No need to mock since we're providing a direct config
         runnable = engine.create_runnable(runnable_config)
-        self.assertIs(runnable, engine)
-        self.assertEqual(engine.config.max_documents, 50)
+        assert runnable is engine
+        assert engine.config.max_documents == 50
 
     def test_text_file_loading(self):
         """Test loading a text file."""
@@ -271,14 +260,14 @@ class DocumentLoaderEngineTest(unittest.TestCase):
             result = engine.invoke(self.text_file)
 
             # Check the result
-            self.assertIsInstance(result, DocumentLoaderOutput)
-            self.assertEqual(len(result.documents), 1)
-            self.assertEqual(
-                result.documents[0]["page_content"],
-                "This is a test document.\nIt has multiple lines.\nThis is line 3.",
+            assert isinstance(result, DocumentLoaderOutput)
+            assert len(result.documents) == 1
+            assert (
+                result.documents[0]["page_content"]
+                == "This is a test document.\nIt has multiple lines.\nThis is line 3."
             )
-            self.assertEqual(result.total_documents, 1)
-            self.assertFalse(result.has_errors)
+            assert result.total_documents == 1
+            assert not result.has_errors
 
             # Verify mocks were called
             mock_prepare.assert_called_once()
@@ -300,13 +289,13 @@ class DocumentLoaderEngineTest(unittest.TestCase):
             result = engine.invoke("nonexistent_file.txt")
 
             # Check the result
-            self.assertIsInstance(result, DocumentLoaderOutput)
-            self.assertEqual(len(result.documents), 0)
-            self.assertEqual(result.total_documents, 0)
-            self.assertTrue(result.has_errors)
-            self.assertEqual(len(result.errors), 1)
-            self.assertEqual(result.errors[0]["type"], "ValueError")
-            self.assertEqual(result.errors[0]["message"], "Test error")
+            assert isinstance(result, DocumentLoaderOutput)
+            assert len(result.documents) == 0
+            assert result.total_documents == 0
+            assert result.has_errors
+            assert len(result.errors) == 1
+            assert result.errors[0]["type"] == "ValueError"
+            assert result.errors[0]["message"] == "Test error"
 
         # Create engine with raise_on_error=True
         engine = create_document_loader_engine({"raise_on_error": True})
@@ -329,15 +318,15 @@ class DocumentLoaderEngineTest(unittest.TestCase):
         engine = create_document_loader_engine({"use_async": True})
 
         # Verify that the engine is configured for async
-        self.assertTrue(engine.config.use_async)
+        assert engine.config.use_async
 
         # Check that the ainvoke method exists and is callable
-        self.assertTrue(hasattr(engine, "ainvoke"))
-        self.assertTrue(callable(engine.ainvoke))
+        assert hasattr(engine, "ainvoke")
+        assert callable(engine.ainvoke)
 
         # Test that create_runnable properly preserves the async setting
         runnable = engine.create_runnable()
-        self.assertTrue(runnable.config.use_async)
+        assert runnable.config.use_async
 
     def test_document_conversion(self):
         """Test document conversion functionality."""
@@ -351,19 +340,19 @@ class DocumentLoaderEngineTest(unittest.TestCase):
 
         doc = MockDocument()
         result = engine._convert_document(doc)
-        self.assertEqual(result["page_content"], "Test content")
-        self.assertEqual(result["metadata"]["source"], "test")
+        assert result["page_content"] == "Test content"
+        assert result["metadata"]["source"] == "test"
 
         # Test converting dictionary
         doc_dict = {"page_content": "Dict content", "metadata": {"type": "dict"}}
         result = engine._convert_document(doc_dict)
-        self.assertEqual(result["page_content"], "Dict content")
-        self.assertEqual(result["metadata"]["type"], "dict")
+        assert result["page_content"] == "Dict content"
+        assert result["metadata"]["type"] == "dict"
 
         # Test converting string
         result = engine._convert_document("Plain string")
-        self.assertEqual(result["page_content"], "Plain string")
-        self.assertEqual(result["metadata"], {})
+        assert result["page_content"] == "Plain string"
+        assert result["metadata"] == {}
 
         # Test converting object with __dict__ method
         class DictLikeObject:
@@ -376,7 +365,7 @@ class DocumentLoaderEngineTest(unittest.TestCase):
 
         try:
             result = engine._convert_document(DictLikeObject())
-            self.assertTrue("page_content" in result)
+            assert "page_content" in result
         except Exception:
             # This might fail depending on implementation, which is fine
             pass
@@ -390,12 +379,12 @@ class DocumentLoaderEngineTest(unittest.TestCase):
                 return self.data
 
         result = engine._convert_document(CustomObject())
-        self.assertEqual(result["page_content"], "Custom data")
+        assert result["page_content"] == "Custom data"
 
         # Test with None
         result = engine._convert_document(None)
-        self.assertEqual(result["page_content"], "None")
-        self.assertEqual(result["metadata"], {})
+        assert result["page_content"] == "None"
+        assert result["metadata"] == {}
 
     def test_engine_framework_integration(self):
         """Test integration with the Haive engine framework."""
@@ -405,30 +394,30 @@ class DocumentLoaderEngineTest(unittest.TestCase):
         # Test that it properly inherits from InvokableEngine
         from haive.core.engine.base import InvokableEngine
 
-        self.assertIsInstance(engine, InvokableEngine)
+        assert isinstance(engine, InvokableEngine)
 
         # Test engine type
-        self.assertEqual(engine.engine_type.value, "document_loader")
+        assert engine.engine_type.value == "document_loader"
 
         # Test that required methods are implemented
-        self.assertTrue(callable(engine.get_input_fields))
-        self.assertTrue(callable(engine.get_output_fields))
-        self.assertTrue(callable(engine.create_runnable))
-        self.assertTrue(callable(engine.invoke))
-        self.assertTrue(callable(engine.ainvoke))
+        assert callable(engine.get_input_fields)
+        assert callable(engine.get_output_fields)
+        assert callable(engine.create_runnable)
+        assert callable(engine.invoke)
+        assert callable(engine.ainvoke)
 
         # Test creating a runnable
         config = DocumentLoaderConfig(max_documents=50)
         engine_with_config = create_document_loader_engine(config)
         runnable = engine_with_config.create_runnable()
-        self.assertEqual(runnable.config.max_documents, 50)
+        assert runnable.config.max_documents == 50
 
         # Test derive_input_schema and derive_output_schema
         input_schema = engine.derive_input_schema()
         output_schema = engine.derive_output_schema()
 
-        self.assertEqual(input_schema.__name__, "DocumentLoaderEngineInput")
-        self.assertEqual(output_schema.__name__, "DocumentLoaderEngineOutput")
+        assert input_schema.__name__ == "DocumentLoaderEngineInput"
+        assert output_schema.__name__ == "DocumentLoaderEngineOutput"
 
 
 if __name__ == "__main__":

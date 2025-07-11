@@ -7,7 +7,7 @@
     "description": "Search for registered domain names using a keyword",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.760663",
+    "timestamp": "2025-07-10T19:45:28.988858",
     "schema": {
       "description": "Input model for the domain search tool.\n\nAttributes:\n    domain: A domain keyword to search for. This can be any term that might appear\n           in registered domain names, such as a brand name, generic term, or\n           specific word of interest.",
       "properties": {
@@ -38,7 +38,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.760663",
+      "timestamp": "2025-07-10T19:45:28.988858",
       "category": "individual_tools"
     }
   },

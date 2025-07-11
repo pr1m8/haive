@@ -1,5 +1,4 @@
-"""
-Quick setup utilities for haive logging with source tracking.
+"""Quick setup utilities for haive logging with source tracking.
 
 This module provides easy functions to configure logging so you always
 know where messages are coming from.
@@ -13,8 +12,7 @@ from haive.core.logging.control import logging_control
 
 
 def show_all_sources():
-    """
-    Enable logging that shows the source of EVERY log message.
+    """Enable logging that shows the source of EVERY log message.
 
     This is the easiest way to see where everything is coming from!
     """
@@ -27,16 +25,10 @@ def show_all_sources():
     # Show all modules (remove any filters)
     logging_control.show_all()
 
-    print("📍 Source tracking enabled for ALL modules!")
-    print("   You'll now see: [TIME] LEVEL module.name | function() in file:line")
-    print(
-        "   Example: [14:32:15] INFO haive.core.engine | execute() in executor.py:123\n"
-    )
 
 
 def show_haive_sources():
-    """
-    Show source information only for haive modules.
+    """Show source information only for haive modules.
 
     This filters out third-party noise but shows where haive logs come from.
     """
@@ -46,13 +38,10 @@ def show_haive_sources():
     # Only show haive modules
     logging_control.haive_only()
 
-    print("📍 Source tracking enabled for haive modules only!")
-    print("   Third-party libraries are hidden.\n")
 
 
-def track_specific_modules(modules: List[str]):
-    """
-    Track specific modules with source information.
+def track_specific_modules(modules: list[str]):
+    """Track specific modules with source information.
 
     Args:
         modules: List of module names to track (e.g., ["haive.core.engine", "myapp"])
@@ -67,13 +56,10 @@ def track_specific_modules(modules: List[str]):
     for module in modules:
         logging_control.set_module_level(module, "DEBUG")
 
-    print(f"📍 Source tracking enabled for: {', '.join(modules)}")
-    print("   All other modules are hidden.\n")
 
 
-def debug_with_source(module: Optional[str] = None):
-    """
-    Enable debug mode with source tracking.
+def debug_with_source(module: str | None = None):
+    """Enable debug mode with source tracking.
 
     Args:
         module: Specific module to debug, or None for all haive modules
@@ -84,16 +70,13 @@ def debug_with_source(module: Optional[str] = None):
     if module:
         # Debug specific module
         logging_control.set_module_level(module, "DEBUG")
-        print(f"🐛 Debug mode with source tracking enabled for: {module}\n")
     else:
         # Debug all haive modules
         logging_control.debug_mode()
-        print("🐛 Debug mode with source tracking enabled for all haive modules!\n")
 
 
 def intercept_prints():
-    """
-    Intercept print() statements to show where they come from.
+    """Intercept print() statements to show where they come from.
 
     This replaces the built-in print() with a version that shows source info.
     """
@@ -154,8 +137,7 @@ def intercept_prints():
 
 
 def intercept_prints_silent():
-    """
-    Silently intercept print() statements to show where they come from.
+    """Silently intercept print() statements to show where they come from.
 
     This is the same as intercept_prints() but without any announcement.
     """
@@ -210,8 +192,7 @@ def intercept_prints_silent():
 
 
 def setup_development_logging():
-    """
-    Set up ideal logging configuration for development.
+    """Set up ideal logging configuration for development.
 
     This gives you:
     - Source tracking for all logs
@@ -236,8 +217,6 @@ def i_want_to_see_everything():
     """Use this when you're really confused and need to see EVERYTHING."""
     show_all_sources()
     intercept_prints()
-    print("🔍 MAXIMUM VISIBILITY MODE ACTIVATED!")
-    print("   You'll see EVERY log and print with full source info.\n")
 
 
 def just_show_my_code():
@@ -250,18 +229,14 @@ def just_show_my_code():
     for module in NOISY_MODULES:
         logging_control.suppress(module)
 
-    print("👁️  Showing only your code (third-party libraries hidden)\n")
 
 
 def where_is_this_coming_from(search_text: str):
-    """
-    Helper to find where specific log messages are coming from.
+    """Helper to find where specific log messages are coming from.
 
     Args:
         search_text: Text to search for in log messages
     """
-    print(f"🔎 Setting up tracking for messages containing: '{search_text}'")
-    print("   Run your code and look for messages with this text.\n")
 
     # Enable source tracking
     enable_source_tracking()
@@ -293,7 +268,6 @@ def debug_on():
 def debug_off():
     """Quick command to disable debug mode."""
     logging_control.set_level("INFO")
-    print("🔕 Debug mode disabled\n")
 
 
 def check_status():
@@ -339,8 +313,7 @@ def check_status():
 
 
 def redirect_rich_print_to_logging():
-    """
-    Redirect rich print statements to logging.
+    """Redirect rich print statements to logging.
 
     This converts rprint() calls to logger.debug() calls.
     """
@@ -371,25 +344,9 @@ def redirect_rich_print_to_logging():
 
 if __name__ == "__main__":
     # Demo the functionality
-    print("Haive Logging Quick Setup Demo\n")
 
     # Show different options
-    print("1. See everything with sources:")
-    print("   from haive.core.logging.quick_setup import i_want_to_see_everything")
-    print("   i_want_to_see_everything()\n")
 
-    print("2. Just your code:")
-    print("   from haive.core.logging.quick_setup import just_show_my_code")
-    print("   just_show_my_code()\n")
 
-    print("3. Track specific modules:")
-    print("   from haive.core.logging.quick_setup import track_specific_modules")
-    print("   track_specific_modules(['haive.core.engine', 'myapp'])\n")
 
-    print("4. Find where something is coming from:")
-    print("   from haive.core.logging.quick_setup import where_is_this_coming_from")
-    print("   where_is_this_coming_from('error message text')\n")
 
-    print("5. Development setup (recommended):")
-    print("   from haive.core.logging.quick_setup import setup_development_logging")
-    print("   setup_development_logging()\n")

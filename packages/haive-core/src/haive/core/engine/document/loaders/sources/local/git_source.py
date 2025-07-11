@@ -4,9 +4,7 @@ from haive.core.engine.loaders.sources.types import SourceType
 
 
 class GitSource(BaseSource):
-    """
-    A source that is a Git source.
-    """
+    """A source that is a Git source."""
 
     source_type: SourceType = Field(default=SourceType.GIT)
     url_prefix: str = Field(default="https://www.git.com/")

@@ -1,54 +1,51 @@
-"""
-Specialized RAG Workflows - FLARE, Dynamic RAG, and Debate RAG
+"""Specialized RAG Workflows - FLARE, Dynamic RAG, and Debate RAG.
 
 This module implements advanced RAG architectures including Forward-Looking Active REtrieval (FLARE),
 Dynamic RAG with add/remove retrievers, and Debate-based RAG for multi-perspective reasoning.
 """
 
-from typing import Any, Dict, List, Optional
-
-from haive.core.schema.prebuilt.rag_state import RAGState
+from typing import Any
 
 from haive.agents.multi.base import ExecutionMode, MultiAgent
 from haive.agents.simple import SimpleAgent
+from haive.core.schema.prebuilt.rag_state import RAGState
 
 
 class FLAREState(RAGState):
-    """RAG state for Forward-Looking Active REtrieval"""
+    """RAG state for Forward-Looking Active REtrieval."""
 
     current_generation: str = ""
-    uncertainty_tokens: List[str] = []
-    active_retrieval_points: List[int] = []
-    generation_segments: List[str] = []
-    confidence_scores: List[float] = []
-    retrieval_triggers: List[str] = []
+    uncertainty_tokens: list[str] = []
+    active_retrieval_points: list[int] = []
+    generation_segments: list[str] = []
+    confidence_scores: list[float] = []
+    retrieval_triggers: list[str] = []
 
 
 class DynamicRAGState(RAGState):
-    """RAG state for Dynamic RAG with configurable retrievers"""
+    """RAG state for Dynamic RAG with configurable retrievers."""
 
-    active_retrievers: Dict[str, Dict[str, Any]] = {}
-    retriever_performance: Dict[str, float] = {}
-    document_sources: Dict[str, List[str]] = {}
-    retriever_configurations: Dict[str, Any] = {}
+    active_retrievers: dict[str, dict[str, Any]] = {}
+    retriever_performance: dict[str, float] = {}
+    document_sources: dict[str, list[str]] = {}
+    retriever_configurations: dict[str, Any] = {}
     adaptive_threshold: float = 0.7
 
 
 class DebateRAGState(RAGState):
-    """RAG state for Debate-based RAG"""
+    """RAG state for Debate-based RAG."""
 
-    debate_positions: Dict[str, str] = {}
-    arguments_by_position: Dict[str, List[str]] = {}
-    evidence_by_position: Dict[str, List[str]] = {}
+    debate_positions: dict[str, str] = {}
+    arguments_by_position: dict[str, list[str]] = {}
+    evidence_by_position: dict[str, list[str]] = {}
     debate_rounds: int = 0
-    synthesis_attempts: List[str] = []
+    synthesis_attempts: list[str] = []
     consensus_reached: bool = False
     final_answer: str = ""
 
 
 class FLAREAgent(MultiAgent):
-    """
-    Forward-Looking Active REtrieval (FLARE) - generates text while actively
+    """Forward-Looking Active REtrieval (FLARE) - generates text while actively
     predicting when retrieval would be beneficial.
     """
 
@@ -63,7 +60,7 @@ class FLAREAgent(MultiAgent):
             - Requests for specific information
             - Uncertainty markers (e.g., "possibly", "might be", "I think")
             - Points where factual information would strengthen the response
-            
+
             Mark these points as active retrieval triggers.
             """,
             output_schema={
@@ -85,7 +82,7 @@ class FLAREAgent(MultiAgent):
             - The specific uncertain claim or question
             - Context from the generation so far
             - Predictive queries for upcoming content
-            
+
             Retrieve documents that can resolve uncertainty or provide needed facts.
             """,
             output_schema={
@@ -148,14 +145,13 @@ class FLAREAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for FLARE workflow"""
+        """Build the custom graph for FLARE workflow."""
         # FLARE uses conditional execution based on uncertainty detection
-        return None  # Use default graph structure
+        return  # Use default graph structure
 
 
 class DynamicRAGAgent(MultiAgent):
-    """
-    Dynamic RAG with add/remove retrievers - adapts retrieval strategy
+    """Dynamic RAG with add/remove retrievers - adapts retrieval strategy
     based on query characteristics and retriever performance.
     """
 
@@ -169,7 +165,7 @@ class DynamicRAGAgent(MultiAgent):
             - Past retriever performance
             - Document source requirements
             - Computational resources
-            
+
             Decide which retrievers to activate, deactivate, or reconfigure.
             """,
             output_schema={
@@ -250,17 +246,16 @@ class DynamicRAGAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for Dynamic RAG workflow"""
-        return None  # Use default graph structure
+        """Build the custom graph for Dynamic RAG workflow."""
+        return  # Use default graph structure
 
 
 class DebateRAGAgent(MultiAgent):
-    """
-    Debate RAG - multiple agents with different perspectives debate
+    """Debate RAG - multiple agents with different perspectives debate
     to reach a comprehensive answer through dialectical reasoning.
     """
 
-    def __init__(self, debate_positions: Optional[List[str]] = None, **kwargs):
+    def __init__(self, debate_positions: list[str] | None = None, **kwargs):
         # Default positions if not provided
         if debate_positions is None:
             debate_positions = ["Affirmative", "Negative", "Neutral"]
@@ -276,7 +271,7 @@ class DebateRAGAgent(MultiAgent):
                 - Construct logical arguments based on retrieved documents
                 - Acknowledge but counter opposing viewpoints
                 - Maintain intellectual honesty while advocating your position
-                
+
                 Your goal is to contribute to finding the truth through debate.
                 """,
                 output_schema={
@@ -349,7 +344,7 @@ class DebateRAGAgent(MultiAgent):
             },
         )
 
-        agents = position_agents + [moderator, evidence_arbiter, synthesis_judge]
+        agents = [*position_agents, moderator, evidence_arbiter, synthesis_judge]
 
         # Store debate configuration as instance variable
         self._debate_positions = debate_positions
@@ -362,14 +357,13 @@ class DebateRAGAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for Debate RAG workflow"""
+        """Build the custom graph for Debate RAG workflow."""
         # Debate RAG uses complex conditional routing between positions
-        return None  # Use default graph structure
+        return  # Use default graph structure
 
 
 class AdaptiveThresholdRAGAgent(MultiAgent):
-    """
-    Adaptive Threshold RAG - dynamically adjusts retrieval thresholds
+    """Adaptive Threshold RAG - dynamically adjusts retrieval thresholds
     based on query difficulty and answer confidence.
     """
 
@@ -383,7 +377,7 @@ class AdaptiveThresholdRAGAgent(MultiAgent):
             - Identify domain and required expertise
             - Estimate information density needed
             - Predict retrieval difficulty
-            
+
             Set initial thresholds for retrieval and relevance.
             """,
             output_schema={
@@ -467,5 +461,5 @@ class AdaptiveThresholdRAGAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for Adaptive Threshold RAG workflow"""
-        return None  # Use default graph structure
+        """Build the custom graph for Adaptive Threshold RAG workflow."""
+        return  # Use default graph structure

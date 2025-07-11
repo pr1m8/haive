@@ -13,7 +13,6 @@ from pydantic import BaseModel, Field, field_validator, model_validator
 # Test structured output and schema modification concept
 def test_simple_agent_schema_modification():
     """Test how SimpleAgent modifies schemas for structured output."""
-
     # Mock an engine
     mock_engine = Mock()
     mock_engine.output_schema = type(
@@ -71,8 +70,6 @@ def test_simple_agent_schema_modification():
     assert hasattr(instance, "response")
     assert hasattr(instance, "analysis")
 
-    print("✅ Schema modification concept works")
-
 
 # Test multi-agent with proper validation
 def test_multi_agent_validation():
@@ -81,7 +78,7 @@ def test_multi_agent_validation():
     class MultiAgentConfig(BaseModel):
         """Multi-agent configuration with validation."""
 
-        agents: List[str] = Field(min_length=2)
+        agents: list[str] = Field(min_length=2)
         execution_mode: str = Field(default="sequential")
         enable_routing: bool = Field(default=False)
 
@@ -109,10 +106,6 @@ def test_multi_agent_validation():
             if len(set(self.agents)) != len(self.agents):
                 raise ValueError("Agent names must be unique")
 
-            print(
-                f"✓ Initialized {self.agent_count} agents in {self.execution_mode} mode"
-            )
-
     # Valid config
     config = MultiAgentConfig(
         agents=["planner", "executor", "reviewer"], execution_mode="sequential"
@@ -135,8 +128,6 @@ def test_multi_agent_validation():
     with pytest.raises(ValueError):
         MultiAgentConfig(agents=["a", "b", "a"])  # Duplicate names
 
-    print("✅ Multi-agent validation works")
-
 
 # Test conditional edges and routing
 def test_conditional_routing_pattern():
@@ -147,12 +138,12 @@ def test_conditional_routing_pattern():
             self.routes = {}
             self.conditions = {}
 
-        def add_route(self, name: str, condition, destinations: Dict[str, str]):
+        def add_route(self, name: str, condition, destinations: dict[str, str]):
             """Add conditional route."""
             self.routes[name] = destinations
             self.conditions[name] = condition
 
-        def route(self, from_node: str, state: Dict) -> str:
+        def route(self, from_node: str, state: dict) -> str:
             """Execute routing logic."""
             if from_node not in self.conditions:
                 return "default"
@@ -170,7 +161,7 @@ def test_conditional_routing_pattern():
         query = state.get("query", "").lower()
         if "urgent" in query:
             return "priority"
-        elif "search" in query:
+        if "search" in query:
             return "search"
         return "normal"
 
@@ -185,8 +176,6 @@ def test_conditional_routing_pattern():
     assert router.route("intent_router", {"query": "search docs"}) == "rag_agent"
     assert router.route("intent_router", {"query": "hello"}) == "simple_agent"
 
-    print("✅ Conditional routing pattern works")
-
 
 # Test schema compatibility
 def test_schema_compatibility():
@@ -195,16 +184,16 @@ def test_schema_compatibility():
     # Agent output schemas
     class ProcessorOutput(BaseModel):
         processed_text: str
-        metadata: Dict[str, Any] = Field(default_factory=dict)
+        metadata: dict[str, Any] = Field(default_factory=dict)
 
     class AnalyzerInput(BaseModel):
         text_to_analyze: str  # Different field name!
-        context: Optional[Dict[str, Any]] = None
+        context: dict[str, Any] | None = None
 
     # Compatibility checker
     class CompatibilityChecker:
         @staticmethod
-        def check(source: type[BaseModel], target: type[BaseModel]) -> Dict[str, Any]:
+        def check(source: type[BaseModel], target: type[BaseModel]) -> dict[str, Any]:
             """Check if schemas are compatible."""
             source_fields = set(source.model_fields.keys())
             target_fields = set(target.model_fields.keys())
@@ -227,11 +216,11 @@ def test_schema_compatibility():
         def create_adapter(
             source_schema: type[BaseModel],
             target_schema: type[BaseModel],
-            field_mapping: Dict[str, str],
+            field_mapping: dict[str, str],
         ):
             """Create adapter function."""
 
-            def adapter(source_data: Dict) -> Dict:
+            def adapter(source_data: dict) -> dict:
                 target_data = {}
                 for target_field, source_field in field_mapping.items():
                     if source_field in source_data:
@@ -258,8 +247,6 @@ def test_schema_compatibility():
 
     assert analyzer_input["text_to_analyze"] == "Hello"
     assert analyzer_input["context"] == {"lang": "en"}
-
-    print("✅ Schema compatibility checking works")
 
 
 # Test engine and agent field synchronization
@@ -300,16 +287,11 @@ def test_field_synchronization():
     assert agent.model_name == "gpt-3.5"  # Agent override preserved
     assert agent.max_tokens == 1000  # Synced from engine
 
-    print("✅ Field synchronization works")
-
 
 if __name__ == "__main__":
-    print("\n🧪 Running Agent Concept Tests\n")
 
     test_simple_agent_schema_modification()
     test_multi_agent_validation()
     test_conditional_routing_pattern()
     test_schema_compatibility()
     test_field_synchronization()
-
-    print("\n🎉 All agent concept tests passed!")

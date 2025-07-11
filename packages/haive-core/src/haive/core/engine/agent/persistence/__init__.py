@@ -1,5 +1,4 @@
-"""
-Persistence module for the Haive framework.
+"""Persistence module for the Haive framework.
 
 This module provides components for state persistence in agents and workflow graphs,
 with implementations for various storage backends.
@@ -24,17 +23,17 @@ from haive.core.persistence.utils import (
 
 # Default exports
 __all__ = [
+    "CheckpointStorageMode",
     # Main classes
     "CheckpointerConfig",
-    "MemoryCheckpointerConfig",
-    "PostgresCheckpointerConfig",
+    "CheckpointerMode",
     # Enums & Types
     "CheckpointerType",
-    "CheckpointerMode",
-    "CheckpointStorageMode",
+    "MemoryCheckpointerConfig",
+    "PostgresCheckpointerConfig",
+    "ensure_async_pool_open",
     # Utility functions
     "ensure_pool_open",
-    "ensure_async_pool_open",
     "register_thread",
     "register_thread_async",
 ]

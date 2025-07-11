@@ -14,6 +14,9 @@ from typing import (
 )
 from uuid import uuid4
 
+from haive.core.graph.state_graph.branch_spec import BranchSpec
+from haive.core.graph.state_graph.node_spec import NodeSpec
+from haive.core.graph.state_graph.serializer import FunctionReference, TypeReference
 from pydantic import (
     BaseModel,
     ConfigDict,
@@ -23,10 +26,6 @@ from pydantic import (
     field_validator,
     model_validator,
 )
-
-from haive.core.graph.state_graph.branch_spec import BranchSpec
-from haive.core.graph.state_graph.node_spec import NodeSpec
-from haive.core.graph.state_graph.serializer import FunctionReference, TypeReference
 
 # Generic type for node specification
 TNode = TypeVar("TNode", bound=Any)

@@ -10,12 +10,8 @@ from langgraph.graph import StateGraph
 from pydantic import BaseModel, Field
 
 # Import our document loader components
-from .auto_loader_factory import (
-    analyze_path_and_suggest_loader,
-)
-from .source_implementation import (
-    CredentialManager,
-)
+from .auto_loader_factory import analyze_path_and_suggest_loader
+from .source_implementation import CredentialManager
 
 
 # State models

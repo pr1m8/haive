@@ -1,5 +1,4 @@
-"""
-Multi-Query Retriever implementation for the Haive framework.
+"""Multi-Query Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Multi-Query retriever,
 which generates multiple query variations to improve retrieval coverage
@@ -32,8 +31,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.MULTI_QUERY)
 class MultiQueryRetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for Multi-Query retriever in the Haive framework.
+    """Configuration for Multi-Query retriever in the Haive framework.
 
     This retriever generates multiple query variations using an LLM to improve
     retrieval coverage and find more relevant documents for complex queries.
@@ -91,13 +89,13 @@ class MultiQueryRetrieverConfig(BaseRetrieverConfig):
     )
 
     # Query prompt customization
-    query_prompt_template: Optional[str] = Field(
+    query_prompt_template: str | None = Field(
         default=None,
         description="Custom prompt template for query generation (uses default if None)",
     )
 
     @validator("num_queries")
-    def validate_num_queries(cls, v):
+    def validate_num_queries(self, v):
         """Ensure reasonable number of queries."""
         if v < 1:
             raise ValueError("num_queries must be at least 1")
@@ -105,7 +103,7 @@ class MultiQueryRetrieverConfig(BaseRetrieverConfig):
             raise ValueError("num_queries should not exceed 10 for performance reasons")
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Multi-Query retriever."""
         return {
             "query": (
@@ -114,11 +112,11 @@ class MultiQueryRetrieverConfig(BaseRetrieverConfig):
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Multi-Query retriever."""
         return {
             "documents": (
-                List[Any],  # List[Document] but avoiding import
+                list[Any],  # List[Document] but avoiding import
                 Field(
                     default_factory=list,
                     description="Documents retrieved from all query variations",
@@ -127,8 +125,7 @@ class MultiQueryRetrieverConfig(BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a Multi-Query retriever from this configuration.
+        """Create a Multi-Query retriever from this configuration.
 
         Returns:
             MultiQueryRetriever: Instantiated retriever ready for multi-query retrieval.

@@ -11,12 +11,12 @@ from pydantic import BaseModel, Field, field_validator
 
 from haive.core.engine.base import EngineType, InvokableEngine
 
+
 logger = logging.getLogger(__name__)
 
 
-class ToolEngine(InvokableEngine[Dict[str, Any], Dict[str, Any]]):
-    """
-    Engine for tools and toolkits.
+class ToolEngine(InvokableEngine[dict[str, Any], dict[str, Any]]):
+    """Engine for tools and toolkits.
 
     ToolEngine manages the execution of tools based on input state,
     supporting individual tools, collections of tools, and toolkits.
@@ -35,11 +35,11 @@ class ToolEngine(InvokableEngine[Dict[str, Any], Dict[str, Any]]):
     engine_type: EngineType = EngineType.TOOL
 
     # Tool sources with proper type enforcement
-    tools: Optional[List[Union[BaseTool, Tool, StructuredTool, BaseModel]]] = None
-    toolkit: Optional[Union[BaseToolkit, List[BaseToolkit]]] = None
+    tools: list[BaseTool | Tool | StructuredTool | BaseModel] | None = None
+    toolkit: BaseToolkit | list[BaseToolkit] | None = None
 
     # Configuration
-    retry_policy: Optional[RetryPolicy] = None
+    retry_policy: RetryPolicy | None = None
     parallel: bool = Field(
         default=False, description="Execute tools in parallel when possible"
     )
@@ -58,10 +58,10 @@ class ToolEngine(InvokableEngine[Dict[str, Any], Dict[str, Any]]):
     )
 
     # Advanced options
-    timeout: Optional[float] = Field(
+    timeout: float | None = Field(
         default=None, description="Timeout for tool execution in seconds"
     )
-    max_iterations: Optional[int] = Field(
+    max_iterations: int | None = Field(
         default=None, description="Maximum number of tool iterations"
     )
 
@@ -69,8 +69,7 @@ class ToolEngine(InvokableEngine[Dict[str, Any], Dict[str, Any]]):
         arbitrary_types_allowed = True
 
     def create_runnable(self, runnable_config=None) -> Any:
-        """
-        Create a runnable tool node.
+        """Create a runnable tool node.
 
         Args:
             runnable_config: Optional runtime configuration
@@ -103,9 +102,8 @@ class ToolEngine(InvokableEngine[Dict[str, Any], Dict[str, Any]]):
 
         return tool_node
 
-    def _get_all_tools(self) -> List[Union[BaseTool, Tool, StructuredTool]]:
-        """
-        Get all tools from the various sources.
+    def _get_all_tools(self) -> list[BaseTool | Tool | StructuredTool]:
+        """Get all tools from the various sources.
 
         Returns:
             List of all tools
@@ -117,7 +115,7 @@ class ToolEngine(InvokableEngine[Dict[str, Any], Dict[str, Any]]):
             for tool in self.tools:
                 # Process BaseModel tools (convert to StructuredTool if needed)
                 if isinstance(tool, BaseModel) and not isinstance(
-                    tool, (BaseTool, Tool, StructuredTool)
+                    tool, BaseTool | Tool | StructuredTool
                 ):
                     try:
                         # Try to convert BaseModel to StructuredTool
@@ -142,18 +140,15 @@ class ToolEngine(InvokableEngine[Dict[str, Any], Dict[str, Any]]):
                         all_tools.extend(tk.get_tools())
                     elif isinstance(tk, BaseToolkit):
                         all_tools.extend(tk.tools)
-            else:
-                # Single toolkit
-                if hasattr(self.toolkit, "get_tools"):
-                    all_tools.extend(self.toolkit.get_tools())
-                elif isinstance(self.toolkit, BaseToolkit):
-                    all_tools.extend(self.toolkit.tools)
+            elif hasattr(self.toolkit, "get_tools"):
+                all_tools.extend(self.toolkit.get_tools())
+            elif isinstance(self.toolkit, BaseToolkit):
+                all_tools.extend(self.toolkit.tools)
 
         return all_tools
 
-    def _convert_model_to_tool(self, model: BaseModel) -> Optional[StructuredTool]:
-        """
-        Convert a Pydantic model to a StructuredTool.
+    def _convert_model_to_tool(self, model: BaseModel) -> StructuredTool | None:
+        """Convert a Pydantic model to a StructuredTool.
 
         Args:
             model: BaseModel to convert
@@ -184,10 +179,9 @@ class ToolEngine(InvokableEngine[Dict[str, Any], Dict[str, Any]]):
         return model_tool
 
     def apply_runnable_config(
-        self, runnable_config: Optional[RunnableConfig] = None
-    ) -> Dict[str, Any]:
-        """
-        Extract parameters from runnable_config relevant to this tool engine.
+        self, runnable_config: RunnableConfig | None = None
+    ) -> dict[str, Any]:
+        """Extract parameters from runnable_config relevant to this tool engine.
 
         Args:
             runnable_config: Runtime configuration
@@ -217,11 +211,10 @@ class ToolEngine(InvokableEngine[Dict[str, Any], Dict[str, Any]]):
 
     def invoke(
         self,
-        input_data: Dict[str, Any],
-        runnable_config: Optional[RunnableConfig] = None,
-    ) -> Dict[str, Any]:
-        """
-        Invoke the tool engine with input data.
+        input_data: dict[str, Any],
+        runnable_config: RunnableConfig | None = None,
+    ) -> dict[str, Any]:
+        """Invoke the tool engine with input data.
 
         Args:
             input_data: Input state dictionary
@@ -258,21 +251,21 @@ class ToolEngine(InvokableEngine[Dict[str, Any], Dict[str, Any]]):
         return result
 
     @field_validator("engine_type")
-    def validate_engine_type(cls, v):
+    def validate_engine_type(self, v):
         """Validate engine type is TOOL."""
         if v != EngineType.TOOL:
             raise ValueError("engine_type must be TOOL")
         return v
 
     @field_validator("tools")
-    def validate_tools(cls, v):
+    def validate_tools(self, v):
         """Validate tools are of the correct type."""
         if v is None:
             return v
 
         valid_tools = []
         for tool in v:
-            if isinstance(tool, (BaseTool, Tool, StructuredTool, BaseModel)):
+            if isinstance(tool, BaseTool | Tool | StructuredTool | BaseModel):
                 valid_tools.append(tool)
             else:
                 logger.warning(f"Ignoring invalid tool type: {type(tool).__name__}")
@@ -280,7 +273,7 @@ class ToolEngine(InvokableEngine[Dict[str, Any], Dict[str, Any]]):
         return valid_tools
 
     @field_validator("toolkit")
-    def validate_toolkit(cls, v):
+    def validate_toolkit(self, v):
         """Validate toolkit is of the correct type."""
         if v is None:
             return v
@@ -295,14 +288,13 @@ class ToolEngine(InvokableEngine[Dict[str, Any], Dict[str, Any]]):
                         f"Ignoring invalid toolkit type: {type(tk).__name__}"
                     )
             return valid_toolkits
-        elif isinstance(v, BaseToolkit) or hasattr(v, "get_tools"):
+        if isinstance(v, BaseToolkit) or hasattr(v, "get_tools"):
             return v
-        else:
-            logger.warning(f"Ignoring invalid toolkit type: {type(v).__name__}")
-            return None
+        logger.warning(f"Ignoring invalid toolkit type: {type(v).__name__}")
+        return None
 
     @field_validator("tool_choice")
-    def validate_tool_choice(cls, v):
+    def validate_tool_choice(self, v):
         """Validate tool_choice has a valid value."""
         valid_choices = ["auto", "required", "none"]
         if v not in valid_choices:

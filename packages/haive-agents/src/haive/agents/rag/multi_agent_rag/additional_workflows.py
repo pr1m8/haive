@@ -1,5 +1,4 @@
-"""
-Additional RAG Workflows - Extended Multi-Agent RAG Implementations
+"""Additional RAG Workflows - Extended Multi-Agent RAG Implementations.
 
 This module implements additional RAG architectures beyond the simple enhanced workflows,
 including memory-based, multi-query, fusion, and advanced reasoning patterns.
@@ -7,39 +6,37 @@ including memory-based, multi-query, fusion, and advanced reasoning patterns.
 
 from typing import Dict, List
 
-from haive.core.schema.prebuilt.rag_state import RAGState
-
 from haive.agents.multi.base import ExecutionMode, MultiAgent
 from haive.agents.simple import SimpleAgent
+from haive.core.schema.prebuilt.rag_state import RAGState
 
 
 class MemoryRAGState(RAGState):
-    """Extended RAG state with conversation memory"""
+    """Extended RAG state with conversation memory."""
 
-    conversation_history: List[Dict[str, str]] = []
-    previous_queries: List[str] = []
+    conversation_history: list[dict[str, str]] = []
+    previous_queries: list[str] = []
     memory_context: str = ""
 
 
 class MultiQueryRAGState(RAGState):
-    """RAG state for multi-query approaches"""
+    """RAG state for multi-query approaches."""
 
-    generated_queries: List[str] = []
-    query_results: Dict[str, List[str]] = {}
+    generated_queries: list[str] = []
+    query_results: dict[str, list[str]] = {}
 
 
 class SelfRAGState(RAGState):
-    """RAG state with self-reflection capabilities"""
+    """RAG state with self-reflection capabilities."""
 
-    reflection_tokens: List[str] = []
+    reflection_tokens: list[str] = []
     needs_retrieval: bool = True
     retrieval_confidence: float = 0.0
     answer_confidence: float = 0.0
 
 
 class SimpleRAGWithMemoryAgent(MultiAgent):
-    """
-    Simple RAG with Memory - incorporates conversation history and previous queries
+    """Simple RAG with Memory - incorporates conversation history and previous queries
     to provide contextually aware responses.
     """
 
@@ -55,7 +52,7 @@ class SimpleRAGWithMemoryAgent(MultiAgent):
             - Key topics and entities mentioned
             - User preferences or patterns
             - Contextual information that would enhance retrieval
-            
+
             Provide a concise memory context summary.
             """,
             output_schema={"memory_context": "str", "relevant_history": "List[str]"},
@@ -97,14 +94,13 @@ class SimpleRAGWithMemoryAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for this multi-agent workflow"""
+        """Build the custom graph for this multi-agent workflow."""
         # Simple sequential execution for memory RAG
-        return None  # Use default graph structure
+        return  # Use default graph structure
 
 
 class SelfRAGAgent(MultiAgent):
-    """
-    Self-RAG with reflection tokens - determines whether retrieval is needed
+    """Self-RAG with reflection tokens - determines whether retrieval is needed
     and reflects on the quality of generated answers.
     """
 
@@ -117,7 +113,7 @@ class SelfRAGAgent(MultiAgent):
             - Is this a factual question requiring external knowledge?
             - Can this be answered with general knowledge?
             - Does this require recent or specific information?
-            
+
             Output reflection tokens: [Retrieval], [No Retrieval], [Continue], [Utility]
             """,
             output_schema={
@@ -146,8 +142,8 @@ class SelfRAGAgent(MultiAgent):
             - Is the answer supported by evidence?
             - Are there any hallucinations or unsupported claims?
             - Is the answer complete and accurate?
-            
-            Output reflection tokens: [Relevant], [Partially Relevant], [Irrelevant], 
+
+            Output reflection tokens: [Relevant], [Partially Relevant], [Irrelevant],
             [No support], [Utility], [Isrel], [Issup]
             """,
             output_schema={
@@ -168,13 +164,12 @@ class SelfRAGAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for this multi-agent workflow"""
-        return None  # Use default graph structure
+        """Build the custom graph for this multi-agent workflow."""
+        return  # Use default graph structure
 
 
 class MultiQueryRAGAgent(MultiAgent):
-    """
-    Multi-Query RAG - generates multiple diverse queries and retrieves documents
+    """Multi-Query RAG - generates multiple diverse queries and retrieves documents
     for each, then synthesizes results.
     """
 
@@ -235,13 +230,12 @@ class MultiQueryRAGAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for this multi-agent workflow"""
-        return None  # Use default graph structure
+        """Build the custom graph for this multi-agent workflow."""
+        return  # Use default graph structure
 
 
 class RAGFusionAgent(MultiAgent):
-    """
-    RAG Fusion - combines multiple retrieval strategies and fuses results
+    """RAG Fusion - combines multiple retrieval strategies and fuses results
     using reciprocal rank fusion and other techniques.
     """
 
@@ -252,10 +246,10 @@ class RAGFusionAgent(MultiAgent):
             instructions="""
             Apply multiple retrieval strategies:
             1. Semantic similarity search
-            2. Keyword-based search  
+            2. Keyword-based search
             3. Question-based retrieval
             4. Context-aware retrieval
-            
+
             Retrieve documents using each strategy and rank them.
             """,
             output_schema={
@@ -273,7 +267,7 @@ class RAGFusionAgent(MultiAgent):
             instructions="""
             Apply Reciprocal Rank Fusion (RRF) to combine results from different strategies.
             RRF formula: score(d) = Σ(1/(k + rank_i(d))) for all strategies i
-            
+
             Create a unified ranking of the most relevant documents.
             """,
             output_schema={
@@ -308,13 +302,12 @@ class RAGFusionAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for this multi-agent workflow"""
-        return None  # Use default graph structure
+        """Build the custom graph for this multi-agent workflow."""
+        return  # Use default graph structure
 
 
 class StepBackPromptingRAGAgent(MultiAgent):
-    """
-    Step-Back Prompting RAG - asks broader conceptual questions before
+    """Step-Back Prompting RAG - asks broader conceptual questions before
     specific retrieval to get better context.
     """
 
@@ -328,8 +321,8 @@ class StepBackPromptingRAGAgent(MultiAgent):
             - Be more general and conceptual
             - Help establish broader context
             - Lead to foundational knowledge retrieval
-            
-            Example: "What is the best treatment for pneumonia?" → 
+
+            Example: "What is the best treatment for pneumonia?" � 
             "What are the principles of treating bacterial infections?"
             """,
             output_schema={
@@ -346,7 +339,7 @@ class StepBackPromptingRAGAgent(MultiAgent):
             Retrieve documents for both:
             1. The original specific question
             2. The step-back conceptual question
-            
+
             The step-back retrieval provides foundational context.
             """,
             output_schema={
@@ -382,13 +375,12 @@ class StepBackPromptingRAGAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for this multi-agent workflow"""
-        return None  # Use default graph structure
+        """Build the custom graph for this multi-agent workflow."""
+        return  # Use default graph structure
 
 
 class QueryDecompositionRAGAgent(MultiAgent):
-    """
-    Query Decomposition RAG - breaks complex queries into simpler sub-questions,
+    """Query Decomposition RAG - breaks complex queries into simpler sub-questions,
     retrieves for each, then composes the final answer.
     """
 
@@ -400,7 +392,7 @@ class QueryDecompositionRAGAgent(MultiAgent):
             Break down complex queries into 2-4 simpler, focused sub-questions.
             Each sub-question should:
             - Address a specific aspect of the main question
-            - Be answerable independently  
+            - Be answerable independently
             - Contribute to the overall answer
             - Be clear and specific
             """,
@@ -451,5 +443,5 @@ class QueryDecompositionRAGAgent(MultiAgent):
         )
 
     def build_custom_graph(self):
-        """Build the custom graph for this multi-agent workflow"""
-        return None  # Use default graph structure
+        """Build the custom graph for this multi-agent workflow."""
+        return  # Use default graph structure

@@ -1,5 +1,4 @@
-"""
-Zilliz Cloud Vector Store implementation for the Haive framework.
+"""Zilliz Cloud Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the Zilliz Cloud vector store,
 which is a fully managed cloud-native vector database service based on Milvus.
@@ -35,8 +34,7 @@ from haive.core.engine.vectorstore.types import VectorStoreType
 
 @BaseVectorStoreConfig.register(VectorStoreType.ZILLIZ)
 class ZillizVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
-    """
-    Configuration for Zilliz Cloud vector store in the Haive framework.
+    """Configuration for Zilliz Cloud vector store in the Haive framework.
 
     This vector store uses Zilliz Cloud for managed Milvus service with
     enterprise features and automatic scaling.
@@ -74,13 +72,13 @@ class ZillizVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
     """
 
     # Connection configuration
-    connection_args: Dict[str, Any] = Field(
+    connection_args: dict[str, Any] = Field(
         ...,
         description="Connection parameters: must include 'uri' and optionally 'token', 'secure'",
     )
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None,
         description="Zilliz Cloud API key/token (auto-resolved from ZILLIZ_API_KEY)",
     )
@@ -96,12 +94,12 @@ class ZillizVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
     )
 
     # Index configuration
-    index_params: Optional[Dict[str, Any]] = Field(
+    index_params: dict[str, Any] | None = Field(
         default=None,
         description="Index parameters: {'metric_type': 'L2', 'index_type': 'AUTOINDEX'}",
     )
 
-    search_params: Optional[Dict[str, Any]] = Field(
+    search_params: dict[str, Any] | None = Field(
         default=None, description="Search parameters for queries"
     )
 
@@ -123,12 +121,12 @@ class ZillizVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
     # Advanced configuration
     auto_id: bool = Field(default=True, description="Whether to auto-generate IDs")
 
-    timeout: Optional[float] = Field(
+    timeout: float | None = Field(
         default=None, description="Timeout for operations in seconds"
     )
 
     @validator("consistency_level")
-    def validate_consistency_level(cls, v):
+    def validate_consistency_level(self, v):
         """Validate consistency level is supported."""
         valid_levels = ["Strong", "Session", "Bounded", "Eventually"]
         if v not in valid_levels:
@@ -138,7 +136,7 @@ class ZillizVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
         return v
 
     @validator("connection_args")
-    def validate_connection_args(cls, v):
+    def validate_connection_args(self, v):
         """Validate connection arguments."""
         if not v:
             raise ValueError("connection_args must be provided")
@@ -150,27 +148,26 @@ class ZillizVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
 
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Zilliz vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Zilliz vector store."""
         return {
             "ids": (
-                List[Union[str, int]],
+                list[str | int],
                 Field(description="IDs of the added documents"),
             ),
         }
 
     def instantiate(self):
-        """
-        Create a Zilliz vector store from this configuration.
+        """Create a Zilliz vector store from this configuration.
 
         Returns:
             Zilliz: Instantiated Zilliz vector store.

@@ -22,11 +22,6 @@ from typing import (
     Union,
 )
 
-from langchain_core.runnables import RunnableConfig
-from langgraph.graph import END, START  # Import the actual constants
-from langgraph.types import Command, RetryPolicy, Send
-from pydantic import BaseModel, ConfigDict, Field, model_validator
-
 # Import Branch implementation
 from haive.core.graph.branches.branch import Branch
 from haive.core.graph.branches.types import BranchMode, ComparisonType
@@ -40,6 +35,10 @@ from haive.core.graph.state_graph.validation_mixin import ValidationMixin
 
 # Import RichLogger
 from haive.core.logging.rich_logger import LogLevel, RichLogger, get_logger
+from langchain_core.runnables import RunnableConfig
+from langgraph.graph import END, START  # Import the actual constants
+from langgraph.types import Command, RetryPolicy, Send
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 # Define a type for branch result types
 BranchResultType = Union[

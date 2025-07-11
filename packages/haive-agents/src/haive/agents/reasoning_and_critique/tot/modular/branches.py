@@ -1,9 +1,10 @@
 from typing import Any
 
-from haive.core.graph.branches import Branch
 from langchain_core.messages import AIMessage
 from langgraph.graph import END
 from langgraph.types import Command, Send
+
+from haive.core.graph.branches import Branch
 
 
 class ToTBranch(Branch):
@@ -76,7 +77,7 @@ class ToTBranch(Branch):
 
             # Return END with the final state updates, setting answer explicitly
             return END, {
-                "messages": state.messages + [final_message],
+                "messages": [*state.messages, final_message],
                 "answer": content,  # Make sure this is set explicitly
             }
 

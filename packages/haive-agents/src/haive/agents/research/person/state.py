@@ -5,6 +5,7 @@ from typing import Annotated, Any
 
 from pydantic import BaseModel, Field
 
+
 # Define extraction schema
 DEFAULT_EXTRACTION_SCHEMA = {
     "type": "object",

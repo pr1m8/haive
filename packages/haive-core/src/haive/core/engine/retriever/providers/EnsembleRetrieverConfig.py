@@ -1,5 +1,4 @@
-"""
-Ensemble Retriever implementation for the Haive framework.
+"""Ensemble Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Ensemble retriever,
 which combines multiple retrieval strategies using weighted combination
@@ -31,8 +30,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.ENSEMBLE)
 class EnsembleRetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for Ensemble retriever in the Haive framework.
+    """Configuration for Ensemble retriever in the Haive framework.
 
     This retriever combines multiple retrieval strategies using weighted combination
     to improve overall performance and coverage across different query types.
@@ -71,13 +69,13 @@ class EnsembleRetrieverConfig(BaseRetrieverConfig):
     )
 
     # Core ensemble configuration
-    retrievers: List[BaseRetrieverConfig] = Field(
+    retrievers: list[BaseRetrieverConfig] = Field(
         ...,
         min_items=2,
         description="List of retriever configurations to combine in the ensemble",
     )
 
-    weights: List[float] = Field(
+    weights: list[float] = Field(
         ...,
         description="Weights for each retriever (must sum to 1.0 and match number of retrievers)",
     )
@@ -103,14 +101,14 @@ class EnsembleRetrieverConfig(BaseRetrieverConfig):
     )
 
     @validator("weights")
-    def validate_weights(cls, v, values):
+    def validate_weights(self, v, values):
         """Validate that weights sum to 1.0."""
         if abs(sum(v) - 1.0) > 1e-6:
             raise ValueError(f"Weights must sum to 1.0, got {sum(v)}")
         return v
 
     @validator("weights")
-    def validate_weights_length(cls, v, values):
+    def validate_weights_length(self, v, values):
         """Validate that weights match number of retrievers."""
         if "retrievers" in values and len(v) != len(values["retrievers"]):
             raise ValueError(
@@ -119,23 +117,23 @@ class EnsembleRetrieverConfig(BaseRetrieverConfig):
         return v
 
     @validator("weights", each_item=True)
-    def validate_weight_values(cls, v):
+    def validate_weight_values(self, v):
         """Validate that each weight is between 0 and 1."""
         if not 0 <= v <= 1:
             raise ValueError(f"Each weight must be between 0 and 1, got {v}")
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Ensemble retriever."""
         return {
             "query": (str, Field(description="Query string for ensemble retrieval")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Ensemble retriever."""
         return {
             "documents": (
-                List[Any],  # List[Document] but avoiding import
+                list[Any],  # List[Document] but avoiding import
                 Field(
                     default_factory=list,
                     description="Documents retrieved by the ensemble",
@@ -144,8 +142,7 @@ class EnsembleRetrieverConfig(BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create an Ensemble retriever from this configuration.
+        """Create an Ensemble retriever from this configuration.
 
         Returns:
             EnsembleRetriever: Instantiated retriever ready for ensemble retrieval.

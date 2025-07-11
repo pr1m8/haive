@@ -10,12 +10,6 @@ from typing import Optional
 
 import pytest
 
-# Mock LLM for testing
-from langchain_core.language_models.fake import FakeListLLM
-from langchain_core.messages import AIMessage, HumanMessage
-from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
-from pydantic import BaseModel, Field
-
 # Import our parser engine
 from haive.core.engine.output_parser.base import (
     OutputParserType,
@@ -25,6 +19,12 @@ from haive.core.engine.output_parser.base import (
     create_pydantic_parser,
     create_str_parser,
 )
+
+# Mock LLM for testing
+from langchain_core.language_models.fake import FakeListLLM
+from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
+from pydantic import BaseModel, Field
 
 
 # Test data models

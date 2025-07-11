@@ -1,11 +1,8 @@
 import logging
 
-from langgraph.graph import END
-
 from haive.core.engine.base import EngineType
 from haive.core.graph.node.config import NodeConfig
-
-# from conftest import real_llm_engine
+from langgraph.graph import END
 
 # Configure logging for this test file
 logger = logging.getLogger(__name__)
@@ -120,7 +117,7 @@ def test_node_config_resolve_engine(real_llm_engine, monkeypatch):
     class MockRegistry:
         def find(self, name_or_id):
             logger.debug(f"MockRegistry.find called with: {name_or_id}")
-            if name_or_id == "test_engine" or name_or_id == real_llm_engine.id:
+            if name_or_id in ("test_engine", real_llm_engine.id):
                 logger.debug(f"MockRegistry returning: {real_llm_engine}")
                 return real_llm_engine
             logger.debug("MockRegistry returning None")
@@ -209,7 +206,7 @@ def test_node_config_serialization(real_llm_engine, monkeypatch):
             logger.debug(
                 f"MockRegistry.find called with: {name_or_id} during deserialization"
             )
-            if name_or_id == real_llm_engine.id or name_or_id == real_llm_engine.name:
+            if name_or_id in (real_llm_engine.id, real_llm_engine.name):
                 logger.debug(f"MockRegistry returning engine: {real_llm_engine}")
                 return real_llm_engine
             logger.debug("MockRegistry returning None")

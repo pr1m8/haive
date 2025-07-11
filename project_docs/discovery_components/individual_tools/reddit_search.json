@@ -7,7 +7,7 @@
     "description": "Search posts on Reddit using subreddit, time filter, and query.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.771729",
+    "timestamp": "2025-07-10T19:45:28.995448",
     "schema": {
       "description": "Search for posts on Reddit with specified parameters.\n\nArgs:\n    query: Query string to search post titles for\n    sort: Sort method: 'relevance', 'hot', 'top', 'new', or 'comments'\n    time_filter: Time period: 'all', 'day', 'hour', 'month', 'week', or 'year'\n    subreddit: Subreddit name like 'python' or 'all'\n    limit: Max number of results to return\n\nReturns:\n    str: Formatted results from Reddit posts matching the query parameters\n\nRaises:\n    ValueError: If the Reddit API returns an error",
       "properties": {
@@ -56,7 +56,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.771729",
+      "timestamp": "2025-07-10T19:45:28.995448",
       "category": "individual_tools"
     }
   },

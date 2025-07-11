@@ -1,17 +1,16 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Any, Dict, List, Optional
-
-from langchain_core.documents import Document
-from langchain_core.retrievers import BaseRetriever
-from langchain_core.vectorstores import VectorStore
-from pydantic import BaseModel, Field
+from typing import Any
 
 from haive.core.models.embeddings.base import (
     BaseEmbeddingConfig,
     HuggingFaceEmbeddingConfig,
 )
+from langchain_core.documents import Document
+from langchain_core.retrievers import BaseRetriever
+from langchain_core.vectorstores import VectorStore
+from pydantic import BaseModel, Field
 
 
 class VectorStoreProvider(str, Enum):
@@ -30,7 +29,7 @@ class VectorStoreProvider(str, Enum):
 class VectorStoreConfig(BaseModel):
     """Configuration model for a vector store."""
 
-    name: Optional[str] = Field(default=None)
+    name: str | None = Field(default=None)
     embedding_model: BaseEmbeddingConfig = Field(
         default=HuggingFaceEmbeddingConfig(
             model="sentence-transformers/all-mpnet-base-v2"
@@ -44,10 +43,10 @@ class VectorStoreConfig(BaseModel):
     vector_store_path: str = Field(
         default="vector_store", description="The path to the vector store"
     )
-    vector_store_kwargs: Dict[str, Any] = Field(
+    vector_store_kwargs: dict[str, Any] = Field(
         default_factory=dict, description="Optional kwargs for the vector store"
     )
-    documents: List[Document] = Field(
+    documents: list[Document] = Field(
         default_factory=list, description="The raw documents to store"
     )
     docstore_path: str = Field(
@@ -105,12 +104,11 @@ class VectorStoreConfig(BaseModel):
                 self.embedding_model.instantiate(),
                 **self.vector_store_kwargs,
             )
-        else:
-            return vs.from_documents(
-                self.documents,
-                self.embedding_model.instantiate(),
-                **self.vector_store_kwargs,
-            )
+        return vs.from_documents(
+            self.documents,
+            self.embedding_model.instantiate(),
+            **self.vector_store_kwargs,
+        )
 
     def create_retriever(self, async_mode: bool = False):
         """Create a retriever from the vector store."""
@@ -120,12 +118,12 @@ class VectorStoreConfig(BaseModel):
     @classmethod
     def create_vs_config_from_documents(
         cls,
-        documents: List[Document],
+        documents: list[Document],
         embedding_model: BaseEmbeddingConfig = HuggingFaceEmbeddingConfig(
             model="sentence-transformers/all-mpnet-base-v2"
         ),
         **kwargs,
-    ) -> "VectorStoreConfig":
+    ) -> VectorStoreConfig:
         """Create a VectorStoreConfig from a list of documents."""
         config = cls(documents=documents, embedding_model=embedding_model, **kwargs)
         return config
@@ -133,12 +131,12 @@ class VectorStoreConfig(BaseModel):
     @classmethod
     def create_vs_from_documents(
         cls,
-        documents: List[Document],
+        documents: list[Document],
         embedding_model: BaseEmbeddingConfig = HuggingFaceEmbeddingConfig(
             model="sentence-transformers/all-mpnet-base-v2"
         ),
         **kwargs,
-    ) -> "VectorStoreConfig":
+    ) -> VectorStoreConfig:
         """Create a VectorStore from a list of documents."""
         config = cls.create_vs_config_from_documents(
             documents, embedding_model, **kwargs
@@ -156,7 +154,7 @@ def create_retriever(config: VectorStoreConfig, async_mode: bool = False):
 
 
 def create_vs_config_from_documents(
-    documents: List[Document],
+    documents: list[Document],
     embedding_model: BaseEmbeddingConfig = HuggingFaceEmbeddingConfig(
         model="sentence-transformers/all-mpnet-base-v2"
     ),
@@ -168,7 +166,7 @@ def create_vs_config_from_documents(
 
 
 def create_vs_from_documents(
-    documents: List[Document],
+    documents: list[Document],
     embedding_model: BaseEmbeddingConfig = HuggingFaceEmbeddingConfig(
         model="sentence-transformers/all-mpnet-base-v2"
     ),
@@ -180,7 +178,7 @@ def create_vs_from_documents(
 
 
 def create_retriever_from_documents(
-    documents: List[Document],
+    documents: list[Document],
     embedding_model: BaseEmbeddingConfig = HuggingFaceEmbeddingConfig(
         model="sentence-transformers/all-mpnet-base-v2"
     ),

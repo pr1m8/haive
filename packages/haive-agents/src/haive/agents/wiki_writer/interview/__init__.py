@@ -1,4 +1,4 @@
-"""Interview - TODO: Add brief description
+"""Interview - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

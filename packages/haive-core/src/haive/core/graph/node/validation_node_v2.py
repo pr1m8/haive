@@ -1,5 +1,4 @@
-"""
-Validation Node V2 - Regular node that updates state with ToolMessages.
+"""Validation Node V2 - Regular node that updates state with ToolMessages.
 
 This is a proper node (not conditional edge) that can update state by adding
 ToolMessages for Pydantic model validation and errors. It works with a separate
@@ -14,14 +13,13 @@ import json
 import logging
 from typing import Any, Dict, List, Optional
 
-from langchain_core.messages import AIMessage, ToolMessage
-from langgraph.types import Command
-from pydantic import BaseModel, Field, ValidationError
-
 from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
 from haive.core.graph.common.types import ConfigLike, StateLike
 from haive.core.graph.node.base_config import NodeConfig
 from haive.core.graph.node.types import NodeType
+from langchain_core.messages import AIMessage, ToolMessage
+from langgraph.types import Command
+from pydantic import BaseModel, Field, ValidationError
 
 logger = logging.getLogger(__name__)
 
@@ -73,7 +71,7 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
         default="validation_router", description="Router node for routing decisions"
     )
 
-    def _get_engine_from_state(self, state: StateLike) -> Optional[Any]:
+    def _get_engine_from_state(self, state: StateLike) -> Any | None:
         """Get engine from state - same logic as original validation."""
         logger.debug(f"Getting engine: {self.engine_name}")
 
@@ -88,7 +86,7 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
                 return engine
 
             # Try by engine.name attribute
-            for key, eng in state.engines.items():
+            for _key, eng in state.engines.items():
                 if hasattr(eng, "name") and eng.name == self.engine_name:
                     logger.info(f"Found engine by name attribute: {self.engine_name}")
                     return eng
@@ -114,7 +112,7 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
         logger.warning(f"Engine not found: {self.engine_name}")
         return None
 
-    def _get_tool_routes_from_engine(self, engine: Any) -> Dict[str, str]:
+    def _get_tool_routes_from_engine(self, engine: Any) -> dict[str, str]:
         """Get tool routes from engine."""
         if hasattr(engine, "tool_routes") and engine.tool_routes:
             return engine.tool_routes
@@ -122,7 +120,7 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
 
     def _find_pydantic_model_class(
         self, tool_name: str, engine: Any
-    ) -> Optional[type[BaseModel]]:
+    ) -> type[BaseModel] | None:
         """Find Pydantic model class by name in engine."""
         # Check structured_output_model
         if (
@@ -150,7 +148,7 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
         self,
         tool_name: str,
         tool_id: str,
-        args: Dict[str, Any],
+        args: dict[str, Any],
         model_class: type[BaseModel],
     ) -> ToolMessage:
         """Create ToolMessage for Pydantic model validation."""
@@ -232,9 +230,7 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
             additional_kwargs={"is_error": True, "error_type": "tool_not_found"},
         )
 
-    def __call__(
-        self, state: StateLike, config: Optional[ConfigLike] = None
-    ) -> Command:
+    def __call__(self, state: StateLike, config: ConfigLike | None = None) -> Command:
         """Process tool calls and update state with ToolMessages."""
         logger.info("=== ValidationNodeV2 Execution ===")
 

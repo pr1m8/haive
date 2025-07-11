@@ -5,6 +5,8 @@ import pprint
 from typing import Any, Literal
 
 import pytest
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.schema.schema_composer import SchemaComposer
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from langchain_core.output_parsers import (
     JsonOutputParser,
@@ -18,9 +20,6 @@ from langchain_core.prompts import (
 )
 from langchain_core.tools import StructuredTool, tool
 from pydantic import BaseModel, Field
-
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.schema.schema_composer import SchemaComposer
 
 from .conftest import WeatherQuery, check_api_keys, skip_if_no_api_keys
 

@@ -1,5 +1,4 @@
-"""
-ChatGPT Plugin Retriever implementation for the Haive framework.
+"""ChatGPT Plugin Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the ChatGPT Plugin retriever,
 which integrates with ChatGPT plugins to retrieve information from external
@@ -35,8 +34,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.CHATGPT_PLUGIN)
 class ChatGPTPluginRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for ChatGPT Plugin retriever in the Haive framework.
+    """Configuration for ChatGPT Plugin retriever in the Haive framework.
 
     This retriever integrates with ChatGPT plugins to access external
     services and data sources through the plugin ecosystem.
@@ -83,7 +81,7 @@ class ChatGPTPluginRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     plugin_name: str = Field(..., description="Name of the ChatGPT plugin")
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None, description="API key for plugin authentication"
     )
 
@@ -101,16 +99,16 @@ class ChatGPTPluginRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # Plugin-specific parameters
-    plugin_manifest_url: Optional[str] = Field(
+    plugin_manifest_url: str | None = Field(
         default=None, description="URL to the plugin manifest file"
     )
 
-    plugin_openapi_url: Optional[str] = Field(
+    plugin_openapi_url: str | None = Field(
         default=None, description="URL to the plugin OpenAPI specification"
     )
 
     # Database connection for plugin data
-    aiopg_dsn: Optional[str] = Field(
+    aiopg_dsn: str | None = Field(
         default=None, description="PostgreSQL connection string for plugin data storage"
     )
 
@@ -129,21 +127,21 @@ class ChatGPTPluginRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         description="User agent string for plugin requests",
     )
 
-    headers: Optional[Dict[str, str]] = Field(
+    headers: dict[str, str] | None = Field(
         default=None, description="Additional headers for plugin requests"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for ChatGPT Plugin retriever."""
         return {
             "query": (str, Field(description="Query for ChatGPT plugin")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for ChatGPT Plugin retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list, description="Documents from ChatGPT plugin"
                 ),
@@ -151,8 +149,7 @@ class ChatGPTPluginRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a ChatGPT Plugin retriever from this configuration.
+        """Create a ChatGPT Plugin retriever from this configuration.
 
         Returns:
             ChatGPTPluginRetriever: Instantiated retriever ready for plugin integration.

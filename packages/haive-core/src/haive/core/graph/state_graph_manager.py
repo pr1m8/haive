@@ -49,7 +49,6 @@ class StateGraphManager:
     def ensure_compiled(self):
         """Recompile the graph if modifications were made."""
         if self.needs_recompile:
-            print("🔄 Recompiling the graph...")
             self.graph.compile()
             self.metadata = self.extract_metadata()
             self.needs_recompile = False
@@ -67,7 +66,9 @@ class StateGraphManager:
             self.needs_recompile = True
 
     # def insert_node(self, node: str, between: Tuple[str, str], func: callable = None):
-    def insert_node(self, node: str, between: tuple[str, str], func: callable = None):
+    def insert_node(
+        self, node: str, between: tuple[str, str], func: callable | None = None
+    ):
         """Insert a new node between two existing nodes, using LangGraph's `add_node` and `add_edge` methods.
 
         Args:
@@ -82,8 +83,6 @@ class StateGraphManager:
             raise ValueError(
                 f"Cannot insert node: {src} or {dst} does not exist in the graph."
             )
-
-        print(f"📌 Inserting `{node}` between `{src}` → `{dst}`")
 
         # Remove the existing edge
         self.remove_edge(src, dst)
@@ -118,8 +117,6 @@ class StateGraphManager:
         # Pick the first transition from `__start__`
         _, first_node = start_edges[0]
 
-        print(f"📌 Inserting {node} between __start__ → {first_node}")
-
         # Add the new node
         self.add_node(node)
 
@@ -143,17 +140,10 @@ class StateGraphManager:
         # Pick the first transition to `END`
         last_node, _ = end_edges[0]
 
-        print(f"📌 Inserting {node} between {last_node} → END")
-
         # Add the new node
         self.add_node(node)
 
         # Remove old edge and insert new edges
-        # self.remove_edge(last_node, "END")
-        # self.graph.edges.add((last_node, node))
-        # self.graph.edges.add((node, "END"))
-
-        # self.needs_recompile = True
 
     def update_branch(self, node: str, condition: str, target: str):
         """Update a conditional branch using defaultdict."""
@@ -272,7 +262,6 @@ class StateGraphManager:
         plt.title("State Graph Visualization", fontsize=14, fontweight="bold")
         plt.savefig(output_file, bbox_inches="tight")
         plt.show()
-        print(f"Graph saved as {output_file}")
 
     def get_metadata(self):
         """Return the extracted metadata."""

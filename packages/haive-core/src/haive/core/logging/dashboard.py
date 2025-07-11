@@ -1,5 +1,4 @@
-"""
-Advanced Logging Dashboard for Haive Framework
+"""Advanced Logging Dashboard for Haive Framework.
 
 This module provides a sophisticated Rich-based dashboard for real-time
 logging control and monitoring with advanced features.
@@ -12,6 +11,7 @@ from collections import Counter, deque
 from datetime import datetime
 from typing import Any, Deque, Dict, List
 
+from haive.core.logging.control import logging_control
 from rich import box
 from rich.console import Console
 from rich.layout import Layout
@@ -19,8 +19,6 @@ from rich.live import Live
 from rich.panel import Panel
 from rich.table import Table
 from rich.text import Text
-
-from haive.core.logging.control import logging_control
 
 try:
     from prompt_toolkit import prompt
@@ -32,8 +30,7 @@ except ImportError:
 
 
 class LoggingDashboard:
-    """
-    Advanced logging dashboard with real-time monitoring and control.
+    """Advanced logging dashboard with real-time monitoring and control.
 
     Features:
     - Real-time log streaming with filtering
@@ -50,11 +47,11 @@ class LoggingDashboard:
         self.running = False
 
         # Log data structures
-        self.log_buffer: Deque[Dict[str, Any]] = deque(maxlen=1000)
-        self.filtered_logs: List[Dict[str, Any]] = []
+        self.log_buffer: Deque[dict[str, Any]] = deque(maxlen=1000)
+        self.filtered_logs: list[dict[str, Any]] = []
         self.module_activity: Counter = Counter()
         self.level_counts: Counter = Counter()
-        self.error_buffer: Deque[Dict[str, Any]] = deque(maxlen=50)
+        self.error_buffer: Deque[dict[str, Any]] = deque(maxlen=50)
 
         # UI state
         self.active_panel = "logs"  # logs, config, modules, search
@@ -492,13 +489,12 @@ class ModuleActivityVisualizer:
 
     def __init__(self):
         self.console = Console()
-        self.activity_data: Dict[str, List[int]] = {}
+        self.activity_data: dict[str, list[int]] = {}
         self.time_window = 60  # seconds
         self.update_interval = 1  # second
 
     def visualize(self, duration: int = 60):
-        """
-        Visualize module activity for a duration.
+        """Visualize module activity for a duration.
 
         Args:
             duration: How long to monitor (seconds)

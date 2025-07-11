@@ -7,7 +7,7 @@
     "description": "A wrapper around OpenAI DALL-E API. Useful for when you need to generate images from a text description. Input should be an image description.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.758522",
+    "timestamp": "2025-07-10T19:45:28.987588",
     "schema": {
       "properties": {
         "name": {
@@ -43,7 +43,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.758522",
+      "timestamp": "2025-07-10T19:45:28.987588",
       "category": "individual_tools"
     }
   },

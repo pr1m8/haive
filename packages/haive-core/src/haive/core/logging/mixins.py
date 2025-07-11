@@ -1,31 +1,28 @@
 # src/haive/core/logging/mixins.py
 
-"""
-Logging mixins that integrate with the Rich logging system.
-"""
+"""Logging mixins that integrate with the Rich logging system."""
 
 import functools
 import logging
 import time
-from typing import Any, Callable, Dict, Optional, TypeVar
-
-from pydantic import BaseModel, PrivateAttr, computed_field, model_validator
+from collections.abc import Callable
+from typing import Any, Dict, Optional, TypeVar
 
 from haive.core.logging.manager import get_logging_manager
+from pydantic import BaseModel, PrivateAttr, computed_field, model_validator
 
 T = TypeVar("T")
 
 
 class LoggingMixin(BaseModel):
-    """
-    Basic logging mixin for Pydantic models.
+    """Basic logging mixin for Pydantic models.
 
     Provides structured logging with context information.
     """
 
     # Private attributes for logging
-    _logger: Optional[logging.Logger] = PrivateAttr(default=None)
-    _log_context: Optional[Dict[str, Any]] = PrivateAttr(default=None)
+    _logger: logging.Logger | None = PrivateAttr(default=None)
+    _log_context: dict[str, Any] | None = PrivateAttr(default=None)
 
     @model_validator(mode="after")
     def initialize_logger(self) -> "LoggingMixin":
@@ -58,20 +55,20 @@ class LoggingMixin(BaseModel):
 
         if "agent" in class_name or "agent" in module_name:
             return "agent"
-        elif "engine" in class_name or "engine" in module_name:
+        if "engine" in class_name or "engine" in module_name:
             return "engine"
-        elif "graph" in class_name or "graph" in module_name:
+        if "graph" in class_name or "graph" in module_name:
             return "graph"
-        elif "tool" in class_name or "tool" in module_name:
+        if "tool" in class_name or "tool" in module_name:
             return "tool"
-        elif "game" in class_name or "game" in module_name:
+        if "game" in class_name or "game" in module_name:
             return "game"
-        elif "core" in module_name:
+        if "core" in module_name:
             return "core"
         else:
             return "general"
 
-    def _get_log_context(self) -> Dict[str, Any]:
+    def _get_log_context(self) -> dict[str, Any]:
         """Get context information for logging."""
         if self._log_context is not None:
             return self._log_context.copy()
@@ -130,7 +127,7 @@ class LoggingMixin(BaseModel):
         self.logger.handle(record)
 
     def log_error(
-        self, message: str, exception: Optional[Exception] = None, **kwargs
+        self, message: str, exception: Exception | None = None, **kwargs
     ) -> None:
         """Log error message with context and optional exception."""
         context = self._get_log_context()
@@ -154,8 +151,7 @@ class LoggingMixin(BaseModel):
 
 
 class RichLoggerMixin(LoggingMixin):
-    """
-    Enhanced logging mixin with Rich-specific features.
+    """Enhanced logging mixin with Rich-specific features.
 
     Provides beautiful console output with Rich formatting.
     """
@@ -174,7 +170,7 @@ class RichLoggerMixin(LoggingMixin):
         self.logger.handle(record)
 
     def log_performance(
-        self, operation: str, duration: float, details: Optional[Dict[str, Any]] = None
+        self, operation: str, duration: float, details: dict[str, Any] | None = None
     ) -> None:
         """Log performance information with Rich formatting."""
         message = f"{operation} completed in {duration:.3f}s"
@@ -249,15 +245,16 @@ class RichLoggerMixin(LoggingMixin):
         self.log_performance(operation, duration, kwargs)
         return duration
 
-    def log_step(self, step: str, step_number: Optional[int] = None, **kwargs) -> None:
+    def log_step(self, step: str, step_number: int | None = None, **kwargs) -> None:
         """Log a step in a process."""
         context = self._get_log_context()
         context.update(kwargs)
 
-        if step_number is not None:
-            message = f"📋 Step {step_number}: {step}"
-        else:
-            message = f"📋 {step}"
+        message = (
+            f"📋 Step {step_number}: {step}"
+            if step_number is not None
+            else f"📋 {step}"
+        )
 
         record = self.logger.makeRecord(
             self.logger.name, logging.INFO, __file__, 0, message, (), None
@@ -281,12 +278,10 @@ class RichLoggerMixin(LoggingMixin):
 
 
 class PerformanceLoggerMixin(RichLoggerMixin):
-    """
-    Specialized mixin for performance logging with timing utilities.
-    """
+    """Specialized mixin for performance logging with timing utilities."""
 
     # Private attribute for timing operations
-    _operation_timers: Dict[str, float] = PrivateAttr(default_factory=dict)
+    _operation_timers: dict[str, float] = PrivateAttr(default_factory=dict)
 
     def start_timer(self, operation: str) -> None:
         """Start timing an operation."""

@@ -1,8 +1,7 @@
+from haive.agents.react_class.react_agent2.many_tools.models import QueryForTools
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-
-from haive.agents.react_class.react_agent2.many_tools.models import QueryForTools
 
 tool_query_system_messagege = SystemMessage(
     "Given this conversation, generate a query for additional tools. "
@@ -14,8 +13,6 @@ tool_query_prompt_template = ChatPromptTemplate.from_messages(
     [tool_query_system_messagege, MessagesPlaceholder(variable_name="messages")]
 )
 tool_query_builder_aug_llm_config = AugLLMConfig(
-    # model="gpt-4o-mini",
-    # temperature=0.0,
     prompt_template=tool_query_prompt_template,
     structured_output_model=QueryForTools,
 )

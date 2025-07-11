@@ -7,7 +7,7 @@
     "description": "Enumeration of supported vector store types.\n\nThis enum defines all the vector store implementations available in the Haive framework.\nEach type corresponds to a specific vector database or vector storage solution.",
     "source_code": "class VectorStoreType(str, Enum):\n    \"\"\"Enumeration of supported vector store types.\n\n    This enum defines all the vector store implementations available in the Haive framework.\n    Each type corresponds to a specific vector database or vector storage solution.\n    \"\"\"\n\n    # Open source vector databases\n    CHROMA = \"Chroma\"\n    FAISS = \"FAISS\"\n    QDRANT = \"Qdrant\"\n    WEAVIATE = \"Weaviate\"\n    MILVUS = \"Milvus\"\n    LANCEDB = \"LanceDB\"\n\n    # Cloud/Managed vector databases\n    PINECONE = \"Pinecone\"\n    ZILLIZ = \"Zilliz\"\n    MONGODB_ATLAS = \"MongoDBAtlas\"\n    AZURE_SEARCH = \"AzureSearch\"\n    OPENSEARCH = \"OpenSearch\"\n    AMAZON_OPENSEARCH = \"AmazonOpenSearch\"\n    GOOGLE_VERTEX_AI_VECTOR_SEARCH = \"GoogleVertexAIVectorSearch\"\n\n    # Database extensions\n    PGVECTOR = \"PGVector\"\n    SUPABASE = \"Supabase\"\n    CASSANDRA = \"Cassandra\"\n    CLICKHOUSE = \"ClickHouse\"\n    NEO4J = \"Neo4j\"\n\n    # Search engines with vector capabilities\n    ELASTICSEARCH = \"Elasticsearch\"\n    TYPESENSE = \"Typesense\"\n    REDIS = \"Redis\"\n\n    # Specialized vector stores\n    DOCARRAY = \"DocArray\"\n    ANNOY = \"Annoy\"\n    SCANN = \"ScaNN\"\n    HNSW = \"HNSW\"\n    USEARCH = \"USearch\"\n\n    # In-memory and development\n    IN_MEMORY = \"InMemory\"\n    SKLEARN = \"SKLearn\"\n\n    # Graph databases with vector support\n    NEBULA = \"Nebula\"\n    MEMGRAPH = \"Memgraph\"\n\n    # Other specialized stores\n    VECTARA = \"Vectara\"\n    ROCKSET = \"Rockset\"\n    TIGRIS = \"Tigris\"\n    UPSTASH = \"Upstash\"\n    XATA = \"Xata\"\n    YELLOWBRICK = \"Yellowbrick\"\n    MARQO = \"Marqo\"\n    VEARCH = \"Vearch\"\n    ALIBABACLOUD_OPENSEARCH = \"AlibabaCloudOpenSearch\"\n    TENCENT_VECTOR_DB = \"TencentVectorDB\"\n    VERTEX_AI_FEATURE_STORE = \"VertexAIFeatureStore\"\n",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:22.802573",
+    "timestamp": "2025-07-10T19:45:41.362931",
     "schema": {
       "properties": {
         "args": {
@@ -54,7 +54,7 @@
       "has_tool": true,
       "has_engine_config": true,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:22.802573",
+      "timestamp": "2025-07-10T19:45:41.362931",
       "category": "engines"
     }
   },

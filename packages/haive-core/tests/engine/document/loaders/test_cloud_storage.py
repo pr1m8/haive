@@ -17,12 +17,9 @@ from typing import Any, Dict, List, Optional
 base_path = Path("/home/will/Projects/haive/backend/haive/packages/haive-core/src")
 sys.path.insert(0, str(base_path))
 
-print("☁️ Testing Cloud Storage Sources System")
-print("=" * 60)
 
 try:
     # Test importing the cloud storage components
-    print("📦 Testing cloud storage components...")
 
     # Test the enums and basic classes
     from enum import Enum
@@ -65,17 +62,13 @@ try:
         CONNECTION_STRING = "connection_string"
         IAM_ROLE = "iam_role"
 
-    print("✅ Cloud storage enums working correctly!")
 
 except Exception as e:
-    print(f"❌ Enum test failed: {e}")
+    pass")
 
 
 def test_platform_detection():
     """Test cloud platform detection from URLs."""
-
-    print("\n🔍 Testing Platform Detection")
-    print("-" * 40)
 
     def detect_cloud_platform(url_or_path: str):
         """Detect cloud platform from URL or path."""
@@ -111,23 +104,16 @@ def test_platform_detection():
     for url, expected_platform in test_urls.items():
         detected = detect_cloud_platform(url)
         status = "✅" if detected == expected_platform else "❌"
-        print(f"  {status} {url} → {detected}")
         if detected == expected_platform:
             detection_success += 1
 
     success_rate = (detection_success / len(test_urls)) * 100
-    print(
-        f"\n  Success Rate: {detection_success}/{len(test_urls)} ({success_rate:.1f}%)"
-    )
 
     return detection_success >= 6
 
 
 def test_s3_sources():
     """Test AWS S3 source configurations."""
-
-    print("\n🪣 Testing S3 Sources")
-    print("-" * 40)
 
     # Mock S3 source classes
     class MockS3FileSource:
@@ -214,34 +200,23 @@ def test_s3_sources():
         try:
             source = test["source_class"](**test["config"])
 
-            print(f"  ✅ {test['name']}: {source.platform.value}")
 
             if hasattr(source, "scrape_all"):
                 scrape_config = source.scrape_all()
-                print(
-                    f"    Scrape all: bucket={scrape_config['bucket']}, recursive={scrape_config['recursive']}"
-                )
             else:
                 loader_kwargs = source.get_loader_kwargs()
-                print(
-                    f"    Bucket: {loader_kwargs.get('bucket')}, Key: {loader_kwargs.get('key', 'N/A')}"
-                )
 
             s3_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {test['name']}: Error - {e}")
+            pass")
 
-    print(f"\n  S3 Source Tests: {s3_tests_passed}/{len(test_configs)} passed")
 
     return s3_tests_passed >= 2
 
 
 def test_file_sharing_services():
     """Test file sharing service configurations."""
-
-    print("\n📁 Testing File Sharing Services")
-    print("-" * 40)
 
     # Mock file sharing source class
     class MockGoogleDriveSource:
@@ -292,32 +267,19 @@ def test_file_sharing_services():
             if config["platform"] == CloudPlatform.GOOGLE_DRIVE:
                 source = MockGoogleDriveSource(**config)
                 scrape_config = source.scrape_all()
-                print(f"  ✅ {config['name']}: {source.platform.value}")
-                print(
-                    f"    Folder: {config.get('folder_id', 'root')}, Recursive: {config['recursive']}"
-                )
-                print(
-                    f"    Export formats: {len(scrape_config['export_formats'])} configured"
-                )
             else:
-                print(f"  ✅ {config['name']}: {config['platform'].value}")
-                print(f"    Path: {config.get('folder_path', '/')}")
 
             sharing_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {config['name']}: Error - {e}")
+            pass")
 
-    print(f"\n  File Sharing Tests: {sharing_tests_passed}/{len(test_configs)} passed")
 
     return sharing_tests_passed >= 2
 
 
 def test_data_lake_sources():
     """Test data lake source configurations."""
-
-    print("\n🏔️ Testing Data Lake Sources")
-    print("-" * 40)
 
     # Mock data lake source class
     class MockDeltaLakeSource:
@@ -372,37 +334,27 @@ def test_data_lake_sources():
     for config in test_configs:
         try:
             if config.get("platform") == CloudPlatform.APACHE_ICEBERG:
-                print(f"  ✅ {config['name']}: {config['platform'].value}")
-                print(
-                    f"    Table: {config['table']}, Snapshot: {config.get('snapshot_id')}"
-                )
             else:
                 source = MockDeltaLakeSource(**config)
                 loader_kwargs = source.get_loader_kwargs()
 
-                print(f"  ✅ {config['name']}: {source.platform.value}")
-                print(f"    Path: {config['table_path']}")
 
                 if "version" in loader_kwargs:
-                    print(f"    Version: {loader_kwargs['version']}")
+                    pass
                 elif "timestamp" in loader_kwargs:
-                    print(f"    Timestamp: {loader_kwargs['timestamp']}")
+                    pass
 
             lake_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {config['name']}: Error - {e}")
+            pass")
 
-    print(f"\n  Data Lake Tests: {lake_tests_passed}/{len(test_configs)} passed")
 
     return lake_tests_passed >= 2
 
 
 def test_enterprise_storage():
     """Test enterprise storage configurations."""
-
-    print("\n🏢 Testing Enterprise Storage")
-    print("-" * 40)
 
     # Mock SharePoint source class
     class MockSharePointSource:
@@ -443,30 +395,18 @@ def test_enterprise_storage():
             source = MockSharePointSource(**config)
             scrape_config = source.scrape_all()
 
-            print(f"  ✅ {config['name']}: {source.platform.value}")
-            print(f"    Site: {config['site_url']}")
-            print(f"    Library: {source.document_library}")
-            print(
-                f"    Scrape all: recursive={scrape_config['recursive']}, metadata={scrape_config['include_metadata']}"
-            )
 
             enterprise_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {config['name']}: Error - {e}")
+            pass")
 
-    print(
-        f"\n  Enterprise Storage Tests: {enterprise_tests_passed}/{len(test_configs)} passed"
-    )
 
     return enterprise_tests_passed >= 1
 
 
 def test_authentication_types():
     """Test various authentication configurations."""
-
-    print("\n🔐 Testing Authentication Types")
-    print("-" * 40)
 
     auth_tests_passed = 0
     auth_configs = [
@@ -499,15 +439,12 @@ def test_authentication_types():
 
     for config in auth_configs:
         try:
-            print(f"  ✅ {config['platform'].value}: {config['auth_type'].value}")
-            print(f"    Description: {config['description']}")
 
             auth_tests_passed += 1
 
         except Exception as e:
-            print(f"  ❌ {config['platform'].value}: Error - {e}")
+            pass")
 
-    print(f"\n  Authentication Tests: {auth_tests_passed}/{len(auth_configs)} passed")
 
     return auth_tests_passed >= 4
 
@@ -515,61 +452,16 @@ def test_authentication_types():
 def display_cloud_storage_summary():
     """Display summary of the cloud storage implementation."""
 
-    print("\n" + "=" * 60)
-    print("☁️ CLOUD STORAGE SOURCES IMPLEMENTATION")
-    print("=" * 60)
 
-    print(f"\n☁️ MAJOR CLOUD PROVIDERS:")
-    print("  ✅ AWS:")
-    print("    • S3 File & Directory loaders")
-    print("    • IAM role support")
-    print("    • Custom endpoints (MinIO)")
-    print("  ✅ Google Cloud:")
-    print("    • GCS File & Directory loaders")
-    print("    • Service account authentication")
-    print("  ✅ Azure:")
-    print("    • Blob Storage File & Container loaders")
-    print("    • Connection string & SAS tokens")
 
-    print(f"\n📁 FILE SHARING SERVICES:")
-    print("  ✅ Google Drive (OAuth, folder hierarchy)")
-    print("  ✅ Dropbox (OAuth, recursive loading)")
-    print("  ✅ OneDrive (Microsoft Graph API)")
-    print("  ✅ Box (Enterprise features)")
 
-    print(f"\n🏔️ DATA LAKES:")
-    print("  ✅ Delta Lake (time travel, schema evolution)")
-    print("  ✅ Apache Iceberg (snapshot isolation)")
-    print("  ✅ Apache Hudi (incremental processing)")
 
-    print(f"\n🏢 ENTERPRISE STORAGE:")
-    print("  ✅ SharePoint (document libraries)")
-    print("  ✅ MinIO (S3-compatible)")
-    print("  ✅ Ceph (distributed storage)")
 
-    print(f"\n⚡ PERFORMANCE FEATURES:")
-    print("  • Parallel loading (up to 50 concurrent)")
-    print("  • Streaming for large files")
-    print("  • Glob pattern filtering")
-    print("  • Recursive directory traversal")
-    print("  • Metadata preservation")
 
-    print(f"\n🔐 SECURITY FEATURES:")
-    print("  • Multiple auth methods")
-    print("  • Credential encryption")
-    print("  • IAM/RBAC support")
-    print("  • Private endpoint support")
-
-    print("\n" + "=" * 60)
-    print("🎉 CLOUD STORAGE PHASE 9 COMPLETE!")
-    print("=" * 60)
 
 
 def main():
     """Run all cloud storage tests."""
-
-    print("\n🧪 Running Cloud Storage Tests")
-    print("=" * 40)
 
     tests_passed = 0
     total_tests = 6
@@ -577,57 +469,46 @@ def main():
     # Test 1: Platform Detection
     if test_platform_detection():
         tests_passed += 1
-        print("✅ Platform Detection: PASS")
     else:
-        print("❌ Platform Detection: FAIL")
+        pass")
 
     # Test 2: S3 Sources
     if test_s3_sources():
         tests_passed += 1
-        print("✅ S3 Sources: PASS")
     else:
-        print("❌ S3 Sources: FAIL")
+        pass")
 
     # Test 3: File Sharing Services
     if test_file_sharing_services():
         tests_passed += 1
-        print("✅ File Sharing Services: PASS")
     else:
-        print("❌ File Sharing Services: FAIL")
+        pass")
 
     # Test 4: Data Lake Sources
     if test_data_lake_sources():
         tests_passed += 1
-        print("✅ Data Lake Sources: PASS")
     else:
-        print("❌ Data Lake Sources: FAIL")
+        pass")
 
     # Test 5: Enterprise Storage
     if test_enterprise_storage():
         tests_passed += 1
-        print("✅ Enterprise Storage: PASS")
     else:
-        print("❌ Enterprise Storage: FAIL")
+        pass")
 
     # Test 6: Authentication Types
     if test_authentication_types():
         tests_passed += 1
-        print("✅ Authentication Types: PASS")
     else:
-        print("❌ Authentication Types: FAIL")
+        pass")
 
     # Results
-    print(
-        f"\n🎯 TEST RESULTS: {tests_passed}/{total_tests} tests passed ({(tests_passed/total_tests*100):.1f}%)"
-    )
 
     if tests_passed >= 5:
-        print("🎉 CLOUD STORAGE: EXCELLENT IMPLEMENTATION!")
         display_cloud_storage_summary()
         return True
-    else:
-        print("⚠️ CLOUD STORAGE: NEEDS IMPROVEMENT")
-        return False
+    print("⚠️ CLOUD STORAGE: NEEDS IMPROVEMENT")
+    return False
 
 
 if __name__ == "__main__":

@@ -11,7 +11,12 @@ Tests for:
 from typing import Any, Dict, List, Optional
 from unittest.mock import Mock, patch
 
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
+from pydantic import BaseModel, Field
 import pytest
+
+from haive.agents.multi.base import SequentialAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.agent_composer import AgentSchemaComposer
 from haive.core.schema.auto_compatibility import AutoCompatibilitySystem
@@ -21,11 +26,6 @@ from haive.core.schema.enhanced_schema_composer import (
     SeparationStrategy,
 )
 from haive.core.schema.state import MessagesState, StateSchema, ToolState
-from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
-from pydantic import BaseModel, Field
-
-from haive.agents.multi.base import SequentialAgent
-from haive.agents.simple.agent import SimpleAgent
 
 
 # Test Schemas
@@ -33,21 +33,21 @@ class QuerySchema(BaseModel):
     """Input schema for query processing."""
 
     query: str = Field(description="User query")
-    context: Optional[List[str]] = Field(default=None, description="Context")
+    context: list[str] | None = Field(default=None, description="Context")
 
 
 class AnalysisSchema(BaseModel):
     """Output schema for analysis."""
 
     summary: str = Field(description="Analysis summary")
-    entities: List[str] = Field(default_factory=list, description="Extracted entities")
+    entities: list[str] = Field(default_factory=list, description="Extracted entities")
     confidence: float = Field(default=0.0, ge=0, le=1)
 
 
 class RecommendationSchema(BaseModel):
     """Schema for recommendations."""
 
-    recommendations: List[str] = Field(description="List of recommendations")
+    recommendations: list[str] = Field(description="List of recommendations")
     priority: str = Field(default="medium", description="Priority level")
 
 
@@ -60,11 +60,11 @@ def mock_query_engine():
 
     engine.get_input_fields.return_value = {
         "query": (str, Field(description="Query")),
-        "messages": (List[BaseMessage], Field(default_factory=list)),
+        "messages": (list[BaseMessage], Field(default_factory=list)),
     }
     engine.get_output_fields.return_value = {
         "response": (str, Field(description="Response")),
-        "entities": (List[str], Field(default_factory=list)),
+        "entities": (list[str], Field(default_factory=list)),
     }
 
     engine.derive_input_schema.return_value = QuerySchema
@@ -81,10 +81,10 @@ def mock_analysis_engine():
 
     engine.get_input_fields.return_value = {
         "summary": (str, Field(description="Summary to analyze")),
-        "entities": (List[str], Field(default_factory=list)),
+        "entities": (list[str], Field(default_factory=list)),
     }
     engine.get_output_fields.return_value = {
-        "recommendations": (List[str], Field(default_factory=list)),
+        "recommendations": (list[str], Field(default_factory=list)),
         "priority": (str, Field(default="medium")),
     }
 
@@ -100,7 +100,7 @@ class TestSchemaComposer:
 
         # Add fields
         composer.add_field("query", str, default="")
-        composer.add_field("results", List[str], default_factory=list)
+        composer.add_field("results", list[str], default_factory=list)
         composer.add_field("confidence", float, default=0.0)
 
         # Build schema
@@ -144,7 +144,7 @@ class TestSchemaComposer:
         from langchain_core.messages import add_messages
 
         composer.add_field(
-            "messages", List[BaseMessage], default_factory=list, reducer=add_messages
+            "messages", list[BaseMessage], default_factory=list, reducer=add_messages
         )
 
         schema = composer.build()
@@ -240,7 +240,7 @@ class TestEnhancedSchemaComposer:
         engine2 = Mock()
         engine2.get_input_fields.return_value = {"data": (int, Field())}  # Conflict!
         engine2.get_output_fields.return_value = {
-            "result": (List[str], Field())
+            "result": (list[str], Field())
         }  # Conflict!
 
         agent1 = Mock(engines={"e1": engine1})
@@ -282,12 +282,12 @@ class TestSchemaCompatibility:
 
         class Schema1(BaseModel):
             query: str
-            context: Optional[List[str]] = None
+            context: list[str] | None = None
 
         class Schema2(BaseModel):
             query: str
-            context: Optional[List[str]] = None
-            extra: Optional[str] = None  # Optional extra field
+            context: list[str] | None = None
+            extra: str | None = None  # Optional extra field
 
         report = compatibility_system.check_compatibility(Schema1, Schema2)
 
@@ -333,7 +333,7 @@ class TestMultiAgentSchemaIntegration:
             analysis_agent = SimpleAgent(engine=mock_analysis_engine, name="analyzer")
 
             # Test schema compatibility
-            compatibility_system = AutoCompatibilitySystem()
+            AutoCompatibilitySystem()
 
             # In a real sequential flow, output of agent1 should be compatible with input of agent2
             # This would check query_agent.output_schema vs analysis_agent.input_schema
@@ -354,7 +354,7 @@ class TestMultiAgentSchemaIntegration:
 
         # Add fields with engine mappings
         composer.add_field("query", str)
-        composer.add_field("entities", List[str], default_factory=list)
+        composer.add_field("entities", list[str], default_factory=list)
         composer.add_field("summary", str, default="")
 
         schema = composer.build()

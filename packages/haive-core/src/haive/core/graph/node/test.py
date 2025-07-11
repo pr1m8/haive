@@ -1,7 +1,7 @@
 # test_node_factory.py
 
-import uuid
 from typing import List
+import uuid
 
 from langchain_core.messages import HumanMessage
 from langgraph.graph import END
@@ -15,7 +15,7 @@ from haive.core.schema.schema_composer import SchemaComposer
 
 # Define a test output schema
 class Plan(BaseModel):
-    Steps: List[str] = Field(description="A list of steps to complete the task")
+    Steps: list[str] = Field(description="A list of steps to complete the task")
 
 
 # Create an AugLLM engine
@@ -52,12 +52,7 @@ test_state = {"messages": [HumanMessage(content="Write a plan for building a web
 result = node_function(test_state)
 
 # Print the result
-print("Result type:", type(result))
-print("Command goto:", result.goto)
-print("Command update:", result.update)
 
 # Check if plan was generated
 if "plan" in result.update:
     plan = result.update["plan"]
-    print("\nGenerated Plan:")
-    print("Steps:", plan.Steps if hasattr(plan, "Steps") else plan)

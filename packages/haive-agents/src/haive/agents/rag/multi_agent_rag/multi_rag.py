@@ -1,4 +1,4 @@
-"""Multi-Agent RAG System Implementation
+"""Multi-Agent RAG System Implementation.
 
 This module provides complete multi-agent RAG workflows using the multi-agent framework
 with conditional routing, sequential processing, and parallel execution patterns.
@@ -7,11 +7,10 @@ with conditional routing, sequential processing, and parallel execution patterns
 from collections.abc import Callable
 from typing import Any
 
+from haive.agents.multi.base import ConditionalAgent, ParallelAgent, SequentialAgent
 from haive.core.fixtures.documents import conversation_documents
 from haive.core.schema.compatibility import check_compatibility
 from langchain_core.documents import Document
-
-from haive.agents.multi.base import ConditionalAgent, ParallelAgent, SequentialAgent
 
 from .agents import (
     SIMPLE_RAG_AGENT,

@@ -1,12 +1,11 @@
 # src/haive/agents/self_discovery/state.py
-"""
-State schema for Self-Discovery reasoning system.
-"""
+"""State schema for Self-Discovery reasoning system."""
 
 from typing import Any, Dict, List, Optional
 
-from haive.core.schema.prebuilt.messages.messages_state import MessagesState
 from pydantic import Field
+
+from haive.core.schema.prebuilt.messages.messages_state import MessagesState
 
 
 class SelfDiscoveryState(MessagesState):
@@ -19,18 +18,18 @@ class SelfDiscoveryState(MessagesState):
     task_description: str = Field(description="The task to be solved")
 
     # Intermediate fields
-    selected_modules: Optional[List[str]] = Field(
+    selected_modules: list[str] | None = Field(
         default=None, description="Selected reasoning modules for the task"
     )
-    adapted_modules: Optional[List[Dict[str, str]]] = Field(
+    adapted_modules: list[dict[str, str]] | None = Field(
         default=None, description="Adapted modules specific to the task"
     )
-    reasoning_structure: Optional[Dict[str, Any]] = Field(
+    reasoning_structure: dict[str, Any] | None = Field(
         default=None, description="Step-by-step reasoning structure"
     )
 
     # Output field
-    answer: Optional[str] = Field(default=None, description="Final answer to the task")
+    answer: str | None = Field(default=None, description="Final answer to the task")
 
     # Shared fields for LangGraph
     __shared_fields__ = [

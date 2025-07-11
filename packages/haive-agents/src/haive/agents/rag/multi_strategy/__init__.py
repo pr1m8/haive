@@ -1,4 +1,4 @@
-"""Multi Strategy - TODO: Add brief description
+"""Multi Strategy - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

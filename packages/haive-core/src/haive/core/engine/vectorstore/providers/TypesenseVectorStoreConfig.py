@@ -1,5 +1,4 @@
-"""
-Typesense Vector Store implementation for the Haive framework.
+"""Typesense Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the Typesense vector store,
 which combines typo-tolerant search with vector similarity.
@@ -35,8 +34,7 @@ from haive.core.engine.vectorstore.types import VectorStoreType
 
 @BaseVectorStoreConfig.register(VectorStoreType.TYPESENSE)
 class TypesenseVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
-    """
-    Configuration for Typesense vector store in the Haive framework.
+    """Configuration for Typesense vector store in the Haive framework.
 
     This vector store uses Typesense for typo-tolerant search combined
     with vector similarity capabilities.
@@ -92,8 +90,7 @@ class TypesenseVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
         default="http", description="Connection protocol: 'http' or 'https'"
     )
 
-    # Authentication (SecureConfigMixin)
-    api_key: Optional[str] = Field(
+    api_key: str | None = Field(
         default=None,
         description="Typesense API key (auto-resolved from TYPESENSE_API_KEY)",
     )
@@ -123,7 +120,7 @@ class TypesenseVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
     )
 
     @validator("protocol")
-    def validate_protocol(cls, v):
+    def validate_protocol(self, v):
         """Validate protocol is supported."""
         valid_protocols = ["http", "https"]
         if v not in valid_protocols:
@@ -131,7 +128,7 @@ class TypesenseVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
         return v
 
     @validator("port")
-    def validate_port(cls, v):
+    def validate_port(self, v):
         """Validate port is numeric."""
         try:
             port_num = int(v)
@@ -142,7 +139,7 @@ class TypesenseVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
         return v
 
     @validator("collection_name")
-    def validate_collection_name(cls, v):
+    def validate_collection_name(self, v):
         """Validate collection name format."""
         if not v or len(v.strip()) == 0:
             raise ValueError("collection_name cannot be empty")
@@ -155,27 +152,26 @@ class TypesenseVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
             )
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Typesense vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Typesense vector store."""
         return {
             "ids": (
-                List[str],
+                list[str],
                 Field(description="IDs of the added documents in Typesense"),
             ),
         }
 
     def instantiate(self):
-        """
-        Create a Typesense vector store from this configuration.
+        """Create a Typesense vector store from this configuration.
 
         Returns:
             Typesense: Instantiated Typesense vector store.
@@ -185,8 +181,8 @@ class TypesenseVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
             ValueError: If configuration is invalid.
         """
         try:
-            import typesense
             from langchain_community.vectorstores import Typesense
+            import typesense
         except ImportError:
             raise ImportError(
                 "Typesense requires typesense package. "

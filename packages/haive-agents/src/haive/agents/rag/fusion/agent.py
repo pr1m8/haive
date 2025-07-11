@@ -1,4 +1,4 @@
-"""RAG Fusion Agents
+"""RAG Fusion Agents.
 
 Implementation of RAG Fusion with reciprocal rank fusion for enhanced retrieval.
 Based on the architecture pattern from rag-architectures-flows.md.
@@ -8,6 +8,10 @@ import logging
 import math
 from typing import Any, Dict, List, Optional, Union
 
+from haive.agents.base.agent import Agent
+from haive.agents.multi.base import ParallelAgent, SequentialAgent
+from haive.agents.rag.base.agent import BaseRAGAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
@@ -17,11 +21,6 @@ from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field, PrivateAttr
 
-from haive.agents.base.agent import Agent
-from haive.agents.multi.base import ParallelAgent, SequentialAgent
-from haive.agents.rag.base.agent import BaseRAGAgent
-from haive.agents.simple.agent import SimpleAgent
-
 logger = logging.getLogger(__name__)
 
 
@@ -29,13 +28,13 @@ class QueryVariationsFusion(BaseModel):
     """Enhanced query variations for fusion."""
 
     original_query: str = Field(description="Original query")
-    semantic_variations: List[str] = Field(
+    semantic_variations: list[str] = Field(
         description="Semantically similar variations"
     )
-    syntactic_variations: List[str] = Field(
+    syntactic_variations: list[str] = Field(
         description="Syntactically different variations"
     )
-    context_variations: List[str] = Field(description="Context-specific variations")
+    context_variations: list[str] = Field(description="Context-specific variations")
 
     fusion_strategy: str = Field(description="Recommended fusion strategy")
     expected_overlap: float = Field(
@@ -46,11 +45,11 @@ class QueryVariationsFusion(BaseModel):
 class FusionResult(BaseModel):
     """Results from reciprocal rank fusion."""
 
-    original_rankings: Dict[str, List[str]] = Field(
+    original_rankings: dict[str, list[str]] = Field(
         description="Original rankings per query"
     )
-    fused_ranking: List[str] = Field(description="Final fused ranking")
-    fusion_scores: Dict[str, float] = Field(description="RRF scores per document")
+    fused_ranking: list[str] = Field(description="Final fused ranking")
+    fusion_scores: dict[str, float] = Field(description="RRF scores per document")
 
     confidence: float = Field(ge=0.0, le=1.0, description="Confidence in fusion")
     diversity_score: float = Field(ge=0.0, le=1.0, description="Diversity of results")
@@ -69,7 +68,7 @@ QUERY_EXPANSION_FUSION_PROMPT = ChatPromptTemplate.from_messages(
 Create multiple query variations that will retrieve complementary information:
 
 1. **Semantic Variations**: Different ways to express the same meaning
-2. **Syntactic Variations**: Different sentence structures and phrasings  
+2. **Syntactic Variations**: Different sentence structures and phrasings
 3. **Context Variations**: Questions that provide different contextual angles
 
 The goal is to maximize retrieval coverage while maintaining relevance.
@@ -99,8 +98,8 @@ FUSION_ANSWER_PROMPT = ChatPromptTemplate.from_messages(
             "system",
             """You are an expert at synthesizing information from multiple retrieval results.
 
-You have access to documents retrieved using different query variations and ranked using 
-Reciprocal Rank Fusion. The highest-ranked documents are the most relevant across 
+You have access to documents retrieved using different query variations and ranked using
+Reciprocal Rank Fusion. The highest-ranked documents are the most relevant across
 multiple query perspectives.
 
 Key principles:
@@ -146,11 +145,11 @@ class ReciprocalRankFusionAgent(Agent):
         """Build RRF fusion graph."""
         graph = BaseGraph(name="ReciprocalRankFusion")
 
-        def perform_rrf_fusion(state: Dict[str, Any]) -> Dict[str, Any]:
+        def perform_rrf_fusion(state: dict[str, Any]) -> dict[str, Any]:
             """Perform reciprocal rank fusion on multiple document lists."""
             # Get multiple retrieval results
             retrieval_results = getattr(state, "retrieval_results", {})
-            query_variations = getattr(state, "query_variations", [])
+            getattr(state, "query_variations", [])
 
             if not retrieval_results:
                 # Try to get from individual fields
@@ -209,12 +208,12 @@ class ReciprocalRankFusionAgent(Agent):
         return graph
 
     def _calculate_rrf_scores(
-        self, retrieval_results: Dict[str, List[Document]]
-    ) -> Dict[str, float]:
+        self, retrieval_results: dict[str, list[Document]]
+    ) -> dict[str, float]:
         """Calculate RRF scores for all documents."""
         doc_scores = {}
 
-        for query, docs in retrieval_results.items():
+        for _query, docs in retrieval_results.items():
             for rank, doc in enumerate(docs):
                 doc_id = self._doc_id(doc)
                 rrf_score = 1.0 / (self.k_parameter + rank + 1)
@@ -230,7 +229,7 @@ class ReciprocalRankFusionAgent(Agent):
         return str(hash(doc.page_content[:100]))
 
     def _calculate_confidence(
-        self, retrieval_results: Dict[str, List[Document]]
+        self, retrieval_results: dict[str, list[Document]]
     ) -> float:
         """Calculate confidence in fusion results."""
         if len(retrieval_results) < 2:
@@ -239,7 +238,7 @@ class ReciprocalRankFusionAgent(Agent):
         # Calculate overlap between top results
         top_docs = {}
         for query, docs in retrieval_results.items():
-            top_docs[query] = set(self._doc_id(doc) for doc in docs[:5])
+            top_docs[query] = set(self._doc_id(doc) for doc in docs[:5]}
 
         # Average pairwise overlap
         overlaps = []
@@ -253,7 +252,7 @@ class ReciprocalRankFusionAgent(Agent):
         return sum(overlaps) / len(overlaps) if overlaps else 0.5
 
     def _calculate_diversity(
-        self, retrieval_results: Dict[str, List[Document]]
+        self, retrieval_results: dict[str, list[Document]]
     ) -> float:
         """Calculate diversity of retrieval results."""
         all_docs = set()
@@ -267,7 +266,7 @@ class ReciprocalRankFusionAgent(Agent):
         return len(all_docs) / max(total_docs, 1) if total_docs > 0 else 0.0
 
     def _calculate_consensus(
-        self, retrieval_results: Dict[str, List[Document]]
+        self, retrieval_results: dict[str, list[Document]]
     ) -> float:
         """Calculate consensus level across queries."""
         if len(retrieval_results) < 2:
@@ -287,8 +286,8 @@ class ReciprocalRankFusionAgent(Agent):
         return multi_query_docs / max(total_unique_docs, 1)
 
     def _build_doc_lookup(
-        self, retrieval_results: Dict[str, List[Document]]
-    ) -> Dict[str, Document]:
+        self, retrieval_results: dict[str, list[Document]]
+    ) -> dict[str, Document]:
         """Build lookup from doc ID to document."""
         lookup = {}
         for docs in retrieval_results.values():
@@ -303,9 +302,9 @@ class RAGFusionAgent(SequentialAgent):
     @classmethod
     def from_documents(
         cls,
-        documents: List[Document],
-        llm_config: Optional[LLMConfig] = None,
-        embedding_model: Optional[str] = None,
+        documents: list[Document],
+        llm_config: LLMConfig | None = None,
+        embedding_model: str | None = None,
         num_variations: int = 3,
         k_parameter: float = 60.0,
         **kwargs,
@@ -373,13 +372,13 @@ class RAGFusionAgent(SequentialAgent):
 
 
 def create_multi_query_retrieval_callable(
-    documents: List[Document],
-    embedding_model: Optional[str] = None,
+    documents: list[Document],
+    embedding_model: str | None = None,
     max_docs_per_query: int = 10,
 ):
     """Create a callable function for multi-query retrieval that can be used as a graph node."""
 
-    def multi_query_retrieve(state: Dict[str, Any]) -> Dict[str, Any]:
+    def multi_query_retrieve(state: dict[str, Any]) -> dict[str, Any]:
         """Retrieve documents for multiple query variations using callable node pattern."""
         # Get query variations from state (should be from RAGState)
         variations_fusion = getattr(state, "query_variations_fusion", None)
@@ -396,7 +395,7 @@ def create_multi_query_retrieval_callable(
             all_queries = [original_query]
 
         # Remove duplicates and empty queries
-        all_queries = list(set(q.strip() for q in all_queries if q.strip()))
+        all_queries = list(set(q.strip() for q in all_queries if q.strip()})
         logger.info(
             f"Multi-query retrieval with {len(all_queries)} queries: {all_queries}"
         )
@@ -456,8 +455,8 @@ class MultiQueryRetrievalAgent(Agent):
 
     name: str = "Multi-Query Retrieval"
     # Define Pydantic fields properly
-    documents: List[Document] = Field(description="Documents for retrieval")
-    embedding_model: Optional[str] = Field(default=None, description="Embedding model")
+    documents: list[Document] = Field(description="Documents for retrieval")
+    embedding_model: str | None = Field(default=None, description="Embedding model")
     max_docs_per_query: int = Field(default=10, description="Max docs per query")
 
     def build_graph(self) -> BaseGraph:
@@ -481,8 +480,8 @@ class MultiQueryRetrievalAgent(Agent):
 
 # Factory function for easy creation
 def create_rag_fusion_agent(
-    documents: List[Document],
-    llm_config: Optional[LLMConfig] = None,
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
     fusion_type: str = "standard",
     **kwargs,
 ) -> RAGFusionAgent:
@@ -514,7 +513,7 @@ def create_rag_fusion_agent(
 
 
 # I/O schema for compatibility
-def get_rag_fusion_io_schema() -> Dict[str, List[str]]:
+def get_rag_fusion_io_schema() -> dict[str, list[str]]:
     """Get I/O schema for RAG Fusion agents."""
     return {
         "inputs": ["query", "messages"],

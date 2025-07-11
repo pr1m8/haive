@@ -7,7 +7,7 @@
     "description": "Scrape web pages using WebBaseLoader to extract detailed content information.\n\n    This tool uses langchain's WebBaseLoader to fetch and parse content from specified URLs,\n    returning the extracted content in a formatted document structure.\n\n    Args:\n        urls (List[str]): The list of URLs to scrape for content.\n\n    Returns:\n        str: The scraped content from all URLs in a structured format with document titles.\n\n    Raises:\n        Exception: If URL scraping fails due to network issues, invalid URLs, or access restrictions.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.755006",
+    "timestamp": "2025-07-10T19:45:28.983911",
     "schema": {
       "description": "Scrape web pages using WebBaseLoader to extract detailed content information.\n\nThis tool uses langchain's WebBaseLoader to fetch and parse content from specified URLs,\nreturning the extracted content in a formatted document structure.\n\nArgs:\n    urls (List[str]): The list of URLs to scrape for content.\n\nReturns:\n    str: The scraped content from all URLs in a structured format with document titles.\n\nRaises:\n    Exception: If URL scraping fails due to network issues, invalid URLs, or access restrictions.",
       "properties": {
@@ -38,7 +38,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.755006",
+      "timestamp": "2025-07-10T19:45:28.983911",
       "category": "individual_tools"
     }
   },

@@ -1,18 +1,16 @@
-"""
-Utilities for working with fields and state objects.
-"""
+"""Utilities for working with fields and state objects."""
 
 import inspect
 import logging
 import re
 from typing import Any, Optional, Set
 
+
 logger = logging.getLogger(__name__)
 
 
 def extract_field(state: Any, field_path: str) -> Any:
-    """
-    Extract a field value from state using a path.
+    """Extract a field value from state using a path.
 
     Supports:
     - Simple keys: "fieldname"
@@ -33,7 +31,7 @@ def extract_field(state: Any, field_path: str) -> Any:
     # Handle special keys
     if field_path == "messages.last.content":
         messages = get_field_value(state, "messages")
-        if not messages or not isinstance(messages, (list, tuple)) or not messages:
+        if not messages or not isinstance(messages, list | tuple) or not messages:
             return None
         last_message = messages[-1]
         return get_field_value(last_message, "content")
@@ -47,7 +45,7 @@ def extract_field(state: Any, field_path: str) -> Any:
             # Try to convert numeric indices
             if part.isdigit():
                 part = int(part)
-            elif part == "last" and isinstance(current, (list, tuple)) and current:
+            elif part == "last" and isinstance(current, list | tuple) and current:
                 part = -1
 
             # Get next level
@@ -62,8 +60,7 @@ def extract_field(state: Any, field_path: str) -> Any:
 
 
 def get_field_value(obj: Any, key: Any) -> Any:
-    """
-    Get a field value using various access methods.
+    """Get a field value using various access methods.
 
     Args:
         obj: Object to extract from
@@ -73,10 +70,10 @@ def get_field_value(obj: Any, key: Any) -> Any:
         Extracted value or None if not found
     """
     # Handle indexing for lists and tuples
-    if isinstance(obj, (list, tuple)):
+    if isinstance(obj, list | tuple):
         try:
             if isinstance(key, int) and (
-                0 <= key < len(obj) or key < 0 and abs(key) <= len(obj)
+                0 <= key < len(obj) or (key < 0 and abs(key) <= len(obj))
             ):
                 return obj[key]
         except (IndexError, TypeError):
@@ -102,9 +99,8 @@ def get_field_value(obj: Any, key: Any) -> Any:
     return None
 
 
-def extract_fields_from_function(func: callable) -> Set[str]:
-    """
-    Extract field references from a function.
+def extract_fields_from_function(func: callable) -> set[str]:
+    """Extract field references from a function.
 
     Args:
         func: Function to analyze
@@ -125,7 +121,7 @@ def extract_fields_from_function(func: callable) -> Set[str]:
 
         fields.update(dict_refs)
         fields.update(attr_refs)
-    except (IOError, TypeError):
+    except (OSError, TypeError):
         pass
 
     return fields
@@ -138,11 +134,8 @@ def extract_base_field(field_path: str) -> str:
     return field_path.split(".")[0] if "." in field_path else field_path
 
 
-def get_last_message_content(
-    state: Any, message_key: str = "messages"
-) -> Optional[str]:
-    """
-    Get the content of the last message from state.
+def get_last_message_content(state: Any, message_key: str = "messages") -> str | None:
+    """Get the content of the last message from state.
 
     Args:
         state: State object
@@ -152,7 +145,7 @@ def get_last_message_content(
         Content string or None
     """
     messages = extract_field(state, message_key)
-    if not messages or not isinstance(messages, (list, tuple)) or not messages:
+    if not messages or not isinstance(messages, list | tuple) or not messages:
         return None
 
     last_message = messages[-1]
@@ -160,9 +153,9 @@ def get_last_message_content(
     # Try different ways to get message content
     if hasattr(last_message, "content"):
         return last_message.content
-    elif isinstance(last_message, dict) and "content" in last_message:
+    if isinstance(last_message, dict) and "content" in last_message:
         return last_message["content"]
-    elif isinstance(last_message, (list, tuple)) and len(last_message) >= 2:
+    if isinstance(last_message, list | tuple) and len(last_message) >= 2:
         # Might be a (role, content) tuple
         return last_message[1]
 

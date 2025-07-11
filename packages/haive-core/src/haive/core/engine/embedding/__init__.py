@@ -55,8 +55,8 @@ from .types import EmbeddingType
 
 __all__ = [
     "BaseEmbeddingConfig",
+    "EmbeddingConfigFactory",
     "EmbeddingType",
     "create_embedding_config",
-    "EmbeddingConfigFactory",
     "providers",
 ]

@@ -1,5 +1,4 @@
-"""
-PubMed Retriever implementation for the Haive framework.
+"""PubMed Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the PubMed retriever,
 which retrieves biomedical and life science literature from the PubMed database.
@@ -34,8 +33,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.PUBMED)
 class PubMedRetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for PubMed retriever in the Haive framework.
+    """Configuration for PubMed retriever in the Haive framework.
 
     This retriever searches the PubMed database for biomedical literature
     and returns article abstracts and metadata as documents.
@@ -97,31 +95,31 @@ class PubMedRetrieverConfig(BaseRetrieverConfig):
     )
 
     # API configuration
-    email: Optional[str] = Field(
+    email: str | None = Field(
         default=None,
         description="Email address for NCBI API (recommended for higher rate limits)",
     )
 
     # Search filters
-    min_year: Optional[int] = Field(
+    min_year: int | None = Field(
         default=None, ge=1900, le=2030, description="Minimum publication year filter"
     )
 
-    max_year: Optional[int] = Field(
+    max_year: int | None = Field(
         default=None, ge=1900, le=2030, description="Maximum publication year filter"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for PubMed retriever."""
         return {
             "query": (str, Field(description="Biomedical search query for PubMed")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for PubMed retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list, description="Biomedical articles from PubMed"
                 ),
@@ -129,8 +127,7 @@ class PubMedRetrieverConfig(BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a PubMed retriever from this configuration.
+        """Create a PubMed retriever from this configuration.
 
         Returns:
             PubMedRetriever: Instantiated retriever ready for biomedical literature search.

@@ -22,16 +22,15 @@ if TYPE_CHECKING:
 
 
 def register_component(
-    registry_getter: Union[str, Callable[[], "AbstractRegistry"]] = None,
+    registry_getter: str | Callable[[], "AbstractRegistry"] = None,
     component_type: Any = None,
     auto_register: bool = True,
-    metadata: Optional[Dict[str, Any]] = None,
-    extract_fields: Optional[List[str]] = None,
-    transform: Optional[Callable[[Any], Any]] = None,
+    metadata: Dict[str, Any] | None = None,
+    extract_fields: List[str] | None = None,
+    transform: Callable[[Any], Any] | None = None,
     registry_method: str = "register",
 ):
-    """
-    Universal decorator for registering components with any registry.
+    """Universal decorator for registering components with any registry.
 
     Args:
         registry_getter: String name of registry or callable that returns the registry instance
@@ -46,7 +45,7 @@ def register_component(
         Decorated class with registration capabilities
     """
 
-    def decorator(cls: Type[T]) -> Type[T]:
+    def decorator(cls: type[T]) -> type[T]:
         # Store original __init__
         original_init = cls.__init__
 

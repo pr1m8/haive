@@ -1,6 +1,5 @@
 # src/haive/core/graph/node/utils.py
-"""
-Utility functions for creating and working with nodes.
+"""Utility functions for creating and working with nodes.
 
 This module provides convenience functions for creating different types of nodes
 and extracting information from schemas for node integration.
@@ -16,20 +15,20 @@ from haive.core.graph.node.config import NodeConfig
 from haive.core.graph.node.factory import NodeFactory
 from haive.core.graph.node.types import CommandGoto, NodeType
 
+
 logger = logging.getLogger(__name__)
 
 
 def create_node(
     engine_or_callable: Any,
-    name: Optional[str] = None,
-    command_goto: Optional[CommandGoto] = None,
-    input_mapping: Optional[Dict[str, str]] = None,
-    output_mapping: Optional[Dict[str, str]] = None,
-    retry_policy: Optional[RetryPolicy] = None,
+    name: str | None = None,
+    command_goto: CommandGoto | None = None,
+    input_mapping: dict[str, str] | None = None,
+    output_mapping: dict[str, str] | None = None,
+    retry_policy: RetryPolicy | None = None,
     **kwargs,
 ) -> Callable:
-    """
-    Create a node from an engine or callable.
+    """Create a node from an engine or callable.
 
     Args:
         engine_or_callable: Engine, engine name, or callable function
@@ -72,14 +71,13 @@ def create_node(
 
 
 def create_validation_node(
-    schemas: List[Union[Type[BaseModel], Callable]],
-    name: Optional[str] = None,
-    command_goto: Optional[CommandGoto] = None,
+    schemas: list[type[BaseModel] | Callable],
+    name: str | None = None,
+    command_goto: CommandGoto | None = None,
     messages_field: str = "messages",
     **kwargs,
 ) -> Callable:
-    """
-    Create a validation node.
+    """Create a validation node.
 
     Args:
         schemas: List of validation schemas or functions
@@ -107,13 +105,12 @@ def create_validation_node(
 
 def create_branch_node(
     condition: Callable,
-    routes: Dict[Any, str],
-    name: Optional[str] = None,
-    input_mapping: Optional[Dict[str, str]] = None,
+    routes: dict[Any, str],
+    name: str | None = None,
+    input_mapping: dict[str, str] | None = None,
     **kwargs,
 ) -> Callable:
-    """
-    Create a branch node.
+    """Create a branch node.
 
     Args:
         condition: Function that evaluates the state and returns a key for routing
@@ -137,17 +134,16 @@ def create_branch_node(
 
 
 def create_send_node(
-    send_targets: List[str],
-    send_field: Optional[str] = None,
-    name: Optional[str] = None,
-    input_mapping: Optional[Dict[str, str]] = None,
+    send_targets: list[str],
+    send_field: str | None = None,
+    name: str | None = None,
+    input_mapping: dict[str, str] | None = None,
     distribution: str = "round_robin",
-    payload_extractor: Optional[Callable] = None,
+    payload_extractor: Callable | None = None,
     send_all_to_each: bool = False,
     **kwargs,
 ) -> Callable:
-    """
-    Create a send node for fan-out operations.
+    """Create a send node for fan-out operations.
 
     Args:
         send_targets: List of target node names to send items to
@@ -184,10 +180,9 @@ def create_send_node(
 
 
 def extract_io_mapping_from_schema(
-    schema: Type, engine_id: str
-) -> Dict[str, Dict[str, str]]:
-    """
-    Extract input and output mappings from a schema for a specific engine.
+    schema: type, engine_id: str
+) -> dict[str, dict[str, str]]:
+    """Extract input and output mappings from a schema for a specific engine.
 
     Args:
         schema: StateSchema class

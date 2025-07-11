@@ -1,6 +1,7 @@
 # Engine Serialization Issue
 
 ## Problem
+
 When EngineType enum is serialized, it's showing as 'EngineType.LLM' instead of 'llm'.
 
 ## Root Cause Analysis
@@ -31,7 +32,7 @@ from pydantic import field_serializer
 class Engine(ABC, BaseModel, Generic[TIn, TOut]):
     # ... existing fields ...
     engine_type: EngineType = Field(description="Type of engine")
-    
+
     @field_serializer('engine_type')
     def serialize_engine_type(self, engine_type: EngineType) -> str:
         """Ensure engine_type is serialized as its value, not string representation."""

@@ -7,10 +7,9 @@ This module provides specialized tool collection management and utilities.
 import inspect
 from typing import Any, Callable, Dict, List, Optional, Sequence, Type, Union
 
+from haive.core.utils.collections import NamedDict
 from langchain_core.tools import BaseTool, BaseToolkit, StructuredTool
 from pydantic import BaseModel, Field, model_validator
-
-from haive.core.utils.collections import NamedDict
 
 
 class ToolList(NamedDict):

@@ -86,6 +86,7 @@ from langchain_core.messages import AnyMessage
 from langchain_core.prompts import BasePromptTemplate
 from pydantic import BaseModel, field_validator
 
+
 if TYPE_CHECKING:
     from haive.core.engine.prompt_template import PromptTemplateEngine
 
@@ -156,11 +157,11 @@ class PromptTemplateMixin:
     """
 
     # Fields that subclasses need to have
-    prompt_template: Optional[BasePromptTemplate]
+    prompt_template: BasePromptTemplate | None
     _prompt_engine: Optional["PromptTemplateEngine"] = None
     _use_prompt_for_input_schema: bool = True
 
-    def derive_input_schema(self) -> Optional[Type[BaseModel]]:
+    def derive_input_schema(self) -> type[BaseModel] | None:
         """Override derive_input_schema to intelligently compose prompt template schemas.
 
         This method enhances the standard input schema derivation process by
@@ -295,14 +296,14 @@ class PromptTemplateMixin:
 
         return self._prompt_engine
 
-    def derive_prompt_input_schema(self) -> Optional[Type[BaseModel]]:
+    def derive_prompt_input_schema(self) -> type[BaseModel] | None:
         """Derive input schema from the prompt template."""
         prompt_engine = self.get_prompt_engine()
         if prompt_engine:
             return prompt_engine.derive_input_schema()
         return None
 
-    def derive_prompt_output_schema(self) -> Optional[Type[BaseModel]]:
+    def derive_prompt_output_schema(self) -> type[BaseModel] | None:
         """Derive output schema from the prompt template."""
         prompt_engine = self.get_prompt_engine()
         if prompt_engine:
@@ -310,15 +311,15 @@ class PromptTemplateMixin:
         return None
 
     def format_prompt(
-        self, input_data: Dict[str, Any]
-    ) -> Union[str, List[AnyMessage], None]:
+        self, input_data: dict[str, Any]
+    ) -> str | list[AnyMessage] | None:
         """Format the prompt template with input data."""
         prompt_engine = self.get_prompt_engine()
         if prompt_engine:
             return prompt_engine.invoke(input_data)
         return None
 
-    def get_prompt_variables(self) -> Dict[str, Any]:
+    def get_prompt_variables(self) -> dict[str, Any]:
         """Get information about prompt template variables."""
         if not self.prompt_template:
             return {}
@@ -353,15 +354,14 @@ class PromptTemplateMixin:
             return False
 
     def compose_with_prompt_schema(
-        self, base_schema: Type[BaseModel]
-    ) -> Type[BaseModel]:
+        self, base_schema: type[BaseModel]
+    ) -> type[BaseModel]:
         """Compose a base schema with the prompt template's input schema."""
         prompt_schema = self.derive_prompt_input_schema()
         if not prompt_schema:
             return base_schema
 
         # Simple field combination approach
-        from typing import Any
 
         from pydantic import create_model
 
@@ -386,7 +386,7 @@ class PromptTemplateMixin:
         schema_name = f"{base_schema.__name__}WithPrompt"
         return create_model(schema_name, **combined_fields)
 
-    def set_base_input_schema(self, schema: Optional[Type[BaseModel]]):
+    def set_base_input_schema(self, schema: type[BaseModel] | None):
         """Set the base input schema to use for composition."""
         self._base_input_schema = schema
 
@@ -394,11 +394,11 @@ class PromptTemplateMixin:
         """Enable or disable prompt template schema derivation."""
         self._use_prompt_for_input_schema = enabled
 
-    def get_effective_input_schema(self) -> Optional[Type[BaseModel]]:
+    def get_effective_input_schema(self) -> type[BaseModel] | None:
         """Get the effective input schema, considering all factors."""
         return self.input_schema
 
-    def validate_prompt_inputs(self, input_data: Dict[str, Any]) -> bool:
+    def validate_prompt_inputs(self, input_data: dict[str, Any]) -> bool:
         """Validate that input data satisfies prompt template requirements."""
         if not self.prompt_template:
             return True
@@ -419,7 +419,7 @@ class PromptTemplateMixin:
 
         return len(missing_vars) == 0
 
-    def get_missing_prompt_vars(self, input_data: Dict[str, Any]) -> List[str]:
+    def get_missing_prompt_vars(self, input_data: dict[str, Any]) -> list[str]:
         """Get list of missing required prompt variables."""
         if not self.prompt_template:
             return []
@@ -440,7 +440,7 @@ class PromptTemplateMixin:
 
         return list(missing_vars)
 
-    def validate_with_prompt_schema(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
+    def validate_with_prompt_schema(self, input_data: dict[str, Any]) -> dict[str, Any]:
         """Validate input data against the effective input schema."""
         schema = self.get_effective_input_schema()
         if schema:
@@ -448,7 +448,7 @@ class PromptTemplateMixin:
             return validated.model_dump()
         return input_data
 
-    def get_prompt_aware_input_fields(self) -> Dict[str, Any]:
+    def get_prompt_aware_input_fields(self) -> dict[str, Any]:
         """Get input fields considering prompt template requirements."""
         # Start with base fields if available
         base_fields = {}
@@ -467,7 +467,7 @@ class PromptTemplateMixin:
                     if "message" in var.lower():
                         from langchain_core.messages import AnyMessage
 
-                        base_fields[var] = (List[AnyMessage], None)
+                        base_fields[var] = (list[AnyMessage], None)
                     else:
                         base_fields[var] = (str, None)
 

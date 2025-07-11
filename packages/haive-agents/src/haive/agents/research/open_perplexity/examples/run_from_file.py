@@ -4,12 +4,13 @@ with a research question loaded from a text file.
 """
 
 import argparse
+from datetime import datetime
 import logging
+from pathlib import Path
 import sys
 import time
 import traceback
-from datetime import datetime
-from pathlib import Path
+
 
 # Add the parent directory to the path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent.parent))
@@ -64,10 +65,7 @@ def run_research(question_file, output_dir=None, research_depth=2, max_sources=5
         logger.info(f"Starting research run with question file: {question_file}")
 
         # Create output directory if needed
-        if output_dir is None:
-            output_dir = Path.cwd() / "outputs"
-        else:
-            output_dir = Path(output_dir)
+        output_dir = Path.cwd() / "outputs" if output_dir is None else Path(output_dir)
 
         output_dir.mkdir(exist_ok=True)
         logger.info(f"Using output directory: {output_dir}")
@@ -130,8 +128,8 @@ def run_research(question_file, output_dir=None, research_depth=2, max_sources=5
         return True
 
     except Exception as e:
-        logger.error(f"Error running research: {e}")
-        logger.error(traceback.format_exc())
+        logger.exception(f"Error running research: {e}")
+        logger.exception(traceback.format_exc())
         return False
 
 

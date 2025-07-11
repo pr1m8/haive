@@ -2,15 +2,8 @@
 
 import logging
 
-import pytest
-from haive.core.engine.retriever import VectorStoreRetrieverConfig
-from haive.core.engine.vectorstore import VectorStoreConfig, VectorStoreProvider
-from haive.core.graph.node.config import NodeConfig
-from haive.core.graph.node.factory import NodeFactory
-
-# Import from our architecture
-from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig
 from langchain_core.documents import Document
+import pytest
 from rich.console import Console
 from rich.logging import RichHandler
 from rich.panel import Panel
@@ -18,6 +11,14 @@ from rich.pretty import Pretty
 
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.rag.base.config import BaseRAGConfig
+from haive.core.engine.retriever import VectorStoreRetrieverConfig
+from haive.core.engine.vectorstore import VectorStoreConfig, VectorStoreProvider
+from haive.core.graph.node.config import NodeConfig
+from haive.core.graph.node.factory import NodeFactory
+
+# Import from our architecture
+from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig
+
 
 # Set up rich console for output
 console = Console()

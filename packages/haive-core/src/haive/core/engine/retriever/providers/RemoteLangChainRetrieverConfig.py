@@ -1,5 +1,4 @@
-"""
-Remote LangChain Retriever implementation for the Haive framework.
+"""Remote LangChain Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Remote LangChain retriever,
 which enables retrieval from remote LangChain services and endpoints,
@@ -32,8 +31,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.REMOTE_LANGCHAIN)
 class RemoteLangChainRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for Remote LangChain retriever in the Haive framework.
+    """Configuration for Remote LangChain retriever in the Haive framework.
 
     This retriever enables retrieval from remote LangChain services and endpoints,
     allowing distributed and federated retrieval architectures.
@@ -71,7 +69,7 @@ class RemoteLangChainRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None,
         description="API key for remote endpoint authentication (auto-resolved)",
     )
@@ -100,7 +98,7 @@ class RemoteLangChainRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # Request headers
-    custom_headers: Dict[str, str] = Field(
+    custom_headers: dict[str, str] = Field(
         default_factory=dict, description="Custom headers to send with requests"
     )
 
@@ -111,21 +109,21 @@ class RemoteLangChainRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     @validator("endpoint_url")
-    def validate_endpoint_url(cls, v):
+    def validate_endpoint_url(self, v):
         """Validate endpoint URL format."""
         if not v.startswith(("http://", "https://")):
             raise ValueError("endpoint_url must start with http:// or https://")
         return v
 
     @validator("auth_method")
-    def validate_auth_method(cls, v):
+    def validate_auth_method(self, v):
         """Validate authentication method."""
         valid_methods = ["api_key", "bearer_token", "basic", "none"]
         if v not in valid_methods:
             raise ValueError(f"auth_method must be one of {valid_methods}, got {v}")
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Remote LangChain retriever."""
         return {
             "query": (
@@ -134,11 +132,11 @@ class RemoteLangChainRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Remote LangChain retriever."""
         return {
             "documents": (
-                List[Any],  # List[Document] but avoiding import
+                list[Any],  # List[Document] but avoiding import
                 Field(
                     default_factory=list,
                     description="Documents retrieved from remote LangChain service",
@@ -147,8 +145,7 @@ class RemoteLangChainRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a Remote LangChain retriever from this configuration.
+        """Create a Remote LangChain retriever from this configuration.
 
         Returns:
             RemoteLangChainRetriever: Instantiated retriever ready for remote retrieval.

@@ -1,6 +1,5 @@
 # src/haive/core/graph/node/registry.py
-"""
-Node registry for managing and accessing nodes.
+"""Node registry for managing and accessing nodes.
 
 This module provides a registry for node configurations, allowing nodes to be
 registered, looked up, and managed throughout the application.
@@ -17,8 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 class NodeRegistry(AbstractRegistry[NodeConfig]):
-    """
-    Registry for node configurations and types.
+    """Registry for node configurations and types.
 
     This registry keeps track of all registered node configurations
     and implements the AbstractRegistry interface from the Haive framework.
@@ -41,15 +39,14 @@ class NodeRegistry(AbstractRegistry[NodeConfig]):
 
     def __init__(self):
         """Initialize the registry with empty storage."""
-        self.nodes_by_id: Dict[str, NodeConfig] = {}
-        self.nodes_by_type: Dict[NodeType, Dict[str, NodeConfig]] = {
+        self.nodes_by_id: dict[str, NodeConfig] = {}
+        self.nodes_by_type: dict[NodeType, dict[str, NodeConfig]] = {
             node_type: {} for node_type in NodeType
         }
-        self.custom_node_types: Dict[str, Type[NodeConfig]] = {}
+        self.custom_node_types: dict[str, type[NodeConfig]] = {}
 
     def register(self, item: NodeConfig) -> NodeConfig:
-        """
-        Register a node configuration.
+        """Register a node configuration.
 
         Args:
             item: Node configuration to register
@@ -62,9 +59,8 @@ class NodeRegistry(AbstractRegistry[NodeConfig]):
         logger.debug(f"Registered node config: {item.name} (id: {item.id})")
         return item
 
-    def get(self, item_type: NodeType, name: str) -> Optional[NodeConfig]:
-        """
-        Get a node configuration by type and name.
+    def get(self, item_type: NodeType, name: str) -> NodeConfig | None:
+        """Get a node configuration by type and name.
 
         Args:
             item_type: Node type
@@ -75,9 +71,8 @@ class NodeRegistry(AbstractRegistry[NodeConfig]):
         """
         return self.nodes_by_type[item_type].get(name)
 
-    def find_by_id(self, id: str) -> Optional[NodeConfig]:
-        """
-        Find a node configuration by ID.
+    def find_by_id(self, id: str) -> NodeConfig | None:
+        """Find a node configuration by ID.
 
         Args:
             id: Node ID
@@ -87,9 +82,8 @@ class NodeRegistry(AbstractRegistry[NodeConfig]):
         """
         return self.nodes_by_id.get(id)
 
-    def find_by_name(self, name: str) -> Optional[NodeConfig]:
-        """
-        Find a node configuration by name (searches all types).
+    def find_by_name(self, name: str) -> NodeConfig | None:
+        """Find a node configuration by name (searches all types).
 
         Args:
             name: Node name
@@ -102,9 +96,8 @@ class NodeRegistry(AbstractRegistry[NodeConfig]):
                 return node_config
         return None
 
-    def list(self, item_type: NodeType) -> List[str]:
-        """
-        List all node names of a specific type.
+    def list(self, item_type: NodeType) -> list[str]:
+        """List all node names of a specific type.
 
         Args:
             item_type: Node type
@@ -114,9 +107,8 @@ class NodeRegistry(AbstractRegistry[NodeConfig]):
         """
         return list(self.nodes_by_type[item_type].keys())
 
-    def get_all(self, item_type: NodeType) -> Dict[str, NodeConfig]:
-        """
-        Get all nodes of a specific type.
+    def get_all(self, item_type: NodeType) -> dict[str, NodeConfig]:
+        """Get all nodes of a specific type.
 
         Args:
             item_type: Node type
@@ -127,8 +119,7 @@ class NodeRegistry(AbstractRegistry[NodeConfig]):
         return self.nodes_by_type[item_type]
 
     def list_all_names(self) -> List[str]:
-        """
-        List all registered node names across all types.
+        """List all registered node names across all types.
 
         Returns:
             List of all node names
@@ -139,10 +130,9 @@ class NodeRegistry(AbstractRegistry[NodeConfig]):
         return names
 
     def register_custom_node_type(
-        self, name: str, config_class: Type[NodeConfig]
+        self, name: str, config_class: type[NodeConfig]
     ) -> None:
-        """
-        Register a custom node configuration class.
+        """Register a custom node configuration class.
 
         Args:
             name: Name of the custom node type

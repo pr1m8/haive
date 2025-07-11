@@ -1,4 +1,4 @@
-"""Task Analysis - TODO: Add brief description
+"""Task Analysis - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

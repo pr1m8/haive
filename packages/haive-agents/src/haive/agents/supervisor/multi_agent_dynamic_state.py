@@ -8,36 +8,35 @@ import time
 from typing import Any, Dict, List, Optional, Set, Union
 from uuid import uuid4
 
-from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
-from haive.core.schema.state_schema import StateSchema
-from langchain_core.messages import BaseMessage
-from pydantic import BaseModel, Field, computed_field
-
 from haive.agents.supervisor.dynamic_state import (
     AgentExecutionConfig,
     AgentExecutionResult,
     DynamicSupervisorState,
     SupervisorDecision,
 )
+from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
+from haive.core.schema.state_schema import StateSchema
+from langchain_core.messages import BaseMessage
+from pydantic import BaseModel, Field, computed_field
 
 
 class AgentRegistryState(BaseModel):
     """State for dynamic agent registry management."""
 
     # Registry management
-    available_agents: Dict[str, str] = Field(
+    available_agents: dict[str, str] = Field(
         default_factory=dict, description="Map of agent names to their types"
     )
-    agent_capabilities: Dict[str, str] = Field(
+    agent_capabilities: dict[str, str] = Field(
         default_factory=dict,
         description="Map of agent names to capability descriptions",
     )
-    agent_tools: Dict[str, List[str]] = Field(
+    agent_tools: dict[str, list[str]] = Field(
         default_factory=dict, description="Map of agent names to their tool lists"
     )
 
     # Dynamic choice model state
-    choice_model_options: List[str] = Field(
+    choice_model_options: list[str] = Field(
         default_factory=list, description="Current options in the choice model"
     )
     choice_model_version: int = Field(
@@ -45,28 +44,32 @@ class AgentRegistryState(BaseModel):
     )
 
     # Agent addition/removal tracking
-    pending_agent_additions: List[Dict[str, Any]] = Field(
+    pending_agent_additions: list[dict[str, Any]] = Field(
         default_factory=list, description="Agents pending addition to registry"
     )
-    pending_agent_removals: List[str] = Field(
+    pending_agent_removals: list[str] = Field(
         default_factory=list, description="Agent names pending removal from registry"
     )
 
     # Tool-to-agent mapping for dynamic routing
-    tool_to_agent_mapping: Dict[str, str] = Field(
+    tool_to_agent_mapping: dict[str, str] = Field(
         default_factory=dict, description="Map of tool names to owning agent names"
     )
 
     # Agent request tracking
-    agent_change_requests: List[Dict[str, Any]] = Field(
+    agent_change_requests: list[dict[str, Any]] = Field(
         default_factory=list, description="History of agent change requests"
     )
-    last_agent_change: Optional[float] = Field(
+    last_agent_change: float | None = Field(
         default=None, description="Timestamp of last agent registry change"
     )
 
     def add_agent_to_registry(
-        self, agent_name: str, agent_type: str, capability: str, tools: List[str] = None
+        self,
+        agent_name: str,
+        agent_type: str,
+        capability: str,
+        tools: list[str] | None = None,
     ) -> None:
         """Add agent to registry state."""
         self.available_agents[agent_name] = agent_type
@@ -104,16 +107,16 @@ class AgentRegistryState(BaseModel):
         self.choice_model_options = list(self.available_agents.keys())
         self.choice_model_version += 1
 
-    def get_agent_for_tool(self, tool_name: str) -> Optional[str]:
+    def get_agent_for_tool(self, tool_name: str) -> str | None:
         """Get the agent that owns a specific tool."""
         return self.tool_to_agent_mapping.get(tool_name)
 
-    def get_tools_for_agent(self, agent_name: str) -> List[str]:
+    def get_tools_for_agent(self, agent_name: str) -> list[str]:
         """Get tools owned by a specific agent."""
         return self.agent_tools.get(agent_name, [])
 
     def add_agent_change_request(
-        self, request_type: str, agent_name: str, details: Dict[str, Any] = None
+        self, request_type: str, agent_name: str, details: dict[str, Any] | None = None
     ) -> None:
         """Track agent change requests."""
         request = {
@@ -135,20 +138,20 @@ class MultiAgentCoordinationState(BaseModel):
     )
 
     # Agent execution queue and history
-    execution_queue: List[Dict[str, Any]] = Field(
+    execution_queue: list[dict[str, Any]] = Field(
         default_factory=list, description="Queue of agents/tasks to execute"
     )
 
-    active_executions: Dict[str, Dict[str, Any]] = Field(
+    active_executions: dict[str, dict[str, Any]] = Field(
         default_factory=dict, description="Currently active agent executions"
     )
 
     # Inter-agent communication
-    agent_messages: Dict[str, List[BaseMessage]] = Field(
+    agent_messages: dict[str, list[BaseMessage]] = Field(
         default_factory=dict, description="Messages between agents"
     )
 
-    shared_context: Dict[str, Any] = Field(
+    shared_context: dict[str, Any] = Field(
         default_factory=dict, description="Shared context accessible to all agents"
     )
 
@@ -163,16 +166,16 @@ class MultiAgentCoordinationState(BaseModel):
     )
 
     # Agent handoffs and transitions
-    agent_handoffs: List[Dict[str, Any]] = Field(
+    agent_handoffs: list[dict[str, Any]] = Field(
         default_factory=list, description="History of agent-to-agent handoffs"
     )
 
-    current_active_agent: Optional[str] = Field(
+    current_active_agent: str | None = Field(
         default=None, description="Currently active agent in coordination"
     )
 
     def add_to_execution_queue(
-        self, agent_name: str, task: Dict[str, Any], priority: int = 1
+        self, agent_name: str, task: dict[str, Any], priority: int = 1
     ) -> None:
         """Add agent execution to queue."""
         execution = {
@@ -215,7 +218,7 @@ class MultiAgentCoordinationState(BaseModel):
         from_agent: str,
         to_agent: str,
         reason: str,
-        context: Dict[str, Any] = None,
+        context: dict[str, Any] | None = None,
     ) -> None:
         """Record agent handoff."""
         handoff = {
@@ -243,16 +246,16 @@ class MultiAgentDynamicSupervisorState(DynamicSupervisorState):
     )
 
     # Dynamic choice model integration
-    choice_model_cache: Optional[Dict[str, Any]] = Field(
+    choice_model_cache: dict[str, Any] | None = Field(
         default=None, description="Cached choice model configuration"
     )
 
     # Tool management extensions
-    dynamic_tool_routes: Dict[str, str] = Field(
+    dynamic_tool_routes: dict[str, str] = Field(
         default_factory=dict, description="Dynamic tool routing configuration"
     )
 
-    tool_usage_history: List[Dict[str, Any]] = Field(
+    tool_usage_history: list[dict[str, Any]] = Field(
         default_factory=list, description="History of tool usage across agents"
     )
 
@@ -298,8 +301,8 @@ class MultiAgentDynamicSupervisorState(DynamicSupervisorState):
         agent_name: str,
         agent_type: str,
         capability: str,
-        tools: List[str] = None,
-        config: Dict[str, Any] = None,
+        tools: list[str] | None = None,
+        config: dict[str, Any] | None = None,
     ) -> str:
         """Request addition of a new agent."""
         request_id = str(uuid4())
@@ -334,7 +337,7 @@ class MultiAgentDynamicSupervisorState(DynamicSupervisorState):
 
         return request_id
 
-    def process_pending_agent_changes(self) -> Dict[str, List[str]]:
+    def process_pending_agent_changes(self) -> dict[str, list[str]]:
         """Process all pending agent additions and removals."""
         results = {"added": [], "removed": [], "failed": []}
 
@@ -349,7 +352,7 @@ class MultiAgentDynamicSupervisorState(DynamicSupervisorState):
                 )
                 results["added"].append(request["agent_name"])
             except Exception as e:
-                results["failed"].append(f"Add {request['agent_name']}: {str(e)}")
+                results["failed"].append(f"Add {request['agent_name']}: {e!s}")
 
         # Process removals
         for agent_name in self.agent_registry.pending_agent_removals:
@@ -359,7 +362,7 @@ class MultiAgentDynamicSupervisorState(DynamicSupervisorState):
                 else:
                     results["failed"].append(f"Remove {agent_name}: not found")
             except Exception as e:
-                results["failed"].append(f"Remove {agent_name}: {str(e)}")
+                results["failed"].append(f"Remove {agent_name}: {e!s}")
 
         # Clear pending lists
         self.agent_registry.pending_agent_additions.clear()
@@ -368,7 +371,7 @@ class MultiAgentDynamicSupervisorState(DynamicSupervisorState):
 
         return results
 
-    def route_tool_to_agent(self, tool_name: str) -> Optional[str]:
+    def route_tool_to_agent(self, tool_name: str) -> str | None:
         """Route a tool call to the appropriate agent."""
         agent_name = self.agent_registry.get_agent_for_tool(tool_name)
 
@@ -393,7 +396,7 @@ class MultiAgentDynamicSupervisorState(DynamicSupervisorState):
 
         return self.coordination.coordination_session_id
 
-    def end_coordination_session(self) -> Dict[str, Any]:
+    def end_coordination_session(self) -> dict[str, Any]:
         """End the current coordination session and return summary."""
         session_duration = time.time() - self.coordination.coordination_start_time
 
@@ -408,7 +411,7 @@ class MultiAgentDynamicSupervisorState(DynamicSupervisorState):
         self.coordination_active = False
         return summary
 
-    def get_coordination_status(self) -> Dict[str, Any]:
+    def get_coordination_status(self) -> dict[str, Any]:
         """Get current coordination status."""
         return {
             "active": self.coordination_active,

@@ -7,8 +7,6 @@ and creates new ReactAgents when needed.
 import logging
 from typing import Any, Dict, List, Literal, Optional, Union
 
-from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, ToolMessage
 from langchain_core.tools import BaseTool
 from pydantic import Field, PrivateAttr
@@ -16,6 +14,9 @@ from pydantic.v1 import BaseModel as V1BaseModel
 
 from haive.agents.base.agent import Agent
 from haive.agents.react.agent import ReactAgent
+from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +25,7 @@ class AgentSelectionTool(BaseTool):
     """Tool that uses DynamicChoiceModel to select best agent."""
 
     name: str = "select_agent"
-    description: str = """Select the best agent for the current task. 
+    description: str = """Select the best agent for the current task.
     Use this tool to determine which agent should handle the request."""
 
     def __init__(self, choice_model: DynamicChoiceModel, **kwargs):
@@ -33,7 +34,6 @@ class AgentSelectionTool(BaseTool):
 
     def _run(self, task_description: str) -> str:
         """Select agent based on task description."""
-
         # Get available options
         available_agents = self.choice_model.option_names
 
@@ -53,22 +53,6 @@ class AgentSelectionTool(BaseTool):
             if "research" in agent_name.lower() and any(
                 word in task_lower
                 for word in ["research", "find", "search", "investigate"]
-            ):
-                return agent_name
-            elif "write" in agent_name.lower() and any(
-                word in task_lower for word in ["write", "create", "draft", "compose"]
-            ):
-                return agent_name
-            elif "code" in agent_name.lower() and any(
-                word in task_lower for word in ["code", "program", "implement", "debug"]
-            ):
-                return agent_name
-            elif "math" in agent_name.lower() and any(
-                word in task_lower for word in ["calculate", "math", "solve", "compute"]
-            ):
-                return agent_name
-            elif "analyze" in agent_name.lower() and any(
-                word in task_lower for word in ["analyze", "examine", "evaluate"]
             ):
                 return agent_name
 
@@ -92,7 +76,6 @@ class AgentCreationTool(BaseTool):
 
     def _run(self, agent_type: str, capability_description: str) -> str:
         """Create a new ReactAgent."""
-
         # Define agent types we can create
         agent_templates = {
             "research": {
@@ -157,8 +140,8 @@ class AgentCreationTool(BaseTool):
             return f"Created {agent_name} successfully"
 
         except Exception as e:
-            logger.error(f"Failed to create agent {agent_name}: {e}")
-            return f"Failed to create agent: {str(e)}"
+            logger.exception(f"Failed to create agent {agent_name}: {e}")
+            return f"Failed to create agent: {e!s}"
 
 
 class ChoiceModelSupervisor(ReactAgent):
@@ -175,14 +158,13 @@ class ChoiceModelSupervisor(ReactAgent):
     max_agents: int = Field(default=8, description="Maximum agents to maintain")
 
     # Private attributes
-    _agents: Dict[str, ReactAgent] = PrivateAttr(default_factory=dict)
-    _choice_model: Optional[DynamicChoiceModel] = PrivateAttr(default=None)
-    _agent_selection_tool: Optional[AgentSelectionTool] = PrivateAttr(default=None)
-    _agent_creation_tool: Optional[AgentCreationTool] = PrivateAttr(default=None)
+    _agents: dict[str, ReactAgent] = PrivateAttr(default_factory=dict)
+    _choice_model: DynamicChoiceModel | None = PrivateAttr(default=None)
+    _agent_selection_tool: AgentSelectionTool | None = PrivateAttr(default=None)
+    _agent_creation_tool: AgentCreationTool | None = PrivateAttr(default=None)
 
     def setup_agent(self) -> None:
         """Set up supervisor with choice model and tools."""
-
         # Initialize agents dict
         self._agents = {}
 
@@ -204,13 +186,13 @@ class ChoiceModelSupervisor(ReactAgent):
         logger.info("✅ Choice model supervisor initialized")
 
     @property
-    def agents(self) -> Dict[str, ReactAgent]:
+    def agents(self) -> dict[str, ReactAgent]:
         """Get current agents."""
         return self._agents
 
     def _update_choice_model(self):
         """Update choice model with current agents."""
-        agent_names = list(self._agents.keys()) + ["END"]
+        agent_names = [*list(self._agents.keys()), "END"]
         agent_descriptions = []
 
         for name in agent_names:
@@ -261,9 +243,8 @@ class ChoiceModelSupervisor(ReactAgent):
     def _create_supervisor_decision_node(self):
         """Create supervisor node that uses tools for decisions."""
 
-        async def supervisor_node(state: Any) -> Dict[str, Any]:
+        async def supervisor_node(state: Any) -> dict[str, Any]:
             """Supervisor makes decisions using DynamicChoiceModel."""
-
             logger.info("=" * 60)
             logger.info("CHOICE MODEL SUPERVISOR")
             logger.info("=" * 60)
@@ -314,7 +295,6 @@ class ChoiceModelSupervisor(ReactAgent):
 
                 # Look for tool calls in the decision
                 selected_agent = None
-                needs_creation = False
 
                 for msg in decision_messages:
                     if isinstance(msg, ToolMessage):
@@ -323,7 +303,6 @@ class ChoiceModelSupervisor(ReactAgent):
                         elif "create_agent" in getattr(msg, "name", ""):
                             # Agent was created, update our tracking
                             self._update_choice_model()
-                            needs_creation = False
                     elif isinstance(msg, AIMessage):
                         # Check for tool calls
                         if hasattr(msg, "tool_calls") and msg.tool_calls:
@@ -332,38 +311,31 @@ class ChoiceModelSupervisor(ReactAgent):
                                     # Will be resolved by tool message
                                     pass
                                 elif tool_call["name"] == "create_agent":
-                                    needs_creation = True
+                                    pass
 
                 # Determine target agent
-                if (
-                    selected_agent
-                    and selected_agent != "CREATE_NEW_AGENT"
-                    and selected_agent != "END"
-                ):
+                if selected_agent and selected_agent not in {"CREATE_NEW_AGENT", "END"}:
                     logger.info(f"Selected agent: {selected_agent}")
                     return {
                         "target_agent": selected_agent,
                         "original_request": content,
                         "is_complete": False,
                     }
-                elif selected_agent == "END":
+                if selected_agent == "END":
                     return {"is_complete": True}
-                else:
-                    # Default to first available agent if we have any
-                    if self._agents:
-                        first_agent = list(self._agents.keys())[0]
-                        logger.info(f"Using default agent: {first_agent}")
-                        return {
-                            "target_agent": first_agent,
-                            "original_request": content,
-                            "is_complete": False,
-                        }
-                    else:
-                        logger.info("No agents available")
-                        return {"is_complete": True}
+                if self._agents:
+                    first_agent = next(iter(self._agents.keys()))
+                    logger.info(f"Using default agent: {first_agent}")
+                    return {
+                        "target_agent": first_agent,
+                        "original_request": content,
+                        "is_complete": False,
+                    }
+                logger.info("No agents available")
+                return {"is_complete": True}
 
             except Exception as e:
-                logger.error(f"Error in supervisor decision: {e}")
+                logger.exception(f"Error in supervisor decision: {e}")
                 return {"is_complete": True}
 
         return supervisor_node
@@ -371,9 +343,8 @@ class ChoiceModelSupervisor(ReactAgent):
     def _create_agent_executor_node(self):
         """Create node that executes the selected agent."""
 
-        async def executor_node(state: Any) -> Dict[str, Any]:
+        async def executor_node(state: Any) -> dict[str, Any]:
             """Execute the selected ReactAgent."""
-
             logger.info("=" * 60)
             logger.info("AGENT EXECUTOR")
             logger.info("=" * 60)
@@ -381,7 +352,7 @@ class ChoiceModelSupervisor(ReactAgent):
             state_dict = self._extract_state_dict(state)
 
             target_agent = state_dict.get("target_agent")
-            original_request = state_dict.get("original_request", "")
+            state_dict.get("original_request", "")
 
             if not target_agent:
                 return {"error": "No target agent specified"}
@@ -418,12 +389,12 @@ class ChoiceModelSupervisor(ReactAgent):
                 return update
 
             except Exception as e:
-                logger.error(f"Error executing {target_agent}: {e}")
+                logger.exception(f"Error executing {target_agent}: {e}")
                 return {"error": str(e), "last_agent": target_agent}
 
         return executor_node
 
-    def _extract_state_dict(self, state: Any) -> Dict[str, Any]:
+    def _extract_state_dict(self, state: Any) -> dict[str, Any]:
         """Extract state dict preserving messages."""
         if isinstance(state, dict):
             return state
@@ -452,11 +423,11 @@ class ChoiceModelSupervisor(ReactAgent):
 
         return "END"
 
-    def get_available_agents(self) -> List[str]:
+    def get_available_agents(self) -> list[str]:
         """Get list of available agents."""
         return list(self._agents.keys())
 
-    def get_choice_model_status(self) -> Dict[str, Any]:
+    def get_choice_model_status(self) -> dict[str, Any]:
         """Get status of choice model."""
         return {
             "available_options": (
@@ -473,20 +444,11 @@ if __name__ == "__main__":
 
     async def test_choice_model_supervisor():
         """Test the choice model supervisor."""
-
-        print("\n" + "=" * 80)
-        print("🧪 TESTING CHOICE MODEL SUPERVISOR")
-        print("=" * 80 + "\n")
-
         # Create supervisor (starts empty)
         supervisor = ChoiceModelSupervisor(name="choice_supervisor", max_agents=5)
 
-        print(f"Starting agents: {supervisor.get_available_agents()}")
-        print(f"Choice model: {supervisor.get_choice_model_status()}")
-
         # Test 1: Research request
-        print("\n[Test 1] Research request")
-        result1 = await supervisor.ainvoke(
+        await supervisor.ainvoke(
             {
                 "messages": [
                     HumanMessage(
@@ -496,11 +458,8 @@ if __name__ == "__main__":
             }
         )
 
-        print(f"Available agents after test 1: {supervisor.get_available_agents()}")
-
         # Test 2: Coding request
-        print("\n[Test 2] Coding request")
-        result2 = await supervisor.ainvoke(
+        await supervisor.ainvoke(
             {
                 "messages": [
                     HumanMessage(content="Write Python code to implement quicksort")
@@ -508,21 +467,13 @@ if __name__ == "__main__":
             }
         )
 
-        print(f"Available agents after test 2: {supervisor.get_available_agents()}")
-
         # Test 3: Use existing agent
-        print("\n[Test 3] Another research request (should use existing)")
-        result3 = await supervisor.ainvoke(
+        await supervisor.ainvoke(
             {
                 "messages": [
                     HumanMessage(content="Find information about quantum computing")
                 ]
             }
         )
-
-        print(f"Final agents: {supervisor.get_available_agents()}")
-        print(f"Final choice model: {supervisor.get_choice_model_status()}")
-
-        print("\n✅ Choice model supervisor test complete!")
 
     asyncio.run(test_choice_model_supervisor())

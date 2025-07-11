@@ -1,0 +1,1083 @@
+{
+  "among_us": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "AmongUsAgent",
+        "AmongUsAgentConfig",
+        "AmongUsState",
+        "AmongUsStateManagerMixin"
+      ],
+      "classes": [
+        "AmongUsAgent",
+        "AmongUsAgentConfig",
+        "AmongUsState",
+        "AmongUsStateManagerMixin"
+      ],
+      "functions": [],
+      "other": [
+        "agent",
+        "config",
+        "models",
+        "prompts",
+        "state",
+        "state_manager",
+        "ui"
+      ],
+      "game_components": [
+        "AmongUsAgent",
+        "AmongUsAgentConfig",
+        "AmongUsState",
+        "AmongUsStateManagerMixin"
+      ]
+    }
+  },
+  "battleship": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "BattleshipAgent",
+        "BattleshipAgentConfig",
+        "BattleshipState",
+        "BattleshipStateManager",
+        "Ship",
+        "Coordinates",
+        "MoveCommand",
+        "MoveOutcome",
+        "ShipPlacement",
+        "ShipPlacementWrapper",
+        "Analysis",
+        "GamePhase",
+        "PlayerBoard",
+        "generate_ship_placement_prompt",
+        "generate_move_prompt",
+        "generate_analysis_prompt",
+        "build_battleship_engines"
+      ],
+      "classes": [
+        "Analysis",
+        "BattleshipAgent",
+        "BattleshipAgentConfig",
+        "BattleshipState",
+        "BattleshipStateManager",
+        "Coordinates",
+        "GamePhase",
+        "MoveCommand",
+        "MoveOutcome",
+        "PlayerBoard",
+        "Ship",
+        "ShipPlacement",
+        "ShipPlacementWrapper"
+      ],
+      "functions": [
+        "build_battleship_engines",
+        "generate_analysis_prompt",
+        "generate_move_prompt",
+        "generate_ship_placement_prompt"
+      ],
+      "other": [
+        "agent",
+        "config",
+        "engines",
+        "models",
+        "prompts",
+        "state",
+        "state_manager"
+      ],
+      "game_components": [
+        "BattleshipAgent",
+        "BattleshipAgentConfig",
+        "BattleshipState",
+        "BattleshipStateManager",
+        "GamePhase"
+      ]
+    }
+  },
+  "checkers": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "CheckersAgent",
+        "CheckersAgentConfig",
+        "CheckersState",
+        "CheckersStateManager",
+        "CheckersAnalysis",
+        "CheckersMove",
+        "CheckersPlayerDecision",
+        "checkers_engines",
+        "CheckersUI",
+        "BoardPosition",
+        "GameResult",
+        "MoveHistory",
+        "AnalysisResult",
+        "PlayerConfiguration",
+        "create_standard_game",
+        "create_tournament_game",
+        "create_educational_game",
+        "analyze_board_position",
+        "validate_checkers_move",
+        "format_game_result",
+        "__version__",
+        "__author__",
+        "__license__",
+        "CheckersUI"
+      ],
+      "classes": [
+        "Any",
+        "CheckersAgent",
+        "CheckersAgentConfig",
+        "CheckersAnalysis",
+        "CheckersMove",
+        "CheckersPlayerDecision",
+        "CheckersState",
+        "CheckersStateManager",
+        "CheckersUI"
+      ],
+      "functions": [
+        "AnalysisResult",
+        "BoardPosition",
+        "Dict",
+        "GameResult",
+        "List",
+        "MoveHistory",
+        "Optional",
+        "PlayerConfiguration",
+        "Union",
+        "analyze_board_position",
+        "create_educational_game",
+        "create_standard_game",
+        "create_tournament_game",
+        "format_game_result",
+        "validate_checkers_move"
+      ],
+      "other": [
+        "BOARD_SIZE",
+        "DEFAULT_GAME_CONFIG",
+        "EDUCATIONAL_CONFIG",
+        "INITIAL_PIECES_PER_PLAYER",
+        "KING_ROWS",
+        "MAX_ANALYSIS_DEPTH",
+        "MAX_RECOMMENDED_TURNS",
+        "MIN_MOVE_TIMEOUT",
+        "TOURNAMENT_CONFIG",
+        "TYPE_CHECKING",
+        "agent",
+        "checkers_engines",
+        "config",
+        "engines",
+        "models",
+        "state",
+        "state_manager",
+        "ui"
+      ],
+      "game_components": [
+        "CheckersAgent",
+        "CheckersAgentConfig",
+        "CheckersState",
+        "CheckersStateManager"
+      ]
+    }
+  },
+  "chess": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "ChessAgent",
+        "ChessConfig",
+        "ChessAnalysis",
+        "ChessGameStateManager",
+        "ChessMoveModel",
+        "ChessPlayerDecision",
+        "ChessState"
+      ],
+      "classes": [
+        "ChessAgent",
+        "ChessAnalysis",
+        "ChessConfig",
+        "ChessGameStateManager",
+        "ChessMoveModel",
+        "ChessPlayerDecision",
+        "ChessState"
+      ],
+      "functions": [],
+      "other": [
+        "agent",
+        "aug_llms",
+        "config",
+        "engines",
+        "generic_engines",
+        "llm_utils",
+        "models",
+        "state",
+        "state_manager",
+        "utils"
+      ],
+      "game_components": [
+        "ChessAgent",
+        "ChessConfig",
+        "ChessGameStateManager",
+        "ChessState"
+      ]
+    }
+  },
+  "clue": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "ClueAgent",
+        "ClueConfig",
+        "ClueGuess",
+        "ClueHypothesis",
+        "ClueResponse",
+        "ClueSolution",
+        "ClueState",
+        "ClueStateManager",
+        "ClueUI"
+      ],
+      "classes": [
+        "ClueAgent",
+        "ClueConfig",
+        "ClueGuess",
+        "ClueHypothesis",
+        "ClueResponse",
+        "ClueSolution",
+        "ClueState",
+        "ClueStateManager",
+        "ClueUI"
+      ],
+      "functions": [],
+      "other": ["agent", "config", "models", "state", "state_manager", "ui"],
+      "game_components": [
+        "ClueAgent",
+        "ClueConfig",
+        "ClueState",
+        "ClueStateManager"
+      ]
+    }
+  },
+  "connect4": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "Connect4Agent",
+        "Connect4AgentConfig",
+        "Connect4State",
+        "Connect4StateManager",
+        "Connect4UI",
+        "Connect4Analysis",
+        "Connect4Move",
+        "Connect4PlayerDecision",
+        "__version__",
+        "create_game",
+        "create_ui",
+        "initialize_game",
+        "BOARD_ROWS",
+        "BOARD_COLUMNS",
+        "MAX_MOVES",
+        "DEFAULT_PLAYER_COLORS",
+        "WIN_LENGTH"
+      ],
+      "classes": [
+        "Connect4Agent",
+        "Connect4AgentConfig",
+        "Connect4Analysis",
+        "Connect4Move",
+        "Connect4PlayerDecision",
+        "Connect4State",
+        "Connect4StateManager",
+        "Connect4UI"
+      ],
+      "functions": ["create_game", "create_ui", "initialize_game"],
+      "other": [
+        "BOARD_COLUMNS",
+        "BOARD_ROWS",
+        "DEFAULT_PLAYER_COLORS",
+        "MAX_MOVES",
+        "TYPE_CHECKING",
+        "WIN_LENGTH",
+        "agent",
+        "config",
+        "engines",
+        "models",
+        "state",
+        "state_manager",
+        "ui"
+      ],
+      "game_components": [
+        "Connect4Agent",
+        "Connect4AgentConfig",
+        "Connect4State",
+        "Connect4StateManager"
+      ]
+    }
+  },
+  "debate": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": ["DebateAgent", "DebateAgentConfig"],
+      "classes": ["DebateAgent", "DebateAgentConfig"],
+      "functions": [],
+      "other": [
+        "agent",
+        "config",
+        "engines",
+        "models",
+        "state",
+        "state_manager"
+      ],
+      "game_components": ["DebateAgent", "DebateAgentConfig"]
+    }
+  },
+  "dominoes": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "DominoMove",
+        "DominoTile",
+        "DominoesAgent",
+        "DominoesAgentConfig",
+        "DominoesAnalysis",
+        "DominoesPlayerDecision",
+        "DominoesRichUI",
+        "DominoesState",
+        "DominoesStateManager",
+        "DominoesUI"
+      ],
+      "classes": [
+        "DominoMove",
+        "DominoTile",
+        "DominoesAgent",
+        "DominoesAgentConfig",
+        "DominoesAnalysis",
+        "DominoesPlayerDecision",
+        "DominoesRichUI",
+        "DominoesState",
+        "DominoesStateManager",
+        "DominoesUI"
+      ],
+      "functions": [],
+      "other": [
+        "agent",
+        "config",
+        "engines",
+        "models",
+        "rich_ui",
+        "state",
+        "state_manager",
+        "ui"
+      ],
+      "game_components": [
+        "DominoesAgent",
+        "DominoesAgentConfig",
+        "DominoesState",
+        "DominoesStateManager"
+      ]
+    }
+  },
+  "fox_and_geese": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "FoxAndGeeseAgent",
+        "FoxAndGeeseAnalysis",
+        "FoxAndGeeseConfig",
+        "FoxAndGeeseMove",
+        "FoxAndGeesePosition",
+        "FoxAndGeeseRichUI",
+        "FoxAndGeeseState",
+        "FoxAndGeeseStateManager",
+        "FoxAndGeeseUI"
+      ],
+      "classes": [
+        "FoxAndGeeseAgent",
+        "FoxAndGeeseAnalysis",
+        "FoxAndGeeseConfig",
+        "FoxAndGeeseMove",
+        "FoxAndGeesePosition",
+        "FoxAndGeeseRichUI",
+        "FoxAndGeeseState",
+        "FoxAndGeeseStateManager",
+        "FoxAndGeeseUI"
+      ],
+      "functions": [],
+      "other": [
+        "agent",
+        "config",
+        "engines",
+        "models",
+        "rich_ui",
+        "state",
+        "state_manager",
+        "ui"
+      ],
+      "game_components": [
+        "FoxAndGeeseAgent",
+        "FoxAndGeeseConfig",
+        "FoxAndGeeseState",
+        "FoxAndGeeseStateManager"
+      ]
+    }
+  },
+  "go": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "GoAgent",
+        "GoAgentConfig",
+        "GoAnalysis",
+        "GoGameState",
+        "GoGameStateManager",
+        "GoMoveModel",
+        "GoPlayerDecision"
+      ],
+      "classes": [
+        "GoAgent",
+        "GoAgentConfig",
+        "GoAnalysis",
+        "GoGameState",
+        "GoGameStateManager",
+        "GoMoveModel",
+        "GoPlayerDecision"
+      ],
+      "functions": [],
+      "other": [
+        "agent",
+        "aug_llms",
+        "config",
+        "go_engine",
+        "models",
+        "state",
+        "state_manager"
+      ],
+      "game_components": [
+        "GoAgent",
+        "GoAgentConfig",
+        "GoGameState",
+        "GoGameStateManager"
+      ]
+    }
+  },
+  "hold_em": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "HoldemGameAgent",
+        "HoldemGameAgentConfig",
+        "HoldemPlayerAgent",
+        "HoldemPlayerAgentConfig",
+        "HoldemGameSettings",
+        "create_default_holdem_config",
+        "create_cash_game_config",
+        "create_tournament_config",
+        "create_heads_up_config",
+        "create_custom_holdem_config",
+        "HoldemState",
+        "PlayerState",
+        "PlayerStatus",
+        "GamePhase",
+        "HoldemGameStateManager",
+        "PlayerAction",
+        "PlayerDecision",
+        "PokerAction",
+        "HandRank",
+        "PokerCard",
+        "HandEvaluation",
+        "PlayerDecisionModel",
+        "PokerAnalysis",
+        "GameSituationAnalysis",
+        "BettingDecision",
+        "OpponentModel",
+        "PokerHandHistory",
+        "TableDynamics",
+        "get_hand_analyzer",
+        "get_opponent_profiler",
+        "get_betting_strategist",
+        "get_situation_analyzer",
+        "get_bluff_detector",
+        "get_table_dynamics_analyzer",
+        "get_complete_llm_suite",
+        "HoldemRichUI"
+      ],
+      "classes": [
+        "BettingDecision",
+        "GamePhase",
+        "GameSituationAnalysis",
+        "HandEvaluation",
+        "HandRank",
+        "HoldemGameAgent",
+        "HoldemGameAgentConfig",
+        "HoldemGameSettings",
+        "HoldemGameStateManager",
+        "HoldemPlayerAgent",
+        "HoldemPlayerAgentConfig",
+        "HoldemRichUI",
+        "HoldemState",
+        "OpponentModel",
+        "PlayerAction",
+        "PlayerDecision",
+        "PlayerDecisionModel",
+        "PlayerState",
+        "PlayerStatus",
+        "PokerAction",
+        "PokerAnalysis",
+        "PokerCard",
+        "PokerHandHistory",
+        "TableDynamics"
+      ],
+      "functions": [
+        "create_cash_game_config",
+        "create_custom_holdem_config",
+        "create_default_holdem_config",
+        "create_heads_up_config",
+        "create_tournament_config",
+        "get_betting_strategist",
+        "get_bluff_detector",
+        "get_complete_llm_suite",
+        "get_hand_analyzer",
+        "get_opponent_profiler",
+        "get_situation_analyzer",
+        "get_table_dynamics_analyzer"
+      ],
+      "other": [
+        "aug_llms",
+        "config",
+        "engines",
+        "game_agent",
+        "models",
+        "player_agent",
+        "state",
+        "state_manager",
+        "ui",
+        "utils"
+      ],
+      "game_components": [
+        "GamePhase",
+        "GameSituationAnalysis",
+        "HoldemGameAgent",
+        "HoldemGameAgentConfig",
+        "HoldemGameSettings",
+        "HoldemGameStateManager",
+        "HoldemPlayerAgent",
+        "HoldemPlayerAgentConfig",
+        "HoldemState",
+        "PlayerState"
+      ]
+    }
+  },
+  "mafia": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "MafiaAgent",
+        "MafiaAgentConfig",
+        "MafiaGameState",
+        "PlayerState",
+        "MafiaAction",
+        "PlayerRole",
+        "GamePhase",
+        "ActionType",
+        "MafiaStateManager",
+        "generate_villager_prompt",
+        "generate_mafia_prompt",
+        "generate_detective_prompt",
+        "generate_doctor_prompt",
+        "generate_narrator_prompt",
+        "aug_llm_configs"
+      ],
+      "classes": [
+        "ActionType",
+        "GamePhase",
+        "MafiaAction",
+        "MafiaAgent",
+        "MafiaAgentConfig",
+        "MafiaGameState",
+        "MafiaStateManager",
+        "PlayerRole",
+        "PlayerState"
+      ],
+      "functions": [
+        "generate_detective_prompt",
+        "generate_doctor_prompt",
+        "generate_mafia_prompt",
+        "generate_narrator_prompt",
+        "generate_villager_prompt"
+      ],
+      "other": [
+        "agent",
+        "aug_llm_configs",
+        "config",
+        "engines",
+        "models",
+        "state",
+        "state_manager"
+      ],
+      "game_components": [
+        "GamePhase",
+        "MafiaAgent",
+        "MafiaAgentConfig",
+        "MafiaGameState",
+        "MafiaStateManager",
+        "PlayerState"
+      ]
+    }
+  },
+  "mancala": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "MancalaAgent",
+        "MancalaAnalysis",
+        "MancalaConfig",
+        "MancalaMove",
+        "MancalaState",
+        "MancalaStateManager",
+        "mancala_engines"
+      ],
+      "classes": [
+        "MancalaAgent",
+        "MancalaAnalysis",
+        "MancalaConfig",
+        "MancalaMove",
+        "MancalaState",
+        "MancalaStateManager"
+      ],
+      "functions": [],
+      "other": [
+        "agent",
+        "config",
+        "engines",
+        "mancala_engines",
+        "models",
+        "state",
+        "state_manager"
+      ],
+      "game_components": [
+        "MancalaAgent",
+        "MancalaConfig",
+        "MancalaState",
+        "MancalaStateManager"
+      ]
+    }
+  },
+  "mastermind": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "ColorCode",
+        "MastermindAgent",
+        "MastermindAnalysis",
+        "MastermindConfig",
+        "MastermindGuess",
+        "MastermindState",
+        "MastermindStateManager",
+        "mastermind_engines"
+      ],
+      "classes": [
+        "ColorCode",
+        "MastermindAgent",
+        "MastermindAnalysis",
+        "MastermindConfig",
+        "MastermindGuess",
+        "MastermindState",
+        "MastermindStateManager"
+      ],
+      "functions": [],
+      "other": [
+        "agent",
+        "config",
+        "engines",
+        "mastermind_engines",
+        "models",
+        "state",
+        "state_manager",
+        "ui"
+      ],
+      "game_components": [
+        "MastermindAgent",
+        "MastermindConfig",
+        "MastermindState",
+        "MastermindStateManager"
+      ]
+    }
+  },
+  "monopoly": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "MonopolyAgent",
+        "MonopolyAgentConfig",
+        "MonopolyGameAgent",
+        "MonopolyGameAgentConfig",
+        "MonopolyPlayerAgent",
+        "MonopolyPlayerAgentConfig",
+        "MonopolyState"
+      ],
+      "classes": [
+        "MonopolyAgent",
+        "MonopolyAgentConfig",
+        "MonopolyGameAgent",
+        "MonopolyGameAgentConfig",
+        "MonopolyPlayerAgent",
+        "MonopolyPlayerAgentConfig",
+        "MonopolyState"
+      ],
+      "functions": [],
+      "other": [
+        "agent",
+        "game_agent",
+        "models",
+        "player_agent",
+        "state",
+        "utils"
+      ],
+      "game_components": [
+        "MonopolyAgent",
+        "MonopolyAgentConfig",
+        "MonopolyGameAgent",
+        "MonopolyGameAgentConfig",
+        "MonopolyPlayerAgent",
+        "MonopolyPlayerAgentConfig",
+        "MonopolyState"
+      ]
+    }
+  },
+  "nim": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "NimAgent",
+        "NimConfig",
+        "NimState",
+        "NimStateManager",
+        "NimAnalysis",
+        "NimMove",
+        "NimVariant",
+        "PositionType",
+        "nim_engines",
+        "NimUI",
+        "RICH_AVAILABLE",
+        "PileConfiguration",
+        "GameResult",
+        "AnalysisResult",
+        "create_standard_game",
+        "create_misere_game",
+        "analyze_position",
+        "calculate_nim_sum",
+        "find_optimal_move",
+        "__version__",
+        "__author__",
+        "__license__",
+        "NimUI",
+        "RICH_AVAILABLE"
+      ],
+      "classes": [
+        "Any",
+        "NimAgent",
+        "NimAnalysis",
+        "NimConfig",
+        "NimMove",
+        "NimState",
+        "NimStateManager",
+        "NimUI",
+        "NimVariant",
+        "PositionType"
+      ],
+      "functions": [
+        "AnalysisResult",
+        "Dict",
+        "GameResult",
+        "List",
+        "Optional",
+        "PileConfiguration",
+        "Union",
+        "analyze_position",
+        "calculate_nim_sum",
+        "create_misere_game",
+        "create_standard_game",
+        "find_optimal_move"
+      ],
+      "other": [
+        "CLASSIC_PILE_SIZES",
+        "COMPLEX_PILE_SIZES",
+        "DEFAULT_PILE_SIZES",
+        "LOSING_POSITION_NIMSUM",
+        "MAX_RECOMMENDED_PILES",
+        "MAX_RECOMMENDED_PILE_SIZE",
+        "RICH_AVAILABLE",
+        "SIMPLE_PILE_SIZES",
+        "TYPE_CHECKING",
+        "WINNING_POSITION_NIMSUM_MIN",
+        "agent",
+        "config",
+        "engines",
+        "models",
+        "nim_engines",
+        "state",
+        "state_manager",
+        "ui"
+      ],
+      "game_components": [
+        "NimAgent",
+        "NimConfig",
+        "NimState",
+        "NimStateManager"
+      ]
+    }
+  },
+  "poker": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "AgentDecision",
+        "Card",
+        "GamePhase",
+        "GameResult",
+        "Hand",
+        "Player",
+        "PlayerAction",
+        "PlayerObservation",
+        "PokerAgent",
+        "PokerAgentConfig",
+        "PokerState",
+        "PokerStateManager",
+        "poker_agent_configs"
+      ],
+      "classes": [
+        "AgentDecision",
+        "Card",
+        "GamePhase",
+        "GameResult",
+        "Hand",
+        "Player",
+        "PlayerAction",
+        "PlayerObservation",
+        "PokerAgent",
+        "PokerAgentConfig",
+        "PokerState",
+        "PokerStateManager"
+      ],
+      "functions": [],
+      "other": [
+        "agent",
+        "config",
+        "engines",
+        "models",
+        "poker_agent_configs",
+        "prompts",
+        "state",
+        "state_manager"
+      ],
+      "game_components": [
+        "AgentDecision",
+        "GamePhase",
+        "GameResult",
+        "PokerAgent",
+        "PokerAgentConfig",
+        "PokerState",
+        "PokerStateManager"
+      ]
+    }
+  },
+  "reversi": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "ReversiAgent",
+        "ReversiAnalysis",
+        "ReversiConfig",
+        "ReversiMove",
+        "ReversiState",
+        "ReversiStateManager",
+        "reversi_engines"
+      ],
+      "classes": [
+        "ReversiAgent",
+        "ReversiAnalysis",
+        "ReversiConfig",
+        "ReversiMove",
+        "ReversiState",
+        "ReversiStateManager"
+      ],
+      "functions": [],
+      "other": [
+        "agent",
+        "config",
+        "engines",
+        "models",
+        "reversi_engines",
+        "state",
+        "state_manager"
+      ],
+      "game_components": [
+        "ReversiAgent",
+        "ReversiConfig",
+        "ReversiState",
+        "ReversiStateManager"
+      ]
+    }
+  },
+  "risk": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "Card",
+        "Continent",
+        "Player",
+        "RiskAgent",
+        "RiskAnalysis",
+        "RiskConfig",
+        "RiskMove",
+        "RiskState",
+        "RiskStateManager",
+        "Territory",
+        "risk_engines"
+      ],
+      "classes": [
+        "Card",
+        "Continent",
+        "Player",
+        "RiskAgent",
+        "RiskAnalysis",
+        "RiskConfig",
+        "RiskMove",
+        "RiskState",
+        "RiskStateManager",
+        "Territory"
+      ],
+      "functions": ["risk_engines"],
+      "other": [
+        "agent",
+        "config",
+        "engines",
+        "models",
+        "state",
+        "state_manager"
+      ],
+      "game_components": [
+        "RiskAgent",
+        "RiskConfig",
+        "RiskState",
+        "RiskStateManager"
+      ]
+    }
+  },
+  "tic_tac_toe": {
+    "status": "success",
+    "error": "",
+    "analysis": {},
+    "exports": {
+      "has_all": true,
+      "all_contents": [
+        "TicTacToeAgent",
+        "TicTacToeConfig",
+        "TicTacToeMove",
+        "TicTacToeAnalysis",
+        "TicTacToeState",
+        "TicTacToeStateManager",
+        "tictactoe_engines",
+        "RichTicTacToeRunner",
+        "create_default_agent",
+        "create_tournament_agent",
+        "create_educational_agent",
+        "run_quick_game",
+        "is_ui_available",
+        "__version__",
+        "__author__",
+        "__email__",
+        "__license__",
+        "get_module_info"
+      ],
+      "classes": [
+        "RichTicTacToeRunner",
+        "TicTacToeAgent",
+        "TicTacToeAnalysis",
+        "TicTacToeConfig",
+        "TicTacToeMove",
+        "TicTacToeState",
+        "TicTacToeStateManager"
+      ],
+      "functions": [
+        "create_default_agent",
+        "create_educational_agent",
+        "create_tournament_agent",
+        "get_module_info",
+        "is_ui_available",
+        "run_quick_game"
+      ],
+      "other": [
+        "TYPE_CHECKING",
+        "agent",
+        "config",
+        "engines",
+        "models",
+        "state",
+        "state_manager",
+        "tictactoe_engines",
+        "ui"
+      ],
+      "game_components": [
+        "TicTacToeAgent",
+        "TicTacToeConfig",
+        "TicTacToeState",
+        "TicTacToeStateManager"
+      ]
+    }
+  }
+}

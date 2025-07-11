@@ -18,14 +18,12 @@ def setup_paths():
     )
 
 
-def test_simple_agent() -> Dict[str, Any]:
+def test_simple_agent() -> dict[str, Any]:
     """Test Simple agent with persistence."""
     try:
-        print("🔄 Testing Simple Agent...")
-
-        from langchain_core.messages import HumanMessage
 
         from haive.agents.simple.agent import SimpleAgent
+        from langchain_core.messages import HumanMessage
 
         timestamp = datetime.now().strftime("%H%M%S")
         agent = SimpleAgent(
@@ -82,14 +80,12 @@ def test_simple_agent() -> Dict[str, Any]:
         return {"status": "❌ FAILED", "error": str(e), "error_type": type(e).__name__}
 
 
-def test_react_agent() -> Dict[str, Any]:
+def test_react_agent() -> dict[str, Any]:
     """Test React agent with persistence."""
     try:
-        print("🔄 Testing React Agent...")
-
-        from langchain_core.messages import HumanMessage
 
         from haive.agents.react.agent import ReactAgent
+        from langchain_core.messages import HumanMessage
 
         timestamp = datetime.now().strftime("%H%M%S")
         agent = ReactAgent(
@@ -146,14 +142,12 @@ def test_react_agent() -> Dict[str, Any]:
         return {"status": "❌ FAILED", "error": str(e), "error_type": type(e).__name__}
 
 
-def test_rag_agent() -> Dict[str, Any]:
+def test_rag_agent() -> dict[str, Any]:
     """Test RAG agent with persistence."""
     try:
-        print("🔄 Testing RAG Agent...")
-
-        from langchain_core.messages import HumanMessage
 
         from haive.agents.rag.base.agent import BaseRAGAgent
+        from langchain_core.messages import HumanMessage
 
         timestamp = datetime.now().strftime("%H%M%S")
         agent = BaseRAGAgent(
@@ -217,16 +211,14 @@ def test_rag_agent() -> Dict[str, Any]:
         return {"status": "❌ FAILED", "error": str(e), "error_type": type(e).__name__}
 
 
-def test_collaborative_conversation() -> Dict[str, Any]:
+def test_collaborative_conversation() -> dict[str, Any]:
     """Test Collaborative conversation agent with persistence."""
     try:
-        print("🔄 Testing Collaborative Conversation Agent...")
-
-        from haive.core.engine.aug_llm import AugLLMConfig
 
         from haive.agents.conversation.collaberative.agent import (
             CollaborativeConversation,
         )
+        from haive.core.engine.aug_llm import AugLLMConfig
 
         timestamp = datetime.now().strftime("%H%M%S")
 
@@ -298,14 +290,12 @@ def test_collaborative_conversation() -> Dict[str, Any]:
         return {"status": "❌ FAILED", "error": str(e), "error_type": type(e).__name__}
 
 
-def test_debate_conversation() -> Dict[str, Any]:
+def test_debate_conversation() -> dict[str, Any]:
     """Test Debate conversation agent with persistence."""
     try:
-        print("🔄 Testing Debate Conversation Agent...")
-
-        from haive.core.engine.aug_llm import AugLLMConfig
 
         from haive.agents.conversation.debate.agent import DebateAgent
+        from haive.core.engine.aug_llm import AugLLMConfig
 
         timestamp = datetime.now().strftime("%H%M%S")
 
@@ -336,7 +326,7 @@ def test_debate_conversation() -> Dict[str, Any]:
         config = {"configurable": {"thread_id": thread_id}}
 
         # Run debate
-        result = agent.invoke(
+        agent.invoke(
             {"messages": [], "topic": "Should AI be used in education"}, config
         )
 
@@ -359,8 +349,6 @@ def test_debate_conversation() -> Dict[str, Any]:
 
 def main():
     """Run comprehensive tests on all agent types."""
-    print("🧪 Comprehensive Agent Testing with PostgreSQL Persistence")
-    print("=" * 70)
 
     setup_paths()
 
@@ -383,52 +371,38 @@ def main():
     test_results["debate"] = test_debate_conversation()
 
     # Generate summary report
-    print("\n" + "=" * 70)
-    print("📊 TEST RESULTS SUMMARY")
-    print("=" * 70)
 
     passed_count = 0
     failed_count = 0
 
     for agent_type, result in test_results.items():
         status = result["status"]
-        print(f"\n🤖 {agent_type.title()} Agent:")
-        print(f"   Status: {status}")
 
         if "✅ PASSED" in status:
             passed_count += 1
             if "agent_name" in result:
-                print(f"   Agent: {result['agent_name']}")
+                pass
             if "thread_id" in result:
-                print(f"   Thread: {result['thread_id']}")
+                pass
             if "persistence_type" in result:
-                print(f"   Persistence: {result['persistence_type']}")
+                pass
             if "app_name" in result and result["app_name"] != "N/A":
-                print(f"   App Name: {result['app_name']}")
+                pass
             if "memory_working" in result:
                 memory_status = (
                     "✅ Working" if result["memory_working"] else "❌ Not Working"
                 )
-                print(f"   Memory: {memory_status}")
         elif "❌ FAILED" in status:
             failed_count += 1
-            print(f"   Error: {result.get('error', 'Unknown error')}")
-            print(f"   Type: {result.get('error_type', 'Unknown')}")
         elif "⚠️" in status:
-            print(f"   Warning: {result.get('has_prepared_statement_errors', False)}")
+            pass
 
     # Overall status
-    print(f"\n🎯 OVERALL RESULTS:")
-    print(f"   ✅ Passed: {passed_count}")
-    print(f"   ❌ Failed: {failed_count}")
-    print(f"   📊 Total: {len(test_results)}")
 
     if failed_count == 0:
-        print(
-            f"\n🎉 ALL TESTS PASSED! All agent types working with PostgreSQL persistence."
-        )
+        pass
     else:
-        print(f"\n⚠️  Some tests failed. Check the errors above for details.")
+        passs.")
 
     # Save detailed results
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -439,7 +413,6 @@ def main():
     with open(results_file, "w") as f:
         json.dump(test_results, f, indent=2)
 
-    print(f"\n📁 Detailed results saved: {results_file}")
 
 
 if __name__ == "__main__":

@@ -1,9 +1,9 @@
-from haive.core.graph.branches.branch import Branch
-from haive.core.types import Tool_Type
 from langgraph.types import RetryPolicy
 from pydantic import Field
 
 from haive.agents.simple.config import SimpleAgentConfig
+from haive.core.graph.branches.branch import Branch
+from haive.core.types import Tool_Type
 
 
 class ReactAgentConfig(SimpleAgentConfig):
@@ -12,14 +12,8 @@ class ReactAgentConfig(SimpleAgentConfig):
     tools: list[Tool_Type] = Field(
         default_factory=list, description="The tools to use for the agent"
     )
-    continuation_branch: Branch = Field(
-        # default_factory=Branch,
-        description="The branch to continue the agent"
-    )
+    continuation_branch: Branch = Field(description="The branch to continue the agent")
     max_iterations: int = Field(
         default=10, description="The maximum number of iterations for the agent"
     )
-    retry_policy: RetryPolicy = Field(
-        # default=RetryPolicy.RETRY,
-        description="The retry policy for the agent"
-    )
+    retry_policy: RetryPolicy = Field(description="The retry policy for the agent")

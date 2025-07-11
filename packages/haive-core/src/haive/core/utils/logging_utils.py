@@ -38,10 +38,7 @@ def setup_test_logger(
 
     # Create log file name
     base_name = file_path.stem
-    if test_name:
-        log_file_name = f"{base_name}.{test_name}.log"
-    else:
-        log_file_name = f"{base_name}.log"
+    log_file_name = f"{base_name}.{test_name}.log" if test_name else f"{base_name}.log"
 
     log_file_path = test_log_dir / log_file_name
 

@@ -1,5 +1,4 @@
-"""
-Core models module for the Haive framework.
+"""Core models module for the Haive framework.
 
 This module provides a comprehensive set of model abstractions and implementations
 for working with large language models (LLMs), embeddings, retrievers, and vector
@@ -23,22 +22,17 @@ Typical usage example:
 """
 
 # Import submodules
-from haive.core.models import (
-    embeddings,
-    llm,
-    retriever,
-    vectorstore,
-)
+from haive.core.models import embeddings, llm, retriever, vectorstore
 
 # Model metadata utilities
 from haive.core.models.metadata import ModelMetadata
 from haive.core.models.metadata_mixin import ModelMetadataMixin as MetadataMixin
 
 __all__ = [
-    "ModelMetadata",
     "MetadataMixin",
-    "llm",
+    "ModelMetadata",
     "embeddings",
+    "llm",
     "retriever",
     "vectorstore",
 ]

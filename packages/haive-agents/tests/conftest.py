@@ -1,13 +1,16 @@
 """Configuration file for pytest to properly handle imports and logging.
-Save as tests/conftest.py
+Save as tests/conftest.py.
 """
 
 import logging
-import uuid
 from pathlib import Path
 from typing import Any
+import uuid
 
+from langchain_core.runnables import RunnableConfig
+from pydantic import Field
 import pytest
+
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.engine.base import (
     Engine,
@@ -20,8 +23,7 @@ from haive.core.engine.retriever import BaseRetrieverConfig, RetrieverType
 from haive.core.engine.vectorstore import VectorStoreConfig, VectorStoreProvider
 from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig
 from haive.core.models.llm.base import AzureLLMConfig
-from langchain_core.runnables import RunnableConfig
-from pydantic import Field
+
 
 # --------------------------------------------------------------------
 # ✅ Add the project root to sys.path so imports work across project

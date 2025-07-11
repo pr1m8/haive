@@ -10,11 +10,9 @@ engines, and other sources. It's organized into focused submodules:
 """
 
 from haive.core.schema.composer.engine.engine_manager import EngineComposerMixin
-from haive.core.schema.composer.field.field_extractor import FieldExtractorMixin
 from haive.core.schema.composer.schema_composer import SchemaComposer
 
 __all__ = [
     "SchemaComposer",
     "EngineComposerMixin",
-    "FieldExtractorMixin",
 ]

@@ -57,13 +57,10 @@ registry_module = import_module_from_file(
 
 def test_loader_selection_fix():
     """Test the specific loader selection fix."""
-
-    SourceRegistry = registry_module.SourceRegistry
     register_source = registry_module.register_source
     source_registry = registry_module.source_registry
     LocalSource = source_base_module.LocalSource
 
-    print("🔧 Testing Loader Selection Fix...")
 
     # Clear the global registry
     source_registry._sources.clear()
@@ -90,9 +87,7 @@ def test_loader_selection_fix():
     class PDFSource(LocalSource):
         """PDF source for testing."""
 
-        pass
 
-    print(f"  ✓ Registered PDF source with explicit fast/quality loaders")
 
     # Create a source
     source = source_registry.create_source("/path/to/document.pdf")
@@ -106,13 +101,6 @@ def test_loader_selection_fix():
     )
     default_loader = source_registry.get_loader_for_source(source)  # No preference
 
-    print(
-        f"  ✓ Speed preference selected: {fast_loader.name} (speed={fast_loader.speed})"
-    )
-    print(
-        f"  ✓ Quality preference selected: {quality_loader.name} (quality={quality_loader.quality})"
-    )
-    print(f"  ✓ Default (no preference) selected: {default_loader.name}")
 
     # Verify the fix worked
     assert (
@@ -131,29 +119,21 @@ def test_loader_selection_fix():
         default_loader.name == "PyPDFLoader"
     ), f"Expected default PyPDFLoader, got {default_loader.name}"
 
-    print("  ✅ Loader selection fix verified!")
 
     return True
 
 
 def main():
     """Run the test."""
-    print("🚀 Testing Loader Selection Fix\n")
-    print("=" * 40)
 
     try:
         success = test_loader_selection_fix()
 
-        print("\n" + "=" * 40)
         if success:
-            print("🎉 LOADER SELECTION FIX WORKS!")
-            print("\n✨ The issue was that default_loader was being prioritized")
-            print("   over preference. Now preference is checked first.")
 
         return success
 
     except Exception as e:
-        print(f"❌ Test failed: {e}")
         import traceback
 
         traceback.print_exc()
@@ -162,5 +142,4 @@ def main():
 
 if __name__ == "__main__":
     success = main()
-    print(f"\n{'✅ SUCCESS' if success else '❌ FAILURE'}")
     exit(0 if success else 1)

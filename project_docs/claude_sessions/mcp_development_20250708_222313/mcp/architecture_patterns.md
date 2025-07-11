@@ -13,18 +13,19 @@ The `MCPMixin` class provides MCP capabilities that can be mixed into any Haive 
 ```python
 class MCPMixin:
     """Mixin that adds MCP capabilities to any agent class."""
-    
+
     def setup_mcp(self) -> None:
         """Initialize MCP configuration and state."""
-        
+
     async def initialize_mcp(self) -> bool:
         """Connect to MCP servers and discover tools."""
-        
+
     async def _setup_mcp_tools(self) -> None:
         """Register discovered MCP tools with the agent."""
 ```
 
 **Benefits:**
+
 - Composition over inheritance
 - Can be added to any agent type
 - Provides consistent MCP interface
@@ -50,7 +51,7 @@ class MCPConfig(BaseModel):
     enabled: bool = True
     lazy_init: bool = False
     servers: Dict[str, MCPServerConfig] = Field(default_factory=dict)
-    
+
 class MCPServerConfig(BaseModel):
     name: str
     transport: MCPTransport = "stdio"  # or "sse"
@@ -62,6 +63,7 @@ class MCPServerConfig(BaseModel):
 ```
 
 **Key Features:**
+
 - Pydantic validation
 - Environment variable support
 - Capability tracking
@@ -82,6 +84,7 @@ server_config = MCPServerConfig(
 ```
 
 **Use Cases:**
+
 - NPM packages (`npx` execution)
 - Python scripts
 - Local executables
@@ -98,6 +101,7 @@ server_config = MCPServerConfig(
 ```
 
 **Use Cases:**
+
 - Web-based MCP servers
 - Remote services
 - Containerized servers
@@ -117,6 +121,7 @@ server_config = MCPServerConfig(
 ```
 
 **Security Considerations:**
+
 - Environment variables for secrets
 - No hardcoded credentials
 - Runtime configuration
@@ -131,7 +136,7 @@ async def initialize_mcp(self) -> bool:
     for server_name, config in self.mcp_config.servers.items():
         client = await self._connect_to_server(config)
         tools = await client.list_tools()
-        
+
         # Register tools with server prefix
         for tool in tools:
             tool_name = f"{server_name}_{tool.name}"
@@ -143,11 +148,13 @@ async def initialize_mcp(self) -> bool:
 **Pattern**: `{server_name}_{tool_name}`
 
 **Examples:**
+
 - `filesystem_read_file`
 - `github_create_issue`
 - `postgres_execute_query`
 
 **Benefits:**
+
 - Namespace isolation
 - Server identification
 - Conflict prevention
@@ -220,7 +227,7 @@ def create_with_mcp_servers(
         name: MCPServerConfig(name=name, **config)
         for name, config in server_configs.items()
     }
-    
+
     mcp_config = MCPConfig(enabled=True, servers=servers)
     return cls(engine=engine, mcp_config=mcp_config, **kwargs)
 ```
@@ -252,7 +259,7 @@ def create_multi_mcp_agent(engine: Any, **tokens) -> MCPAgent:
         "github": {...},
         "postgres": {...}
     }
-    
+
     return MCPAgent.create_with_mcp_servers(
         engine=engine,
         server_configs=server_configs
@@ -266,13 +273,13 @@ def create_multi_mcp_agent(engine: Any, **tokens) -> MCPAgent:
 ```python
 class MCPDocumentationLoader:
     """Load and search MCP server documentation."""
-    
+
     def load_all_mcp_documents(self) -> List[Dict]:
         """Load all 992 server documents."""
-        
+
     def find_servers_by_capability(self, capability: str) -> List[Dict]:
         """AI-powered capability search."""
-        
+
     def generate_implementation_guide(self, servers: List[str]) -> Dict:
         """Auto-generate configuration from docs."""
 ```
@@ -304,7 +311,7 @@ class TransferableMCPAgent(MCPAgent):
         tool_names: Optional[List[str]] = None
     ) -> None:
         """Transfer specific tools between agents."""
-        
+
     async def transfer_all_tools_to_agent(self, target_agent: MCPAgent) -> None:
         """Transfer all tools to another agent."""
 ```
@@ -318,7 +325,7 @@ db_agent = create_database_agent(engine)
 
 # Share file tools with database agent
 await file_agent.transfer_tools_to_agent(
-    db_agent, 
+    db_agent,
     tool_names=["filesystem_read_file", "filesystem_write_file"]
 )
 
@@ -380,10 +387,10 @@ class MCPMixin:
 async def call_mcp_tool(self, tool_name: str, arguments: Dict) -> Any:
     """Call tool with result caching for expensive operations."""
     cache_key = f"{tool_name}:{hash(str(arguments))}"
-    
+
     if cache_key in self._tool_cache:
         return self._tool_cache[cache_key]
-        
+
     result = await self._execute_tool(tool_name, arguments)
     self._tool_cache[cache_key] = result
     return result
@@ -396,7 +403,7 @@ async def call_mcp_tool(self, tool_name: str, arguments: Dict) -> Any:
 ```python
 class MCPAgent(MCPMixin, SimpleAgent):
     """MCP capabilities added to SimpleAgent via mixin."""
-    
+
     def setup_agent(self) -> None:
         super().setup_agent()  # Base agent setup
         if self.mcp_config and self.mcp_config.enabled:
@@ -427,26 +434,31 @@ class MCPAgentState(SimpleAgentState):
 ## Best Practices
 
 ### 1. Configuration Management
+
 - Use environment variables for secrets
 - Validate configurations with Pydantic
 - Support both development and production configs
 
 ### 2. Error Handling
+
 - Implement graceful degradation
 - Provide meaningful error messages
 - Log failures for debugging
 
 ### 3. Performance
+
 - Use lazy initialization when appropriate
 - Cache expensive operations
 - Monitor server health
 
 ### 4. Security
+
 - Never hardcode credentials
 - Use secure transport when available
 - Validate all inputs
 
 ### 5. Testing
+
 - Mock MCP servers for unit tests
 - Use real servers for integration tests
 - Test error conditions and recovery

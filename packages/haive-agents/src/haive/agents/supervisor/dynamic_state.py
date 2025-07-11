@@ -9,9 +9,10 @@ import time
 from typing import Any, Dict, List, Optional, Set, Union
 from uuid import uuid4
 
-from haive.core.schema.state_schema import StateSchema
 from langchain_core.messages import BaseMessage
 from pydantic import BaseModel, Field, computed_field
+
+from haive.core.schema.state_schema import StateSchema
 
 
 class AgentExecutionConfig(BaseModel):
@@ -19,7 +20,7 @@ class AgentExecutionConfig(BaseModel):
 
     agent_name: str = Field(description="Name of the agent")
     capability_description: str = Field(description="Agent's capability description")
-    execution_timeout: Optional[float] = Field(
+    execution_timeout: float | None = Field(
         default=300.0, description="Timeout in seconds"
     )
     retry_count: int = Field(default=0, description="Number of retries attempted")
@@ -35,23 +36,23 @@ class AgentExecutionConfig(BaseModel):
     )
 
     # Agent metadata
-    agent_type: Optional[str] = Field(
+    agent_type: str | None = Field(
         default=None, description="Type of agent (react, simple, etc.)"
     )
     created_at: float = Field(
         default_factory=time.time, description="When agent was registered"
     )
-    last_used_at: Optional[float] = Field(
+    last_used_at: float | None = Field(
         default=None, description="Last execution timestamp"
     )
     success_count: int = Field(default=0, description="Number of successful executions")
     error_count: int = Field(default=0, description="Number of failed executions")
 
     # Dynamic configuration
-    custom_params: Dict[str, Any] = Field(
+    custom_params: dict[str, Any] = Field(
         default_factory=dict, description="Custom agent parameters"
     )
-    state_adapters: Dict[str, Any] = Field(
+    state_adapters: dict[str, Any] = Field(
         default_factory=dict, description="State adaptation rules"
     )
 
@@ -67,26 +68,26 @@ class AgentExecutionResult(BaseModel):
     start_time: float = Field(
         default_factory=time.time, description="Execution start time"
     )
-    end_time: Optional[float] = Field(default=None, description="Execution end time")
-    duration: Optional[float] = Field(
+    end_time: float | None = Field(default=None, description="Execution end time")
+    duration: float | None = Field(
         default=None, description="Execution duration in seconds"
     )
 
     # Results
-    messages: List[BaseMessage] = Field(
+    messages: list[BaseMessage] = Field(
         default_factory=list, description="Messages from agent execution"
     )
-    output: Optional[Any] = Field(default=None, description="Agent output data")
-    error: Optional[str] = Field(default=None, description="Error message if failed")
+    output: Any | None = Field(default=None, description="Agent output data")
+    error: str | None = Field(default=None, description="Error message if failed")
 
     # Metadata
-    token_usage: Optional[Dict[str, int]] = Field(
+    token_usage: dict[str, int] | None = Field(
         default=None, description="Token usage statistics"
     )
-    tool_calls: List[Dict[str, Any]] = Field(
+    tool_calls: list[dict[str, Any]] = Field(
         default_factory=list, description="Tools called during execution"
     )
-    state_changes: Dict[str, Any] = Field(
+    state_changes: dict[str, Any] = Field(
         default_factory=dict, description="State changes made"
     )
 
@@ -97,7 +98,7 @@ class SupervisorDecision(BaseModel):
     decision_id: str = Field(
         default_factory=lambda: str(uuid4()), description="Unique decision ID"
     )
-    target_agent: Optional[str] = Field(description="Selected agent name or END")
+    target_agent: str | None = Field(description="Selected agent name or END")
     reasoning: str = Field(description="Explanation for the decision")
     confidence: float = Field(
         default=0.5, ge=0.0, le=1.0, description="Confidence in decision"
@@ -107,18 +108,18 @@ class SupervisorDecision(BaseModel):
     )
 
     # Decision context
-    available_agents: List[str] = Field(
+    available_agents: list[str] = Field(
         default_factory=list, description="Agents available at decision time"
     )
-    input_analysis: Dict[str, Any] = Field(
+    input_analysis: dict[str, Any] = Field(
         default_factory=dict, description="Analysis of user input"
     )
-    previous_context: Optional[str] = Field(
+    previous_context: str | None = Field(
         default=None, description="Previous conversation context"
     )
 
     # Alternative options considered
-    alternatives: List[Dict[str, float]] = Field(
+    alternatives: list[dict[str, float]] = Field(
         default_factory=list, description="Other options with scores"
     )
 
@@ -131,44 +132,44 @@ class DynamicSupervisorState(StateSchema):
     """
 
     # Core messaging (inherited from StateSchema)
-    messages: List[BaseMessage] = Field(
+    messages: list[BaseMessage] = Field(
         default_factory=list, description="Conversation messages"
     )
 
     # Agent management
-    registered_agents: Dict[str, AgentExecutionConfig] = Field(
+    registered_agents: dict[str, AgentExecutionConfig] = Field(
         default_factory=dict, description="Currently registered agents with config"
     )
-    agent_execution_history: List[AgentExecutionResult] = Field(
+    agent_execution_history: list[AgentExecutionResult] = Field(
         default_factory=list, description="History of agent executions"
     )
 
     # Current execution context
-    current_execution: Optional[AgentExecutionResult] = Field(
+    current_execution: AgentExecutionResult | None = Field(
         default=None, description="Currently executing agent result"
     )
-    execution_queue: List[str] = Field(
+    execution_queue: list[str] = Field(
         default_factory=list, description="Queue of agents to execute"
     )
 
     # Supervisor decision tracking
-    routing_decisions: List[SupervisorDecision] = Field(
+    routing_decisions: list[SupervisorDecision] = Field(
         default_factory=list, description="History of routing decisions"
     )
-    current_decision: Optional[SupervisorDecision] = Field(
+    current_decision: SupervisorDecision | None = Field(
         default=None, description="Current routing decision"
     )
 
     # Dynamic configuration
-    supervisor_config: Dict[str, Any] = Field(
+    supervisor_config: dict[str, Any] = Field(
         default_factory=dict, description="Dynamic supervisor configuration"
     )
-    adaptation_rules: Dict[str, Any] = Field(
+    adaptation_rules: dict[str, Any] = Field(
         default_factory=dict, description="Rules for adapting agent responses"
     )
 
     # Performance tracking
-    session_stats: Dict[str, Any] = Field(
+    session_stats: dict[str, Any] = Field(
         default_factory=lambda: {
             "total_executions": 0,
             "successful_executions": 0,
@@ -180,10 +181,10 @@ class DynamicSupervisorState(StateSchema):
     )
 
     # Task and conversation management
-    task_context: Dict[str, Any] = Field(
+    task_context: dict[str, Any] = Field(
         default_factory=dict, description="Current task context and requirements"
     )
-    conversation_metadata: Dict[str, Any] = Field(
+    conversation_metadata: dict[str, Any] = Field(
         default_factory=dict, description="Conversation-level metadata"
     )
 
@@ -209,7 +210,7 @@ class DynamicSupervisorState(StateSchema):
 
     @computed_field
     @property
-    def last_execution_time(self) -> Optional[float]:
+    def last_execution_time(self) -> float | None:
         """Timestamp of last agent execution."""
         if not self.agent_execution_history:
             return None
@@ -226,7 +227,7 @@ class DynamicSupervisorState(StateSchema):
 
     @computed_field
     @property
-    def most_used_agent(self) -> Optional[str]:
+    def most_used_agent(self) -> str | None:
         """Name of most frequently used agent."""
         if not self.agent_execution_history:
             return None
@@ -250,7 +251,7 @@ class DynamicSupervisorState(StateSchema):
             return True
         return False
 
-    def get_agent_config(self, agent_name: str) -> Optional[AgentExecutionConfig]:
+    def get_agent_config(self, agent_name: str) -> AgentExecutionConfig | None:
         """Get agent configuration by name."""
         return self.registered_agents.get(agent_name)
 
@@ -299,11 +300,11 @@ class DynamicSupervisorState(StateSchema):
         self.routing_decisions.append(decision)
         self.current_decision = decision
 
-    def get_recent_decisions(self, limit: int = 5) -> List[SupervisorDecision]:
+    def get_recent_decisions(self, limit: int = 5) -> list[SupervisorDecision]:
         """Get recent routing decisions."""
         return self.routing_decisions[-limit:] if self.routing_decisions else []
 
-    def get_agent_performance(self, agent_name: str) -> Dict[str, Any]:
+    def get_agent_performance(self, agent_name: str) -> dict[str, Any]:
         """Get performance metrics for specific agent."""
         agent_results = [
             r for r in self.agent_execution_history if r.agent_name == agent_name
@@ -342,11 +343,11 @@ class DynamicSupervisorState(StateSchema):
         if config:
             config.retry_count = 0
 
-    def get_available_agents(self) -> List[str]:
+    def get_available_agents(self) -> list[str]:
         """Get list of available agent names."""
         return list(self.registered_agents.keys())
 
-    def get_high_priority_agents(self) -> List[str]:
+    def get_high_priority_agents(self) -> list[str]:
         """Get agents sorted by priority (highest first)."""
         agents_with_priority = [
             (name, config.priority) for name, config in self.registered_agents.items()
@@ -369,7 +370,7 @@ class DynamicSupervisorState(StateSchema):
 
         # Apply any configured state adapters
         adapted_response = response
-        for adapter_name, adapter_config in config.state_adapters.items():
+        for _adapter_name, _adapter_config in config.state_adapters.items():
             # This would be implemented based on specific adaptation needs
             # For now, return original response
             pass

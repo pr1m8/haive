@@ -8,9 +8,9 @@ import asyncio
 from typing import Any, Dict, List, Optional
 from unittest.mock import AsyncMock, MagicMock, Mock, patch
 
-import pytest
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 from langchain_core.tools import BaseTool, StructuredTool
+import pytest
 
 from haive.agents.discovery.dynamic_tool_selector import (
     ContextAwareSelector,
@@ -32,7 +32,7 @@ class MockTool(BaseTool):
     """Mock tool for testing."""
 
     def __init__(
-        self, name: str, description: str = "", capabilities: List[str] = None
+        self, name: str, description: str = "", capabilities: list[str] | None = None
     ):
         super().__init__()
         self.name = name
@@ -57,7 +57,7 @@ class TestToolSelectionResult:
         assert result.selection_metadata == {}
         assert result.query_analysis is None
         assert result.selection_confidence == 0.0
-        assert result.fallback_used == False
+        assert not result.fallback_used
         assert result.selection_time_ms == 0.0
 
     def test_creation_with_data(self):
@@ -309,7 +309,7 @@ class TestDynamicToolSelector:
     async def test_usage_statistics_update(self):
         """Test updating usage statistics."""
         query = "test stats"
-        tools = [MockTool("stat_tool")]
+        [MockTool("stat_tool")]
         context = {"domain": "testing"}
 
         # Enable learning
@@ -365,7 +365,7 @@ class TestDynamicToolSelector:
 
         # Should handle error gracefully
         assert isinstance(result, ToolSelectionResult)
-        assert result.fallback_used == True
+        assert result.fallback_used
         assert "error" in result.selection_metadata
 
     @pytest.mark.asyncio
@@ -832,7 +832,7 @@ class TestFactoryFunctions:
         assert isinstance(selector, LangGraphStyleSelector)
         assert selector.selection_mode == SelectionMode.CONTEXTUAL
         assert selector.max_tools_per_query == 8
-        assert selector.learning_enabled == False
+        assert not selector.learning_enabled
 
     def test_create_context_aware_selector(self):
         """Test factory function for context-aware selector."""

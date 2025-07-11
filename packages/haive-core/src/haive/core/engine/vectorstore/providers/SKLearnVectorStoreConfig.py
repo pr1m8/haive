@@ -1,5 +1,4 @@
-"""
-SKLearn Vector Store implementation for the Haive framework.
+"""SKLearn Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the SKLearn vector store,
 which provides ML-integrated nearest neighbor search using scikit-learn.
@@ -25,17 +24,15 @@ a consistent Haive configuration interface.
 
 from typing import Any, Dict, List, Optional, Tuple, Type
 
-from langchain_core.documents import Document
-from pydantic import Field, validator
-
 from haive.core.engine.vectorstore.base import BaseVectorStoreConfig
 from haive.core.engine.vectorstore.types import VectorStoreType
+from langchain_core.documents import Document
+from pydantic import Field, validator
 
 
 @BaseVectorStoreConfig.register(VectorStoreType.SKLEARN)
 class SKLearnVectorStoreConfig(BaseVectorStoreConfig):
-    """
-    Configuration for SKLearn vector store in the Haive framework.
+    """Configuration for SKLearn vector store in the Haive framework.
 
     This vector store uses scikit-learn's NearestNeighbors for
     ML-integrated similarity search operations.
@@ -87,7 +84,7 @@ class SKLearnVectorStoreConfig(BaseVectorStoreConfig):
     )
 
     # Persistence configuration
-    persist_path: Optional[str] = Field(
+    persist_path: str | None = Field(
         default=None, description="Path for persistent storage (optional)"
     )
 
@@ -100,12 +97,12 @@ class SKLearnVectorStoreConfig(BaseVectorStoreConfig):
         default=30, ge=1, le=1000, description="Leaf size for tree algorithms"
     )
 
-    n_jobs: Optional[int] = Field(
+    n_jobs: int | None = Field(
         default=None, description="Number of parallel jobs (-1 for all cores)"
     )
 
     @validator("metric")
-    def validate_metric(cls, v):
+    def validate_metric(self, v):
         """Validate distance metric is supported by scikit-learn."""
         # Common scikit-learn metrics - not exhaustive
         valid_metrics = [
@@ -128,11 +125,13 @@ class SKLearnVectorStoreConfig(BaseVectorStoreConfig):
             # Allow custom metrics but warn
             import warnings
 
-            warnings.warn(f"metric '{v}' may not be supported by scikit-learn")
+            warnings.warn(
+                f"metric '{v}' may not be supported by scikit-learn", stacklevel=2
+            )
         return v
 
     @validator("algorithm")
-    def validate_algorithm(cls, v):
+    def validate_algorithm(self, v):
         """Validate algorithm is supported by scikit-learn."""
         valid_algorithms = ["auto", "ball_tree", "kd_tree", "brute"]
         if v not in valid_algorithms:
@@ -140,7 +139,7 @@ class SKLearnVectorStoreConfig(BaseVectorStoreConfig):
         return v
 
     @validator("serializer")
-    def validate_serializer(cls, v):
+    def validate_serializer(self, v):
         """Validate serializer is supported."""
         valid_serializers = ["json", "bson", "parquet"]
         if v not in valid_serializers:
@@ -148,33 +147,32 @@ class SKLearnVectorStoreConfig(BaseVectorStoreConfig):
         return v
 
     @validator("n_jobs")
-    def validate_n_jobs(cls, v):
+    def validate_n_jobs(self, v):
         """Validate n_jobs parameter."""
         if v is not None and v < -1:
             raise ValueError("n_jobs must be None, -1, or positive integer")
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for SKLearn vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for SKLearn vector store."""
         return {
             "ids": (
-                List[str],
+                list[str],
                 Field(description="IDs of the added documents in SKLearn store"),
             ),
         }
 
     def instantiate(self):
-        """
-        Create a SKLearn vector store from this configuration.
+        """Create a SKLearn vector store from this configuration.
 
         Returns:
             SKLearnVectorStore: Instantiated SKLearn vector store.

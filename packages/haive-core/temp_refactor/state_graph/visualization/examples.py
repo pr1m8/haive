@@ -1,5 +1,4 @@
-"""
-Example usage of the MermaidGenerator for visualizing state graphs.
+"""Example usage of the MermaidGenerator for visualizing state graphs.
 
 This module provides examples of how to use the MermaidGenerator
 for visualizing different types of state graphs.

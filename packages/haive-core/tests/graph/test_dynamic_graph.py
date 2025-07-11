@@ -2,9 +2,9 @@ import json
 import os
 from typing import List
 
-import pytest
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field
+import pytest
 
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
@@ -19,19 +19,14 @@ class GraphState(BaseModel):
     """Test state schema."""
 
     query: str = ""
-    context: List[str] = Field(default_factory=list)
+    context: list[str] = Field(default_factory=list)
     output: str = ""
 
 
 # Test helpers to pretty print results
 def print_test_result(test_name, result):
     """Print test result in a nice format."""
-    result_str = json.dumps(result, indent=2)
-    print("\n======================================================================")
-    print(f"✅ TEST: {test_name}")
-    print("======================================================================")
-    print(f"RESULT:\n{result_str}")
-    print("======================================================================\n")
+    json.dumps(result, indent=2)
 
 
 # Fixture for creating mock engines
@@ -374,8 +369,7 @@ def test_add_conditional_edges(test_graph):
     def condition(state):
         if state.get("route") == "A":
             return "a"
-        else:
-            return "b"
+        return "b"
 
     # Add nodes
     test_graph.add_node("router", router_func)

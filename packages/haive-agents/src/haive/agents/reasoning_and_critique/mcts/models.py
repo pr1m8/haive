@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-import math
 from collections import deque
+import math
 from typing import Any
 
 from langchain_core.messages import BaseMessage, HumanMessage
@@ -77,7 +77,7 @@ class TreeNode(BaseModel):
         return all_nodes
 
     def get_best_solution(self) -> TreeNode:
-        all_nodes = [self] + self._get_all_children()
+        all_nodes = [self, *self._get_all_children()]
         best = max(
             all_nodes,
             key=lambda node: int(node.is_terminal and node.is_solved) * node.value,
@@ -120,7 +120,7 @@ class TreeNode(BaseModel):
             return handler(children)
         except ValueError as exc:
             if "Circular reference" not in str(exc):
-                raise exc
+                raise
             return [{"depth": c.depth, "value": c.value} for c in children]
 
 

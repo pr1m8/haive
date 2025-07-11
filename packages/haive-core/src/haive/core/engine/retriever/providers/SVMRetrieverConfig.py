@@ -1,5 +1,4 @@
-"""
-Support Vector Machine Retriever implementation for the Haive framework.
+"""Support Vector Machine Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the SVM (Support Vector Machine) retriever,
 which uses Support Vector Machine algorithm for document retrieval. SVM retriever treats
@@ -34,8 +33,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.SVM)
 class SVMRetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for Support Vector Machine retriever in the Haive framework.
+    """Configuration for Support Vector Machine retriever in the Haive framework.
 
     This retriever uses SVM classification to score and rank documents based on
     their similarity to the query, treating retrieval as a classification problem.
@@ -79,7 +77,7 @@ class SVMRetrieverConfig(BaseRetrieverConfig):
     )
 
     # Documents to index
-    documents: List[Document] = Field(
+    documents: list[Document] = Field(
         default_factory=list, description="Documents to index for SVM retrieval"
     )
 
@@ -111,17 +109,17 @@ class SVMRetrieverConfig(BaseRetrieverConfig):
         default=0.0, description="Independent term in kernel function for poly/sigmoid"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for SVM retriever."""
         return {
             "query": (str, Field(description="Text query for SVM-based ranking")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for SVM retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list, description="Documents ranked by SVM scores"
                 ),
@@ -129,8 +127,7 @@ class SVMRetrieverConfig(BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create an SVM retriever from this configuration.
+        """Create an SVM retriever from this configuration.
 
         Returns:
             SVMRetriever: Instantiated retriever ready for classification-based retrieval.

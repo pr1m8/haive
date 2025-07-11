@@ -2,13 +2,6 @@
 
 import logging
 
-from haive.core.engine.agent.agent import Agent, register_agent
-from haive.core.graph.dynamic_graph_builder import DynamicGraph
-from langchain_core.messages import AIMessage
-from langchain_core.prompts import ChatPromptTemplate
-from langgraph.graph import END
-from langgraph.types import Command
-
 from haive.agents.reasoning_and_critique.self_discover.config import (
     SelfDiscoverAgentConfig,
 )
@@ -19,6 +12,12 @@ from haive.agents.reasoning_and_critique.self_discover.models import (
     ReasoningStructure,
 )
 from haive.agents.reasoning_and_critique.self_discover.state import SelfDiscoverState
+from haive.core.engine.agent.agent import Agent, register_agent
+from haive.core.graph.dynamic_graph_builder import DynamicGraph
+from langchain_core.messages import AIMessage
+from langchain_core.prompts import ChatPromptTemplate
+from langgraph.graph import END
+from langgraph.types import Command
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -81,7 +80,7 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
                 )
 
             except Exception as e:
-                logger.error(f"Error in select_modules: {e!s}")
+                logger.exception(f"Error in select_modules: {e!s}")
                 return Command(
                     update={"error": f"Error in module selection: {e!s}"}, goto=END
                 )
@@ -129,7 +128,7 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
                 )
 
             except Exception as e:
-                logger.error(f"Error in adapt_modules: {e!s}")
+                logger.exception(f"Error in adapt_modules: {e!s}")
                 return Command(
                     update={"error": f"Error in module adaptation: {e!s}"}, goto=END
                 )
@@ -178,7 +177,7 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
                 )
 
             except Exception as e:
-                logger.error(f"Error in create_structure: {e!s}")
+                logger.exception(f"Error in create_structure: {e!s}")
                 return Command(
                     update={"error": f"Error in structure creation: {e!s}"}, goto=END
                 )
@@ -239,7 +238,7 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
                 return Command(update=update, goto=END)
 
             except Exception as e:
-                logger.error(f"Error in execute_reasoning: {e!s}")
+                logger.exception(f"Error in execute_reasoning: {e!s}")
                 error_msg = f"Error in reasoning execution: {e!s}"
 
                 # Prepare update with error
@@ -265,7 +264,6 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
         self.graph = gb.build()
 
         # Compile the graph
-        # self.app = self.graph.compile(checkpointer=self.memory)
 
         logger.info(f"Set up SelfDiscover workflow for {self.config.name}")
 

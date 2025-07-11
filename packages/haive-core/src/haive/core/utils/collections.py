@@ -7,9 +7,8 @@ standard Python collections with additional functionality.
 
 from typing import Any, Dict, Generic, Iterable, List, Optional, TypeVar, Union
 
-from pydantic import BaseModel, Field, model_validator
-
 from haive.core.utils.getter_mixin import GetterMixin
+from pydantic import BaseModel, Field, model_validator
 
 T = TypeVar('T')
 

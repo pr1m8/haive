@@ -34,7 +34,9 @@ Usage:
     ```
 """
 
-from typing import Any, Callable, Generic, List, Optional, Type, TypeVar
+from collections.abc import Callable
+from typing import Any, Generic, List, Optional, Type, TypeVar
+
 
 T = TypeVar("T")
 
@@ -54,7 +56,7 @@ class GetterMixin(Generic[T]):
         None directly, but requires subclasses to implement _get_items()
     """
 
-    def _get_items(self) -> List[T]:
+    def _get_items(self) -> list[T]:
         """Get all items from the collection.
 
         This method must be implemented by subclasses to provide access
@@ -69,8 +71,8 @@ class GetterMixin(Generic[T]):
         raise NotImplementedError("Subclasses must implement _get_items()")
 
     def get_by_attr(
-        self, attr_name: str, value: Any, default: Optional[T] = None
-    ) -> Optional[T]:
+        self, attr_name: str, value: Any, default: T | None = None
+    ) -> T | None:
         """Get first item where attribute equals value.
 
         This method finds the first item in the collection where the
@@ -89,7 +91,7 @@ class GetterMixin(Generic[T]):
                 return item
         return default
 
-    def get_all_by_attr(self, attr_name: str, value: Any) -> List[T]:
+    def get_all_by_attr(self, attr_name: str, value: Any) -> list[T]:
         """Get all items where attribute equals value.
 
         This method finds all items in the collection where the
@@ -108,7 +110,7 @@ class GetterMixin(Generic[T]):
             if self._has_attr_value(item, attr_name, value)
         ]
 
-    def filter(self, **kwargs) -> List[T]:
+    def filter(self, **kwargs) -> list[T]:
         """Filter items by multiple attribute criteria.
 
         This method finds all items that match all of the specified
@@ -137,7 +139,7 @@ class GetterMixin(Generic[T]):
                 results.append(item)
         return results
 
-    def find(self, predicate: Callable[[T], bool]) -> Optional[T]:
+    def find(self, predicate: Callable[[T], bool]) -> T | None:
         """Find first item matching a custom predicate function.
 
         This method finds the first item for which the predicate
@@ -160,7 +162,7 @@ class GetterMixin(Generic[T]):
                 return item
         return None
 
-    def find_all(self, predicate: Callable[[T], bool]) -> List[T]:
+    def find_all(self, predicate: Callable[[T], bool]) -> list[T]:
         """Find all items matching a custom predicate function.
 
         This method finds all items for which the predicate
@@ -184,7 +186,7 @@ class GetterMixin(Generic[T]):
         """
         return [item for item in self._get_items() if predicate(item)]
 
-    def get_by_type(self, type_cls: Type) -> List[T]:
+    def get_by_type(self, type_cls: type) -> list[T]:
         """Get all items of specified type.
 
         This method finds all items that are instances of the specified type.
@@ -203,7 +205,7 @@ class GetterMixin(Generic[T]):
         """
         return [item for item in self._get_items() if isinstance(item, type_cls)]
 
-    def field_values(self, field_name: str) -> List[Any]:
+    def field_values(self, field_name: str) -> list[Any]:
         """Get all values for a specific field across items.
 
         This method collects the values of a specific field or attribute
@@ -232,7 +234,7 @@ class GetterMixin(Generic[T]):
                 results.append(None)
         return results
 
-    def first(self, **kwargs) -> Optional[T]:
+    def first(self, **kwargs) -> T | None:
         """Get first item matching criteria.
 
         This is a convenience method that combines filter() with

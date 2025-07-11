@@ -7,7 +7,6 @@ def transform_query(state):
     Returns:
         state (dict): Updates question key with a re-phrased question
     """
-    print("---TRANSFORM QUERY---")
     question = state["question"]
     documents = state["documents"]
 

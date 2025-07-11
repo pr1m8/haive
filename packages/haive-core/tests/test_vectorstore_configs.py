@@ -1,11 +1,10 @@
 """Test vector store configurations."""
 
 import pytest
-from langchain_core.documents import Document
-
 from haive.core.engine.vectorstore.base import BaseVectorStoreConfig
 from haive.core.engine.vectorstore.types import VectorStoreType
 from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig
+from langchain_core.documents import Document
 
 
 @pytest.fixture

@@ -3,11 +3,12 @@ import logging
 from typing import Any, Dict, Optional, Type, Union
 
 from haive.core.engine.agent.persistence.base import CheckpointerConfig
-from haive.core.engine.agent.persistence.memory_config import MemoryCheckpointerConfig
-from haive.core.engine.agent.persistence.mongodb_config import MongoDBCheckpointerConfig
-from haive.core.engine.agent.persistence.postgres_config import (
-    PostgresCheckpointerConfig,
-)
+from haive.core.engine.agent.persistence.memory_config import \
+    MemoryCheckpointerConfig
+from haive.core.engine.agent.persistence.mongodb_config import \
+    MongoDBCheckpointerConfig
+from haive.core.engine.agent.persistence.postgres_config import \
+    PostgresCheckpointerConfig
 from haive.core.engine.agent.persistence.types import CheckpointerType
 
 logger = logging.getLogger(__name__)

@@ -58,6 +58,7 @@ from rich.tree import Tree
 
 from haive.core.schema.state_schema import StateSchema
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -89,10 +90,9 @@ class SchemaUI:
 
     @staticmethod
     def display_schema(
-        schema: Union[Type[BaseModel], BaseModel], title: str = "Schema"
+        schema: type[BaseModel] | BaseModel, title: str = "Schema"
     ) -> None:
-        """
-        Display a schema or schema instance with rich formatting.
+        """Display a schema or schema instance with rich formatting.
 
         Args:
             schema: Schema class or instance to display
@@ -115,10 +115,9 @@ class SchemaUI:
 
     @staticmethod
     def _create_schema_content(
-        schema: Union[Type[BaseModel], BaseModel], is_class: bool = True
+        schema: type[BaseModel] | BaseModel, is_class: bool = True
     ) -> Any:
-        """
-        Create rich content for schema display.
+        """Create rich content for schema display.
 
         Args:
             schema: Schema class or instance
@@ -160,10 +159,11 @@ class SchemaUI:
                     default_str = f"Field(default_factory={factory_name})"
                 else:
                     default = field_info.default
-                    if default is ...:
-                        default_str = "Field(...)"
-                    else:
-                        default_str = f"Field(default={repr(default)})"
+                    default_str = (
+                        "Field(...)"
+                        if default is ...
+                        else f"Field(default={default!r})"
+                    )
 
                 # Add description if available
                 if field_info.description:
@@ -213,8 +213,7 @@ class SchemaUI:
 
     @staticmethod
     def _format_value(value: Any) -> str:
-        """
-        Format a value for display, handling complex types.
+        """Format a value for display, handling complex types.
 
         Args:
             value: Value to format
@@ -224,19 +223,19 @@ class SchemaUI:
         """
         if value is None:
             return "None"
-        elif isinstance(value, str):
+        if isinstance(value, str):
             if len(value) > 100:
                 return f'"{value[:97]}..."'
             return f'"{value}"'
-        elif isinstance(value, (int, float, bool)):
+        if isinstance(value, int | float | bool):
             return str(value)
-        elif isinstance(value, list):
+        if isinstance(value, list):
             if not value:
                 return "[]"
             if len(value) > 5:
                 return f"[{', '.join(SchemaUI._format_value(v) for v in value[:3])}, ... ({len(value)} items)]"
             return f"[{', '.join(SchemaUI._format_value(v) for v in value)}]"
-        elif isinstance(value, dict):
+        if isinstance(value, dict):
             if not value:
                 return "{}"
             if len(value) > 3:
@@ -253,9 +252,8 @@ class SchemaUI:
             return str(value)
 
     @staticmethod
-    def schema_to_code(schema: Type[BaseModel]) -> str:
-        """
-        Convert schema to Python code representation.
+    def schema_to_code(schema: type[BaseModel]) -> str:
+        """Convert schema to Python code representation.
 
         Args:
             schema: Schema class to convert
@@ -286,10 +284,11 @@ class SchemaUI:
                     default_str = f"Field(default_factory={factory_name})"
                 else:
                     default = field_info.default
-                    if default is ...:
-                        default_str = "Field(...)"
-                    else:
-                        default_str = f"Field(default={repr(default)})"
+                    default_str = (
+                        "Field(...)"
+                        if default is ...
+                        else f"Field(default={default!r})"
+                    )
 
                 # Add description if available
                 if field_info.description:
@@ -320,10 +319,9 @@ class SchemaUI:
 
     @staticmethod
     def display_schema_code(
-        schema: Type[BaseModel], title: str = "Schema Code"
+        schema: type[BaseModel], title: str = "Schema Code"
     ) -> None:
-        """
-        Display schema as syntax-highlighted Python code.
+        """Display schema as syntax-highlighted Python code.
 
         Args:
             schema: Schema class to display
@@ -339,13 +337,12 @@ class SchemaUI:
 
     @staticmethod
     def compare_schemas(
-        schema1: Type[BaseModel],
-        schema2: Type[BaseModel],
+        schema1: type[BaseModel],
+        schema2: type[BaseModel],
         title1: str = "Schema 1",
         title2: str = "Schema 2",
     ) -> None:
-        """
-        Compare two schemas side by side.
+        """Compare two schemas side by side.
 
         Args:
             schema1: First schema to compare
@@ -397,8 +394,7 @@ class SchemaUI:
 
     @staticmethod
     def _format_field(field_info: Any) -> str:
-        """
-        Format field info for display.
+        """Format field info for display.
 
         Args:
             field_info: Field info to format
@@ -418,20 +414,14 @@ class SchemaUI:
             default_str = f"default_factory={factory_name}"
         else:
             default = field_info.default
-            if default is ...:
-                default_str = "required"
-            else:
-                default_str = f"default={repr(default)}"
+            default_str = "required" if default is ... else f"default={default!r}"
 
         return f"{type_str} ({default_str})"
 
 
 # Create convenience function for easy access
-def display_schema(
-    schema: Union[Type[BaseModel], BaseModel], title: str = "Schema"
-) -> None:
-    """
-    Display a schema or schema instance with rich formatting.
+def display_schema(schema: type[BaseModel] | BaseModel, title: str = "Schema") -> None:
+    """Display a schema or schema instance with rich formatting.
 
     Args:
         schema: Schema class or instance to display

@@ -1,16 +1,15 @@
-"""
-Base analyzer class and common functionality for component analysis.
-"""
+"""Base analyzer class and common functionality for component analysis."""
 
+from abc import ABC, abstractmethod
 import inspect
 import logging
 import re
-from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional, Type
 
 from pydantic import BaseModel, ConfigDict, create_model
 
 from haive.core.utils.haive_discovery.component_info import ComponentInfo
+
 
 logger = logging.getLogger(__name__)
 
@@ -21,18 +20,16 @@ class ComponentAnalyzer(ABC):
     @abstractmethod
     def can_analyze(self, obj: Any) -> bool:
         """Check if this analyzer can handle the given object."""
-        pass
 
     @abstractmethod
     def analyze(self, obj: Any, module_path: str) -> ComponentInfo:
         """Analyze the object and return component info."""
-        pass
 
-    def create_tool(self, component_info: ComponentInfo) -> Optional[Any]:
+    def create_tool(self, component_info: ComponentInfo) -> Any | None:
         """Convert component to a StructuredTool if possible."""
         return None
 
-    def create_engine_config(self, component_info: ComponentInfo) -> Optional[Any]:
+    def create_engine_config(self, component_info: ComponentInfo) -> Any | None:
         """Create a Haive engine config if possible."""
         return None
 
@@ -41,10 +38,9 @@ class ComponentAnalyzer(ABC):
         try:
             if hasattr(obj, "__name__"):
                 return obj.__name__
-            elif hasattr(obj, "name"):
+            if hasattr(obj, "name"):
                 return obj.name
-            else:
-                return f"{default_prefix}_{id(obj)}"
+            return f"{default_prefix}_{id(obj)}"
         except Exception:
             return f"{default_prefix}_{id(obj)}"
 
@@ -53,12 +49,11 @@ class ComponentAnalyzer(ABC):
         try:
             if hasattr(obj, "__name__"):
                 return obj.__name__
-            else:
-                return type(obj).__name__
+            return type(obj).__name__
         except Exception:
             return "UnknownClass"
 
-    def detect_env_vars(self, source_code: str) -> List[str]:
+    def detect_env_vars(self, source_code: str) -> list[str]:
         """Detect environment variables in source code."""
         if not source_code:
             return []
@@ -76,7 +71,7 @@ class ComponentAnalyzer(ABC):
             matches = re.findall(pattern, source_code)
             env_vars.update(matches)
 
-        return sorted(list(env_vars))
+        return sorted(env_vars)
 
     def get_source_code(self, obj: Any) -> str:
         """Extract source code from object."""
@@ -90,14 +85,14 @@ class ComponentAnalyzer(ABC):
                     pass
             return ""
 
-    def extract_schema(self, obj: Any) -> Dict[str, Any]:
+    def extract_schema(self, obj: Any) -> dict[str, Any]:
         """Extract schema information from object."""
         try:
             if hasattr(obj, "args_schema") and obj.args_schema:
                 # LangChain tool schema
                 if hasattr(obj.args_schema, "model_json_schema"):
                     return obj.args_schema.model_json_schema()
-                elif hasattr(obj.args_schema, "schema"):
+                if hasattr(obj.args_schema, "schema"):
                     return obj.args_schema.schema()
 
             # Try to create schema from __init__ signature
@@ -124,8 +119,8 @@ class ComponentAnalyzer(ABC):
         return {}
 
     def create_pydantic_model(
-        self, cls: Type, force_serializable: bool = False
-    ) -> Type[BaseModel]:
+        self, cls: type, force_serializable: bool = False
+    ) -> type[BaseModel]:
         """Create a Pydantic model from a class signature."""
         try:
             sig = inspect.signature(cls.__init__)

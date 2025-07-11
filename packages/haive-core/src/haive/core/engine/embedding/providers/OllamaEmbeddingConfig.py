@@ -61,13 +61,13 @@ class OllamaEmbeddingConfig(BaseEmbeddingConfig):
     base_url: str = Field(
         default="http://localhost:11434", description="Ollama server URL"
     )
-    headers: Optional[Dict[str, str]] = Field(
+    headers: dict[str, str] | None = Field(
         default=None, description="Optional HTTP headers for requests"
     )
-    model_options: Optional[Dict[str, Any]] = Field(
+    model_options: dict[str, Any] | None = Field(
         default=None, description="Optional model-specific options"
     )
-    request_timeout: Optional[float] = Field(
+    request_timeout: float | None = Field(
         default=None, description="Timeout for API requests in seconds"
     )
 
@@ -77,6 +77,7 @@ class OllamaEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     @validator("model")
+    @classmethod
     def validate_model(cls, v):
         """Validate the Ollama model name."""
         popular_models = {
@@ -97,6 +98,7 @@ class OllamaEmbeddingConfig(BaseEmbeddingConfig):
         return v
 
     @validator("base_url")
+    @classmethod
     def validate_base_url(cls, v):
         """Validate Ollama server URL."""
         if not v or not v.strip():

@@ -1,5 +1,4 @@
-"""
-Interactive Rich UI for Haive Logging Control
+"""Interactive Rich UI for Haive Logging Control.
 
 This module provides a beautiful, interactive terminal UI for controlling
 logging in real-time using Rich's Live display and keyboard input.
@@ -9,8 +8,8 @@ import logging
 import threading
 import time
 from datetime import datetime
-from typing import List, Optional, Tuple
 
+from haive.core.logging.control import logging_control
 from rich import box
 from rich.align import Align
 from rich.console import Console
@@ -20,8 +19,6 @@ from rich.panel import Panel
 from rich.table import Table
 from rich.text import Text
 
-from haive.core.logging.control import logging_control
-
 # Try to import keyboard handling
 try:
     import readchar
@@ -29,12 +26,10 @@ try:
     READCHAR_AVAILABLE = True
 except ImportError:
     READCHAR_AVAILABLE = False
-    print("Warning: readchar not available. Install with: pip install readchar")
 
 
 class LoggingUI:
-    """
-    Interactive Rich UI for logging control.
+    """Interactive Rich UI for logging control.
 
     Provides a real-time dashboard for:
     - Viewing current logging configuration
@@ -50,7 +45,7 @@ class LoggingUI:
         self.selected_menu = 0
         self.selected_module = 0
         self.show_logs = True
-        self.log_buffer: List[Tuple[str, str, str]] = []  # (time, level, message)
+        self.log_buffer: list[tuple[str, str, str]] = []  # (time, level, message)
         self.max_log_lines = 20
 
         # Menu options
@@ -437,11 +432,9 @@ class LoggingUI:
 
 
 class LoggingMonitor:
-    """
-    Simple logging monitor that shows live logs with filtering.
-    """
+    """Simple logging monitor that shows live logs with filtering."""
 
-    def __init__(self, filter_modules: Optional[List[str]] = None):
+    def __init__(self, filter_modules: list[str] | None = None):
         """Initialize the monitor."""
         self.console = Console()
         self.filter_modules = filter_modules or []
@@ -449,9 +442,8 @@ class LoggingMonitor:
         self.log_entries = []
         self.max_entries = 100
 
-    def monitor(self, duration: Optional[int] = None):
-        """
-        Monitor logs for a duration or until interrupted.
+    def monitor(self, duration: int | None = None):
+        """Monitor logs for a duration or until interrupted.
 
         Args:
             duration: Seconds to monitor (None = until interrupted)
@@ -481,11 +473,10 @@ class LoggingMonitor:
 
             def emit(self, record):
                 # Check filters
-                if self.monitor.filter_modules:
-                    if not any(
-                        record.name.startswith(f) for f in self.monitor.filter_modules
-                    ):
-                        return
+                if self.monitor.filter_modules and not any(
+                    record.name.startswith(f) for f in self.monitor.filter_modules
+                ):
+                    return
 
                 # Format and display
                 level_colors = {
@@ -527,9 +518,8 @@ def launch_ui():
     ui.run()
 
 
-def monitor_logs(modules: Optional[List[str]] = None, duration: Optional[int] = None):
-    """
-    Monitor logs with optional filtering.
+def monitor_logs(modules: list[str] | None = None, duration: int | None = None):
+    """Monitor logs with optional filtering.
 
     Args:
         modules: List of module prefixes to monitor
@@ -539,4 +529,4 @@ def monitor_logs(modules: Optional[List[str]] = None, duration: Optional[int] = 
     monitor.monitor(duration)
 
 
-__all__ = ["LoggingUI", "LoggingMonitor", "launch_ui", "monitor_logs"]
+__all__ = ["LoggingMonitor", "LoggingUI", "launch_ui", "monitor_logs"]

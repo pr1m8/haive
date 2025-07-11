@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 
 from haive.core.engine.agent.persistence.types import CheckpointerType
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -43,7 +44,7 @@ class CheckpointerConfig(BaseModel):
         # Default implementation returns same as synchronous version
         return self.create_checkpointer()
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Convert configuration to a dictionary for serialization.
 
         Returns:

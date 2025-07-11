@@ -1,12 +1,13 @@
 from collections.abc import Callable
 from typing import Any
 
-from agents.react_agent2.models import Action, ActionType, Thought
-from haive.core.engine.aug_llm import AugLLMConfig, compose_runnable
 from langchain_core.messages import AIMessage
 from langgraph.graph import END
 from langgraph.types import Command
 from pydantic import BaseModel
+
+from agents.react_agent2.models import Action, ActionType, Thought
+from haive.core.engine.aug_llm import AugLLMConfig, compose_runnable
 
 
 def get_tool_by_name(tools, name):
@@ -92,9 +93,6 @@ def execute_tool(tool, input_value):
     return f"Error: Cannot execute tool {get_tool_name(tool)}"
 
 
-import traceback
-
-
 def think_node(state: dict[str, Any], aug_llm: AugLLMConfig | None = None) -> Command:
     """Think about the current state and decide on an action.
 
@@ -106,7 +104,6 @@ def think_node(state: dict[str, Any], aug_llm: AugLLMConfig | None = None) -> Co
         Command object with next state updates
     """
     # Debugging: Print the state type
-    print(f"DEBUG - think_node received state type: {type(state)}")
 
     # Convert state to dict if it's a model
     state_dict = state.model_dump() if hasattr(state, "model_dump") else state
@@ -115,18 +112,15 @@ def think_node(state: dict[str, Any], aug_llm: AugLLMConfig | None = None) -> Co
     iteration_count = state_dict.get("iteration_count", 0) + 1
     max_iterations = state_dict.get("max_iterations", 10)
 
-    print(f"DEBUG - Current iteration: {iteration_count}/{max_iterations}")
-
     if iteration_count > max_iterations:
-        print("DEBUG - Maximum iterations reached")
         return Command(
             update={
                 "final_answer": "Maximum iterations reached. I need to stop now.",
-                "messages": state_dict.get("messages", [])
-                + [
+                "messages": [
+                    *state_dict.get("messages", []),
                     AIMessage(
                         content="I've reached my maximum number of thinking steps and need to stop now."
-                    )
+                    ),
                 ],
                 "status": "done",
             },
@@ -135,7 +129,7 @@ def think_node(state: dict[str, Any], aug_llm: AugLLMConfig | None = None) -> Co
 
     # Prepare input for thinking
     messages = state_dict.get("messages", [])
-    observations = state_dict.get("observations", [])
+    state_dict.get("observations", [])
     intermediate_steps = state_dict.get("intermediate_steps", [])
 
     # Build context for thinking
@@ -144,24 +138,20 @@ def think_node(state: dict[str, Any], aug_llm: AugLLMConfig | None = None) -> Co
     # Include messages
     if messages:
         prompt_input["messages"] = messages
-        print(f"DEBUG - Using {len(messages)} messages in prompt")
 
     # Include original query from messages
     if "input" not in prompt_input:
         for msg in messages:
             if isinstance(msg, tuple) and msg[0] == "user":
                 prompt_input["input"] = msg[1]
-                print(f"DEBUG - Found user input: {msg[1][:50]}...")
                 break
             if hasattr(msg, "type") and msg.type == "human":
                 prompt_input["input"] = msg.content
-                print(f"DEBUG - Found human message: {msg.content[:50]}...")
                 break
 
     # If no input was found, add a default
     if "input" not in prompt_input:
         prompt_input["input"] = "Please provide assistance."
-        print("DEBUG - Using default input message")
 
     # Include intermediate steps
     step_context = []
@@ -178,13 +168,11 @@ def think_node(state: dict[str, Any], aug_llm: AugLLMConfig | None = None) -> Co
 
     if step_context:
         prompt_input["steps"] = "\n".join(step_context)
-        print(f"DEBUG - Added {len(intermediate_steps)} intermediate steps to context")
     else:
         prompt_input["steps"] = ""
 
     # Make sure we have a valid LLM config
     if not aug_llm:
-        print("DEBUG - No LLM config provided, creating a fallback response")
         return Command(
             update={
                 "final_answer": "Error: Thinking LLM not configured properly.",
@@ -195,28 +183,21 @@ def think_node(state: dict[str, Any], aug_llm: AugLLMConfig | None = None) -> Co
 
     # Call thinking LLM
     try:
-        print("DEBUG - Composing thinking LLM runnable")
         runnable = compose_runnable(aug_llm)
 
-        print(
-            f"DEBUG - Invoking LLM with prompt input keys: {list(prompt_input.keys())}"
-        )
         thought_result = runnable.invoke(prompt_input)
 
-        print(f"DEBUG - LLM result type: {type(thought_result)}")
         if hasattr(thought_result, "content"):
-            print(f"DEBUG - LLM result content: {thought_result.content[:100]}...")
+            pass
         else:
-            print(f"DEBUG - LLM raw result: {str(thought_result)[:100]}...")
+            pass
 
         # Parse result
         if isinstance(thought_result, Thought):
             # Already parsed as Thought
             thought = thought_result
-            print("DEBUG - Result already parsed as Thought")
         else:
             # Need to parse manually
-            print("DEBUG - Need to manually parse result to Thought")
 
             # Extract content from various possible response formats
             content = ""
@@ -228,7 +209,7 @@ def think_node(state: dict[str, Any], aug_llm: AugLLMConfig | None = None) -> Co
                 # Handle dict with direct mapping
                 return Command(
                     update={
-                        "thoughts": state_dict.get("thoughts", []) + [thought_result],
+                        "thoughts": [*state_dict.get("thoughts", []), thought_result],
                         "current_thought": thought_result,
                         "current_action": thought_result.get(
                             "action",
@@ -245,8 +226,6 @@ def think_node(state: dict[str, Any], aug_llm: AugLLMConfig | None = None) -> Co
             else:
                 content = str(thought_result)
 
-            print(f"DEBUG - Extracted content: {content[:100]}...")
-
             # Try to extract action using regex
             import re
 
@@ -259,7 +238,7 @@ def think_node(state: dict[str, Any], aug_llm: AugLLMConfig | None = None) -> Co
                 action_name = action_match.group(1).strip()
 
                 # Look for tool names in the action
-                tools = state_dict.get("tools", {})
+                state_dict.get("tools", {})
                 tool_names = state_dict.get("tool_names", [])
 
                 for name in tool_names:
@@ -279,13 +258,11 @@ def think_node(state: dict[str, Any], aug_llm: AugLLMConfig | None = None) -> Co
                 thought=content,
                 action=Action(action_type=action_type, action_input=action_input),
             )
-            print(f"DEBUG - Manually created Thought: {thought}")
 
         # Update state with new thought
         thoughts = state_dict.get("thoughts", [])
         thoughts.append(thought)
 
-        print("DEBUG - Successfully updated state with new thought")
         return Command(
             update={
                 "thoughts": thoughts,
@@ -298,8 +275,6 @@ def think_node(state: dict[str, Any], aug_llm: AugLLMConfig | None = None) -> Co
         )
 
     except Exception as e:
-        print(f"DEBUG - Error in think_node: {e!s}")
-        print(traceback.format_exc())
 
         # Create a fallback response
         return Command(
@@ -326,8 +301,10 @@ def act_node(state: dict[str, Any]) -> Command:
         return Command(
             update={
                 "final_answer": current_action.action_input,
-                "messages": state_dict.get("messages", [])
-                + [AIMessage(content=current_action.action_input)],
+                "messages": [
+                    *state_dict.get("messages", []),
+                    AIMessage(content=current_action.action_input),
+                ],
                 "status": "done",
             },
             goto="observe",
@@ -364,9 +341,9 @@ def act_node(state: dict[str, Any]) -> Command:
             return Command(
                 update={
                     "retry_attempts": retry_attempts,
-                    "observations": state_dict.get("observations", [])
-                    + [
-                        f"Tool execution failed. Retrying ({current_attempts}/{max_retry_attempts})..."
+                    "observations": [
+                        *state_dict.get("observations", []),
+                        f"Tool execution failed. Retrying ({current_attempts}/{max_retry_attempts})...",
                     ],
                 },
                 goto="think",  # Go back to thinking to try a different approach

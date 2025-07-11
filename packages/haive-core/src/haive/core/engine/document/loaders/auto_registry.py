@@ -55,10 +55,10 @@ class RegistrationInfo:
     """
 
     source_name: str
-    source_class: Type[BaseSource]
+    source_class: type[BaseSource]
     module_name: str
     category: SourceCategory
-    loaders: List[str]
+    loaders: list[str]
     registration_time: datetime
 
 
@@ -78,7 +78,7 @@ class RegistrationStats:
     total_modules_scanned: int
     total_sources_found: int
     total_sources_registered: int
-    registration_errors: List[str]
+    registration_errors: list[str]
     registration_time: float
     categories_covered: int
 
@@ -119,11 +119,11 @@ class AutoRegistry:
             registry: Optional custom registry instance
         """
         self.registry = registry or enhanced_registry
-        self.registered_sources: Dict[str, RegistrationInfo] = {}
-        self.registration_errors: List[str] = []
+        self.registered_sources: dict[str, RegistrationInfo] = {}
+        self.registration_errors: list[str] = []
         self._sources_dir = Path(__file__).parent / "sources"
 
-    def discover_source_modules(self) -> List[str]:
+    def discover_source_modules(self) -> list[str]:
         """Discover all source modules in the sources directory.
 
         Returns:
@@ -155,13 +155,13 @@ class AutoRegistry:
 
         except Exception as e:
             error_msg = f"Failed to discover source modules: {e}"
-            logger.error(error_msg)
+            logger.exception(error_msg)
             self.registration_errors.append(error_msg)
 
         logger.info(f"Discovered {len(modules)} source modules")
         return modules
 
-    def import_source_module(self, module_name: str) -> Optional[Any]:
+    def import_source_module(self, module_name: str) -> Any | None:
         """Import a source module safely.
 
         Args:
@@ -188,7 +188,7 @@ class AutoRegistry:
             self.registration_errors.append(error_msg)
             return None
 
-    def find_source_classes(self, module: Any) -> List[Tuple[str, Type[BaseSource]]]:
+    def find_source_classes(self, module: Any) -> list[tuple[str, type[BaseSource]]]:
         """Find all source classes in a module.
 
         Args:
@@ -228,7 +228,7 @@ class AutoRegistry:
 
         return source_classes
 
-    def validate_source_class(self, source_class: Type[BaseSource]) -> bool:
+    def validate_source_class(self, source_class: type[BaseSource]) -> bool:
         """Validate that a source class is properly configured.
 
         Args:
@@ -279,7 +279,7 @@ class AutoRegistry:
             return False
 
     def register_source_class(
-        self, source_name: str, source_class: Type[BaseSource], module_name: str
+        self, source_name: str, source_class: type[BaseSource], module_name: str
     ) -> bool:
         """Register a single source class.
 
@@ -339,7 +339,7 @@ class AutoRegistry:
 
         except Exception as e:
             error_msg = f"Failed to register {source_name}: {e}"
-            logger.error(error_msg)
+            logger.exception(error_msg)
             self.registration_errors.append(error_msg)
             return False
 
@@ -428,7 +428,7 @@ class AutoRegistry:
 
             except Exception as e:
                 error_msg = f"Error processing module {module_name}: {e}"
-                logger.error(error_msg)
+                logger.exception(error_msg)
                 self.registration_errors.append(error_msg)
 
         # Calculate final statistics
@@ -508,7 +508,7 @@ class AutoRegistry:
         )
         return registered_count
 
-    def get_registration_status(self) -> Dict[str, Any]:
+    def get_registration_status(self) -> dict[str, Any]:
         """Get current registration status and statistics.
 
         Returns:
@@ -556,7 +556,7 @@ class AutoRegistry:
             "last_updated": datetime.now().isoformat(),
         }
 
-    def list_sources_by_category(self) -> Dict[SourceCategory, List[str]]:
+    def list_sources_by_category(self) -> dict[SourceCategory, list[str]]:
         """List all registered sources grouped by category.
 
         Returns:
@@ -585,7 +585,7 @@ class AutoRegistry:
 
         return by_category
 
-    def get_source_info(self, source_name: str) -> Optional[RegistrationInfo]:
+    def get_source_info(self, source_name: str) -> RegistrationInfo | None:
         """Get detailed information about a registered source.
 
         Args:
@@ -605,7 +605,7 @@ class AutoRegistry:
         """
         return self.registered_sources.get(source_name)
 
-    def validate_all_registrations(self) -> Dict[str, Any]:
+    def validate_all_registrations(self) -> dict[str, Any]:
         """Validate all registered sources.
 
         Returns:
@@ -665,7 +665,7 @@ def auto_register_all() -> RegistrationStats:
     return auto_registry.register_all_sources()
 
 
-def get_registration_status() -> Dict[str, Any]:
+def get_registration_status() -> dict[str, Any]:
     """Get current registration status.
 
     Returns:
@@ -682,7 +682,7 @@ def get_registration_status() -> Dict[str, Any]:
     return auto_registry.get_registration_status()
 
 
-def list_available_sources() -> List[str]:
+def list_available_sources() -> list[str]:
     """List all available source types.
 
     Returns:
@@ -699,7 +699,7 @@ def list_available_sources() -> List[str]:
     return list(auto_registry.registered_sources.keys())
 
 
-def get_sources_by_category(category: SourceCategory) -> List[str]:
+def get_sources_by_category(category: SourceCategory) -> list[str]:
     """Get sources for a specific category.
 
     Args:
@@ -730,7 +730,7 @@ try:
         f"from {_stats.total_modules_scanned} modules"
     )
 except Exception as e:
-    logger.error(f"Auto-registration failed: {e}")
+    logger.exception(f"Auto-registration failed: {e}")
 
 
 # Export main functions
@@ -739,8 +739,8 @@ __all__ = [
     "RegistrationInfo",
     "RegistrationStats",
     "auto_register_all",
-    "get_registration_status",
-    "list_available_sources",
-    "get_sources_by_category",
     "auto_registry",
+    "get_registration_status",
+    "get_sources_by_category",
+    "list_available_sources",
 ]

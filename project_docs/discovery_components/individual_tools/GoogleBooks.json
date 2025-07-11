@@ -7,7 +7,7 @@
     "description": "A wrapper around Google Books. Useful for when you need to answer general inquiries about books of certain topics and generate recommendation based off of key wordsInput should be a query string",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.785235",
+    "timestamp": "2025-07-10T19:45:29.006434",
     "schema": {
       "description": "Input for the GoogleBooksQuery tool.",
       "properties": {
@@ -36,7 +36,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.785235",
+      "timestamp": "2025-07-10T19:45:29.006434",
       "category": "individual_tools"
     }
   },

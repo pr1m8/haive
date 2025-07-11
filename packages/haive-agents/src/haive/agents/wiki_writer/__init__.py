@@ -1,4 +1,4 @@
-"""Wiki Writer - TODO: Add brief description
+"""Wiki Writer - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

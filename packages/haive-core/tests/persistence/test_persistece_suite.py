@@ -4,7 +4,6 @@ import os
 import uuid
 
 import pytest
-
 from haive.core.persistence import (
     CheckpointerType,
     create_memory_checkpointer,

@@ -32,8 +32,8 @@ class DynamicGraphManager:
     """Manages a LangGraph that can be modified after compilation."""
 
     def __init__(self):
-        self.agents: Dict[str, MockAgent] = {}
-        self.graph: Optional[StateGraph] = None
+        self.agents: dict[str, MockAgent] = {}
+        self.graph: StateGraph | None = None
         self.compiled_graph = None
         self.is_compiled = False
 
@@ -49,9 +49,8 @@ class DynamicGraphManager:
         if self.is_compiled:
             logger.info("   ⚠️  Graph already compiled - need to rebuild!")
             return self._rebuild_graph()
-        else:
-            logger.info("   ✅ Agent added (graph not yet compiled)")
-            return True
+        logger.info("   ✅ Agent added (graph not yet compiled)")
+        return True
 
     def build_initial_graph(self) -> None:
         """Build the initial graph structure."""
@@ -75,7 +74,7 @@ class DynamicGraphManager:
                 state["next"] = "writing_agent"
             elif self.agents:
                 # Default to first available agent
-                state["next"] = list(self.agents.keys())[0]
+                state["next"] = next(iter(self.agents.keys()))
             else:
                 state["next"] = END
 
@@ -92,7 +91,7 @@ class DynamicGraphManager:
         def route_supervisor(state: dict) -> str:
             return state.get("next", END)
 
-        destinations = list(self.agents.keys()) + [END]
+        destinations = [*list(self.agents.keys()), END]
         self.graph.add_conditional_edges(
             "supervisor", route_supervisor, {dest: dest for dest in destinations}
         )
@@ -146,7 +145,7 @@ class DynamicGraphManager:
             return True
 
         except Exception as e:
-            logger.error(f"   ❌ Failed to rebuild graph: {e}")
+            logger.exception(f"   ❌ Failed to rebuild graph: {e}")
             # Restore old graph
             self.compiled_graph = old_compiled
             return False
@@ -163,76 +162,40 @@ class DynamicGraphManager:
 
 async def test_dynamic_addition():
     """Test the complete flow of dynamic agent addition."""
-
-    print("\n" + "=" * 70)
-    print("🧪 TESTING DYNAMIC AGENT ADDITION AFTER COMPILATION")
-    print("=" * 70)
-
     # Create manager
     manager = DynamicGraphManager()
 
     # Step 1: Add initial agent and compile
-    print("\n[Step 1] Adding initial agent before compilation")
     writing_agent = MockAgent("writing_agent")
     manager.add_agent(writing_agent)
 
-    print("\n[Step 2] Compiling the graph")
     manager.compile()
 
     # Test with initial setup
-    print("\n[Step 3] Testing with initial agent")
     result1 = await manager.run("Write me a story")
-    print(f"Result: {result1}")
     assert "writing_agent" in str(result1), "Writing agent should handle this"
 
     # Step 4: Add new agent AFTER compilation
-    print("\n[Step 4] Adding math_agent AFTER compilation")
     math_agent = MockAgent("math_agent")
-    success = manager.add_agent(math_agent)
-    print(f"Addition successful: {success}")
+    manager.add_agent(math_agent)
 
     # Test with new agent
-    print("\n[Step 5] Testing with newly added agent")
     result2 = await manager.run("Calculate 2+2")
-    print(f"Result: {result2}")
     assert "math_agent" in str(result2), "Math agent should handle this"
 
     # Add another agent
-    print("\n[Step 6] Adding research_agent")
     research_agent = MockAgent("research_agent")
-    success = manager.add_agent(research_agent)
+    manager.add_agent(research_agent)
 
     # Final test
-    print("\n[Step 7] Final verification")
-    print(f"Total agents: {len(manager.agents)}")
-    print(f"Agent names: {list(manager.agents.keys())}")
 
     # Test each type
-    write_result = await manager.run("Write something")
-    math_result = await manager.run("Do some math")
-
-    print(f"\nWrite request result: {write_result.get('last_agent')}")
-    print(f"Math request result: {math_result.get('last_agent')}")
-
-    print("\n✅ SUCCESS: Dynamic agent addition works after compilation!")
-    print("   - Started with 1 agent")
-    print("   - Added 2 more agents after compilation")
-    print("   - Graph rebuilds automatically")
-    print("   - All routing works correctly")
+    await manager.run("Write something")
+    await manager.run("Do some math")
 
     return True
 
 
 if __name__ == "__main__":
-    print("\n🚀 LangGraph Dynamic Agent Addition Test")
-    print("This test proves that agents CAN be added after graph compilation")
-    print("by rebuilding the graph when new agents are registered.\n")
 
     asyncio.run(test_dynamic_addition())
-
-    print("\n🎉 Test completed successfully!")
-    print("\nKey findings:")
-    print("1. ✅ Agents CAN be added after compilation")
-    print("2. ✅ Graph rebuilding preserves functionality")
-    print("3. ✅ Routing adapts to new agents automatically")
-    print("4. ✅ The dynamic supervisor design is valid!")

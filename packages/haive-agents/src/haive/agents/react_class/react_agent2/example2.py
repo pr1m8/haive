@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 
 from haive.agents.react_class.react_agent2.agent2 import create_react_agent
 
-# from langgraph.prebuilt import create_react_agent
+
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -20,12 +20,11 @@ def print_latest_message(result):
     if messages:
         final_message = messages[-1]
         if hasattr(final_message, "content"):
-            content = final_message.content
+            pass
         elif isinstance(final_message, dict) and "content" in final_message:
-            content = final_message["content"]
+            final_message["content"]
         else:
-            content = str(final_message)
-        print(f"Answer: {content}")
+            str(final_message)
 
 
 # =============================================
@@ -35,7 +34,6 @@ def print_latest_message(result):
 
 def example_basic_react_agent():
     """Basic React agent with search and calculator tools."""
-    print("\n===== Example 1: Basic React Agent =====")
 
     # Define a simple search tool
     @tool
@@ -65,7 +63,6 @@ def example_basic_react_agent():
     result = agent.run("Who was Albert Einstein and what is 2023 minus his birth year?")
 
     # Display the final answer
-    print("\nFinal result:")
     print_latest_message(result)
 
     return agent
@@ -78,7 +75,6 @@ def example_basic_react_agent():
 
 def example_structured_output_agent():
     """React agent that returns structured output."""
-    print("\n===== Example 2: React Agent with Structured Output =====")
 
     # Define a structured output model
     class MovieReview(BaseModel):
@@ -119,20 +115,13 @@ def example_structured_output_agent():
     result = agent.run("Can you provide a review of the movie Inception?")
 
     # Display the structured output
-    print("\nStructured output:")
     structured_output = result.get("structured_output")
     if structured_output:
         movie_review = structured_output
-        print(f"Title: {movie_review.title}")
-        print(f"Year: {movie_review.year}")
-        print(f"Rating: {movie_review.rating}/10")
-        print(f"Summary: {movie_review.summary}")
-        print("\nPros:")
-        for pro in movie_review.pros:
-            print(f"- {pro}")
-        print("\nCons:")
-        for con in movie_review.cons:
-            print(f"- {con}")
+        for _pro in movie_review.pros:
+            pass
+        for _con in movie_review.cons:
+            pass
 
     return agent
 
@@ -144,7 +133,6 @@ def example_structured_output_agent():
 
 def example_memory_agent():
     """React agent with conversation memory."""
-    print("\n===== Example 3: React Agent with Memory =====")
 
     # Define a simple weather tool
     @tool
@@ -166,17 +154,14 @@ def example_memory_agent():
     config = {"configurable": {"thread_id": thread_id}}
 
     # First question
-    print("\nAsking about weather in San Francisco...")
     result1 = agent.run("What's the weather like in San Francisco?", **config)
     print_latest_message(result1)
 
     # Follow-up question
-    print("\nAsking follow-up question...")
     result2 = agent.run("Should I bring a jacket?", **config)
     print_latest_message(result2)
 
     # Another follow-up
-    print("\nAsking about a different location...")
     result3 = agent.run("What about in Miami?", **config)
     print_latest_message(result3)
 
@@ -190,7 +175,6 @@ def example_memory_agent():
 
 def example_business_intelligence_agent():
     """React agent specialized in business intelligence tasks."""
-    print("\n===== Example 4: Business Intelligence Agent =====")
 
     # Define business intelligence tools
     @tool
@@ -215,16 +199,16 @@ def example_business_intelligence_agent():
 
     # Create business intelligence agent
     system_prompt = """You are a skilled business intelligence assistant that helps analyze data, find information, and perform business actions.
-    
+
     You have access to internal databases, web searches, data analysis tools, and can execute business actions when properly authorized.
-    
+
     When responding to requests:
     1. First understand what information or action is needed
     2. Search for relevant data or context
     3. Analyze the information if necessary
     4. Execute actions only when explicitly requested and authorized
     5. Provide clear, concise, and actionable insights
-    
+
     Always maintain confidentiality of internal data and verify authorization before executing business actions.
     """
 
@@ -237,15 +221,12 @@ def example_business_intelligence_agent():
     )
 
     # Run tests
-    print("\nQuestion 1: Analyzing sales data...")
     result1 = agent.run("Can you analyze our sales data in detail?")
     print_latest_message(result1)
 
-    print("\nQuestion 2: Approving purchase order...")
     result2 = agent.run("Can you approve purchase order #45678?")
     print_latest_message(result2)
 
-    print("\nQuestion 3: Market trends research...")
     result3 = agent.run("What's the current market trend for AI technology companies?")
     print_latest_message(result3)
 
@@ -259,7 +240,6 @@ def example_business_intelligence_agent():
 
 def interactive_chat():
     """Start an interactive chat with a React agent."""
-    print("\n===== Interactive Chat with React Agent =====")
 
     # Define tools
     @tool
@@ -298,8 +278,6 @@ def interactive_chat():
 
 def run_examples():
     """Run all React agent examples."""
-    print("\n====== REACT AGENT EXAMPLES ======\n")
-
     # Run basic example
     example_basic_react_agent()
 
@@ -312,10 +290,7 @@ def run_examples():
     # Run business intelligence example
     example_business_intelligence_agent()
 
-    print("\n====== EXAMPLES COMPLETED ======\n")
-
     # Uncomment to run interactive chat
-    # interactive_chat()
 
 
 if __name__ == "__main__":

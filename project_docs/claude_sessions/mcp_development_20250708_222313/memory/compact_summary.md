@@ -3,6 +3,7 @@
 ## Quick Reference
 
 ### What We Built
+
 Located in `/packages/haive-mcp/src/haive/mcp/`:
 
 1. **fastapi_mcp_server.py** - Complete web server with:
@@ -38,8 +39,9 @@ Then open http://localhost:8000
 4. **HITL** via web UI with WebSocket updates
 
 ### Architecture
+
 - Database: 1,960 MCP servers
-- Retriever: Enhanced parent-child + self-query  
+- Retriever: Enhanced parent-child + self-query
 - Integration: langchain_mcp_adapters.MultiServerMCPClient
 - Testing: Live server connections with all capabilities
 

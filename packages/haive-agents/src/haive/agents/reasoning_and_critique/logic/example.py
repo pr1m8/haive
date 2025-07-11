@@ -63,17 +63,10 @@ def example_business_decision():
     # The result contains the final synthesized report
     report = result.get("final_report") or result.get("synthesized_conclusion")
 
-    print("REASONING REPORT: Acquisition Decision")
-    print("=" * 50)
-
     if report:
-        print(f"\nExecutive Summary:\n{report.executive_summary}")
-        print(f"\nConfidence Level: {report.confidence_level}")
-        print(f"\nRecommendation: {report.decision_recommendation}")
 
-        print("\nKey Insights:")
-        for insight in report.key_insights[:5]:
-            print(f"- {insight}")
+        for _insight in report.key_insights[:5]:
+            pass
 
     return result
 
@@ -101,21 +94,14 @@ def example_quick_reasoning():
         }
     )
 
-    print("\nQUICK DECISION:")
-    print(result.get("synthesized_conclusion", "No conclusion reached"))
-
     return result
 
 
 # Run examples
 if __name__ == "__main__":
-    print("Running Reasoning System Examples...")
-    print("=" * 60)
 
     # Run business example
     business_result = example_business_decision()
-
-    print("\n" + "=" * 60 + "\n")
 
     # Run quick example
     quick_result = example_quick_reasoning()

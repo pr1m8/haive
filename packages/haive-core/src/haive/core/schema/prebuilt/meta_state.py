@@ -41,8 +41,9 @@ from pydantic import Field, model_validator
 
 from haive.core.schema.prebuilt.messages_state import MessagesState
 
+
 if TYPE_CHECKING:
-    from haive.agents.base.agent import Agent
+    pass
 
 
 class MetaStateSchema(MessagesState):
@@ -73,51 +74,51 @@ class MetaStateSchema(MessagesState):
     """
 
     # Core agent field - the contained agent
-    agent: Optional[Any] = Field(
+    agent: Any | None = Field(
         default=None, description="Contained agent for meta execution"
     )
 
     # Agent execution context
-    agent_input: Dict[str, Any] = Field(
+    agent_input: dict[str, Any] = Field(
         default_factory=dict, description="Input data to pass to the contained agent"
     )
 
-    agent_output: Dict[str, Any] = Field(
+    agent_output: dict[str, Any] = Field(
         default_factory=dict,
         description="Output data received from the contained agent",
     )
 
-    agent_config: Dict[str, Any] = Field(
+    agent_config: dict[str, Any] = Field(
         default_factory=dict,
         description="Configuration for agent execution (debug, thread_id, etc.)",
     )
 
     # Meta-level context
-    meta_context: Dict[str, Any] = Field(
+    meta_context: dict[str, Any] = Field(
         default_factory=dict, description="Meta-level execution context and metadata"
     )
 
     # Execution tracking
-    execution_history: List[Dict[str, Any]] = Field(
+    execution_history: list[dict[str, Any]] = Field(
         default_factory=list,
         description="History of agent executions with timestamps and results",
     )
 
-    agent_state: Dict[str, Any] = Field(
+    agent_state: dict[str, Any] = Field(
         default_factory=dict, description="Current state of the contained agent"
     )
 
     # Agent identification and metadata
-    agent_name: Optional[str] = Field(
+    agent_name: str | None = Field(
         default=None, description="Name/identifier for the contained agent"
     )
 
-    agent_type: Optional[str] = Field(
+    agent_type: str | None = Field(
         default=None, description="Type of the contained agent"
     )
 
     # Execution results
-    last_execution_result: Optional[Dict[str, Any]] = Field(
+    last_execution_result: dict[str, Any] | None = Field(
         default=None, description="Result from the last agent execution"
     )
 
@@ -126,7 +127,7 @@ class MetaStateSchema(MessagesState):
         description="Current execution status (ready, running, completed, error)",
     )
 
-    error_info: Optional[Dict[str, Any]] = Field(
+    error_info: dict[str, Any] | None = Field(
         default=None, description="Error information from failed executions"
     )
 
@@ -142,7 +143,7 @@ class MetaStateSchema(MessagesState):
     }
 
     @model_validator(mode="after")
-    def setup_agent_integration(self) -> "MetaStateSchema":
+    def setup_agent_integration(self) -> MetaStateSchema:
         """Setup integration with the contained agent.
 
         This validator:
@@ -238,14 +239,14 @@ class MetaStateSchema(MessagesState):
             else:
                 first_engine = next(iter(agent_engines.values()))
                 self.engine = first_engine
-                logger.debug(f"Set main engine from agent's first engine")
+                logger.debug("Set main engine from agent's first engine")
 
     def execute_agent(
         self,
-        input_data: Optional[Dict[str, Any]] = None,
-        config: Optional[Dict[str, Any]] = None,
+        input_data: dict[str, Any] | None = None,
+        config: dict[str, Any] | None = None,
         update_state: bool = True,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Execute the contained agent with the given input.
 
         Args:
@@ -320,11 +321,11 @@ class MetaStateSchema(MessagesState):
                 if isinstance(result, dict) and "messages" in result:
                     self.add_messages(result["messages"])
 
-            logger.info(f"Agent execution completed successfully")
+            logger.info("Agent execution completed successfully")
             return execution_record
 
         except Exception as e:
-            logger.error(f"Agent execution failed: {e}")
+            logger.exception(f"Agent execution failed: {e}")
 
             # Create error record
             error_record = {
@@ -345,10 +346,10 @@ class MetaStateSchema(MessagesState):
 
     def prepare_agent_input(
         self,
-        additional_input: Optional[Dict[str, Any]] = None,
+        additional_input: dict[str, Any] | None = None,
         include_messages: bool = True,
         include_context: bool = True,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Prepare input data for agent execution.
 
         Args:
@@ -378,7 +379,7 @@ class MetaStateSchema(MessagesState):
 
         return input_data
 
-    def get_agent_engine(self, engine_name: str) -> Optional[Any]:
+    def get_agent_engine(self, engine_name: str) -> Any | None:
         """Get an engine from the contained agent.
 
         Args:
@@ -410,7 +411,7 @@ class MetaStateSchema(MessagesState):
         self.error_info = None
         self.agent_input = {}
 
-    def get_execution_summary(self) -> Dict[str, Any]:
+    def get_execution_summary(self) -> dict[str, Any]:
         """Get a summary of agent execution history.
 
         Returns:
@@ -439,7 +440,7 @@ class MetaStateSchema(MessagesState):
 
     def clone_with_agent(
         self, new_agent: Any, reset_history: bool = True
-    ) -> "MetaStateSchema":
+    ) -> MetaStateSchema:
         """Create a clone of this meta state with a different agent.
 
         Args:
@@ -470,9 +471,9 @@ class MetaStateSchema(MessagesState):
     def from_agent(
         cls,
         agent: Any,
-        initial_input: Optional[Dict[str, Any]] = None,
-        meta_context: Optional[Dict[str, Any]] = None,
-    ) -> "MetaStateSchema":
+        initial_input: dict[str, Any] | None = None,
+        meta_context: dict[str, Any] | None = None,
+    ) -> MetaStateSchema:
         """Create a MetaStateSchema from an agent.
 
         Args:

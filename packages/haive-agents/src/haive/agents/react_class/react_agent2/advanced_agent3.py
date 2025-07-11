@@ -79,7 +79,7 @@ class AdvancedReactAgent(Agent[AdvancedReactAgentConfig]):
         self.tool_groups = {self.config.default_tool_node_name: []}
 
         # Add tool routing destinations
-        for tool_name, node_name in self.config.tool_routing.items():
+        for _tool_name, node_name in self.config.tool_routing.items():
             if node_name not in self.tool_groups:
                 self.tool_groups[node_name] = []
 
@@ -180,7 +180,9 @@ class AdvancedReactAgent(Agent[AdvancedReactAgentConfig]):
 
                         return result_dict
                     except Exception as e:
-                        logger.error(f"Error executing tool node '{node_name}': {e!s}")
+                        logger.exception(
+                            f"Error executing tool node '{node_name}': {e!s}"
+                        )
                         state_dict["error"] = f"Tool execution error: {e!s}"
                         state_dict["status"] = "error"
                         return state_dict
@@ -188,7 +190,7 @@ class AdvancedReactAgent(Agent[AdvancedReactAgentConfig]):
                 return execute_tool
 
             # Add all tool nodes to the graph
-            for node_name in self.tool_groups.keys():
+            for node_name in self.tool_groups:
                 if node_name in self.tool_nodes:
                     gb.add_node(
                         name=node_name,
@@ -247,9 +249,7 @@ class AdvancedReactAgent(Agent[AdvancedReactAgentConfig]):
                 return node_name
 
             # Create the destinations dictionary for tool routing
-            tool_destinations = {
-                node_name: node_name for node_name in self.tool_nodes.keys()
-            }
+            tool_destinations = {node_name: node_name for node_name in self.tool_nodes}
             tool_destinations[END] = END  # Add END destination
 
             # Create the main router function that combines max iterations check and tool routing

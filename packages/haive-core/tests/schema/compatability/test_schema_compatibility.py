@@ -7,8 +7,6 @@ This provides a template for comprehensive testing of all module components.
 from typing import List, Optional
 
 import pytest
-from pydantic import BaseModel, Field
-
 from haive.core.schema.compatibility import (
     CompatibilityChecker,
     CompatibilityLevel,
@@ -21,6 +19,7 @@ from haive.core.schema.compatibility import (
     generate_report,
 )
 from haive.core.schema.compatibility.types import ConversionQuality
+from pydantic import BaseModel, Field
 
 
 class TestTypeAnalyzer:
@@ -366,11 +365,10 @@ class TestLangChainConverters:
     )
     def test_message_conversion(self):
         """Test message type conversions."""
-        from langchain_core.messages import AIMessage, HumanMessage
-
         from haive.core.schema.compatibility.langchain_converters import (
             MessageConverter,
         )
+        from langchain_core.messages import AIMessage, HumanMessage
 
         converter = MessageConverter()
         context = ConversionContext(source_type="HumanMessage", target_type="AIMessage")

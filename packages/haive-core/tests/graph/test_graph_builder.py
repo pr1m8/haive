@@ -1,10 +1,11 @@
 import os
 import sys
-import unittest
 from typing import Any
+import unittest
 from unittest.mock import MagicMock, Mock
 
 from haive.core.engine.base import EngineType
+
 
 # First, mock all dependencies BEFORE importing any modules
 # Create mock objects that will be used throughout
@@ -414,7 +415,7 @@ class DynamicGraphTests(unittest.TestCase):
         )
 
     def test_init_with_components(self):
-        """Test initializing with components"""
+        """Test initializing with components."""
         # Create DynamicGraph with components
         graph = MockDynamicGraph(
             name="test_graph",
@@ -423,23 +424,23 @@ class DynamicGraphTests(unittest.TestCase):
         )
 
         # Check that engines were stored
-        self.assertEqual(len(graph.engines), 2)
-        self.assertEqual(graph.engines["llm_engine"], self.llm_engine)
-        self.assertEqual(graph.engines["retriever_engine"], self.retriever_engine)
+        assert len(graph.engines) == 2
+        assert graph.engines["llm_engine"] == self.llm_engine
+        assert graph.engines["retriever_engine"] == self.retriever_engine
 
     def test_init_with_state_schema(self):
-        """Test initializing with custom state schema"""
+        """Test initializing with custom state schema."""
         # Create DynamicGraph with state schema
         graph = MockDynamicGraph(
             name="test_graph", state_schema=StateModel, visualize=False
         )
 
         # Check schema initialization
-        self.assertIsNotNone(graph.schema_manager)
-        self.assertIsNotNone(graph.state_model)
+        assert graph.schema_manager is not None
+        assert graph.state_model is not None
 
     def test_with_runnable_config(self):
-        """Test with_runnable_config method"""
+        """Test with_runnable_config method."""
         # Create base graph
         base_graph = MockDynamicGraph(
             name="base_graph", components=[self.llm_engine], visualize=False
@@ -452,13 +453,13 @@ class DynamicGraphTests(unittest.TestCase):
         new_graph = base_graph.with_runnable_config(custom_config)
 
         # Check that a new graph was created
-        self.assertIsNot(new_graph, base_graph)
+        assert new_graph is not base_graph
 
         # Check that config was set
-        self.assertEqual(new_graph.default_runnable_config, custom_config)
+        assert new_graph.default_runnable_config == custom_config
 
     def test_set_default_runnable_config(self):
-        """Test set_default_runnable_config method"""
+        """Test set_default_runnable_config method."""
         # Create graph
         graph = MockDynamicGraph(name="test_graph", visualize=False)
 
@@ -467,13 +468,13 @@ class DynamicGraphTests(unittest.TestCase):
         result = graph.set_default_runnable_config(custom_config)
 
         # Check that config was set
-        self.assertEqual(graph.default_runnable_config, custom_config)
+        assert graph.default_runnable_config == custom_config
 
         # Check that method returns self for chaining
-        self.assertIs(result, graph)
+        assert result is graph
 
     def test_update_default_runnable_config(self):
-        """Test update_default_runnable_config method"""
+        """Test update_default_runnable_config method."""
         # Create graph
         graph = MockDynamicGraph(
             name="test_graph",
@@ -485,16 +486,14 @@ class DynamicGraphTests(unittest.TestCase):
         result = graph.update_default_runnable_config(top_k=3)
 
         # Check that config was updated
-        self.assertEqual(graph.default_runnable_config["configurable"]["top_k"], 3)
-        self.assertEqual(
-            graph.default_runnable_config["configurable"]["temperature"], 0.5
-        )
+        assert graph.default_runnable_config["configurable"]["top_k"] == 3
+        assert graph.default_runnable_config["configurable"]["temperature"] == 0.5
 
         # Check that method returns self for chaining
-        self.assertIs(result, graph)
+        assert result is graph
 
     def test_add_node(self):
-        """Test add_node method"""
+        """Test add_node method."""
         # Create graph
         graph = MockDynamicGraph(name="test_graph", visualize=False)
 
@@ -516,23 +515,21 @@ class DynamicGraphTests(unittest.TestCase):
 
         # Check the args passed to add_node
         args, kwargs = mock_state_graph_editor.return_value.add_node.call_args
-        self.assertEqual(kwargs["name"], "test_node")
-        self.assertEqual(kwargs["engine"], self.llm_engine)
-        self.assertEqual(kwargs["command_goto"], "next_node")
-        self.assertEqual(kwargs["input_mapping"], {"state_input": "engine_input"})
-        self.assertEqual(kwargs["output_mapping"], {"engine_output": "state_output"})
-        self.assertEqual(
-            kwargs["runnable_config"], {"configurable": {"temperature": 0.7}}
-        )
+        assert kwargs["name"] == "test_node"
+        assert kwargs["engine"] == self.llm_engine
+        assert kwargs["command_goto"] == "next_node"
+        assert kwargs["input_mapping"] == {"state_input": "engine_input"}
+        assert kwargs["output_mapping"] == {"engine_output": "state_output"}
+        assert kwargs["runnable_config"] == {"configurable": {"temperature": 0.7}}
 
         # Check that engine was stored
-        self.assertEqual(graph.engines["test_node"], self.llm_engine)
+        assert graph.engines["test_node"] == self.llm_engine
 
         # Check that method returns self for chaining
-        self.assertIs(result, graph)
+        assert result is graph
 
     def test_add_config_node(self):
-        """Test add_config_node method"""
+        """Test add_config_node method."""
         # Create graph
         graph = MockDynamicGraph(name="test_graph", visualize=False)
 
@@ -554,10 +551,10 @@ class DynamicGraphTests(unittest.TestCase):
         mock_state_graph_editor.return_value.add_node.assert_called_once()
 
         # Check that method returns self for chaining
-        self.assertIs(result, graph)
+        assert result is graph
 
     def test_add_structured_output_node(self):
-        """Test add_structured_output_node method"""
+        """Test add_structured_output_node method."""
 
         # Create model for structured output
         class ResponseFormat(BaseModel):
@@ -587,10 +584,10 @@ class DynamicGraphTests(unittest.TestCase):
         mock_state_graph_editor.return_value.add_node.assert_called_once()
 
         # Check that method returns self for chaining
-        self.assertIs(result, graph)
+        assert result is graph
 
     def test_add_tool_node(self):
-        """Test add_tool_node method"""
+        """Test add_tool_node method."""
         # Create graph
         graph = MockDynamicGraph(name="test_graph", visualize=False)
 
@@ -601,7 +598,9 @@ class DynamicGraphTests(unittest.TestCase):
 
         # Add tool node
         mock_tools = [MagicMock(), MagicMock()]
-        mock_post_processor = lambda x: x
+
+        def mock_post_processor(x):
+            return x
 
         result = graph.add_tool_node(
             name="tools",
@@ -622,10 +621,10 @@ class DynamicGraphTests(unittest.TestCase):
         mock_state_graph_editor.return_value.add_node.assert_called_once()
 
         # Check that method returns self for chaining
-        self.assertIs(result, graph)
+        assert result is graph
 
     def test_add_edge(self):
-        """Test add_edge method"""
+        """Test add_edge method."""
         # Create graph
         graph = MockDynamicGraph(name="test_graph", visualize=False)
 
@@ -641,10 +640,10 @@ class DynamicGraphTests(unittest.TestCase):
         )
 
         # Check that method returns self for chaining
-        self.assertIs(result, graph)
+        assert result is graph
 
     def test_add_conditional_edges(self):
-        """Test add_conditional_edges method"""
+        """Test add_conditional_edges method."""
         # Create graph
         graph = MockDynamicGraph(name="test_graph", visualize=False)
 
@@ -667,10 +666,10 @@ class DynamicGraphTests(unittest.TestCase):
         )
 
         # Check that method returns self for chaining
-        self.assertIs(result, graph)
+        assert result is graph
 
     def test_set_entry_point(self):
-        """Test set_entry_point method"""
+        """Test set_entry_point method."""
         # Create graph
         graph = MockDynamicGraph(name="test_graph", visualize=False)
 
@@ -686,10 +685,10 @@ class DynamicGraphTests(unittest.TestCase):
         )
 
         # Check that method returns self for chaining
-        self.assertIs(result, graph)
+        assert result is graph
 
     def test_build(self):
-        """Test build method"""
+        """Test build method."""
         # Create mock graph returned by build_graph
         mock_graph = MagicMock()
         mock_state_graph_editor.return_value.build_graph.return_value = mock_graph
@@ -711,10 +710,10 @@ class DynamicGraphTests(unittest.TestCase):
         mock_state_graph_editor.return_value.build_graph.assert_called_once()
 
         # Check result
-        self.assertEqual(result, mock_graph)
+        assert result == mock_graph
 
     def test_to_dict(self):
-        """Test to_dict method"""
+        """Test to_dict method."""
         # Create graph with components and config
         graph = MockDynamicGraph(
             name="test_graph",
@@ -728,15 +727,15 @@ class DynamicGraphTests(unittest.TestCase):
         result = graph.to_dict()
 
         # Check basic properties
-        self.assertEqual(result["name"], "test_graph")
-        self.assertEqual(result["description"], "Test graph description")
-        self.assertEqual(result["visualize"], True)
+        assert result["name"] == "test_graph"
+        assert result["description"] == "Test graph description"
+        assert result["visualize"]
 
         # Check components
-        self.assertIsNotNone(result["components"])
+        assert result["components"] is not None
 
         # Check default runnable config
-        self.assertIsNotNone(result["default_runnable_config"])
+        assert result["default_runnable_config"] is not None
 
 
 if __name__ == "__main__":

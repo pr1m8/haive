@@ -10,6 +10,7 @@
 ## Where DynamicChoiceModel IS Used
 
 ### 1. Dynamic Supervisor Agent
+
 ```python
 # In supervisor agents for agent selection
 from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
@@ -21,7 +22,7 @@ class DynamicSupervisorState(BaseModel):
             include_end=True
         )
     )
-    
+
     @property
     def AgentChoice(self) -> Type[BaseModel]:
         """Get current agent choice model"""
@@ -29,6 +30,7 @@ class DynamicSupervisorState(BaseModel):
 ```
 
 ### 2. Game States (Clue, Mastermind)
+
 ```python
 # For dynamic player/action choices in games
 class ClueGameState(BaseModel):
@@ -41,6 +43,7 @@ class ClueGameState(BaseModel):
 ```
 
 ### 3. StructuredOutputMixin
+
 ```python
 # For dynamic tool configuration
 class StructuredOutputMixin:
@@ -52,6 +55,7 @@ class StructuredOutputMixin:
 ## How Validation Nodes Work Instead
 
 ### Tool Route Detection
+
 ```python
 # UnifiedValidationNode uses engine.tool_routes
 def _get_tool_route(self, tool_name: str, engine: Any) -> str:
@@ -59,11 +63,12 @@ def _get_tool_route(self, tool_name: str, engine: Any) -> str:
     tool_routes = getattr(engine, "tool_routes", {})
     if tool_name in tool_routes:
         return tool_routes[tool_name]
-    
+
     # Returns: "pydantic_model", "langchain_tool", "function", etc.
 ```
 
 ### Fixed Routing Destinations
+
 ```python
 # Validation nodes have fixed destination nodes
 class UnifiedValidationNodeConfig(BaseNodeConfig):
@@ -75,22 +80,23 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
 ## Potential Future Integration
 
 ### Concept: Dynamic Validation Router
+
 ```python
 # CONCEPTUAL - Not implemented
 class DynamicValidationNode(UnifiedValidationNodeConfig):
     """Validation node with dynamic routing choices"""
-    
+
     route_choice_builder: DynamicChoiceModel = Field(
         default_factory=lambda: DynamicChoiceModel(
             options=["tool_node", "parse_output", "agent_node"],
             include_end=True
         )
     )
-    
+
     def add_route_option(self, node_name: str):
         """Dynamically add a routing destination"""
         self.route_choice_builder.add_option(node_name)
-    
+
     def _determine_destination(self, tool_type: str) -> str:
         """Use dynamic choice model for routing"""
         RouteChoice = self.route_choice_builder.current_model

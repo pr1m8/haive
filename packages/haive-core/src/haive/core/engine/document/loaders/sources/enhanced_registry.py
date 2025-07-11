@@ -5,8 +5,8 @@ loaders with easy decorator-based registration, bulk capabilities, and comprehen
 """
 
 import logging
-from dataclasses import dataclass
-from typing import Any, Callable, Dict, List, Optional, Set, Type, Union
+from dataclasses import dataclass, field
+from typing import Any, Callable, Dict, List, Optional, Set, Type, TypeVar, Union
 
 from .registry import LoaderMapping
 from .source_types import (
@@ -21,6 +21,8 @@ from .source_types import (
 )
 
 logger = logging.getLogger(__name__)
+
+TSource = TypeVar("TSource", bound=BaseSource)
 
 
 @dataclass
@@ -63,11 +65,7 @@ class EnhancedSourceRegistration:
     priority: int = 0
     author: Optional[str] = None
     version: str = "1.0.0"
-    dependencies: Set[str] = None
-
-    def __post_init__(self):
-        if self.dependencies is None:
-            self.dependencies = set()
+    dependencies: Set[str] = field(default_factory=set)
 
 
 class EnhancedSourceRegistry:
@@ -106,18 +104,18 @@ class EnhancedSourceRegistry:
         max_concurrent: int = 1,
         rate_limit_delay: float = 0.0,
         # Loaders
-        loaders: Dict[str, Union[str, Dict[str, Any]]] = None,
+        loaders: Optional[Dict[str, Union[str, Dict[str, Any]]]] = None,
         default_loader: str = "default",
         # Matching criteria
-        file_extensions: List[str] = None,
-        url_patterns: List[str] = None,
-        schemes: List[str] = None,
-        mime_types: List[str] = None,
+        file_extensions: Optional[List[str]] = None,
+        url_patterns: Optional[List[str]] = None,
+        schemes: Optional[List[str]] = None,
+        mime_types: Optional[List[str]] = None,
         # Metadata
         priority: int = 0,
         author: Optional[str] = None,
         version: str = "1.0.0",
-        dependencies: List[str] = None,
+        dependencies: Optional[List[str]] = None,
         # Credential requirements
         requires_credentials: bool = False,
         credential_type: CredentialType = CredentialType.NONE,
@@ -282,6 +280,13 @@ class EnhancedSourceRegistry:
             "schemes_covered": len(self._scheme_index),
         }
 
+    def get_source_loaders(self, source_name: str) -> Dict[str, LoaderMapping]:
+        """Get all loaders for a given source name."""
+        registration = self._sources.get(source_name)
+        if registration:
+            return registration.loaders
+        return {}
+
     def find_source_for_path(self, path: str) -> Optional[EnhancedSourceRegistration]:
         """Find the best source for a given path."""
         from ..path_analyzer import PathAnalyzer
@@ -368,19 +373,19 @@ def register_source(
     category: SourceCategory,
     description: str = "",
     # Quick setup for common cases
-    file_extensions: List[str] = None,
-    url_patterns: List[str] = None,
-    schemes: List[str] = None,
-    mime_types: List[str] = None,
+    file_extensions: Optional[List[str]] = None,
+    url_patterns: Optional[List[str]] = None,
+    schemes: Optional[List[str]] = None,
+    mime_types: Optional[List[str]] = None,
     # Loader definitions
-    loaders: Dict[str, Union[str, Dict[str, Any]]] = None,
+    loaders: Optional[Dict[str, Union[str, Dict[str, Any]]]] = None,
     default_loader: str = "default",
     # Capabilities
     is_bulk_loader: bool = False,
     supports_recursive: bool = False,
     supports_filtering: bool = False,
     supports_scrape_all: bool = False,
-    capabilities: List[LoaderCapability] = None,
+    capabilities: Optional[List[LoaderCapability]] = None,
     # Performance characteristics
     max_concurrent: int = 1,
     rate_limit_delay: float = 0.0,
@@ -394,11 +399,11 @@ def register_source(
     priority: int = 0,
     author: Optional[str] = None,
     version: str = "1.0.0",
-    dependencies: List[str] = None,
-) -> Callable[[Type[BaseSource]], Type[BaseSource]]:
+    dependencies: Optional[List[str]] = None,
+) -> Callable[[Type[TSource]], Type[TSource]]:
     """Enhanced decorator for registering source types."""
 
-    def decorator(source_class: Type[BaseSource]) -> Type[BaseSource]:
+    def decorator(source_class: Type[TSource]) -> Type[TSource]:
 
         # Create capabilities
         source_capabilities = SourceCapabilities(
@@ -526,14 +531,14 @@ def register_bulk_source(
         LoaderCapability.RECURSIVE,
         LoaderCapability.FILTERING,
     ]
-    
-    if 'capabilities' in kwargs:
+
+    if "capabilities" in kwargs:
         # Merge with existing capabilities
-        existing_capabilities = kwargs.pop('capabilities')
+        existing_capabilities = kwargs.pop("capabilities")
         merged_capabilities = list(set(default_capabilities + existing_capabilities))
-        kwargs['capabilities'] = merged_capabilities
+        kwargs["capabilities"] = merged_capabilities
     else:
-        kwargs['capabilities'] = default_capabilities
+        kwargs["capabilities"] = default_capabilities
 
     return register_source(
         name=name,

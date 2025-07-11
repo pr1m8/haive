@@ -88,12 +88,12 @@ class DocumentEngineConfig(BaseModel):
     )
 
     # Source configuration
-    source_type: Optional[DocumentSourceType] = Field(
+    source_type: DocumentSourceType | None = Field(
         default=None, description="Explicit source type (auto-detected if not provided)"
     )
 
     # Loader configuration
-    loader_name: Optional[str] = Field(
+    loader_name: str | None = Field(
         default=None,
         description="Specific loader to use (auto-selected if not provided)",
     )
@@ -126,7 +126,7 @@ class DocumentEngineConfig(BaseModel):
         default=True, description="Whether to recursively process directories"
     )
 
-    max_documents: Optional[int] = Field(
+    max_documents: int | None = Field(
         default=None, description="Maximum number of documents to load", ge=1
     )
 
@@ -143,15 +143,15 @@ class DocumentEngineConfig(BaseModel):
     )
 
     # Filtering options
-    include_patterns: List[str] = Field(
+    include_patterns: list[str] = Field(
         default_factory=list, description="Glob patterns for files to include"
     )
 
-    exclude_patterns: List[str] = Field(
+    exclude_patterns: list[str] = Field(
         default_factory=list, description="Glob patterns for files to exclude"
     )
 
-    supported_formats: List[DocumentFormat] = Field(
+    supported_formats: list[DocumentFormat] = Field(
         default_factory=lambda: list(DocumentFormat),
         description="Supported document formats",
     )
@@ -187,11 +187,11 @@ class DocumentEngineConfig(BaseModel):
     cache_ttl: int = Field(default=3600, description="Cache TTL in seconds", ge=0)
 
     # Additional options
-    loader_options: Dict[str, Any] = Field(
+    loader_options: dict[str, Any] = Field(
         default_factory=dict, description="Additional options passed to loaders"
     )
 
-    processing_options: Dict[str, Any] = Field(
+    processing_options: dict[str, Any] = Field(
         default_factory=dict, description="Additional options for processing"
     )
 
@@ -210,47 +210,47 @@ class DocumentInput(BaseModel):
     """Input model for document operations."""
 
     # Primary source
-    source: Union[str, Path, Dict[str, Any]] = Field(
+    source: str | Path | dict[str, Any] = Field(
         ..., description="Source to process (path, URL, or configuration dict)"
     )
 
     # Override options
-    source_type: Optional[DocumentSourceType] = Field(
+    source_type: DocumentSourceType | None = Field(
         default=None, description="Override source type for this operation"
     )
 
-    loader_name: Optional[str] = Field(
+    loader_name: str | None = Field(
         default=None, description="Override loader for this operation"
     )
 
     # Processing overrides
-    chunking_strategy: Optional[ChunkingStrategy] = Field(
+    chunking_strategy: ChunkingStrategy | None = Field(
         default=None, description="Override chunking strategy"
     )
 
-    chunk_size: Optional[int] = Field(
+    chunk_size: int | None = Field(
         default=None, description="Override chunk size", ge=1
     )
 
-    chunk_overlap: Optional[int] = Field(
+    chunk_overlap: int | None = Field(
         default=None, description="Override chunk overlap", ge=0
     )
 
     # Filtering overrides
-    include_patterns: Optional[List[str]] = Field(
+    include_patterns: list[str] | None = Field(
         default=None, description="Override include patterns"
     )
 
-    exclude_patterns: Optional[List[str]] = Field(
+    exclude_patterns: list[str] | None = Field(
         default=None, description="Override exclude patterns"
     )
 
     # Additional options
-    loader_options: Dict[str, Any] = Field(
+    loader_options: dict[str, Any] = Field(
         default_factory=dict, description="Additional loader options"
     )
 
-    processing_options: Dict[str, Any] = Field(
+    processing_options: dict[str, Any] = Field(
         default_factory=dict, description="Additional processing options"
     )
 
@@ -260,19 +260,19 @@ class DocumentChunk(BaseModel):
 
     content: str = Field(..., description="Chunk content")
 
-    metadata: Dict[str, Any] = Field(default_factory=dict, description="Chunk metadata")
+    metadata: dict[str, Any] = Field(default_factory=dict, description="Chunk metadata")
 
     chunk_index: int = Field(..., description="Index of this chunk in the document")
 
-    chunk_id: Optional[str] = Field(
+    chunk_id: str | None = Field(
         default=None, description="Unique identifier for this chunk"
     )
 
-    start_char: Optional[int] = Field(
+    start_char: int | None = Field(
         default=None, description="Start character position in original document"
     )
 
-    end_char: Optional[int] = Field(
+    end_char: int | None = Field(
         default=None, description="End character position in original document"
     )
 
@@ -287,12 +287,12 @@ class ProcessedDocument(BaseModel):
 
     # Content
     content: str = Field(..., description="Full document content")
-    chunks: List[DocumentChunk] = Field(
+    chunks: list[DocumentChunk] = Field(
         default_factory=list, description="Document chunks"
     )
 
     # Metadata
-    metadata: Dict[str, Any] = Field(
+    metadata: dict[str, Any] = Field(
         default_factory=dict, description="Document metadata"
     )
 
@@ -318,7 +318,7 @@ class DocumentOutput(BaseModel):
     """Output model for document operations."""
 
     # Processed documents
-    documents: List[ProcessedDocument] = Field(
+    documents: list[ProcessedDocument] = Field(
         default_factory=list, description="Processed documents"
     )
 
@@ -338,18 +338,18 @@ class DocumentOutput(BaseModel):
     source_type: DocumentSourceType = Field(..., description="Source type used")
 
     # Processing info
-    loader_names: List[str] = Field(default_factory=list, description="Loaders used")
+    loader_names: list[str] = Field(default_factory=list, description="Loaders used")
 
     processing_strategy: ProcessingStrategy = Field(
         ..., description="Processing strategy used"
     )
 
     # Errors and warnings
-    errors: List[Dict[str, Any]] = Field(
+    errors: list[dict[str, Any]] = Field(
         default_factory=list, description="Errors encountered"
     )
 
-    warnings: List[Dict[str, Any]] = Field(
+    warnings: list[dict[str, Any]] = Field(
         default_factory=list, description="Warnings generated"
     )
 
@@ -384,14 +384,14 @@ class DocumentOutput(BaseModel):
 
 # Export all models
 __all__ = [
+    "ChunkingStrategy",
+    "DocumentChunk",
     "DocumentEngineConfig",
+    "DocumentFormat",
     "DocumentInput",
     "DocumentOutput",
-    "ProcessedDocument",
-    "DocumentChunk",
-    "LoaderPreference",
-    "ProcessingStrategy",
-    "ChunkingStrategy",
-    "DocumentFormat",
     "DocumentSourceType",
+    "LoaderPreference",
+    "ProcessedDocument",
+    "ProcessingStrategy",
 ]

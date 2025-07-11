@@ -7,13 +7,12 @@ and branch operations in the BaseGraph architecture.
 import uuid
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Literal, Optional, Union
 
-from langgraph.types import Send
-
 from haive.core.graph.branches.branch import Branch
 from haive.core.graph.branches.types import BranchMode, ComparisonType
 from haive.core.graph.common.references import CallableReference
 from haive.core.graph.state_graph.components.base_component import BaseGraphComponent
 from haive.core.logging.rich_logger import get_logger
+from langgraph.types import Send
 
 if TYPE_CHECKING:
     from haive.core.graph.state_graph.base_graph2 import BaseGraph, BranchResultType

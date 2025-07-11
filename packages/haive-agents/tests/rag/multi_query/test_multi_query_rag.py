@@ -1,14 +1,13 @@
-"""Test Multi-Query RAG Agent
+"""Test Multi-Query RAG Agent.
 
 Tests the MultiQueryRAGAgent with query expansion.
 """
 
 import pytest
+from haive.agents.rag.multi_query.agent import MultiQueryRAGAgent
 from haive.core.fixtures.documents import conversation_documents
 from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.documents import Document
-
-from haive.agents.rag.multi_query.agent import MultiQueryRAGAgent
 
 
 class TestMultiQueryRAGAgent:
@@ -73,20 +72,14 @@ class TestMultiQueryRAGAgent:
 
             # Should have results
             assert result is not None
-            print(f"✅ Multi-Query RAG completed successfully")
 
             # Check if query variations were generated
             if "query_variations" in result:
-                variations = result["query_variations"]
-                print(f"Query variations generated:")
-                print(f"  - Specific: {variations.get('specific_query', 'N/A')}")
-                print(f"  - Broader: {variations.get('broader_query', 'N/A')}")
-                print(f"  - Alternative: {variations.get('alternative_query', 'N/A')}")
+                result["query_variations"]
 
             # Check retrieval stats
             if "retrieval_stats" in result:
-                stats = result["retrieval_stats"]
-                print(f"Retrieval stats: {stats}")
+                result["retrieval_stats"]
 
         except Exception as e:
             pytest.fail(f"Multi-Query RAG failed: {e}")
@@ -121,15 +114,12 @@ class TestMultiQueryRAGAgent:
             assert multi_result is not None
             assert simple_result is not None
 
-            print("✅ Both Multi-Query and Simple RAG completed")
-
             # Multi-query should have retrieved from multiple queries
             if "retrieval_queries" in multi_result:
-                num_queries = len(multi_result["retrieval_queries"])
-                print(f"Multi-Query used {num_queries} different queries for retrieval")
+                len(multi_result["retrieval_queries"])
 
-        except Exception as e:
-            print(f"Comparison test partial failure: {e}")
+        except Exception:
+            pass
 
     def test_multi_query_edge_cases(self, llm_config):
         """Test Multi-Query RAG with edge cases."""
@@ -149,9 +139,8 @@ class TestMultiQueryRAGAgent:
         try:
             result = rag.run({"query": query})
             assert result is not None
-            print("✅ Multi-Query RAG handled specific query")
-        except Exception as e:
-            print(f"Edge case test failure: {e}")
+        except Exception:
+            pass
 
 
 if __name__ == "__main__":

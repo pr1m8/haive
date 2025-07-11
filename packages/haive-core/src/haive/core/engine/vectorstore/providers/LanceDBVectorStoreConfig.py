@@ -1,5 +1,4 @@
-"""
-LanceDB Vector Store implementation for the Haive framework.
+"""LanceDB Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the LanceDB vector store,
 which is a modern, high-performance vector database built on Lance format.
@@ -35,8 +34,7 @@ from haive.core.engine.vectorstore.types import VectorStoreType
 
 @BaseVectorStoreConfig.register(VectorStoreType.LANCEDB)
 class LanceDBVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
-    """
-    Configuration for LanceDB vector store in the Haive framework.
+    """Configuration for LanceDB vector store in the Haive framework.
 
     This vector store uses LanceDB for high-performance vector search
     with columnar storage and ACID transactions.
@@ -89,12 +87,12 @@ class LanceDBVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
     )
 
     # Cloud configuration (SecureConfigMixin)
-    api_key: Optional[str] = Field(
+    api_key: str | None = Field(
         default=None,
         description="LanceDB API key for cloud connections (auto-resolved from LANCE_API_KEY)",
     )
 
-    region: Optional[str] = Field(
+    region: str | None = Field(
         default=None,
         description="LanceDB region for cloud connections (e.g., 'us-west-2')",
     )
@@ -139,16 +137,16 @@ class LanceDBVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
     )
 
     # Advanced options
-    nprobes: Optional[int] = Field(
+    nprobes: int | None = Field(
         default=None, ge=1, description="Number of probes for IVF index search"
     )
 
-    refine_factor: Optional[int] = Field(
+    refine_factor: int | None = Field(
         default=None, ge=1, description="Refine factor for improving search quality"
     )
 
     @validator("distance")
-    def validate_distance(cls, v):
+    def validate_distance(self, v):
         """Validate distance metric is supported."""
         valid_distances = ["cosine", "l2", "dot", "hamming"]
         if v not in valid_distances:
@@ -156,7 +154,7 @@ class LanceDBVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
         return v
 
     @validator("mode")
-    def validate_mode(cls, v):
+    def validate_mode(self, v):
         """Validate mode is supported."""
         valid_modes = ["overwrite", "append"]
         if v not in valid_modes:
@@ -164,7 +162,7 @@ class LanceDBVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
         return v
 
     @validator("uri")
-    def validate_uri(cls, v):
+    def validate_uri(self, v):
         """Basic validation of LanceDB URI."""
         if v.startswith("db://") and len(v) < 6:
             raise ValueError(
@@ -172,27 +170,26 @@ class LanceDBVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
             )
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for LanceDB vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for LanceDB vector store."""
         return {
             "ids": (
-                List[str],
+                list[str],
                 Field(description="IDs of the added documents in LanceDB"),
             ),
         }
 
     def instantiate(self):
-        """
-        Create a LanceDB vector store from this configuration.
+        """Create a LanceDB vector store from this configuration.
 
         Returns:
             LanceDB: Instantiated LanceDB vector store.
@@ -205,7 +202,7 @@ class LanceDBVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
             from langchain_community.vectorstores import LanceDB
         except ImportError:
             raise ImportError(
-                "LanceDB requires lancedb package. " "Install with: pip install lancedb"
+                "LanceDB requires lancedb package. Install with: pip install lancedb"
             )
 
         # Validate embedding

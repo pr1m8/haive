@@ -3,7 +3,6 @@
 from typing import Optional
 
 import pytest
-
 from haive.core.schema import (
     MessagesState,
     MessagesStateWithTokenUsage,

@@ -17,6 +17,10 @@ sys.path.insert(
 
 from typing import Any
 
+from haive.agents.multi.base import ConditionalAgent, ParallelAgent, SequentialAgent
+from haive.agents.rag.base.agent import SimpleRAGAgent
+from haive.agents.react.agent import ReactAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.fixtures.documents import conversation_documents
 from langchain_core.messages import HumanMessage
@@ -24,14 +28,9 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
 
-from haive.agents.multi.base import ConditionalAgent, ParallelAgent, SequentialAgent
-from haive.agents.rag.base.agent import SimpleRAGAgent
-from haive.agents.react.agent import ReactAgent
-from haive.agents.simple.agent import SimpleAgent
-
 # Define prompts
 RAG_ANSWER_SYSTEM_PROMPT = """
-You are part of a RAG workflow where your job is to answer whether the documents 
+You are part of a RAG workflow where your job is to answer whether the documents
 retrieved answer the original query.
 """
 
@@ -63,10 +62,6 @@ Provide a refined query that might yield better results.
 
 def test_sequential_rag():
     """Test sequential RAG workflow."""
-    print("=" * 80)
-    print("TEST 1: Sequential RAG Agent")
-    print("=" * 80)
-
     # Create agents
     rag_agent = SimpleRAGAgent.from_documents(conversation_documents)
     answer_agent = SimpleAgent(
@@ -85,10 +80,9 @@ def test_sequential_rag():
     # Test execution
     try:
         seq_agent.compile()
-        print("\n✅ Sequential agent compiled successfully!")
 
         # For sequential agents, we need to provide the correct input structure
-        result = seq_agent.run(
+        seq_agent.run(
             {
                 "messages": [
                     HumanMessage(
@@ -98,9 +92,7 @@ def test_sequential_rag():
                 "query": "What restaurants were discussed in the conversation?",
             }
         )
-        print("\nResult:", result)
-    except Exception as e:
-        print(f"\n❌ Error: {e}")
+    except Exception:
         import traceback
 
         traceback.print_exc()
@@ -108,10 +100,6 @@ def test_sequential_rag():
 
 def test_conditional_rag():
     """Test conditional RAG with branching based on relevance."""
-    print("\n" + "=" * 80)
-    print("TEST 2: Conditional RAG with Branching")
-    print("=" * 80)
-
     # Create agents
     rag_agent = SimpleRAGAgent.from_documents(conversation_documents)
 
@@ -171,18 +159,15 @@ def test_conditional_rag():
     # Test execution
     try:
         cond_agent.compile()
-        print("\n✅ Conditional agent compiled successfully!")
 
         # For conditional agents, we need to provide the correct input structure
-        result = cond_agent.run(
+        cond_agent.run(
             {
                 "messages": [HumanMessage(content="What restaurants were discussed?")],
                 "query": "What restaurants were discussed?",
             }
         )
-        print("\nResult:", result)
-    except Exception as e:
-        print(f"\n❌ Error: {e}")
+    except Exception:
         import traceback
 
         traceback.print_exc()
@@ -190,19 +175,16 @@ def test_conditional_rag():
 
 def test_parallel_agents():
     """Test parallel agent execution."""
-    print("\n" + "=" * 80)
-    print("TEST 3: Parallel Agent Execution")
-    print("=" * 80)
 
     # Create tool for math operations
     @tool
     def add(a: int, b: int) -> int:
-        """Returns the sum of two numbers"""
+        """Returns the sum of two numbers."""
         return a + b
 
     @tool
     def multiply(a: int, b: int) -> int:
-        """Returns the product of two numbers"""
+        """Returns the product of two numbers."""
         return a * b
 
     # Create multiple agents with different capabilities
@@ -237,9 +219,8 @@ def test_parallel_agents():
     # Test execution
     try:
         parallel_agent.compile()
-        print("\n✅ Parallel agent compiled successfully!")
 
-        result = parallel_agent.run(
+        parallel_agent.run(
             {
                 "messages": [
                     HumanMessage(
@@ -248,9 +229,7 @@ def test_parallel_agents():
                 ]
             }
         )
-        print("\nResult:", result)
-    except Exception as e:
-        print(f"\n❌ Error: {e}")
+    except Exception:
         import traceback
 
         traceback.print_exc()
@@ -258,10 +237,6 @@ def test_parallel_agents():
 
 def test_custom_branching():
     """Test custom branching with loops."""
-    print("\n" + "=" * 80)
-    print("TEST 4: Custom Branching with Retry Logic")
-    print("=" * 80)
-
     # This would demonstrate more complex routing patterns
     # Including loops, retries, and dynamic routing
 
@@ -319,8 +294,6 @@ def test_custom_branching():
     # Visualize structure
     custom_agent.visualize_structure()
 
-    print("\n✅ Custom branching agent created with retry logic")
-
 
 if __name__ == "__main__":
     # Run tests
@@ -328,7 +301,3 @@ if __name__ == "__main__":
     test_conditional_rag()
     test_parallel_agents()
     test_custom_branching()
-
-    print("\n" + "=" * 80)
-    print("All tests completed!")
-    print("=" * 80)

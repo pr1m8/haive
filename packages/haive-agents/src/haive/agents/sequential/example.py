@@ -5,8 +5,6 @@ This demonstrates how to easily chain together pre-configured components
 for a sequential reasoning workflow.
 """
 
-from haive.core.utils.pydantic_utils import pretty_print
-
 # Import the pre-configured AugLLMConfigs directly
 from haive.agents.reasoning_and_critique.self_discover.aug_llms import (
     adapt_chain,
@@ -14,6 +12,8 @@ from haive.agents.reasoning_and_critique.self_discover.aug_llms import (
     structured_chain,
 )
 from haive.agents.sequential.config import SequentialAgentConfig
+from haive.core.utils.pydantic_utils import pretty_print
+
 
 # Create the sequential agent with the imported components
 agent = SequentialAgentConfig.from_components(
@@ -24,22 +24,16 @@ agent = SequentialAgentConfig.from_components(
 ).build_agent()
 
 # Print the workflow
-print("\n=== SEQUENTIAL REASONING WORKFLOW ===\n")
-print(agent.explain_workflow())
 
 
 def run_example():
     # Define a task
     task = "Design an algorithm to detect fraudulent credit card transactions"
 
-    print(f"\nTask: {task}\n")
-    print("Running sequential reasoning workflow...\n")
-
     # Run the agent (automatically handles data passing between steps)
     result = agent.run({"task_description": task})
 
     # Display the final plan
-    print("\n=== FINAL REASONING PLAN ===\n")
 
     if "plan" in result:
         pretty_print(result["plan"], "Reasoning Plan")

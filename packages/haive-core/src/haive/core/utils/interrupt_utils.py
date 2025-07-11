@@ -1,5 +1,4 @@
-"""
-Utilities for detecting whether a callable uses `pause_for_human(...)` to pause execution.
+"""Utilities for detecting whether a callable uses `pause_for_human(...)` to pause execution.
 
 This wraps LangGraph's `interrupt(...)` signal and provides AST-based static analysis to detect
 if a function or callable object may yield control for human input.
@@ -17,8 +16,7 @@ T = TypeVar("T")
 
 
 def pause_for_human(payload: T) -> T:
-    """
-    Pause execution for human input and return a resume value of the same type.
+    """Pause execution for human input and return a resume value of the same type.
 
     This is a wrapper around `langgraph.types.interrupt(...)` and should be used
     to signal an interruptible pause in a LangGraph node.
@@ -33,16 +31,13 @@ def pause_for_human(payload: T) -> T:
 
 
 class _PauseCallVisitor(ast.NodeVisitor):
-    """
-    AST visitor that detects calls to `pause_for_human(...)` within a function body.
-    """
+    """AST visitor that detects calls to `pause_for_human(...)` within a function body."""
 
     def __init__(self) -> None:
         self.found = False
 
     def visit_Call(self, node: ast.Call) -> None:
-        """
-        Visit each call node to see if it's a call to `pause_for_human`.
+        """Visit each call node to see if it's a call to `pause_for_human`.
 
         Supports both direct usage (`pause_for_human(...)`) and attribute access
         (`some_module.pause_for_human(...)`).
@@ -66,8 +61,7 @@ class _PauseCallVisitor(ast.NodeVisitor):
 
 @lru_cache(maxsize=256)
 def uses_pause(fn: Callable[..., Any]) -> bool:
-    """
-    Detect whether a function contains a call to `pause_for_human(...)`.
+    """Detect whether a function contains a call to `pause_for_human(...)`.
 
     Args:
         fn: A top-level function or method object.
@@ -95,8 +89,7 @@ def uses_pause(fn: Callable[..., Any]) -> bool:
 
 
 def is_interruptible(obj: object) -> bool:
-    """
-    Determine whether an object will trigger an interrupt via `pause_for_human()`.
+    """Determine whether an object will trigger an interrupt via `pause_for_human()`.
 
     Works for:
     - Plain functions and methods
@@ -110,7 +103,7 @@ def is_interruptible(obj: object) -> bool:
         False otherwise.
     """
     # Directly check plain functions
-    if callable(obj) and not hasattr(obj, "__call__") and uses_pause(obj):
+    if callable(obj) and not callable(obj) and uses_pause(obj):
         return True
 
     # Check class __call__ method

@@ -7,7 +7,7 @@
     "description": "A wrapper around Arxiv.org Useful for when you need to answer questions about Physics, Mathematics, Computer Science, Quantitative Biology, Quantitative Finance, Statistics, Electrical Engineering, and Economics from scientific articles on arxiv.org. Input should be a search query.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.732122",
+    "timestamp": "2025-07-10T19:45:28.966895",
     "schema": {
       "description": "Input for the Arxiv tool.",
       "properties": {
@@ -36,7 +36,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.732122",
+      "timestamp": "2025-07-10T19:45:28.966895",
       "category": "individual_tools"
     }
   },

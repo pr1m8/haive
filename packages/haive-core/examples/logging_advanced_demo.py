@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Advanced Haive Logging Demo
+"""Advanced Haive Logging Demo.
 
 Demonstrates all features of the haive logging system including:
 - Interactive CLI with prompt-toolkit
@@ -32,8 +31,6 @@ from haive.core.logging.auto_config import (
 
 def demo_basic_control():
     """Demonstrate basic logging control."""
-    print("\n=== Basic Logging Control Demo ===")
-
     # Get a logger
     logger = get_logger("haive.demo.basic")
 
@@ -43,13 +40,11 @@ def demo_basic_control():
     logger.warning("This is a warning message")
     logger.error("This is an error message")
 
-    print("\nToggling debug mode...")
     debug_mode()
 
     logger.debug("Debug message - now visible!")
     logger.info("Info message - still visible")
 
-    print("\nSwitching to quiet mode...")
     quiet_mode()
 
     logger.debug("Debug - hidden in quiet mode")
@@ -63,8 +58,6 @@ def demo_basic_control():
 
 def demo_module_control():
     """Demonstrate module-specific control."""
-    print("\n=== Module-Specific Control Demo ===")
-
     # Create loggers for different modules
     engine_logger = get_logger("haive.core.engine.demo")
     agent_logger = get_logger("haive.agents.demo")
@@ -74,8 +67,6 @@ def demo_module_control():
     logging_control.set_module_level("haive.core.engine", "DEBUG")
     logging_control.set_module_level("haive.agents", "WARNING")
     logging_control.suppress("haive.tools")
-
-    print("\nEngine at DEBUG, Agents at WARNING, Tools suppressed:")
 
     # Test each module
     engine_logger.debug("Engine debug - visible")
@@ -94,8 +85,6 @@ def demo_module_control():
 
 def demo_filtering():
     """Demonstrate log filtering."""
-    print("\n=== Log Filtering Demo ===")
-
     # Create various loggers
     loggers = {
         "haive.core.engine": get_logger("haive.core.engine.test"),
@@ -104,13 +93,11 @@ def demo_filtering():
         "external.library": get_logger("external.library"),
     }
 
-    print("\nShowing only haive.core and haive.games:")
     logging_control.only_show(["haive.core", "haive.games"])
 
     for name, logger in loggers.items():
         logger.info(f"Message from {name}")
 
-    print("\nShowing only haive logs:")
     haive_only()
 
     for name, logger in loggers.items():
@@ -122,10 +109,7 @@ def demo_filtering():
 
 def demo_auto_configuration():
     """Demonstrate auto-configuration presets."""
-    print("\n=== Auto-Configuration Demo ===")
-
     # Game development preset
-    print("\nApplying game development preset...")
     configure_for_game_development()
 
     game_logger = get_logger("haive.games.demo")
@@ -137,7 +121,6 @@ def demo_auto_configuration():
     agent_logger.info("Agent decision - visible")
 
     # Agent development preset
-    print("\nApplying agent development preset...")
     configure_for_agent_development()
 
     agent_logger = get_logger("haive.agents.demo")
@@ -152,8 +135,6 @@ def demo_auto_configuration():
 
 def simulate_application_logs():
     """Simulate a real application generating logs."""
-    print("\n=== Simulating Application Logs ===")
-
     # Apply default configuration
     auto_configure_logging(preset="default")
 
@@ -167,9 +148,6 @@ def simulate_application_logs():
         ("urllib3.connectionpool", "HTTP connection"),
     ]
 
-    print("\nGenerating logs from various components...")
-    print("(Notice how third-party libraries are suppressed)")
-
     for _ in range(3):
         for module, message in components:
             logger = get_logger(module)
@@ -179,7 +157,6 @@ def simulate_application_logs():
 
 def demo_concurrent_logging():
     """Demonstrate thread-safe concurrent logging."""
-    print("\n=== Concurrent Logging Demo ===")
 
     def worker(worker_id: int, count: int):
         """Worker function that generates logs."""
@@ -199,15 +176,11 @@ def demo_concurrent_logging():
 
 def demo_debug_toggle():
     """Demonstrate the debug toggle functionality."""
-    print("\n=== Debug Toggle Demo ===")
-
     logger = get_logger("haive.demo.toggle")
 
-    print("\nCurrent state:")
     logger.debug("Debug - not visible by default")
     logger.info("Info - visible")
 
-    print("\nToggling debug ON...")
     from haive.core.logging.debug_toggle import toggle_debug
 
     toggle_debug("on")
@@ -215,7 +188,6 @@ def demo_debug_toggle():
     logger.debug("Debug - now visible!")
     logger.info("Info - still visible")
 
-    print("\nToggling debug OFF...")
     toggle_debug("off")
 
     logger.debug("Debug - hidden again")
@@ -224,46 +196,10 @@ def demo_debug_toggle():
 
 def show_cli_commands():
     """Show available CLI commands."""
-    print("\n=== Available CLI Commands ===")
-    print(
-        """
-# Launch interactive CLI with auto-completion
-python -m haive.core.logging interactive
-
-# Quick debug toggle
-python -m haive.core.logging debug on
-python -m haive.core.logging debug off
-
-# Launch rich UI
-python -m haive.core.logging ui
-
-# Launch advanced dashboard
-python -m haive.core.logging dashboard
-
-# Monitor logs in real-time
-python -m haive.core.logging monitor
-
-# Set log levels
-python -m haive.core.logging level DEBUG
-python -m haive.core.logging module haive.core.engine DEBUG
-
-# Apply presets
-python -m haive.core.logging preset development
-
-# Show status
-python -m haive.core.logging status
-
-# Generate test logs
-python -m haive.core.logging test
-"""
-    )
 
 
 def main():
     """Run all demos."""
-    print("🚀 Haive Advanced Logging Demo")
-    print("=" * 50)
-
     # Run demos
     demo_basic_control()
     input("\nPress Enter to continue...")
@@ -287,12 +223,6 @@ def main():
 
     # Show CLI commands
     show_cli_commands()
-
-    print("\n✅ Demo complete!")
-    print("\nTry the interactive CLI:")
-    print("  python -m haive.core.logging interactive")
-    print("\nOr quick debug toggle:")
-    print("  python -m haive.core.logging.debug_toggle")
 
 
 if __name__ == "__main__":

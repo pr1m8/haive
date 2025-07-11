@@ -11,6 +11,7 @@ from typing import Any, Dict
 from rich.console import Console
 from rich.table import Table
 
+
 # Mock imports for testing without full haive setup
 console = Console()
 
@@ -42,22 +43,21 @@ class MockEngine:
             return MockResponse(
                 '{"target": "research_agent", "reasoning": "Request needs research capabilities", "confidence": 0.8}'
             )
-        elif "math" in content_lower or "calculate" in content_lower:
+        if "math" in content_lower or "calculate" in content_lower:
             return MockResponse(
                 '{"target": "math_agent", "reasoning": "Request needs mathematical computation", "confidence": 0.9}'
             )
-        elif "write" in content_lower or "content" in content_lower:
+        if "write" in content_lower or "content" in content_lower:
             return MockResponse(
                 '{"target": "writing_agent", "reasoning": "Request needs writing capabilities", "confidence": 0.7}'
             )
-        elif "code" in content_lower or "program" in content_lower:
+        if "code" in content_lower or "program" in content_lower:
             return MockResponse(
                 '{"target": "code_agent", "reasoning": "Request needs coding capabilities", "confidence": 0.8}'
             )
-        else:
-            return MockResponse(
-                '{"target": "END", "reasoning": "No specific agent needed", "confidence": 0.5}'
-            )
+        return MockResponse(
+            '{"target": "END", "reasoning": "No specific agent needed", "confidence": 0.5}'
+        )
 
 
 class MockAgent:
@@ -72,7 +72,7 @@ class MockAgent:
         # Add tools to engine
         if self.tools:
             self.engine.tools = self.tools
-            self.engine.tool_routes = {tool: "langchain_tool" for tool in self.tools}
+            self.engine.tool_routes = dict.fromkeys(self.tools, "langchain_tool")
 
     async def ainvoke(self, state, config=None):
         """Mock agent execution."""
@@ -142,7 +142,7 @@ class SimpleDynamicSupervisorTest:
             return False
 
         # Remove agent
-        agent = self.agents.pop(agent_name)
+        self.agents.pop(agent_name)
         config = self.agent_configs.pop(agent_name)
 
         # Remove from choice options
@@ -185,7 +185,7 @@ class SimpleDynamicSupervisorTest:
 
         if not selected_agent:
             if self.agents:
-                selected_agent = list(self.agents.keys())[0]
+                selected_agent = next(iter(self.agents.keys()))
                 reasoning = "No keyword match, using first available agent"
             else:
                 selected_agent = "END"
@@ -283,7 +283,6 @@ class SimpleDynamicSupervisorTest:
 
 async def run_simple_test():
     """Run the simple test scenario."""
-
     console.print("[bold magenta]Simple Dynamic Supervisor Test[/bold magenta]")
     console.print("=" * 50)
 
@@ -383,7 +382,6 @@ async def run_simple_test():
 
 async def simulate_agent_building_flow():
     """Simulate how eventual agent building would work."""
-
     console.print("\n[bold blue]🏗️ Simulating Future Agent Building Flow[/bold blue]")
 
     supervisor = SimpleDynamicSupervisorTest()
@@ -427,7 +425,7 @@ async def simulate_agent_building_flow():
         # Simulate agent building process
         spec = building_request["agent_spec"]
         console.print(
-            f"[dim]Analyzing request and generating agent specification...[/dim]"
+            "[dim]Analyzing request and generating agent specification...[/dim]"
         )
         console.print(f"[dim]Agent Name: {spec['name']}[/dim]")
         console.print(f"[dim]Agent Type: {spec['type']}[/dim]")
@@ -466,7 +464,6 @@ async def simulate_agent_building_flow():
 
 async def main():
     """Run all test scenarios."""
-
     try:
         # Run simple test
         await run_simple_test()

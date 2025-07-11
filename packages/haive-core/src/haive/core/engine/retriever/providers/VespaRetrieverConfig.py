@@ -1,5 +1,4 @@
-"""
-Vespa Retriever implementation for the Haive framework.
+"""Vespa Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Vespa retriever,
 which uses Vespa search engine for advanced search and retrieval capabilities.
@@ -34,8 +33,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.VESPA)
 class VespaRetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for Vespa retriever in the Haive framework.
+    """Configuration for Vespa retriever in the Haive framework.
 
     This retriever uses Vespa search engine to perform hybrid search
     combining vector similarity and text search capabilities.
@@ -100,13 +98,13 @@ class VespaRetrieverConfig(BaseRetrieverConfig):
         default=10, ge=1, le=100, description="Number of documents to retrieve"
     )
 
-    metadata_fields: List[str] = Field(
+    metadata_fields: list[str] = Field(
         default_factory=list,
         description="List of fields to include in document metadata",
     )
 
     # Vespa query configuration
-    vespa_query_body: Optional[Dict[str, Any]] = Field(
+    vespa_query_body: dict[str, Any] | None = Field(
         default=None, description="Custom Vespa query body configuration"
     )
 
@@ -123,24 +121,23 @@ class VespaRetrieverConfig(BaseRetrieverConfig):
         default=30.0, ge=0.1, le=300.0, description="Query timeout in seconds"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Vespa retriever."""
         return {
             "query": (str, Field(description="Search query for Vespa")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Vespa retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(default_factory=list, description="Documents from Vespa search"),
             ),
         }
 
     def instantiate(self):
-        """
-        Create a Vespa retriever from this configuration.
+        """Create a Vespa retriever from this configuration.
 
         Returns:
             VespaRetriever: Instantiated retriever ready for hybrid search.
@@ -170,7 +167,7 @@ class VespaRetrieverConfig(BaseRetrieverConfig):
         else:
             # Default query body
             query_body = {
-                "yql": f"select * from sources * where userQuery()",
+                "yql": "select * from sources * where userQuery()",
                 "hits": self.k,
                 "ranking": self.ranking_profile,
                 "type": self.query_model,

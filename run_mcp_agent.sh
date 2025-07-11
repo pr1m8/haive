@@ -12,7 +12,7 @@ lsof -ti:6969 | xargs kill -9 2>/dev/null || true
 sleep 2
 
 # Change to the haive directory
-cd /home/will/Projects/haive/backend/haive
+cd /home/will/Projects/haive/backend/haive || exit
 
 # Run the MCP agent in the background with output logging
 nohup poetry run python -m haive.mcp.mcp_simple_rag_agent > /tmp/mcp_agent.log 2>&1 &
@@ -24,14 +24,14 @@ PID=$!
 sleep 5
 
 # Check if the process is still running
-if kill -0 $PID 2>/dev/null; then
+if kill -0 "${PID}" 2>/dev/null; then
     echo "✅ MCP Discovery Agent started successfully!"
     echo "📍 URL: http://localhost:6969"
-    echo "🆔 Process ID: $PID"
+    echo "🆔 Process I${: $}PID"
     echo "📋 Log file: /tmp/mcp_agent.log"
     echo ""
     echo "To stop the agent, run:"
-    echo "  kill $PID"
+    echo "  kill ${PID}"
     echo "  # or"
     echo "  lsof -ti:6969 | xargs kill -9"
     echo ""

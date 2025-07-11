@@ -7,7 +7,7 @@
     "description": "Get FRED series observations (actual data values) with optional date range filtering",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.824083",
+    "timestamp": "2025-07-10T19:45:29.039914",
     "schema": {
       "description": "Input schema for FRED series observations queries.",
       "properties": {
@@ -62,7 +62,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.824083",
+      "timestamp": "2025-07-10T19:45:29.039914",
       "category": "toolkits"
     }
   },

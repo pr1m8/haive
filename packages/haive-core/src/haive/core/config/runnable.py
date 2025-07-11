@@ -32,8 +32,8 @@ Example:
 """
 
 import copy
-import uuid
 from typing import Any
+import uuid
 
 from langchain_core.runnables import RunnableConfig
 from pydantic import BaseModel
@@ -118,7 +118,7 @@ class RunnableConfigManager:
             engine_params = {
                 k: v
                 for k, v in all_params.items()
-                if v is not None and not isinstance(v, (BaseModel, dict, list))
+                if v is not None and not isinstance(v, BaseModel | dict | list)
             }
         elif hasattr(engine, "dict"):
             # Pydantic v1
@@ -129,7 +129,7 @@ class RunnableConfigManager:
             engine_params = {
                 k: v
                 for k, v in all_params.items()
-                if v is not None and not isinstance(v, (BaseModel, dict, list))
+                if v is not None and not isinstance(v, BaseModel | dict | list)
             }
 
         # Add engine parameters to both global config and engine-specific sections

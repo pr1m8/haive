@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Demo showing automatic source tracking in haive logging.
+"""Demo showing automatic source tracking in haive logging.
 
 This demonstrates how the logging system automatically shows:
 - Exactly where each log comes from
@@ -32,7 +31,7 @@ class ExampleService:
             self.logger.info(f"Request {request_id} completed successfully")
             return result
         except Exception as e:
-            self.logger.error(f"Request {request_id} failed: {e}")
+            self.logger.exception(f"Request {request_id} failed: {e}")
             raise
 
     def _validate_request(self, request_id: int):
@@ -82,16 +81,10 @@ def module_level_function():
 
 
 def demo_automatic_logging():
-    """
-    Demonstrate automatic logging configuration.
+    """Demonstrate automatic logging configuration.
 
     When you import haive.core, the logging system is automatically set up!
     """
-    print("🚀 Haive Automatic Logging Demo")
-    print("=" * 60)
-    print("\nWhen you import haive.core, logging is automatically configured!")
-    print("It suppresses noisy third-party libraries and shows clean output.\n")
-
     # The logging is already configured from importing haive.core
     logger = get_logger("haive.demo.main")
 
@@ -103,34 +96,25 @@ def demo_automatic_logging():
     service2 = ExampleService("processor")
 
     # Process some requests
-    print("\n--- Processing Requests ---")
     service1.process_request(123)
     service2.process_request(456)
 
     # Module level logging
-    print("\n--- Module Level Function ---")
     module_level_function()
 
     # Game engine example
-    print("\n--- Game Engine Example ---")
     engine = GameEngine()
     engine.start()
     engine.update(0.016)  # 60 FPS
 
 
 def demo_source_tracking():
-    """
-    Demonstrate enhanced source tracking.
+    """Demonstrate enhanced source tracking.
 
     This shows exactly where each log message originates.
     """
-    print("\n\n🔍 Enabling Enhanced Source Tracking")
-    print("=" * 60)
-
     # Enable source tracking
     enable_source_tracking()
-
-    print("\nNow you can see detailed source information for each log!\n")
 
     # Create logger
     logger = get_logger("haive.demo.tracking")
@@ -162,16 +146,11 @@ def demo_source_tracking():
 
 def demo_debug_mode():
     """Demonstrate debug mode toggle."""
-    print("\n\n🐛 Debug Mode Demo")
-    print("=" * 60)
-
     logger = get_logger("haive.demo.debug")
 
-    print("\nNormal mode - debug messages hidden:")
     logger.debug("This debug message is hidden")
     logger.info("This info message is visible")
 
-    print("\nEnabling debug mode...")
     logging_control.debug_mode()
 
     logger.debug("Now debug messages are visible!")
@@ -183,18 +162,13 @@ def demo_debug_mode():
 
 def demo_filtering():
     """Demonstrate module filtering."""
-    print("\n\n🎯 Module Filtering Demo")
-    print("=" * 60)
-
     # Create loggers from different modules
     haive_logger = get_logger("haive.core.test")
     external_logger = get_logger("external.library")
 
-    print("\nNormal logging - all modules visible:")
     haive_logger.info("Message from haive.core.test")
     external_logger.info("Message from external.library")
 
-    print("\nFiltering to only haive modules...")
     logging_control.haive_only()
 
     haive_logger.info("Haive message - still visible")
@@ -220,14 +194,6 @@ def main():
     # Filtering
     input("\nPress Enter to see filtering demo...")
     demo_filtering()
-
-    print("\n\n✅ Demo Complete!")
-    print("\nKey Takeaways:")
-    print("1. Import haive.core and logging is automatically configured")
-    print("2. Use 'python -m haive.core.logging source' to enable source tracking")
-    print("3. Use 'python -m haive.core.logging debug on/off' for quick debugging")
-    print("4. Use 'python -m haive.core.logging interactive' for full control")
-    print("\nThe logging system 'just works' out of the box! 🎉")
 
 
 if __name__ == "__main__":

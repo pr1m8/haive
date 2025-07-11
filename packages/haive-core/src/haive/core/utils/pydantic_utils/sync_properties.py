@@ -1,11 +1,7 @@
 # Usage example
-# stringified = stringify_pydantic_model(model, pretty=True)
-from typing import Any, Dict, List
-
-from pydantic import BaseModel, Field
 
 
-def create_sync_properties(field_names: List[str], target_attr: str = "engine_config"):
+def create_sync_properties(field_names: list[str], target_attr: str = "engine_config"):
     """Create properties that sync with an attribute of the instance (e.g. engine_config)."""
 
     def decorator(cls):

@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-import os
-import json
 from collections import Counter
+import json
+import os
+
 
 # Patterns to ignore
 IGNORED_DIRS = {"__pycache__"}
 IGNORED_EXTENSIONS = {".pyc"}
 
+
 def aggregate_counts(base_dir):
-    """
-    Scan the immediate child modules in base_dir, and aggregate counts
+    """Scan the immediate child modules in base_dir, and aggregate counts
     of file names (from the module's top-level) and subdirectory names.
     """
     file_counter = Counter()
@@ -34,14 +35,12 @@ def aggregate_counts(base_dir):
                     file_counter[entry] += 1
     return {
         "common_files": dict(file_counter),
-        "common_subdirectories": dict(subdir_counter)
+        "common_subdirectories": dict(subdir_counter),
     }
 
+
 def main():
-    targets = {
-        "agents": "src/haive/agents",
-        "games": "src/haive/games"
-    }
+    targets = {"agents": "src/haive/agents", "games": "src/haive/games"}
     output = {}
     for label, path in targets.items():
         output[label] = aggregate_counts(path)
@@ -53,7 +52,6 @@ def main():
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2)
 
-    print(f"Aggregated structure summary saved to {output_path}")
 
 if __name__ == "__main__":
     main()

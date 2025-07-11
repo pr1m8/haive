@@ -10,6 +10,7 @@ from haive.haive.self_rag.nodes import (
 )
 from haive.haive.self_rag.state import GraphState
 
+
 workflow = StateGraph(GraphState)
 
 # Define the nodes

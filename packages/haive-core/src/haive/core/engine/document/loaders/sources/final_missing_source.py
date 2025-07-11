@@ -9,11 +9,7 @@ from typing import Any, Dict, List, Optional
 from pydantic import Field
 
 from .enhanced_registry import enhanced_registry, register_source
-from .source_types import (
-    LoaderCapability,
-    RemoteSource,
-    SourceCategory,
-)
+from .source_types import LoaderCapability, RemoteSource, SourceCategory
 
 
 # =============================================================================
@@ -44,11 +40,13 @@ from .source_types import (
 )
 class PlaywrightWebSource(RemoteSource):
     """Playwright web scraping source for dynamic content."""
-    
+
     source_type: str = "playwright_web"
     headless: bool = Field(True, description="Run browser in headless mode")
-    browser_type: str = Field("chromium", description="Browser type (chromium, firefox, webkit)")
-    wait_selector: Optional[str] = Field(None, description="CSS selector to wait for")
+    browser_type: str = Field(
+        "chromium", description="Browser type (chromium, firefox, webkit)"
+    )
+    wait_selector: str | None = Field(None, description="CSS selector to wait for")
     timeout: int = Field(30000, description="Page load timeout in milliseconds")
 
 

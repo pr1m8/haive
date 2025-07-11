@@ -1,16 +1,9 @@
 import pytest
-
 from haive.core.persistence.postgres_config import PostgresCheckpointerConfig
-from haive.core.persistence.types import (
-    CheckpointerMode,
-    CheckpointStorageMode,
-)
+from haive.core.persistence.types import CheckpointerMode, CheckpointStorageMode
 
 # Import from utils directly (no circular import)
-from tests.persistence.utils import (
-    get_db_params,
-    setup_test_logging,
-)
+from tests.persistence.utils import get_db_params, setup_test_logging
 
 # Set up logging
 logger = setup_test_logging()

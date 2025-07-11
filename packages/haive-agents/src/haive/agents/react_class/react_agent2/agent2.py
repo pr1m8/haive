@@ -1,13 +1,9 @@
 # src/haive/agents/react_agent2/agent2.py
-# from langgraph.prebuilt import create_react_agent
-import logging
-import uuid
 from collections.abc import Callable
+import logging
 from typing import Any
+import uuid
 
-from haive.core.engine.agent.agent import Agent, register_agent
-from haive.core.graph.dynamic_graph_builder import DynamicGraph
-from haive.core.utils.message_utils import normalize_message, normalize_messages
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.tools import BaseTool, StructuredTool, Tool
@@ -16,6 +12,10 @@ from langgraph.prebuilt import ToolNode
 from pydantic import BaseModel
 
 from haive.agents.react_class.react_agent2.config2 import ReactAgentConfig
+from haive.core.engine.agent.agent import Agent, register_agent
+from haive.core.graph.dynamic_graph_builder import DynamicGraph
+from haive.core.utils.message_utils import normalize_message, normalize_messages
+
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -81,10 +81,7 @@ class MessageNormalizingToolNode:
     def __call__(self, state):
         """Process the state with tools, ensuring message compatibility."""
         # Convert state to dict if needed
-        if hasattr(state, "model_dump"):
-            state_dict = state.model_dump()
-        else:
-            state_dict = dict(state)
+        state_dict = state.model_dump() if hasattr(state, "model_dump") else dict(state)
 
         # Normalize messages to proper BaseMessage objects
         if "messages" in state_dict:
@@ -99,7 +96,7 @@ class MessageNormalizingToolNode:
             for msg in state_dict["messages"]:
                 # Already a proper message object
                 if isinstance(
-                    msg, (AIMessage, HumanMessage, SystemMessage, ToolMessage)
+                    msg, AIMessage | HumanMessage | SystemMessage | ToolMessage
                 ):
                     normalized_messages.append(msg)
                 # Dict representation of a message
@@ -234,10 +231,9 @@ class ReactAgent(Agent[ReactAgentConfig]):
         def should_use_tools(state):
             """Determine if we should route to tools based on the last message."""
             # Normalize state if needed
-            if hasattr(state, "model_dump"):
-                state_dict = state.model_dump()
-            else:
-                state_dict = dict(state)
+            state_dict = (
+                state.model_dump() if hasattr(state, "model_dump") else dict(state)
+            )
 
             # Check if the last message has tool calls
             return has_tool_calls(state_dict)
@@ -280,10 +276,9 @@ class ReactAgent(Agent[ReactAgentConfig]):
             """Generate structured output from conversation history."""
             try:
                 # Convert state to dict if needed
-                if hasattr(state, "model_dump"):
-                    state_dict = state.model_dump()
-                else:
-                    state_dict = dict(state)
+                state_dict = (
+                    state.model_dump() if hasattr(state, "model_dump") else dict(state)
+                )
 
                 # Get the LLM from engine
                 llm = self.config.engine.llm_config.instantiate()
@@ -306,7 +301,7 @@ class ReactAgent(Agent[ReactAgentConfig]):
             except Exception as e:
                 # Handle error
                 error_msg = f"Failed to generate structured output: {e!s}"
-                logger.error(error_msg)
+                logger.exception(error_msg)
 
                 return {"error": error_msg}
 
@@ -403,7 +398,7 @@ class ReactAgent(Agent[ReactAgentConfig]):
             return result
 
         except Exception as e:
-            logger.error(f"Error running agent: {e!s}")
+            logger.exception(f"Error running agent: {e!s}")
 
             # Add error to state
             if isinstance(processed_input, dict):
@@ -412,18 +407,15 @@ class ReactAgent(Agent[ReactAgentConfig]):
                 # Add error message
                 if "messages" in processed_input:
                     error_msg = AIMessage(content=f"Error: {e!s}")
-                    processed_input["messages"] = list(processed_input["messages"]) + [
-                        error_msg
+                    processed_input["messages"] = [
+                        *list(processed_input["messages"]),
+                        error_msg,
                     ]
 
             return processed_input
 
     def chat(self):
         """Start an interactive chat session with the agent."""
-        print(
-            f"\nStarting chat with {self.config.name}. Type 'exit' to end the session."
-        )
-
         # Create a thread ID for this conversation
         thread_id = str(uuid.uuid4())
         config = {"configurable": {"thread_id": thread_id}}
@@ -437,7 +429,6 @@ class ReactAgent(Agent[ReactAgentConfig]):
 
             # Check for exit command
             if user_input.lower() in ["exit", "quit", "bye"]:
-                print("\nEnding chat session.")
                 break
 
             # Always use proper LangChain message objects
@@ -469,7 +460,7 @@ class ReactAgent(Agent[ReactAgentConfig]):
 
                     # Display AI messages
                     if isinstance(normalized_msg, AIMessage):
-                        print(f"\nAI: {normalized_msg.content}")
+                        pass
 
     def stream(
         self, input_data: str | list[str] | dict[str, Any] | BaseModel, **kwargs
@@ -499,20 +490,19 @@ class ReactAgent(Agent[ReactAgentConfig]):
         logger.info(f"Streaming agent {self.config.name}")
 
         try:
-            for output in self.app.stream(
+            yield from self.app.stream(
                 processed_input,
                 config=config,
                 stream_mode="values",
                 debug=self.config.debug,
-            ):
-                yield output
+            )
 
             # Save state history if requested
             if self.config.save_history:
                 self.save_state_history()
 
         except Exception as e:
-            logger.error(f"Error streaming agent: {e!s}")
+            logger.exception(f"Error streaming agent: {e!s}")
 
             # Add error to state
             if isinstance(processed_input, dict):
@@ -521,8 +511,9 @@ class ReactAgent(Agent[ReactAgentConfig]):
                 # Add error message
                 if "messages" in processed_input:
                     error_msg = AIMessage(content=f"Error: {e!s}")
-                    processed_input["messages"] = list(processed_input["messages"]) + [
-                        error_msg
+                    processed_input["messages"] = [
+                        *list(processed_input["messages"]),
+                        error_msg,
                     ]
 
                 yield processed_input
@@ -585,8 +576,3 @@ def create_react_agent(
 
     # Build and return agent
     return config.build_agent()
-
-
-# from haive_tools.tools.search_tools import tavily_search_tool
-# a = create_react_agent(tools=[tavily_search_tool],model="gpt-4o")
-# a.chat()

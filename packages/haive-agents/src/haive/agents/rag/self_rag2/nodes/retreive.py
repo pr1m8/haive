@@ -1,5 +1,5 @@
 def retrieve(state):
-    """Retrieve documents
+    """Retrieve documents.
 
     Args:
         state (dict): The current graph state
@@ -7,7 +7,6 @@ def retrieve(state):
     Returns:
         state (dict): New key added to state, documents, that contains retrieved documents
     """
-    print("---RETRIEVE---")
     question = state["question"]
 
     # Retrieval

@@ -6,16 +6,17 @@ and LLM interactions (without mocks).
 
 from typing import Any, Dict, List
 
-import pytest
-from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.documents import Document
+import pytest
+
+from haive.core.models.llm.base import AzureLLMConfig
 
 
 class TestRealRAGExecution:
     """Test RAG agents with real execution and document processing."""
 
     @pytest.fixture
-    def sample_documents(self) -> List[Document]:
+    def sample_documents(self) -> list[Document]:
         """Create sample documents for testing.
 
         Returns:
@@ -240,7 +241,7 @@ class TestRealRAGExecution:
         from haive.agents.rag.chain_collection import RAGChainCollection
 
         collection = RAGChainCollection()
-        agent = collection.create_simple_rag(sample_documents, test_llm_config)
+        collection.create_simple_rag(sample_documents, test_llm_config)
 
         # Test state structure
         test_state = {"query": "What is machine learning?", "messages": []}
@@ -428,13 +429,10 @@ def run_real_rag_tests():
             else:
                 method(sample_docs, test_llm_config)
             results["passed"] += 1
-            print(f"✅ {method_name}")
         except Exception as e:
             results["failed"] += 1
             results["errors"].append(f"{method_name}: {e}")
-            print(f"❌ {method_name}: {e}")
 
-    print(f"\n📊 Real Test Results: {results['passed']}/{len(test_methods)} passed")
     return results
 
 

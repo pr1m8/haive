@@ -5,15 +5,14 @@ from collections.abc import Callable
 from datetime import datetime
 from typing import Union
 
+from haive.agents.react_class.react_v2.state import ReactAgentState
+from haive.agents.simple.config import SimpleAgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.tools import BaseTool, StructuredTool, Tool
 from pydantic import BaseModel, Field, field_validator
-
-from haive.agents.react_class.react_v2.state import ReactAgentState
-from haive.agents.simple.config import SimpleAgentConfig
 
 logger = logging.getLogger(__name__)
 
@@ -135,7 +134,7 @@ class ReactAgentConfig(SimpleAgentConfig):
         flat_tools = []
         if isinstance(tools, dict):
             for tool_set in tools.values():
-                if isinstance(tool_set, (list, tuple)):
+                if isinstance(tool_set, list | tuple):
                     flat_tools.extend(tool_set)
                 else:
                     flat_tools.append(tool_set)
@@ -220,7 +219,7 @@ class ReactAgentConfig(SimpleAgentConfig):
         return config
 
     @field_validator("tools")
-    def validate_tools(cls, v):
+    def validate_tools(self, v):
         """Validate that tools are properly configured."""
         if not v:
             logger.warning("No tools provided for ReactAgent")

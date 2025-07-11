@@ -27,11 +27,10 @@ a consistent Haive configuration interface.
 
 from typing import Any, Dict, List, Optional, Tuple, Type
 
-from langchain_core.documents import Document
-from pydantic import Field, validator
-
 from haive.core.engine.vectorstore.base import BaseVectorStoreConfig, SecureConfigMixin
 from haive.core.engine.vectorstore.types import VectorStoreType
+from langchain_core.documents import Document
+from pydantic import Field, validator
 
 
 @BaseVectorStoreConfig.register(VectorStoreType.VECTARA)

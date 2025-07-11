@@ -1,5 +1,4 @@
-"""
-Subgraph registry for the state graph system.
+"""Subgraph registry for the state graph system.
 
 This module provides the SubgraphRegistry class for managing subgraphs
 in a graph.
@@ -14,15 +13,14 @@ from haive.core.graph.state_graph.components.subgraph import Subgraph
 
 
 class SubgraphRegistry(BaseModel):
-    """
-    Registry for managing subgraphs in a graph.
+    """Registry for managing subgraphs in a graph.
 
     This class provides a central registry for subgraphs,
     handling their registration, configuration, and retrieval.
     """
 
-    subgraphs: Dict[str, Subgraph] = Field(default_factory=dict)
-    subgraph_mappings: Dict[str, Dict[str, Dict[str, str]]] = Field(
+    subgraphs: dict[str, Subgraph] = Field(default_factory=dict)
+    subgraph_mappings: dict[str, dict[str, dict[str, str]]] = Field(
         default_factory=dict
     )
 
@@ -32,12 +30,11 @@ class SubgraphRegistry(BaseModel):
         self,
         subgraph_name: str,
         graph: GraphBase,
-        input_mapping: Optional[Dict[str, str]] = None,
-        output_mapping: Optional[Dict[str, str]] = None,
+        input_mapping: dict[str, str] | None = None,
+        output_mapping: dict[str, str] | None = None,
         **kwargs
     ) -> Subgraph:
-        """
-        Register a subgraph.
+        """Register a subgraph.
 
         Args:
             subgraph_name: Name for the subgraph
@@ -70,8 +67,7 @@ class SubgraphRegistry(BaseModel):
         return subgraph
 
     def unregister_subgraph(self, subgraph_name: str) -> None:
-        """
-        Unregister a subgraph.
+        """Unregister a subgraph.
 
         Args:
             subgraph_name: Name of the subgraph to unregister
@@ -82,9 +78,8 @@ class SubgraphRegistry(BaseModel):
         if subgraph_name in self.subgraph_mappings:
             del self.subgraph_mappings[subgraph_name]
 
-    def get_subgraph(self, subgraph_name: str) -> Optional[Subgraph]:
-        """
-        Get a subgraph by name.
+    def get_subgraph(self, subgraph_name: str) -> Subgraph | None:
+        """Get a subgraph by name.
 
         Args:
             subgraph_name: Name of the subgraph
@@ -94,27 +89,24 @@ class SubgraphRegistry(BaseModel):
         """
         return self.subgraphs.get(subgraph_name)
 
-    def get_all_subgraphs(self) -> Dict[str, Subgraph]:
-        """
-        Get all registered subgraphs.
+    def get_all_subgraphs(self) -> dict[str, Subgraph]:
+        """Get all registered subgraphs.
 
         Returns:
             Dictionary of subgraph name to Subgraph instance
         """
         return self.subgraphs
 
-    def list_subgraphs(self) -> List[str]:
-        """
-        List all registered subgraph names.
+    def list_subgraphs(self) -> list[str]:
+        """List all registered subgraph names.
 
         Returns:
             List of subgraph names
         """
         return list(self.subgraphs.keys())
 
-    def get_mappings(self, subgraph_name: str) -> Dict[str, Dict[str, str]]:
-        """
-        Get the input/output mappings for a subgraph.
+    def get_mappings(self, subgraph_name: str) -> dict[str, dict[str, str]]:
+        """Get the input/output mappings for a subgraph.
 
         Args:
             subgraph_name: Name of the subgraph

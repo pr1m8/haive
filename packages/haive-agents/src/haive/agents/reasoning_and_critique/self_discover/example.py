@@ -3,12 +3,11 @@
 import json
 import logging
 
-from langchain_core.prompts import ChatPromptTemplate
-
 from haive.agents.reasoning_and_critique.self_discover.agent2 import (
     SelfDiscoverAgent,
     create_self_discover_agent,
 )
+from langchain_core.prompts import ChatPromptTemplate
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -23,22 +22,11 @@ def example_math_problem():
         name="math_problem_solver", model="gpt-4o", temperature=0.0
     )
 
-    print(f"Solving math problem: {problem}")
     result = agent.run(problem)
-    print(result)
-    print(type(result))
     # Print full reasoning process
-    print("\n=== SELECTED MODULES ===")
-    print(result.get("selected_modules", ""))
 
-    print("\n=== ADAPTED MODULES ===")
-    print(result.get("adapted_modules", ""))
 
-    print("\n=== REASONING STRUCTURE ===")
-    print(result.get("reasoning_structure", ""))
 
-    print("\n=== FINAL ANSWER ===")
-    print(result.get("answer", ""))
 
 
 def example_svg_interpretation():
@@ -68,27 +56,18 @@ def example_svg_interpretation():
         reasoning_modules=visual_reasoning_modules,
     )
 
-    print(f"Interpreting SVG path: {problem}")
     result = agent.run(problem)
 
     # Print full reasoning process
-    print("\n=== SELECTED MODULES ===")
-    print(result.get("selected_modules", ""))
 
-    print("\n=== ADAPTED MODULES ===")
-    print(result.get("adapted_modules", ""))
 
-    print("\n=== REASONING STRUCTURE ===")
-    print(result.get("reasoning_structure", ""))
 
-    print("\n=== FINAL ANSWER ===")
-    print(result.get("answer", ""))
 
 
 def example_logical_reasoning():
     """Example using SelfDiscover for a logical reasoning problem."""
     problem = """Four people (Alex, Blake, Casey, and Dana) each have a different favorite color (red, blue, green, and yellow) and a different favorite fruit (apple, banana, cherry, and date). Given the following clues, determine each person's favorite color and fruit:
-    
+
 1. The person who likes red also likes dates.
 2. Dana doesn't like yellow or apples.
 3. Casey likes cherries.
@@ -117,21 +96,12 @@ def example_logical_reasoning():
         reasoning_modules=logical_reasoning_modules,
     )
 
-    print(f"Solving logical problem:\n{problem}")
     result = agent.run(problem)
 
     # Print full reasoning process
-    print("\n=== SELECTED MODULES ===")
-    print(result.get("selected_modules", ""))
 
-    print("\n=== ADAPTED MODULES ===")
-    print(result.get("adapted_modules", ""))
 
-    print("\n=== REASONING STRUCTURE ===")
-    print(result.get("reasoning_structure", ""))
 
-    print("\n=== FINAL ANSWER ===")
-    print(result.get("answer", ""))
 
 
 def create_custom_domain_agent(
@@ -217,7 +187,6 @@ def run_batch_problems(
     results = []
 
     for i, problem in enumerate(problems):
-        print(f"\nProcessing problem {i+1}/{len(problems)}: {problem[:100]}...")
 
         try:
             # Run the agent on this problem
@@ -236,10 +205,9 @@ def run_batch_problems(
             results.append(problem_result)
 
             # Print just the answer for progress tracking
-            print(f"Answer: {problem_result['answer'][:200]}...")
 
         except Exception as e:
-            logger.error(f"Error processing problem {i+1}: {e!s}")
+            logger.exception(f"Error processing problem {i+1}: {e!s}")
             results.append({"problem": problem, "error": str(e)})
 
     # Save to file if requested
@@ -247,9 +215,8 @@ def run_batch_problems(
         try:
             with open(output_file, "w") as f:
                 json.dump(results, f, indent=2)
-            print(f"Results saved to {output_file}")
         except Exception as e:
-            logger.error(f"Error saving results to {output_file}: {e!s}")
+            logger.exception(f"Error saving results to {output_file}: {e!s}")
 
     return results
 
@@ -265,13 +232,13 @@ def example_advanced_configuration():
                 """
         Look at the problem below and select the 3-5 most appropriate reasoning techniques from the available options.
         Choose only techniques that will directly contribute to solving this specific problem.
-        
+
         Available reasoning techniques:
         {reasoning_modules}
-        
+
         Problem to solve:
         {task_description}
-        
+
         Selected reasoning techniques (list only the numbers of your chosen techniques):
         """,
             ),
@@ -285,13 +252,13 @@ def example_advanced_configuration():
                 "human",
                 """
         Customize these selected reasoning techniques specifically for the problem at hand:
-        
+
         Selected techniques:
         {selected_modules}
-        
+
         Problem to solve:
         {task_description}
-        
+
         For each technique, provide a customized version that addresses the specific challenges of this problem:
         """,
             ),
@@ -307,13 +274,13 @@ def example_advanced_configuration():
         Create a structured reasoning plan as a JSON object to solve this problem.
         Your JSON should contain keys for each step of analysis, with explanations for what needs to be determined at each step.
         Do NOT solve the problem yet - only create the plan framework.
-        
+
         Customized reasoning techniques:
         {adapted_modules}
-        
+
         Problem to solve:
         {task_description}
-        
+
         JSON reasoning plan structure:
         """,
             ),
@@ -328,13 +295,13 @@ def example_advanced_configuration():
                 """
         Follow this reasoning structure to methodically solve the problem.
         Fill in each component of the structure with your actual reasoning and calculations.
-        
+
         Reasoning structure:
         {reasoning_structure}
-        
+
         Problem to solve:
         {task_description}
-        
+
         Complete solution with all reasoning steps:
         """,
             ),
@@ -371,21 +338,12 @@ def example_advanced_configuration():
     )
 
     # Run the agent
-    print(f"Solving problem with custom configuration: {problem}")
     result = agent.run(problem)
 
     # Print results
-    print("\n=== SELECTED MODULES ===")
-    print(result.get("selected_modules", ""))
 
-    print("\n=== ADAPTED MODULES ===")
-    print(result.get("adapted_modules", ""))
 
-    print("\n=== REASONING STRUCTURE ===")
-    print(result.get("reasoning_structure", ""))
 
-    print("\n=== FINAL ANSWER ===")
-    print(result.get("answer", ""))
 
 
 def analyze_reasoning_process(
@@ -398,7 +356,6 @@ def analyze_reasoning_process(
         output_file: Optional file to save analysis
     """
     if not agent_results:
-        print("No results to analyze")
         return None
 
     # Initialize analysis data
@@ -445,34 +402,23 @@ def analyze_reasoning_process(
     )
 
     # Print analysis
-    print("\n=== REASONING PROCESS ANALYSIS ===")
-    print(f"Total problems: {analysis['total_problems']}")
-    print(
-        f"Successful problems: {analysis['successful_problems']} ({round((analysis['successful_problems']/analysis['total_problems'])*100, 2)}%)"
-    )
-    print(
-        f"Failed problems: {analysis['failed_problems']} ({round((analysis['failed_problems']/analysis['total_problems'])*100, 2)}%)"
-    )
 
-    print("\nModule usage (top 5):")
     for module, data in sorted_modules[:5]:
-        print(f"  Module {module}: {data['count']} problems ({data['percentage']}%)")
+        pass
 
     if analysis["common_errors"]:
-        print("\nCommon errors:")
         for error, count in sorted(
             analysis["common_errors"].items(), key=lambda x: x[1], reverse=True
         )[:3]:
-            print(f"  {error[:100]}... ({count} occurrences)")
+            pass
 
     # Save to file if requested
     if output_file:
         try:
             with open(output_file, "w") as f:
                 json.dump(analysis, f, indent=2)
-            print(f"Analysis saved to {output_file}")
         except Exception as e:
-            logger.error(f"Error saving analysis to {output_file}: {e!s}")
+            logger.exception(f"Error saving analysis to {output_file}: {e!s}")
 
     return analysis
 
@@ -485,7 +431,6 @@ def example_compare_models():
     results = {}
 
     for model in models:
-        print(f"\nTesting with model: {model}")
         agent = create_self_discover_agent(
             name=f"{model}_sequence_agent", model=model, temperature=0.0
         )
@@ -498,19 +443,12 @@ def example_compare_models():
             "answer": result.get("answer", ""),
         }
 
-        print(f"Answer from {model}: {results[model]['answer'][:200]}...")
 
     # Compare reasoning structures
-    print("\n=== COMPARISON OF REASONING STRUCTURES ===")
     for model in models:
-        print(f"\n{model} reasoning structure:")
-        print(results[model]["reasoning_structure"][:300])
 
     # Compare final answers
-    print("\n=== COMPARISON OF FINAL ANSWERS ===")
     for model in models:
-        print(f"\n{model} answer:")
-        print(results[model]["answer"])
 
 
 if __name__ == "__main__":
@@ -534,6 +472,4 @@ if __name__ == "__main__":
         example_advanced_configuration()
         example_compare_models()
     else:
-        print(
-            "Unknown example. Available examples: math, svg, logic, advanced, compare, all"
-        )
+        pass

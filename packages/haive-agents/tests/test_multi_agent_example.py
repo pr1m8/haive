@@ -5,12 +5,12 @@ This module tests a specific example where we have:
 2. A react agent with add tool
 """
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from pydantic import BaseModel, Field
 
 from haive.agents.multi.agent import MultiAgent
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 # The Plan model as per user request

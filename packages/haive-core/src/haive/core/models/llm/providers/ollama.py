@@ -33,12 +33,12 @@ Examples:
 """
 
 import os
-from typing import Any, List, Optional, Type
-
-from pydantic import Field
+from typing import Any
 
 from haive.core.models.llm.provider_types import LLMProvider
-from haive.core.models.llm.providers.base import BaseLLMProvider, ProviderImportError
+from haive.core.models.llm.providers.base import (BaseLLMProvider,
+                                                  ProviderImportError)
+from pydantic import Field
 
 
 class OllamaProvider(BaseLLMProvider):
@@ -112,34 +112,34 @@ class OllamaProvider(BaseLLMProvider):
         default_factory=lambda: os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"),
         description="Ollama server URL",
     )
-    temperature: Optional[float] = Field(
+    temperature: float | None = Field(
         default=None, ge=0, le=1, description="Sampling temperature"
     )
-    num_predict: Optional[int] = Field(
+    num_predict: int | None = Field(
         default=None, ge=1, description="Maximum tokens to generate"
     )
-    top_p: Optional[float] = Field(
+    top_p: float | None = Field(
         default=None, ge=0, le=1, description="Nucleus sampling parameter"
     )
-    top_k: Optional[int] = Field(
+    top_k: int | None = Field(
         default=None, ge=1, description="Top-k sampling parameter"
     )
-    repeat_penalty: Optional[float] = Field(
+    repeat_penalty: float | None = Field(
         default=None, ge=0, description="Repetition penalty"
     )
-    seed: Optional[int] = Field(
+    seed: int | None = Field(
         default=None, description="Random seed for reproducibility"
     )
-    num_gpu: Optional[int] = Field(
+    num_gpu: int | None = Field(
         default_factory=lambda: int(os.getenv("OLLAMA_NUM_GPU", "0")) or None,
         ge=0,
         description="Number of GPUs to use",
     )
-    num_thread: Optional[int] = Field(
+    num_thread: int | None = Field(
         default=None, ge=1, description="Number of CPU threads"
     )
 
-    def _get_chat_class(self) -> Type[Any]:
+    def _get_chat_class(self) -> type[Any]:
         """Get the Ollama chat class.
 
         Returns:
@@ -224,7 +224,7 @@ class OllamaProvider(BaseLLMProvider):
         return params
 
     @classmethod
-    def get_models(cls) -> List[str]:
+    def get_models(cls) -> list[str]:
         """Get available Ollama models.
 
         This attempts to connect to the local Ollama server and list

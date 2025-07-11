@@ -3,32 +3,36 @@
 ## Current Confusion Points
 
 ### 1. Engine vs Engines in Base Agent
+
 ```python
 class Agent:
     engine: Optional[Engine] = None  # Single engine?
     engines: Dict[str, Engine] = {}  # Multiple engines?
-    
+
     # Which one to use when?
     # How do they sync to state?
     # Why both patterns?
 ```
 
 ### 2. Field Synchronization Confusion
+
 - `_sync_fields_from_engine()` - What exactly does this sync?
 - When do fields get added to state?
 - How do engine fields map to state fields?
 - What happens with multiple engines?
 
 ### 3. State Schema Composition
+
 - When is the state schema created?
 - How does SchemaComposer know what fields to include?
 - What's the difference between:
   - Fields from engine.get_input_fields()
-  - Fields from engine.get_output_fields()  
+  - Fields from engine.get_output_fields()
   - Fields defined on the state class itself
   - Fields added dynamically
 
 ### 4. Multi-Agent Makes it Worse
+
 - Each agent has its own state schema
 - But they need to share some fields
 - How does field ownership work?
@@ -37,9 +41,10 @@ class Agent:
 ## The Real Problems
 
 ### Problem 1: No Clear Field Lifecycle
+
 ```
 Where do fields come from?
-1. Defined on StateSchema class? 
+1. Defined on StateSchema class?
 2. Added by engine.get_input_fields()?
 3. Added by engine.get_output_fields()?
 4. Synced from engine attributes?
@@ -55,6 +60,7 @@ When do they get added?
 ```
 
 ### Problem 2: Unclear Sync Direction
+
 ```
 Engine → State:
 - engine.tools → state.tools?
@@ -67,6 +73,7 @@ State → Engine:
 ```
 
 ### Problem 3: Multi-Engine Ambiguity
+
 ```python
 # If agent has multiple engines:
 engines = {
@@ -82,6 +89,7 @@ engines = {
 ## Current Code Patterns
 
 ### Pattern 1: Simple Agent
+
 ```python
 class SimpleAgent(Agent):
     def __init__(self, engine: Engine):
@@ -90,6 +98,7 @@ class SimpleAgent(Agent):
 ```
 
 ### Pattern 2: Multi-Engine Agent (RAG)
+
 ```python
 class RAGAgent(Agent):
     def __init__(self):
@@ -101,6 +110,7 @@ class RAGAgent(Agent):
 ```
 
 ### Pattern 3: Multi-Agent
+
 ```python
 class SequentialAgent(MultiAgent):
     def __init__(self, agents: List[Agent]):
@@ -111,6 +121,7 @@ class SequentialAgent(MultiAgent):
 ## What We Really Need
 
 ### 1. Clear Field Ownership Model
+
 ```python
 @dataclass
 class FieldSource:
@@ -122,6 +133,7 @@ class FieldSource:
 ```
 
 ### 2. Explicit Sync Rules
+
 ```python
 class SyncRule:
     """Defines how a field syncs between engine and state."""
@@ -132,6 +144,7 @@ class SyncRule:
 ```
 
 ### 3. Clear State Composition
+
 ```python
 class StateComposition:
     """Tracks how state is composed."""
@@ -139,7 +152,7 @@ class StateComposition:
     engine_fields: Dict[str, List[FieldDefinition]]  # Per engine
     dynamic_fields: List[FieldDefinition]  # Added at runtime
     shared_fields: List[str]  # From parent/shared context
-    
+
     def build_schema(self) -> Type[BaseModel]:
         """Build final schema with clear precedence rules."""
         pass
@@ -148,14 +161,15 @@ class StateComposition:
 ## Proposed Simplification
 
 ### Option 1: Explicit Field Declaration
+
 ```python
 class SimpleAgent(Agent):
     # Declare what fields this agent needs
     required_fields = ["messages", "context"]
-    
-    # Declare what fields this agent provides  
+
+    # Declare what fields this agent provides
     provided_fields = ["response", "reasoning"]
-    
+
     # Declare engine field mappings
     engine_mappings = {
         "tools": "engine.tools",  # state.tools = engine.tools
@@ -164,6 +178,7 @@ class SimpleAgent(Agent):
 ```
 
 ### Option 2: Schema-First Approach
+
 ```python
 class SimpleAgentState(StateSchema):
     """Define state schema explicitly."""
@@ -178,6 +193,7 @@ class SimpleAgent(Agent[SimpleAgentState]):
 ```
 
 ### Option 3: Builder Pattern
+
 ```python
 agent = (AgentBuilder()
     .with_engine(llm_engine)

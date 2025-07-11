@@ -1,4 +1,4 @@
-"""Self Discover - TODO: Add brief description
+"""Self Discover - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

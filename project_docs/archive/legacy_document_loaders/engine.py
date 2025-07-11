@@ -36,40 +36,25 @@ Typical usage example:
 
 import asyncio
 import logging
-from pathlib import Path
 import time
+from pathlib import Path
 from typing import Any, Optional, Union
 
 # Import from engine config
-from engine_config import (
-    DocumentLoaderConfig,
-    DocumentLoaderInput,
-    DocumentLoaderOutput,
-)
-
+from engine_config import (DocumentLoaderConfig, DocumentLoaderInput,
+                           DocumentLoaderOutput)
+from haive.core.engine.base import EngineType, InvokableEngine
 # Import from loader strategy
-from loader_strategy import (
-    LoaderRegistry,
-    LoaderStrategy,
-    loader_registry,
-)
-
+from loader_strategy import LoaderRegistry, LoaderStrategy, loader_registry
 # Path analysis imports - placeholder for now
 from path_analysis_implementation import analyze_path
 from pydantic import Field
-
 # Import from source implementations
-from source_implementation import (
-    BaseSource,
-    LoaderStrategy,
-    PathAnalysisResult,
-)
-
+from source_implementation import (BaseSource, LoaderStrategy,
+                                   PathAnalysisResult)
 # Import from source registry
-from source_registry import SourceTypeRegistry, registry as source_registry
-
-from haive.core.engine.base import EngineType, InvokableEngine
-
+from source_registry import SourceTypeRegistry
+from source_registry import registry as source_registry
 
 logger = logging.getLogger(__name__)
 
@@ -426,7 +411,7 @@ class DocumentLoaderEngine(
             # If source is already a BaseSource instance, wrap it in an input model
             return DocumentLoaderInput(source=str(source), **kwargs)
 
-        if isinstance(source, (str, Path)):
+        if isinstance(source, str | Path):
             # If source is a string or Path, create an input model
             return DocumentLoaderInput(source=str(source), **kwargs)
 

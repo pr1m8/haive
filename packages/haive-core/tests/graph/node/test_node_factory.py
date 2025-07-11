@@ -6,6 +6,7 @@ from langgraph.types import Command, Send
 from haive.core.graph.node.config import NodeConfig
 from haive.core.graph.node.factory import NodeFactory
 
+
 # Configure logging for this test file
 logger = logging.getLogger(__name__)
 

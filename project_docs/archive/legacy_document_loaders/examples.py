@@ -9,12 +9,8 @@ import os
 from typing import Any, Dict, List
 
 # Import document loader agents
-from agent import (
-    DirectoryLoaderAgent,
-    DocumentLoaderAgent,
-    FileLoaderAgent,
-    WebLoaderAgent,
-)
+from agent import (DirectoryLoaderAgent, DocumentLoaderAgent, FileLoaderAgent,
+                   WebLoaderAgent)
 from haive.core.graph.state_graph.state_graph import StateGraph
 
 # ============================================================================

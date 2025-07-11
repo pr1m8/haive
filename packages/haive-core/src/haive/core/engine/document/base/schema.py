@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from langchain_core.documents import Document
 from pydantic import BaseModel, Field
@@ -44,7 +44,7 @@ class DocumentSourceInfo(BaseModel):
     source_type: str = Field(description="Type of document source")
     source_path: str = Field(description="Path or URL to the source")
     source_id: str = Field(description="Unique identifier for the source")
-    loader_used: Optional[str] = Field(
+    loader_used: str | None = Field(
         None, description="Loader used to process this source"
     )
 
@@ -58,18 +58,18 @@ class DocumentSourceInfo(BaseModel):
     was_split: bool = Field(
         False, description="Whether documents were split into chunks"
     )
-    text_splitter_type: Optional[TextSplitterType] = Field(
+    text_splitter_type: TextSplitterType | None = Field(
         None, description="Text splitter type used"
     )
-    chunk_size: Optional[int] = Field(None, description="Chunk size used for splitting")
-    chunk_overlap: Optional[int] = Field(
+    chunk_size: int | None = Field(None, description="Chunk size used for splitting")
+    chunk_overlap: int | None = Field(
         None, description="Chunk overlap used for splitting"
     )
     chunks_created: int = Field(
         0, description="Number of chunks created from this source"
     )
 
-    metadata: Dict[str, Any] = Field(
+    metadata: dict[str, Any] = Field(
         default_factory=dict, description="Additional source metadata"
     )
 
@@ -78,10 +78,10 @@ class DocumentEngineInputSchema(BaseModel):
     """Enhanced input schema for the document engine with source tracking."""
 
     # Primary input - can be documents OR source paths
-    documents: Optional[List[Document]] = Field(
+    documents: list[Document] | None = Field(
         None, description="Pre-loaded documents to process"
     )
-    source_paths: Optional[List[str]] = Field(
+    source_paths: list[str] | None = Field(
         None, description="Paths/URLs to load documents from"
     )
 
@@ -108,7 +108,7 @@ class DocumentEngineInputSchema(BaseModel):
     )
     chunk_size: int = Field(1000, description="Chunk size for text splitting")
     chunk_overlap: int = Field(200, description="Overlap between chunks")
-    custom_separators: Optional[List[str]] = Field(
+    custom_separators: list[str] | None = Field(
         None, description="Custom separators for text splitting"
     )
 
@@ -118,30 +118,28 @@ class DocumentEngineInputSchema(BaseModel):
     )
 
     # Filtering and selection
-    file_extensions: Optional[List[str]] = Field(
+    file_extensions: list[str] | None = Field(
         None, description="Filter by file extensions"
     )
-    max_files: Optional[int] = Field(
+    max_files: int | None = Field(
         None, description="Maximum number of files to process"
     )
 
     # Metadata and tracking
-    session_id: Optional[str] = Field(
-        None, description="Session identifier for tracking"
-    )
-    user_id: Optional[str] = Field(None, description="User identifier")
-    tags: List[str] = Field(default_factory=list, description="Tags for organization")
+    session_id: str | None = Field(None, description="Session identifier for tracking")
+    user_id: str | None = Field(None, description="User identifier")
+    tags: list[str] = Field(default_factory=list, description="Tags for organization")
 
 
 class DocumentEngineOutputSchema(BaseModel):
     """Enhanced output schema for the document engine with comprehensive tracking."""
 
     # Processed documents
-    documents: List[Document] = Field(description="The processed documents")
+    documents: list[Document] = Field(description="The processed documents")
 
     # Loading results
     loading_status: DocumentLoadingStatus = Field(description="Overall loading status")
-    sources_processed: List[DocumentSourceInfo] = Field(
+    sources_processed: list[DocumentSourceInfo] = Field(
         description="Information about processed sources"
     )
 
@@ -157,24 +155,24 @@ class DocumentEngineOutputSchema(BaseModel):
     average_load_time: float = Field(description="Average time per source load")
 
     # Error information
-    errors: List[Dict[str, Any]] = Field(
+    errors: list[dict[str, Any]] = Field(
         default_factory=list, description="Loading errors encountered"
     )
-    warnings: List[str] = Field(
+    warnings: list[str] = Field(
         default_factory=list, description="Warnings during processing"
     )
 
     # Metadata
-    loader_usage: Dict[str, int] = Field(
+    loader_usage: dict[str, int] = Field(
         default_factory=dict, description="Count of each loader type used"
     )
-    source_types: Dict[str, int] = Field(
+    source_types: dict[str, int] = Field(
         default_factory=dict, description="Count of each source type processed"
     )
-    loading_strategies: Dict[str, int] = Field(
+    loading_strategies: dict[str, int] = Field(
         default_factory=dict, description="Count of each loading strategy used"
     )
-    text_splitter_usage: Dict[str, int] = Field(
+    text_splitter_usage: dict[str, int] = Field(
         default_factory=dict, description="Count of each text splitter type used"
     )
 
@@ -189,7 +187,7 @@ class DocumentBatchLoadingSchema(BaseModel):
     """Schema for batch document loading operations."""
 
     batch_id: str = Field(description="Unique batch identifier")
-    sources: List[str] = Field(description="List of source paths to process")
+    sources: list[str] = Field(description="List of source paths to process")
     batch_size: int = Field(10, description="Number of sources to process per batch")
 
     # Processing configuration
@@ -198,7 +196,7 @@ class DocumentBatchLoadingSchema(BaseModel):
     max_workers: int = Field(4, description="Maximum worker threads")
 
     # Progress tracking
-    progress_callback: Optional[str] = Field(
+    progress_callback: str | None = Field(
         None, description="Callback for progress updates"
     )
     save_intermediate: bool = Field(False, description="Save intermediate results")
@@ -220,35 +218,35 @@ class DocumentEngineStateSchema(BaseModel):
     current_status: DocumentLoadingStatus = Field(
         DocumentLoadingStatus.PENDING, description="Current processing status"
     )
-    sources_queue: List[str] = Field(
+    sources_queue: list[str] = Field(
         default_factory=list, description="Queue of sources to process"
     )
-    sources_completed: List[str] = Field(
+    sources_completed: list[str] = Field(
         default_factory=list, description="Completed sources"
     )
-    sources_failed: List[str] = Field(
+    sources_failed: list[str] = Field(
         default_factory=list, description="Failed sources"
     )
 
     # Results
-    loaded_documents: List[Document] = Field(
+    loaded_documents: list[Document] = Field(
         default_factory=list, description="All loaded documents"
     )
-    source_mappings: Dict[str, DocumentSourceInfo] = Field(
+    source_mappings: dict[str, DocumentSourceInfo] = Field(
         default_factory=dict, description="Source to info mapping"
     )
 
     # Metrics
-    start_time: Optional[float] = Field(None, description="Processing start timestamp")
-    end_time: Optional[float] = Field(None, description="Processing end timestamp")
-    error_log: List[Dict[str, Any]] = Field(
+    start_time: float | None = Field(None, description="Processing start timestamp")
+    end_time: float | None = Field(None, description="Processing end timestamp")
+    error_log: list[dict[str, Any]] = Field(
         default_factory=list, description="Error log"
     )
 
     # Persistence info
-    thread_id: Optional[str] = Field(
+    thread_id: str | None = Field(
         None, description="Conversation thread ID for persistence"
     )
-    checkpoint_id: Optional[str] = Field(
+    checkpoint_id: str | None = Field(
         None, description="Checkpoint ID for state recovery"
     )

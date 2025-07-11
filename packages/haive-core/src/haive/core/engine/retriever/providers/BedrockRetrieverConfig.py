@@ -1,5 +1,4 @@
-"""
-Amazon Bedrock Retriever implementation for the Haive framework.
+"""Amazon Bedrock Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Amazon Bedrock retriever,
 which uses AWS Bedrock's foundation models for retrieval tasks. Bedrock provides
@@ -36,8 +35,7 @@ from haive.core.engine.vectorstore.vectorstore import VectorStoreConfig
 
 @BaseRetrieverConfig.register(RetrieverType.BEDROCK)
 class BedrockRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for Amazon Bedrock retriever in the Haive framework.
+    """Configuration for Amazon Bedrock retriever in the Haive framework.
 
     This retriever uses AWS Bedrock foundation models for embedding generation
     and retrieval tasks within RAG workflows.
@@ -101,12 +99,12 @@ class BedrockRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     region_name: str = Field(default="us-east-1", description="AWS region name")
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None,
         description="AWS access key ID (auto-resolved from AWS_ACCESS_KEY_ID)",
     )
 
-    secret_key: Optional[SecretStr] = Field(
+    secret_key: SecretStr | None = Field(
         default=None,
         description="AWS secret access key (auto-resolved from AWS_SECRET_ACCESS_KEY)",
     )
@@ -122,15 +120,15 @@ class BedrockRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     # Bedrock specific parameters
-    model_kwargs: Optional[Dict[str, Any]] = Field(
+    model_kwargs: dict[str, Any] | None = Field(
         default=None, description="Additional model parameters for Bedrock calls"
     )
 
-    endpoint_url: Optional[str] = Field(
+    endpoint_url: str | None = Field(
         default=None, description="Custom Bedrock endpoint URL (for VPC endpoints)"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Bedrock retriever."""
         return {
             "query": (
@@ -139,11 +137,11 @@ class BedrockRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Bedrock retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list,
                     description="Documents from Bedrock-powered search",
@@ -152,8 +150,7 @@ class BedrockRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create an Amazon Bedrock retriever from this configuration.
+        """Create an Amazon Bedrock retriever from this configuration.
 
         Returns:
             BedrockRetriever: Instantiated retriever ready for foundation model-powered search.
@@ -197,7 +194,7 @@ class BedrockRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         if self.model_kwargs:
             embedding_kwargs["model_kwargs"] = self.model_kwargs
 
-        embeddings = BedrockEmbeddings(**embedding_kwargs)
+        BedrockEmbeddings(**embedding_kwargs)
 
         # Instantiate vector store with Bedrock embeddings
         vectorstore = self.vectorstore_config.instantiate()

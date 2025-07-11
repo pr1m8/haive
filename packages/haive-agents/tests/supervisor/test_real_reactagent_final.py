@@ -10,18 +10,13 @@ from pathlib import Path
 # Add the source path for imports
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../src"))
 
-print("🚀 Starting REAL ReactAgent Test with State History Saving")
-print("=" * 60)
 
 try:
+    from haive.agents.react.agent import ReactAgent
     from langchain_core.messages import HumanMessage
     from langchain_core.tools import BaseTool
 
-    from haive.agents.react.agent import ReactAgent
-
-    print("✅ Successfully imported REAL haive ReactAgent and dependencies")
 except ImportError as e:
-    print(f"❌ Import error: {e}")
     sys.exit(1)
 
 
@@ -81,14 +76,11 @@ def save_state_history(agent_name: str, state_data: dict, test_phase: str):
             default=str,
         )
 
-    print(f"📁 State history saved: {filepath}")
     return filepath
 
 
 async def test_real_haive_reactagents():
     """Test with actual haive ReactAgents."""
-
-    print("\n📋 Creating REAL ReactAgents...")
 
     try:
         # Create REAL ReactAgent instances
@@ -110,9 +102,6 @@ async def test_real_haive_reactagents():
             tools=[WritingTool()],
         )
 
-        print(f"✅ Created {research_agent.name} - Type: {type(research_agent)}")
-        print(f"✅ Created {coding_agent.name} - Type: {type(coding_agent)}")
-        print(f"✅ Created {writing_agent.name} - Type: {type(writing_agent)}")
 
         # Save initial agent states
         for agent in [research_agent, coding_agent, writing_agent]:
@@ -135,11 +124,8 @@ async def test_real_haive_reactagents():
             "content_creator": writing_agent,
         }
 
-        print(f"\n🎯 Created registry with {len(agent_registry)} REAL ReactAgents")
 
         # Test 1: Research task
-        print(f"\n🔬 TEST 1: Real Research Task")
-        print("-" * 30)
 
         test_input = {
             "messages": [
@@ -148,11 +134,9 @@ async def test_real_haive_reactagents():
                 )
             ]
         }
-        print(f"INPUT: {test_input['messages'][0].content}")
 
         try:
             result = await research_agent.ainvoke(test_input)
-            print(f"OUTPUT: {result}")
 
             # Save test state
             test_state = {
@@ -166,7 +150,6 @@ async def test_real_haive_reactagents():
             save_state_history("research_test", test_state, "execution")
 
         except Exception as e:
-            print(f"❌ Research test failed: {e}")
             error_state = {
                 "test_name": "research_task",
                 "error": str(e),
@@ -176,8 +159,6 @@ async def test_real_haive_reactagents():
             save_state_history("research_test", error_state, "error")
 
         # Test 2: Coding task
-        print(f"\n💻 TEST 2: Real Coding Task")
-        print("-" * 30)
 
         coding_input = {
             "messages": [
@@ -186,11 +167,9 @@ async def test_real_haive_reactagents():
                 )
             ]
         }
-        print(f"INPUT: {coding_input['messages'][0].content}")
 
         try:
             coding_result = await coding_agent.ainvoke(coding_input)
-            print(f"OUTPUT: {coding_result}")
 
             coding_state = {
                 "test_name": "coding_task",
@@ -203,7 +182,6 @@ async def test_real_haive_reactagents():
             save_state_history("coding_test", coding_state, "execution")
 
         except Exception as e:
-            print(f"❌ Coding test failed: {e}")
             error_state = {
                 "test_name": "coding_task",
                 "error": str(e),
@@ -213,8 +191,6 @@ async def test_real_haive_reactagents():
             save_state_history("coding_test", error_state, "error")
 
         # Test 3: Writing task
-        print(f"\n✍️ TEST 3: Real Writing Task")
-        print("-" * 30)
 
         writing_input = {
             "messages": [
@@ -223,11 +199,9 @@ async def test_real_haive_reactagents():
                 )
             ]
         }
-        print(f"INPUT: {writing_input['messages'][0].content}")
 
         try:
             writing_result = await writing_agent.ainvoke(writing_input)
-            print(f"OUTPUT: {writing_result}")
 
             writing_state = {
                 "test_name": "writing_task",
@@ -240,7 +214,6 @@ async def test_real_haive_reactagents():
             save_state_history("writing_test", writing_state, "execution")
 
         except Exception as e:
-            print(f"❌ Writing test failed: {e}")
             error_state = {
                 "test_name": "writing_task",
                 "error": str(e),
@@ -250,14 +223,8 @@ async def test_real_haive_reactagents():
             save_state_history("writing_test", error_state, "error")
 
         # Final verification
-        print(f"\n🎯 FINAL VERIFICATION")
-        print("=" * 30)
 
-        print(f"📋 Total REAL ReactAgents: {len(agent_registry)}")
         for name, agent in agent_registry.items():
-            print(f"  ✓ {name}: {agent.description}")
-            print(f"    Type: {type(agent)}")
-            print(f"    Tools: {[tool.name for tool in agent.tools]}")
 
         # Save final state
         final_state = {
@@ -276,14 +243,8 @@ async def test_real_haive_reactagents():
         }
         save_state_history("final_test", final_state, "completion")
 
-        print(f"\n✅ ALL TESTS COMPLETED WITH REAL REACTAGENTS")
-        print(
-            f"✅ STATE HISTORY SAVED TO: /home/will/Projects/haive/backend/haive/packages/haive-agents/resources/state_history/"
-        )
-        print(f"✅ DYNAMIC SUPERVISOR TESTING READY")
 
     except Exception as e:
-        print(f"❌ Test suite failed: {e}")
         final_error_state = {
             "test_suite": "real_reactagents",
             "error": str(e),

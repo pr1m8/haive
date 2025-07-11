@@ -16,6 +16,7 @@ from pydantic import Field, create_model, model_validator
 from haive.core.logging.rich_logger import get_logger
 from haive.core.schema.state_schema import StateSchema
 
+
 # Get logger instance
 logger = get_logger(__name__)
 
@@ -39,14 +40,13 @@ class MultiAgentStateSchema(StateSchema):
     """
 
     # Explicit engines field that EngineNodeConfig expects
-    engines: Dict[str, Any] = Field(
+    engines: dict[str, Any] = Field(
         default_factory=dict, description="Dictionary of engines accessible to nodes"
     )
 
     @model_validator(mode="after")
-    def populate_engines_dict(self) -> "MultiAgentStateSchema":
-        """
-        Populate the engines dictionary with all available engines.
+    def populate_engines_dict(self) -> MultiAgentStateSchema:
+        """Populate the engines dictionary with all available engines.
 
         This validator runs after the model is created and:
         1. Collects engines from individual fields
@@ -58,8 +58,6 @@ class MultiAgentStateSchema(StateSchema):
 
         # Start with an empty engines dict if none exists
         if not hasattr(self, "engines"):
-            self.engines = {}
-        elif self.engines is None:
             self.engines = {}
 
         # 1. First collect engines from instance fields
@@ -110,10 +108,9 @@ class MultiAgentStateSchema(StateSchema):
 
     @classmethod
     def from_state_schema(
-        cls, schema_class: Type[StateSchema], name: Optional[str] = None
-    ) -> Type[MultiAgentStateSchema]:
-        """
-        Create a MultiAgentStateSchema from an existing StateSchema class.
+        cls, schema_class: type[StateSchema], name: str | None = None
+    ) -> type[MultiAgentStateSchema]:
+        """Create a MultiAgentStateSchema from an existing StateSchema class.
 
         Args:
             schema_class: Original StateSchema class to convert
@@ -197,10 +194,9 @@ class MultiAgentSchemaComposer:
 
     @staticmethod
     def from_schema(
-        schema_class: Type[StateSchema], name: Optional[str] = None
-    ) -> Type[MultiAgentStateSchema]:
-        """
-        Create a MultiAgentStateSchema from an existing StateSchema.
+        schema_class: type[StateSchema], name: str | None = None
+    ) -> type[MultiAgentStateSchema]:
+        """Create a MultiAgentStateSchema from an existing StateSchema.
 
         Args:
             schema_class: Original StateSchema to convert
@@ -213,10 +209,9 @@ class MultiAgentSchemaComposer:
 
     @staticmethod
     def from_components(
-        components: List[Any], name: str = "MultiAgentSchema"
-    ) -> Type[MultiAgentStateSchema]:
-        """
-        Create a MultiAgentStateSchema from components.
+        components: list[Any], name: str = "MultiAgentSchema"
+    ) -> type[MultiAgentStateSchema]:
+        """Create a MultiAgentStateSchema from components.
 
         Args:
             components: List of components to extract fields from

@@ -15,23 +15,13 @@ import json
 import logging
 import uuid
 from abc import ABC, abstractmethod
-from typing import (
-    Any,
-    Dict,
-    Generic,
-    List,
-    Optional,
-    Tuple,
-    Type,
-    TypeVar,
-)
-
-from langchain_core.runnables import RunnableConfig
-from pydantic import BaseModel, ConfigDict, Field, create_model, field_serializer
+from typing import Any, Dict, Generic, List, Optional, Tuple, Type, TypeVar
 
 # Import registry base
 from haive.core.engine.base.protocols import AsyncInvokable, Invokable
 from haive.core.engine.base.types import EngineType
+from langchain_core.runnables import RunnableConfig
+from pydantic import BaseModel, ConfigDict, Field, create_model, field_serializer
 
 logger = logging.getLogger(__name__)
 
@@ -85,7 +75,7 @@ class Engine(ABC, BaseModel, Generic[TIn, TOut]):
     # Configuration for model serialization
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
-    @field_serializer('engine_type')
+    @field_serializer("engine_type")
     def serialize_engine_type(self, engine_type: EngineType) -> str:
         """Ensure engine_type is serialized as its value, not string representation."""
         return engine_type.value

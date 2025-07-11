@@ -1,57 +1,60 @@
 #!/usr/bin/env python3
-"""
-Document Loader Inspector Script
+"""Document Loader Inspector Script.
 
 This script analyses all document loaders in LangChain and extracts detailed information
 about their signatures, parameters, default values, required parameters, docstrings,
 and inheritance hierarchy. The data is saved in both JSON and Markdown formats.
 """
 
-import os
-import sys
-import json
-import inspect
-import importlib
-import pkgutil
 import argparse
-from typing import Dict, List, Any, Optional, Tuple, Set, get_type_hints
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from datetime import datetime
+import importlib
+import inspect
+import json
+import os
+import pkgutil
 import re
+import sys
+from typing import Any, Dict, List, Optional, Set, Tuple, get_type_hints
+
 
 # Make sure LangChain is installed
 try:
     import langchain_community
 except ImportError:
-    print("LangChain Community package not found. Please install it with:")
-    print("pip install langchain-community")
     sys.exit(1)
+
 
 @dataclass
 class ParameterInfo:
     """Information about a constructor parameter."""
+
     name: str
     type_hint: str
     default_value: str
     is_required: bool
     doc_description: str = ""
 
+
 @dataclass
 class LoaderInfo:
     """Detailed information about a document loader."""
+
     name: str
     module: str
     full_path: str
     docstring: str
-    base_classes: List[str]
-    parameters: List[ParameterInfo]
+    base_classes: list[str]
+    parameters: list[ParameterInfo]
     source_type: str = ""  # Will be filled later: LOCAL, REMOTE, DATABASE, API, etc.
     category: str = ""  # Will be filled later: file_loaders, web_loaders, etc.
-    formats: List[str] = None  # Will be filled later
+    formats: list[str] = None  # Will be filled later
 
     def __post_init__(self):
         if self.formats is None:
             self.formats = []
+
 
 def get_parameter_doc_description(docstring: str, param_name: str) -> str:
     """Extract parameter description from docstring."""
@@ -61,12 +64,12 @@ def get_parameter_doc_description(docstring: str, param_name: str) -> str:
     # Look for parameter in docstring using common patterns
     patterns = [
         # Sphinx format
-        fr':param {param_name}: (.*?)(?:$|\n|\:param)',
+        rf":param {param_name}: (.*?)(?:$|\n|\:param)",
         # Google style
-        fr'{param_name} \((.*?)\): (.*?)(?=\n\s*\w+:|\n\s*$|\n\s*\n)',
-        fr'{param_name}: (.*?)(?=\n\s*\w+:|\n\s*$|\n\s*\n)',
+        rf"{param_name} \((.*?)\): (.*?)(?=\n\s*\w+:|\n\s*$|\n\s*\n)",
+        rf"{param_name}: (.*?)(?=\n\s*\w+:|\n\s*$|\n\s*\n)",
         # Simple format
-        fr'{param_name}[^\n]* - (.*?)(?=\n|$)',
+        rf"{param_name}[^\n]* - (.*?)(?=\n|$)",
     ]
 
     for pattern in patterns:
@@ -74,12 +77,13 @@ def get_parameter_doc_description(docstring: str, param_name: str) -> str:
         if match:
             desc = match.group(1).strip()
             # Clean up description
-            desc = re.sub(r'\s+', ' ', desc)
+            desc = re.sub(r"\s+", " ", desc)
             return desc
 
     return ""
 
-def get_init_parameters(cls) -> List[ParameterInfo]:
+
+def get_init_parameters(cls) -> list[ParameterInfo]:
     """Get detailed information about __init__ parameters."""
     try:
         # Get init signature
@@ -101,7 +105,9 @@ def get_init_parameters(cls) -> List[ParameterInfo]:
             # Determine type hint
             type_hint = "Any"
             if name in type_hints:
-                type_hint = str(type_hints[name]).replace("<class '", "").replace("'>", "")
+                type_hint = (
+                    str(type_hints[name]).replace("<class '", "").replace("'>", "")
+                )
             elif param.annotation != inspect.Parameter.empty:
                 type_hint = str(param.annotation)
 
@@ -115,22 +121,25 @@ def get_init_parameters(cls) -> List[ParameterInfo]:
             # Get parameter description from docstring
             doc_description = get_parameter_doc_description(docstring, name)
 
-            parameters.append(ParameterInfo(
-                name=name,
-                type_hint=type_hint,
-                default_value=default_value,
-                is_required=is_required,
-                doc_description=doc_description
-            ))
+            parameters.append(
+                ParameterInfo(
+                    name=name,
+                    type_hint=type_hint,
+                    default_value=default_value,
+                    is_required=is_required,
+                    doc_description=doc_description,
+                )
+            )
 
         return parameters
-    except (ValueError, TypeError, AttributeError) as e:
-        print(f"Error getting parameters for {cls.__name__}: {str(e)}")
+    except (ValueError, TypeError, AttributeError):
         return []
 
-def get_all_loaders(package_path, module_path="langchain_community.document_loaders") -> List[LoaderInfo]:
-    """
-    Recursively scan the package for document loaders and extract information.
+
+def get_all_loaders(
+    package_path, module_path="langchain_community.document_loaders"
+) -> list[LoaderInfo]:
+    """Recursively scan the package for document loaders and extract information.
 
     Args:
         package_path: Path to the langchain_community/document_loaders directory
@@ -160,21 +169,29 @@ def get_all_loaders(package_path, module_path="langchain_community.document_load
 
             # Find all classes that might be document loaders
             for attr_name in dir(module):
-                if attr_name.startswith('_'):
+                if attr_name.startswith("_"):
                     continue
 
                 attr = getattr(module, attr_name)
 
                 # Check if it's a class and its name suggests it's a loader
-                if (inspect.isclass(attr) and
-                    ("Loader" in attr_name or
-                     attr_name.endswith("Parser") or
-                     any(base.__name__.endswith("Loader")
-                         for base in attr.__mro__ if base is not object))):
+                if inspect.isclass(attr) and (
+                    "Loader" in attr_name
+                    or attr_name.endswith("Parser")
+                    or any(
+                        base.__name__.endswith("Loader")
+                        for base in attr.__mro__
+                        if base is not object
+                    )
+                ):
 
                     # Get base classes
-                    base_classes = [base.__name__ for base in attr.__mro__[1:]
-                                  if base is not object and base.__module__.startswith('langchain')]
+                    base_classes = [
+                        base.__name__
+                        for base in attr.__mro__[1:]
+                        if base is not object
+                        and base.__module__.startswith("langchain")
+                    ]
 
                     # Get docstring
                     docstring = inspect.getdoc(attr) or ""
@@ -189,120 +206,168 @@ def get_all_loaders(package_path, module_path="langchain_community.document_load
                         full_path=f"{full_module_path}.{attr_name}",
                         docstring=docstring,
                         base_classes=base_classes,
-                        parameters=parameters
+                        parameters=parameters,
                     )
 
                     loaders_info.append(loader_info)
 
-        except (ImportError, AttributeError) as e:
-            print(f"Error importing {full_module_path}: {str(e)}")
+        except (ImportError, AttributeError):
+            pass
 
     return loaders_info
+
 
 def infer_source_type(loader_info: LoaderInfo) -> str:
     """Infer the source type based on the loader name, module, and parameters."""
     name = loader_info.name.lower()
-    module = loader_info.module.lower()
+    loader_info.module.lower()
     param_names = [p.name.lower() for p in loader_info.parameters]
 
     # Check for local file loaders
-    if any(term in name for term in ['file', 'directory', 'csv', 'pdf', 'txt', 'text', 'docx', 'excel']):
+    if any(
+        term in name
+        for term in ["file", "directory", "csv", "pdf", "txt", "text", "docx", "excel"]
+    ):
         return "LOCAL"
 
     # Check for remote loaders
-    if any(term in name for term in ['url', 'web', 'http', 'cloud', 's3', 'azure', 'gcs',
-                                     'cos', 'obs', 'online', 'remote']):
+    if any(
+        term in name
+        for term in [
+            "url",
+            "web",
+            "http",
+            "cloud",
+            "s3",
+            "azure",
+            "gcs",
+            "cos",
+            "obs",
+            "online",
+            "remote",
+        ]
+    ):
         return "REMOTE"
 
     # Check for database loaders
-    if any(term in name for term in ['db', 'database', 'sql', 'mongo', 'cassandra',
-                                     'couchbase', 'rockset', 'snowflake', 'tidb', 'kinetica']):
+    if any(
+        term in name
+        for term in [
+            "db",
+            "database",
+            "sql",
+            "mongo",
+            "cassandra",
+            "couchbase",
+            "rockset",
+            "snowflake",
+            "tidb",
+            "kinetica",
+        ]
+    ):
         return "DATABASE"
 
     # Check for API loaders
-    if any(term in name for term in ['api', 'hubspot', 'salesforce', 'stripe', 'figma',
-                                     'zendesk', 'trello', 'weather', 'apikey', 'token']):
+    if any(
+        term in name
+        for term in [
+            "api",
+            "hubspot",
+            "salesforce",
+            "stripe",
+            "figma",
+            "zendesk",
+            "trello",
+            "weather",
+            "apikey",
+            "token",
+        ]
+    ):
         return "API"
 
     # Check parameters for hints
-    if any(param in param_names for param in ['url', 'urls', 'web_path', 'endpoint']):
+    if any(param in param_names for param in ["url", "urls", "web_path", "endpoint"]):
         return "REMOTE"
 
-    if any(param in param_names for param in ['file_path', 'path']):
+    if any(param in param_names for param in ["file_path", "path"]):
         return "LOCAL"
 
-    if any(param in param_names for param in ['query', 'connection', 'connection_string']):
+    if any(
+        param in param_names for param in ["query", "connection", "connection_string"]
+    ):
         return "DATABASE"
 
-    if any(param in param_names for param in ['api_key', 'token', 'auth']):
+    if any(param in param_names for param in ["api_key", "token", "auth"]):
         return "API"
 
     # Fallback to custom
     return "CUSTOM"
 
+
 def infer_loader_category(loader_info: LoaderInfo) -> str:
     """Infer the category based on the loader name and module."""
     name = loader_info.name.lower()
-    module = loader_info.module.lower()
+    loader_info.module.lower()
 
     # File type categories
-    if any(term in name for term in ['pdf']):
+    if any(term in name for term in ["pdf"]):
         return "pdf_loaders"
 
-    if any(term in name for term in ['word', 'docx']):
+    if any(term in name for term in ["word", "docx"]):
         return "word_loaders"
 
-    if any(term in name for term in ['csv', 'excel', 'dataframe']):
+    if any(term in name for term in ["csv", "excel", "dataframe"]):
         return "tabular_loaders"
 
-    if any(term in name for term in ['html', 'web', 'url']):
+    if any(term in name for term in ["html", "web", "url"]):
         return "web_loaders"
 
-    if any(term in name for term in ['json']):
+    if any(term in name for term in ["json"]):
         return "json_loaders"
 
-    if any(term in name for term in ['directory']):
+    if any(term in name for term in ["directory"]):
         return "directory_loaders"
 
-    if any(term in name for term in ['text', 'txt']):
+    if any(term in name for term in ["text", "txt"]):
         return "text_loaders"
 
-    if any(term in name for term in ['markdown', 'md']):
+    if any(term in name for term in ["markdown", "md"]):
         return "markdown_loaders"
 
-    if any(term in name for term in ['image']):
+    if any(term in name for term in ["image"]):
         return "image_loaders"
 
-    if any(term in name for term in ['audio', 'youtube']):
+    if any(term in name for term in ["audio", "youtube"]):
         return "audio_loaders"
 
-    if any(term in name for term in ['chat', 'message']):
+    if any(term in name for term in ["chat", "message"]):
         return "chat_loaders"
 
-    if any(term in name for term in ['email']):
+    if any(term in name for term in ["email"]):
         return "email_loaders"
 
-    if any(term in name for term in ['code', 'python']):
+    if any(term in name for term in ["code", "python"]):
         return "code_loaders"
 
     # Source categories
-    if any(term in name for term in ['database', 'sql', 'mongo', 'cassandra']):
+    if any(term in name for term in ["database", "sql", "mongo", "cassandra"]):
         return "database_loaders"
 
-    if any(term in name for term in ['api', 'salesforce', 'hubspot', 'stripe']):
+    if any(term in name for term in ["api", "salesforce", "hubspot", "stripe"]):
         return "api_loaders"
 
-    if any(term in name for term in ['cloud', 's3', 'azure', 'gcs']):
+    if any(term in name for term in ["cloud", "s3", "azure", "gcs"]):
         return "cloud_storage_loaders"
 
     # Default to generic loader category
     return "other_loaders"
 
-def infer_formats(loader_info: LoaderInfo) -> List[str]:
+
+def infer_formats(loader_info: LoaderInfo) -> list[str]:
     """Infer the document formats supported by the loader."""
     name = loader_info.name.lower()
     module = loader_info.module.lower()
-    docstring = loader_info.docstring.lower()
+    loader_info.docstring.lower()
 
     formats = []
 
@@ -366,7 +431,8 @@ def infer_formats(loader_info: LoaderInfo) -> List[str]:
     # Remove duplicates and return
     return list(set(formats))
 
-def categorize_loaders(loaders_info: List[LoaderInfo]) -> List[LoaderInfo]:
+
+def categorize_loaders(loaders_info: list[LoaderInfo]) -> list[LoaderInfo]:
     """Add source type, category, and formats to each loader."""
     categorized_loaders = []
 
@@ -384,9 +450,10 @@ def categorize_loaders(loaders_info: List[LoaderInfo]) -> List[LoaderInfo]:
 
     return categorized_loaders
 
-def generate_markdown(loaders_info: List[LoaderInfo], output_file: str):
+
+def generate_markdown(loaders_info: list[LoaderInfo], output_file: str):
     """Generate detailed Markdown documentation for all loaders."""
-    with open(output_file, 'w') as f:
+    with open(output_file, "w") as f:
         f.write("# LangChain Document Loaders Analysis\n\n")
         f.write(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
 
@@ -397,10 +464,14 @@ def generate_markdown(loaders_info: List[LoaderInfo], output_file: str):
         # Source type breakdown
         source_types = {}
         for loader in loaders_info:
-            source_types[loader.source_type] = source_types.get(loader.source_type, 0) + 1
+            source_types[loader.source_type] = (
+                source_types.get(loader.source_type, 0) + 1
+            )
 
         f.write("### Source Types\n\n")
-        for source_type, count in sorted(source_types.items(), key=lambda x: x[1], reverse=True):
+        for source_type, count in sorted(
+            source_types.items(), key=lambda x: x[1], reverse=True
+        ):
             f.write(f"- {source_type}: {count} loaders\n")
         f.write("\n")
 
@@ -410,7 +481,9 @@ def generate_markdown(loaders_info: List[LoaderInfo], output_file: str):
             categories[loader.category] = categories.get(loader.category, 0) + 1
 
         f.write("### Categories\n\n")
-        for category, count in sorted(categories.items(), key=lambda x: x[1], reverse=True):
+        for category, count in sorted(
+            categories.items(), key=lambda x: x[1], reverse=True
+        ):
             f.write(f"- {category}: {count} loaders\n")
         f.write("\n")
 
@@ -421,7 +494,9 @@ def generate_markdown(loaders_info: List[LoaderInfo], output_file: str):
                 formats[format_name] = formats.get(format_name, 0) + 1
 
         f.write("### Supported Formats\n\n")
-        for format_name, count in sorted(formats.items(), key=lambda x: x[1], reverse=True):
+        for format_name, count in sorted(
+            formats.items(), key=lambda x: x[1], reverse=True
+        ):
             f.write(f"- {format_name}: {count} loaders\n")
         f.write("\n")
 
@@ -449,7 +524,9 @@ def generate_markdown(loaders_info: List[LoaderInfo], output_file: str):
 
                     # Base classes
                     if loader.base_classes:
-                        f.write(f"**Inherits from**: {', '.join(loader.base_classes)}\n\n")
+                        f.write(
+                            f"**Inherits from**: {', '.join(loader.base_classes)}\n\n"
+                        )
 
                     # Docstring
                     if loader.docstring:
@@ -459,7 +536,11 @@ def generate_markdown(loaders_info: List[LoaderInfo], output_file: str):
                     if loader.parameters:
                         f.write("**Parameters**:\n\n")
                         for param in loader.parameters:
-                            required = "(Required)" if param.is_required else f"(Default: {param.default_value})"
+                            required = (
+                                "(Required)"
+                                if param.is_required
+                                else f"(Default: {param.default_value})"
+                            )
                             f.write(f"- `{param.name}`: {param.type_hint} {required}")
                             if param.doc_description:
                                 f.write(f" - {param.doc_description}")
@@ -473,7 +554,7 @@ def generate_markdown(loaders_info: List[LoaderInfo], output_file: str):
 
         # Choose representative loaders from each source type
         example_loaders = {}
-        for source_type in source_types.keys():
+        for source_type in source_types:
             for loader in loaders_info:
                 if loader.source_type == source_type and loader.parameters:
                     if source_type not in example_loaders:
@@ -498,13 +579,20 @@ def generate_markdown(loaders_info: List[LoaderInfo], output_file: str):
                     default_param = "..."
 
                 desc = param.doc_description or f"{param.name} parameter"
-                f.write(f'    {param.name}: {param_type} = Field({default_param}, description="{desc}")\n')
+                f.write(
+                    f'    {param.name}: {param_type} = Field({default_param}, description="{desc}")\n'
+                )
 
             f.write("```\n\n")
 
+
 def main():
-    parser = argparse.ArgumentParser(description="Extract information about LangChain document loaders")
-    parser.add_argument("--output-dir", default="loader_analysis", help="Directory to save output files")
+    parser = argparse.ArgumentParser(
+        description="Extract information about LangChain document loaders"
+    )
+    parser.add_argument(
+        "--output-dir", default="loader_analysis", help="Directory to save output files"
+    )
     args = parser.parse_args()
 
     # Create output directory if it doesn't exist
@@ -516,44 +604,34 @@ def main():
         loaders_path = os.path.join(langchain_path, "document_loaders")
 
         if not os.path.isdir(loaders_path):
-            print(f"Cannot find document_loaders directory at {loaders_path}")
             sys.exit(1)
 
-        print(f"Found document_loaders directory at {loaders_path}")
-    except Exception as e:
-        print(f"Error finding document_loaders directory: {str(e)}")
+    except Exception:
         sys.exit(1)
 
     # Extract loader information
-    print("Extracting information about document loaders...")
     loaders_info = get_all_loaders(loaders_path)
-    print(f"Found {len(loaders_info)} document loaders")
 
     # Categorize loaders
-    print("Categorizing loaders...")
     categorized_loaders = categorize_loaders(loaders_info)
 
     # Save to JSON
     json_output = os.path.join(args.output_dir, "document_loaders_info.json")
-    with open(json_output, 'w') as f:
+    with open(json_output, "w") as f:
         json.dump([asdict(loader) for loader in categorized_loaders], f, indent=2)
-    print(f"Saved JSON data to {json_output}")
 
     # Generate Markdown documentation
     markdown_output = os.path.join(args.output_dir, "document_loaders_analysis.md")
     generate_markdown(categorized_loaders, markdown_output)
-    print(f"Generated Markdown documentation: {markdown_output}")
 
     # Provide stats
     sources = {}
     for loader in categorized_loaders:
         sources[loader.source_type] = sources.get(loader.source_type, 0) + 1
 
-    print("\nDocument Loader Statistics:")
-    for source, count in sorted(sources.items(), key=lambda x: x[1], reverse=True):
-        print(f"  {source}: {count} loaders")
+    for _source, _count in sorted(sources.items(), key=lambda x: x[1], reverse=True):
+        pass
 
-    print("\nAnalysis complete!")
 
 if __name__ == "__main__":
     main()

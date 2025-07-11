@@ -15,15 +15,17 @@ This document tracks the implementation status of various agent modules in the H
 ## Research Agents
 
 ### ✅ PersonResearchAgent
+
 - **Location**: `packages/haive-agents/src/haive/agents/research/person/`
 - **Status**: Complete and working
 - **Features**: Comprehensive person research with multi-source data
 - **Example**: Available in module
 
 ### ❌ OpenPerplexityAgent
+
 - **Location**: `packages/haive-agents/src/haive/agents/research/open_perplexity/`
 - **Status**: Has multiple errors preventing import
-- **Issues**: 
+- **Issues**:
   - ✅ Missing `create_research_engines()` function in engines.py (FIXED)
   - ✅ The agent itself is named `ResearchAgent` not `OpenPerplexityAgent` (FIXED via alias)
   - ❌ Pydantic model errors in structured_tools.py - non-annotated attributes
@@ -32,6 +34,7 @@ This document tracks the implementation status of various agent modules in the H
 - **Example**: Has powerful examples in `examples/` directory but can't run due to errors
 
 ### 📝 STORMAgent
+
 - **Location**: `packages/haive-agents/src/haive/agents/research/storm/`
 - **Status**: Config exists, implementation pending
 - **Components Needed**:
@@ -45,10 +48,11 @@ This document tracks the implementation status of various agent modules in the H
 ## Reasoning and Critique Agents
 
 ### 🚧 MCTSAgent (Monte Carlo Tree Search)
+
 - **Location**: `packages/haive-agents/src/haive/agents/reasoning_and_critique/mcts/`
 - **Status**: Files exist but had incorrect import paths
 - **Issues Fixed**:
-  - Import paths in __init__.py were using `agents.mcts` instead of full path
+  - Import paths in **init**.py were using `agents.mcts` instead of full path
 - **Components**:
   - ✅ agent.py
   - ✅ config.py
@@ -59,25 +63,29 @@ This document tracks the implementation status of various agent modules in the H
 
 ## Module Organization Issues
 
-### Missing __init__.py Files
+### Missing **init**.py Files
+
 - ❌ `packages/haive-agents/src/haive/agents/research/__init__.py` - CREATED
 
 ### Import Path Corrections Made
+
 1. Fixed MCTS module imports from relative to absolute paths
 2. Added missing `create_research_engines()` function to open_perplexity/engines.py
-3. Created research module __init__.py
-4. Updated storm __init__.py to be placeholder-only
+3. Created research module **init**.py
+4. Updated storm **init**.py to be placeholder-only
 5. Updated storm config.py to use placeholder classes
 
 ## Recommendations
 
 ### Immediate Actions
+
 1. ✅ Fix import paths in MCTS module - DONE
 2. ✅ Add missing create_research_engines function - DONE
 3. ✅ Create placeholder implementations for STORM - DONE
 4. Rename `ResearchAgent` to `OpenPerplexityAgent` in open_perplexity module OR update imports
 
 ### Future Work
+
 1. Complete STORM agent implementation
 2. Add more reasoning and critique agents
 3. Create comprehensive test suites for each agent
@@ -88,6 +96,7 @@ This document tracks the implementation status of various agent modules in the H
 The following agents have working examples that demonstrate powerful capabilities:
 
 ### OpenPerplexity Research Agent
+
 - **Location**: `packages/haive-agents/src/haive/agents/research/open_perplexity/examples/`
 - **Examples**:
   - `simple_research.py` - Basic research usage
@@ -96,6 +105,7 @@ The following agents have working examples that demonstrate powerful capabilitie
   - `run_with_visualization.py` - Research with visual outputs
 
 ### MCTS Agent
+
 - **Location**: `packages/haive-agents/src/haive/agents/reasoning_and_critique/mcts/example.py`
 - **Features**: Monte Carlo Tree Search for complex reasoning tasks
 
@@ -110,11 +120,13 @@ The following agents have working examples that demonstrate powerful capabilitie
 To avoid import errors while these modules are being fixed:
 
 1. **For research agents**: Import only PersonResearchAgent directly
+
    ```python
    from haive.agents.research.person import PersonResearchAgent
    ```
 
 2. **For MCTS**: Import directly from the module
+
    ```python
    from haive.agents.reasoning_and_critique.mcts import MCTSAgent, MCTSAgentConfig
    ```

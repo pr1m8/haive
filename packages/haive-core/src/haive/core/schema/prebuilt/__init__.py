@@ -15,7 +15,8 @@ The messages submodule provides additional functionality:
 """
 
 from haive.core.schema.multi_agent_state_schema import MultiAgentStateSchema
-from haive.core.schema.prebuilt.basic_agent_state import BasicAgentState
+#from haive.core.schema.prebuilt.basic_agent_state import BasicAgentState
+from haive.core.schema.prebuilt.llm_state import LLMState
 
 # Import messages module components
 from haive.core.schema.prebuilt.messages import (
@@ -27,9 +28,8 @@ from haive.core.schema.prebuilt.messages import (
     extract_token_usage_from_message,
 )
 from haive.core.schema.prebuilt.messages_state import MessagesState
-from haive.core.schema.prebuilt.tool_state import ToolState
-from haive.core.schema.prebuilt.llm_state import LLMState
 from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
+from haive.core.schema.prebuilt.tool_state import ToolState
 
 # Convenient aliases
 TokenAwareState = MessagesStateWithTokenUsage  # Shorter name
@@ -38,7 +38,7 @@ AgentState = LLMState  # Generic agent state with single engine
 
 __all__ = [
     # Core prebuilt schemas
-    "BasicAgentState",
+    #"BasicAgentState",
     "MessagesState",
     "ToolState",
     "MultiAgentStateSchema",
@@ -54,6 +54,6 @@ __all__ = [
     "calculate_token_cost",
     # Aliases
     "TokenAwareState",
-    "TokenToolState", 
+    "TokenToolState",
     "AgentState",
 ]

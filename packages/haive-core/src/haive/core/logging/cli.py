@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Command-line interface for haive logging system.
+"""Command-line interface for haive logging system.
 
 Usage:
     python -m haive.core.logging [command] [options]
@@ -22,28 +21,28 @@ def create_parser():
 Examples:
   # Launch interactive CLI
   python -m haive.core.logging interactive
-  
+
   # Enable source tracking (see where logs come from)
   python -m haive.core.logging source
-  
+
   # Launch UI
   python -m haive.core.logging ui
-  
+
   # Launch dashboard
   python -m haive.core.logging dashboard
-  
+
   # Set global level
   python -m haive.core.logging level DEBUG
-  
+
   # Suppress modules
   python -m haive.core.logging suppress langchain urllib3
-  
+
   # Apply preset
   python -m haive.core.logging preset debug
-  
+
   # Monitor logs
   python -m haive.core.logging monitor
-  
+
   # Quick debug toggle
   python -m haive.core.logging debug on
   python -m haive.core.logging debug off
@@ -150,7 +149,7 @@ Examples:
     return parser
 
 
-def main(args: Optional[List[str]] = None):
+def main(args: List[str] | None = None):
     """Main entry point."""
     parser = create_parser()
     parsed_args = parser.parse_args(args)
@@ -164,7 +163,8 @@ def main(args: Optional[List[str]] = None):
     try:
         if command in ["interactive", "i", "cli"]:
             # Launch interactive CLI
-            from haive.core.logging.interactive_cli import InteractiveLoggingCLI
+            from haive.core.logging.interactive_cli import \
+                InteractiveLoggingCLI
 
             cli = InteractiveLoggingCLI()
             cli.run()
@@ -176,23 +176,16 @@ def main(args: Optional[List[str]] = None):
             enable_source_tracking()
 
             # Show example
-            print("\nExample output:")
-            print(
-                "[14:32:15] INFO     haive.core.engine | execute() in executor.py:123"
-            )
-            print("           └─ Shows: module path | function in file:line\n")
 
             if not parsed_args.simple:
-                print("Tip: Use --simple flag for simpler output without colors")
+                pass
 
         elif command == "ui":
-            print("Launching logging UI...")
             from haive.core.logging.ui import launch_ui
 
             launch_ui()
 
         elif command == "dashboard":
-            print("Launching logging dashboard...")
             from haive.core.logging.dashboard import launch_dashboard
 
             launch_dashboard()
@@ -206,11 +199,9 @@ def main(args: Optional[List[str]] = None):
 
         elif command == "level":
             logging_control.set_level(parsed_args.level)
-            print(f"Set global log level to {parsed_args.level}")
 
         elif command == "module":
             logging_control.set_module_level(parsed_args.name, parsed_args.level)
-            print(f"Set {parsed_args.name} to {parsed_args.level}")
 
         elif command == "preset":
             preset = parsed_args.preset
@@ -225,47 +216,38 @@ def main(args: Optional[List[str]] = None):
             elif preset == "haive-only":
                 logging_control.haive_only()
             elif preset == "development":
-                from haive.core.logging.auto_config import auto_configure_logging
+                from haive.core.logging.auto_config import \
+                    auto_configure_logging
 
                 auto_configure_logging(preset="development")
             elif preset == "production":
-                from haive.core.logging.auto_config import auto_configure_logging
-
-                auto_configure_logging(preset="minimal")
-            elif preset == "minimal":
-                from haive.core.logging.auto_config import auto_configure_logging
+                from haive.core.logging.auto_config import \
+                    auto_configure_logging
 
                 auto_configure_logging(preset="minimal")
             elif preset == "verbose":
-                from haive.core.logging.auto_config import auto_configure_logging
+                from haive.core.logging.auto_config import \
+                    auto_configure_logging
 
                 auto_configure_logging(preset="verbose")
-            print(f"Applied preset: {preset}")
 
         elif command == "suppress":
             for module in parsed_args.modules:
                 logging_control.suppress(module)
-            print(f"Suppressed: {', '.join(parsed_args.modules)}")
 
         elif command == "filter":
             logging_control.only_show(parsed_args.modules)
-            print(f"Filtering to: {', '.join(parsed_args.modules)}")
 
         elif command == "status":
-            print(f"Global level: {logging_control.current_level}")
             if logging_control._suppressed_modules:
-                print(
-                    f"Suppressed: {', '.join(sorted(logging_control._suppressed_modules))}"
-                )
+                pass
             if logging_control._show_only_modules:
-                print(f"Filtered to: {', '.join(logging_control._show_only_modules)}")
+                pass
             if logging_control._module_levels:
-                print("Module levels:")
                 for module, level in sorted(logging_control._module_levels.items()):
-                    print(f"  {module}: {level}")
+                    pass
 
         elif command == "test":
-            print("Generating test logs...")
             import logging
             import time
 
@@ -286,7 +268,6 @@ def main(args: Optional[List[str]] = None):
                 logger.info(f"Test message from {module}")
                 time.sleep(0.1)
 
-            print("Test logs generated!")
 
         elif command == "debug":
             action = parsed_args.action
@@ -297,32 +278,25 @@ def main(args: Optional[List[str]] = None):
                 if action in ["on", "toggle"]:
                     for module in modules:
                         logging_control.set_module_level(module, "DEBUG")
-                    print(f"Debug enabled for: {', '.join(modules)}")
                 else:  # off
                     for module in modules:
                         logging_control.set_module_level(module, "INFO")
-                    print(f"Debug disabled for: {', '.join(modules)}")
-            else:
-                # Global debug toggle
-                if action == "on":
-                    logging_control.debug_mode()
-                    print("Debug mode enabled")
-                elif action == "off":
+            elif action == "on":
+                logging_control.debug_mode()
+                print("Debug mode enabled")
+            elif action == "off":
+                logging_control.set_level("INFO")
+                print("Debug mode disabled")
+            else:  # toggle
+                if logging_control.current_level == "DEBUG":
                     logging_control.set_level("INFO")
                     print("Debug mode disabled")
-                else:  # toggle
-                    if logging_control.current_level == "DEBUG":
-                        logging_control.set_level("INFO")
-                        print("Debug mode disabled")
-                    else:
-                        logging_control.debug_mode()
-                        print("Debug mode enabled")
+                else:
+                    logging_control.debug_mode()
+                    print("Debug mode enabled")
 
     except ImportError as e:
-        print(f"Error: Required module not available - {e}")
-        print("Install with: pip install haive[logging]")
     except Exception as e:
-        print(f"Error: {e}")
         sys.exit(1)
 
 

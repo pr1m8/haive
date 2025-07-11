@@ -3,6 +3,7 @@
 import uuid
 from typing import Any, Dict, List, Optional, Sequence, Union
 
+from haive.agents.simple import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.node.parser_node_config import ParserNodeConfig
@@ -14,14 +15,12 @@ from langgraph.graph import END, START
 from langgraph.types import Command, Send
 from pydantic import BaseModel, Field
 
-from haive.agents.simple import SimpleAgent
-
 
 # Test schemas
 class Plan(BaseModel):
     """A plan with steps."""
 
-    steps: List[str] = Field(description="A list of steps to complete the task")
+    steps: list[str] = Field(description="A list of steps to complete the task")
 
 
 # Test tools
@@ -31,13 +30,12 @@ def add_numbers(a: float, b: float) -> float:
     return a + b
 
 
-def improved_validation_node(state: Dict[str, Any]) -> Command:
+def improved_validation_node(state: dict[str, Any]) -> Command:
     """Improved validation node that can add ToolMessages to state.
 
     This node replaces the conditional edge validation with a proper node
     that can update state by adding ToolMessages when needed.
     """
-    from haive.core.engine.base import EngineRegistry
 
     # Get messages from state
     messages = state.get("messages", [])
@@ -105,7 +103,7 @@ def improved_validation_node(state: Dict[str, Any]) -> Command:
             except Exception as e:
                 # Create error ToolMessage
                 tool_msg = ToolMessage(
-                    content=f"Error validating {tool_name}: {str(e)}",
+                    content=f"Error validating {tool_name}: {e!s}",
                     tool_call_id=tool_id,
                     name=tool_name,
                 )
@@ -137,15 +135,12 @@ def improved_validation_node(state: Dict[str, Any]) -> Command:
     elif len(set(destinations)) == 1:
         # All tools go to same destination
         goto = destinations[0]
+    elif "tool_node" in destinations:
+        goto = "tool_node"
+    elif "parse_output" in destinations:
+        goto = "parse_output"
     else:
-        # Mixed destinations - need to handle this case
-        # For now, prioritize tool_node over parse_output
-        if "tool_node" in destinations:
-            goto = "tool_node"
-        elif "parse_output" in destinations:
-            goto = "parse_output"
-        else:
-            goto = END
+        goto = END
 
     return Command(update=update_dict, goto=goto)
 
@@ -252,7 +247,6 @@ class ImprovedSimpleAgent(SimpleAgent):
 # Test functions
 async def test_improved_pydantic_validation():
     """Test the improved validation with Pydantic models."""
-    print("\n=== Testing Improved Pydantic Validation ===")
 
     # Create engine with Pydantic model
     engine = AugLLMConfig(
@@ -302,29 +296,22 @@ async def test_improved_pydantic_validation():
     graph = agent.create_runnable()
     result = await graph.ainvoke(initial_state)
 
-    print("Final messages:")
     for i, msg in enumerate(result["messages"]):
-        print(f"  [{i}] {type(msg).__name__}: {str(msg)[:100]}...")
         if hasattr(msg, "tool_call_id"):
-            print(f"      Tool: {getattr(msg, 'name', 'N/A')}, ID: {msg.tool_call_id}")
+            pass
 
     # Check if ToolMessage was created
     tool_messages = [msg for msg in result["messages"] if isinstance(msg, ToolMessage)]
 
     if len(tool_messages) > 0:
-        print(f"✅ Successfully created {len(tool_messages)} ToolMessage(s)")
         tool_msg = tool_messages[0]
-        print(f"   Content: {tool_msg.content}")
-        print(f"   Tool ID: {tool_msg.tool_call_id}")
         return True
-    else:
-        print("❌ No ToolMessage found - validation failed")
-        return False
+    print("❌ No ToolMessage found - validation failed")
+    return False
 
 
 async def test_improved_regular_tool_validation():
     """Test the improved validation with regular tools."""
-    print("\n=== Testing Improved Regular Tool Validation ===")
 
     # Create engine with regular tools
     engine = AugLLMConfig(
@@ -361,31 +348,24 @@ async def test_improved_regular_tool_validation():
     graph = agent.create_runnable()
     result = await graph.ainvoke(initial_state)
 
-    print("Final messages:")
     for i, msg in enumerate(result["messages"]):
-        print(f"  [{i}] {type(msg).__name__}: {str(msg)[:100]}...")
         if hasattr(msg, "tool_call_id"):
-            print(f"      Tool: {getattr(msg, 'name', 'N/A')}, ID: {msg.tool_call_id}")
+            pass
 
     # Check if ToolMessage was created by tool_node
     tool_messages = [msg for msg in result["messages"] if isinstance(msg, ToolMessage)]
 
     if len(tool_messages) > 0:
-        print(f"✅ Successfully created {len(tool_messages)} ToolMessage(s)")
         tool_msg = tool_messages[0]
-        print(f"   Content: {tool_msg.content}")
-        print(f"   Tool ID: {tool_msg.tool_call_id}")
         return True
-    else:
-        print("❌ No ToolMessage found - validation failed")
-        return False
+    print("❌ No ToolMessage found - validation failed")
+    return False
 
 
 if __name__ == "__main__":
     import asyncio
 
     async def main():
-        print("🧪 Testing Improved SimpleAgent Validation")
 
         results = []
 
@@ -393,24 +373,20 @@ if __name__ == "__main__":
             result1 = await test_improved_pydantic_validation()
             results.append(("Improved Pydantic", result1))
         except Exception as e:
-            print(f"❌ Improved Pydantic test failed: {e}")
             results.append(("Improved Pydantic", False))
 
         try:
             result2 = await test_improved_regular_tool_validation()
             results.append(("Improved Regular Tool", result2))
         except Exception as e:
-            print(f"❌ Improved Regular tool test failed: {e}")
             results.append(("Improved Regular Tool", False))
 
-        print("\n📊 Results:")
         for test_name, passed in results:
             status = "✅ PASS" if passed else "❌ FAIL"
-            print(f"  {test_name}: {status}")
 
         if all(result for _, result in results):
-            print("\n🎉 All improved validation tests passed!")
+            pass!")
         else:
-            print("\n🔧 Some tests failed - need more improvements")
+            passs")
 
     asyncio.run(main())

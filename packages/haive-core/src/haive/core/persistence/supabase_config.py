@@ -23,13 +23,12 @@ import json
 import logging
 import uuid
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
-
-from pydantic import Field, model_validator
+from typing import Any, Dict
 
 from haive.core.persistence.base import CheckpointerConfig
 from haive.core.persistence.types import CheckpointerType
 from haive.core.persistence.utils import deserialize_metadata, serialize_metadata
+from pydantic import Field, model_validator
 
 logger = logging.getLogger(__name__)
 
@@ -82,14 +81,13 @@ class SupabaseSaver:
 
     def __init__(
         self,
-        supabase_url: Optional[str] = None,
-        supabase_key: Optional[str] = None,
-        client: Optional[Any] = None,
-        user_id: Optional[str] = None,
+        supabase_url: str | None = None,
+        supabase_key: str | None = None,
+        client: Any | None = None,
+        user_id: str | None = None,
         initialize_schema: bool = True,
     ):
-        """
-        Initialize the Supabase saver.
+        """Initialize the Supabase saver.
 
         Args:
             supabase_url: Supabase project URL (not needed if client provided)
@@ -109,44 +107,37 @@ class SupabaseSaver:
         # Use provided client or create new one
         if client:
             self.client = client
-        else:
-            # Try using dataflow shared client first
-            if DATAFLOW_AVAILABLE:
-                try:
-                    self.client = get_supabase_client()
-                    self.supabase_url = (
-                        None  # Not storing credentials when using env vars
-                    )
-                    self.supabase_key = None
-                except Exception as e:
-                    logger.warning(f"Failed to get Supabase client from dataflow: {e}")
+        elif DATAFLOW_AVAILABLE:
+            try:
+                self.client = get_supabase_client()
+                self.supabase_url = None  # Not storing credentials when using env vars
+                self.supabase_key = None
+            except Exception as e:
+                logger.warning(f"Failed to get Supabase client from dataflow: {e}")
 
-                    # Fall back to direct client creation with provided credentials
-                    if supabase_url and supabase_key:
-                        self.supabase_url = supabase_url
-                        self.supabase_key = supabase_key
-                        self.client = create_client(supabase_url, supabase_key)
-                    else:
-                        raise ValueError(
-                            "Supabase URL and key required when dataflow client not available"
-                        )
-            else:
-                # No dataflow module, use direct client creation
+                # Fall back to direct client creation with provided credentials
                 if supabase_url and supabase_key:
                     self.supabase_url = supabase_url
                     self.supabase_key = supabase_key
                     self.client = create_client(supabase_url, supabase_key)
                 else:
                     raise ValueError(
-                        "Supabase URL and key required when dataflow module not available"
+                        "Supabase URL and key required when dataflow client not available"
                     )
+        elif supabase_url and supabase_key:
+            self.supabase_url = supabase_url
+            self.supabase_key = supabase_key
+            self.client = create_client(supabase_url, supabase_key)
+        else:
+            raise ValueError(
+                "Supabase URL and key required when dataflow module not available"
+            )
 
         if initialize_schema:
             self.setup()
 
     def setup(self):
-        """
-        Set up the Supabase database schema.
+        """Set up the Supabase database schema.
 
         Creates necessary tables, foreign key relationships, indexes,
         and RLS policies for secure access.
@@ -162,7 +153,7 @@ class SupabaseSaver:
                 try:
                     self.client.rpc("execute_sql", {"sql": clean_sql}).execute()
                 except Exception as e:
-                    logger.error(f"SQL Error: {e}\nSQL: {clean_sql[:100]}...")
+                    logger.exception(f"SQL Error: {e}\nSQL: {clean_sql[:100]}...")
                     raise
 
             # Check if tables already exist
@@ -496,17 +487,16 @@ class SupabaseSaver:
             logger.info("Successfully set up Supabase schema")
 
         except Exception as e:
-            logger.error(f"Error setting up Supabase schema: {e}")
+            logger.exception(f"Error setting up Supabase schema: {e}")
             raise
 
     def register_user(
         self,
         user_id: str,
-        email: Optional[str] = None,
-        metadata: Optional[Dict[str, Any]] = None,
+        email: str | None = None,
+        metadata: dict[str, Any] | None = None,
     ) -> str:
-        """
-        Register a user in the system.
+        """Register a user in the system.
 
         Args:
             user_id: User ID
@@ -539,12 +529,11 @@ class SupabaseSaver:
     def register_thread(
         self,
         thread_id: str,
-        user_id: Optional[str] = None,
-        name: Optional[str] = None,
-        metadata: Optional[Dict[str, Any]] = None,
+        user_id: str | None = None,
+        name: str | None = None,
+        metadata: dict[str, Any] | None = None,
     ) -> str:
-        """
-        Register a thread in the system.
+        """Register a thread in the system.
 
         Args:
             thread_id: Thread ID
@@ -584,34 +573,32 @@ class SupabaseSaver:
 
             logger.debug(f"Thread {thread_id} already exists, updated last access")
             return internal_id
-        else:
-            # Generate internal ID
-            internal_id = str(uuid.uuid4())
+        # Generate internal ID
+        internal_id = str(uuid.uuid4())
 
-            # Convert metadata to JSON string
-            metadata_json = serialize_metadata(metadata or {})
+        # Convert metadata to JSON string
+        metadata_json = serialize_metadata(metadata or {})
 
-            # Insert new thread
-            self.client.table("agent_threads").insert(
-                {
-                    "id": internal_id,
-                    "user_id": user_id,
-                    "external_id": thread_id,
-                    "name": name,
-                    "metadata": metadata_json,
-                }
-            ).execute()
+        # Insert new thread
+        self.client.table("agent_threads").insert(
+            {
+                "id": internal_id,
+                "user_id": user_id,
+                "external_id": thread_id,
+                "name": name,
+                "metadata": metadata_json,
+            }
+        ).execute()
 
-            logger.info(
-                f"Thread {thread_id} registered in Supabase with internal ID {internal_id}"
-            )
-            return internal_id
+        logger.info(
+            f"Thread {thread_id} registered in Supabase with internal ID {internal_id}"
+        )
+        return internal_id
 
     def get_internal_thread_id(
-        self, thread_id: str, user_id: Optional[str] = None
-    ) -> Optional[str]:
-        """
-        Get the internal thread ID from an external thread ID.
+        self, thread_id: str, user_id: str | None = None
+    ) -> str | None:
+        """Get the internal thread ID from an external thread ID.
 
         Args:
             thread_id: External thread ID
@@ -640,9 +627,8 @@ class SupabaseSaver:
 
         return None
 
-    def get(self, config: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """
-        Get a checkpoint from the database.
+    def get(self, config: dict[str, Any]) -> dict[str, Any] | None:
+        """Get a checkpoint from the database.
 
         Args:
             config: Configuration with thread_id and optional checkpoint_id
@@ -712,18 +698,17 @@ class SupabaseSaver:
             return None
 
         except Exception as e:
-            logger.error(f"Error retrieving checkpoint: {e}")
+            logger.exception(f"Error retrieving checkpoint: {e}")
             return None
 
     def put(
         self,
-        config: Dict[str, Any],
-        checkpoint: Dict[str, Any],
-        metadata: Optional[Dict[str, Any]] = None,
-        new_versions: Optional[Dict[str, Any]] = None,
-    ) -> Dict[str, Any]:
-        """
-        Save a checkpoint to the database.
+        config: dict[str, Any],
+        checkpoint: dict[str, Any],
+        metadata: dict[str, Any] | None = None,
+        new_versions: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Save a checkpoint to the database.
 
         Args:
             config: Configuration with thread_id and optional checkpoint_id
@@ -813,19 +798,18 @@ class SupabaseSaver:
             }
 
         except Exception as e:
-            logger.error(f"Error saving checkpoint: {e}")
+            logger.exception(f"Error saving checkpoint: {e}")
             # Return original config
             return config
 
     def list(
         self,
-        config: Dict[str, Any],
-        limit: Optional[int] = None,
-        filter: Optional[Dict[str, Any]] = None,
-        before: Optional[Dict[str, Any]] = None,
-    ) -> List[Any]:
-        """
-        List checkpoints for a thread.
+        config: dict[str, Any],
+        limit: int | None = None,
+        filter: dict[str, Any] | None = None,
+        before: dict[str, Any] | None = None,
+    ) -> list[Any]:
+        """List checkpoints for a thread.
 
         Args:
             config: Configuration with thread_id
@@ -943,12 +927,11 @@ class SupabaseSaver:
             return checkpoint_tuples
 
         except Exception as e:
-            logger.error(f"Error listing checkpoints: {e}")
+            logger.exception(f"Error listing checkpoints: {e}")
             return []
 
-    def delete_thread(self, thread_id: str, user_id: Optional[str] = None) -> bool:
-        """
-        Delete a thread and all its checkpoints.
+    def delete_thread(self, thread_id: str, user_id: str | None = None) -> bool:
+        """Delete a thread and all its checkpoints.
 
         Args:
             thread_id: Thread ID
@@ -980,7 +963,7 @@ class SupabaseSaver:
             return True
 
         except Exception as e:
-            logger.error(f"Error deleting thread: {e}")
+            logger.exception(f"Error deleting thread: {e}")
             return False
 
 
@@ -1043,15 +1026,15 @@ class SupabaseCheckpointerConfig(CheckpointerConfig):
     type: CheckpointerType = CheckpointerType.SUPABASE
 
     # Supabase configuration
-    supabase_url: Optional[str] = Field(
+    supabase_url: str | None = Field(
         default=None,
         description="Supabase project URL (optional if using shared client from dataflow)",
     )
-    supabase_key: Optional[str] = Field(
+    supabase_key: str | None = Field(
         default=None,
         description="Supabase API key (optional if using shared client from dataflow)",
     )
-    user_id: Optional[str] = Field(default=None, description="User ID for RLS policies")
+    user_id: str | None = Field(default=None, description="User ID for RLS policies")
 
     # Runtime settings
     setup_needed: bool = Field(
@@ -1059,7 +1042,7 @@ class SupabaseCheckpointerConfig(CheckpointerConfig):
     )
 
     # Internal state (not serialized)
-    checkpointer: Optional[Any] = Field(default=None, exclude=True)
+    checkpointer: Any | None = Field(default=None, exclude=True)
 
     @model_validator(mode="after")
     def validate_supabase_available(self):
@@ -1135,7 +1118,7 @@ class SupabaseCheckpointerConfig(CheckpointerConfig):
                 self.setup_needed = False
 
             except Exception as e:
-                logger.error(f"Error creating Supabase checkpointer: {e}")
+                logger.exception(f"Error creating Supabase checkpointer: {e}")
                 logger.warning("Falling back to memory checkpointer")
 
                 # Fall back to memory saver
@@ -1148,11 +1131,10 @@ class SupabaseCheckpointerConfig(CheckpointerConfig):
     def register_thread(
         self,
         thread_id: str,
-        name: Optional[str] = None,
-        metadata: Optional[Dict[str, Any]] = None,
+        name: str | None = None,
+        metadata: dict[str, Any] | None = None,
     ) -> None:
-        """
-        Register a thread in the Supabase database.
+        """Register a thread in the Supabase database.
 
         Args:
             thread_id: The thread ID to register
@@ -1173,12 +1155,11 @@ class SupabaseCheckpointerConfig(CheckpointerConfig):
 
     def put_checkpoint(
         self,
-        config: Dict[str, Any],
+        config: dict[str, Any],
         data: Any,
-        metadata: Optional[Dict[str, Any]] = None,
-    ) -> Dict[str, Any]:
-        """
-        Store a checkpoint in the Supabase database.
+        metadata: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Store a checkpoint in the Supabase database.
 
         Args:
             config: Configuration with thread_id and optional checkpoint_id
@@ -1201,27 +1182,24 @@ class SupabaseCheckpointerConfig(CheckpointerConfig):
         # Store using appropriate API based on checkpointer type
         if isinstance(checkpointer, SupabaseSaver):
             return checkpointer.put(config, checkpoint_data, metadata)
-        else:
-            # Try standard methods
-            try:
-                # Check method signature
-                import inspect
+        # Try standard methods
+        try:
+            # Check method signature
+            import inspect
 
-                sig = inspect.signature(checkpointer.put)
+            sig = inspect.signature(checkpointer.put)
 
-                if "metadata" in sig.parameters and "new_versions" in sig.parameters:
-                    # New API
-                    return checkpointer.put(config, checkpoint_data, metadata or {}, {})
-                else:
-                    # Old API
-                    return checkpointer.put(config, checkpoint_data)
-            except (AttributeError, Exception) as e:
-                logger.error(f"Error storing checkpoint: {e}")
-                return config
+            if "metadata" in sig.parameters and "new_versions" in sig.parameters:
+                # New API
+                return checkpointer.put(config, checkpoint_data, metadata or {}, {})
+            # Old API
+            return checkpointer.put(config, checkpoint_data)
+        except (AttributeError, Exception) as e:
+            logger.exception(f"Error storing checkpoint: {e}")
+            return config
 
-    def get_checkpoint(self, config: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """
-        Retrieve a checkpoint from the Supabase database.
+    def get_checkpoint(self, config: dict[str, Any]) -> dict[str, Any] | None:
+        """Retrieve a checkpoint from the Supabase database.
 
         Args:
             config: Configuration with thread_id and optional checkpoint_id
@@ -1234,7 +1212,7 @@ class SupabaseCheckpointerConfig(CheckpointerConfig):
         # Retrieve using appropriate method
         if isinstance(checkpointer, SupabaseSaver):
             return checkpointer.get(config)
-        elif hasattr(checkpointer, "get"):
+        if hasattr(checkpointer, "get"):
             result = checkpointer.get(config)
 
             # Extract channel_values if available
@@ -1246,10 +1224,9 @@ class SupabaseCheckpointerConfig(CheckpointerConfig):
         return None
 
     def list_checkpoints(
-        self, config: Dict[str, Any], limit: Optional[int] = None
-    ) -> List[Tuple[Dict[str, Any], Any]]:
-        """
-        List checkpoints for a thread.
+        self, config: dict[str, Any], limit: int | None = None
+    ) -> list[tuple[dict[str, Any], Any]]:
+        """List checkpoints for a thread.
 
         Args:
             config: Configuration with thread_id
@@ -1264,19 +1241,18 @@ class SupabaseCheckpointerConfig(CheckpointerConfig):
         if isinstance(checkpointer, SupabaseSaver):
             checkpoint_tuples = checkpointer.list(config, limit=limit)
             return [(cp.config, cp.checkpoint) for cp in checkpoint_tuples]
-        elif hasattr(checkpointer, "list"):
+        if hasattr(checkpointer, "list"):
             try:
                 checkpoint_tuples = list(checkpointer.list(config, limit=limit))
                 return [(cp.config, cp.checkpoint) for cp in checkpoint_tuples]
             except Exception as e:
-                logger.error(f"Error listing checkpoints: {e}")
+                logger.exception(f"Error listing checkpoints: {e}")
                 return []
 
         return []
 
     def close(self) -> None:
-        """
-        Close any resources associated with this checkpointer.
+        """Close any resources associated with this checkpointer.
 
         This is a no-op for Supabase as HTTP clients don't need explicit closing.
         """

@@ -7,11 +7,10 @@ state handling and dynamic agent execution without graph rebuilding.
 import logging
 from typing import Any, Dict, List, Optional, Union
 
+from haive.agents.react.agent import ReactAgent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 from pydantic import Field
-
-from haive.agents.react.agent import ReactAgent
 
 from .dynamic_executor_node import create_dynamic_executor_node
 from .dynamic_state import DynamicSupervisorState
@@ -30,10 +29,10 @@ class ProperDynamicSupervisor(ReactAgent):
     """
 
     # Agent registry - stores actual agent instances
-    _agent_registry: Dict[str, Any] = Field(default_factory=dict, exclude=True)
+    _agent_registry: dict[str, Any] = Field(default_factory=dict, exclude=True)
 
     # Capability descriptions for routing decisions
-    _agent_capabilities: Dict[str, str] = Field(default_factory=dict, exclude=True)
+    _agent_capabilities: dict[str, str] = Field(default_factory=dict, exclude=True)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -41,7 +40,7 @@ class ProperDynamicSupervisor(ReactAgent):
         self._agent_capabilities = {}
 
     def register_agent(
-        self, agent: Any, capability: str = None, agent_name: str = None
+        self, agent: Any, capability: str | None = None, agent_name: str | None = None
     ) -> bool:
         """Register an agent for dynamic execution.
 
@@ -125,9 +124,8 @@ class ProperDynamicSupervisor(ReactAgent):
     def _create_supervisor_node(self):
         """Create the supervisor decision node."""
 
-        async def supervisor_node(state: Union[Dict[str, Any], Any]) -> Dict[str, Any]:
+        async def supervisor_node(state: dict[str, Any] | Any) -> dict[str, Any]:
             """Supervisor decides which agent to execute next."""
-
             logger.info("=" * 60)
             logger.info("SUPERVISOR NODE")
             logger.info("=" * 60)
@@ -145,7 +143,7 @@ class ProperDynamicSupervisor(ReactAgent):
                 state_dict = state.model_dump()
                 # Preserve messages
                 if hasattr(state, "messages"):
-                    state_dict["messages"] = getattr(state, "messages")
+                    state_dict["messages"] = state.messages
             else:
                 state_dict = state if isinstance(state, dict) else {"value": state}
 
@@ -185,13 +183,12 @@ class ProperDynamicSupervisor(ReactAgent):
             if target_agent:
                 logger.info(f"Selected agent: {target_agent}")
                 return {"target_agent": target_agent, "complete": False}
-            else:
-                logger.info("No suitable agent found")
-                return {"complete": True}
+            logger.info("No suitable agent found")
+            return {"complete": True}
 
         return supervisor_node
 
-    def _select_agent(self, content: str, available_agents: List[str]) -> Optional[str]:
+    def _select_agent(self, content: str, available_agents: list[str]) -> str | None:
         """Select the best agent for the given content.
 
         This is a simple implementation - can be enhanced with:
@@ -231,9 +228,8 @@ class ProperDynamicSupervisor(ReactAgent):
         # Default to first available agent
         return available_agents[0] if available_agents else None
 
-    def _route_supervisor(self, state: Union[Dict[str, Any], Any]) -> str:
+    def _route_supervisor(self, state: dict[str, Any] | Any) -> str:
         """Route from supervisor node."""
-
         # Convert state if needed
         if hasattr(state, "model_dump"):
             state_dict = state.model_dump()
@@ -248,11 +244,11 @@ class ProperDynamicSupervisor(ReactAgent):
 
         return "END"
 
-    def get_registered_agents(self) -> List[str]:
+    def get_registered_agents(self) -> list[str]:
         """Get list of registered agent names."""
         return list(self._agent_registry.keys())
 
-    def get_agent_capabilities(self) -> Dict[str, str]:
+    def get_agent_capabilities(self) -> dict[str, str]:
         """Get agent capabilities descriptions."""
         return self._agent_capabilities.copy()
 
@@ -264,20 +260,19 @@ if __name__ == "__main__":
     class MockAgent:
         """Simple mock agent for testing."""
 
-        def __init__(self, name: str, response_prefix: str = None):
+        def __init__(self, name: str, response_prefix: str | None = None):
             self.name = name
             self.response_prefix = response_prefix or f"{name} response"
 
-        async def ainvoke(self, state: Dict[str, Any], config=None) -> Dict[str, Any]:
+        async def ainvoke(self, state: dict[str, Any], config=None) -> dict[str, Any]:
             messages = state.get("messages", [])
             response = AIMessage(
                 content=f"{self.response_prefix}: Processed your request"
             )
-            return {"messages": messages + [response]}
+            return {"messages": [*messages, response]}
 
     async def test_proper_dynamic_supervisor():
         """Test the proper dynamic supervisor."""
-
         # Create supervisor
         supervisor = ProperDynamicSupervisor(name="proper_supervisor")
 
@@ -292,11 +287,9 @@ if __name__ == "__main__":
         )
 
         # Test execution
-        result = await supervisor.ainvoke(
+        await supervisor.ainvoke(
             {"messages": [HumanMessage(content="Research AI trends")]}
         )
-
-        print(f"Result: {result}")
 
         # Add more agents dynamically (no graph rebuild!)
         supervisor.register_agent(
@@ -304,10 +297,8 @@ if __name__ == "__main__":
         )
 
         # Test with new agent
-        result = await supervisor.ainvoke(
+        await supervisor.ainvoke(
             {"messages": [HumanMessage(content="Calculate 15 + 27")]}
         )
-
-        print(f"Result after adding agent: {result}")
 
     asyncio.run(test_proper_dynamic_supervisor())

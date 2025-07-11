@@ -4,7 +4,7 @@ from pydantic import Field
 
 
 def retrieve(state):
-    """Retrieve documents
+    """Retrieve documents.
 
     Args:
         state (dict): The current graph state
@@ -12,7 +12,6 @@ def retrieve(state):
     Returns:
         state (dict): New key added to state, documents, that contains retrieved documents
     """
-    print("---RETRIEVE---")
     question = state["question"]
 
     # Retrieval
@@ -21,7 +20,7 @@ def retrieve(state):
 
 
 def generate(state):
-    """Generate answer
+    """Generate answer.
 
     Args:
         state (dict): The current graph state
@@ -29,7 +28,6 @@ def generate(state):
     Returns:
         state (dict): New key added to state, generation, that contains LLM generation
     """
-    print("---GENERATE---")
     question = state["question"]
     documents = state["documents"]
 
@@ -47,7 +45,6 @@ def grade_documents(state):
     Returns:
         state (dict): Updates documents key with only filtered relevant documents
     """
-    print("---CHECK DOCUMENT RELEVANCE TO QUESTION---")
     question = state["question"]
     documents = state["documents"]
 
@@ -59,10 +56,8 @@ def grade_documents(state):
         )
         grade = score.binary_score
         if grade == "yes":
-            print("---GRADE: DOCUMENT RELEVANT---")
             filtered_docs.append(d)
         else:
-            print("---GRADE: DOCUMENT NOT RELEVANT---")
             continue
     return {"documents": filtered_docs, "question": question}
 
@@ -76,7 +71,6 @@ def transform_query(state):
     Returns:
         state (dict): Updates question key with a re-phrased question
     """
-    print("---TRANSFORM QUERY---")
     question = state["question"]
     documents = state["documents"]
 

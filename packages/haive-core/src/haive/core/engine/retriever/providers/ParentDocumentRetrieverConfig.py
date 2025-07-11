@@ -1,5 +1,4 @@
-"""
-Parent Document Retriever implementation for the Haive framework.
+"""Parent Document Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Parent Document retriever,
 which retrieves small chunks for embedding similarity but returns larger parent
@@ -33,8 +32,7 @@ from haive.core.engine.vectorstore.vectorstore import VectorStoreConfig
 
 @BaseRetrieverConfig.register(RetrieverType.PARENT_DOCUMENT)
 class ParentDocumentRetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for Parent Document retriever in the Haive framework.
+    """Configuration for Parent Document retriever in the Haive framework.
 
     This retriever retrieves small chunks for similarity search but returns larger
     parent documents, providing better context while maintaining search precision.
@@ -86,7 +84,7 @@ class ParentDocumentRetrieverConfig(BaseRetrieverConfig):
         description="Type of document store for parent documents: 'in_memory', 'file_system'",
     )
 
-    docstore_path: Optional[str] = Field(
+    docstore_path: str | None = Field(
         default=None,
         description="Path for file system document store (required if docstore_type='file_system')",
     )
@@ -112,7 +110,7 @@ class ParentDocumentRetrieverConfig(BaseRetrieverConfig):
     )
 
     @validator("docstore_type")
-    def validate_docstore_type(cls, v):
+    def validate_docstore_type(self, v):
         """Validate document store type."""
         valid_types = ["in_memory", "file_system"]
         if v not in valid_types:
@@ -120,7 +118,7 @@ class ParentDocumentRetrieverConfig(BaseRetrieverConfig):
         return v
 
     @validator("child_chunk_overlap")
-    def validate_child_chunk_overlap(cls, v, values):
+    def validate_child_chunk_overlap(self, v, values):
         """Validate that child chunk overlap is less than chunk size."""
         chunk_size = values.get("child_chunk_size", 200)
         if v >= chunk_size:
@@ -130,7 +128,7 @@ class ParentDocumentRetrieverConfig(BaseRetrieverConfig):
         return v
 
     @validator("docstore_path")
-    def validate_docstore_path(cls, v, values):
+    def validate_docstore_path(self, v, values):
         """Validate docstore path is provided when needed."""
         docstore_type = values.get("docstore_type", "")
         if docstore_type == "file_system" and not v:
@@ -139,17 +137,17 @@ class ParentDocumentRetrieverConfig(BaseRetrieverConfig):
             )
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Parent Document retriever."""
         return {
             "query": (str, Field(description="Query for parent document retrieval")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Parent Document retriever."""
         return {
             "documents": (
-                List[Any],  # List[Document] but avoiding import
+                list[Any],  # List[Document] but avoiding import
                 Field(
                     default_factory=list,
                     description="Parent documents of retrieved child chunks",
@@ -158,8 +156,7 @@ class ParentDocumentRetrieverConfig(BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a Parent Document retriever from this configuration.
+        """Create a Parent Document retriever from this configuration.
 
         Returns:
             ParentDocumentRetriever: Instantiated retriever ready for parent document retrieval.

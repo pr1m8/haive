@@ -13,14 +13,15 @@ import sys
 import time
 
 import httpx
-from haive.core.schema.schema_composer import SchemaComposer
-from haive.core.utils.pydantic_utils import display_code, pretty_print
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import StructuredTool, Tool
 from langgraph.pregel import RetryPolicy
 from pydantic import BaseModel, Field
 
 from haive.agents.react_class.react_v3.agent import ReactAgent
+from haive.core.schema.schema_composer import SchemaComposer
+from haive.core.utils.pydantic_utils import display_code, pretty_print
+
 
 # Configure logging
 logging.basicConfig(
@@ -34,7 +35,7 @@ logger = logging.getLogger("react_agent_test")
 
 # Define a simple tool
 def get_current_weather(location: str) -> str:
-    """Get the current weather in a given location"""
+    """Get the current weather in a given location."""
     # Simulate API delay
     time.sleep(0.5)
 
@@ -122,18 +123,12 @@ def test_basic_react_agent():
     )
 
     # Print information about the agent
-    print("\n===== Basic ReactAgent Info =====")
-    print(f"Agent Name: {agent.config.name}")
-    print(f"Number of Tools: {len(agent.config.tools)}")
-    print(f"Tools: {[tool.name for tool in agent.config.tools]}")
 
     # Run the agent
     query = "What's the weather in New York and can you also search for information about climate change?"
-    print(f"\nQuery: {query}")
 
     result = agent.run(query)
 
-    print("\n===== Agent Result =====")
     pretty_print(result, "Agent Result")
 
     return agent
@@ -164,26 +159,19 @@ def test_structured_tool_agent():
     )
 
     # Show schema information
-    print("\n===== Structured Tool Agent Schemas =====")
     schema_composer = SchemaComposer.from_components(
-        [agent.config.engine] + agent.config.tools
+        [agent.config.engine, *agent.config.tools]
     )
-    state_schema = schema_composer.build()
-
-    print(f"State Schema: {state_schema.__name__}")
-    print(f"Fields: {list(state_schema.model_fields.keys())}")
+    schema_composer.build()
 
     # Display calculator tool schema
-    print("\n===== Calculator Tool Schema =====")
     display_code(Calculator, "Calculator Schema")
 
     # Run the agent with a calculation request
     query = "Can you add 24.5 and 17.8, and then tell me the weather in Seattle?"
-    print(f"\nQuery: {query}")
 
     result = agent.run(query)
 
-    print("\n===== Agent Result with Structured Tool =====")
     pretty_print(result, "Agent Result")
 
     return agent
@@ -218,28 +206,19 @@ def test_retry_policy():
     )
 
     # Print retry policy details
-    print("\n===== Retry Policy Details =====")
-    print(f"Initial Interval: {retry_policy.initial_interval}s")
-    print(f"Backoff Factor: {retry_policy.backoff_factor}x")
-    print(f"Max Interval: {retry_policy.max_interval}s")
-    print(f"Max Attempts: {retry_policy.max_attempts}")
 
     # Print interval progression
-    print("\nRetry Interval Progression (without jitter):")
     interval = retry_policy.initial_interval
-    for i in range(1, retry_policy.max_attempts):
-        print(f"Retry {i}: {interval:.2f}s")
+    for _i in range(1, retry_policy.max_attempts):
         interval = min(
             interval * retry_policy.backoff_factor, retry_policy.max_interval
         )
 
     # Run the agent
     query = "Can you search for information about quantum computing?"
-    print(f"\nQuery: {query}")
 
     result = agent.run(query)
 
-    print("\n===== Agent Result with Retry Policy =====")
     pretty_print(result, "Agent Result")
 
     return agent
@@ -274,7 +253,6 @@ def test_multi_turn_conversation():
 
     # First turn
     query1 = "What's the weather in Miami?"
-    print(f"\nUser: {query1}")
 
     messages.append(HumanMessage(content=query1))
     result1 = agent.run(messages)
@@ -283,20 +261,16 @@ def test_multi_turn_conversation():
     messages = result1.get("messages", [])
 
     # Print intermediate result
-    print("\n===== First Turn Result =====")
     for msg in messages[-2:]:  # Show AI response and potential tool message
-        msg_type = type(msg).__name__
-        print(f"{msg_type}: {msg.content}")
+        type(msg).__name__
 
     # Second turn
     query2 = "Can you multiply 15 by 7?"
-    print(f"\nUser: {query2}")
 
     messages.append(HumanMessage(content=query2))
     result2 = agent.run(messages)
 
     # Print final result
-    print("\n===== Multi-turn Conversation Result =====")
     pretty_print(result2, "Final Result")
 
     return agent, result2
@@ -304,18 +278,10 @@ def test_multi_turn_conversation():
 
 def test_all():
     """Run all ReactAgent tests."""
-    print("\n\n" + "=" * 50)
-    print("RUNNING REACT AGENT TESTS")
-    print("=" * 50 + "\n")
-
     test_basic_react_agent()
     test_structured_tool_agent()
     test_retry_policy()
     test_multi_turn_conversation()
-
-    print("\n\n" + "=" * 50)
-    print("ALL TESTS COMPLETED")
-    print("=" * 50 + "\n")
 
 
 if __name__ == "__main__":

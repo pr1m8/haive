@@ -10,8 +10,8 @@ class MockLLM:
 
     def __init__(
         self,
-        responses: list[str] = None,
-        response_map: dict[str, str] = None,
+        responses: list[str] | None = None,
+        response_map: dict[str, str] | None = None,
         default_response: str = "This is a test response from MockLLM.",
     ):
         """Initialize the MockLLM.
@@ -148,8 +148,8 @@ class MockEngineBuilder:
 
     @staticmethod
     def create_mock_llm_config(
-        responses: list[str] = None,
-        response_map: dict[str, str] = None,
+        responses: list[str] | None = None,
+        response_map: dict[str, str] | None = None,
         default_response: str = "This is a test response.",
         system_message: str = "You are a test assistant.",
     ):

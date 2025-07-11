@@ -16,6 +16,7 @@ from typing import (
     get_origin,
 )
 
+from haive.core.schema.state_schema import StateSchema
 from langchain_core.runnables import RunnableConfig
 from langgraph.types import Command, Send
 from pydantic import (
@@ -28,8 +29,6 @@ from pydantic import (
     model_validator,
 )
 from typing_extensions import TypedDict
-
-from haive.core.schema.state_schema import StateSchema
 
 # Define a callable type alias more precisely
 # Command destination types for better type checking

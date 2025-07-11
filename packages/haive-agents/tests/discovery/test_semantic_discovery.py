@@ -9,7 +9,6 @@ from typing import Any, Dict, List, Optional
 from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
-
 from haive.agents.discovery.semantic_discovery import (
     CapabilityMatcher,
     ComponentMetadata,
@@ -164,7 +163,7 @@ class TestCapabilityMatcher:
 class MockEmbeddingProvider:
     """Mock embedding provider for testing."""
 
-    def embed_text(self, text: str) -> List[float]:
+    def embed_text(self, text: str) -> list[float]:
         """Mock text embedding."""
         # Simple hash-based embedding for testing
         import hashlib
@@ -174,7 +173,7 @@ class MockEmbeddingProvider:
         hash_bytes = hash_obj.digest()
         return [float(b) / 255.0 for b in hash_bytes[:10]]  # 10-dimensional embedding
 
-    def embed_texts(self, texts: List[str]) -> List[List[float]]:
+    def embed_texts(self, texts: list[str]) -> list[list[float]]:
         """Mock multiple text embeddings."""
         return [self.embed_text(text) for text in texts]
 
@@ -190,7 +189,7 @@ class MockVectorStore:
         """Mock add documents."""
         self.documents.extend(documents)
 
-    def similarity_search(self, query: str, k: int = 5, filter=None) -> List:
+    def similarity_search(self, query: str, k: int = 5, filter=None) -> list:
         """Mock similarity search."""
         # Simple mock that returns documents based on keyword matching
         query_words = set(query.lower().split())
@@ -206,7 +205,7 @@ class MockVectorStore:
         scored_docs.sort(key=lambda x: x[1], reverse=True)
         return [doc for doc, _ in scored_docs[:k]]
 
-    def similarity_search_with_score(self, query: str, k: int = 5, filter=None) -> List:
+    def similarity_search_with_score(self, query: str, k: int = 5, filter=None) -> list:
         """Mock similarity search with scores."""
         query_words = set(query.lower().split())
 
@@ -309,7 +308,8 @@ class TestVectorBasedToolSelector:
     def test_diverse_tool_selection(self):
         """Test diverse tool selection to avoid redundancy."""
         # Add similar tools to test diversity
-        similar_components = self.test_components + [
+        similar_components = [
+            *self.test_components,
             ComponentMetadata(
                 name="alternative_search",
                 description="Alternative web search engine",

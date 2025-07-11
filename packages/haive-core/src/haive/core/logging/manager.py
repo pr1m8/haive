@@ -1,7 +1,6 @@
 # src/haive/core/logging/manager.py
 
-"""
-Central logging manager for the Haive framework.
+"""Central logging manager for the Haive framework.
 
 Manages Rich console output, file logging, and project-wide configuration.
 """
@@ -9,8 +8,10 @@ Manages Rich console output, file logging, and project-wide configuration.
 import logging
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, Optional, Union
+from typing import Any, Optional
 
+from haive.core.logging.formatters import FileFormatter, RichFormatter
+from haive.core.logging.handlers import RichConsoleHandler, RotatingFileHandler
 from rich.console import Console
 from rich.logging import RichHandler
 from rich.panel import Panel
@@ -18,13 +19,9 @@ from rich.text import Text
 from rich.theme import Theme
 from rich.traceback import install as install_rich_traceback
 
-from haive.core.logging.formatters import FileFormatter, RichFormatter
-from haive.core.logging.handlers import RichConsoleHandler, RotatingFileHandler
-
 
 class LoggingManager:
-    """
-    Central manager for all logging in the Haive framework.
+    """Central manager for all logging in the Haive framework.
 
     Provides Rich-based console logging, file logging, and project-wide configuration.
     """
@@ -42,14 +39,14 @@ class LoggingManager:
 
         # Logging configuration
         self.log_level = logging.INFO
-        self.log_dir: Optional[Path] = None
+        self.log_dir: Path | None = None
         self.file_logging_enabled = True
         self.console_logging_enabled = True
         self.rich_tracebacks_enabled = True
 
         # Component loggers
-        self.loggers: Dict[str, logging.Logger] = {}
-        self.handlers: Dict[str, logging.Handler] = {}
+        self.loggers: dict[str, logging.Logger] = {}
+        self.handlers: dict[str, logging.Handler] = {}
 
         # Initialize
         self._setup_rich_tracebacks()
@@ -113,7 +110,7 @@ class LoggingManager:
         root_indicators = ["pyproject.toml", ".git", "haive", "packages"]
 
         # Walk up the directory tree
-        for parent in [current_path] + list(current_path.parents):
+        for parent in [current_path, *list(current_path.parents)]:
             if any((parent / indicator).exists() for indicator in root_indicators):
                 self.project_root = parent
                 self.log_dir = parent / "logs"
@@ -128,15 +125,14 @@ class LoggingManager:
 
     def setup_project_logging(
         self,
-        level: Union[int, str] = logging.INFO,
-        log_dir: Optional[Union[str, Path]] = None,
+        level: int | str = logging.INFO,
+        log_dir: str | Path | None = None,
         console_output: bool = True,
         file_output: bool = True,
         rich_tracebacks: bool = True,
         component_subdirs: bool = True,
     ) -> None:
-        """
-        Setup project-wide logging configuration.
+        """Setup project-wide logging configuration.
 
         Args:
             level: Logging level
@@ -211,7 +207,7 @@ class LoggingManager:
         return handler
 
     def _create_file_handler(
-        self, component: str, filename: Optional[str] = None
+        self, component: str, filename: str | None = None
     ) -> RotatingFileHandler:
         """Create rotating file handler for a component."""
         if not filename:
@@ -248,10 +244,9 @@ class LoggingManager:
         return handler
 
     def get_logger(
-        self, name: str, component: Optional[str] = None, file_logging: bool = True
+        self, name: str, component: str | None = None, file_logging: bool = True
     ) -> logging.Logger:
-        """
-        Get or create a logger for a specific component.
+        """Get or create a logger for a specific component.
 
         Args:
             name: Logger name (usually module name)
@@ -292,15 +287,15 @@ class LoggingManager:
 
         if "agent" in name_lower:
             return "agent"
-        elif "engine" in name_lower:
+        if "engine" in name_lower:
             return "engine"
-        elif "graph" in name_lower:
+        if "graph" in name_lower:
             return "graph"
-        elif "tool" in name_lower:
+        if "tool" in name_lower:
             return "tool"
-        elif "game" in name_lower:
+        if "game" in name_lower:
             return "game"
-        elif "core" in name_lower:
+        if "core" in name_lower:
             return "core"
         else:
             return "general"
@@ -348,7 +343,7 @@ class LoggingManager:
         operation: str,
         duration: float,
         component: str = "System",
-        details: Optional[Dict[str, Any]] = None,
+        details: dict[str, Any] | None = None,
     ) -> None:
         """Log performance information with Rich formatting."""
         perf_text = Text()
@@ -366,7 +361,7 @@ class LoggingManager:
         self.console.print(perf_text)
 
     def log_error_with_context(
-        self, error: Exception, context: Dict[str, Any], component: str = "System"
+        self, error: Exception, context: dict[str, Any], component: str = "System"
     ) -> None:
         """Log error with rich context information."""
         error_text = Text()
@@ -411,7 +406,7 @@ class LoggingManager:
 
 
 # Global instance
-_logging_manager: Optional[LoggingManager] = None
+_logging_manager: LoggingManager | None = None
 
 
 def get_logging_manager() -> LoggingManager:

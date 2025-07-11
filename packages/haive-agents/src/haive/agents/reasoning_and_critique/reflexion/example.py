@@ -2,8 +2,6 @@
 
 # def main():
 # """Main function to run the Reflexion agent."""
-# config = ReflexionConfig()
-# agent = ReflexionAgent(config)
 # agent.run("""
 # You are an ai ethiciist who believes that ai agents should be able to reason about their own actions and decisions.
 # You believe that ai agents should be able to reason about their own actions and decisions.
@@ -41,4 +39,3 @@
 # YOU are writing this from your perspective as an ai ethiciist, and you are writing this as a manifesto against the use of ai agents.
 # """)
 # if __name__ == "__main__":
-#    main()

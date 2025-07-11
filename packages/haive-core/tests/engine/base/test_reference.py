@@ -11,7 +11,7 @@ from haive.core.engine.base.reference import ComponentRef
 class TestRunnable:
     """Test runnable for reference testing."""
 
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config: dict[str, Any]):
         self.config = config
 
     def invoke(self, input_data: Any, **kwargs):

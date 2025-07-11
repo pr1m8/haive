@@ -1,4 +1,4 @@
-"""Speculative RAG Agents
+"""Speculative RAG Agents.
 
 Implementation of speculative RAG with parallel hypothesis generation and verification.
 Uses structured output models for hypothesis planning and iterative refinement.
@@ -9,6 +9,10 @@ import logging
 from enum import Enum
 from typing import Any, Dict, List, Optional, Union
 
+from haive.agents.base.agent import Agent
+from haive.agents.multi.base import ParallelAgent, SequentialAgent
+from haive.agents.rag.base.agent import BaseRAGAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
@@ -16,11 +20,6 @@ from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field, validator
-
-from haive.agents.base.agent import Agent
-from haive.agents.multi.base import ParallelAgent, SequentialAgent
-from haive.agents.rag.base.agent import BaseRAGAgent
-from haive.agents.simple.agent import SimpleAgent
 
 logger = logging.getLogger(__name__)
 
@@ -59,27 +58,27 @@ class Hypothesis(BaseModel):
 
     # Supporting information
     reasoning: str = Field(description="Reasoning behind hypothesis")
-    key_assumptions: List[str] = Field(description="Key assumptions made")
-    supporting_evidence: List[str] = Field(description="Initial supporting evidence")
+    key_assumptions: list[str] = Field(description="Key assumptions made")
+    supporting_evidence: list[str] = Field(description="Initial supporting evidence")
 
     # Verification planning
-    verification_criteria: List[str] = Field(
+    verification_criteria: list[str] = Field(
         description="How to verify this hypothesis"
     )
-    required_evidence: List[str] = Field(description="Evidence needed for verification")
+    required_evidence: list[str] = Field(description="Evidence needed for verification")
     verification_complexity: str = Field(
         description="Complexity of verification process"
     )
 
     # Processing metadata
     generation_method: str = Field(description="How this hypothesis was generated")
-    related_hypotheses: List[str] = Field(description="IDs of related hypotheses")
+    related_hypotheses: list[str] = Field(description="IDs of related hypotheses")
 
     # Verification results (updated during verification)
     verification_status: VerificationStatus = Field(default=VerificationStatus.PENDING)
-    verification_score: Optional[float] = Field(default=None, ge=0.0, le=1.0)
-    verification_evidence: List[str] = Field(default_factory=list)
-    verification_reasoning: Optional[str] = Field(default=None)
+    verification_score: float | None = Field(default=None, ge=0.0, le=1.0)
+    verification_evidence: list[str] = Field(default_factory=list)
+    verification_reasoning: str | None = Field(default=None)
 
 
 class SpeculativeExecutionPlan(BaseModel):
@@ -114,7 +113,7 @@ class SpeculativeExecutionPlan(BaseModel):
     )
     refinement_enabled: bool = Field(description="Whether to refine hypotheses")
 
-    execution_metadata: Dict[str, Any] = Field(
+    execution_metadata: dict[str, Any] = Field(
         description="Additional execution parameters"
     )
 
@@ -126,11 +125,11 @@ class SpeculativeResult(BaseModel):
     total_hypotheses_generated: int = Field(description="Total hypotheses created")
 
     # Hypothesis outcomes
-    verified_hypotheses: List[Hypothesis] = Field(
+    verified_hypotheses: list[Hypothesis] = Field(
         description="Successfully verified hypotheses"
     )
-    refuted_hypotheses: List[Hypothesis] = Field(description="Refuted hypotheses")
-    inconclusive_hypotheses: List[Hypothesis] = Field(
+    refuted_hypotheses: list[Hypothesis] = Field(description="Refuted hypotheses")
+    inconclusive_hypotheses: list[Hypothesis] = Field(
         description="Inconclusive hypotheses"
     )
 
@@ -149,17 +148,17 @@ class SpeculativeResult(BaseModel):
     consensus_level: float = Field(
         ge=0.0, le=1.0, description="Agreement between hypotheses"
     )
-    conflicting_evidence: List[str] = Field(description="Identified conflicts")
-    confidence_distribution: Dict[str, int] = Field(
+    conflicting_evidence: list[str] = Field(description="Identified conflicts")
+    confidence_distribution: dict[str, int] = Field(
         description="Distribution of confidence levels"
     )
 
     # Final synthesis
     synthesized_answer: str = Field(description="Final synthesized answer")
-    key_insights: List[str] = Field(description="Key insights discovered")
-    limitations: List[str] = Field(description="Identified limitations")
+    key_insights: list[str] = Field(description="Key insights discovered")
+    limitations: list[str] = Field(description="Identified limitations")
 
-    processing_metadata: Dict[str, Any] = Field(
+    processing_metadata: dict[str, Any] = Field(
         description="Processing statistics and metadata"
     )
 
@@ -345,7 +344,7 @@ class HypothesisGeneratorAgent(Agent):
 
     def __init__(
         self,
-        llm_config: Optional[LLMConfig] = None,
+        llm_config: LLMConfig | None = None,
         num_hypotheses: int = 5,
         hypothesis_diversity: str = "high",
         **kwargs,
@@ -375,11 +374,11 @@ class HypothesisGeneratorAgent(Agent):
         generation_engine = AugLLMConfig(
             llm_config=self.llm_config,
             prompt_template=HYPOTHESIS_GENERATION_PROMPT,
-            structured_output_model=List[Hypothesis],
+            structured_output_model=list[Hypothesis],
             output_key="hypotheses",
         )
 
-        def generate_hypotheses(state: Dict[str, Any]) -> Dict[str, Any]:
+        def generate_hypotheses(state: dict[str, Any]) -> dict[str, Any]:
             """Generate multiple hypotheses for the query."""
             query = getattr(state, "query", "")
             context = getattr(state, "context", "") or getattr(
@@ -467,8 +466,8 @@ class ParallelVerificationAgent(Agent):
 
     def __init__(
         self,
-        documents: List[Document],
-        llm_config: Optional[LLMConfig] = None,
+        documents: list[Document],
+        llm_config: LLMConfig | None = None,
         verification_depth: str = "thorough",
         **kwargs,
     ):
@@ -499,14 +498,14 @@ class ParallelVerificationAgent(Agent):
         graph = BaseGraph(name="ParallelVerifier")
 
         # Create verification engine
-        verification_engine = AugLLMConfig(
+        AugLLMConfig(
             llm_config=self.llm_config,
             prompt_template=HYPOTHESIS_VERIFICATION_PROMPT,
             structured_output_model=Hypothesis,  # Returns updated hypothesis
             output_key="verified_hypothesis",
         )
 
-        def verify_hypotheses_parallel(state: Dict[str, Any]) -> Dict[str, Any]:
+        def verify_hypotheses_parallel(state: dict[str, Any]) -> dict[str, Any]:
             """Verify hypotheses in parallel batches."""
             hypotheses = getattr(state, "hypotheses", [])
             query = getattr(state, "query", "")
@@ -566,8 +565,8 @@ class ParallelVerificationAgent(Agent):
         return graph
 
     def _verify_hypothesis_batch(
-        self, hypotheses: List[Hypothesis], query: str
-    ) -> Dict[str, Hypothesis]:
+        self, hypotheses: list[Hypothesis], query: str
+    ) -> dict[str, Hypothesis]:
         """Verify a batch of hypotheses."""
         results = {}
 
@@ -589,7 +588,7 @@ class ParallelVerificationAgent(Agent):
                 # Mark as inconclusive on error
                 hypothesis.verification_status = VerificationStatus.INCONCLUSIVE
                 hypothesis.verification_reasoning = (
-                    f"Verification failed due to error: {str(e)}"
+                    f"Verification failed due to error: {e!s}"
                 )
                 results[hypothesis.id] = hypothesis
 
@@ -667,7 +666,7 @@ class ParallelVerificationAgent(Agent):
             logger.warning(f"Hypothesis verification failed: {e}")
             # Return original with inconclusive status
             hypothesis.verification_status = VerificationStatus.INCONCLUSIVE
-            hypothesis.verification_reasoning = f"Verification error: {str(e)}"
+            hypothesis.verification_reasoning = f"Verification error: {e!s}"
             return hypothesis
 
 
@@ -677,8 +676,8 @@ class SpeculativeRAGAgent(SequentialAgent):
     @classmethod
     def from_documents(
         cls,
-        documents: List[Document],
-        llm_config: Optional[LLMConfig] = None,
+        documents: list[Document],
+        llm_config: LLMConfig | None = None,
         num_hypotheses: int = 5,
         verification_depth: str = "thorough",
         **kwargs,
@@ -737,8 +736,8 @@ class SpeculativeRAGAgent(SequentialAgent):
 
 # Factory function
 def create_speculative_rag_agent(
-    documents: List[Document],
-    llm_config: Optional[LLMConfig] = None,
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
     speculation_mode: str = "balanced",
     **kwargs,
 ) -> SpeculativeRAGAgent:
@@ -770,7 +769,7 @@ def create_speculative_rag_agent(
 
 
 # I/O schema for compatibility
-def get_speculative_rag_io_schema() -> Dict[str, List[str]]:
+def get_speculative_rag_io_schema() -> dict[str, list[str]]:
     """Get I/O schema for Speculative RAG agents."""
     return {
         "inputs": ["query", "context", "messages"],

@@ -15,10 +15,11 @@ import json
 import logging
 from typing import Any, Dict, Optional
 
+
 logger = logging.getLogger(__name__)
 
 
-def serialize_metadata(metadata: Dict[str, Any]) -> str:
+def serialize_metadata(metadata: dict[str, Any]) -> str:
     """Serialize metadata dictionary to JSON string.
 
     Args:
@@ -30,7 +31,7 @@ def serialize_metadata(metadata: Dict[str, Any]) -> str:
     return json.dumps(metadata)
 
 
-def deserialize_metadata(metadata_str: str) -> Dict[str, Any]:
+def deserialize_metadata(metadata_str: str) -> dict[str, Any]:
     """Deserialize metadata from JSON string to dictionary.
 
     Args:
@@ -42,7 +43,7 @@ def deserialize_metadata(metadata_str: str) -> Dict[str, Any]:
     return json.loads(metadata_str) if metadata_str else {}
 
 
-def ensure_pool_open(checkpointer: Any) -> Optional[Any]:
+def ensure_pool_open(checkpointer: Any) -> Any | None:
     """Ensure that a PostgreSQL connection pool is properly opened.
 
     This function checks if a checkpointer has an associated connection pool
@@ -90,12 +91,12 @@ def ensure_pool_open(checkpointer: Any) -> Optional[Any]:
         try:
             checkpointer.setup()
         except Exception as e:
-            logger.error(f"Error setting up checkpointer: {e}")
+            logger.exception(f"Error setting up checkpointer: {e}")
 
     return None
 
 
-async def ensure_async_pool_open(checkpointer: Any) -> Optional[Any]:
+async def ensure_async_pool_open(checkpointer: Any) -> Any | None:
     """Ensure that an async PostgreSQL connection pool is properly opened.
 
     This asynchronous function checks if an async checkpointer has an associated
@@ -158,9 +159,9 @@ async def ensure_async_pool_open(checkpointer: Any) -> Optional[Any]:
                                 opened_pool = conn
                                 logger.info("Successfully opened async pool")
                             except Exception as e:
-                                logger.error(f"Error opening async pool: {e}")
+                                logger.exception(f"Error opening async pool: {e}")
                     except Exception as e:
-                        logger.error(f"Error checking if async pool is open: {e}")
+                        logger.exception(f"Error checking if async pool is open: {e}")
             except ImportError:
                 logger.debug("psycopg_pool AsyncPool not available")
 
@@ -172,21 +173,19 @@ async def ensure_async_pool_open(checkpointer: Any) -> Optional[Any]:
             try:
                 await checkpointer.setup()
             except Exception as e:
-                logger.error(f"Error setting up async checkpointer: {e}")
+                logger.exception(f"Error setting up async checkpointer: {e}")
 
     except Exception as e:
-        logger.error(f"Error ensuring async pool is open: {e}")
+        logger.exception(f"Error ensuring async pool is open: {e}")
 
     return opened_pool
 
 
 # In utils.py
 def register_thread(
-    checkpointer: Any, thread_id: str, metadata: Optional[Dict[str, Any]] = None
+    checkpointer: Any, thread_id: str, metadata: dict[str, Any] | None = None
 ) -> bool:
-    """
-    Register a thread in the PostgreSQL database if needed.
-    """
+    """Register a thread in the PostgreSQL database if needed."""
     try:
         if hasattr(checkpointer, "conn"):
             pool = checkpointer.conn
@@ -195,23 +194,22 @@ def register_thread(
                 ensure_pool_open(checkpointer)
 
                 # Register the thread
-                with pool.connection() as conn:
-                    with conn.cursor() as cursor:
-                        # Check if threads table exists
-                        cursor.execute(
-                            """
+                with pool.connection() as conn, conn.cursor() as cursor:
+                    # Check if threads table exists
+                    cursor.execute(
+                        """
                             SELECT EXISTS (
-                                SELECT FROM information_schema.tables 
+                                SELECT FROM information_schema.tables
                                 WHERE table_name = 'threads'
                             );
                         """
-                        )
-                        table_exists = cursor.fetchone()[0]
+                    )
+                    table_exists = cursor.fetchone()[0]
 
-                        if not table_exists:
-                            logger.debug("Creating threads table")
-                            cursor.execute(
-                                """
+                    if not table_exists:
+                        logger.debug("Creating threads table")
+                        cursor.execute(
+                            """
                                 CREATE TABLE IF NOT EXISTS threads (
                                     thread_id VARCHAR(255) PRIMARY KEY,
                                     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -220,28 +218,26 @@ def register_thread(
                                     user_id VARCHAR(255)
                                 );
                             """
-                            )
+                        )
 
-                        # Convert metadata to JSON string first
-                        import json
+                    # Convert metadata to JSON string first
+                    import json
 
-                        metadata_json = json.dumps(metadata) if metadata else "{}"
+                    metadata_json = json.dumps(metadata) if metadata else "{}"
 
-                        # Insert the thread if not exists, or update last_access
-                        cursor.execute(
-                            """
-                            INSERT INTO threads (thread_id, last_access, metadata) 
-                            VALUES (%s, CURRENT_TIMESTAMP, %s::jsonb) 
-                            ON CONFLICT (thread_id) 
+                    # Insert the thread if not exists, or update last_access
+                    cursor.execute(
+                        """
+                            INSERT INTO threads (thread_id, last_access, metadata)
+                            VALUES (%s, CURRENT_TIMESTAMP, %s::jsonb)
+                            ON CONFLICT (thread_id)
                             DO UPDATE SET last_access = CURRENT_TIMESTAMP, metadata = %s::jsonb
                         """,
-                            (thread_id, metadata_json, metadata_json),
-                        )
+                        (thread_id, metadata_json, metadata_json),
+                    )
 
-                        logger.info(
-                            f"Thread {thread_id} registered/updated in PostgreSQL"
-                        )
-                        return True
+                    logger.info(f"Thread {thread_id} registered/updated in PostgreSQL")
+                    return True
     except Exception as e:
         logger.warning(f"Error registering thread: {e}")
 
@@ -249,11 +245,9 @@ def register_thread(
 
 
 async def register_thread_async(
-    checkpointer: Any, thread_id: str, metadata: Optional[Dict[str, Any]] = None
+    checkpointer: Any, thread_id: str, metadata: dict[str, Any] | None = None
 ) -> bool:
-    """
-    Register a thread in the PostgreSQL database asynchronously.
-    """
+    """Register a thread in the PostgreSQL database asynchronously."""
     if not hasattr(checkpointer, "conn"):
         return False
 
@@ -262,22 +256,21 @@ async def register_thread_async(
 
         metadata_json = json.dumps(metadata) if metadata else "{}"
 
-        async with checkpointer.conn.connection() as conn:
-            async with conn.cursor() as cursor:
-                # Check if table exists
-                await cursor.execute(
-                    """
+        async with checkpointer.conn.connection() as conn, conn.cursor() as cursor:
+            # Check if table exists
+            await cursor.execute(
+                """
                     SELECT EXISTS (
-                        SELECT FROM information_schema.tables 
+                        SELECT FROM information_schema.tables
                         WHERE table_name = 'threads'
                     );
                 """
-                )
-                table_exists = (await cursor.fetchone())[0]
+            )
+            table_exists = (await cursor.fetchone())[0]
 
-                if not table_exists:
-                    await cursor.execute(
-                        """
+            if not table_exists:
+                await cursor.execute(
+                    """
                         CREATE TABLE IF NOT EXISTS threads (
                             thread_id VARCHAR(255) PRIMARY KEY,
                             created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -286,23 +279,21 @@ async def register_thread_async(
                             user_id VARCHAR(255)
                         );
                     """
-                    )
+                )
 
-                # Use parameterized query with proper JSONB handling
-                await cursor.execute(
-                    """
-                    INSERT INTO threads (thread_id, last_access, metadata) 
-                    VALUES (%s, CURRENT_TIMESTAMP, %s::jsonb) 
-                    ON CONFLICT (thread_id) 
+            # Use parameterized query with proper JSONB handling
+            await cursor.execute(
+                """
+                    INSERT INTO threads (thread_id, last_access, metadata)
+                    VALUES (%s, CURRENT_TIMESTAMP, %s::jsonb)
+                    ON CONFLICT (thread_id)
                     DO UPDATE SET last_access = CURRENT_TIMESTAMP, metadata = %s::jsonb
                 """,
-                    (thread_id, metadata_json, metadata_json),
-                )
+                (thread_id, metadata_json, metadata_json),
+            )
 
-                logger.info(
-                    f"Thread {thread_id} registered/updated in PostgreSQL (async)"
-                )
-                return True
+            logger.info(f"Thread {thread_id} registered/updated in PostgreSQL (async)")
+            return True
     except Exception as e:
         logger.warning(f"Error registering thread asynchronously: {e}")
 

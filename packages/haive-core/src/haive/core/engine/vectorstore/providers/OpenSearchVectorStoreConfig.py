@@ -1,5 +1,4 @@
-"""
-OpenSearch Vector Store implementation for the Haive framework.
+"""OpenSearch Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the OpenSearch vector store,
 which provides scalable vector search capabilities with Amazon OpenSearch.
@@ -34,8 +33,7 @@ from haive.core.engine.vectorstore.types import VectorStoreType
 
 @BaseVectorStoreConfig.register(VectorStoreType.OPENSEARCH)
 class OpenSearchVectorStoreConfig(BaseVectorStoreConfig):
-    """
-    Configuration for OpenSearch vector store in the Haive framework.
+    """Configuration for OpenSearch vector store in the Haive framework.
 
     This vector store uses OpenSearch for scalable vector search with
     support for multiple engines and hybrid search capabilities.
@@ -88,9 +86,9 @@ class OpenSearchVectorStoreConfig(BaseVectorStoreConfig):
     index_name: str = Field(..., description="Name of the OpenSearch index (required)")
 
     # Authentication
-    username: Optional[str] = Field(default=None, description="OpenSearch username")
+    username: str | None = Field(default=None, description="OpenSearch username")
 
-    password: Optional[str] = Field(
+    password: str | None = Field(
         default=None,
         description="OpenSearch password (auto-resolved from OPENSEARCH_PASSWORD)",
     )
@@ -169,14 +167,14 @@ class OpenSearchVectorStoreConfig(BaseVectorStoreConfig):
     )
 
     @validator("opensearch_url")
-    def validate_opensearch_url(cls, v):
+    def validate_opensearch_url(self, v):
         """Validate OpenSearch URL format."""
         if not v.startswith(("http://", "https://")):
             raise ValueError("opensearch_url must start with http:// or https://")
         return v
 
     @validator("engine")
-    def validate_engine(cls, v):
+    def validate_engine(self, v):
         """Validate vector engine is supported."""
         valid_engines = ["nmslib", "faiss", "lucene"]
         if v not in valid_engines:
@@ -184,7 +182,7 @@ class OpenSearchVectorStoreConfig(BaseVectorStoreConfig):
         return v
 
     @validator("space_type")
-    def validate_space_type(cls, v):
+    def validate_space_type(self, v):
         """Validate space type is supported."""
         valid_space_types = [
             "l2",
@@ -199,7 +197,7 @@ class OpenSearchVectorStoreConfig(BaseVectorStoreConfig):
         return v
 
     @validator("index_name")
-    def validate_index_name(cls, v):
+    def validate_index_name(self, v):
         """Validate index name format."""
         if not v or len(v.strip()) == 0:
             raise ValueError("index_name cannot be empty")
@@ -212,27 +210,26 @@ class OpenSearchVectorStoreConfig(BaseVectorStoreConfig):
             )
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for OpenSearch vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for OpenSearch vector store."""
         return {
             "ids": (
-                List[str],
+                list[str],
                 Field(description="IDs of the added documents in OpenSearch"),
             ),
         }
 
     def instantiate(self):
-        """
-        Create an OpenSearch vector store from this configuration.
+        """Create an OpenSearch vector store from this configuration.
 
         Returns:
             OpenSearchVectorSearch: Instantiated OpenSearch vector store.

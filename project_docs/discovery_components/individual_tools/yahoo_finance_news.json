@@ -7,7 +7,7 @@
     "description": "Useful for when you need to find financial news about a public company. Input should be a company ticker. For example, AAPL for Apple, MSFT for Microsoft.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.758336",
+    "timestamp": "2025-07-10T19:45:28.987408",
     "schema": {
       "description": "Input for the YahooFinanceNews tool.",
       "properties": {
@@ -36,7 +36,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.758336",
+      "timestamp": "2025-07-10T19:45:28.987408",
       "category": "individual_tools"
     }
   },

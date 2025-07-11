@@ -1,4 +1,4 @@
-"""Safe Agent Compatibility Testing
+"""Safe Agent Compatibility Testing.
 
 This module provides comprehensive compatibility testing for RAG agents using the
 compatibility module without modifying or breaking existing agents.
@@ -9,13 +9,12 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any
 
+from haive.agents.base.agent import Agent
 from haive.core.schema.compatibility import (
     ConverterRegistry,
     TypeAnalyzer,
 )
 from haive.core.schema.compatibility.reports import generate_report
-
-from haive.agents.base.agent import Agent
 
 from .agents import DocumentGradingAgent
 from .state import MultiAgentRAGState
@@ -160,7 +159,7 @@ class SafeCompatibilityTester:
             return report
 
         except Exception as e:
-            logger.error(
+            logger.exception(
                 f"Error testing compatibility between {source_name} and {target_name}: {e!s}"
             )
             return self._create_error_report(
@@ -271,7 +270,7 @@ class SafeCompatibilityTester:
             }
 
         except Exception as e:
-            logger.error(f"Error in safe RAG testing: {e!s}")
+            logger.exception(f"Error in safe RAG testing: {e!s}")
             return {
                 "error": str(e),
                 "safety_status": "Tests failed but no agents were modified",
@@ -592,7 +591,7 @@ def safe_test_rag_compatibility() -> dict[str, Any]:
 
 
 def test_custom_agent_workflow(
-    agents: list[Agent], workflow_name: str = "Custom Workflow"
+    agents: list[Agent], workflow_name: str
 ) -> MultiAgentCompatibilityReport:
     """Test compatibility of a custom agent workflow.
 

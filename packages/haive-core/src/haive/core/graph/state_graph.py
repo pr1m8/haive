@@ -1,10 +1,9 @@
 """State graph wrapper for LangGraph integration."""
 
-from typing import Any, Type
-
-from pydantic import BaseModel, Field
+from typing import Any
 
 from haive.core.graph.state_graph.state_graph import StateGraphSerializable
+from pydantic import BaseModel, Field
 
 
 class StateGraph(BaseModel):
@@ -15,10 +14,10 @@ class StateGraph(BaseModel):
     """
 
     name: str = Field(default="state_graph", description="Name of the graph")
-    state_schema: Type[Any] = Field(default=dict, description="State schema type")
+    state_schema: type[Any] = Field(default=dict, description="State schema type")
 
     def __init__(
-        self, state_schema: Type[Any] = dict, name: str = "state_graph", **kwargs
+        self, state_schema: type[Any] = dict, name: str = "state_graph", **kwargs
     ):
         """Initialize a new state graph."""
         super().__init__(name=name, state_schema=state_schema, **kwargs)

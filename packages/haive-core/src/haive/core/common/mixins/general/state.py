@@ -28,7 +28,7 @@ Usage:
 """
 
 from datetime import datetime
-from typing import Any, Dict, Optional
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -60,11 +60,11 @@ class StateMixin(BaseModel):
     """
 
     state: str = Field(default="active", description="Current state of the object")
-    state_history: list[Dict[str, Any]] = Field(
+    state_history: list[dict[str, Any]] = Field(
         default_factory=list, description="History of state changes with timestamps"
     )
 
-    def change_state(self, new_state: str, reason: Optional[str] = None) -> None:
+    def change_state(self, new_state: str, reason: str | None = None) -> None:
         """Change state and automatically track the transition in history.
 
         This method updates the current state and records the transition
@@ -90,7 +90,7 @@ class StateMixin(BaseModel):
         }
         self.state_history.append(change_record)
 
-    def get_state_changes(self) -> list[Dict[str, Any]]:
+    def get_state_changes(self) -> list[dict[str, Any]]:
         """Get a copy of the complete state change history.
 
         Returns:

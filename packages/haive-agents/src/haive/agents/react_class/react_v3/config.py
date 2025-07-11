@@ -7,12 +7,14 @@ ReAct (Reasoning and Acting) pattern for tool-using agents.
 import logging
 from typing import Any
 
-from haive.core.engine.agent.agent import AgentConfig
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.schema.state_schema import StateSchema
 from langchain_core.tools import BaseTool
 from langgraph.pregel import RetryPolicy
 from pydantic import Field, model_validator
+
+from haive.core.engine.agent.agent import AgentConfig
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.schema.state_schema import StateSchema
+
 
 # Setup logging
 logger = logging.getLogger(__name__)
@@ -87,7 +89,7 @@ class ReactAgentConfig(AgentConfig):
 
     @model_validator(mode="after")
     def setup_defaults(self):
-        """Set up default retry policies if not provided"""
+        """Set up default retry policies if not provided."""
         if self.reasoning_retry is None:
             self.reasoning_retry = RetryPolicy(
                 initial_interval=1.0,

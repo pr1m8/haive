@@ -19,6 +19,7 @@ from typing import (
 )
 
 import tiktoken
+from haive.core.schema.state_schema import StateSchema
 from langchain_core.messages import (
     AIMessage,
     AnyMessage,
@@ -30,11 +31,8 @@ from langchain_core.messages import (
     filter_messages,
     get_buffer_string,
 )
-from langchain_core.messages.utils import (
-    convert_to_openai_messages,
-    messages_from_dict,
-)
 from langchain_core.messages.base import message_to_dict
+from langchain_core.messages.utils import convert_to_openai_messages, messages_from_dict
 from langgraph.graph import END, add_messages
 from langgraph.types import Send
 from pydantic import (
@@ -43,11 +41,9 @@ from pydantic import (
     RootModel,
     computed_field,
     field_validator,
-    model_validator,
     model_serializer,
+    model_validator,
 )
-
-from haive.core.schema.state_schema import StateSchema
 
 
 class ToolCallInfo(BaseModel):
@@ -1062,19 +1058,19 @@ class MessageList(RootModel[List[AnyMessage]]):
     def serialize_model(self):
         """Custom serializer to properly handle MessageList for LangGraph compatibility."""
         # Get the root list - handle both MessageList objects and plain lists
-        messages = self.root if hasattr(self, 'root') else self
-        
+        messages = self.root if hasattr(self, "root") else self
+
         # Use LangChain's built-in serialization with proper BaseMessage checking
         serialized_messages = []
         for msg in messages:
             if isinstance(msg, BaseMessage):
                 # Use serialize_as_any to ensure all fields are preserved
                 msg_dict = msg.model_dump(serialize_as_any=True)
-                
+
                 # For ToolMessage, ensure tool_call_id is preserved explicitly
                 if isinstance(msg, ToolMessage) and hasattr(msg, "tool_call_id"):
                     msg_dict["tool_call_id"] = msg.tool_call_id
-                
+
                 # Preserve engine metadata from additional_kwargs at top level
                 if hasattr(msg, "additional_kwargs") and msg.additional_kwargs:
                     # Check for engine_name, engine_id and other metadata
@@ -1082,7 +1078,7 @@ class MessageList(RootModel[List[AnyMessage]]):
                     for field in engine_fields:
                         if field in msg.additional_kwargs:
                             msg_dict[field] = msg.additional_kwargs[field]
-                
+
                 serialized_messages.append(msg_dict)
             elif isinstance(msg, dict):
                 # Already serialized

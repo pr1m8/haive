@@ -1,4 +1,4 @@
-"""Examples - Examples for the Open Perplexity research agent
+"""Examples - Examples for the Open Perplexity research agent.
 
 TODO: Add detailed description of module functionality
 

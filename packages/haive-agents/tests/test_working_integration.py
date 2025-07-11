@@ -32,7 +32,7 @@ class QueryResult(BaseModel):
 def test_graph_with_conditional_edges():
     """Test graph creation with conditional edges."""
 
-    def route_by_content(state: Dict) -> str:
+    def route_by_content(state: dict) -> str:
         """Route based on message content."""
         messages = state.get("messages", [])
         if messages and "search" in str(messages[-1]).lower():
@@ -70,8 +70,6 @@ def test_graph_with_conditional_edges():
     assert "router" in graph.nodes
     assert len(graph.branches) > 0  # Should have conditional branches
 
-    print("✅ Conditional edges test passed")
-
 
 def test_schema_composition_concepts():
     """Test schema composition patterns."""
@@ -83,7 +81,7 @@ def test_schema_composition_concepts():
 
     # Add fields
     composer.add_field("query", str, default="")
-    composer.add_field("results", List[str], default_factory=list)
+    composer.add_field("results", list[str], default_factory=list)
     composer.add_field("confidence", float, default=0.0)
 
     # Build schema
@@ -99,12 +97,9 @@ def test_schema_composition_concepts():
     assert hasattr(instance, "query")  # Custom field
     assert instance.confidence == 0.9
 
-    print("✅ Schema composition test passed")
-
 
 def test_engine_configuration():
     """Test engine configuration patterns."""
-
     # Create mock engine
     engine = MagicMock(spec=AugLLMConfig)
     engine.name = "test_engine"
@@ -113,13 +108,13 @@ def test_engine_configuration():
 
     # Set up schema methods
     engine.get_input_fields.return_value = {
-        "messages": (List[BaseMessage], Field(default_factory=list)),
+        "messages": (list[BaseMessage], Field(default_factory=list)),
         "context": (str, Field(default="")),
     }
 
     engine.get_output_fields.return_value = {
         "response": (str, Field()),
-        "metadata": (Dict, Field(default_factory=dict)),
+        "metadata": (dict, Field(default_factory=dict)),
     }
 
     # Test field extraction
@@ -128,8 +123,6 @@ def test_engine_configuration():
 
     assert "messages" in input_fields
     assert "response" in output_fields
-
-    print("✅ Engine configuration test passed")
 
 
 def test_model_post_init_pattern():
@@ -158,28 +151,26 @@ def test_model_post_init_pattern():
     # Test invalid model
     try:
         ConfiguredModel(name="bad", value=-1)
-        assert False, "Should have raised ValueError"
+        raise AssertionError("Should have raised ValueError")
     except ValueError:
         pass
-
-    print("✅ model_post_init pattern test passed")
 
 
 def test_component_composition():
     """Test component composition patterns."""
 
     # Define components
-    def processor(state: Dict) -> Dict:
+    def processor(state: dict) -> dict:
         """Process input."""
         return {"processed": True}
 
-    def validator(state: Dict) -> Dict:
+    def validator(state: dict) -> dict:
         """Validate processed data."""
         if not state.get("processed"):
             raise ValueError("Not processed")
         return {"validated": True}
 
-    def formatter(state: Dict) -> Dict:
+    def formatter(state: dict) -> dict:
         """Format output."""
         return {"formatted": state}
 
@@ -191,7 +182,6 @@ def test_component_composition():
     }
 
     # Define flow
-    flow = [("processor", "validator"), ("validator", "formatter")]
 
     # Test composition
     state = {}
@@ -200,8 +190,6 @@ def test_component_composition():
 
     assert state.get("formatted") is not None
 
-    print("✅ Component composition test passed")
-
 
 def test_multi_agent_concepts():
     """Test multi-agent coordination concepts."""
@@ -209,9 +197,9 @@ def test_multi_agent_concepts():
     class AgentState(BaseModel):
         """Shared state for agents."""
 
-        messages: List[BaseMessage] = Field(default_factory=list)
+        messages: list[BaseMessage] = Field(default_factory=list)
         query: str = ""
-        results: List[str] = Field(default_factory=list)
+        results: list[str] = Field(default_factory=list)
 
     # Mock agents
     class MockAgent:
@@ -225,7 +213,7 @@ def test_multi_agent_concepts():
         MockAgent("searcher", lambda s: {"results": ["result1", "result2"]}),
         MockAgent(
             "formatter",
-            lambda s: {"messages": s.get("messages", []) + [AIMessage(content="Done")]},
+            lambda s: {"messages": [*s.get("messages", []), AIMessage(content="Done")]},
         ),
     ]
 
@@ -241,8 +229,6 @@ def test_multi_agent_concepts():
     assert len(state["results"]) == 2
     assert len(state["messages"]) == 2
 
-    print("✅ Multi-agent concepts test passed")
-
 
 if __name__ == "__main__":
     # Run all tests
@@ -252,5 +238,3 @@ if __name__ == "__main__":
     test_model_post_init_pattern()
     test_component_composition()
     test_multi_agent_concepts()
-
-    print("\n🎉 All tests passed!")

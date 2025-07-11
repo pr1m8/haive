@@ -194,7 +194,7 @@ class GraphPatternRegistry:
 
 # Pattern registration decorator
 def register_pattern(
-    name: str, pattern_type: str, description: str = None, **default_params
+    name: str, pattern_type: str, description: str | None = None, **default_params
 ):
     """Decorator to register a function as a graph pattern.
 
@@ -227,8 +227,8 @@ def register_branch(
     name: str,
     condition_type: str,
     routes: dict[str, str],
-    default_route: str = None,
-    description: str = None,
+    default_route: str | None = None,
+    description: str | None = None,
 ):
     """Decorator to register a function as a branch condition.
 

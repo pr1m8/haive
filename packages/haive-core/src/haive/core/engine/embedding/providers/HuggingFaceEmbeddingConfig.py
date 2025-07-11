@@ -59,11 +59,11 @@ class HuggingFaceEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     # HuggingFace-specific fields
-    model_kwargs: Dict[str, Any] = Field(
+    model_kwargs: dict[str, Any] = Field(
         default_factory=lambda: {"device": "cpu"},
         description="Additional arguments for model initialization",
     )
-    encode_kwargs: Dict[str, Any] = Field(
+    encode_kwargs: dict[str, Any] = Field(
         default_factory=dict, description="Additional arguments for encoding"
     )
     multi_process: bool = Field(
@@ -75,7 +75,7 @@ class HuggingFaceEmbeddingConfig(BaseEmbeddingConfig):
     use_cache: bool = Field(
         default=True, description="Whether to use embedding caching"
     )
-    cache_folder: Optional[str] = Field(
+    cache_folder: str | None = Field(
         default=None, description="Directory for caching embeddings"
     )
 
@@ -90,6 +90,7 @@ class HuggingFaceEmbeddingConfig(BaseEmbeddingConfig):
     )
 
     @validator("model")
+    @classmethod
     def validate_model(cls, v):
         """Validate the HuggingFace model name."""
         if not v or not v.strip():
@@ -97,6 +98,7 @@ class HuggingFaceEmbeddingConfig(BaseEmbeddingConfig):
         return v.strip()
 
     @validator("model_kwargs")
+    @classmethod
     def validate_model_kwargs(cls, v):
         """Validate and set default model kwargs."""
         if not v:
@@ -114,6 +116,7 @@ class HuggingFaceEmbeddingConfig(BaseEmbeddingConfig):
         return v
 
     @validator("cache_folder")
+    @classmethod
     def validate_cache_folder(cls, v, values):
         """Set default cache folder if not specified."""
         if v is None and values.get("use_cache", True):

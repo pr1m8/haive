@@ -55,15 +55,16 @@ import logging
 from typing import Dict, List, Optional, Type
 
 from haive.core.models.llm.provider_types import LLMProvider
-from haive.core.models.llm.providers.base import BaseLLMProvider, ProviderImportError
+from haive.core.models.llm.providers.base import (BaseLLMProvider,
+                                                  ProviderImportError)
 
 logger = logging.getLogger(__name__)
 
 # Provider registry - populated lazily
-_PROVIDER_REGISTRY: Dict[LLMProvider, Type[BaseLLMProvider]] = {}
+_PROVIDER_REGISTRY: dict[LLMProvider, type[BaseLLMProvider]] = {}
 
 
-def _lazy_import_provider(provider: LLMProvider) -> Optional[Type[BaseLLMProvider]]:
+def _lazy_import_provider(provider: LLMProvider) -> type[BaseLLMProvider] | None:
     """Lazily import a provider class.
 
     Args:
@@ -164,13 +165,13 @@ def _lazy_import_provider(provider: LLMProvider) -> Optional[Type[BaseLLMProvide
         logger.debug(f"Failed to import {provider.value} provider: {e}")
         return None
     except AttributeError as e:
-        logger.error(
+        logger.exception(
             f"Provider class {class_name} not found in module {module_name}: {e}"
         )
         return None
 
 
-def get_provider(provider: LLMProvider) -> Type[BaseLLMProvider]:
+def get_provider(provider: LLMProvider) -> type[BaseLLMProvider]:
     """Get a provider class by enum value.
 
     Args:
@@ -193,7 +194,7 @@ def get_provider(provider: LLMProvider) -> Type[BaseLLMProvider]:
     return provider_class
 
 
-def list_providers() -> List[str]:
+def list_providers() -> list[str]:
     """List all available provider names.
 
     Returns:

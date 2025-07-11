@@ -1,5 +1,4 @@
-"""
-Common models for the Haive framework.
+"""Common models for the Haive framework.
 
 This module contains reusable model classes and data structures that can be used
 across different parts of the Haive framework.
@@ -11,6 +10,7 @@ The main components include:
 
 from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from haive.core.common.models.named_list import NamedList, create_named_list
+
 
 __all__ = [
     "DynamicChoiceModel",

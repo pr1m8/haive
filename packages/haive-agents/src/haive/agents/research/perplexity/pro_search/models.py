@@ -1,6 +1,5 @@
 # perplexity_search_models.py
-"""
-Pydantic models for Perplexity-style quick search workflow.
+"""Pydantic models for Perplexity-style quick search workflow.
 These models support a multi-stage search process with reasoning, query generation,
 parallel search execution, and synthesis.
 """
@@ -24,19 +23,19 @@ class SearchContext(BaseModel):
         default_factory=datetime.now,
         description="Current date and time for temporal context",
     )
-    user_location: Optional[str] = Field(
+    user_location: str | None = Field(
         default=None, description="User's location for geo-specific searches"
     )
-    search_history: List[str] = Field(
+    search_history: list[str] = Field(
         default_factory=list, description="Recent search queries for context"
     )
-    domain_preferences: Set[str] = Field(
+    domain_preferences: set[str] = Field(
         default_factory=set, description="Preferred domains or sources"
     )
 
     @computed_field
     @property
-    def temporal_context(self) -> Dict[str, str]:
+    def temporal_context(self) -> dict[str, str]:
         """Generate temporal context strings."""
         now = self.current_date
         return {
@@ -52,12 +51,11 @@ class SearchContext(BaseModel):
         hour = self.current_date.hour
         if 5 <= hour < 12:
             return "morning"
-        elif 12 <= hour < 17:
+        if 12 <= hour < 17:
             return "afternoon"
-        elif 17 <= hour < 21:
+        if 17 <= hour < 21:
             return "evening"
-        else:
-            return "night"
+        return "night"
 
 
 class QueryIntent(BaseModel):
@@ -86,11 +84,11 @@ class QueryIntent(BaseModel):
         default=3, ge=1, le=10, description="Estimated number of sources needed"
     )
 
-    key_entities: List[str] = Field(
+    key_entities: list[str] = Field(
         default_factory=list, description="Key entities identified in the query"
     )
 
-    related_concepts: List[str] = Field(
+    related_concepts: list[str] = Field(
         default_factory=list, description="Related concepts that might enhance search"
     )
 
@@ -102,7 +100,7 @@ class QueryIntent(BaseModel):
             complexity = info.data["complexity_level"]
             if complexity == "simple" and v > 3:
                 return 3
-            elif complexity == "complex" and v < 5:
+            if complexity == "complex" and v < 5:
                 return 5
         return v
 
@@ -125,7 +123,7 @@ class QueryReasoning(BaseModel):
         description="Strategy for searching this query effectively"
     )
 
-    potential_challenges: List[str] = Field(
+    potential_challenges: list[str] = Field(
         default_factory=list,
         description="Potential challenges in finding accurate information",
     )
@@ -164,7 +162,7 @@ class SearchQueryConfig(BaseModel):
         default="primary", description="Type/purpose of this query"
     )
 
-    target_source_types: List[
+    target_source_types: list[
         Literal["web", "academic", "news", "wiki", "social", "video", "image"]
     ] = Field(
         default_factory=lambda: ["web"],
@@ -195,7 +193,7 @@ class QueryBatch(BaseModel):
 
     reasoning: QueryReasoning = Field(description="Reasoning that led to these queries")
 
-    queries: List[SearchQueryConfig] = Field(
+    queries: list[SearchQueryConfig] = Field(
         min_length=1, max_length=10, description="List of queries to execute"
     )
 
@@ -223,7 +221,7 @@ class QueryBatch(BaseModel):
 
     @computed_field
     @property
-    def primary_queries(self) -> List[SearchQueryConfig]:
+    def primary_queries(self) -> list[SearchQueryConfig]:
         """Get primary queries only."""
         return [q for q in self.queries if q.query_type == "primary"]
 
@@ -252,17 +250,17 @@ class SearchResult(BaseModel):
         "web", "academic", "news", "wiki", "social", "video", "image"
     ] = Field(default="web")
 
-    publish_date: Optional[datetime] = Field(
+    publish_date: datetime | None = Field(
         default=None, description="Publication date if available"
     )
 
-    metadata: Dict[str, Any] = Field(
+    metadata: dict[str, Any] = Field(
         default_factory=dict, description="Additional metadata"
     )
 
     @computed_field
     @property
-    def age_days(self) -> Optional[int]:
+    def age_days(self) -> int | None:
         """Calculate age of content in days."""
         if self.publish_date:
             return (datetime.now() - self.publish_date).days
@@ -279,15 +277,13 @@ class SearchQueryResult(BaseModel):
     """Results for a single search query."""
 
     query: SearchQueryConfig = Field(description="The query that was executed")
-    results: List[SearchResult] = Field(
+    results: list[SearchResult] = Field(
         default_factory=list, description="Search results"
     )
     execution_time_ms: int = Field(
         ge=0, description="Query execution time in milliseconds"
     )
-    error: Optional[str] = Field(
-        default=None, description="Error message if query failed"
-    )
+    error: str | None = Field(default=None, description="Error message if query failed")
 
     @computed_field
     @property
@@ -297,7 +293,7 @@ class SearchQueryResult(BaseModel):
 
     @computed_field
     @property
-    def top_results(self) -> List[SearchResult]:
+    def top_results(self) -> list[SearchResult]:
         """Get top 3 results by relevance."""
         return sorted(self.results, key=lambda x: x.relevance_score, reverse=True)[:3]
 
@@ -310,15 +306,15 @@ class SearchQueryResult(BaseModel):
 class ContentAnalysis(BaseModel):
     """Analysis of search results content."""
 
-    key_findings: List[str] = Field(
+    key_findings: list[str] = Field(
         min_length=1, description="Key findings from the search results"
     )
 
-    common_themes: List[str] = Field(
+    common_themes: list[str] = Field(
         default_factory=list, description="Common themes across results"
     )
 
-    contradictions: List[Dict[str, str]] = Field(
+    contradictions: list[dict[str, str]] = Field(
         default_factory=list, description="Contradictions found between sources"
     )
 
@@ -326,7 +322,7 @@ class ContentAnalysis(BaseModel):
         default="medium", description="Confidence in the findings"
     )
 
-    gaps_identified: List[str] = Field(
+    gaps_identified: list[str] = Field(
         default_factory=list, description="Information gaps that remain"
     )
 
@@ -345,7 +341,7 @@ class SearchSynthesis(BaseModel):
 
     query_batch: QueryBatch = Field(description="Original query batch")
 
-    search_results: List[SearchQueryResult] = Field(description="All search results")
+    search_results: list[SearchQueryResult] = Field(description="All search results")
 
     analysis: ContentAnalysis = Field(description="Analysis of the content")
 
@@ -355,11 +351,11 @@ class SearchSynthesis(BaseModel):
         ge=0.0, le=1.0, description="How completely the search answered the query"
     )
 
-    follow_up_queries: List[str] = Field(
+    follow_up_queries: list[str] = Field(
         default_factory=list, max_length=5, description="Suggested follow-up queries"
     )
 
-    citations: List[Dict[str, str]] = Field(
+    citations: list[dict[str, str]] = Field(
         default_factory=list, description="Citations for key claims"
     )
 
@@ -415,19 +411,19 @@ class PerplexitySearchState(BaseModel):
     )
 
     # Processing stages
-    reasoning: Optional[QueryReasoning] = Field(
+    reasoning: QueryReasoning | None = Field(
         default=None, description="Query reasoning and understanding"
     )
 
-    query_batch: Optional[QueryBatch] = Field(
+    query_batch: QueryBatch | None = Field(
         default=None, description="Generated search queries"
     )
 
-    search_results: List[SearchQueryResult] = Field(
+    search_results: list[SearchQueryResult] = Field(
         default_factory=list, description="Raw search results"
     )
 
-    synthesis: Optional[SearchSynthesis] = Field(
+    synthesis: SearchSynthesis | None = Field(
         default=None, description="Final synthesis"
     )
 
@@ -452,11 +448,10 @@ class PerplexitySearchState(BaseModel):
         """Determine next action in workflow."""
         if self.synthesis and self.is_complete:
             return "complete"
-        elif not self.reasoning:
+        if not self.reasoning:
             return "reason"
-        elif not self.query_batch:
+        if not self.query_batch:
             return "generate_queries"
-        elif len(self.search_results) < len(self.query_batch.queries):
+        if len(self.search_results) < len(self.query_batch.queries):
             return "search"
-        else:
-            return "synthesize"
+        return "synthesize"

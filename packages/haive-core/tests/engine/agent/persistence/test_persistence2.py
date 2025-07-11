@@ -6,12 +6,11 @@ import logging
 import uuid
 
 import pytest
-from langgraph.checkpoint.memory import MemorySaver
-
 from haive.core.engine.agent.persistence.postgres_config import (
     POSTGRES_AVAILABLE,
     PostgresCheckpointerConfig,
 )
+from langgraph.checkpoint.memory import MemorySaver
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)

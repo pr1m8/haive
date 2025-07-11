@@ -7,6 +7,11 @@ from typing import Any, Dict, List
 from unittest.mock import MagicMock, Mock, patch
 
 import pytest
+from haive.agents.multi.base import SequentialAgent
+from haive.agents.react.agent import ReactAgent
+
+# Import SimpleAgent from correct location
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 
 # Use base_graph2 as indicated
@@ -17,12 +22,6 @@ from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 from langchain_core.tools import tool
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field
-
-from haive.agents.multi.base import SequentialAgent
-from haive.agents.react.agent import ReactAgent
-
-# Import SimpleAgent from correct location
-from haive.agents.simple.agent import SimpleAgent
 
 
 # Test tools
@@ -49,7 +48,7 @@ class AnalysisResult(BaseModel):
 def test_graph_with_conditional_edges():
     """Test graph creation with conditional edges."""
 
-    def route_by_content(state: Dict) -> str:
+    def route_by_content(state: dict) -> str:
         """Route based on message content."""
         messages = state.get("messages", [])
         if messages and "search" in str(messages[-1]).lower():
@@ -87,19 +86,17 @@ def test_graph_with_conditional_edges():
     assert "router" in graph.nodes
     assert len(graph.branches) > 0  # Should have conditional branches
 
-    print("✅ Conditional edges test passed")
     return True
 
 
 def test_schema_composition():
     """Test schema composition patterns."""
-
     # Create composer
     composer = SchemaComposer(name="TestSchema", base_class=MessagesState)
 
     # Add fields
     composer.add_field("query", str, default="")
-    composer.add_field("results", List[str], default_factory=list)
+    composer.add_field("results", list[str], default_factory=list)
     composer.add_field("confidence", float, default=0.0)
 
     # Build schema
@@ -115,13 +112,11 @@ def test_schema_composition():
     assert hasattr(instance, "query")  # Custom field
     assert instance.confidence == 0.9
 
-    print("✅ Schema composition test passed")
     return True
 
 
 def test_simple_agent_mock():
     """Test SimpleAgent with mocked engine."""
-
     # Create mock engine
     mock_engine = Mock(spec=AugLLMConfig)
     mock_engine.name = "test_llm"
@@ -131,14 +126,14 @@ def test_simple_agent_mock():
 
     # Mock schema methods
     mock_engine.get_input_fields.return_value = {
-        "messages": (List[BaseMessage], Field(default_factory=list))
+        "messages": (list[BaseMessage], Field(default_factory=list))
     }
     mock_engine.get_output_fields.return_value = {"response": (str, Field(default=""))}
 
     # Mock output schema class
     class MockSchema(BaseModel):
         response: str = ""
-        messages: List[BaseMessage] = Field(default_factory=list)
+        messages: list[BaseMessage] = Field(default_factory=list)
 
     mock_engine.derive_output_schema.return_value = MockSchema
     mock_engine.output_schema = MockSchema
@@ -159,7 +154,6 @@ def test_simple_agent_mock():
                 assert "langchain_tool" in tool_routes
                 assert len(tool_routes["langchain_tool"]) == 2
 
-                print("✅ SimpleAgent mock test passed")
                 return True
 
 
@@ -172,7 +166,7 @@ def test_multi_agent_concept():
 
         name: str
         min_agents: int = Field(default=2, ge=1)
-        agents: List[str] = Field(default_factory=list)
+        agents: list[str] = Field(default_factory=list)
 
         def model_post_init(self, __context):
             """Validate after initialization."""
@@ -184,7 +178,6 @@ def test_multi_agent_concept():
             # Set derived fields
             self.agent_count = len(self.agents)
             self.is_valid = True
-            print(f"✓ Validated config with {self.agent_count} agents")
 
     # Test valid config
     config = ValidatedConfig(name="test_multi", agents=["agent1", "agent2", "agent3"])
@@ -194,11 +187,10 @@ def test_multi_agent_concept():
     # Test invalid config
     try:
         ValidatedConfig(name="bad_multi", min_agents=5, agents=["only_one"])
-        assert False, "Should have raised ValueError"
+        raise AssertionError("Should have raised ValueError")
     except ValueError as e:
-        print(f"✓ Correctly caught validation error: {e}")
+        pass")
 
-    print("✅ Multi-agent concept test passed")
     return True
 
 
@@ -206,13 +198,13 @@ def test_conditional_routing_in_graph():
     """Test conditional routing with actual BaseGraph."""
 
     # Create routing function
-    def intent_router(state: Dict) -> str:
+    def intent_router(state: dict) -> str:
         """Route based on detected intent."""
         query = state.get("query", "").lower()
 
         if "analyze" in query:
             return "analyzer"
-        elif "search" in query:
+        if "search" in query:
             return "searcher"
         else:
             return "default"
@@ -280,7 +272,6 @@ def test_conditional_routing_in_graph():
     assert intent_router({"query": "search for info"}) == "searcher"
     assert intent_router({"query": "hello"}) == "default"
 
-    print("✅ Conditional routing test passed")
     return True
 
 
@@ -288,7 +279,6 @@ if __name__ == "__main__":
     # Run all tests
     results = []
 
-    print("\n🧪 Running Fixed Integration Tests\n")
 
     results.append(
         ("Graph with conditional edges", test_graph_with_conditional_edges())
@@ -299,13 +289,11 @@ if __name__ == "__main__":
     results.append(("Conditional routing", test_conditional_routing_in_graph()))
 
     # Summary
-    print("\n📊 Test Results:")
     for test_name, passed in results:
         status = "✅ PASSED" if passed else "❌ FAILED"
-        print(f"  {test_name}: {status}")
 
     all_passed = all(result[1] for result in results)
     if all_passed:
-        print("\n🎉 All tests passed!")
+        pass!")
     else:
-        print("\n❌ Some tests failed!")
+        pass")

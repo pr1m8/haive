@@ -10,13 +10,13 @@ Example:
     Basic MCTS usage::
 
         from haive.agents.reasoning_and_critique.mcts import MCTSAgent, MCTSAgentConfig
-        
+
         config = MCTSAgentConfig(
             name="mcts_reasoner",
             max_iterations=10
         )
         agent = MCTSAgent(config=config)
-        
+
         result = await agent.ainvoke({"problem": "Solve this logic puzzle..."})
 
 """
@@ -34,6 +34,7 @@ from haive.agents.reasoning_and_critique.mcts import (
     print_tree_stats,
 )
 
+
 __all__ = [
     "MCTSAgent",
     "MCTSAgentConfig",
@@ -42,6 +43,6 @@ __all__ = [
     "NodeData",
     "Reflection",
     "create_mcts_agent",
-    "extract_best_solution", 
+    "extract_best_solution",
     "print_tree_stats",
 ]

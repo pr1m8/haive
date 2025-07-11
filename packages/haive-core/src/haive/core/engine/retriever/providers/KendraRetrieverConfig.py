@@ -1,5 +1,4 @@
-"""
-Amazon Kendra Retriever implementation for the Haive framework.
+"""Amazon Kendra Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Amazon Kendra retriever,
 which uses AWS Kendra's intelligent enterprise search service. Kendra provides
@@ -35,8 +34,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.KENDRA)
 class KendraRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for Amazon Kendra retriever in the Haive framework.
+    """Configuration for Amazon Kendra retriever in the Haive framework.
 
     This retriever uses AWS Kendra's intelligent search service to provide
     ML-powered enterprise search with natural language understanding.
@@ -88,12 +86,12 @@ class KendraRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     region_name: str = Field(default="us-east-1", description="AWS region name")
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None,
         description="AWS access key ID (auto-resolved from AWS_ACCESS_KEY_ID)",
     )
 
-    secret_key: Optional[SecretStr] = Field(
+    secret_key: SecretStr | None = Field(
         default=None,
         description="AWS secret access key (auto-resolved from AWS_SECRET_ACCESS_KEY)",
     )
@@ -108,7 +106,7 @@ class KendraRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         default=10, ge=1, le=100, description="Number of documents to retrieve"
     )
 
-    attribute_filter: Optional[Dict[str, Any]] = Field(
+    attribute_filter: dict[str, Any] | None = Field(
         default=None, description="Kendra attribute filters for document filtering"
     )
 
@@ -117,21 +115,21 @@ class KendraRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         default=10, ge=1, le=100, description="Number of results per page"
     )
 
-    user_context: Optional[Dict[str, Any]] = Field(
+    user_context: dict[str, Any] | None = Field(
         default=None, description="User context for personalized results"
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Kendra retriever."""
         return {
             "query": (str, Field(description="Natural language query for Kendra")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Kendra retriever."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(
                     default_factory=list, description="Enterprise documents from Kendra"
                 ),
@@ -139,8 +137,7 @@ class KendraRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create an Amazon Kendra retriever from this configuration.
+        """Create an Amazon Kendra retriever from this configuration.
 
         Returns:
             AmazonKendraRetriever: Instantiated retriever ready for enterprise search.

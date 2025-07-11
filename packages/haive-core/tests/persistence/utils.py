@@ -1,7 +1,7 @@
 import logging
 import os
-import uuid
 from typing import Any, Dict
+import uuid
 
 
 # Configure detailed logging
@@ -25,7 +25,7 @@ def setup_test_logging():
 
 
 # Get database connection parameters from environment or use defaults
-def get_db_params() -> Dict[str, Any]:
+def get_db_params() -> dict[str, Any]:
     """Get database parameters from environment variables or defaults."""
     return {
         "db_host": os.environ.get("TEST_DB_HOST", "localhost"),
@@ -65,5 +65,3 @@ async def cleanup_threads_async(checkpointer: Any, thread_ids: list):
 # Simple state for testing
 class SimpleState(dict):
     """Simple dictionary-based state for testing."""
-
-    pass

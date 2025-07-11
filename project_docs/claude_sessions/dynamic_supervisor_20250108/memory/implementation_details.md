@@ -11,13 +11,13 @@ We built a dynamic supervisor system for Haive that can manage agents at runtime
 ```python
 class SupervisorState(MessagesState):
     """State for dynamic supervisor with agent registry."""
-    
+
     # Agent registry - Dict instead of List for O(1) lookups
     agents: Dict[str, AgentInfo] = Field(default_factory=dict)
-    
+
     # Active agents - List instead of Set (sets aren't msgpack serializable!)
     active_agents: List[str] = Field(default_factory=list)
-    
+
     # Routing control
     next_agent: Optional[str] = None
     agent_task: str = ""
@@ -35,7 +35,7 @@ class AgentInfo(BaseModel):
     name: str
     description: str
     active: bool = True
-    
+
     # Serializable metadata (empty for now, could extend)
     agent_metadata: dict = Field(default_factory=dict)
 ```
@@ -47,7 +47,7 @@ class AgentInfo(BaseModel):
 ```python
 class SupervisorStateWithTools(SupervisorState):
     """State with dynamic tool generation from agents."""
-    
+
     def sync_agents(self):
         """Generate handoff tools from current agents."""
         self._update_choice_model()  # Update dynamic choice validation
@@ -55,6 +55,7 @@ class SupervisorStateWithTools(SupervisorState):
 ```
 
 Tools are generated dynamically:
+
 - `handoff_to_search_agent`
 - `handoff_to_math_agent`
 - `choose_agent` (with dynamic validation)
@@ -64,19 +65,19 @@ Tools are generated dynamically:
 ```python
 class AgentExecutionNode:
     """Mirrors tool_node pattern but for agents."""
-    
+
     def __call__(self, state: SupervisorStateWithTools):
         # 1. Get routing from state
         agent_name = state.next_agent
         task = state.agent_task
-        
+
         # 2. Get agent from state.agents
         agent_info = state.agents[agent_name]
         agent = agent_info.get_agent()
-        
+
         # 3. Execute agent
         result = agent.run(task)
-        
+
         # 4. Return state update
         return {
             "agent_response": result,
@@ -90,42 +91,47 @@ class AgentExecutionNode:
 ```python
 class DynamicSupervisorAgent(SimpleAgent):
     """Extends SimpleAgent with dynamic agent management."""
-    
+
     def build_graph(self) -> BaseGraph:
         # Extend SimpleAgent graph
         graph = super().build_graph()
-        
+
         # Add agent execution node
         agent_execution_node = create_agent_execution_node()
         graph.add_node("agent_execution", agent_execution_node)
         graph.add_edge("agent_execution", "agent_node")
-        
+
         return graph
 ```
 
 ## Implementation Journey
 
 ### Phase 1: Initial Architecture (Components 1-3)
+
 - Created `SupervisorState` with agent registry
 - Built `AgentInfo` for agent metadata
 - Implemented agent execution node
 
 ### Phase 2: Serialization Crisis
+
 - Hit "Type is not msgpack serializable: ModelMetaclass" error
 - Discovered agents contain Pydantic model classes (not serializable)
 - Found that Python sets aren't serializable either
 
 ### Phase 3: Solutions
+
 1. **Set → List**: Changed `active_agents: Set[str]` to `List[str]` with validation
 2. **Exclude Agent**: Added `exclude=True` to agent field in AgentInfo
 3. **Keep References**: Agents exist in memory but aren't checkpointed
 
 ### Phase 4: Dynamic Tools
+
 - Implemented `sync_agents()` for dynamic tool generation
 - Created handoff tools that route to agent_execution node
 - Added DynamicChoiceModel for validated agent selection
 
 ### Phase 5: Testing & Validation
+
 - Tested dynamic addition/removal of agents
 - Verified supervisor identifies missing capabilities
 - Confirmed multi-agent coordination works
@@ -133,12 +139,14 @@ class DynamicSupervisorAgent(SimpleAgent):
 ## Key Patterns
 
 ### 1. State-Driven Tools
+
 ```python
 # Tools generated from state, not hardcoded
 state.sync_agents()  # Regenerates tools based on current agents
 ```
 
 ### 2. Agent Lifecycle Management
+
 ```python
 state.add_agent(name, agent, description)      # Add new capability
 state.remove_agent(name)                       # Remove completely
@@ -147,6 +155,7 @@ state.deactivate_agent(name)                   # Hide but keep
 ```
 
 ### 3. Serialization Strategy
+
 - **In Memory**: Full agent objects accessible
 - **In Storage**: Only metadata serialized
 - **On Load**: Agents reconstructed from registry

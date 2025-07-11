@@ -34,9 +34,8 @@ from langchain_core.messages import BaseMessage, convert_to_messages
 logger = logging.getLogger(__name__)
 
 
-def preserve_messages_reducer(left: List, right: List) -> List:
-    """
-    Custom reducer that preserves BaseMessage objects to avoid losing fields.
+def preserve_messages_reducer(left: list, right: list) -> list:
+    """Custom reducer that preserves BaseMessage objects to avoid losing fields.
 
     This is a replacement for LangGraph's add_messages reducer that avoids
     calling convert_to_messages when the messages are already BaseMessage objects.

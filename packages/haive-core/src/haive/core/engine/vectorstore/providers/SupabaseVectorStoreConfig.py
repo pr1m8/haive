@@ -1,5 +1,4 @@
-"""
-Supabase Vector Store implementation for the Haive framework.
+"""Supabase Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the Supabase vector store,
 which is a managed PostgreSQL service with built-in pgvector support.
@@ -35,8 +34,7 @@ from haive.core.engine.vectorstore.types import VectorStoreType
 
 @BaseVectorStoreConfig.register(VectorStoreType.SUPABASE)
 class SupabaseVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
-    """
-    Configuration for Supabase vector store in the Haive framework.
+    """Configuration for Supabase vector store in the Haive framework.
 
     This vector store uses Supabase's managed PostgreSQL with pgvector
     for vector similarity search with real-time capabilities.
@@ -75,7 +73,7 @@ class SupabaseVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
         ..., description="Supabase project URL (https://your-project.supabase.co)"
     )
 
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None,
         description="Supabase API key (auto-resolved from SUPABASE_KEY or SUPABASE_SERVICE_KEY)",
     )
@@ -114,7 +112,7 @@ class SupabaseVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
     )
 
     # Search configuration
-    similarity_threshold: Optional[float] = Field(
+    similarity_threshold: float | None = Field(
         default=None, description="Similarity threshold for search results"
     )
 
@@ -124,33 +122,32 @@ class SupabaseVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
     )
 
     @validator("supabase_url")
-    def validate_supabase_url(cls, v):
+    def validate_supabase_url(self, v):
         """Validate Supabase URL format."""
         if not v.startswith("https://") or not v.endswith(".supabase.co"):
             raise ValueError("supabase_url must be a valid Supabase project URL")
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Supabase vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Supabase vector store."""
         return {
             "ids": (
-                List[str],
+                list[str],
                 Field(description="IDs of the added documents in Supabase"),
             ),
         }
 
     def instantiate(self):
-        """
-        Create a Supabase vector store from this configuration.
+        """Create a Supabase vector store from this configuration.
 
         Returns:
             SupabaseVectorStore: Instantiated Supabase vector store.
@@ -218,13 +215,12 @@ class SupabaseVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
             except Exception as e:
                 import warnings
 
-                warnings.warn(f"Could not create table or function: {e}")
+                warnings.warn(f"Could not create table or function: {e}", stacklevel=2)
 
         return vectorstore
 
     def _create_table_and_function(self, client):
         """Create the table and similarity search function if they don't exist."""
-
         # Create table SQL
         create_table_sql = f"""
         CREATE TABLE IF NOT EXISTS {self.table_name} (
@@ -268,8 +264,8 @@ class SupabaseVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
 
         # Create index SQL for better performance
         create_index_sql = f"""
-        CREATE INDEX IF NOT EXISTS {self.table_name}_{self.vector_column}_idx 
-        ON {self.table_name} 
+        CREATE INDEX IF NOT EXISTS {self.table_name}_{self.vector_column}_idx
+        ON {self.table_name}
         USING ivfflat ({self.vector_column} vector_cosine_ops)
         WITH (lists = 100);
         """

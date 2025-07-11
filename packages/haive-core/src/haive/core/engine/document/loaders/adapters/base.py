@@ -1,5 +1,4 @@
-"""
-Base loader adapter for document loaders.
+"""Base loader adapter for document loaders.
 
 This module provides the base LoaderAdapter class that all specific
 loader adapters inherit from, establishing a consistent interface.
@@ -14,8 +13,7 @@ from haive.core.engine.loaders.sources.base import BaseSource
 
 
 class LoaderAdapter(ABC):
-    """
-    Base adapter class for document loaders.
+    """Base adapter class for document loaders.
 
     LoaderAdapter provides a unified interface for loading documents from
     different source types using various langchain document loaders.
@@ -28,8 +26,7 @@ class LoaderAdapter(ABC):
     """
 
     def __init__(self, source: BaseSource, **params):
-        """
-        Initialize the adapter.
+        """Initialize the adapter.
 
         Args:
             source: The source to load documents from
@@ -39,20 +36,17 @@ class LoaderAdapter(ABC):
         self.params = params
 
     @abstractmethod
-    def load(self) -> List[Document]:
-        """
-        Load documents from the source.
+    def load(self) -> list[Document]:
+        """Load documents from the source.
 
         This method must be implemented by all subclasses.
 
         Returns:
             List of loaded documents
         """
-        pass
 
-    def load_and_split(self, **split_params) -> List[Document]:
-        """
-        Load and split documents.
+    def load_and_split(self, **split_params) -> list[Document]:
+        """Load and split documents.
 
         This method loads documents and then splits them into chunks
         using a text splitter.
@@ -77,9 +71,8 @@ class LoaderAdapter(ABC):
         # Split documents
         return text_splitter.split_documents(docs)
 
-    def fetch_all(self) -> List[BaseSource]:
-        """
-        Fetch all available sources (if supported).
+    def fetch_all(self) -> list[BaseSource]:
+        """Fetch all available sources (if supported).
 
         This method is used for sources that contain multiple sub-sources,
         such as directories or sitemaps.

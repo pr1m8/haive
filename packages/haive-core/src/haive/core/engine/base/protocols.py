@@ -1,5 +1,4 @@
-"""
-Protocol definitions for the Haive engine system.
+"""Protocol definitions for the Haive engine system.
 
 This module defines protocol classes that establish common interfaces
 for various components in the Haive framework. These protocols enable
@@ -9,6 +8,7 @@ that implement common behaviors.
 
 from typing import Protocol, TypeVar, runtime_checkable
 
+
 # Type variables
 I = TypeVar("I")  # Input type
 O = TypeVar("O")  # Output type
@@ -16,8 +16,7 @@ O = TypeVar("O")  # Output type
 
 @runtime_checkable
 class Invokable(Protocol[I, O]):
-    """
-    Protocol for objects that can be invoked synchronously.
+    """Protocol for objects that can be invoked synchronously.
 
     Defines a common interface for any object that can process
     input data and return output data through an invoke method.
@@ -44,8 +43,7 @@ class Invokable(Protocol[I, O]):
     """
 
     def invoke(self, input_data: I, **kwargs) -> O:
-        """
-        Process input data and return output data.
+        """Process input data and return output data.
 
         Args:
             input_data (I): The input data to process.
@@ -59,8 +57,7 @@ class Invokable(Protocol[I, O]):
 
 @runtime_checkable
 class AsyncInvokable(Protocol[I, O]):
-    """
-    Protocol for objects that can be invoked asynchronously.
+    """Protocol for objects that can be invoked asynchronously.
 
     Defines a common interface for any object that can process
     input data and return output data through an asynchronous
@@ -91,8 +88,7 @@ class AsyncInvokable(Protocol[I, O]):
     """
 
     async def ainvoke(self, input_data: I, **kwargs) -> O:
-        """
-        Process input data asynchronously and return output data.
+        """Process input data asynchronously and return output data.
 
         Args:
             input_data (I): The input data to process.

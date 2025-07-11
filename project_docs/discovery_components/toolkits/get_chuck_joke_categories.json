@@ -7,7 +7,7 @@
     "description": "Get a list of all available joke categories",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.830381",
+    "timestamp": "2025-07-10T19:45:29.043152",
     "schema": {
       "description": "Get a list of all available joke categories from the Chuck Norris API.\n\nReturns:\n    List[str]: A list of category names as strings.\n\nRaises:\n    requests.RequestException: If the API request fails.",
       "properties": {},
@@ -29,7 +29,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.830381",
+      "timestamp": "2025-07-10T19:45:29.043152",
       "category": "toolkits"
     }
   },

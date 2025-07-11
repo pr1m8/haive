@@ -8,13 +8,12 @@ import logging
 import time
 from typing import Any, Dict, List, Optional, Set
 
+from haive.agents.base.agent import Agent
 from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 from rich.tree import Tree
-
-from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 console = Console()
@@ -41,16 +40,14 @@ class AgentRegistry:
             routing_model: DynamicChoiceModel to synchronize with agent changes
         """
         self.routing_model = routing_model
-        self.agents: Dict[str, Agent] = {}
-        self.agent_capabilities: Dict[str, str] = {}
-        self.registration_timestamps: Dict[str, float] = {}
+        self.agents: dict[str, Agent] = {}
+        self.agent_capabilities: dict[str, str] = {}
+        self.registration_timestamps: dict[str, float] = {}
         self._rebuild_needed = False
 
         logger.info("AgentRegistry initialized")
 
-    def register(
-        self, agent: Agent, capability_description: Optional[str] = None
-    ) -> bool:
+    def register(self, agent: Agent, capability_description: str | None = None) -> bool:
         """Register an agent and update routing model.
 
         Args:
@@ -130,7 +127,7 @@ class AgentRegistry:
 
         return True
 
-    def get_agent(self, name: str) -> Optional[Agent]:
+    def get_agent(self, name: str) -> Agent | None:
         """Get agent by name.
 
         Args:
@@ -141,7 +138,7 @@ class AgentRegistry:
         """
         return self.agents.get(name)
 
-    def get_available_agents(self) -> List[str]:
+    def get_available_agents(self) -> list[str]:
         """Get list of currently available agent names.
 
         Returns:
@@ -149,7 +146,7 @@ class AgentRegistry:
         """
         return list(self.agents.keys())
 
-    def get_routing_options(self) -> List[str]:
+    def get_routing_options(self) -> list[str]:
         """Get all routing options including END.
 
         Returns:
@@ -157,7 +154,7 @@ class AgentRegistry:
         """
         return self.routing_model.option_names
 
-    def get_agent_capabilities(self) -> Dict[str, str]:
+    def get_agent_capabilities(self) -> dict[str, str]:
         """Get mapping of agent names to their capabilities.
 
         Returns:
@@ -165,7 +162,7 @@ class AgentRegistry:
         """
         return self.agent_capabilities.copy()
 
-    def get_agent_capability(self, agent_name: str) -> Optional[str]:
+    def get_agent_capability(self, agent_name: str) -> str | None:
         """Get capability description for specific agent.
 
         Args:
@@ -297,7 +294,7 @@ class AgentRegistry:
 
             console.print(cap_table)
 
-    def get_registry_stats(self) -> Dict[str, Any]:
+    def get_registry_stats(self) -> dict[str, Any]:
         """Get registry statistics.
 
         Returns:

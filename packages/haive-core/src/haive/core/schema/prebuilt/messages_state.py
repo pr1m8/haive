@@ -1,6 +1,7 @@
 from typing import Annotated, Any, ClassVar, Dict, List, Optional, Union
 
 import tiktoken
+from haive.core.schema.state_schema import StateSchema
 from langchain_core.messages import (
     AIMessage,
     AnyMessage,
@@ -11,15 +12,10 @@ from langchain_core.messages import (
     filter_messages,
     get_buffer_string,
 )
-from langchain_core.messages.utils import (
-    convert_to_openai_messages,
-    messages_from_dict,
-)
+from langchain_core.messages.utils import convert_to_openai_messages, messages_from_dict
 from langgraph.graph import add_messages
 from langgraph.types import Send
-from pydantic import Field, model_validator, field_validator
-
-from haive.core.schema.state_schema import StateSchema
+from pydantic import Field, field_validator, model_validator
 
 # Import new utilities
 try:
@@ -61,7 +57,7 @@ class MessagesState(StateSchema):
     - Conversation round tracking and analysis
     - Tool call deduplication and error handling
     - Message transformation utilities
-    
+
     Note: For token usage tracking, use MessagesStateWithTokenUsage instead.
 
     The messages field is automatically shared with parent/child graphs and configured
@@ -76,7 +72,6 @@ class MessagesState(StateSchema):
     messages: Annotated[List[AnyMessage], add_messages] = Field(
         default_factory=list, description="Conversation messages"
     )
-    
 
     # Configuration for LangGraph compatibility
     __shared_fields__ = ["messages"]
@@ -121,7 +116,7 @@ class MessagesState(StateSchema):
                 i += 1
 
         return instance
-    
+
     @model_validator(mode="after")
     def track_all_message_tokens(self) -> "MessagesState":
         """
@@ -135,7 +130,7 @@ class MessagesState(StateSchema):
                 if isinstance(message, AIMessage):
                     # Extract and track token usage from the message
                     self.track_message_tokens(message)
-        
+
         return self
 
     @model_validator(mode="after")
@@ -172,7 +167,7 @@ class MessagesState(StateSchema):
         if isinstance(message, dict):
             message = messages_from_dict([message])[0]
         self.messages.append(message)
-        
+
         # Automatically track token usage for AI messages
         if isinstance(message, AIMessage):
             self.track_message_tokens(message)

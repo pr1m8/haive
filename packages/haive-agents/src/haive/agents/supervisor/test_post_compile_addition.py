@@ -41,7 +41,7 @@ class MockEngine:
 class MockAgent:
     """Simple mock agent for testing."""
 
-    def __init__(self, name: str, tools: List[str] = None):
+    def __init__(self, name: str, tools: list[str] = None):
         self.name = name
         self.engine = MockEngine(f"{name}_engine")
         self.tools = tools or []
@@ -75,7 +75,7 @@ class SimpleDynamicSupervisor:
             option_names=["END"], option_descriptions=["End the conversation"]
         )
         self.compiled = False
-        self.graph_nodes = set(["supervisor", "END"])
+        self.graph_nodes = set(["supervisor", "END"}
 
     def register_agent(self, agent: MockAgent) -> bool:
         """Register an agent."""
@@ -133,12 +133,7 @@ class SimpleDynamicSupervisor:
 async def test_post_compile_agent_addition():
     """Test adding agents after graph compilation."""
 
-    print("\n" + "=" * 60)
-    print("🧪 Testing Post-Compile Agent Addition")
-    print("=" * 60 + "\n")
-
     # Step 1: Create supervisor with initial agent
-    print("Step 1: Creating supervisor with initial agent")
     supervisor = SimpleDynamicSupervisor()
 
     # Add one agent before compilation
@@ -146,12 +141,9 @@ async def test_post_compile_agent_addition():
     supervisor.register_agent(initial_agent)
 
     # Step 2: Compile the graph
-    print("\nStep 2: Compiling the graph")
     supervisor.compile()
-    print(f"   Compiled: {supervisor.compiled}")
 
     # Step 3: Test routing with only initial agent
-    print("\nStep 3: Testing routing with initial agent only")
     result1 = await supervisor.route_request("Write me a story")
     assert result1 == "writing_agent", f"Expected writing_agent, got {result1}"
 
@@ -161,50 +153,32 @@ async def test_post_compile_agent_addition():
     ), f"Expected writing_agent (default), got {result2}"
 
     # Step 4: Add new agent AFTER compilation
-    print("\nStep 4: Adding math_agent AFTER compilation")
-    print(f"   Can add post-compile? {supervisor.can_add_agents_post_compile()}")
 
     math_agent = MockAgent("math_agent", ["calculator", "equation_solver"])
     supervisor.register_agent(math_agent)
 
     # Step 5: Test routing with new agent
-    print("\nStep 5: Testing routing with newly added agent")
     result3 = await supervisor.route_request("Calculate 2+2")
     assert result3 == "math_agent", f"Expected math_agent, got {result3}"
 
     # Step 6: Add another agent
-    print("\nStep 6: Adding research_agent")
     research_agent = MockAgent("research_agent", ["web_search", "wikipedia"])
     supervisor.register_agent(research_agent)
 
     # Step 7: Verify all agents work
-    print("\nStep 7: Final verification")
-    print(f"   Total agents: {len(supervisor.agent_registry)}")
-    print(f"   Agent names: {list(supervisor.agent_registry.keys())}")
-    print(f"   Choice model options: {supervisor.choice_model.option_names}")
 
     # Test routing to each agent type
     write_result = await supervisor.route_request("Write something")
     math_result = await supervisor.route_request("Do some math")
     generic_result = await supervisor.route_request("Generic request")
 
-    print(f"\n   Write request → {write_result}")
-    print(f"   Math request → {math_result}")
-    print(f"   Generic request → {generic_result}")
 
-    print("\n✅ SUCCESS: Agents can be added after graph compilation!")
-    print(f"   Started with 1 agent, ended with {len(supervisor.agent_registry)}")
-    print(f"   All routing works correctly")
 
     return True
 
 
 async def test_graph_rebuilding():
     """Test the actual graph rebuilding mechanism."""
-
-    print("\n" + "=" * 60)
-    print("🔧 Testing Graph Rebuilding Mechanism")
-    print("=" * 60 + "\n")
 
     # This tests the actual _rebuild_graph method concept
     class GraphRebuildingSupervisor(SimpleDynamicSupervisor):
@@ -230,12 +204,12 @@ async def test_graph_rebuilding():
             logger.info(f"\n🔨 Rebuilding graph (rebuild #{self.graph_rebuild_count})")
 
             # Update routing destinations
-            self.routing_destinations = list(self.agent_registry.keys()) + ["END"]
+            self.routing_destinations = [*list(self.agent_registry.keys()), "END"]
             logger.info(f"   New routing destinations: {self.routing_destinations}")
 
             # Simulate re-compilation
             logger.info("   Re-compiling graph with new structure...")
-            logger.info(f"   ✅ Graph rebuilt successfully")
+            logger.info("   ✅ Graph rebuilt successfully"y")
 
     # Test the rebuilding
     supervisor = GraphRebuildingSupervisor()
@@ -245,18 +219,12 @@ async def test_graph_rebuilding():
 
     # Compile
     supervisor.compile()
-    print(f"\nInitial state: {supervisor.routing_destinations}")
-    print(f"Rebuild count: {supervisor.graph_rebuild_count}")
 
     # Add agent post-compile (should trigger rebuild)
     supervisor.register_agent(MockAgent("agent2"))
-    print(f"\nAfter adding agent2: {supervisor.routing_destinations}")
-    print(f"Rebuild count: {supervisor.graph_rebuild_count}")
 
     # Add another agent (should trigger another rebuild)
     supervisor.register_agent(MockAgent("agent3"))
-    print(f"\nAfter adding agent3: {supervisor.routing_destinations}")
-    print(f"Rebuild count: {supervisor.graph_rebuild_count}")
 
     # Verify
     assert supervisor.graph_rebuild_count == 2, "Expected 2 rebuilds"
@@ -264,14 +232,11 @@ async def test_graph_rebuilding():
         len(supervisor.routing_destinations) == 4
     ), "Expected 4 destinations (3 agents + END)"
 
-    print("\n✅ Graph rebuilding works correctly!")
 
 
 if __name__ == "__main__":
-    print("🚀 Running Dynamic Supervisor Post-Compile Tests\n")
 
     # Run tests
     asyncio.run(test_post_compile_agent_addition())
     asyncio.run(test_graph_rebuilding())
 
-    print("\n🎉 All tests passed! Dynamic agent addition works after compilation.")

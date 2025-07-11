@@ -1,5 +1,4 @@
-"""
-LlamaIndex Graph Retriever implementation for the Haive framework.
+"""LlamaIndex Graph Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the LlamaIndex Graph retriever,
 which performs graph-based retrieval using knowledge graphs and graph databases
@@ -33,8 +32,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.LLAMA_INDEX_GRAPH)
 class LlamaIndexGraphRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
-    """
-    Configuration for LlamaIndex Graph retriever in the Haive framework.
+    """Configuration for LlamaIndex Graph retriever in the Haive framework.
 
     This retriever performs graph-based retrieval using knowledge graphs and
     graph databases, providing semantic relationships and graph traversal capabilities.
@@ -87,17 +85,17 @@ class LlamaIndexGraphRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         description="Type of graph backend: 'neo4j', 'networkx', 'knowledge_graph'",
     )
 
-    connection_url: Optional[str] = Field(
+    connection_url: str | None = Field(
         default=None,
         description="Connection URL for graph database (required for Neo4j)",
     )
 
-    database_name: Optional[str] = Field(
+    database_name: str | None = Field(
         default=None, description="Database name (for Neo4j)"
     )
 
     # API configuration with SecureConfigMixin
-    api_key: Optional[str] = (
+    api_key: str | None = (
         Field(  # Using str instead of SecretStr to avoid import issues
             default=None,
             description="API key for graph services (auto-resolved from environment)",
@@ -132,7 +130,7 @@ class LlamaIndexGraphRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         default=True, description="Whether to include relationship information"
     )
 
-    similarity_threshold: Optional[float] = Field(
+    similarity_threshold: float | None = Field(
         default=None,
         ge=0.0,
         le=1.0,
@@ -140,7 +138,7 @@ class LlamaIndexGraphRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
     )
 
     @validator("graph_type")
-    def validate_graph_type(cls, v):
+    def validate_graph_type(self, v):
         """Validate graph type."""
         valid_types = ["neo4j", "networkx", "knowledge_graph"]
         if v not in valid_types:
@@ -148,7 +146,7 @@ class LlamaIndexGraphRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         return v
 
     @validator("query_type")
-    def validate_query_type(cls, v):
+    def validate_query_type(self, v):
         """Validate query type."""
         valid_types = ["node", "relationship", "path", "subgraph"]
         if v not in valid_types:
@@ -156,24 +154,24 @@ class LlamaIndexGraphRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         return v
 
     @validator("connection_url")
-    def validate_connection_url(cls, v, values):
+    def validate_connection_url(self, v, values):
         """Validate connection URL for Neo4j."""
         graph_type = values.get("graph_type", "")
         if graph_type == "neo4j" and not v:
             raise ValueError("connection_url is required for Neo4j graph type")
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for LlamaIndex Graph retriever."""
         return {
             "query": (str, Field(description="Query for graph-based retrieval")),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for LlamaIndex Graph retriever."""
         return {
             "documents": (
-                List[Any],  # List[Document] but avoiding import
+                list[Any],  # List[Document] but avoiding import
                 Field(
                     default_factory=list,
                     description="Documents retrieved from graph traversal",
@@ -182,8 +180,7 @@ class LlamaIndexGraphRetrieverConfig(SecureConfigMixin, BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a LlamaIndex Graph retriever from this configuration.
+        """Create a LlamaIndex Graph retriever from this configuration.
 
         Returns:
             LlamaIndexGraphRetriever: Instantiated retriever ready for graph-based retrieval.

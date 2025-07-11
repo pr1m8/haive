@@ -1,5 +1,4 @@
-"""
-Rephrase Query Retriever implementation for the Haive framework.
+"""Rephrase Query Retriever implementation for the Haive framework.
 
 This module provides a configuration class for the Rephrase Query retriever,
 which reformulates user queries using an LLM to improve retrieval performance
@@ -32,8 +31,7 @@ from haive.core.engine.retriever.types import RetrieverType
 
 @BaseRetrieverConfig.register(RetrieverType.REPHRASE_QUERY)
 class RePhraseQueryRetrieverConfig(BaseRetrieverConfig):
-    """
-    Configuration for Rephrase Query retriever in the Haive framework.
+    """Configuration for Rephrase Query retriever in the Haive framework.
 
     This retriever reformulates user queries using an LLM to improve retrieval
     performance by creating more effective search queries.
@@ -79,12 +77,12 @@ class RePhraseQueryRetrieverConfig(BaseRetrieverConfig):
     )
 
     # Prompt customization
-    prompt_template: Optional[str] = Field(
+    prompt_template: str | None = Field(
         default=None,
         description="Custom prompt template for rephrasing (uses default if None)",
     )
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Rephrase Query retriever."""
         return {
             "query": (
@@ -93,11 +91,11 @@ class RePhraseQueryRetrieverConfig(BaseRetrieverConfig):
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Rephrase Query retriever."""
         return {
             "documents": (
-                List[Any],  # List[Document] but avoiding import
+                list[Any],  # List[Document] but avoiding import
                 Field(
                     default_factory=list,
                     description="Documents retrieved using the rephrased query",
@@ -106,8 +104,7 @@ class RePhraseQueryRetrieverConfig(BaseRetrieverConfig):
         }
 
     def instantiate(self):
-        """
-        Create a Rephrase Query retriever from this configuration.
+        """Create a Rephrase Query retriever from this configuration.
 
         Returns:
             RePhraseQueryRetriever: Instantiated retriever ready for query rephrasing retrieval.

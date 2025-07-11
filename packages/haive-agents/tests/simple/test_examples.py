@@ -1,11 +1,12 @@
 """Tests for SimpleAgent specific use cases and examples."""
 
 from agents.simple.factory import create_simple_agent
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
+
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
 
 
 def test_basic_agent():
@@ -146,15 +147,15 @@ def test_document_structure_agent():
 
     # A short text for testing
     test_text = """# Introduction to Python
-    
+
     Python is a popular programming language.
-    
+
     ## Basic Syntax
-    
+
     Python has a simple syntax that is easy to learn.
-    
+
     ## Data Types
-    
+
     Python supports various data types including strings, numbers, and lists.
     """
 

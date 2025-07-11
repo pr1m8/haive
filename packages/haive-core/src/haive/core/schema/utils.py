@@ -79,8 +79,7 @@ class SchemaUtils:
 
     @staticmethod
     def format_type_annotation(type_hint: Any) -> str:
-        """
-        Format a type hint for pretty printing.
+        """Format a type hint for pretty printing.
 
         Creates a clean, readable string representation of a type annotation.
 
@@ -113,7 +112,7 @@ class SchemaUtils:
         type_str = type_str.replace("typing.", "")
 
         # Handle special case of Optional and Union
-        if type_str.startswith("Optional[") or type_str.startswith("Union["):
+        if type_str.startswith(("Optional[", "Union[")):
             return type_str
 
         # Handle nested annotations
@@ -131,8 +130,7 @@ class SchemaUtils:
 
     @staticmethod
     def extract_field_info(field_info: FieldInfo) -> tuple[Any, str, str | None]:
-        """
-        Extract useful information from a Pydantic FieldInfo.
+        """Extract useful information from a Pydantic FieldInfo.
 
         Args:
             field_info: Pydantic field info object.
@@ -163,7 +161,7 @@ class SchemaUtils:
                 default_str = " = None"
             elif isinstance(default, str):
                 default_str = f' = "{default}"'
-            elif isinstance(default, (int, float, bool)):
+            elif isinstance(default, int | float | bool):
                 default_str = f" = {default}"
             else:
                 default_str = f" = {default!r}"
@@ -176,17 +174,16 @@ class SchemaUtils:
     def format_schema_as_python(
         schema_name: str,
         fields: dict[str, tuple[Any, FieldInfo]],
-        properties: dict[str, Any] = None,
-        computed_properties: dict[str, Any] = None,
-        class_methods: dict[str, Any] = None,
-        static_methods: dict[str, Any] = None,
-        field_descriptions: dict[str, str] = None,
+        properties: dict[str, Any] | None = None,
+        computed_properties: dict[str, Any] | None = None,
+        class_methods: dict[str, Any] | None = None,
+        static_methods: dict[str, Any] | None = None,
+        field_descriptions: dict[str, str] | None = None,
         shared_fields: set[str] | None = None,
         reducer_fields: dict[str, Callable] | None = None,
         base_class: str = "StateSchema",
     ) -> str:
-        """
-        Format a schema definition as Python code.
+        """Format a schema definition as Python code.
 
         Creates a string representation of a schema class with all its fields,
         properties, methods, and metadata.
@@ -254,7 +251,7 @@ class SchemaUtils:
             output.append(f"    {field_name}: {type_str}{default_str}")
 
         # Add properties
-        for prop_name in properties.keys():
+        for prop_name in properties:
             output.append("\n    @property")
             output.append(f"    def {prop_name}(self): ...")
 
@@ -267,12 +264,12 @@ class SchemaUtils:
                 output.append(f"    def {prop_name}(self, value): ...")
 
         # Add class methods
-        for method_name in class_methods.keys():
+        for method_name in class_methods:
             output.append("\n    @classmethod")
             output.append(f"    def {method_name}(cls): ...")
 
         # Add static methods
-        for method_name in static_methods.keys():
+        for method_name in static_methods:
             output.append("\n    @staticmethod")
             output.append(f"    def {method_name}(): ...")
 
@@ -287,8 +284,7 @@ class SchemaUtils:
         reducers: dict[str, Callable] | None = None,
         base_class: type[BaseModel] | None = None,
     ) -> type[BaseModel]:
-        """
-        Build a state schema from field definitions.
+        """Build a state schema from field definitions.
 
         Args:
             name: Name for the schema class.
@@ -337,8 +333,7 @@ class SchemaUtils:
         shared: bool = False,
         reducer: Callable | None = None,
     ) -> type[BaseModel]:
-        """
-        Add a field to an existing schema class.
+        """Add a field to an existing schema class.
 
         Args:
             schema: Existing schema class.
@@ -397,8 +392,7 @@ class SchemaUtils:
 
     @staticmethod
     def get_reducer_name(reducer: callable) -> str:
-        """
-        Get a serializable name for a reducer function.
+        """Get a serializable name for a reducer function.
 
         Args:
             reducer: Reducer function.

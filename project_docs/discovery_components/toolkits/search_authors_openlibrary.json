@@ -7,7 +7,7 @@
     "description": "Search for authors by name using OpenLibrary",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.852789",
+    "timestamp": "2025-07-10T19:45:29.070758",
     "schema": {
       "description": "Input schema for the author search tool.\n\nAttributes:\n    name: Name of the author to search for.",
       "properties": {
@@ -36,7 +36,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.852789",
+      "timestamp": "2025-07-10T19:45:29.070758",
       "category": "toolkits"
     }
   },

@@ -23,13 +23,13 @@ import logging
 import os
 import sqlite3
 import uuid
-from typing import Any, Dict, List, Optional, Tuple
-
-from pydantic import Field
+from typing import Any, Dict
 
 from haive.core.persistence.base import CheckpointerConfig
 from haive.core.persistence.types import CheckpointerType
-from haive.core.persistence.utils import deserialize_metadata, serialize_metadata
+from haive.core.persistence.utils import (deserialize_metadata,
+                                          serialize_metadata)
+from pydantic import Field
 
 logger = logging.getLogger(__name__)
 
@@ -153,7 +153,7 @@ class SQLiteSaver:
 
             conn.commit()
 
-    def get(self, config: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    def get(self, config: dict[str, Any]) -> dict[str, Any] | None:
         """Retrieve a checkpoint from the SQLite database.
 
         This method retrieves a specific checkpoint from the database based on the
@@ -206,7 +206,7 @@ class SQLiteSaver:
                 # Get specific checkpoint
                 cursor.execute(
                     """
-                    SELECT data FROM checkpoints 
+                    SELECT data FROM checkpoints
                     WHERE thread_id = ? AND checkpoint_ns = ? AND checkpoint_id = ?
                     """,
                     (thread_id, checkpoint_ns, checkpoint_id),
@@ -215,7 +215,7 @@ class SQLiteSaver:
                 # Get latest checkpoint
                 cursor.execute(
                     """
-                    SELECT data FROM checkpoints 
+                    SELECT data FROM checkpoints
                     WHERE thread_id = ? AND checkpoint_ns = ?
                     ORDER BY created_at DESC LIMIT 1
                     """,
@@ -231,13 +231,12 @@ class SQLiteSaver:
 
     def put(
         self,
-        config: Dict[str, Any],
-        checkpoint: Dict[str, Any],
-        metadata: Optional[Dict[str, Any]] = None,
-        new_versions: Optional[Dict[str, Any]] = None,
-    ) -> Dict[str, Any]:
-        """
-        Save a checkpoint to the database.
+        config: dict[str, Any],
+        checkpoint: dict[str, Any],
+        metadata: dict[str, Any] | None = None,
+        new_versions: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Save a checkpoint to the database.
 
         Args:
             config: Configuration with thread_id and optional checkpoint_id
@@ -286,7 +285,7 @@ class SQLiteSaver:
             # Insert checkpoint
             cursor.execute(
                 """
-                INSERT INTO checkpoints 
+                INSERT INTO checkpoints
                 (checkpoint_id, thread_id, checkpoint_ns, parent_checkpoint_id, data, metadata)
                 VALUES (?, ?, ?, ?, ?, ?)
                 """,
@@ -313,13 +312,12 @@ class SQLiteSaver:
 
     def list(
         self,
-        config: Dict[str, Any],
-        limit: Optional[int] = None,
-        filter: Optional[Dict[str, Any]] = None,
-        before: Optional[Dict[str, Any]] = None,
-    ) -> List[Tuple[Dict[str, Any], Dict[str, Any]]]:
-        """
-        List checkpoints for a thread.
+        config: dict[str, Any],
+        limit: int | None = None,
+        filter: dict[str, Any] | None = None,
+        before: dict[str, Any] | None = None,
+    ) -> list[tuple[dict[str, Any], dict[str, Any]]]:
+        """List checkpoints for a thread.
 
         Args:
             config: Configuration with thread_id
@@ -339,7 +337,7 @@ class SQLiteSaver:
 
             query = """
             SELECT checkpoint_id, parent_checkpoint_id, data, metadata
-            FROM checkpoints 
+            FROM checkpoints
             WHERE thread_id = ? AND checkpoint_ns = ?
             ORDER BY created_at DESC
             """
@@ -462,7 +460,7 @@ class SQLiteCheckpointerConfig(CheckpointerConfig):
     )
 
     # Internal state (not serialized)
-    checkpointer: Optional[Any] = Field(default=None, exclude=True)
+    checkpointer: Any | None = Field(default=None, exclude=True)
 
     def create_checkpointer(self) -> Any:
         """Create a SQLite checkpointer based on this configuration.
@@ -496,8 +494,8 @@ class SQLiteCheckpointerConfig(CheckpointerConfig):
     def register_thread(
         self,
         thread_id: str,
-        name: Optional[str] = None,
-        metadata: Optional[Dict[str, Any]] = None,
+        name: str | None = None,
+        metadata: dict[str, Any] | None = None,
     ) -> None:
         """Register or update a thread in the SQLite database.
 
@@ -557,7 +555,7 @@ class SQLiteCheckpointerConfig(CheckpointerConfig):
                 # Insert new thread
                 cursor.execute(
                     """
-                    INSERT INTO threads (thread_id, metadata) 
+                    INSERT INTO threads (thread_id, metadata)
                     VALUES (?, ?)
                     """,
                     (thread_id, metadata_json),
@@ -567,8 +565,8 @@ class SQLiteCheckpointerConfig(CheckpointerConfig):
                 # Update last access time
                 cursor.execute(
                     """
-                    UPDATE threads 
-                    SET last_access = CURRENT_TIMESTAMP 
+                    UPDATE threads
+                    SET last_access = CURRENT_TIMESTAMP
                     WHERE thread_id = ?
                     """,
                     (thread_id,),
@@ -577,12 +575,11 @@ class SQLiteCheckpointerConfig(CheckpointerConfig):
 
     def put_checkpoint(
         self,
-        config: Dict[str, Any],
+        config: dict[str, Any],
         data: Any,
-        metadata: Optional[Dict[str, Any]] = None,
-    ) -> Dict[str, Any]:
-        """
-        Store a checkpoint in the SQLite database.
+        metadata: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Store a checkpoint in the SQLite database.
 
         Args:
             config: Configuration with thread_id and optional checkpoint_id
@@ -605,9 +602,8 @@ class SQLiteCheckpointerConfig(CheckpointerConfig):
         # Store the checkpoint
         return checkpointer.put(config, checkpoint_data, metadata)
 
-    def get_checkpoint(self, config: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """
-        Retrieve a checkpoint from the SQLite database.
+    def get_checkpoint(self, config: dict[str, Any]) -> dict[str, Any] | None:
+        """Retrieve a checkpoint from the SQLite database.
 
         Args:
             config: Configuration with thread_id and optional checkpoint_id
@@ -627,10 +623,9 @@ class SQLiteCheckpointerConfig(CheckpointerConfig):
         return result
 
     def list_checkpoints(
-        self, config: Dict[str, Any], limit: Optional[int] = None
-    ) -> List[Tuple[Dict[str, Any], Any]]:
-        """
-        List checkpoints for a thread.
+        self, config: dict[str, Any], limit: int | None = None
+    ) -> list[tuple[dict[str, Any], Any]]:
+        """List checkpoints for a thread.
 
         Args:
             config: Configuration with thread_id

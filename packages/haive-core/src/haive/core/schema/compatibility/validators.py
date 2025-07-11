@@ -10,8 +10,6 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Any, Callable, Dict, List, Optional, Set, Tuple, Union
 
-from pydantic import BaseModel
-
 from haive.core.schema.compatibility.types import (
     FieldInfo,
     SchemaInfo,
@@ -19,6 +17,7 @@ from haive.core.schema.compatibility.types import (
     ValidationResult,
     ValidationWarning,
 )
+from pydantic import BaseModel
 
 
 class ValidationContext(BaseModel):

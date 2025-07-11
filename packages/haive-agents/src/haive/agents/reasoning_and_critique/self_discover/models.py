@@ -33,7 +33,7 @@ class ModuleSelectionResult(BaseModel):
         return formatted
 
     @field_validator("selected_modules")
-    def validate_modules(cls, modules):
+    def validate_modules(self, modules):
         """Ensure we have a reasonable number of modules."""
         if len(modules) < 1:
             raise ValueError("At least one module must be selected")
@@ -100,7 +100,7 @@ class ReasoningStructure(BaseModel):
         return formatted
 
     @field_validator("steps")
-    def validate_steps(cls, steps):
+    def validate_steps(self, steps):
         """Ensure we have a reasonable number of steps."""
         if len(steps) < 1:
             raise ValueError("At least one step must be included")

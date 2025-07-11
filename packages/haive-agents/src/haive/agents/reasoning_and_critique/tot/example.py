@@ -7,11 +7,10 @@ with different problem types.
 import asyncio
 import logging
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
-
 from haive.agents.reasoning_and_critique.tot.agent import ToTAgent
 from haive.agents.reasoning_and_critique.tot.config import TOTAgentConfig
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -127,12 +126,12 @@ async def run_complex_reasoning_example():
     If at least half of the pirates (including the captain) accept the plan, they keep the coins.
     If the majority rejects the plan, the captain is thrown overboard, and the process starts
     again with the next oldest pirate.
-    
+
     Each pirate's priorities are:
     1. Stay alive
     2. Get as many coins as possible
     3. Throw others overboard if it doesn't affect their survival or coins
-    
+
     What is the optimal distribution plan for the 60-year-old captain?
     """
 

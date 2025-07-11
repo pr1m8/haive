@@ -1,7 +1,6 @@
 # src/haive/core/logging/__init__.py
 
-"""
-Haive Rich Logging System
+"""Haive Rich Logging System.
 
 A comprehensive logging system built around Rich UI with extensive formatting,
 file logging, and beautiful console output.
@@ -38,12 +37,7 @@ except ImportError:
 
 # Import UI components if available
 try:
-    from haive.core.logging.ui import (
-        LoggingMonitor,
-        LoggingUI,
-        launch_ui,
-        monitor_logs,
-    )
+    from haive.core.logging.ui import LoggingMonitor, LoggingUI, launch_ui, monitor_logs
 
     UI_AVAILABLE = True
 except ImportError:
@@ -61,31 +55,31 @@ except ImportError:
     DASHBOARD_AVAILABLE = False
 
 __all__ = [
+    "FileFormatter",
     # Manager and mixins
     "LoggingManager",
     "LoggingMixin",
-    "RichLoggerMixin",
+    "RichConsoleHandler",
     # Formatters and handlers
     "RichFormatter",
-    "FileFormatter",
-    "RichConsoleHandler",
+    "RichLoggerMixin",
     "RotatingFileHandler",
+    "debug_mode",
     # Utilities
     "get_logger",
-    "setup_project_logging",
-    "log_exception",
+    "haive_only",
     # Decorators
     "log_calls",
-    "log_performance",
     "log_errors",
+    "log_exception",
+    "log_performance",
     # Control interface
     "logging_control",
-    "set_log_level",
-    "suppress_modules",
     "only_show_modules",
-    "debug_mode",
     "quiet_mode",
-    "haive_only",
+    "set_log_level",
+    "setup_project_logging",
+    "suppress_modules",
 ]
 
 # Add auto-config exports if available
@@ -93,8 +87,8 @@ if AUTO_CONFIG_AVAILABLE:
     __all__.extend(
         [
             "auto_configure_logging",
-            "configure_for_game_development",
             "configure_for_agent_development",
+            "configure_for_game_development",
             "show_clean_logs",
         ]
     )
@@ -103,8 +97,8 @@ if AUTO_CONFIG_AVAILABLE:
 if UI_AVAILABLE:
     __all__.extend(
         [
-            "LoggingUI",
             "LoggingMonitor",
+            "LoggingUI",
             "launch_ui",
             "monitor_logs",
         ]

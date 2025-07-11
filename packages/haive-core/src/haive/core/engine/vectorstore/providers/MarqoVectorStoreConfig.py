@@ -1,5 +1,4 @@
-"""
-Marqo Vector Store implementation for the Haive framework.
+"""Marqo Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the Marqo vector store,
 which is an open-source tensor search engine with multimodal capabilities.
@@ -25,7 +24,8 @@ The implementation integrates with LangChain's Marqo while providing
 a consistent Haive configuration interface.
 """
 
-from typing import Any, Callable, Dict, List, Optional, Tuple, Type
+from collections.abc import Callable
+from typing import Any, Dict, List, Optional, Tuple, Type
 
 from langchain_core.documents import Document
 from pydantic import Field, validator
@@ -36,8 +36,7 @@ from haive.core.engine.vectorstore.types import VectorStoreType
 
 @BaseVectorStoreConfig.register(VectorStoreType.MARQO)
 class MarqoVectorStoreConfig(BaseVectorStoreConfig):
-    """
-    Configuration for Marqo vector store in the Haive framework.
+    """Configuration for Marqo vector store in the Haive framework.
 
     This vector store uses Marqo's tensor search engine for multimodal search
     with built-in embedding models and automatic model management.
@@ -95,7 +94,7 @@ class MarqoVectorStoreConfig(BaseVectorStoreConfig):
 
     index_name: str = Field(..., description="Name of the Marqo index (required)")
 
-    api_key: Optional[str] = Field(
+    api_key: str | None = Field(
         default=None,
         description="API key for Marqo Cloud (optional, for cloud deployments)",
     )
@@ -116,7 +115,7 @@ class MarqoVectorStoreConfig(BaseVectorStoreConfig):
     )
 
     # Search settings
-    searchable_attributes: Optional[List[str]] = Field(
+    searchable_attributes: list[str] | None = Field(
         default=None, description="List of attributes to make searchable"
     )
 
@@ -126,24 +125,24 @@ class MarqoVectorStoreConfig(BaseVectorStoreConfig):
     )
 
     # Advanced settings
-    add_documents_settings: Optional[Dict[str, Any]] = Field(
+    add_documents_settings: dict[str, Any] | None = Field(
         default=None, description="Additional settings for add_documents operations"
     )
 
-    page_content_builder: Optional[Callable[[Dict[str, Any]], str]] = Field(
+    page_content_builder: Callable[[dict[str, Any]], str] | None = Field(
         default=None,
         description="Custom function to build page content from Marqo results",
     )
 
     @validator("marqo_url")
-    def validate_marqo_url(cls, v):
+    def validate_marqo_url(self, v):
         """Validate Marqo URL format."""
         if not v.startswith(("http://", "https://")):
             raise ValueError("marqo_url must start with http:// or https://")
         return v
 
     @validator("index_name")
-    def validate_index_name(cls, v):
+    def validate_index_name(self, v):
         """Validate index name format."""
         if not v or len(v.strip()) == 0:
             raise ValueError("index_name cannot be empty")
@@ -157,7 +156,7 @@ class MarqoVectorStoreConfig(BaseVectorStoreConfig):
         return v
 
     @validator("model")
-    def validate_model(cls, v):
+    def validate_model(self, v):
         """Validate model format."""
         if not v or len(v.strip()) == 0:
             raise ValueError("model cannot be empty")
@@ -174,33 +173,30 @@ class MarqoVectorStoreConfig(BaseVectorStoreConfig):
         return v
 
     def validate_embedding(self):
-        """
-        Override to make embedding optional for Marqo.
+        """Override to make embedding optional for Marqo.
 
         Marqo manages its own embeddings internally based on the specified model,
         so we don't require an embedding configuration.
         """
         # Marqo doesn't need external embeddings
-        pass
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Marqo vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to Marqo"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Marqo vector store."""
         return {
-            "ids": (List[str], Field(description="Document IDs in Marqo")),
+            "ids": (list[str], Field(description="Document IDs in Marqo")),
         }
 
     def instantiate(self, client=None):
-        """
-        Create a Marqo vector store from this configuration.
+        """Create a Marqo vector store from this configuration.
 
         Args:
             client: Optional pre-configured Marqo client. If not provided,
@@ -214,11 +210,11 @@ class MarqoVectorStoreConfig(BaseVectorStoreConfig):
             ValueError: If configuration is invalid.
         """
         try:
-            import marqo
             from langchain_community.vectorstores import Marqo
+            import marqo
         except ImportError as e:
             raise ImportError(
-                "Marqo requires marqo package. " "Install with: pip install marqo"
+                "Marqo requires marqo package. Install with: pip install marqo"
             ) from e
 
         # Create Marqo client if not provided

@@ -7,6 +7,7 @@ This module implements a tool-using agent that follows the ReAct pattern
 import logging
 from typing import Any
 
+from haive.agents.react_class.react_v3.config import ReactAgentConfig
 from haive.core.engine.agent.agent import Agent, register_agent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
@@ -14,8 +15,6 @@ from haive.core.schema.schema_composer import SchemaComposer
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, ToolMessage
 from langgraph.graph import END, StateGraph
 from pydantic import BaseModel
-
-from haive.agents.react_class.react_v3.config import ReactAgentConfig
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -45,7 +44,7 @@ class ReactAgent(Agent[ReactAgentConfig]):
 
         # Auto-derive schema if not provided
         if self.config.state_schema is None:
-            components = [self.config.engine] + self.config.tools
+            components = [self.config.engine, *self.config.tools]
             schema_composer = SchemaComposer.from_components(components)
             self.config.state_schema = schema_composer.build()
             logger.info(
@@ -55,7 +54,7 @@ class ReactAgent(Agent[ReactAgentConfig]):
         # Create dynamic graph with state schema
         gb = DynamicGraph(
             name=self.config.name,
-            components=[self.config.engine] + self.config.tools,
+            components=[self.config.engine, *self.config.tools],
             state_schema=self.config.state_schema,
             visualize=self.config.visualize,
         )
@@ -146,7 +145,7 @@ class ReactAgent(Agent[ReactAgentConfig]):
                     )
                 except Exception as e:
                     error_msg = f"Error executing tool '{tool_name}': {e!s}"
-                    logger.error(error_msg)
+                    logger.exception(error_msg)
                     messages.append(
                         ToolMessage(content=error_msg, tool_call_id=tool_id)
                     )

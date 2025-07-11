@@ -14,12 +14,12 @@ from haive.core.engine.base import InvokableEngine, NonInvokableEngine
 from haive.core.graph.node.config import NodeConfig
 from haive.core.graph.node.types import NodeType
 
+
 logger = logging.getLogger(__name__)
 
 
 class NodeFactory:
-    """
-    Factory for creating node functions from configurations.
+    """Factory for creating node functions from configurations.
 
     This class provides methods for creating different types of node functions
     based on their configuration, engine type, or specialized functionality.
@@ -27,8 +27,7 @@ class NodeFactory:
 
     @classmethod
     def create_node_function(cls, config: NodeConfig) -> Callable:
-        """
-        Create a node function from a node configuration.
+        """Create a node function from a node configuration.
 
         Args:
             config: NodeConfig with all node configuration
@@ -42,27 +41,21 @@ class NodeFactory:
         # Handle based on node type
         if config.node_type == NodeType.TOOL:
             return cls._create_tool_node(config)
-        elif config.node_type == NodeType.VALIDATION:
+        if config.node_type == NodeType.VALIDATION:
             return cls._create_validation_node(config)
-        # elif config.node_type == NodeType.BRANCH:
-        # return cls._create_branch_node(config)
-        # elif config.node_type == NodeType.SEND:
-        # return cls._create_send_node(config)
-        elif isinstance(engine, InvokableEngine):
+        if isinstance(engine, InvokableEngine):
             return cls._create_invokable_engine_node(config, engine, engine_id)
-        elif isinstance(engine, NonInvokableEngine):
+        if isinstance(engine, NonInvokableEngine):
             return cls._create_non_invokable_engine_node(config, engine, engine_id)
-        elif callable(engine):
+        if callable(engine):
             return cls._create_callable_node(config, engine)
-        else:
-            return cls._create_generic_node(config, engine)
+        return cls._create_generic_node(config, engine)
 
     @classmethod
     def _create_invokable_engine_node(
-        cls, config: NodeConfig, engine: InvokableEngine, engine_id: Optional[str]
+        cls, config: NodeConfig, engine: InvokableEngine, engine_id: str | None
     ) -> Callable:
-        """
-        Create a node function for an invokable engine.
+        """Create a node function for an invokable engine.
 
         Args:
             config: Node configuration
@@ -87,19 +80,12 @@ class NodeFactory:
             try:
                 # Extract input from state using the fixed _extract_input method
                 input_data = cls._extract_input(state, input_mapping, engine_id)
-                # print(engine.prompt_template)
-                # breakpoint()
                 # Create a fresh runnable with appropriate config
                 runnable = engine.create_runnable()
-                print(runnable)
 
                 # Invoke the runnable
                 result = runnable.invoke(input_data)
-                print(result)
-                print(output_mapping)
-                print(type(result))
 
-                # print()
                 logger.debug(f"Result: {result}")
                 # Process output using the fixed _process_output method - ONLY PASS 2 REQUIRED ARGS
                 processed_output = cls._process_output(result, output_mapping)
@@ -119,7 +105,7 @@ class NodeFactory:
                 # Return with Command for routing
                 return Command(update=processed_output, goto=command_goto)
             except Exception as e:
-                logger.error(f"Error in node {engine_id or 'unknown'}: {e}")
+                logger.exception(f"Error in node {engine_id or 'unknown'}: {e}")
                 return Command(update={"error": str(e)}, goto=command_goto)
 
         # Add metadata
@@ -130,10 +116,9 @@ class NodeFactory:
 
     @classmethod
     def _create_non_invokable_engine_node(
-        cls, config: NodeConfig, engine: NonInvokableEngine, engine_id: Optional[str]
+        cls, config: NodeConfig, engine: NonInvokableEngine, engine_id: str | None
     ) -> Callable:
-        """
-        Create a node function for a non-invokable engine.
+        """Create a node function for a non-invokable engine.
 
         Args:
             config: Node configuration
@@ -178,7 +163,7 @@ class NodeFactory:
 
                 return Command(update=processed_output, goto=command_goto)
             except Exception as e:
-                logger.error(
+                logger.exception(
                     f"Error in non-invokable node {engine_id or 'unknown'}: {e}"
                 )
                 return Command(update={"error": str(e)}, goto=command_goto)
@@ -191,8 +176,7 @@ class NodeFactory:
 
     @classmethod
     def _create_callable_node(cls, config: NodeConfig, func: Callable) -> Callable:
-        """
-        Create a node function from a callable.
+        """Create a node function from a callable.
 
         Args:
             config: Node configuration
@@ -241,16 +225,15 @@ class NodeFactory:
                         result = loop.run_until_complete(func(input_data, config))
                     else:
                         result = func(input_data, config)
+                elif is_async:
+                    # Run async function in event loop
+                    loop = asyncio.get_event_loop()
+                    result = loop.run_until_complete(func(input_data))
                 else:
-                    if is_async:
-                        # Run async function in event loop
-                        loop = asyncio.get_event_loop()
-                        result = loop.run_until_complete(func(input_data))
-                    else:
-                        result = func(input_data)
+                    result = func(input_data)
 
                 # Handle result that's already a Command or Send
-                if isinstance(result, (Command, Send)) or (
+                if isinstance(result, Command | Send) or (
                     isinstance(result, list)
                     and all(isinstance(item, Send) for item in result)
                 ):
@@ -262,7 +245,7 @@ class NodeFactory:
                 # Return with Command for routing
                 return Command(update=processed_output, goto=command_goto)
             except Exception as e:
-                logger.error(f"Error in callable node: {e}")
+                logger.exception(f"Error in callable node: {e}")
                 return Command(update={"error": str(e)}, goto=command_goto)
 
         # Add async support if function is async
@@ -281,7 +264,7 @@ class NodeFactory:
                         result = await func(input_data)
 
                     # Handle result that's already a Command or Send
-                    if isinstance(result, (Command, Send)) or (
+                    if isinstance(result, Command | Send) or (
                         isinstance(result, list)
                         and all(isinstance(item, Send) for item in result)
                     ):
@@ -293,7 +276,7 @@ class NodeFactory:
                     # Return with Command for routing
                     return Command(update=processed_output, goto=command_goto)
                 except Exception as e:
-                    logger.error(f"Error in async callable node: {e}")
+                    logger.exception(f"Error in async callable node: {e}")
                     return Command(update={"error": str(e)}, goto=command_goto)
 
             # Set async invoke method
@@ -306,8 +289,7 @@ class NodeFactory:
 
     @classmethod
     def _create_tool_node(cls, config: NodeConfig) -> Callable:
-        """
-        Create a tool node function.
+        """Create a tool node function.
 
         Args:
             config: Node configuration
@@ -350,7 +332,7 @@ class NodeFactory:
                 result = tool_node.invoke(input_data, config)
 
                 # If result is already a Command or Send, return it
-                if isinstance(result, (Command, Send)) or (
+                if isinstance(result, Command | Send) or (
                     isinstance(result, list)
                     and all(isinstance(item, Send) for item in result)
                 ):
@@ -374,7 +356,7 @@ class NodeFactory:
                 # Return with Command for routing
                 return Command(update=processed_output, goto=command_goto)
             except Exception as e:
-                logger.error(f"Error in tool node: {e}")
+                logger.exception(f"Error in tool node: {e}")
                 return Command(update={"error": str(e)}, goto=command_goto)
 
         # Add async support if tool node supports it
@@ -390,7 +372,7 @@ class NodeFactory:
                     result = await tool_node.ainvoke(input_data, config)
 
                     # If result is already a Command or Send, return it
-                    if isinstance(result, (Command, Send)) or (
+                    if isinstance(result, Command | Send) or (
                         isinstance(result, list)
                         and all(isinstance(item, Send) for item in result)
                     ):
@@ -414,7 +396,7 @@ class NodeFactory:
                     # Return with Command for routing
                     return Command(update=processed_output, goto=command_goto)
                 except Exception as e:
-                    logger.error(f"Error in async tool node: {e}")
+                    logger.exception(f"Error in async tool node: {e}")
                     return Command(update={"error": str(e)}, goto=command_goto)
 
             # Set async invoke method
@@ -427,8 +409,7 @@ class NodeFactory:
 
     @classmethod
     def _create_validation_node(cls, config: NodeConfig) -> Callable:
-        """
-        Create a validation node function.
+        """Create a validation node function.
 
         Args:
             config: Node configuration
@@ -470,7 +451,7 @@ class NodeFactory:
                 result = validation_node.invoke(input_data, config)
 
                 # If result is already a Command or Send, return it
-                if isinstance(result, (Command, Send)) or (
+                if isinstance(result, Command | Send) or (
                     isinstance(result, list)
                     and all(isinstance(item, Send) for item in result)
                 ):
@@ -494,7 +475,7 @@ class NodeFactory:
                 # Return with Command for routing
                 return Command(update=processed_output, goto=command_goto)
             except Exception as e:
-                logger.error(f"Error in validation node: {e}")
+                logger.exception(f"Error in validation node: {e}")
                 return Command(update={"error": str(e)}, goto=command_goto)
 
         # Add metadata
@@ -504,8 +485,7 @@ class NodeFactory:
 
     @classmethod
     def _create_branch_node(cls, config: NodeConfig) -> Callable:
-        """
-        Create a branch node function.
+        """Create a branch node function.
 
         Args:
             config: Node configuration
@@ -521,7 +501,7 @@ class NodeFactory:
                 module = __import__(module_name, fromlist=[func_name])
                 condition = getattr(module, func_name)
             except (ValueError, ImportError, AttributeError) as e:
-                logger.error(f"Error importing condition function: {e}")
+                logger.exception(f"Error importing condition function: {e}")
                 raise ValueError(f"Could not resolve condition function: {e}")
 
         if not condition or not config.routes:
@@ -554,15 +534,14 @@ class NodeFactory:
                         target = routes.get(key, routes.get("default", END))
                         sends.append(Send(target, input_data))
                     return sends
-                else:
-                    # Single result - find matching route
-                    key = str(result)
-                    target = routes.get(key, routes.get("default", END))
+                # Single result - find matching route
+                key = str(result)
+                target = routes.get(key, routes.get("default", END))
 
-                    # Return Command with no update (just routing)
-                    return Command(goto=target)
+                # Return Command with no update (just routing)
+                return Command(goto=target)
             except Exception as e:
-                logger.error(f"Error in branch node: {e}")
+                logger.exception(f"Error in branch node: {e}")
                 # Fall through to default route
                 default_target = routes.get("default", END)
                 return Command(goto=default_target)
@@ -574,8 +553,7 @@ class NodeFactory:
 
     @classmethod
     def _create_send_node(cls, config: NodeConfig) -> Callable:
-        """
-        Create a send node function.
+        """Create a send node function.
 
         Args:
             config: Node configuration
@@ -620,7 +598,7 @@ class NodeFactory:
                     return Command(goto=END)
 
                 # Ensure items is a list
-                if not isinstance(items, (list, tuple)):
+                if not isinstance(items, list | tuple):
                     items = [items]
 
                 # Create Send objects for each target
@@ -642,7 +620,7 @@ class NodeFactory:
 
                 return sends
             except Exception as e:
-                logger.error(f"Error in send node: {e}")
+                logger.exception(f"Error in send node: {e}")
                 return Command(goto=END)
 
         # Add metadata
@@ -652,8 +630,7 @@ class NodeFactory:
 
     @classmethod
     def _create_generic_node(cls, config: NodeConfig, obj: Any) -> Callable:
-        """
-        Create a generic node function.
+        """Create a generic node function.
 
         Args:
             config: Node configuration
@@ -683,7 +660,7 @@ class NodeFactory:
                 # Return with Command for routing
                 return Command(update=processed_output, goto=command_goto)
             except Exception as e:
-                logger.error(f"Error in generic node: {e}")
+                logger.exception(f"Error in generic node: {e}")
                 return Command(update={"error": str(e)}, goto=command_goto)
 
         # Add metadata
@@ -693,10 +670,9 @@ class NodeFactory:
 
     @classmethod
     def _extract_input(
-        cls, state: Any, input_mapping: Dict[str, str], engine_id: Optional[str] = None
+        cls, state: Any, input_mapping: dict[str, str], engine_id: str | None = None
     ) -> Any:
-        """
-        Extract input from state based on mapping with engine I/O awareness.
+        """Extract input from state based on mapping with engine I/O awareness.
 
         Args:
             state: State object (dict, BaseModel, etc.)
@@ -745,7 +721,7 @@ class NodeFactory:
 
                     # If only one field is expected and we have exactly one field, return it directly
                     if len(input_fields) == 1 and len(engine_input) == 1:
-                        return list(engine_input.values())[0]
+                        return next(iter(engine_input.values()))
 
                     # Otherwise return the dictionary
                     return engine_input
@@ -762,7 +738,7 @@ class NodeFactory:
             else:
                 # Try attribute access
                 state_dict = {}
-                for state_key in input_mapping.keys():
+                for state_key in input_mapping:
                     if hasattr(state, state_key):
                         state_dict[state_key] = getattr(state, state_key)
 
@@ -774,26 +750,24 @@ class NodeFactory:
 
             # If only one key was mapped, return the value directly
             if len(input_mapping) == 1 and len(mapped_input) == 1:
-                return list(mapped_input.values())[0]
+                return next(iter(mapped_input.values()))
 
             return mapped_input
 
         # Final fallback: return state as-is
         if isinstance(state, dict):
             return state
-        elif hasattr(state, "model_dump"):
+        if hasattr(state, "model_dump"):
             return state.model_dump()
-        elif hasattr(state, "dict"):
+        if hasattr(state, "dict"):
             return state.dict()
-        else:
-            return state
+        return state
 
     @classmethod
     def _process_output(
-        cls, output: Any, output_mapping: Dict[str, str]
-    ) -> Dict[str, Any]:
-        """
-        Process output according to mapping.
+        cls, output: Any, output_mapping: dict[str, str]
+    ) -> dict[str, Any]:
+        """Process output according to mapping.
 
         Args:
             output: Output from function/engine

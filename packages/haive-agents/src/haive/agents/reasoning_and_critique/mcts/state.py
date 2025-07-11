@@ -1,5 +1,6 @@
-from agents.mcts.models import TreeNode
 from pydantic import BaseModel, Field
+
+from agents.mcts.models import TreeNode
 
 
 class TreeState(BaseModel):

@@ -1,6 +1,4 @@
-"""
-Analyzers for tool-related components.
-"""
+"""Analyzers for tool-related components."""
 
 import importlib
 import inspect
@@ -80,7 +78,7 @@ class DocumentLoaderAnalyzer(ComponentAnalyzer):
 
         return info
 
-    def create_tool(self, component_info: ComponentInfo) -> Optional[Any]:
+    def create_tool(self, component_info: ComponentInfo) -> Any | None:
         """Convert document loader to a StructuredTool."""
         if not LANGCHAIN_AVAILABLE:
             return None

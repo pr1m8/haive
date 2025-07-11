@@ -1,6 +1,4 @@
-"""
-Utilities for serialization and deserialization.
-"""
+"""Utilities for serialization and deserialization."""
 
 import json
 import logging
@@ -13,8 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 def ensure_serializable(obj: Any) -> Any:
-    """
-    Ensure an object can be serialized to JSON.
+    """Ensure an object can be serialized to JSON.
 
     Args:
         obj: Object to make serializable
@@ -22,10 +19,10 @@ def ensure_serializable(obj: Any) -> Any:
     Returns:
         JSON-serializable version of the object
     """
-    if obj is None or isinstance(obj, (str, int, float, bool)):
+    if obj is None or isinstance(obj, str | int | float | bool):
         return obj
 
-    if isinstance(obj, (list, tuple, set)):
+    if isinstance(obj, list | tuple | set):
         return [ensure_serializable(item) for item in obj]
 
     if isinstance(obj, dict):
@@ -57,8 +54,7 @@ def ensure_serializable(obj: Any) -> Any:
 
 
 def to_json(obj: Any, **kwargs) -> str:
-    """
-    Convert an object to a JSON string.
+    """Convert an object to a JSON string.
 
     Args:
         obj: Object to serialize
@@ -71,9 +67,8 @@ def to_json(obj: Any, **kwargs) -> str:
     return json.dumps(serializable, **kwargs)
 
 
-def from_json(json_str: str, target_cls: Optional[Type] = None) -> Any:
-    """
-    Convert a JSON string to an object.
+def from_json(json_str: str, target_cls: type | None = None) -> Any:
+    """Convert a JSON string to an object.
 
     Args:
         json_str: JSON string to deserialize

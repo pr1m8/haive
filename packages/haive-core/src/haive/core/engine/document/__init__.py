@@ -134,9 +134,7 @@ from haive.core.engine.document.loaders.sources.implementation import (
 from haive.core.engine.document.loaders.sources.implementation import (
     SourceType as EnhancedSourceType,
 )
-from haive.core.engine.document.loaders.sources.implementation import (
-    source_registry,
-)
+from haive.core.engine.document.loaders.sources.implementation import source_registry
 
 # Specific loader implementations - only import what exists
 from haive.core.engine.document.loaders.specific import (  # Database sources

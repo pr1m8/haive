@@ -5,9 +5,7 @@ from haive.core.engine.loaders.sources.types import SourceType
 
 
 class DiffbotSource(URLSource):
-    """
-    A source that is a Diffbot source.
-    """
+    """A source that is a Diffbot source."""
 
     source_type: SourceType = Field(default=SourceType.DIFFBOT)
     url_prefix: str = Field(default="https://www.diffbot.com/")

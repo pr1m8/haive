@@ -4,9 +4,6 @@
 
 from typing import Any, Dict, List, Optional, Union
 
-from langchain_core.documents import Document
-from pydantic import Field, field_validator
-
 from haive.core.engine.retriever.retriever import (
     BaseRetrieverConfig,
     VectorStoreRetrieverConfig,
@@ -16,6 +13,8 @@ from haive.core.models.embeddings.base import (
     BaseEmbeddingConfig,
     HuggingFaceEmbeddingConfig,
 )
+from langchain_core.documents import Document
+from pydantic import Field, field_validator
 
 
 class RetrieverMixin:

@@ -8,7 +8,6 @@ from pathlib import Path
 from unittest.mock import Mock, patch
 
 import pytest
-
 from haive.core.engine.document.config import LoaderPreference
 from haive.core.engine.document.loaders.auto_factory import DocumentLoaderFactory
 from haive.core.engine.document.loaders.path_analyzer import (

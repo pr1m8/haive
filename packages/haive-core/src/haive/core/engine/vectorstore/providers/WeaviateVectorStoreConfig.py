@@ -1,5 +1,4 @@
-"""
-Weaviate Vector Store implementation for the Haive framework.
+"""Weaviate Vector Store implementation for the Haive framework.
 
 This module provides a configuration class for the Weaviate vector store,
 which is an open-source vector database with built-in modules for ML.
@@ -35,8 +34,7 @@ from haive.core.engine.vectorstore.types import VectorStoreType
 
 @BaseVectorStoreConfig.register(VectorStoreType.WEAVIATE)
 class WeaviateVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
-    """
-    Configuration for Weaviate vector store in the Haive framework.
+    """Configuration for Weaviate vector store in the Haive framework.
 
     This vector store uses Weaviate for advanced vector search with
     GraphQL support and built-in ML capabilities.
@@ -77,9 +75,9 @@ class WeaviateVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
     """
 
     # Connection configuration
-    url: Optional[str] = Field(default=None, description="URL of the Weaviate instance")
+    url: str | None = Field(default=None, description="URL of the Weaviate instance")
 
-    api_key: Optional[SecretStr] = Field(
+    api_key: SecretStr | None = Field(
         default=None,
         description="API key for Weaviate Cloud (auto-resolved from WEAVIATE_API_KEY)",
     )
@@ -103,16 +101,16 @@ class WeaviateVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
         default=False, description="Use embedded Weaviate instance (for development)"
     )
 
-    embedded_options: Optional[Dict[str, Any]] = Field(
+    embedded_options: dict[str, Any] | None = Field(
         default=None, description="Options for embedded Weaviate instance"
     )
 
     # Authentication
-    auth_client_secret: Optional[Dict[str, Any]] = Field(
+    auth_client_secret: dict[str, Any] | None = Field(
         default=None, description="Authentication client secret configuration"
     )
 
-    additional_headers: Optional[Dict[str, str]] = Field(
+    additional_headers: dict[str, str] | None = Field(
         default=None, description="Additional HTTP headers for requests"
     )
 
@@ -122,17 +120,17 @@ class WeaviateVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
     )
 
     # Timeout configuration
-    timeout_config: Optional[Dict[str, int]] = Field(
+    timeout_config: dict[str, int] | None = Field(
         default=None, description="Timeout configuration for operations"
     )
 
     # Additional properties
-    additional_properties: Optional[List[str]] = Field(
+    additional_properties: list[str] | None = Field(
         default=None, description="Additional properties to store with documents"
     )
 
     @validator("url")
-    def validate_url_or_embedded(cls, v, values):
+    def validate_url_or_embedded(self, v, values):
         """Validate that either URL is provided or embedded is True."""
         if not v and not values.get("use_embedded"):
             raise ValueError(
@@ -140,24 +138,23 @@ class WeaviateVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
             )
         return v
 
-    def get_input_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Return input field definitions for Weaviate vector store."""
         return {
             "documents": (
-                List[Document],
+                list[Document],
                 Field(description="Documents to add to the vector store"),
             ),
         }
 
-    def get_output_fields(self) -> Dict[str, Tuple[Type, Any]]:
+    def get_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Return output field definitions for Weaviate vector store."""
         return {
-            "ids": (List[str], Field(description="IDs of the added documents")),
+            "ids": (list[str], Field(description="IDs of the added documents")),
         }
 
     def instantiate(self):
-        """
-        Create a Weaviate vector store from this configuration.
+        """Create a Weaviate vector store from this configuration.
 
         Returns:
             Weaviate: Instantiated Weaviate vector store.
@@ -247,7 +244,7 @@ class WeaviateVectorStoreConfig(SecureConfigMixin, BaseVectorStoreConfig):
             # Schema might already exist or there might be permission issues
             import warnings
 
-            warnings.warn(f"Could not create schema: {e}")
+            warnings.warn(f"Could not create schema: {e}", stacklevel=2)
 
         # Create Weaviate vector store
         return Weaviate(

@@ -25,8 +25,6 @@ Usage:
     ```
 """
 
-from typing import List
-
 from pydantic import BaseModel, Field
 
 
@@ -59,10 +57,10 @@ class VersionMixin(BaseModel):
         self.version_history.append(self.version)
         self.version = new_version
 
-    def get_version_history(self) -> List[str]:
+    def get_version_history(self) -> list[str]:
         """Get complete version history including the current version.
 
         Returns:
             List containing all previous versions plus the current version.
         """
-        return self.version_history + [self.version]
+        return [*self.version_history, self.version]

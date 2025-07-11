@@ -33,12 +33,12 @@ Usage:
     ```
 """
 
-import asyncio
-import logging
-import uuid
 from abc import ABC
+import asyncio
 from collections.abc import AsyncGenerator
+import logging
 from typing import Any, Dict, Generator, Optional, Union
+import uuid
 
 from langchain_core.runnables import RunnableConfig
 from langgraph.graph.graph import CompiledGraph
@@ -52,6 +52,7 @@ from haive.core.persistence.handlers import (
     register_async_thread_if_needed,
     register_thread_if_needed,
 )
+
 
 logger = logging.getLogger(__name__)
 
@@ -146,8 +147,8 @@ class CheckpointerMixin(BaseModel):
 
     def _prepare_runnable_config(
         self,
-        thread_id: Optional[str] = None,
-        config: Optional[RunnableConfig] = None,
+        thread_id: str | None = None,
+        config: RunnableConfig | None = None,
         **kwargs,
     ) -> RunnableConfig:
         """Prepare runnable config with thread management.
@@ -212,8 +213,8 @@ class CheckpointerMixin(BaseModel):
     def run(
         self,
         input_data: Any,
-        thread_id: Optional[str] = None,
-        config: Optional[RunnableConfig] = None,
+        thread_id: str | None = None,
+        config: RunnableConfig | None = None,
         **kwargs,
     ) -> Any:
         """Run with checkpointer support.
@@ -277,8 +278,8 @@ class CheckpointerMixin(BaseModel):
     async def arun(
         self,
         input_data: Any,
-        thread_id: Optional[str] = None,
-        config: Optional[RunnableConfig] = None,
+        thread_id: str | None = None,
+        config: RunnableConfig | None = None,
         **kwargs,
     ) -> Any:
         """Async run with checkpointer support.
@@ -358,54 +359,52 @@ class CheckpointerMixin(BaseModel):
 
             # Invoke async app
             return await async_app.ainvoke(input_data, runtime_config)
-        else:
-            # Use sync checkpointer
-            checkpointer = self.get_checkpointer(async_mode=False)
+        # Use sync checkpointer
+        checkpointer = self.get_checkpointer(async_mode=False)
 
+        if checkpointer and thread_id:
+            register_thread_if_needed(checkpointer, thread_id)
+
+        # Get previous state
+        previous_state = None
+        try:
             if checkpointer and thread_id:
-                register_thread_if_needed(checkpointer, thread_id)
+                previous_state = app.get_state(runtime_config)
+        except Exception as e:
+            logger.warning(f"Error retrieving previous state: {e}")
 
-            # Get previous state
-            previous_state = None
+        # Prepare merged input
+        if previous_state:
             try:
-                if checkpointer and thread_id:
-                    previous_state = app.get_state(runtime_config)
-            except Exception as e:
-                logger.warning(f"Error retrieving previous state: {e}")
+                input_schema = getattr(self, "input_schema", None)
+                state_schema = getattr(self, "state_schema", None)
 
-            # Prepare merged input
-            if previous_state:
-                try:
-                    input_schema = getattr(self, "input_schema", None)
-                    state_schema = getattr(self, "state_schema", None)
-
-                    input_data = prepare_merged_input(
-                        input_data,
-                        previous_state,
-                        runtime_config,
-                        input_schema,
-                        state_schema,
-                    )
-                except Exception as e:
-                    logger.warning(f"Error merging with previous state: {e}")
-
-            # Use ainvoke if available, otherwise thread pool
-            if hasattr(app, "ainvoke"):
-                return await app.ainvoke(input_data, runtime_config)
-            else:
-                loop = asyncio.get_event_loop()
-                return await loop.run_in_executor(
-                    None, lambda: app.invoke(input_data, runtime_config)
+                input_data = prepare_merged_input(
+                    input_data,
+                    previous_state,
+                    runtime_config,
+                    input_schema,
+                    state_schema,
                 )
+            except Exception as e:
+                logger.warning(f"Error merging with previous state: {e}")
+
+        # Use ainvoke if available, otherwise thread pool
+        if hasattr(app, "ainvoke"):
+            return await app.ainvoke(input_data, runtime_config)
+        loop = asyncio.get_event_loop()
+        return await loop.run_in_executor(
+            None, lambda: app.invoke(input_data, runtime_config)
+        )
 
     def stream(
         self,
         input_data: Any,
-        thread_id: Optional[str] = None,
+        thread_id: str | None = None,
         stream_mode: str = "values",
-        config: Optional[RunnableConfig] = None,
+        config: RunnableConfig | None = None,
         **kwargs,
-    ) -> Generator[Dict[str, Any], None, None]:
+    ) -> Generator[dict[str, Any], None, None]:
         """Stream with checkpointer support.
 
         This method streams graph execution results with checkpointing support,
@@ -468,11 +467,11 @@ class CheckpointerMixin(BaseModel):
     async def astream(
         self,
         input_data: Any,
-        thread_id: Optional[str] = None,
+        thread_id: str | None = None,
         stream_mode: str = "values",
-        config: Optional[RunnableConfig] = None,
+        config: RunnableConfig | None = None,
         **kwargs,
-    ) -> AsyncGenerator[Dict[str, Any], None]:
+    ) -> AsyncGenerator[dict[str, Any], None]:
         """Async stream with checkpointer support.
 
         This method streams graph execution results asynchronously with

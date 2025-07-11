@@ -1,24 +1,21 @@
-"""
-Rich logging infrastructure for Haive framework.
+"""Rich logging infrastructure for Haive framework.
 
 This module provides a unified logging solution that combines Python's logging
 with Rich's formatting capabilities for beautiful console output.
 """
 
-import logging
-import os
-import sys
 from contextlib import contextmanager
 from datetime import datetime
 from enum import Enum
+import logging
+import os
 from pathlib import Path
-from typing import Any, Dict, Optional, Union
+from typing import Any
 
 from rich.console import Console
 from rich.logging import RichHandler
 from rich.panel import Panel
 from rich.table import Table
-from rich.text import Text
 from rich.traceback import install as install_rich_traceback
 
 
@@ -80,8 +77,7 @@ silence_third_party_loggers()
 
 
 class RichLogger:
-    """
-    Enhanced logger that combines Python logging with Rich formatting.
+    """Enhanced logger that combines Python logging with Rich formatting.
 
     This provides:
     - Standard logging interface
@@ -91,7 +87,7 @@ class RichLogger:
     - Performance tracking
     """
 
-    _instances: Dict[str, "RichLogger"] = {}
+    _instances: dict[str, "RichLogger"] = {}
     _console = Console(stderr=True)  # Use stderr for logging
     _debug_mode = False
     _initialized = False
@@ -174,7 +170,7 @@ class RichLogger:
         self.logger.critical(msg, *args, **kwargs)
 
     # Rich formatting methods
-    def table(self, title: str, data: Dict[str, Any], level: int = logging.INFO):
+    def table(self, title: str, data: dict[str, Any], level: int = logging.INFO):
         """Log data as a rich table."""
         if not self.logger.isEnabledFor(level):
             return
@@ -196,7 +192,7 @@ class RichLogger:
     def panel(
         self,
         msg: str,
-        title: Optional[str] = None,
+        title: str | None = None,
         level: int = logging.INFO,
         style: str = "blue",
     ):
@@ -217,12 +213,12 @@ class RichLogger:
         """Log progress message with blue styling."""
         self.logger.info(f"[blue]→[/blue] {msg}")
 
-    def debug_table(self, title: str, data: Dict[str, Any]):
+    def debug_table(self, title: str, data: dict[str, Any]):
         """Log debug table (only shown in debug mode)."""
         if self._debug_mode:
             self.table(title, data, level=logging.DEBUG)
 
-    def debug_panel(self, msg: str, title: Optional[str] = None):
+    def debug_panel(self, msg: str, title: str | None = None):
         """Log debug panel (only shown in debug mode)."""
         if self._debug_mode:
             self.panel(msg, title, level=logging.DEBUG, style="dim")
@@ -238,7 +234,7 @@ class RichLogger:
             duration = (datetime.now() - start).total_seconds()
             self.debug(f"Completed: {operation} ({duration:.2f}s)")
 
-    def log_exception(self, exc: Exception, msg: Optional[str] = None):
+    def log_exception(self, exc: Exception, msg: str | None = None):
         """Log exception with rich traceback."""
         if msg:
             self.error(msg)
@@ -255,7 +251,7 @@ class RichLogger:
             return str_value[: max_length - 3] + "..."
         return str_value
 
-    def set_level(self, level: Union[int, str]):
+    def set_level(self, level: int | str):
         """Set logger level."""
         if isinstance(level, str):
             level = getattr(logging, level.upper())
@@ -279,12 +275,11 @@ def disable_debug_mode():
 
 
 def configure_logging(
-    level: Union[int, str] = logging.INFO,
+    level: int | str = logging.INFO,
     debug_env_var: str = "HAIVE_DEBUG",
-    log_file: Optional[Path] = None,
+    log_file: Path | None = None,
 ):
-    """
-    Configure logging for the entire application.
+    """Configure logging for the entire application.
 
     Args:
         level: Default log level

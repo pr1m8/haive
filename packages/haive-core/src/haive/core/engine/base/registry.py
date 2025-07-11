@@ -1,5 +1,4 @@
-"""
-Registry management for Haive engines.
+"""Registry management for Haive engines.
 
 This module provides a centralized registry for all engine instances in the Haive system.
 The registry allows engines to be registered, retrieved, and managed through a singleton
@@ -13,12 +12,12 @@ from haive.core.engine.base.base import Engine
 from haive.core.engine.base.types import EngineType
 from haive.core.registry.base import AbstractRegistry
 
+
 logger = logging.getLogger(__name__)
 
 
 class EngineRegistry(AbstractRegistry[Engine]):
-    """
-    Central registry for all engines in the Haive system.
+    """Central registry for all engines in the Haive system.
 
     This class implements a singleton pattern to ensure a single point of access
     for all engine registrations and lookups. Engines are organized by their type
@@ -34,8 +33,7 @@ class EngineRegistry(AbstractRegistry[Engine]):
 
     @classmethod
     def get_instance(cls) -> "EngineRegistry":
-        """
-        Get the singleton instance of the engine registry.
+        """Get the singleton instance of the engine registry.
 
         This method ensures that only one instance of the registry exists
         throughout the application lifecycle.
@@ -55,8 +53,7 @@ class EngineRegistry(AbstractRegistry[Engine]):
         return cls._instance
 
     def __init__(self):
-        """
-        Initialize the registry with empty dictionaries.
+        """Initialize the registry with empty dictionaries.
 
         Creates an empty registry structure with dictionaries for each engine type
         and an empty ID mapping dictionary.
@@ -65,8 +62,7 @@ class EngineRegistry(AbstractRegistry[Engine]):
         self.engine_ids = {}  # id -> engine mapping
 
     def register(self, item: Engine) -> Engine:
-        """
-        Register an engine in the registry.
+        """Register an engine in the registry.
 
         Adds the provided engine to the registry, indexed by both its type/name
         and its unique ID.
@@ -92,9 +88,8 @@ class EngineRegistry(AbstractRegistry[Engine]):
         )
         return item
 
-    def get(self, item_type: EngineType, name: str) -> Optional[Engine]:
-        """
-        Get an engine by its type and name.
+    def get(self, item_type: EngineType, name: str) -> Engine | None:
+        """Get an engine by its type and name.
 
         Retrieves an engine instance from the registry using its type and name.
 
@@ -115,9 +110,8 @@ class EngineRegistry(AbstractRegistry[Engine]):
         """
         return self.engines[item_type].get(name)
 
-    def find_by_id(self, id: str) -> Optional[Engine]:
-        """
-        Find an engine by its unique ID.
+    def find_by_id(self, id: str) -> Engine | None:
+        """Find an engine by its unique ID.
 
         Retrieves an engine instance from the registry using its unique ID.
 
@@ -135,9 +129,8 @@ class EngineRegistry(AbstractRegistry[Engine]):
         """
         return self.engine_ids.get(id)
 
-    def find(self, name_or_id: str) -> Optional[Engine]:
-        """
-        Find an engine by name or ID across all engine types.
+    def find(self, name_or_id: str) -> Engine | None:
+        """Find an engine by name or ID across all engine types.
 
         Searches for an engine by first checking the ID registry (faster) and
         then searching through all engine types by name.
@@ -166,9 +159,8 @@ class EngineRegistry(AbstractRegistry[Engine]):
 
         return None
 
-    def list(self, item_type: EngineType) -> List[str]:
-        """
-        List all engines of a specific type.
+    def list(self, item_type: EngineType) -> list[str]:
+        """List all engines of a specific type.
 
         Returns a list of names of all engines registered for the given type.
 
@@ -185,9 +177,8 @@ class EngineRegistry(AbstractRegistry[Engine]):
         """
         return list(self.engines[item_type].keys())
 
-    def get_all(self, item_type: EngineType) -> Dict[str, Engine]:
-        """
-        Get all engines of a specific type.
+    def get_all(self, item_type: EngineType) -> dict[str, Engine]:
+        """Get all engines of a specific type.
 
         Returns a dictionary mapping names to engines for the given type.
 
@@ -206,8 +197,7 @@ class EngineRegistry(AbstractRegistry[Engine]):
         return self.engines[item_type]
 
     def clear(self) -> None:
-        """
-        Clear the registry.
+        """Clear the registry.
 
         Removes all engines from the registry, resetting it to an empty state.
         Useful for testing or when reloading configurations.

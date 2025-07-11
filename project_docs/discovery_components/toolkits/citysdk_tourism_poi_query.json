@@ -7,7 +7,7 @@
     "description": "Retrieve Points of Interest from the CitySDK Tourism API using a bounding box or city filter.",
     "source_code": "",
     "env_vars": [],
-    "timestamp": "2025-07-05T11:38:15.803344",
+    "timestamp": "2025-07-10T19:45:29.023752",
     "schema": {
       "description": "Input schema for querying Points of Interest from the CitySDK Tourism API.\n\nArgs:\n    bbox: Bounding box coordinates to filter POIs geographically\n    city: City name to filter POIs by location",
       "properties": {
@@ -56,7 +56,7 @@
       "has_tool": true,
       "has_engine_config": false,
       "env_vars": [],
-      "timestamp": "2025-07-05T11:38:15.803344",
+      "timestamp": "2025-07-10T19:45:29.023752",
       "category": "toolkits"
     }
   },

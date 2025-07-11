@@ -8,12 +8,11 @@ for routing and state management.
 import logging
 from typing import Any, Dict, List, Optional
 
+from haive.agents.base.agent import Agent
 from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel, Field
 from rich.console import Console
-
-from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 console = Console()
@@ -28,10 +27,10 @@ class AgentDescriptor(BaseModel):
     priority: int = Field(
         default=1, description="Agent priority (higher = more preferred)"
     )
-    tools: List[str] = Field(
+    tools: list[str] = Field(
         default_factory=list, description="List of tool names this agent has"
     )
-    config: Dict[str, Any] = Field(
+    config: dict[str, Any] = Field(
         default_factory=dict, description="Agent configuration"
     )
 
@@ -58,7 +57,7 @@ class ChangeAgentInput(BaseModel):
     """Input for changing/updating an existing agent."""
 
     agent_name: str = Field(description="Name of agent to change")
-    updates: Dict[str, Any] = Field(
+    updates: dict[str, Any] = Field(
         description="Updates to apply to agent configuration"
     )
 
@@ -89,9 +88,7 @@ class AgentRegistryManager:
         self.agent_constructors[agent_type] = constructor
         logger.info(f"Registered agent constructor: {agent_type}")
 
-    def create_agent_from_descriptor(
-        self, descriptor: AgentDescriptor
-    ) -> Optional[Agent]:
+    def create_agent_from_descriptor(self, descriptor: AgentDescriptor) -> Agent | None:
         """Create an agent instance from descriptor."""
         constructor = self.agent_constructors.get(descriptor.agent_type)
         if not constructor:
@@ -108,7 +105,7 @@ class AgentRegistryManager:
             return agent
 
         except Exception as e:
-            logger.error(f"Failed to create agent {descriptor.name}: {e}")
+            logger.exception(f"Failed to create agent {descriptor.name}: {e}")
             return None
 
     def get_agent_choice_model(self) -> DynamicChoiceModel[str]:
@@ -127,7 +124,7 @@ class AddAgentTool(BaseTool):
     """Tool for dynamically adding agents to the supervisor."""
 
     name: str = "add_agent"
-    description: str = """Add a new agent to the supervisor's registry. 
+    description: str = """Add a new agent to the supervisor's registry.
     This allows the supervisor to route requests to the new agent."""
     args_schema = AddAgentInput
 
@@ -162,12 +159,11 @@ class AddAgentTool(BaseTool):
                 # Update choice model
                 self.registry_manager.get_agent_choice_model()
                 return f"Successfully added agent: {agent_descriptor.name}"
-            else:
-                return f"Failed to register agent: {agent_descriptor.name}"
+            return f"Failed to register agent: {agent_descriptor.name}"
 
         except Exception as e:
-            logger.error(f"Error adding agent: {e}")
-            return f"Error adding agent: {str(e)}"
+            logger.exception(f"Error adding agent: {e}")
+            return f"Error adding agent: {e!s}"
 
     def _run(
         self, agent_descriptor: AgentDescriptor, rebuild_graph: bool = True
@@ -199,12 +195,11 @@ class RemoveAgentTool(BaseTool):
                 # Update choice model
                 self.registry_manager.get_agent_choice_model()
                 return f"Successfully removed agent: {agent_name}"
-            else:
-                return f"Agent not found or failed to remove: {agent_name}"
+            return f"Agent not found or failed to remove: {agent_name}"
 
         except Exception as e:
-            logger.error(f"Error removing agent: {e}")
-            return f"Error removing agent: {str(e)}"
+            logger.exception(f"Error removing agent: {e}")
+            return f"Error removing agent: {e!s}"
 
     def _run(self, agent_name: str, rebuild_graph: bool = True) -> str:
         """Synchronous version - not implemented for async supervisor."""
@@ -223,7 +218,7 @@ class ChangeAgentTool(BaseTool):
         super().__init__()
         self.registry_manager = registry_manager
 
-    async def _arun(self, agent_name: str, updates: Dict[str, Any]) -> str:
+    async def _arun(self, agent_name: str, updates: dict[str, Any]) -> str:
         """Change agent configuration asynchronously."""
         try:
             success = await self.registry_manager.supervisor.update_agent_config(
@@ -232,14 +227,13 @@ class ChangeAgentTool(BaseTool):
 
             if success:
                 return f"Successfully updated agent: {agent_name}"
-            else:
-                return f"Agent not found or failed to update: {agent_name}"
+            return f"Agent not found or failed to update: {agent_name}"
 
         except Exception as e:
-            logger.error(f"Error updating agent: {e}")
-            return f"Error updating agent: {str(e)}"
+            logger.exception(f"Error updating agent: {e}")
+            return f"Error updating agent: {e!s}"
 
-    def _run(self, agent_name: str, updates: Dict[str, Any]) -> str:
+    def _run(self, agent_name: str, updates: dict[str, Any]) -> str:
         """Synchronous version - not implemented for async supervisor."""
         return "This tool requires async execution"
 
@@ -287,8 +281,8 @@ class ListAgentsTool(BaseTool):
             )
 
         except Exception as e:
-            logger.error(f"Error listing agents: {e}")
-            return f"Error listing agents: {str(e)}"
+            logger.exception(f"Error listing agents: {e}")
+            return f"Error listing agents: {e!s}"
 
     def _run(self, include_performance: bool = True) -> str:
         """Synchronous version - not implemented for async supervisor."""
@@ -317,28 +311,29 @@ class AgentSelectorTool(BaseTool):
     async def _arun(self, choice: str) -> str:
         """Select agent asynchronously."""
         try:
-            if not self.registry_manager.supervisor.agent_registry.is_agent_registered(
-                choice
+            if (
+                not self.registry_manager.supervisor.agent_registry.is_agent_registered(
+                    choice
+                )
+                and choice != "END"
             ):
-                if choice != "END":
-                    return f"Agent not found: {choice}"
+                return f"Agent not found: {choice}"
 
             # This tool doesn't actually change state, just validates the choice
             # The routing will be handled by the supervisor's decision logic
             return f"Agent selected: {choice}"
 
         except Exception as e:
-            logger.error(f"Error selecting agent: {e}")
-            return f"Error selecting agent: {str(e)}"
+            logger.exception(f"Error selecting agent: {e}")
+            return f"Error selecting agent: {e!s}"
 
     def _run(self, choice: str) -> str:
         """Synchronous version - not implemented for async supervisor."""
         return "This tool requires async execution"
 
 
-def create_agent_management_tools(supervisor_agent) -> List[BaseTool]:
+def create_agent_management_tools(supervisor_agent) -> list[BaseTool]:
     """Create all agent management tools for a supervisor."""
-
     registry_manager = AgentRegistryManager(supervisor_agent)
 
     # Register some basic agent constructors for testing
@@ -367,4 +362,3 @@ def register_agent_constructor(supervisor_agent, agent_type: str, constructor):
     """Register an agent constructor with the supervisor's registry manager."""
     # This would need to be called on the registry manager
     # For now, this is a placeholder for the integration pattern
-    pass

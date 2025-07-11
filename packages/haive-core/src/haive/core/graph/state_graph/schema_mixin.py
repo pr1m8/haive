@@ -6,13 +6,13 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from haive.core.graph.common.types import ConfigLike, StateLike
 
+
 T = TypeVar("T", bound=StateLike)
-C = TypeVar("C", bound=Optional[ConfigLike])
+C = TypeVar("C", bound=ConfigLike | None)
 
 
 class GraphSchemaMixin(BaseModel, Generic[T, C]):
-    """
-    Mixin for schema management in graphs.
+    """Mixin for schema management in graphs.
 
     This mixin provides functionality for managing state, input, and output schemas
     in graph objects.
@@ -29,9 +29,8 @@ class GraphSchemaMixin(BaseModel, Generic[T, C]):
 
     @model_validator(mode="before")
     @classmethod
-    def validate_schema_setup(cls, data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Validate schema relationships and set defaults.
+    def validate_schema_setup(cls, data: dict[str, Any]) -> dict[str, Any]:
+        """Validate schema relationships and set defaults.
 
         Args:
             data: Dictionary of values being validated
@@ -77,8 +76,7 @@ class GraphSchemaMixin(BaseModel, Generic[T, C]):
         return values
 
     def validate_input(self, data: Any) -> Any:
-        """
-        Validate input data against input schema.
+        """Validate input data against input schema.
 
         Args:
             data: Input data
@@ -88,14 +86,13 @@ class GraphSchemaMixin(BaseModel, Generic[T, C]):
         """
         if hasattr(self.input_schema, "model_validate"):
             return self.input_schema.model_validate(data)
-        elif hasattr(self.input_schema, "parse_obj"):
+        if hasattr(self.input_schema, "parse_obj"):
             # Pydantic v1 support
             return self.input_schema.parse_obj(data)
         return data
 
     def validate_output(self, data: Any) -> Any:
-        """
-        Validate output data against output schema.
+        """Validate output data against output schema.
 
         Args:
             data: Output data
@@ -105,14 +102,13 @@ class GraphSchemaMixin(BaseModel, Generic[T, C]):
         """
         if hasattr(self.output_schema, "model_validate"):
             return self.output_schema.model_validate(data)
-        elif hasattr(self.output_schema, "parse_obj"):
+        if hasattr(self.output_schema, "parse_obj"):
             # Pydantic v1 support
             return self.output_schema.parse_obj(data)
         return data
 
-    def create_state(self, data: Optional[Any] = None) -> Any:
-        """
-        Create a state instance based on state schema.
+    def create_state(self, data: Any | None = None) -> Any:
+        """Create a state instance based on state schema.
 
         Args:
             data: Optional initial data
@@ -129,14 +125,13 @@ class GraphSchemaMixin(BaseModel, Generic[T, C]):
         # Validate and create instance
         if hasattr(self.state_schema, "model_validate"):
             return self.state_schema.model_validate(data)
-        elif hasattr(self.state_schema, "parse_obj"):
+        if hasattr(self.state_schema, "parse_obj"):
             # Pydantic v1 support
             return self.state_schema.parse_obj(data)
         return data
 
-    def get_shared_fields(self) -> List[str]:
-        """
-        Get list of shared fields from state schema.
+    def get_shared_fields(self) -> list[str]:
+        """Get list of shared fields from state schema.
 
         Returns:
             List of field names that are shared
@@ -147,9 +142,8 @@ class GraphSchemaMixin(BaseModel, Generic[T, C]):
             return self.state_schema.__shared_fields__
         return []
 
-    def get_reducer_fields(self) -> Dict[str, Any]:
-        """
-        Get reducer functions from state schema.
+    def get_reducer_fields(self) -> dict[str, Any]:
+        """Get reducer functions from state schema.
 
         Returns:
             Dictionary mapping field names to reducer functions
@@ -161,8 +155,7 @@ class GraphSchemaMixin(BaseModel, Generic[T, C]):
         return {}
 
     def has_field(self, field_name: str) -> bool:
-        """
-        Check if state schema has a specific field.
+        """Check if state schema has a specific field.
 
         Args:
             field_name: Field name to check
@@ -173,7 +166,7 @@ class GraphSchemaMixin(BaseModel, Generic[T, C]):
         if hasattr(self.state_schema, "model_fields"):
             # Pydantic v2
             return field_name in self.state_schema.model_fields
-        elif hasattr(self.state_schema, "__fields__"):
+        if hasattr(self.state_schema, "__fields__"):
             # Pydantic v1
             return field_name in self.state_schema.__fields__
         return False

@@ -10,6 +10,7 @@ from pydantic import BaseModel
 
 from haive.core.graph.patterns.base import GraphPattern, PatternMetadata
 
+
 # Set up logging
 logger = logging.getLogger(__name__)
 

@@ -1,4 +1,4 @@
-"""Example of using ListIterationNode with RAG agents
+"""Example of using ListIterationNode with RAG agents.
 
 Shows how to use the list iteration pattern for processing multiple queries
 or documents through RAG agents.
@@ -6,6 +6,7 @@ or documents through RAG agents.
 
 from typing import Any, Dict, List
 
+from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.list_iteration_node import (
     ListIterationNodeConfig,
@@ -16,13 +17,10 @@ from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 
-from haive.agents.rag.simple.agent import SimpleRAGAgent
-
 
 # Example 1: Process multiple queries through a RAG agent
-def create_multi_query_processor(documents: List[Document]):
+def create_multi_query_processor(documents: list[Document]):
     """Create a list iteration node that processes multiple queries."""
-
     # Create a RAG agent
     rag_agent = SimpleRAGAgent.from_documents(
         documents=documents,
@@ -34,7 +32,7 @@ def create_multi_query_processor(documents: List[Document]):
     )
 
     # Create callable that uses the RAG agent
-    def process_query(query: str, context: Dict[str, Any]) -> Dict[str, Any]:
+    def process_query(query: str, context: dict[str, Any]) -> dict[str, Any]:
         """Process a single query through RAG."""
         result = rag_agent.run({"query": query})
         return {
@@ -55,7 +53,6 @@ def create_multi_query_processor(documents: List[Document]):
 # Example 2: Process documents through summarization
 def create_document_summarizer():
     """Create a list iteration node that summarizes multiple documents."""
-
     # Create summarization engine
     summarize_prompt = ChatPromptTemplate.from_messages(
         [
@@ -75,7 +72,7 @@ def create_document_summarizer():
     )
 
     # Create engine callable
-    def summarize_document(doc: Document, context: Dict[str, Any]) -> Dict[str, Any]:
+    def summarize_document(doc: Document, context: dict[str, Any]) -> dict[str, Any]:
         """Summarize a single document."""
         result = summarize_engine.invoke({"document": doc.page_content})
         return {
@@ -97,18 +94,17 @@ def create_document_summarizer():
 # Example 3: Batch entity extraction
 def create_entity_extractor():
     """Create a list iteration node for entity extraction."""
-
     from pydantic import BaseModel, Field
 
     class ExtractedEntities(BaseModel):
         """Entities extracted from text."""
 
-        people: List[str] = Field(default_factory=list, description="Names of people")
-        organizations: List[str] = Field(
+        people: list[str] = Field(default_factory=list, description="Names of people")
+        organizations: list[str] = Field(
             default_factory=list, description="Organization names"
         )
-        locations: List[str] = Field(default_factory=list, description="Location names")
-        dates: List[str] = Field(default_factory=list, description="Dates mentioned")
+        locations: list[str] = Field(default_factory=list, description="Location names")
+        dates: list[str] = Field(default_factory=list, description="Dates mentioned")
 
     extract_prompt = ChatPromptTemplate.from_messages(
         [("system", "Extract entities from the following text."), ("human", "{text}")]
@@ -140,7 +136,7 @@ def create_entity_extractor():
 def create_parallel_document_grader():
     """Create a list iteration node that grades documents in parallel."""
 
-    def grade_document(doc: Document, context: Dict[str, Any]) -> Dict[str, Any]:
+    def grade_document(doc: Document, context: dict[str, Any]) -> dict[str, Any]:
         """Grade a single document - this would be processed in parallel."""
         # In real usage, this would be a separate node that receives the Send
         return {
@@ -164,7 +160,6 @@ def create_parallel_document_grader():
 # Example usage in a graph
 def example_graph_usage():
     """Example of how to use list iteration nodes in a graph."""
-
     from haive.core.graph.state_graph.base_graph2 import BaseGraph
     from langgraph.graph import END, START
 
@@ -191,7 +186,7 @@ def example_graph_usage():
     graph.add_edge("summarize_docs", END)
 
     # Example state
-    example_state = {
+    {
         "queries": ["What is AI?", "How does ML work?", "What are neural networks?"],
         "documents": [
             Document(page_content="Long document about AI..."),

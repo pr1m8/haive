@@ -8,15 +8,6 @@ vector stores, and research parameters.
 from datetime import datetime
 from typing import Any
 
-from haive.core.engine.agent.agent import AgentConfig
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
-from haive.core.models.vectorstore.base import VectorStoreConfig
-from langchain_core.messages import SystemMessage
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.tools import BaseTool
-from pydantic import BaseModel, Field
-
 from haive.agents.research.open_perplexity.engines import create_research_engines
 from haive.agents.research.open_perplexity.prompts import MAIN_SYSTEM_PROMPT
 from haive.agents.research.open_perplexity.react_agent_config import (
@@ -31,6 +22,14 @@ from haive.agents.research.open_perplexity.state import (
     ResearchState,
 )
 from haive.agents.research.open_perplexity.structured_tools import RESEARCH_TOOLS
+from haive.core.engine.agent.agent import AgentConfig
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+from haive.core.models.vectorstore.base import VectorStoreConfig
+from langchain_core.messages import SystemMessage
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.tools import BaseTool
+from pydantic import BaseModel, Field
 
 
 class ResearchAgentConfig(AgentConfig):

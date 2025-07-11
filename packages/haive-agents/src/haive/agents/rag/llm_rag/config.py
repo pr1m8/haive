@@ -1,9 +1,5 @@
 import uuid
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.prompts import ChatPromptTemplate
-from pydantic import BaseModel, ConfigDict, Field, model_validator
-
 # Import from base RAG
 from haive.agents.rag.base.config import BaseRAGConfig
 
@@ -13,12 +9,15 @@ from haive.agents.rag.llm_rag.state import (
     LLMRAGOutputState,
     LLMRAGState,
 )
+from haive.core.engine.aug_llm import AugLLMConfig
+from langchain_core.prompts import ChatPromptTemplate
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 # Define the prompt template for the LLM
-RAG_BASE_PROMPT = """You are an assistant for question-answering tasks. 
+RAG_BASE_PROMPT = """You are an assistant for question-answering tasks.
 Use the following pieces of retrieved context to answer the question.
 
-First, determine if the context is relevant to the question. If the context is not relevant to 
+First, determine if the context is relevant to the question. If the context is not relevant to
 the question, respond with "The retrieved documents are not relevant to the question."
 
 If the context is relevant:
@@ -33,7 +32,7 @@ Answer:
 """
 
 RELEVANCE_CHECKER_PROMPT = """You are an assistant that determines if retrieved documents are relevant to a user query.
-Your task is to analyze the query and retrieved documents to determine if they contain information 
+Your task is to analyze the query and retrieved documents to determine if they contain information
 that would help answer the query.
 
 Query: {query}
