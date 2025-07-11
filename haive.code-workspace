@@ -1,65 +1,102 @@
+// haive-monorepo.code-workspace
 {
-  "folders": [
-    {
-      "name": "haive-monorepo",
-      "path": "."
-    }
-  ],
-  "settings": {
-    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
-    "python.analysis.extraPaths": [
-      "./packages/haive-core/src",
-      "./packages/haive-agents/src",
-      "./packages/haive-games/src",
-      "./packages/haive-prebuilt/src",
-      "./packages/haive-tools/src",
-      "./packages/haive-dataflow/src"
-    ],
-    "python.envFile": "${workspaceFolder}/.env",
-    "python.testing.pytestEnabled": true,
-    "python.testing.pytestArgs": [
-      "packages/haive-core/tests",
-      "packages/haive-agents/tests",
-      "packages/haive-games/tests",
-      "packages/haive-prebuilt/tests",
-      "packages/haive-tools/tests",
-      "packages/haive-dataflow/tests"
-    ],
-    "editor.formatOnSave": true,
-    "python.analysis.typeCheckingMode": "basic",
-    "python.linting.enabled": true,
-    "python.linting.pylintEnabled": true,
-    "terminal.integrated.cwd": "${workspaceFolder}",
-    "files.exclude": {
-      "**/__pycache__": true,
-      "**/*.pyc": true,
-      "**/*.pyo": true,
-      "**/.mypy_cache": true,
-      "**/.pytest_cache": true,
-      "**/.venv": true,
-      "**/node_modules": true
-    },
-    "files.watcherExclude": {
-      "**/__pycache__": true,
-      "**/*.pyc": true,
-      "**/*.pyo": true,
-      "**/.mypy_cache": true,
-      "**/.pytest_cache": true,
-      "**/.venv": true,
-      "**/node_modules": true,
-      "**/.git": true
-    }
-  },
-  "launch": {
-    "configurations": [],
-    "compounds": []
-  },
-  "extensions": {
-    "recommendations": [
-      "ms-python.python",
-      "ms-python.vscode-pylance",
-      "esbenp.prettier-vscode",
-      "charliermarsh.ruff"
-    ]
+	"folders": [
+	  {
+		"name": "haive-monorepo",
+		"path": "."
+	  }
+	],
+	"settings": {
+	  // --- Git Configuration ---
+	  // Fix for nested repositories: tells VS Code to scan subdirectories
+	  // for .git folders, so each package is treated as a separate repo.
+	  "git.repositoryScanMaxDepth": 2,
+  
+	  // --- Python Environment & Paths ---
+	  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+	  "python.envFile": "${workspaceFolder}/.env",
+	  "python.analysis.extraPaths": [
+		// These paths allow the IDE to find modules inside each package for
+		// IntelliSense, even though the parent 'packages' folder is hidden.
+		"./packages/haive-core/src",
+		"./packages/haive-agents/src",
+		"./packages/haive-games/src",
+		"./packages/haive-prebuilt/src",
+		"./packages/haive-tools/src",
+		"./packages/haive-dataflow/src"
+	  ],
+  
+	  // --- Testing ---
+	  "python.testing.pytestEnabled": true,
+	  "python.testing.pytestArgs": [
+		"packages/haive-core/tests",
+		"packages/haive-agents/tests",
+		"packages/haive-games/tests",
+		"packages/haive-prebuilt/tests",
+		"packages/haive-tools/tests",
+		"packages/haive-dataflow/tests"
+	  ],
+  
+	  // --- Linting & Formatting ---
+	  "python.analysis.typeCheckingMode": "basic",
+	  "python.linting.enabled": true,
+	  "python.linting.pylintEnabled": true,
+	  "editor.formatOnSave": true,
+  
+	  // --- Editor & Terminal ---
+	  "terminal.integrated.cwd": "${workspaceFolder}",
+  
+	  // --- File Exclusions & Performance Tuning ---
+	  // Hides specified folders from the Explorer view to reduce clutter.
+	  "files.exclude": {
+		// Fix for "packages appearing twice": hides the top-level folder.
+		"packages": true,
+		// Common Python/Node cache and virtual environment folders.
+		"**/__pycache__": true,
+		"**/*.py[co]": true, // Combines .pyc and .pyo
+		"**/.mypy_cache": true,
+		"**/.pytest_cache": true,
+		"**/.venv": true,
+		"**/node_modules": true,
+		// Hide history and documentation folders.
+		"**/.history": true,
+		"docs": true,
+		"project_docs": true
+	  },
+	  // Excludes folders from search results (Ctrl+Shift+F).
+	  "search.exclude": {
+		"**/.venv": true,
+		"**/node_modules": true,
+		"**/.history": true,
+		"docs/**": true,
+		"project_docs/**": true
+	  },
+	  // Prevents VS Code from watching files in these folders, which
+	  // significantly improves performance, especially in WSL.
+	  "files.watcherExclude": {
+		"**/__pycache__": true,
+		"**/*.py[co]": true,
+		"**/.mypy_cache": true,
+		"**/.pytest_cache": true,
+		"**/.venv": true,
+		"**/node_modules": true,
+		"**/.git": true,
+		"**/.history": true,
+		"docs/**": true,
+		"project_docs/**": true
+	  }
+	},
+	"launch": {
+	  "configurations": [],
+	  "compounds": []
+	},
+	"extensions": {
+	  "recommendations": [
+		"ms-python.python",
+		"ms-python.vscode-pylance",
+		"esbenp.prettier-vscode",
+		"charliermarsh.ruff"
+	  ]
+	}
   }
-}
+  
