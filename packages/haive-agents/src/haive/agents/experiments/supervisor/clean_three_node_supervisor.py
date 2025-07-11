@@ -1,5 +1,4 @@
-"""
-Clean 3-node supervisor: supervisor -> (execute_agent | add_agent | END)
+"""Clean 3-node supervisor: supervisor -> (execute_agent | add_agent | END).
 
 Simple, clear routing:
 - execute_agent: Takes agent name + payload, runs the agent
@@ -11,9 +10,6 @@ import asyncio
 from datetime import datetime
 from typing import Any, Dict, List, Literal, Optional
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.schema import StateSchema
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 from langgraph.graph import END
@@ -21,30 +17,33 @@ from pydantic import BaseModel, Field
 
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.schema import StateSchema
 
 
 class SupervisorState(StateSchema):
     """State for the 3-node supervisor."""
 
-    messages: List[Any] = Field(default_factory=list)
+    messages: list[Any] = Field(default_factory=list)
 
     # Agent execution
-    agent_to_execute: Optional[str] = Field(default=None)
-    execution_payload: Optional[str] = Field(default=None)
-    agent_response: Optional[str] = Field(default=None)
+    agent_to_execute: str | None = Field(default=None)
+    execution_payload: str | None = Field(default=None)
+    agent_response: str | None = Field(default=None)
 
     # Agent creation
-    agent_to_add: Optional[Dict[str, Any]] = Field(default=None)
+    agent_to_add: dict[str, Any] | None = Field(default=None)
 
     # Agent registry (stored in state)
-    available_agents: Dict[str, Any] = Field(default_factory=dict)
-    agent_metadata: Dict[str, Dict[str, Any]] = Field(default_factory=dict)
+    available_agents: dict[str, Any] = Field(default_factory=dict)
+    agent_metadata: dict[str, dict[str, Any]] = Field(default_factory=dict)
 
 
 class ExecuteAgentNode:
     """Node that executes any agent by name."""
 
-    async def __call__(self, state: SupervisorState) -> Dict[str, Any]:
+    async def __call__(self, state: SupervisorState) -> dict[str, Any]:
         """Execute the specified agent with the payload."""
         agent_name = state.agent_to_execute
         payload = state.execution_payload
@@ -95,7 +94,7 @@ class ExecuteAgentNode:
                 state.agent_metadata[agent_name]["last_used"] = datetime.now()
 
         except Exception as e:
-            state.agent_response = f"Error executing {agent_name}: {str(e)}"
+            state.agent_response = f"Error executing {agent_name}: {e!s}"
 
         # Clear execution state
         state.agent_to_execute = None
@@ -107,7 +106,7 @@ class ExecuteAgentNode:
 class AddAgentNode:
     """Node that creates and adds new agents."""
 
-    async def __call__(self, state: SupervisorState) -> Dict[str, Any]:
+    async def __call__(self, state: SupervisorState) -> dict[str, Any]:
         """Create and register a new agent."""
         agent_spec = state.agent_to_add
 
@@ -173,7 +172,7 @@ class AddAgentNode:
             )
 
         except Exception as e:
-            state.agent_response = f"Error creating agent: {str(e)}"
+            state.agent_response = f"Error creating agent: {e!s}"
 
         # Clear creation state
         state.agent_to_add = None
@@ -182,9 +181,8 @@ class AddAgentNode:
 
 
 class ThreeNodeSupervisor(ReactAgent):
-    """
-    Clean supervisor with exactly 3 destinations:
-    supervisor -> execute_agent | add_agent | END
+    """Clean supervisor with exactly 3 destinations:
+    supervisor -> execute_agent | add_agent | END.
     """
 
     def __init__(self, **kwargs):
@@ -212,7 +210,7 @@ class ThreeNodeSupervisor(ReactAgent):
             return f"Will create {agent_type} agent '{name}': {description}"
 
         @tool
-        def list_agents() -> List[str]:
+        def list_agents() -> list[str]:
             """List all available agents and their descriptions."""
             # This would access state in real implementation
             return ["Use this tool to see available agents"]
@@ -260,7 +258,7 @@ class ThreeNodeSupervisor(ReactAgent):
 
         return graph.compile()
 
-    async def _supervisor_node(self, state: SupervisorState) -> Dict[str, Any]:
+    async def _supervisor_node(self, state: SupervisorState) -> dict[str, Any]:
         """Supervisor node that uses tools to set up routing."""
         # Get current input
         if state.messages:
@@ -286,7 +284,7 @@ Available agents: {agent_list}
 
 Your tools:
 - execute_agent(agent_name, task): Execute an existing agent
-- add_new_agent(name, description, type, system_message): Create a new agent  
+- add_new_agent(name, description, type, system_message): Create a new agent
 - list_agents(): See all available agents
 - agent_status(name): Check agent metadata
 - finish_conversation(): End the conversation
@@ -341,18 +339,14 @@ Important: After using a tool, set the appropriate state fields:
         """Route to one of the 3 destinations."""
         if state.agent_to_execute:
             return "execute"
-        elif state.agent_to_add:
+        if state.agent_to_add:
             return "add"
-        else:
-            return "end"
+        return "end"
 
 
 # Demo the clean 3-node pattern
 async def demo_three_node_supervisor():
     """Demonstrate the 3-node supervisor pattern."""
-
-    print("=== Clean 3-Node Supervisor Demo ===\n")
-
     # Create supervisor
     supervisor_engine = AugLLMConfig(
         name="supervisor_engine",
@@ -361,7 +355,7 @@ async def demo_three_node_supervisor():
         system_message="You are a task routing supervisor with 3 actions: execute, add, or end.",
     ).create()
 
-    supervisor = ThreeNodeSupervisor(
+    ThreeNodeSupervisor(
         name="three_node_supervisor",
         engine=supervisor_engine,
         state_schema=SupervisorState,
@@ -370,13 +364,7 @@ async def demo_three_node_supervisor():
     # Test the routing
     initial_state = SupervisorState()
 
-    print("Supervisor has 3 possible routes:")
-    print("1. execute_agent - Executes existing agent")
-    print("2. add_agent - Creates new agent")
-    print("3. END - Terminates conversation\n")
-
     # Test 1: Try to execute non-existent agent (should route to add)
-    print("Test 1: Request math calculation (no math agent exists)")
     initial_state.messages = [{"role": "user", "content": "Calculate 5 + 3"}]
 
     # Simulate supervisor decision
@@ -389,32 +377,18 @@ async def demo_three_node_supervisor():
 
     # Execute add_agent node
     add_node = AddAgentNode()
-    result = await add_node(initial_state)
-    print(f"Add result: {result['state'].agent_response}\n")
+    await add_node(initial_state)
 
     # Test 2: Now execute the created agent
-    print("Test 2: Execute the newly created math agent")
     initial_state.agent_to_execute = "math_agent"
     initial_state.execution_payload = "Calculate 5 + 3"
 
     execute_node = ExecuteAgentNode()
-    result = await execute_node(initial_state)
-    print(f"Execute result: {result['state'].agent_response}\n")
-
-    print("✅ 3-Node Pattern Complete!")
-    print(f"Available agents: {list(initial_state.available_agents.keys())}")
-    print(f"Total messages: {len(initial_state.messages)}")
+    await execute_node(initial_state)
 
 
 if __name__ == "__main__":
-    print("Clean 3-Node Supervisor Pattern")
-    print("supervisor -> (execute_agent | add_agent | END)")
-    print("Simple, clear routing with no ambiguity\n")
 
     # Show the routing logic
-    print("Routing decision based on state:")
-    print("- state.agent_to_execute set -> go to execute_agent")
-    print("- state.agent_to_add set -> go to add_agent")
-    print("- neither set -> go to END")
 
     asyncio.run(demo_three_node_supervisor())

@@ -1,8 +1,8 @@
 """AgentInfo class for holding agent metadata and instance."""
 
-from typing import Any, Optional
+from typing import Any
 
-from pydantic import BaseModel, Field, field_serializer, model_validator
+from pydantic import BaseModel, Field, model_validator
 
 
 class AgentInfo(BaseModel):

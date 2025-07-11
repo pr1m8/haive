@@ -1,4 +1,4 @@
-"""Hallucination Graders - TODO: Add brief description
+"""Hallucination Graders - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

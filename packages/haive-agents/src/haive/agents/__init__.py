@@ -83,19 +83,17 @@ from haive.agents.react.agent import ReactAgent
 # Import commonly used agents
 from haive.agents.simple import SimpleAgent
 
-# from haive.agents.planning.plan_and_execute.agent import PlanAndExecuteAgent
-
 __all__ = [
-    # Version
-    "__version__",
     # Base classes
     "Agent",
-    "GenericAgent",
-    # Common agents
-    "SimpleAgent",
-    "ReactAgent",
     "BaseRAGAgent",
-    "SimpleRAGAgent",
+    "GenericAgent",
     "MultiAgent",
     "PlanAndExecuteAgent",
+    "ReactAgent",
+    # Common agents
+    "SimpleAgent",
+    "SimpleRAGAgent",
+    # Version
+    "__version__",
 ]

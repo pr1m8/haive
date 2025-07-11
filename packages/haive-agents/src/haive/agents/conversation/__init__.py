@@ -7,7 +7,7 @@ other according to different patterns, structures, and rules.
 
 Architecture:
     The conversation system is built around a hierarchical architecture:
-    
+
     - BaseConversationAgent: Core orchestration logic and state management
     - Specialized conversation types: Each with unique interaction patterns
     - Shared state system: Common message handling and flow control
@@ -16,19 +16,19 @@ Architecture:
 Core Conversation Types:
     BaseConversationAgent: Foundation for all conversation agents with core
         orchestration logic, state management, and message routing capabilities.
-    
+
     RoundRobinConversation: Simple turn-taking conversation where each agent
         speaks in sequence. Useful for panel discussions and ordered dialogues.
-    
+
     DirectedConversation: Conversations with a directed flow controlled by a
         moderator. Supports dynamic speaker selection and flow control.
-    
+
     DebateConversation: Structured debates with positions, arguments, rebuttals,
         and judging. Includes scoring and evaluation mechanisms.
-    
+
     CollaborativeConversation: Multiple agents collaborating on a shared task.
         Features task decomposition, role assignment, and result synthesis.
-    
+
     SocialMediaConversation: Simulated social media interactions with posts,
         replies, reactions, and viral propagation patterns.
 
@@ -42,29 +42,29 @@ State Management:
 
 Usage Patterns:
     Basic Round Robin Conversation::
-    
+
         from haive.agents.conversation import RoundRobinConversation
         from haive.agents.simple import SimpleAgent
-        
+
         # Create participants
         alice = SimpleAgent(name="Alice")
         bob = SimpleAgent(name="Bob")
         charlie = SimpleAgent(name="Charlie")
-        
+
         # Create conversation
         conversation = RoundRobinConversation(
             participants=[alice, bob, charlie],
             topic="Future of AI",
             rounds=3
         )
-        
+
         # Run conversation
         result = await conversation.arun()
-    
+
     Structured Debate::
-    
+
         from haive.agents.conversation import DebateConversation
-        
+
         debate = DebateConversation(
             topic="Should AI be regulated?",
             pro_agents=[pro_agent1, pro_agent2],
@@ -72,14 +72,14 @@ Usage Patterns:
             judge_agent=judge_agent,
             rounds=5
         )
-        
+
         result = await debate.arun()
         winner = result.get("winner")
-    
+
     Collaborative Task::
-    
+
         from haive.agents.conversation import CollaborativeConversation
-        
+
         collaboration = CollaborativeConversation(
             participants={
                 "designer": designer_agent,
@@ -89,7 +89,7 @@ Usage Patterns:
             task="Design a new mobile app",
             deliverables=["mockup", "specs", "timeline"]
         )
-        
+
         result = await collaboration.arun()
 
 Advanced Features:
@@ -131,24 +131,26 @@ __version__ = "1.0.0"
 __author__ = "Haive Team"
 __license__ = "MIT"
 
+from collections.abc import Callable
+
 # Type imports for better IDE support
 from typing import (
+    TYPE_CHECKING,
     Any,
-    Callable,
     Dict,
     List,
+    Literal,
+    NotRequired,
     Optional,
-    Type,
-    Union,
-    TYPE_CHECKING,
     Protocol,
+    Type,
+    TypeAlias,
+    Union,
     runtime_checkable,
 )
+
 from typing_extensions import (
-    Literal,
-    TypeAlias,
     TypedDict,
-    NotRequired,
 )
 
 if TYPE_CHECKING:
@@ -164,95 +166,105 @@ from haive.agents.conversation.round_robin.agent import RoundRobinConversation
 from haive.agents.conversation.social_media.agent import SocialMediaConversation
 
 # Type aliases for better API clarity
-ConversationType: TypeAlias = Literal["round_robin", "directed", "debate", "collaborative", "social_media"]
+ConversationType: TypeAlias = Literal[
+    "round_robin", "directed", "debate", "collaborative", "social_media"
+]
 ParticipantRole: TypeAlias = Literal["speaker", "moderator", "judge", "observer"]
-ConversationStatus: TypeAlias = Literal["pending", "active", "paused", "completed", "cancelled"]
-MessageType: TypeAlias = Literal["statement", "question", "response", "argument", "rebuttal", "judgment"]
+ConversationStatus: TypeAlias = Literal[
+    "pending", "active", "paused", "completed", "cancelled"
+]
+MessageType: TypeAlias = Literal[
+    "statement", "question", "response", "argument", "rebuttal", "judgment"
+]
+
 
 # Protocol definitions for type safety
 @runtime_checkable
 class ConversationParticipant(Protocol):
     """Protocol for agents that can participate in conversations."""
-    
+
     name: str
-    
+
     async def arun(self, input_data: Any) -> Any:
         """Run the agent with input data."""
         ...
-    
+
     def get_role(self) -> ParticipantRole:
         """Get the participant's role in the conversation."""
         ...
 
+
 # Configuration types
 class ConversationConfig(TypedDict, total=False):
     """Configuration for conversation agents."""
+
     max_turns: NotRequired[int]
     timeout_seconds: NotRequired[float]
     auto_moderation: NotRequired[bool]
     save_history: NotRequired[bool]
     allow_interruptions: NotRequired[bool]
-    
+
+
 class DebateConfig(ConversationConfig, total=False):
     """Configuration specific to debate conversations."""
+
     rounds: NotRequired[int]
     time_per_round: NotRequired[float]
     scoring_system: NotRequired[str]
     allow_rebuttals: NotRequired[bool]
-    
+
+
 class CollaborativeConfig(ConversationConfig, total=False):
     """Configuration specific to collaborative conversations."""
+
     task_decomposition: NotRequired[bool]
-    role_assignment: NotRequired[Dict[str, str]]
-    deliverables: NotRequired[List[str]]
+    role_assignment: NotRequired[dict[str, str]]
+    deliverables: NotRequired[list[str]]
     progress_tracking: NotRequired[bool]
+
 
 # Define public API
 __all__ = [
-    # Version information
-    "__version__",
-    "__author__",
-    "__license__",
-    
     # Core conversation agents
     "BaseConversationAgent",
-    "RoundRobinConversation",
-    "DirectedConversation",
-    "DebateConversation",
+    "CollaborativeConfig",
     "CollaborativeConversation",
-    "SocialMediaConversation",
-    
-    # Type aliases
-    "ConversationType",
-    "ParticipantRole",
-    "ConversationStatus",
-    "MessageType",
-    
-    # Protocols
-    "ConversationParticipant",
-    
     # Configuration types
     "ConversationConfig",
+    # Protocols
+    "ConversationParticipant",
+    "ConversationStatus",
+    # Type aliases
+    "ConversationType",
     "DebateConfig",
-    "CollaborativeConfig",
-    
+    "DebateConversation",
+    "DirectedConversation",
+    "MessageType",
+    "ParticipantRole",
+    "RoundRobinConversation",
+    "SocialMediaConversation",
+    "__author__",
+    "__license__",
+    # Version information
+    "__version__",
+    "create_collaboration",
     # Convenience functions
     "create_conversation",
     "create_debate",
-    "create_collaboration",
-    "validate_participants",
     "get_conversation_types",
+    "validate_participants",
 ]
+
 
 # Module initialization
 def _initialize_conversation_module() -> None:
     """Initialize the conversation module with default configurations."""
     import logging
-    
+
     # Set up logging for conversation operations
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
-    
+
     # Validate critical dependencies
     try:
         from haive.agents.base.agent import Agent
@@ -263,38 +275,39 @@ def _initialize_conversation_module() -> None:
             f"Please install with: pip install haive-agents[conversation]"
         )
 
+
 # Convenience factory functions
 def create_conversation(
     conversation_type: ConversationType,
-    participants: List[ConversationParticipant],
+    participants: list[ConversationParticipant],
     topic: str,
-    config: Optional[ConversationConfig] = None,
-    **kwargs: Any
+    config: ConversationConfig | None = None,
+    **kwargs: Any,
 ) -> BaseConversationAgent:
     """Create a conversation agent of the specified type.
-    
+
     Args:
         conversation_type: Type of conversation to create
         participants: List of agents to participate in the conversation
         topic: Topic or subject of the conversation
         config: Optional configuration for the conversation
         **kwargs: Additional keyword arguments specific to the conversation type
-        
+
     Returns:
         Configured conversation agent
-        
+
     Examples:
         Round robin conversation::
-        
+
             conversation = create_conversation(
                 "round_robin",
                 participants=[alice, bob, charlie],
                 topic="Future of AI",
                 config={"max_turns": 10}
             )
-            
+
         Debate conversation::
-        
+
             debate = create_conversation(
                 "debate",
                 participants=[pro_agent, con_agent],
@@ -304,54 +317,38 @@ def create_conversation(
             )
     """
     config = config or {}
-    
+
     if conversation_type == "round_robin":
         return RoundRobinConversation(
-            participants=participants,
-            topic=topic,
-            **config,
-            **kwargs
+            participants=participants, topic=topic, **config, **kwargs
         )
-    elif conversation_type == "directed":
+    if conversation_type == "directed":
         return DirectedConversation(
-            participants=participants,
-            topic=topic,
-            **config,
-            **kwargs
+            participants=participants, topic=topic, **config, **kwargs
         )
-    elif conversation_type == "debate":
-        return DebateConversation(
-            topic=topic,
-            **config,
-            **kwargs
-        )
-    elif conversation_type == "collaborative":
+    if conversation_type == "debate":
+        return DebateConversation(topic=topic, **config, **kwargs)
+    if conversation_type == "collaborative":
         return CollaborativeConversation(
-            participants=participants,
-            topic=topic,
-            **config,
-            **kwargs
+            participants=participants, topic=topic, **config, **kwargs
         )
-    elif conversation_type == "social_media":
+    if conversation_type == "social_media":
         return SocialMediaConversation(
-            participants=participants,
-            topic=topic,
-            **config,
-            **kwargs
+            participants=participants, topic=topic, **config, **kwargs
         )
-    else:
-        raise ValueError(f"Unknown conversation type: {conversation_type}")
+    raise ValueError(f"Unknown conversation type: {conversation_type}")
+
 
 def create_debate(
     topic: str,
-    pro_agents: List[ConversationParticipant],
-    con_agents: List[ConversationParticipant],
-    judge_agent: Optional[ConversationParticipant] = None,
+    pro_agents: list[ConversationParticipant],
+    con_agents: list[ConversationParticipant],
+    judge_agent: ConversationParticipant | None = None,
     rounds: int = 3,
-    config: Optional[DebateConfig] = None
+    config: DebateConfig | None = None,
 ) -> DebateConversation:
     """Create a structured debate conversation.
-    
+
     Args:
         topic: Topic to debate
         pro_agents: Agents arguing for the topic
@@ -359,22 +356,22 @@ def create_debate(
         judge_agent: Optional judge agent to score the debate
         rounds: Number of debate rounds
         config: Optional debate configuration
-        
+
     Returns:
         Configured debate conversation
-        
+
     Examples:
         Simple debate::
-        
+
             debate = create_debate(
                 topic="Should AI be regulated?",
                 pro_agents=[regulatory_expert],
                 con_agents=[tech_advocate],
                 judge_agent=neutral_judge
             )
-            
+
         Multi-participant debate::
-        
+
             debate = create_debate(
                 topic="Climate change solutions",
                 pro_agents=[scientist1, activist],
@@ -384,36 +381,37 @@ def create_debate(
             )
     """
     config = config or {}
-    
+
     return DebateConversation(
         topic=topic,
         pro_agents=pro_agents,
         con_agents=con_agents,
         judge_agent=judge_agent,
         rounds=rounds,
-        **config
+        **config,
     )
+
 
 def create_collaboration(
     task: str,
-    participants: Dict[str, ConversationParticipant],
-    deliverables: Optional[List[str]] = None,
-    config: Optional[CollaborativeConfig] = None
+    participants: dict[str, ConversationParticipant],
+    deliverables: list[str] | None = None,
+    config: CollaborativeConfig | None = None,
 ) -> CollaborativeConversation:
     """Create a collaborative conversation for team tasks.
-    
+
     Args:
         task: Task description for the collaboration
         participants: Dictionary mapping roles to participant agents
         deliverables: Optional list of expected deliverables
         config: Optional collaboration configuration
-        
+
     Returns:
         Configured collaborative conversation
-        
+
     Examples:
         Software development team::
-        
+
             collaboration = create_collaboration(
                 task="Design a new mobile app",
                 participants={
@@ -423,9 +421,9 @@ def create_collaboration(
                 },
                 deliverables=["mockup", "specs", "timeline"]
             )
-            
+
         Research team::
-        
+
             collaboration = create_collaboration(
                 task="Analyze market trends",
                 participants={
@@ -437,29 +435,27 @@ def create_collaboration(
             )
     """
     config = config or {}
-    
+
     return CollaborativeConversation(
-        task=task,
-        participants=participants,
-        deliverables=deliverables or [],
-        **config
+        task=task, participants=participants, deliverables=deliverables or [], **config
     )
 
+
 def validate_participants(
-    participants: List[ConversationParticipant],
+    participants: list[ConversationParticipant],
     min_participants: int = 2,
-    max_participants: Optional[int] = None
+    max_participants: int | None = None,
 ) -> bool:
     """Validate that participants meet conversation requirements.
-    
+
     Args:
         participants: List of participant agents
         min_participants: Minimum number of participants required
         max_participants: Maximum number of participants allowed
-        
+
     Returns:
         True if participants are valid, False otherwise
-        
+
     Raises:
         ValueError: If validation fails with specific error details
     """
@@ -468,41 +464,42 @@ def validate_participants(
             f"Conversation requires at least {min_participants} participants, "
             f"got {len(participants)}"
         )
-    
+
     if max_participants and len(participants) > max_participants:
         raise ValueError(
             f"Conversation allows at most {max_participants} participants, "
             f"got {len(participants)}"
         )
-    
+
     # Check that all participants implement the protocol
     for i, participant in enumerate(participants):
         if not isinstance(participant, ConversationParticipant):
             raise ValueError(
                 f"Participant {i} does not implement ConversationParticipant protocol"
             )
-    
+
     # Check for unique names
     names = [p.name for p in participants]
     if len(names) != len(set(names)):
         duplicates = [name for name in names if names.count(name) > 1]
-        raise ValueError(
-            f"Duplicate participant names found: {duplicates}"
-        )
-    
+        raise ValueError(f"Duplicate participant names found: {duplicates}")
+
     return True
 
-def get_conversation_types() -> List[ConversationType]:
+
+def get_conversation_types() -> list[ConversationType]:
     """Get list of available conversation types.
-    
+
     Returns:
         List of available conversation type strings
     """
     return ["round_robin", "directed", "debate", "collaborative", "social_media"]
 
-def __dir__() -> List[str]:
+
+def __dir__() -> list[str]:
     """Override dir() to show only public API."""
     return __all__
+
 
 # Initialize module
 _initialize_conversation_module()

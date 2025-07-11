@@ -1,4 +1,4 @@
-"""Enhanced Discovery System for Dynamic Agent and Tool Management
+"""Enhanced Discovery System for Dynamic Agent and Tool Management.
 
 This module provides advanced discovery capabilities for Haive agents, including:
 - Semantic discovery using vector embeddings
@@ -10,19 +10,6 @@ This module provides advanced discovery capabilities for Haive agents, including
 The system builds on the existing haive.core.utils.discovery infrastructure
 while adding intelligent, context-aware discovery capabilities.
 """
-
-# Re-export component registry items from core
-from haive.core.registry import (
-    CapabilityCategory,
-    CapabilityIndex,
-    ComponentAnalyzer,
-    ComponentMetadata,
-    ComponentType,
-    EnhancedComponentRegistry,
-    RegistrySearcher,
-    create_component_registry,
-    register_component_batch,
-)
 
 from haive.agents.discovery.dynamic_tool_selector import (
     ContextAwareSelector,
@@ -51,38 +38,51 @@ from haive.agents.discovery.semantic_discovery import (
     VectorBasedToolSelector,
 )
 
+# Re-export component registry items from core
+from haive.core.registry import (
+    CapabilityCategory,
+    CapabilityIndex,
+    ComponentAnalyzer,
+    ComponentMetadata,
+    ComponentType,
+    EnhancedComponentRegistry,
+    RegistrySearcher,
+    create_component_registry,
+    register_component_batch,
+)
+
 __all__ = [
-    # Semantic Discovery
-    "SemanticDiscoveryEngine",
-    "VectorBasedToolSelector",
-    "CapabilityMatcher",
-    "QueryAnalyzer",
-    "QueryAnalysis",
-    "DiscoveryMode",
-    "ToolSelectionStrategy",
-    # Dynamic Tool Selection
-    "DynamicToolSelector",
-    "LangGraphStyleSelector",
-    "ContextAwareSelector",
-    "ToolSelectionResult",
-    "SelectionMode",
-    "ToolBindingStrategy",
-    "ToolUsageTracker",
+    "AdaptiveSelectionStrategy",
     # Selection Strategies
     "BaseSelectionStrategy",
-    "SemanticSelectionStrategy",
     "CapabilityBasedStrategy",
-    "AdaptiveSelectionStrategy",
-    "ContextualSelectionStrategy",
-    "EnsembleSelectionStrategy",
+    "CapabilityCategory",
+    "CapabilityIndex",
+    "CapabilityMatcher",
+    "ComponentAnalyzer",
+    "ComponentMetadata",
     # Component Registry (re-exported from core)
     "ComponentType",
-    "CapabilityCategory",
-    "ComponentMetadata",
-    "CapabilityIndex",
-    "ComponentAnalyzer",
-    "RegistrySearcher",
+    "ContextAwareSelector",
+    "ContextualSelectionStrategy",
+    "DiscoveryMode",
+    # Dynamic Tool Selection
+    "DynamicToolSelector",
     "EnhancedComponentRegistry",
+    "EnsembleSelectionStrategy",
+    "LangGraphStyleSelector",
+    "QueryAnalysis",
+    "QueryAnalyzer",
+    "RegistrySearcher",
+    "SelectionMode",
+    # Semantic Discovery
+    "SemanticDiscoveryEngine",
+    "SemanticSelectionStrategy",
+    "ToolBindingStrategy",
+    "ToolSelectionResult",
+    "ToolSelectionStrategy",
+    "ToolUsageTracker",
+    "VectorBasedToolSelector",
     "create_component_registry",
     "register_component_batch",
 ]

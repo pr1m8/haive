@@ -1,8 +1,6 @@
 import logging
 from typing import Any
 
-from haive.core.engine.agent.agent import Agent, AgentConfig, register_agent
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.documents import Document
 from langgraph.constants import Send
 from langgraph.graph import END, START
@@ -21,6 +19,9 @@ from haive.agents.document_modifiers.kg.kg_map_merge.models import (
     KnowledgeGraph,
 )
 from haive.agents.document_modifiers.kg.kg_map_merge.state import KnowledgeGraphState
+from haive.core.engine.agent.agent import Agent, AgentConfig, register_agent
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 logger = logging.getLogger(__name__)
 
@@ -51,11 +52,8 @@ class ParallelKGTransformer(Agent[ParallelKGTransformerConfig]):
 
     def __init__(self, config: ParallelKGTransformerConfig):
         # Prepare graph transformer
-        graph_transformer_config = config.engines.get("graph_transformer")
+        config.engines.get("graph_transformer")
         self.llm_graph_transformer = GraphTransformer()
-        # engine=graph_transformer_config.llm_config.instantiate() if graph_transformer_config else None
-        # )
-        print(self.llm_graph_transformer)
         # Prepare extractors from engines
         self.node_extractor = config.engines["node_extractor"].create_runnable()
         self.relationship_extractor = config.engines[
@@ -80,8 +78,6 @@ class ParallelKGTransformer(Agent[ParallelKGTransformerConfig]):
         self.graph.add_conditional_edges(
             START, self.map_graph_documents, ["collect_graph_documents"]
         )
-
-        # self.graph.add_conditional_edges(START, self.map_graph_documents, ["map_graph_documents"])
 
         # ✅ Same idea for this conditional multi-send step
 
@@ -115,7 +111,7 @@ class ParallelKGTransformer(Agent[ParallelKGTransformerConfig]):
     ):
         content = state["content"]
         # At this point, `content` is a Document object
-        if isinstance(content, Document) or isinstance(content, dict):
+        if isinstance(content, Document | dict):
             context = content
         elif isinstance(content, BaseModel):
             context = str(content)
@@ -180,7 +176,7 @@ class ParallelKGTransformer(Agent[ParallelKGTransformerConfig]):
             }
 
         except Exception as e:
-            logger.error(f"Error in collect_nodes: {e}")
+            logger.exception(f"Error in collect_nodes: {e}")
             return {"index": 1}
 
     def map_relationships(self, state: KnowledgeGraphState):
@@ -269,7 +265,7 @@ class ParallelKGTransformer(Agent[ParallelKGTransformerConfig]):
             }
 
         except Exception as e:
-            logger.error(f"Error in collect_relationships: {e}")
+            logger.exception(f"Error in collect_relationships: {e}")
             return {"index": 1}
 
     def merge_graphs(self, state: KnowledgeGraphState):
@@ -327,8 +323,7 @@ class ParallelKGTransformer(Agent[ParallelKGTransformerConfig]):
                 "knowledge_graphs": [],
             }
 
-        except Exception as e:
-            print(f"Error merging graphs: {e}")
+        except Exception:
 
             # Fallback: use the created knowledge graph without LLM refinement
             return {
@@ -389,17 +384,13 @@ async def main():
     # Print final knowledge graph
     final_graph = result.get("final_knowledge_graph")
     if final_graph:
-        print("Nodes:")
-        for node in final_graph.nodes:
-            print(f"- {node.id} (Type: {node.type}, Properties: {node.properties})")
+        for _node in final_graph.nodes:
+            pass
 
-        print("\nRelationships:")
-        for rel in final_graph.relationships:
-            print(
-                f"- {rel.source} --({rel.type})--> {rel.target} (Confidence: {rel.confidence_score})"
-            )
+        for _rel in final_graph.relationships:
+            pass
     else:
-        print("No knowledge graph generated.")
+        pass
 
 
 if __name__ == "__main__":

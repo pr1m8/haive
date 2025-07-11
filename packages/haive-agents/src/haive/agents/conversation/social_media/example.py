@@ -3,11 +3,10 @@
 
 import logging
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.messages import AIMessage, SystemMessage
-
 from haive.agents.conversation.social_media.agent import SocialMediaConversation
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from langchain_core.messages import AIMessage, SystemMessage
 
 # Set logging
 logging.getLogger("haive").setLevel(logging.WARNING)
@@ -15,7 +14,6 @@ logging.getLogger("haive").setLevel(logging.WARNING)
 
 def example_twitter_thread():
     """Twitter-style conversation thread with viral mechanics."""
-    print("=== Twitter Thread Example ===\n")
 
     # Create Twitter thread
     thread = SocialMediaConversation.create_twitter_thread(
@@ -34,7 +32,6 @@ def example_twitter_thread():
     result = thread.invoke({})
 
     # Display thread with engagement metrics
-    print("Twitter Thread:\n")
     final_likes = result.get("likes", {})
     final_shares = result.get("shares", {})
 
@@ -44,7 +41,6 @@ def example_twitter_thread():
             likes = final_likes.get(author, 0)
             shares = final_shares.get(author, 0)
 
-            print(f"\n@{author}: {msg.content}")
 
             # Show engagement
             engagement = []
@@ -53,20 +49,19 @@ def example_twitter_thread():
             if shares > 0:
                 engagement.append(f"🔁 {shares}")
             if engagement:
-                print(f"   {' '.join(engagement)}")
+                pass
 
         elif isinstance(msg, SystemMessage):
-            print(f"\n{msg.content}")
+            pass
 
     # Show trending hashtags
     trending = result.get("trending_topics", [])
     if trending:
-        print(f"\n\n📈 Trending: {', '.join(trending[:3])}")
+        pass}")
 
 
 def example_instagram_discussion():
     """Instagram-style post with comments."""
-    print("\n\n=== Instagram Post Discussion ===\n")
 
     # Create Instagram discussion
     personas = {
@@ -104,8 +99,6 @@ def example_instagram_discussion():
     result = conversation.invoke({})
 
     # Display Instagram-style
-    print("📸 Instagram Post & Comments:\n")
-    print("─" * 50)
 
     post_count = 0
     for msg in result.get("messages", []):
@@ -115,15 +108,12 @@ def example_instagram_discussion():
             likes = result.get("likes", {}).get(author, 0)
 
             # Format as Instagram comment
-            print(f"\n💬 @{author}")
-            print(f"   {msg.content}")
             if likes > 0:
-                print(f"   ❤️ {likes} likes · Reply")
+                passply")
 
 
 def example_tiktok_comments():
     """TikTok-style video comments."""
-    print("\n\n=== TikTok Comments ===\n")
 
     # TikTok personas
     personas = {
@@ -162,21 +152,18 @@ def example_tiktok_comments():
     result = conversation.invoke({})
 
     # Display TikTok style
-    print("🎵 TikTok Video Comments:\n")
 
     for msg in result.get("messages", []):
         if isinstance(msg, AIMessage) and hasattr(msg, "name"):
             author = msg.name
             likes = result.get("likes", {}).get(author, 0)
 
-            print(f"\n@{author}: {msg.content}")
             if likes > 0:
-                print(f"{'  ' * 2}❤️ {likes}")
+                passs}")
 
 
 def example_linkedin_professional():
     """LinkedIn professional discussion."""
-    print("\n\n=== LinkedIn Professional Discussion ===\n")
 
     # LinkedIn professionals
     professionals = {
@@ -238,8 +225,6 @@ def example_linkedin_professional():
     result = conversation.invoke({})
 
     # Display LinkedIn style
-    print("💼 LinkedIn Discussion:\n")
-    print("─" * 60)
 
     for msg in result.get("messages", []):
         if isinstance(msg, AIMessage) and hasattr(msg, "name"):
@@ -247,8 +232,6 @@ def example_linkedin_professional():
             likes = result.get("likes", {}).get(author, 0)
             shares = result.get("shares", {}).get(author, 0)
 
-            print(f"\n👤 {author}")
-            print(f"{msg.content}\n")
 
             reactions = []
             if likes > 0:
@@ -256,12 +239,11 @@ def example_linkedin_professional():
             if shares > 0:
                 reactions.append(f"♻️ {shares} reposts")
             if reactions:
-                print(" · ".join(reactions))
+                pass)
 
 
 def example_viral_moment():
     """Demonstration of viral mechanics."""
-    print("\n\n=== Viral Moment Simulation ===\n")
 
     # Create scenario likely to go viral
     personas = {
@@ -297,26 +279,19 @@ def example_viral_moment():
     result = conversation.run({}, debug=True)
 
     # Show viral progression
-    print("🔥 Viral Moment Progression:\n")
 
-    likes_progression = {}
     for msg in result.get("messages", []):
         if isinstance(msg, AIMessage) and hasattr(msg, "name"):
             author = msg.name
             current_likes = result.get("likes", {}).get(author, 0)
 
-            print(f"\n@{author}: {msg.content}")
             if current_likes > 0:
-                print(f"   ❤️ {current_likes} likes")
+                passes")
 
             # Check if went viral
             if current_likes >= conversation.viral_threshold:
-                print("   🎉 WENT VIRAL!")
+                pass!")
 
 
 if __name__ == "__main__":
     example_twitter_thread()
-    # example_instagram_discussion()
-    # example_tiktok_comments()
-    # example_linkedin_professional()
-    # example_viral_moment()

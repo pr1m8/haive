@@ -93,16 +93,19 @@ result = await classroom.arun()
 The system recognizes several mention patterns:
 
 ### 1. Direct Mentions (@name)
+
 - **Pattern**: `@Alice`
 - **Priority**: Highest
 - **Example**: "Great point! @Alice, what's your perspective?"
 
 ### 2. Name References
+
 - **Pattern**: `Alice,` or `Alice:`
 - **Priority**: High
 - **Example**: "Alice, could you elaborate on that?"
 
 ### 3. Question Targets
+
 - **Pattern**: Questions directed at specific people
 - **Priority**: High
 - **Examples**:
@@ -111,6 +114,7 @@ The system recognizes several mention patterns:
   - "Diana, what's your opinion?"
 
 ### 4. Custom Patterns
+
 ```python
 from haive.agents.conversation.directed import DirectedConversationConfig
 
@@ -174,11 +178,11 @@ class DirectedState(ConversationState):
     # Mention tracking
     mentioned_speakers: List[str]        # Who was mentioned in last message
     pending_speakers: List[str]          # Queue of speakers to go next
-    
-    # Interaction tracking  
+
+    # Interaction tracking
     interaction_count: Dict[str, Dict[str, int]]  # Who mentions whom
     silence_count: int                   # Turns without mentions
-    
+
     # Participation metrics
     last_spoke: Dict[str, int]          # When each speaker last talked
     response_times: Dict[str, List[float]]  # Response latencies
@@ -191,11 +195,11 @@ class DirectedState(ConversationState):
 ```python
 class CustomDirectedConversation(DirectedConversation):
     """Extended with domain-specific mention patterns."""
-    
+
     def _extract_structured_mentions(self, state) -> List[SpeakerMention]:
         """Add custom mention detection logic."""
         mentions = super()._extract_structured_mentions(state)
-        
+
         # Add role-based mentions
         content = state.messages[-1].content
         for speaker, role in self.speaker_roles.items():
@@ -207,7 +211,7 @@ class CustomDirectedConversation(DirectedConversation):
                         confidence=0.7
                     )
                 )
-        
+
         return mentions
 ```
 
@@ -216,17 +220,17 @@ class CustomDirectedConversation(DirectedConversation):
 ```python
 class AnalyticsDirectedConversation(DirectedConversation):
     """Track detailed interaction patterns."""
-    
+
     def get_interaction_report(self) -> Dict[str, Any]:
         """Generate interaction analytics."""
         state = self.get_state()
-        
+
         # Calculate interaction metrics
         total_mentions = sum(
-            sum(targets.values()) 
+            sum(targets.values())
             for targets in state.interaction_count.values()
         )
-        
+
         # Find most active relationships
         relationships = []
         for speaker, targets in state.interaction_count.items():
@@ -237,10 +241,10 @@ class AnalyticsDirectedConversation(DirectedConversation):
                     "count": count,
                     "strength": count / total_mentions
                 })
-        
+
         # Sort by interaction strength
         relationships.sort(key=lambda x: x["count"], reverse=True)
-        
+
         return {
             "total_mentions": total_mentions,
             "top_relationships": relationships[:5],
@@ -285,15 +289,15 @@ from haive.memory import ConversationMemory
 
 class MemoryDirectedConversation(DirectedConversation):
     """Directed conversation with memory of past interactions."""
-    
+
     def __init__(self, *args, memory_store=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.memory = ConversationMemory(store=memory_store)
-    
+
     def _prepare_agent_input(self, state, agent_name):
         """Add memory context to agent input."""
         base_input = super()._prepare_agent_input(state, agent_name)
-        
+
         # Retrieve past interactions with current speakers
         if state.mentioned_speakers:
             for mentioned in state.mentioned_speakers:
@@ -303,7 +307,7 @@ class MemoryDirectedConversation(DirectedConversation):
                 if past_interactions:
                     context = f"[Past interactions with {mentioned}: {len(past_interactions)} conversations]"
                     base_input["messages"].insert(0, SystemMessage(content=context))
-        
+
         return base_input
 ```
 
@@ -331,30 +335,35 @@ tech_meeting = DirectedConversation(
 ## Best Practices
 
 ### 1. Natural Conversation Flow
+
 - Start with a clear moderator or facilitator
 - Use mentions sparingly for natural flow
 - Allow organic back-and-forth exchanges
 - Don't over-structure the conversation
 
 ### 2. Mention Patterns
+
 - Keep patterns simple and intuitive
 - Test patterns with your specific use case
 - Consider cultural/domain conventions
 - Document expected patterns for users
 
 ### 3. Participation Balance
+
 - Monitor quiet participants
 - Use fallback strategies wisely
 - Consider forced participation sparingly
 - Track engagement metrics
 
 ### 4. Context Management
+
 - Provide clear context for mentions
 - Include why someone is being addressed
 - Maintain conversation continuity
 - Summarize when switching topics
 
 ### 5. Error Handling
+
 - Handle missing participants gracefully
 - Provide fallbacks for no mentions
 - Clear messaging for unclear mentions
@@ -396,6 +405,7 @@ tech_meeting = DirectedConversation(
 ## Examples
 
 See the [example.py](example.py) file for complete working examples including:
+
 - Classroom discussions
 - Team meetings
 - Customer support scenarios

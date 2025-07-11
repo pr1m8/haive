@@ -26,7 +26,7 @@ if TYPE_CHECKING:
     from haive.agents.dynamic_supervisor.state import SupervisorStateWithTools
 
 
-def create_agent_tools(state: "SupervisorStateWithTools") -> List[Any]:
+def create_agent_tools(state: "SupervisorStateWithTools") -> list[Any]:
     """Generate all tools from current agents in state.
 
     Creates handoff tools for each registered agent and a choice validation tool.
@@ -47,7 +47,7 @@ def create_agent_tools(state: "SupervisorStateWithTools") -> List[Any]:
     tools = []
 
     # Create handoff tools for each agent
-    for agent_name, agent_info in state.agents.items():
+    for agent_name, _agent_info in state.agents.items():
         handoff_tool = create_handoff_tool(state, agent_name)
         tools.append(handoff_tool)
 
@@ -104,8 +104,10 @@ def create_handoff_tool(state: "SupervisorStateWithTools", agent_name: str) -> A
                 from langchain_core.messages import HumanMessage
 
                 agent_input = {
-                    "messages": state.messages
-                    + [HumanMessage(content=task_description)]
+                    "messages": [
+                        *state.messages,
+                        HumanMessage(content=task_description),
+                    ]
                 }
 
                 # Execute the agent (prefer sync methods in tools)
@@ -182,19 +184,19 @@ def create_handoff_tool(state: "SupervisorStateWithTools", agent_name: str) -> A
                 return f"Agent {agent_name} completed: {response}"
 
             except Exception as e:
-                return f"Error executing {agent_name}: {str(e)}"
+                return f"Error executing {agent_name}: {e!s}"
 
         except Exception as e:
-            return f"Error with {agent_name}: {str(e)}"
+            return f"Error with {agent_name}: {e!s}"
 
     # Create tool with proper name and description
     handoff_tool.__name__ = f"handoff_to_{agent_name}"
     handoff_tool.__doc__ = f"""Hand off a task to {agent_name}.
-    
+
     {agent_info.description}
-    
+
     Capabilities: {', '.join(agent_info.capabilities) if agent_info.capabilities else 'General'}
-    
+
     Args:
         task_description: The task to delegate to this agent
     """
@@ -245,7 +247,7 @@ def create_choice_tool(state: "SupervisorStateWithTools") -> Any:
         """
         try:
             # Get valid options from state
-            valid_options = list(state.agents.keys()) + ["END"]
+            valid_options = [*list(state.agents.keys()), "END"]
 
             # Validate choice
             if agent not in valid_options:
@@ -270,7 +272,7 @@ def create_choice_tool(state: "SupervisorStateWithTools") -> Any:
             return result
 
         except Exception as e:
-            return f"Error validating choice: {str(e)}"
+            return f"Error validating choice: {e!s}"
 
     # Update tool description with current options
     agent_list = "\n".join(
@@ -278,11 +280,11 @@ def create_choice_tool(state: "SupervisorStateWithTools") -> Any:
     )
 
     choose_agent.__doc__ = f"""Choose which agent should handle the task.
-    
+
     Available agents:
     {agent_list}
     - END: No suitable agent available
-    
+
     Args:
         agent: Name of the agent to choose
     """
@@ -312,7 +314,7 @@ def create_add_agent_tool() -> Any:
 
     @tool
     def request_agent(
-        capability: str, reason: str, requirements: List[str] = None
+        capability: str, reason: str, requirements: list[str] | None = None
     ) -> str:
         """Request a new agent with specific capability.
 
@@ -326,7 +328,7 @@ def create_add_agent_tool() -> Any:
         Returns:
             Confirmation of the request
         """
-        req_str = f"\n- ".join(requirements) if requirements else "None"
+        req_str = "\n- ".join(requirements) if requirements else "None"
 
         return f"""Agent request submitted:
 Capability: {capability}

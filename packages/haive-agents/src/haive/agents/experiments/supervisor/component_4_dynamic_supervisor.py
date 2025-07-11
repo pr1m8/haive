@@ -2,11 +2,6 @@
 
 from typing import Any, Dict, Optional
 
-from haive.core.engine import AugLLMConfig
-from haive.core.graph import BaseGraph
-from haive.core.models.llm.base import AzureLLMConfig
-from pydantic import Field, model_validator
-
 from haive.agents.experiments.supervisor.component_2_tools import (
     SupervisorStateWithTools,
 )
@@ -14,11 +9,15 @@ from haive.agents.experiments.supervisor.component_3_agent_execution import (
     AgentExecutionNode,
 )
 from haive.agents.react.agent import ReactAgent
+from haive.core.graph import BaseGraph
+from haive.core.models.llm.base import AzureLLMConfig
+from pydantic import Field, model_validator
+
+from haive.core.engine import AugLLMConfig
 
 
 class DynamicSupervisor(ReactAgent):
-    """
-    Dynamic supervisor that can add/remove agents at runtime.
+    """Dynamic supervisor that can add/remove agents at runtime.
 
     Key architecture:
     - Uses ReactAgent as base for reasoning capabilities
@@ -68,7 +67,6 @@ class DynamicSupervisor(ReactAgent):
     @model_validator(mode="after")
     def setup_dynamic_supervisor(self):
         """Setup supervisor with dynamic tool integration."""
-        print("🔧 Setting up dynamic supervisor...")
 
         # Sync tools from state to engine
         self._sync_tools_from_state()
@@ -78,12 +76,10 @@ class DynamicSupervisor(ReactAgent):
         self._setup_schemas()
         self._build_initial_graph()
 
-        print("✅ Dynamic supervisor setup complete")
         return self
 
     def _sync_tools_from_state(self):
         """Sync tools from state.agents to engine (key dynamic behavior)."""
-        print("🔄 Syncing tools from state to engine...")
 
         # Get current state
         if hasattr(self, "_current_state") and self._current_state:
@@ -95,7 +91,6 @@ class DynamicSupervisor(ReactAgent):
         # Get tools from state
         if hasattr(state, "get_all_tools"):
             dynamic_tools = state.get_all_tools()
-            print(f"  📋 Found {len(dynamic_tools)} dynamic tools")
 
             # Update engine tools
             self.engine.tools = dynamic_tools
@@ -105,13 +100,11 @@ class DynamicSupervisor(ReactAgent):
                 tool.name: "langchain_tool" for tool in dynamic_tools
             }
 
-            print(f"  ✅ Updated engine with tools: {[t.name for t in dynamic_tools]}")
         else:
-            print("  ⚠️ State has no get_all_tools method")
+            passod")
 
     def build_graph(self) -> BaseGraph:
-        """
-        Build supervisor graph with agent execution capabilities.
+        """Build supervisor graph with agent execution capabilities.
 
         Architecture:
         supervisor (reasoning) → agent_execution | END
@@ -119,7 +112,6 @@ class DynamicSupervisor(ReactAgent):
         The supervisor uses dynamic tools to make routing decisions,
         then the agent_execution node handles the actual execution.
         """
-        print("🏗️ Building dynamic supervisor graph...")
 
         graph = BaseGraph()
 
@@ -142,21 +134,18 @@ class DynamicSupervisor(ReactAgent):
         # Set entry point
         graph.set_entry_point("supervisor")
 
-        print("✅ Graph built with supervisor → agent_execution flow")
         return graph.compile()
 
     async def _supervisor_reasoning_node(
         self, state: SupervisorStateWithTools
-    ) -> Dict[str, Any]:
-        """
-        Supervisor reasoning node that uses dynamic tools for decision making.
+    ) -> dict[str, Any]:
+        """Supervisor reasoning node that uses dynamic tools for decision making.
 
         This node:
         1. Updates engine tools from current state
         2. Uses ReactAgent reasoning with dynamic tools
         3. Sets routing decisions in state
         """
-        print(f"🧠 Supervisor reasoning node...")
 
         # Update tools from current state before reasoning
         self._sync_tools_from_state_instance(state)
@@ -169,9 +158,8 @@ class DynamicSupervisor(ReactAgent):
         # The tools should have set next_agent and agent_task
         if isinstance(result, dict):
             return result
-        else:
-            # Handle AIMessage or other result types
-            return {"messages": [result]}
+        # Handle AIMessage or other result types
+        return {"messages": [result]}
 
     def _sync_tools_from_state_instance(self, state: SupervisorStateWithTools):
         """Sync tools from a specific state instance."""
@@ -180,16 +168,13 @@ class DynamicSupervisor(ReactAgent):
         self.engine.tool_routes = {
             tool.name: "langchain_tool" for tool in dynamic_tools
         }
-        print(f"  🔄 Synced {len(dynamic_tools)} tools from state")
 
     def _route_supervisor_decision(self, state: SupervisorStateWithTools) -> str:
         """Route based on supervisor's decision in state."""
         if state.next_agent and state.next_agent != "END":
-            print(f"🎯 Routing to execute agent: {state.next_agent}")
             return "execute"
-        else:
-            print(f"🏁 Routing to end")
-            return "end"
+        print(f"🏁 Routing to end")
+        return "end"
 
     # Convenience methods for agent management
     def add_agent(self, name: str, agent: Any, description: str, active: bool = True):
@@ -198,7 +183,7 @@ class DynamicSupervisor(ReactAgent):
             self._current_state.add_agent(name, agent, description, active)
             self._sync_tools_from_state()
         else:
-            print("⚠️ No current state - agent will be added when state is initialized")
+            passed")
 
     def remove_agent(self, name: str) -> bool:
         """Remove an agent from the supervisor's registry."""
@@ -209,7 +194,7 @@ class DynamicSupervisor(ReactAgent):
             return result
         return False
 
-    def list_agents(self) -> Dict[str, str]:
+    def list_agents(self) -> dict[str, str]:
         """List all agents in the registry."""
         if hasattr(self, "_current_state") and self._current_state:
             return self._current_state.list_all_agents()
@@ -225,11 +210,10 @@ class DynamicSupervisor(ReactAgent):
 # Factory function for easy creation
 def create_dynamic_supervisor(
     name: str = "dynamic_supervisor",
-    engine: Optional[AugLLMConfig] = None,
-    initial_agents: Optional[Dict[str, Any]] = None,
+    engine: AugLLMConfig | None = None,
+    initial_agents: Dict[str, Any] | None = None,
 ) -> DynamicSupervisor:
-    """
-    Create a dynamic supervisor with optional initial agents.
+    """Create a dynamic supervisor with optional initial agents.
 
     Args:
         name: Supervisor name
@@ -239,13 +223,11 @@ def create_dynamic_supervisor(
     Returns:
         Configured DynamicSupervisor ready for use
     """
-    print(f"🏭 Creating dynamic supervisor: {name}")
 
     supervisor = DynamicSupervisor(name=name, engine=engine)
 
     # Add initial agents if provided
     if initial_agents:
-        print(f"  📋 Adding {len(initial_agents)} initial agents...")
         state = supervisor.state_schema()
         for agent_name, agent_config in initial_agents.items():
             state.add_agent(
@@ -257,5 +239,4 @@ def create_dynamic_supervisor(
         supervisor._current_state = state
         supervisor._sync_tools_from_state()
 
-    print(f"✅ Dynamic supervisor created: {name}")
     return supervisor

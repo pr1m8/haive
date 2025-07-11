@@ -3,10 +3,6 @@
 import asyncio
 from typing import Any, Dict, Literal
 
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from langchain_core.messages import AIMessage, HumanMessage
-from langgraph.graph import END
-
 # Import our working components
 from haive.agents.experiments.supervisor.component_2_tools import (
     SupervisorStateWithTools,
@@ -15,9 +11,12 @@ from haive.agents.experiments.supervisor.component_3_agent_execution import (
     create_agent_execution_node,
 )
 from haive.agents.experiments.supervisor.test_utils import create_test_agents
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from langchain_core.messages import AIMessage, HumanMessage
+from langgraph.graph import END
 
 
-async def supervisor_node(state: SupervisorStateWithTools) -> Dict[str, Any]:
+async def supervisor_node(state: SupervisorStateWithTools) -> dict[str, Any]:
     """Supervisor node that analyzes task and routes to appropriate agent."""
     # Get last user message
     user_message = None
@@ -78,8 +77,6 @@ def route_supervisor(
 
 async def test_complete_supervisor():
     """Test the complete dynamic supervisor system."""
-    print("\n=== Testing Complete Dynamic Supervisor ===\n")
-
     # Create test agents
     agents_dict = await create_test_agents()
 
@@ -90,16 +87,10 @@ async def test_complete_supervisor():
         active_agents={"search_agent", "math_agent"},  # planning_agent is inactive
     )
 
-    print("1. Initial setup:")
-    print(f"   Agents: {list(initial_state.agents.keys())}")
-    print(f"   Active: {initial_state.active_agents}")
-    print(f"   Tools generated: {initial_state.generated_tools}")
-
     # Create nodes
     agent_execution_node = create_agent_execution_node()
 
     # Build graph
-    print("\n2. Building graph...")
     graph = BaseGraph(state_schema=SupervisorStateWithTools)
 
     # Add nodes
@@ -117,22 +108,17 @@ async def test_complete_supervisor():
 
     # Compile
     compiled = graph.compile()
-    print("   ✅ Graph compiled successfully!")
 
     # Test 1: Math task
-    print("\n3. Testing math task...")
     result = await compiled.ainvoke(initial_state.model_dump())
 
-    print(f"   Messages: {len(result.get('messages', []))}")
-    for i, msg in enumerate(result.get("messages", [])):
-        content = msg.get("content", "") if isinstance(msg, dict) else msg.content
-        print(f"   [{i}] {content[:100]}")
+    for _i, msg in enumerate(result.get("messages", [])):
+        msg.get("content", "") if isinstance(msg, dict) else msg.content
 
     if result.get("agent_response"):
-        print(f"   Agent response: {result['agent_response']}")
+        pass
 
     # Test 2: Search task
-    print("\n4. Testing search task...")
     search_state = SupervisorStateWithTools(
         messages=[
             HumanMessage(
@@ -145,12 +131,10 @@ async def test_complete_supervisor():
 
     result2 = await compiled.ainvoke(search_state.model_dump())
 
-    print(f"   Messages: {len(result2.get('messages', []))}")
     if result2.get("agent_response"):
-        print(f"   Agent response: {result2['agent_response'][:100]}...")
+        pass
 
     # Test 3: Inactive agent
-    print("\n5. Testing inactive agent...")
     plan_state = SupervisorStateWithTools(
         messages=[HumanMessage(content="Create a plan for building a web app")],
         agents=agents_dict,
@@ -159,14 +143,8 @@ async def test_complete_supervisor():
 
     result3 = await compiled.ainvoke(plan_state.model_dump())
 
-    print(f"   Messages: {len(result3.get('messages', []))}")
     last_msg = result3.get("messages", [])[-1]
-    content = (
-        last_msg.get("content", "") if isinstance(last_msg, dict) else last_msg.content
-    )
-    print(f"   Last message: {content}")
-
-    print("\n✅ Complete supervisor test finished!")
+    (last_msg.get("content", "") if isinstance(last_msg, dict) else last_msg.content)
 
 
 if __name__ == "__main__":

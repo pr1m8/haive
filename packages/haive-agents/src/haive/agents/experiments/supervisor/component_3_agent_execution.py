@@ -7,12 +7,12 @@ from haive.agents.experiments.supervisor.component_2_tools import (
     SupervisorStateWithTools,
 )
 
+
 logger = logging.getLogger(__name__)
 
 
 class AgentExecutionNode:
-    """
-    Agent execution node that mirrors the tool_node pattern.
+    """Agent execution node that mirrors the tool_node pattern.
 
     Key insight: Just like tool_node reads from engine.tools at runtime,
     this node reads from state.agents at runtime to execute any agent.
@@ -21,9 +21,8 @@ class AgentExecutionNode:
     def __init__(self, name: str = "agent_execution"):
         self.name = name
 
-    def __call__(self, state: SupervisorStateWithTools) -> Dict[str, Any]:
-        """
-        Execute agent based on state routing - mirrors tool_node pattern.
+    def __call__(self, state: SupervisorStateWithTools) -> dict[str, Any]:
+        """Execute agent based on state routing - mirrors tool_node pattern.
 
         This is the core pattern that enables dynamic supervisor:
         1. Read state.next_agent (like tool_node reads tool name from state)
@@ -58,7 +57,7 @@ class AgentExecutionNode:
 
         # Handle both AgentInfo objects and dict representations
         if isinstance(agent_info, dict):
-            logger.info(f"  Agent info type: dict")
+            logger.info("  Agent info type: dict")
             agent = agent_info.get("agent") or agent_info["agent"]
             is_active = agent_info.get("active", True)
         else:
@@ -129,12 +128,12 @@ class AgentExecutionNode:
             }
 
         except Exception as e:
-            logger.error(f"❌ Error executing agent '{agent_name}': {e}")
+            logger.exception(f"❌ Error executing agent '{agent_name}': {e}")
             logger.exception("Full traceback:")
 
             # Return error state
             return {
-                "agent_response": f"Error executing {agent_name}: {str(e)}",
+                "agent_response": f"Error executing {agent_name}: {e!s}",
                 "next_agent": None,
                 "agent_task": "",
                 "last_executed_agent": agent_name,
@@ -162,7 +161,7 @@ class SyncAgentExecutionNode:
     def __init__(self, name: str = "agent_execution"):
         self.name = name
 
-    def __call__(self, state: SupervisorStateWithTools) -> Dict[str, Any]:
+    def __call__(self, state: SupervisorStateWithTools) -> dict[str, Any]:
         """Sync version - calls agents using invoke instead of arun."""
         logger.info(f"🎯 Sync Agent Execution Node: {self.name}")
 
@@ -222,9 +221,9 @@ class SyncAgentExecutionNode:
             }
 
         except Exception as e:
-            logger.error(f"Error executing {agent_name}: {e}")
+            logger.exception(f"Error executing {agent_name}: {e}")
             return {
-                "agent_response": f"Error: {str(e)}",
+                "agent_response": f"Error: {e!s}",
                 "next_agent": None,
                 "agent_task": "",
                 "execution_error": str(e),

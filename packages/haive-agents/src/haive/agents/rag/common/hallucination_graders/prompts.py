@@ -1,5 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate
 
+
 RAG_HALLUCINATION_DETECTION_COMPREHENSIVE = ChatPromptTemplate.from_messages(
     [
         (
@@ -54,7 +55,7 @@ Be thorough, precise, and evidence-based in your analysis.""",
 **Required Analysis:**
 1. **Claim-by-Claim Verification**
 2. **Hallucination Assessment** with overall score
-3. **Evidence Evaluation** 
+3. **Evidence Evaluation**
 4. **Specific Issues Identified**
 5. **Recommendations** for improving accuracy
 

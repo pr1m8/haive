@@ -136,7 +136,6 @@ class OverallState(InputState, OutputState):
     """
 
     # Input - inherited from InputState
-    # question: str
 
     # Intermediary fields
     steps: list[str] = Field(
@@ -165,6 +164,3 @@ class OverallState(InputState, OutputState):
     )
 
     # Output - inherited from OutputState
-    # answer: str
-    # hallucination_check: Optional[str]
-    # answer_grade: Optional[str]

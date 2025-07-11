@@ -1,4 +1,4 @@
-"""Semantic Discovery Engine with Vector-Based Tool Selection
+"""Semantic Discovery Engine with Vector-Based Tool Selection.
 
 This module implements semantic discovery capabilities inspired by LangGraph's
 many-tools pattern, using vector embeddings to match tools and components
@@ -12,26 +12,13 @@ Key Features:
 - Context-aware component matching
 """
 
-import asyncio
-import logging
 from abc import ABC, abstractmethod
+import asyncio
 from dataclasses import dataclass, field
 from enum import Enum
+import logging
 from typing import Any, Dict, List, Optional, Protocol, Tuple, Union
 
-from haive.core.registry import (
-    CapabilityCategory,
-    ComponentAnalyzer,
-    ComponentMetadata,
-    ComponentType,
-    EnhancedComponentRegistry,
-    create_component_registry,
-)
-from haive.core.utils.haive_discovery import (
-    UnifiedHaiveDiscovery,
-    discover_tools,
-    get_all_tools,
-)
 from langchain_community.vectorstores import Chroma
 from langchain_core.documents import Document
 from langchain_core.embeddings import Embeddings
@@ -47,6 +34,20 @@ from haive.agents.discovery.selection_strategies import (
     EnsembleSelectionStrategy,
     SemanticSelectionStrategy,
 )
+from haive.core.registry import (
+    CapabilityCategory,
+    ComponentAnalyzer,
+    ComponentMetadata,
+    ComponentType,
+    EnhancedComponentRegistry,
+    create_component_registry,
+)
+from haive.core.utils.haive_discovery import (
+    UnifiedHaiveDiscovery,
+    discover_tools,
+    get_all_tools,
+)
+
 
 logger = logging.getLogger(__name__)
 
@@ -76,22 +77,22 @@ class QueryAnalysis:
     """Analysis of user query for tool selection."""
 
     original_query: str
-    extracted_keywords: List[str]
-    inferred_capabilities: List[str]
-    domain_tags: List[str]
+    extracted_keywords: list[str]
+    inferred_capabilities: list[str]
+    domain_tags: list[str]
     complexity_score: float
     intent_classification: str
-    suggested_tools: List[str] = field(default_factory=list)
+    suggested_tools: list[str] = field(default_factory=list)
 
 
 class EmbeddingProvider(Protocol):
     """Protocol for embedding providers."""
 
-    def embed_documents(self, texts: List[str]) -> List[List[float]]:
+    def embed_documents(self, texts: list[str]) -> list[list[float]]:
         """Embed multiple documents."""
         ...
 
-    def embed_query(self, text: str) -> List[float]:
+    def embed_query(self, text: str) -> list[float]:
         """Embed a single query."""
         ...
 
@@ -103,7 +104,7 @@ class VectorBasedToolSelector(BaseModel):
         default_factory=lambda: OpenAIEmbeddings(),
         description="Embedding provider for vectorization",
     )
-    vector_store: Optional[VectorStore] = Field(
+    vector_store: VectorStore | None = Field(
         default=None, description="Vector store for tool embeddings"
     )
     similarity_threshold: float = Field(
@@ -112,7 +113,7 @@ class VectorBasedToolSelector(BaseModel):
     max_tools: int = Field(default=5, description="Maximum number of tools to select")
 
     # Component registry for enhanced capabilities
-    component_registry: Optional[EnhancedComponentRegistry] = Field(
+    component_registry: EnhancedComponentRegistry | None = Field(
         default=None, description="Enhanced component registry"
     )
 
@@ -133,7 +134,7 @@ class VectorBasedToolSelector(BaseModel):
 
         return self
 
-    def index_tools(self, tools: List[Any]) -> None:
+    def index_tools(self, tools: list[Any]) -> None:
         """Index tools in vector store and component registry."""
         # Also register in component registry
         if self.component_registry:
@@ -172,27 +173,24 @@ class VectorBasedToolSelector(BaseModel):
 
     async def select_tools(
         self, query: str, strategy: ToolSelectionStrategy = ToolSelectionStrategy.TOP_K
-    ) -> List[ComponentMetadata]:
+    ) -> list[ComponentMetadata]:
         """Select tools based on query using specified strategy."""
         if strategy == ToolSelectionStrategy.TOP_K:
             return await self._select_top_k(query)
-        elif strategy == ToolSelectionStrategy.THRESHOLD:
+        if strategy == ToolSelectionStrategy.THRESHOLD:
             return await self._select_by_threshold(query)
-        elif strategy == ToolSelectionStrategy.HYBRID:
+        if strategy == ToolSelectionStrategy.HYBRID:
             return await self._select_hybrid(query)
-        else:
-            # Use component registry for advanced strategies
-            if self.component_registry:
-                results = self.component_registry.search_components(
-                    query,
-                    component_types=[ComponentType.TOOL],
-                    max_results=self.max_tools,
-                )
-                return results
-            else:
-                return await self._select_top_k(query)
+        if self.component_registry:
+            results = self.component_registry.search_components(
+                query,
+                component_types=[ComponentType.TOOL],
+                max_results=self.max_tools,
+            )
+            return results
+        return await self._select_top_k(query)
 
-    async def _select_top_k(self, query: str) -> List[ComponentMetadata]:
+    async def _select_top_k(self, query: str) -> list[ComponentMetadata]:
         """Select top K most similar tools."""
         # Use component registry if available
         if self.component_registry:
@@ -218,7 +216,7 @@ class VectorBasedToolSelector(BaseModel):
 
         return selected_tools
 
-    async def _select_by_threshold(self, query: str) -> List[ComponentMetadata]:
+    async def _select_by_threshold(self, query: str) -> list[ComponentMetadata]:
         """Select tools above similarity threshold."""
         # Use component registry if available
         if self.component_registry:
@@ -253,7 +251,7 @@ class VectorBasedToolSelector(BaseModel):
 
         return selected_tools[: self.max_tools]
 
-    async def _select_hybrid(self, query: str) -> List[ComponentMetadata]:
+    async def _select_hybrid(self, query: str) -> list[ComponentMetadata]:
         """Hybrid selection combining similarity and capability matching."""
         # Use component registry for hybrid search
         if self.component_registry:
@@ -295,7 +293,7 @@ class VectorBasedToolSelector(BaseModel):
 class QueryAnalyzer(BaseModel):
     """Analyzes queries to extract relevant information for tool selection."""
 
-    capability_keywords: Dict[str, List[str]] = Field(
+    capability_keywords: dict[str, list[str]] = Field(
         default_factory=lambda: {
             "search": ["search", "find", "look", "query", "discover"],
             "analysis": ["analyze", "examine", "inspect", "evaluate", "assess"],
@@ -341,7 +339,7 @@ class QueryAnalyzer(BaseModel):
             intent_classification=intent,
         )
 
-    def _extract_domain_tags(self, query: str) -> List[str]:
+    def _extract_domain_tags(self, query: str) -> list[str]:
         """Extract domain-specific tags from query."""
         domains = {
             "web": ["web", "website", "url", "internet", "online"],
@@ -376,7 +374,7 @@ class QueryAnalyzer(BaseModel):
 
         return min(complexity, 1.0)
 
-    def _classify_intent(self, query: str, capabilities: List[str]) -> str:
+    def _classify_intent(self, query: str, capabilities: list[str]) -> str:
         """Classify the primary intent of the query."""
         if not capabilities:
             return "unknown"
@@ -403,15 +401,15 @@ class QueryAnalyzer(BaseModel):
 class CapabilityMatcher(BaseModel):
     """Matches tools based on required capabilities."""
 
-    capability_matrix: Dict[str, List[str]] = Field(
+    capability_matrix: dict[str, list[str]] = Field(
         default_factory=dict, description="Matrix mapping tools to capabilities"
     )
 
-    component_registry: Optional[EnhancedComponentRegistry] = Field(
+    component_registry: EnhancedComponentRegistry | None = Field(
         default=None, description="Component registry for capability lookup"
     )
 
-    def build_capability_matrix(self, tools: List[Any]) -> None:
+    def build_capability_matrix(self, tools: list[Any]) -> None:
         """Build capability matrix from tools."""
         for tool in tools:
             name = getattr(tool, "name", str(tool))
@@ -425,9 +423,9 @@ class CapabilityMatcher(BaseModel):
 
     def match_tools(
         self,
-        required_capabilities: List[str],
-        optional_capabilities: Optional[List[str]] = None,
-    ) -> List[Tuple[str, float]]:
+        required_capabilities: list[str],
+        optional_capabilities: list[str] | None = None,
+    ) -> list[tuple[str, float]]:
         """Match tools based on capabilities."""
         # Use component registry if available
         if self.component_registry:
@@ -464,7 +462,7 @@ class CapabilityMatcher(BaseModel):
         matches.sort(key=lambda x: x[1], reverse=True)
         return matches
 
-    def _infer_capabilities(self, tool: Any) -> List[str]:
+    def _infer_capabilities(self, tool: Any) -> list[str]:
         """Infer capabilities from tool attributes."""
         capabilities = []
 
@@ -507,7 +505,7 @@ class SemanticDiscoveryEngine(BaseModel):
     )
 
     # Enhanced component registry
-    component_registry: Optional[EnhancedComponentRegistry] = Field(
+    component_registry: EnhancedComponentRegistry | None = Field(
         default=None, description="Shared component registry"
     )
 
@@ -524,8 +522,8 @@ class SemanticDiscoveryEngine(BaseModel):
         return self
 
     async def discover_tools(
-        self, tools: Optional[List[Any]] = None, haive_root: Optional[str] = None
-    ) -> List[ComponentMetadata]:
+        self, tools: list[Any] | None = None, haive_root: str | None = None
+    ) -> list[ComponentMetadata]:
         """Discover available tools."""
         if tools is None:
             # Use Haive discovery
@@ -560,8 +558,8 @@ class SemanticDiscoveryEngine(BaseModel):
         query: str,
         max_tools: int = 5,
         strategy: ToolSelectionStrategy = ToolSelectionStrategy.HYBRID,
-        capability_filter: Optional[List[str]] = None,
-    ) -> Tuple[List[ComponentMetadata], QueryAnalysis]:
+        capability_filter: list[str] | None = None,
+    ) -> tuple[list[ComponentMetadata], QueryAnalysis]:
         """Perform semantic tool selection for a query."""
         # Analyze query
         query_analysis = self.query_analyzer.analyze_query(query)
@@ -606,10 +604,10 @@ class SemanticDiscoveryEngine(BaseModel):
 
     async def get_tools_for_capabilities(
         self,
-        required_capabilities: List[str],
-        optional_capabilities: Optional[List[str]] = None,
+        required_capabilities: list[str],
+        optional_capabilities: list[str] | None = None,
         max_tools: int = 5,
-    ) -> List[ComponentMetadata]:
+    ) -> list[ComponentMetadata]:
         """Get tools that match specific capabilities."""
         if self.component_registry:
             # Use registry capability search
@@ -628,31 +626,28 @@ class SemanticDiscoveryEngine(BaseModel):
                     filtered.append(result)
 
             return filtered[:max_tools]
-        else:
-            # Use capability matcher
-            matches = self.capability_matcher.match_tools(
-                required_capabilities, optional_capabilities
+        # Use capability matcher
+        matches = self.capability_matcher.match_tools(
+            required_capabilities, optional_capabilities
+        )
+
+        # Convert to ComponentMetadata
+        results = []
+        for tool_name, score in matches[:max_tools]:
+            metadata = ComponentMetadata(
+                name=tool_name,
+                component_type=ComponentType.TOOL,
+                description=f"Tool: {tool_name}",
+                capabilities=self.capability_matcher.capability_matrix.get(
+                    tool_name, []
+                ),
+                capability_match_score=score,
             )
+            results.append(metadata)
 
-            # Convert to ComponentMetadata
-            results = []
-            for tool_name, score in matches[:max_tools]:
-                metadata = ComponentMetadata(
-                    name=tool_name,
-                    component_type=ComponentType.TOOL,
-                    description=f"Tool: {tool_name}",
-                    capabilities=self.capability_matcher.capability_matrix.get(
-                        tool_name, []
-                    ),
-                    capability_match_score=score,
-                )
-                results.append(metadata)
+        return results
 
-            return results
-
-    def update_selection_strategy(
-        self, strategy: Union[BaseSelectionStrategy, str]
-    ) -> None:
+    def update_selection_strategy(self, strategy: BaseSelectionStrategy | str) -> None:
         """Update the selection strategy."""
         if isinstance(strategy, str):
             # Create strategy from string

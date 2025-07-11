@@ -70,8 +70,6 @@ def basic_example():
         - Processing Time: 2.3 seconds
         - Steps: ['check_domain_relevance', 'generate_query', 'validate_query', 'execute_query', 'generate_answer']
     """
-    print("\n🎬 Basic GraphDB RAG Agent Example")
-    print("=" * 40)
 
     try:
         # Create agent with default configuration
@@ -79,8 +77,6 @@ def basic_example():
 
         # Sample question
         question = "What is the movie with the highest rating?"
-        print(f"\nQuestion: {question}")
-        print("\nProcessing...")
 
         # Track execution time
         start_time = time.time()
@@ -92,16 +88,10 @@ def basic_example():
         execution_time = time.time() - start_time
 
         # Display results
-        print(f"\n✅ Answer: {result.get('answer', 'No answer generated')}")
 
-        print("\n📊 Execution Details:")
-        print(f"- Cypher Query: {result.get('cypher_statement', 'N/A')}")
-        print(f"- Processing Time: {execution_time:.1f} seconds")
-        print(f"- Steps: {result.get('steps', [])}")
 
     except Exception as e:
-        logger.error(f"Error in basic example: {e}")
-        print(f"\n❌ Error: {e!s}")
+        logger.exception(f"Error in basic example: {e}")
 
 
 def streaming_example():
@@ -135,15 +125,12 @@ def streaming_example():
 
         ✅ Final Answer: The Matrix was directed by Lana Wachowski and Lilly Wachowski.
     """
-    print("\n🌊 Streaming GraphDB RAG Agent Example")
-    print("=" * 40)
 
     try:
         # Create agent
         agent = GraphDBRAGAgent(config=GraphDBRAGConfig())
 
         question = "Who directed The Matrix?"
-        print(f"\nQuestion: {question}\n")
 
         # Stream the execution
         for chunk in agent.stream(
@@ -152,47 +139,40 @@ def streaming_example():
         ):
             # Process each step
             for node_name, node_output in chunk.items():
-                print(f"📍 Step: {node_name}")
 
                 # Handle different node outputs
                 if node_name == "check_domain_relevance":
                     if node_output.get("next_action") != "end":
-                        print("   ✓ Domain check passed")
+                        pass")
                     else:
-                        print("   ✗ Query out of domain")
+                        pass")
 
                 elif node_name == "generate_query":
                     cypher = node_output.get("cypher_statement", "")
                     if cypher:
-                        print(f"   ✓ Generated Cypher: {cypher}")
+                        pass")
 
                 elif node_name == "validate_query":
                     if node_output.get("next_action") == "execute_query":
-                        print("   ✓ Query validation passed")
+                        pass")
                     else:
                         errors = node_output.get("cypher_errors", [])
-                        print(f"   ⚠️  Validation errors: {errors}")
 
                 elif node_name == "execute_query":
                     records = node_output.get("database_records", [])
                     if records and records != "No results found":
-                        print("   ✓ Query executed successfully")
-                        print(f"   📊 Results: {records}")
                     else:
-                        print("   ⚠️  No results found")
+                        passnd")
 
                 elif node_name == "generate_answer":
-                    print("   ✓ Final answer generated")
+                    pass")
 
-                print()  # Add spacing between steps
 
         # Get final result
         final_result = agent.run({"question": question})
-        print(f"✅ Final Answer: {final_result['answer']}")
 
     except Exception as e:
-        logger.error(f"Error in streaming example: {e}")
-        print(f"\n❌ Error: {e!s}")
+        logger.exception(f"Error in streaming example: {e}")
 
 
 def custom_domain_example():
@@ -215,12 +195,9 @@ def custom_domain_example():
         Processing healthcare query...
         Answer: The following patients have been diagnosed with diabetes: John Smith, Mary Johnson, and Robert Williams.
     """
-    print("\n🏥 Custom Domain (Healthcare) Example")
-    print("=" * 40)
 
     try:
         # Configure for healthcare domain
-        print("\nConfiguring agent for healthcare domain...")
 
         # Create custom examples for few-shot learning
         healthcare_examples = [
@@ -261,32 +238,28 @@ def custom_domain_example():
         agent = GraphDBRAGAgent(config)
 
         # Test domain relevance
-        print("\nTesting domain relevance:")
 
         # Should pass
         healthcare_question = "Which patients have diabetes?"
         result = agent.run({"question": healthcare_question})
         if "answer" in result and "not about healthcare" not in result["answer"]:
-            print(f'- ✅ "{healthcare_question}" - Accepted')
+            pass')
         else:
-            print(f'- ❌ "{healthcare_question}" - Rejected')
+            pass')
 
         # Should fail
         weather_question = "What's the weather today?"
         result = agent.run({"question": weather_question})
         if "not about healthcare" in result.get("answer", ""):
-            print(f'- ❌ "{weather_question}" - Rejected (out of domain)')
+            pass')
         else:
-            print(f'- ✅ "{weather_question}" - Accepted (unexpected!)')
+            pass')
 
         # Process a real healthcare query
-        print("\nProcessing healthcare query...")
         result = agent.run({"question": healthcare_question})
-        print(f"Answer: {result['answer']}")
 
     except Exception as e:
-        logger.error(f"Error in custom domain example: {e}")
-        print(f"\n❌ Error: {e!s}")
+        logger.exception(f"Error in custom domain example: {e}")
 
 
 def batch_processing_example():
@@ -318,8 +291,6 @@ def batch_processing_example():
         - Average Time: 1.7s
         - Total Time: 8.5s
     """
-    print("\n📦 Batch Processing Example")
-    print("=" * 40)
 
     try:
         # Create agent
@@ -334,7 +305,6 @@ def batch_processing_example():
             "Who directed Inception?",
         ]
 
-        print(f"\nProcessing {len(queries)} queries...\n")
 
         # Track statistics
         results = []
@@ -352,13 +322,8 @@ def batch_processing_example():
 
                 # Check if successful
                 if "not about" in result.get("answer", "").lower():
-                    print(f'{i}. "{question}"')
-                    print(f"   ❌ Out of domain ({execution_time:.1f}s)\n")
                     failed += 1
                 else:
-                    print(f'{i}. "{question}"')
-                    print(f"   ✅ Success ({execution_time:.1f}s)")
-                    print(f'   Answer: {result["answer"][:100]}...\n')
                     successful += 1
 
                 results.append(
@@ -374,27 +339,17 @@ def batch_processing_example():
 
             except Exception as e:
                 execution_time = time.time() - start_time
-                print(f'{i}. "{question}"')
-                print(f"   ❌ Error: {e!s} ({execution_time:.1f}s)\n")
                 failed += 1
                 total_time += execution_time
 
         # Display statistics
-        print("📊 Batch Statistics:")
-        print(f"- Total Queries: {len(queries)}")
-        print(f"- Successful: {successful} ({successful/len(queries)*100:.0f}%)")
-        print(f"- Failed: {failed} ({failed/len(queries)*100:.0f}%)")
-        print(f"- Average Time: {total_time/len(queries):.1f}s")
-        print(f"- Total Time: {total_time:.1f}s")
 
         # Save results to file
         with open("batch_results.json", "w") as f:
             json.dump(results, f, indent=2)
-        print("\n💾 Results saved to batch_results.json")
 
     except Exception as e:
-        logger.error(f"Error in batch processing: {e}")
-        print(f"\n❌ Error: {e!s}")
+        logger.exception(f"Error in batch processing: {e}")
 
 
 def error_handling_example():
@@ -420,18 +375,14 @@ def error_handling_example():
         3. Complex nested query:
            ✅ Successfully validated and executed
     """
-    print("\n🛡️ Error Handling Example")
-    print("=" * 40)
 
     try:
         # Create agent with debug configuration
         config = GraphDBRAGConfig(domain_name="movies")
         agent = GraphDBRAGAgent(config)
 
-        print("\nTesting various error scenarios...\n")
 
         # Test 1: Query that might generate invalid Cypher
-        print("1. Testing query correction:")
         complex_question = (
             "Show me all actors who have worked with directors who have won an Oscar"
         )
@@ -440,38 +391,31 @@ def error_handling_example():
         for chunk in agent.stream({"question": complex_question}):
             if "validate_query" in chunk:
                 if chunk["validate_query"].get("cypher_errors"):
-                    print(
-                        f"   Initial query had errors: {chunk['validate_query']['cypher_errors']}"
-                    )
+                    pass
             elif "correct_query" in chunk:
-                print("   ✅ Successfully corrected and executed")
+                pass")
 
         # Test 2: Query with non-existent entities
-        print("\n2. Non-existent labels:")
         result = agent.run(
             {
                 "question": "List all SpaceShips in the database"  # Assuming no SpaceShip label
             }
         )
         if "not about movies" in result.get("answer", "").lower():
-            print("   ⚠️  Handled gracefully: Query rejected as out of domain")
+            passin")
         else:
-            print(f"   Answer: {result.get('answer', 'No answer')}")
+            pass
 
         # Test 3: Very complex query
-        print("\n3. Complex nested query:")
         complex_result = agent.run(
             {
                 "question": "What is the average rating of movies directed by people who have also acted?"
             }
         )
         if complex_result.get("answer"):
-            print("   ✅ Successfully validated and executed")
-            print(f"   Answer: {complex_result['answer']}")
 
     except Exception as e:
-        logger.error(f"Error in error handling example: {e}")
-        print(f"\n❌ Error: {e!s}")
+        logger.exception(f"Error in error handling example: {e}")
 
 
 def performance_monitoring_example():
@@ -504,14 +448,11 @@ def performance_monitoring_example():
         - Consider caching frequent queries
         - Use more specific examples for faster generation
     """
-    print("\n⚡ Performance Monitoring Example")
-    print("=" * 40)
 
     try:
         # Create agent
         agent = GraphDBRAGAgent(config=GraphDBRAGConfig())
 
-        print("\nRunning performance analysis...")
 
         # Track timing for each step
         step_times = {}
@@ -521,7 +462,7 @@ def performance_monitoring_example():
         question = "What are the top 10 highest grossing movies?"
 
         for chunk in agent.stream({"question": question}):
-            for node_name, node_output in chunk.items():
+            for node_name, _node_output in chunk.items():
                 if node_name not in step_times:
                     step_times[node_name] = {
                         "start": time.time(),
@@ -537,42 +478,23 @@ def performance_monitoring_example():
         total_time = time.time() - total_start
 
         # Display performance metrics
-        print("\n📊 Performance Metrics:\n")
-        print(f"{'Step':<25} | {'Time (s)':<10} | {'% of Total':<12}")
-        print("-" * 50)
 
         # Calculate and display metrics
         for step, timing in step_times.items():
             if timing["duration"]:
                 percentage = (timing["duration"] / total_time) * 100
-                print(
-                    f"{step:<25} | {timing['duration']:<10.1f} | {percentage:<12.0f}%"
-                )
 
-        print("-" * 50)
-        print(f"{'Total':<25} | {total_time:<10.1f} | {'100%':<12}")
 
         # Identify bottlenecks
         bottleneck = max(step_times.items(), key=lambda x: x[1]["duration"] or 0)
 
-        print("\n🎯 Optimization Suggestions:")
-        print(
-            f"- {bottleneck[0]} is the bottleneck ({bottleneck[1]['duration']/total_time*100:.0f}% of time)"
-        )
 
         if bottleneck[0] == "generate_query":
-            print("- Consider caching frequent queries")
-            print("- Use more specific examples for faster generation")
         elif bottleneck[0] == "execute_query":
-            print("- Check Neo4j query performance")
-            print("- Consider adding database indexes")
         elif bottleneck[0] == "validate_query":
-            print("- Simplify validation rules if possible")
-            print("- Cache validation results for similar queries")
 
     except Exception as e:
-        logger.error(f"Error in performance monitoring: {e}")
-        print(f"\n❌ Error: {e!s}")
+        logger.exception(f"Error in performance monitoring: {e}")
 
 
 async def async_example():
@@ -594,8 +516,6 @@ async def async_example():
 
         Total time: 2.8s (vs ~7s sequential)
     """
-    print("\n🔄 Async Execution Example")
-    print("=" * 40)
 
     try:
         # Create agent
@@ -608,7 +528,6 @@ async def async_example():
             "Which actors have won multiple Oscars?",
         ]
 
-        print(f"\nProcessing {len(queries)} queries concurrently...\n")
 
         # Define async task
         async def process_query(agent, question, index):
@@ -645,21 +564,13 @@ async def async_example():
         # Display results
         for result in sorted(results, key=lambda x: x["index"]):
             if result["success"]:
-                print(f'✅ Query {result["index"]} completed: "{result["question"]}"')
-                print(f'   Time: {result["time"]:.1f}s')
-                print(f'   Answer: {result["answer"][:100]}...\n')
             else:
-                print(f'❌ Query {result["index"]} failed: "{result["question"]}"')
-                print(f'   Error: {result["error"]}\n')
 
         # Compare with sequential time
         sequential_time = sum(r["time"] for r in results)
-        print(f"Total time: {total_time:.1f}s (vs ~{sequential_time:.1f}s sequential)")
-        print(f"Speedup: {sequential_time/total_time:.1f}x")
 
     except Exception as e:
-        logger.error(f"Error in async example: {e}")
-        print(f"\n❌ Error: {e!s}")
+        logger.exception(f"Error in async example: {e}")
 
 
 def main():
@@ -689,18 +600,6 @@ def main():
 
             Enter your choice (0-8):
     """
-    print("\n🎯 GraphDB RAG Agent Examples")
-    print("=" * 30)
-    print("\nSelect an example to run:")
-    print("1. Basic Usage")
-    print("2. Streaming Execution")
-    print("3. Custom Domain Configuration")
-    print("4. Batch Processing")
-    print("5. Error Handling")
-    print("6. Performance Monitoring")
-    print("7. Async Execution")
-    print("8. Run All Examples")
-    print("0. Exit")
 
     examples = {
         "1": basic_example,
@@ -718,20 +617,17 @@ def main():
             choice = input("\nEnter your choice (0-8): ").strip()
 
             if choice == "0":
-                print("\n👋 Goodbye!")
                 break
             if choice in examples:
                 examples[choice]()
                 input("\nPress Enter to continue...")
             else:
-                print("❌ Invalid choice. Please try again.")
+                pass")
 
         except KeyboardInterrupt:
-            print("\n\n👋 Goodbye!")
             break
         except Exception as e:
-            logger.error(f"Error in main menu: {e}")
-            print(f"\n❌ Error: {e!s}")
+            logger.exception(f"Error in main menu: {e}")
 
 
 def run_all_examples():
@@ -740,8 +636,6 @@ def run_all_examples():
     This function executes all example functions to demonstrate
     the full capabilities of the GraphDBRAGAgent.
     """
-    print("\n🚀 Running All Examples")
-    print("=" * 50)
 
     examples = [
         ("Basic Usage", basic_example),
@@ -754,21 +648,15 @@ def run_all_examples():
     ]
 
     for i, (name, func) in enumerate(examples, 1):
-        print(f"\n\n{'='*50}")
-        print(f"Example {i}/{len(examples)}: {name}")
-        print("=" * 50)
 
         try:
             func()
         except Exception as e:
-            logger.error(f"Error running {name}: {e}")
-            print(f"\n❌ Error in {name}: {e!s}")
+            logger.exception(f"Error running {name}: {e}")
 
         if i < len(examples):
-            print("\n⏸️  Pausing before next example...")
             time.sleep(2)
 
-    print("\n\n✅ All examples completed!")
 
 
 if __name__ == "__main__":
@@ -779,6 +667,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        logger.error(f"Fatal error: {e}")
-        print(f"\n❌ Fatal error: {e!s}")
+        logger.exception(f"Fatal error: {e}")
         exit(1)

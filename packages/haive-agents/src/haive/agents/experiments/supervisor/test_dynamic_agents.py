@@ -2,9 +2,6 @@
 
 import asyncio
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
-from haive.tools.tools.search_tools import tavily_search_tool
 from langchain_core.messages import HumanMessage
 
 # Create some test tools
@@ -19,6 +16,9 @@ from haive.agents.experiments.supervisor.dynamic_supervisor_agent import (
 )
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+from haive.tools.tools.search_tools import tavily_search_tool
 
 
 @tool
@@ -39,8 +39,6 @@ def get_weather(location: str) -> str:
 
 async def test_dynamic_agents():
     """Test adding and removing agents dynamically."""
-    print("🔧 Testing dynamic agent management...\n")
-
     # Create initial search agent
     search_engine = AugLLMConfig(
         name="search_engine",
@@ -66,7 +64,6 @@ If no suitable agent exists, explain what capability is missing.""",
         name="dynamic_supervisor", engine=supervisor_engine
     )
 
-    print("1. Starting with search agent only...")
     # Create initial state with just search agent
     state = SupervisorStateWithTools()
     state.messages = [HumanMessage(content="What's the capital of France?")]
@@ -81,14 +78,9 @@ If no suitable agent exists, explain what capability is missing.""",
     state.active_agents = ["search_agent"]
     state.sync_agents()
 
-    print(f"   Available agents: {list(state.agents.keys())}")
-    print(f"   Generated tools: {state.generated_tools}\n")
-
     # Run supervisor
-    result = await supervisor.arun(state, debug=False)
-    print(f"   ✅ Task 1 completed\n")
+    await supervisor.arun(state, debug=False)
 
-    print("2. Adding math agent dynamically...")
     # Create math agent
     math_engine = AugLLMConfig(
         name="math_engine",
@@ -103,16 +95,11 @@ If no suitable agent exists, explain what capability is missing.""",
     state.add_agent("math_agent", math_agent, "Mathematics specialist", active=True)
     state.sync_agents()
 
-    print(f"   Available agents: {list(state.agents.keys())}")
-    print(f"   Generated tools: {state.generated_tools}\n")
-
     # New math task
     state.messages.append(HumanMessage(content="Calculate 25 * 37 + 128"))
 
-    result = await supervisor.arun(state, debug=False)
-    print(f"   ✅ Task 2 completed\n")
+    await supervisor.arun(state, debug=False)
 
-    print("3. Adding weather agent and deactivating search...")
     # Create weather agent
     weather_engine = AugLLMConfig(
         name="weather_engine",
@@ -132,22 +119,14 @@ If no suitable agent exists, explain what capability is missing.""",
     state.deactivate_agent("search_agent")
     state.sync_agents()
 
-    print(f"   Available agents: {list(state.agents.keys())}")
-    print(f"   Active agents: {state.list_active_agents()}")
-    print(f"   Generated tools: {state.generated_tools}\n")
-
     # Weather task
     state.messages.append(HumanMessage(content="What's the weather in Paris?"))
 
-    result = await supervisor.arun(state, debug=False)
-    print(f"   ✅ Task 3 completed\n")
+    await supervisor.arun(state, debug=False)
 
-    print("4. Complex task requiring multiple agents...")
     # Reactivate search agent
     state.activate_agent("search_agent")
     state.sync_agents()
-
-    print(f"   Active agents: {list(state.list_active_agents().keys())}")
 
     # Multi-agent task
     state.messages.append(
@@ -156,25 +135,11 @@ If no suitable agent exists, explain what capability is missing.""",
         )
     )
 
-    result = await supervisor.arun(state, debug=False)
-    print(f"   ✅ Task 4 completed\n")
+    await supervisor.arun(state, debug=False)
 
-    print("5. Removing agents...")
     # Remove weather agent
     state.remove_agent("weather_agent")
     state.sync_agents()
-
-    print(f"   Remaining agents: {list(state.agents.keys())}")
-    print(f"   Generated tools: {state.generated_tools}\n")
-
-    print("🎉 Dynamic agent management test complete!")
-    print("\nKey findings:")
-    print("- ✅ Agents can be added dynamically")
-    print("- ✅ Agents can be activated/deactivated")
-    print("- ✅ Agents can be removed")
-    print("- ✅ Tools are regenerated automatically")
-    print("- ✅ State persists across runs")
-    print("- ✅ Agents are stored in state but excluded from serialization")
 
 
 if __name__ == "__main__":

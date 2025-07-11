@@ -2,10 +2,10 @@
 
 from typing import Dict, List, Optional
 
-from haive.core.schema.prebuilt.messages_state import MessagesState
 from pydantic import Field, field_validator
 
 from haive.agents.experiments.supervisor.agent_info import AgentInfo
+from haive.core.schema.prebuilt.messages_state import MessagesState
 
 
 class SupervisorState(MessagesState):
@@ -18,28 +18,28 @@ class SupervisorState(MessagesState):
     model_config = {"arbitrary_types_allowed": True}
 
     # Agent registry
-    agents: Dict[str, AgentInfo] = Field(
+    agents: dict[str, AgentInfo] = Field(
         default_factory=dict, description="Registry of available agents by name"
     )
-    active_agents: List[str] = Field(
+    active_agents: list[str] = Field(
         default_factory=list,
         description="List of currently active agent names (unique)",
     )
 
     @field_validator("active_agents")
     @classmethod
-    def ensure_unique_agents(cls, v: List[str]) -> List[str]:
+    def ensure_unique_agents(cls, v: list[str]) -> list[str]:
         """Ensure active agents list contains unique values."""
         return list(set(v)) if v else []
 
     # Routing control
-    next_agent: Optional[str] = Field(
+    next_agent: str | None = Field(
         default=None, description="Name of agent to execute next"
     )
     agent_task: str = Field(
         default="", description="Task to pass to the selected agent"
     )
-    agent_response: Optional[str] = Field(
+    agent_response: str | None = Field(
         default=None, description="Response from the executed agent"
     )
 
@@ -51,11 +51,8 @@ class SupervisorState(MessagesState):
 
         self.agents[name] = agent_info
 
-        if active:
-            if name not in self.active_agents:
-                self.active_agents.append(name)
-
-        print(f"✅ Added agent '{name}': {description} (active: {active})")
+        if active and name not in self.active_agents:
+            self.active_agents.append(name)
 
     def remove_agent(self, name: str) -> bool:
         """Remove an agent from the registry."""
@@ -63,7 +60,6 @@ class SupervisorState(MessagesState):
             del self.agents[name]
             if name in self.active_agents:
                 self.active_agents.remove(name)
-            print(f"🗑️ Removed agent '{name}'")
             return True
         return False
 
@@ -73,7 +69,6 @@ class SupervisorState(MessagesState):
             self.agents[name].activate()
             if name not in self.active_agents:
                 self.active_agents.append(name)
-            print(f"🔄 Activated agent '{name}'")
             return True
         return False
 
@@ -83,17 +78,16 @@ class SupervisorState(MessagesState):
             self.agents[name].deactivate()
             if name in self.active_agents:
                 self.active_agents.remove(name)
-            print(f"⏸️ Deactivated agent '{name}'")
             return True
         return False
 
-    def get_agent(self, name: str) -> Optional[any]:
+    def get_agent(self, name: str) -> any | None:
         """Get agent instance by name."""
         if name in self.agents:
             return self.agents[name].get_agent()
         return None
 
-    def list_active_agents(self) -> Dict[str, str]:
+    def list_active_agents(self) -> dict[str, str]:
         """List active agents with descriptions."""
         return {
             name: info.description
@@ -101,7 +95,7 @@ class SupervisorState(MessagesState):
             if info.is_active()
         }
 
-    def list_all_agents(self) -> Dict[str, str]:
+    def list_all_agents(self) -> dict[str, str]:
         """List all agents with descriptions."""
         return {name: info.description for name, info in self.agents.items()}
 
@@ -109,7 +103,6 @@ class SupervisorState(MessagesState):
         """Set the next agent and task for execution."""
         self.next_agent = agent_name
         self.agent_task = task
-        print(f"🎯 Routing to '{agent_name}' with task: {task[:50]}...")
 
     def clear_routing(self):
         """Clear routing information."""

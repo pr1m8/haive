@@ -1,4 +1,4 @@
-"""Rewoo - TODO: Add brief description
+"""Rewoo - TODO: Add brief description.
 
 TODO: Add detailed description of module functionality
 

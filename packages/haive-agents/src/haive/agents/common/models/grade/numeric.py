@@ -6,9 +6,8 @@ scores and percentage-based grading.
 
 from typing import Any
 
-from pydantic import Field, field_validator, model_validator
-
 from haive.agents.common.models.grade.base import Grade, GradeType
+from pydantic import Field, field_validator, model_validator
 
 
 class NumericGrade(Grade):

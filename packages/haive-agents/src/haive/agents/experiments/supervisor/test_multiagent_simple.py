@@ -3,14 +3,14 @@
 import asyncio
 from typing import Literal
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
-from haive.core.schema.agent_schema_composer import BuildMode
 from langchain_core.messages import AIMessage, HumanMessage
 from langgraph.graph import END
 
 from haive.agents.multi.enhanced_base import MultiAgentBase
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+from haive.core.schema.agent_schema_composer import BuildMode
 
 
 # Test just the routing logic
@@ -30,8 +30,6 @@ async def simple_agent_node(state):
 
 async def test_simple_multiagent():
     """Test basic MultiAgentBase functionality."""
-    print("\n=== Testing Simple MultiAgentBase ===\n")
-
     # Create a simple supervisor agent
     supervisor = SimpleAgent(
         name="supervisor",
@@ -60,11 +58,8 @@ async def test_simple_multiagent():
 
     result = await compiled.ainvoke(initial_state)
 
-    print(f"Messages count: {len(result.get('messages', []))}")
-    for i, msg in enumerate(result.get("messages", [])):
-        print(f"  Message {i}: {msg.content[:50]}...")
-
-    print("\n✅ Simple MultiAgentBase test complete!")
+    for _i, _msg in enumerate(result.get("messages", [])):
+        pass
 
 
 if __name__ == "__main__":

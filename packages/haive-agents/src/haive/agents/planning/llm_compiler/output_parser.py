@@ -1,6 +1,6 @@
 import ast
-import re
 from collections.abc import Iterator, Sequence
+import re
 from typing import (
     Any,
 )
@@ -11,6 +11,7 @@ from langchain_core.output_parsers.transform import BaseTransformOutputParser
 from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import BaseTool
 from typing_extensions import TypedDict
+
 
 THOUGHT_PATTERN = r"Thought: ([^\n]*)"
 ACTION_PATTERN = r"\n*(\d+)\. (\w+)\((.*)\)(\s*#\w+\n)?"
@@ -38,7 +39,7 @@ def _parse_llm_compiler_action_args(args: str, tool: str | BaseTool) -> list[Any
     extracted_args = {}
     tool_key = None
     prev_idx = None
-    for key in tool.args.keys():
+    for key in tool.args:
         # Split if present
         if f"{key}=" in args:
             idx = args.index(f"{key}=")

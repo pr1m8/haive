@@ -8,10 +8,9 @@ monitoring capabilities.
 import logging
 from typing import Any, Literal
 
+from haive.agents.base.agent import Agent
 from haive.core.schema import MessagesStateWithTokenUsage, SchemaComposer
 from pydantic import Field
-
-from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 
@@ -86,7 +85,7 @@ class TokenTrackingAgent(Agent):
         if self.engine:
             engine_list.append(self.engine)
 
-        for name, component in self.engines.items():
+        for _name, component in self.engines.items():
             if isinstance(component, str):
                 continue
             if not isinstance(component, Agent):

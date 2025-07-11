@@ -7,9 +7,6 @@ with dynamic agent execution capabilities.
 import asyncio
 from typing import Any, Dict, Literal
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
-from haive.core.schema.agent_schema_composer import BuildMode
 from langchain_core.messages import AIMessage, HumanMessage
 from langgraph.graph import END
 from pydantic import Field
@@ -23,6 +20,10 @@ from haive.agents.experiments.supervisor.component_3_agent_execution import (
 )
 from haive.agents.multi.enhanced_base import MultiAgentBase
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+from haive.core.schema.agent_schema_composer import BuildMode
+
 
 # Create supervisor prompt
 SUPERVISOR_PROMPT = """You are an intelligent task supervisor that routes tasks to specialized agents.
@@ -77,7 +78,7 @@ def route_supervisor(
     return "END"
 
 
-async def supervisor_node(state: SupervisorStateWithTools) -> Dict[str, Any]:
+async def supervisor_node(state: SupervisorStateWithTools) -> dict[str, Any]:
     """Supervisor node that uses dynamic tools from state."""
     # Get last user message
     user_message = None
@@ -102,7 +103,6 @@ async def supervisor_node(state: SupervisorStateWithTools) -> Dict[str, Any]:
 
 def create_dynamic_supervisor_system() -> MultiAgentBase:
     """Create the complete dynamic supervisor system using MultiAgentBase."""
-
     # Create agent execution node
     agent_execution_node = create_agent_execution_node()
 
@@ -141,8 +141,6 @@ async def test_multiagent_supervisor():
     except ImportError:
         from test_utils import create_test_agents
 
-    print("\n=== Testing MultiAgentBase Dynamic Supervisor ===\n")
-
     # Create test agents
     agents_dict = await create_test_agents()
 
@@ -163,37 +161,24 @@ async def test_multiagent_supervisor():
     }
 
     # Run the system
-    print("Initial task: Search for information about Haive framework")
-    print("\nExecuting supervisor system...")
 
     result = await compiled.ainvoke(initial_state)
 
-    print("\n=== Results ===")
-    print(f"Final messages: {len(result.get('messages', []))}")
     if result.get("agent_response"):
-        print(f"Agent response: {result['agent_response'][:200]}...")
-    print(f"Last agent used: {result.get('next_agent', 'None')}")
+        pass
 
     # Test with a math task
-    print("\n\n=== Testing with Math Task ===")
     initial_state["messages"] = [HumanMessage(content="Calculate 15 + 27")]
 
     result = await compiled.ainvoke(initial_state)
-
-    print(f"Agent response: {result.get('agent_response', 'No response')}")
-
-    print("\n✅ MultiAgentBase supervisor test complete!")
 
 
 # Add a simpler test for just the routing
 async def test_routing_logic():
     """Test just the routing logic without full system."""
-    from haive.agents.experiments.supervisor.agent_info import AgentInfo
     from haive.agents.experiments.supervisor.component_1_state_foundation import (
         create_test_simple_agent,
     )
-
-    print("\n=== Testing Routing Logic ===\n")
 
     # Create minimal state
     state = SupervisorStateWithTools()
@@ -203,25 +188,17 @@ async def test_routing_logic():
     state.add_agent("search_agent", search_agent, "Web search specialist")
 
     # Test routing with no task
-    print("1. Testing with no task set:")
-    route = route_supervisor(state)
-    print(f"   Route: {route} (expected: END)")
+    route_supervisor(state)
 
     # Test routing with task set
-    print("\n2. Testing with task set:")
     state.next_agent = "search_agent"
     state.agent_task = "Search for Python tutorials"
-    route = route_supervisor(state)
-    print(f"   Route: {route} (expected: agent_execution)")
+    route_supervisor(state)
 
     # Test explicit END
-    print("\n3. Testing explicit END:")
     state.next_agent = "END"
     state.agent_task = ""
-    route = route_supervisor(state)
-    print(f"   Route: {route} (expected: END)")
-
-    print("\n✅ Routing logic test complete!")
+    route_supervisor(state)
 
 
 if __name__ == "__main__":

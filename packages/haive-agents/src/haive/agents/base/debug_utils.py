@@ -150,11 +150,7 @@ class AgentDebugger:
                 base_config.get("configurable", {}).get("thread_id", "None")
             )
             base_keys = ", ".join(
-                [
-                    k
-                    for k in base_config.keys()
-                    if k not in ["recursion_limit", "configurable"]
-                ]
+                [k for k in base_config if k not in ["recursion_limit", "configurable"]]
             )
 
         table.add_row(
@@ -170,11 +166,7 @@ class AgentDebugger:
             runtime_config.get("configurable", {}).get("thread_id", "None")
         )
         runtime_keys = ", ".join(
-            [
-                k
-                for k in runtime_config.keys()
-                if k not in ["recursion_limit", "configurable"]
-            ]
+            [k for k in runtime_config if k not in ["recursion_limit", "configurable"]]
         )
         table.add_row(
             "runtime_config",

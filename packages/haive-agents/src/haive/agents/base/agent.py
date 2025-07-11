@@ -9,12 +9,20 @@ including execution, state management, and persistence functionality through mix
 import logging
 import re
 from abc import ABC, abstractmethod
-from typing import Any, Literal
+from typing import Any, Dict, Literal
 
+# Import mixins
+from haive.agents.base.mixins.execution_mixin import ExecutionMixin
+from haive.agents.base.mixins.persistence_mixin import PersistenceMixin
+from haive.agents.base.mixins.state_mixin import StateMixin
+from haive.agents.base.serialization_mixin import SerializationMixin
 from haive.core.engine.base import Engine, EngineType, InvokableEngine
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.schema_composer import SchemaComposer
 from haive.core.schema.state_schema import StateSchema
+
+# Import BaseOutputParser to ensure it's available for LangGraph type evaluation
+from langchain_core.output_parsers.base import BaseOutputParser
 from langchain_core.runnables import RunnableConfig
 from langgraph.graph.graph import CompiledGraph
 from pydantic import BaseModel, Field, PrivateAttr, create_model, model_validator
@@ -22,12 +30,6 @@ from rich.console import Console
 from rich.logging import RichHandler
 from rich.table import Table
 from rich.tree import Tree
-
-# Import mixins
-from haive.agents.base.mixins.execution_mixin import ExecutionMixin
-from haive.agents.base.mixins.persistence_mixin import PersistenceMixin
-from haive.agents.base.mixins.state_mixin import StateMixin
-from haive.agents.base.serialization_mixin import SerializationMixin
 
 # Configure rich logging
 logging.basicConfig(
@@ -238,7 +240,7 @@ class Agent(
         if "engines" in values and values["engines"] is not None:
             engines = values["engines"]
 
-            if isinstance(engines, (list, tuple)):
+            if isinstance(engines, list | tuple):
                 # Convert list/tuple to dict
                 engine_dict = {}
                 for i, engine in enumerate(engines):
@@ -299,7 +301,7 @@ class Agent(
                 logger.info(tree)
 
         except Exception as e:
-            logger.error(f"Failed to setup agent {self.__class__.__name__}: {e}")
+            logger.exception(f"Failed to setup agent {self.__class__.__name__}: {e}")
             # Don't raise - allow partial setup for better debugging
 
         return self
@@ -382,7 +384,7 @@ class Agent(
         if self.engine:
             engine_list.append(self.engine)
 
-        for name, component in self.engines.items():
+        for _name, component in self.engines.items():
             if isinstance(component, str):  # Skip string references
                 continue
             if isinstance(component, Agent):
@@ -570,7 +572,7 @@ class Agent(
                         main_engine, "structured_output_version", None
                     )
 
-                    if output_version == "v2" or output_version == 2:
+                    if output_version in {"v2", 2}:
                         # For v2, we need to create a schema that includes the parsed output field
                         # Use proper field naming utilities
                         from haive.core.schema.field_utils import (
@@ -825,7 +827,6 @@ class Agent(
         # Build schema kwargs - only pass what StateGraph expects
         schema_kwargs = {}
 
-        # CRITICAL: state_schema is required
         if self.state_schema:
             schema_kwargs["state_schema"] = self.state_schema
         else:
@@ -851,9 +852,9 @@ class Agent(
         try:
             langgraph = self.graph.to_langgraph(**schema_kwargs)
         except Exception as e:
-            logger.error(f"Failed to convert graph to langgraph: {e}")
-            logger.error(f"Schema kwargs were: {list(schema_kwargs.keys())}")
-            logger.error(f"State schema type: {type(self.state_schema)}")
+            logger.exception(f"Failed to convert graph to langgraph: {e}")
+            logger.exception(f"Schema kwargs were: {list(schema_kwargs.keys())}")
+            logger.exception(f"State schema type: {type(self.state_schema)}")
             raise
 
         # Now compile the LangGraph StateGraph with checkpointer and runtime config
@@ -924,7 +925,9 @@ class Agent(
             self.graph = self.build_graph()
             self._graph_built = True
         except Exception as e:
-            logger.error(f"Failed to rebuild graph for {self.__class__.__name__}: {e}")
+            logger.exception(
+                f"Failed to rebuild graph for {self.__class__.__name__}: {e}"
+            )
             raise
         return self.graph
 
@@ -970,7 +973,7 @@ class Agent(
                     self.checkpointer.setup()
                     logger.debug("Checkpointer tables set up successfully")
                 except Exception as e:
-                    logger.error(f"Error setting up checkpointer tables: {e}")
+                    logger.exception(f"Error setting up checkpointer tables: {e}")
 
             # First, we need to convert BaseGraph to LangGraph StateGraph
             # Build schema kwargs for conversion
@@ -1003,7 +1006,7 @@ class Agent(
                 langgraph_graph = self.graph.to_langgraph(**schema_kwargs)
                 logger.debug("Successfully converted BaseGraph to LangGraph StateGraph")
             except Exception as e:
-                logger.error(f"Failed to convert BaseGraph to LangGraph: {e}")
+                logger.exception(f"Failed to convert BaseGraph to LangGraph: {e}")
                 raise
 
             # Now compile the LangGraph StateGraph with checkpointer and store
@@ -1182,7 +1185,7 @@ class Agent(
             logger.info(f"Graph visualization saved to: {output_path}")
 
         except Exception as e:
-            logger.error(f"Error visualizing graph: {e}")
+            logger.exception(f"Error visualizing graph: {e}")
 
     # ============================================================================
     # ENGINE ACCESS METHODS (StateSchema-compatible interface)
@@ -1299,7 +1302,7 @@ class Agent(
                         f"State schema {self.state_schema.__name__} does not support tools"
                     )
             except Exception as e:
-                logger.error(f"Failed to add tool to state: {e}")
+                logger.exception(f"Failed to add tool to state: {e}")
 
     def configure_engine_routes(self, engine_type: str, routes: list[str]) -> None:
         """Configure which tool routes an engine type should accept in the state schema.
@@ -1324,7 +1327,7 @@ class Agent(
                         f"State schema {self.state_schema.__name__} does not support route configuration"
                     )
             except Exception as e:
-                logger.error(f"Failed to configure engine routes: {e}")
+                logger.exception(f"Failed to configure engine routes: {e}")
 
     def get_state_tools(self) -> list[Any]:
         """Get all tools from the state schema if it supports tools.
@@ -1341,7 +1344,7 @@ class Agent(
                 if hasattr(state_instance, "tools"):
                     return getattr(state_instance, "tools", [])
             except Exception as e:
-                logger.error(f"Failed to get state tools: {e}")
+                logger.exception(f"Failed to get state tools: {e}")
 
         return []
 
@@ -1361,7 +1364,7 @@ class Agent(
                         f"State schema {self.state_schema.__name__} does not support tool syncing"
                     )
             except Exception as e:
-                logger.error(f"Failed to sync tools to engines: {e}")
+                logger.exception(f"Failed to sync tools to engines: {e}")
 
     def get_schema_info(self) -> dict[str, Any]:
         """Get comprehensive information about the agent's schema system.
@@ -1518,7 +1521,7 @@ class Agent(
                     engine_name=engine_name, name=schema_name
                 )
             except Exception as e:
-                logger.error(f"Failed to derive input schema: {e}")
+                logger.exception(f"Failed to derive input schema: {e}")
                 return None
         else:
             logger.warning(
@@ -1550,7 +1553,7 @@ class Agent(
                     engine_name=engine_name, name=schema_name
                 )
             except Exception as e:
-                logger.error(f"Failed to derive output schema: {e}")
+                logger.exception(f"Failed to derive output schema: {e}")
                 return None
         else:
             logger.warning(

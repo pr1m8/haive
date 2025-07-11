@@ -1,10 +1,10 @@
 """Fixed Plan Execute State that avoids Engine type issues."""
 
-from typing import Any, Dict, List, Optional, Union
 from datetime import datetime
+from typing import Any, Dict, List, Optional, Union
+
 from pydantic import Field, computed_field
 
-from haive.core.schema.prebuilt.messages.messages_state import MessagesState
 from haive.agents.planning.p_and_e.models import (
     ExecutionResult,
     Plan,
@@ -12,12 +12,12 @@ from haive.agents.planning.p_and_e.models import (
     ReplanDecision,
     StepStatus,
 )
+from haive.core.schema.prebuilt.messages.messages_state import MessagesState
 
 
 class FixedPlanExecuteState(MessagesState):
-    """
-    Fixed Plan and Execute state that avoids Engine serialization issues.
-    
+    """Fixed Plan and Execute state that avoids Engine serialization issues.
+
     This state schema removes the problematic Engine fields that cause
     "Can't instantiate abstract class Engine" errors in MultiAgent systems.
     """
@@ -50,19 +50,19 @@ class FixedPlanExecuteState(MessagesState):
         return "No objective specified"
 
     # Additional context
-    context: Optional[str] = Field(
+    context: str | None = Field(
         default=None, description="Additional context or requirements for the objective"
     )
 
     # Current plan
-    plan: Optional[Plan] = Field(default=None, description="The current execution plan")
+    plan: Plan | None = Field(default=None, description="The current execution plan")
 
     # Execution tracking
-    current_step_id: Optional[int] = Field(
+    current_step_id: int | None = Field(
         default=None, description="ID of the step currently being executed"
     )
 
-    execution_results: List[ExecutionResult] = Field(
+    execution_results: list[ExecutionResult] = Field(
         default_factory=list, description="Results from executed steps"
     )
 
@@ -71,17 +71,17 @@ class FixedPlanExecuteState(MessagesState):
         default=0, description="Number of times the plan has been revised"
     )
 
-    replan_history: List[Dict[str, Any]] = Field(
+    replan_history: list[dict[str, Any]] = Field(
         default_factory=list, description="History of replanning decisions and reasons"
     )
 
     # Final answer
-    final_answer: Optional[str] = Field(
+    final_answer: str | None = Field(
         default=None, description="Final answer once execution is complete"
     )
 
     # Error tracking
-    errors: List[Dict[str, Any]] = Field(
+    errors: list[dict[str, Any]] = Field(
         default_factory=list, description="Errors encountered during execution"
     )
 
@@ -90,13 +90,13 @@ class FixedPlanExecuteState(MessagesState):
         default_factory=datetime.now, description="When the execution started"
     )
 
-    completed_at: Optional[datetime] = Field(
+    completed_at: datetime | None = Field(
         default=None, description="When the execution completed"
     )
 
     @computed_field
     @property
-    def execution_time(self) -> Optional[float]:
+    def execution_time(self) -> float | None:
         """Total execution time in seconds."""
         # Use getattr with defaults to avoid AttributeError during initialization
         started_at = getattr(self, "started_at", None)
@@ -107,7 +107,7 @@ class FixedPlanExecuteState(MessagesState):
 
     @computed_field
     @property
-    def current_step(self) -> Optional[str]:
+    def current_step(self) -> str | None:
         """Get the current step formatted for the executor."""
         if not self.plan or not self.current_step_id:
             return None
@@ -165,10 +165,7 @@ class FixedPlanExecuteState(MessagesState):
 
         # Replan after every 3 completed steps for review
         completed_count = len(self.plan.completed_steps)
-        if completed_count > 0 and completed_count % 3 == 0:
-            return True
-
-        return False
+        return bool(completed_count > 0 and completed_count % 3 == 0)
 
     # Configuration for LangGraph - messages is already shared from MessagesState
     __shared_fields__ = [

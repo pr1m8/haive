@@ -1,4 +1,4 @@
-"""Collaborative Conversation - Cooperative Multi-Agent Problem-Solving.
+r"""Collaborative Conversation - Cooperative Multi-Agent Problem-Solving.
 
 Multi-agent conversations focused on collaborative problem-solving and teamwork.
 The collaborative conversation implements a specialized conversation pattern designed
@@ -35,15 +35,15 @@ Collaboration Philosophy:
 
 Usage Patterns:
     Software development team::\n
-    
+
         from haive.agents.conversation import CollaborativeConversation
         from haive.agents.simple import SimpleAgent
-        
+
         # Create specialized team members
         architect = SimpleAgent(name="Architect", role="system_design")
         backend_dev = SimpleAgent(name="Backend", role="api_development")
         devops = SimpleAgent(name="DevOps", role="infrastructure")
-        
+
         # Create collaborative conversation
         collab = CollaborativeConversation(
             objective="Design a REST API for a todo application",
@@ -56,17 +56,17 @@ Usage Patterns:
             deliverables=["system_design", "api_spec", "deployment_plan"],
             max_rounds=5
         )
-        
+
         # Run the collaboration
         result = await collab.arun()
-        
+
         # Access collaboration results
         messages = result["messages"]
         final_output = result["work_product"]
         contributions = result["role_contributions"]
-        
+
     Research team collaboration::\n
-    
+
         # Multi-disciplinary research collaboration
         research_collab = CollaborativeConversation(
             objective="Analyze climate change impacts on urban planning",
@@ -75,9 +75,9 @@ Usage Patterns:
             phases=["literature_review", "data_analysis", "synthesis"],
             consensus_threshold=0.8
         )
-        
+
     Creative collaboration::\n
-    
+
         # Creative team working on content strategy
         creative_collab = CollaborativeConversation.create_creative_team(
             objective="Develop marketing campaign for sustainable products",
@@ -162,15 +162,17 @@ __license__ = "MIT"
 
 # Type imports for better IDE support
 from typing import (
+    TYPE_CHECKING,
     Any,
     Dict,
     List,
+    Literal,
     Optional,
     Union,
-    TYPE_CHECKING,
-    Literal,
 )
-from typing_extensions import TypeAlias, TypedDict, NotRequired
+
+from typing_extensions import NotRequired, TypeAlias, TypedDict
+
 
 if TYPE_CHECKING:
     from haive.agents.conversation.base.agent import BaseConversationAgent
@@ -180,96 +182,105 @@ if TYPE_CHECKING:
 from haive.agents.conversation.collaberative.agent import CollaborativeConversation
 from haive.agents.conversation.collaberative.state import CollaborativeState
 
+
 # Type aliases for collaborative conversations
 CollaborativeParticipant: TypeAlias = Any  # Agent with collaboration capabilities
 TeamRole: TypeAlias = str  # Role identifier and description
-CollaborationMode: TypeAlias = Literal["development", "research", "creative", "strategy", "analysis", "problem_solving"]
-CollaborationPhase: TypeAlias = Literal["planning", "brainstorming", "development", "review", "synthesis", "consensus"]
-WorkProduct: TypeAlias = Dict[str, Any]  # Collaborative output and deliverables
-CollaborativeResult: TypeAlias = Dict[str, Any]  # Collaboration outcome and artifacts
+CollaborationMode: TypeAlias = Literal[
+    "development", "research", "creative", "strategy", "analysis", "problem_solving"
+]
+CollaborationPhase: TypeAlias = Literal[
+    "planning", "brainstorming", "development", "review", "synthesis", "consensus"
+]
+WorkProduct: TypeAlias = dict[str, Any]  # Collaborative output and deliverables
+CollaborativeResult: TypeAlias = dict[str, Any]  # Collaboration outcome and artifacts
+
 
 # Configuration types for collaborative conversations
 class CollaborativeConfiguration(TypedDict, total=False):
     """Configuration for collaborative conversations."""
+
     collaboration_mode: NotRequired[CollaborationMode]
-    phases: NotRequired[List[CollaborationPhase]]
-    deliverables: NotRequired[List[str]]
+    phases: NotRequired[list[CollaborationPhase]]
+    deliverables: NotRequired[list[str]]
     consensus_threshold: NotRequired[float]
     max_brainstorming_rounds: NotRequired[int]
     enable_role_rotation: NotRequired[bool]
     track_contributions: NotRequired[bool]
     output_format: NotRequired[str]
 
+
 class RoleConfiguration(TypedDict, total=False):
     """Configuration for team roles."""
+
     role_name: NotRequired[str]
     role_description: NotRequired[str]
-    expertise_areas: NotRequired[List[str]]
-    responsibilities: NotRequired[List[str]]
+    expertise_areas: NotRequired[list[str]]
+    responsibilities: NotRequired[list[str]]
     contribution_weight: NotRequired[float]
+
 
 class WorkProductConfig(TypedDict, total=False):
     """Configuration for work product management."""
+
     versioning_enabled: NotRequired[bool]
-    quality_gates: NotRequired[List[str]]
-    review_criteria: NotRequired[List[str]]
-    output_templates: NotRequired[Dict[str, str]]
+    quality_gates: NotRequired[list[str]]
+    review_criteria: NotRequired[list[str]]
+    output_templates: NotRequired[dict[str, str]]
+
 
 # Define public API
 __all__ = [
-    # Version information
-    "__version__",
-    "__author__",
-    "__license__",
-    
-    # Core classes
-    "CollaborativeConversation",
-    "CollaborativeState",
-    
-    # Type aliases
-    "CollaborativeParticipant",
-    "TeamRole",
     "CollaborationMode",
     "CollaborationPhase",
-    "WorkProduct",
-    "CollaborativeResult",
-    
     # Configuration types
     "CollaborativeConfiguration",
+    # Core classes
+    "CollaborativeConversation",
+    # Type aliases
+    "CollaborativeParticipant",
+    "CollaborativeResult",
+    "CollaborativeState",
     "RoleConfiguration",
+    "TeamRole",
+    "WorkProduct",
     "WorkProductConfig",
-    
+    "__author__",
+    "__license__",
+    # Version information
+    "__version__",
     # Utility functions
     "create_collaborative_conversation",
+    "create_creative_team",
     "create_development_team",
     "create_research_team",
-    "create_creative_team",
     "validate_team_setup",
 ]
+
 
 # Utility functions
 def create_collaborative_conversation(
     objective: str,
-    participants: List[CollaborativeParticipant],
-    roles: Dict[str, str],
+    participants: list[CollaborativeParticipant],
+    roles: dict[str, str],
     collaboration_mode: CollaborationMode = "problem_solving",
-    config: Optional[CollaborativeConfiguration] = None
+    config: CollaborativeConfiguration | None = None,
 ) -> CollaborativeConversation:
-    """Create a collaborative conversation for team-based work.
-    
+    r"""Create a collaborative conversation for team-based work.
+
     Args:
         objective: Collaboration objective or goal
         participants: List of participant agents
         roles: Dictionary mapping participant names to role descriptions
         collaboration_mode: Mode of collaboration
         config: Optional collaboration configuration
-        
+
     Returns:
         Configured CollaborativeConversation instance
-        
+
     Examples:
         Basic team collaboration::\n
-        
+
             collab = create_collaborative_conversation(
                 objective="Design a mobile app",
                 participants=[designer, developer, product_manager],
@@ -280,9 +291,9 @@ def create_collaborative_conversation(
                 },
                 collaboration_mode="development"
             )
-            
+
         Research collaboration::\n
-        
+
             research = create_collaborative_conversation(
                 objective="Analyze market trends in renewable energy",
                 participants=[data_analyst, industry_expert, policy_researcher],
@@ -299,33 +310,34 @@ def create_collaborative_conversation(
             )
     """
     config = config or {}
-    
+
     return CollaborativeConversation(
         objective=objective,
         participants=participants,
         roles=roles,
         collaboration_mode=collaboration_mode,
-        **config
+        **config,
     )
+
 
 def create_development_team(
     project_goal: str,
-    team_members: Dict[str, CollaborativeParticipant],
-    sprint_length: int = 5
+    team_members: dict[str, CollaborativeParticipant],
+    sprint_length: int = 5,
 ) -> CollaborativeConversation:
-    """Create a software development team collaboration.
-    
+    r"""Create a software development team collaboration.
+
     Args:
         project_goal: Development project goal
         team_members: Dictionary mapping roles to team member agents
         sprint_length: Number of rounds for development sprint
-        
+
     Returns:
         Configured development CollaborativeConversation
-        
+
     Examples:
         Development team::\n
-        
+
             dev_team = create_development_team(
                 project_goal="Build user authentication system",
                 team_members={
@@ -344,27 +356,28 @@ def create_development_team(
         collaboration_mode="development",
         phases=["planning", "development", "review"],
         max_rounds=sprint_length,
-        deliverables=["technical_design", "implementation_plan", "test_strategy"]
+        deliverables=["technical_design", "implementation_plan", "test_strategy"],
     )
+
 
 def create_research_team(
     research_question: str,
-    researchers: List[CollaborativeParticipant],
-    methodology: str = "mixed_methods"
+    researchers: list[CollaborativeParticipant],
+    methodology: str = "mixed_methods",
 ) -> CollaborativeConversation:
-    """Create a research team collaboration.
-    
+    r"""Create a research team collaboration.
+
     Args:
         research_question: Research question or hypothesis
         researchers: List of researcher agents
         methodology: Research methodology approach
-        
+
     Returns:
         Configured research CollaborativeConversation
-        
+
     Examples:
         Research collaboration::\n
-        
+
             research_team = create_research_team(
                 research_question="What factors influence remote work productivity?",
                 researchers=[survey_researcher, data_scientist, behavioral_psychologist],
@@ -376,29 +389,35 @@ def create_research_team(
         participants=researchers,
         collaboration_mode="research",
         phases=["planning", "data_collection", "analysis", "synthesis"],
-        deliverables=["research_design", "data_analysis", "findings", "recommendations"],
+        deliverables=[
+            "research_design",
+            "data_analysis",
+            "findings",
+            "recommendations",
+        ],
         consensus_threshold=0.75,
-        track_contributions=True
+        track_contributions=True,
     )
+
 
 def create_creative_team(
     creative_brief: str,
-    creative_roles: Dict[str, CollaborativeParticipant],
-    brainstorming_rounds: int = 3
+    creative_roles: dict[str, CollaborativeParticipant],
+    brainstorming_rounds: int = 3,
 ) -> CollaborativeConversation:
-    """Create a creative team collaboration.
-    
+    r"""Create a creative team collaboration.
+
     Args:
         creative_brief: Creative project brief or objective
         creative_roles: Dictionary mapping creative roles to team member agents
         brainstorming_rounds: Number of brainstorming rounds
-        
+
     Returns:
         Configured creative CollaborativeConversation
-        
+
     Examples:
         Creative team::\n
-        
+
             creative_team = create_creative_team(
                 creative_brief="Develop brand identity for eco-friendly startup",
                 creative_roles={
@@ -417,53 +436,59 @@ def create_creative_team(
         collaboration_mode="creative",
         phases=["brainstorming", "development", "refinement", "consensus"],
         max_brainstorming_rounds=brainstorming_rounds,
-        deliverables=["concept", "visual_identity", "messaging", "guidelines"]
+        deliverables=["concept", "visual_identity", "messaging", "guidelines"],
     )
 
+
 def validate_team_setup(
-    participants: List[CollaborativeParticipant],
-    roles: Dict[str, str]
+    participants: list[CollaborativeParticipant], roles: dict[str, str]
 ) -> bool:
     """Validate team setup for collaborative conversation.
-    
+
     Args:
         participants: List of participant agents
         roles: Dictionary mapping names to role descriptions
-        
+
     Returns:
         True if team setup is valid for collaboration
-        
+
     Raises:
         ValueError: If validation fails with specific error details
     """
     if len(participants) < 2:
         raise ValueError("Collaborative conversation requires at least 2 participants")
-    
+
     # Validate participants
     for i, participant in enumerate(participants):
-        if not hasattr(participant, 'name'):
+        if not hasattr(participant, "name"):
             raise ValueError(f"Participant {i} missing required 'name' attribute")
-        
-        if not hasattr(participant, 'arun'):
+
+        if not hasattr(participant, "arun"):
             raise ValueError(f"Participant {i} missing required 'arun' method")
-    
+
     # Check role assignments
-    participant_names = [getattr(p, 'name', f'participant_{i}') for i, p in enumerate(participants)]
-    
-    for name in roles.keys():
+    participant_names = [
+        getattr(p, "name", f"participant_{i}") for i, p in enumerate(participants)
+    ]
+
+    for name in roles:
         if name not in participant_names:
             raise ValueError(f"Role assigned to unknown participant: {name}")
-    
+
     # Check for unique names
     if len(participant_names) != len(set(participant_names)):
-        duplicates = [name for name in participant_names if participant_names.count(name) > 1]
+        duplicates = [
+            name for name in participant_names if participant_names.count(name) > 1
+        ]
         raise ValueError(f"Duplicate participant names found: {duplicates}")
-    
+
     return True
 
-def __dir__() -> List[str]:
+
+def __dir__() -> list[str]:
     """Override dir() to show only public API."""
     return __all__
+
 
 # Add convenience functions to global namespace
 create_collaborative_conversation.__module__ = __name__

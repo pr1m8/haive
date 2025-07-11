@@ -1,4 +1,4 @@
-"""LLM Compiler Agent Implementation
+"""LLM Compiler Agent Implementation.
 
 This module implements the LLM Compiler agent architecture from:
 "LLM Compiler: An LLM Agent Architecture for Planning, Task Parallelization, and Execution"
@@ -22,5 +22,6 @@ Usage:
 
 from agents.llm_compiler.agent import LLMCompilerAgent
 from agents.llm_compiler.config import DEFAULT_CONFIG, LLMCompilerAgentConfig
+
 
 __all__ = ["DEFAULT_CONFIG", "LLMCompilerAgent", "LLMCompilerAgentConfig"]

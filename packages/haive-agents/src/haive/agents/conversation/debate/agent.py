@@ -7,13 +7,12 @@ optional judging/scoring capabilities.
 
 from typing import Any, Literal
 
+from haive.agents.conversation.base.agent import BaseConversationAgent
+from haive.agents.conversation.debate.state import DebateState
 from haive.core.logging.rich_logger import LogLevel, get_logger
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from langgraph.types import Command
 from pydantic import BaseModel, Field, model_validator
-
-from haive.agents.conversation.base.agent import BaseConversationAgent
-from haive.agents.conversation.debate.state import DebateState
 
 logger = get_logger(__name__)
 logger.set_level(LogLevel.INFO)
@@ -238,7 +237,7 @@ class DebateConversation(BaseConversationAgent):
 ⚖️ **Rules**:
 {rules_str}
 
-Let us begin! {list(self.debate_positions.keys())[0]}, please present your opening statement."""
+Let us begin! {next(iter(self.debate_positions.keys()))}, please present your opening statement."""
         )
 
     def select_speaker(self, state: DebateState) -> Command:
@@ -313,7 +312,7 @@ Let us begin! {list(self.debate_positions.keys())[0]}, please present your openi
         # Set first speaker for new phase
         if new_phase in ["arguments", "rebuttals", "closing"]:
             # Start with first participant
-            updates["current_speaker"] = list(state.debate_positions.keys())[0]
+            updates["current_speaker"] = next(iter(state.debate_positions.keys()))
         elif new_phase == "judging":
             updates["current_speaker"] = self.judge_name
 
@@ -451,7 +450,7 @@ Let us begin! {list(self.debate_positions.keys())[0]}, please present your openi
 
         # Insert context at the beginning of messages
         messages = base_input.get("messages", [])
-        base_input["messages"] = [context_msg] + messages
+        base_input["messages"] = [context_msg, *messages]
 
         return base_input
 
@@ -718,9 +717,8 @@ Let us begin! {list(self.debate_positions.keys())[0]}, please present your openi
         **kwargs,
     ) -> "DebateConversation":
         """Create a simple two-sided debate conversation."""
-        from haive.core.engine.aug_llm import AugLLMConfig
-
         from haive.agents.simple.agent import SimpleAgent
+        from haive.core.engine.aug_llm import AugLLMConfig
 
         name_a, pos_a = position_a
         name_b, pos_b = position_b

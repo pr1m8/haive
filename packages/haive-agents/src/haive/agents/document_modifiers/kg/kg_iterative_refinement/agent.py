@@ -44,13 +44,6 @@ See Also:
 import logging
 from typing import Any, Dict, Optional
 
-from haive.core.engine.agent.agent import Agent, register_agent
-from langchain_core.documents import Document
-from langchain_core.prompts import PromptTemplate
-from langchain_core.runnables import RunnableConfig
-from langgraph.graph import START
-from langgraph.types import Command
-
 from haive.agents.document_modifiers.kg.kg_base.models import GraphTransformer
 from haive.agents.document_modifiers.kg.kg_iterative_refinement.config import (
     IterativeGraphTransformerConfig,
@@ -61,6 +54,12 @@ from haive.agents.document_modifiers.kg.kg_iterative_refinement.state import (
 from haive.agents.document_modifiers.kg.kg_iterative_refinement.utils import (
     replace_empty_placeholders,
 )
+from haive.core.engine.agent.agent import Agent, register_agent
+from langchain_core.documents import Document
+from langchain_core.prompts import PromptTemplate
+from langchain_core.runnables import RunnableConfig
+from langgraph.graph import START
+from langgraph.types import Command
 
 logger = logging.getLogger(__name__)
 

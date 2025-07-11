@@ -10,8 +10,6 @@ This implementation follows the LangGraph pattern using:
 
 from typing import List
 
-from langgraph.graph import END
-
 from haive.agents.multi.enhanced_base import BuildMode, MultiAgentBase
 
 # Import existing p_and_e components
@@ -24,6 +22,7 @@ from haive.agents.planning.p_and_e.prompts import (
 from haive.agents.planning.p_and_e.state import PlanExecuteState
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
+from langgraph.graph import END
 
 # ============================================================================
 # ROUTING FUNCTIONS (LangGraph Pattern)
@@ -115,7 +114,7 @@ def process_executor_output(state: PlanExecuteState, executor_result) -> dict:
             exec_result = ExecutionResult(
                 step_id=state.current_step_id, success=True, output=result_text
             )
-            updates["execution_results"] = state.execution_results + [exec_result]
+            updates["execution_results"] = [*state.execution_results, exec_result]
 
             # Set next step if available
             if state.plan.next_step:
@@ -157,7 +156,7 @@ def create_proper_plan_execute(
     planner_model: str = "gpt-4o-mini",
     executor_model: str = "gpt-4o-mini",
     replanner_model: str = "gpt-4o-mini",
-    tools: List = None,
+    tools: list | None = None,
 ) -> MultiAgentBase:
     """Create proper Plan & Execute agent using existing p_and_e components.
 
@@ -229,7 +228,7 @@ def create_proper_plan_execute(
 # ============================================================================
 
 
-def create_plan_execute_with_search(tools: List = None) -> MultiAgentBase:
+def create_plan_execute_with_search(tools: list | None = None) -> MultiAgentBase:
     """Create Plan & Execute agent with search tools."""
     if tools is None:
         from haive.tools import duckduckgo_search_tool
@@ -249,4 +248,3 @@ if __name__ == "__main__":
 
     # Test the implementation
     result = agent.run("Research the latest developments in AI and provide a summary")
-    print(f"Result: {result}")

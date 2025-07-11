@@ -4,9 +4,8 @@
 import logging
 from typing import Literal
 
-from pydantic import BaseModel, Field
-
 from haive.agents.conversation.base.state import ConversationState
+from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
 

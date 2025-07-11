@@ -34,8 +34,6 @@ Available RAG Strategies:
 import logging
 from typing import Any, Callable, Dict, List, Optional
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 
@@ -48,6 +46,9 @@ from haive.agents.rag.models import (
     SpeculativeResult,
     StepBackResult,
 )
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+
 
 logger = logging.getLogger(__name__)
 
@@ -71,7 +72,7 @@ class RAGChainCollection:
 
     @staticmethod
     def create_simple_rag(
-        documents: List[Document], llm_config: LLMConfig
+        documents: list[Document], llm_config: LLMConfig
     ) -> ChainAgent:
         """Create a simple RAG agent with basic retrieve-and-generate pattern.
 
@@ -93,8 +94,8 @@ class RAGChainCollection:
         """
 
         # Simple retrieval mock
-        def retrieve(state: Dict[str, Any]) -> Dict[str, Any]:
-            query = state.get("query", "")
+        def retrieve(state: dict[str, Any]) -> dict[str, Any]:
+            state.get("query", "")
             # Mock retrieval - in real implementation would use vector search
             relevant_docs = documents[:3]  # Top 3 docs
             context = "\n\n".join([doc.page_content for doc in relevant_docs])
@@ -115,9 +116,8 @@ class RAGChainCollection:
         return ChainAgent(retrieve, generator, name="Simple RAG")
 
     @staticmethod
-    def create_hyde_rag(documents: List[Document], llm_config: LLMConfig) -> ChainAgent:
+    def create_hyde_rag(documents: list[Document], llm_config: LLMConfig) -> ChainAgent:
         """HyDE RAG - generate hypothetical document first."""
-
         # Hypothetical document generator
         hyde_generator = AugLLMConfig(
             llm_config=llm_config,
@@ -135,7 +135,7 @@ class RAGChainCollection:
         )
 
         # Enhanced retrieval using hypothesis
-        def enhanced_retrieve(state: Dict[str, Any]) -> Dict[str, Any]:
+        def enhanced_retrieve(state: dict[str, Any]) -> dict[str, Any]:
             hyde_result = state.get("hyde_result", {})
             hypothetical_doc = hyde_result.get("hypothetical_doc", "")
 
@@ -160,7 +160,7 @@ class RAGChainCollection:
                         """Original Query: {query}
                 Hypothetical Document: {hyde_result}
                 Retrieved Context: {context}
-                
+
                 Provide a comprehensive answer.""",
                     ),
                 ]
@@ -172,10 +172,9 @@ class RAGChainCollection:
 
     @staticmethod
     def create_fusion_rag(
-        documents: List[Document], llm_config: LLMConfig
+        documents: list[Document], llm_config: LLMConfig
     ) -> ChainAgent:
         """Fusion RAG - multiple queries with reciprocal rank fusion."""
-
         # Multi-query generator
         multi_query_gen = AugLLMConfig(
             llm_config=llm_config,
@@ -192,9 +191,9 @@ class RAGChainCollection:
         )
 
         # Fusion ranker
-        def fusion_rank(state: Dict[str, Any]) -> Dict[str, Any]:
+        def fusion_rank(state: dict[str, Any]) -> dict[str, Any]:
             # Mock fusion ranking
-            queries = state.get("multi_queries", "").split("\n")[:3]
+            state.get("multi_queries", "").split("\n")[:3]
 
             # Simulate retrieving for each query and fusing results
             all_docs = documents[:5]
@@ -218,7 +217,7 @@ class RAGChainCollection:
                         "human",
                         """Query: {query}
                 Fusion Results: {fusion_result}
-                
+
                 Create comprehensive answer.""",
                     ),
                 ]
@@ -230,10 +229,9 @@ class RAGChainCollection:
 
     @staticmethod
     def create_step_back_rag(
-        documents: List[Document], llm_config: LLMConfig
+        documents: list[Document], llm_config: LLMConfig
     ) -> ChainAgent:
         """Step-Back RAG - abstract reasoning before specific answer."""
-
         # Step-back reasoner
         step_back = AugLLMConfig(
             llm_config=llm_config,
@@ -251,7 +249,7 @@ class RAGChainCollection:
         )
 
         # Enhanced context retrieval
-        def context_retrieve(state: Dict[str, Any]) -> Dict[str, Any]:
+        def context_retrieve(state: dict[str, Any]) -> dict[str, Any]:
             step_back_result = state.get("step_back_result", {})
             abstract_answer = step_back_result.get("abstract_answer", "")
 
@@ -274,7 +272,7 @@ class RAGChainCollection:
                         """Original Query: {query}
                 Abstract Reasoning: {step_back_result}
                 Specific Context: {context}
-                
+
                 Provide a well-reasoned answer.""",
                     ),
                 ]
@@ -286,10 +284,9 @@ class RAGChainCollection:
 
     @staticmethod
     def create_speculative_rag(
-        documents: List[Document], llm_config: LLMConfig
+        documents: list[Document], llm_config: LLMConfig
     ) -> ChainAgent:
         """Speculative RAG - generate and verify hypotheses."""
-
         # Hypothesis generator
         hypothesis_gen = AugLLMConfig(
             llm_config=llm_config,
@@ -304,7 +301,7 @@ class RAGChainCollection:
         )
 
         # Hypothesis verifier
-        def verify_hypotheses(state: Dict[str, Any]) -> Dict[str, Any]:
+        def verify_hypotheses(state: dict[str, Any]) -> dict[str, Any]:
             speculative_result = state.get("speculative_result", {})
             hypotheses = speculative_result.get("hypotheses", [])
 
@@ -331,7 +328,7 @@ class RAGChainCollection:
                         "human",
                         """Query: {query}
                 Verified Hypotheses: {verified_hypotheses}
-                
+
                 Synthesize final answer.""",
                     ),
                 ]
@@ -345,14 +342,14 @@ class RAGChainCollection:
 
     @staticmethod
     def create_memory_aware_rag(
-        documents: List[Document], llm_config: LLMConfig
+        documents: list[Document], llm_config: LLMConfig
     ) -> ChainAgent:
         """Memory-Aware RAG - uses conversation memory."""
 
         # Memory analyzer
-        def analyze_memory(state: Dict[str, Any]) -> Dict[str, Any]:
+        def analyze_memory(state: dict[str, Any]) -> dict[str, Any]:
             # Mock memory analysis
-            query = state.get("query", "")
+            state.get("query", "")
             messages = state.get("messages", [])
 
             # Extract relevant past context (simplified)
@@ -368,7 +365,7 @@ class RAGChainCollection:
             }
 
         # Context-aware retrieval
-        def memory_retrieve(state: Dict[str, Any]) -> Dict[str, Any]:
+        def memory_retrieve(state: dict[str, Any]) -> dict[str, Any]:
             query = state.get("query", "")
             relevant_memories = state.get("relevant_memories", [])
 
@@ -393,7 +390,7 @@ class RAGChainCollection:
                 Temporal Context: {temporal_context}
                 Relevant Memories: {relevant_memories}
                 Retrieved Context: {context}
-                
+
                 Provide contextually aware answer.""",
                     ),
                 ]
@@ -407,10 +404,9 @@ class RAGChainCollection:
 
     @staticmethod
     def create_flare_rag(
-        documents: List[Document], llm_config: LLMConfig
+        documents: list[Document], llm_config: LLMConfig
     ) -> ChainAgent:
         """FLARE RAG - forward-looking active retrieval."""
-
         # Initial answer attempt
         initial_gen = AugLLMConfig(
             llm_config=llm_config,
@@ -427,7 +423,7 @@ class RAGChainCollection:
         )
 
         # Active retrieval based on gaps
-        def active_retrieve(state: Dict[str, Any]) -> Dict[str, Any]:
+        def active_retrieve(state: dict[str, Any]) -> dict[str, Any]:
             initial_answer = state.get("initial_answer", "")
 
             # Identify information gaps (simplified)
@@ -444,11 +440,10 @@ class RAGChainCollection:
                     "additional_context": additional_context,
                     "needs_refinement": True,
                 }
-            else:
-                return {"needs_refinement": False}
+            return {"needs_refinement": False}
 
         # Conditional refinement
-        def maybe_refine(state: Dict[str, Any]) -> Dict[str, Any]:
+        def maybe_refine(state: dict[str, Any]) -> dict[str, Any]:
             if state.get("needs_refinement", False):
                 # Use LLM to refine answer
                 refined_engine = AugLLMConfig(
@@ -461,7 +456,7 @@ class RAGChainCollection:
                                 """Query: {query}
                         Initial Answer: {initial_answer}
                         Additional Context: {additional_context}
-                        
+
                         Provide refined answer.""",
                             ),
                         ]
@@ -469,8 +464,7 @@ class RAGChainCollection:
                     output_key="response",
                 )
                 return refined_engine.invoke(state)
-            else:
-                return {"response": state.get("initial_answer", "")}
+            return {"response": state.get("initial_answer", "")}
 
         return ChainAgent(initial_gen, active_retrieve, maybe_refine, name="FLARE RAG")
 
@@ -478,12 +472,11 @@ class RAGChainCollection:
 # Factory functions for easy creation
 def create_rag_chain(
     rag_type: str,
-    documents: List[Document],
-    llm_config: Optional[LLMConfig] = None,
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
     **kwargs,
 ) -> ChainAgent:
     """Create any RAG chain by type."""
-
     if not llm_config:
         llm_config = AzureLLMConfig(
             deployment_name="gpt-4",
@@ -495,15 +488,15 @@ def create_rag_chain(
 
     if rag_type == "simple":
         return collection.create_simple_rag(documents, llm_config)
-    elif rag_type == "hyde":
+    if rag_type == "hyde":
         return collection.create_hyde_rag(documents, llm_config)
-    elif rag_type == "fusion":
+    if rag_type == "fusion":
         return collection.create_fusion_rag(documents, llm_config)
-    elif rag_type == "step_back":
+    if rag_type == "step_back":
         return collection.create_step_back_rag(documents, llm_config)
-    elif rag_type == "speculative":
+    if rag_type == "speculative":
         return collection.create_speculative_rag(documents, llm_config)
-    elif rag_type == "memory_aware":
+    if rag_type == "memory_aware":
         return collection.create_memory_aware_rag(documents, llm_config)
     elif rag_type == "flare":
         return collection.create_flare_rag(documents, llm_config)
@@ -513,13 +506,12 @@ def create_rag_chain(
 
 # Multi-RAG pipeline
 def create_rag_pipeline(
-    rag_types: List[str],
-    documents: List[Document],
+    rag_types: list[str],
+    documents: list[Document],
     combination_strategy: str = "sequential",
-    llm_config: Optional[LLMConfig] = None,
+    llm_config: LLMConfig | None = None,
 ) -> ChainAgent:
     """Create a pipeline of multiple RAG approaches."""
-
     chains = [
         create_rag_chain(rag_type, documents, llm_config) for rag_type in rag_types
     ]
@@ -527,14 +519,15 @@ def create_rag_pipeline(
     if combination_strategy == "sequential":
         # Sequential execution
         return ChainAgent(*chains, name="RAG Pipeline")
-    elif combination_strategy == "parallel":
+    if combination_strategy == "parallel":
         # All run in parallel then combine (simplified)
-        combiner = lambda state: {"combined_responses": [state.get("response", "")]}
+        def combiner(state):
+            return {"combined_responses": [state.get("response", "")]}
+
         return flow_with_edges(
-            chains + [combiner], *[f"{i}->-1" for i in range(len(chains))]
+            [*chains, combiner], *[f"{i}->-1" for i in range(len(chains))]
         )
-    else:
-        raise ValueError(f"Unknown combination strategy: {combination_strategy}")
+    raise ValueError(f"Unknown combination strategy: {combination_strategy}")
 
 
 # All available RAG types

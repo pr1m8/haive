@@ -9,8 +9,6 @@ from datetime import datetime, timedelta
 from enum import Enum
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
-
 from haive.agents.common.models.task_analysis.base import (
     ComplexityType,
     PlanningRequirement,
@@ -25,6 +23,7 @@ from haive.agents.common.models.task_analysis.solvability import (
     SolvabilityBarrier,
     SolvabilityStatus,
 )
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 
 class AnalysisMethod(str, Enum):
@@ -350,12 +349,11 @@ class TaskAnalysis(BaseModel):
             )
 
         # Check decomposition consistency
-        if self.decomposition:
-            if (
-                self.complexity.overall_complexity == ComplexityType.TRIVIAL
-                and len(self.decomposition.branches) > 3
-            ):
-                raise ValueError("Trivial tasks should not have complex decomposition")
+        if self.decomposition and (
+            self.complexity.overall_complexity == ComplexityType.TRIVIAL
+            and len(self.decomposition.branches) > 3
+        ):
+            raise ValueError("Trivial tasks should not have complex decomposition")
 
         # Check confidence consistency
         avg_confidence = (

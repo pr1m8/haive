@@ -1,5 +1,3 @@
-from agents.web_nav.models import Prediction
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain.prompts import (
     ChatPromptTemplate,
     HumanMessagePromptTemplate,
@@ -7,29 +5,33 @@ from langchain.prompts import (
     SystemMessagePromptTemplate,
 )
 
+from agents.web_nav.models import Prediction
+from haive.core.engine.aug_llm import AugLLMConfig
+
+
 WEB_NAV_PROMPT = ChatPromptTemplate.from_messages(
     [
         # ✅ System message with WebVoyager-style instructions
         SystemMessagePromptTemplate.from_template(
-            """### 🤖 **Web Navigator Agent**  
+            """### 🤖 **Web Navigator Ag*  
 
-        You are a **robot web browser assistant** that **navigates the web like a human**.  
-        Your goal is to **complete a task step by step** by analyzing a webpage.  
-        Each step, you will receive an **Observation**, which includes:  
-        - 📸 **Screenshot** of the webpage  
-        - 🔢 **Numerical Labels** (TOP LEFT of each Web Element)  
-        - 📋 **Textual Information**  
+        You are a **robot web browser assistant** that **navigates the web like a human**.
+        Your goal is to **complete a task step by step** by analyzing a webpage.
+        Each step, you will receive an **Observation**, which includes:
+        - 📸 **Screenshot** of the wee  
+        - 🔢 **Numerical Labels** (TOP LEFT of each Web Ele)  
+        - 📋 **Textual Informat*  
 
-        **🌐 Available Actions:**  
-        1️⃣ Click an element  
-        2️⃣ Type in a textbox  
-        3️⃣ Scroll up/down  
-        4️⃣ Wait  
-        5️⃣ Go back  
-        6️⃣ Start over (Google)  
-        7️⃣ Answer the question  
+        **🌐 Available Actio*  
+        1️⃣ Click an ent  
+        2️⃣ Type in a tox  
+        3️⃣ Scroll uwn  
+        4️�it  
+        5️⃣ Gck  
+        6️⃣ Start over (Ge)  
+        7️⃣ Answer the quon  
 
-        **📌 Action Format (STRICT, JSON)**:  
+        **📌 Action Format (STRICT, JSO:  
         ```json
         {{
           "thought": "{{ thought }}",
@@ -38,22 +40,22 @@ WEB_NAV_PROMPT = ChatPromptTemplate.from_messages(
         }}
         ```
 
-        **🚦 Web Browsing Rules:**  
-        - **Only one action per step**  
-        - Ensure **correct bounding box selection**  
-        - **Numeric labels** are in the **top-left corner**  
-        - **Avoid unnecessary elements** (Login, Sign-in, Donate)  
-        - **Plan strategically** to minimize steps  
+        **🚦 Web Browsing Rul*  
+        - **Only one action per step**
+        - Ensure **correct bounding box selection**
+        - **Numeric labels** are in the **top-left corner**
+        - **Avoid unnecessary elements** (Login, Sign-in, Donate)
+        - **Plan strategically** to minimize steps
 
-        **Example Input:**  
+        **Example Input:**
         ```
-        Observation: <Labeled Screenshot>  
-        Bounding Boxes:  
-        0 (<button/>): "Search"  
-        1 (<input/>): "Search box"  
+        Observation: <Labeled Screenshot>
+        Bounding Boxes:
+        0 (<button/>): "Search"
+        1 (<input/>): "Search box"
         ```
 
-        **Expected Output:**  
+        **Expected Output:**
         ```json
         {{
           "thought": "I need to type in the search box to continue.",
@@ -62,13 +64,13 @@ WEB_NAV_PROMPT = ChatPromptTemplate.from_messages(
         }}
         ```
 
-        If you encounter an issue with capchas, dont go back to the previous page, break down what the question is asking you, 
+        If you encounter an issue with capchas, dont go back to the previous page, break down what the question is asking you,
         evaluate the options, and then make a decision. Try to focus in on the relevant information.
-        Be patient and try to find the best answer. Take your time, there is no rush. 
+        Be patient and try to find the best answer. Take your time, there is no rush.
 
-        **🛑 Dealing with CAPTCHAs**  
-        - If you detect a CAPTCHA (e.g., "I'm not a robot", distorted text, image selection), **DO NOT attempt an action**.  
-        - Instead, return the following structured response:  
+        **🛑 Dealing with CAPTC*  
+        - If you detect a CAPTCHA (e.g., "I'm not a robot", distorted text, image selection), **DO NOT attempt an action**.
+        - Instead, return the following structured response:
 
         ```json
         {{
@@ -76,14 +78,14 @@ WEB_NAV_PROMPT = ChatPromptTemplate.from_messages(
           "action": "CaptchaDetected",
           "args": []
         }}
-        ```  
+        ```
 
-        - This signals the system that **human intervention is required**.  
-        - If you are unsure, check for common CAPTCHA-related terms:  
-          - `"I'm not a robot"`  
-          - `"reCAPTCHA"`  
-          - `"Verify"`  
-          - `"Click all images"`  
+        - This signals the system that **human intervention is required**.
+        - If you are unsure, check for common CAPTCHA-related terms:
+          - `"I'm not a robot"`
+          - `"reCAPTCHA"`
+          - `"Verify"`
+          - `"Click all images"`
 
         """
         ),
@@ -100,10 +102,5 @@ prompt = WEB_NAV_PROMPT
 web_nav_aug_llm = AugLLMConfig(
     name="web_navigator",
     prompt_template=prompt,
-    # output_parser=PydanticOutputParser(pydantic_object=Prediction)  # ✅ Ensure Prediction schema
     structured_output_model=Prediction,
-    # postprocess=parse
-    # output_parser=StrOutputParser()
 )
-# web_nav_aug_llm_config = web_nav_aug_llm.create_runnable()
-# web_nav_aug_llm_config.invoke()

@@ -1,11 +1,10 @@
 import logging
 
+from haive.agents.rag.filtered.config import FilteredRAGConfig
+from haive.agents.rag.filtered.state import FilteredRAGState
 from haive.core.engine.agent.agent import Agent, register_agent
 from langgraph.graph import END, START
 from langgraph.types import Command
-
-from haive.agents.rag.filtered.config import FilteredRAGConfig
-from haive.agents.rag.filtered.state import FilteredRAGState
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +47,7 @@ class FilteredRAGAgent(Agent[FilteredRAGConfig]):
 
             logger.info("Filtered RAG agent components initialized successfully")
         except Exception as e:
-            logger.error(f"Error initializing Filtered RAG components: {e}")
+            logger.exception(f"Error initializing Filtered RAG components: {e}")
             raise
 
     @property
@@ -76,7 +75,7 @@ class FilteredRAGAgent(Agent[FilteredRAGConfig]):
             return Command(update={"retrieved_documents": documents})
 
         except Exception as e:
-            logger.error(f"Error retrieving documents: {e!s}")
+            logger.exception(f"Error retrieving documents: {e!s}")
             return Command(
                 update={
                     "error": f"Error retrieving documents: {e!s}",
@@ -142,7 +141,7 @@ class FilteredRAGAgent(Agent[FilteredRAGConfig]):
             )
 
         except Exception as e:
-            logger.error(f"Error in document filtering: {e!s}")
+            logger.exception(f"Error in document filtering: {e!s}")
             return Command(
                 update={
                     "error": f"Error filtering documents: {e!s}",
@@ -196,7 +195,7 @@ class FilteredRAGAgent(Agent[FilteredRAGConfig]):
             return Command(update={"answer": answer})
 
         except Exception as e:
-            logger.error(f"Error generating answer: {e!s}")
+            logger.exception(f"Error generating answer: {e!s}")
             return Command(
                 update={
                     "error": f"Error generating answer: {e!s}",

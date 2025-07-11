@@ -17,12 +17,9 @@ from component_4_multiagent_supervisor import (
 )
 
 if __name__ == "__main__":
-    print("Running Component 4 MultiAgentBase tests...")
 
     # Run routing test first
     asyncio.run(test_routing_logic())
-
-    print("\n" + "=" * 80 + "\n")
 
     # Run full integration test
     asyncio.run(test_multiagent_supervisor())

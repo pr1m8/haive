@@ -1,8 +1,9 @@
-from haive.core.engine.agent.agent import AgentConfig
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import Field
+
+from haive.core.engine.agent.agent import AgentConfig
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 class ParallelKGTransformerConfig(AgentConfig):
@@ -40,7 +41,7 @@ class ParallelKGTransformerConfig(AgentConfig):
                         "human",
                         """Merge these knowledge graphs:
                 {graph_contexts}
-                
+
                 Provide a unified and refined knowledge graph.""",
                     ),
                 ]

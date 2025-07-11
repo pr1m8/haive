@@ -20,7 +20,7 @@ Example:
         )
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from pydantic import BaseModel, Field, field_serializer, model_validator
 
@@ -59,11 +59,11 @@ class AgentInfo(BaseModel):
     name: str = Field(..., description="Agent name")
     description: str = Field(..., description="What the agent is good at or used for")
     active: bool = Field(default=True, description="Whether agent is currently active")
-    capabilities: List[str] = Field(
+    capabilities: list[str] = Field(
         default_factory=list,
         description="List of capability keywords (e.g., 'search', 'math', 'code')",
     )
-    metadata: Dict[str, Any] = Field(
+    metadata: dict[str, Any] = Field(
         default_factory=dict, description="Additional metadata about the agent"
     )
 
@@ -166,13 +166,13 @@ class AgentInfoV2(BaseModel):
     name: str = Field(..., description="Agent name")
     description: str = Field(..., description="Agent description")
     active: bool = Field(default=True)
-    capabilities: List[str] = Field(default_factory=list)
-    metadata: Dict[str, Any] = Field(default_factory=dict)
+    capabilities: list[str] = Field(default_factory=list)
+    metadata: dict[str, Any] = Field(default_factory=dict)
 
     model_config = {"arbitrary_types_allowed": True}
 
     @field_serializer("agent")
-    def serialize_agent(self, agent: Any) -> Dict[str, Any]:
+    def serialize_agent(self, agent: Any) -> dict[str, Any]:
         """Attempt to serialize agent to dict.
 
         Args:
@@ -183,16 +183,15 @@ class AgentInfoV2(BaseModel):
         """
         if hasattr(agent, "model_dump"):
             return agent.model_dump()
-        elif hasattr(agent, "dict"):
+        if hasattr(agent, "dict"):
             return agent.dict()
-        else:
-            # Fallback: Store type and config info
-            return {
-                "type": type(agent).__name__,
-                "module": type(agent).__module__,
-                "name": getattr(agent, "name", "unknown"),
-                "config": getattr(agent, "config", {}),
-            }
+        # Fallback: Store type and config info
+        return {
+            "type": type(agent).__name__,
+            "module": type(agent).__module__,
+            "name": getattr(agent, "name", "unknown"),
+            "config": getattr(agent, "config", {}),
+        }
 
 
 class AgentRequest(BaseModel):
@@ -224,10 +223,10 @@ class AgentRequest(BaseModel):
     task_context: str = Field(
         ..., description="Context about why this capability is needed"
     )
-    suggested_name: Optional[str] = Field(
+    suggested_name: str | None = Field(
         default=None, description="Suggested name for the new agent"
     )
-    requirements: List[str] = Field(
+    requirements: list[str] = Field(
         default_factory=list, description="Specific requirements or constraints"
     )
     priority: str = Field(
@@ -255,6 +254,6 @@ class RoutingDecision(BaseModel):
     confidence: float = Field(
         default=1.0, ge=0.0, le=1.0, description="Confidence in decision"
     )
-    alternatives: List[str] = Field(
+    alternatives: list[str] = Field(
         default_factory=list, description="Alternative agents that could handle this"
     )

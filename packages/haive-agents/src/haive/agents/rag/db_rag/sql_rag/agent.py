@@ -39,12 +39,6 @@ Note:
 import logging
 
 import sqlparse
-from haive.core.engine.agent.agent import Agent, register_agent
-from haive.core.graph.branches import Branch
-from langchain_core.messages import AIMessage
-from langgraph.graph import END, START
-from langgraph.types import Command
-
 from haive.agents.rag.db_rag.sql_rag.config import SQLRAGConfig
 from haive.agents.rag.db_rag.sql_rag.engines import default_sql_engines
 from haive.agents.rag.db_rag.sql_rag.state import OverallState
@@ -54,6 +48,11 @@ from haive.agents.rag.db_rag.sql_rag.utils import (
     explore_database_schema,
     get_all_toolkit_tools,
 )
+from haive.core.engine.agent.agent import Agent, register_agent
+from haive.core.graph.branches import Branch
+from langchain_core.messages import AIMessage
+from langgraph.graph import END, START
+from langgraph.types import Command
 
 logger = logging.getLogger(__name__)
 
@@ -194,7 +193,7 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
             )
 
         except Exception as e:
-            logger.error(f"Error initializing SQLRAGAgent: {e}")
+            logger.exception(f"Error initializing SQLRAGAgent: {e}")
             raise
 
     def check_domain_relevance(self, state: OverallState) -> Command:
@@ -282,7 +281,7 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
                 }
             )
         except Exception as e:
-            logger.error(f"Error in check_domain_relevance: {e}")
+            logger.exception(f"Error in check_domain_relevance: {e}")
             return Command(
                 update={
                     "error": f"Error checking domain relevance: {e!s}",
@@ -351,12 +350,12 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
                     "schema_info": schema_info,
                     "database_schema": schema_message,
                     "next_action": "analyze_query",
-                    "steps": state.steps + ["retrieve_schema"],
-                    "messages": state.messages + [AIMessage(content=schema_message)],
+                    "steps": [*state.steps, "retrieve_schema"],
+                    "messages": [*state.messages, AIMessage(content=schema_message)],
                 }
             )
         except Exception as e:
-            logger.error(f"Error in retrieve_schema: {e}")
+            logger.exception(f"Error in retrieve_schema: {e}")
             return Command(
                 update={
                     "error": f"Error retrieving database schema: {e!s}",
@@ -427,11 +426,11 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
                     "query_analysis": query_analysis,
                     "tables_needed": tables_needed,
                     "next_action": "generate_query",
-                    "steps": state.steps + ["analyze_query"],
+                    "steps": [*state.steps, "analyze_query"],
                 }
             )
         except Exception as e:
-            logger.error(f"Error in analyze_query: {e}")
+            logger.exception(f"Error in analyze_query: {e}")
             return Command(
                 update={
                     "error": f"Error analyzing query: {e!s}",
@@ -500,7 +499,7 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
                     update={
                         "sql_query": f"-- Database contains tables: {tables_list}",
                         "next_action": "generate_answer",  # Skip to answer generation
-                        "steps": state.steps + ["generate_query"],
+                        "steps": [*state.steps, "generate_query"],
                         "query_result": f"The database contains the following tables: {tables_list}",
                     }
                 )
@@ -556,11 +555,11 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
                 update={
                     "sql_query": formatted_query,
                     "next_action": "validate_query",
-                    "steps": state.steps + ["generate_query"],
+                    "steps": [*state.steps, "generate_query"],
                 }
             )
         except Exception as e:
-            logger.error(f"Error in generate_query: {e}")
+            logger.exception(f"Error in generate_query: {e}")
             return Command(
                 update={
                     "error": f"Error generating SQL query: {e!s}",
@@ -611,7 +610,7 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
                     update={
                         "sql_errors": ["Query not provided."],
                         "next_action": "end",
-                        "steps": state.steps + ["validate_query"],
+                        "steps": [*state.steps, "validate_query"],
                     }
                 )
 
@@ -644,17 +643,17 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
                     update={
                         "next_action": "correct_query",
                         "sql_errors": errors,
-                        "steps": state.steps + ["validate_query"],
+                        "steps": [*state.steps, "validate_query"],
                     }
                 )
             return Command(
                 update={
                     "next_action": "execute_query",
-                    "steps": state.steps + ["validate_query"],
+                    "steps": [*state.steps, "validate_query"],
                 }
             )
         except Exception as e:
-            logger.error(f"Error in validate_query: {e}")
+            logger.exception(f"Error in validate_query: {e}")
             return Command(
                 update={
                     "error": f"Error validating SQL query: {e!s}",
@@ -718,11 +717,11 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
                 update={
                     "sql_query": formatted_query,
                     "next_action": "validate_query",
-                    "steps": state.steps + ["correct_query"],
+                    "steps": [*state.steps, "correct_query"],
                 }
             )
         except Exception as e:
-            logger.error(f"Error in correct_query: {e}")
+            logger.exception(f"Error in correct_query: {e}")
             return Command(
                 update={
                     "error": f"Error correcting SQL query: {e!s}",
@@ -769,7 +768,7 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
                     update={
                         "query_result": "No SQL query to execute",
                         "next_action": "generate_answer",
-                        "steps": state.steps + ["execute_query"],
+                        "steps": [*state.steps, "execute_query"],
                     }
                 )
 
@@ -786,7 +785,7 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
                     if not result or (isinstance(result, str) and result.strip() == ""):
                         result = self.no_results
                 except Exception as e:
-                    logger.error(f"Error executing SQL query: {e}")
+                    logger.exception(f"Error executing SQL query: {e}")
                     result = f"Error executing query: {e!s}"
             else:
                 # Execute directly if tool not available
@@ -795,18 +794,18 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
                     if not result:
                         result = self.no_results
                 except Exception as e:
-                    logger.error(f"Error executing SQL query directly: {e}")
+                    logger.exception(f"Error executing SQL query directly: {e}")
                     result = f"Error executing query: {e!s}"
 
             return Command(
                 update={
                     "query_result": result,
                     "next_action": "generate_answer",
-                    "steps": state.steps + ["execute_query"],
+                    "steps": [*state.steps, "execute_query"],
                 }
             )
         except Exception as e:
-            logger.error(f"Error in execute_query: {e}")
+            logger.exception(f"Error in execute_query: {e}")
             return Command(
                 update={
                     "error": f"Error executing SQL query: {e!s}",
@@ -868,7 +867,7 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
                     update={
                         "answer": f"The database contains the following tables: {tables_list}",
                         "next_action": "end",
-                        "steps": state.steps + ["generate_answer"],
+                        "steps": [*state.steps, "generate_answer"],
                     }
                 )
 
@@ -886,7 +885,7 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
                 "answer": answer,
                 "final_sql": sql_str,
                 "next_action": "end",
-                "steps": state.steps + ["generate_answer"],
+                "steps": [*state.steps, "generate_answer"],
             }
 
             # Run hallucination check if required
@@ -919,7 +918,7 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
 
             return Command(update=result)
         except Exception as e:
-            logger.error(f"Error in generate_answer: {e}")
+            logger.exception(f"Error in generate_answer: {e}")
             return Command(
                 update={
                     "error": f"Error generating answer: {e!s}",

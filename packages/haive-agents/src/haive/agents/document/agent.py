@@ -39,6 +39,7 @@ See Also:
 import logging
 from typing import Any, Dict, List, Optional, Union
 
+from haive.agents.base.agent import Agent
 from haive.core.engine.document import DocumentEngine, DocumentEngineConfig
 from haive.core.engine.document.config import (
     ChunkingStrategy,
@@ -54,8 +55,6 @@ from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field, field_validator
 
-from haive.agents.base.agent import Agent
-
 logger = logging.getLogger(__name__)
 
 
@@ -63,26 +62,26 @@ class DocumentProcessingResult(BaseModel):
     """Comprehensive result of document processing pipeline."""
 
     # Pipeline Results
-    fetched_sources: List[str] = Field(
+    fetched_sources: list[str] = Field(
         default_factory=list, description="Sources successfully fetched"
     )
-    loaded_documents: List[Dict[str, Any]] = Field(
+    loaded_documents: list[dict[str, Any]] = Field(
         default_factory=list, description="Documents loaded from sources"
     )
-    transformed_documents: List[Dict[str, Any]] = Field(
+    transformed_documents: list[dict[str, Any]] = Field(
         default_factory=list, description="Documents after transformation/normalization"
     )
-    document_chunks: List[Dict[str, Any]] = Field(
+    document_chunks: list[dict[str, Any]] = Field(
         default_factory=list, description="Document chunks created by splitting"
     )
-    annotated_chunks: List[Dict[str, Any]] = Field(
+    annotated_chunks: list[dict[str, Any]] = Field(
         default_factory=list, description="Chunks with extracted metadata annotations"
     )
-    embedded_chunks: List[Dict[str, Any]] = Field(
+    embedded_chunks: list[dict[str, Any]] = Field(
         default_factory=list,
         description="Chunks with embeddings (if embedding enabled)",
     )
-    stored_documents: List[str] = Field(
+    stored_documents: list[str] = Field(
         default_factory=list,
         description="Document IDs stored in vector store (if storage enabled)",
     )
@@ -99,10 +98,10 @@ class DocumentProcessingResult(BaseModel):
     chunking_strategy: str = Field(default="", description="Chunking strategy used")
 
     # Source Analysis
-    source_types: Dict[str, int] = Field(
+    source_types: dict[str, int] = Field(
         default_factory=dict, description="Count of each source type processed"
     )
-    document_formats: Dict[str, int] = Field(
+    document_formats: dict[str, int] = Field(
         default_factory=dict, description="Count of each document format processed"
     )
 
@@ -111,7 +110,7 @@ class DocumentProcessingResult(BaseModel):
         default=0, description="Successfully processed sources"
     )
     failed_sources: int = Field(default=0, description="Failed source processing")
-    processing_errors: List[str] = Field(
+    processing_errors: list[str] = Field(
         default_factory=list, description="Errors encountered during processing"
     )
 
@@ -289,7 +288,7 @@ class DocumentAgent(Agent):
     # SOURCE CONFIGURATION
     # ========================================================================
 
-    allowed_source_types: List[DocumentSourceType] = Field(
+    allowed_source_types: list[DocumentSourceType] = Field(
         default_factory=lambda: [
             DocumentSourceType.FILE,
             DocumentSourceType.DIRECTORY,
@@ -304,7 +303,7 @@ class DocumentAgent(Agent):
         default=True, description="Whether to auto-detect source types"
     )
 
-    max_sources: Optional[int] = Field(
+    max_sources: int | None = Field(
         default=None, description="Maximum number of sources to process"
     )
 
@@ -522,7 +521,7 @@ class DocumentAgent(Agent):
 
         return graph
 
-    def _get_pipeline_stages(self) -> List[str]:
+    def _get_pipeline_stages(self) -> list[str]:
         """Get list of enabled pipeline stages."""
         stages = ["fetch", "load", "transform", "split", "annotate"]
 
@@ -540,7 +539,7 @@ class DocumentAgent(Agent):
     # ========================================================================
 
     def process_sources(
-        self, sources: Union[str, List[str]], **kwargs
+        self, sources: str | List[str], **kwargs
     ) -> DocumentProcessingResult:
         """Process multiple document sources through the full pipeline.
 
@@ -584,7 +583,7 @@ class DocumentAgent(Agent):
                     logger.error("No engine available for processing")
 
             except Exception as e:
-                logger.error(f"Failed to process source {source}: {e}")
+                logger.exception(f"Failed to process source {source}: {e}")
                 if not self.skip_invalid:
                     raise
 
@@ -595,8 +594,8 @@ class DocumentAgent(Agent):
         self,
         directory_path: str,
         recursive: bool = True,
-        include_patterns: Optional[List[str]] = None,
-        exclude_patterns: Optional[List[str]] = None,
+        include_patterns: List[str] | None = None,
+        exclude_patterns: List[str] | None = None,
         **kwargs,
     ) -> DocumentProcessingResult:
         """Process all documents in a directory.
@@ -629,7 +628,7 @@ class DocumentAgent(Agent):
             # Restore original setting
             self.engine.recursive = original_recursive
 
-    def process_urls(self, urls: List[str], **kwargs) -> DocumentProcessingResult:
+    def process_urls(self, urls: list[str], **kwargs) -> DocumentProcessingResult:
         """Process documents from web URLs.
 
         Args:
@@ -642,7 +641,7 @@ class DocumentAgent(Agent):
         return self.process_sources(urls, **kwargs)
 
     def process_cloud_storage(
-        self, cloud_paths: List[str], **kwargs
+        self, cloud_paths: list[str], **kwargs
     ) -> DocumentProcessingResult:
         """Process documents from cloud storage.
 
@@ -655,7 +654,7 @@ class DocumentAgent(Agent):
         """
         return self.process_sources(cloud_paths, **kwargs)
 
-    def analyze_source_structure(self, source: str, **kwargs) -> Dict[str, Any]:
+    def analyze_source_structure(self, source: str, **kwargs) -> dict[str, Any]:
         """Analyze the structure of a source without full processing.
 
         Args:
@@ -689,7 +688,7 @@ class DocumentAgent(Agent):
                     else 0
                 ),
                 "formats": (
-                    list(set(doc.format.value for doc in result.documents))
+                    list(set(doc.format.value for doc in result.documents})
                     if hasattr(result, "documents")
                     else []
                 ),
@@ -707,12 +706,11 @@ class DocumentAgent(Agent):
 
     def _aggregate_results(
         self,
-        engine_results: List[DocumentOutput],
-        sources: List[str],
+        engine_results: list[DocumentOutput],
+        sources: list[str],
         total_time: float,
     ) -> DocumentProcessingResult:
         """Aggregate multiple engine results into a comprehensive result."""
-
         # Initialize counters
         total_documents = 0
         total_chunks = 0
@@ -807,7 +805,7 @@ class DocumentAgent(Agent):
         )
 
     def _convert_engine_result_to_agent_result(
-        self, engine_result: DocumentOutput, sources: List[str]
+        self, engine_result: DocumentOutput, sources: list[str]
     ) -> DocumentProcessingResult:
         """Convert a single engine result to agent result format."""
         return self._aggregate_results(

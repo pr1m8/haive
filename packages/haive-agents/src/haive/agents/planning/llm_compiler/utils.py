@@ -12,7 +12,7 @@ def schedule_pending_task(
 ):
     while True:
         deps = task["dependencies"]
-        if deps and (any([dep not in observations for dep in deps])):
+        if deps and (any(dep not in observations for dep in deps)):
             # Dependencies not yet satisfied
             time.sleep(retry_after)
             continue
@@ -51,7 +51,7 @@ def schedule_tasks(scheduler_input: SchedulerInput) -> list[FunctionMessage]:
             if (
                 # Depends on other tasks
                 deps
-                and (any([dep not in observations for dep in deps]))
+                and (any(dep not in observations for dep in deps))
             ):
                 futures.append(
                     executor.submit(
@@ -61,8 +61,7 @@ def schedule_tasks(scheduler_input: SchedulerInput) -> list[FunctionMessage]:
             else:
                 # No deps or all deps satisfied
                 # can schedule now
-                schedule_task.invoke(dict(task=task, observations=observations))
-                # futures.append(executor.submit(schedule_task.invoke, dict(task=task, observations=observations)))
+                schedule_task.invoke({"task": task, "observations": observations})
 
         # All tasks have been submitted or enqueued
         # Wait for them to complete
@@ -118,7 +117,7 @@ def _execute_task(task, observations, config):
     except Exception as e:
         return (
             f"ERROR(Failed to call {tool_to_use.name} with args {args}."
-            + f" Args resolved to {resolved_args}. Error: {e!r})"
+            f" Args resolved to {resolved_args}. Error: {e!r})"
         )
 
 
@@ -160,7 +159,7 @@ def schedule_pending_task(
 ):
     while True:
         deps = task["dependencies"]
-        if deps and (any([dep not in observations for dep in deps])):
+        if deps and (any(dep not in observations for dep in deps)):
             # Dependencies not yet satisfied
             time.sleep(retry_after)
             continue

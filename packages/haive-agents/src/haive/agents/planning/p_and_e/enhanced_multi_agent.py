@@ -1,5 +1,4 @@
-"""
-Enhanced Multi-Agent Base for Plan and Execute patterns.
+"""Enhanced Multi-Agent Base for Plan and Execute patterns.
 
 This module provides an enhanced version of MultiAgent that allows for cleaner
 configuration with agents, state schema, and branches passed directly.
@@ -9,11 +8,10 @@ import logging
 from abc import abstractmethod
 from typing import Any, Callable, Dict, List, Optional, Type, Union
 
+from haive.agents.multi.base import ExecutionMode, MultiAgent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.state_schema import StateSchema
 from pydantic import Field
-
-from haive.agents.multi.base import ExecutionMode, MultiAgent
 
 logger = logging.getLogger(__name__)
 
@@ -23,15 +21,14 @@ class EnhancedMultiAgent(MultiAgent):
 
     def __init__(
         self,
-        agents: List[Any],
-        state_schema: Optional[Type[StateSchema]] = None,
-        branches: Optional[Dict[str, Dict[str, Any]]] = None,
+        agents: list[Any],
+        state_schema: type[StateSchema] | None = None,
+        branches: dict[str, dict[str, Any]] | None = None,
         schema_composition_method: str = "smart",
         execution_mode: ExecutionMode = ExecutionMode.CONDITIONAL,
         **kwargs,
     ):
-        """
-        Initialize enhanced multi-agent with direct configuration.
+        """Initialize enhanced multi-agent with direct configuration.
 
         Args:
             agents: List of agents to orchestrate
@@ -41,7 +38,6 @@ class EnhancedMultiAgent(MultiAgent):
             execution_mode: Execution pattern
             **kwargs: Additional MultiAgent arguments
         """
-
         # Store schema override
         self._state_schema_override = state_schema
 
@@ -57,7 +53,6 @@ class EnhancedMultiAgent(MultiAgent):
 
     def setup_multi_agent(self) -> "EnhancedMultiAgent":
         """Override to use state schema override if provided."""
-
         if self._state_schema_override:
             # Use provided state schema instead of composing
             self.state_schema = self._state_schema_override
@@ -94,19 +89,17 @@ class PlanAndExecuteMultiAgent(EnhancedMultiAgent):
 
     def __init__(
         self,
-        agents: List[Any],
-        state_schema: Optional[Type[StateSchema]] = None,
+        agents: list[Any],
+        state_schema: type[StateSchema] | None = None,
         **kwargs,
     ):
-        """
-        Initialize Plan and Execute multi-agent.
+        """Initialize Plan and Execute multi-agent.
 
         Args:
             agents: List of [planner, executor, replanner] agents
             state_schema: Optional state schema (defaults to PlanExecuteState)
             **kwargs: Additional arguments
         """
-
         # Default state schema
         if state_schema is None:
             from haive.agents.planning.p_and_e.state import PlanExecuteState
@@ -144,7 +137,6 @@ class PlanAndExecuteMultiAgent(EnhancedMultiAgent):
 
     def build_custom_graph(self, graph: BaseGraph) -> BaseGraph:
         """Build the Plan and Execute workflow graph."""
-
         # Ensure we have exactly 3 agents
         if len(self.agents) != 3:
             raise ValueError(
@@ -170,7 +162,7 @@ class PlanAndExecuteMultiAgent(EnhancedMultiAgent):
         graph.add_node("process_replan", self._process_replan_decision)
 
         # Define the workflow
-        from langgraph.graph import END, START
+        from langgraph.graph import START
 
         graph.add_edge(START, planner_node)
         graph.add_edge(planner_node, "prepare_execution")
@@ -201,22 +193,18 @@ class PlanAndExecuteMultiAgent(EnhancedMultiAgent):
     def _prepare_execution_step(self, state: Any):
         """Prepare the next execution step."""
         # Your implementation here
-        pass
 
     def _process_execution_result(self, state: Any):
         """Process the execution result and update the plan."""
         # Your implementation here
-        pass
 
     def _prepare_replan_step(self, state: Any):
         """Prepare for replanning."""
         # Your implementation here
-        pass
 
     def _process_replan_decision(self, state: Any):
         """Process the replanning decision."""
         # Your implementation here
-        pass
 
     def _route_after_execution(self, state: Any) -> str:
         """Route after execution based on plan status."""

@@ -4,19 +4,23 @@ import asyncio
 import logging
 import uuid
 from collections.abc import AsyncGenerator, Generator
-from typing import Any
+from typing import Any, TYPE_CHECKING, cast
 
+# Import debug utilities
+from haive.agents.base.debug_utils import debug_logger, get_agent_debugger
 from haive.core.config.runnable import RunnableConfigManager
 from haive.core.persistence.handlers import (
     prepare_merged_input,
     register_thread_if_needed,
 )
 from langchain_core.messages import BaseMessage, HumanMessage
+from langchain_core.output_parsers.base import BaseOutputParser
 from langchain_core.runnables import RunnableConfig
 from pydantic import BaseModel
 
-# Import debug utilities
-from haive.agents.base.debug_utils import debug_logger, get_agent_debugger
+if TYPE_CHECKING:
+    from haive.agents.base.mixins.agent_protocol import AgentProtocol
+
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +28,7 @@ logger = logging.getLogger(__name__)
 class ExecutionMixin:
     """Mixin for agent execution functionality including run, stream, and state management."""
 
-    def _prepare_input(self, input_data: Any) -> Any:
+    def _prepare_input(self: "AgentProtocol", input_data: Any) -> Any:
         """Prepare input for the agent based on the input schema.
 
         Args:
@@ -54,23 +58,34 @@ class ExecutionMixin:
                     schema_fields = input_schema.__fields__
 
                 prepared_input = {}
+                text_fields = [
+                    f
+                    for f in ["input", "query", "question", "text", "content"]
+                    if f in schema_fields
+                ]
 
-                # Detect message field and populate if found
+                # If there's only one non-messages field, use it.
+                non_message_fields = [f for f in schema_fields if f != "messages"]
+                if len(non_message_fields) == 1:
+                    prepared_input[non_message_fields[0]] = input_data
+                # Populate common text fields if found
+                elif text_fields:
+                    for field_name in text_fields:
+                        prepared_input[field_name] = input_data
+                # Fallback to first field
+                elif schema_fields and "messages" not in schema_fields:
+                        first_field = next(iter(schema_fields))
+                        prepared_input[first_field] = input_data
+
+                # Always populate messages field if present
                 if "messages" in schema_fields:
                     prepared_input["messages"] = [HumanMessage(content=input_data)]
 
-                # Populate common text fields with input string
-                for field_name in ["input", "query", "question", "text", "content"]:
-                    if field_name in schema_fields:
-                        prepared_input[field_name] = input_data
-
-                # If no matches, use first field or create minimal dict
-                if not prepared_input:
-                    if schema_fields:
-                        first_field = next(iter(schema_fields))
-                        prepared_input[first_field] = input_data
-                    else:
+                # If no fields were populated (e.g. only messages field)
+                if not prepared_input and "messages" not in schema_fields:
                         prepared_input = {"input": input_data}
+                elif not prepared_input and "messages" in schema_fields:
+                    pass  # messages field was already handled
 
                 # Create instance or return dict
                 try:
@@ -218,7 +233,7 @@ class ExecutionMixin:
                             # Get actual BaseMessage objects, not their dict representations
                             if hasattr(original_messages, "root"):
                                 actual_messages = original_messages.root
-                            elif isinstance(original_messages, (list, tuple)):
+                            elif isinstance(original_messages, list | tuple):
                                 actual_messages = list(original_messages)
                             else:
                                 try:
@@ -272,7 +287,7 @@ class ExecutionMixin:
             return self._prepare_input(str(input_data))
 
     def _prepare_runnable_config(
-        self,
+        self: "AgentProtocol",
         thread_id: str | None = None,
         config: RunnableConfig | None = None,
         **kwargs,
@@ -300,6 +315,7 @@ class ExecutionMixin:
         if (
             not base_config
             and hasattr(self, "config")
+            and self.config
             and hasattr(self.config, "runnable_config")
         ):
             base_config = self.config.runnable_config
@@ -384,7 +400,7 @@ class ExecutionMixin:
 
         return runtime_config
 
-    def _process_output(self, output_data: Any) -> Any:
+    def _process_output(self: "AgentProtocol", output_data: Any) -> Any:
         """Process and validate output data.
 
         Args:
@@ -419,10 +435,10 @@ class ExecutionMixin:
         return output_data
 
     def run(
-        self,
+        self: "AgentProtocol",
         input_data: Any,
         thread_id: str | None = None,
-        debug: bool = None,
+        debug: bool | None = None,
         config: RunnableConfig | None = None,
         **kwargs,
     ) -> Any:
@@ -430,6 +446,7 @@ class ExecutionMixin:
         # Ensure we have compiled app
         if not hasattr(self, "_app") or self._app is None:
             self.compile()
+        assert self._app is not None, "Graph compilation failed"
 
         # Default debug to verbose if available
         if debug is None:
@@ -444,13 +461,14 @@ class ExecutionMixin:
         )
 
         # Extract thread_id for persistence
-        thread_id = runtime_config["configurable"].get("thread_id")
+        thread_id = runtime_config.get("configurable", {}).get("thread_id")
 
         # IMPORTANT: Extract recursion limit from configurable and set it at top level
-        if "recursion_limit" in runtime_config["configurable"]:
-            runtime_config["recursion_limit"] = runtime_config["configurable"][
-                "recursion_limit"
-            ]
+        configurable = runtime_config.get("configurable", {})
+        if "recursion_limit" in configurable:
+            limit = configurable.get("recursion_limit")
+            if limit is not None:
+                runtime_config["recursion_limit"] = limit
         elif not runtime_config.get("recursion_limit"):
             # Set a default if not present
             runtime_config["recursion_limit"] = 100
@@ -470,7 +488,9 @@ class ExecutionMixin:
 
         if active_checkpointer and thread_id:
             try:
-                register_thread_if_needed(active_checkpointer, thread_id)
+                agent_name = getattr(self, "name", "Unknown Agent")
+                metadata = {"thread_name": agent_name}
+                register_thread_if_needed(active_checkpointer, thread_id, metadata)
             except Exception as e:
                 logger.warning(f"Failed to register thread for checkpointing: {e}")
                 # Disable checkpointing for this session if it fails
@@ -494,7 +514,7 @@ class ExecutionMixin:
                 full_input = prepare_merged_input(
                     processed_input,
                     previous_state,
-                    runtime_config,
+                    cast(dict, runtime_config),
                     input_schema,
                     state_schema,
                 )
@@ -516,6 +536,39 @@ class ExecutionMixin:
             if hasattr(processed_input, "model_dump"):
                 processed_input = processed_input.model_dump()
 
+                # CRITICAL FIX: Populate missing state schema fields
+                # If the state schema requires an engine field (like LLMState), populate it
+                state_schema = getattr(self, "state_schema", None)
+                if state_schema and hasattr(state_schema, "model_fields"):
+                    # Check if engine field is required but missing
+                    if (
+                        (
+                            "engine" in state_schema.model_fields
+                            and "engine" not in processed_input
+                        )
+                        and hasattr(self, "engine")
+                        and self.engine is not None
+                    ):
+                        processed_input["engine"] = self.engine
+                        logger.debug(
+                            "Populated missing engine field for state schema validation"
+                        )
+
+                    # Populate any other missing required fields with defaults
+                    for field_name, field_info in state_schema.model_fields.items():
+                        if field_name not in processed_input:
+                            # Check if field has a default or default_factory
+                            if not field_info.is_required():
+                                if field_info.default is not ...:
+                                    processed_input[field_name] = field_info.default
+                                elif field_info.default_factory is not None:
+                                    processed_input[field_name] = (
+                                        field_info.default_factory()
+                                    )
+                                logger.debug(
+                                    f"Populated missing field '{field_name}' with default value"
+                                )
+
             result = self._app.invoke(
                 processed_input, config=runtime_config, debug=debug
             )
@@ -525,13 +578,13 @@ class ExecutionMixin:
             output = self._process_output(result)
 
             # Save state history if configured
-            if runtime_config["configurable"].get("save_history", True):
+            if runtime_config.get("configurable", {}).get("save_history", True):
                 self.save_state_history(runtime_config)
 
             return output
 
         except Exception as e:
-            logger.error(f"Error during agent execution: {e}")
+            logger.exception(f"Error during agent execution: {e}")
             raise
         finally:
             # Clean up connection pool if we opened it
@@ -544,11 +597,11 @@ class ExecutionMixin:
                     logger.warning(f"Error during connection cleanup: {cleanup_error}")
 
     async def arun(
-        self,
+        self: "AgentProtocol",
         input_data: Any,
         thread_id: str | None = None,
         config: RunnableConfig | None = None,
-        debug: bool = None,
+        debug: bool | None = None,
         **kwargs,
     ) -> Any:
         """Asynchronously run the agent with input data.
@@ -571,6 +624,7 @@ class ExecutionMixin:
             # Ensure we have compiled app
             if not hasattr(self, "_app") or self._app is None:
                 self.compile()
+            assert self._app is not None, "Graph compilation failed"
 
             # Default debug to verbose if available
             if debug is None:
@@ -585,7 +639,7 @@ class ExecutionMixin:
             )
 
             # Extract thread_id for persistence
-            thread_id = runtime_config["configurable"].get("thread_id")
+            thread_id = runtime_config.get("configurable", {}).get("thread_id")
 
             # Register thread if needed with async checkpointer
             if async_checkpointer and thread_id:
@@ -593,13 +647,18 @@ class ExecutionMixin:
                     register_async_thread_if_needed,
                 )
 
-                await register_async_thread_if_needed(async_checkpointer, thread_id)
+                agent_name = getattr(self, "name", "Unknown Agent")
+                metadata = {"thread_name": agent_name}
+                await register_async_thread_if_needed(
+                    async_checkpointer, thread_id, metadata
+                )
 
             # Get previous state if available using async checkpointer
             previous_state = None
             try:
                 if async_checkpointer and thread_id:
                     # Create async app with async checkpointer for state retrieval
+                    assert self.graph is not None, "Graph not built"
                     async_app = self.graph.to_langgraph(
                         state_schema=self.state_schema
                     ).compile(checkpointer=async_checkpointer, store=self.store)
@@ -617,7 +676,7 @@ class ExecutionMixin:
                     full_input = prepare_merged_input(
                         processed_input,
                         previous_state,
-                        runtime_config,
+                        cast(dict, runtime_config),
                         input_schema,
                         state_schema,
                     )
@@ -639,7 +698,41 @@ class ExecutionMixin:
                 if hasattr(processed_input, "model_dump"):
                     processed_input = processed_input.model_dump()
 
+                    # CRITICAL FIX: Populate missing state schema fields
+                    # If the state schema requires an engine field (like LLMState), populate it
+                    state_schema = getattr(self, "state_schema", None)
+                    if state_schema and hasattr(state_schema, "model_fields"):
+                        # Check if engine field is required but missing
+                        if (
+                            (
+                                "engine" in state_schema.model_fields
+                                and "engine" not in processed_input
+                            )
+                            and hasattr(self, "engine")
+                            and self.engine is not None
+                        ):
+                            processed_input["engine"] = self.engine
+                            logger.debug(
+                                "Populated missing engine field for state schema validation"
+                            )
+
+                        # Populate any other missing required fields with defaults
+                        for field_name, field_info in state_schema.model_fields.items():
+                            if field_name not in processed_input:
+                                # Check if field has a default or default_factory
+                                if not field_info.is_required():
+                                    if field_info.default is not ...:
+                                        processed_input[field_name] = field_info.default
+                                    elif field_info.default_factory is not None:
+                                        processed_input[field_name] = (
+                                            field_info.default_factory()
+                                        )
+                                    logger.debug(
+                                        f"Populated missing field '{field_name}' with default value"
+                                    )
+
                 # Create async app with async checkpointer
+                assert self.graph is not None, "Graph not built"
                 async_app = self.graph.to_langgraph(
                     state_schema=self.state_schema
                 ).compile(checkpointer=async_checkpointer, store=self.store)
@@ -651,13 +744,13 @@ class ExecutionMixin:
                 output = self._process_output(result)
 
                 # Save state history if configured
-                if runtime_config["configurable"].get("save_history", True):
+                if runtime_config.get("configurable", {}).get("save_history", True):
                     self.save_state_history(runtime_config)
 
                 return output
 
             except Exception as e:
-                logger.error(f"Error during async agent execution: {e}")
+                logger.exception(f"Error during async agent execution: {e}")
                 raise
             finally:
                 # Clean up async connection pool if we opened it
@@ -689,12 +782,12 @@ class ExecutionMixin:
             )
 
     def stream(
-        self,
+        self: "AgentProtocol",
         input_data: Any,
         thread_id: str | None = None,
         stream_mode: str = "values",
         config: RunnableConfig | None = None,
-        debug: bool = None,
+        debug: bool | None = None,
         **kwargs,
     ) -> Generator[dict[str, Any], None, None]:
         """Stream agent execution with input data.
@@ -713,6 +806,7 @@ class ExecutionMixin:
         # Ensure we have compiled app
         if not hasattr(self, "_app") or self._app is None:
             self.compile()
+        assert self._app is not None, "Graph compilation failed"
 
         # Default debug to verbose if available
         if debug is None:
@@ -730,13 +824,14 @@ class ExecutionMixin:
         )
 
         # Extract thread_id for persistence
-        thread_id = runtime_config["configurable"].get("thread_id")
+        thread_id = runtime_config.get("configurable", {}).get("thread_id")
 
         # IMPORTANT: Extract recursion limit from configurable and set it at top level
-        if "recursion_limit" in runtime_config["configurable"]:
-            runtime_config["recursion_limit"] = runtime_config["configurable"][
-                "recursion_limit"
-            ]
+        configurable = runtime_config.get("configurable", {})
+        if "recursion_limit" in configurable:
+            limit = configurable.get("recursion_limit")
+            if limit is not None:
+                runtime_config["recursion_limit"] = limit
         elif not runtime_config.get("recursion_limit"):
             # Set a default if not present
             runtime_config["recursion_limit"] = 100
@@ -756,7 +851,9 @@ class ExecutionMixin:
 
         if active_checkpointer and thread_id:
             try:
-                register_thread_if_needed(active_checkpointer, thread_id)
+                agent_name = getattr(self, "name", "Unknown Agent")
+                metadata = {"thread_name": agent_name}
+                register_thread_if_needed(active_checkpointer, thread_id, metadata)
             except Exception as e:
                 logger.warning(f"Failed to register thread for checkpointing: {e}")
                 # Disable checkpointing for this session if it fails
@@ -780,7 +877,7 @@ class ExecutionMixin:
                 full_input = prepare_merged_input(
                     processed_input,
                     previous_state,
-                    runtime_config,
+                    cast(dict, runtime_config),
                     input_schema,
                     state_schema,
                 )
@@ -795,6 +892,39 @@ class ExecutionMixin:
             if hasattr(processed_input, "model_dump"):
                 processed_input = processed_input.model_dump()
 
+                # CRITICAL FIX: Populate missing state schema fields
+                # If the state schema requires an engine field (like LLMState), populate it
+                state_schema = getattr(self, "state_schema", None)
+                if state_schema and hasattr(state_schema, "model_fields"):
+                    # Check if engine field is required but missing
+                    if (
+                        (
+                            "engine" in state_schema.model_fields
+                            and "engine" not in processed_input
+                        )
+                        and hasattr(self, "engine")
+                        and self.engine is not None
+                    ):
+                        processed_input["engine"] = self.engine
+                        logger.debug(
+                            "Populated missing engine field for state schema validation"
+                        )
+
+                    # Populate any other missing required fields with defaults
+                    for field_name, field_info in state_schema.model_fields.items():
+                        if field_name not in processed_input:
+                            # Check if field has a default or default_factory
+                            if not field_info.is_required():
+                                if field_info.default is not ...:
+                                    processed_input[field_name] = field_info.default
+                                elif field_info.default_factory is not None:
+                                    processed_input[field_name] = (
+                                        field_info.default_factory()
+                                    )
+                                logger.debug(
+                                    f"Populated missing field '{field_name}' with default value"
+                                )
+
             stream_gen = self._app.stream(processed_input, runtime_config)
 
             final_result = None
@@ -808,16 +938,18 @@ class ExecutionMixin:
 
             # Save state history if configured and we have a final result
             if (
-                runtime_config["configurable"].get("save_history", True)
+                runtime_config.get("configurable", {}).get("save_history", True)
                 and final_result is not None
             ):
                 self.save_state_history(runtime_config)
 
         except Exception as e:
-            logger.error(f"Error during streaming execution: {e}")
+            logger.exception(f"Error during streaming execution: {e}")
             raise
 
-    def _process_stream_chunk(self, chunk: Any, stream_mode: str) -> dict[str, Any]:
+    def _process_stream_chunk(
+        self: "AgentProtocol", chunk: Any, stream_mode: str
+    ) -> dict[str, Any]:
         """Process a stream chunk based on stream mode.
 
         Args:
@@ -837,7 +969,7 @@ class ExecutionMixin:
             # Handle LangGraph AddableUpdatesDict format - extract actual state values
             if isinstance(chunk, dict):
                 # LangGraph returns {node_name: state_data}
-                for node_name, node_data in chunk.items():
+                for _node_name, node_data in chunk.items():
                     if isinstance(node_data, dict) and node_data:
                         # Return the actual state data instead of node metadata
                         return node_data
@@ -861,29 +993,21 @@ class ExecutionMixin:
         return chunk
 
     async def astream(
-        self,
+        self: "AgentProtocol",
         input_data: Any,
         thread_id: str | None = None,
         stream_mode: str = "values",
         config: RunnableConfig | None = None,
-        debug: bool = None,
+        debug: bool | None = None,
         **kwargs,
     ) -> AsyncGenerator[dict[str, Any], None]:
         """Asynchronously stream agent execution with input data.
 
-        Args:
-            input_data: Input data for the agent
-            thread_id: Optional thread ID for persistence
-            stream_mode: Stream mode (values, updates, debug, etc.)
-            config: Optional runtime configuration
-            debug: Whether to enable debug mode
-            **kwargs: Additional runtime configuration
-
-        Yields:
-            Async iterator of state updates during execution
+        This implementation wraps the synchronous generator in an async one
+        by running the sync generator's iteration in a separate thread to avoid
+        blocking the event loop.
         """
-        # For now, wrap sync generator
-        # TODO: Implement full async support
+        loop = asyncio.get_event_loop()
         sync_gen = self.stream(
             input_data,
             thread_id=thread_id,
@@ -893,5 +1017,17 @@ class ExecutionMixin:
             **kwargs,
         )
 
-        for chunk in sync_gen:
-            yield chunk
+        it = iter(sync_gen)
+        while True:
+            try:
+                # Run the blocking `next()` call in a thread
+                chunk = await loop.run_in_executor(None, next, it)
+                yield chunk
+            except StopIteration:
+                break
+
+    def save_state_history(self: "AgentProtocol", config: RunnableConfig):
+        """Optionally save state history to a file."""
+        # This method is a placeholder to be implemented by the agent class
+        # that uses this mixin if state history saving is desired.
+        pass

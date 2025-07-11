@@ -51,12 +51,10 @@ class MemoryAgent(ReactAgent):
             # Extract user_id from runtime config
             try:
                 user_id = self._get_current_user_id()
-                result = save_unstructured_memories(
-                    [memory], self.config.vector_store, user_id
-                )
+                save_unstructured_memories([memory], self.config.vector_store, user_id)
                 return f"Memory saved: {memory}"
             except Exception as e:
-                logger.error(f"Error saving memory: {e}")
+                logger.exception(f"Error saving memory: {e}")
                 return f"Error saving memory: {e!s}"
 
         def save_structured_memory(subject: str, predicate: str, object_: str) -> str:
@@ -71,7 +69,7 @@ class MemoryAgent(ReactAgent):
                 save_structured_memories([triple], self.config.vector_store, user_id)
                 return f"Structured memory saved: {subject} {predicate} {object_}"
             except Exception as e:
-                logger.error(f"Error saving structured memory: {e}")
+                logger.exception(f"Error saving structured memory: {e}")
                 return f"Error saving structured memory: {e!s}"
 
         def recall_memory(query: str) -> list[str]:
@@ -86,7 +84,7 @@ class MemoryAgent(ReactAgent):
                 )
                 return memories
             except Exception as e:
-                logger.error(f"Error recalling memories: {e}")
+                logger.exception(f"Error recalling memories: {e}")
                 return []
 
         # Create structured tools
@@ -284,7 +282,7 @@ class MemoryAgent(ReactAgent):
             return result
 
         except Exception as e:
-            logger.error(f"Error loading memories: {e}")
+            logger.exception(f"Error loading memories: {e}")
             return {"recall_memories": [], "user_id": self._get_current_user_id()}
 
     def _extract_query(self, state: dict[str, Any]) -> dict[str, Any]:
@@ -347,7 +345,7 @@ class MemoryAgent(ReactAgent):
                     or """
                 Extract important information from the conversation as structured knowledge triples.
                 Format: [{"subject": "entity1", "predicate": "relation", "object_": "entity2"}]
-                
+
                 Extract only facts that would be useful to remember for future conversations.
                 Focus on personal preferences, facts about the user, important events, etc.
                 """
@@ -358,7 +356,7 @@ class MemoryAgent(ReactAgent):
                     or """
                 Extract important information from the conversation as natural language statements.
                 Format each memory as a separate, self-contained statement.
-                
+
                 Extract only facts that would be useful to remember for future conversations.
                 Focus on personal preferences, facts about the user, important events, etc.
                 """
@@ -412,7 +410,7 @@ class MemoryAgent(ReactAgent):
                         if valid_memories:
                             return {"extracted_memories": valid_memories}
                 except Exception as e:
-                    logger.error(f"Error parsing structured memories: {e}")
+                    logger.exception(f"Error parsing structured memories: {e}")
                     # Fall back to unstructured extraction
 
             # Unstructured memory extraction
@@ -429,7 +427,7 @@ class MemoryAgent(ReactAgent):
                 return {"extracted_memories": unstructured_memories}
 
         except Exception as e:
-            logger.error(f"Error extracting memories: {e}")
+            logger.exception(f"Error extracting memories: {e}")
 
         return {}
 
@@ -506,7 +504,7 @@ class MemoryAgent(ReactAgent):
                     )
 
         except Exception as e:
-            logger.error(f"Error saving memories: {e}")
+            logger.exception(f"Error saving memories: {e}")
 
         # Clear extracted memories to avoid re-saving
         return {"extracted_memories": []}

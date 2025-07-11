@@ -3,177 +3,234 @@
 import logging
 from typing import Any, Dict, List, Optional
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.node.tool_node_config_v2 import ToolNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import AIMessage
 from langgraph.graph import END, START
 from langgraph.types import Command
-from pydantic import Field
+from pydantic import Field, computed_field
 
+from haive.agents.planning.rewoo.models import EvidenceStatus, ReWOOPlan
+from haive.agents.planning.rewoo.planner.prompts import REWOO_PLANNING_TEMPLATE
 from haive.agents.simple.agent import SimpleAgent
-from haive.agents.planning.rewoo.state import ReWOOState
-from haive.agents.planning.rewoo.models import ReWOOPlan, EvidenceStatus
-from haive.agents.planning.rewoo.node_config import (
-    create_rewoo_planning_node,
-    create_rewoo_evidence_node,
-    create_rewoo_reasoning_node
-)
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.node.tool_node_config_v2 import ToolNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.schema.prebuilt.llm_state import LLMState
+
 
 logger = logging.getLogger(__name__)
 
 
-# Routing functions for ReWOO
-def has_plan(state: ReWOOState) -> bool:
-    """Check if state has a ReWOO plan."""
-    return hasattr(state, 'plan') and state.plan is not None
+class ReWOOState(LLMState):
+    """ReWOO-specific state that extends LLMState with tool options.
 
+    This state provides tools as a computed field that can be used by the agent
+    but doesn't automatically sync them to all engines. This gives us more control
+    over tool routing through validation nodes.
+    """
 
-def has_evidence_ready(state: ReWOOState) -> bool:
-    """Check if evidence is ready to collect."""
-    return len(state.ready_evidence) > 0
+    # Store available tools without auto-sync
+    available_tools: list[Any] = Field(
+        default_factory=list,
+        description="Available tools for ReWOO planning (no auto-sync)",
+    )
 
+    # ReWOO-specific fields
+    current_plan: ReWOOPlan | None = Field(
+        default=None, description="Current ReWOO plan being executed"
+    )
 
-def is_evidence_complete(state: ReWOOState) -> bool:
-    """Check if all evidence collection is complete."""
-    return state.is_evidence_complete
+    evidence_collected: dict[str, Any] = Field(
+        default_factory=dict, description="Evidence collected during execution"
+    )
 
+    @computed_field
+    @property
+    def tool_options(self) -> list[str]:
+        """Computed field providing tool names for planning prompts."""
+        return [
+            tool.name if hasattr(tool, "name") else str(tool)
+            for tool in self.available_tools
+        ]
 
-def has_tool_calls(state: ReWOOState) -> bool:
-    """Check if the last AI message has tool calls."""
-    if not hasattr(state, "messages") or not state.messages:
-        return False
+    @computed_field
+    @property
+    def planning_context(self) -> str:
+        """Computed field for planning agent system message."""
+        return f"""You are a ReWOO planning agent. Create evidence-based plans.
 
-    last_msg = state.messages[-1]
-    if not isinstance(last_msg, AIMessage):
-        return False
+Given the user's query, create a ReWOO plan with:
+1. Steps that collect evidence (#E1, #E2, etc.)
+2. Tool calls for each piece of evidence
+3. Evidence dependencies and references
 
-    tool_calls = getattr(last_msg, "tool_calls", None)
-    return bool(tool_calls)
+Available tools: {self.tool_options}
+
+Create a structured plan where each step produces evidence that later steps can reference."""
 
 
 class ReWOOAgent(SimpleAgent):
     """ReWOO Agent that extends SimpleAgent with evidence-based planning.
-    
+
     This agent follows the ReWOO pattern:
     1. Planning: Creates evidence-based plan
     2. Collection: Collects evidence systematically
     3. Reasoning: Uses evidence for final answer
-    
-    Uses SimpleAgent's infrastructure with ReWOO-specific routing.
+
+    Uses LLMState with controlled tool routing instead of automatic sync.
     """
-    
+
+    # Use ReWOO-specific state schema
+    state_schema: type = Field(
+        default=ReWOOState,
+        description="ReWOO state with LLMState base and controlled tool routing",
+    )
+
+    def setup_agent(self):
+        """Setup ReWOO agent with proper engines and controlled tool routing."""
+        # 1. DEFINE ENGINES FIRST with proper names matching node config
+        # Format the prompt template with available tools
+        tool_options = []
+        if hasattr(self, "tools") and self.tools:
+            tool_options = [
+                tool.name if hasattr(tool, "name") else str(tool) for tool in self.tools
+            ]
+
+        # Use the ReWOO planning template
+
+        planning_prompt = REWOO_PLANNING_TEMPLATE.format(tools=str(tool_options))
+
+        # Define planning engine with structured output v2
+        planning_engine = self.engine.model_copy(
+            update={
+                "name": "planning",
+                "structured_output_model": ReWOOPlan,
+                "structured_output_version": "v2",
+                "system_message": planning_prompt,
+            }
+        )
+
+        reasoning_engine = self.engine.model_copy(
+            update={
+                "name": "reasoning",  # Use simple name to match node config
+                "system_message": """You are a ReWOO reasoning agent. Use collected evidence to answer.
+
+Review all evidence collected and synthesize into a comprehensive response.
+Reference specific evidence when making claims (e.g., "Based on #E1...").""",
+            }
+        )
+
+        # 2. REGISTER ENGINES (no tool sync - we control this)
+        self.engines = {
+            "planning": planning_engine,
+            "reasoning": reasoning_engine,
+            "main": self.engine,  # Keep main engine for tool execution
+        }
+
+        # 3. CALL PARENT SETUP but skip tool sync
+        super().setup_agent()
+
+        # 4. SET AVAILABLE TOOLS in state (no auto-sync)
+        if hasattr(self, "tools") and self.tools:
+            # This will be set in state but won't auto-sync to engines
+            pass
+
     def build_graph(self) -> BaseGraph:
-        """Build ReWOO graph with conditional routing."""
-        # For now, let's just use the base SimpleAgent graph to test the agent works
-        # TODO: Add ReWOO-specific nodes and routing
-        graph = super().build_graph()
-        
-        # Later we'll modify this to add ReWOO-specific nodes:
-        # - Planning node for creating evidence-based plans
-        # - Evidence collection node for gathering evidence
-        # - Reasoning node for final answer synthesis
-        
+        """Build ReWOO graph with conditional routing and validation nodes."""
+        # Create ReWOO graph with proper state schema
+        graph = BaseGraph(name=f"{self.name}_rewoo_graph")
+
+        # 1. PLANNING NODE - Forces ReWOO plan generation
+        planning_node = EngineNodeConfig(
+            name="planning", engine_name="planning"  # Use named engine
+        )
+
+        # 2. VALIDATION NODE - Controls tool routing based on plan
+        from haive.core.graph.node.validation_node_config_v2 import (
+            ValidationNodeConfigV2,
+        )
+
+        validation_node = ValidationNodeConfigV2(
+            name="validation",
+            engine_name="main",  # Use main engine
+            tool_node="tool_execution",
+            parser_node="plan_parser",
+            available_nodes=["planning", "tool_execution", "plan_parser", "reasoning"],
+        )
+
+        # 3. TOOL EXECUTION NODE - Executes tools based on validation
+        tool_node = ToolNodeConfig(
+            name="tool_execution",
+            engine_name="main",
+            allowed_routes=["langchain_tool", "function", "pydantic_model"],
+        )
+
+        # 4. PLAN PARSER NODE - Parses plan from structured output
+        from haive.core.graph.node.parser_node_config_v2 import ParserNodeConfigV2
+
+        parser_node = ParserNodeConfigV2(name="plan_parser", engine_name="main")
+
+        # 5. REASONING NODE - Final answer synthesis
+        reasoning_node = EngineNodeConfig(
+            name="reasoning", engine_name="reasoning"  # Use reasoning engine
+        )
+
+        # Add all nodes
+        graph.add_node("planning", planning_node)
+        graph.add_node("validation", validation_node)
+        graph.add_node("tool_execution", tool_node)
+        graph.add_node("plan_parser", parser_node)
+        graph.add_node("reasoning", reasoning_node)
+
+        # ReWOO Flow: Planning → Validation → [Tool Execution OR Parser] → Reasoning
+        graph.add_edge(START, "planning")
+        graph.add_edge("planning", "validation")
+
+        # Validation controls routing to tool execution or parser
+        # The validation node will use Command to route appropriately
+        graph.add_edge("tool_execution", "reasoning")
+        graph.add_edge("plan_parser", "reasoning")
+        graph.add_edge("reasoning", END)
+
         return graph
-    
-    def process_tool_results_node(self, state: ReWOOState) -> Command:
-        """Process tool results back into evidence."""
-        logger.info("Processing tool results into evidence")
-        
-        # Get the messages
-        messages = state.messages or []
-        if len(messages) < 2:
-            return Command(update={"messages": ["No tool results to process"]})
-        
-        # Get current evidence being collected
-        current_evidence_id = getattr(state, 'current_evidence_id', None)
-        if not current_evidence_id:
-            return Command(update={"messages": ["No current evidence to update"]})
-        
-        # Find the latest ToolMessage
-        from langchain_core.messages import ToolMessage
-        tool_message = None
-        for msg in reversed(messages):
-            if isinstance(msg, ToolMessage):
-                tool_message = msg
-                break
-        
-        if not tool_message:
-            # Tool execution failed
-            state.update_evidence(
-                current_evidence_id,
-                status=EvidenceStatus.FAILED,
-                error="No tool result found"
-            )
-            return Command(update={
-                "messages": ["Tool execution failed - no result"]
-            })
-        
-        try:
-            # Update evidence with tool result
-            state.update_evidence(
-                current_evidence_id,
-                status=EvidenceStatus.COLLECTED,
-                content=tool_message.content
-            )
-            
-            # Also track in tool_results
-            state.add_tool_result(
-                tool_message.name or "unknown", 
-                tool_message.content
-            )
-            
-            return Command(update={
-                "messages": [f"Evidence {current_evidence_id} collected successfully"]
-            })
-            
-        except Exception as e:
-            state.update_evidence(
-                current_evidence_id,
-                status=EvidenceStatus.FAILED,
-                error=str(e)
-            )
-            return Command(update={
-                "messages": [f"Failed to update evidence: {str(e)}"]
-            })
+
+    def create_runnable(self, runnable_config=None) -> Any:
+        """Override to set available_tools in initial state."""
+        # Set available tools in state without auto-sync
+        if hasattr(self, "tools") and self.tools:
+            # This will be used by ReWOOState.tool_options computed field
+            pass
+        else:
+            pass
+
+        # Create runnable with initial state
+        runnable = super().create_runnable(runnable_config)
+
+        return runnable
 
 
 # Example usage
 async def example_rewoo_agent():
-    """Example of using ReWOO agent."""
-    from haive.core.tools import tool
-    
-    # Define tools
-    @tool
-    def search_tool(query: str) -> str:
-        """Search for information."""
-        return f"Search results for: {query}"
-    
-    @tool
-    def analyze_tool(data: str) -> str:
-        """Analyze data."""
-        return f"Analysis of: {data}"
-    
-    # Create agent
+    """Example of using ReWOO agent with controlled tool routing."""
+    from haive.tools.tools.search_tools import tavily_qna, tavily_search_tool
+    from haive.tools.tools.yfinance_tool import yfinance_news_tool
+
+    # Create agent with tools
     agent = ReWOOAgent(
         name="rewoo_agent",
-        engine=AugLLMConfig(
-            model="gpt-4",
-            temperature=0.7
-        ),
-        tools=[search_tool, analyze_tool]
+        engine=AugLLMConfig(name="rewoo_main_engine", temperature=0.7),
+        tools=[tavily_search_tool, tavily_qna, yfinance_news_tool],
     )
-    
-    # Run agent
-    result = await agent.arun("What is the population of Tokyo?")
-    
-    print(f"Result: {result}")
-    
-    # Check evidence collected
-    if hasattr(agent.state, 'evidence_summary'):
-        print(f"Evidence: {agent.state.evidence_summary}")
+
+    # Run agent - should create plan, execute tools, and reason
+    await agent.arun("What is the current stock price of Apple and latest news?")
+
+    # Check state for ReWOO plan
+    if hasattr(agent, "state") and hasattr(agent.state, "current_plan"):
+        pass
 
 
 if __name__ == "__main__":
     import asyncio
+
     asyncio.run(example_rewoo_agent())

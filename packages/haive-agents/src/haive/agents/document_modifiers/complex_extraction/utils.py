@@ -3,16 +3,15 @@ from collections.abc import Callable, Sequence
 from typing import TypedDict
 
 import jsonpatch
+from haive.agents.document_modifiers.complex_extraction.models import (
+    PatchFunctionParameters,
+)
 from langchain_core.messages import AIMessage, AnyMessage, BaseMessage, ToolCall
 from langchain_core.prompt_values import PromptValue
 from langchain_core.runnables import Runnable
 from langgraph.graph import add_messages
 from langgraph.types import Command
 from pydantic import BaseModel
-
-from haive.agents.document_modifiers.complex_extraction.models import (
-    PatchFunctionParameters,
-)
 
 
 def encode(state: BaseModel) -> dict:
@@ -39,7 +38,6 @@ def decode(state: BaseModel) -> dict:
         A dictionary with the extracted data
     """
     # Find the AI message with tool calls in the state
-    ai_message = None
     extracted_data = None
 
     if hasattr(state, "messages") and state.messages:
@@ -49,7 +47,6 @@ def decode(state: BaseModel) -> dict:
                 and hasattr(message, "tool_calls")
                 and message.tool_calls
             ):
-                ai_message = message
                 # Extract data from tool calls
                 for tool_call in message.tool_calls:
                     # If we have a tool call with args, use that as extracted data
@@ -106,9 +103,6 @@ def aggregate_messages(
                 # Add logging in later.
                 if tcid not in resolved_tool_calls:
                     # logger.debug(
-                    #    f"JsonPatch tool call ID {tc['args']['tool_call_id']} not found."
-                    #    f"Valid tool call IDs: {list(resolved_tool_calls.keys())}"
-                    # )
                     tcid = next(iter(resolved_tool_calls.keys()), None)
                 orig_tool_call = resolved_tool_calls[tcid]
                 current_args = orig_tool_call["args"]

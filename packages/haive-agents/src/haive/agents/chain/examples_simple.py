@@ -1,22 +1,20 @@
-"""Simple examples of using ChainAgent
+"""Simple examples of using ChainAgent.
 
 Shows how easy it is to build chains.
 """
 
+from haive.agents.chain import ChainAgent, flow, flow_with_edges
+from haive.agents.rag.simple.agent import SimpleRAGAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 
-from haive.agents.chain import ChainAgent, flow, flow_with_edges
-from haive.agents.rag.simple.agent import SimpleRAGAgent
-from haive.agents.simple.agent import SimpleAgent
-
 
 # Example 1: Simplest possible - just functions
 def example_basic():
     """Just list your nodes."""
-
     chain = flow(
         lambda s: {"step": 1},
         lambda s: {"step": s.get("step", 0) + 1},
@@ -29,7 +27,6 @@ def example_basic():
 # Example 2: Mix agents and engines
 def example_mixed():
     """Mix different node types."""
-
     llm_config = AzureLLMConfig(
         deployment_name="gpt-4",
         azure_endpoint="${AZURE_OPENAI_API_BASE}",
@@ -50,7 +47,8 @@ def example_mixed():
     rag = SimpleRAGAgent.from_documents(docs, llm_config)
 
     # A function
-    formatter = lambda s: {"output": f"Summary: {s.get('summary', '')}"}
+    def formatter(s):
+        return {"output": f"Summary: {s.get('summary', '')}"}
 
     # Just chain them!
     chain = flow(summarizer, rag, formatter)
@@ -61,7 +59,6 @@ def example_mixed():
 # Example 3: Custom routing
 def example_routing():
     """Custom edges for complex flows."""
-
     nodes = [
         lambda s: {
             "type": "A" if len(s.get("input", "")) > 10 else "B"
@@ -85,7 +82,6 @@ def example_routing():
 # Example 4: Using ChainAgent directly
 def example_direct():
     """Using ChainAgent class directly."""
-
     # Initialize with nodes
     chain = ChainAgent(
         lambda s: {"value": 1},
@@ -100,7 +96,6 @@ def example_direct():
 # Example 5: Building incrementally
 def example_incremental():
     """Build step by step."""
-
     chain = ChainAgent()  # Empty chain
 
     # Add nodes one by one
@@ -120,7 +115,6 @@ def example_incremental():
 # Example 6: RAG router in 5 lines
 def example_rag_router():
     """Complete RAG router - super simple."""
-
     llm_config = AzureLLMConfig(
         deployment_name="gpt-4",
         azure_endpoint="${AZURE_OPENAI_API_BASE}",

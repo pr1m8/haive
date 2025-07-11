@@ -10,7 +10,9 @@ except ImportError:
     ParallelKGTransformer = None
 
 try:
-    from .kg_iterative_refinement.iterative_graph_transformer import IterativeGraphTransformer
+    from .kg_iterative_refinement.iterative_graph_transformer import (
+        IterativeGraphTransformer,
+    )
 except ImportError:
     IterativeGraphTransformer = None
 
@@ -20,7 +22,7 @@ except ImportError:
     StructuredKGAgent = None
 
 __all__ = [
-    'ParallelKGTransformer',
-    'IterativeGraphTransformer', 
-    'StructuredKGAgent',
+    "IterativeGraphTransformer",
+    "ParallelKGTransformer",
+    "StructuredKGAgent",
 ]

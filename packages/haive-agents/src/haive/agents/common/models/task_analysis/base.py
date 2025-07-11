@@ -7,8 +7,9 @@ including task representations, dependency types, and complexity classifications
 from enum import Enum
 from typing import Any, Union
 
-from haive.core.common.structures.tree import AutoTree
 from pydantic import BaseModel, ConfigDict, Field
+
+from haive.core.common.structures.tree import AutoTree
 
 
 class TaskType(str, Enum):

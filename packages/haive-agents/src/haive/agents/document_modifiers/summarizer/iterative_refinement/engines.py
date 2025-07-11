@@ -9,7 +9,6 @@ summarize_prompt = ChatPromptTemplate(
     ]
 )
 initial_summary_aug_llm = AugLLMConfig(
-    # model="gpt-4o-mini",
     prompt_template=summarize_prompt,
     output_parser=StrOutputParser(),
 )
@@ -34,5 +33,3 @@ refine_summary_aug_llm = AugLLMConfig(
     prompt_template=refine_prompt,
     output_parser=StrOutputParser(),
 )
-
-print(initial_summary_aug_llm.prompt_template)

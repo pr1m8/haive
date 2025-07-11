@@ -7,9 +7,8 @@ text-based assessments with sentiment analysis and quality indicators.
 from enum import Enum
 from typing import Any
 
-from pydantic import Field, field_validator, model_validator
-
 from haive.agents.common.models.grade.base import Grade, GradeType
+from pydantic import Field, field_validator, model_validator
 
 
 class QualityLevel(str, Enum):
@@ -245,7 +244,6 @@ class QualitativeGrade(Grade):
             True if the quality level meets or exceeds the threshold
         """
         if threshold is None:
-            # Default: "fair" and above is passing
             passing_levels = {
                 QualityLevel.EXCEPTIONAL,
                 QualityLevel.EXCELLENT,

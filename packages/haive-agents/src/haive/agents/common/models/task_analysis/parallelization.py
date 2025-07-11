@@ -7,14 +7,13 @@ execution phases, join points, and optimal execution strategies.
 from enum import Enum
 from typing import Any
 
-from haive.core.common.structures.tree import AutoTree
-from pydantic import BaseModel, ConfigDict, Field
-
 from haive.agents.common.models.task_analysis.base import (
     DependencyNode,
     Task,
     TaskStep,
 )
+from haive.core.common.structures.tree import AutoTree
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class ExecutionStrategy(str, Enum):
@@ -716,13 +715,13 @@ class ParallelizationAnalyzer(BaseModel):
             parallel_tasks = [task_id]
 
             # Simple heuristic: tasks with the same predecessors can often run in parallel
-            predecessors = set(pred_id for pred_id, _ in task_info["predecessors"])
+            predecessors = set(pred_id for pred_id, _ in task_info["predecessors"]}
 
             for other_id, other_info in dependency_graph.items():
                 if other_id != task_id and other_id not in visited:
                     other_predecessors = set(
                         pred_id for pred_id, _ in other_info["predecessors"]
-                    )
+                    }
 
                     # Can run in parallel if they have the same predecessors
                     # and no blocking dependencies between them
@@ -789,7 +788,7 @@ class ParallelizationAnalyzer(BaseModel):
                         id=f"join_{join_id}",
                         name=f"Join before {task_id}",
                         input_task_ids=input_tasks,
-                        output_task_ids=[task_id] + output_tasks,
+                        output_task_ids=[task_id, *output_tasks],
                         bottleneck_probability=0.3 if len(input_tasks) > 2 else 0.1,
                     )
                 )
@@ -831,7 +830,7 @@ class ParallelizationAnalyzer(BaseModel):
         if node in visited:  # Avoid cycles
             return [], 0.0
 
-        current_path = visited + [node]
+        current_path = [*visited, node]
         current_duration = graph[node]["duration"]
 
         successors = graph[node]["successors"]
@@ -949,7 +948,7 @@ class ParallelizationAnalyzer(BaseModel):
                 "workers", resource_constraints.get("cpu_cores", float("inf"))
             )
             if (
-                isinstance(available_workers, (int, float))
+                isinstance(available_workers, int | float)
                 and max_parallelism > available_workers
             ):
                 return ExecutionStrategy.RESOURCE_CONSTRAINED
@@ -967,7 +966,7 @@ class ParallelizationAnalyzer(BaseModel):
             for resource, amount in group.resource_requirements.items():
                 if resource not in peak_resources:
                     peak_resources[resource] = amount
-                elif isinstance(amount, (int, float)):
+                elif isinstance(amount, int | float):
                     peak_resources[resource] = max(peak_resources[resource], amount)
 
         return peak_resources
@@ -987,11 +986,10 @@ class ParallelizationAnalyzer(BaseModel):
                 available is not None
                 and isinstance(required, (int, float))
                 and isinstance(available, (int, float))
-            ):
-                if required > available:
-                    bottlenecks.append(
-                        f"Insufficient {resource}: need {required}, have {available}"
-                    )
+            ) and required > available:
+                bottlenecks.append(
+                    f"Insufficient {resource}: need {required}, have {available}"
+                )
 
         # Check for large parallel groups
         max_parallelism = (

@@ -1,4 +1,4 @@
-"""RAG (Retrieval-Augmented Generation) Module
+"""RAG (Retrieval-Augmented Generation) Module.
 
 Comprehensive RAG implementations with multi-agent orchestration, document grading,
 hallucination detection, and adaptive retrieval strategies. Built on the Haive
@@ -153,49 +153,45 @@ from .simple.agent import SimpleRAGAgent
 from .speculative.agent import HypothesisGeneratorAgent, SpeculativeRAGAgent
 from .step_back.agent import StepBackQueryGeneratorAgent, StepBackRAGAgent
 
-# from .document_grading.agent import DocumentGradingAgent  # Temporarily disabled - missing callable_node
-
-
 # Temporarily disabled due to import issues
-# from .factories.rag_workflow_factory import RAGWorkflowFactory
 
 __all__ = [
-    # Core RAG Agents
-    "SimpleRAGAgent",
-    "CorrectiveRAGAgentV2",
-    "HyDERAGAgentV2",
-    "MultiQueryRAGAgent",
-    "AdaptiveRAGAgent",
-    # "DocumentGradingAgent",  # Temporarily disabled - missing callable_node
-    # Modular Hallucination Graders
-    "HallucinationGraderAgent",
-    "AdvancedHallucinationGraderAgent",
-    "RealtimeHallucinationGraderAgent",
-    "create_hallucination_grader",
-    # Modular Query Decomposers
-    "QueryDecomposerAgent",
-    "HierarchicalQueryDecomposerAgent",
-    "ContextualQueryDecomposerAgent",
     "AdaptiveQueryDecomposerAgent",
-    "create_query_decomposer",
-    # Advanced RAG Architectures
-    # "RAGFusionAgent",  # Temporarily disabled - missing rag_state
-    # "ReciprocalRankFusionAgent",  # Temporarily disabled - missing rag_state
-    "StepBackRAGAgent",
-    "StepBackQueryGeneratorAgent",
-    "SelfRouteRAGAgent",
-    "QueryAnalyzerAgent",
-    "SpeculativeRAGAgent",
-    "HypothesisGeneratorAgent",
-    "MemoryAwareRAGAgent",
-    "MemoryRetrievalAgent",
+    "AdaptiveRAGAgent",
+    "AdvancedHallucinationGraderAgent",
     # Base components
     "BaseRAGAgent",
     # Workflow factories and components
     "CompatibleRAGFactory",
+    "ContextualQueryDecomposerAgent",
+    "CorrectiveRAGAgentV2",
+    # "DocumentGradingAgent",  # Temporarily disabled - missing callable_node
+    # Modular Hallucination Graders
+    "HallucinationGraderAgent",
+    "HierarchicalQueryDecomposerAgent",
+    "HyDERAGAgentV2",
+    "HypothesisGeneratorAgent",
+    "MemoryAwareRAGAgent",
+    "MemoryRetrievalAgent",
+    "MultiQueryRAGAgent",
+    "QueryAnalyzerAgent",
+    # Modular Query Decomposers
+    "QueryDecomposerAgent",
     # "RAGWorkflowFactory",  # Temporarily disabled
     "RAGComponent",
+    "RealtimeHallucinationGraderAgent",
+    "SelfRouteRAGAgent",
+    # Core RAG Agents
+    "SimpleRAGAgent",
+    "SpeculativeRAGAgent",
+    "StepBackQueryGeneratorAgent",
+    # Advanced RAG Architectures
+    # "RAGFusionAgent",  # Temporarily disabled - missing rag_state
+    # "ReciprocalRankFusionAgent",  # Temporarily disabled - missing rag_state
+    "StepBackRAGAgent",
     "WorkflowPattern",
+    "create_hallucination_grader",
     "create_plug_and_play_component",
+    "create_query_decomposer",
     "get_component_compatibility_info",
 ]

@@ -6,9 +6,8 @@ different grade types into a single comprehensive evaluation.
 
 from typing import Any
 
-from pydantic import Field, field_validator, model_validator
-
 from haive.agents.common.models.grade.base import Grade, GradeType
+from pydantic import Field, field_validator, model_validator
 
 
 class CompositeGrade(Grade):
@@ -439,11 +438,7 @@ class CompositeGrade(Grade):
                 return False
 
             # Check if all items are Grade instances or can be converted
-            for item in value:
-                if not isinstance(item, Grade):
-                    return False
-
-            return True
+            return all(isinstance(item, Grade) for item in value)
         except Exception:
             return False
 

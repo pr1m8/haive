@@ -16,6 +16,7 @@ synchronous and asynchronous operation modes.
 
 from typing import Any
 
+from haive.agents.base.agent import Agent
 from haive.core.engine.document_loader import (
     DocumentLoaderEngine,
     DocumentLoaderOutput,
@@ -25,8 +26,6 @@ from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langgraph.graph import END, START
 from pydantic import Field
-
-from haive.agents.base.agent import Agent
 
 
 class DocumentLoaderAgent(Agent):

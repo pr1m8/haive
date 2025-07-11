@@ -1,5 +1,3 @@
-from haive.core.engine.agent.agent import Agent, register_agent
-from haive.core.engine.aug_llm import *
 from langgraph.graph import END
 from langgraph.types import Command
 
@@ -8,17 +6,16 @@ from haive.agents.planning.plan_and_execute.engines import *
 from haive.agents.planning.plan_and_execute.models import *
 from haive.agents.planning.plan_and_execute.state import *
 from haive.agents.react_agent.agent import create_react_agent
+from haive.core.engine.agent.agent import Agent, register_agent
+from haive.core.engine.aug_llm import *
 
 
 @register_agent(PlanAndExecuteConfig)
 class PlanAndExecuteAgent(Agent[PlanAndExecuteConfig]):
     def __init__(self, config: PlanAndExecuteConfig = PlanAndExecuteConfig()):
         self.config = config
-        # self.runnables = create_runnables_dict(config.runnables)
-        # self.runnables = compose_runnables_from_dict(self.runnables)
 
         self.planner_runnable = compose_runnable(self.config.aug_llm_configs["planner"])
-        # print(self.planner_runnable)
         self.agent_executor_runnable = create_react_agent(
             self.config.agent_executor_config
         ).app
@@ -28,11 +25,9 @@ class PlanAndExecuteAgent(Agent[PlanAndExecuteConfig]):
         super().__init__(config)
 
     async def planner(self, state: PlanAndExecuteState):
-        # print(state['input'])
         plan = await self.planner_runnable.ainvoke(
             {"messages": [("user", state.input)]}
         )
-        # print(plan)
         return Command(
             update={"plan": plan}, goto="execute_step", resume={"plan": plan.steps}
         )
@@ -45,9 +40,6 @@ class PlanAndExecuteAgent(Agent[PlanAndExecuteConfig]):
         self.graph.set_entry_point("planner")
 
         self.graph.add_edge("execute_step", "replan_step")
-        # self.graph.add_edge("replan_step","planner")
-        # self.graph.add_edge("replan_step","execute_step")
-        # self.graph.add_edge("execute_step","replan_step")
         self.graph.add_conditional_edges(
             "replan_step",
             # Next, we pass in the function that will determine which node is called next.
@@ -154,7 +146,9 @@ class PlanAndExecuteAgent(Agent[PlanAndExecuteConfig]):
             return "execute_step"
         return "replan_step"
 
-    async def arun(self, input_text: str = None, input_dict: dict[str, Any] = None):
+    async def arun(
+        self, input_text: str | None = None, input_dict: dict[str, Any] | None = None
+    ):
         if not self.graph:
             raise RuntimeError("Workflow graph is not set up.")
         if not self.app:
@@ -168,15 +162,11 @@ class PlanAndExecuteAgent(Agent[PlanAndExecuteConfig]):
         if not inputs:
             raise ValueError("Either input_text or input_dict must be provided")
 
-        # print("🔍 Debug Inputs:", inputs)  # Debugging line
-
         async for output in self.app.astream(
             inputs, stream_mode="values", config=self.runnable_config
         ):
-            print("📝 Output:", output)  # Debugging line
             if "messages" in output:
-                message = output["messages"][-1]
-                # print("💬 Message:", message)
+                output["messages"][-1]
 
             # Ensure update includes required fields
             if not any(
@@ -187,9 +177,6 @@ class PlanAndExecuteAgent(Agent[PlanAndExecuteConfig]):
 
 
 # async def main():
-# a = PlanAndExecuteAgent(PlanAndExecuteConfig())
-# await a.arun(input_text="THe date is feburary 28th 2025. I am in toronto, I live on 1289 Questra Street West. It is friday night at 8:23pm. I am tyring to go on a date with a girl who lives in koretown. I am trying to plan a date where we can find a place that willl take reseertvations around 9:15-9:30pm. We should try to find a place that has a view of the city and is a bit fancy. We should also try to find a place that has a view of the lake to get food or dinner at then a subsequent bar to go after. find me a buynch of places wihtin a small distance from one and other and try to use open atale or other resources to see if they take researvations for tha time. we need ot plan two places.")
 
 
 # if __name__ == "__main__":
-#    asyncio.run(main())

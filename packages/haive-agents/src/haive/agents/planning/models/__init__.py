@@ -8,10 +8,10 @@ resource-aware framework.
 
 from __future__ import annotations
 
-import uuid
 from datetime import datetime
 from enum import Enum
 from typing import Any, Dict, List, Optional, Set, Tuple, Union
+import uuid
 
 from pydantic import (
     BaseModel,
@@ -22,6 +22,7 @@ from pydantic import (
     field_validator,
     model_validator,
 )
+
 
 # ============================================================================
 # ENUMS
@@ -95,9 +96,8 @@ class ResourceRequirement(BaseModel):
     @model_validator(mode="after")
     def validate_minimum(self) -> ResourceRequirement:
         """Ensure minimum is less than amount if flexible."""
-        if self.flexible and self.minimum is not None:
-            if self.minimum > self.amount:
-                raise ValueError("Minimum must be less than requested amount")
+        if self.flexible and self.minimum is not None and self.minimum > self.amount:
+            raise ValueError("Minimum must be less than requested amount")
         return self
 
 

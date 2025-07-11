@@ -1,13 +1,12 @@
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
-from langchain_core.prompts import ChatPromptTemplate
-
 # Import the models
 from haive.agents.document_modifiers.kg.kg_map_merge.models import (
     EntityNode,
     EntityRelationship,
     KnowledgeGraph,
 )
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+from langchain_core.prompts import ChatPromptTemplate
 
 
 def create_node_extraction_config(
@@ -30,15 +29,15 @@ def create_node_extraction_config(
         [
             (
                 "system",
-                """You are an expert entity extractor. 
+                """You are an expert entity extractor.
         Extract key entities from the given text with precision.
-        
+
         Requirements:
         - Identify unique, meaningful entities
         - Assign accurate and specific types
         - Include relevant properties
         - Ensure high-quality, comprehensive entity representation
-        
+
         Output Format:
         - Each entity should have a unique ID
         - Types should be descriptive but concise
@@ -77,16 +76,16 @@ def create_relationship_extraction_config(
         [
             (
                 "system",
-                """You are an expert relationship extractor. 
+                """You are an expert relationship extractor.
         Identify and extract meaningful relationships between entities.
-        
+
         Guidelines:
         - Extract clear, verifiable relationships
         - Assign precise relationship types
         - Provide supporting evidence
         - Assess relationship confidence
         - Capture nuanced contextual connections
-        
+
         Output Requirements:
         - Source and target entities must be well-defined
         - Relationship type should be specific and meaningful
@@ -95,7 +94,7 @@ def create_relationship_extraction_config(
             ),
             (
                 "human",
-                """Extract relationships from this text. 
+                """Extract relationships from this text.
         Consider the context and connections between entities:
         {context}""",
             ),
@@ -131,15 +130,15 @@ def create_graph_extraction_config(
         [
             (
                 "system",
-                """You are an expert knowledge graph extractor. 
+                """You are an expert knowledge graph extractor.
         Create a comprehensive knowledge graph from the given text.
-        
+
         Comprehensive Requirements:
         - Extract all meaningful entities
         - Identify rich, contextual relationships
         - Ensure high-quality, precise graph representation
         - Capture subtle and explicit connections
-        
+
         Detailed Extraction Process:
         1. Identify unique entities with their types and properties
         2. Discover relationships between these entities
@@ -184,14 +183,14 @@ def create_graph_merger_config(
                 "system",
                 """You are an expert knowledge graph reconciliation specialist.
         Merge multiple knowledge graphs with extreme precision.
-        
+
         Merge Objectives:
         - Maintain entity consistency
         - Preserve meaningful relationships
         - Resolve conflicts between graphs
         - Select highest confidence relationships
         - Minimize redundancy
-        
+
         Detailed Merging Process:
         1. Compare entities across graphs
         2. Reconcile conflicting entity properties
@@ -202,7 +201,7 @@ def create_graph_merger_config(
                 "human",
                 """Merge these knowledge graphs with precision:
         {graph_contexts}
-        
+
         Provide a unified, comprehensive knowledge graph.""",
             ),
         ]
@@ -238,15 +237,6 @@ def main():
 
     # Demonstrate accessing configs
     for name, config in configs.items():
-        print(f"Configuration for {name}:")
-        print(f"  Model: {config.llm_config.model}")
-        print(
-            f"  Temperature: {config.llm_config.parameters.get('temperature', 'N/A')}"
-        )
-        print(
-            f"  Structured Output: {config.structured_output_model.__name__ if config.structured_output_model else 'None'}"
-        )
-        print()
 
 
 if __name__ == "__main__":

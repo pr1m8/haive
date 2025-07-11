@@ -1,5 +1,4 @@
-"""
-Configurable Multi-Agent Base for flexible agent orchestration.
+"""Configurable Multi-Agent Base for flexible agent orchestration.
 
 This module provides a general multi-agent base where you can:
 - Pass agents
@@ -12,13 +11,12 @@ import logging
 from abc import abstractmethod
 from typing import Any, Callable, Dict, List, Optional, Type, Union
 
+from haive.agents.base.agent import Agent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.agent_schema_composer import AgentSchemaComposer, BuildMode
 from haive.core.schema.state_schema import StateSchema
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field, PrivateAttr, model_validator
-
-from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 
@@ -28,13 +26,12 @@ class AgentBranch:
 
     def __init__(
         self,
-        from_agent: Union[str, Agent],
+        from_agent: str | Agent,
         condition: Callable[[Any], str],
-        destinations: Dict[str, Union[str, Agent]],
-        default: Optional[Union[str, Agent]] = None,
+        destinations: dict[str, str | Agent],
+        default: str | Agent | None = None,
     ):
-        """
-        Initialize agent branch.
+        """Initialize agent branch.
 
         Args:
             from_agent: Source agent (name or Agent object)
@@ -55,11 +52,10 @@ class WorkflowStep:
         self,
         name: str,
         function: Callable,
-        inputs: Optional[List[Union[str, Agent]]] = None,
-        outputs: Optional[List[Union[str, Agent]]] = None,
+        inputs: list[str | Agent] | None = None,
+        outputs: list[str | Agent] | None = None,
     ):
-        """
-        Initialize workflow step.
+        """Initialize workflow step.
 
         Args:
             name: Name of the workflow step
@@ -74,8 +70,7 @@ class WorkflowStep:
 
 
 class ConfigurableMultiAgent(Agent):
-    """
-    Configurable multi-agent base that accepts agents and routing configuration.
+    """Configurable multi-agent base that accepts agents and routing configuration.
 
     This base class allows you to:
     - Pass a list of agents
@@ -86,18 +81,18 @@ class ConfigurableMultiAgent(Agent):
     """
 
     # Core configuration
-    agents: List[Agent] = Field(description="List of agents to orchestrate")
+    agents: list[Agent] = Field(description="List of agents to orchestrate")
 
     # Routing configuration
-    branches: List[AgentBranch] = Field(
+    branches: list[AgentBranch] = Field(
         default_factory=list, description="Branches/routing between agents"
     )
-    workflow_steps: List[WorkflowStep] = Field(
+    workflow_steps: list[WorkflowStep] = Field(
         default_factory=list, description="Workflow steps between agents"
     )
 
     # Schema configuration
-    state_schema_override: Optional[Type[StateSchema]] = Field(
+    state_schema_override: type[StateSchema] | None = Field(
         default=None, description="Optional state schema override"
     )
     schema_composition_method: str = Field(
@@ -108,21 +103,20 @@ class ConfigurableMultiAgent(Agent):
     )
 
     # Execution configuration
-    start_agent: Optional[Union[str, Agent]] = Field(
+    start_agent: str | Agent | None = Field(
         default=None, description="Agent to start execution with"
     )
-    end_condition: Optional[Callable[[Any], bool]] = Field(
+    end_condition: Callable[[Any], bool] | None = Field(
         default=None, description="Function to determine when to end"
     )
 
     # Private state
-    _agent_node_mapping: Dict[str, str] = PrivateAttr(default_factory=dict)
-    _workflow_node_mapping: Dict[str, str] = PrivateAttr(default_factory=dict)
+    _agent_node_mapping: dict[str, str] = PrivateAttr(default_factory=dict)
+    _workflow_node_mapping: dict[str, str] = PrivateAttr(default_factory=dict)
 
     @model_validator(mode="after")
     def setup_configurable_multi_agent(self) -> "ConfigurableMultiAgent":
         """Set up the configurable multi-agent system."""
-
         # Validate agents
         if not self.agents:
             raise ValueError("ConfigurableMultiAgent requires at least one agent")
@@ -151,10 +145,10 @@ class ConfigurableMultiAgent(Agent):
 
     def add_branch(
         self,
-        from_agent: Union[str, Agent],
+        from_agent: str | Agent,
         condition: Callable[[Any], str],
-        destinations: Dict[str, Union[str, Agent]],
-        default: Optional[Union[str, Agent]] = None,
+        destinations: dict[str, str | Agent],
+        default: str | Agent | None = None,
     ) -> None:
         """Add a branch/routing between agents."""
         branch = AgentBranch(from_agent, condition, destinations, default)
@@ -164,14 +158,14 @@ class ConfigurableMultiAgent(Agent):
         self,
         name: str,
         function: Callable,
-        inputs: Optional[List[Union[str, Agent]]] = None,
-        outputs: Optional[List[Union[str, Agent]]] = None,
+        inputs: list[str | Agent] | None = None,
+        outputs: list[str | Agent] | None = None,
     ) -> None:
         """Add a workflow step between agents."""
         step = WorkflowStep(name, function, inputs, outputs)
         self.workflow_steps.append(step)
 
-    def _get_agent_node_name(self, agent: Union[str, Agent]) -> str:
+    def _get_agent_node_name(self, agent: str | Agent) -> str:
         """Get the node name for an agent."""
         if isinstance(agent, str):
             # Find agent by name
@@ -198,9 +192,9 @@ class ConfigurableMultiAgent(Agent):
 
         return self._agent_node_mapping[base_name]
 
-    def _normalize_destination(self, dest: Union[str, Agent]) -> str:
+    def _normalize_destination(self, dest: str | Agent) -> str:
         """Normalize destination to node name."""
-        if dest == END or dest == "END":
+        if dest in (END, "END"):
             return END
         return self._get_agent_node_name(dest)
 
@@ -283,14 +277,13 @@ class ConfigurableMultiAgent(Agent):
     def setup_agent(self) -> None:
         """Set up the agent - called by parent Agent class."""
         # Setup is done in model_validator
-        pass
 
 
 # Convenience functions for common patterns
 def create_sequential_multi_agent(
-    agents: List[Agent],
+    agents: list[Agent],
     name: str = "SequentialMultiAgent",
-    state_schema: Optional[Type[StateSchema]] = None,
+    state_schema: type[StateSchema] | None = None,
     **kwargs,
 ) -> ConfigurableMultiAgent:
     """Create a sequential multi-agent system."""
@@ -300,10 +293,10 @@ def create_sequential_multi_agent(
 
 
 def create_branching_multi_agent(
-    agents: List[Agent],
-    branches: List[AgentBranch],
+    agents: list[Agent],
+    branches: list[AgentBranch],
     name: str = "BranchingMultiAgent",
-    state_schema: Optional[Type[StateSchema]] = None,
+    state_schema: type[StateSchema] | None = None,
     **kwargs,
 ) -> ConfigurableMultiAgent:
     """Create a multi-agent system with conditional branches."""
@@ -317,10 +310,10 @@ def create_branching_multi_agent(
 
 
 def create_workflow_multi_agent(
-    agents: List[Agent],
-    workflow_steps: List[WorkflowStep],
+    agents: list[Agent],
+    workflow_steps: list[WorkflowStep],
     name: str = "WorkflowMultiAgent",
-    state_schema: Optional[Type[StateSchema]] = None,
+    state_schema: type[StateSchema] | None = None,
     **kwargs,
 ) -> ConfigurableMultiAgent:
     """Create a multi-agent system with workflow steps."""

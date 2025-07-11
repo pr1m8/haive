@@ -3,12 +3,11 @@
 
 import logging
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.messages import AIMessage, SystemMessage
-
 from haive.agents.conversation.debate.agent import DebateConversation
 from haive.agents.conversation.debate.state import DebateState
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from langchain_core.messages import AIMessage, SystemMessage
 
 # Set logging
 logging.getLogger("haive").setLevel(logging.WARNING)
@@ -16,7 +15,6 @@ logging.getLogger("haive").setLevel(logging.WARNING)
 
 def example_simple_debate():
     """Simple two-sided debate on AI regulation."""
-    print("=== Simple Two-Sided Debate ===\n")
 
     # Create debate
     debate = DebateConversation.create_simple_debate(
@@ -41,8 +39,6 @@ def example_simple_debate():
     )
 
     # Display debate highlights
-    print("\n\nDebate Highlights:\n")
-    print(f"Topic: {debate.topic}\n")
 
     # Extract key moments
     for msg in result.get("messages", []):
@@ -53,16 +49,13 @@ def example_simple_debate():
                 keyword in str(content).lower()
                 for keyword in ["opening statement", "closing", "in conclusion"]
             ):
-                print(f"\n[{msg.name}]:\n{content}\n")
-                print("-" * 50)
         elif isinstance(msg, SystemMessage):
-            print(f"\n>>> {msg.content}")
+            pass
 
 
 # examples/conversation/debate_example.py
 def example_panel_debate():
     """Multi-participant panel debate - FIXED VERSION."""
-    print("\n\n=== Panel Debate ===\n")
 
     # Create participant agents with proper state schema
     participants = {
@@ -130,19 +123,15 @@ def example_panel_debate():
     )
 
     # Show debate summary
-    print("\n\nDebate Summary:")
 
     # Show the actual arguments made
     messages = result.get("messages", [])
     for msg in messages:
         if isinstance(msg, AIMessage) and hasattr(msg, "name"):
-            print(f"\n[{msg.name}]:\n{msg.content}\n")
-            print("-" * 50)
 
 
 def example_oxford_debate():
     """Oxford-style formal debate."""
-    print("\n\n=== Oxford Style Debate ===\n")
 
     # Create formal debate structure
     motion = "This house believes that artificial general intelligence (AGI) will be achieved within 10 years"
@@ -228,21 +217,14 @@ def example_oxford_debate():
     )
 
     # Display formal structure
-    print(f"\n\nMotion: {motion}\n")
-    print("Debate Structure Followed:")
-    print("- Opening Statements")
-    print("- Main Arguments")
-    print("- Rebuttals")
-    print("- Closing Statements")
 
     # Show winner if declared
     if hasattr(result, "debate_winner") and result.debate_winner:
-        print(f"\nWinner: {result.debate_winner}")
+        pass
 
 
 def example_socratic_debate():
     """Socratic method debate with questioning."""
-    print("\n\n=== Socratic Dialogue ===\n")
 
     # Create Socratic dialogue participants
     participants = {
@@ -305,18 +287,14 @@ def example_socratic_debate():
     )
 
     # Display dialogue
-    print("\n\nPhilosophical Dialogue:\n")
     messages = result.get("messages", [])
     for msg in messages:
         if isinstance(msg, AIMessage) and hasattr(msg, "name"):
-            print(f"\n{msg.name}: {msg.content}")
+            pass
         elif isinstance(msg, SystemMessage):
-            print(f"\n[System]: {msg.content}")
+            pass
 
 
 if __name__ == "__main__":
     # Run examples
     example_simple_debate()
-    # example_panel_debate()
-    # example_oxford_debate()
-    # example_socratic_debate()

@@ -110,6 +110,7 @@ See Also:
 from haive.agents.rag.db_rag.sql_rag.agent import SQLRAGAgent
 from haive.agents.rag.db_rag.sql_rag.config import SQLDatabaseConfig, SQLRAGConfig
 
+
 # For backward compatibility - some users might expect SQLDatabaseAgent
 SQLDatabaseAgent = SQLRAGAgent
 

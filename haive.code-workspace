@@ -1,61 +1,53 @@
 {
   "folders": [
     {
-      "name": "root",
+      "name": "haive-monorepo",
       "path": "."
-    },
-    {
-      "name": "haive-core",
-      "path": "./packages/haive-core"
-    },
-    {
-      "name": "haive-agents",
-      "path": "./packages/haive-agents"
-    },
-    {
-      "name": "haive-games",
-      "path": "./packages/haive-games"
-    },
-    {
-      "name": "haive-prebuilt",
-      "path": "./packages/haive-prebuilt"
-    },
-    {
-      "name": "haive-tools",
-      "path": "./packages/haive-tools"
-    },
-    {
-      "name": "haive-dataflow",
-      "path": "./packages/haive-dataflow"
     }
   ],
   "settings": {
-    "python.defaultInterpreterPath": "${workspaceFolder:root}/.venv/bin/python",
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
     "python.analysis.extraPaths": [
-      "${workspaceFolder:root}/src",
-      "${workspaceFolder:root}/packages/haive-core/src",
-      "${workspaceFolder:root}/packages/haive-agents/src",
-      "${workspaceFolder:root}/packages/haive-games/src",
-      "${workspaceFolder:root}/packages/haive-prebuilt/src",
-      "${workspaceFolder:root}/packages/haive-tools/src",
-      "${workspaceFolder:root}/packages/haive-dataflow/src"
+      "./packages/haive-core/src",
+      "./packages/haive-agents/src",
+      "./packages/haive-games/src",
+      "./packages/haive-prebuilt/src",
+      "./packages/haive-tools/src",
+      "./packages/haive-dataflow/src"
     ],
-    "python.envFile": "${workspaceFolder:root}/.env",
+    "python.envFile": "${workspaceFolder}/.env",
     "python.testing.pytestEnabled": true,
     "python.testing.pytestArgs": [
-      "packages/"
+      "packages/haive-core/tests",
+      "packages/haive-agents/tests",
+      "packages/haive-games/tests",
+      "packages/haive-prebuilt/tests",
+      "packages/haive-tools/tests",
+      "packages/haive-dataflow/tests"
     ],
     "editor.formatOnSave": true,
     "python.analysis.typeCheckingMode": "basic",
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,
-    "terminal.integrated.cwd": "${workspaceFolder:root}",
+    "terminal.integrated.cwd": "${workspaceFolder}",
     "files.exclude": {
       "**/__pycache__": true,
       "**/*.pyc": true,
       "**/*.pyo": true,
       "**/.mypy_cache": true,
-      "**/.pytest_cache": true
+      "**/.pytest_cache": true,
+      "**/.venv": true,
+      "**/node_modules": true
+    },
+    "files.watcherExclude": {
+      "**/__pycache__": true,
+      "**/*.pyc": true,
+      "**/*.pyo": true,
+      "**/.mypy_cache": true,
+      "**/.pytest_cache": true,
+      "**/.venv": true,
+      "**/node_modules": true,
+      "**/.git": true
     }
   },
   "launch": {
@@ -65,7 +57,9 @@
   "extensions": {
     "recommendations": [
       "ms-python.python",
-      "ms-python.vscode-pylance"
+      "ms-python.vscode-pylance",
+      "esbenp.prettier-vscode",
+      "charliermarsh.ruff"
     ]
   }
 }

@@ -23,15 +23,15 @@ Example:
 
 from typing import Any, Dict, List, Optional
 
-from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
-from haive.core.schema.prebuilt.messages.messages_with_token_usage import (
-    MessagesStateWithTokenUsage,
-)
 from langchain_core.messages import BaseMessage
 from pydantic import Field, field_validator, model_validator
 
 from haive.agents.dynamic_supervisor.models import AgentInfo, AgentInfoV2
 from haive.agents.dynamic_supervisor.tools import create_agent_tools
+from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
+from haive.core.schema.prebuilt.messages.messages_with_token_usage import (
+    MessagesStateWithTokenUsage,
+)
 
 
 class SupervisorState(MessagesStateWithTokenUsage):
@@ -58,19 +58,19 @@ class SupervisorState(MessagesStateWithTokenUsage):
     model_config = {"arbitrary_types_allowed": True}
 
     # Agent registry
-    agents: Dict[str, AgentInfo] = Field(
+    agents: dict[str, AgentInfo] = Field(
         default_factory=dict, description="Registry of available agents by name"
     )
-    active_agents: List[str] = Field(
+    active_agents: list[str] = Field(
         default_factory=list,
         description="List of currently active agent names (unique)",
     )
 
     # Execution tracking
-    last_executed_agent: Optional[str] = Field(
+    last_executed_agent: str | None = Field(
         default=None, description="Name of the last executed agent"
     )
-    agent_response: Optional[str] = Field(
+    agent_response: str | None = Field(
         default=None, description="Response from the last executed agent"
     )
     execution_success: bool = Field(
@@ -79,7 +79,7 @@ class SupervisorState(MessagesStateWithTokenUsage):
 
     @field_validator("active_agents")
     @classmethod
-    def ensure_unique_agents(cls, v: List[str]) -> List[str]:
+    def ensure_unique_agents(cls, v: list[str]) -> list[str]:
         """Ensure active agents list contains unique values.
 
         Args:
@@ -113,8 +113,6 @@ class SupervisorState(MessagesStateWithTokenUsage):
         if active and name not in self.active_agents:
             self.active_agents.append(name)
 
-        print(f"✅ Added agent '{name}': {description} (active: {active})")
-
     def remove_agent(self, name: str) -> bool:
         """Remove an agent from the registry completely.
 
@@ -128,7 +126,6 @@ class SupervisorState(MessagesStateWithTokenUsage):
             del self.agents[name]
             if name in self.active_agents:
                 self.active_agents.remove(name)
-            print(f"🗑️ Removed agent '{name}'")
             return True
         return False
 
@@ -145,7 +142,6 @@ class SupervisorState(MessagesStateWithTokenUsage):
             self.agents[name].activate()
             if name not in self.active_agents:
                 self.active_agents.append(name)
-            print(f"🔄 Activated agent '{name}'")
             return True
         return False
 
@@ -162,11 +158,10 @@ class SupervisorState(MessagesStateWithTokenUsage):
             self.agents[name].deactivate()
             if name in self.active_agents:
                 self.active_agents.remove(name)
-            print(f"⏸️ Deactivated agent '{name}'")
             return True
         return False
 
-    def get_agent(self, name: str) -> Optional[Any]:
+    def get_agent(self, name: str) -> Any | None:
         """Get agent instance by name.
 
         Args:
@@ -179,7 +174,7 @@ class SupervisorState(MessagesStateWithTokenUsage):
             return self.agents[name].get_agent()
         return None
 
-    def list_active_agents(self) -> Dict[str, str]:
+    def list_active_agents(self) -> dict[str, str]:
         """List all active agents with descriptions.
 
         Returns:
@@ -191,7 +186,7 @@ class SupervisorState(MessagesStateWithTokenUsage):
             if info.is_active()
         }
 
-    def list_all_agents(self) -> Dict[str, str]:
+    def list_all_agents(self) -> dict[str, str]:
         """List all agents (active and inactive) with descriptions.
 
         Returns:
@@ -235,7 +230,7 @@ class SupervisorStateWithTools(SupervisorState):
     )
 
     # Generated tools tracking
-    generated_tools: List[str] = Field(
+    generated_tools: list[str] = Field(
         default_factory=list, description="Names of tools generated from agents"
     )
 
@@ -254,14 +249,11 @@ class SupervisorStateWithTools(SupervisorState):
 
     def _sync_internal(self) -> None:
         """Internal sync method."""
-        print("🔧 Syncing choice model and generating tools...")
         self._update_choice_model()
         self._generate_tools_from_agents()
 
     def _update_choice_model(self) -> None:
         """Update choice model with current agents."""
-        print("🔄 Updating choice model...")
-
         # Get current options (excluding END)
         current_options = [
             opt for opt in self.agent_choice_model.option_names if opt != "END"
@@ -273,30 +265,23 @@ class SupervisorStateWithTools(SupervisorState):
                 self.agent_choice_model.remove_option_by_name(option)
 
         # Add new agents
-        for agent_name in self.agents.keys():
+        for agent_name in self.agents:
             if agent_name not in self.agent_choice_model.option_names:
                 self.agent_choice_model.add_option(agent_name)
-                print(f"  ➕ Added choice option: {agent_name}")
 
     def _generate_tools_from_agents(self) -> None:
         """Generate tools from current agents."""
-        print("🔨 Generating tools from agents...")
-
         self.generated_tools.clear()
 
         # Create handoff tools for each agent
-        for agent_name, agent_info in self.agents.items():
+        for agent_name, _agent_info in self.agents.items():
             tool_name = f"handoff_to_{agent_name}"
             self.generated_tools.append(tool_name)
-            print(f"  🔧 Generated tool: {tool_name} - {agent_info.description}")
 
         # Add choice validation tool
         self.generated_tools.append("choose_agent")
-        print(f"  🔧 Generated tool: choose_agent")
 
-        print(f"✅ Generated {len(self.generated_tools)} tools total")
-
-    def get_all_tools(self) -> List[Any]:
+    def get_all_tools(self) -> list[Any]:
         """Get all generated tools as callable instances.
 
         Returns:
@@ -348,7 +333,7 @@ class SupervisorStateV2(MessagesStateWithTokenUsage):
     model_config = {"arbitrary_types_allowed": True}
 
     # Using V2 agent info that doesn't exclude agents
-    agents: Dict[str, AgentInfoV2] = Field(
+    agents: dict[str, AgentInfoV2] = Field(
         default_factory=dict,
         description="Registry of available agents (serializable version)",
     )

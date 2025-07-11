@@ -3,18 +3,17 @@
 
 from typing import Any
 
-from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
-from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.messages import HumanMessage
-from langchain_core.tools import tool
-from pydantic import Field, model_validator
-
 from haive.agents.experiments.supervisor.test_registry_setup import AgentRegistry
 from haive.agents.experiments.supervisor.test_route_tools import (
     create_list_agents_tool,
     create_route_tools,
 )
 from haive.agents.react.agent import ReactAgent
+from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
+from haive.core.engine.aug_llm import AugLLMConfig
+from langchain_core.messages import HumanMessage
+from langchain_core.tools import tool
+from pydantic import Field, model_validator
 
 
 class EnhancedSupervisorWithChoice(ReactAgent):
@@ -36,9 +35,6 @@ class EnhancedSupervisorWithChoice(ReactAgent):
     @model_validator(mode="after")
     def setup_enhanced_supervisor(self) -> "EnhancedSupervisorWithChoice":
         """Setup supervisor with choice model + route tools."""
-
-        print("🔧 Setting up enhanced supervisor with choice model...")
-
         # Update choice model with available agents
         self._sync_choice_model_with_registry()
 
@@ -47,11 +43,10 @@ class EnhancedSupervisorWithChoice(ReactAgent):
         list_tool = create_list_agents_tool(self.agent_registry)
         choice_tool = self._create_agent_choice_tool()
 
-        all_tools = route_tools + [list_tool, choice_tool]
+        all_tools = [*route_tools, list_tool, choice_tool]
 
-        print(f"Created {len(all_tools)} tools:")
-        for tool in all_tools:
-            print(f"  - {tool.name}")
+        for _tool in all_tools:
+            pass
 
         # Create enhanced supervisor engine
         supervisor_engine = AugLLMConfig(
@@ -66,7 +61,7 @@ Available tools:
 
 WORKFLOW:
 1. First, use list_agents to see what's available
-2. Use choose_agent to make a validated decision about which agent to use  
+2. Use choose_agent to make a validated decision about which agent to use
 3. Use route_to_X to execute the task with the chosen agent
 
 Always follow this structured workflow for clear decision making.""",
@@ -76,19 +71,15 @@ Always follow this structured workflow for clear decision making.""",
         self.engine = supervisor_engine
         self.engines["main"] = supervisor_engine
 
-        print("✅ Enhanced supervisor setup complete!")
         return self
 
     def _sync_choice_model_with_registry(self) -> None:
         """Sync choice model options with available agents in registry."""
         available_agents = self.agent_registry.list_available()
 
-        print(f"Syncing choice model with {len(available_agents)} agents...")
-
         # Add each agent as an option to the choice model
-        for agent_name in available_agents.keys():
+        for agent_name in available_agents:
             self.agent_choice_model.add_option(agent_name)
-            print(f"  Added choice option: {agent_name}")
 
     def _create_agent_choice_tool(self):
         """Create tool that uses DynamicChoiceModel for structured agent selection."""
@@ -105,13 +96,10 @@ Always follow this structured workflow for clear decision making.""",
                 The name of the chosen agent (validated against available options)
             """
             try:
-                print(f"🤔 Making agent choice for task: {task_description}")
 
                 # Get current choice model
                 ChoiceModel = self.agent_choice_model.current_model
                 available_options = self.agent_choice_model.option_names
-
-                print(f"Available options: {available_options}")
 
                 # For now, use simple heuristics to choose
                 # In a real implementation, this could use LLM reasoning
@@ -138,15 +126,12 @@ Always follow this structured workflow for clear decision making.""",
                 # Validate choice using the dynamic model
                 try:
                     validated_choice = ChoiceModel(choice=chosen_agent)
-                    print(f"✅ Validated choice: {validated_choice.choice}")
 
                     if reasoning:
                         return f"Chosen agent: {validated_choice.choice} (Reasoning: {reasoning})"
-                    else:
-                        return f"Chosen agent: {validated_choice.choice}"
+                    return f"Chosen agent: {validated_choice.choice}"
 
-                except Exception as validation_error:
-                    print(f"❌ Choice validation failed: {validation_error}")
+                except Exception:
                     # Fall back to END
                     fallback_choice = ChoiceModel(choice="END")
                     return (
@@ -154,8 +139,7 @@ Always follow this structured workflow for clear decision making.""",
                     )
 
             except Exception as e:
-                print(f"❌ Error in choose_agent: {e}")
-                return f"Error choosing agent: {str(e)}"
+                return f"Error choosing agent: {e!s}"
 
         return choose_agent
 
@@ -163,7 +147,6 @@ Always follow this structured workflow for clear decision making.""",
         """Add agent to registry and sync choice model."""
         self.agent_registry.register(name, agent, description)
         self.agent_choice_model.add_option(name)
-        print(f"✅ Added {name} to registry and choice model")
 
     def remove_agent_from_registry(self, name: str) -> bool:
         """Remove agent from registry and choice model."""
@@ -172,14 +155,11 @@ Always follow this structured workflow for clear decision making.""",
 
         # Remove from registry (would need to implement this)
         # For now, just report
-        print(f"🗑️ Removed {name} from choice model: {removed_from_choice}")
         return removed_from_choice
 
 
 def test_enhanced_supervisor():
     """Test the enhanced supervisor with choice model."""
-    print("🚀 Testing Enhanced Supervisor with Choice Model")
-
     # Import here to avoid circular imports
     from haive.agents.experiments.supervisor.test_registry_setup import (
         create_test_agents,
@@ -200,23 +180,15 @@ def test_enhanced_supervisor():
         name="enhanced_supervisor", agent_registry=registry
     )
 
-    print("\\n=== Testing Structured Decision Making ===")
-
     # Test choice model directly
-    print("Testing choice model:")
-    test_choice = supervisor.agent_choice_model.test_model("math_agent")
-    print(f"Choice model test result: {test_choice}")
+    supervisor.agent_choice_model.test_model("math_agent")
 
     # Test supervisor workflow
-    print("\\nTesting full supervisor workflow:")
     try:
-        result = supervisor.invoke(
-            {"messages": [HumanMessage("I need to calculate 15 * 7")]}
-        )
-        print(f"Supervisor result: {result}")
+        supervisor.invoke({"messages": [HumanMessage("I need to calculate 15 * 7")]})
 
-    except Exception as e:
-        print(f"Error in supervisor test: {e}")
+    except Exception:
+        pass
 
     return supervisor
 

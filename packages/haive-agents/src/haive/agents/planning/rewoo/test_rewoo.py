@@ -4,81 +4,82 @@ import asyncio
 import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from haive.agents.planning.rewoo.agent import ReWOOAgent
 from haive.agents.planning.rewoo.models import ReWOOPlan
+from haive.core.engine.aug_llm import AugLLMConfig
 
 # Import real tools from haive.tools
-from haive.tools.tools.search_tools import tavily_search_tool, tavily_qna
+from haive.tools.tools.search_tools import tavily_qna, tavily_search_tool
 from haive.tools.tools.yfinance_tool import yfinance_news_tool
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 async def test_rewoo_agent():
     """Test ReWOO agent with debug output."""
-    print("=" * 60)
-    print("TESTING REWOO AGENT")
-    print("=" * 60)
-    
+
     # Create agent
     from haive.core.models.llm.base import AzureLLMConfig
-    
+
     agent = ReWOOAgent(
         name="test_rewoo_agent",
-        engine=AugLLMConfig(
-            llm_config=AzureLLMConfig(model="gpt-4"),
-            temperature=0.7
-        ),
+        engine=AugLLMConfig(llm_config=AzureLLMConfig(model="gpt-4"), temperature=0.7),
         tools=[tavily_search_tool, tavily_qna, yfinance_news_tool],
-        structured_output_model=ReWOOPlan  # Add structured output for planning
     )
-    
+
     # Test query that should require multiple evidence steps
     query = "What is the current stock price of Apple (AAPL) and what are the latest news about the company?"
-    
-    print(f"Query: {query}")
-    print("-" * 40)
-    
+
+
     try:
         # Run with debug - shorter output
         result = await agent.arun(query, debug=False)
-        
-        print("-" * 40)
-        print("FINAL RESULT:")
-        print(result)
-        print("-" * 40)
-        
+
+
         # Check if we got a structured ReWOO plan
-        if hasattr(result, 'name') and hasattr(result, 'steps'):
-            print(f"\n✅ REWOO PLAN GENERATED: {result.name}")
-            print(f"📝 Objective: {result.objective}")
-            print(f"📊 Steps: {len(result.steps)}")
-            print(f"🗂️ Evidence: {len(result.evidence_map)}")
-            
-            print("\nPLAN STEPS:")
+        if hasattr(result, "name") and hasattr(result, "steps"):
+
             for i, step in enumerate(result.steps, 1):
-                print(f"  {i}. {step.name}")
                 if step.evidence:
-                    print(f"     Evidence: {step.evidence.id} - {step.evidence.description}")
+                    pass
                 if step.tool_call:
-                    print(f"     Tool: {step.tool_call.tool_name}")
-            
-            print("\nEVIDENCE MAP:")
+                    pass
+
             for eid, evidence in result.evidence_map.items():
-                print(f"  {eid}: {evidence.description}")
-                print(f"       Source: {evidence.source}")
-                print(f"       Method: {evidence.collection_method}")
         else:
-            print(f"\n❌ NO REWOO PLAN - Got: {type(result)}")
             if isinstance(result, str):
-                print(f"String result: {result[:200]}...")
-        
+                pass
+
+            # Debug - check what's in the result
+            if hasattr(result, "__dict__"):
+                for attr in dir(result):
+                    if not attr.startswith("_"):
+                        try:
+                            val = getattr(result, attr)
+                        except:
+                            pass
+
+            # Check messages for tool calls
+            if hasattr(result, "messages"):
+                for i, msg in enumerate(result.messages):
+                    if hasattr(msg, "content"):
+                        pass
+                    if hasattr(msg, "tool_calls") and msg.tool_calls:
+                        for tc in msg.tool_calls:
+                            if tc["name"] == "ReWOOPlan":
+                                plan_args = tc["args"]
+                                if "steps" in plan_args:
+                                    for j, step in enumerate(plan_args["steps"], 1):
+                                        if "tool_call" in step:
+                                            pass
+
     except Exception as e:
-        print(f"ERROR: {e}")
         import traceback
+
         traceback.print_exc()
+
 
 if __name__ == "__main__":
     asyncio.run(test_rewoo_agent())

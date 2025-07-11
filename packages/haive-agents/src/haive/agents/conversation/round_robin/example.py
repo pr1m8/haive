@@ -3,12 +3,13 @@
 
 import logging
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.messages import AIMessage, SystemMessage
 
 from haive.agents.conversation.round_robin.agent import RoundRobinConversation
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+
 
 # Set logging
 logging.getLogger("haive").setLevel(logging.WARNING)
@@ -16,8 +17,6 @@ logging.getLogger("haive").setLevel(logging.WARNING)
 
 def example_simple_round_robin():
     """Simple round-robin conversation with auto-generated agents."""
-    print("=== Simple Round Robin Example ===\n")
-
     # Create using the factory method
     conversation = RoundRobinConversation.create_simple(
         participants=["Alice", "Bob", "Charlie"],
@@ -30,21 +29,13 @@ def example_simple_round_robin():
     result = conversation.invoke({})
 
     # Display results
-    print(f"Topic: {conversation.topic}\n")
     for msg in result.get("messages", []):
         if isinstance(msg, SystemMessage):
-            print(f"\n[System]: {msg.content}")
-        elif isinstance(msg, AIMessage) and hasattr(msg, "name"):
-            print(f"\n{msg.name}: {msg.content}")
-
-    print(f"\n\nCompleted {result.get('round_number', 0)} rounds")
-    print(f"Total messages: {len(result.get('messages', []))}")
+            pass
 
 
 def example_custom_round_robin():
     """Round-robin with custom agent configurations."""
-    print("\n\n=== Custom Round Robin Example ===\n")
-
     # Create custom agents with specific personalities
     agents = {
         "Optimist": AugLLMConfig(
@@ -82,13 +73,11 @@ def example_custom_round_robin():
     # Display
     for msg in result.get("messages", []):
         if isinstance(msg, AIMessage) and hasattr(msg, "name"):
-            print(f"\n{msg.name}: {msg.content}")
+            pass
 
 
 def example_panel_discussion():
     """Simulate a panel discussion with round-robin format."""
-    print("\n\n=== Panel Discussion Example ===\n")
-
     # Create panel discussion
     panelists = {
         "Moderator": SimpleAgent(
@@ -143,13 +132,10 @@ def example_panel_discussion():
     )
 
     # Display key points
-    print("Panel Discussion Highlights:\n")
     for msg in result.get("messages", []):
         if isinstance(msg, AIMessage) and hasattr(msg, "name"):
-            print(f"\n[{msg.name}]:\n{msg.content}\n")
+            pass
 
 
 if __name__ == "__main__":
     example_simple_round_robin()
-    # example_custom_round_robin()
-    # example_panel_discussion()

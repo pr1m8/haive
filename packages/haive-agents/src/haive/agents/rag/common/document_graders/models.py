@@ -1,4 +1,4 @@
-"""RAG Structured Output Models
+"""RAG Structured Output Models.
 
 Pydantic models for structured outputs from RAG evaluation agents.
 """
@@ -6,6 +6,7 @@ Pydantic models for structured outputs from RAG evaluation agents.
 from typing import Literal
 
 from pydantic import BaseModel, Field
+
 
 # Import the grading models from your system
 

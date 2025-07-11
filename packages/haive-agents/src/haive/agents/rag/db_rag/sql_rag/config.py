@@ -37,14 +37,13 @@ import os
 from typing import Any
 
 from dotenv import load_dotenv
+from haive.agents.rag.db_rag.sql_rag.engines import default_sql_engines
+from haive.agents.rag.db_rag.sql_rag.state import InputState, OutputState, OverallState
 from haive.core.engine.agent.agent import AgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_community.utilities import SQLDatabase
 from pydantic import BaseModel, Field, field_validator
-
-from haive.agents.rag.db_rag.sql_rag.engines import default_sql_engines
-from haive.agents.rag.db_rag.sql_rag.state import InputState, OutputState, OverallState
 
 load_dotenv(".env")
 
@@ -225,10 +224,8 @@ class SQLDatabaseConfig(BaseModel):
                 db_kwargs["exclude_tables"] = self.exclude_tables
 
             db = SQLDatabase.from_uri(connection_string, **db_kwargs)
-            print(f"✅ Connected to {self.db_type} database at {connection_string}")
             return db
-        except Exception as e:
-            print(f"🚨 Failed to connect to database: {e}")
+        except Exception:
             return None
 
     def get_db_schema(self) -> dict[str, Any]:
@@ -393,7 +390,7 @@ class SQLRAGConfig(AgentConfig):
 
     @field_validator("engines")
     def check_required_engines(
-        cls, v: dict[str, AugLLMConfig]
+        self, v: dict[str, AugLLMConfig]
     ) -> dict[str, AugLLMConfig]:
         """Validate that all required engines are present.
 

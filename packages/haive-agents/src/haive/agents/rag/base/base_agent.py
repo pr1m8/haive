@@ -1,10 +1,9 @@
 import logging
 
+from haive.agents.rag.base.config import BaseRAGConfig
 from haive.core.engine.agent.agent import Agent, register_agent
 from haive.core.graph.GraphBuilder import DynamicGraph
 from langgraph.types import Command
-
-from haive.agents.rag.base.config import BaseRAGConfig
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -37,10 +36,6 @@ class BaseRAGAgent(Agent[BaseRAGConfig]):
         """Set up the RAG workflow for this agent."""
         gb = DynamicGraph(state_schema=self.state_schema)
         gb.add_node("retrieve", self.retrieve)
-        # gb.add_node("generate_answer", self.generate_answer)
-        # gb.add_edge(START, "retrieve")
-        # gb.add_edge("retrieve", "generate_answer")
-        # gb.add_edge("generate_answer", END)
         self.graph = gb.build()
 
 
@@ -79,7 +74,7 @@ def test_base_rag_agent():
 
     # Print or log the result for verification
     logging.info(f"Result: {result}")
-    
+
     assert "answer" in result, "Answer not found in the result"
 
 # Run the test

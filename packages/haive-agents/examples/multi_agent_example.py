@@ -5,13 +5,12 @@ This example demonstrates how to create a multi-agent system with:
 2. A react agent with an add tool
 """
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.messages import HumanMessage
-from pydantic import BaseModel, Field
-
 from haive.agents.multi.agent import MultiAgent
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from langchain_core.messages import HumanMessage
+from pydantic import BaseModel, Field
 
 
 # Define the Plan model
@@ -89,32 +88,23 @@ def run_example():
     }
 
     # Invoke the multi-agent
-    print(f"Invoking multi-agent: {multi_agent.name}")
     result = multi_agent.invoke(input_data)
 
     # Print the result
-    print("\nMulti-agent result:")
 
     # Print messages
     if "messages" in result:
-        print("\nMessages:")
-        for i, msg in enumerate(result["messages"]):
-            print(f"  {i+1}. {msg.type}: {msg.content[:100]}...")
+        for _i, _msg in enumerate(result["messages"]):
+            pass
 
     # Print structured outputs
     if "structured_outputs" in result:
-        print("\nStructured outputs:")
-        for agent_id, output in result["structured_outputs"].items():
-            agent_name = multi_agent._state_instance.agents[agent_id].name
-            print(f"  {agent_name}:")
-            print(f"  {output}")
+        for agent_id, _output in result["structured_outputs"].items():
+            multi_agent._state_instance.agents[agent_id].name
 
     # Print agent outputs
-    print("\nAgent outputs:")
-    for agent_id, output in result.get("outputs", {}).items():
-        agent_name = multi_agent._state_instance.agents[agent_id].name
-        print(f"  {agent_name}:")
-        print(f"  {output}")
+    for agent_id, _output in result.get("outputs", {}).items():
+        multi_agent._state_instance.agents[agent_id].name
 
 
 if __name__ == "__main__":

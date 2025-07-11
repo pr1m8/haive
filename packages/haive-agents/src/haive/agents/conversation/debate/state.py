@@ -4,9 +4,8 @@
 import operator
 from typing import Any
 
-from pydantic import Field, computed_field
-
 from haive.agents.conversation.base.state import ConversationState
+from pydantic import Field, computed_field
 
 
 class DebateState(ConversationState):
@@ -118,11 +117,10 @@ class DebateState(ConversationState):
             self.current_phase == "arguments" and self.all_arguments_complete
         ):
             return True
-        if (self.current_phase == "rebuttals" and self.all_rebuttals_complete) or (
-            self.current_phase == "closing" and self.closing_statements_complete
-        ):
-            return True
-        return False
+        return bool(
+            (self.current_phase == "rebuttals" and self.all_rebuttals_complete)
+            or (self.current_phase == "closing" and self.closing_statements_complete)
+        )
 
     @computed_field
     @property

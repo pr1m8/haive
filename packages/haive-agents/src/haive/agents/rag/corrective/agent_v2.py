@@ -1,16 +1,12 @@
-"""Corrective RAG (CRAG) Agent V2
+"""Corrective RAG (CRAG) Agent V2.
 
 Self-correcting retrieval with proper quality assessment.
 Implements architecture from rag-architectures-flows.md:
 Retrieval → Relevance Check → Knowledge Refinement/Web Search/Combine
 """
 
-from typing import Any, Callable, Dict, List, Optional
-
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import LLMConfig
-from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate
+from collections.abc import Callable
+from typing import Any, Dict, List, Optional
 
 from haive.agents.multi.base import ConditionalAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
@@ -20,6 +16,10 @@ from haive.agents.rag.common.document_graders.binary_grader.prompt import (
 )
 from haive.agents.rag.common.document_graders.models import DocumentBinaryResponse
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import LLMConfig
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
 
 # Web search prompt for when documents aren't relevant
 WEB_SEARCH_PROMPT = ChatPromptTemplate.from_messages(
@@ -31,7 +31,7 @@ WEB_SEARCH_PROMPT = ChatPromptTemplate.from_messages(
         (
             "human",
             """The user's question could not be answered with the available documents.
-    
+
 Original question: {query}
 Failed documents: {retrieved_documents}
 
@@ -68,8 +68,8 @@ class CorrectiveRAGAgentV2(ConditionalAgent):
     @classmethod
     def from_documents(
         cls,
-        documents: List[Document],
-        llm_config: Optional[LLMConfig] = None,
+        documents: list[Document],
+        llm_config: LLMConfig | None = None,
         relevance_threshold: float = 0.7,
         **kwargs
     ):
@@ -122,10 +122,10 @@ class CorrectiveRAGAgentV2(ConditionalAgent):
         )
 
         # Define conditional routing based on grading
-        def grade_documents(state: Dict[str, Any]) -> str:
+        def grade_documents(state: dict[str, Any]) -> str:
             """Grade documents and determine next step."""
             # Check if we have grading results
-            if "document_decisions" in state and state["document_decisions"]:
+            if state.get("document_decisions"):
                 decisions = state["document_decisions"]
 
                 # Count passing documents
@@ -142,10 +142,9 @@ class CorrectiveRAGAgentV2(ConditionalAgent):
                 # Route based on relevance threshold
                 if relevance_ratio >= relevance_threshold:
                     return "answer"  # All good, generate answer
-                elif relevance_ratio > 0.3:  # Some relevant docs
+                if relevance_ratio > 0.3:  # Some relevant docs
                     return "refiner"  # Refine partially relevant docs
-                else:
-                    return "web_search"  # Need external search
+                return "web_search"  # Need external search
 
             # No grading results yet, check if we have docs
             docs = state.get("retrieved_documents", [])

@@ -118,6 +118,7 @@ from haive.agents.rag.db_rag.graph_db.state import (
     OverallState,
 )
 
+
 # Backward compatibility aliases
 GraphDBAgent = GraphDBRAGAgent
 """Alias for backward compatibility. Use GraphDBRAGAgent instead."""
@@ -127,23 +128,23 @@ GraphDBAgentConfig = GraphDBRAGConfig
 
 # Define what should be imported with "from package import *"
 __all__ = [
+    # Model classes
+    "CypherQueryOutput",
+    "ExampleConfig",
+    # Backward compatibility
+    "GraphDBAgent",
+    "GraphDBAgentConfig",
+    "GraphDBConfig",
     # Main classes
     "GraphDBRAGAgent",
     "GraphDBRAGConfig",
-    "GraphDBConfig",
-    "ExampleConfig",
+    "GuardrailsOutput",
     # State classes
     "InputState",
     "OutputState",
     "OverallState",
-    # Model classes
-    "CypherQueryOutput",
-    "ValidateCypherOutput",
-    "GuardrailsOutput",
     "PropertyFilter",
-    # Backward compatibility
-    "GraphDBAgent",
-    "GraphDBAgentConfig",
+    "ValidateCypherOutput",
 ]
 
 # Package metadata

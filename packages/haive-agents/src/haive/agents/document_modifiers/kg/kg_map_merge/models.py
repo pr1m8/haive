@@ -188,15 +188,11 @@ def main():
     kg.add_relationship(relationship)
 
     # Print out the graph details
-    print("Nodes:")
-    for node in kg.nodes:
-        print(f"- {node.id} (Type: {node.type})")
+    for _node in kg.nodes:
+        pass
 
-    print("\nRelationships:")
-    for rel in kg.relationships:
-        print(
-            f"- {rel.source} --({rel.type})--> {rel.target} (Confidence: {rel.confidence_score})"
-        )
+    for _rel in kg.relationships:
+        pass
 
 
 if __name__ == "__main__":

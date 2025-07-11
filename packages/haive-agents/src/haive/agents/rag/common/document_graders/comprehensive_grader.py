@@ -1,12 +1,10 @@
-"""Comprehensive Document Grading System
+"""Comprehensive Document Grading System.
 
 Advanced document relevance, quality, and hallucination detection for RAG systems.
 """
 
 from enum import Enum
-from typing import Any, Dict, List, Optional
 
-from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 
@@ -64,11 +62,11 @@ class ComprehensiveDocumentGrade(BaseModel):
     hallucination_justification: str = Field(description="Hallucination risk reasoning")
 
     # Content Analysis
-    key_facts: List[str] = Field(default_factory=list, description="Verifiable facts")
-    potential_issues: List[str] = Field(
+    key_facts: list[str] = Field(default_factory=list, description="Verifiable facts")
+    potential_issues: list[str] = Field(
         default_factory=list, description="Quality/accuracy concerns"
     )
-    supporting_evidence: List[str] = Field(
+    supporting_evidence: list[str] = Field(
         default_factory=list, description="Evidence quality indicators"
     )
 
@@ -77,7 +75,7 @@ class ComprehensiveDocumentGrade(BaseModel):
     recommendation: str = Field(description="Usage recommendation")
 
     # Metadata
-    processing_notes: List[str] = Field(
+    processing_notes: list[str] = Field(
         default_factory=list, description="Processing observations"
     )
 
@@ -89,7 +87,7 @@ class ComprehensiveGradingResponse(BaseModel):
     total_documents: int = Field(description="Number of documents graded")
 
     # Individual grades
-    document_grades: List[ComprehensiveDocumentGrade] = Field(
+    document_grades: list[ComprehensiveDocumentGrade] = Field(
         description="Individual document assessments"
     )
 
@@ -103,14 +101,14 @@ class ComprehensiveGradingResponse(BaseModel):
     )
 
     # Recommendations
-    recommended_documents: List[str] = Field(description="IDs of recommended documents")
-    flagged_documents: List[str] = Field(description="IDs of documents with issues")
+    recommended_documents: list[str] = Field(description="IDs of recommended documents")
+    flagged_documents: list[str] = Field(description="IDs of documents with issues")
 
     # Summary
     overall_assessment: str = Field(
         description="Summary of document collection quality"
     )
-    retrieval_recommendations: List[str] = Field(
+    retrieval_recommendations: list[str] = Field(
         description="Suggestions for improving retrieval"
     )
 
@@ -120,8 +118,8 @@ COMPREHENSIVE_DOCUMENT_GRADING_PROMPT = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            """You are an expert document evaluator with expertise in information quality assessment, 
-fact-checking, and hallucination detection. Your role is to provide comprehensive assessments of 
+            """You are an expert document evaluator with expertise in information quality assessment,
+fact-checking, and hallucination detection. Your role is to provide comprehensive assessments of
 documents for RAG systems.
 
 **EVALUATION FRAMEWORK:**
@@ -129,7 +127,7 @@ documents for RAG systems.
 **1. RELEVANCE ASSESSMENT:**
 - HIGHLY_RELEVANT: Directly answers the query with specific information
 - RELEVANT: Contains substantial information related to the query
-- PARTIALLY_RELEVANT: Has some relevant information but missing key aspects  
+- PARTIALLY_RELEVANT: Has some relevant information but missing key aspects
 - MARGINALLY_RELEVANT: Tangentially related with minimal useful information
 - NOT_RELEVANT: No meaningful connection to the query
 
@@ -185,7 +183,7 @@ HALLUCINATION_DETECTION_PROMPT = ChatPromptTemplate.from_messages(
         (
             "system",
             """You are a specialist in detecting hallucinations and misinformation in text content.
-Your task is to identify potentially fabricated, unsupported, or misleading information that could 
+Your task is to identify potentially fabricated, unsupported, or misleading information that could
 lead to hallucinations in AI responses.
 
 **HALLUCINATION INDICATORS:**
@@ -233,7 +231,7 @@ QUALITY_ASSESSMENT_PROMPT = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            """You are an information quality specialist focused on evaluating document 
+            """You are an information quality specialist focused on evaluating document
 reliability, comprehensiveness, and utility for knowledge systems.
 
 **QUALITY DIMENSIONS:**

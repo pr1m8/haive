@@ -9,8 +9,7 @@ from typing import Any, Callable, Dict, List, Optional, Type
 
 from langchain_core.tools import BaseTool, tool
 from langgraph_supervisor import create_forward_message_tool, create_handoff_tool
-from pydantic import BaseModel as LangchainBaseModel
-from pydantic import Field as LangchainField
+from pydantic import BaseModel as LangchainBaseModel, Field as LangchainField
 
 from haive.agents.experiments.supervisor.state_models import (
     AgentMetadata,
@@ -18,6 +17,7 @@ from haive.agents.experiments.supervisor.state_models import (
     SupervisorState,
     ToolMapping,
 )
+
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +27,7 @@ class HandoffArgs(LangchainBaseModel):
     """Arguments for agent handoff."""
 
     task: str = LangchainField(..., description="The task to hand off to the agent")
-    context: Optional[Dict[str, Any]] = LangchainField(
+    context: dict[str, Any] | None = LangchainField(
         default=None, description="Additional context for the agent"
     )
     return_raw: bool = LangchainField(
@@ -49,10 +49,10 @@ class CreateAgentArgs(LangchainBaseModel):
     system_message: str = LangchainField(
         default="", description="System message for the agent"
     )
-    capabilities: List[str] = LangchainField(
+    capabilities: list[str] = LangchainField(
         default_factory=list, description="List of agent capabilities"
     )
-    tools: List[str] = LangchainField(
+    tools: list[str] = LangchainField(
         default_factory=list, description="List of tools to give the agent"
     )
 
@@ -60,7 +60,7 @@ class CreateAgentArgs(LangchainBaseModel):
 class AgentStatusArgs(LangchainBaseModel):
     """Arguments for agent status queries."""
 
-    agent_name: Optional[str] = LangchainField(
+    agent_name: str | None = LangchainField(
         default=None, description="Specific agent to get status for"
     )
     include_performance: bool = LangchainField(
@@ -82,10 +82,10 @@ def create_supervisor_handoff_tool(
 
     @tool(args_schema=HandoffArgs)
     def handoff_tool(
-        task: str, context: Optional[Dict[str, Any]] = None, return_raw: bool = False
+        task: str, context: dict[str, Any] | None = None, return_raw: bool = False
     ) -> str:
         f"""Hand off a task to {agent_name}.
-        
+
         {description}
         """
         state = get_state_fn()
@@ -98,8 +98,8 @@ def create_supervisor_handoff_tool(
         try:
             agent = state.agents[agent_name].get_agent()
         except Exception as e:
-            logger.error(f"Failed to deserialize agent {agent_name}: {e}")
-            return f"Error: Failed to load agent '{agent_name}': {str(e)}"
+            logger.exception(f"Failed to deserialize agent {agent_name}: {e}")
+            return f"Error: Failed to load agent '{agent_name}': {e!s}"
 
         # Update execution context
         state.execution_context.current_agent = agent_name
@@ -118,7 +118,7 @@ def create_supervisor_handoff_tool(
 
             # Extract response
             if isinstance(result, dict):
-                if "messages" in result and result["messages"]:
+                if result.get("messages"):
                     response = result["messages"][-1].get("content", str(result))
                 else:
                     response = result.get("output", str(result))
@@ -143,7 +143,7 @@ def create_supervisor_handoff_tool(
             return response
 
         except Exception as e:
-            logger.error(f"Agent {agent_name} execution failed: {e}")
+            logger.exception(f"Agent {agent_name} execution failed: {e}")
 
             # Update state with failure
             state.add_execution_record(
@@ -151,7 +151,7 @@ def create_supervisor_handoff_tool(
             )
             update_state_fn(state)
 
-            return f"Error executing {agent_name}: {str(e)}"
+            return f"Error executing {agent_name}: {e!s}"
 
     # Set the name dynamically
     handoff_tool.__name__ = f"handoff_to_{agent_name}"
@@ -165,7 +165,7 @@ def create_list_agents_tool(get_state_fn: Callable[[], SupervisorState]) -> Base
 
     @tool(args_schema=AgentStatusArgs)
     def list_agents(
-        agent_name: Optional[str] = None, include_performance: bool = False
+        agent_name: str | None = None, include_performance: bool = False
     ) -> str:
         """List available agents and their capabilities.
 
@@ -202,23 +202,22 @@ def create_list_agents_tool(get_state_fn: Callable[[], SupervisorState]) -> Base
 
             return "\n".join(info)
 
-        else:
-            # List all agents
-            if not state.agents:
-                return "No agents currently registered."
+        # List all agents
+        if not state.agents:
+            return "No agents currently registered."
 
-            agent_list = ["Available agents:"]
+        agent_list = ["Available agents:"]
 
-            for name, agent_info in state.agents.items():
-                metadata = agent_info.metadata
-                status = f"- {name}: {metadata.description}"
+        for name, agent_info in state.agents.items():
+            metadata = agent_info.metadata
+            status = f"- {name}: {metadata.description}"
 
-                if include_performance:
-                    status += f" (score: {metadata.performance_score:.2f}, used: {metadata.usage_count}x)"
+            if include_performance:
+                status += f" (score: {metadata.performance_score:.2f}, used: {metadata.usage_count}x)"
 
-                agent_list.append(status)
+            agent_list.append(status)
 
-            return "\n".join(agent_list)
+        return "\n".join(agent_list)
 
     return list_agents
 
@@ -226,7 +225,7 @@ def create_list_agents_tool(get_state_fn: Callable[[], SupervisorState]) -> Base
 def create_agent_creation_tool(
     get_state_fn: Callable[[], DynamicSupervisorState],
     update_state_fn: Callable[[DynamicSupervisorState], None],
-    agent_factory: Optional[Callable[[str, Dict[str, Any]], Any]] = None,
+    agent_factory: Callable[[str, dict[str, Any]], Any] | None = None,
 ) -> BaseTool:
     """Create tool for dynamic agent creation.
 
@@ -242,8 +241,8 @@ def create_agent_creation_tool(
         description: str,
         agent_type: str = "simple",
         system_message: str = "",
-        capabilities: List[str] = None,
-        tools: List[str] = None,
+        capabilities: list[str] | None = None,
+        tools: list[str] | None = None,
     ) -> str:
         """Create a new agent with specified capabilities.
 
@@ -280,10 +279,11 @@ def create_agent_creation_tool(
                 from haive.agents.simple.agent import SimpleAgent
 
                 # Simple factory based on type
-                if agent_type == "react":
-                    agent = ReactAgent(name=name)
-                else:
-                    agent = SimpleAgent(name=name)
+                agent = (
+                    ReactAgent(name=name)
+                    if agent_type == "react"
+                    else SimpleAgent(name=name)
+                )
 
             # Create metadata
             metadata = AgentMetadata(
@@ -305,8 +305,8 @@ def create_agent_creation_tool(
             return f"Successfully created agent '{name}' of type '{agent_type}'"
 
         except Exception as e:
-            logger.error(f"Failed to create agent {name}: {e}")
-            return f"Error creating agent: {str(e)}"
+            logger.exception(f"Failed to create agent {name}: {e}")
+            return f"Error creating agent: {e!s}"
 
     return create_agent
 
@@ -357,8 +357,8 @@ def build_supervisor_tools(
     get_state_fn: Callable[[], SupervisorState],
     update_state_fn: Callable[[SupervisorState], None],
     include_dynamic_creation: bool = False,
-    agent_factory: Optional[Callable] = None,
-) -> List[BaseTool]:
+    agent_factory: Callable | None = None,
+) -> list[BaseTool]:
     """Build the complete set of supervisor tools.
 
     Args:
@@ -405,7 +405,7 @@ def sync_tools_with_state(
     state: SupervisorState,
     update_state_fn: Callable[[SupervisorState], None],
     get_state_fn: Callable[[], SupervisorState],
-) -> Dict[str, BaseTool]:
+) -> dict[str, BaseTool]:
     """Synchronize tools based on current state.
 
     Returns a dictionary of tool_name -> tool for all tools that should exist.

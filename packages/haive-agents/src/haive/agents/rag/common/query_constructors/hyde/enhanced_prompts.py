@@ -12,7 +12,6 @@ Key improvements:
 """
 
 from enum import Enum
-from typing import Dict
 
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
@@ -44,15 +43,15 @@ class HyDEPerspective(str, Enum):
 # SIMPLIFIED GENERATION PROMPTS (Focus on content creation only)
 # ==============================================================================
 
-HYDE_GENERATION_PROMPTS: Dict[HyDEPromptType, ChatPromptTemplate] = {
+HYDE_GENERATION_PROMPTS: dict[HyDEPromptType, ChatPromptTemplate] = {
     HyDEPromptType.GENERAL: ChatPromptTemplate.from_messages(
         [
             (
                 "system",
                 """You are an expert writer creating comprehensive documents that directly answer questions.
-            
+
             Write a detailed, informative document that fully addresses the user's question.
-            
+
             Guidelines:
             - Write as if creating an authoritative reference document
             - Include specific details, examples, and factual information
@@ -69,9 +68,9 @@ HYDE_GENERATION_PROMPTS: Dict[HyDEPromptType, ChatPromptTemplate] = {
             (
                 "system",
                 """You are a technical writer creating detailed technical documentation.
-            
+
             Write comprehensive technical documentation that answers the user's question.
-            
+
             Guidelines:
             - Include implementation details and code examples where relevant
             - Use precise technical terminology
@@ -88,9 +87,9 @@ HYDE_GENERATION_PROMPTS: Dict[HyDEPromptType, ChatPromptTemplate] = {
             (
                 "system",
                 """You are writing an academic research paper section.
-            
+
             Create a detailed, well-researched academic passage that addresses the research question.
-            
+
             Guidelines:
             - Use formal academic writing style
             - Include theoretical background and methodology
@@ -107,9 +106,9 @@ HYDE_GENERATION_PROMPTS: Dict[HyDEPromptType, ChatPromptTemplate] = {
             (
                 "system",
                 """You are a news reporter writing a comprehensive news article.
-            
+
             Write a detailed news article that covers the topic thoroughly.
-            
+
             Guidelines:
             - Use journalistic writing style (who, what, when, where, why)
             - Include quotes and specific details
@@ -126,9 +125,9 @@ HYDE_GENERATION_PROMPTS: Dict[HyDEPromptType, ChatPromptTemplate] = {
             (
                 "system",
                 """You are an expert instructor writing a comprehensive tutorial.
-            
+
             Create a detailed tutorial that teaches the user about the topic.
-            
+
             Guidelines:
             - Use instructional writing style
             - Include step-by-step explanations
@@ -145,9 +144,9 @@ HYDE_GENERATION_PROMPTS: Dict[HyDEPromptType, ChatPromptTemplate] = {
             (
                 "system",
                 """You are writing an encyclopedia or reference entry.
-            
+
             Create a comprehensive reference document that definitively covers the topic.
-            
+
             Guidelines:
             - Use formal, encyclopedic writing style
             - Include definitions, classifications, and detailed descriptions
@@ -164,9 +163,9 @@ HYDE_GENERATION_PROMPTS: Dict[HyDEPromptType, ChatPromptTemplate] = {
             (
                 "system",
                 """You are writing business documentation or analysis.
-            
+
             Create professional business content that addresses the topic comprehensively.
-            
+
             Guidelines:
             - Use business writing style and terminology
             - Include market analysis, strategies, and outcomes
@@ -190,14 +189,14 @@ HYDE_PERSPECTIVE_PROMPT = ChatPromptTemplate.from_messages(
         (
             "system",
             """You are writing a document from the perspective of a {perspective}.
-        
+
         Perspective characteristics:
         - Expert: Deep technical knowledge, comprehensive understanding
         - Beginner: Learning-focused, asks clarifying questions, seeks fundamentals
         - Practitioner: Hands-on experience, practical applications, real-world examples
         - Researcher: Evidence-based, methodology-focused, theoretical depth
         - Critic: Analytical, evaluates pros/cons, identifies limitations
-        
+
         Write a document that a {perspective} would create to address the topic.
         Use language, examples, and focus appropriate for this perspective.
         Write approximately {target_length} characters.""",
@@ -216,14 +215,14 @@ HYDE_ANALYSIS_PROMPT = ChatPromptTemplate.from_messages(
         (
             "system",
             """You are analyzing a hypothetical document to extract structured information.
-        
+
         Analyze the document and extract:
         - Document type and style
         - Key concepts and topics covered
         - Target audience and expertise level
         - Retrieval strategy recommendations
         - Quality assessment
-        
+
         Provide structured analysis that will help with document retrieval and ranking.""",
         ),
         (
@@ -246,7 +245,7 @@ HYDE_EXTRACTION_PROMPT = ChatPromptTemplate.from_messages(
         (
             "system",
             """Extract key information from the hypothetical document for retrieval purposes.
-        
+
         Focus on:
         - Main topics and subtopics
         - Important keywords and terminology
@@ -275,14 +274,14 @@ HYDE_LENGTH_CONTROLLED_PROMPT = ChatPromptTemplate.from_messages(
         (
             "system",
             """Generate a hypothetical document that answers the question.
-        
+
         The document should be exactly {target_length} characters.
         Focus on information density - pack as much relevant information as possible
         into the specified length while maintaining readability and coherence.
-        
+
         Length targets:
         - Short (500 chars): Key facts and direct answer
-        - Medium (1000 chars): Detailed explanation with examples  
+        - Medium (1000 chars): Detailed explanation with examples
         - Long (2000 chars): Comprehensive coverage with context""",
         ),
         ("human", "Question: {query}"),
@@ -299,12 +298,12 @@ HYDE_ENSEMBLE_PROMPT = ChatPromptTemplate.from_messages(
         (
             "system",
             """Generate multiple hypothetical documents that would answer the question from different angles.
-        
+
         Create {num_documents} documents with different:
         - Document types (academic, news, technical, etc.)
         - Perspectives (expert, beginner, practitioner)
         - Focuses (theoretical, practical, historical)
-        
+
         Each document should be approximately {target_length} characters.
         Vary the approach while maintaining quality and relevance.""",
         ),
@@ -423,7 +422,7 @@ def select_prompt_automatically(query: str) -> HyDEPromptType:
         return HyDEPromptType.TECHNICAL
 
     # Academic keywords
-    elif any(
+    if any(
         word in query_lower
         for word in [
             "research",
@@ -440,7 +439,7 @@ def select_prompt_automatically(query: str) -> HyDEPromptType:
         return HyDEPromptType.ACADEMIC
 
     # News/current events keywords
-    elif any(
+    if any(
         word in query_lower
         for word in [
             "news",
@@ -458,7 +457,7 @@ def select_prompt_automatically(query: str) -> HyDEPromptType:
         return HyDEPromptType.NEWS
 
     # Tutorial/how-to keywords
-    elif any(
+    if any(
         word in query_lower
         for word in [
             "how to",
@@ -475,7 +474,7 @@ def select_prompt_automatically(query: str) -> HyDEPromptType:
         return HyDEPromptType.TUTORIAL
 
     # Business keywords
-    elif any(
+    if any(
         word in query_lower
         for word in [
             "business",
@@ -492,8 +491,7 @@ def select_prompt_automatically(query: str) -> HyDEPromptType:
         return HyDEPromptType.BUSINESS
 
     # Default to general
-    else:
-        return HyDEPromptType.GENERAL
+    return HyDEPromptType.GENERAL
 
 
 def create_hyde_prompt(config: HyDEPromptConfig, query: str) -> ChatPromptTemplate:
@@ -508,7 +506,6 @@ def create_hyde_prompt(config: HyDEPromptConfig, query: str) -> ChatPromptTempla
     """
     if config.use_ensemble:
         return get_ensemble_prompt(config.num_documents, config.target_length)
-    elif config.perspective:
+    if config.perspective:
         return get_perspective_prompt(config.perspective, config.target_length)
-    else:
-        return get_generation_prompt(config.prompt_type, config.target_length)
+    return get_generation_prompt(config.prompt_type, config.target_length)

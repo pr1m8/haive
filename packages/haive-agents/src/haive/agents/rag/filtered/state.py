@@ -1,7 +1,6 @@
+from haive.agents.rag.base.state import BaseRAGState
 from langchain_core.documents import Document
 from pydantic import Field
-
-from haive.agents.rag.base.state import BaseRAGState
 
 
 class FilteredRAGState(BaseRAGState):

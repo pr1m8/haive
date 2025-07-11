@@ -3,6 +3,7 @@
 ## Problem
 
 The tools package has a non-standard structure:
+
 - Expected: `haive.tools.api`, `haive.tools.code`, `haive.tools.utility`
 - Actual: `haive.tools.toolkits.dev`, `haive.tools.tools.{individual_tools}`
 
@@ -19,7 +20,7 @@ API Tools
 API-related tools in Haive are organized within toolkits for specific services.
 
 .. note::
-   
+
    Looking for ``haive.tools.api``? API tools are organized by service
    in the toolkits directory.
 
@@ -31,7 +32,7 @@ Available API Toolkits
    :recursive:
 
    haive.tools.toolkits.airbyte
-   haive.tools.toolkits.azure_ai_services  
+   haive.tools.toolkits.azure_ai_services
    haive.tools.toolkits.clickup
    haive.tools.toolkits.gitlab
    haive.tools.toolkits.jira
@@ -46,7 +47,7 @@ Code Example
 
    # Instead of: from haive.tools.api import SomeAPITool
    # Use: from haive.tools.toolkits.{service} import SpecificTool
-   
+
    from haive.tools.toolkits.gitlab import GitLabTool
    from haive.tools.toolkits.slack import SlackTool
 ```
@@ -87,10 +88,10 @@ For other tools, import from their specific locations:
 
    # Search tools
    from haive.tools.tools.duckduckgo_search import DuckDuckGoSearchTool
-   
+
    # Development tools
    from haive.tools.toolkits.dev.tools import CodeEditorTool
-   
+
    # API integrations
    from haive.tools.toolkits.github import GitHubTool
 
@@ -126,7 +127,7 @@ import ast
 def generate_toolkit_index():
     """Generate index of all toolkits with proper imports."""
     toolkit_path = Path("../packages/haive-tools/src/haive/tools/toolkits")
-    
+
     toolkits = {}
     for toolkit_dir in toolkit_path.iterdir():
         if toolkit_dir.is_dir() and not toolkit_dir.name.startswith('_'):
@@ -142,9 +143,9 @@ def generate_toolkit_index():
                                     tools.append(node.name)
                     except:
                         pass
-            
+
             toolkits[toolkit_dir.name] = tools
-    
+
     # Generate RST
     rst = """
 Toolkit Reference
@@ -155,17 +156,17 @@ Toolkit Reference
    :widths: 20 30 50
 
    * - Toolkit
-     - Main Classes  
+     - Main Classes
      - Description
 """
-    
+
     for name, tools in sorted(toolkits.items()):
         rst += f"""
    * - :doc:`toolkits/{name}`
      - {', '.join(tools[:3])}
      - {get_toolkit_description(name)}
 """
-    
+
     return rst
 ```
 
@@ -184,7 +185,7 @@ def missing_module_handler(app, what, name, obj, options, lines):
             f"   This module path is deprecated. Please use:",
             f"",
         ])
-        
+
         if 'api' in name:
             lines.extend([
                 "   - :mod:`haive.tools.toolkits.{service}` for API integrations",
@@ -220,20 +221,20 @@ Old Import → New Import
 
    # ❌ Old (doesn't exist)
    from haive.tools.api import APITool
-   
+
    # ✅ New (correct path)
    from haive.tools.toolkits.{service} import SpecificTool
 
    # ❌ Old (doesn't exist)
    from haive.tools.code import CodeTool
-   
+
    # ✅ New (correct path)
    from haive.tools.toolkits.dev.tools import CodeEditorTool
 
    # ❌ Old (doesn't exist)
    from haive.tools.utility import UtilityTool
-   
-   # ✅ New (correct path) 
+
+   # ✅ New (correct path)
    from haive.tools.tools.{specific_tool} import Tool
 
 Common Tools Quick Reference
@@ -254,7 +255,7 @@ Common Tools Quick Reference
    * - API Calls
      - ``from haive.tools.toolkits.requests import RequestsTool``
      - HTTP requests
-   * - File Operations  
+   * - File Operations
      - ``from haive.tools.toolkits.dev.shell import FileSystemTool``
      - File manipulation
 ```
@@ -262,6 +263,6 @@ Common Tools Quick Reference
 ## Benefits
 
 1. **Acknowledges Reality**: Documents what actually exists
-2. **Helps Users**: Clear migration path from expected to actual imports  
+2. **Helps Users**: Clear migration path from expected to actual imports
 3. **Discoverable**: Makes the non-obvious structure navigable
 4. **Future-Proof**: If structure changes, only update mapping tables

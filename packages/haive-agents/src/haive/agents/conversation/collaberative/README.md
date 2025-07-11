@@ -58,7 +58,7 @@ from haive.agents.simple import SimpleAgent
 
 # Create participants
 writer1 = SimpleAgent(name="Alice", role="researcher")
-writer2 = SimpleAgent(name="Bob", role="analyst") 
+writer2 = SimpleAgent(name="Bob", role="analyst")
 writer3 = SimpleAgent(name="Charlie", role="editor")
 
 # Create collaborative session
@@ -120,7 +120,7 @@ sections = [
     "Executive Summary",
     "Background",
     "Technical Analysis",
-    "Risk Assessment", 
+    "Risk Assessment",
     "Implementation Plan",
     "Budget Considerations",
     "Timeline",
@@ -145,16 +145,16 @@ CollaborativeConversation(
     topic="Project Topic",
     document_title="Final Document Title",
     sections=["Section1", "Section2", "Section3"],
-    
+
     # Contribution settings
     min_contributions_per_section=1,  # Min per participant per section
     require_approval=False,           # Require approval before section completion
     allow_revisions=True,            # Allow editing completed sections
-    
+
     # Output settings
     output_format="markdown",        # markdown, code, outline, report
     include_attribution=True,        # Include contributor names
-    
+
     # Conversation limits
     max_rounds=30                    # Enough for all contributions
 )
@@ -163,18 +163,22 @@ CollaborativeConversation(
 ### Output Formats
 
 #### Markdown Format
+
 ```markdown
 # Document Title
 
 ## Section 1
+
 [Alice]: First contribution to section 1
 [Bob]: Building on Alice's point...
 
 ## Section 2
+
 [Charlie]: Starting section 2 with...
 ```
 
 #### Code Format
+
 ```python
 # Document Title
 # Collaborative Code
@@ -183,11 +187,12 @@ CollaborativeConversation(
 [Alice]: def authenticate_user(token):
 [Bob]:     # Validate token format first
 
-# Section 2  
+# Section 2
 [Charlie]: class TokenValidator:
 ```
 
 #### Outline Format
+
 ```
 Document Title
 =============
@@ -201,6 +206,7 @@ Section 2:
 ```
 
 #### Report Format
+
 ```
 DOCUMENT TITLE
 
@@ -224,17 +230,17 @@ class CollaborativeState(ConversationState):
     shared_document: str                    # Compiled document
     document_sections: Dict[str, str]       # Content per section
     sections_order: List[str]               # Section sequence
-    
+
     # Progress tracking
     current_section: Optional[str]          # Active section
     completed_sections: List[str]           # Finished sections
     section_status: Dict[str, str]          # Status per section
-    
+
     # Contribution tracking
     contributions: List[Tuple[str, str, str]]  # (speaker, section, content)
     contribution_count: Dict[str, int]         # Total per speaker
     section_contributors: Dict[str, List[str]] # Contributors per section
-    
+
     # Configuration
     output_format: str                      # Output style
     approval_status: Dict[str, bool]        # Approval tracking
@@ -247,11 +253,11 @@ class CollaborativeState(ConversationState):
 ```python
 class CustomCollaborativeConversation(CollaborativeConversation):
     """Collaboration with custom section logic."""
-    
+
     def _check_section_completion(self, state) -> Optional[Command]:
         """Custom completion criteria."""
         current = state.current_section
-        
+
         # Special handling for conclusion section
         if current == "Conclusion":
             # Require all participants to contribute
@@ -259,10 +265,10 @@ class CustomCollaborativeConversation(CollaborativeConversation):
             for speaker, section, _ in state.contributions:
                 if section == current:
                     contributors.add(speaker)
-            
+
             if len(contributors) < len(state.speakers):
                 return None  # Keep section open
-        
+
         return super()._check_section_completion(state)
 ```
 
@@ -271,17 +277,17 @@ class CustomCollaborativeConversation(CollaborativeConversation):
 ```python
 class AdaptiveCollaboration(CollaborativeConversation):
     """Generate sections based on initial discussion."""
-    
+
     def __init__(self, *args, **kwargs):
         # Start with high-level sections
         kwargs["sections"] = ["Initial Discussion", "Topics Identified"]
         super().__init__(*args, **kwargs)
         self.topics_identified = []
-    
+
     def process_response(self, state):
         """Extract topics and create new sections."""
         update = super().process_response(state)
-        
+
         # In initial discussion, identify topics
         if state.current_section == "Initial Discussion":
             topics = self._extract_topics(state.messages[-1].content)
@@ -290,7 +296,7 @@ class AdaptiveCollaboration(CollaborativeConversation):
                 # Add new sections dynamically
                 new_sections = state.sections_order + topics + ["Summary"]
                 update["sections_order"] = new_sections
-        
+
         return update
 ```
 
@@ -299,19 +305,19 @@ class AdaptiveCollaboration(CollaborativeConversation):
 ```python
 class ReviewedCollaboration(CollaborativeConversation):
     """Collaboration with approval requirements."""
-    
+
     def __init__(self, *args, approvers=None, **kwargs):
         kwargs["require_approval"] = True
         super().__init__(*args, **kwargs)
         self.approvers = approvers or []
-    
+
     def _check_section_completion(self, state):
         """Require approval before moving sections."""
         # Check if section has enough contributions
         base_check = super()._check_section_completion(state)
         if not base_check:
             return None
-        
+
         # Check if approved
         current = state.current_section
         if not state.approval_status.get(current, False):
@@ -321,7 +327,7 @@ class ReviewedCollaboration(CollaborativeConversation):
                 f"Approvers: {', '.join(self.approvers)}"
             )
             return Command(update={"messages": [approval_msg]})
-        
+
         return base_check
 ```
 
@@ -332,55 +338,60 @@ from haive.tools import CodeAnalyzer, GrammarChecker
 
 class ToolAssistedCollaboration(CollaborativeConversation):
     """Collaboration with tool support."""
-    
+
     def __init__(self, *args, tools=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.tools = tools or []
-    
+
     async def process_contribution(self, content, contributor, section):
         """Enhance contributions with tools."""
         enhanced = content
-        
+
         # Grammar check for report format
         if self.output_format == "report" and self.grammar_checker:
             enhanced = await self.grammar_checker.improve(content)
-        
+
         # Code analysis for code format
         if self.output_format == "code" and self.code_analyzer:
             analysis = await self.code_analyzer.analyze(content)
             if analysis.issues:
                 enhanced += f"\n# Analysis: {analysis.summary}"
-        
+
         return enhanced
 ```
 
 ## Best Practices
 
 ### 1. Section Design
+
 - Keep sections focused and achievable
 - Order sections logically
 - Balance section complexity
 - Consider participant expertise
 
 ### 2. Contribution Balance
+
 - Set appropriate minimums per section
 - Monitor participation metrics
 - Use speaker selection to balance input
 - Allow flexibility for natural flow
 
 ### 3. Output Quality
+
 - Choose appropriate output format
 - Use attribution for accountability
 - Enable revisions for polish
 - Consider approval workflows
 
 ### 4. Collaboration Flow
+
 - Start with clear objectives
 - Provide section-specific guidance
 - Allow for iterative refinement
 - Summarize at transitions
 
 ### 5. Performance
+
 - Set realistic max_rounds
 - Monitor document size
 - Consider section chunking
@@ -428,14 +439,16 @@ class ToolAssistedCollaboration(CollaborativeConversation):
 ## Example Outputs
 
 The module includes example outputs in the `outputs/` directory:
+
 - [Brainstorming Session](outputs/brainstorming.md) - Product ideation example
 - [Code Review](outputs/code_review.md) - Technical review example
 
 ## Examples
 
 See the [example.py](example.py) file for complete working examples including:
+
 - Brainstorming sessions
-- Code reviews  
+- Code reviews
 - Project planning
 - Research papers
 - Creative writing

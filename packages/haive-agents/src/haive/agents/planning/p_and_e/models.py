@@ -1,6 +1,5 @@
 # src/haive/agents/plan_and_execute/models.py
-"""
-Models for Plan and Execute Agent System.
+"""Models for Plan and Execute Agent System.
 
 This module defines the data models for planning, execution, and replanning
 in the Plan and Execute agent architecture.
@@ -8,9 +7,8 @@ in the Plan and Execute agent architecture.
 
 from datetime import datetime
 from enum import Enum
-from typing import Any, Dict, List, Literal, Optional, Union
+from typing import Literal, Union
 
-from langchain_core.messages import BaseMessage
 from pydantic import (
     BaseModel,
     ConfigDict,
@@ -59,7 +57,7 @@ class PlanStep(BaseModel):
         description="Type of step to help executor choose appropriate approach",
     )
 
-    dependencies: List[int] = Field(
+    dependencies: list[int] = Field(
         default_factory=list,
         description="List of step IDs that must be completed before this step",
     )
@@ -72,24 +70,22 @@ class PlanStep(BaseModel):
         default=StepStatus.PENDING, description="Current status of the step"
     )
 
-    result: Optional[str] = Field(
+    result: str | None = Field(
         default=None, description="Actual result/output from executing this step"
     )
 
-    error: Optional[str] = Field(
-        default=None, description="Error message if step failed"
-    )
+    error: str | None = Field(default=None, description="Error message if step failed")
 
-    started_at: Optional[datetime] = Field(
+    started_at: datetime | None = Field(
         default=None, description="Timestamp when step execution started"
     )
 
-    completed_at: Optional[datetime] = Field(
+    completed_at: datetime | None = Field(
         default=None, description="Timestamp when step execution completed"
     )
 
     @field_serializer("started_at", "completed_at")
-    def serialize_datetime(self, dt: Optional[datetime]) -> Optional[str]:
+    def serialize_datetime(self, dt: datetime | None) -> str | None:
         """Serialize datetime fields to ISO format."""
         return dt.isoformat() if dt else None
 
@@ -102,7 +98,7 @@ class PlanStep(BaseModel):
 
     @computed_field
     @property
-    def execution_time(self) -> Optional[float]:
+    def execution_time(self) -> float | None:
         """Calculate execution time in seconds."""
         if self.started_at and self.completed_at:
             return (self.completed_at - self.started_at).total_seconds()
@@ -129,7 +125,7 @@ class Plan(BaseModel):
         description="The main objective/goal this plan aims to achieve"
     )
 
-    steps: List[PlanStep] = Field(description="Ordered list of steps to execute")
+    steps: list[PlanStep] = Field(description="Ordered list of steps to execute")
 
     total_steps: int = Field(description="Total number of steps in the plan")
 
@@ -148,7 +144,7 @@ class Plan(BaseModel):
 
     @field_validator("steps")
     @classmethod
-    def validate_step_ids(cls, steps: List[PlanStep]) -> List[PlanStep]:
+    def validate_step_ids(cls, steps: list[PlanStep]) -> list[PlanStep]:
         """Ensure step IDs are sequential starting from 1."""
         for i, step in enumerate(steps, 1):
             if step.step_id != i:
@@ -157,7 +153,7 @@ class Plan(BaseModel):
 
     @field_validator("steps")
     @classmethod
-    def validate_dependencies(cls, steps: List[PlanStep]) -> List[PlanStep]:
+    def validate_dependencies(cls, steps: list[PlanStep]) -> list[PlanStep]:
         """Ensure dependencies reference valid step IDs."""
         step_ids = {step.step_id for step in steps}
         for step in steps:
@@ -178,25 +174,25 @@ class Plan(BaseModel):
 
     @computed_field
     @property
-    def completed_steps(self) -> List[PlanStep]:
+    def completed_steps(self) -> list[PlanStep]:
         """Get all completed steps."""
         return [s for s in self.steps if s.status == StepStatus.COMPLETED]
 
     @computed_field
     @property
-    def failed_steps(self) -> List[PlanStep]:
+    def failed_steps(self) -> list[PlanStep]:
         """Get all failed steps."""
         return [s for s in self.steps if s.status == StepStatus.FAILED]
 
     @computed_field
     @property
-    def pending_steps(self) -> List[PlanStep]:
+    def pending_steps(self) -> list[PlanStep]:
         """Get all pending steps."""
         return [s for s in self.steps if s.status == StepStatus.PENDING]
 
     @computed_field
     @property
-    def next_step(self) -> Optional[PlanStep]:
+    def next_step(self) -> PlanStep | None:
         """Get the next step ready for execution."""
         completed_ids = {s.step_id for s in self.completed_steps}
 
@@ -227,7 +223,7 @@ class Plan(BaseModel):
         """Check if any steps have failed."""
         return any(s.status == StepStatus.FAILED for s in self.steps)
 
-    def get_step(self, step_id: int) -> Optional[PlanStep]:
+    def get_step(self, step_id: int) -> PlanStep | None:
         """Get a specific step by ID."""
         for step in self.steps:
             if step.step_id == step_id:
@@ -238,8 +234,8 @@ class Plan(BaseModel):
         self,
         step_id: int,
         status: StepStatus,
-        result: Optional[str] = None,
-        error: Optional[str] = None,
+        result: str | None = None,
+        error: str | None = None,
     ) -> bool:
         """Update the status of a specific step."""
         step = self.get_step(step_id)
@@ -289,8 +285,8 @@ class ExecutionResult(BaseModel):
     step_id: int = Field(description="ID of the executed step")
     success: bool = Field(description="Whether execution was successful")
     output: str = Field(description="Output/result from the execution")
-    error: Optional[str] = Field(default=None, description="Error message if failed")
-    execution_time: Optional[float] = Field(
+    error: str | None = Field(default=None, description="Error message if failed")
+    execution_time: float | None = Field(
         default=None, description="Time taken in seconds"
     )
 
@@ -316,15 +312,15 @@ class ReplanDecision(BaseModel):
 
     reasoning: str = Field(description="Explanation for the decision")
 
-    final_answer: Optional[str] = Field(
+    final_answer: str | None = Field(
         default=None, description="Final answer if decision is 'answer'"
     )
 
-    replan_instructions: Optional[str] = Field(
+    replan_instructions: str | None = Field(
         default=None, description="Instructions for replanning if decision is 'replan'"
     )
 
-    skip_steps: Optional[List[int]] = Field(
+    skip_steps: list[int] | None = Field(
         default=None, description="Step IDs to skip if continuing with modifications"
     )
 
@@ -353,7 +349,7 @@ class Response(BaseModel):
 class Act(BaseModel):
     """Action to perform - either respond with answer or continue with plan."""
 
-    action: Union[Response, Plan] = Field(
+    action: Response | Plan = Field(
         description="Action to perform. If you want to respond to user, use Response. "
         "If you need to further use tools to get the answer, use Plan."
     )

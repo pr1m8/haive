@@ -84,43 +84,44 @@ from haive.agents.common.models.task_analysis.visualization import (
     TaskComplexityVisualizer,
 )
 
+
 __all__ = [
-    # Base enums and types
-    "TaskType",
-    "DependencyType",
+    "BlockerType",
+    "BreadthAnalysis",
+    "ComplexityDashboard",
     "ComplexityLevel",
-    "ComputationalComplexity",
-    "KnowledgeComplexity",
-    "TimeComplexity",
-    "ResourceType",
-    # Core task models
-    "Task",
-    "TaskStep",
-    "DependencyNode",
     # Analysis components
     "ComplexityMetrics",
-    "DepthAnalysis",
-    "BreadthAnalysis",
+    "ComputationalComplexity",
     "CriticalPathAnalysis",
-    "SolvabilityAssessment",
-    "BlockerType",
-    "ResourceRequirement",
-    "SolvabilityAnalyzer",
-    "ParallelizationAnalysis",
-    "ParallelGroup",
+    "DependencyAnalyzer",
+    "DependencyGraphRenderer",
+    "DependencyNode",
+    "DependencyType",
+    "DepthAnalysis",
     "ExecutionPhase",
     "JoinPoint",
+    "KnowledgeComplexity",
+    "ParallelGroup",
+    "ParallelizationAnalysis",
     "ParallelizationAnalyzer",
-    # Tree and dependency analysis
-    "TaskDependencyTree",
-    "DependencyAnalyzer",
+    "ResourceRequirement",
+    "ResourceType",
+    "SolvabilityAnalyzer",
+    "SolvabilityAssessment",
+    # Core task models
+    "Task",
     # Main analyzer
     "TaskComplexityAnalysis",
     "TaskComplexityAnalyzer",
     # Visualization
     "TaskComplexityVisualizer",
-    "DependencyGraphRenderer",
-    "ComplexityDashboard",
+    # Tree and dependency analysis
+    "TaskDependencyTree",
+    "TaskStep",
+    # Base enums and types
+    "TaskType",
+    "TimeComplexity",
 ]
 
 # Version info

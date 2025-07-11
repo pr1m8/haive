@@ -1,4 +1,4 @@
-"""Agentic RAG Router with Proper Conditional Routing
+"""Agentic RAG Router with Proper Conditional Routing.
 
 Implementation using conditional edges for routing between strategies.
 """
@@ -6,14 +6,6 @@ Implementation using conditional edges for routing between strategies.
 import logging
 from enum import Enum
 from typing import Any, Dict, List, Optional
-
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
-from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate
-from langgraph.graph import END, START
-from pydantic import BaseModel, Field
 
 from haive.agents.base.agent import Agent
 from haive.agents.rag.base.agent import BaseRAGAgent
@@ -23,6 +15,13 @@ from haive.agents.rag.hyde.agent_v2 import HyDERAGAgentV2
 from haive.agents.rag.multi_query.agent import MultiQueryRAGAgent
 from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
+from langgraph.graph import END, START
+from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
 
@@ -65,7 +64,7 @@ class AgenticRAGRouterV2(Agent):
     """Agentic RAG Router using proper conditional routing."""
 
     name: str = "Agentic RAG Router V2"
-    documents: List[Document] = Field(description="Documents for RAG")
+    documents: list[Document] = Field(description="Documents for RAG")
     llm_config: LLMConfig = Field(description="LLM configuration")
 
     def build_graph(self) -> BaseGraph:
@@ -113,7 +112,7 @@ class AgenticRAGRouterV2(Agent):
         graph.add_node("flare_rag", flare_rag)
 
         # Routing function
-        def route_to_strategy(state: Dict[str, Any]) -> str:
+        def route_to_strategy(state: dict[str, Any]) -> str:
             """Route to appropriate RAG strategy based on selection."""
             strategy_decision = state.get("strategy_decision", {})
             strategy = strategy_decision.get("strategy", RAGStrategy.SIMPLE)

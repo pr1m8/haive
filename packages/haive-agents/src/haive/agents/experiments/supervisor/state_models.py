@@ -4,15 +4,16 @@ This module defines the core state schemas and models used by supervisors
 to manage agents, tools, and execution context.
 """
 
+from datetime import datetime
 import json
 import pickle
-from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 
-from haive.core.schema.state_schema import StateSchema
 from langchain_core.messages import BaseMessage
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel, ConfigDict, Field, model_validator
+
+from haive.core.schema.state_schema import StateSchema
 
 
 class AgentMetadata(BaseModel):
@@ -20,12 +21,12 @@ class AgentMetadata(BaseModel):
 
     name: str
     description: str
-    capabilities: List[str] = Field(default_factory=list)
+    capabilities: list[str] = Field(default_factory=list)
     created_at: datetime = Field(default_factory=datetime.utcnow)
-    last_used: Optional[datetime] = None
+    last_used: datetime | None = None
     usage_count: int = 0
     performance_score: float = 1.0  # 0-1 score for agent performance
-    tags: List[str] = Field(default_factory=list)
+    tags: list[str] = Field(default_factory=list)
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
@@ -78,7 +79,7 @@ class ToolMapping(BaseModel):
     """Maps tools to their source agents and categories."""
 
     tool_name: str
-    agent_name: Optional[str] = None  # Source agent if applicable
+    agent_name: str | None = None  # Source agent if applicable
     category: str = "general"  # general, handoff, control, utility
     description: str
     is_dynamic: bool = False  # Whether tool was dynamically created
@@ -89,10 +90,10 @@ class ToolMapping(BaseModel):
 class ExecutionContext(BaseModel):
     """Current execution context for the supervisor."""
 
-    current_agent: Optional[str] = None
-    current_task: Optional[str] = None
-    execution_stack: List[str] = Field(default_factory=list)  # Call stack
-    start_time: Optional[datetime] = None
+    current_agent: str | None = None
+    current_task: str | None = None
+    execution_stack: list[str] = Field(default_factory=list)  # Call stack
+    start_time: datetime | None = None
     total_steps: int = 0
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
@@ -102,19 +103,19 @@ class SupervisorState(StateSchema):
     """Base state schema for supervisors with full tracking."""
 
     # Core conversation state
-    messages: List[BaseMessage] = Field(default_factory=list)
+    messages: list[BaseMessage] = Field(default_factory=list)
 
     # Agent registry
-    agents: Dict[str, SerializedAgent] = Field(
+    agents: dict[str, SerializedAgent] = Field(
         default_factory=dict, description="Registry of available agents"
     )
 
     # Tool management
-    tools: Dict[str, BaseTool] = Field(
+    tools: dict[str, BaseTool] = Field(
         default_factory=dict, description="Available tools mapped by name"
     )
 
-    tool_mappings: Dict[str, ToolMapping] = Field(
+    tool_mappings: dict[str, ToolMapping] = Field(
         default_factory=dict, description="Metadata about each tool"
     )
 
@@ -124,8 +125,8 @@ class SupervisorState(StateSchema):
     )
 
     # Results and history
-    last_result: Optional[Any] = None
-    execution_history: List[Dict[str, Any]] = Field(default_factory=list)
+    last_result: Any | None = None
+    execution_history: list[dict[str, Any]] = Field(default_factory=list)
 
     # Configuration
     auto_sync_tools: bool = Field(
@@ -181,12 +182,12 @@ class SupervisorState(StateSchema):
             self.execution_history = self.execution_history[-self.max_history_size :]
         return self
 
-    def add_execution_record(self, record: Dict[str, Any]) -> None:
+    def add_execution_record(self, record: dict[str, Any]) -> None:
         """Add a record to execution history."""
         record["timestamp"] = datetime.utcnow().isoformat()
         self.execution_history.append(record)
 
-    def get_agent_by_name(self, name: str) -> Optional[Any]:
+    def get_agent_by_name(self, name: str) -> Any | None:
         """Get deserialized agent by name."""
         if name in self.agents:
             return self.agents[name].get_agent()
@@ -210,7 +211,7 @@ class DynamicSupervisorState(SupervisorState):
     """Extended state for dynamic supervisors that can create agents."""
 
     # Agent creation configuration
-    agent_templates: Dict[str, Dict[str, Any]] = Field(
+    agent_templates: dict[str, dict[str, Any]] = Field(
         default_factory=dict, description="Templates for creating new agents"
     )
 
@@ -219,7 +220,7 @@ class DynamicSupervisorState(SupervisorState):
         default=True, description="Whether supervisor can create new agents"
     )
 
-    creation_history: List[Dict[str, Any]] = Field(
+    creation_history: list[dict[str, Any]] = Field(
         default_factory=list, description="History of agent creations"
     )
 
@@ -242,12 +243,12 @@ class DynamicSupervisorState(SupervisorState):
 
         return self
 
-    def add_agent_template(self, name: str, template: Dict[str, Any]) -> None:
+    def add_agent_template(self, name: str, template: dict[str, Any]) -> None:
         """Add a template for agent creation."""
         self.agent_templates[name] = template
 
     def record_agent_creation(
-        self, agent_name: str, template_used: Optional[str] = None
+        self, agent_name: str, template_used: str | None = None
     ) -> None:
         """Record that an agent was created."""
         self.creation_history.append(

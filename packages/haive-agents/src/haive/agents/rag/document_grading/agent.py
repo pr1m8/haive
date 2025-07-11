@@ -1,4 +1,4 @@
-"""Document Grading RAG Agent
+"""Document Grading RAG Agent.
 
 Iterative document grading with structured output.
 Uses CallableNodeConfig to iterate over retrieved documents.
@@ -6,6 +6,10 @@ Uses CallableNodeConfig to iterate over retrieved documents.
 
 from typing import List, Optional
 
+from haive.agents.base.agent import Agent
+from haive.agents.multi.base import SequentialAgent
+from haive.agents.rag.base.agent import BaseRAGAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.callable_node import (
     CallableNodeConfig,
@@ -17,11 +21,6 @@ from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field
-
-from haive.agents.base.agent import Agent
-from haive.agents.multi.base import SequentialAgent
-from haive.agents.rag.base.agent import BaseRAGAgent
-from haive.agents.simple.agent import SimpleAgent
 
 
 # Simple grading model for single document
@@ -38,7 +37,7 @@ SINGLE_DOC_GRADING_PROMPT = ChatPromptTemplate.from_messages(
         (
             "system",
             """You are an expert document grader. Assess this document's relevance to the query.
-    
+
 Provide:
 1. A relevance score (0.0-1.0)
 2. Whether it's relevant (true/false)
@@ -64,9 +63,9 @@ class DocumentGradingAgent(Agent):
 
     name: str = "Document Grader"
     relevance_threshold: float = 0.7
-    llm_config: Optional[LLMConfig] = None
+    llm_config: LLMConfig | None = None
 
-    def __init__(self, llm_config: Optional[LLMConfig] = None, **kwargs):
+    def __init__(self, llm_config: LLMConfig | None = None, **kwargs):
         """Initialize with LLM config."""
         self.llm_config = llm_config or AzureLLMConfig(
             deployment_name="gpt-4",
@@ -126,8 +125,8 @@ class DocumentGradingRAGAgent(SequentialAgent):
     @classmethod
     def from_documents(
         cls,
-        documents: List[Document],
-        llm_config: Optional[LLMConfig] = None,
+        documents: list[Document],
+        llm_config: LLMConfig | None = None,
         relevance_threshold: float = 0.7,
         **kwargs,
     ):
@@ -162,7 +161,7 @@ class DocumentGradingRAGAgent(SequentialAgent):
                         (
                             "human",
                             """Answer the query using these relevant documents.
-                    
+
 Query: {query}
 Relevant Documents: {graded_documents}""",
                         ),

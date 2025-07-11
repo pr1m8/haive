@@ -1,4 +1,4 @@
-"""Integration of ChainAgent with Multi-Agent Base
+"""Integration of ChainAgent with Multi-Agent Base.
 
 Makes ChainAgent work seamlessly with the multi-agent framework.
 """
@@ -6,12 +6,13 @@ Makes ChainAgent work seamlessly with the multi-agent framework.
 import logging
 from typing import Any, Callable, Dict, List, Optional
 
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from pydantic import Field
 
 from haive.agents.base.agent import Agent
 from haive.agents.chain.chain_agent_simple import ChainAgent, NodeLike
 from haive.agents.multi.base import ExecutionMode, MultiAgent
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
 
 logger = logging.getLogger(__name__)
 
@@ -23,16 +24,15 @@ class ChainMultiAgent(MultiAgent):
     """
 
     execution_mode: ExecutionMode = Field(default=ExecutionMode.SEQUENCE)
-    chain_config: Optional[Dict[str, Any]] = Field(
+    chain_config: dict[str, Any] | None = Field(
         default=None, description="Chain configuration"
     )
 
     @classmethod
     def from_chain(
-        cls, chain: ChainAgent, name: Optional[str] = None, **kwargs
+        cls, chain: ChainAgent, name: str | None = None, **kwargs
     ) -> "ChainMultiAgent":
         """Create a MultiAgent from a ChainAgent."""
-
         # Extract agents from the chain's nodes
         agents = []
         for i, node in enumerate(chain.nodes):
@@ -54,13 +54,12 @@ class ChainMultiAgent(MultiAgent):
     @classmethod
     def from_nodes(
         cls,
-        nodes: List[NodeLike],
-        edges: Optional[List] = None,
+        nodes: list[NodeLike],
+        edges: list | None = None,
         name: str = "Chain Multi Agent",
         **kwargs,
     ) -> "ChainMultiAgent":
         """Create directly from nodes and edges."""
-
         # Create a ChainAgent first
         chain = ChainAgent(*nodes, edges=edges or [], name=name)
 
@@ -104,10 +103,7 @@ def multi_to_chain(multi: MultiAgent) -> ChainAgent:
     if multi.execution_mode == ExecutionMode.SEQUENCE:
         # Simple sequential conversion
         return ChainAgent(*multi.agents, name=multi.name)
-    else:
-        raise ValueError(
-            f"Cannot convert {multi.execution_mode} MultiAgent to ChainAgent"
-        )
+    raise ValueError(f"Cannot convert {multi.execution_mode} MultiAgent to ChainAgent")
 
 
 # Extended execution modes
@@ -131,15 +127,14 @@ def sequential_multi(*agents: Agent, name: str = "Sequential Multi") -> ChainMul
 
 
 def conditional_multi(
-    agents: List[Agent],
-    conditions: Dict[str, Callable],
+    agents: list[Agent],
+    conditions: dict[str, Callable],
     name: str = "Conditional Multi",
 ) -> ChainMultiAgent:
     """Create a conditional multi-agent system."""
-
     # Convert conditions to ChainAgent edges format
     edges = []
-    for i, (agent_name, condition) in enumerate(conditions.items()):
+    for i, (_agent_name, condition) in enumerate(conditions.items()):
         # This is simplified - real implementation would be more complex
         edges.append((i, {"true": i + 1, "false": i + 2}, condition))
 

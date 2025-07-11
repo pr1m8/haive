@@ -6,18 +6,19 @@ This module provides the abstract base class for multi-agent systems,
 enabling composition of multiple agents with various coordination patterns.
 """
 
-import logging
 from abc import abstractmethod
+import logging
 from typing import Any, Literal
 
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.schema.agent_schema_composer import AgentSchemaComposer
 from langgraph.graph import END
 from langgraph.types import Command
 from pydantic import Field, PrivateAttr, model_validator
 
 from haive.agents.base.agent import Agent
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.schema.agent_schema_composer import AgentSchemaComposer
+
 
 logger = logging.getLogger(__name__)
 
@@ -287,7 +288,7 @@ class MultiAgent(Agent):
             updates = {
                 "current_agent": agent_name,
                 "completed_agents": (
-                    state.completed_agents + [agent_name]
+                    [*state.completed_agents, agent_name]
                     if agent_name not in state.completed_agents
                     else state.completed_agents
                 ),
@@ -312,10 +313,11 @@ class MultiAgent(Agent):
     ) -> "MultiAgent":
         """Create a multi-agent system from a list or dict of agents."""
         # Convert list to dict if needed
-        if isinstance(agents, list):
-            agent_dict = {agent.name: agent for agent in agents}
-        else:
-            agent_dict = agents
+        agent_dict = (
+            {agent.name: agent for agent in agents}
+            if isinstance(agents, list)
+            else agents
+        )
 
         return cls(
             name=name or f"{cls.__name__}",

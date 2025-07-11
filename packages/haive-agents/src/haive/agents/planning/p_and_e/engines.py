@@ -1,16 +1,11 @@
 # src/haive/agents/plan_and_execute/aug_llms.py
-"""
-AugLLM configurations for Plan and Execute Agent System.
+"""AugLLM configurations for Plan and Execute Agent System.
 
 This module defines the AugLLM configurations for planning, execution,
 and replanning agents.
 """
 
 from typing import List, Optional
-
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
-from langchain_core.tools import BaseTool
 
 from haive.agents.planning.p_and_e.models import Act, Plan
 from haive.agents.planning.p_and_e.prompts import (
@@ -19,6 +14,9 @@ from haive.agents.planning.p_and_e.prompts import (
     planner_prompt_simple,
     replan_prompt,
 )
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+from langchain_core.tools import BaseTool
 
 # ============================================================================
 # PLANNER AGENT CONFIGURATION
@@ -28,8 +26,7 @@ from haive.agents.planning.p_and_e.prompts import (
 def create_planner_aug_llm_config(
     model_name: str = "gpt-4o", temperature: float = 0.1, use_context: bool = True
 ) -> AugLLMConfig:
-    """
-    Create AugLLM configuration for the planning agent.
+    """Create AugLLM configuration for the planning agent.
 
     Args:
         model_name: The LLM model to use
@@ -43,8 +40,6 @@ def create_planner_aug_llm_config(
         name="planner_llm",
         llm_config=AzureLLMConfig(
             model=model_name,
-            # temperature=temperature,
-            # max_tokens=2000  # Plans can be detailed
         ),
         prompt_template=planner_prompt if use_context else planner_prompt_simple,
         structured_output_model=Plan,
@@ -67,12 +62,10 @@ def create_planner_aug_llm_config(
 
 def create_executor_aug_llm_config(
     model_name: str = "gpt-4o",
-    # temperature: float = 0.3,
-    tools: Optional[List[BaseTool]] = None,
+    tools: list[BaseTool] | None = None,
     force_tool_use: bool = False,
 ) -> AugLLMConfig:
-    """
-    Create AugLLM configuration for the execution agent.
+    """Create AugLLM configuration for the execution agent.
 
     Args:
         model_name: The LLM model to use
@@ -87,8 +80,6 @@ def create_executor_aug_llm_config(
         name="executor_llm",
         llm_config=AzureLLMConfig(
             model=model_name,
-            # temperature=temperature,
-            # max_tokens=1500
         ),
         prompt_template=executor_prompt,
         tools=tools or [],
@@ -111,8 +102,7 @@ def create_executor_aug_llm_config(
 def create_replan_aug_llm_config(
     model_name: str = "gpt-4o", temperature: float = 0.2, max_replan_attempts: int = 3
 ) -> AugLLMConfig:
-    """
-    Create AugLLM configuration for the replanning agent.
+    """Create AugLLM configuration for the replanning agent.
 
     Args:
         model_name: The LLM model to use
@@ -126,8 +116,6 @@ def create_replan_aug_llm_config(
         name="replan_llm",
         llm_config=AzureLLMConfig(
             model=model_name,
-            # temperature=temperature,
-            # max_tokens=2000  # Need room for new plans or detailed answers
         ),
         prompt_template=replan_prompt,
         structured_output_model=Act,  # Uses Response | Plan union

@@ -4,13 +4,10 @@ This example demonstrates how to use the TokenTrackingAgent base class to
 automatically track token usage and costs for LLM-based agents.
 """
 
-from typing import Any
-
+from haive.agents.base import TokenTrackingAgent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.graph.state_graph.state_graph import StateGraph
 from haive.core.llm import LLMConfig
-
-from haive.agents.base import TokenTrackingAgent
 
 
 class CostAwareAssistant(TokenTrackingAgent):
@@ -64,7 +61,6 @@ def main():
     agent = CostAwareAssistant(name="cost_aware_assistant", engine=llm)
 
     # Have a conversation
-    print("Starting conversation with token tracking...\n")
 
     # First message
     result1 = agent.invoke(
@@ -72,14 +68,10 @@ def main():
     )
 
     # Get token usage after first interaction
-    usage1 = agent.get_token_usage_summary()
-    print(f"After message 1:")
-    print(f"  Total tokens: {usage1['total_tokens']}")
-    print(f"  Total cost: ${usage1['total_cost']:.4f}")
-    print()
+    agent.get_token_usage_summary()
 
     # Second message
-    result2 = agent.invoke(
+    agent.invoke(
         {
             "messages": [
                 {"role": "user", "content": "What is quantum computing?"},
@@ -90,20 +82,11 @@ def main():
     )
 
     # Get cumulative token usage
-    usage2 = agent.get_token_usage_summary()
-    print(f"After message 2 (cumulative):")
-    print(f"  Total tokens: {usage2['total_tokens']}")
-    print(f"  Input tokens: {usage2['input_tokens']}")
-    print(f"  Output tokens: {usage2['output_tokens']}")
-    print(f"  Total cost: ${usage2['total_cost']:.4f}")
-    print(f"  Conversation rounds: {usage2['rounds']}")
+    agent.get_token_usage_summary()
 
     # Get detailed cost analysis
     if hasattr(agent._state, "get_conversation_cost_analysis"):
-        analysis = agent._state.get_conversation_cost_analysis()
-        print(f"\nDetailed Analysis:")
-        print(f"  Average tokens per round: {analysis['avg_tokens_per_round']:.1f}")
-        print(f"  Capacity status: {analysis['capacity_status']}")
+        agent._state.get_conversation_cost_analysis()
 
 
 if __name__ == "__main__":

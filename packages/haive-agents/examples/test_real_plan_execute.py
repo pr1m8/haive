@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Real end-to-end test of Plan & Execute Multi-Agent System.
+"""Real end-to-end test of Plan & Execute Multi-Agent System.
 
 This test actually runs the system with real LLM calls to verify:
 1. Shared fields are properly shared between agents
@@ -9,18 +8,18 @@ This test actually runs the system with real LLM calls to verify:
 """
 
 import asyncio
-import json
 from datetime import datetime
+import json
 from typing import Any, Dict
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.schema.agent_schema_composer import BuildMode
 from langchain_core.tools import tool
 
 from haive.agents.multi.enhanced_base import create_plan_execute_multi_agent
 from haive.agents.planning.p_and_e.models import Act, Plan, PlanStep, Response
 from haive.agents.planning.p_and_e.state import PlanExecuteState
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.schema.agent_schema_composer import BuildMode
 
 
 # Create some real tools for the executor to use
@@ -36,7 +35,7 @@ def calculate(expression: str) -> float:
         }
         return eval(expression, {"__builtins__": allowed_names})
     except Exception as e:
-        return f"Error: {str(e)}"
+        return f"Error: {e!s}"
 
 
 @tool
@@ -51,22 +50,18 @@ def search_info(query: str) -> str:
     # Mock search results
     if "weather" in query.lower():
         return "Current weather: 72°F, partly cloudy"
-    elif "news" in query.lower():
+    if "news" in query.lower():
         return "Latest news: AI advances continue to accelerate"
-    else:
-        return f"Search results for '{query}': Various information available"
+    return f"Search results for '{query}': Various information available"
 
 
 async def main():
-    print("=" * 70)
-    print("REAL PLAN & EXECUTE MULTI-AGENT SYSTEM TEST")
-    print("=" * 70)
 
     # Create real LLM configurations with structured output
     planner_config = AugLLMConfig(
         name="planner_llm",
         system_message="""You are a planning agent. Create step-by-step plans to achieve objectives.
-        
+
 When creating a plan:
 1. Break down the objective into clear, actionable steps
 2. Each step should be specific and measurable
@@ -122,16 +117,8 @@ Use the Act model to return either a Response (final answer) or a new Plan.""",
         schema_build_mode=BuildMode.PARALLEL,
     )
 
-    print(f"\nSystem created: {system.name}")
-    print(f"Agents: {[a.name for a in system.agents]}")
-    print(f"Build mode: {system.schema_build_mode}")
-
     # Test with a real objective
     test_objective = "What is 25 * 4 + 10, and what time is it right now?"
-
-    print(f"\n{'='*70}")
-    print(f"OBJECTIVE: {test_objective}")
-    print(f"{'='*70}\n")
 
     try:
         # Build the graph
@@ -154,19 +141,15 @@ Use the Act model to return either a Response (final answer) or a new Plan.""",
             "final_answer": None,
         }
 
-        print("Starting execution...\n")
-
         # Track state changes to verify sharing
         step_count = 0
 
         # Execute the graph
         async for event in compiled.astream(initial_state):
             step_count += 1
-            print(f"\n--- Step {step_count} ---")
 
             # Show which node executed
-            node_name = list(event.keys())[0] if event else "Unknown"
-            print(f"Node: {node_name}")
+            node_name = next(iter(event.keys())) if event else "Unknown"
 
             # Get the state from the event
             if node_name in event:
@@ -174,57 +157,31 @@ Use the Act model to return either a Response (final answer) or a new Plan.""",
 
                 # Show key state fields to verify sharing
                 if isinstance(state_update, dict):
-                    if "plan" in state_update and state_update["plan"]:
+                    if state_update.get("plan"):
                         plan = state_update["plan"]
                         if hasattr(plan, "objective"):
-                            print(f"Plan objective: {plan.objective}")
-                            print(
-                                f"Plan steps: {len(plan.steps) if hasattr(plan, 'steps') else 0}"
-                            )
                             if hasattr(plan, "steps"):
-                                for step in plan.steps:
-                                    print(
-                                        f"  - Step {step.step_id}: {step.description} [{step.status}]"
-                                    )
+                                for _step in plan.steps:
+                                    pass
 
-                    if (
-                        "execution_results" in state_update
-                        and state_update["execution_results"]
-                    ):
-                        print(
-                            f"Execution results: {len(state_update['execution_results'])} results"
-                        )
+                    if state_update.get("execution_results"):
                         for result in state_update["execution_results"]:
                             if hasattr(result, "output"):
-                                print(
-                                    f"  - Step {result.step_id}: {result.output[:100]}..."
-                                )
+                                pass
 
-                    if "final_answer" in state_update and state_update["final_answer"]:
-                        print(f"Final answer: {state_update['final_answer']}")
+                    if state_update.get("final_answer"):
+                        pass
 
                     if "messages" in state_update:
-                        print(f"Messages: {len(state_update['messages'])} total")
+                        pass
 
             # Limit steps to prevent infinite loops
             if step_count > 10:
-                print("\n⚠️  Stopping after 10 steps to prevent infinite loop")
                 break
 
-        print(f"\n{'='*70}")
-        print("EXECUTION COMPLETE")
-        print(f"Total steps: {step_count}")
-        print(f"{'='*70}")
-
         # Verify shared fields worked correctly
-        print("\n🔍 SHARED FIELDS VERIFICATION:")
-        print("✓ Messages were shared - all agents saw the same conversation")
-        print("✓ Plan was shared - executor could read planner's plan")
-        print("✓ Execution results were shared - replanner saw executor's results")
-        print("✓ System completed the objective through agent coordination")
 
-    except Exception as e:
-        print(f"\n❌ Error during execution: {e}")
+    except Exception:
         import traceback
 
         traceback.print_exc()

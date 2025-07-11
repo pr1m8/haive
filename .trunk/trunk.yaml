@@ -43,6 +43,18 @@ lint:
         - "**/migrations/**"
         - "**/__pycache__/**"
         - ".history/**"
+        - ".venv/**"
+        - "node_modules/**"
+        - "packages/**"
+        - "projects/**"
+        - "haive-core/**"
+        - "data/**"
+        - "docs/**"
+        - "resources/**"
+        - "assets/**"
+        - "dist/**"
+        - "build/**"
+        - "*.egg-info/**"
 
 actions:
   disabled:

@@ -1,20 +1,14 @@
-"""
-Dynamic supervisor with general agent execution node.
+"""Dynamic supervisor with general agent execution node.
 
 This implementation uses a single agent_execution_node that can execute any agent
 dynamically based on the supervisor's routing decision, similar to how tool_node works.
 """
 
 import asyncio
-import json
 from datetime import datetime
+import json
 from typing import Any, Dict, List, Literal, Optional
 
-from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import LLMConfig
-from haive.core.schema import StateSchema
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.tools import tool
 from langgraph.graph import END
@@ -22,6 +16,11 @@ from pydantic import BaseModel, Field, model_validator
 
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.models.llm.base import LLMConfig
+from haive.core.schema import StateSchema
 
 
 # Enhanced Agent Registry with activation
@@ -38,7 +37,7 @@ class DynamicAgentRegistry:
         name: str,
         agent: Any,
         description: str,
-        capabilities: List[str],
+        capabilities: list[str],
         active: bool = True,
     ):
         """Register an agent with metadata."""
@@ -68,20 +67,20 @@ class DynamicAgentRegistry:
             return True
         return False
 
-    def get_active_agents(self) -> Dict[str, Any]:
+    def get_active_agents(self) -> dict[str, Any]:
         """Get only active agents with their metadata."""
         return {
             name: {"agent": self.agents[name], "metadata": self.agent_metadata[name]}
             for name in self.active_agents
         }
 
-    def get_agent(self, name: str) -> Optional[Any]:
+    def get_agent(self, name: str) -> Any | None:
         """Get an agent if it exists and is active."""
         if name in self.active_agents:
             return self.agents[name]
         return None
 
-    def find_agents_by_capability(self, capability: str) -> List[str]:
+    def find_agents_by_capability(self, capability: str) -> list[str]:
         """Find all agents (active or inactive) with a specific capability."""
         matching_agents = []
         for name, metadata in self.agent_metadata.items():
@@ -92,12 +91,12 @@ class DynamicAgentRegistry:
 
 # Supervisor State with agent routing
 class DynamicSupervisorState(StateSchema):
-    messages: List[Dict[str, Any]] = Field(default_factory=list)
+    messages: list[dict[str, Any]] = Field(default_factory=list)
     current_task: str = Field(default="")
-    agent_route: Optional[str] = Field(default=None)  # Which agent to route to
-    agent_response: Optional[str] = Field(default=None)  # Response from agent
-    required_capabilities: List[str] = Field(default_factory=list)
-    execution_history: List[Dict[str, Any]] = Field(default_factory=list)
+    agent_route: str | None = Field(default=None)  # Which agent to route to
+    agent_response: str | None = Field(default=None)  # Response from agent
+    required_capabilities: list[str] = Field(default_factory=list)
+    execution_history: list[dict[str, Any]] = Field(default_factory=list)
 
 
 # Dynamic Supervisor with Agent Execution Node
@@ -105,7 +104,7 @@ class DynamicNodeSupervisor(ReactAgent):
     """Supervisor that uses a general agent execution node instead of pre-compiled handoffs."""
 
     agent_registry: DynamicAgentRegistry = Field(default_factory=DynamicAgentRegistry)
-    agent_choice_model: Optional[DynamicChoiceModel] = Field(default=None)
+    agent_choice_model: DynamicChoiceModel | None = Field(default=None)
 
     @model_validator(mode="after")
     def setup_dynamic_supervisor(self):
@@ -124,7 +123,7 @@ class DynamicNodeSupervisor(ReactAgent):
 
         if active_agents:
             # Create choices including "none" option
-            choices = active_agents + ["none"]
+            choices = [*active_agents, "none"]
             self.agent_choice_model = DynamicChoiceModel.from_choices(
                 choices,
                 name="AgentRouting",
@@ -133,11 +132,10 @@ class DynamicNodeSupervisor(ReactAgent):
 
     def _setup_supervisor_tools(self):
         """Setup supervisor-specific tools."""
-        tools = []
 
         # Tool to analyze task requirements
         @tool
-        def analyze_task_requirements(task: str) -> Dict[str, Any]:
+        def analyze_task_requirements(task: str) -> dict[str, Any]:
             """Analyze a task to determine required capabilities."""
             capabilities = []
 
@@ -168,7 +166,7 @@ class DynamicNodeSupervisor(ReactAgent):
 
         # Tool to check agent availability
         @tool
-        def check_agent_availability(capability: str) -> Dict[str, Any]:
+        def check_agent_availability(capability: str) -> dict[str, Any]:
             """Check which agents can handle a specific capability."""
             matching_agents = self.agent_registry.find_agents_by_capability(capability)
             active_matches = [
@@ -200,8 +198,7 @@ class DynamicNodeSupervisor(ReactAgent):
                 # Update choice model after activation
                 self._update_choice_model()
                 return f"Successfully activated agent '{agent_name}'"
-            else:
-                return f"Failed to activate agent '{agent_name}'"
+            return f"Failed to activate agent '{agent_name}'"
 
         # Tool to route to agent (sets the routing decision)
         @tool
@@ -216,7 +213,7 @@ class DynamicNodeSupervisor(ReactAgent):
 
         # Tool to list agents
         @tool
-        def list_agents() -> Dict[str, Any]:
+        def list_agents() -> dict[str, Any]:
             """List all registered agents and their status."""
             all_agents = {}
             for name in self.agent_registry.agents:
@@ -272,7 +269,7 @@ class DynamicNodeSupervisor(ReactAgent):
 
         return graph.compile()
 
-    async def _supervisor_node(self, state: DynamicSupervisorState) -> Dict[str, Any]:
+    async def _supervisor_node(self, state: DynamicSupervisorState) -> dict[str, Any]:
         """Supervisor node that makes routing decisions."""
         # Use the engine to analyze and decide
         task = (
@@ -283,7 +280,7 @@ class DynamicNodeSupervisor(ReactAgent):
 
         # Create prompt for supervisor
         prompt = f"""
-You are a supervisor managing multiple specialized agents. 
+You are a supervisor managing multiple specialized agents.
 
 Current task: {task}
 
@@ -309,7 +306,7 @@ Use the tools provided to analyze, check availability, activate agents, and rout
 
     async def _agent_execution_node(
         self, state: DynamicSupervisorState
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """General node that executes any routed agent."""
         if not state.agent_route:
             state.agent_response = "No agent route specified"
@@ -338,7 +335,7 @@ Use the tools provided to analyze, check availability, activate agents, and rout
                 }
             )
         except Exception as e:
-            state.agent_response = f"Error executing {state.agent_route}: {str(e)}"
+            state.agent_response = f"Error executing {state.agent_route}: {e!s}"
             state.execution_history.append(
                 {
                     "timestamp": datetime.now().isoformat(),
@@ -356,7 +353,7 @@ Use the tools provided to analyze, check availability, activate agents, and rout
 
     async def _process_result_node(
         self, state: DynamicSupervisorState
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Process results from agent execution."""
         if state.agent_response:
             # Add response to messages
@@ -385,9 +382,6 @@ Use the tools provided to analyze, check availability, activate agents, and rout
 # Test the dynamic supervisor
 async def test_dynamic_node_supervisor():
     """Test the supervisor with dynamic agent activation."""
-
-    print("Creating specialized agents...")
-
     # Create test agents
     from haive.tools.tools.search_tools import tavily_search_tool
 
@@ -422,7 +416,7 @@ async def test_dynamic_node_supervisor():
     class Essay(BaseModel):
         title: str
         introduction: str
-        body: List[str]
+        body: list[str]
         conclusion: str
 
     essay_engine = create_structured_output_engine(
@@ -434,7 +428,6 @@ async def test_dynamic_node_supervisor():
     essay_agent = SimpleAgent(name="essay_agent", engine=essay_engine)
 
     # Create supervisor
-    print("\nCreating dynamic supervisor...")
 
     supervisor_engine = AugLLMConfig(
         name="supervisor_engine",
@@ -475,23 +468,14 @@ async def test_dynamic_node_supervisor():
     )
 
     # Test 1: Task needing only active agents
-    print("\n--- Test 1: Math calculation ---")
-    result1 = await supervisor.arun(
+    await supervisor.arun(
         "Calculate the compound interest on $10,000 at 5% for 10 years"
     )
-    print(f"Result: {result1}")
 
     # Test 2: Task needing inactive agent
-    print("\n--- Test 2: Essay writing (needs activation) ---")
-    result2 = await supervisor.arun(
-        "Write an essay about the benefits of renewable energy"
-    )
-    print(f"Result: {result2}")
+    await supervisor.arun("Write an essay about the benefits of renewable energy")
 
     # Check final state
-    print("\n--- Final State ---")
-    print(f"Active agents: {list(supervisor.agent_registry.active_agents)}")
-    print(f"Execution history: {len(supervisor.state.execution_history)} entries")
 
 
 if __name__ == "__main__":

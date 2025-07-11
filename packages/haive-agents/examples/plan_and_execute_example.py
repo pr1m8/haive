@@ -9,13 +9,12 @@ This example demonstrates how to use the PlanAndExecuteAgent to:
 import asyncio
 import logging
 
-from haive.core.llm import AugLLMConfig
-from haive.tools.tools.search_tools import tavily_search
-
 from haive.agents.planning.plan_and_execute import (
     PlanAndExecuteAgent,
     create_plan_and_execute_agent,
 )
+from haive.core.llm import AugLLMConfig
+from haive.tools.tools.search_tools import tavily_search
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -24,7 +23,6 @@ logger = logging.getLogger(__name__)
 
 async def main():
     """Run a Plan and Execute agent example."""
-
     # Create configurations for each agent
     planner_config = AugLLMConfig(
         model="gpt-4", temperature=0.7, system_message="You are a strategic planner."
@@ -66,13 +64,12 @@ async def main():
         logger.info(f"Final result: {result}")
 
     except Exception as e:
-        logger.error(f"Error during execution: {e}")
+        logger.exception(f"Error during execution: {e}")
         raise
 
 
 async def advanced_example():
     """Advanced example with custom agent configuration."""
-
     # Create a Plan and Execute agent using the class directly
     agent = PlanAndExecuteAgent(
         planner_config=AugLLMConfig(model="gpt-4", temperature=0.7),
@@ -109,7 +106,6 @@ async def advanced_example():
 
 async def minimal_example():
     """Minimal example without replanner."""
-
     # Create without replanner for simpler workflows
     agent = PlanAndExecuteAgent(
         planner_config=AugLLMConfig(model="gpt-4"),
@@ -129,5 +125,3 @@ if __name__ == "__main__":
     asyncio.run(main())
 
     # Uncomment to run other examples:
-    # asyncio.run(advanced_example())
-    # asyncio.run(minimal_example())

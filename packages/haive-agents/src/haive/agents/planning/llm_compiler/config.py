@@ -1,7 +1,12 @@
 """Configuration for the LLMCompiler agent using AugLLMConfig system."""
 
-import uuid
 from typing import Any
+import uuid
+
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnableConfig
+from langchain_core.tools import BaseTool, StructuredTool
+from pydantic import BaseModel, Field, model_validator
 
 from agents.llm_compiler.models import JoinerOutput
 from agents.llm_compiler.state import CompilerState
@@ -10,10 +15,7 @@ from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from haive.core.tools.dev_tools import python_repl_tool
 from haive.core.tools.search_tools import tavily_search_tool
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.runnables import RunnableConfig
-from langchain_core.tools import BaseTool, StructuredTool
-from pydantic import BaseModel, Field, model_validator
+
 
 # Base planner prompt template
 planner_prompt = ChatPromptTemplate.from_messages(
@@ -92,7 +94,7 @@ Example plan format:
 Thought: The previous plan found GDP and population data but failed to calculate the ratio correctly.
 
 {next_idx}. math(problem="properly format GDP from ${{1}} to a number")
-{next_idx_plus_one}. math(problem="properly format population from ${{2}} to a number") 
+{next_idx_plus_one}. math(problem="properly format population from ${{2}} to a number")
 {next_idx_plus_two}. math(problem="divide ${{3}} by ${{4}}")
 {next_idx_plus_three}. join()
 <END_OF_PLAN>
@@ -229,7 +231,7 @@ class LLMCompilerAgentConfig(AgentArchitectureConfig):
     )
 
     @model_validator(mode="after")
-    def validate_configs(cls, values):
+    def validate_configs(self, values):
         """Ensure that the configurations are valid."""
         # Ensure planner config has the correct prompt template
         if not values.planner_config.prompt_template:

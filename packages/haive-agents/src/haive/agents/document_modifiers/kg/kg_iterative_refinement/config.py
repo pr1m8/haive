@@ -1,12 +1,11 @@
 # Initial summary
 
-from haive.core.engine.agent.agent import AgentConfig
-from haive.core.engine.aug_llm import AugLLMConfig
-from pydantic import Field
-
 from haive.agents.document_modifiers.kg.kg_iterative_refinement.state import (
     IterativeGraphTransformerState,
 )
+from haive.core.engine.agent.agent import AgentConfig
+from haive.core.engine.aug_llm import AugLLMConfig
+from pydantic import Field
 
 
 class IterativeGraphTransformerConfig(AgentConfig):
