@@ -2,26 +2,7 @@
   "folders": [
     {
       "name": "🏠 root",
-      "path": ".",
-      "settings": {
-        "files.exclude": {
-          "packages/haive-core/**": true,
-          "packages/haive-agents/**": true,
-          "packages/haive-games/**": true,
-          "packages/haive-tools/**": true,
-          "packages/haive-dataflow/**": true,
-          "packages/haive-prebuilt/**": true,
-          "packages/haive-mcp/**": true
-        },
-        "search.exclude": {
-          "packages/**": true
-        },
-        "files.watcherExclude": {
-          "packages/**": true
-        },
-        "git.scanRepositories": false,
-        "git.autoRepositoryDetection": false
-      }
+      "path": "."
     },
     {
       "name": "🧠 haive-core",
@@ -152,13 +133,14 @@
     "git.autoRepositoryDetection": "openEditors",
     "git.repositoryScanMaxDepth": 1,
     "git.ignoreLimitWarning": true,
-    "git.ignoreSubmodules": false,
+    "git.detectSubmodules": false,
+    "git.detectSubmodulesLimit": 0,
 
     "python.analysis.autoSearchPaths": false,
     "python.analysis.indexing": false,
     "python.analysis.autoImportCompletions": true,
     "python.jediEnabled": false,
-    "python.languageServer": "None"
+    "python.languageServer": "Pylance"
   },
   "launch": {
     "configurations": [
