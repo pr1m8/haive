@@ -1,10 +1,3 @@
-[submodule "packages/haive-core"]
-    path = packages/haive-core
-    url = https://github.com/pr1m8/haive-core.git
-    branch = vzn/dav
-
-
-
 [submodule "packages/haive-games"]
     path = packages/haive-games
     url = https://github.com/pr1m8/haive-games.git
@@ -20,10 +13,6 @@
 	url = https://github.com/pr1m8/haive-mcp.git
     branch = vzn/dav
 
-[submodule "packages/haive-agents"]
-	path = packages/haive-agents
-	url = https://github.com/pr1m8/haive-agents.git
-	branch = feature/fix_everything
 [submodule "packages/haive-dataflow"]
 	path = packages/haive-dataflow
 	url = https://github.com/pr1m8/haive-dataflow.git
@@ -32,3 +21,11 @@
 	path = packages/haive-tools
 	url = https://github.com/pr1m8/haive-tools.git
 	branch = vzn/dav
+[submodule "packages/haive-core"]
+	path = packages/haive-core
+	url = https://github.com/pr1m8/haive-core.git
+	branch = feature/fix_everything
+[submodule "packages/haive-agents"]
+	path = packages/haive-agents
+	url = https://github.com/pr1m8/haive-agents.git
+	branch = feature/fix_everything
