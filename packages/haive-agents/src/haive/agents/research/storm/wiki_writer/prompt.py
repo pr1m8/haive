@@ -1,6 +1,5 @@
 from langchain_core.output_parsers import StrOutputParser
 
-
 writer_prompt = ChatPromptTemplate.from_messages(
     [
         (

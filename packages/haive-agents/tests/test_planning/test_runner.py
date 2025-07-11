@@ -62,9 +62,10 @@ def validate_convenience_functions():
         # Test function signature
         import inspect
 
+        from haive.core.engines.llm.config import AugLLMConfig
+
         from haive.agents.multi.enhanced_base import create_plan_execute_multi_agent
         from haive.agents.simple.agent import SimpleAgent
-        from haive.core.engines.llm.config import AugLLMConfig
 
         sig = inspect.signature(create_plan_execute_multi_agent)
 

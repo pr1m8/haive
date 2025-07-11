@@ -8,12 +8,13 @@ import logging
 import time
 from typing import Any, Dict, List, Optional, Set
 
-from haive.agents.base.agent import Agent
 from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 from rich.tree import Tree
+
+from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 console = Console()

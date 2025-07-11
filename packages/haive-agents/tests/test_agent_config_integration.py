@@ -1,13 +1,13 @@
 """Test the ConfigurableAgent class integration with AgentConfig."""
 
-from langgraph.graph import END
 import pytest
-
-from haive.agents.configurable_agent import ConfigurableAgent
 from haive.core.engine.agent.config import POSTGRES_AVAILABLE, AgentConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.persistence.postgres_config import PostgresCheckpointerConfig
 from haive.core.persistence.supabase_config import SupabaseCheckpointerConfig
+from langgraph.graph import END
+
+from haive.agents.configurable_agent import ConfigurableAgent
 
 
 class TestAgentConfigIntegration(ConfigurableAgent):

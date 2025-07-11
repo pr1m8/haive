@@ -25,7 +25,6 @@ from haive.agents.research.person.state import (
     PersonResearchState,
 )
 
-
 __all__ = [
     "Person",
     "PersonResearchAgent",

@@ -1,20 +1,18 @@
 # src/haive/agents/simple/chain_agent.py
-from datetime import datetime
 import json
 import logging
+from datetime import datetime
 from typing import Any
-
-from langchain_core.messages import AIMessage, HumanMessage
-from langchain_core.prompts import ChatPromptTemplate
-from langgraph.graph import END
-from pydantic import BaseModel, Field
 
 from agents.simple.agent import SimpleAgent, SimpleAgentConfig, SimpleAgentStateSchema
 from haive.core.engine.agent.agent import register_agent
 from haive.core.engine.aug_llm import AugLLMConfig, compose_runnable
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from haive.core.models.llm.base import AzureLLMConfig
-
+from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.prompts import ChatPromptTemplate
+from langgraph.graph import END
+from pydantic import BaseModel, Field
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -429,10 +427,9 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
 
     # Import necessary modules for examples
+    from haive.core.models.llm.base import AzureLLMConfig
     from langchain_core.output_parsers import StrOutputParser
     from langchain_core.prompts import ChatPromptTemplate
-
-    from haive.core.models.llm.base import AzureLLMConfig
 
     # Create a few example engines
     translator_prompt = ChatPromptTemplate.from_messages(

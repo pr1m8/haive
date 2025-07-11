@@ -8,9 +8,10 @@ monitoring capabilities.
 import logging
 from typing import Any, Literal
 
-from haive.agents.base.agent import Agent
 from haive.core.schema import MessagesStateWithTokenUsage, SchemaComposer
 from pydantic import Field
+
+from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 

@@ -7,11 +7,6 @@ from typing import Any, Dict, List
 from unittest.mock import MagicMock, Mock, patch
 
 import pytest
-from haive.agents.multi.base import SequentialAgent
-from haive.agents.react.agent import ReactAgent
-
-# Import SimpleAgent from correct location
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 
 # Use base_graph2 as indicated
@@ -22,6 +17,12 @@ from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 from langchain_core.tools import tool
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field
+
+from haive.agents.multi.base import SequentialAgent
+from haive.agents.react.agent import ReactAgent
+
+# Import SimpleAgent from correct location
+from haive.agents.simple.agent import SimpleAgent
 
 
 # Test tools

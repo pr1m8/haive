@@ -4,7 +4,6 @@ from agents.reflexion.models import AnswerQuestion, ReviseAnswer
 from agents.reflexion.prompts import actor_prompt_template
 from haive.core.engine.aug_llm import AugLLMConfig
 
-
 initial_answer_prompt = actor_prompt_template.partial(
     first_instruction="Provide a detailed 1000 word essay.",
     function_name=AnswerQuestion.__name__,

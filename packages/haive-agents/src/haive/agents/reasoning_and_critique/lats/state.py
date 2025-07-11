@@ -1,6 +1,5 @@
-from typing_extensions import TypedDict
-
 from agents.lats.node import Node
+from typing_extensions import TypedDict
 
 
 class TreeState(TypedDict):

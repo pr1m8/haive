@@ -1,6 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate
 
-
 RAG_QUERY_REFINEMENT = ChatPromptTemplate.from_messages(
     [
         (

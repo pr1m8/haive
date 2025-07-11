@@ -23,7 +23,6 @@ from typing import (
     Union,
 )
 
-from haive.agents.base.agent import Agent
 from haive.core.engine.base import EngineType
 from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
@@ -34,6 +33,8 @@ from langgraph.graph import END, START
 from pydantic import BaseModel, Field, PrivateAttr, model_validator
 from rich.console import Console
 from rich.tree import Tree
+
+from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 console = Console()

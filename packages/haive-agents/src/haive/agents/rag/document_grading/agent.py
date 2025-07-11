@@ -6,10 +6,6 @@ Uses CallableNodeConfig to iterate over retrieved documents.
 
 from typing import List, Optional
 
-from haive.agents.base.agent import Agent
-from haive.agents.multi.base import SequentialAgent
-from haive.agents.rag.base.agent import BaseRAGAgent
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.callable_node import (
     CallableNodeConfig,
@@ -21,6 +17,11 @@ from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field
+
+from haive.agents.base.agent import Agent
+from haive.agents.multi.base import SequentialAgent
+from haive.agents.rag.base.agent import BaseRAGAgent
+from haive.agents.simple.agent import SimpleAgent
 
 
 # Simple grading model for single document

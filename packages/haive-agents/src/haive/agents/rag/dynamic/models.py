@@ -1,6 +1,7 @@
-from haive.agents.rag.dynamic.data_source_types import DataSourceType
 from haive.core.models.retriever.base import RetrieverConfig
 from pydantic import BaseModel, Field
+
+from haive.agents.rag.dynamic.data_source_types import DataSourceType
 
 
 class DataSourceConfig(BaseModel):

@@ -1,9 +1,10 @@
 # Example usage
 
+from langchain_core.messages import HumanMessage
+
 from haive.agents.document_modifiers.complex_extraction.factory import (
     create_complex_extraction_agent,
 )
-from langchain_core.messages import HumanMessage
 
 if __name__ == "__main__":
     from pydantic import BaseModel, Field

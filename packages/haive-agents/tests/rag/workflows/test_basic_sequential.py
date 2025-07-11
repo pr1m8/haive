@@ -5,8 +5,9 @@ No mocks - real integration testing.
 """
 
 import pytest
-from haive.agents.rag.workflows.basic_sequential import AnswerAgent, BasicSequentialRAG
 from haive.core.fixtures.documents import conversation_documents
+
+from haive.agents.rag.workflows.basic_sequential import AnswerAgent, BasicSequentialRAG
 
 
 class TestAnswerAgent:

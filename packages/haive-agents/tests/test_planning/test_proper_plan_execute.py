@@ -73,6 +73,8 @@ def test_state_schema_compatibility():
     """Test that the state schema works with existing p_and_e models."""
 
     try:
+        from langchain_core.messages import HumanMessage
+
         from haive.agents.planning.p_and_e.models import (
             ExecutionResult,
             Plan,
@@ -80,7 +82,6 @@ def test_state_schema_compatibility():
             StepType,
         )
         from haive.agents.planning.p_and_e.state import PlanExecuteState
-        from langchain_core.messages import HumanMessage
 
         # Create a sample plan
         plan = Plan(
@@ -128,6 +129,8 @@ def test_routing_functions():
     """Test the routing functions with sample states."""
 
     try:
+        from langchain_core.messages import HumanMessage
+
         from haive.agents.planning.p_and_e.models import (
             Plan,
             PlanStep,
@@ -139,7 +142,6 @@ def test_routing_functions():
             route_after_replan,
             should_continue,
         )
-        from langchain_core.messages import HumanMessage
 
         # Test 1: State with final answer should end
         state_with_answer = PlanExecuteState(

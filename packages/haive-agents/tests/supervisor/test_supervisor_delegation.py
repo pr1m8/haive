@@ -8,14 +8,15 @@ import logging
 import os
 from typing import List
 
-from haive.agents.react.agent import ReactAgent
-from haive.agents.supervisor.agent_v2 import SupervisorAgent, SupervisorState
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import LLMConfig
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.tools import tool
 from rich.console import Console
 from rich.panel import Panel
+
+from haive.agents.react.agent import ReactAgent
+from haive.agents.supervisor.agent_v2 import SupervisorAgent, SupervisorState
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

@@ -33,17 +33,17 @@ Note:
 """
 
 import argparse
-from datetime import datetime
 import json
 import logging
 import sys
+from datetime import datetime
 from typing import Any
+
+from haive.core.engine.aug_llm import AugLLMConfig
 
 from haive.agents.rag.db_rag.sql_rag.agent import SQLRAGAgent
 from haive.agents.rag.db_rag.sql_rag.config import SQLDatabaseConfig, SQLRAGConfig
 from haive.agents.rag.db_rag.sql_rag.engines import default_sql_engines
-from haive.core.engine.aug_llm import AugLLMConfig
-
 
 # For backward compatibility
 SQLDatabaseAgent = SQLRAGAgent

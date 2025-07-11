@@ -1,9 +1,12 @@
 # src/haive/agents/react_agent2/agent2.py
-from collections.abc import Callable
 import logging
-from typing import Any
 import uuid
+from collections.abc import Callable
+from typing import Any
 
+from haive.core.engine.agent.agent import Agent, register_agent
+from haive.core.graph.dynamic_graph_builder import DynamicGraph
+from haive.core.utils.message_utils import normalize_message, normalize_messages
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.tools import BaseTool, StructuredTool, Tool
@@ -12,10 +15,6 @@ from langgraph.prebuilt import ToolNode
 from pydantic import BaseModel
 
 from haive.agents.react_class.react_agent2.config2 import ReactAgentConfig
-from haive.core.engine.agent.agent import Agent, register_agent
-from haive.core.graph.dynamic_graph_builder import DynamicGraph
-from haive.core.utils.message_utils import normalize_message, normalize_messages
-
 
 # Set up logging
 logger = logging.getLogger(__name__)

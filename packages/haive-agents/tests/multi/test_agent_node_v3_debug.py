@@ -3,14 +3,15 @@
 import asyncio
 from typing import List
 
-# Import Agent for model_rebuild
-from haive.agents.base.agent import Agent
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
 from haive.core.schema.state_schema import StateSchema
 from langchain_core.messages import HumanMessage
 from pydantic import Field
+
+# Import Agent for model_rebuild
+from haive.agents.base.agent import Agent
+from haive.agents.simple.agent import SimpleAgent
 
 # Fix forward reference issue
 MultiAgentState.model_rebuild()

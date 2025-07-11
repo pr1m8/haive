@@ -7,7 +7,6 @@ from haive.agents.experiments.supervisor.component_2_tools import (
     SupervisorStateWithTools,
 )
 
-
 logger = logging.getLogger(__name__)
 
 

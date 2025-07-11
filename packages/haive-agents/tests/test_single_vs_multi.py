@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 """Test single agent vs multi-agent to understand serialization issue."""
 
+from langchain_core.messages import HumanMessage
+
 from haive.agents.multi.base import SequentialAgent
 from haive.agents.react.agent import ReactAgent
-from langchain_core.messages import HumanMessage
 
 # Test 1: Single ReactAgent
 

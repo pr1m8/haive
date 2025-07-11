@@ -1,9 +1,8 @@
 from typing import Any
 
+from agents.lats.models import Reflection
 from langchain_core.output_parsers import PydanticOutputParser
 from langchain_core.prompts import ChatPromptTemplate
-
-from agents.lats.models import Reflection
 
 
 def create_reflection_chain():
@@ -71,12 +70,11 @@ def format_messages_for_chain(messages: list[Any]) -> str:
 """
 Factory functions for creating LATS agents.
 """
-from langchain_core.tools import BaseTool
-
 from agents.lats.config import LATSAgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from haive.core.tools.search_tools import tavily_search_tool
+from langchain_core.tools import BaseTool
 
 
 def create_lats_agent(

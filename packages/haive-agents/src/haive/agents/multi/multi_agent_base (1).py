@@ -6,19 +6,18 @@ This module provides the abstract base class for multi-agent systems,
 enabling composition of multiple agents with various coordination patterns.
 """
 
-from abc import abstractmethod
 import logging
+from abc import abstractmethod
 from typing import Any, Literal
 
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.schema.agent_schema_composer import AgentSchemaComposer
 from langgraph.graph import END
 from langgraph.types import Command
 from pydantic import Field, PrivateAttr, model_validator
 
 from haive.agents.base.agent import Agent
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.schema.agent_schema_composer import AgentSchemaComposer
-
 
 logger = logging.getLogger(__name__)
 

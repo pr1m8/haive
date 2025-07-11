@@ -3,9 +3,8 @@
 
 from typing import Any, Dict, List, Optional
 
-from pydantic import Field
-
 from haive.core.schema.prebuilt.messages.messages_state import MessagesState
+from pydantic import Field
 
 
 class SelfDiscoveryState(MessagesState):

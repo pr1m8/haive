@@ -1,3 +1,11 @@
+from haive.core.engine.agent.agent import AgentArchitecture, AgentArchitectureConfig
+from haive.core.engine.aug_llm import AugLLMConfig
+from langgraph.graph import END, START
+from langgraph.types import Command
+
+# from haive.agents.reasoning_and_critique.self_discover.models import #Plan
+from pydantic import Field
+
 from haive.agents.reasoning_and_critique.self_discover.aug_llms import (
     adapt_chain,
     select_chain,
@@ -9,13 +17,6 @@ from haive.agents.reasoning_and_critique.self_discover.models import (
     AdaptedModules,
 )
 from haive.agents.reasoning_and_critique.self_discover.state import SelfDiscoverState
-from haive.core.engine.agent.agent import AgentArchitecture, AgentArchitectureConfig
-from haive.core.engine.aug_llm import AugLLMConfig
-from langgraph.graph import END, START
-from langgraph.types import Command
-
-# from haive.agents.reasoning_and_critique.self_discover.models import #Plan
-from pydantic import Field
 
 
 class SelfDiscoverAgentConfig(AgentArchitectureConfig):

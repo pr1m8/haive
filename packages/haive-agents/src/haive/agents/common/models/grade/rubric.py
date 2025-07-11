@@ -6,8 +6,9 @@ multiple criteria with individual scores and weights.
 
 from typing import Any
 
-from haive.agents.common.models.grade.base import Grade, GradeType
 from pydantic import BaseModel, Field, field_validator, model_validator
+
+from haive.agents.common.models.grade.base import Grade, GradeType
 
 
 class RubricCriterion(BaseModel):

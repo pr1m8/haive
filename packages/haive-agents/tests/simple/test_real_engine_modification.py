@@ -13,8 +13,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../../"))
 def test_real_simple_agent_without_modification():
     """Test real SimpleAgent with engine modification disabled."""
     try:
-        from haive.agents.simple.agent import SimpleAgent
         from haive.core.engine.aug_llm import AugLLMConfig
+
+        from haive.agents.simple.agent import SimpleAgent
 
     except Exception as e:
         return

@@ -6,11 +6,12 @@ import sys
 sys.path.insert(0, "/home/will/Projects/haive/backend/haive/packages/haive-agents/src")
 sys.path.insert(0, "/home/will/Projects/haive/backend/haive/packages/haive-core/src")
 
+from langchain_core.documents import Document
+
 from haive.agents.rag.corrective.agent_v2 import CorrectiveRAGAgentV2
 from haive.agents.rag.hyde.agent_v2 import HyDERAGAgentV2
 from haive.agents.rag.multi_query.agent import MultiQueryRAGAgent
 from haive.agents.rag.simple.agent import SimpleRAGAgent
-from langchain_core.documents import Document
 
 # Create test documents
 test_documents = [

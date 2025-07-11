@@ -4,8 +4,9 @@
 import operator
 from typing import Any
 
-from haive.agents.conversation.base.state import ConversationState
 from pydantic import Field, computed_field
+
+from haive.agents.conversation.base.state import ConversationState
 
 
 class DebateState(ConversationState):

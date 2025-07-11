@@ -9,6 +9,8 @@ from datetime import datetime, timedelta
 from enum import Enum
 from typing import Any
 
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+
 from haive.agents.common.models.task_analysis.base import (
     ComplexityType,
     PlanningRequirement,
@@ -23,7 +25,6 @@ from haive.agents.common.models.task_analysis.solvability import (
     SolvabilityBarrier,
     SolvabilityStatus,
 )
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 
 class AnalysisMethod(str, Enum):

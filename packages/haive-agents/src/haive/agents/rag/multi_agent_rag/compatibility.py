@@ -9,12 +9,13 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any
 
-from haive.agents.base.agent import Agent
 from haive.core.schema.compatibility import (
     ConverterRegistry,
     TypeAnalyzer,
 )
 from haive.core.schema.compatibility.reports import generate_report
+
+from haive.agents.base.agent import Agent
 
 from .agents import DocumentGradingAgent
 from .state import MultiAgentRAGState

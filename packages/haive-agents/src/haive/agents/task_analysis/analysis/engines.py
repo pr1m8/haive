@@ -1,13 +1,13 @@
 # src/haive/agents/task_analysis/analysis/engine.py
 
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+
 from haive.agents.task_analysis.analysis.prompts import (
     FEASIBILITY_ASSESSMENT_PROMPT,
     INTEGRATED_ANALYSIS_PROMPT,
     OPTIMIZATION_RECOMMENDATIONS_PROMPT,
 )
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
-
 
 # Integrated analysis engine
 IntegratedAnalyzerEngine = AugLLMConfig(

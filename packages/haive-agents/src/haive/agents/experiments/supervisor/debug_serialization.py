@@ -1,11 +1,12 @@
 """Debug what exactly is not serializable in the agent objects."""
 
 import ormsgpack
-from haive.agents.experiments.supervisor.agent_info import AgentInfo
-from haive.agents.react.agent import ReactAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from haive.tools.tools.search_tools import tavily_search_tool
+
+from haive.agents.experiments.supervisor.agent_info import AgentInfo
+from haive.agents.react.agent import ReactAgent
 
 
 def test_serialization(obj, name):

@@ -84,7 +84,6 @@ from haive.agents.common.models.task_analysis.visualization import (
     TaskComplexityVisualizer,
 )
 
-
 __all__ = [
     "BlockerType",
     "BreadthAnalysis",

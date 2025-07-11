@@ -1,11 +1,12 @@
 import asyncio
 
+from haive.core.utils.doc_utils import clean_and_format_text
+from langchain_core.documents import Document
+
 from haive.agents.document_modifiers.summarizer.map_branch.agent import SummarizerAgent
 from haive.agents.document_modifiers.summarizer.map_branch.config import (
     SummarizerAgentConfig,
 )
-from haive.core.utils.doc_utils import clean_and_format_text
-from langchain_core.documents import Document
 
 
 async def main():

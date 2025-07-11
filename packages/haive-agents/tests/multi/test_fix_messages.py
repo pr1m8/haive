@@ -122,13 +122,14 @@ SimpleAgentState.model_dump = fixed_model_dump
 ReactAgentState.model_dump = fixed_model_dump
 
 
+from haive.core.engine.aug_llm import AugLLMConfig
+from langchain_core.tools import tool
+
 from haive.agents.multi.base import SequentialAgent
 
 # Now test with the actual agents
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
-from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.tools import tool
 
 
 @tool

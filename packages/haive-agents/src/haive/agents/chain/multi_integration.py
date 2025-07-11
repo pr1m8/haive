@@ -6,13 +6,12 @@ Makes ChainAgent work seamlessly with the multi-agent framework.
 import logging
 from typing import Any, Callable, Dict, List, Optional
 
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from pydantic import Field
 
 from haive.agents.base.agent import Agent
 from haive.agents.chain.chain_agent_simple import ChainAgent, NodeLike
 from haive.agents.multi.base import ExecutionMode, MultiAgent
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-
 
 logger = logging.getLogger(__name__)
 

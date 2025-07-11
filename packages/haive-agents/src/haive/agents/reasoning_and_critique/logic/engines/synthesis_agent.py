@@ -1,8 +1,9 @@
 # src/haive/agents/reasoning/synthesis_agent.py
 
-from haive.agents.reasoning_and_critique.logic.models import ReasoningReport
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+
+from haive.agents.reasoning_and_critique.logic.models import ReasoningReport
 
 REASONING_SYNTHESIS_PROMPT = ChatPromptTemplate.from_messages(
     [

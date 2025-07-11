@@ -8,14 +8,15 @@ import asyncio
 import logging
 from typing import List
 
-from haive.agents.react.agent import ReactAgent
-from haive.agents.simple.agent import SimpleAgent
-from haive.agents.supervisor.agent import SupervisorAgent, SupervisorState
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import LLMConfig
 from langchain_core.messages import AIMessage, HumanMessage
 from rich.console import Console
 from rich.panel import Panel
+
+from haive.agents.react.agent import ReactAgent
+from haive.agents.simple.agent import SimpleAgent
+from haive.agents.supervisor.agent import SupervisorAgent, SupervisorState
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

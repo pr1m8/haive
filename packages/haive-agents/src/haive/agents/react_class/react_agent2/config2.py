@@ -3,7 +3,6 @@ from collections.abc import Callable
 from datetime import datetime
 from typing import Any
 
-from haive.agents.react_class.react_agent2.state2 import ReactAgentState
 from haive.core.engine.agent.agent import AgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
@@ -12,6 +11,8 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import BaseTool, StructuredTool, Tool
 from pydantic import BaseModel, Field, field_validator
+
+from haive.agents.react_class.react_agent2.state2 import ReactAgentState
 
 # =============================================
 # React Agent Config

@@ -7,8 +7,9 @@ satisfaction ratings, and custom ordinal scales.
 from enum import Enum
 from typing import Any
 
-from haive.agents.common.models.grade.base import Grade, GradeType
 from pydantic import Field, field_validator, model_validator
+
+from haive.agents.common.models.grade.base import Grade, GradeType
 
 
 class LikertScale(str, Enum):

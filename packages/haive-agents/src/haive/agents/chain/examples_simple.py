@@ -3,13 +3,14 @@
 Shows how easy it is to build chains.
 """
 
-from haive.agents.chain import ChainAgent, flow, flow_with_edges
-from haive.agents.rag.simple.agent import SimpleRAGAgent
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
+
+from haive.agents.chain import ChainAgent, flow, flow_with_edges
+from haive.agents.rag.simple.agent import SimpleRAGAgent
+from haive.agents.simple.agent import SimpleAgent
 
 
 # Example 1: Simplest possible - just functions

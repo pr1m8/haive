@@ -5,7 +5,6 @@ from haive.agents.document_modifiers.kg.kg_map_merge.utils import (
     visualize_graph,
 )
 
-
 if __name__ == "__main__":
 
     async def main():

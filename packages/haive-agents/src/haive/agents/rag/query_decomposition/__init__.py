@@ -11,7 +11,6 @@ from .agent import (
     QueryDecomposerAgent,
 )
 
-
 __all__ = [
     "AdaptiveQueryDecomposerAgent",
     "ContextualQueryDecomposerAgent",

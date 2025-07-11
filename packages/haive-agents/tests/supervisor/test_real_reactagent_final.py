@@ -12,9 +12,10 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../src"))
 
 
 try:
-    from haive.agents.react.agent import ReactAgent
     from langchain_core.messages import HumanMessage
     from langchain_core.tools import BaseTool
+
+    from haive.agents.react.agent import ReactAgent
 
 except ImportError as e:
     sys.exit(1)

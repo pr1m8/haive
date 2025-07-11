@@ -1,9 +1,8 @@
 from typing import Any
 
+from agents.llm_compiler.models import CompilerPlan, CompilerStep
 from langchain_core.messages import BaseMessage
 from pydantic import BaseModel, Field
-
-from agents.llm_compiler.models import CompilerPlan, CompilerStep
 
 
 # State model for LLMCompiler agent

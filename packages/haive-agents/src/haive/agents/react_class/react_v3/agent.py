@@ -7,7 +7,6 @@ This module implements a tool-using agent that follows the ReAct pattern
 import logging
 from typing import Any
 
-from haive.agents.react_class.react_v3.config import ReactAgentConfig
 from haive.core.engine.agent.agent import Agent, register_agent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
@@ -15,6 +14,8 @@ from haive.core.schema.schema_composer import SchemaComposer
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, ToolMessage
 from langgraph.graph import END, StateGraph
 from pydantic import BaseModel
+
+from haive.agents.react_class.react_v3.config import ReactAgentConfig
 
 # Set up logging
 logger = logging.getLogger(__name__)

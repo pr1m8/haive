@@ -4,10 +4,11 @@ This example demonstrates how to use the TokenTrackingAgent base class to
 automatically track token usage and costs for LLM-based agents.
 """
 
-from haive.agents.base import TokenTrackingAgent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.graph.state_graph.state_graph import StateGraph
 from haive.core.llm import LLMConfig
+
+from haive.agents.base import TokenTrackingAgent
 
 
 class CostAwareAssistant(TokenTrackingAgent):

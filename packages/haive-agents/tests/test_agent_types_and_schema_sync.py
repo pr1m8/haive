@@ -12,9 +12,6 @@ from typing import Any, Dict, List, Optional, Type
 from unittest.mock import MagicMock, Mock, patch
 
 import pytest
-from haive.agents.base.agent import Agent
-from haive.agents.rag.agent import SimpleRAGAgent
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.engine.base import Engine, EngineRetriever
 from haive.core.schema.auto_compatibility import AutoCompatibilitySystem
@@ -23,6 +20,10 @@ from haive.core.schema.state import MessagesState, StateSchema
 from langchain_core.documents import Document
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 from pydantic import BaseModel, Field
+
+from haive.agents.base.agent import Agent
+from haive.agents.rag.agent import SimpleRAGAgent
+from haive.agents.simple.agent import SimpleAgent
 
 
 # Custom Agent Types for Testing

@@ -13,8 +13,9 @@ sys.path.insert(0, "/home/will/Projects/haive/backend/haive/packages/haive-agent
 def test_message_flow():
     """Test that messages flow logically and sound right."""
 
-    from haive.agents.simple.agent import SimpleAgent
     from langchain_core.messages import HumanMessage
+
+    from haive.agents.simple.agent import SimpleAgent
 
     timestamp = datetime.now().strftime("%H%M%S")
     thread_id = f"flow_test_{timestamp}"

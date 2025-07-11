@@ -1,6 +1,8 @@
 import logging
 from typing import Any
 
+from haive.core.engine.agent.agent import Agent, AgentConfig, register_agent
+from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.documents import Document
 from langgraph.constants import Send
 from langgraph.graph import END, START
@@ -19,9 +21,6 @@ from haive.agents.document_modifiers.kg.kg_map_merge.models import (
     KnowledgeGraph,
 )
 from haive.agents.document_modifiers.kg.kg_map_merge.state import KnowledgeGraphState
-from haive.core.engine.agent.agent import Agent, AgentConfig, register_agent
-from haive.core.engine.aug_llm import AugLLMConfig
-
 
 logger = logging.getLogger(__name__)
 

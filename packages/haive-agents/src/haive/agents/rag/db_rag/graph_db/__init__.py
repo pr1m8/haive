@@ -118,7 +118,6 @@ from haive.agents.rag.db_rag.graph_db.state import (
     OverallState,
 )
 
-
 # Backward compatibility aliases
 GraphDBAgent = GraphDBRAGAgent
 """Alias for backward compatibility. Use GraphDBRAGAgent instead."""

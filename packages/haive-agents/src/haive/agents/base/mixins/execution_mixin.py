@@ -4,10 +4,8 @@ import asyncio
 import logging
 import uuid
 from collections.abc import AsyncGenerator, Generator
-from typing import Any, TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, Any, cast
 
-# Import debug utilities
-from haive.agents.base.debug_utils import debug_logger, get_agent_debugger
 from haive.core.config.runnable import RunnableConfigManager
 from haive.core.persistence.handlers import (
     prepare_merged_input,
@@ -17,6 +15,9 @@ from langchain_core.messages import BaseMessage, HumanMessage
 from langchain_core.output_parsers.base import BaseOutputParser
 from langchain_core.runnables import RunnableConfig
 from pydantic import BaseModel
+
+# Import debug utilities
+from haive.agents.base.debug_utils import debug_logger, get_agent_debugger
 
 if TYPE_CHECKING:
     from haive.agents.base.mixins.agent_protocol import AgentProtocol
@@ -74,8 +75,8 @@ class ExecutionMixin:
                         prepared_input[field_name] = input_data
                 # Fallback to first field
                 elif schema_fields and "messages" not in schema_fields:
-                        first_field = next(iter(schema_fields))
-                        prepared_input[first_field] = input_data
+                    first_field = next(iter(schema_fields))
+                    prepared_input[first_field] = input_data
 
                 # Always populate messages field if present
                 if "messages" in schema_fields:
@@ -83,7 +84,7 @@ class ExecutionMixin:
 
                 # If no fields were populated (e.g. only messages field)
                 if not prepared_input and "messages" not in schema_fields:
-                        prepared_input = {"input": input_data}
+                    prepared_input = {"input": input_data}
                 elif not prepared_input and "messages" in schema_fields:
                     pass  # messages field was already handled
 

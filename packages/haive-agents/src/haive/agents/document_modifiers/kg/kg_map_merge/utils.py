@@ -1,12 +1,12 @@
-from langchain_core.documents import Document
-from langchain_neo4j.graphs.graph_document import GraphDocument
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+from langchain_core.documents import Document
+from langchain_neo4j.graphs.graph_document import GraphDocument
 
 from haive.agents.document_modifiers.kg.kg_map_merge.agent import StructuredKGAgent
 from haive.agents.document_modifiers.kg.kg_map_merge.config import ParallelKGAgentConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 
 def visualize_graph(
@@ -102,7 +102,6 @@ def visualize_graph(
 
 
 from langchain_community.graphs.graph_document import GraphDocument, Node, Relationship
-
 
 a = GraphDocument(
     nodes=[

@@ -10,6 +10,8 @@ This implementation follows the LangGraph pattern using:
 
 from typing import List
 
+from langgraph.graph import END
+
 from haive.agents.multi.enhanced_base import BuildMode, MultiAgentBase
 
 # Import existing p_and_e components
@@ -22,7 +24,6 @@ from haive.agents.planning.p_and_e.prompts import (
 from haive.agents.planning.p_and_e.state import PlanExecuteState
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
-from langgraph.graph import END
 
 # ============================================================================
 # ROUTING FUNCTIONS (LangGraph Pattern)

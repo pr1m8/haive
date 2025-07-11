@@ -1,3 +1,11 @@
+from haive.core.engine.agent.agent import Agent, register_agent
+from haive.core.engine.aug_llm import compose_runnable
+from langchain_core.documents import Document
+from langchain_experimental.graph_transformers import LLMGraphTransformer
+from langchain_neo4j.graphs.graph_document import GraphDocument, Relationship
+from langgraph.graph import END, START
+from langgraph.types import Command, Send
+
 from haive.agents.document_modifiers.kg.kg_base.models import GraphTransformer
 from haive.agents.document_modifiers.kg.kg_map_merge.config import ParallelKGAgentConfig
 from haive.agents.document_modifiers.kg.kg_map_merge.engines import (
@@ -6,13 +14,6 @@ from haive.agents.document_modifiers.kg.kg_map_merge.engines import (
     schema_extraction_engine,
 )
 from haive.agents.document_modifiers.kg.kg_map_merge.state import ParallelKGState
-from haive.core.engine.agent.agent import Agent, register_agent
-from haive.core.engine.aug_llm import compose_runnable
-from langchain_core.documents import Document
-from langchain_experimental.graph_transformers import LLMGraphTransformer
-from langchain_neo4j.graphs.graph_document import GraphDocument, Relationship
-from langgraph.graph import END, START
-from langgraph.types import Command, Send
 
 
 @register_agent(ParallelKGAgentConfig)

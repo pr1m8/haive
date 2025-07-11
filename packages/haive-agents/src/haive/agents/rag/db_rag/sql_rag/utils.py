@@ -19,7 +19,6 @@ Example:
 
 from typing import Any
 
-from haive.agents.rag.db_rag.sql_rag.config import SQLDatabaseConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import LLMConfig
 from langchain_community.agent_toolkits import SQLDatabaseToolkit
@@ -28,6 +27,8 @@ from langchain_core.runnables import RunnableLambda, RunnableWithFallbacks
 from langchain_core.tools import BaseTool
 from langchain_openai import AzureChatOpenAI
 from langgraph.prebuilt import ToolNode
+
+from haive.agents.rag.db_rag.sql_rag.config import SQLDatabaseConfig
 
 
 def create_sql_toolkit(

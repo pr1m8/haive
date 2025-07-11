@@ -1,13 +1,14 @@
 import operator
 from typing import Annotated, Literal
 
-from haive.agents.document_modifiers.complex_extraction.utils import (
-    add_or_overwrite_messages,
-)
 from langchain_core.messages import AnyMessage
 
 # from
 from pydantic import BaseModel, Field
+
+from haive.agents.document_modifiers.complex_extraction.utils import (
+    add_or_overwrite_messages,
+)
 
 
 class ComplexExtractionInput(BaseModel):

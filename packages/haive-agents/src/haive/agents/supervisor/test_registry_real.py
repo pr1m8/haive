@@ -19,8 +19,9 @@ async def create_real_agents():
     """Create real ReactAgents for testing."""
 
     try:
-        from haive.agents.react.agent import ReactAgent
         from haive.core.engine.aug_llm import AugLLMConfig
+
+        from haive.agents.react.agent import ReactAgent
 
         # Create research agent
         research_engine = AugLLMConfig(

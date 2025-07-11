@@ -6,10 +6,9 @@ foundation for all document processing agents in the haive framework.
 
 from typing import List, Optional
 
+from haive.core.schema import StateSchema
 from langchain_core.documents import Document
 from pydantic import Field, computed_field, field_validator, model_validator
-
-from haive.core.schema import StateSchema
 
 
 class DocumentModifierState(StateSchema):

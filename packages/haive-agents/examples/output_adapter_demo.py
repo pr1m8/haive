@@ -2,8 +2,9 @@
 
 from typing import Any, Dict, List, Optional
 
-from haive.agents.base.mixins.output_mixin import OutputAdapter, OutputMixin
 from pydantic import BaseModel, Field
+
+from haive.agents.base.mixins.output_mixin import OutputAdapter, OutputMixin
 
 
 # Define structured output models

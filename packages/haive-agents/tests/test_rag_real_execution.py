@@ -6,10 +6,9 @@ and LLM interactions (without mocks).
 
 from typing import Any, Dict, List
 
-from langchain_core.documents import Document
 import pytest
-
 from haive.core.models.llm.base import AzureLLMConfig
+from langchain_core.documents import Document
 
 
 class TestRealRAGExecution:

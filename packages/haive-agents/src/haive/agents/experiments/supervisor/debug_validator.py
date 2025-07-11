@@ -2,13 +2,14 @@
 
 from typing import Optional
 
+from pydantic import Field, ValidationInfo, field_validator
+
 from haive.agents.experiments.supervisor.component_2_tools import (
     SupervisorStateWithTools,
 )
 from haive.agents.experiments.supervisor.test_component_1_state import (
     create_real_agents,
 )
-from pydantic import Field, ValidationInfo, field_validator
 
 
 def test_validator_access():

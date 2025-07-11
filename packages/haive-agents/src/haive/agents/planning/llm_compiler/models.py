@@ -6,10 +6,9 @@ integrating with the base Step and Plan models from the plan_and_execute agent.
 
 from typing import Any
 
+from agents.plan_and_execute.models import Plan, Step
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel, Field
-
-from agents.plan_and_execute.models import Plan, Step
 
 
 class TaskDependency(BaseModel):

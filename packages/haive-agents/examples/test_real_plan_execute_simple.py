@@ -6,12 +6,13 @@ This test actually runs the system to verify shared fields work correctly.
 
 import asyncio
 
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.schema.agent_schema_composer import BuildMode
+
 from haive.agents.multi.enhanced_base import create_plan_execute_multi_agent
 from haive.agents.planning.p_and_e.models import Plan, PlanStep
 from haive.agents.planning.p_and_e.state import PlanExecuteState
 from haive.agents.simple.agent import SimpleAgent
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.schema.agent_schema_composer import BuildMode
 
 
 async def main():

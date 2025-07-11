@@ -8,10 +8,11 @@ import asyncio
 import logging
 from typing import Any, Callable, Dict, List, Optional
 
-from haive.agents.react.agent import ReactAgent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import BaseMessage
 from pydantic import Field
+
+from haive.agents.react.agent import ReactAgent
 
 from .dynamic_state import DynamicSupervisorState
 

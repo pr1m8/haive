@@ -22,8 +22,9 @@ Example:
 import logging
 import re
 
-from haive.agents.document_modifiers.tnt.state import TaxonomyGenerationState
 from langchain_core.documents import Document
+
+from haive.agents.document_modifiers.tnt.state import TaxonomyGenerationState
 
 logger = logging.getLogger(__name__)
 

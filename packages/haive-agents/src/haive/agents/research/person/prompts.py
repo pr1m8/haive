@@ -2,7 +2,6 @@
 
 from langchain_core.prompts import ChatPromptTemplate
 
-
 # Prompt for extracting information from research notes
 EXTRACTION_PROMPT = ChatPromptTemplate.from_template(
     """Your task is to take notes gathered from web research and extract them into the following schema.

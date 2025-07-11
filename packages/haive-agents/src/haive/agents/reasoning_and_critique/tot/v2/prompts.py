@@ -1,6 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate
 
-
 # Expansion prompts - all fields must exist in ToTState
 expansion_prompt = ChatPromptTemplate.from_messages(
     [

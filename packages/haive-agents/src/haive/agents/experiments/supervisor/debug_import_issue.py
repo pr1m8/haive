@@ -7,6 +7,7 @@ def test_import_paths():
 
     # Import AgentInfo two ways
     from agent_info import AgentInfo as AgentInfo1
+
     from haive.agents.experiments.supervisor.agent_info import AgentInfo as AgentInfo2
 
     # Create instances

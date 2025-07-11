@@ -26,6 +26,8 @@ Example:
 import random
 from typing import Any
 
+from haive.core.engine.agent.agent import Agent, AgentConfig, register_agent
+from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.runnables import (
     RunnableConfig,
     RunnableLambda,
@@ -46,8 +48,6 @@ from haive.agents.document_modifiers.tnt.engines import (
 )
 from haive.agents.document_modifiers.tnt.state import TaxonomyGenerationState
 from haive.agents.document_modifiers.tnt.utils import format_docs, format_taxonomy
-from haive.core.engine.agent.agent import Agent, AgentConfig, register_agent
-from haive.core.engine.aug_llm import AugLLMConfig
 
 
 # FR

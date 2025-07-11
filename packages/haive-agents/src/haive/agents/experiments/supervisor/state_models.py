@@ -4,16 +4,15 @@ This module defines the core state schemas and models used by supervisors
 to manage agents, tools, and execution context.
 """
 
-from datetime import datetime
 import json
 import pickle
+from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 
+from haive.core.schema.state_schema import StateSchema
 from langchain_core.messages import BaseMessage
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel, ConfigDict, Field, model_validator
-
-from haive.core.schema.state_schema import StateSchema
 
 
 class AgentMetadata(BaseModel):

@@ -11,18 +11,18 @@ This test suite validates:
 from typing import Any, Dict, List, Optional
 from unittest.mock import MagicMock, Mock, patch
 
+import pytest
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.engine.base import EngineRetriever
 from langchain_core.documents import Document
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, ToolMessage
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
-import pytest
 
 from haive.agents.multi.base import SequentialAgent
 from haive.agents.rag.agent import SimpleRAGAgent
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.engine.base import EngineRetriever
 
 
 # Test Models

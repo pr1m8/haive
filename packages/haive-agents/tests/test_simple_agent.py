@@ -1,10 +1,10 @@
 """Test that the base Agent class is simple and doesn't use AgentConfig."""
 
-from langgraph.graph import END
 import pytest
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from langgraph.graph import END
 
 from haive.agents.base import Agent
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
 
 class SimpleTestAgent(Agent):

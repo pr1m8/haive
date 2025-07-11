@@ -1,11 +1,10 @@
 from collections.abc import Sequence
 from typing import Annotated
 
+from haive.core.schema.state_schema import StateSchema
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 from langgraph.graph import add_messages
 from pydantic import Field
-
-from haive.core.schema.state_schema import StateSchema
 
 
 class SimpleAgentState(StateSchema):

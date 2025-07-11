@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 """Test to isolate the msgpack serialization issue."""
 
+from langchain_core.messages import HumanMessage
+
 from haive.agents.multi.base import SequentialAgent
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
-from langchain_core.messages import HumanMessage
 
 # Create agents with tools already configured
 react_agent = ReactAgent(name="React Agent")

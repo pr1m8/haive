@@ -161,7 +161,6 @@ from typing import (
 
 from typing_extensions import NotRequired, TypeAlias, TypedDict
 
-
 if TYPE_CHECKING:
     from haive.agents.conversation.base.agent import BaseConversationAgent
     from haive.agents.conversation.base.state import ConversationState
@@ -169,7 +168,6 @@ if TYPE_CHECKING:
 # Core imports
 from haive.agents.conversation.directed.agent import DirectedConversation
 from haive.agents.conversation.directed.state import DirectedState
-
 
 # Type aliases for directed conversations
 DirectedParticipant: TypeAlias = Any  # Agent with conversation capabilities

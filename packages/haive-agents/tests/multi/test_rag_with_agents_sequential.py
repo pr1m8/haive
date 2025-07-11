@@ -9,9 +9,6 @@ This test demonstrates:
 import asyncio
 from typing import List
 
-from haive.agents.base.agent import Agent
-from haive.agents.rag.base.agent import BaseRAGAgent
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.engine.vectorstore.vectorstore import (
     VectorStoreConfig,
@@ -24,6 +21,10 @@ from haive.core.schema.state_schema import StateSchema
 from langchain_core.documents import Document
 from langchain_core.messages import HumanMessage
 from pydantic import Field
+
+from haive.agents.base.agent import Agent
+from haive.agents.rag.base.agent import BaseRAGAgent
+from haive.agents.simple.agent import SimpleAgent
 
 # Fix forward reference issue
 MultiAgentState.model_rebuild()

@@ -1,10 +1,11 @@
 # src/haive/agents/reasoning/bias_detector.py
 
+from haive.core.engine.aug_llm import AugLLMConfig
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+
 from haive.agents.reasoning_and_critique.logic.models import (
     ReasoningAnalysis,
 )
-from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 BIAS_DETECTION_PROMPT = ChatPromptTemplate.from_messages(
     [

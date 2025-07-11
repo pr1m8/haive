@@ -3,10 +3,11 @@
 
 import logging
 
-from haive.agents.conversation.directed.agent import DirectedConversation
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
+
+from haive.agents.conversation.directed.agent import DirectedConversation
+from haive.agents.simple.agent import SimpleAgent
 
 # Set logging
 logging.getLogger("haive").setLevel(logging.WARNING)

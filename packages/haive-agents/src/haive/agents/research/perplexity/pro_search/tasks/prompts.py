@@ -5,7 +5,6 @@ These prompts guide task decomposition, execution planning, and adaptive replann
 
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-
 # ============================================================================
 # Initial Task Decomposition Prompt
 # ============================================================================
@@ -352,9 +351,8 @@ loop_condition_prompt = ChatPromptTemplate.from_messages(
 
 def create_decomposition_aug_llm(llm_config):
     """Create AugLLMConfig for task decomposition."""
-    from recursive_planning_models import TaskDecomposition
-
     from haive.core.engine.aug_llm import AugLLMConfig
+    from recursive_planning_models import TaskDecomposition
 
     return AugLLMConfig(
         llm_config=llm_config,
@@ -375,9 +373,8 @@ def create_decomposition_aug_llm(llm_config):
 
 def create_execution_planning_aug_llm(llm_config):
     """Create AugLLMConfig for execution planning."""
-    from recursive_planning_models import ExecutionPlan
-
     from haive.core.engine.aug_llm import AugLLMConfig
+    from recursive_planning_models import ExecutionPlan
 
     return AugLLMConfig(
         llm_config=llm_config,
@@ -399,9 +396,8 @@ def create_execution_planning_aug_llm(llm_config):
 
 def create_replanning_analysis_aug_llm(llm_config):
     """Create AugLLMConfig for replanning analysis."""
-    from recursive_planning_models import ReplanningAnalysis
-
     from haive.core.engine.aug_llm import AugLLMConfig
+    from recursive_planning_models import ReplanningAnalysis
 
     return AugLLMConfig(
         llm_config=llm_config,

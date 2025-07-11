@@ -1,6 +1,6 @@
 import ast
-from collections.abc import Iterator, Sequence
 import re
+from collections.abc import Iterator, Sequence
 from typing import (
     Any,
 )
@@ -11,7 +11,6 @@ from langchain_core.output_parsers.transform import BaseTransformOutputParser
 from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import BaseTool
 from typing_extensions import TypedDict
-
 
 THOUGHT_PATTERN = r"Thought: ([^\n]*)"
 ACTION_PATTERN = r"\n*(\d+)\. (\w+)\((.*)\)(\s*#\w+\n)?"

@@ -55,7 +55,6 @@ from .mixins import ExecutionMixin, PersistenceMixin, StateMixin
 from .serialization_mixin import SerializationMixin
 from .types import AgentInput, AgentOutput, AgentState
 
-
 __all__ = [
     "Agent",
     "AgentInput",

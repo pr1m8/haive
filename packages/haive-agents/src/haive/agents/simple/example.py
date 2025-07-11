@@ -6,10 +6,6 @@ This script demonstrates how to create and use SimpleAgent with custom state sch
 import logging
 import uuid
 
-from haive.agents.simple import (
-    SimpleAgent,
-    SimpleAgentConfig,
-)
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.messages import BaseMessage
@@ -22,6 +18,11 @@ from rich.console import Console
 from rich.logging import RichHandler
 from rich.panel import Panel
 from rich.traceback import install as install_rich_traceback
+
+from haive.agents.simple import (
+    SimpleAgent,
+    SimpleAgentConfig,
+)
 
 # Install rich traceback for better error display
 install_rich_traceback(show_locals=True, width=120, suppress=[])

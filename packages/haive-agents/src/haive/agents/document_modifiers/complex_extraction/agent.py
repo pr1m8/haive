@@ -47,10 +47,11 @@ See Also:
     - :class:`~haive.agents.document_modifiers.complex_extraction.models.RetryStrategy`: Retry strategy configuration
 """
 
-from collections.abc import Callable, Sequence
 import logging
+from collections.abc import Callable, Sequence
 from typing import Any, Dict, List, Optional, Union
 
+from haive.core.engine.agent.agent import Agent, register_agent
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import (
     AIMessage,
@@ -77,8 +78,6 @@ from haive.agents.document_modifiers.complex_extraction.utils import (
     default_aggregator,
     encode,
 )
-from haive.core.engine.agent.agent import Agent, register_agent
-
 
 logger = logging.getLogger(__name__)
 

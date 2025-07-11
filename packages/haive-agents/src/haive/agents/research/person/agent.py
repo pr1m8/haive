@@ -58,6 +58,12 @@ import logging
 import os
 from typing import Any, Literal, Optional, cast
 
+# Import agent base classes
+from haive.core.engine.agent.agent import Agent, register_agent
+from langchain_core.runnables import RunnableConfig
+from langgraph.graph import END, START, StateGraph
+from pydantic import create_model
+
 # Import agent specific modules
 from haive.agents.research.person.config import PersonResearchAgentConfig
 from haive.agents.research.person.models import Queries, ReflectionOutput
@@ -77,12 +83,6 @@ from haive.agents.research.person.utils import (
     format_all_notes,
     get_config_from_runnable_config,
 )
-
-# Import agent base classes
-from haive.core.engine.agent.agent import Agent, register_agent
-from langchain_core.runnables import RunnableConfig
-from langgraph.graph import END, START, StateGraph
-from pydantic import create_model
 
 # Set up logging
 logger = logging.getLogger(__name__)

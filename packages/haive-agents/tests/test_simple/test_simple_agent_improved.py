@@ -3,7 +3,6 @@
 import uuid
 from typing import Any, Dict, List, Optional, Sequence, Union
 
-from haive.agents.simple import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.node.parser_node_config import ParserNodeConfig
@@ -14,6 +13,8 @@ from langchain_core.tools import tool
 from langgraph.graph import END, START
 from langgraph.types import Command, Send
 from pydantic import BaseModel, Field
+
+from haive.agents.simple import SimpleAgent
 
 
 # Test schemas

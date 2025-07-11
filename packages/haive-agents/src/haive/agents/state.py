@@ -1,12 +1,10 @@
 import logging
 from typing import Any
 
+from agents.web_nav.models import BBox, Prediction
 from langchain_core.messages import BaseMessage
 from playwright.async_api import Page
 from pydantic import BaseModel, ConfigDict, Field, field_validator
-
-from agents.web_nav.models import BBox, Prediction
-
 
 # -----------------------------------------------------------------------------
 # Debugging Utility

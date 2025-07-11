@@ -3,6 +3,12 @@
 
 from typing import List
 
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.tools.tools.search_tools import tavily_search_tool
+from langchain_core.messages import HumanMessage
+from langchain_core.tools import tool
+from pydantic import BaseModel, Field
+
 # Import our integrated supervisor
 from haive.agents.experiments.supervisor.integrated_supervisor_with_handoff import (
     IntegratedSupervisorWithHandoff,
@@ -10,11 +16,6 @@ from haive.agents.experiments.supervisor.integrated_supervisor_with_handoff impo
 from haive.agents.experiments.supervisor.test_registry_setup import AgentRegistry
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.tools.tools.search_tools import tavily_search_tool
-from langchain_core.messages import HumanMessage
-from langchain_core.tools import tool
-from pydantic import BaseModel, Field
 
 
 # Define Essay structure for essay writer

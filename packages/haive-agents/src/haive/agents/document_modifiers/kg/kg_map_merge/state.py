@@ -1,15 +1,16 @@
 import operator
 from typing import Annotated, Literal
 
+from langchain_community.graphs.graph_document import GraphDocument
+from langchain_core.documents import Document
+from pydantic import BaseModel, Field
+
 # Import models
 from haive.agents.document_modifiers.kg.kg_map_merge.models import (
     EntityNode,
     EntityRelationship,
     KnowledgeGraph,
 )
-from langchain_community.graphs.graph_document import GraphDocument
-from langchain_core.documents import Document
-from pydantic import BaseModel, Field
 
 
 class KnowledgeGraphState(BaseModel):

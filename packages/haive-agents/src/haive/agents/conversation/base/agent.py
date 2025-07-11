@@ -23,9 +23,6 @@ particularly the `select_speaker` method that defines the conversation pattern.
 from abc import abstractmethod
 from typing import Any
 
-from haive.agents.base.agent import Agent
-from haive.agents.conversation.base.state import ConversationState
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.logging.rich_logger import LogLevel, get_logger
@@ -33,6 +30,10 @@ from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, System
 from langgraph.graph import END, START
 from langgraph.types import Command
 from pydantic import Field, PrivateAttr, model_validator
+
+from haive.agents.base.agent import Agent
+from haive.agents.conversation.base.state import ConversationState
+from haive.agents.simple.agent import SimpleAgent
 
 logger = get_logger(__name__)
 logger.set_level(LogLevel.WARNING)

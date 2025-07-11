@@ -3,7 +3,6 @@ import logging
 import platform
 from typing import Any
 
-
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)

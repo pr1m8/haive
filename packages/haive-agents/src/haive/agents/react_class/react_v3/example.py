@@ -13,15 +13,14 @@ import sys
 import time
 
 import httpx
+from haive.core.schema.schema_composer import SchemaComposer
+from haive.core.utils.pydantic_utils import display_code, pretty_print
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import StructuredTool, Tool
 from langgraph.pregel import RetryPolicy
 from pydantic import BaseModel, Field
 
 from haive.agents.react_class.react_v3.agent import ReactAgent
-from haive.core.schema.schema_composer import SchemaComposer
-from haive.core.utils.pydantic_utils import display_code, pretty_print
-
 
 # Configure logging
 logging.basicConfig(

@@ -2,12 +2,11 @@
 
 from collections.abc import Callable
 
-from langchain_core.prompts import ChatPromptTemplate
-
 from agents.tot.modular.agent import ToTAgent
 from agents.tot.modular.config import ToTAgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
+from langchain_core.prompts import ChatPromptTemplate
 
 
 def create_tot_agent(

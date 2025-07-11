@@ -4,9 +4,10 @@ Tests the improved HyDERAGAgentV2 with proper hypothetical document generation.
 """
 
 import pytest
-from haive.agents.rag.hyde.agent_v2 import HyDERAGAgentV2
 from haive.core.fixtures.documents import conversation_documents
 from haive.core.models.llm.base import AzureLLMConfig
+
+from haive.agents.rag.hyde.agent_v2 import HyDERAGAgentV2
 
 
 class TestHyDERAGAgentV2:

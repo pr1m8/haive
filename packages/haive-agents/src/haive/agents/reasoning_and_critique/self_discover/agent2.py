@@ -2,6 +2,13 @@
 
 import logging
 
+from haive.core.engine.agent.agent import Agent, register_agent
+from haive.core.graph.dynamic_graph_builder import DynamicGraph
+from langchain_core.messages import AIMessage
+from langchain_core.prompts import ChatPromptTemplate
+from langgraph.graph import END
+from langgraph.types import Command
+
 from haive.agents.reasoning_and_critique.self_discover.config import (
     SelfDiscoverAgentConfig,
 )
@@ -12,12 +19,6 @@ from haive.agents.reasoning_and_critique.self_discover.models import (
     ReasoningStructure,
 )
 from haive.agents.reasoning_and_critique.self_discover.state import SelfDiscoverState
-from haive.core.engine.agent.agent import Agent, register_agent
-from haive.core.graph.dynamic_graph_builder import DynamicGraph
-from langchain_core.messages import AIMessage
-from langchain_core.prompts import ChatPromptTemplate
-from langgraph.graph import END
-from langgraph.types import Command
 
 # Set up logging
 logger = logging.getLogger(__name__)

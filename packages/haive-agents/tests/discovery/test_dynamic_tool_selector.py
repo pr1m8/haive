@@ -8,9 +8,9 @@ import asyncio
 from typing import Any, Dict, List, Optional
 from unittest.mock import AsyncMock, MagicMock, Mock, patch
 
+import pytest
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 from langchain_core.tools import BaseTool, StructuredTool
-import pytest
 
 from haive.agents.discovery.dynamic_tool_selector import (
     ContextAwareSelector,

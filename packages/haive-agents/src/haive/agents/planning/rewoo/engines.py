@@ -4,11 +4,9 @@ This module defines the LLM configurations for the planner and solver
 components of the ReWOO agent.
 """
 
-from langchain_core.prompts import ChatPromptTemplate
-
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
-
+from langchain_core.prompts import ChatPromptTemplate
 
 # Planner prompt template that takes a task and available tools
 planner_prompt = ChatPromptTemplate.from_messages(

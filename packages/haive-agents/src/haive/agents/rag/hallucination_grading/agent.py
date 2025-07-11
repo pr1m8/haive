@@ -7,8 +7,6 @@ Can be plugged into any workflow with compatible I/O schemas.
 import logging
 from typing import Any, Dict, List, Literal, Optional
 
-from haive.agents.base.agent import Agent
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.agent_node import AgentNodeConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
@@ -16,6 +14,9 @@ from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field
+
+from haive.agents.base.agent import Agent
+from haive.agents.simple.agent import SimpleAgent
 
 logger = logging.getLogger(__name__)
 

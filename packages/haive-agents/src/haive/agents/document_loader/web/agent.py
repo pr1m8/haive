@@ -4,9 +4,10 @@ This module provides a specialized document loader agent for loading
 documents from web URLs.
 """
 
-from haive.agents.document_loader.base.agent import DocumentLoaderAgent
 from haive.core.engine.document_loader import create_web_loader_engine
 from pydantic import Field
+
+from haive.agents.document_loader.base.agent import DocumentLoaderAgent
 
 
 class WebLoaderAgent(DocumentLoaderAgent):

@@ -2,7 +2,6 @@
 
 from langchain_core.prompts import ChatPromptTemplate
 
-
 REWOO_PLANNING_TEMPLATE = ChatPromptTemplate.from_messages(
     [
         (

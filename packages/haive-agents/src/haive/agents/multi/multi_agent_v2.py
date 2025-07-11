@@ -19,13 +19,14 @@ from typing import (
     Union,
 )
 
-from haive.agents.base.agent import Agent
 from haive.core.graph.node.agent_node_v3 import create_agent_node_v3
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
 from haive.core.schema.state_schema import StateSchema
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field, create_model, model_validator
+
+from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 

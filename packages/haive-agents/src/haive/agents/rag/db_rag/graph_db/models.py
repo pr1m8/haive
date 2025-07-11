@@ -22,7 +22,6 @@ from typing import Any, Literal, TypeVar
 
 from pydantic import BaseModel, Field, field_validator
 
-
 T = TypeVar("T", bound=str)  # Used for dynamic literals
 
 

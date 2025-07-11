@@ -8,8 +8,9 @@ from datetime import timedelta
 from enum import Enum
 from typing import Any
 
-from haive.agents.common.models.task_analysis.base import SolvabilityStatus
 from pydantic import BaseModel, ConfigDict, Field, model_validator
+
+from haive.agents.common.models.task_analysis.base import SolvabilityStatus
 
 
 class SolvabilityBarrier(str, Enum):

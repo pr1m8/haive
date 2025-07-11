@@ -7,6 +7,7 @@ import asyncio
 import os
 
 from dotenv import load_dotenv
+from haive.core.engine import AugLLMConfig
 from langchain_core.tools import tool
 
 from haive.agents.multi.enhanced_base import MultiAgentBase
@@ -14,8 +15,6 @@ from haive.agents.planning.p_and_e.models import Act, Plan, PlanStep
 from haive.agents.planning.p_and_e.state import PlanExecuteState
 from haive.agents.react import ReactAgent
 from haive.agents.simple import SimpleAgent
-from haive.core.engine import AugLLMConfig
-
 
 # Load environment variables
 load_dotenv()

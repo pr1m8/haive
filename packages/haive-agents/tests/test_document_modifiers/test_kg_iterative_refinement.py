@@ -4,6 +4,9 @@ from typing import Any, Dict, List
 from unittest.mock import MagicMock, Mock, patch
 
 import pytest
+from langchain_community.graphs.graph_document import GraphDocument, Node, Relationship
+from langchain_core.documents import Document
+
 from haive.agents.document_modifiers.kg.kg_iterative_refinement.agent import (
     IterativeGraphTransformer,
 )
@@ -13,8 +16,6 @@ from haive.agents.document_modifiers.kg.kg_iterative_refinement.config import (
 from haive.agents.document_modifiers.kg.kg_iterative_refinement.state import (
     IterativeGraphTransformerState,
 )
-from langchain_community.graphs.graph_document import GraphDocument, Node, Relationship
-from langchain_core.documents import Document
 
 
 class TestIterativeGraphTransformer:

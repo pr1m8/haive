@@ -2,12 +2,13 @@
 
 import uuid
 
-from haive.agents.react_class.react_v2.config import ReactAgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
+
+from haive.agents.react_class.react_v2.config import ReactAgentConfig
 
 
 # 1. Define our tools

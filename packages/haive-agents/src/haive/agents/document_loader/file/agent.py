@@ -6,9 +6,10 @@ documents from local files.
 
 from pathlib import Path
 
-from haive.agents.document_loader.base.agent import DocumentLoaderAgent
 from haive.core.engine.document_loader import create_file_loader_engine
 from pydantic import Field
+
+from haive.agents.document_loader.base.agent import DocumentLoaderAgent
 
 
 class FileLoaderAgent(DocumentLoaderAgent):

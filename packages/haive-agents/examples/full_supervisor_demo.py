@@ -8,12 +8,13 @@ import asyncio
 import logging
 from typing import Any, Dict
 
+from langchain_core.messages import HumanMessage
+
 from haive.agents.experiments.dynamic_supervisor import (
     DynamicSupervisorAgent,
     SupervisorState,
     create_test_registry,
 )
-from langchain_core.messages import HumanMessage
 
 # Enable info logging to see the workflow
 logging.basicConfig(

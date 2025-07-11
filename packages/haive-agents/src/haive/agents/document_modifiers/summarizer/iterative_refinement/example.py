@@ -1,12 +1,13 @@
 import asyncio
 
+from langchain_core.documents import Document
+
 from haive.agents.document_modifiers.summarizer.iterative_refinement.agent import (
     IterativeSummarizer,
 )
 from haive.agents.document_modifiers.summarizer.iterative_refinement.config import (
     IterativeSummarizerConfig,
 )
-from langchain_core.documents import Document
 
 test_docs = [
     Document(page_content="This is a test document about machine learning."),

@@ -2,11 +2,11 @@
 
 from typing import Dict, List, Optional, Set
 
+from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from langchain_core.tools import tool
 from pydantic import Field, field_validator, model_validator
 
 from haive.agents.experiments.supervisor.supervisor_state import SupervisorState
-from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 
 
 class SupervisorStateWithTools(SupervisorState):

@@ -1,11 +1,9 @@
-from langchain_core.prompts import ChatPromptTemplate
-
 from agents.long_term_memory.tools import (
     save_recall_memory,
     search_recall_memories,
 )
 from haive.core.engine.aug_llm import AugLLMConfig
-
+from langchain_core.prompts import ChatPromptTemplate
 
 long_term_memory_prompt_template = ChatPromptTemplate.from_messages(
     [

@@ -23,5 +23,4 @@ Usage:
 from agents.llm_compiler.agent import LLMCompilerAgent
 from agents.llm_compiler.config import DEFAULT_CONFIG, LLMCompilerAgentConfig
 
-
 __all__ = ["DEFAULT_CONFIG", "LLMCompilerAgent", "LLMCompilerAgentConfig"]

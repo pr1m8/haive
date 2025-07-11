@@ -4,7 +4,6 @@
 import os
 import sys
 
-
 # Add the source paths
 sys.path.insert(0, os.path.join(os.getcwd(), "src"))
 

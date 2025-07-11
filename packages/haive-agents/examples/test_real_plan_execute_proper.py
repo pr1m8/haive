@@ -9,6 +9,9 @@ This test uses:
 
 import asyncio
 
+from haive.core.schema.agent_schema_composer import BuildMode
+from haive.tools.tools.search_tools import tavily_qna, tavily_search_tool
+
 from haive.agents.multi.enhanced_base import create_plan_execute_multi_agent
 from haive.agents.planning.p_and_e.engines import (
     create_executor_aug_llm_config,
@@ -17,8 +20,6 @@ from haive.agents.planning.p_and_e.engines import (
 )
 from haive.agents.react_class.react_agent.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
-from haive.core.schema.agent_schema_composer import BuildMode
-from haive.tools.tools.search_tools import tavily_qna, tavily_search_tool
 
 
 async def main():

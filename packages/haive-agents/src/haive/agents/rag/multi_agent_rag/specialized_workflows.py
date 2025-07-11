@@ -6,9 +6,10 @@ Dynamic RAG with add/remove retrievers, and Debate-based RAG for multi-perspecti
 
 from typing import Any
 
+from haive.core.schema.prebuilt.rag_state import RAGState
+
 from haive.agents.multi.base import ExecutionMode, MultiAgent
 from haive.agents.simple import SimpleAgent
-from haive.core.schema.prebuilt.rag_state import RAGState
 
 
 class FLAREState(RAGState):

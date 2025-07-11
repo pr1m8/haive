@@ -2,11 +2,9 @@
 
 import logging
 
-from langchain_core.prompts import PromptTemplate
-
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
-
+from langchain_core.prompts import PromptTemplate
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)

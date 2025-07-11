@@ -25,6 +25,7 @@ async def create_dynamic_supervisor_system():
     # Import required components
     try:
         from dynamic_multi_agent import DynamicMultiAgent
+
         from haive.agents.react.agent import ReactAgent
         from haive.agents.simple.agent import SimpleAgent
     except ImportError:
@@ -188,9 +189,10 @@ async def demonstrate_complex_workflow(supervisor):
 async def demonstrate_react_agent_integration(supervisor):
     """Show how to add a ReactAgent with tools."""
     try:
-        from haive.agents.react.agent import ReactAgent
         from haive.tools.math import calculator
         from haive.tools.web import web_search
+
+        from haive.agents.react.agent import ReactAgent
     except ImportError:
 
         # Create mock tools for demo

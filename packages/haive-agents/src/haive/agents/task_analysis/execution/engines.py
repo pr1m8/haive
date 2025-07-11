@@ -1,5 +1,8 @@
 # src/haive/agents/task_analysis/execution/engine.py
 
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+
 from haive.agents.task_analysis.execution.models import (
     ExecutionPlan,
     JoinPoint,
@@ -11,9 +14,6 @@ from haive.agents.task_analysis.execution.prompts import (
     PHASE_OPTIMIZATION_PROMPT,
     RESOURCE_ALLOCATION_PROMPT,
 )
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
-
 
 # Main execution planning engine
 ExecutionPlannerEngine = AugLLMConfig(

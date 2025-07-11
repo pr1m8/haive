@@ -1,7 +1,8 @@
 from typing import Any
 
-from haive.agents.simple.state import SimpleAgentState
 from pydantic import ConfigDict, Field
+
+from haive.agents.simple.state import SimpleAgentState
 
 
 class ReactAgentState(SimpleAgentState):

@@ -8,14 +8,13 @@ import asyncio
 import os
 
 from dotenv import load_dotenv
+from haive.core.engine import AugLLMConfig
 from langchain_community.tools.tavily_search import TavilySearchResults
 
 from haive.agents.planning import PlanAndExecuteAgent
 from haive.agents.planning.p_and_e.models import Act, Plan
 from haive.agents.react import ReactAgent
 from haive.agents.simple import SimpleAgent
-from haive.core.engine import AugLLMConfig
-
 
 # Load environment variables
 load_dotenv()

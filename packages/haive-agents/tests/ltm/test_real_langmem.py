@@ -7,9 +7,10 @@ Run with: poetry run python packages/haive-agents/tests/ltm/test_real_langmem.py
 import logging
 import sys
 
-from haive.agents.ltm.agent import LTMAgent, LTMState
 from haive.core.models.llm.base import LLMConfig
 from langchain_core.messages import AIMessage, HumanMessage
+
+from haive.agents.ltm.agent import LTMAgent, LTMState
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)

@@ -6,7 +6,6 @@ These prompts guide the LLM through reasoning, query generation, and synthesis.
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-
 # ============================================================================
 # Query Understanding and Reasoning Prompt
 # ============================================================================
@@ -260,9 +259,8 @@ error_recovery_prompt = ChatPromptTemplate.from_messages(
 
 def create_reasoning_aug_llm(llm_config):
     """Create AugLLMConfig for query reasoning step."""
-    from perplexity_search_models import QueryReasoning
-
     from haive.core.engine.aug_llm import AugLLMConfig
+    from perplexity_search_models import QueryReasoning
 
     return AugLLMConfig(
         llm_config=llm_config,
@@ -283,9 +281,8 @@ def create_reasoning_aug_llm(llm_config):
 
 def create_query_generation_aug_llm(llm_config):
     """Create AugLLMConfig for query generation step."""
-    from perplexity_search_models import QueryBatch
-
     from haive.core.engine.aug_llm import AugLLMConfig
+    from perplexity_search_models import QueryBatch
 
     return AugLLMConfig(
         llm_config=llm_config,
@@ -299,9 +296,8 @@ def create_query_generation_aug_llm(llm_config):
 
 def create_synthesis_aug_llm(llm_config):
     """Create AugLLMConfig for synthesis step."""
-    from perplexity_search_models import SearchSynthesis
-
     from haive.core.engine.aug_llm import AugLLMConfig
+    from perplexity_search_models import SearchSynthesis
 
     return AugLLMConfig(
         llm_config=llm_config,

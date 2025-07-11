@@ -173,7 +173,6 @@ from typing import (
 
 from typing_extensions import NotRequired, TypeAlias, TypedDict
 
-
 if TYPE_CHECKING:
     from haive.agents.conversation.base.agent import BaseConversationAgent
     from haive.agents.conversation.base.state import ConversationState
@@ -181,7 +180,6 @@ if TYPE_CHECKING:
 # Core imports
 from haive.agents.conversation.collaberative.agent import CollaborativeConversation
 from haive.agents.conversation.collaberative.state import CollaborativeState
-
 
 # Type aliases for collaborative conversations
 CollaborativeParticipant: TypeAlias = Any  # Agent with collaboration capabilities

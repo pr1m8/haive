@@ -2,13 +2,11 @@
 
 import logging
 
-from pydantic import BaseModel, Field
-
 from agents.reflection.models import ReflectionOutput, ReflectionResult
 from agents.reflection.state import ReflectionAgentState
 from agents.simple.config import SimpleAgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
-
+from pydantic import BaseModel, Field
 
 # Setup logging
 logger = logging.getLogger(__name__)

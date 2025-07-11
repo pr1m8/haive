@@ -6,5 +6,4 @@ Enhanced multi-query with advanced ranking and fusion techniques.
 
 from .agent import RAGFusionAgent, ReciprocalRankFusionAgent
 
-
 __all__ = ["RAGFusionAgent", "ReciprocalRankFusionAgent"]

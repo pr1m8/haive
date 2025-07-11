@@ -119,14 +119,12 @@ from typing import (
 
 from typing_extensions import TypeAlias
 
-
 if TYPE_CHECKING:
     from haive.agents.conversation.base.agent import BaseConversationAgent
     from haive.agents.conversation.base.state import ConversationState
 
 # Core imports
 from haive.agents.conversation.round_robin.agent import RoundRobinConversation
-
 
 # Type aliases for round robin conversations
 RoundRobinParticipant: TypeAlias = Any  # Agent with conversation capabilities

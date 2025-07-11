@@ -9,6 +9,7 @@ import asyncio
 import logging
 from typing import Dict, List
 
+from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import AIMessage, HumanMessage
 from rich.console import Console
 from rich.panel import Panel
@@ -17,8 +18,6 @@ from rich.progress import track
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
 from haive.agents.supervisor.integrated_supervisor import IntegratedDynamicSupervisor
-from haive.core.engine.aug_llm import AugLLMConfig
-
 
 console = Console()
 logging.basicConfig(level=logging.INFO)

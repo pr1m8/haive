@@ -4,13 +4,12 @@ with a research question loaded from a text file.
 """
 
 import argparse
-from datetime import datetime
 import logging
-from pathlib import Path
 import sys
 import time
 import traceback
-
+from datetime import datetime
+from pathlib import Path
 
 # Add the parent directory to the path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent.parent))

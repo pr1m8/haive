@@ -1,6 +1,5 @@
 from haive.core.graph.branches import Branch
 
-
 branch_logic = Branch(
     key="documents",
     comparison="exists",

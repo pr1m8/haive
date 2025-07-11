@@ -7,13 +7,14 @@ import traceback
 logging.basicConfig(level=logging.ERROR, format="%(levelname)s: %(message)s")
 
 
-from haive.agents.multi.base import SequentialAgent
-from haive.agents.react.agent import ReactAgent
-from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
+
+from haive.agents.multi.base import SequentialAgent
+from haive.agents.react.agent import ReactAgent
+from haive.agents.simple.agent import SimpleAgent
 
 
 @tool

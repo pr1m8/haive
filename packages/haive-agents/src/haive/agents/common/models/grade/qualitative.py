@@ -7,8 +7,9 @@ text-based assessments with sentiment analysis and quality indicators.
 from enum import Enum
 from typing import Any
 
-from haive.agents.common.models.grade.base import Grade, GradeType
 from pydantic import Field, field_validator, model_validator
+
+from haive.agents.common.models.grade.base import Grade, GradeType
 
 
 class QualityLevel(str, Enum):
