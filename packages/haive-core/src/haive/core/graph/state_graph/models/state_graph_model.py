@@ -1,12 +1,13 @@
 from collections import defaultdict
 from typing import Any, ClassVar, Dict, Generic, List, Optional, Set, Tuple, TypeVar
 
+from pydantic import Field, computed_field, model_validator
+
 from haive.core.graph.state_graph.base import SerializableModel
 from haive.core.graph.state_graph.models.branch_model import BranchModel
 from haive.core.graph.state_graph.models.edge_model import EdgeModel
 from haive.core.graph.state_graph.models.node_model import NodeModel
 from haive.core.graph.state_graph.models.type_ref import TypeReference
-from pydantic import Field, computed_field, model_validator
 
 TNode = TypeVar("TNode", bound=Any)
 

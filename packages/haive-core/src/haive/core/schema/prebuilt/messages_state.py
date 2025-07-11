@@ -1,7 +1,6 @@
 from typing import Annotated, Any, ClassVar, Dict, List, Optional, Union
 
 import tiktoken
-from haive.core.schema.state_schema import StateSchema
 from langchain_core.messages import (
     AIMessage,
     AnyMessage,
@@ -16,6 +15,8 @@ from langchain_core.messages.utils import convert_to_openai_messages, messages_f
 from langgraph.graph import add_messages
 from langgraph.types import Send
 from pydantic import Field, field_validator, model_validator
+
+from haive.core.schema.state_schema import StateSchema
 
 # Import new utilities
 try:

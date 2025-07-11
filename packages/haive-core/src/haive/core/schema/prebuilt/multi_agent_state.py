@@ -6,12 +6,13 @@ flattening, maintaining hierarchical access with proper typing for the graph API
 
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Set, Union
 
-from haive.core.schema.prebuilt.tool_state import ToolState
 from pydantic import Field, computed_field, field_validator, model_validator
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 from rich.tree import Tree
+
+from haive.core.schema.prebuilt.tool_state import ToolState
 
 if TYPE_CHECKING:
     from haive.agents.base import Agent

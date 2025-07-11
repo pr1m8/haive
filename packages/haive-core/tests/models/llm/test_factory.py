@@ -10,6 +10,7 @@ This module tests the LLM factory including:
 from unittest.mock import Mock, patch
 
 import pytest
+
 from haive.core.models.llm.factory import (
     LLMFactory,
     create_llm,

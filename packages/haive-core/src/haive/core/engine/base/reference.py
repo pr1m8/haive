@@ -9,9 +9,10 @@ serialization of references, and dynamic resolution of components.
 # Forward declaration to avoid circular import
 from typing import TYPE_CHECKING, Any, Dict, Generic, List, Optional, TypeVar, Union
 
+from pydantic import BaseModel, ConfigDict, Field, PrivateAttr
+
 # Import EngineType directly from types to avoid circular import
 from haive.core.engine.base.types import EngineType
-from pydantic import BaseModel, ConfigDict, Field, PrivateAttr
 
 if TYPE_CHECKING:
     from haive.core.engine.base.base import Engine

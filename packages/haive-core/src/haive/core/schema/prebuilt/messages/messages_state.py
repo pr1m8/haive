@@ -19,7 +19,6 @@ from typing import (
 )
 
 import tiktoken
-from haive.core.schema.state_schema import StateSchema
 from langchain_core.messages import (
     AIMessage,
     AnyMessage,
@@ -44,6 +43,8 @@ from pydantic import (
     model_serializer,
     model_validator,
 )
+
+from haive.core.schema.state_schema import StateSchema
 
 
 class ToolCallInfo(BaseModel):

@@ -4,6 +4,7 @@ from typing import Any, Dict
 from unittest.mock import MagicMock, Mock, patch
 
 import pytest
+
 from haive.core.models.retriever.provider_types import RetrieverProvider
 from haive.core.models.retriever.providers.bm25 import Bm25Provider
 from haive.core.models.retriever.providers.ensemble import EnsembleProvider

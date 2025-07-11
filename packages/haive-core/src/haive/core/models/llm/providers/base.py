@@ -39,11 +39,12 @@ import os
 from abc import ABC, abstractmethod
 from typing import Any, Dict
 
+from pydantic import BaseModel, Field, SecretStr, field_validator, model_validator
+
 from haive.core.common.mixins.secure_config import SecureConfigMixin
 from haive.core.models.llm.provider_types import LLMProvider
 from haive.core.models.llm.rate_limiting_mixin import RateLimitingMixin
 from haive.core.models.metadata_mixin import ModelMetadataMixin
-from pydantic import BaseModel, Field, SecretStr, field_validator, model_validator
 
 logger = logging.getLogger(__name__)
 

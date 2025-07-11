@@ -56,7 +56,6 @@ from rich.panel import Panel
 from rich.table import Table
 from rich.tree import Tree
 
-
 logger = logging.getLogger(__name__)
 console = Console()
 

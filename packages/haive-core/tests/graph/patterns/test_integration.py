@@ -4,6 +4,14 @@ import logging
 import uuid
 from typing import Any, Dict, Optional
 
+from langgraph.graph import END, START
+from pydantic import BaseModel
+from rich import print as rprint
+from rich.console import Console
+from rich.logging import RichHandler
+from rich.panel import Panel
+from rich.traceback import install
+
 from haive.core.engine.agent.agent import AgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.engine.base import EngineType
@@ -15,13 +23,6 @@ from haive.core.graph.patterns.base import (
 )
 from haive.core.graph.patterns.integration import register_integrations
 from haive.core.models.llm.base import AzureLLMConfig
-from langgraph.graph import END, START
-from pydantic import BaseModel
-from rich import print as rprint
-from rich.console import Console
-from rich.logging import RichHandler
-from rich.panel import Panel
-from rich.traceback import install
 
 # Set up rich traceback handling for better error display
 install(show_locals=True)

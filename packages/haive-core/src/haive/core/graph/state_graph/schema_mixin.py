@@ -6,7 +6,6 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from haive.core.graph.common.types import ConfigLike, StateLike
 
-
 T = TypeVar("T", bound=StateLike)
 C = TypeVar("C", bound=ConfigLike | None)
 

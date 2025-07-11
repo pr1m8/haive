@@ -1,18 +1,17 @@
 # tests/core/schema/test_state_schema_composer.py
 
-from collections.abc import Sequence
 import logging
+from collections.abc import Sequence
 from typing import Annotated, Any, Optional
 
+import pytest
 from langchain_core.messages import BaseMessage
 from langgraph.graph import add_messages
 from pydantic import BaseModel, Field
-import pytest
 
 from haive.core.engine.base import EngineType, InvokableEngine
 from haive.core.schema.schema_composer import SchemaComposer
 from haive.core.schema.state_schema import StateSchema
-
 
 # Set up logging for tests
 logging.basicConfig(level=logging.DEBUG)

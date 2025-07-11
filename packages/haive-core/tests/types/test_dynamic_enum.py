@@ -1,5 +1,6 @@
-from haive.core.types.dynamic_enum import DynamicEnum, create_dynamic_enum
 from pydantic import BaseModel, ValidationError
+
+from haive.core.types.dynamic_enum import DynamicEnum, create_dynamic_enum
 
 
 # ─── Example subclass ─── #

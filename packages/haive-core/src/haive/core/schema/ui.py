@@ -58,7 +58,6 @@ from rich.tree import Tree
 
 from haive.core.schema.state_schema import StateSchema
 
-
 logger = logging.getLogger(__name__)
 
 

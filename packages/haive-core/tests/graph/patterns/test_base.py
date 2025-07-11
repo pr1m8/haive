@@ -7,6 +7,7 @@ ComponentRequirement, ParameterDefinition, PatternMetadata, GraphPattern, and Br
 from unittest.mock import Mock
 
 import pytest
+
 from haive.core.graph.patterns.base import (
     BranchDefinition,
     ComponentRequirement,

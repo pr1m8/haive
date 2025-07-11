@@ -11,7 +11,6 @@ from pydantic import BaseModel, Field, field_validator
 
 from haive.core.engine.base import EngineType, InvokableEngine
 
-
 logger = logging.getLogger(__name__)
 
 

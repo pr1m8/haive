@@ -9,6 +9,7 @@ from typing import Any, Dict, List, Optional
 from unittest.mock import MagicMock, Mock, patch
 
 import pytest
+
 from haive.core.engine.document.loaders.sources.cloud_storage_sources import (
     AzureBlobFileSource,
     CloudPlatform,

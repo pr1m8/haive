@@ -1,13 +1,12 @@
 # src/haive/core/runtime/extensions/base.py
 
-from typing import Any, Dict, Generic, Optional, TypeVar
 import uuid
+from typing import Any, Dict, Generic, Optional, TypeVar
 
 from pydantic import BaseModel, ConfigDict, Field
 
 from haive.core.engine.base.protocols import ExtensibleProtocol
 from haive.core.runtime.extension.protocols import ExtensionProtocol
-
 
 T = TypeVar("T")  # Target type
 

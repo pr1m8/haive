@@ -12,7 +12,6 @@ from ..connection import ConnectionManager
 from ..embeddings import EmbeddingAdapter
 from ..types import StoreType
 
-
 logger = logging.getLogger(__name__)
 
 

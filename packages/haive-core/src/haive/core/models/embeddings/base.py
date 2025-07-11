@@ -27,8 +27,6 @@ from typing import Any, Dict
 
 import torch
 from dotenv import load_dotenv
-from haive.core.config.constants import EMBEDDINGS_CACHE_DIR
-from haive.core.models.embeddings.provider_types import EmbeddingProvider
 from langchain.embeddings import CacheBackedEmbeddings
 from langchain.storage import LocalFileStore
 from langchain_community.embeddings.anyscale import AnyscaleEmbeddings
@@ -49,6 +47,9 @@ from langchain_google_vertexai import VertexAIEmbeddings
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
 from pydantic import BaseModel, Field, SecretStr, field_validator
+
+from haive.core.config.constants import EMBEDDINGS_CACHE_DIR
+from haive.core.models.embeddings.provider_types import EmbeddingProvider
 
 # Load environment variables from .env file if present
 load_dotenv(".env")

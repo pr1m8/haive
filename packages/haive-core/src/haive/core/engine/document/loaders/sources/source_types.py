@@ -9,8 +9,9 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Dict, Optional, Set, Union
 
-from haive.core.common.mixins.secure_config import SecureConfigMixin
 from pydantic import BaseModel, Field, SecretStr
+
+from haive.core.common.mixins.secure_config import SecureConfigMixin
 
 
 class SourceCategory(str, Enum):

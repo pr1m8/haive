@@ -15,7 +15,6 @@ from haive.core.graph.node.config import NodeConfig
 from haive.core.graph.node.factory import NodeFactory
 from haive.core.graph.node.types import CommandGoto, NodeType
 
-
 logger = logging.getLogger(__name__)
 
 

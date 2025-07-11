@@ -6,8 +6,9 @@ within a parent graph.
 
 from typing import Any, Dict, List, Optional, TypeVar
 
-from haive.core.graph.state_graph.base.graph_base import GraphBase
 from pydantic import BaseModel, Field
+
+from haive.core.graph.state_graph.base.graph_base import GraphBase
 
 # Type variable for the state type
 T = TypeVar("T")

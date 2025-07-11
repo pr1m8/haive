@@ -9,7 +9,6 @@ from typing import TYPE_CHECKING, Any, Dict, Generic, Optional, TypeVar
 
 from pydantic import BaseModel, ConfigDict, Field, PrivateAttr
 
-
 # Forward reference to avoid circular imports
 if TYPE_CHECKING:
     from haive.core.engine.base.reference import ComponentRef

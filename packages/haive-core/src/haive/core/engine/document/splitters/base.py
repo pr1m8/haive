@@ -1,8 +1,9 @@
 from typing import List
 
-from haive.core.engine.base.base import InvokableEngine
 from langchain.document_loaders.base import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+from haive.core.engine.base.base import InvokableEngine
 
 """Kept for backwards compatibility."""
 

@@ -2,8 +2,8 @@
 
 """Rich formatters for beautiful console and file logging."""
 
-from datetime import datetime
 import logging
+from datetime import datetime
 from typing import Any
 
 from rich.console import Console

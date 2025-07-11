@@ -25,10 +25,11 @@ import uuid
 from datetime import datetime
 from typing import Any, Dict
 
+from pydantic import Field, model_validator
+
 from haive.core.persistence.base import CheckpointerConfig
 from haive.core.persistence.types import CheckpointerType
 from haive.core.persistence.utils import deserialize_metadata, serialize_metadata
-from pydantic import Field, model_validator
 
 logger = logging.getLogger(__name__)
 

@@ -10,7 +10,6 @@ import logging
 import threading
 from typing import Any
 
-
 logger = logging.getLogger(__name__)
 
 # Global connection registries

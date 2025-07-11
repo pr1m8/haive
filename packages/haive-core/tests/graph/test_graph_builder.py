@@ -1,11 +1,10 @@
 import os
 import sys
-from typing import Any
 import unittest
+from typing import Any
 from unittest.mock import MagicMock, Mock
 
 from haive.core.engine.base import EngineType
-
 
 # First, mock all dependencies BEFORE importing any modules
 # Create mock objects that will be used throughout

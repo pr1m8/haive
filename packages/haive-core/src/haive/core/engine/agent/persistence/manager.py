@@ -22,7 +22,6 @@ from haive.core.config.auth_runnable import HaiveRunnableConfigManager
 # Import Haive-specific utilities
 from haive.core.engine.agent.persistence.types import CheckpointerType
 
-
 # Set up logging
 logger = logging.getLogger(__name__)
 

@@ -7,7 +7,6 @@ from langchain_core.messages import HumanMessage
 from langchain_core.runnables import RunnableConfig
 from pydantic import BaseModel
 
-
 logger = logging.getLogger(__name__)
 
 T = TypeVar("T", bound=BaseModel)

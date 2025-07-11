@@ -7,9 +7,10 @@ organizations, and extended dataset/model features.
 import logging
 from typing import List, Optional
 
-from haive.core.engine.document.loaders.sources.implementation import WebSource
 from langchain_core.document_loaders.base import BaseLoader
 from langchain_core.documents import Document
+
+from haive.core.engine.document.loaders.sources.implementation import WebSource
 
 logger = logging.getLogger(__name__)
 

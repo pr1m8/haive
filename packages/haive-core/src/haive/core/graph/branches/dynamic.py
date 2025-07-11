@@ -5,14 +5,15 @@ Dynamic output mapping based on state.
 import logging
 from typing import Any, Dict, Optional, Tuple
 
+from langgraph.graph import END
+from pydantic import BaseModel, Field, model_validator
+
 from haive.core.graph.branches.types import ComparisonType
 from haive.core.graph.common.field_utils import extract_field
 from haive.core.graph.common.references import CallableReference
 
 # Import from common utilities
 from haive.core.graph.common.types import StateLike
-from langgraph.graph import END
-from pydantic import BaseModel, Field, model_validator
 
 logger = logging.getLogger(__name__)
 

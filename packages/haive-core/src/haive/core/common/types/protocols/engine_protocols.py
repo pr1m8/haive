@@ -2,10 +2,11 @@ from collections.abc import Callable, Sequence
 from typing import Optional, Protocol, Type, Union
 
 from haive.agents.base.agent import Agent
-from haive.core.engine.base import Engine
 from langchain_core.tools import BaseTool, StructuredTool
 from langchain_core.tools.base import BaseToolkit
 from pydantic import BaseModel
+
+from haive.core.engine.base import Engine
 
 # ============================================================================
 # Engine Protocol

@@ -12,6 +12,7 @@ from typing import Any
 from unittest.mock import patch
 
 import pytest
+
 from haive.core.utils.interrupt_utils import is_interruptible
 from haive.core.utils.interrupt_utils import pause_for_human as real_pause_for_human
 from haive.core.utils.interrupt_utils import uses_pause

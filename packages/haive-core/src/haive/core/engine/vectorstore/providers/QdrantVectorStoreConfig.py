@@ -24,11 +24,12 @@ a consistent Haive configuration interface.
 
 from typing import Any, Dict, List, Optional, Tuple, Type, Union
 
+from langchain_core.documents import Document
+from pydantic import Field, SecretStr, validator
+
 from haive.core.common.mixins.secure_config import SecureConfigMixin
 from haive.core.engine.vectorstore.base import BaseVectorStoreConfig
 from haive.core.engine.vectorstore.types import VectorStoreType
-from langchain_core.documents import Document
-from pydantic import Field, SecretStr, validator
 
 
 @BaseVectorStoreConfig.register(VectorStoreType.QDRANT)

@@ -4,12 +4,11 @@ This mixin provides standardized recompilation tracking and management
 for components that can be dynamically updated (agents, engines, graphs).
 """
 
-from datetime import datetime
 import logging
+from datetime import datetime
 from typing import Any, Dict, List, Optional, Set
 
 from pydantic import Field
-
 
 logger = logging.getLogger(__name__)
 

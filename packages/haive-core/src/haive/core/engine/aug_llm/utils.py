@@ -20,7 +20,6 @@ from langchain_core.runnables import Runnable, RunnableConfig
 
 from haive.core.engine.aug_llm.config import AugLLMConfig
 
-
 # Type for runnable configs
 T = TypeVar("T")
 

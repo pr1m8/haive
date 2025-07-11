@@ -8,8 +8,6 @@ import hashlib
 import json
 from typing import Any, Dict, List, Optional, Union
 
-from haive.core.schema.compatibility.converters import TypeConverter
-from haive.core.schema.compatibility.types import ConversionContext, ConversionQuality
 from langchain_core.documents import Document
 from langchain_core.messages import (
     AIMessage,
@@ -25,6 +23,9 @@ from langchain_core.prompts import (
     MessagesPlaceholder,
     PromptTemplate,
 )
+
+from haive.core.schema.compatibility.converters import TypeConverter
+from haive.core.schema.compatibility.types import ConversionContext, ConversionQuality
 
 
 class MessageConverter(TypeConverter):

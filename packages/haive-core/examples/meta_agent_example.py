@@ -14,12 +14,13 @@ The example shows:
 
 from typing import Any, Dict, List
 
+from langchain_core.messages import AIMessage, HumanMessage
+from langgraph.graph import END, START, StateGraph
+
 from haive.core.graph.node.meta_agent_node import MetaAgentNodeConfig
 
 # Import the meta state and meta agent node
 from haive.core.schema.prebuilt.meta_state import MetaStateSchema
-from langchain_core.messages import AIMessage, HumanMessage
-from langgraph.graph import END, START, StateGraph
 
 
 # Example agent classes (simplified for demonstration)

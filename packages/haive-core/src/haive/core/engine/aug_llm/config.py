@@ -23,6 +23,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import uuid
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -38,10 +39,13 @@ from typing import (
     Union,
     cast,
 )
-import uuid
 
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
-from langchain_core.output_parsers import BaseOutputParser, PydanticOutputParser, StrOutputParser
+from langchain_core.output_parsers import (
+    BaseOutputParser,
+    PydanticOutputParser,
+    StrOutputParser,
+)
 from langchain_core.output_parsers.openai_tools import PydanticToolsParser
 from langchain_core.prompts import (
     BasePromptTemplate,
@@ -53,7 +57,14 @@ from langchain_core.prompts import (
 )
 from langchain_core.runnables import Runnable, RunnableConfig
 from langchain_core.tools import BaseTool, StructuredTool
-from pydantic import BaseModel, ConfigDict, Field, PrivateAttr, field_validator, model_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    PrivateAttr,
+    field_validator,
+    model_validator,
+)
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
@@ -63,7 +74,6 @@ from haive.core.common.mixins.structured_output_mixin import StructuredOutputMix
 from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
 from haive.core.engine.base import EngineType, InvokableEngine
 from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
-
 
 logger = logging.getLogger(__name__)
 console = Console()
@@ -1297,7 +1307,9 @@ class AugLLMConfig(
 
     def _compute_input_fields(self) -> dict[str, tuple[type, Any]]:
         """Compute input fields based on prompt template and configuration."""
-        from typing import Any as AnyType, List as ListType, Optional as OptionalType
+        from typing import Any as AnyType
+        from typing import List as ListType
+        from typing import Optional as OptionalType
 
         fields = {}
 
@@ -1330,9 +1342,11 @@ class AugLLMConfig(
         # Process all other required variables from prompt template
         # BUT exclude partial variables since they should be optional
         for var in required_vars:
-            if (var != self.messages_placeholder_name and
-                var not in fields and
-                var not in partial_vars):  # Skip partial variables!
+            if (
+                var != self.messages_placeholder_name
+                and var not in fields
+                and var not in partial_vars
+            ):  # Skip partial variables!
                 # Use None as default instead of Field(...) to avoid PydanticUndefined
                 fields[var] = (AnyType, None)
 
@@ -1344,16 +1358,23 @@ class AugLLMConfig(
         # Process partial variables as optional fields with default values
         # EXCLUDE format_instructions as it's internal prompt machinery
         for var, default_value in partial_vars.items():
-            if (var != self.messages_placeholder_name and 
-                var not in fields and 
-                var != "format_instructions"):  # EXCLUDE format_instructions
+            if (
+                var != self.messages_placeholder_name
+                and var not in fields
+                and var != "format_instructions"
+            ):  # EXCLUDE format_instructions
                 fields[var] = (OptionalType[AnyType], Field(default=default_value))
 
         return fields
 
     def _compute_output_fields(self) -> dict[str, tuple[type, Any]]:
         """Compute output fields based on configuration."""
-        from typing import Any as AnyType, Dict, List as ListType, Optional as OptionalType
+        from typing import Any as AnyType
+        from typing import (
+            Dict,
+        )
+        from typing import List as ListType
+        from typing import Optional as OptionalType
 
         fields = {}
 
@@ -1912,9 +1933,7 @@ The output should be valid JSON that conforms to the {model_name} schema."""
         self.uses_messages_field = True
         return self
 
-    def replace_message(
-        self, index: int, message: str | BaseMessage
-    ) -> AugLLMConfig:
+    def replace_message(self, index: int, message: str | BaseMessage) -> AugLLMConfig:
         """Replace a message in the prompt template."""
         if not isinstance(self.prompt_template, ChatPromptTemplate):
             raise ValueError("Can only replace messages in a ChatPromptTemplate")
@@ -2080,7 +2099,12 @@ The output should be valid JSON that conforms to the {model_name} schema."""
     def with_tools(
         self,
         tools: list[
-            Type[BaseTool] | Type[BaseModel] | Callable | StructuredTool | BaseTool | str
+            Type[BaseTool]
+            | Type[BaseModel]
+            | Callable
+            | StructuredTool
+            | BaseTool
+            | str
         ],
         force_use: bool = False,
         specific_tool: str | None = None,
@@ -2108,9 +2132,7 @@ The output should be valid JSON that conforms to the {model_name} schema."""
 
         return self
 
-    def add_prompt_template(
-        self, prompt_template: BasePromptTemplate
-    ) -> AugLLMConfig:
+    def add_prompt_template(self, prompt_template: BasePromptTemplate) -> AugLLMConfig:
         """Add a prompt template to the configuration."""
         debug_print(
             f"[blue]Adding prompt template: {type(prompt_template).__name__}[/blue]"
@@ -2379,8 +2401,7 @@ The output should be valid JSON that conforms to the {model_name} schema."""
                         and getattr(msg, "variable_name", "")
                         == messages_placeholder_name
                     )
-                    or (hasattr(msg, "role")
-                    and msg.role == "system")
+                    or (hasattr(msg, "role") and msg.role == "system")
                     for msg in prompt.messages
                 )
             elif isinstance(prompt, FewShotChatMessagePromptTemplate):

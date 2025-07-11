@@ -119,14 +119,13 @@ from haive.core.schema.field_utils import (
     infer_field_type,
     resolve_reducer,
 )
-from haive.core.schema.multi_agent_state_schema import MultiAgentSchemaComposer
+from haive.core.schema.multi_agent_state_schema import (
+    MultiAgentSchemaComposer,
+)
 from haive.core.schema.multi_agent_state_schema import MultiAgentStateSchema
 from haive.core.schema.multi_agent_state_schema import (
     MultiAgentStateSchema as PrebuiltMultiAgentStateSchema,
 )
-
-# Prebuilt state schemas
-# from haive.core.schema.prebuilt.basic_agent_state import BasicAgentState  # Module doesn't exist
 
 # Token usage and messages utilities
 from haive.core.schema.prebuilt.messages import (
@@ -146,14 +145,18 @@ from haive.core.schema.schema_manager import StateSchemaManager
 from haive.core.schema.state_schema import StateSchema
 from haive.core.schema.ui import SchemaUI
 
+# Prebuilt state schemas
+# from haive.core.schema.prebuilt.basic_agent_state import BasicAgentState  # Module doesn't exist
+
+
 # Schema composer with fallback handling
 try:
     from haive.core.schema.composer.schema_composer import SchemaComposer
 except ImportError:
     # Fallback to original location for backward compatibility
-    from haive.core.schema.schema_composer import (
+    from haive.core.schema.schema_composer import (  # type: ignore[attr-defined]
         SchemaComposer,
-    )  # type: ignore[attr-defined]
+    )
 
 # Type aliases for better API clarity
 SchemaType: "TypeAlias" = Type[StateSchema]

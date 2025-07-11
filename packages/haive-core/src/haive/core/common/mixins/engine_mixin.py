@@ -32,9 +32,9 @@ Usage:
     ```
 """
 
-from datetime import datetime
 import json
 import logging
+from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, ConfigDict, Field, PrivateAttr, model_validator
@@ -45,7 +45,6 @@ from rich.table import Table
 from rich.tree import Tree
 
 from haive.core.engine.base import Engine, EngineType
-
 
 logger = logging.getLogger(__name__)
 

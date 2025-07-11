@@ -1,8 +1,8 @@
 """Direct test of document loader components without package imports."""
 
 import importlib.util
-from pathlib import Path
 import sys
+from pathlib import Path
 
 
 # Direct file imports to avoid package __init__.py issues

@@ -37,7 +37,6 @@ Usage:
 from collections.abc import Callable
 from typing import Any, Generic, List, Optional, Type, TypeVar
 
-
 T = TypeVar("T")
 
 

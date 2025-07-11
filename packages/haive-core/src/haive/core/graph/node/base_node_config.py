@@ -6,8 +6,9 @@ improved type safety and generic support.
 
 from typing import Generic, TypeVar
 
-from haive.core.graph.node.base_config import NodeConfig
 from pydantic import BaseModel
+
+from haive.core.graph.node.base_config import NodeConfig
 
 # Type variables for input/output schemas
 TInput = TypeVar("TInput", bound=BaseModel)

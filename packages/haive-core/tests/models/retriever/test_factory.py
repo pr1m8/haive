@@ -3,6 +3,7 @@
 from unittest.mock import MagicMock, Mock, patch
 
 import pytest
+
 from haive.core.models.retriever.factory import (
     RetrieverFactory,
     create_provider,

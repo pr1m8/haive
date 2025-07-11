@@ -4,11 +4,11 @@ This module provides a unified logging solution that combines Python's logging
 with Rich's formatting capabilities for beautiful console output.
 """
 
+import logging
+import os
 from contextlib import contextmanager
 from datetime import datetime
 from enum import Enum
-import logging
-import os
 from pathlib import Path
 from typing import Any
 

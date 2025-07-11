@@ -41,7 +41,6 @@ from pydantic import Field, model_validator
 
 from haive.core.schema.prebuilt.messages_state import MessagesState
 
-
 if TYPE_CHECKING:
     pass
 

@@ -26,13 +26,14 @@ providing a consistent Haive configuration interface with secure API key managem
 
 from typing import Any, Dict, List, Optional, Tuple, Type
 
+from langchain_core.documents import Document
+from pydantic import Field, SecretStr
+
 from haive.core.common.mixins.secure_config import SecureConfigMixin
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.engine.retriever.retriever import BaseRetrieverConfig
 from haive.core.engine.retriever.types import RetrieverType
 from haive.core.engine.vectorstore.vectorstore import VectorStoreConfig
-from langchain_core.documents import Document
-from pydantic import Field, SecretStr
 
 
 @BaseRetrieverConfig.register(RetrieverType.WEB_RESEARCH)

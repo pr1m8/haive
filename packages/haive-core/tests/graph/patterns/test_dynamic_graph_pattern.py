@@ -12,7 +12,6 @@ from pydantic import BaseModel
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from haive.core.graph.patterns.base import GraphPattern, PatternMetadata
 
-
 # Set up logging
 logger = logging.getLogger(__name__)
 

@@ -54,7 +54,6 @@ from typing import (
 
 from pydantic import BaseModel, ConfigDict, Field
 
-
 T = TypeVar("T", bound=BaseModel)
 
 

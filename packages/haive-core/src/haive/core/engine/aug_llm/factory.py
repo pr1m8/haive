@@ -35,7 +35,6 @@ from pydantic import BaseModel
 
 from haive.core.logging.rich_logger import LogLevel, get_logger
 
-
 # Get logger for this module
 logger = get_logger(__name__)
 logger.set_level(LogLevel.WARNING)

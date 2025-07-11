@@ -210,8 +210,8 @@ class MarqoVectorStoreConfig(BaseVectorStoreConfig):
             ValueError: If configuration is invalid.
         """
         try:
-            from langchain_community.vectorstores import Marqo
             import marqo
+            from langchain_community.vectorstores import Marqo
         except ImportError as e:
             raise ImportError(
                 "Marqo requires marqo package. Install with: pip install marqo"

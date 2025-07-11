@@ -36,7 +36,6 @@ from haive.core.common.mixins.general.state import StateMixin
 from haive.core.common.mixins.general.timestamp import TimestampMixin
 from haive.core.common.mixins.general.version import VersionMixin
 
-
 __all__ = [
     "IdMixin",
     "MetadataMixin",

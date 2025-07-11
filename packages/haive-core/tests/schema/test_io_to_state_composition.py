@@ -6,7 +6,6 @@ from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.engine.retriever import BaseRetrieverConfig
 from haive.core.schema.schema_composer import SchemaComposer
 
-
 console = Console()
 
 

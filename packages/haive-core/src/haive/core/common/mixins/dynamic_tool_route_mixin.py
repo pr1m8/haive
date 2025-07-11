@@ -7,8 +7,9 @@ enabling graphs to know when they need recompilation.
 import logging
 from typing import Any, Callable, Dict, List, Optional, Set
 
-from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
 from pydantic import Field, PrivateAttr
+
+from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
 
 logger = logging.getLogger(__name__)
 

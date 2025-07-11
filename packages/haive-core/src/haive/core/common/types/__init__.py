@@ -8,7 +8,6 @@ import os
 from pathlib import Path
 from typing import Any, Dict, Union
 
-
 # JSON-compatible type (dict, list, str, int, float, bool, None)
 JsonType = Union[dict[str, Any], list, str, int, float, bool, None]
 

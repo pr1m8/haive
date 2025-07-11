@@ -9,6 +9,8 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Set, Tuple, Type, Union
 
+from pydantic import BaseModel
+
 from haive.core.schema.compatibility.compatibility import (
     FieldCompatibility,
     SchemaCompatibility,
@@ -19,7 +21,6 @@ from haive.core.schema.compatibility.types import (
     FieldInfo,
     SchemaInfo,
 )
-from pydantic import BaseModel
 
 
 @dataclass

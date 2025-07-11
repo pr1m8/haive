@@ -11,7 +11,6 @@ The main components include:
 from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from haive.core.common.models.named_list import NamedList, create_named_list
 
-
 __all__ = [
     "DynamicChoiceModel",
     "NamedList",

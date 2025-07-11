@@ -1,9 +1,9 @@
 from typing import Any, ClassVar
 from unittest.mock import patch
 
+import pytest
 from langchain_core.runnables import Runnable
 from pydantic import BaseModel
-import pytest
 
 from haive.core.engine.agent.config import AgentConfig, PatternConfig
 from haive.core.engine.base import EngineType, InvokableEngine
@@ -96,7 +96,6 @@ class AgentForTests:
 
 # Register test agent
 from haive.core.engine.agent.agent import AGENT_REGISTRY
-
 
 AGENT_REGISTRY[AgentImplForTests] = AgentForTests
 

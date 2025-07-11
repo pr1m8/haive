@@ -3,14 +3,13 @@
 This module provides base classes for document loaders used by the document engine.
 """
 
-from abc import ABC, abstractmethod
 import logging
+from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
 from langchain_core.documents import Document
 from pydantic import BaseModel
-
 
 # Removed unused imports
 

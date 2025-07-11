@@ -8,8 +8,9 @@ recompilation is needed vs when it's not.
 import logging
 from typing import Any, Dict
 
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from pydantic import BaseModel
+
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

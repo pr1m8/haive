@@ -10,7 +10,6 @@ from haive.core.graph.node.factory import NodeFactory
 from haive.core.graph.node.types import NodeType
 from haive.core.schema.schema_composer import SchemaComposer
 
-
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("test_node_factory")

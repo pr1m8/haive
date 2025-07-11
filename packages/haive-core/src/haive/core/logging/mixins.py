@@ -8,8 +8,9 @@ import time
 from collections.abc import Callable
 from typing import Any, Dict, Optional, TypeVar
 
-from haive.core.logging.manager import get_logging_manager
 from pydantic import BaseModel, PrivateAttr, computed_field, model_validator
+
+from haive.core.logging.manager import get_logging_manager
 
 T = TypeVar("T")
 

@@ -59,9 +59,10 @@ from typing import (
     TypeVar,
 )
 
+from pydantic import BaseModel, Field
+
 from haive.core.schema.field_definition import FieldDefinition
 from haive.core.schema.field_utils import extract_type_metadata, infer_field_type
-from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
 

@@ -8,10 +8,6 @@ maintaining type safety and hierarchical access patterns.
 import logging
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Type, TypeVar, Union
 
-from haive.core.graph.common.types import ConfigLike, NodeType, StateLike
-from haive.core.graph.node.base_node_config import BaseNodeConfig
-from haive.core.schema.field_definition import FieldDefinition
-from haive.core.schema.field_registry import StandardFields
 from langchain_core.messages import BaseMessage
 from langgraph.types import Command
 from pydantic import BaseModel, Field, model_validator
@@ -19,6 +15,11 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 from rich.tree import Tree
+
+from haive.core.graph.common.types import ConfigLike, NodeType, StateLike
+from haive.core.graph.node.base_node_config import BaseNodeConfig
+from haive.core.schema.field_definition import FieldDefinition
+from haive.core.schema.field_registry import StandardFields
 
 if TYPE_CHECKING:
     from haive.agents.base.agent import Agent

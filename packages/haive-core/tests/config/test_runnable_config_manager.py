@@ -1,7 +1,7 @@
 # tests/core/config/test_runnable_config_manager.py
 
-from typing import Any
 import uuid
+from typing import Any
 
 from langchain_core.runnables import RunnableConfig
 from pydantic import BaseModel

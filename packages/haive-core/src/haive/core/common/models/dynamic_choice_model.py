@@ -4,8 +4,8 @@ Uses Protocol to ensure options have extractable names, making it flexible for
 strings, dicts, BaseModels, or any custom class with a name attribute.
 """
 
-from enum import Enum
 import logging
+from enum import Enum
 from typing import (
     Any,
     Dict,
@@ -33,7 +33,6 @@ from rich.table import Table
 from rich.tree import Tree
 
 from haive.core.common.types.protocols.general_protocols import Nameable
-
 
 console = Console()
 logger = logging.getLogger(__name__)

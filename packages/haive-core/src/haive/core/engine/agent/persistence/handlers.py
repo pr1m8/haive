@@ -5,7 +5,6 @@ from typing import Any, Dict, List, Optional, Union
 from langchain_core.messages import HumanMessage
 from pydantic import BaseModel
 
-
 logger = logging.getLogger(__name__)
 
 

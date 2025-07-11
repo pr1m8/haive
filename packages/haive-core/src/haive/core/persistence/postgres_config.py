@@ -17,13 +17,14 @@ concurrent access capabilities.
 import logging
 from typing import Any
 
+from pydantic import Field, SecretStr
+
 from haive.core.persistence.base import CheckpointerConfig
 from haive.core.persistence.types import (
     CheckpointerMode,
     CheckpointerType,
     CheckpointStorageMode,
 )
-from pydantic import Field, SecretStr
 
 logger = logging.getLogger(__name__)
 

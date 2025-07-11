@@ -3,14 +3,15 @@ from __future__ import annotations
 import inspect
 import logging
 from collections import defaultdict
-from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional, Type, Set
+from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional, Set, Type
 
-from haive.core.schema.field_definition import FieldDefinition
-from haive.core.schema.state_schema import StateSchema
 from pydantic import create_model
 
 # Rich UI components for visualization and debugging
 from rich.console import Console
+
+from haive.core.schema.field_definition import FieldDefinition
+from haive.core.schema.state_schema import StateSchema
 
 if TYPE_CHECKING:
     from haive.core.engine.base import Engine
@@ -221,7 +222,9 @@ class _SchemaComposerBase:
                     self.tools = []
                 for engine in self.__class__.engines.values():
                     if hasattr(engine, "tools") and engine.tools:
-                        existing_tool_names = [getattr(t, "name", str(t)) for t in self.tools]
+                        existing_tool_names = [
+                            getattr(t, "name", str(t)) for t in self.tools
+                        ]
                         for tool in engine.tools:
                             tool_name = getattr(tool, "name", str(tool))
                             if tool_name not in existing_tool_names:
@@ -240,4 +243,4 @@ class _SchemaComposerBase:
         if is_state_schema_base and logger.level <= logging.DEBUG:
             self._display_schema_summary(schema)
 
-        return schema 
+        return schema

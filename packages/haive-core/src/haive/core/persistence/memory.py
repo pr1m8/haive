@@ -14,13 +14,14 @@ temporary state management is sufficient.
 import logging
 from typing import Any
 
+from pydantic import Field
+
 from haive.core.persistence.base import CheckpointerConfig
 from haive.core.persistence.types import (
     CheckpointerMode,
     CheckpointerType,
     CheckpointStorageMode,
 )
-from pydantic import Field
 
 logger = logging.getLogger(__name__)
 

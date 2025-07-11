@@ -28,6 +28,10 @@ from typing import (
     get_origin,
 )
 
+from langchain_core.runnables import RunnableConfig
+from langgraph.graph import END
+from pydantic import BaseModel, Field, model_validator
+
 from haive.core.config.runnable import RunnableConfigManager
 
 # Import the protocol definitions
@@ -44,15 +48,13 @@ from haive.core.persistence.base import CheckpointerConfig
 
 # Import persistence-related functionality
 from haive.core.schema.schema_composer import SchemaComposer
-from langchain_core.runnables import RunnableConfig
-from langgraph.graph import END
-from pydantic import BaseModel, Field, model_validator
 
 # Check if PostgreSQL dependencies are available
 try:
+    from langgraph.checkpoint.postgres import PostgresSaver
+
     from haive.core.persistence.memory import MemoryCheckpointerConfig
     from haive.core.persistence.postgres_config import PostgresCheckpointerConfig
-    from langgraph.checkpoint.postgres import PostgresSaver
 
     POSTGRES_AVAILABLE = True
 except ImportError:

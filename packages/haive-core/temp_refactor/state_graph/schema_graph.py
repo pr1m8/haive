@@ -7,8 +7,9 @@ enhanced schema management capabilities.
 import logging
 from typing import Any, Type
 
-from haive.core.graph.state_graph.graph import StateGraph
 from pydantic import BaseModel
+
+from haive.core.graph.state_graph.graph import StateGraph
 
 # Set up logging
 logger = logging.getLogger(__name__)

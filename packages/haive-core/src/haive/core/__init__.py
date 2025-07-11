@@ -62,11 +62,9 @@ from haive.core.engine import (
 from haive.core.graph import (
     BaseGraph,
 )
-from haive.core.schema import (
-    # BasicAgentState,  # Module doesn't exist
+from haive.core.schema import (  # BasicAgentState,  # Module doesn't exist
     SchemaComposer,
 )
-
 
 # Public API
 __all__ = [

@@ -15,6 +15,8 @@ from typing import Any, Dict, List
 from unittest.mock import MagicMock, Mock, patch
 
 import pytest
+from langchain_core.documents import Document
+
 from haive.core.engine.document.loaders.auto_loader import (
     AutoLoader,
     AutoLoaderConfig,
@@ -36,7 +38,6 @@ from haive.core.engine.document.loaders.sources.source_types import (
     LoaderCapability,
     SourceCategory,
 )
-from langchain_core.documents import Document
 
 
 class TestAutoLoaderConfig:

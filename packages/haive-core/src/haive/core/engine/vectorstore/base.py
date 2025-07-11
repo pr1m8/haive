@@ -6,8 +6,8 @@ following the same pattern as the retriever configurations.
 
 from __future__ import annotations
 
-from abc import abstractmethod
 import logging
+from abc import abstractmethod
 from typing import Any, Dict, List, Optional, Tuple, Type, Union
 
 from langchain_core.vectorstores import VectorStore
@@ -15,7 +15,6 @@ from pydantic import Field
 
 from haive.core.engine.base import EngineType, InvokableEngine
 from haive.core.models.embeddings.base import BaseEmbeddingConfig
-
 
 logger = logging.getLogger(__name__)
 

@@ -8,12 +8,13 @@ import logging
 from typing import Any, Dict, List, Optional
 from urllib.parse import urlparse
 
+from langchain_core.document_loaders.base import BaseLoader
+from langchain_core.documents import Document
+
 from haive.core.engine.document.loaders.sources.implementation import (
     CredentialType,
     WebUrlSource,
 )
-from langchain_core.document_loaders.base import BaseLoader
-from langchain_core.documents import Document
 
 logger = logging.getLogger(__name__)
 

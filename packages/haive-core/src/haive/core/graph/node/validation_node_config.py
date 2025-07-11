@@ -4,14 +4,15 @@ import json
 import logging
 from typing import Any, Callable, Dict, List, Optional, Union
 
-from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
-from haive.core.graph.common.types import ConfigLike, StateLike
-from haive.core.graph.node.base_config import NodeConfig
-from haive.core.graph.node.types import NodeType
 from langchain_core.messages import AIMessage, ToolCall, ToolMessage
 from langgraph.graph import END
 from langgraph.prebuilt import ValidationNode
 from pydantic import BaseModel, Field
+
+from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
+from haive.core.graph.common.types import ConfigLike, StateLike
+from haive.core.graph.node.base_config import NodeConfig
+from haive.core.graph.node.types import NodeType
 
 # Configure logger with rich handler
 logger = logging.getLogger(__name__)
@@ -305,7 +306,9 @@ class ValidationNodeConfig(NodeConfig, ToolRouteMixin):
                 f"[bold yellow]Engine not found in registry:[/bold yellow] {self.engine_name}"
             )
         except Exception as e:
-            logger.exception(f"[bold red]Error accessing EngineRegistry:[/bold red] {e}")
+            logger.exception(
+                f"[bold red]Error accessing EngineRegistry:[/bold red] {e}"
+            )
 
         logger.error(
             f"[bold red]Engine '{self.engine_name}' not found anywhere[/bold red]"
@@ -503,9 +506,9 @@ class ValidationNodeConfig(NodeConfig, ToolRouteMixin):
 
         Returns ONLY routing decisions - no state updates!
         """
-        from datetime import datetime
         import json
         import traceback
+        from datetime import datetime
 
         validation_start_time = datetime.now()
         logger.info(
@@ -631,8 +634,12 @@ class ValidationNodeConfig(NodeConfig, ToolRouteMixin):
                     logger.debug(f"      Fields: {fields}")
 
         except Exception as e:
-            logger.exception(f"[bold red]ERROR in sync_tools_and_schemas: {e}[/bold red]")
-            logger.exception(f"[bold red]Traceback: {traceback.format_exc()}[/bold red]")
+            logger.exception(
+                f"[bold red]ERROR in sync_tools_and_schemas: {e}[/bold red]"
+            )
+            logger.exception(
+                f"[bold red]Traceback: {traceback.format_exc()}[/bold red]"
+            )
             return "has_errors"
 
         # Get messages from state with enhanced validation

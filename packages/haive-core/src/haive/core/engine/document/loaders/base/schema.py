@@ -4,7 +4,6 @@ from langchain_community.graphs import GraphDocument
 from langchain_core.documents import Document
 from pydantic import BaseModel, Field
 
-
 DocumentLike = TypeVar("DocumentLike", bound=Document | GraphDocument)
 
 

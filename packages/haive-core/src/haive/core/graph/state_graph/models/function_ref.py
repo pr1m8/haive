@@ -2,8 +2,9 @@ import importlib
 import inspect
 from typing import Any, Literal, Optional
 
-from haive.core.graph.state_graph.base import SerializableModel
 from pydantic import Field, field_validator, model_validator
+
+from haive.core.graph.state_graph.base import SerializableModel
 
 
 class FunctionReference(SerializableModel):

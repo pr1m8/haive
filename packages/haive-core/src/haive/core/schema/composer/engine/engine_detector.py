@@ -3,7 +3,6 @@
 import logging
 from typing import Any, List, Type
 
-
 logger = logging.getLogger(__name__)
 
 

@@ -8,14 +8,15 @@ from typing import Any, Dict
 
 # Check if PostgreSQL is available
 try:
+    from langgraph.checkpoint.postgres import ShallowPostgresSaver
+    from langgraph.checkpoint.postgres.aio import AsyncShallowPostgresSaver
+
     from haive.core.persistence.postgres_saver_override import (
         AsyncPostgresSaverNoPreparedStatements as AsyncPostgresSaver,
     )
     from haive.core.persistence.postgres_saver_override import (
         PostgresSaverNoPreparedStatements as PostgresSaver,
     )
-    from langgraph.checkpoint.postgres import ShallowPostgresSaver
-    from langgraph.checkpoint.postgres.aio import AsyncShallowPostgresSaver
 
     POSTGRES_AVAILABLE = True
 except ImportError:

@@ -11,8 +11,9 @@ import json
 from functools import wraps
 from typing import Any, Callable, Dict, List, Optional, Set, Tuple, Type, TypeVar, Union
 
-from haive.core.schema.compatibility.types import FieldInfo, SchemaInfo
 from pydantic import BaseModel
+
+from haive.core.schema.compatibility.types import FieldInfo, SchemaInfo
 
 T = TypeVar("T")
 
