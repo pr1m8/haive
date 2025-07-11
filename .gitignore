@@ -578,5 +578,6 @@ wheels/
 *.zip
 *.7z
 *.rar
-
+.secrets/
+.ipynb_checkpoints/
 # End of .gitignore
