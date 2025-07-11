@@ -224,6 +224,8 @@ prompt-toolkit = "^3.0.51"
 readchar = "^4.2.1"
 claude-code-sdk = "^0.0.14"
 terminal-controller = "^0.1.9"
+nbstripout = "^0.8.1"
+pymarkdownlnt = "^0.9.30"
 
 
 [tool.poetry.group.docs.dependencies]
@@ -406,6 +408,13 @@ google-genai = "^1.16.1"
 
 [tool.poetry.group.persistence.dependencies]
 langgraph-checkpoint-sqlite = "^2.0.10"
+
+
+[tool.poetry.group.schemathesis.dependencies]
+detect-secrets = "^1.5.0"
+pipdeptree = "^2.27.0"
+nbstripout = "^0.8.1"
+python-language-server = "^0.36.2"
 
 [tool.poetry.extras]
 cpu = ["torch", "torchvision", "torchaudio"]
