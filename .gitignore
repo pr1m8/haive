@@ -580,4 +580,6 @@ wheels/
 *.rar
 .secrets/
 .ipynb_checkpoints/
+resources/
+lc_cache/
 # End of .gitignore
