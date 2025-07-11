@@ -1,18 +1,9 @@
-# Trunk output and temporary files
-*out/
-*logs/
-*actions/
-*notifications/
-*tools/
-plugins/
+*out
+*logs
+*actions
+*notifications
+*tools
+plugins
 user_trunk.yaml
 user.yaml
-tmp/
-packages/
-
-# Cache and metadata
-.trunk/cache/
-.trunk/logs/
-.trunk/out/
-.trunk/plugins/
-.trunk/tools/
+tmp
