@@ -169,3 +169,13 @@ Module Path
    
    # APIs
    from haive.games.connect4.api import play_connect4_simple
+
+API Reference
+-------------
+
+.. autosummary::
+   :toctree: generated
+   :recursive:
+   :caption: Haive Games API
+   
+   haive.games
