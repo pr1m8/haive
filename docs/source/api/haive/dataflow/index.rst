@@ -31,3 +31,13 @@ Package Structure
 
 This package contains the following module hierarchy:
 
+API Reference
+-------------
+
+.. autosummary::
+   :toctree: generated
+   :recursive:
+   :caption: Haive Dataflow API
+   
+   haive.dataflow
+
