@@ -136,6 +136,8 @@ exclude_patterns = [
     "generated/**",
     "_archive/**",
     "conf_*.py",
+    "**/scripts/**",  # Exclude script directories
+    "**/debug*.py",   # Exclude debug files
 ]
 
 # ==============================================================================
@@ -278,6 +280,15 @@ autoapi_keep_files = True
 autoapi_add_toctree_entry = True
 autoapi_member_order = "bysource"
 autoapi_python_class_content = "both"
+autoapi_ignore = [
+    "**/tests/**",
+    "**/test_*.py", 
+    "**/*_test.py",
+    "**/scripts/**",
+    "**/debug*.py",
+    "**/example*.py",
+    "**/demo*.py",
+]
 
 # Napoleon (Google docstrings) - optimized settings
 napoleon_google_docstring = True
