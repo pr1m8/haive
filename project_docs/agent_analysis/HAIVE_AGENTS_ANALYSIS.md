@@ -1,11 +1,13 @@
 # Haive Agents Package Analysis
 
 ## Overview
+
 This document provides a comprehensive analysis of the `haive-agents` package structure, implementation patterns, and recommendations for cleanup and consistency improvements.
 
 ## Package Structure Analysis
 
 ### High-Level Organization
+
 ```
 haive-agents/
 ├── src/haive/agents/           # Main agent implementations
@@ -18,6 +20,7 @@ haive-agents/
 ### Core Agent Types
 
 #### 1. Base Agent (`base/agent.py`)
+
 - **Purpose**: Abstract base class for all agents
 - **Key Features**:
   - Inherits from `InvokableEngine` with execution and state management mixins
@@ -32,6 +35,7 @@ haive-agents/
   - Model validators for initialization sequence control
 
 #### 2. Simple Agent (`simple/agent.py`)
+
 - **Purpose**: Streamlined agent for basic LLM interactions with structured outputs
 - **Key Features**:
   - Inherits from base `Agent` class
@@ -46,6 +50,7 @@ haive-agents/
   - Proper state initialization with tool routes and available nodes
 
 #### 3. React Agent (`react/agent.py`)
+
 - **Purpose**: ReAct pattern implementation with looping behavior
 - **Key Features**:
   - Inherits from `SimpleAgent` for all base functionality
@@ -58,6 +63,7 @@ haive-agents/
   - Enables iterative reasoning and action cycles
 
 #### 4. Multi Agent (`multi/agent.py`)
+
 - **Purpose**: Coordination of multiple agents with various patterns
 - **Key Features**:
   - Multiple coordination modes: sequential, parallel, supervisor, swarm, custom
@@ -75,57 +81,70 @@ haive-agents/
 ## Implementation Patterns Analysis
 
 ### 1. Class Naming Conventions
+
 **Current State**: Generally consistent with some variations
+
 - Agent classes: `SimpleAgent`, `ReactAgent`, `MultiAgent`
 - State classes: `SimpleAgentState` (exists), no specific state for React
 - Config classes: Not prominent in current structure
 
 **Recommendations**:
+
 - Standardize state classes: `SimpleAgentState`, `ReactAgentState`, `MultiAgentState`
 - Consider config classes: `SimpleAgentConfig`, `ReactAgentConfig`, `MultiAgentConfig`
 
 ### 2. Test Setup Patterns
+
 **Current State**: Mixed approaches observed
+
 - Some tests use `unittest.TestCase` (e.g., `TestReactAgent`)
 - Others use function-based pytest
 - Inconsistent mocking strategies
 - Poetry run commands documented in test files
 
 **Issues Identified**:
+
 - Import path inconsistencies in tests
 - Mixing of unittest and pytest patterns
 - Some tests import from incorrect paths (e.g., `from agents.react.agent import ReactAgent`)
 - Class naming in tests varies (`TestReactAgent` vs function-based)
 
 ### 3. Schema Management
+
 **Strengths**:
+
 - Sophisticated schema composition system
 - Automatic derivation of input/output schemas
 - Engine I/O mapping preservation
 - Support for structured outputs and tool routing
 
 **Areas for Improvement**:
+
 - Complex initialization sequence could be simplified
 - Multiple validation decorators create order dependencies
 - Error handling in schema generation could be more robust
 
 ### 4. Persistence Integration
+
 **Strengths**:
+
 - Default PostgreSQL with memory fallback
 - Both sync and async checkpointer support
 - Store integration for cross-thread persistence
 
 **Areas for Improvement**:
+
 - Complex setup logic could be extracted to dedicated handlers
 - Error messaging could be more user-friendly
 
 ## Test Organization Analysis
 
 ### Current Structure
+
 ```
 tests/
 ├── simple/                    # Simple agent tests
-├── react/                     # React agent tests  
+├── react/                     # React agent tests
 ├── multi/                     # Multi agent tests
 ├── rag/                       # RAG-specific tests
 ├── base/                      # Base functionality tests
@@ -134,6 +153,7 @@ tests/
 ```
 
 ### Poetry Run Integration
+
 - Tests documented with `poetry run pytest` commands
 - Proper path handling for package structure
 - Rich logging integration via pytest.ini
@@ -141,6 +161,7 @@ tests/
 ## Recommendations for Cleanup
 
 ### 1. Test Consistency
+
 **Priority: High**
 
 ```python
@@ -152,11 +173,12 @@ from agents.react.agent import ReactAgent
 
 # Standardize test class naming:
 class TestSimpleAgent:  # for pytest classes
-class TestReactAgent:   # for pytest classes  
+class TestReactAgent:   # for pytest classes
 class TestMultiAgent:   # for pytest classes
 ```
 
 ### 2. State Classes Completion
+
 **Priority: Medium**
 
 ```python
@@ -166,7 +188,7 @@ class ReactAgentState(SimpleAgentState):
     """State for ReAct agents with iteration tracking."""
     iterations: int = 0
     max_iterations: int = 10
-    
+
 # multi/state.py - create if needed:
 class MultiAgentState(StateSchema):
     """State for multi-agent coordination."""
@@ -176,9 +198,11 @@ class MultiAgentState(StateSchema):
 ```
 
 ### 3. Configuration Classes
+
 **Priority: Low**
 
 Consider adding configuration classes for better type safety and validation:
+
 ```python
 # simple/config.py
 class SimpleAgentConfig(BaseModel):
@@ -190,6 +214,7 @@ class SimpleAgentConfig(BaseModel):
 ```
 
 ### 4. Error Handling Improvements
+
 **Priority: Medium**
 
 - Add more specific exception types for different failure modes
@@ -197,6 +222,7 @@ class SimpleAgentConfig(BaseModel):
 - Add validation for engine compatibility
 
 ### 5. Documentation Enhancements
+
 **Priority: Low**
 
 - Add more comprehensive docstrings for complex methods
@@ -206,6 +232,7 @@ class SimpleAgentConfig(BaseModel):
 ## Testing with Poetry Run
 
 The package is properly configured for poetry run usage:
+
 ```bash
 # Run specific tests:
 poetry run pytest packages/haive-agents/tests/simple/test_simple_agent.py -v

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Simple test to review if conversation persistence is working without prepared statement conflicts."""
 
-from datetime import datetime
 import os
 import sys
+from datetime import datetime
 
 
 def test_basic_conversation():

@@ -11,8 +11,18 @@ Key improvements:
 
 import inspect
 from datetime import datetime
-from typing import (Any, Callable, Dict, List, Optional, Sequence, Tuple, Type,
-                    Union, get_type_hints)
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    List,
+    Optional,
+    Sequence,
+    Tuple,
+    Type,
+    Union,
+    get_type_hints,
+)
 
 from langchain_core.tools import BaseTool, StructuredTool, Tool
 from langchain_core.tools.base import BaseToolkit

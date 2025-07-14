@@ -4,20 +4,18 @@ This demonstrates how to integrate dynamic tool routing with BaseGraph2's
 recompilation tracking system.
 """
 
-from datetime import datetime
 import logging
+from datetime import datetime
 from typing import Any, Dict, List, Optional, Set, Union
-
-from langchain_core.tools import tool
-from langgraph.types import Command, Send
-from pydantic import Field
 
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
-
+from langchain_core.tools import tool
+from langgraph.types import Command, Send
+from pydantic import Field
 
 logger = logging.getLogger(__name__)
 

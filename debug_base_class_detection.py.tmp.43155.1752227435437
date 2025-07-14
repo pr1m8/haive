@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+"""Debug base class detection in SchemaComposer."""
+
+import logging
+logging.basicConfig(level=logging.DEBUG, format='%(name)s - %(message)s')
+
+# Only show SchemaComposer logs
+for logger_name in logging.root.manager.loggerDict:
+    if not logger_name.startswith('haive.core.schema'):
+        logging.getLogger(logger_name).setLevel(logging.WARNING)
+
+from haive.core.engine.aug_llm.config import AugLLMConfig
+from haive.core.schema.composer import SchemaComposer
+
+# Create AugLLMConfig
+config = AugLLMConfig(temperature=0.7)
+
+print("=== Testing SchemaComposer.from_components ===")
+schema = SchemaComposer.from_components([config], name="TestSchema")
+
+print(f"\nResulting base classes: {[cls.__name__ for cls in schema.__mro__]}")

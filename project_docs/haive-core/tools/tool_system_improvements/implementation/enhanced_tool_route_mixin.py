@@ -11,10 +11,8 @@ import inspect
 import logging
 from typing import Any, Callable, Dict, List, Optional, Tuple, get_type_hints
 
-from pydantic import BaseModel, Field
-
 from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
-
+from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
 
