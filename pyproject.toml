@@ -230,6 +230,8 @@ pyannotate = "^1.2.0"
 autotyping = "^24.9.0"
 monkeytype = "^23.3.0"
 yapf = "^0.43.0"
+pre-commit-hooks = "^5.0.0"
+towncrier = "^24.8.0"
 
 
 [tool.poetry.group.docs.dependencies]
