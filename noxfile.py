@@ -2,10 +2,10 @@
 
 Documentation Commands:
 -----------------------
-    nox -s docs                 # Build docs once with graceful error handling (full rebuild)
-    nox -s docs_fast            # Fast incremental build for development (only changed files)
+    nox -s docs                 # Fast incremental sphinx-build (recommended)
+    nox -s docs_full            # Full rebuild with autosummary regeneration (slower)
+    nox -s docs_autobuild       # Auto-build with hot reload and live updates  
     nox -s docs_serve           # Serve pre-existing build (simple HTTP server)
-    nox -s docs_autobuild       # Auto-build with hot reload and live updates
     nox -s docs_clean           # Clean build artifacts
 
 Development Commands:
@@ -105,8 +105,8 @@ def run_with_graceful_handling(
 
 @nox.session(python=PYTHON_VERSIONS)
 def docs(session):
-    """Build documentation once with graceful error handling and detailed logging."""
-    session.log("📚 Building documentation with graceful error handling...")
+    """Standard sphinx-build with logging and --keep-going."""
+    session.log("📚 Running sphinx-build with professional logging...")
 
     # Create log file
     log_file = create_log_file(session, "docs_build")
@@ -115,19 +115,16 @@ def docs(session):
     session.log("📦 Installing dependencies...")
     session.run("poetry", "install", "--all-extras", external=True)
 
-    # Set environment for graceful import handling
-    os.environ["SPHINX_AUTOSUMMARY_GENERATE"] = "true"
+    # Set environment for incremental builds
+    os.environ["SPHINX_AUTOSUMMARY_GENERATE"] = "false"  # Skip autosummary regeneration for speed
     os.environ["HAIVE_DOCS_MODE"] = "true"
 
-    # Prepare command with enhanced error handling
+    # Standard sphinx-build command with logging and --keep-going
     cmd = [
         "poetry",
         "run",
         "sphinx-build",
-        "-b",
-        "html",  # HTML output
-        "-E",  # Don't use saved environment, rebuild everything
-        "-a",  # Write all files, not just new/changed ones
+        "-b", "html",
         "--keep-going",  # Continue building despite errors
         "-v",  # Verbose output
         str(SOURCE_DIR),
@@ -135,66 +132,64 @@ def docs(session):
     ]
 
     # Run with graceful handling and live logging
-    success = run_with_graceful_handling(session, cmd, log_file, "Documentation Build")
+    success = run_with_graceful_handling(session, cmd, log_file, "Sphinx Build")
 
-    # Report results with helpful messaging
+    # Simple result reporting
     if success:
-        session.log(
-            f"🌐 Documentation: file://{(BUILD_DIR / 'html' / 'index.html').absolute()}"
-        )
+        session.log(f"✅ Sphinx build complete: file://{(BUILD_DIR / 'html' / 'index.html').absolute()}")
     else:
-        session.log(
-            "⚠️  Build completed with issues (this is normal during development)"
-        )
+        session.log("⚠️  Sphinx build completed with warnings/errors")
         if (BUILD_DIR / "html" / "index.html").exists():
-            session.log(
-                f"📄 Documentation still built: file://{(BUILD_DIR / 'html' / 'index.html').absolute()}"
-            )
-            session.log(
-                "💡 Warnings/errors are expected during development - check the log for details"
-            )
-        else:
-            session.log(
-                "❌ Build failed completely - check the log for critical errors"
-            )
+            session.log(f"📄 Documentation available: file://{(BUILD_DIR / 'html' / 'index.html').absolute()}")
 
-    session.log(f"📋 Detailed build log: {log_file}")
+    session.log(f"📋 Build log: {log_file}")
     return success
 
 
+
 @nox.session(python=PYTHON_VERSIONS)
-def docs_fast(session):
-    """Fast incremental documentation build for development."""
-    session.log("⚡ Fast incremental documentation build...")
-    
+def docs_full(session):
+    """Full sphinx-build with autosummary regeneration (slower but complete)."""
+    session.log("📚 Running FULL sphinx-build with autosummary regeneration...")
+
+    # Create log file
+    log_file = create_log_file(session, "docs_full_build")
+
     # Install dependencies
     session.log("📦 Installing dependencies...")
     session.run("poetry", "install", "--all-extras", external=True)
-    
-    # Set environment - disable autosummary generation for speed
-    os.environ["SPHINX_AUTOSUMMARY_GENERATE"] = "false"
+
+    # Set environment for full regeneration
+    os.environ["SPHINX_AUTOSUMMARY_GENERATE"] = "true"  # Force autosummary regeneration
     os.environ["HAIVE_DOCS_MODE"] = "true"
-    
-    # Fast incremental build (no -E, no -a flags)
+
+    # Full sphinx-build command with clean rebuild
     cmd = [
         "poetry",
-        "run", 
+        "run",
         "sphinx-build",
         "-b", "html",
-        "-q",  # Quiet mode
+        "-E",  # Don't use cached environment
+        "-a",  # Write all files
+        "--keep-going",  # Continue building despite errors
+        "-v",  # Verbose output
         str(SOURCE_DIR),
         str(BUILD_DIR / "html"),
     ]
-    
-    # Run fast build
-    success = session.run(*cmd, external=True, success_codes=[0, 1])
-    
-    if success == 0:
-        session.log(f"⚡ Fast build complete: file://{(BUILD_DIR / 'html' / 'index.html').absolute()}")
+
+    # Run with graceful handling and live logging
+    success = run_with_graceful_handling(session, cmd, log_file, "Full Sphinx Build")
+
+    # Simple result reporting
+    if success:
+        session.log(f"✅ Full sphinx build complete: file://{(BUILD_DIR / 'html' / 'index.html').absolute()}")
     else:
-        session.log("⚠️  Fast build completed with warnings (check output)")
-    
-    return success == 0
+        session.log("⚠️  Full sphinx build completed with warnings/errors")
+        if (BUILD_DIR / "html" / "index.html").exists():
+            session.log(f"📄 Documentation available: file://{(BUILD_DIR / 'html' / 'index.html').absolute()}")
+
+    session.log(f"📋 Build log: {log_file}")
+    return success
 
 
 @nox.session(python=PYTHON_VERSIONS)

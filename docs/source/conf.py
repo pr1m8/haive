@@ -36,6 +36,9 @@ workspace_dir = docs_dir.parent
 # Add the workspace to Python path for imports
 sys.path.insert(0, str(workspace_dir))
 
+# Add extensions directory to path for custom extensions
+sys.path.insert(0, str(conf_dir / "_extensions"))
+
 # Add package source paths - namespaced imports require parent directory
 packages_dir = workspace_dir / "packages"
 package_names = [
@@ -97,6 +100,8 @@ extensions = [
     "sphinx_design",
     "myst_parser",
     "sphinxcontrib.mermaid",
+    # Custom extensions  
+    "games_autodoc",
 ]
 
 # ==============================================================================
