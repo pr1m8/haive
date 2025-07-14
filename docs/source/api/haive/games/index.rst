@@ -3,6 +3,13 @@ Haive Games
 
 Comprehensive game environments for AI agents with LLM integration.
 
+.. note::
+   
+   📍 **Enhanced Documentation Available**: In addition to the manually curated content below, 
+   we now have smart auto-generated documentation that recognizes game patterns and quality levels. 
+   See the `Intelligent Game Overview <#intelligent-game-overview>`_ section for a comprehensive 
+   view that adapts to the actual codebase structure.
+
 .. grid:: 1 2 2 3
    :gutter: 3
 
@@ -169,6 +176,11 @@ Module Path
    
    # APIs
    from haive.games.connect4.api import play_connect4_simple
+
+Intelligent Game Overview
+=========================
+
+.. games-autodoc::
 
 API Reference
 -------------

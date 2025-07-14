@@ -3,6 +3,12 @@ Board Games
 
 Classic board games with AI opponents.
 
+.. note::
+   
+   The content below shows manually curated examples. For a comprehensive auto-generated overview 
+   of all board games with quality indicators and consistent patterns, see the 
+   `Smart Game Documentation <#smart-game-overview>`_ section below.
+
 Chess
 -----
 
@@ -147,3 +153,9 @@ All board games support:
 - Configurable thinking time
 - Position evaluation
 - Rich terminal UI (select games)
+
+Smart Game Overview
+===================
+
+.. games-autodoc::
+   :category: board_games
