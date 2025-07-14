@@ -1,0 +1,8 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Directory\shell\VSCode-WSL]
+@="Open in VSCode (WSL)"
+"Icon"="%ProgramFiles%\\Microsoft VS Code\\Code.exe"
+
+[HKEY_CLASSES_ROOT\Directory\shell\VSCode-WSL\command]
+@="wsl.exe code --remote wsl+Ubuntu \"%V\"" 

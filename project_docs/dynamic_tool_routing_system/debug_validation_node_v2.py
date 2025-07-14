@@ -4,8 +4,7 @@ import logging
 
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.node.validation_node_config_v2 import \
-    ValidationNodeConfigV2
+from haive.core.graph.node.validation_node_config_v2 import ValidationNodeConfigV2
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.tools import tool
 

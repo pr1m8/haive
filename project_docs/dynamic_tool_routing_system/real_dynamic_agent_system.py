@@ -10,6 +10,7 @@ from datetime import datetime
 from typing import Annotated, Any, Dict, List, Literal, Optional, Set, Union
 
 from haive.agents.base.agent import Agent
+
 # Real Haive imports
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
