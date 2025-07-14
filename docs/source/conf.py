@@ -142,7 +142,8 @@ exclude_patterns = [
 # HTML Theme Configuration
 # ==============================================================================
 
-html_theme = "furo"
+# Choose your theme! 
+html_theme = "pydata_sphinx_theme"  # You said you like PyData too!
 html_title = "Haive Documentation"
 html_short_title = "Haive"
 
@@ -156,50 +157,38 @@ html_js_files = [
     "agent-visualization.js",  # Agent demos
 ]
 
-# Modern theme options
+# PyData theme options - Professional & Scientific
 html_theme_options = {
-    # Branding
-    "light_logo": "images/haive-logo-light.svg",
-    "dark_logo": "images/haive-logo-dark.svg",
-    # Colors
-    "light_css_variables": {
-        "color-brand-primary": "#0f62fe",
-        "color-brand-content": "#4589ff",
-        "color-foreground-primary": "#161616",
-        "color-foreground-secondary": "#525252",
-        "color-background-primary": "#ffffff",
-        "color-background-secondary": "#f8f9fb",
-    },
-    "dark_css_variables": {
-        "color-brand-primary": "#4589ff",
-        "color-brand-content": "#8a3ffc",
-        "color-foreground-primary": "#f4f4f4",
-        "color-foreground-secondary": "#c6c6c6",
-        "color-background-primary": "#161616",
-        "color-background-secondary": "#1a1a1a",
-    },
+    # GitHub integration
+    "github_url": "https://github.com/will-astley/haive",
+    "use_edit_page_button": True,
+    
     # Navigation
-    "sidebar_hide_name": False,
-    "navigation_depth": 3,
-    # Features
-    "announcement": (
-        '<div style="text-align: center; font-weight: 600;">'
-        "🤖 <strong>Haive AI Agent Framework</strong> - "
-        "Building intelligent agents with Google-style documentation"
-        "</div>"
-    ),
-    # Footer
-    "footer_icons": [
+    "show_toc_level": 2,
+    "navigation_depth": 4,
+    "show_nav_level": 2,
+    "collapse_navigation": False,
+    "navigation_with_keys": True,
+    
+    # Search
+    "search_bar_text": "Search Haive docs...",
+    "search_bar_position": "navbar",
+    
+    # Header
+    "navbar_end": ["navbar-icon-links", "theme-switcher"],
+    "icon_links": [
         {
             "name": "GitHub",
             "url": "https://github.com/will-astley/haive",
-            "html": '<svg height="16" width="16" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>',
+            "icon": "fa-brands fa-github",
         },
     ],
-    # Source links
-    "source_repository": "https://github.com/will-astley/haive/",
-    "source_branch": "main",
-    "source_directory": "docs/source/",
+    
+    # Announcement
+    "announcement": "🤖 <b>Haive AI Agent Framework</b> - Build intelligent agents with ease!",
+    
+    # Footer
+    "footer_items": ["copyright", "sphinx-version"],
 }
 
 # ==============================================================================
@@ -269,13 +258,13 @@ autodoc_mock_imports = [
 # AutoAPI - MUCH BETTER than autosummary!
 autoapi_type = "python"
 autoapi_dirs = [
-    "../packages/haive-core/src",
-    "../packages/haive-agents/src",
-    "../packages/haive-tools/src", 
-    "../packages/haive-games/src",
-    "../packages/haive-dataflow/src",
-    "../packages/haive-mcp/src",
-    "../packages/haive-prebuilt/src",
+    "../../packages/haive-core/src",
+    "../../packages/haive-agents/src",
+    "../../packages/haive-tools/src", 
+    "../../packages/haive-games/src",
+    "../../packages/haive-dataflow/src",
+    "../../packages/haive-mcp/src",
+    "../../packages/haive-prebuilt/src",
 ]
 autoapi_root = "api"
 autoapi_options = [
