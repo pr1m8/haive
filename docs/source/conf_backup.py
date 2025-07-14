@@ -22,7 +22,44 @@ logger = logging.getLogger(__name__)
 # Suppress specific warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", message=".*Matplotlib.*")
-warnings.filterwarnings("ignore", category=UserWarning, module="sphinx")
+
+# Add all package source directories to Python path for proper module discovery
+conf_dir = Path(__file__).parent
+project_root = conf_dir.parent.parent
+sys.path.insert(0, str(project_root))
+
+# Add all haive package source directories to sys.path
+packages_dir = project_root / "packages"
+if packages_dir.exists():
+    logger.info(f"Found packages directory: {packages_dir}")
+    for package_dir in packages_dir.glob("haive-*"):
+        src_dir = package_dir / "src"
+        if src_dir.exists():
+            logger.info(f"Adding to sys.path: {src_dir}")
+            sys.path.insert(0, str(src_dir))
+            # Try to import the package
+            package_name = package_dir.name.replace("-", ".")
+            try:
+                __import__(package_name)
+                logger.info(f"Successfully imported {package_name}")
+            except Exception as e:
+                logger.exception(f"Failed to import {package_name}: {e}")
+
+# Ensure the main haive package is discoverable
+main_haive_path = packages_dir / "haive-core" / "src"
+if main_haive_path.exists():
+    sys.path.insert(0, str(main_haive_path))
+
+# ==============================================================================
+# Project Information
+# ==============================================================================
+
+project = "Haive"
+author = "William R. Astley"
+current_year = datetime.now().year
+copyright = f"2025-{current_year}, {author}"  # noqa: A001
+version = "1.0"
+release = "1.0.0"
 
 # ==============================================================================
 # Path Setup for Namespaced Monorepo
@@ -49,36 +86,15 @@ package_names = [
 ]
 
 # For namespaced packages, we need to add the src directory
-logger.info(f"Found packages directory: {packages_dir}")
 for package in package_names:
     src_path = packages_dir / package / "src"
     if src_path.exists():
-        logger.info(f"Adding to sys.path: {src_path}")
         sys.path.insert(0, str(src_path))
-        
-        # Try to import the package
-        package_module = f"haive.{package.split('-')[1]}"
-        try:
-            __import__(package_module)
-            logger.info(f"Successfully imported {package_module}")
-        except Exception as e:
-            logger.warning(f"Failed to import {package_module}: {e}")
 
 # Add custom extensions
 extensions_path = conf_dir / "_extensions"
 if extensions_path.exists():
     sys.path.insert(0, str(extensions_path))
-
-# ==============================================================================
-# Project Information
-# ==============================================================================
-
-project = "Haive"
-author = "William R. Astley"
-current_year = datetime.now().year
-copyright = f"2025-{current_year}, {author}"  # noqa: A001
-version = "1.0"
-release = "1.0.0"
 
 # ==============================================================================
 # Extensions Configuration
@@ -97,7 +113,12 @@ extensions = [
     "sphinx_design",
     "myst_parser",
     "sphinxcontrib.mermaid",
+    # Custom Haive extension (if available)
 ]
+
+# Try to load custom extension if it exists
+# Temporarily disabled for faster builds
+#     pass
 
 # ==============================================================================
 # Source File Configuration
@@ -153,16 +174,20 @@ html_js_files = [
     "agent-visualization.js",  # Agent demos
 ]
 
+# Disable showcase files - they override all pages
+# if (static_dir / "showcase.css").exists():
+# if (static_dir / "showcase.js").exists():
+
 # Modern theme options
 html_theme_options = {
     # Branding
     "light_logo": "images/haive-logo-light.svg",
     "dark_logo": "images/haive-logo-dark.svg",
-    # Colors
+    # SIMPLIFIED Colors - Fix white-on-white issues
     "light_css_variables": {
         "color-brand-primary": "#0f62fe",
         "color-brand-content": "#4589ff",
-        "color-foreground-primary": "#161616",
+        "color-foreground-primary": "#161616",  # Dark text on light bg
         "color-foreground-secondary": "#525252",
         "color-background-primary": "#ffffff",
         "color-background-secondary": "#f8f9fb",
@@ -170,12 +195,12 @@ html_theme_options = {
     "dark_css_variables": {
         "color-brand-primary": "#4589ff",
         "color-brand-content": "#8a3ffc",
-        "color-foreground-primary": "#f4f4f4",
+        "color-foreground-primary": "#f4f4f4",  # Light text on dark bg
         "color-foreground-secondary": "#c6c6c6",
         "color-background-primary": "#161616",
         "color-background-secondary": "#1a1a1a",
     },
-    # Navigation
+    # SIMPLIFIED Navigation
     "sidebar_hide_name": False,
     "navigation_depth": 3,
     # Features
@@ -222,8 +247,6 @@ autodoc_type_aliases = {
     "StateSchema": "haive.core.schema.StateSchema",
     "Engine": "haive.core.engine.Engine",
     "Tool": "haive.core.tools.Tool",
-    "Graph": "haive.core.graph.BaseGraph",
-    "RunnableConfig": "Dict[str, Any]",
 }
 
 # Mock imports for missing modules
@@ -232,26 +255,30 @@ autodoc_mock_imports = [
     "haive.tools.api",
     "haive.tools.utility",
     "haive.tools.code",
-    "haive.tools.search",
-    "haive.tools.math",
-    "haive.tools.data",
     "haive.agents.rag.self_rag",
     "haive.core.schema.compatibility",
     "haive.agents.planning.llm_compiler",
-    "haive.agents.reasoning_and_critique.reflection",
-    "haive.agents.conversation.collaborative",
-    "haive.agents.supervisor",
+    "haive.agents.reasoning_and_critique.reflection",  # Should be reflexion
+    "haive.agents.conversation.collaborative",  # Typo: should be collaberative
+    "haive.agents.supervisor",  # Various supervisor imports fail
+    # Additional missing modules from latest build
+    "haive.tools.search",
+    "haive.tools.math",
+    "haive.tools.data",
     "haive.core.engine.loaders",
+    # Document modifiers that are failing
     "haive.agents.document_modifiers.kg",
     "haive.agents.document_modifiers.kg.kg_base",
     "haive.agents.document_modifiers.kg.kg_iterative_refinement",
     "haive.agents.document_modifiers.kg.kg_map_merge",
     "haive.agents.document_modifiers.summarizer",
     "haive.agents.document_modifiers.summarizer.iterative_refinement",
+    # Broad wildcards for problematic modules
     "haive.agents.rag.db_rag",
     "haive.agents.reasoning_and_critique",
     "haive.agents.research",
     "haive.core.engine.document",
+    # Persistence modules that don't exist
     "haive.core.persistence.create_checkpointer",
     "haive.core.persistence.create_memory_checkpointer",
     "haive.core.persistence.create_postgres_checkpointer",
@@ -270,16 +297,39 @@ autosummary_filename_map = {}
 # Make autosummary work properly with our module structure
 autosummary_mock_imports = autodoc_mock_imports
 
+
 # Tell autosummary to treat these as modules
 def autosummary_get_type(app, obj, parent):
     """Force certain patterns to be recognized as modules."""
     if obj and hasattr(obj, "__name__"):
         name = obj.__name__
-        # Force all haive.* submodules to be treated as modules
-        for package in ["core", "agents", "tools", "games", "dataflow", "mcp", "prebuilt"]:
-            if name.startswith(f"haive.{package}.") and "." in name[len(f"haive.{package}."):]:
-                return "module"
+        # Force haive.core.* submodules to be treated as modules
+        if name.startswith("haive.core.") and "." in name[11:]:
+            return "module"
+        # Force haive.agents.* submodules to be treated as modules
+        if name.startswith("haive.agents.") and "." in name[13:]:
+            return "module"
+        # Force haive.tools.* submodules to be treated as modules
+        if name.startswith("haive.tools.") and "." in name[12:]:
+            return "module"
     return None
+
+
+# Fix module import issues
+import warnings
+
+warnings.filterwarnings("ignore", category=UserWarning, module="sphinx")
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+# Enable recursive module discovery
+autodoc_default_options = {
+    "members": True,
+    "member-order": "bysource",
+    "special-members": "__init__",
+    "undoc-members": True,
+    "exclude-members": "__weakref__",
+    "show-inheritance": True,
+}
 
 # Force autosummary to generate proper module files
 autosummary_context = {
@@ -350,6 +400,7 @@ mermaid_version = "10.6.1"
 
 # Performance
 templates_path = ["_templates"]
+exclude_patterns.extend(["**/.tox", "**/.pytest_cache", "**/build", "**/dist"])
 
 # Autosummary template path
 autosummary_template_path = ["_templates/autosummary"]
@@ -410,12 +461,14 @@ latex_documents = [
 # Custom Event Handlers
 # ==============================================================================
 
+
 def skip_submodules(app, what, name, obj, skip, options):  # noqa: PLR0913
     """Skip submodules to avoid duplication in autosummary."""
     if what == "module" and "." in name:
         # Skip submodules in autosummary
         return True
     return skip
+
 
 def setup(app):
     """Setup function for custom modifications."""
@@ -424,16 +477,16 @@ def setup(app):
     # Log what packages we're documenting
     logger.info(f"Package names configured: {package_names}")
 
-    # Test import all packages
-    for package in ["core", "agents", "tools", "games", "dataflow", "mcp", "prebuilt"]:
-        try:
-            module = __import__(f"haive.{package}")
-            logger.info(f"haive.{package} imported successfully from: {module.__file__}")
-            logger.info(
-                f"haive.{package}.__all__ = {getattr(module, '__all__', 'NOT DEFINED')}"
-            )
-        except Exception as e:
-            logger.exception(f"Failed to import haive.{package}: {type(e).__name__}: {e}")
+    # Test import haive.games specifically
+    try:
+        import haive.games
+
+        logger.info(f"haive.games imported successfully from: {haive.games.__file__}")
+        logger.info(
+            f"haive.games.__all__ = {getattr(haive.games, '__all__', 'NOT DEFINED')}"
+        )
+    except Exception as e:
+        logger.exception(f"Failed to import haive.games: {type(e).__name__}: {e}")
 
     # Ensure directories exist
     static_dir = conf_dir / "_static"
@@ -469,7 +522,130 @@ def setup(app):
                 lines.insert(4, "")
 
     app.connect("autodoc-process-docstring", handle_import_failure)
-    
+
+    # Create minimal custom files if they don't exist
+    modern_css = static_dir / "modern.css"
+    if not modern_css.exists():
+        modern_css.write_text(
+            """
+/* Modern Haive Documentation Styles */
+:root {
+    --font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-stack-monospace: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+}
+
+body {
+    font-family: var(--font-stack);
+    line-height: 1.7;
+}
+
+code, pre {
+    font-family: var(--font-stack-monospace);
+}
+
+/* Improved code blocks */
+.highlight {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Clean card styles */
+.sd-card {
+    border-radius: 12px;
+    border: 1px solid var(--color-background-secondary);
+    transition: all 0.2s ease;
+}
+
+.sd-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+/* Google-style docstring formatting */
+.sig-param .n {
+    font-weight: 600;
+}
+
+.sig-return-typehint {
+    font-style: italic;
+}
+
+/* Module and class headers */
+.py.class, .py.function, .py.method {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-background-border);
+}
+
+/* Better spacing for docstring sections */
+.rubric {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+"""
+        )
+
+    modern_js = static_dir / "modern.js"
+    if not modern_js.exists():
+        modern_js.write_text(
+            """
+// Modern Haive Documentation JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🤖 Haive Documentation loaded');
+
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href !== '#') {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+        });
+    });
+
+    // Copy button feedback
+    document.querySelectorAll('.copybtn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const original = this.textContent;
+            this.textContent = '✓ Copied!';
+            setTimeout(() => this.textContent = original, 1000);
+        });
+    });
+
+    // Highlight current section in sidebar
+    const observer = new IntersectionObserver(
+        entries => {
+            entries.forEach(entry => {
+                const id = entry.target.getAttribute('id');
+                if (id) {
+                    const link = document.querySelector(`nav a[href="#${id}"]`);
+                    if (entry.intersectionRatio > 0) {
+                        link?.classList.add('current');
+                    } else {
+                        link?.classList.remove('current');
+                    }
+                }
+            });
+        },
+        { rootMargin: '0px 0px -50% 0px' }
+    );
+
+    // Observe all sections with IDs
+    document.querySelectorAll('section[id]').forEach(section => {
+        observer.observe(section);
+    });
+});
+"""
+        )
+
     # Connect event handlers
     app.connect("autodoc-skip-member", skip_submodules)
 
