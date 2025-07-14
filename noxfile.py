@@ -2,7 +2,8 @@
 
 Documentation Commands:
 -----------------------
-    nox -s docs                 # Build docs once with graceful error handling
+    nox -s docs                 # Build docs once with graceful error handling (full rebuild)
+    nox -s docs_fast            # Fast incremental build for development (only changed files)
     nox -s docs_serve           # Serve pre-existing build (simple HTTP server)
     nox -s docs_autobuild       # Auto-build with hot reload and live updates
     nox -s docs_clean           # Clean build artifacts
@@ -159,6 +160,41 @@ def docs(session):
 
     session.log(f"📋 Detailed build log: {log_file}")
     return success
+
+
+@nox.session(python=PYTHON_VERSIONS)
+def docs_fast(session):
+    """Fast incremental documentation build for development."""
+    session.log("⚡ Fast incremental documentation build...")
+    
+    # Install dependencies
+    session.log("📦 Installing dependencies...")
+    session.run("poetry", "install", "--all-extras", external=True)
+    
+    # Set environment - disable autosummary generation for speed
+    os.environ["SPHINX_AUTOSUMMARY_GENERATE"] = "false"
+    os.environ["HAIVE_DOCS_MODE"] = "true"
+    
+    # Fast incremental build (no -E, no -a flags)
+    cmd = [
+        "poetry",
+        "run", 
+        "sphinx-build",
+        "-b", "html",
+        "-q",  # Quiet mode
+        str(SOURCE_DIR),
+        str(BUILD_DIR / "html"),
+    ]
+    
+    # Run fast build
+    success = session.run(*cmd, external=True, success_codes=[0, 1])
+    
+    if success == 0:
+        session.log(f"⚡ Fast build complete: file://{(BUILD_DIR / 'html' / 'index.html').absolute()}")
+    else:
+        session.log("⚠️  Fast build completed with warnings (check output)")
+    
+    return success == 0
 
 
 @nox.session(python=PYTHON_VERSIONS)
