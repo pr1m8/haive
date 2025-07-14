@@ -19,18 +19,9 @@ Complete API documentation for the Haive framework with hierarchical navigation 
      </div>
    </div>
 
-.. toctree::
-   :maxdepth: 2
-   :caption: 📦 Package Reference
-   :hidden:
-   
-   haive/core/index
-   haive/agents/index
-   haive/tools/index
-   haive/games/index
-   haive/dataflow/index
-   haive/prebuilt/index
-   haive/mcp/index
+.. note::
+   **Package Navigation**: Individual package documentation is available through the main Haive API Reference below.
+   Each package provides detailed API documentation, examples, and architectural details.
 
 .. note::
    **Navigation Structure**: 
