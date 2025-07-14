@@ -267,6 +267,7 @@ langchain-google-vertexai = "^2.0.27"
 sphinx-gallery = "^0.19.0"
 sphinx-exec-directive = "^0.6"
 jupyter-cache = "^1.0.1"
+pydata-sphinx-theme = "^0.16.1"
 
 [tool.poetry.group.dev.dependencies.torch]
 version = "2.6.0+cu118"

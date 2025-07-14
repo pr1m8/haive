@@ -216,9 +216,12 @@ autodoc_default_options = {
     "exclude-members": "__weakref__",
     "inherited-members": True,
 }
-autodoc_typehints = "both"  # Show types in signature AND description
-autodoc_typehints_format = "short"
-autodoc_class_signature = "separated"
+# Type hints configuration - makes types clickable!
+autodoc_typehints = "description"  # Show in description for cleaner signatures
+typehints_document_rtype = True
+typehints_use_signature = True
+typehints_use_signature_return = True
+always_document_param_types = True
 autodoc_type_aliases = {
     # Simplify common Haive types
     "Agent": "haive.agents.base.Agent",
@@ -333,12 +336,12 @@ myst_enable_extensions = [
     "substitution",
 ]
 
-# Intersphinx - link to other projects
-intersphinx_mapping = {
-    "python": ("https://docs.python.org/3", None),
-    "pydantic": ("https://docs.pydantic.dev/latest/", None),
-    "langchain": ("https://api.python.langchain.com/en/latest/", None),
-}
+# Intersphinx - disabled temporarily due to network issues
+# intersphinx_mapping = {
+#     "python": ("https://docs.python.org/3", None),
+#     "pydantic": ("https://docs.pydantic.dev/latest/", None), 
+#     "langchain": ("https://api.python.langchain.com/en/latest/", None),
+# }
 
 # Mermaid diagrams
 mermaid_version = "10.6.1"

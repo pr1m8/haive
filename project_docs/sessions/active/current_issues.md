@@ -1,6 +1,6 @@
 # Current Issues - Active Development Problems
 
-**Updated**: 2025-01-09  
+**Updated**: 2025-01-14  
 **Status**: Active tracking of known issues
 
 ## 🚨 Critical Issues
@@ -40,12 +40,6 @@
 - **Impact**: Tool selection errors
 - **Status**: Needs naming convention
 
-### 3. Memory Persistence
-
-- **Problem**: Agent memory not properly persisted
-- **Impact**: Context loss between sessions
-- **Status**: Architecture review needed
-
 ## 📝 Low Priority Issues
 
 ### 1. Documentation Gaps
@@ -72,13 +66,20 @@
 - **Solution**: Fixed Sphinx configuration
 - **Status**: ✅ Resolved
 
+### 3. PostgreSQL Store Prepared Statement Conflicts (Fixed 2025-01-14)
+
+- **Problem**: "prepared statement '_pg3_X' already exists" errors with PostgreSQL store and connection pooling
+- **Root Cause**: LangGraph pipeline mode creates conflicting prepared statements with pgBouncer/Supabase
+- **Solution**: Three-part fix: `prepare_threshold=None`, `DEALLOCATE ALL`, and `supports_pipeline=False`
+- **Status**: ✅ Resolved
+
 ## 📊 Issue Tracking
 
-- **Total Active**: 6 issues
+- **Total Active**: 5 issues
 - **Critical**: 3 issues
 - **Medium**: 2 issues
-- **Low**: 1 issue
-- **Resolved This Week**: 2 issues
+- **Low**: 0 issues
+- **Resolved This Week**: 3 issues
 
 ## 🎯 Next Steps
 
