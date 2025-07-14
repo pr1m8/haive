@@ -88,20 +88,21 @@ release = "1.0.0"
 # ==============================================================================
 
 extensions = [
-    # Core Sphinx extensions
-    "sphinx.ext.autodoc",
-    "sphinx.ext.autosummary",
-    "sphinx.ext.viewcode",
-    "sphinx.ext.napoleon",
-    "sphinx.ext.intersphinx",
-    "sphinx.ext.githubpages",
-    # Enhanced documentation
-    "sphinx_copybutton",
-    "sphinx_design",
-    "myst_parser",
-    "sphinxcontrib.mermaid",
-    # Custom extensions  
-    "games_autodoc",
+    # Core API documentation - USING YOUR POWERFUL EXTENSIONS!
+    "autoapi.extension",              # 🚀 Better than autodoc+autosummary
+    "sphinx.ext.napoleon",            # Google docstrings
+    "sphinx.ext.viewcode",            # Source code links
+    "sphinx.ext.intersphinx",         # Cross-references (disabled offline)
+    
+    # Enhanced display - YOUR INSTALLED EXTENSIONS
+    "sphinx_autodoc_typehints",       # 🎨 Beautiful type hints
+    "sphinx_copybutton",              # Copy code blocks
+    "sphinx_design",                  # 🎨 Cards, grids, badges
+    "sphinx_tabs",                    # 📑 Tabbed content
+    "sphinx_togglebutton",            # 🔽 Collapsible sections
+    "sphinx_exec_directive",          # ⚡ Live code execution
+    "myst_parser",                    # Markdown support
+    "sphinxcontrib.mermaid",          # 📊 Diagrams
 ]
 
 # ==============================================================================
@@ -148,11 +149,8 @@ html_short_title = "Haive"
 # Static files
 html_static_path = ["_static"]
 
-# Enhanced CSS for better styling and syntax highlighting
-html_css_files = [
-    "haive-docs-enhanced.css",  # Comprehensive styling fixes
-    "api-showcase.css",  # Beautiful gradient cards (enhanced)
-]
+# NO CUSTOM CSS - Let Furo handle everything!
+html_css_files = []
 
 html_js_files = [
     "agent-visualization.js",  # Agent demos
@@ -265,33 +263,29 @@ autodoc_mock_imports = [
     "tensorflow",
 ]
 
-# Autosummary - fixed configuration for proper documentation generation
-autosummary_generate = True
-autosummary_generate_overwrite = True  # Overwrite to keep docs up to date
-autosummary_imported_members = True  # Import members for proper documentation
-autosummary_ignore_module_all = False
-autosummary_filename_map = {}
-
-# Make autosummary work properly with our module structure
-autosummary_mock_imports = autodoc_mock_imports
-
-# Tell autosummary to treat these as modules
-def autosummary_get_type(app, obj, parent):
-    """Force certain patterns to be recognized as modules."""
-    if obj and hasattr(obj, "__name__"):
-        name = obj.__name__
-        # Force all haive.* submodules to be treated as modules
-        for package in ["core", "agents", "tools", "games", "dataflow", "mcp", "prebuilt"]:
-            if name.startswith(f"haive.{package}.") and "." in name[len(f"haive.{package}."):]:
-                return "module"
-    return None
-
-# Force autosummary to generate proper module files
-autosummary_context = {
-    "fullname": lambda name: name,
-    "module": lambda name: name,
-    "objname": lambda name: name.split(".")[-1],
-}
+# AutoAPI - MUCH BETTER than autosummary!
+autoapi_type = "python"
+autoapi_dirs = [
+    "../packages/haive-core/src",
+    "../packages/haive-agents/src",
+    "../packages/haive-tools/src", 
+    "../packages/haive-games/src",
+    "../packages/haive-dataflow/src",
+    "../packages/haive-mcp/src",
+    "../packages/haive-prebuilt/src",
+]
+autoapi_root = "api"
+autoapi_options = [
+    "members",
+    "undoc-members",
+    "show-inheritance", 
+    "show-module-summary",
+    "imported-members",
+]
+autoapi_keep_files = True
+autoapi_add_toctree_entry = True
+autoapi_member_order = "bysource"
+autoapi_python_class_content = "both"
 
 # Napoleon (Google docstrings) - optimized settings
 napoleon_google_docstring = True
