@@ -51,6 +51,11 @@ Workflow (pure orchestration - no LLM)
    - Tool change detection and recompilation triggering
    - Real state transitions (tools: 2 → 3)
    - Auto-recompilation workflow complete
+6. **Agent-as-Tool Pattern** - ✅ **IMPLEMENTED in Base Agent**
+   - All agents now have `as_tool()` class method
+   - Retriever tool creation with `create_retriever_tool()`
+   - Foundation for memory-first routing system
+   - See: [Agent-as-Tool Pattern Documentation](agent_as_tool_pattern.md)
 
 ### 🔄 In Progress - Ready for Implementation
 1. **MultiAgent Sequential Pattern** - ReactAgent → SimpleAgent flow

@@ -73,13 +73,21 @@
 - **Solution**: Three-part fix: `prepare_threshold=None`, `DEALLOCATE ALL`, and `supports_pipeline=False`
 - **Status**: ✅ Resolved
 
+### 4. Agent-as-Tool Pattern Implementation (Fixed 2025-01-14)
+
+- **Problem**: Need all agents to have class method `as_tool()` for easy composition
+- **Solution**: Added `as_tool()` and `create_retriever_tool()` class methods to base Agent class
+- **Impact**: All agents can now be converted to tools for use in other agents
+- **Documentation**: [Agent-as-Tool Pattern](../architecture/agent_as_tool_pattern.md)
+- **Status**: ✅ Resolved
+
 ## 📊 Issue Tracking
 
 - **Total Active**: 5 issues
 - **Critical**: 3 issues
 - **Medium**: 2 issues
 - **Low**: 0 issues
-- **Resolved This Week**: 3 issues
+- **Resolved This Week**: 4 issues
 
 ## 🎯 Next Steps
 
