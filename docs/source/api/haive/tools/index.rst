@@ -84,3 +84,13 @@ This package contains the following module hierarchy:
 
 **utility**
   - *(no submodules)*
+
+API Reference
+-------------
+
+.. autosummary::
+   :toctree: generated
+   :recursive:
+   :caption: Haive Tools API
+   
+   haive.tools
