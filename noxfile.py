@@ -1,10 +1,14 @@
 """Nox configuration for Haive project.
 
-Simple Commands:
----------------
+Documentation Commands:
+-----------------------
     nox -s docs                 # Build docs once with graceful error handling
-    nox -s docs_serve           # Build and serve with auto-reload (port 8003)
+    nox -s docs_serve           # Serve pre-existing build (simple HTTP server)
+    nox -s docs_autobuild       # Auto-build with hot reload and live updates
     nox -s docs_clean           # Clean build artifacts
+
+Development Commands:
+--------------------
     nox -s lint                 # Run linters
     nox -s test                 # Run tests
 """
@@ -159,11 +163,37 @@ def docs(session):
 
 @nox.session(python=PYTHON_VERSIONS)
 def docs_serve(session):
-    """Serve documentation with auto-reload and graceful error handling."""
-    session.log("🚀 Starting documentation server with graceful error handling...")
+    """Serve pre-existing documentation build (simple HTTP server)."""
+    session.log("🌐 Serving pre-built documentation...")
+    
+    # Check if build exists
+    if not (BUILD_DIR / "html" / "index.html").exists():
+        session.log("❌ No documentation build found!")
+        session.log("💡 Run 'nox -s docs' first to build documentation")
+        return False
+    
+    session.log(f"📁 Serving from: {BUILD_DIR / 'html'}")
+    session.log("🌐 Server starting at: http://localhost:8003")
+    session.log("🛑 Press Ctrl+C to stop")
+    
+    # Simple HTTP server for pre-built docs
+    try:
+        session.run(
+            "python", "-m", "http.server", "8003", 
+            "--directory", str(BUILD_DIR / "html"),
+            external=True
+        )
+    except KeyboardInterrupt:
+        session.log("🛑 Server stopped by user")
 
-    # Create log file for server session
-    log_file = create_log_file(session, "docs_serve")
+
+@nox.session(python=PYTHON_VERSIONS)
+def docs_autobuild(session):
+    """Auto-build documentation with hot reload and live updates."""
+    session.log("🚀 Starting auto-build server with hot reload...")
+
+    # Create log file for autobuild session
+    log_file = create_log_file(session, "docs_autobuild")
 
     # Kill existing processes gracefully
     try:
@@ -180,8 +210,9 @@ def docs_serve(session):
     os.environ["SPHINX_AUTOSUMMARY_GENERATE"] = "false"  # Faster for serving
     os.environ["HAIVE_DOCS_MODE"] = "true"
 
-    session.log("🌐 Server will start at: http://localhost:8003")
+    session.log("🌐 Auto-build server will start at: http://localhost:8003")
     session.log("📁 Watching packages/ for changes")
+    session.log("🔄 Documentation rebuilds automatically on file changes")
     session.log("⚠️  Import warnings are normal and handled gracefully")
     session.log(f"📋 Server logs: {log_file}")
 
@@ -219,11 +250,11 @@ def docs_serve(session):
 
     # Run autobuild with graceful handling
     try:
-        run_with_graceful_handling(session, cmd, log_file, "Documentation Server")
+        run_with_graceful_handling(session, cmd, log_file, "Auto-build Server")
     except KeyboardInterrupt:
-        session.log("🛑 Server stopped by user")
+        session.log("🛑 Auto-build server stopped by user")
     except Exception as e:
-        session.log(f"❌ Server failed: {e}")
+        session.log(f"❌ Auto-build server failed: {e}")
         session.log(f"📋 Check logs: {log_file}")
 
 
