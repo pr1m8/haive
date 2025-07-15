@@ -90,12 +90,13 @@ release = "1.0.0"
 extensions = [
     # Core API documentation - USING YOUR POWERFUL EXTENSIONS!
     "autoapi.extension",              # 🚀 Better than autodoc+autosummary
-    "sphinx.ext.napoleon",            # Google docstrings
-    "sphinx.ext.viewcode",            # Source code links
+    "sphinx.ext.napoleon",            # Google docstrings - PROPERLY CONFIGURED
+    "sphinx.ext.viewcode",            # Source code links - CRITICAL FOR HYPERLINKS
+    "sphinx.ext.linkcode",            # GitHub source links - ADDED FOR GITHUB LINKS
     "sphinx.ext.intersphinx",         # Cross-references (disabled offline)
     
     # Enhanced display - YOUR INSTALLED EXTENSIONS
-    "sphinx_autodoc_typehints",       # 🎨 Beautiful type hints
+    "sphinx_autodoc_typehints",       # 🎨 Beautiful type hints - WORKS WITH GOOGLE STYLE
     "sphinx_copybutton",              # Copy code blocks
     "sphinx_design",                  # 🎨 Cards, grids, badges
     "sphinx_tabs",                    # 📑 Tabbed content
@@ -144,49 +145,65 @@ exclude_patterns = [
 # HTML Theme Configuration
 # ==============================================================================
 
-# Choose your theme! 
-html_theme = "pydata_sphinx_theme"  # You said you like PyData too!
+# Choose PyData Sphinx Theme - User preference!
+html_theme = "pydata_sphinx_theme"
 html_title = "Haive Documentation"
 html_short_title = "Haive"
 
 # Static files
 html_static_path = ["_static"]
 
-# NO CUSTOM CSS - Let Furo handle everything!
-html_css_files = []
+# Enhanced CSS for better contrast and styling
+html_css_files = [
+    "custom.css",  # Keep existing custom styles
+]
 
 html_js_files = [
     "agent-visualization.js",  # Agent demos
 ]
 
-# PyData theme options - Professional & Scientific
+# PyData theme options - Professional & Scientific with enhanced navigation
 html_theme_options = {
+    # Fix navigation and contrast issues
+    "navbar_align": "left",
+    "navbar_center": ["navbar-nav"],
+    "secondary_sidebar_items": ["page-toc", "edit-this-page"],
+    
     # GitHub integration
     "github_url": "https://github.com/will-astley/haive",
     "use_edit_page_button": True,
     
-    # Navigation
+    # Enhanced navigation for better visibility
     "show_toc_level": 2,
     "navigation_depth": 4,
-    "show_nav_level": 2,
     "collapse_navigation": False,
     "navigation_with_keys": True,
     
-    # Search
+    # Search improvements
     "search_bar_text": "Search Haive docs...",
     "search_bar_position": "navbar",
     
-    # Header
+    # Header with theme switcher
     "navbar_end": ["navbar-icon-links", "theme-switcher"],
     "icon_links": [
         {
-            "name": "GitHub",
+            "name": "GitHub", 
             "url": "https://github.com/will-astley/haive",
             "icon": "fa-brands fa-github",
         },
     ],
     
-    # Announcement
+    # Theme switching for better contrast
+    "switcher": {
+        "json_url": "_static/switcher.json",
+        "version_match": "latest"
+    },
+    
+    # Better contrast with accessible pygments
+    "pygments_light_style": "default",
+    "pygments_dark_style": "github-dark",
+    
+    # Announcement banner
     "announcement": "🤖 <b>Haive AI Agent Framework</b> - Build intelligent agents with ease!",
     
     # Footer
@@ -480,3 +497,47 @@ def setup(app):
         "parallel_read_safe": True,
         "parallel_write_safe": True,
     }
+
+
+# ==============================================================================
+# GitHub Source Links Configuration (for sphinx.ext.linkcode)
+# ==============================================================================
+
+def linkcode_resolve(domain, info):
+    """Resolve function to link to GitHub source code.
+    
+    This enables [source] links next to every function/class that link
+    directly to the GitHub repository source code.
+    """
+    if domain != 'py':
+        return None
+    if not info['module']:
+        return None
+    
+    # Extract package name from module path
+    module_parts = info['module'].split('.')
+    if len(module_parts) < 2 or module_parts[0] != 'haive':
+        return None
+    
+    # Map haive.package to packages/haive-package structure
+    package_name = module_parts[1]
+    package_dir = f"haive-{package_name}"
+    
+    # Build the file path
+    submodule_path = '/'.join(module_parts[2:]) if len(module_parts) > 2 else ''
+    if submodule_path:
+        filename = f"packages/{package_dir}/src/haive/{package_name}/{submodule_path}.py"
+    else:
+        filename = f"packages/{package_dir}/src/haive/{package_name}/__init__.py"
+    
+    # Return GitHub link
+    return f"https://github.com/will-astley/haive/blob/main/{filename}"
+
+
+# ==============================================================================
+# Pygments Configuration for Better Code Contrast
+# ==============================================================================
+
+# Enhanced pygments styling for better code readability
+pygments_style = "default"  # Light mode - good contrast
+pygments_dark_style = "github-dark"  # Dark mode - accessible colors
