@@ -41,13 +41,14 @@ sys.path.insert(0, str(conf_dir / "_extensions"))
 
 # Add package source paths - namespaced imports require parent directory
 packages_dir = workspace_dir / "packages"
+
+# Note: haive-prebuilt is excluded from docs as it contains generated/binary content
 package_names = [
     "haive-core",
     "haive-agents",
     "haive-tools",
     "haive-games",
     "haive-dataflow",
-    "haive-prebuilt",
     "haive-mcp",
 ]
 
@@ -283,7 +284,7 @@ autoapi_dirs = [
     "../../packages/haive-games/src",
     "../../packages/haive-dataflow/src",
     "../../packages/haive-mcp/src",
-    "../../packages/haive-prebuilt/src",
+    #"../../packages/haive-prebuilt/src",
 ]
 autoapi_root = "api"
 autoapi_options = [
