@@ -59,9 +59,10 @@ lint:
 actions:
   disabled:
     - trunk-announce
+  enabled:
     - trunk-check-pre-push
     - trunk-fmt-pre-commit
-  enabled:
+    - trunk-check-pre-commit
     - git-lfs
     - trunk-upgrade-available
 # Optional: If your main branch is not "main" or "master", set it here
