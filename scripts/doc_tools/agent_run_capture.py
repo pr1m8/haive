@@ -349,7 +349,7 @@ class AgentRunner:
 .. _agent-run-{capture.metadata.run_id}:
 
 {capture.metadata.agent_name} Run Output
-{'=' * (len(capture.metadata.agent_name) + 11)}
+{"=" * (len(capture.metadata.agent_name) + 11)}
 
 .. container:: agent-run-output
    :data-paginated: true
@@ -358,14 +358,14 @@ class AgentRunner:
    .. container:: run-header
 
       **Agent:** {capture.metadata.agent_name}
-      
+
       **Type:** {capture.metadata.agent_type}
-      
-      **Timestamp:** {capture.metadata.timestamp.strftime('%Y-%m-%d %H:%M:%S')}
-      
+
+      **Timestamp:** {capture.metadata.timestamp.strftime("%Y-%m-%d %H:%M:%S")}
+
       **Duration:** {capture.metadata.duration:.2f}s
-      
-      **Status:** {'✅ Success' if capture.metadata.success else '❌ Failed'}
+
+      **Status:** {"✅ Success" if capture.metadata.success else "❌ Failed"}
 
    .. container:: run-content
 

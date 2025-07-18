@@ -183,7 +183,7 @@ class ReadmeIntegrator:
 ```{{note}}
 **Original Location:** `{relative_path}`
 
-**Category:** {metadata['category']}
+**Category:** {metadata["category"]}
 ```
 
 """
@@ -231,7 +231,7 @@ the Haive codebase, organized by category.
             category_index = category_dir / "index.rst"
             category_content = f"""
 {category.title()} Documentation
-{'=' * (len(category) + 14)}
+{"=" * (len(category) + 14)}
 
 .. toctree::
    :maxdepth: 2
