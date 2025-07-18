@@ -1308,7 +1308,7 @@ Abstract base class for sophisticated multi-agent systems.
 _Multi-Agent Systems | haive-agents_
 Abstract base class for multi-agent systems.
 **Features:** conversation
-**Module:** `haive.agents.multi.multi_agent_base (1)`
+**Module:** `haive.agents.multi.multi_agent_base`
 
 **MultiAgent** (🔴 Complex)
 _Multi-Agent Systems | haive-agents_

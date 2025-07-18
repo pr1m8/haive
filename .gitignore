@@ -298,13 +298,9 @@ pyvenv.cfg
 docs/build/
 docs/_build/
 docs/source/_build/
-docs/source/_static/
-docs/source/_templates/
 docs/source/api/
 docs/scratch/
 _build/
-_static/
-_templates/
 *.pdf
 *.tex
 sphinx*
@@ -313,15 +309,8 @@ readthedocs-sphinx-search/
 personal_notes/**/rendered/
 personal_notes/**/*.html
 **/rendered/
-**/*.html
 **/_build/
-**/_static/
-**/_templates/
 **/api/
-# Ignore all .rst files in docs/source and subdirectories
-docs/source/**/*.rst
-# Except for index.rst in the root of docs/source
-!docs/source/index.rst
 site/
 _site/
 
@@ -583,14 +572,51 @@ wheels/
 resources/
 lc_cache/
 # End of .gitignore
-# Ignore submodule changes in root
-/packages/haive-core/
-/packages/haive-agents/
-/packages/haive-games/
-/packages/haive-tools/
-/packages/haive-dataflow/
-/packages/haive-prebuilt/
+# =============================================================================
+# 📄 Documentation and temporary files cleanup
+# =============================================================================
+# Temporary fix/debug files
+*_FIX*.md
+*_GUIDE*.md
+*_SUMMARY*.md
+*_ANALYSIS*.md
+*_REPORT*.md
+fix_*.py
+debug_*.py
+auto_fix_*.py
+apply_*.py
+analyze_*.py
+create_*.py
+emergency_*.py
+explore_*.py
+implement_*.py
+proper_*.py
+quick_*.py
+safe_*.py
+simple_*.py
+test_*.py
+trace_*.py
+haive_*.py
+*_performance_fix.py
+*_import_fix.py
+*_thread_fix.py
+*_checkpoint_fix.py
+*_config_fix.py
+*_schema_fix.py
+
+# Generated documentation backups
+docs/source/conf_backup*.py
+docs/source/conf_safe.py
+docs/error_reports/
+docs/logs/
+docs/build/
+*_cleanup_*.md
+*_dependencies_*.md
+
+# Notebooks in packages
 /packages/haive-mcp/notebooks/Untitled*.ipynb
 *.ipynb_checkpoints
 notebooks/*.ipynb
-project_docs/
+
+# Examples and testing
+examples/multi_agent_showcase.py

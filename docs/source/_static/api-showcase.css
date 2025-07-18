@@ -10,13 +10,13 @@
   --haive-secondary: #a855f7;
   --haive-accent: #d946ef;
   --haive-success: #10b981;
-  
+
   /* Subtle gradients - more professional with purple */
   --gradient-primary: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(168, 85, 247, 0.05) 100%);
   --gradient-secondary: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(217, 70, 239, 0.05) 100%);
   --gradient-warm: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(249, 115, 22, 0.05) 100%);
   --gradient-cool: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(6, 182, 212, 0.05) 100%);
-  
+
   /* Spacing scale */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -24,7 +24,7 @@
   --space-4: 1rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
-  
+
   /* Animations */
   --duration-fast: 200ms;
   --duration-normal: 300ms;
@@ -237,7 +237,7 @@ section[id*="engine"] code.docutils.literal {
   section[id*="haive"] .sd-container-fluid .sd-card:hover {
     transform: translateY(-4px) scale(1.01);
   }
-  
+
   section[id="haive-api-reference"] .sd-card:hover {
     transform: translateY(-6px) scale(1.02);
   }

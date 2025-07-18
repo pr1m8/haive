@@ -76,23 +76,23 @@
   --haive-success: #10b981;
   --haive-warning: #f59e0b;
   --haive-danger: #ef4444;
-  
+
   /* Gradients for impact - Purple spectrum */
   --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
   --gradient-secondary: linear-gradient(135deg, #a855f7 0%, #d946ef 100%);
   --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
   --gradient-cool: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
   --gradient-dark: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
-  
+
   /* Glass morphism */
   --glass-bg: rgba(255, 255, 255, 0.1);
   --glass-border: rgba(255, 255, 255, 0.2);
   --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  
+
   /* Typography */
   --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', monospace;
-  
+
   /* Spacing scale */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -103,7 +103,7 @@
   --space-12: 3rem;
   --space-16: 4rem;
   --space-20: 5rem;
-  
+
   /* Animations */
   --duration-fast: 200ms;
   --duration-normal: 300ms;
@@ -586,24 +586,24 @@ body {
   .hero-section {
     padding: var(--space-12) var(--space-4);
   }
-  
+
   .hero-title {
     font-size: 2.5rem;
   }
-  
+
   .agent-gallery {
     padding: var(--space-8) var(--space-2);
   }
-  
+
   .agents-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .gallery-controls {
     flex-direction: column;
     gap: var(--space-6);
   }
-  
+
   .stats-dashboard {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -616,20 +616,20 @@ body {
   .agent-gallery {
     background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
   }
-  
+
   .agent-card {
     background: #262626;
     border-color: #404040;
   }
-  
+
   .agent-card-header {
     background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
   }
-  
+
   .agent-description {
     color: #c6c6c6;
   }
-  
+
   .search-input,
   .view-toggle,
   .category-chip {
