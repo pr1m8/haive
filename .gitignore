@@ -593,3 +593,4 @@ lc_cache/
 /packages/haive-mcp/notebooks/Untitled*.ipynb
 *.ipynb_checkpoints
 notebooks/*.ipynb
+project_docs/
