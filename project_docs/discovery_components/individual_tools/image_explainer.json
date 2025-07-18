@@ -1,0 +1,40 @@
+{
+  "component_info": {
+    "name": "image_explainer",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.scene_explain_tool",
+    "class_name": "SceneXplainTool",
+    "description": "An Image Captioning Tool: Use this tool to generate a detailed caption for an image. The input can be an image file of any format, and the output will be a text description that covers every detail of the image.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:28.973062",
+    "schema": {
+      "properties": {
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "image_explainer",
+    "tool_description": "An Image Captioning Tool: Use this tool to generate a detailed caption for an image. The input can be an image file of any format, and the output will be a text description that covers every detail of the image."
+  },
+  "document": {
+    "page_content": "# image_explainer\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.tools.scene_explain_tool\n**Class:** SceneXplainTool\n\n## Description\nAn Image Captioning Tool: Use this tool to generate a detailed caption for an image. The input can be an image file of any format, and the output will be a text description that covers every detail of the image.\n\n## Schema\n```json\n{\n  \"properties\": {\n    \"kwargs\": {\n      \"type\": \"Any\",\n      \"default\": null\n    }\n  }\n}\n```\n\n## Usage as Tool\n**Tool Name:** `image_explainer`\n**Description:** An Image Captioning Tool: Use this tool to generate a detailed caption for an image. The input can be an image file of any format, and the output will be a text description that covers every detail of the image.\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "image_explainer",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.tools.scene_explain_tool",
+      "class_name": "SceneXplainTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:28.973062",
+      "category": "individual_tools"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

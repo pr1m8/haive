@@ -1,0 +1,71 @@
+{
+  "component_info": {
+    "name": "get_location_details",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.trip_advisor_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get details about a location by ID.\n\n    Retrieves comprehensive information about a specific TripAdvisor location\n    such as a hotel, restaurant, or attraction.\n\n    Args:\n        location_id: The unique identifier for a TripAdvisor location.\n        language: The language code for the response content (ISO 639-1).\n        currency: The currency code for price values (ISO 4217).\n\n    Returns:\n        dict: Location details including name, address, rating, etc.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:29.035056",
+    "schema": {
+      "description": "Input parameters for retrieving location details.",
+      "properties": {
+        "location_id": {
+          "description": "The unique identifier for a TripAdvisor location.",
+          "title": "Location Id",
+          "type": "integer"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "The language code for the response content (ISO 639-1).",
+          "title": "Language"
+        },
+        "currency": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "USD",
+          "description": "The currency code for price values (ISO 4217).",
+          "title": "Currency"
+        }
+      },
+      "required": ["location_id"],
+      "title": "LocationDetailsInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_location_details",
+    "tool_description": "Get details about a location by ID.\n\n    Retrieves comprehensive information about a specific TripAdvisor location\n    such as a hotel, restaurant, or attraction.\n\n    Args:\n        location_id: The unique identifier for a TripAdvisor location.\n        language: The language code for the response content (ISO 639-1).\n        currency: The currency code for price values (ISO 4217).\n\n    Returns:\n        dict: Location details including name, address, rating, etc."
+  },
+  "document": {
+    "page_content": "# get_location_details\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.trip_advisor_toolkit\n**Class:** StructuredTool\n\n## Description\nGet details about a location by ID.\n\n    Retrieves comprehensive information about a specific TripAdvisor location\n    such as a hotel, restaurant, or attraction.\n\n    Args:\n        location_id: The unique identifier for a TripAdvisor location.\n        language: The language code for the response content (ISO 639-1).\n        currency: The currency code for price values (ISO 4217).\n\n    Returns:\n        dict: Location details including name, address, rating, etc.\n\n## Schema\n```json\n{\n  \"description\": \"Input parameters for retrieving location details.\",\n  \"properties\": {\n    \"location_id\": {\n      \"description\": \"The unique identifier for a TripAdvisor location.\",\n      \"title\": \"Location Id\",\n      \"type\": \"integer\"\n    },\n    \"language\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": \"en\",\n      \"description\": \"The language code for the response content (ISO 639-1).\",\n      \"title\": \"Language\"\n    },\n    \"currency\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": \"USD\",\n      \"description\": \"The currency code for price values (ISO 4217).\",\n      \"title\": \"Currency\"\n    }\n  },\n  \"required\": [\n    \"location_id\"\n  ],\n  \"title\": \"LocationDetailsInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `get_location_details`\n**Description:** Get details about a location by ID.\n\n    Retrieves comprehensive information about a specific TripAdvisor location\n    such as a hotel, restaurant, or attraction.\n\n    Args:\n        location_id: The unique identifier for a TripAdvisor location.\n        language: The language code for the response content (ISO 639-1).\n        currency: The currency code for price values (ISO 4217).\n\n    Returns:\n        dict: Location details including name, address, rating, etc.\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "get_location_details",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.trip_advisor_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:29.035056",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

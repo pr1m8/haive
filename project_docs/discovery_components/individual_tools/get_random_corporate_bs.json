@@ -1,0 +1,38 @@
+{
+  "component_info": {
+    "name": "get_random_corporate_bs",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.corporate_bs_tool",
+    "class_name": "StructuredTool",
+    "description": "Generate a random corporate buzzword phrase for satirical purposes",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:28.972190",
+    "schema": {
+      "description": "Fetch a random corporate buzzword phrase from the Corporate BS Generator API.\n\nReturns:\n    CorporateBS: An object containing the randomly generated corporate phrase.\n\nRaises:\n    requests.RequestException: If the API request fails.",
+      "properties": {},
+      "title": "get_random_corporate_bs",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_random_corporate_bs",
+    "tool_description": "Generate a random corporate buzzword phrase for satirical purposes"
+  },
+  "document": {
+    "page_content": "# get_random_corporate_bs\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.tools.corporate_bs_tool\n**Class:** StructuredTool\n\n## Description\nGenerate a random corporate buzzword phrase for satirical purposes\n\n## Schema\n```json\n{\n  \"description\": \"Fetch a random corporate buzzword phrase from the Corporate BS Generator API.\\n\\nReturns:\\n    CorporateBS: An object containing the randomly generated corporate phrase.\\n\\nRaises:\\n    requests.RequestException: If the API request fails.\",\n  \"properties\": {},\n  \"title\": \"get_random_corporate_bs\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `get_random_corporate_bs`\n**Description:** Generate a random corporate buzzword phrase for satirical purposes\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "get_random_corporate_bs",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.tools.corporate_bs_tool",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:28.972190",
+      "category": "individual_tools"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

@@ -1,0 +1,45 @@
+{
+  "component_info": {
+    "name": "python_repl_tool",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.dev_tools",
+    "class_name": "StructuredTool",
+    "description": "Use this to execute python code. If you want to see the output of a value,\n    you should print it out with `print(...)`. This is visible to the user.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:28.989600",
+    "schema": {
+      "description": "Use this to execute python code. If you want to see the output of a value,\nyou should print it out with `print(...)`. This is visible to the user.",
+      "properties": {
+        "code": {
+          "description": "The python code to execute to generate your chart.",
+          "title": "Code",
+          "type": "string"
+        }
+      },
+      "required": ["code"],
+      "title": "python_repl_tool",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "python_repl_tool",
+    "tool_description": "Use this to execute python code. If you want to see the output of a value,\n    you should print it out with `print(...)`. This is visible to the user."
+  },
+  "document": {
+    "page_content": "# python_repl_tool\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.tools.dev_tools\n**Class:** StructuredTool\n\n## Description\nUse this to execute python code. If you want to see the output of a value,\n    you should print it out with `print(...)`. This is visible to the user.\n\n## Schema\n```json\n{\n  \"description\": \"Use this to execute python code. If you want to see the output of a value,\\nyou should print it out with `print(...)`. This is visible to the user.\",\n  \"properties\": {\n    \"code\": {\n      \"description\": \"The python code to execute to generate your chart.\",\n      \"title\": \"Code\",\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"code\"\n  ],\n  \"title\": \"python_repl_tool\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `python_repl_tool`\n**Description:** Use this to execute python code. If you want to see the output of a value,\n    you should print it out with `print(...)`. This is visible to the user.\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "python_repl_tool",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.tools.dev_tools",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:28.989600",
+      "category": "individual_tools"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

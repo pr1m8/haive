@@ -1,0 +1,58 @@
+{
+  "component_info": {
+    "name": "asknews_search",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.asknews_tool",
+    "class_name": "AskNewsSearch",
+    "description": "This tool allows you to perform a search on up-to-date news and historical news. If you needs news from more than 48 hours ago, you can estimate the number of hours back to search.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:28.989286",
+    "schema": {
+      "description": "Input for the AskNews Search tool.",
+      "properties": {
+        "query": {
+          "description": "Search query to be used for finding real-time or historical news information.",
+          "title": "Query",
+          "type": "string"
+        },
+        "hours_back": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "If the Assistant deems that the event may have occurred more than 48 hours ago, it estimates the number of hours back to search. For example, if the event was one month ago, the Assistant may set this to 720. One week would be 168. The Assistant can estimate up to on year back (8760).",
+          "title": "Hours Back"
+        }
+      },
+      "required": ["query"],
+      "title": "SearchInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "asknews_search",
+    "tool_description": "This tool allows you to perform a search on up-to-date news and historical news. If you needs news from more than 48 hours ago, you can estimate the number of hours back to search."
+  },
+  "document": {
+    "page_content": "# asknews_search\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.tools.asknews_tool\n**Class:** AskNewsSearch\n\n## Description\nThis tool allows you to perform a search on up-to-date news and historical news. If you needs news from more than 48 hours ago, you can estimate the number of hours back to search.\n\n## Schema\n```json\n{\n  \"description\": \"Input for the AskNews Search tool.\",\n  \"properties\": {\n    \"query\": {\n      \"description\": \"Search query to be used for finding real-time or historical news information.\",\n      \"title\": \"Query\",\n      \"type\": \"string\"\n    },\n    \"hours_back\": {\n      \"anyOf\": [\n        {\n          \"type\": \"integer\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": 0,\n      \"description\": \"If the Assistant deems that the event may have occurred more than 48 hours ago, it estimates the number of hours back to search. For example, if the event was one month ago, the Assistant may set this to 720. One week would be 168. The Assistant can estimate up to on year back (8760).\",\n      \"title\": \"Hours Back\"\n    }\n  },\n  \"required\": [\n    \"query\"\n  ],\n  \"title\": \"SearchInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `asknews_search`\n**Description:** This tool allows you to perform a search on up-to-date news and historical news. If you needs news from more than 48 hours ago, you can estimate the number of hours back to search.\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "asknews_search",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.tools.asknews_tool",
+      "class_name": "AskNewsSearch",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:28.989286",
+      "category": "individual_tools"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

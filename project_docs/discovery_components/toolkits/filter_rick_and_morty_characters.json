@@ -1,0 +1,91 @@
+{
+  "component_info": {
+    "name": "filter_rick_and_morty_characters",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.rick_and_morty_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Filter Rick and Morty characters using the REST API with optional parameters.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:29.021561",
+    "schema": {
+      "description": "Input schema for filtering Rick and Morty characters.\n\nThis model defines optional parameters that can be used to filter\nthe characters returned by the Rick and Morty API.\n\nAttributes:\n    name (Optional[str]): Filter by character name (case-insensitive, partial matches).\n    status (Optional[str]): Filter by character status (\"alive\", \"dead\", or \"unknown\").\n    species (Optional[str]): Filter by character species (e.g., \"Human\", \"Alien\").\n    gender (Optional[str]): Filter by character gender (\"male\", \"female\", \"genderless\", \"unknown\").",
+      "properties": {
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter characters by name.",
+          "title": "Name"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "alive, dead, or unknown",
+          "title": "Status"
+        },
+        "species": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter characters by species.",
+          "title": "Species"
+        },
+        "gender": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "male, female, genderless, unknown",
+          "title": "Gender"
+        }
+      },
+      "title": "FilterCharactersInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "filter_rick_and_morty_characters",
+    "tool_description": "Filter Rick and Morty characters using the REST API with optional parameters."
+  },
+  "document": {
+    "page_content": "# filter_rick_and_morty_characters\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.rick_and_morty_toolkit\n**Class:** StructuredTool\n\n## Description\nFilter Rick and Morty characters using the REST API with optional parameters.\n\n## Schema\n```json\n{\n  \"description\": \"Input schema for filtering Rick and Morty characters.\\n\\nThis model defines optional parameters that can be used to filter\\nthe characters returned by the Rick and Morty API.\\n\\nAttributes:\\n    name (Optional[str]): Filter by character name (case-insensitive, partial matches).\\n    status (Optional[str]): Filter by character status (\\\"alive\\\", \\\"dead\\\", or \\\"unknown\\\").\\n    species (Optional[str]): Filter by character species (e.g., \\\"Human\\\", \\\"Alien\\\").\\n    gender (Optional[str]): Filter by character gender (\\\"male\\\", \\\"female\\\", \\\"genderless\\\", \\\"unknown\\\").\",\n  \"properties\": {\n    \"name\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": null,\n      \"description\": \"Filter characters by name.\",\n      \"title\": \"Name\"\n    },\n    \"status\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": null,\n      \"description\": \"alive, dead, or unknown\",\n      \"title\": \"Status\"\n    },\n    \"species\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": null,\n      \"description\": \"Filter characters by species.\",\n      \"title\": \"Species\"\n    },\n    \"gender\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": null,\n      \"description\": \"male, female, genderless, unknown\",\n      \"title\": \"Gender\"\n    }\n  },\n  \"title\": \"FilterCharactersInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `filter_rick_and_morty_characters`\n**Description:** Filter Rick and Morty characters using the REST API with optional parameters.\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "filter_rick_and_morty_characters",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.rick_and_morty_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:29.021561",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}
