@@ -97,7 +97,7 @@ release = "1.0.0"
 
 extensions = [
     # === CORE API DOCUMENTATION ===
-    # "autoapi.extension",  # 🚀 Temporarily disabled for Jinja2 testing
+    "autoapi.extension",  # 🚀 RE-ENABLED for P0 fix testing
     "sphinx.ext.napoleon",  # Google/NumPy docstring support
     "sphinx.ext.viewcode",  # [source] links
     "sphinx.ext.linkcode",  # GitHub source links
@@ -187,11 +187,13 @@ html_static_path = ["_static"]
 
 # Enhanced CSS and JS for Furo with showcase styling
 html_css_files = [
+    "haive-design-system.css",  # 🎨 NEW: Professional design system foundation
     "custom.css",
     "haive-enhanced.css",  # Enhanced styling with gradients and animations
     "furo-showcase.css",  # Showcase styling for agents and games
     "showcase.css",  # Main showcase styling
     "api-showcase.css",  # API documentation showcase
+    "agent-demo-visualizations.css",  # Agent demo visualization styles
 ]
 
 html_js_files = [
@@ -199,6 +201,7 @@ html_js_files = [
     "enhanced-search.js",  # Enhanced search functionality
     "showcase-interactions.js",  # Interactive showcase elements
     "enhanced-interface.js",  # Unified interface enhancements
+    "agent-demo-utils.js",  # Agent demo visualization utilities
 ]
 
 # Furo theme options - SHOWCASE OPTIMIZED
@@ -257,7 +260,7 @@ html_theme_options = {
         "color-announcement-text": "#ffffff",
     },
     # === ANNOUNCEMENT ===
-    "announcement": "🤖 <strong>Haive AI Agent Framework</strong> - Build intelligent agents with ease! 🚀",
+    # "announcement": "🤖 <strong>Haive AI Agent Framework</strong> - Build intelligent agents with ease! 🚀",  # 🚨 REMOVED: Ugly blue banner
     # === FOOTER ===
     "footer_icons": [
         {
@@ -716,6 +719,7 @@ def setup(app):
 import sys
 
 sys.path.insert(0, str(conf_dir))
+from agent_cache_loader import get_agent_demo_context, get_available_agent_types
 from agent_demo_data import AVAILABLE_AGENTS, get_agent_context
 
 # Configure Jinja2 contexts for sphinx-jinja2
@@ -723,6 +727,9 @@ jinja2_contexts = {
     "agent_demo": {
         "get_agent_context": get_agent_context,
         "available_agents": AVAILABLE_AGENTS,
+        # New cached data functions
+        "get_agent_demo_context": get_agent_demo_context,
+        "get_available_agent_types": get_available_agent_types,
     }
 }
 
