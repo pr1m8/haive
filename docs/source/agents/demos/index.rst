@@ -12,6 +12,7 @@ Interactive demonstrations of all Haive agents with graph visualization, state t
 ~~~~~~~~~~~~~~~~~~~~~
 
    simple-demo
+   simple-demo-test
    structuredoutput-demo
 
 🧠 React Agents

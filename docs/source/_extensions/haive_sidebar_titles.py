@@ -1,13 +1,10 @@
 """Custom Sphinx extension to provide better sidebar titles for Haive documentation."""
 
-from pathlib import Path
-import re
-from typing import Any, Dict, Optional
+from typing import Any
 
 from docutils import nodes
 from sphinx.addnodes import toctree as toctree_node
 from sphinx.application import Sphinx
-from sphinx.environment import BuildEnvironment
 
 
 # Module name to human-readable title mapping

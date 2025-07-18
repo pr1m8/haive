@@ -278,9 +278,9 @@ autodoc_mock_imports = [
 
 ### Success Metrics
 
-✅ **Toolkits namespace** - 7 modules fixed  
-✅ **Mock system** - 120+ modules handled gracefully  
-✅ **Build stability** - Consistent successful builds  
+✅ **Toolkits namespace** - 7 modules fixed
+✅ **Mock system** - 120+ modules handled gracefully
+✅ **Build stability** - Consistent successful builds
 ✅ **Warning reduction** - 90%+ reduction in import warnings
 
 This systematic approach will resolve the majority of import issues affecting the Haive documentation build process.

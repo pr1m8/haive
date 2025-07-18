@@ -1,7 +1,7 @@
 # HTML Truncation Issue in Sphinx Documentation
 
-**Date**: 2025-01-08  
-**Status**: Active Debugging  
+**Date**: 2025-01-08
+**Status**: Active Debugging
 **Session**: Documentation Enhancement & Agent Visualization
 
 ## Problem Description

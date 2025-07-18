@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Fix common documentation warnings in the Haive project."""
 
-import re
-import sys
 from pathlib import Path
+import re
 
 
 def fix_rst_files():
@@ -43,9 +42,7 @@ def fix_rst_files():
                 line = line.rstrip() + "``"
 
             # Fix odd number of double asterisks
-            if (
-                asterisk_count - double_asterisk_count * 2
-            ) == 0 and double_asterisk_count % 2 == 1:
+            if (asterisk_count - double_asterisk_count * 2) == 0 and double_asterisk_count % 2 == 1:
                 line = line.rstrip() + "**"
 
             fixed_lines.append(line)
@@ -83,9 +80,7 @@ def fix_python_docstrings():
     packages_dir = Path(__file__).parent.parent / "packages"
 
     # Fix the specific RetrieverType docstring issue
-    retriever_types_file = (
-        packages_dir / "haive-core/src/haive/core/engine/retriever/types.py"
-    )
+    retriever_types_file = packages_dir / "haive-core/src/haive/core/engine/retriever/types.py"
 
     if retriever_types_file.exists():
         content = retriever_types_file.read_text()
@@ -95,12 +90,7 @@ def fix_python_docstrings():
         # The issue is that the category descriptions have inconsistent indentation
         content = re.sub(
             r"(\s+Categories:\n)(\s+Base Vector Store Retrievers:\n)(\s+Simple retrievers.*\n\n)(\s+Advanced Retrieval Strategies:\n)(\s+Sophisticated.*)",
-            lambda m: m.group(1)
-            + m.group(2)
-            + m.group(3)
-            + m.group(4)
-            + "        "
-            + m.group(5),
+            lambda m: m.group(1) + m.group(2) + m.group(3) + m.group(4) + "        " + m.group(5),
             content,
             flags=re.DOTALL,
         )
@@ -109,9 +99,7 @@ def fix_python_docstrings():
             retriever_types_file.write_text(content)
 
     # Fix BaseRetrieverConfig docstring issues
-    retriever_file = (
-        packages_dir / "haive-core/src/haive/core/engine/retriever/retriever.py"
-    )
+    retriever_file = packages_dir / "haive-core/src/haive/core/engine/retriever/retriever.py"
 
     if retriever_file.exists():
         content = retriever_file.read_text()
@@ -143,7 +131,6 @@ def fix_python_docstrings():
 
 
 if __name__ == "__main__":
-
     # Fix RST files
     fixed_rst = fix_rst_files()
 

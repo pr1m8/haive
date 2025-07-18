@@ -3,7 +3,6 @@
 import logging
 
 from sphinx.ext.autosummary import Autosummary as BaseAutosummary, ImportExceptionGroup
-from sphinx.ext.autosummary.generate import generate_autosummary_docs
 
 
 logger = logging.getLogger(__name__)
