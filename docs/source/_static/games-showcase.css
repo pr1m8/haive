@@ -1,0 +1,111 @@
+/* Enhanced styling for games documentation */
+
+/* Grid cards for games */
+.sd-card {
+    transition: all 0.3s ease;
+    border: 1px solid var(--color-background-border);
+    height: 100%;
+}
+
+.sd-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+    border-color: var(--color-brand-primary);
+}
+
+.sd-card-body {
+    padding: 1.5rem;
+}
+
+.sd-card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Game category headers */
+h3 {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--color-brand-primary);
+}
+
+/* Code blocks styling */
+.highlight-python {
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Better spacing for grid containers */
+.sd-container-fluid {
+    padding: 0;
+    margin: 1rem 0 2rem 0;
+}
+
+/* Style for feature lists in cards */
+.sd-card-body p:last-child {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    color: var(--color-foreground-secondary);
+}
+
+.sd-card-body p strong {
+    color: var(--color-brand-primary);
+}
+
+/* Improve autosummary tables if they still appear */
+.autosummary.longtable {
+    width: 100%;
+    margin: 1.5rem 0;
+}
+
+.autosummary td {
+    padding: 0.75rem;
+    vertical-align: top;
+}
+
+.autosummary tr {
+    border-bottom: 1px solid var(--color-background-border);
+}
+
+.autosummary tr:hover {
+    background-color: var(--color-api-background-hover);
+}
+
+.autosummary code {
+    font-weight: 600;
+    color: var(--color-brand-primary);
+}
+
+/* Hide empty or poorly formatted module descriptions */
+.autosummary td:nth-child(2):empty::after {
+    content: "Click to view full documentation";
+    font-style: italic;
+    color: var(--color-foreground-secondary);
+}
+
+/* Game showcase specific styles */
+.game-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.game-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);
+    z-index: 1;
+}
+
+.game-card .sd-card-body {
+    position: relative;
+    z-index: 2;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}

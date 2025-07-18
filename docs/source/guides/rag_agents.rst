@@ -33,15 +33,15 @@ Simple RAG Agents
 
 .. code-block:: python
 
-   from haive.agents.rag.simple import SimpleRAGAgent
-   
-   agent = SimpleRAGAgent(
-       name="simple_rag",
-       vector_store=vector_store,
-       model="gpt-4"
-   )
-   
-   result = await agent.query("What is RAG?")
+    from haive.agents.rag.simple import SimpleRAGAgent
+
+    agent = SimpleRAGAgent(
+    name="simple_rag",
+    vector_store=vector_store,
+    model="gpt-4"
+    )
+
+    result = await agent.query("What is RAG?")
 
 **LLMRAGAgent**
    - Location: ``haive.agents.rag.llm_rag``
@@ -58,13 +58,13 @@ Advanced Query Processing
 
 .. code-block:: python
 
-   from haive.agents.rag.hyde import HyDERAGAgent
-   
-   agent = HyDERAGAgent(
-       name="hyde_rag",
-       vector_store=vector_store,
-       hypothesis_model="gpt-4"
-   )
+    from haive.agents.rag.hyde import HyDERAGAgent
+
+    agent = HyDERAGAgent(
+    name="hyde_rag",
+    vector_store=vector_store,
+    hypothesis_model="gpt-4"
+    )
 
 **MultiQueryRAGAgent**
    - Location: ``haive.agents.rag.multi_query``
@@ -86,14 +86,14 @@ Document Grading & Validation
 
 .. code-block:: python
 
-   from haive.agents.rag.corrective import CorrectiveRAGAgent
-   
-   agent = CorrectiveRAGAgent(
-       name="corrective_rag",
-       vector_store=vector_store,
-       grading_threshold=0.7,
-       max_retries=3
-   )
+    from haive.agents.rag.corrective import CorrectiveRAGAgent
+
+    agent = CorrectiveRAGAgent(
+    name="corrective_rag",
+    vector_store=vector_store,
+    grading_threshold=0.7,
+    max_retries=3
+    )
 
 **SelfRAGAgent**
    - Location: ``haive.agents.rag.self_reflective``
@@ -115,13 +115,13 @@ Specialized Architectures
 
 .. code-block:: python
 
-   from haive.agents.rag.adaptive import AdaptiveRAGAgent
-   
-   agent = AdaptiveRAGAgent(
-       name="adaptive_rag",
-       strategies=["simple", "hyde", "multi_query"],
-       auto_select=True
-   )
+    from haive.agents.rag.adaptive import AdaptiveRAGAgent
+
+    agent = AdaptiveRAGAgent(
+    name="adaptive_rag",
+    strategies=["simple", "hyde", "multi_query"],
+    auto_select=True
+    )
 
 **FusionRAGAgent**
    - Location: ``haive.agents.rag.fusion``
@@ -143,13 +143,13 @@ Database-Specific RAG
 
 .. code-block:: python
 
-   from haive.agents.rag.db_rag.sql_rag import SQLRAGAgent
-   
-   agent = SQLRAGAgent(
-       name="sql_rag",
-       database_url="postgresql://...",
-       schema_description="sales database"
-   )
+    from haive.agents.rag.db_rag.sql_rag import SQLRAGAgent
+
+    agent = SQLRAGAgent(
+    name="sql_rag",
+    database_url="postgresql://...",
+    schema_description="sales database"
+    )
 
 **GraphRAGAgent**
    - Location: ``haive.agents.rag.db_rag.graph_db``
@@ -166,15 +166,15 @@ Multi-Agent RAG Systems
 
 .. code-block:: python
 
-   from haive.agents.rag.multi_agent_rag import MultiAgentRAG
-   
-   system = MultiAgentRAG(
-       agents={
-           "researcher": ResearchRAGAgent(),
-           "validator": ValidationRAGAgent(),
-           "synthesizer": SynthesisRAGAgent()
-       }
-   )
+    from haive.agents.rag.multi_agent_rag import MultiAgentRAG
+
+    system = MultiAgentRAG(
+    agents={
+    "researcher": ResearchRAGAgent(),
+    "validator": ValidationRAGAgent(),
+    "synthesizer": SynthesisRAGAgent()
+    }
+    )
 
 Configuration Patterns
 ----------------------
@@ -184,53 +184,53 @@ Basic Configuration
 
 .. code-block:: python
 
-   from haive.agents.rag.base import RAGConfig
-   
-   config = RAGConfig(
-       # Retrieval settings
-       vector_store_type="chroma",
-       embedding_model="text-embedding-3-small",
-       chunk_size=500,
-       chunk_overlap=50,
-       top_k=5,
-       
-       # Generation settings
-       llm_model="gpt-4",
-       temperature=0.7,
-       max_tokens=1000,
-       
-       # Grading settings
-       relevance_threshold=0.7,
-       enable_reranking=True,
-       
-       # Memory settings
-       enable_memory=True,
-       memory_type="conversation_buffer"
-   )
+    from haive.agents.rag.base import RAGConfig
+
+    config = RAGConfig(
+    # Retrieval settings
+    vector_store_type="chroma",
+    embedding_model="text-embedding-3-small",
+    chunk_size=500,
+    chunk_overlap=50,
+    top_k=5,
+
+    # Generation settings
+    llm_model="gpt-4",
+    temperature=0.7,
+    max_tokens=1000,
+
+    # Grading settings
+    relevance_threshold=0.7,
+    enable_reranking=True,
+
+    # Memory settings
+    enable_memory=True,
+    memory_type="conversation_buffer"
+    )
 
 Advanced Configuration
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
-   from haive.agents.rag.multi_strategy import MultiStrategyConfig
-   
-   config = MultiStrategyConfig(
-       strategies={
-           "factual": {
-               "retrieval": "dense",
-               "grading": "strict",
-               "generation": "precise"
-           },
-           "creative": {
-               "retrieval": "hybrid",
-               "grading": "lenient",
-               "generation": "creative"
-           }
-       },
-       strategy_selector="auto",  # or "manual"
-       fallback_strategy="factual"
-   )
+    from haive.agents.rag.multi_strategy import MultiStrategyConfig
+
+    config = MultiStrategyConfig(
+    strategies={
+    "factual": {
+    "retrieval": "dense",
+    "grading": "strict",
+    "generation": "precise"
+    },
+    "creative": {
+    "retrieval": "hybrid",
+    "grading": "lenient",
+    "generation": "creative"
+    }
+    },
+    strategy_selector="auto",  # or "manual"
+    fallback_strategy="factual"
+    )
 
 Common Patterns
 ---------------
@@ -240,44 +240,44 @@ Query Enhancement
 
 .. code-block:: python
 
-   # Query decomposition
-   from haive.agents.rag.query_decomposition import QueryDecomposer
-   
-   decomposer = QueryDecomposer()
-   sub_queries = await decomposer.decompose(
-       "Compare advantages and disadvantages of solar vs wind energy"
-   )
-   # Result: ["advantages of solar energy", "disadvantages of solar energy", ...]
+    # Query decomposition
+    from haive.agents.rag.query_decomposition import QueryDecomposer
+
+    decomposer = QueryDecomposer()
+    sub_queries = await decomposer.decompose(
+    "Compare advantages and disadvantages of solar vs wind energy"
+    )
+    # Result: ["advantages of solar energy", "disadvantages of solar energy", ...]
 
 Document Processing
 ~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
-   # Custom document grading
-   from haive.agents.rag.common.document_graders import ComprehensiveGrader
-   
-   grader = ComprehensiveGrader(
-       relevance_weight=0.4,
-       completeness_weight=0.3,
-       accuracy_weight=0.3
-   )
-   
-   score = await grader.grade(document, query)
+    # Custom document grading
+    from haive.agents.rag.common.document_graders import ComprehensiveGrader
+
+    grader = ComprehensiveGrader(
+    relevance_weight=0.4,
+    completeness_weight=0.3,
+    accuracy_weight=0.3
+    )
+
+    score = await grader.grade(document, query)
 
 Hallucination Prevention
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
-   # Hallucination checking
-   from haive.agents.rag.common.hallucination_graders import HallucinationGrader
-   
-   grader = HallucinationGrader()
-   is_grounded = await grader.check(
-       answer=generated_answer,
-       sources=retrieved_documents
-   )
+    # Hallucination checking
+    from haive.agents.rag.common.hallucination_graders import HallucinationGrader
+
+    grader = HallucinationGrader()
+    is_grounded = await grader.check(
+    answer=generated_answer,
+    sources=retrieved_documents
+    )
 
 Performance Optimization
 ------------------------
@@ -287,39 +287,39 @@ Caching Strategies
 
 .. code-block:: python
 
-   from haive.agents.rag.base import RAGAgent
-   from haive.core.cache import SemanticCache
-   
-   cache = SemanticCache(similarity_threshold=0.95)
-   
-   agent = RAGAgent(
-       name="cached_rag",
-       cache=cache,
-       cache_ttl=3600  # 1 hour
-   )
+    from haive.agents.rag.base import RAGAgent
+    from haive.core.cache import SemanticCache
+
+    cache = SemanticCache(similarity_threshold=0.95)
+
+    agent = RAGAgent(
+    name="cached_rag",
+    cache=cache,
+    cache_ttl=3600  # 1 hour
+    )
 
 Batch Processing
 ~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
-   # Process multiple queries efficiently
-   queries = ["Query 1", "Query 2", "Query 3"]
-   
-   results = await agent.batch_query(
-       queries=queries,
-       batch_size=10,
-       parallel=True
-   )
+    # Process multiple queries efficiently
+    queries = ["Query 1", "Query 2", "Query 3"]
+
+    results = await agent.batch_query(
+    queries=queries,
+    batch_size=10,
+    parallel=True
+    )
 
 Streaming Responses
 ~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
-   # Stream responses for real-time applications
-   async for chunk in agent.stream_query("Complex question"):
-       print(chunk, end="", flush=True)
+    # Stream responses for real-time applications
+    async for chunk in agent.stream_query("Complex question"):
+    print(chunk, end="", flush=True)
 
 Integration Examples
 --------------------
@@ -329,70 +329,70 @@ With Memory Systems
 
 .. code-block:: python
 
-   from haive.agents.rag.memory_aware import MemoryAwareRAGAgent
-   
-   agent = MemoryAwareRAGAgent(
-       name="memory_rag",
-       memory_type="conversation_summary",
-       memory_window=10,
-       include_memory_in_context=True
-   )
+    from haive.agents.rag.memory_aware import MemoryAwareRAGAgent
+
+    agent = MemoryAwareRAGAgent(
+    name="memory_rag",
+    memory_type="conversation_summary",
+    memory_window=10,
+    include_memory_in_context=True
+    )
 
 With Tool Usage
 ~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
-   from haive.agents.rag.adaptive_tools import ToolAugmentedRAGAgent
-   from haive.tools import WebSearchTool, CalculatorTool
-   
-   agent = ToolAugmentedRAGAgent(
-       name="tool_rag",
-       tools=[WebSearchTool(), CalculatorTool()],
-       tool_selection="auto"
-   )
+    from haive.agents.rag.adaptive_tools import ToolAugmentedRAGAgent
+    from haive.tools import WebSearchTool, CalculatorTool
+
+    agent = ToolAugmentedRAGAgent(
+    name="tool_rag",
+    tools=[WebSearchTool(), CalculatorTool()],
+    tool_selection="auto"
+    )
 
 With Structured Output
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
-   from haive.agents.rag.typed import TypedRAGAgent
-   from pydantic import BaseModel
-   
-   class AnalysisResult(BaseModel):
-       summary: str
-       key_points: List[str]
-       confidence: float
-   
-   agent = TypedRAGAgent(
-       name="typed_rag",
-       output_schema=AnalysisResult
-   )
+    from haive.agents.rag.typed import TypedRAGAgent
+    from pydantic import BaseModel
+
+    class AnalysisResult(BaseModel):
+    summary: str
+    key_points: List[str]
+    confidence: float
+
+    agent = TypedRAGAgent(
+    name="typed_rag",
+    output_schema=AnalysisResult
+    )
 
 Best Practices
 --------------
 
 1. **Choose the Right Agent**
-   
+
    - Start with SimpleRAGAgent for prototypes
    - Use CorrectiveRAGAgent for accuracy-critical tasks
    - Deploy AdaptiveRAGAgent for diverse query types
 
 2. **Optimize Retrieval**
-   
+
    - Tune chunk size based on your content
    - Use hybrid search for better recall
    - Implement semantic caching for common queries
 
 3. **Ensure Quality**
-   
+
    - Always enable document grading for production
    - Implement hallucination checks for factual content
    - Monitor retrieval and generation metrics
 
 4. **Scale Efficiently**
-   
+
    - Use batch processing for multiple queries
    - Implement connection pooling for databases
    - Cache embeddings for frequently accessed documents
@@ -428,21 +428,21 @@ Monitoring & Debugging
 
 .. code-block:: python
 
-   # Enable detailed logging
-   import logging
-   
-   logging.getLogger("haive.agents.rag").setLevel(logging.DEBUG)
-   
-   # Track metrics
-   from haive.monitoring import RAGMonitor
-   
-   monitor = RAGMonitor()
-   agent = SimpleRAGAgent(monitor=monitor)
-   
-   # Get performance metrics
-   metrics = monitor.get_metrics()
-   print(f"Avg retrieval time: {metrics.avg_retrieval_time}s")
-   print(f"Avg generation time: {metrics.avg_generation_time}s")
+    # Enable detailed logging
+    import logging
+
+    logging.getLogger("haive.agents.rag").setLevel(logging.DEBUG)
+
+    # Track metrics
+    from haive.monitoring import RAGMonitor
+
+    monitor = RAGMonitor()
+    agent = SimpleRAGAgent(monitor=monitor)
+
+    # Get performance metrics
+    metrics = monitor.get_metrics()
+    print(f"Avg retrieval time: {metrics.avg_retrieval_time}s")
+    print(f"Avg generation time: {metrics.avg_generation_time}s")
 
 Advanced Topics
 ---------------
@@ -452,53 +452,53 @@ Custom RAG Implementation
 
 .. code-block:: python
 
-   from haive.agents.rag.base import BaseRAGAgent
-   
-   class CustomRAGAgent(BaseRAGAgent):
-       async def retrieve(self, query: str) -> List[Document]:
-           # Custom retrieval logic
-           pass
-       
-       async def grade(self, docs: List[Document], query: str) -> List[Document]:
-           # Custom grading logic
-           pass
-       
-       async def generate(self, query: str, context: List[Document]) -> str:
-           # Custom generation logic
-           pass
+    from haive.agents.rag.base import BaseRAGAgent
+
+    class CustomRAGAgent(BaseRAGAgent):
+    async def retrieve(self, query: str) -> List[Document]:
+    # Custom retrieval logic
+    pass
+
+    async def grade(self, docs: List[Document], query: str) -> List[Document]:
+    # Custom grading logic
+    pass
+
+    async def generate(self, query: str, context: List[Document]) -> str:
+    # Custom generation logic
+    pass
 
 Factory Pattern Usage
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
-   from haive.agents.rag.factories import CompatibleRAGFactory
-   
-   factory = CompatibleRAGFactory()
-   
-   # Create agent from configuration
-   agent = factory.create_agent({
-       "type": "corrective",
-       "vector_store": "chroma",
-       "model": "gpt-4",
-       "grading_enabled": True
-   })
+    from haive.agents.rag.factories import CompatibleRAGFactory
+
+    factory = CompatibleRAGFactory()
+
+    # Create agent from configuration
+    agent = factory.create_agent({
+    "type": "corrective",
+    "vector_store": "chroma",
+    "model": "gpt-4",
+    "grading_enabled": True
+    })
 
 Multi-Modal RAG
 ~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
-   from haive.agents.rag.multimodal import MultiModalRAGAgent
-   
-   agent = MultiModalRAGAgent(
-       name="mm_rag",
-       supported_modalities=["text", "image", "table"],
-       embedding_models={
-           "text": "text-embedding-3",
-           "image": "clip-vit-base"
-       }
-   )
+    from haive.agents.rag.multimodal import MultiModalRAGAgent
+
+    agent = MultiModalRAGAgent(
+    name="mm_rag",
+    supported_modalities=["text", "image", "table"],
+    embedding_models={
+    "text": "text-embedding-3",
+    "image": "clip-vit-base"
+    }
+    )
 
 See Also
 --------

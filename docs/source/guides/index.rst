@@ -11,7 +11,7 @@ Core Concepts
 
 .. toctree::
    :maxdepth: 1
-   
+
    core_concepts
    architecture
    state_management
@@ -22,7 +22,7 @@ Building Agents
 
 .. toctree::
    :maxdepth: 2
-   
+
    building_agents
    agent_patterns
    custom_agents
@@ -34,7 +34,7 @@ Working with Tools
 
 .. toctree::
    :maxdepth: 2
-   
+
    using_tools
    custom_tools
    tool_routing
@@ -45,15 +45,16 @@ Documentation
 
 .. toctree::
    :maxdepth: 2
-   
+
    documentation/index
+   executable_examples
 
 Integration Guides
 ------------------
 
 .. toctree::
    :maxdepth: 2
-   
+
    frontend_integration
 
 Advanced Topics
@@ -61,7 +62,7 @@ Advanced Topics
 
 .. toctree::
    :maxdepth: 2
-   
+
    advanced_patterns
    performance
    deployment
