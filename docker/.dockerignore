@@ -65,7 +65,7 @@ workspaces/
 documents/
 projects/
 notebooks/
-scratches/ 
+scratches/
 examples/
 
 # Cache directories
