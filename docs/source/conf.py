@@ -187,7 +187,7 @@ html_static_path = ["_static"]
 
 # Enhanced CSS and JS for Furo with showcase styling
 html_css_files = [
-    "haive-design-system.css",  # 🎨 NEW: Professional design system foundation
+    "haive-design-system.css",  # 🎨 PRIORITY: Professional design system foundation - MUST LOAD FIRST
     "custom.css",
     "haive-enhanced.css",  # Enhanced styling with gradients and animations
     "furo-showcase.css",  # Showcase styling for agents and games
@@ -197,6 +197,7 @@ html_css_files = [
 ]
 
 html_js_files = [
+    "haive-graph-visualizations.js",  # 🎨 NEW: Graph visualization classes
     "agent-visualization.js",
     "enhanced-search.js",  # Enhanced search functionality
     "showcase-interactions.js",  # Interactive showcase elements
