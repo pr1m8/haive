@@ -1,0 +1,45 @@
+{
+  "component_info": {
+    "name": "search_poems_by_author",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.poetry_db_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Search for poems by a specific poet",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:29.024672",
+    "schema": {
+      "description": "Input schema for searching poems by author name.\n\nArgs:\n    author: Name of the poet to search for",
+      "properties": {
+        "author": {
+          "description": "Name of the poet to search for",
+          "title": "Author",
+          "type": "string"
+        }
+      },
+      "required": ["author"],
+      "title": "AuthorSearchInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "search_poems_by_author",
+    "tool_description": "Search for poems by a specific poet"
+  },
+  "document": {
+    "page_content": "# search_poems_by_author\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.poetry_db_toolkit\n**Class:** StructuredTool\n\n## Description\nSearch for poems by a specific poet\n\n## Schema\n```json\n{\n  \"description\": \"Input schema for searching poems by author name.\\n\\nArgs:\\n    author: Name of the poet to search for\",\n  \"properties\": {\n    \"author\": {\n      \"description\": \"Name of the poet to search for\",\n      \"title\": \"Author\",\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"author\"\n  ],\n  \"title\": \"AuthorSearchInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `search_poems_by_author`\n**Description:** Search for poems by a specific poet\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "search_poems_by_author",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.poetry_db_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:29.024672",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

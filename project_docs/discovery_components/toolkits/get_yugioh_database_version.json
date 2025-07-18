@@ -1,0 +1,52 @@
+{
+  "component_info": {
+    "name": "get_yugioh_database_version",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.yugiioh_toolkit",
+    "class_name": "Tool",
+    "description": "Check the Yu-Gi-Oh! database version",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:29.022832",
+    "schema": {
+      "properties": {
+        "name": {
+          "type": "str",
+          "default": null
+        },
+        "func": {
+          "type": "Optional[Callable]",
+          "default": null
+        },
+        "description": {
+          "type": "str",
+          "default": null
+        },
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_yugioh_database_version",
+    "tool_description": "Check the Yu-Gi-Oh! database version"
+  },
+  "document": {
+    "page_content": "# get_yugioh_database_version\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.yugiioh_toolkit\n**Class:** Tool\n\n## Description\nCheck the Yu-Gi-Oh! database version\n\n## Schema\n```json\n{\n  \"properties\": {\n    \"name\": {\n      \"type\": \"str\",\n      \"default\": null\n    },\n    \"func\": {\n      \"type\": \"Optional[Callable]\",\n      \"default\": null\n    },\n    \"description\": {\n      \"type\": \"str\",\n      \"default\": null\n    },\n    \"kwargs\": {\n      \"type\": \"Any\",\n      \"default\": null\n    }\n  }\n}\n```\n\n## Usage as Tool\n**Tool Name:** `get_yugioh_database_version`\n**Description:** Check the Yu-Gi-Oh! database version\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "get_yugioh_database_version",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.yugiioh_toolkit",
+      "class_name": "Tool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:29.022832",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}
