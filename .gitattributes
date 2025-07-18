@@ -1,0 +1,46 @@
+# Git LFS Configuration for Haive
+
+# Track published documentation with Git LFS
+docs/published/**/*.html filter=lfs diff=lfs merge=lfs -text
+docs/published/**/*.js filter=lfs diff=lfs merge=lfs -text
+docs/published/**/*.css filter=lfs diff=lfs merge=lfs -text
+docs/published/**/*.json filter=lfs diff=lfs merge=lfs -text
+docs/published/**/*.png filter=lfs diff=lfs merge=lfs -text
+docs/published/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+docs/published/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
+docs/published/**/*.gif filter=lfs diff=lfs merge=lfs -text
+docs/published/**/*.svg filter=lfs diff=lfs merge=lfs -text
+docs/published/**/*.pdf filter=lfs diff=lfs merge=lfs -text
+docs/published/**/*.woff filter=lfs diff=lfs merge=lfs -text
+docs/published/**/*.woff2 filter=lfs diff=lfs merge=lfs -text
+docs/published/**/*.ttf filter=lfs diff=lfs merge=lfs -text
+docs/published/**/*.eot filter=lfs diff=lfs merge=lfs -text
+
+# Track versioned documentation with Git LFS
+docs/versions/**/*.html filter=lfs diff=lfs merge=lfs -text
+docs/versions/**/*.js filter=lfs diff=lfs merge=lfs -text
+docs/versions/**/*.css filter=lfs diff=lfs merge=lfs -text
+docs/versions/**/*.json filter=lfs diff=lfs merge=lfs -text
+docs/versions/**/*.png filter=lfs diff=lfs merge=lfs -text
+docs/versions/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+docs/versions/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
+docs/versions/**/*.gif filter=lfs diff=lfs merge=lfs -text
+docs/versions/**/*.svg filter=lfs diff=lfs merge=lfs -text
+docs/versions/**/*.pdf filter=lfs diff=lfs merge=lfs -text
+docs/versions/**/*.woff filter=lfs diff=lfs merge=lfs -text
+docs/versions/**/*.woff2 filter=lfs diff=lfs merge=lfs -text
+docs/versions/**/*.ttf filter=lfs diff=lfs merge=lfs -text
+docs/versions/**/*.eot filter=lfs diff=lfs merge=lfs -text
+
+# Track other large files
+*.pkl filter=lfs diff=lfs merge=lfs -text
+*.pickle filter=lfs diff=lfs merge=lfs -text
+*.h5 filter=lfs diff=lfs merge=lfs -text
+*.hdf5 filter=lfs diff=lfs merge=lfs -text
+*.model filter=lfs diff=lfs merge=lfs -text
+*.tar.gz filter=lfs diff=lfs merge=lfs -text
+*.zip filter=lfs diff=lfs merge=lfs -text
+
+# Track documentation archives
+docs/archives/**/* filter=lfs diff=lfs merge=lfs -text
+docs/releases/**/* filter=lfs diff=lfs merge=lfs -text
