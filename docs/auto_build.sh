@@ -42,11 +42,11 @@ echo "[$(timestamp)] Starting background build with 15 minute timeout..." >>"${L
 nohup bash -c "
     timeout 900 poetry run sphinx-build -b html docs/source docs/build/html -j auto -q >> '${LOG_FILE}' 2>&1
     BUILD_EXIT=\$?
-    
+
     if [ \$BUILD_EXIT -eq 0 ]; then
         echo '[$(timestamp)] ✅ Build completed successfully!' >>${'$LOG_FI}LE'
         echo 'SUCCESS' > '${STATUS_FILE}'
-        
+
         # Start server if not running
         if ! lsof -ti :8002 > /dev/null 2>&1; then
             echo '[$(timestamp)] Starting documentation server on port 8002...' >> '${LOG_FILE}'
@@ -55,13 +55,13 @@ nohup bash -c "
             echo \$! > /tmp/doc_server.pid
             echo '[$(timestamp)] Server started at http://localhost:8002' >> '${LOG_FILE}'
         fi
-        
+
         # Log key URLs
         echo '[$(timestamp)] 🌐 Key URLs:' >${ '$LOG_F}ILE'
         echo '  - Main: http://localhost:8002/api/haive/index.html' >> '${LOG_FILE}'
         echo '  - Core: http://localhost:8002/api/haive/core/index.html' >> '${LOG_FILE}'
         echo '  - Engine: http://localhost:8002/api/haive/core/engine/index.html' >> '${LOG_FILE}'
-        
+
     elif [ \$BUILD_EXIT -eq 124 ]; then
         echo '[$(timestamp)] ⏱️ Build timed out after 15 minutes!' ${> '$LOG_}FILE'
         echo 'TIMEOUT' > '${STATUS_FILE}'
@@ -69,7 +69,7 @@ nohup bash -c "
         echo '[$(timestamp)] ❌ Build failed with exit code \$BUILD_EXIT' >>${'$LOG_FI}LE'
         echo 'FAILED' > '${STATUS_FILE}'
     fi
-    
+
     rm -f '${PID_FILE}'
 " >/dev/null 2>&1 &
 

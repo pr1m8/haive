@@ -1,11 +1,13 @@
 # Agent System Improvement Plan
 
 ## 🎯 Core Vision
+
 Make building agents as simple as writing a function, while preserving the power of the current system.
 
 ## 🔍 Current State Summary
 
 ### What We Have
+
 1. **Engines**: Configuration factories (not directly callable)
 2. **Nodes**: Graph building blocks with I/O mapping
 3. **Agents**: Complex orchestrators that build graphs
@@ -13,6 +15,7 @@ Make building agents as simple as writing a function, while preserving the power
 5. **Graphs**: BaseGraph → LangGraph conversion
 
 ### The Problems
+
 1. **Too Many Concepts**: Users must understand 5+ abstractions
 2. **Hidden Complexity**: Schema generation, tool routing, state management
 3. **Poor Defaults**: Requires too much configuration
@@ -42,7 +45,7 @@ def my_agent(query: str) -> str:
 # Or class-based but simpler
 class MyAgent(SimpleNode):
     engine: Engine = GPT4Engine()
-    
+
     def process(self, query: str) -> str:
         return self.engine.invoke({"query": query})
 ```
@@ -58,12 +61,12 @@ class ChatAgent(PrebuiltAgent):
 class RAGAgent(PrebuiltAgent):
     """Ready-to-use RAG agent with retriever and LLM"""
     retriever: Retriever
-    
+
 class PlanExecuteAgent(PrebuiltAgent):
     """Ready-to-use planner/executor pattern"""
     planner: Engine
     executor: Engine
-    
+
 class RouterAgent(PrebuiltAgent):
     """Ready-to-use routing agent"""
     routes: Dict[str, Agent]
@@ -75,7 +78,7 @@ class RouterAgent(PrebuiltAgent):
 # Prebuilt schemas for common patterns
 from haive.schemas import (
     ChatSchema,      # messages + query/response
-    RAGSchema,       # query + context + response  
+    RAGSchema,       # query + context + response
     PlannerSchema,   # objective + steps + status
     RouterSchema,    # input + route + output
 )
@@ -100,7 +103,7 @@ def create_workflow(*components):
 # All these work the same way
 workflow = create_workflow(
     my_agent,           # Agent
-    my_engine,          # Engine  
+    my_engine,          # Engine
     my_function,        # Callable
     lambda x: x * 2,    # Lambda
 )
@@ -125,6 +128,7 @@ agent.invoke(InputType(...))  # ✓ Type checked
 ## 📋 Implementation Plan
 
 ### Phase 1: Core Simplification (Week 1-2)
+
 1. **Standardized Node Interface**
    - Create universal `process()` method
    - Auto-detect component types
@@ -141,6 +145,7 @@ agent.invoke(InputType(...))  # ✓ Type checked
    - Better error messages
 
 ### Phase 2: Developer Experience (Week 3-4)
+
 1. **Prebuilt Agents**
    - ChatAgent, RAGAgent, PlannerAgent, etc.
    - Ready-to-use with sensible defaults
@@ -157,6 +162,7 @@ agent.invoke(InputType(...))  # ✓ Type checked
    - Clear error messages
 
 ### Phase 3: Advanced Features (Week 5-6)
+
 1. **Schema Compatibility**
    - Automatic adaptation between schemas
    - Compatibility checking
@@ -184,6 +190,7 @@ agent.invoke(InputType(...))  # ✓ Type checked
 ## 📚 Example: Before and After
 
 ### Before (Current System)
+
 ```python
 class MyRAGAgent(Agent):
     def __init__(self):
@@ -193,7 +200,7 @@ class MyRAGAgent(Agent):
             name="rag_agent",
             engines={"retriever": retriever_engine, "llm": llm_engine}
         )
-    
+
     def build_graph(self):
         graph = BaseGraph(state_schema=self.state_schema)
         graph.add_node("retrieve", EngineNode(name="retrieve"))
@@ -205,6 +212,7 @@ class MyRAGAgent(Agent):
 ```
 
 ### After (Improved System)
+
 ```python
 # Option 1: Prebuilt
 agent = RAGAgent(

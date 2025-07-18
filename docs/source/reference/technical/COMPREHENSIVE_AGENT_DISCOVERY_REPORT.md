@@ -2,8 +2,8 @@
 
 ## Haive Codebase Agent Taxonomy and Analysis
 
-**Discovery Date:** June 25, 2025  
-**Total Agents Discovered:** 126 agents across 3 packages  
+**Discovery Date:** June 25, 2025
+**Total Agents Discovered:** 126 agents across 3 packages
 **Problematic Modules:** 37 files with syntax issues (excluded from analysis)
 
 ---
@@ -26,7 +26,7 @@ The core agents package provides foundational agent types and sophisticated impl
 
 ### 1.1 Simple & React Agents (6 agents)
 
-**Category:** Basic agent patterns  
+**Category:** Basic agent patterns
 **Purpose:** Foundation for most other agent types
 
 - **SimpleAgent** (2 implementations)
@@ -42,7 +42,7 @@ The core agents package provides foundational agent types and sophisticated impl
 
 ### 1.2 Multi-Agent Systems (7 agents)
 
-**Category:** Coordinated agent orchestration  
+**Category:** Coordinated agent orchestration
 **Purpose:** Complex multi-agent workflows and coordination
 
 - **MultiAgent** (3 implementations)
@@ -65,7 +65,7 @@ The core agents package provides foundational agent types and sophisticated impl
 
 ### 1.3 Retrieval Augmented Generation (RAG) (10 agents)
 
-**Category:** Information retrieval and generation  
+**Category:** Information retrieval and generation
 **Purpose:** Document-based question answering and knowledge retrieval
 
 - **SimpleRAGAgent**
@@ -112,7 +112,7 @@ The core agents package provides foundational agent types and sophisticated impl
 
 ### 1.4 Reasoning & Critique (9 agents)
 
-**Category:** Advanced reasoning and self-improvement  
+**Category:** Advanced reasoning and self-improvement
 **Purpose:** Complex problem solving with introspection
 
 - **ReflectionAgent**
@@ -146,7 +146,7 @@ The core agents package provides foundational agent types and sophisticated impl
 
 ### 1.5 Document Processing (11 agents)
 
-**Category:** Document handling and transformation  
+**Category:** Document handling and transformation
 **Purpose:** Loading, processing, and transforming documents
 
 #### Document Loaders (4 agents)
@@ -168,7 +168,7 @@ The core agents package provides foundational agent types and sophisticated impl
 
 ### 1.6 Conversation Agents (6 agents)
 
-**Category:** Multi-agent communication and collaboration  
+**Category:** Multi-agent communication and collaboration
 **Purpose:** Orchestrated conversations between agents
 
 - **BaseConversationAgent**
@@ -199,7 +199,7 @@ The core agents package provides foundational agent types and sophisticated impl
 
 ### 1.7 Planning Agents (3 agents)
 
-**Category:** Strategic planning and execution  
+**Category:** Strategic planning and execution
 **Purpose:** Multi-step planning and coordinated execution
 
 - **PlanAndExecuteAgent**
@@ -217,7 +217,7 @@ The core agents package provides foundational agent types and sophisticated impl
 
 ### 1.8 Memory Agents (2 agents)
 
-**Category:** Memory and persistence  
+**Category:** Memory and persistence
 **Purpose:** Long-term memory and state management
 
 - **LongTermMemoryAgent**
@@ -233,7 +233,7 @@ The core agents package provides foundational agent types and sophisticated impl
 
 ### 1.9 Research Agents (2 agents)
 
-**Category:** Information research and analysis  
+**Category:** Information research and analysis
 **Purpose:** Deep research and information gathering
 
 - **PersonResearchAgent**
@@ -247,7 +247,7 @@ The core agents package provides foundational agent types and sophisticated impl
 
 ### 1.10 Specialized Agents (22 agents)
 
-**Category:** Other specialized implementations  
+**Category:** Other specialized implementations
 **Purpose:** Various domain-specific applications
 
 Notable agents include:

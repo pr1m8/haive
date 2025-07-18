@@ -15,7 +15,6 @@ from ..source_implementation import (
     auto_source,
 )
 
-
 logger = logging.getLogger(__name__)
 
 # =============================================================================
@@ -114,9 +113,7 @@ class MongoDBSource(DatabaseSource):
             return self.create_mongodb_loader()
         raise ValueError(f"Unsupported strategy: {strategy_name}")
 
-    def authenticate(
-        self, credential_manager: CredentialManager | None = None
-    ) -> bool:
+    def authenticate(self, credential_manager: CredentialManager | None = None) -> bool:
         """Authenticate the MongoDB source."""
         self.credential_manager = credential_manager
 
@@ -346,9 +343,7 @@ class BigQuerySource(DatabaseSource):
             return self.create_bigquery_loader()
         raise ValueError(f"Unsupported strategy: {strategy_name}")
 
-    def authenticate(
-        self, credential_manager: CredentialManager | None = None
-    ) -> bool:
+    def authenticate(self, credential_manager: CredentialManager | None = None) -> bool:
         """Authenticate the BigQuery source."""
         self.credential_manager = credential_manager
 
@@ -648,9 +643,7 @@ class GCSSource(CloudSource):
             return self.create_directory_loader()
         raise ValueError(f"Unsupported strategy: {strategy_name}")
 
-    def authenticate(
-        self, credential_manager: CredentialManager | None = None
-    ) -> bool:
+    def authenticate(self, credential_manager: CredentialManager | None = None) -> bool:
         """Authenticate the GCS source."""
         self.credential_manager = credential_manager
 
@@ -818,9 +811,7 @@ class AzureBlobSource(CloudSource):
             return self.create_container_loader()
         raise ValueError(f"Unsupported strategy: {strategy_name}")
 
-    def authenticate(
-        self, credential_manager: CredentialManager | None = None
-    ) -> bool:
+    def authenticate(self, credential_manager: CredentialManager | None = None) -> bool:
         """Authenticate the Azure Blob source."""
         self.credential_manager = credential_manager
 

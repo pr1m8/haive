@@ -5,17 +5,22 @@
 
 /* Import showcase variables */
 :root {
-  /* Core brand colors - Beautiful purple theme */
+  /* Unified brand colors - Professional purple theme */
   --haive-primary: #8b5cf6;
   --haive-secondary: #a855f7;
   --haive-accent: #d946ef;
   --haive-success: #10b981;
 
-  /* Subtle gradients - more professional with purple */
-  --gradient-primary: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(168, 85, 247, 0.05) 100%);
-  --gradient-secondary: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(217, 70, 239, 0.05) 100%);
-  --gradient-warm: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(249, 115, 22, 0.05) 100%);
-  --gradient-cool: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(6, 182, 212, 0.05) 100%);
+  /* Subtle gradients - consistent with showcase.css */
+  --gradient-primary: linear-gradient(
+    135deg,
+    #6366f1 0%,
+    #8b5cf6 50%,
+    #a855f7 100%
+  );
+  --gradient-secondary: linear-gradient(135deg, #a855f7 0%, #d946ef 100%);
+  --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+  --gradient-cool: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
 
   /* Spacing scale */
   --space-1: 0.25rem;
@@ -69,7 +74,7 @@ article[id*="haive"] .sd-container-fluid .sd-card::before,
 section[id*="haive"] .sd-container-fluid .sd-card::before,
 section[id*="schema"] .sd-container-fluid .sd-card::before,
 section[id*="engine"] .sd-container-fluid .sd-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -120,7 +125,7 @@ section[id*="engine"] .sd-card-text {
   color: #525252 !important;
   font-size: 0.95rem !important;
   line-height: 1.5;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
   background: rgba(15, 98, 254, 0.1);
   padding: var(--space-2) var(--space-3);
   border-radius: 12px;
@@ -145,11 +150,11 @@ section[id="haive-api-reference"] .sd-card,
   cursor: pointer;
 }
 
-/* Extra special hover for main cards */
+/* Refined hover for main cards - less aggressive */
 section[id="haive-api-reference"] .sd-card:hover,
 .sd-card:hover {
-  transform: translateY(-12px) scale(1.03);
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2) !important;
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12) !important;
   border-color: var(--haive-primary) !important;
 }
 
@@ -214,18 +219,22 @@ section[id="haive-api-reference"] .sd-card-title strong::before {
    Module Path Code Styling
    ============================================================================= */
 
-/* Style code blocks in API docs */
+/* Style code blocks in API docs - improved contrast */
 article[id*="haive"] code.docutils.literal,
 section[id*="haive"] code.docutils.literal,
 section[id*="schema"] code.docutils.literal,
 section[id*="engine"] code.docutils.literal {
-  background: var(--gradient-primary) !important;
-  color: white !important;
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.15) 0%,
+    rgba(168, 85, 247, 0.1) 100%
+  ) !important;
+  color: #4c1d95 !important;
   padding: var(--space-1) var(--space-3) !important;
-  border-radius: 12px !important;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+  border-radius: 8px !important;
+  font-family: "JetBrains Mono", "Fira Code", monospace !important;
   font-weight: 600 !important;
-  box-shadow: 0 2px 8px rgba(15, 98, 254, 0.3);
+  border: 1px solid rgba(139, 92, 246, 0.2);
 }
 
 /* =============================================================================
@@ -235,12 +244,65 @@ section[id*="engine"] code.docutils.literal {
 @media (max-width: 768px) {
   article[id*="haive"] .sd-container-fluid .sd-card:hover,
   section[id*="haive"] .sd-container-fluid .sd-card:hover {
-    transform: translateY(-4px) scale(1.01);
+    transform: translateY(-2px) scale(1.005);
   }
 
   section[id="haive-api-reference"] .sd-card:hover {
-    transform: translateY(-6px) scale(1.02);
+    transform: translateY(-3px) scale(1.01);
   }
+}
+
+/* =============================================================================
+   Visual Hierarchy & Navigation
+   ============================================================================= */
+
+/* Improve page titles and headers */
+h1 {
+  font-size: 2.5rem !important;
+  font-weight: 800 !important;
+  color: var(--haive-primary) !important;
+  margin-bottom: 1.5rem !important;
+  border-bottom: 3px solid var(--haive-primary) !important;
+  padding-bottom: 0.5rem !important;
+}
+
+h2 {
+  font-size: 1.8rem !important;
+  font-weight: 700 !important;
+  color: var(--haive-secondary) !important;
+  margin-top: 2rem !important;
+  margin-bottom: 1rem !important;
+}
+
+h3 {
+  font-size: 1.4rem !important;
+  font-weight: 600 !important;
+  color: var(--haive-primary) !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+/* Improve breadcrumbs */
+.breadcrumb {
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.05) 0%,
+    rgba(168, 85, 247, 0.03) 100%
+  ) !important;
+  border-radius: 12px !important;
+  padding: 0.75rem 1rem !important;
+  margin-bottom: 1.5rem !important;
+  border: 1px solid rgba(139, 92, 246, 0.1) !important;
+}
+
+.breadcrumb a {
+  color: var(--haive-primary) !important;
+  text-decoration: none !important;
+  font-weight: 500 !important;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline !important;
 }
 
 /* =============================================================================
@@ -253,10 +315,18 @@ section[id*="engine"] code.docutils.literal {
   animation: cardLoad 0.6s ease-out forwards;
 }
 
-.sd-card:nth-child(1) { animation-delay: 0.1s; }
-.sd-card:nth-child(2) { animation-delay: 0.2s; }
-.sd-card:nth-child(3) { animation-delay: 0.3s; }
-.sd-card:nth-child(4) { animation-delay: 0.4s; }
+.sd-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.sd-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.sd-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.sd-card:nth-child(4) {
+  animation-delay: 0.4s;
+}
 
 @keyframes cardLoad {
   from {

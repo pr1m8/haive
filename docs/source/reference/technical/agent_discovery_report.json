@@ -329,7 +329,7 @@
         },
         {
           "class_name": "MultiAgent",
-          "module_path": "packages.haive-agents.src.haive.agents.multi.multi_agent_base (1)",
+          "module_path": "packages.haive-agents.src.haive.agents.multi.multi_agent_base",
           "description": "Abstract base class for multi-agent systems.",
           "base_classes": ["Agent"],
           "special_features": []
@@ -2653,8 +2653,8 @@
     },
     {
       "class_name": "MultiAgent",
-      "module_path": "packages.haive-agents.src.haive.agents.multi.multi_agent_base (1)",
-      "file_path": "/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/multi_agent_base (1).py",
+      "module_path": "packages.haive-agents.src.haive.agents.multi.multi_agent_base",
+      "file_path": "/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/multi_agent_base.py",
       "description": "Abstract base class for multi-agent systems.",
       "base_classes": ["Agent"],
       "category": "multi_agent",

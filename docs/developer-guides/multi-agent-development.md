@@ -1,6 +1,6 @@
 # Multi-Agent Development Guide
 
-*Comprehensive guide for building and orchestrating multi-agent systems with the Haive framework*
+_Comprehensive guide for building and orchestrating multi-agent systems with the Haive framework_
 
 ## Table of Contents
 
@@ -113,7 +113,7 @@ planner = SimpleAgent(
 
 executor = SimpleAgent(
     engine=AugLLMConfig(
-        name="executor", 
+        name="executor",
         system_prompt="You execute plans step by step."
     ),
     name="executor"
@@ -137,11 +137,11 @@ class WorkflowConfig(BaseModel):
     agents: List[str] = Field(min_length=2)
     execution_mode: str = Field(default="sequential")
     enable_routing: bool = Field(default=False)
-    
+
     # Computed fields
     agent_count: int = 0
     has_routing: bool = False
-    
+
     @field_validator('execution_mode')
     @classmethod
     def validate_mode(cls, v):
@@ -149,12 +149,12 @@ class WorkflowConfig(BaseModel):
         if v not in valid_modes:
             raise ValueError(f"Mode must be one of {valid_modes}")
         return v
-    
+
     def model_post_init(self, __context):
         """Post-init validation and setup."""
         self.agent_count = len(self.agents)
         self.has_routing = self.enable_routing and self.execution_mode == "conditional"
-        
+
         if len(set(self.agents)) != len(self.agents):
             raise ValueError("Agent names must be unique")
 ```
@@ -236,7 +236,7 @@ class MetaAgentState(StateSchema):
     current_agent: str = ""
     execution_history: List[str] = Field(default_factory=list)
     agent_states: Dict[str, Any] = Field(default_factory=dict)
-    
+
     def track_agent_execution(self, agent_name: str, state: Dict):
         """Track individual agent execution."""
         self.current_agent = agent_name
@@ -253,14 +253,14 @@ The system preserves important message fields across agent boundaries:
 ```python
 class MessagePreserver:
     """Preserves critical message fields across agents."""
-    
+
     PRESERVED_FIELDS = [
         'tool_call_id',
-        'message_id', 
+        'message_id',
         'thread_id',
         'additional_kwargs'
     ]
-    
+
     def preserve_message_context(self, messages: List[Message]) -> List[Message]:
         """Ensure critical fields are maintained."""
         # Implementation preserves field integrity
@@ -287,24 +287,24 @@ Route to different agents based on state content:
 ```python
 class ConditionalRouter:
     """Routes requests to appropriate agents."""
-    
+
     def __init__(self):
         self.routes = {}
         self.conditions = {}
-    
+
     def add_route(self, name: str, condition, destinations: Dict[str, str]):
         """Add conditional route."""
         self.routes[name] = destinations
         self.conditions[name] = condition
-    
+
     def route(self, from_node: str, state: Dict) -> str:
         """Execute routing logic."""
         if from_node not in self.conditions:
             return "default"
-        
+
         condition = self.conditions[from_node]
         result = condition(state)
-        
+
         return self.routes[from_node].get(result, "default")
 
 # Usage
@@ -338,7 +338,7 @@ class RobustMultiAgent(MultiAgent):
         """Handle individual agent errors gracefully."""
         # Log error
         logger.error(f"Agent {agent_name} failed: {error}")
-        
+
         # Add error to state
         if "errors" not in state:
             state["errors"] = []
@@ -347,7 +347,7 @@ class RobustMultiAgent(MultiAgent):
             "error": str(error),
             "timestamp": datetime.now()
         })
-        
+
         # Continue with next agent or fallback
         return self.get_fallback_agent(agent_name)
 ```
@@ -393,7 +393,7 @@ result = rag_pipeline.invoke({"query": "What is machine learning?"})
 def research_router(state):
     """Route based on research complexity."""
     complexity = analyze_query_complexity(state.get("query", ""))
-    
+
     if complexity == "simple":
         return "quick_search"
     elif complexity == "complex":
@@ -428,12 +428,14 @@ research_system = MultiAgent(
 ### Debugging Tips
 
 1. **Enable Logging**
+
    ```python
    import logging
    logging.getLogger("haive.agents.multi").setLevel(logging.DEBUG)
    ```
 
 2. **State Inspection**
+
    ```python
    # Add state inspection between agents
    multi_agent.add_debug_callback(lambda state: print(f"State: {state}"))
@@ -456,4 +458,4 @@ research_system = MultiAgent(
 
 ---
 
-*This guide consolidates information from multiple multi-agent documentation sources and provides comprehensive coverage of multi-agent development in the Haive framework.*
+_This guide consolidates information from multiple multi-agent documentation sources and provides comprehensive coverage of multi-agent development in the Haive framework._

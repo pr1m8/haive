@@ -1,144 +1,45 @@
-API Reference
-=============
+🔗 API Reference
+================
 
-This page contains auto-generated API reference documentation [#f1]_.
+Complete reference documentation for the Haive AI Agent Framework.
+
+.. grid:: 2
+   :gutter: 3
+
+   .. grid-item-card:: 🧠 **Core Infrastructure**
+      :link: src/haive/core/index
+      :link-type: doc
+
+      Foundation classes for engines, schemas, persistence, and runtime systems.
+
+   .. grid-item-card:: 🤖 **Agent Implementations**
+      :link: src/haive/agents/index
+      :link-type: doc
+
+      Pre-built agents for conversation, reasoning, RAG, and multi-agent coordination.
+
+   .. grid-item-card:: 🛠️ **Tools & Utilities**
+      :link: src/haive/tools/index
+      :link-type: doc
+
+      Extensible tools for search, code execution, data processing, and more.
+
+   .. grid-item-card:: 🎮 **Games & Examples**
+      :link: src/haive/games/index
+      :link-type: doc
+
+      Interactive game environments and example implementations.
+
+Quick Navigation
+---------------
 
 .. toctree::
    :titlesonly:
+   :maxdepth: 2
 
-   /api/bs/index
-   /api/ui/index
-   /api/db/index
-   /api/app/index
-   /api/mcp/index
-   /api/core/index
-   /api/tree/index
-   /api/base/index
-   /api/hyde/index
-   /api/grid/index
-   /api/deck/index
-   /api/tile/index
-   /api/game/index
-   /api/move/index
-   /api/cell/index
-   /api/main/index
-   /api/llms/index
-   /api/utils/index
-   /api/agent/index
-   /api/flare/index
-   /api/state/index
-   /api/tools/index
-   /api/shell/index
-   /api/games/index
-   /api/poker/index
-   /api/piece/index
-   /api/board/index
-   /api/agents/index
-   /api/models/index
-   /api/prompt/index
-   /api/config/index
-   /api/logger/index
-   /api/player/index
-   /api/router/index
-   /api/routes/index
-   /api/engines/index
-   /api/prompts/index
-   /api/app_dep/index
-   /api/ensemble/index
-   /api/generate/index
-   /api/retreive/index
-   /api/refactor/index
-   /api/position/index
-   /api/promopts/index
-   /api/dataflow/index
-   /api/game_api/index
-   /api/registry/index
-   /api/multiqery/index
-   /api/protocols/index
-   /api/tree_leaf/index
-   /api/blackjack/index
-   /api/core-game/index
-   /api/container/index
-   /api/vault_cli/index
-   /api/named_dict/index
-   /api/self_query/index
-   /api/file_types/index
-   /api/conversion/index
-   /api/components/index
-   /api/edge_model/index
-   /api/node_model/index
-   /api/pro_search/index
-   /api/math_tools/index
-   /api/tool_utils/index
-   /api/permission/index
-   /api/type_hints/index
-   /api/postiition/index
-   /api/middleware/index
-   /api/run_simple/index
-   /api/game_agent/index
-   /api/query_types/index
-   /api/game_socket/index
-   /api/game_router/index
-   /api/litellm_cli/index
-   /api/dynamic_enum/index
-   /api/function_ref/index
-   /api/branch_model/index
-   /api/connect4_api/index
-   /api/run_game_api/index
-   /api/registry_cli/index
-   /api/time_weighted/index
-   /api/type_checking/index
-   /api/voting_system/index
-   /api/state_manager/index
-   /api/run_chess_api/index
-   /api/run_games_api/index
-   /api/memory_schemas/index
-   /api/auto_discovery/index
-   /api/run_simplified/index
-   /api/parent_document/index
-   /api/dynamic_literal/index
-   /api/grade_documents/index
-   /api/transform_query/index
-   /api/import_analyzer/index
-   /api/simple_chess_ws/index
-   /api/integrate_games/index
-   /api/tic_tac_toe_api/index
-   /api/document_graders/index
-   /api/query_refinement/index
-   /api/routing_patterns/index
-   /api/list_multi_agent/index
-   /api/remote_execution/index
-   /api/print_to_logging/index
-   /api/advanced_registry/index
-   /api/state_graph_model/index
-   /api/answer_generators/index
-   /api/data_source_types/index
-   /api/multi_file_rename/index
-   /api/general_games_api/index
-   /api/game_router_fixed/index
-   /api/decide_to_generate/index
-   /api/run_integrated_api/index
-   /api/serve_chess_client/index
-   /api/import_consolidator/index
-   /api/dependency_analyzer/index
-   /api/complexity_analyzer/index
-   /api/code_smell_detector/index
-   /api/rag_workflow_factory/index
-   /api/game_router_enhanced/index
-   /api/serializable_callable/index
-   /api/programming_languages/index
-   /api/pydantic_prompt_utils/index
-   /api/hallucination_graders/index
-   /api/aug_llm_mcp_extension/index
-   /api/compatible_rag_factory/index
-   /api/function_call_analyzer/index
-   /api/containers_tilebag (1)/index
-   /api/proper_list_multi_agent/index
-   /api/structured_output_enhancer/index
-   /api/background_process_manager/index
-   /api/function_logging_transformer/index
-   /api/compatible_rag_factory_simple/index
-   /api/automatic_test_case_generator/index
-   /api/grade_generation_v_documents_and_question/index
+   Complete API Reference <src/haive/index>
 
-.. [#f1] Created with `sphinx-autoapi <https://github.com/readthedocs/sphinx-autoapi>`_
+.. note::
+   This documentation is automatically generated from source code docstrings using `sphinx-autoapi <https://github.com/readthedocs/sphinx-autoapi>`_.
+   
+   For tutorials and guides, see the :doc:`../introduction/index` section.

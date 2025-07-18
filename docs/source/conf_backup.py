@@ -4,11 +4,12 @@ Configuration for building documentation for the Haive namespaced monorepo.
 Uses Google-style docstrings and works with poetry/nox build system.
 """
 
+from datetime import datetime
 import logging
+from pathlib import Path
 import sys
 import warnings
-from datetime import datetime
-from pathlib import Path
+
 
 # Set up logging for debugging
 log_file = Path(__file__).parent / "sphinx_debug.log"
@@ -22,44 +23,7 @@ logger = logging.getLogger(__name__)
 # Suppress specific warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", message=".*Matplotlib.*")
-
-# Add all package source directories to Python path for proper module discovery
-conf_dir = Path(__file__).parent
-project_root = conf_dir.parent.parent
-sys.path.insert(0, str(project_root))
-
-# Add all haive package source directories to sys.path
-packages_dir = project_root / "packages"
-if packages_dir.exists():
-    logger.info(f"Found packages directory: {packages_dir}")
-    for package_dir in packages_dir.glob("haive-*"):
-        src_dir = package_dir / "src"
-        if src_dir.exists():
-            logger.info(f"Adding to sys.path: {src_dir}")
-            sys.path.insert(0, str(src_dir))
-            # Try to import the package
-            package_name = package_dir.name.replace("-", ".")
-            try:
-                __import__(package_name)
-                logger.info(f"Successfully imported {package_name}")
-            except Exception as e:
-                logger.exception(f"Failed to import {package_name}: {e}")
-
-# Ensure the main haive package is discoverable
-main_haive_path = packages_dir / "haive-core" / "src"
-if main_haive_path.exists():
-    sys.path.insert(0, str(main_haive_path))
-
-# ==============================================================================
-# Project Information
-# ==============================================================================
-
-project = "Haive"
-author = "William R. Astley"
-current_year = datetime.now().year
-copyright = f"2025-{current_year}, {author}"  # noqa: A001
-version = "1.0"
-release = "1.0.0"
+warnings.filterwarnings("ignore", category=UserWarning, module="sphinx")
 
 # ==============================================================================
 # Path Setup for Namespaced Monorepo
@@ -73,23 +37,43 @@ workspace_dir = docs_dir.parent
 # Add the workspace to Python path for imports
 sys.path.insert(0, str(workspace_dir))
 
+# Add extensions directory to path for custom extensions
+sys.path.insert(0, str(conf_dir / "_extensions"))
+
 # Add package source paths - namespaced imports require parent directory
 packages_dir = workspace_dir / "packages"
+
+# Note: haive-prebuilt is excluded from docs as it contains generated/binary content
 package_names = [
     "haive-core",
     "haive-agents",
     "haive-tools",
     "haive-games",
     "haive-dataflow",
-    "haive-prebuilt",
     "haive-mcp",
+    # "haive-prebuilt",
+]
+# docs/conf.py
+nitpicky = True
+nitpick_ignore = [
+    # Add ignored references here if needed
 ]
 
 # For namespaced packages, we need to add the src directory
+logger.info(f"Found packages directory: {packages_dir}")
 for package in package_names:
     src_path = packages_dir / package / "src"
     if src_path.exists():
+        logger.info(f"Adding to sys.path: {src_path}")
         sys.path.insert(0, str(src_path))
+
+        # Try to import the package
+        package_module = f"haive.{package.split('-')[1]}"
+        try:
+            __import__(package_module)
+            logger.info(f"Successfully imported {package_module}")
+        except Exception as e:
+            logger.warning(f"Failed to import {package_module}: {e}")
 
 # Add custom extensions
 extensions_path = conf_dir / "_extensions"
@@ -97,37 +81,59 @@ if extensions_path.exists():
     sys.path.insert(0, str(extensions_path))
 
 # ==============================================================================
+# Project Information
+# ==============================================================================
+
+project = "Haive"
+author = "William R. Astley"
+current_year = datetime.now().year
+copyright = f"2025-{current_year}, {author}"  # noqa: A001
+version = "1.0"
+release = "1.0.0"
+
+# ==============================================================================
 # Extensions Configuration
 # ==============================================================================
 
 extensions = [
-    # Core Sphinx extensions
-    "sphinx.ext.autodoc",
-    "sphinx.ext.autosummary",
-    "sphinx.ext.viewcode",
-    "sphinx.ext.napoleon",
-    "sphinx.ext.intersphinx",
-    "sphinx.ext.githubpages",
-    # Enhanced documentation
-    "sphinx_copybutton",
-    "sphinx_design",
-    "myst_parser",
-    "sphinxcontrib.mermaid",
-    # Custom Haive extension (if available)
+    # Core API documentation - USING YOUR POWERFUL EXTENSIONS!
+    "autoapi.extension",  # 🚀 Better than autodoc+autosummary
+    "sphinx.ext.napoleon",  # Google docstrings - PROPERLY CONFIGURED
+    "sphinx.ext.viewcode",  # Source code links - CRITICAL FOR HYPERLINKS
+    "sphinx.ext.linkcode",  # GitHub source links - ADDED FOR GITHUB LINKS
+    "sphinx.ext.intersphinx",  # Cross-references (disabled offline)
+    # Enhanced display - YOUR INSTALLED EXTENSIONS
+    "sphinx_autodoc_typehints",  # 🎨 Beautiful type hints - WORKS WITH GOOGLE STYLE
+    "sphinx_copybutton",  # Copy code blocks
+    "sphinx_design",  # 🎨 Cards, grids, badges
+    # "sphinx_tabs",  # 📑 Tabbed content (warning about no setup function)
+    "sphinx_togglebutton",  # 🔽 Collapsible sections
+    "sphinx_exec_directive",  # ⚡ Live code execution
+    "myst_parser",  # Markdown support
+    "sphinxcontrib.mermaid",  # 📊 Diagrams
+    # Additional useful extensions
+    "sphinx_inline_tabs",  # Inline tabs for better organization
+    # "sphinx_code_tabs",  # Code examples in multiple languages (conflicts with sphinx_tabs)
+    "sphinxcontrib.youtube",  # Embed YouTube videos
+    "sphinxext.opengraph",  # Open Graph metadata for social sharing
+    "sphinx_sitemap",  # Generate sitemap.xml
+    # "sphinx_gallery",  # Example gallery generation (no setup function)
+    # "sphinx_mdinclude",  # Include markdown files (conflicts with myst_parser)
+    # "sphinx_data_viewer",  # Display data tables (may need configuration)
+    "sphinxcontrib.openapi",  # OpenAPI/Swagger documentation
+    "sphinxcontrib.httpdomain",  # Document HTTP APIs
+    # "readthedocs_sphinx_search",  # Enhanced search for RTD (not installed - confirmed missing)
 ]
-
-# Try to load custom extension if it exists
-# Temporarily disabled for faster builds
-#     pass
 
 # ==============================================================================
 # Source File Configuration
 # ==============================================================================
 
-source_suffix = {
-    ".rst": "restructuredtext",
-    ".md": "markdown",
-}
+# source_suffix is handled by myst_parser extension
+# source_suffix = {
+#     ".rst": "restructuredtext",
+#     ".md": "markdown",
+# }
 
 exclude_patterns = [
     "_build",
@@ -151,77 +157,66 @@ exclude_patterns = [
     "generated/**",
     "_archive/**",
     "conf_*.py",
+    "**/scripts/**",  # Exclude script directories
+    "**/debug*.py",  # Exclude debug files
 ]
 
 # ==============================================================================
 # HTML Theme Configuration
 # ==============================================================================
 
-html_theme = "furo"
+# Choose PyData Sphinx Theme - User preference!
+html_theme = "pydata_sphinx_theme"
 html_title = "Haive Documentation"
 html_short_title = "Haive"
 
 # Static files
 html_static_path = ["_static"]
 
-# Enhanced CSS for better styling and syntax highlighting
+# Enhanced CSS for better contrast and styling
 html_css_files = [
-    "haive-docs-enhanced.css",  # Comprehensive styling fixes
-    "api-showcase.css",  # Beautiful gradient cards (enhanced)
+    "custom.css",  # Keep existing custom styles
 ]
 
 html_js_files = [
     "agent-visualization.js",  # Agent demos
 ]
 
-# Disable showcase files - they override all pages
-# if (static_dir / "showcase.css").exists():
-# if (static_dir / "showcase.js").exists():
-
-# Modern theme options
+# PyData theme options - Professional & Scientific with enhanced navigation
 html_theme_options = {
-    # Branding
-    "light_logo": "images/haive-logo-light.svg",
-    "dark_logo": "images/haive-logo-dark.svg",
-    # SIMPLIFIED Colors - Fix white-on-white issues
-    "light_css_variables": {
-        "color-brand-primary": "#0f62fe",
-        "color-brand-content": "#4589ff",
-        "color-foreground-primary": "#161616",  # Dark text on light bg
-        "color-foreground-secondary": "#525252",
-        "color-background-primary": "#ffffff",
-        "color-background-secondary": "#f8f9fb",
-    },
-    "dark_css_variables": {
-        "color-brand-primary": "#4589ff",
-        "color-brand-content": "#8a3ffc",
-        "color-foreground-primary": "#f4f4f4",  # Light text on dark bg
-        "color-foreground-secondary": "#c6c6c6",
-        "color-background-primary": "#161616",
-        "color-background-secondary": "#1a1a1a",
-    },
-    # SIMPLIFIED Navigation
-    "sidebar_hide_name": False,
-    "navigation_depth": 3,
-    # Features
-    "announcement": (
-        '<div style="text-align: center; font-weight: 600;">'
-        "🤖 <strong>Haive AI Agent Framework</strong> - "
-        "Building intelligent agents with Google-style documentation"
-        "</div>"
-    ),
-    # Footer
-    "footer_icons": [
+    # Fix navigation and contrast issues
+    "navbar_align": "left",
+    "navbar_center": ["navbar-nav"],
+    "secondary_sidebar_items": ["page-toc", "edit-this-page"],
+    # GitHub integration
+    "github_url": "https://github.com/will-astley/haive",
+    "use_edit_page_button": True,
+    # Enhanced navigation for better visibility
+    "show_toc_level": 2,
+    "navigation_depth": 4,
+    "collapse_navigation": False,
+    "navigation_with_keys": True,
+    # Search improvements
+    "search_bar_text": "Search Haive docs...",
+    "search_bar_position": "navbar",
+    # Header with theme switcher
+    "navbar_end": ["navbar-icon-links", "theme-switcher"],
+    "icon_links": [
         {
             "name": "GitHub",
             "url": "https://github.com/will-astley/haive",
-            "html": '<svg height="16" width="16" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>',
+            "icon": "fa-brands fa-github",
         },
     ],
-    # Source links
-    "source_repository": "https://github.com/will-astley/haive/",
-    "source_branch": "main",
-    "source_directory": "docs/source/",
+    # Theme switching for better contrast
+    "switcher": {"json_url": "_static/switcher.json", "version_match": "latest"},
+    # Better contrast with accessible pygments
+    "pygments_light_style": "default",
+    "pygments_dark_style": "github-dark",
+    # Announcement banner
+    "announcement": "🤖 <b>Haive AI Agent Framework</b> - Build intelligent agents with ease!",
+    # Footer
+    "footer_items": ["copyright", "sphinx-version"],
 }
 
 # ==============================================================================
@@ -238,15 +233,20 @@ autodoc_default_options = {
     "exclude-members": "__weakref__",
     "inherited-members": True,
 }
-autodoc_typehints = "both"  # Show types in signature AND description
-autodoc_typehints_format = "short"
-autodoc_class_signature = "separated"
+# Type hints configuration - makes types clickable!
+autodoc_typehints = "description"  # Show in description for cleaner signatures
+typehints_document_rtype = True
+typehints_use_signature = True
+typehints_use_signature_return = True
+always_document_param_types = True
 autodoc_type_aliases = {
     # Simplify common Haive types
     "Agent": "haive.agents.base.Agent",
     "StateSchema": "haive.core.schema.StateSchema",
     "Engine": "haive.core.engine.Engine",
     "Tool": "haive.core.tools.Tool",
+    "Graph": "haive.core.graph.BaseGraph",
+    "RunnableConfig": "Dict[str, Any]",
 }
 
 # Mock imports for missing modules
@@ -255,30 +255,26 @@ autodoc_mock_imports = [
     "haive.tools.api",
     "haive.tools.utility",
     "haive.tools.code",
-    "haive.agents.rag.self_rag",
-    "haive.core.schema.compatibility",
-    "haive.agents.planning.llm_compiler",
-    "haive.agents.reasoning_and_critique.reflection",  # Should be reflexion
-    "haive.agents.conversation.collaborative",  # Typo: should be collaberative
-    "haive.agents.supervisor",  # Various supervisor imports fail
-    # Additional missing modules from latest build
     "haive.tools.search",
     "haive.tools.math",
     "haive.tools.data",
+    "haive.agents.rag.self_rag",
+    "haive.core.schema.compatibility",
+    "haive.agents.planning.llm_compiler",
+    "haive.agents.reasoning_and_critique.reflection",
+    # "haive.agents.conversation.collaborative",
+    "haive.agents.supervisor",
     "haive.core.engine.loaders",
-    # Document modifiers that are failing
-    "haive.agents.document_modifiers.kg",
-    "haive.agents.document_modifiers.kg.kg_base",
-    "haive.agents.document_modifiers.kg.kg_iterative_refinement",
-    "haive.agents.document_modifiers.kg.kg_map_merge",
-    "haive.agents.document_modifiers.summarizer",
-    "haive.agents.document_modifiers.summarizer.iterative_refinement",
-    # Broad wildcards for problematic modules
+    # "haive.agents.document_modifiers.kg",
+    # "haive.agents.document_modifiers.kg.kg_base",
+    # "haive.agents.document_modifiers.kg.kg_iterative_refinement",
+    # "haive.agents.document_modifiers.kg.kg_map_merge",
+    # "haive.agents.document_modifiers.summarizer",
+    # "haive.agents.document_modifiers.summarizer.iterative_refinement",
     "haive.agents.rag.db_rag",
     "haive.agents.reasoning_and_critique",
     "haive.agents.research",
     "haive.core.engine.document",
-    # Persistence modules that don't exist
     "haive.core.persistence.create_checkpointer",
     "haive.core.persistence.create_memory_checkpointer",
     "haive.core.persistence.create_postgres_checkpointer",
@@ -287,56 +283,38 @@ autodoc_mock_imports = [
     "tensorflow",
 ]
 
-# Autosummary - fixed configuration for proper documentation generation
-autosummary_generate = True
-autosummary_generate_overwrite = True  # Overwrite to keep docs up to date
-autosummary_imported_members = True  # Import members for proper documentation
-autosummary_ignore_module_all = False
-autosummary_filename_map = {}
-
-# Make autosummary work properly with our module structure
-autosummary_mock_imports = autodoc_mock_imports
-
-
-# Tell autosummary to treat these as modules
-def autosummary_get_type(app, obj, parent):
-    """Force certain patterns to be recognized as modules."""
-    if obj and hasattr(obj, "__name__"):
-        name = obj.__name__
-        # Force haive.core.* submodules to be treated as modules
-        if name.startswith("haive.core.") and "." in name[11:]:
-            return "module"
-        # Force haive.agents.* submodules to be treated as modules
-        if name.startswith("haive.agents.") and "." in name[13:]:
-            return "module"
-        # Force haive.tools.* submodules to be treated as modules
-        if name.startswith("haive.tools.") and "." in name[12:]:
-            return "module"
-    return None
-
-
-# Fix module import issues
-import warnings
-
-warnings.filterwarnings("ignore", category=UserWarning, module="sphinx")
-warnings.filterwarnings("ignore", category=DeprecationWarning)
-
-# Enable recursive module discovery
-autodoc_default_options = {
-    "members": True,
-    "member-order": "bysource",
-    "special-members": "__init__",
-    "undoc-members": True,
-    "exclude-members": "__weakref__",
-    "show-inheritance": True,
-}
-
-# Force autosummary to generate proper module files
-autosummary_context = {
-    "fullname": lambda name: name,
-    "module": lambda name: name,
-    "objname": lambda name: name.split(".")[-1],
-}
+# AutoAPI - MUCH BETTER than autosummary!
+autoapi_type = "python"
+autoapi_dirs = [
+    "../../packages/haive-core/src",
+    "../../packages/haive-agents/src",
+    "../../packages/haive-tools/src",
+    "../../packages/haive-games/src",
+    "../../packages/haive-dataflow/src",
+    "../../packages/haive-mcp/src",
+    # "../../packages/haive-prebuilt/src",
+]
+autoapi_root = "api"
+autoapi_options = [
+    "members",
+    "undoc-members",
+    "show-inheritance",
+    "show-module-summary",
+    "imported-members",
+]
+autoapi_keep_files = True
+autoapi_add_toctree_entry = True
+autoapi_member_order = "bysource"
+autoapi_python_class_content = "both"
+autoapi_ignore = [
+    "**/tests/**",
+    "**/test_*.py",
+    "**/*_test.py",
+    "**/scripts/**",
+    "**/debug*.py",
+    "**/example*.py",
+    "**/demo*.py",
+]
 
 # Napoleon (Google docstrings) - optimized settings
 napoleon_google_docstring = True
@@ -384,12 +362,7 @@ myst_enable_extensions = [
     "substitution",
 ]
 
-# Intersphinx - link to other projects
-intersphinx_mapping = {
-    "python": ("https://docs.python.org/3", None),
-    "pydantic": ("https://docs.pydantic.dev/latest/", None),
-    "langchain": ("https://api.python.langchain.com/en/latest/", None),
-}
+# Intersphinx - disabled temporarily due to network issues
 
 # Mermaid diagrams
 mermaid_version = "10.6.1"
@@ -400,7 +373,6 @@ mermaid_version = "10.6.1"
 
 # Performance
 templates_path = ["_templates"]
-exclude_patterns.extend(["**/.tox", "**/.pytest_cache", "**/build", "**/dist"])
 
 # Autosummary template path
 autosummary_template_path = ["_templates/autosummary"]
@@ -477,16 +449,14 @@ def setup(app):
     # Log what packages we're documenting
     logger.info(f"Package names configured: {package_names}")
 
-    # Test import haive.games specifically
-    try:
-        import haive.games
-
-        logger.info(f"haive.games imported successfully from: {haive.games.__file__}")
-        logger.info(
-            f"haive.games.__all__ = {getattr(haive.games, '__all__', 'NOT DEFINED')}"
-        )
-    except Exception as e:
-        logger.exception(f"Failed to import haive.games: {type(e).__name__}: {e}")
+    # Test import all packages
+    for package in ["core", "agents", "tools", "games", "dataflow", "mcp", "prebuilt"]:
+        try:
+            module = __import__(f"haive.{package}")
+            logger.info(f"haive.{package} imported successfully from: {module.__file__}")
+            logger.info(f"haive.{package}.__all__ = {getattr(module, '__all__', 'NOT DEFINED')}")
+        except Exception as e:
+            logger.exception(f"Failed to import haive.{package}: {type(e).__name__}: {e}")
 
     # Ensure directories exist
     static_dir = conf_dir / "_static"
@@ -503,9 +473,7 @@ def setup(app):
             if "haive.tools.api" in name:
                 lines.insert(0, ".. warning::")
                 lines.insert(1, "")
-                lines.insert(
-                    2, "   This module has been reorganized. API tools are now in:"
-                )
+                lines.insert(2, "   This module has been reorganized. API tools are now in:")
                 lines.insert(3, "   ``haive.tools.toolkits.{service_name}``")
                 lines.insert(4, "")
             elif "haive.tools.code" in name:
@@ -523,129 +491,6 @@ def setup(app):
 
     app.connect("autodoc-process-docstring", handle_import_failure)
 
-    # Create minimal custom files if they don't exist
-    modern_css = static_dir / "modern.css"
-    if not modern_css.exists():
-        modern_css.write_text(
-            """
-/* Modern Haive Documentation Styles */
-:root {
-    --font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-stack-monospace: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
-}
-
-body {
-    font-family: var(--font-stack);
-    line-height: 1.7;
-}
-
-code, pre {
-    font-family: var(--font-stack-monospace);
-}
-
-/* Improved code blocks */
-.highlight {
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-/* Clean card styles */
-.sd-card {
-    border-radius: 12px;
-    border: 1px solid var(--color-background-secondary);
-    transition: all 0.2s ease;
-}
-
-.sd-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-}
-
-/* Google-style docstring formatting */
-.sig-param .n {
-    font-weight: 600;
-}
-
-.sig-return-typehint {
-    font-style: italic;
-}
-
-/* Module and class headers */
-.py.class, .py.function, .py.method {
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--color-background-border);
-}
-
-/* Better spacing for docstring sections */
-.rubric {
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-}
-"""
-        )
-
-    modern_js = static_dir / "modern.js"
-    if not modern_js.exists():
-        modern_js.write_text(
-            """
-// Modern Haive Documentation JavaScript
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🤖 Haive Documentation loaded');
-
-    // Smooth scrolling
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const href = this.getAttribute('href');
-            if (href !== '#') {
-                e.preventDefault();
-                const target = document.querySelector(href);
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            }
-        });
-    });
-
-    // Copy button feedback
-    document.querySelectorAll('.copybtn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const original = this.textContent;
-            this.textContent = '✓ Copied!';
-            setTimeout(() => this.textContent = original, 1000);
-        });
-    });
-
-    // Highlight current section in sidebar
-    const observer = new IntersectionObserver(
-        entries => {
-            entries.forEach(entry => {
-                const id = entry.target.getAttribute('id');
-                if (id) {
-                    const link = document.querySelector(`nav a[href="#${id}"]`);
-                    if (entry.intersectionRatio > 0) {
-                        link?.classList.add('current');
-                    } else {
-                        link?.classList.remove('current');
-                    }
-                }
-            });
-        },
-        { rootMargin: '0px 0px -50% 0px' }
-    );
-
-    // Observe all sections with IDs
-    document.querySelectorAll('section[id]').forEach(section => {
-        observer.observe(section);
-    });
-});
-"""
-        )
-
     # Connect event handlers
     app.connect("autodoc-skip-member", skip_submodules)
 
@@ -654,3 +499,48 @@ document.addEventListener('DOMContentLoaded', function() {
         "parallel_read_safe": True,
         "parallel_write_safe": True,
     }
+
+
+# ==============================================================================
+# GitHub Source Links Configuration (for sphinx.ext.linkcode)
+# ==============================================================================
+
+
+def linkcode_resolve(domain, info):
+    """Resolve function to link to GitHub source code.
+
+    This enables [source] links next to every function/class that link
+    directly to the GitHub repository source code.
+    """
+    if domain != "py":
+        return None
+    if not info["module"]:
+        return None
+
+    # Extract package name from module path
+    module_parts = info["module"].split(".")
+    if len(module_parts) < 2 or module_parts[0] != "haive":
+        return None
+
+    # Map haive.package to packages/haive-package structure
+    package_name = module_parts[1]
+    package_dir = f"haive-{package_name}"
+
+    # Build the file path
+    submodule_path = "/".join(module_parts[2:]) if len(module_parts) > 2 else ""
+    if submodule_path:
+        filename = f"packages/{package_dir}/src/haive/{package_name}/{submodule_path}.py"
+    else:
+        filename = f"packages/{package_dir}/src/haive/{package_name}/__init__.py"
+
+    # Return GitHub link
+    return f"https://github.com/will-astley/haive/blob/main/{filename}"
+
+
+# ==============================================================================
+# Pygments Configuration for Better Code Contrast
+# ==============================================================================
+
+# Enhanced pygments styling for better code readability
+pygments_style = "default"  # Light mode - good contrast
+pygments_dark_style = "github-dark"  # Dark mode - accessible colors

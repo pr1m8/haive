@@ -1,402 +1,660 @@
-# CLAUDE.md - Haive Agent Framework Memory Hub
+# CLAUDE.md - Haive Agent Framework
 
-**Purpose**: Central routing and quick access to Haive development resources  
-**Version**: 3.0  
-**Last Updated**: 2025-01-09
+**Purpose**: Central memory hub for Haive development
+**Version**: 4.0
+**Last Updated**: 2025-01-15
 
-## 🎯 Quick Access
+## 🎯 Project Context
 
-- **Working Directory**: `/home/will/Projects/haive/backend/haive`
-- **Active Branch**: `feature/engine-typing-generics`
-- **Main Commands**: Always use `poetry run` for all operations
-- **Test Pattern**: Real components only, NO MOCKS EVER
-- **Import Pattern**: `from haive.core.*` (explicit package references)
+- **Directory**: `/home/will/Projects/haive/backend/haive`
+- **Branch**: `feature/fix_everything`
+- **Core Rules**:
+  - Always use `poetry run` prefix for ALL Python commands
+  - Real components only - NO MOCKS EVER in tests
+  - Always use explicit imports: `from haive.core.*`
 
-## 📁 Memory Organization
+## 📚 Essential Documentation
 
-### Core Memories (Import these as needed)
+### 🧠 Memory Index System
 
-- **Command Execution**: @project_docs/active/standards/coding/COMMAND_EXECUTION_GUIDE.md - CRITICAL: Always use `poetry run`
-- **Memory System**: @project_docs/active/standards/documentation/memory_system.md - Memory architecture and principles
-- **Development Workflow**: @project_docs/active/standards/coding/development_workflow.md - Complete development methodology
-- **Build & Test**: @project_docs/active/standards/coding/BUILD_AND_TEST_GUIDE.md - Trunk, nox, and testing procedures
-- **Agent Configuration**: @project_docs/active/standards/coding/AGENT_CONFIGURATION_GUIDE.md - AugLLM, Simple, React, RAG agent patterns
-- **Pydantic Patterns**: @project_docs/active/standards/coding/PYDANTIC_PATTERNS.md - Proper Pydantic usage and anti-patterns
-- **Code Style**: @project_docs/active/standards/coding/style_guide.md - Python coding standards
-- **Testing**: @project_docs/active/standards/testing/philosophy.md - No-mocks testing approach
-- **Git Workflow**: @project_docs/active/standards/git/workflow.md - Git best practices
+- **@memory_index/README.md** - Central memory index for all discoveries
+- **@memory_index/quick_reference.md** - Most-used patterns and fixes
+- **@memory_index/by_date/** - Chronological memory tracking
+- **@project_docs/README.md** - Main project documentation hub
 
-### Package-Specific Memories
+### Standards & Guides (Import for details)
 
-- **haive-agents**: @project_docs/haive-agents/README.md - Agent development guide
-- **haive-core**: @project_docs/haive-core/README.md - Core architecture
-- **haive-games**: @project_docs/haive-games/README.md - Games framework
-- **haive-tools**: @project_docs/haive-tools/README.md - Tool implementations
-- **haive-mcp**: @project_docs/haive-mcp/README.md - MCP integration
+- @project_docs/active/standards/coding/COMMAND_EXECUTION_GUIDE.md
+- @project_docs/active/standards/coding/PYDANTIC_PATTERNS.md
+- @project_docs/active/standards/testing/philosophy.md
+- @project_docs/active/standards/git/workflow.md
 
-### Current Work Context
+### Architecture & Patterns
 
-- **Active Issues**: @project_docs/sessions/active/current_issues.md
-- **Sprint Progress**: @project_docs/sessions/active/current_sprint.md
-- **MultiAgent Memory Hub**: @project_docs/active/architecture/multi_agent_meta_agent_memory_hub.md ✅ **UPDATED**
-- **Recent Sessions**: @project_docs/sessions/active/README.md
+- @project_docs/active/architecture/multi_agent_meta_agent_memory_hub.md
+- @project_docs/active/architecture/meta_state_pattern.md
+- @project_docs/active/architecture/agent_as_tool_pattern.md
 
-### ✅ Recent Achievements (2025-01-13)
+## 🚀 Current Focus
 
-1. **MetaAgentState Validation** - Real Azure OpenAI execution with SimpleAgentV2
-2. **Recompilation Mixin Testing** - Dynamic tool addition working (2 → 3 tools)
-3. **No-Mocks Architecture** - 100% real component integration validated
+- **Active Work**: MultiAgent Sequential Pattern (ReactAgent → SimpleAgent)
+- **Issues**: @project_docs/sessions/active/current_issues.md
+- **Recent Achievements**: See @memory_index/by_date/2025-01-16/
 
-## 🚀 Current Focus Areas
-
-### 🔄 Active Development - MultiAgent Sequential Pattern
-
-1. **ReactAgent → SimpleAgent Flow** - Sequential execution with structured output
-2. **Cross-Agent Data Transfer** - State management between agents
-3. **Real Component Testing** - No mocks, full Azure OpenAI integration
-4. **Multi-Agent State Schema** - Coordinated state without flattening
-
-### ✅ Completed Development
-
-1. **MetaAgentState** - Agent embedding and execution working
-2. **Recompilation Mixin** - Dynamic tool changes with auto-recompilation
-3. **Schema Composition** - Engine-based state generation
-4. **Engine Typing** - Proper generics implementation
-
-### Known Critical Issues
-
-- Schema field conflicts with multiple engines
-- Import cycles in agent/engine dependencies
-- See full list: @project_docs/claude_sessions/current_issues.md
-
-## 🧠 Smart Memory Protocol
-
-### Session Start Checklist
+## 🔥 Git Safety Protocol (CRITICAL)
 
 ```bash
-# 1. Check current state
+# BEFORE ANY WORK
 git status && git diff
 
-# 2. Load relevant package memory
-# Read the specific package README you're working on
+# BEFORE CREATING FILES
+find . -name "similar_file*"  # Check if exists
 
-# 3. Create session workspace
-mkdir -p project_docs/claude_sessions/claude_$(date +%Y%m%d_%H%M%S)_{purpose}
+# BEFORE COMMITTING
+git diff --cached           # Review staged changes
+trunk check --all          # Run linting
+poetry run pytest          # Run tests
 
-# 4. Use TodoWrite for planning
-```
-
-### During Development
-
-1. **Track Progress**: Update @project_docs/progress_tracking/current_sprint.md
-2. **Document Issues**: Add to @project_docs/claude_sessions/current_issues.md
-3. **Save Patterns**: Document in session memory for reuse
-4. **Cross-Reference**: Use [MEM-XXX] tags for navigation
-
-### After Tasks
-
-1. **Update Status**: Mark todos complete
-2. **Document Learning**: Add to relevant package docs
-3. **Clean Up**: Move completed work to archives
-4. **Commit Properly**: Follow @project_docs/GIT_WORKFLOW.md
-
-## 🔗 Essential Paths
-
-```bash
-# Source code locations
-packages/haive-{package}/src/haive/{package}/
-packages/haive-{package}/tests/
-
-# Documentation hierarchy
-project_docs/
-├── claude_documentation/     # Claude-specific guides
-├── {package_name}/          # Package documentation
-├── claude_sessions/         # Work session memories
-└── progress_tracking/       # Sprint and task tracking
-
-# Key files to know
-~/.claude/CLAUDE.md          # Global preferences (DO NOT MODIFY)
-./CLAUDE.local.md           # Local overrides (if needed)
-./pyproject.toml            # Workspace dependencies
-```
-
-## 🔥 GIT SAFETY FIRST - ALWAYS CHECK BEFORE ACTING
-
-### MANDATORY Git Workflow - Run EVERY TIME
-
-```bash
-# 1. BEFORE ANY WORK - See what's changed
-git status                    # What files are modified?
-git diff                      # What exact changes were made?
-git diff --cached             # What's staged for commit?
-
-# 2. BEFORE CREATING FILES - Check if it exists
-find . -name "similar_file*"  # Don't duplicate existing work
-
-# 3. AFTER MAKING CHANGES - Review everything
-git diff                      # Review your changes line by line
-git status                    # Confirm which files you touched
-
-# 4. BEFORE COMMITTING - Final safety check
-git diff --cached             # Review what you're about to commit
-trunk check --all             # Run linting
-poetry run pytest             # Run tests
-
-# 5. SAFE COMMIT PROCESS
-git add specific_file.py      # Add files individually (NOT git add .)
-git diff --cached             # Review staged changes AGAIN
+# COMMIT SAFELY
+git add specific_file.py   # Add individually
 git commit -m "feat: clear description"
 ```
 
-### Git Commands You MUST Use
+## 🛠️ Most Used Commands
 
 ```bash
-# CRITICAL - Use these constantly
-git status                    # Current state - RUN OFTEN
-git diff                      # Unstaged changes - REVIEW CAREFULLY
-git diff --cached             # Staged changes - CHECK BEFORE COMMIT
-git log --oneline -5          # Recent commits
-git diff HEAD~1               # What changed in last commit
-
-# USEFUL - For specific situations
-git stash                     # Save work temporarily
-git checkout -- file.py       # Undo changes to specific file
-git reset HEAD file.py        # Unstage a file
-```
-
-## ⚡ Most Used Commands
-
-```bash
-# BEFORE ANY WORK - Research existing patterns
-find packages/ -name "*.py" | xargs grep -l "YourPattern" | head -5
-
-# Quality checks (ALWAYS run before committing)
-trunk check --all                      # Primary linting tool
-trunk check --fix --all                # Fix auto-fixable issues
-
-# Development
-poetry run python -m haive.agents.simple --example
+# Development (ALWAYS with poetry run)
+poetry run python script.py
 poetry run pytest packages/haive-agents/tests/ -v
 poetry run python -c "from haive.core import *; print('Imports OK')"
 
-# Type checking and additional quality
-poetry run mypy packages/haive-{package}/src/
-poetry run ruff check packages/haive-{package}/
+# Quality Checks
+trunk check --all
+trunk check --fix --all
+poetry run mypy packages/
+poetry run ruff check
 
-# Testing specific components
-poetry run pytest packages/haive-{package}/tests/test_specific.py -v
-poetry run pytest --cov=haive --cov-report=html
+# Research Before Coding
+find packages/ -name "*.py" | xargs grep -l "YourPattern" | head -5
 ```
 
-## 📊 Package Structure
+## 📦 Project Structure
 
 ```
-haive/
-├── core/      # Engines, graphs, schemas (foundation)
-├── agents/    # Agent implementations (simple, react, rag)
-├── tools/     # Tool implementations (math, web, file)
-├── games/     # Game implementations (chess, go, puzzles)
-├── dataflow/  # Streaming and data management
-├── mcp/       # Model Context Protocol integration
-└── prebuilt/  # Pre-configured components
+packages/
+├── haive-core/     # Engines, graphs, schemas (foundation)
+├── haive-agents/   # Agent implementations
+├── haive-tools/    # Tool implementations
+├── haive-games/    # Game environments
+├── haive-mcp/      # MCP integration
+└── haive-prebuilt/ # Pre-configured components
+
+project_docs/
+├── active/         # Current standards & architecture
+├── sessions/       # Working memory
+└── {package}/      # Package-specific docs
 ```
 
-### Package File Structure
+## 🎯 Critical Development Rules
 
-```
-packages/haive-{package}/
-├── src/haive/{package}/        # Source code
-│   ├── __init__.py            # Public exports
-│   ├── base/                  # Base classes/interfaces
-│   └── {feature}/             # Feature modules
-├── tests/                     # REAL component tests
-│   ├── conftest.py           # Shared fixtures
-│   └── test_{feature}.py     # Test files
-└── pyproject.toml            # Package dependencies
-```
+1. **NO MOCKS EVER**: Test with real LLMs, real tools, real components
+2. **Poetry Run Everything**: Never run Python directly
+3. **Research First**: Check existing patterns before implementing
+4. **Explicit Imports**: `from haive.core.engine import X` not `from engine import X`
+5. **Pydantic Patterns**: Never override `__init__`, use Field validation
+6. **Git Safety**: Always check diff before commits
+7. **Use TodoWrite**: For planning and tracking
 
-## 🎯 Development Patterns
-
-### Import Hierarchy (CRITICAL)
-
-```python
-# Core can only import from: standard library, third-party
-# Agents can import from: core, standard library, third-party
-# Tools can import from: core, standard library, third-party
-# Games can import from: core, agents, tools, third-party
-
-# NEVER: Core importing from agents/tools/games (circular!)
-```
-
-### Standard Patterns
-
-- **Configs**: Always use Pydantic models with validation
-- **Errors**: Structured logging, never print()
-- **State**: Use StateSchema for all agent states
-- **Testing**: Real components, descriptive test names
-- **Docs**: Google-style docstrings for Sphinx
-
-### Schema Inheritance Patterns
-
-```python
-# Check existing schemas FIRST!
-from haive.core.schema.prebuilt.messages_state import MessagesState
-from haive.core.schema.prebuilt.meta_state import MetaStateSchema
-from haive.core.schema.prebuilt.messages.messages_with_token_usage import MessagesStateWithTokenUsage
-
-# When extending schemas, check what they expect:
-# - MessagesState has: messages field
-# - MessagesStateWithTokenUsage has: messages + token_usage fields
-# - MetaStateSchema has: agent, agent_state, meta fields
-
-# Example: Extending properly
-class MyCustomState(MessagesStateWithTokenUsage):
-    """Extends with token tracking built-in"""
-    custom_field: str = Field(default="")
-```
-
-## 🔧 Common Imports & Configuration Patterns
+## 📝 Quick Code Reference
 
 ### Essential Imports
 
 ```python
-# Core engine configurations
+# Core
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.prebuilt.messages_state import MessagesState
 from haive.core.schema.prebuilt.meta_state import MetaStateSchema
 
-# Agent types
+# Agents
 from haive.agents.simple.agent import SimpleAgent
 from haive.agents.react.agent import ReactAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
 
-# LangChain core tools
-from langchain_core.tools import Tool
-from langchain_core.tools import tool  # decorator
-from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
-
-# Common utilities
-from pydantic import BaseModel, Field
-from typing import List, Dict, Any, Optional
+# Tools
+from langchain_core.tools import Tool, tool
+from langchain_core.messages import HumanMessage, AIMessage
 ```
 
-### AugLLMConfig Setup (CORRECT WAY)
+### Agent Configuration Patterns
 
 ```python
-# ✅ CORRECT - Don't specify model parameter
-config = AugLLMConfig()  # Uses defaults (gpt-4o-mini)
-
-# ✅ CORRECT - With custom settings
+# AugLLMConfig (NEVER set model parameter directly)
+config = AugLLMConfig()  # Uses defaults
 config = AugLLMConfig(
     temperature=0.7,
     max_tokens=1000,
     system_message="You are a helpful assistant"
 )
 
-# ❌ WRONG - Don't set model parameter
-config = AugLLMConfig(model="gpt-4")  # This causes issues
-```
-
-### Simple Agent Setup
-
-```python
-from haive.agents.simple.agent import SimpleAgent
-from haive.core.engine.aug_llm import AugLLMConfig
-
-# Basic setup
-config = AugLLMConfig()
-agent = SimpleAgent(engine=config)
-
-# With custom name and settings
-config = AugLLMConfig(
-    temperature=0.3,
-    system_message="You are a code reviewer"
-)
+# SimpleAgent
 agent = SimpleAgent(
-    name="code_reviewer",
+    name="my_agent",
     engine=config
 )
 
-# Usage
-result = agent.run("Review this code: def hello(): print('hi')")
-```
-
-### React Agent Setup
-
-```python
-from haive.agents.react.agent import ReactAgent
-from haive.core.engine.aug_llm import AugLLMConfig
-
-# Basic setup with tools
-config = AugLLMConfig()
-agent = ReactAgent(
-    name="react_agent",
-    engine=config,
-    tools=["calculator", "search"]  # Tool names
-)
-
-# Usage
-result = agent.run("Calculate 15 * 23 and search for Python tutorials")
-```
-
-### RAG Agent Setup
-
-```python
-from haive.agents.rag.base.agent import BaseRAGAgent
-from haive.core.engine.vectorstore.vectorstore import VectorStoreConfig
-from haive.core.engine.aug_llm import AugLLMConfig
-
-# Setup with documents
-documents = [...]  # Your documents
-config = AugLLMConfig()
-
-vector_config = VectorStoreConfig(
-    name="my_vectorstore",
-    documents=documents,
-    vector_store_provider=VectorStoreProvider.FAISS
-)
-
-agent = BaseRAGAgent(
-    name="rag_agent",
-    engine=vector_config,
-    llm_config=config
-)
-
-# Usage
-result = agent.run("What does the documentation say about X?")
-```
-
-### Tool Creation with LangChain
-
-```python
-from langchain_core.tools import Tool, tool
-from typing import Any
-
-# Method 1: Using @tool decorator
+# ReactAgent with tools
 @tool
 def calculator(expression: str) -> str:
     """Calculate mathematical expressions."""
-    try:
-        result = eval(expression)
-        return str(result)
-    except:
-        return "Error in calculation"
+    return str(eval(expression))
 
-# Method 2: Using Tool class
-def search_function(query: str) -> str:
-    """Search for information."""
-    return f"Search results for: {query}"
-
-search_tool = Tool(
-    name="search",
-    description="Search for information on any topic",
-    func=search_function
+agent = ReactAgent(
+    name="react_agent",
+    engine=config,
+    tools=[calculator]
 )
-
-# Usage with agents
-tools = [calculator, search_tool]
-agent = ReactAgent(engine=config, tools=tools)
 ```
+
+### Testing Pattern (NO MOCKS)
+
+```python
+def test_agent_real_execution():
+    """Test with REAL components."""
+    config = AugLLMConfig()
+    agent = SimpleAgent(engine=config)
+
+    result = agent.run("Hello")
+    assert isinstance(result, str)
+    assert len(result) > 0
+```
+
+## 🧠 Incremental Development Workflow
+
+### 1. Start Work Protocol
+
+```bash
+# Check current state
+git status && git diff
+
+# Load relevant memories
+# @project_docs/haive-agents/README.md (if working on agents)
+# @project_docs/haive-core/README.md (if working on core)
+
+# Create session workspace
+mkdir -p project_docs/claude_sessions/claude_$(date +%Y%m%d_%H%M%S)_${purpose}
+```
+
+### 2. Research & Plan (ALWAYS FIRST)
+
+```bash
+# Find existing patterns
+find packages/ -name "*.py" | xargs grep -l "YourPattern" | head -5
+
+# Check existing tests
+find packages/ -name "test_*.py" | xargs grep -l "similar_concept"
+
+# Use TodoWrite for planning
+```
+
+### 3. Build Incrementally (Test Each Step)
+
+```python
+# Step 1: Create minimal class
+class MyAgent:
+    def __init__(self):
+        pass
+
+# Step 2: Test basic creation
+def test_agent_creation():
+    agent = MyAgent()
+    assert agent is not None
+
+# Step 3: Add one feature
+class MyAgent:
+    def __init__(self, name: str):
+        self.name = name
+
+# Step 4: Test that feature
+def test_agent_with_name():
+    agent = MyAgent("test")
+    assert agent.name == "test"
+
+# Continue this pattern...
+```
+
+### 4. Testing Strategy - Build As You Go
+
+#### Test File Locations
+
+```
+packages/haive-{package}/
+├── src/haive/{package}/
+│   └── my_module.py           # Your source code
+└── tests/
+    └── test_my_module.py      # Test for that module
+```
+
+#### Test Each Addition Immediately
+
+```python
+# ✅ CORRECT - Test each piece as you build
+def test_step_1_basic_creation():
+    """Test basic agent creation works."""
+    agent = MyAgent()
+    assert agent is not None
+
+def test_step_2_with_config():
+    """Test agent with configuration."""
+    config = AugLLMConfig()
+    agent = MyAgent(config=config)
+    assert agent.config == config
+
+def test_step_3_basic_execution():
+    """Test basic agent execution."""
+    agent = MyAgent(config=AugLLMConfig())
+    result = agent.run("Hello")
+    assert isinstance(result, str)
+    assert len(result) > 0
+```
+
+#### Ask for Help When Stuck
+
+```python
+# When you encounter issues:
+# 1. Check existing similar implementations
+# 2. Look at test patterns in other packages
+# 3. Ask specific questions like:
+#    "How do other agents handle configuration?"
+#    "What's the pattern for tool integration?"
+#    "How should I structure this test?"
+```
+
+### 5. Memory Management for Agents & Instances
+
+#### Agent-Specific Memories
+
+```python
+# When working with specific agents, load their memories:
+# @project_docs/haive-agents/simple/patterns.md
+# @project_docs/haive-agents/react/implementation.md
+# @project_docs/haive-agents/rag/configuration.md
+
+# For agent instances in tests:
+# @project_docs/haive-agents/testing/real_component_patterns.md
+```
+
+#### Instance Management
+
+```python
+# When creating agent instances, document patterns:
+# @project_docs/sessions/active/agent_instance_patterns.md
+
+# Common instance patterns:
+config = AugLLMConfig(temperature=0.1)  # Low temp for tests
+agent = SimpleAgent(name="test_agent", engine=config)
+
+# Store instance patterns for reuse
+test_config = AugLLMConfig(temperature=0.0)  # Deterministic
+```
+
+## 🔗 Package Import Hierarchy
+
+```
+# ALLOWED:
+- Core → standard library, third-party
+- Agents → core, standard library, third-party
+- Tools → core, standard library, third-party
+- Games → core, agents, tools, third-party
+
+# FORBIDDEN:
+- Core → agents/tools/games (circular!)
+```
+
+## 🎨 Coding Style & Standards
+
+### Python Code Style
+
+```python
+# ✅ CORRECT - Descriptive names, type hints, early returns
+def process_agent_response(
+    agent_response: str,
+    validation_config: ValidationConfig
+) -> ProcessedResponse:
+    """Process agent response with validation.
+
+    Args:
+        agent_response: Raw response from agent
+        validation_config: Configuration for validation rules
+
+    Returns:
+        ProcessedResponse with validation results
+
+    Raises:
+        ValidationError: If response fails validation
+    """
+    if not agent_response:
+        raise ValidationError("Empty response")
+
+    if not validation_config.enabled:
+        return ProcessedResponse(content=agent_response, validated=False)
+
+    # Process with validation
+    validated_content = validate_response(agent_response, validation_config)
+    return ProcessedResponse(
+        content=validated_content,
+        validated=True,
+        validation_score=validated_content.score
+    )
+
+# ❌ WRONG - Poor naming, no types, nested logic
+def process(resp, config):
+    if resp:
+        if config:
+            if config.enabled:
+                return validate_response(resp, config)
+            else:
+                return resp
+        else:
+            return resp
+    else:
+        return None
+```
+
+### Pydantic Model Patterns
+
+```python
+# ✅ CORRECT - Proper Pydantic usage
+class AgentConfig(BaseModel):
+    """Configuration for agent behavior."""
+
+    model_config = ConfigDict(
+        str_strip_whitespace=True,
+        validate_assignment=True,
+        extra="forbid"
+    )
+
+    name: str = Field(..., min_length=1, max_length=50)
+    temperature: float = Field(default=0.7, ge=0.0, le=2.0)
+    max_tokens: Optional[int] = Field(default=None, ge=1)
+    tools: List[str] = Field(default_factory=list)
+
+    @field_validator("name")
+    @classmethod
+    def validate_name(cls, v: str) -> str:
+        """Validate agent name format."""
+        if not v.replace("_", "").isalnum():
+            raise ValueError("Name must be alphanumeric with underscores")
+        return v
+
+# Usage - Pydantic handles initialization automatically
+config = AgentConfig(name="my_agent", temperature=0.8)
+# Pydantic validates all fields and creates the instance
+```
+
+### Error Handling Patterns
+
+```python
+# ✅ CORRECT - Structured error handling
+import logging
+from typing import Optional
+
+logger = logging.getLogger(__name__)
+
+def execute_agent_safely(
+    agent: Agent,
+    input_data: str
+) -> Optional[AgentResponse]:
+    """Execute agent with comprehensive error handling."""
+    try:
+        logger.info(f"Executing agent {agent.name} with input length {len(input_data)}")
+
+        response = agent.run(input_data)
+
+        if not response:
+            logger.warning(f"Agent {agent.name} returned empty response")
+            return None
+
+        logger.info(f"Agent {agent.name} completed successfully")
+        return response
+
+    except ValidationError as e:
+        logger.error(f"Validation error in agent {agent.name}: {e}")
+        raise AgentValidationError(f"Agent validation failed: {e}")
+
+    except Exception as e:
+        logger.error(f"Unexpected error in agent {agent.name}: {e}")
+        raise AgentExecutionError(f"Agent execution failed: {e}")
+
+# ❌ WRONG - Silent failures, print statements
+def bad_execute(agent, input_data):
+    try:
+        result = agent.run(input_data)
+        print(f"Got result: {result}")  # Use logger!
+        return result
+    except:
+        print("Something went wrong")   # No error context!
+        return None                     # Silent failure!
+```
+
+### Testing Patterns (NO MOCKS)
+
+```python
+# ✅ CORRECT - Real component testing with descriptive names
+def test_simple_agent_handles_basic_conversation_with_real_llm():
+    """Test SimpleAgent maintains conversation context with real LLM."""
+    config = AugLLMConfig(temperature=0.1)  # Low for consistency
+    agent = SimpleAgent(name="test_conversation", engine=config)
+
+    # First exchange
+    response1 = agent.run("My name is Alice")
+    assert isinstance(response1, str)
+    assert len(response1) > 0
+
+    # Second exchange - should remember context
+    response2 = agent.run("What's my name?")
+    assert "alice" in response2.lower()
+
+    # Verify state persistence
+    assert len(agent.conversation_history) >= 4  # 2 user + 2 assistant
+
+def test_react_agent_with_real_calculator_tool_integration():
+    """Test ReactAgent uses real calculator tool correctly."""
+    @tool
+    def calculator(expression: str) -> str:
+        """Real calculator tool."""
+        return str(eval(expression))
+
+    config = AugLLMConfig(temperature=0.1)
+    agent = ReactAgent(
+        name="test_calculator",
+        engine=config,
+        tools=[calculator]
+    )
+
+    result = agent.run("What is 15 * 23?")
+    assert "345" in str(result)
+    assert agent.tool_calls_made > 0
+
+# ❌ WRONG - Mocks, vague names, no real testing
+def test_agent():  # Vague name!
+    mock_llm = Mock()  # NO MOCKS!
+    mock_llm.return_value = "fake response"
+    agent = SimpleAgent(llm=mock_llm)
+    result = agent.run("test")
+    assert result == "fake response"  # Tests nothing real!
+```
+
+## 🚨 Common Pitfalls to Avoid
+
+1. **Running Python without poetry run** → ImportError
+2. **Using mocks in tests** → False confidence
+3. **Generic imports** → Use explicit haive.core.\*
+4. **Overriding Pydantic **init\*\*\*\* → Breaks validation
+5. **Using print() instead of logger** → Poor debugging
+6. **git add .** → Stage files individually
+7. **Building without testing** → Large broken changes
+8. **Not asking for help** → Stuck for hours on solvable problems
+9. **Skipping research phase** → Reinventing existing patterns
+10. **Testing at the end** → Hard to debug failures
+
+## 📊 MCP Integration (Recommended)
+
+### Quick Setup for Common Tools
+
+```bash
+# PostgreSQL - Database operations
+claude mcp add haive-db -s user -- npx -y @modelcontextprotocol/server-postgres "postgresql://localhost/haive"
+
+# Filesystem - Enhanced file operations
+claude mcp add haive-files -s user -- npx -y @modelcontextprotocol/server-filesystem /home/will/Projects/haive
+
+# GitHub - Repository management
+claude mcp add haive-github -s user -e GITHUB_TOKEN=$GITHUB_TOKEN -- npx -y @modelcontextprotocol/server-github
+
+# List configured servers
+claude mcp list
+```
+
+See: @project_docs/claude_documentation/MCP_SETUP.md for complete setup guide with 8+ servers
+
+## 🆘 When to Ask for Help
+
+### Don't Stay Stuck - Ask Specific Questions
+
+```python
+# ✅ GOOD - Specific questions with context
+"I'm implementing a ReactAgent with tools but getting ImportError on langchain_core.tools.
+I've checked that langchain is installed with poetry show. What should I check next?"
+
+"My agent test passes but the agent isn't actually using the tools I provided.
+Here's my test code: [code]. What's the pattern for testing tool usage?"
+
+"I'm following the MetaStateSchema pattern but getting a Pydantic validation error
+when trying to embed my agent. The error is: [error]. How do I fix this?"
+
+# ❌ BAD - Vague questions
+"My code doesn't work"
+"I'm getting an error"
+"How do I make an agent?"
+```
+
+### When to Ask vs When to Research
+
+```python
+# ✅ RESEARCH FIRST - Common patterns
+find packages/ -name "*.py" | xargs grep -l "similar_problem"
+# Look at existing agent implementations
+# Check test files for patterns
+
+# ✅ ASK FOR HELP - After research doesn't work
+"I found 3 similar implementations [X, Y, Z] but none handle my specific case of [description].
+What's the best approach for [specific problem]?"
+
+# ✅ ASK FOR HELP - Time-sensitive issues
+"I'm getting a blocking error that's preventing all tests from running: [error]"
+
+# ✅ ASK FOR HELP - Architecture decisions
+"Should I extend SimpleAgent or create a new agent type for [use case]?"
+```
+
+### Debugging Workflow
+
+```bash
+# 1. Check the basics
+poetry run python -c "import haive.core; print('Core imports OK')"
+poetry run python -c "import haive.agents; print('Agents imports OK')"
+git status && git diff
+
+# 2. Run minimal test
+poetry run python -c "
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.agents.simple.agent import SimpleAgent
+config = AugLLMConfig()
+agent = SimpleAgent(engine=config)
+print('Basic agent creation works')
+"
+
+# 3. If still stuck, ask for help with:
+# - What you're trying to do
+# - What you've tried
+# - Exact error message
+# - Minimal reproduction code
+```
+
+## 🔍 Quick Debugging
+
+### Runtime Agent Debugging
+
+```python
+# ✅ ALWAYS use debug=True when developing/testing agents
+agent = SimpleAgent(name="test_agent", engine=config)
+result = agent.run("Hello", debug=True)  # Shows detailed execution info
+
+# For ReactAgent with tools
+agent = ReactAgent(name="debug_agent", engine=config, tools=[calculator])
+result = agent.run("Calculate 15 * 23", debug=True)  # Shows tool calls, reasoning steps
+
+# For async agents
+result = await agent.arun("Hello", debug=True)  # Async version with debug info
+
+# ✅ ALWAYS logically check outputs
+print(f"Agent result: {result}")
+print(f"Result type: {type(result)}")
+print(f"Result length: {len(str(result))}")
+
+# Check if result makes sense
+if "345" in str(result):
+    print("✅ Calculation appears correct")
+else:
+    print("❌ Expected calculation result not found")
+
+# For structured outputs, check fields
+if hasattr(result, 'content'):
+    print(f"Content: {result.content}")
+if hasattr(result, 'metadata'):
+    print(f"Metadata: {result.metadata}")
+```
+
+### Environment Debugging
+
+```bash
+# Check imports work
+poetry run python -c "from haive.core import *; from haive.agents import *"
+
+# Verify environment
+poetry env info
+which python  # Should show .venv path
+
+# Fix common issues
+poetry install --all-extras
+poetry cache clear pypi --all
+```
+
+### Documentation Build Debugging
+
+```bash
+# Build docs (check for errors)
+nox -s docs
+
+# Quick build test
+poetry run sphinx-build -b html docs/source docs/build/html -W --keep-going
+
+# Check for syntax errors in examples
+find packages -name "*.py" -exec python -m py_compile {} \; 2>&1 | grep -E "Error|Sorry"
+
+# Find files with invalid names (spaces, parentheses)
+find . -name "*\ *" -o -name "*(*" -o -name "*)*"
+
+# View docs locally
+python -m http.server 8003 --directory docs/build/html/
+# Then open http://localhost:8003
+```
+
+📚 **Documentation Memories**:
+
+- @memory_index/by_task/documentation/ - All documentation-related memories
+- @memory_index/by_error/build_errors/ - Build error solutions
+- @memory_index/quick_reference.md - Common patterns and fixes
 
 ## 🧪 Testing: NO MOCKS + Proper Structure
 
@@ -411,6 +669,417 @@ packages/haive-{package}/
 
 # ALWAYS: Test files go in packages/haive-*/tests/
 # NEVER: Create test files in root or random locations
+
+# For nested modules, mirror the source structure:
+packages/haive-agents/
+├── src/haive/agents/
+│   └── reasoning_and_critique/
+│       └── self_discover/
+│           └── agent.py
+└── tests/
+    └── reasoning_and_critique/
+        └── self_discover/
+            └── test_agent.py   # Mirror the directory structure
+```
+
+### Running Tests
+
+```bash
+# Run all tests in a package
+poetry run pytest packages/haive-agents/tests/ -v
+
+# Run specific test subdirectory
+poetry run pytest packages/haive-agents/tests/multi/ -v
+poetry run pytest packages/haive-agents/tests/rag/ -v
+
+# Run single test file
+poetry run pytest packages/haive-agents/tests/multi/test_simple_multi_agent.py -v
+
+# Run specific test function
+poetry run pytest packages/haive-agents/tests/multi/test_simple_multi_agent.py::test_sequential_execution -v
+
+# Run with coverage
+poetry run pytest packages/haive-agents/tests/ --cov=haive.agents --cov-report=html
+
+# Run tests matching pattern
+poetry run pytest -k "test_react" -v
+```
+
+## 📂 File Organization Standards
+
+### Project File Structure
+
+```
+haive/
+├── packages/              # All package code
+│   ├── haive-core/
+│   │   ├── src/          # Source code
+│   │   └── tests/        # Test files organized by module
+│   │       ├── graph/    # Graph-related tests
+│   │       ├── memory/   # Memory system tests
+│   │       ├── schema/   # Schema tests
+│   │       └── persistence/ # Persistence tests
+│   ├── haive-agents/
+│   │   ├── src/
+│   │   └── tests/
+│   │       ├── multi/    # Multi-agent tests
+│   │       ├── rag/      # RAG agent tests
+│   │       ├── planning/ # Planning agent tests
+│   │       ├── research/ # Research agent tests
+│   │       └── reasoning/ # Reasoning agent tests
+│   └── ...
+├── scripts/              # Utility scripts
+│   ├── maintenance/      # Maintenance and fix scripts
+│   │   ├── docs/        # Documentation build scripts
+│   │   └── agents/      # Agent enhancement scripts
+│   └── debug/           # Debug utilities
+├── project_docs/         # Documentation
+│   ├── active/          # Current standards
+│   ├── summaries/       # Implementation summaries
+│   ├── guides/          # User guides
+│   ├── build-reports/   # Build and test reports
+│   ├── issues/          # Issue tracking
+│   └── plans/           # Architecture plans
+├── examples/            # Example scripts
+└── docs/                # Sphinx documentation
+
+# Files that MUST stay in root:
+- CLAUDE.md              # This file - central memory
+- README.md              # Project readme
+- pyproject.toml         # Poetry configuration
+- noxfile.py            # Nox automation
+- .gitignore            # Git ignore rules
+```
+
+### Creating New Files
+
+```bash
+# ALWAYS check if similar file exists first
+find packages/ -name "*similar_pattern*" -type f
+
+# Create test file in correct location
+# For agent tests:
+touch packages/haive-agents/tests/category/test_new_feature.py
+
+# For core tests:
+touch packages/haive-core/tests/module/test_new_component.py
+
+# For scripts:
+touch scripts/maintenance/category/new_script.py
+
+# For documentation:
+touch project_docs/category/new_doc.md
+```
+
+### Moving Files to Proper Locations
+
+```bash
+# If you accidentally create a test in root:
+mv test_something.py packages/haive-agents/tests/appropriate_category/
+
+# If you create a debug script in root:
+mv fix_something.py scripts/debug/
+
+# If you create documentation in root:
+mv SOMETHING_SUMMARY.md project_docs/summaries/
+```
+
+## 📚 Documentation Standards
+
+### Google-Style Docstrings (Required for Sphinx AutoAPI)
+
+```python
+def process_agent_data(
+    agent_name: str,
+    data: List[Dict[str, Any]],
+    config: Optional[ProcessConfig] = None,
+    validate: bool = True
+) -> ProcessResult:
+    """Process raw agent data with optional validation.
+
+    This function takes raw agent data and processes it according to
+    the provided configuration. It supports batch processing and
+    optional validation.
+
+    Args:
+        agent_name: Name of the agent processing the data.
+        data: List of dictionaries containing raw data entries.
+            Each entry must have 'id' and 'content' keys.
+        config: Optional configuration for processing behavior.
+            If None, uses default configuration.
+        validate: Whether to validate data before processing.
+            Defaults to True.
+
+    Returns:
+        ProcessResult: Object containing:
+            - processed_data: List of processed entries
+            - errors: List of any errors encountered
+            - metadata: Processing metadata including timing
+
+    Raises:
+        ValueError: If agent_name is empty or data is malformed.
+        ProcessingError: If processing fails after retries.
+        ValidationError: If validate=True and data fails validation.
+
+    Examples:
+        Basic usage:
+
+        >>> data = [{'id': 1, 'content': 'Hello'}]
+        >>> result = process_agent_data('analyzer', data)
+        >>> print(result.processed_data)
+        [{'id': 1, 'content': 'Hello', 'processed': True}]
+
+        With configuration:
+
+        >>> config = ProcessConfig(batch_size=10, timeout=30)
+        >>> result = process_agent_data('analyzer', data, config=config)
+
+    Note:
+        This function is thread-safe and can be used in concurrent
+        processing pipelines. For large datasets, consider using
+        the async version: process_agent_data_async().
+
+    See Also:
+        process_agent_data_async: Async version of this function.
+        ProcessConfig: Configuration options documentation.
+        validate_agent_data: Standalone validation function.
+    """
+```
+
+### Class Documentation
+
+```python
+class AgentProcessor:
+    """Handles processing of agent-specific data streams.
+
+    This class provides a high-level interface for processing
+    data streams from various agent types. It supports real-time
+    and batch processing modes.
+
+    Attributes:
+        name: Processor identifier.
+        config: Current processing configuration.
+        metrics: Performance metrics collector.
+        is_running: Whether processor is actively processing.
+
+    Example:
+        >>> processor = AgentProcessor(
+        ...     name="main_processor",
+        ...     config=ProcessConfig(mode="realtime")
+        ... )
+        >>> processor.start()
+        >>> processor.process(data_stream)
+    """
+
+    def __init__(
+        self,
+        name: str,
+        config: ProcessConfig,
+        metrics_enabled: bool = True
+    ):
+        """Initialize the agent processor.
+
+        Args:
+            name: Unique processor identifier.
+            config: Processing configuration.
+            metrics_enabled: Whether to collect metrics.
+        """
+```
+
+### Module Documentation
+
+```python
+"""Agent processing utilities for the Haive framework.
+
+This module provides core functionality for processing agent data
+streams, including validation, transformation, and persistence.
+
+Key Features:
+    - Real-time and batch processing modes
+    - Automatic retry with exponential backoff
+    - Comprehensive validation framework
+    - Performance metrics collection
+
+Basic Usage:
+    >>> from haive.core.processing import AgentProcessor
+    >>> processor = AgentProcessor("main", config)
+    >>> result = processor.process(data)
+
+Advanced Usage:
+    See the examples/ directory for complex processing pipelines
+    and integration patterns.
+
+Module Structure:
+    - processor.py: Main AgentProcessor class
+    - validators.py: Data validation utilities
+    - transformers.py: Data transformation functions
+    - metrics.py: Performance monitoring
+
+See Also:
+    - haive.agents: Agent implementations
+    - haive.core.engine: Processing engines
+"""
+```
+
+### README.md Structure for Packages
+
+````markdown
+# haive-agents
+
+Agent implementations for the Haive framework.
+
+## Overview
+
+This package provides various agent types including:
+
+- SimpleAgent: Basic conversational agents
+- ReactAgent: Reasoning and action agents with tool use
+- RAG Agents: Retrieval-augmented generation agents
+- Multi-Agent Systems: Coordinated agent groups
+
+## Installation
+
+```bash
+poetry add haive-agents
+```
+````
+
+## Quick Start
+
+```python
+from haive.agents.simple import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+
+# Create agent
+config = AugLLMConfig(temperature=0.7)
+agent = SimpleAgent(name="assistant", engine=config)
+
+# Use agent
+response = agent.run("Hello, how can you help?")
+```
+
+## Features
+
+- **Type Safety**: Full type hints and Pydantic models
+- **Real Components**: No mocks, tested with real LLMs
+- **Extensible**: Easy to create custom agents
+- **Async Support**: All agents support async execution
+
+## Documentation
+
+- [API Reference](https://haive.readthedocs.io/api/agents)
+- [User Guide](../../project_docs/guides/agents_guide.md)
+- [Examples](../../examples/agents/)
+
+## Testing
+
+```bash
+poetry run pytest packages/haive-agents/tests/
+```
+
+## Contributing
+
+See [CONTRIBUTING.md](../../CONTRIBUTING.md)
+
+````
+
+### Using '@' for Memory References
+
+```python
+# In code comments and docstrings, use @ to reference memories:
+
+def complex_implementation():
+    """Implement complex multi-agent pattern.
+
+    This implementation follows the pattern described in
+    @project_docs/active/architecture/multi_agent_meta_agent_memory_hub.md
+
+    For state management details, see:
+    @project_docs/active/architecture/meta_state_pattern.md
+    """
+
+    # Load configuration as per @project_docs/active/standards/coding/PYDANTIC_PATTERNS.md
+    config = load_config()
+
+    # Follow testing approach from @project_docs/active/standards/testing/philosophy.md
+    validate_real_components(config)
+````
+
+### Documentation Hierarchy
+
+```
+1. Code-Level Documentation (Highest Priority)
+   - Google-style docstrings on ALL public functions/classes
+   - Type hints on ALL parameters and returns
+   - Examples in docstrings for complex functions
+
+2. Module-Level Documentation
+   - Module docstring explaining purpose and structure
+   - README.md in each package root
+   - __init__.py docstrings for public API
+
+3. Package-Level Documentation
+   - Comprehensive README.md with examples
+   - API reference (auto-generated by Sphinx)
+   - Migration guides for version changes
+
+4. Project-Level Documentation
+   - project_docs/ for architecture and decisions
+   - Memory documents with @ references
+   - Implementation guides and patterns
+```
+
+### Sphinx AutoAPI Configuration
+
+```python
+# docs/source/conf.py additions for AutoAPI
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',  # For Google-style docstrings
+    'sphinx.ext.viewcode',
+    'sphinx.ext.intersphinx',
+    'sphinx_autodoc_typehints',
+    'autoapi.extension',
+]
+
+# AutoAPI configuration
+autoapi_type = 'python'
+autoapi_dirs = [
+    '../../packages/haive-core/src',
+    '../../packages/haive-agents/src',
+    '../../packages/haive-tools/src',
+]
+autoapi_options = [
+    'members',
+    'undoc-members',
+    'show-inheritance',
+    'show-module-summary',
+    'imported-members',
+]
+
+# Napoleon settings for Google-style
+napoleon_google_docstring = True
+napoleon_numpy_docstring = False
+napoleon_include_init_with_doc = True
+napoleon_include_private_with_doc = False
+napoleon_include_special_with_doc = True
+```
+
+### Documentation Checklist
+
+```markdown
+## Before Committing Code
+
+- [ ] All public functions have Google-style docstrings
+- [ ] All parameters have type hints
+- [ ] Return types are specified
+- [ ] Complex functions include Examples section
+- [ ] Exceptions are documented in Raises section
+- [ ] Related functions listed in See Also section
+- [ ] Module has comprehensive docstring
+- [ ] Package has updated README.md
+- [ ] Memory references use @ notation
+- [ ] Run `poetry run sphinx-build -b html docs/source docs/build`
 ```
 
 ### Writing Tests - NO MOCKS PATTERN
@@ -438,33 +1107,38 @@ def test_simple_agent_real_execution():
 # ✅ ALWAYS USE REAL COMPONENTS
 ```
 
-## 🚨 Critical Reminders
+### Build-Test-Build Pattern
 
-1. **GIT DIFF ALWAYS** - `git status` and `git diff` before ANY work
-2. **RESEARCH FIRST** - Check existing patterns before implementing anything
-3. **USE TRUNK** - Always run `trunk check --all` before committing
-4. **NO MOCKS IN TESTS** - Use real LLMs, real tools, real components
-5. **PROPER PYDANTIC** - No manual **init**, use Field validation, check existing patterns
-6. **EXPLICIT IMPORTS** - `from haive.core.engine import X`, not `from engine import X`
-7. **GIT REVIEW CHANGES** - `git diff --cached` before every commit
-8. **USE TODOS** - TodoWrite for planning, tracking, and organization
-9. **POETRY RUN EVERYTHING** - Never run Python directly, always `poetry run python`
-10. **CHECK EXISTING SCHEMAS** - Look at MessagesState, MetaStateSchema patterns first
-11. **STAGE FILES INDIVIDUALLY** - `git add file.py` NOT `git add .`
-12. **DOCUMENT PROGRESS** - Update session memory as you work
+```python
+# Step 1: Write minimal test
+def test_agent_creation():
+    """Test agent can be created."""
+    agent = MyAgent()
+    assert agent is not None
 
-## 📝 Quick Memory Access
+# Step 2: Write minimal code to pass
+class MyAgent:
+    def __init__(self):
+        pass
 
-Need details? Import the full guides:
+# Step 3: Run test
+poetry run pytest tests/test_my_agent.py::test_agent_creation -v
 
-- Memory architecture: @project_docs/active/standards/documentation/memory_system.md
-- Development workflow: @project_docs/active/standards/coding/development_workflow.md
-- Build & test procedures: @project_docs/active/standards/coding/BUILD_AND_TEST_GUIDE.md
-- Pydantic patterns: @project_docs/active/standards/coding/PYDANTIC_PATTERNS.md
-- Code examples: @project_docs/claude_documentation/CLAUDE_AGENTS.md
-- Testing details: @project_docs/active/standards/testing/philosophy.md
-- Git workflows: @project_docs/active/standards/git/workflow.md
+# Step 4: Add next feature test
+def test_agent_with_config():
+    """Test agent accepts configuration."""
+    config = AugLLMConfig()
+    agent = MyAgent(config=config)
+    assert agent.config == config
+
+# Step 5: Update code to pass
+class MyAgent:
+    def __init__(self, config=None):
+        self.config = config
+
+# Continue this pattern...
+```
 
 ---
 
-**Remember**: This file is loaded at every session start. Keep it lean and use imports for detailed information!
+**Remember**: This file loads at every session. Keep frequently-used info here, import the rest!
