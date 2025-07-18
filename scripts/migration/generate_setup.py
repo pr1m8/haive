@@ -39,7 +39,7 @@ def generate_setup_py(pyproject_path):
                     r"\^(\d+)\.(\d+)\.(\d+)", dep_version
                 ).groups()
                 dependencies[dep_name] = (
-                    f">={major}.{minor}.{patch},<{int(major)+1}.0.0"
+                    f">={major}.{minor}.{patch},<{int(major) + 1}.0.0"
                 )
             else:
                 dependencies[dep_name] = dep_version

@@ -389,7 +389,7 @@ class FileNormalizer:
                 # Normalize filename for remaining files
                 for file in files_to_process:
                     # For duplicates, we need to work with the base name (without numbers)
-                    if len(file_groups[base_name]) > 1:
+                    if len(files) > 1:
                         # This was a duplicate group, normalize the base name
                         normalized_name = self.normalize_filename(
                             base_name, common_prefix
@@ -572,16 +572,16 @@ def main():
 Examples:
   # Normalize files in a directory (dry run)
   python file_normalizer.py normalize ./my_files/
-  
+
   # Normalize and execute changes
   python file_normalizer.py normalize ./my_files/ --execute
-  
+
   # Fix imports for Haive package
   python file_normalizer.py fix-imports ./packages/haive-games/src/haive/games/holdem/
-  
+
   # Normalize recent downloads
   python file_normalizer.py download-normalize "holdem" ./normalized_holdem/
-  
+
   # Do everything
   python file_normalizer.py all ./my_files/ --target-package haive.games.holdem --execute
         """,

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Fix common documentation build issues."""
 
-import re
 from pathlib import Path
+import re
 
 
 def fix_title_underlines(file_path):

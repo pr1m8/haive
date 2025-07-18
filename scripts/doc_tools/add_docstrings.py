@@ -136,8 +136,8 @@ games framework, including game state management, rules enforcement, move valida
 and agent integration.
 
 Example:
-    >>> from haive.games.{actual_module_name} import {display_name.replace(' ', '')}Agent
-    >>> agent = {display_name.replace(' ', '')}Agent()
+    >>> from haive.games.{actual_module_name} import {display_name.replace(" ", "")}Agent
+    >>> agent = {display_name.replace(" ", "")}Agent()
     >>> final_state = agent.run_game(visualize=True)
 
 Typical usage:
@@ -162,8 +162,8 @@ This module provides data models for representing {display_name} game elements,
 including board state, pieces, players, moves, and analysis results.
 
 Example:
-    >>> from haive.games.{actual_module_name}.models import {display_name.replace(' ', '')}Move
-    >>> move = {display_name.replace(' ', '')}Move(position=(0, 0), player="X")
+    >>> from haive.games.{actual_module_name}.models import {display_name.replace(" ", "")}Move
+    >>> move = {display_name.replace(" ", "")}Move(position=(0, 0), player="X")
 """
     elif module_path.endswith("state.py"):
         docstring = f"""State representation for {display_name} game.
@@ -173,8 +173,8 @@ complete game state including board position, player information, turn tracking,
 and game status.
 
 Example:
-    >>> from haive.games.{actual_module_name}.state import {display_name.replace(' ', '')}State
-    >>> state = {display_name.replace(' ', '')}State.initialize()
+    >>> from haive.games.{actual_module_name}.state import {display_name.replace(" ", "")}State
+    >>> state = {display_name.replace(" ", "")}State.initialize()
 """
     elif module_path.endswith("state_manager.py"):
         docstring = f"""State manager for {display_name} game logic and mechanics.
@@ -183,8 +183,8 @@ This module handles core operations like initializing the board, validating and 
 moves, evaluating win conditions, and updating the state with engine analyses.
 
 Example:
-    >>> from haive.games.{actual_module_name}.state_manager import {display_name.replace(' ', '')}StateManager
-    >>> manager = {display_name.replace(' ', '')}StateManager()
+    >>> from haive.games.{actual_module_name}.state_manager import {display_name.replace(" ", "")}StateManager
+    >>> manager = {display_name.replace(" ", "")}StateManager()
     >>> new_state = manager.apply_move(state, move)
 """
     elif module_path.endswith("agent.py"):
@@ -194,8 +194,8 @@ This module provides an agent for playing {display_name}, handling strategic dec
 making, move generation, and game management.
 
 Example:
-    >>> from haive.games.{actual_module_name}.agent import {display_name.replace(' ', '')}Agent
-    >>> agent = {display_name.replace(' ', '')}Agent()
+    >>> from haive.games.{actual_module_name}.agent import {display_name.replace(" ", "")}Agent
+    >>> agent = {display_name.replace(" ", "")}Agent()
     >>> result = agent.run_game()
 """
     elif module_path.endswith("config.py"):
@@ -205,8 +205,8 @@ This module defines the configuration options for {display_name} games,
 including game parameters, player settings, and engine configurations.
 
 Example:
-    >>> from haive.games.{actual_module_name}.config import {display_name.replace(' ', '')}Config
-    >>> config = {display_name.replace(' ', '')}Config(first_player="X")
+    >>> from haive.games.{actual_module_name}.config import {display_name.replace(" ", "")}Config
+    >>> config = {display_name.replace(" ", "")}Config(first_player="X")
 """
     elif module_path.endswith("engines.py"):
         docstring = f"""Engine configurations for {display_name} game.
@@ -235,8 +235,8 @@ This module provides UI components for visualizing and interacting with
 {display_name} games, including console-based and rich terminal interfaces.
 
 Example:
-    >>> from haive.games.{actual_module_name}.ui import {display_name.replace(' ', '')}UI
-    >>> ui = {display_name.replace(' ', '')}UI()
+    >>> from haive.games.{actual_module_name}.ui import {display_name.replace(" ", "")}UI
+    >>> ui = {display_name.replace(" ", "")}UI()
     >>> ui.display(game_state)
 """
     else:
@@ -246,7 +246,7 @@ Example:
 This module provides supporting functionality for {display_name} games.
 
 Example:
-    >>> from haive.games.{actual_module_name}.{module_path_parts[-1].replace('.py', '')} import some_function
+    >>> from haive.games.{actual_module_name}.{module_path_parts[-1].replace(".py", "")} import some_function
     >>> result = some_function()
 """
 
@@ -298,7 +298,7 @@ Example:
     ...     first_player="player1",
     ...     enable_analysis=True
     ... )
-    >>> agent = {display_name.replace(' ', '')}Agent(config)
+    >>> agent = {display_name.replace(" ", "")}Agent(config)
 """
 
     if class_name.endswith("State"):
@@ -886,15 +886,15 @@ def create_module_readme(module_path: str, dry_run: bool = False) -> bool:
 
         # Basic usage example
         usage_example = f"""```python
-from haive.games.{module_name} import {display_name.replace(' ', '')}Agent
-from haive.games.{module_name} import {display_name.replace(' ', '')}Config
+from haive.games.{module_name} import {display_name.replace(" ", "")}Agent
+from haive.games.{module_name} import {display_name.replace(" ", "")}Config
 
 # Create a game agent with custom configuration
-config = {display_name.replace(' ', '')}Config(
+config = {display_name.replace(" ", "")}Config(
     enable_analysis=True,
     visualize=True
 )
-agent = {display_name.replace(' ', '')}Agent(config)
+agent = {display_name.replace(" ", "")}Agent(config)
 
 # Run a complete game
 final_state = agent.run_game()
