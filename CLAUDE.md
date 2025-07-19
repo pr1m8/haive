@@ -496,6 +496,7 @@ def test_agent():  # Vague name!
 8. **Not asking for help** → Stuck for hours on solvable problems
 9. **Skipping research phase** → Reinventing existing patterns
 10. **Testing at the end** → Hard to debug failures
+11. **Deleting test files** → Loss of valuable documentation
 
 ## 📊 MCP Integration (Recommended)
 
@@ -658,6 +659,17 @@ python -m http.server 8003 --directory docs/build/html/
 
 ## 🧪 Testing: NO MOCKS + Proper Structure
 
+### 🚨 IMPORTANT: Keep Test Files As Documentation
+
+**DO NOT DELETE TEST FILES** - They serve as living documentation of:
+
+- How the system should behave
+- Real usage patterns and examples
+- Edge cases and error handling
+- Integration between components
+
+Test files are valuable references for understanding the codebase!
+
 ### Test File Organization
 
 ```
@@ -669,6 +681,7 @@ packages/haive-{package}/
 
 # ALWAYS: Test files go in packages/haive-*/tests/
 # NEVER: Create test files in root or random locations
+# ALWAYS: Keep test files after creation - they're documentation!
 
 # For nested modules, mirror the source structure:
 packages/haive-agents/
