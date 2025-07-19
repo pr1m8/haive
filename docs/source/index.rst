@@ -1,31 +1,19 @@
 🤖 Haive Documentation
 ======================
 
-.. raw:: html
+.. card:: 🤖 Professional AI Agent Framework
+   :class-card: hero-section
+   :text-align: center
+   
+   Build sophisticated AI agents with conversational AI, game intelligence, tool orchestration,
+   and knowledge systems. Modern Python framework with auto-persistence and multi-agent coordination.
+   
+   Professional AI agent framework for Python developers.
 
-   <div class="agent-hero-section">
-      <div class="hero-content">
-         <h2>🤖 Professional AI Agent Framework</h2>
-         <p class="hero-description">
-            Build sophisticated AI agents with conversational AI, game intelligence, tool orchestration,
-            and knowledge systems. Modern Python framework with auto-persistence and multi-agent coordination.
-         </p>
-      </div>
-   </div>
+🚀 Quick Start
+================
 
-Professional AI agent framework for Python developers.
-
-.. raw:: html
-
-   <div class="showcase-section">
-      <div class="showcase-header">
-         <h2>🚀 Quick Start</h2>
-      </div>
-
-      <div class="code-example-section">
-         <h4>⚡ Get Started in Minutes</h4>
-      </div>
-   </div>
+⚡ **Get Started in Minutes**
 
 .. code-block:: python
 
@@ -48,143 +36,144 @@ Professional AI agent framework for Python developers.
    response = await agent.arun("Hello, world!")
    print(response)
 
-.. raw:: html
+🎯 Core Capabilities
+===================
 
-   <div class="showcase-section">
-      <div class="showcase-header">
-         <h2>🎯 Core Capabilities</h2>
-         <p>Explore the main features of the Haive framework</p>
-      </div>
+Explore the main features of the Haive framework
 
-      <div class="agent-showcase">
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">🧠</div>
-               <div>
-                  <h3 class="agent-title">AI Agents</h3>
-                  <p class="agent-subtitle">Conversational intelligence</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Build intelligent agents with memory, personality, and advanced reasoning capabilities.
-            </p>
-            <div class="agent-features">
-               <span class="feature-tag">SimpleAgent</span>
-               <span class="feature-tag">ReactAgent</span>
-               <span class="feature-tag">RAG Systems</span>
-            </div>
-            <a href="agents/index.html" class="agent-link">Browse Agents</a>
-         </div>
+.. grid:: 1 2 3 3
+   :gutter: 3
+   :padding: 2
 
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">🎮</div>
-               <div>
-                  <h3 class="agent-title">Game Intelligence</h3>
-                  <p class="agent-subtitle">Strategic gameplay</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Create AI opponents for Chess, Go, Poker, and other strategic games with advanced algorithms.
-            </p>
-            <div class="agent-features">
-               <span class="feature-tag">Chess Engine</span>
-               <span class="feature-tag">Board Games</span>
-               <span class="feature-tag">AI Strategies</span>
-            </div>
-            <a href="games/index.html" class="agent-link">View Games</a>
-         </div>
+   .. grid-item-card:: 🧠 AI Agents
+      :link: agents/index
+      :class-header: bg-primary text-white
+      :shadow: lg
+      
+      **Conversational Intelligence**
+      
+      Build intelligent agents with memory, personality, and advanced reasoning capabilities.
+      
+      +++
+      
+      .. badge:: SimpleAgent
+         :color: primary
+         
+      .. badge:: ReactAgent  
+         :color: secondary
+         
+      .. badge:: RAG Systems
+         :color: info
 
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">🔧</div>
-               <div>
-                  <h3 class="agent-title">Tool Orchestration</h3>
-                  <p class="agent-subtitle">External integrations</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Connect agents to APIs, databases, search engines, and external services seamlessly.
-            </p>
-            <div class="agent-features">
-               <span class="feature-tag">Web APIs</span>
-               <span class="feature-tag">Databases</span>
-               <span class="feature-tag">Search Tools</span>
-            </div>
-            <a href="tools/index.html" class="agent-link">Browse Tools</a>
-         </div>
+   .. grid-item-card:: 🎮 Game Intelligence
+      :link: games/index
+      :class-header: bg-success text-white
+      :shadow: lg
+      
+      **Strategic Gameplay**
+      
+      Create AI opponents for Chess, Go, Poker, and other strategic games with advanced algorithms.
+      
+      +++
+      
+      .. badge:: Chess Engine
+         :color: success
+         
+      .. badge:: Board Games
+         :color: success
+         
+      .. badge:: AI Strategies
+         :color: success
 
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">🔄</div>
-               <div>
-                  <h3 class="agent-title">Dynamic MCP Integration</h3>
-                  <p class="agent-subtitle">1,960+ Servers • Hot-Reload • AI Discovery</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Intelligent MCP server discovery with hot-reload capabilities and HITL approval.
-               Access 1,960+ pre-indexed servers with AI-powered discovery.
-            </p>
-            <div class="agent-features">
-               <span class="feature-tag">Auto-Discovery</span>
-               <span class="feature-tag">Hot-Reload</span>
-               <span class="feature-tag">HITL Approval</span>
-            </div>
-            <a href="mcp/index.html" class="agent-link">MCP Integration</a>
-         </div>
+   .. grid-item-card:: 🔧 Tool Orchestration
+      :link: tools/index
+      :class-header: bg-info text-white
+      :shadow: lg
+      
+      **External Integrations**
+      
+      Connect agents to APIs, databases, search engines, and external services seamlessly.
+      
+      +++
+      
+      .. badge:: Web APIs
+         :color: info
+         
+      .. badge:: Databases
+         :color: info
+         
+      .. badge:: Search Tools
+         :color: info
 
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">📖</div>
-               <div>
-                  <h3 class="agent-title">API Reference</h3>
-                  <p class="agent-subtitle">Complete documentation</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Comprehensive API documentation with examples, guides, and implementation details.
-            </p>
-            <div class="agent-features">
-               <span class="feature-tag">Core API</span>
-               <span class="feature-tag">Agent Classes</span>
-               <span class="feature-tag">Tools API</span>
-            </div>
-            <a href="api/index.html" class="agent-link">View API Reference</a>
-         </div>
+   .. grid-item-card:: 🔄 Dynamic MCP Integration
+      :link: mcp/index
+      :class-header: bg-warning text-white
+      :shadow: lg
+      
+      **1,960+ Servers • Hot-Reload • AI Discovery**
+      
+      Intelligent MCP server discovery with hot-reload capabilities and HITL approval.
+      
+      +++
+      
+      .. badge:: Auto-Discovery
+         :color: warning
+         
+      .. badge:: Hot-Reload
+         :color: warning
+         
+      .. badge:: HITL Approval
+         :color: warning
 
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">📚</div>
-               <div>
-                  <h3 class="agent-title">Guides & Examples</h3>
-                  <p class="agent-subtitle">Learn by doing</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Step-by-step tutorials, implementation guides, and real-world examples to get you started.
-            </p>
-            <div class="agent-features">
-               <span class="feature-tag">Tutorials</span>
-               <span class="feature-tag">Examples</span>
-               <span class="feature-tag">Best Practices</span>
-            </div>
-            <a href="guides/index.html" class="agent-link">Learn More</a>
-         </div>
-      </div>
-   </div>
+   .. grid-item-card:: 📖 API Reference
+      :link: api/index
+      :class-header: bg-secondary text-white
+      :shadow: lg
+      
+      **Complete Documentation**
+      
+      Comprehensive API documentation with examples, guides, and implementation details.
+      
+      +++
+      
+      .. badge:: Core API
+         :color: secondary
+         
+      .. badge:: Agent Classes
+         :color: secondary
+         
+      .. badge:: Tools API
+         :color: secondary
+
+   .. grid-item-card:: 📚 Guides & Examples
+      :link: guides/index
+      :class-header: bg-dark text-white
+      :shadow: lg
+      
+      **Learn by Doing**
+      
+      Step-by-step tutorials, implementation guides, and real-world examples to get started.
+      
+      +++
+      
+      .. badge:: Tutorials
+         :color: dark
+         
+      .. badge:: Examples
+         :color: dark
+         
+      .. badge:: Best Practices
+         :color: dark
 
 .. toctree::
    :maxdepth: 2
    :caption: 📚 Getting Started
-   :hidden:
 
    introduction/index
 
 .. toctree::
    :maxdepth: 2
    :caption: 🤖 Agent Showcase
-   :hidden:
 
    agents/index
    agents/simple/index
@@ -195,7 +184,6 @@ Professional AI agent framework for Python developers.
 .. toctree::
    :maxdepth: 2
    :caption: 🎮 Games
-   :hidden:
 
    games/index
    games/chess/index
@@ -203,7 +191,6 @@ Professional AI agent framework for Python developers.
 .. toctree::
    :maxdepth: 2
    :caption: 🔧 Tools
-   :hidden:
 
    tools/index
    tools/search/index
@@ -211,7 +198,6 @@ Professional AI agent framework for Python developers.
 .. toctree::
    :maxdepth: 2
    :caption: 📡 MCP Integration
-   :hidden:
 
    mcp/index
    mcp/dynamic-mcp
@@ -221,14 +207,12 @@ Professional AI agent framework for Python developers.
 .. toctree::
    :maxdepth: 2
    :caption: 📖 API Reference
-   :hidden:
 
    api/index
 
 .. toctree::
    :maxdepth: 2
    :caption: 🧑‍💻 Guides & Examples
-   :hidden:
 
    gallery
    guides/index

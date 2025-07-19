@@ -1,2 +1,2 @@
 // Navigation fixes JavaScript - placeholder
-console.log('Navigation fixes loaded');
+console.log("Navigation fixes loaded");

@@ -1,74 +1,77 @@
 /**
  * Contextual Navigation for Furo Theme
- * 
+ *
  * Enhances navigation to show contextual view when on module pages
  */
 
-(function() {
-    'use strict';
+(function () {
+  "use strict";
 
-    function getCurrentPackage() {
-        const pathname = window.location.pathname;
-        // Match new pattern like /api/haive/core/engine/base.html
-        let match = pathname.match(/\/api\/haive\/([^\/]+)\//);
-        if (match) {
-            return match[1]; // Returns 'core', 'agents', etc.
-        }
-        // Fallback for generated paths
-        match = pathname.match(/\/api\/generated\/(haive\.([^\.]+))/);
-        return match ? match[2] : null;
+  function getCurrentPackage() {
+    const pathname = window.location.pathname;
+    // Match new pattern like /api/haive/core/engine/base.html
+    let match = pathname.match(/\/api\/haive\/([^\/]+)\//);
+    if (match) {
+      return match[1]; // Returns 'core', 'agents', etc.
     }
+    // Fallback for generated paths
+    match = pathname.match(/\/api\/generated\/(haive\.([^\.]+))/);
+    return match ? match[2] : null;
+  }
 
-    function enhanceNavigation() {
-        const currentPackage = getCurrentPackage();
-        if (!currentPackage) return;
+  function enhanceNavigation() {
+    const currentPackage = getCurrentPackage();
+    if (!currentPackage) return;
 
-        // Collapse other packages, expand current package
-        collapseOtherPackages(currentPackage);
-        
-        // Add visual indicators
-        highlightCurrentPackage(currentPackage);
-        
-        // Add breadcrumb navigation
-        addBreadcrumb(currentPackage);
-    }
+    // Collapse other packages, expand current package
+    collapseOtherPackages(currentPackage);
 
-    function collapseOtherPackages(currentPackage) {
-        // Map package names to their titles in new structure
-        const packageMap = {
-            'agents': 'Agents',
-            'core': 'Core',
-            'tools': 'Tools',
-            'games': 'Games',
-            'dataflow': 'Dataflow',
-            'prebuilt': 'Prebuilt',
-            'mcp': 'MCP'
-        };
+    // Add visual indicators
+    highlightCurrentPackage(currentPackage);
 
-        // Find all package sections
-        Object.entries(packageMap).forEach(([pkg, title]) => {
-            const links = document.querySelectorAll('a.reference.internal');
-            for (const link of links) {
-                // Look for new structure pattern
-                if ((link.textContent === `Haive ${title}` || link.textContent === title) && 
-                    link.href.includes(`/haive/${pkg}/`)) {
-                    const section = link.closest('li.has-children');
-                    if (section) {
-                        const checkbox = section.querySelector('input[type="checkbox"]');
-                        if (checkbox) {
-                            // Expand current package, collapse others
-                            checkbox.checked = (pkg === currentPackage);
-                        }
-                    }
-                    break;
-                }
+    // Add breadcrumb navigation
+    addBreadcrumb(currentPackage);
+  }
+
+  function collapseOtherPackages(currentPackage) {
+    // Map package names to their titles in new structure
+    const packageMap = {
+      agents: "Agents",
+      core: "Core",
+      tools: "Tools",
+      games: "Games",
+      dataflow: "Dataflow",
+      prebuilt: "Prebuilt",
+      mcp: "MCP",
+    };
+
+    // Find all package sections
+    Object.entries(packageMap).forEach(([pkg, title]) => {
+      const links = document.querySelectorAll("a.reference.internal");
+      for (const link of links) {
+        // Look for new structure pattern
+        if (
+          (link.textContent === `Haive ${title}` ||
+            link.textContent === title) &&
+          link.href.includes(`/haive/${pkg}/`)
+        ) {
+          const section = link.closest("li.has-children");
+          if (section) {
+            const checkbox = section.querySelector('input[type="checkbox"]');
+            if (checkbox) {
+              // Expand current package, collapse others
+              checkbox.checked = pkg === currentPackage;
             }
-        });
-    }
+          }
+          break;
+        }
+      }
+    });
+  }
 
-    function highlightCurrentPackage(currentPackage) {
-        const style = document.createElement('style');
-        style.textContent = `
+  function highlightCurrentPackage(currentPackage) {
+    const style = document.createElement("style");
+    style.textContent = `
             /* Highlight current package section */
             .sidebar-tree .toctree-l2.current > a {
                 font-weight: 600;
@@ -87,16 +90,16 @@
                 margin-left: -3px;
             }
         `;
-        document.head.appendChild(style);
-    }
+    document.head.appendChild(style);
+  }
 
-    function addBreadcrumb(currentPackage) {
-        const mainContent = document.querySelector('#furo-main-content');
-        if (!mainContent) return;
+  function addBreadcrumb(currentPackage) {
+    const mainContent = document.querySelector("#furo-main-content");
+    if (!mainContent) return;
 
-        const breadcrumb = document.createElement('nav');
-        breadcrumb.className = 'module-breadcrumb';
-        breadcrumb.innerHTML = `
+    const breadcrumb = document.createElement("nav");
+    breadcrumb.className = "module-breadcrumb";
+    breadcrumb.innerHTML = `
             <a href="../../index.html">API Reference</a>
             <span class="separator">›</span>
             <a href="../../haive/index.html">Haive</a>
@@ -106,12 +109,12 @@
             <span class="current">${getCurrentModuleName()}</span>
         `;
 
-        // Insert breadcrumb at the top of content
-        mainContent.insertBefore(breadcrumb, mainContent.firstChild);
+    // Insert breadcrumb at the top of content
+    mainContent.insertBefore(breadcrumb, mainContent.firstChild);
 
-        // Add breadcrumb styles
-        const style = document.createElement('style');
-        style.textContent = `
+    // Add breadcrumb styles
+    const style = document.createElement("style");
+    style.textContent = `
             .module-breadcrumb {
                 padding: 0.5rem 0;
                 margin-bottom: 1rem;
@@ -139,32 +142,34 @@
                 color: var(--color-foreground-primary);
             }
         `;
-        document.head.appendChild(style);
+    document.head.appendChild(style);
+  }
+
+  function getCurrentModuleName() {
+    const title = document.querySelector("h1");
+    return title ? title.textContent : "Module";
+  }
+
+  function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  function init() {
+    // Only run on API module pages
+    if (
+      !window.location.pathname.includes("/api/haive/") &&
+      !window.location.pathname.includes("/api/generated/")
+    ) {
+      return;
     }
 
-    function getCurrentModuleName() {
-        const title = document.querySelector('h1');
-        return title ? title.textContent : 'Module';
-    }
+    enhanceNavigation();
+  }
 
-    function capitalize(str) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
-    }
-
-    function init() {
-        // Only run on API module pages
-        if (!window.location.pathname.includes('/api/haive/') && 
-            !window.location.pathname.includes('/api/generated/')) {
-            return;
-        }
-
-        enhanceNavigation();
-    }
-
-    // Initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
+  // Initialize when DOM is ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
 })();

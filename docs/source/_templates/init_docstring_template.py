@@ -13,7 +13,7 @@ Example:
     Basic usage::
 
         from haive.module import MainClass
-        
+
         instance = MainClass()
         result = instance.process(data)
 """
@@ -39,11 +39,11 @@ Example:
     Basic usage example::
 
         from haive.module import Component1, Component2
-        
+
         # Initialize components
         comp1 = Component1(config={'key': 'value'})
         comp2 = Component2()
-        
+
         # Process data
         intermediate = comp1.process(input_data)
         result = comp2.transform(intermediate)
@@ -52,13 +52,13 @@ Example:
 
         from haive.module import Pipeline
         from haive.module.config import PipelineConfig
-        
+
         # Configure pipeline
         config = PipelineConfig(
             steps=['preprocess', 'analyze', 'postprocess'],
             parallel=True
         )
-        
+
         # Create and run pipeline
         pipeline = Pipeline(config)
         results = pipeline.run(data_batch)
@@ -104,13 +104,13 @@ The package follows these design principles:
 
 Quick Start:
     Install the package::
-    
+
         pip install haive-{package}
-    
+
     Basic usage::
-    
+
         from haive.{package} import MainComponent
-        
+
         component = MainComponent()
         result = component.execute(task)
 

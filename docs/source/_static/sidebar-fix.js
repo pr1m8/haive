@@ -1,2 +1,2 @@
 // Sidebar fix JavaScript - placeholder
-console.log('Sidebar fix loaded');
+console.log("Sidebar fix loaded");
