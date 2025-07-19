@@ -9,14 +9,17 @@
 ## Key Components
 
 ### Classes
+
 - **{ClassName}**: {Brief description of the class and its purpose}
 - **{ClassName}**: {Brief description of the class and its purpose}
 
 ### Functions
+
 - **{function_name}()**: {Brief description of what the function does}
 - **{function_name}()**: {Brief description of what the function does}
 
 ### Submodules
+
 - **{submodule}**: {Brief description of the submodule}
 - **{submodule}**: {Brief description of the submodule}
 
@@ -63,10 +66,12 @@ result = component.process(data)
 {Describe any configuration options, environment variables, or settings that affect this module}
 
 ### Environment Variables
+
 - `HAIVE_{MODULE}_CONFIG`: {Description}
 - `HAIVE_{MODULE}_DEBUG`: {Description}
 
 ### Configuration Options
+
 ```python
 {
     "option1": "default_value",  # Description
@@ -81,10 +86,11 @@ For detailed API documentation, see the [API Reference](../api/{module}/index.rs
 ### Quick Reference
 
 #### {ClassName}
+
 ```python
 class {ClassName}({BaseClass}):
     """Brief description."""
-    
+
     def method1(self, param1: Type) -> ReturnType:
         """Brief description of method."""
         pass
@@ -99,9 +105,11 @@ class {ClassName}({BaseClass}):
 ## Common Issues and Solutions
 
 ### Issue: {Common issue description}
+
 **Solution**: {How to resolve the issue}
 
 ### Issue: {Common issue description}
+
 **Solution**: {How to resolve the issue}
 
 ## See Also

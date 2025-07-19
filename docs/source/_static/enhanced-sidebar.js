@@ -1,2 +1,2 @@
 // Enhanced sidebar JavaScript - placeholder
-console.log('Enhanced sidebar loaded');
+console.log("Enhanced sidebar loaded");

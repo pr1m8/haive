@@ -212,6 +212,10 @@ ruff = "^0.11.6"
 pyright = "^1.1.399"
 sourcery = "^1.35.0"
 coverage = "^7.8.0"
+# Documentation automation tools for destroying 20,374 issues 🔥
+interrogate = "^1.5.0"          # Find missing docstrings
+pydocstyle = "^6.3.0"           # Docstring style enforcement  
+darglint = "^1.8.1"             # Docstring-code sync validation
 mimesis = "^18.0.0"
 factory-boy = "^3.3.3"
 hypothesis = "^6.131.6"
@@ -247,6 +251,9 @@ reindent = "^3.5.1"
 rstcheck = "^6.2.5"
 tomli = "^2.2.1"
 allure-pytest = "^2.14.3"
+pipdeptree = "^2.27.0"
+autopep8 = "^2.3.2"
+pycodestyle = "^2.14.0"
 
 
 [tool.poetry.group.docs.dependencies]

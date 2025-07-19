@@ -185,15 +185,9 @@ html_short_title = "Haive"
 # Static files
 html_static_path = ["_static"]
 
-# Enhanced CSS and JS for Furo with showcase styling
+# Minimal CSS - Streamlined design system
 html_css_files = [
-    "haive-design-system.css",  # 🎨 PRIORITY: Professional design system foundation - MUST LOAD FIRST
-    "custom.css",
-    "haive-enhanced.css",  # Enhanced styling with gradients and animations
-    "furo-showcase.css",  # Showcase styling for agents and games
-    "showcase.css",  # Main showcase styling
-    "api-showcase.css",  # API documentation showcase
-    "agent-demo-visualizations.css",  # Agent demo visualization styles
+    "haive-minimal.css",  # 🎨 Streamlined design system with Sphinx Design integration
 ]
 
 html_js_files = [
@@ -289,6 +283,17 @@ html_theme_options = {
     "source_repository": "https://github.com/will-astley/haive",
     "source_branch": "main",
     "source_directory": "docs/source/",
+}
+
+# === SIDEBAR CONFIGURATION FOR FURO ===
+html_sidebars = {
+    "**": [
+        "sidebar/brand.html",
+        "sidebar/search.html",
+        "sidebar/scroll-start.html",
+        "sidebar/navigation.html",
+        "sidebar/scroll-end.html",
+    ],
 }
 
 # ==============================================================================

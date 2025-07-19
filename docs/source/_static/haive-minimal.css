@@ -1,0 +1,184 @@
+/**
+ * Haive Minimal CSS - Streamlined Design System
+ * Version: 2.0 - Modernized with Sphinx Design
+ * Purpose: Minimal overrides for Furo + Sphinx Design integration
+ */
+
+/* ==========================================================================
+   MINIMAL DESIGN TOKENS (Use Furo's CSS variables)
+   ========================================================================== */
+
+:root {
+  /* Haive brand colors - integrate with Furo */
+  --haive-primary: #0066cc;
+  --haive-primary-light: #4da3ff;
+  --haive-primary-dark: #004085;
+  --haive-secondary: #7c3aed;
+  --haive-accent: #10b981;
+
+  /* Agent type colors */
+  --agent-simple: var(--haive-primary);
+  --agent-react: var(--haive-secondary);
+  --agent-rag: var(--haive-accent);
+  --agent-game: #f59e0b;
+
+  /* Status colors - use bootstrap compatible */
+  --status-stable: #10b981;
+  --status-beta: #f59e0b;
+  --status-experimental: #ef4444;
+}
+
+/* ==========================================================================
+   FURO INTEGRATION OVERRIDES (Minimal)
+   ========================================================================== */
+
+/* Enhance Furo headings with brand colors */
+.furo-content h1 {
+  color: var(--haive-primary);
+  font-weight: 600;
+}
+
+.furo-content h2 {
+  color: var(--haive-primary-dark);
+  font-weight: 500;
+}
+
+/* Logo integration */
+.sidebar-brand-text {
+  color: var(--haive-primary) !important;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   SPHINX DESIGN CUSTOMIZATIONS (Minimal)
+   ========================================================================== */
+
+/* Card enhancements */
+.sd-card {
+  border-radius: 12px !important;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.sd-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Badge customizations for agent types */
+.sd-badge {
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+/* Grid spacing override */
+.sd-grid {
+  margin-bottom: 2rem;
+}
+
+/* ==========================================================================
+   COMPONENT SPECIFIC (Minimal)
+   ========================================================================== */
+
+/* Hero section - keep minimal styling */
+.hero-section {
+  text-align: center;
+  padding: 3rem 0;
+  background: linear-gradient(135deg, #f8faff 0%, #e6f0ff 100%);
+  border-radius: 12px;
+  margin-bottom: 3rem;
+}
+
+/* Status indicators */
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.status-indicator.stable {
+  color: var(--status-stable);
+}
+.status-indicator.beta {
+  color: var(--status-beta);
+}
+.status-indicator.experimental {
+  color: var(--status-experimental);
+}
+
+/* Code block enhancements (minimal) */
+.highlight {
+  border-radius: 8px;
+}
+
+/* ==========================================================================
+   RESPONSIVE ADJUSTMENTS (Let Sphinx Design handle most)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 2rem 1rem;
+  }
+
+  .sd-card {
+    margin-bottom: 1rem;
+  }
+}
+
+/* ==========================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+/* Focus states */
+.sd-card:focus-within {
+  outline: 2px solid var(--haive-primary);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .sd-card {
+    border: 2px solid var(--color-foreground-primary);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .sd-card {
+    transition: none;
+  }
+
+  .sd-card:hover {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   DARK MODE INTEGRATION (Furo handles most)
+   ========================================================================== */
+
+[data-theme="dark"] {
+  /* Override specific elements for dark mode */
+  .hero-section {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  }
+}
+
+/* ==========================================================================
+   PRINT STYLES
+   ========================================================================== */
+
+@media print {
+  .sd-card {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #ccc;
+  }
+
+  .hero-section {
+    background: none !important;
+  }
+}
