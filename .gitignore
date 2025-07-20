@@ -620,3 +620,4 @@ notebooks/*.ipynb
 
 # Examples and testing
 examples/multi_agent_showcase.py
+.venv-py312-backup/
