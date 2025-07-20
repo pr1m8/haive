@@ -18,7 +18,7 @@ class DocstringGenerator:
         self.generated_count = 0
         self.skipped_count = 0
 
-    def analyze_function(self, node: ast.FunctionDef) -> Dict[str, Any]:
+    def analyze_function(self, node: ast.FunctionDef) -> dict[str, Any]:
         """Analyze a function node to extract information for docstring."""
         info = {
             "name": node.name,
@@ -70,16 +70,16 @@ class DocstringGenerator:
                     info["raises"].add(child.exc.id)
 
             # Check for yield
-            if isinstance(child, (ast.Yield, ast.YieldFrom)):
+            if isinstance(child, ast.Yield | ast.YieldFrom):
                 info["has_yield"] = True
 
             # Simple complexity metric
-            if isinstance(child, (ast.If, ast.For, ast.While, ast.Try)):
+            if isinstance(child, ast.If | ast.For | ast.While | ast.Try):
                 info["complexity"] += 1
 
         return info
 
-    def generate_function_docstring(self, func_info: Dict[str, Any]) -> str:
+    def generate_function_docstring(self, func_info: dict[str, Any]) -> str:
         """Generate a docstring for a function based on analysis."""
         lines = []
 
@@ -133,14 +133,14 @@ class DocstringGenerator:
         lines.append('"""')
         return "\n".join(lines)
 
-    def _generate_summary(self, func_info: Dict[str, Any]) -> str:
+    def _generate_summary(self, func_info: dict[str, Any]) -> str:
         """Generate a one-line summary for a function."""
         name = func_info["name"]
 
         # Common patterns
         if name.startswith("get_"):
             return f"Get {name[4:].replace('_', ' ')}."
-        elif name.startswith("set_"):
+        if name.startswith("set_"):
             return f"Set {name[4:].replace('_', ' ')}."
         elif name.startswith("is_"):
             return f"Check if {name[3:].replace('_', ' ')}."
@@ -171,18 +171,18 @@ class DocstringGenerator:
         else:
             return f"{name.replace('_', ' ').capitalize()}."
 
-    def _generate_extended_description(self, func_info: Dict[str, Any]) -> str:
+    def _generate_extended_description(self, func_info: dict[str, Any]) -> str:
         """Generate extended description for complex functions."""
         if func_info["is_async"]:
             return "This is an asynchronous function that should be awaited."
-        elif func_info["has_yield"]:
+        if func_info["has_yield"]:
             return "This is a generator function that yields values lazily."
         elif func_info["complexity"] > 5:
             return "This function implements complex logic with multiple conditional branches."
         else:
             return f"This function processes {len(func_info['args'])} parameters to produce a result."
 
-    def _generate_arg_description(self, arg: Dict[str, Any]) -> str:
+    def _generate_arg_description(self, arg: dict[str, Any]) -> str:
         """Generate description for an argument."""
         name = arg["name"]
         arg_type = arg["type"]
@@ -191,7 +191,7 @@ class DocstringGenerator:
         if arg_type:
             if "str" in arg_type:
                 return f"The {name.replace('_', ' ')} string."
-            elif "int" in arg_type:
+            if "int" in arg_type:
                 return f"The {name.replace('_', ' ')} integer value."
             elif "float" in arg_type:
                 return f"The {name.replace('_', ' ')} floating point value."
@@ -207,7 +207,7 @@ class DocstringGenerator:
         # Name-based descriptions
         if name == "config":
             return "Configuration dictionary."
-        elif name == "data":
+        if name == "data":
             return "Input data to process."
         elif name == "context":
             return "Execution context."
@@ -222,7 +222,7 @@ class DocstringGenerator:
         else:
             return f"The {name.replace('_', ' ')}."
 
-    def _generate_returns_description(self, func_info: Dict[str, Any]) -> str:
+    def _generate_returns_description(self, func_info: dict[str, Any]) -> str:
         """Generate description for return value."""
         returns_type = func_info["returns"]
         name = func_info["name"]
@@ -230,7 +230,7 @@ class DocstringGenerator:
         if returns_type:
             if returns_type == "None":
                 return "None"
-            elif returns_type == "bool":
+            if returns_type == "bool":
                 return "True if successful, False otherwise."
             elif returns_type == "str":
                 return "The resulting string."
@@ -248,11 +248,11 @@ class DocstringGenerator:
                 return f"The {returns_type} result."
 
         # Name-based inference
-        if name.startswith("is_") or name.startswith("has_"):
+        if name.startswith(("is_", "has_")):
             return "True if condition is met, False otherwise."
-        elif name.startswith("get_") or name.startswith("find_"):
+        if name.startswith(("get_", "find_")):
             return "The requested value or None if not found."
-        elif name.startswith("create_") or name.startswith("build_"):
+        elif name.startswith(("create_", "build_")):
             return "The newly created instance."
         elif func_info["is_property"]:
             return f"The {name.replace('_', ' ')} value."
@@ -276,7 +276,7 @@ class DocstringGenerator:
 
         return common_exceptions.get(exc_name, f"If {exc_name} occurs.")
 
-    def _generate_example(self, func_info: Dict[str, Any]) -> str:
+    def _generate_example(self, func_info: dict[str, Any]) -> str:
         """Generate a simple example for a function."""
         name = func_info["name"]
         args = func_info["args"]
@@ -304,7 +304,7 @@ class DocstringGenerator:
 
         return example
 
-    def analyze_class(self, node: ast.ClassDef) -> Dict[str, Any]:
+    def analyze_class(self, node: ast.ClassDef) -> dict[str, Any]:
         """Analyze a class node to extract information."""
         info = {
             "name": node.name,
@@ -334,7 +334,7 @@ class DocstringGenerator:
 
         return info
 
-    def generate_class_docstring(self, class_info: Dict[str, Any]) -> str:
+    def generate_class_docstring(self, class_info: dict[str, Any]) -> str:
         """Generate a docstring for a class."""
         lines = []
         name = class_info["name"]
@@ -389,7 +389,7 @@ class DocstringGenerator:
         if module_name == "__init__":
             parent = file_path.parent.name
             return f'"""Package initialization for {parent}."""'
-        elif module_name == "config":
+        if module_name == "config":
             return '"""Configuration management module."""'
         elif module_name == "utils":
             return '"""Utility functions and helpers."""'
@@ -405,7 +405,7 @@ class DocstringGenerator:
     def process_file(self, file_path: Path, dry_run: bool = False) -> bool:
         """Process a single file to add docstrings."""
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, encoding="utf-8") as f:
                 content = f.read()
 
             # Parse AST
@@ -438,15 +438,14 @@ class DocstringGenerator:
                         )
                         self.generated_count += 1
 
-                elif isinstance(node, ast.ClassDef):
-                    if not ast.get_docstring(node):
-                        class_info = self.analyze_class(node)
-                        docstring = self.generate_class_docstring(class_info)
-                        indent = "    " * (node.col_offset // 4)
-                        modifications.append(
-                            (node.lineno, node.col_offset, f"{indent}{docstring}")
-                        )
-                        self.generated_count += 1
+                elif isinstance(node, ast.ClassDef) and not ast.get_docstring(node):
+                    class_info = self.analyze_class(node)
+                    docstring = self.generate_class_docstring(class_info)
+                    indent = "    " * (node.col_offset // 4)
+                    modifications.append(
+                        (node.lineno, node.col_offset, f"{indent}{docstring}")
+                    )
+                    self.generated_count += 1
 
             if modifications and not dry_run:
                 # Apply modifications
@@ -455,7 +454,7 @@ class DocstringGenerator:
                 # Sort by line number (descending) to avoid offset issues
                 modifications.sort(key=lambda x: x[0], reverse=True)
 
-                for line_no, col_offset, docstring in modifications:
+                for line_no, _col_offset, docstring in modifications:
                     if line_no == 0:
                         # Module docstring
                         lines.insert(0, docstring)
@@ -473,7 +472,6 @@ class DocstringGenerator:
             return bool(modifications)
 
         except Exception as e:
-            print(f"Error processing {file_path}: {e}")
             return False
 
 
@@ -494,17 +492,14 @@ def main():
 
     if target.is_file():
         if generator.process_file(target, args.dry_run):
-            print(f"✅ Processed {target}")
+            pass")
     elif target.is_dir():
         files = list(target.rglob("*.py"))
         for file in files:
             if "__pycache__" not in str(file):
                 if generator.process_file(file, args.dry_run):
-                    print(f"✅ Processed {file}")
+                    pass")
 
-    print(f"\n📊 Summary:")
-    print(f"   Generated: {generator.generated_count} docstrings")
-    print(f"   Skipped: {generator.skipped_count} (already had docstrings)")
 
 
 if __name__ == "__main__":

@@ -50,19 +50,18 @@ class TypeHintFixer:
             modified_content = self._apply_fixes(original_content, fixes)
 
             if dry_run:
-                for fix in fixes[:3]:  # Show first 3
+                for _fix in fixes[:3]:  # Show first 3
                     pass
                 return True
             # Write the modified content
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(modified_content)
 
-            print(f"✅ Fixed {len(fixes)} functions in {file_path}")
             self.fixes_applied += len(fixes)
             self.files_modified += 1
             return True
 
-        except Exception as e:
+        except Exception:
             return False
 
     def _identify_fixes(self, tree: ast.AST, content: str) -> list[dict]:
@@ -80,7 +79,7 @@ class TypeHintFixer:
 
     def _analyze_function_for_fixes(
         self, node: ast.FunctionDef, lines: list[str]
-    ) -> Dict | None:
+    ) -> dict | None:
         """Analyze a function to determine what fixes are needed."""
         # Skip private methods (except __init__)
         if node.name.startswith("_") and node.name not in ["__init__", "__call__"]:
@@ -185,7 +184,7 @@ class TypeHintFixer:
             return "str"
         if param_name.endswith("_list"):
             return "List[Any]"
-        elif param_name.endswith("_dict"):
+        if param_name.endswith("_dict"):
             return "Dict[str, Any]"
         elif param_name.endswith("_count"):
             return "int"
@@ -236,7 +235,7 @@ class TypeHintFixer:
             return "bool"
         if func_name.startswith(("get_", "find_", "search_")):
             return "Optional[Any]"
-        elif func_name.startswith(("create_", "build_", "make_")):
+        if func_name.startswith(("create_", "build_", "make_")):
             return "Any"
         elif func_name.startswith(("list_", "all_")):
             return "List[Any]"
@@ -252,8 +251,7 @@ class TypeHintFixer:
             if "None" in return_types and len(return_types) == 2:
                 other_type = next(t for t in return_types if t != "None")
                 return f"Optional[{other_type}]"
-            else:
-                return "Any"
+            return "Any"
 
         # Default for functions without explicit returns
         return "None" if not has_explicit_return else "Any"
