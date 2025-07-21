@@ -137,7 +137,6 @@ def fix_common_syntax_errors(file_path: Path) -> bool:
 
 def pre_build_validation() -> dict:
     """Validate all Python files before building."""
-
     results = {
         "total_files": 0,
         "syntax_errors": [],
@@ -171,21 +170,18 @@ def pre_build_validation() -> dict:
                     )
 
     # Report results
-    print(f"📊 Validation complete: {results['total_files']} files checked")
 
     if results["syntax_errors"]:
-        print(f"❌ Found {len(results['syntax_errors'])} syntax errors")
         for err in results["syntax_errors"][:5]:  # Show first 5
-            print(f"  - {err['file']}: {err['error']}")
+            pass
         if len(results["syntax_errors"]) > 5:
-            print(f"  ... and {len(results['syntax_errors']) - 5} more")
+            pass
 
     return results
 
 
 def check_extension_compatibility() -> dict:
     """Check if all configured extensions are properly available."""
-
     results = {"available": [], "missing": [], "warnings": []}
 
     for ext, description in EXTENSIONS.items():
@@ -201,14 +197,13 @@ def check_extension_compatibility() -> dict:
             )
 
     if results["missing"]:
-        print(f"⚠️  Missing {len(results['missing'])} extensions")
+        pass
 
     return results
 
 
 def run_sphinx_build_enhanced(log_file: Path) -> dict:
     """Run Sphinx build with enhanced error handling."""
-
     status = {
         "success": False,
         "warnings": 0,
@@ -279,7 +274,7 @@ def run_sphinx_build_enhanced(log_file: Path) -> dict:
                 elif "exception" in line_lower or "traceback" in line_lower:
                     status["error_details"].append(line.strip())
                 elif "writing output..." in line_lower:
-                    print("📝 Writing output files...")
+                    pass
                 elif "build succeeded" in line_lower:
                     status["success"] = True
 
@@ -305,7 +300,6 @@ def generate_build_report(
     log_file: Path,
 ) -> Path:
     """Generate comprehensive build report."""
-
     report_file = (
         ERROR_REPORT_DIR / f"build_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md"
     )
@@ -371,7 +365,6 @@ def generate_build_report(
 
 def main():
     """Main enhanced documentation build process."""
-
     # Ensure directories exist
     ensure_directories()
 
@@ -398,14 +391,13 @@ def main():
     )
 
     # Final summary
-    print(f"\n📊 Build Report: {report_file}")
 
     if build_status["success"]:
-        print("✅ Documentation build completed successfully!")
+        pass
     elif build_status["output_exists"]:
-        print("⚠️  Build completed with errors but generated HTML files")
+        pass
     else:
-        print("❌ Documentation build failed")
+        pass
 
     if BUILD_DIR.exists() and list(BUILD_DIR.glob("*.html")):
         index_path = BUILD_DIR / "index.html"

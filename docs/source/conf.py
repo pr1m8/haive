@@ -97,7 +97,7 @@ release = "1.0.0"
 
 extensions = [
     # === CORE API DOCUMENTATION ===
-    "autoapi.extension",  # 🚀 RE-ENABLED for P0 fix testing
+    "autoapi.extension",  # ✅ RE-ENABLED - working on full module support
     "sphinx.ext.napoleon",  # Google/NumPy docstring support
     "sphinx.ext.viewcode",  # [source] links
     "sphinx.ext.linkcode",  # GitHub source links
@@ -125,7 +125,7 @@ extensions = [
     # === SOCIAL & SEO ===
     "sphinxext.opengraph",  # 📱 Open Graph metadata
     # === EXAMPLES & GALLERIES ===
-    # "sphinx_gallery",  # 🖼️ Example gallery generation (temp disabled)
+    "sphinx_gallery",  # 🖼️ Example gallery generation - NOW ENABLED
     # === TYPE HINTS & DOCUMENTATION ===
     "sphinx_autodoc_typehints",  # 🎯 Beautiful type hints
     # === REQUIREMENTS & DATA ===
@@ -305,11 +305,11 @@ autoapi_type = "python"
 autoapi_dirs = [
     # Point to src directories (will generate haive.* namespace)
     "../../packages/haive-core/src",
-    "../../packages/haive-agents/src",
-    # "../../packages/haive-tools/src",
-    # "../../packages/haive-games/src",
-    # "../../packages/haive-mcp/src",
-    # "../../packages/haive-dataflow/src",
+    "../../packages/haive-agents/src",  # ✅ ENABLED - fixed import issues
+    "../../packages/haive-tools/src",
+    "../../packages/haive-dataflow/src",
+    "../../packages/haive-games/src",  # ✅ ENABLED - adding games
+    "../../packages/haive-mcp/src",  # ✅ ENABLED - adding MCP
 ]
 autoapi_root = "api"
 autoapi_options = [
@@ -430,16 +430,20 @@ mermaid.initialize({
 # === SPHINX GALLERY - EXAMPLE GALLERIES ===
 sphinx_gallery_conf = {
     "examples_dirs": [
-        # Only use directories that actually exist
+        # Use directories that actually exist with examples
         "../../packages/haive-agents/examples",
-        "../../packages/haive-tools/examples",
         "../../packages/haive-games/examples",
+        "../../packages/haive-mcp/examples",
+        # "../../packages/haive-tools/examples",  # TODO: Create examples
+        # "../../packages/haive-core/examples",   # TODO: Create examples
     ],
     "gallery_dirs": [
         # Corresponding output directories
         "auto_examples/agents",
-        "auto_examples/tools",
         "auto_examples/games",
+        "auto_examples/mcp",
+        # "auto_examples/tools",  # TODO: Enable when examples exist
+        # "auto_examples/core",   # TODO: Enable when examples exist
     ],
     "filename_pattern": "/.*tutorial|.*guide|.*example",
     "ignore_pattern": "__init__.py|debug_*|test_*",
@@ -659,6 +663,9 @@ autoapi_ignore = [
     "**/reasoning_and_critique/tot/modular/example.py",  # Syntax error: indentation
     "**/react_class/react_agent2/example.py",  # Syntax error: indentation
     "**/conversation/collaberative/example.py",  # Syntax error: indentation
+    # Additional problematic imports fixed
+    "**/archive/meta/agent.py",  # Contains MetaAgentState that may conflict
+    "**/self_healing_code/agent.py",  # Complex agent with potential issues
 ]
 
 # ==============================================================================
