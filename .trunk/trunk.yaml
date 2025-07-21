@@ -45,7 +45,6 @@ lint:
         - ".history/**"
         - ".venv/**"
         - "node_modules/**"
-        - "packages/**"
         - "projects/**"
         - "haive-core/**"
         - "data/**"
@@ -55,6 +54,10 @@ lint:
         - "dist/**"
         - "build/**"
         - "*.egg-info/**"
+        # Allow packages to be linted now
+        - "packages/**/test_*.py"
+        - "packages/**/*test*.py"
+        - "packages/**/.venv/**"
 
 actions:
   disabled:
