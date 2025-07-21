@@ -631,6 +631,10 @@ autoapi_ignore = [
     "**/litellm_cli.py",
     "**/aug_llms.py",
     "**/example*.py",
+    "**/.ipynb_checkpoints/**",  # Jupyter checkpoint files
+    "**/checkpoint*.py",  # Checkpoint files
+    "**/containers_tilebag/**",  # Problematic container files
+    "**/spaces_and_parentheses/**",  # Files with invalid names
     "**/logger.py",  # Ignore logger modules
     "**/*logger*",  # Ignore anything with logger in name
     "**/examples/**",  # Ignore examples

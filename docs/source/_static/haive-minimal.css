@@ -109,9 +109,173 @@
   color: var(--status-experimental);
 }
 
-/* Code block enhancements (minimal) */
+/* ==========================================================================
+   CRITICAL VISUAL FIXES - PHASE 1
+   ========================================================================== */
+
+/* 1. FIX DUPLICATE COPY BUTTONS - Only show one copy button per code block */
+.highlight .copy-button:not(:first-of-type) {
+  display: none !important;
+}
+
+/* Ensure copy button container only shows one button */
+.code-block-container .copy-button + .copy-button {
+  display: none !important;
+}
+
+/* 2. REMOVE UGLY ANNOUNCEMENT BANNER */
+.furo-announcement {
+  display: none !important;
+}
+
+/* 3. FIX HEADER REPETITION - Prevent duplicate titles */
+.hero-section h1 + h1,
+.hero-section h2 + h2 {
+  display: none !important;
+}
+
+/* Remove redundant robot emojis after first occurrence */
+h1:has(~ h1:contains("🤖")),
+h2:has(~ h2:contains("🤖")) {
+  display: none !important;
+}
+
+/* 4. FIX DUPLICATE CODE BLOCKS */
+.highlight + .highlight {
+  display: none !important;
+}
+
+/* Hide duplicate code content */
+.code-block-container + .code-block-container {
+  display: none !important;
+}
+
+/* 5. IMPROVE SIDEBAR NAVIGATION SPACING */
+.sidebar-tree {
+  padding: 1rem 0;
+}
+
+.sidebar-tree li {
+  margin: 0.25rem 0;
+  padding: 0.125rem 0;
+}
+
+.sidebar-tree a {
+  padding: 0.5rem 1rem;
+  display: block;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar-tree a:hover {
+  background-color: var(--color-sidebar-item-background--hover);
+}
+
+/* Fix navigation alignment issues */
+.toctree-l1 > a {
+  font-weight: 500;
+  padding-left: 1rem;
+}
+
+.toctree-l2 > a {
+  padding-left: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.toctree-l3 > a {
+  padding-left: 2rem;
+  font-size: 0.85rem;
+}
+
+/* 6. IMPROVE TYPOGRAPHY AND CONSISTENCY */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.3;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 2.25rem;
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 500;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+/* 7. BETTER CODE BLOCK STYLING */
 .highlight {
   border-radius: 8px;
+  margin: 1.5rem 0;
+  border: 1px solid var(--color-background-border);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Single, well-styled copy button */
+.highlight .copy-button {
+  background: var(--haive-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.highlight .copy-button:hover {
+  background: var(--haive-primary-dark);
+}
+
+/* 8. CONSISTENT CARD STYLING */
+.sd-card {
+  border: 1px solid var(--color-background-border);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.sd-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* 9. CLEAN UP SPACING */
+.furo-content {
+  line-height: 1.6;
+}
+
+p {
+  margin: 1rem 0;
+}
+
+/* Remove excessive margins */
+.hero-section {
+  margin-bottom: 2rem;
+}
+
+/* 10. PROFESSIONAL COLOR SCHEME */
+:root {
+  --haive-text-muted: #6b7280;
+  --haive-bg-subtle: #f8fafc;
+}
+
+[data-theme="dark"] {
+  --haive-text-muted: #9ca3af;
+  --haive-bg-subtle: #1e293b;
 }
 
 /* ==========================================================================
