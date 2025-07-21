@@ -186,7 +186,7 @@ class TypeHintFixer:
             return "List[Any]"
         if param_name.endswith("_dict"):
             return "Dict[str, Any]"
-        elif param_name.endswith("_count"):
+        if param_name.endswith("_count"):
             return "int"
         elif param_name.endswith(("_enabled", "_flag")):
             return "bool"
@@ -237,7 +237,7 @@ class TypeHintFixer:
             return "Optional[Any]"
         if func_name.startswith(("create_", "build_", "make_")):
             return "Any"
-        elif func_name.startswith(("list_", "all_")):
+        if func_name.startswith(("list_", "all_")):
             return "List[Any]"
         elif func_name == "__init__":
             return "None"
@@ -426,7 +426,7 @@ def main():
             for py_file in python_files:
                 fixer.fix_function_signature(py_file, dry_run=args.dry_run)
         else:
-            print(f"❌ Target not found: {target_path}")
+            pass
 
 
 if __name__ == "__main__":
