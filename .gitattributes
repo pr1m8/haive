@@ -49,7 +49,6 @@ project_docs/**/*.jpg filter=lfs diff=lfs merge=lfs -text
 project_docs/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
 project_docs/**/*.gif filter=lfs diff=lfs merge=lfs -text
 project_docs/**/*.svg filter=lfs diff=lfs merge=lfs -text
-
 # Don't track text files with LFS
 *.md text
 *.rst text
@@ -59,3 +58,4 @@ project_docs/**/*.svg filter=lfs diff=lfs merge=lfs -text
 *.yml text
 *.yaml text
 *.toml text
+docs/screenshots/* filter=lfs diff=lfs merge=lfs -text

@@ -692,51 +692,57 @@ def docs_logs(session):
 def docs_quality(session):
     """Run documentation quality checks (doc8, codespell)."""
     session.log("🔍 Running documentation quality checks...")
-    
+
     # Create log file
     log_file = create_log_file(session, "docs_quality")
-    
+
     # Install dependencies
     session.log("📦 Installing quality tools...")
     session.run("poetry", "install", "--only", "docs", external=True)
-    
+
     quality_results = {"doc8": False, "codespell": False}
-    
+
     # Run doc8 for RST linting
     session.log("📋 Running doc8 (RST linter)...")
     try:
         session.run(
-            "poetry", "run", "doc8", 
+            "poetry",
+            "run",
+            "doc8",
             str(SOURCE_DIR),
-            "--config", "pyproject.toml",
-            external=True
+            "--config",
+            "pyproject.toml",
+            external=True,
         )
         quality_results["doc8"] = True
         session.log("✅ doc8: No RST issues found")
     except Exception as e:
         session.log(f"⚠️  doc8 found issues: {e}")
         session.log("   Run with --verbose to see details")
-    
+
     # Run codespell for typo checking
     session.log("📝 Running codespell (typo checker)...")
     try:
         session.run(
-            "poetry", "run", "codespell",
+            "poetry",
+            "run",
+            "codespell",
             str(SOURCE_DIR),
-            "--config", "pyproject.toml",
-            external=True
+            "--config",
+            "pyproject.toml",
+            external=True,
         )
         quality_results["codespell"] = True
         session.log("✅ codespell: No typos found")
     except Exception as e:
         session.log(f"⚠️  codespell found typos: {e}")
         session.log("   Add to ignore list in pyproject.toml if needed")
-    
+
     # Summary
     session.log("=" * 50)
     session.log("📊 QUALITY CHECK SUMMARY")
     session.log("=" * 50)
-    
+
     all_passed = all(quality_results.values())
     if all_passed:
         session.log("✅ All quality checks passed!")
@@ -745,7 +751,7 @@ def docs_quality(session):
         for check, passed in quality_results.items():
             status = "✅" if passed else "❌"
             session.log(f"  {status} {check}")
-    
+
     session.log(f"📋 Full log: {log_file}")
     return all_passed
 
@@ -754,24 +760,27 @@ def docs_quality(session):
 def docs_linkcheck(session):
     """Check for broken links in documentation."""
     session.log("🔗 Checking documentation links...")
-    
+
     # Create log file
     log_file = create_log_file(session, "docs_linkcheck")
-    
+
     # Install dependencies
     session.log("📦 Installing dependencies...")
     session.run("poetry", "install", "--all-extras", external=True)
-    
+
     # Run sphinx linkcheck
     cmd = [
-        "poetry", "run", "sphinx-build",
-        "-b", "linkcheck",
+        "poetry",
+        "run",
+        "sphinx-build",
+        "-b",
+        "linkcheck",
         str(SOURCE_DIR),
         str(DOCS_DIR / "build" / "linkcheck"),
     ]
-    
+
     status = run_with_graceful_handling(session, cmd, log_file, "Link Check")
-    
+
     # Report results
     output_dir = DOCS_DIR / "build" / "linkcheck"
     if output_dir.exists():
@@ -784,7 +793,7 @@ def docs_linkcheck(session):
                     session.log(content)
                 else:
                     session.log("✅ No broken links found!")
-    
+
     session.log(f"📋 Full report: {output_dir / 'output.txt'}")
     return status["success"]
 
@@ -793,31 +802,34 @@ def docs_linkcheck(session):
 def docs_coverage(session):
     """Check documentation coverage for all modules."""
     session.log("📊 Checking documentation coverage...")
-    
+
     # Create log file
     log_file = create_log_file(session, "docs_coverage")
-    
+
     # Install dependencies
     session.log("📦 Installing dependencies...")
     session.run("poetry", "install", "--all-extras", external=True)
-    
+
     # Run coverage check
     cmd = [
-        "poetry", "run", "sphinx-build",
-        "-b", "coverage",
+        "poetry",
+        "run",
+        "sphinx-build",
+        "-b",
+        "coverage",
         str(SOURCE_DIR),
         str(DOCS_DIR / "build" / "coverage"),
     ]
-    
+
     status = run_with_graceful_handling(session, cmd, log_file, "Coverage Check")
-    
+
     # Report results
     coverage_file = DOCS_DIR / "build" / "coverage" / "python.txt"
     if coverage_file.exists():
         session.log("📊 Documentation coverage report:")
         with open(coverage_file) as f:
             session.log(f.read())
-    
+
     return status["success"]
 
 
@@ -825,35 +837,41 @@ def docs_coverage(session):
 def docs_pdf(session):
     """Generate PDF documentation using sphinx-simplepdf."""
     session.log("📄 Generating PDF documentation...")
-    
+
     # Create log file
     log_file = create_log_file(session, "docs_pdf")
-    
+
     # Install dependencies
     session.log("📦 Installing dependencies...")
     session.run("poetry", "install", "--all-extras", external=True)
-    
+
     # First build HTML (required for simplepdf)
     session.log("🔨 Building HTML first...")
     session.run(
-        "poetry", "run", "sphinx-build",
-        "-b", "html",
+        "poetry",
+        "run",
+        "sphinx-build",
+        "-b",
+        "html",
         str(SOURCE_DIR),
         str(BUILD_DIR),
-        external=True
+        external=True,
     )
-    
+
     # Then generate PDF
     session.log("📄 Generating PDF...")
     cmd = [
-        "poetry", "run", "sphinx-build",
-        "-b", "simplepdf",
+        "poetry",
+        "run",
+        "sphinx-build",
+        "-b",
+        "simplepdf",
         str(SOURCE_DIR),
         str(DOCS_DIR / "build" / "pdf"),
     ]
-    
+
     status = run_with_graceful_handling(session, cmd, log_file, "PDF Generation")
-    
+
     # Check for output
     pdf_dir = DOCS_DIR / "build" / "pdf"
     if pdf_dir.exists():
@@ -864,7 +882,7 @@ def docs_pdf(session):
                 session.log(f"📄 {pdf}")
         else:
             session.log("❌ No PDF files generated")
-    
+
     return status["success"]
 
 
