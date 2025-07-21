@@ -171,12 +171,14 @@ def pre_build_validation() -> dict:
                     )
 
     # Report results
+    print(f"📊 Validation complete: {results['total_files']} files checked")
 
     if results["syntax_errors"]:
+        print(f"❌ Found {len(results['syntax_errors'])} syntax errors")
         for err in results["syntax_errors"][:5]:  # Show first 5
-            pass
+            print(f"  - {err['file']}: {err['error']}")
         if len(results["syntax_errors"]) > 5:
-            pass
+            print(f"  ... and {len(results['syntax_errors']) - 5} more")
 
     return results
 
@@ -199,7 +201,7 @@ def check_extension_compatibility() -> dict:
             )
 
     if results["missing"]:
-        passng")
+        print(f"⚠️  Missing {len(results['missing'])} extensions")
 
     return results
 
@@ -277,7 +279,7 @@ def run_sphinx_build_enhanced(log_file: Path) -> dict:
                 elif "exception" in line_lower or "traceback" in line_lower:
                     status["error_details"].append(line.strip())
                 elif "writing output..." in line_lower:
-                    pass.")
+                    print("📝 Writing output files...")
                 elif "build succeeded" in line_lower:
                     status["success"] = True
 
@@ -396,18 +398,19 @@ def main():
     )
 
     # Final summary
+    print(f"\n📊 Build Report: {report_file}")
 
     if build_status["success"]:
-        pass!")
+        print("✅ Documentation build completed successfully!")
     elif build_status["output_exists"]:
+        print("⚠️  Build completed with errors but generated HTML files")
     else:
-        pass")
+        print("❌ Documentation build failed")
 
     if BUILD_DIR.exists() and list(BUILD_DIR.glob("*.html")):
         index_path = BUILD_DIR / "index.html"
         if index_path.exists():
-            pass}")
-
+            pass
 
     # Return appropriate exit code
     if build_status["success"]:
