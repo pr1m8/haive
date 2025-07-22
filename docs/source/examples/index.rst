@@ -1,170 +1,133 @@
-Examples and Tutorials
-======================
+📚 Examples and Tutorials
+=========================
 
-The Haive framework includes extensive examples distributed throughout the codebase. Each module contains its own example files demonstrating usage patterns.
+Comprehensive examples showcasing Haive's capabilities across all packages.
 
-Example Locations
------------------
+.. grid:: 1 2 2 2
+   :gutter: 3
 
-Examples are organized by package and module:
+   .. grid-item-card:: 🤖 Agent Examples
+      :shadow: lg
+      
+      **Simple & ReactAgent tutorials**
+      
+      Learn to create conversational agents, structured output, and tool integration.
+      
+      +++
+      
+      ✓ Simple Agent Tutorial • ✓ ReactAgent with Tools • ✓ Structured Output
 
-Agent Examples
-~~~~~~~~~~~~~~
+   .. grid-item-card:: 🎮 Game Examples
+      :shadow: lg
+      
+      **AI Game Playing**
+      
+      Build AI agents that play games like Chess, Tic-Tac-Toe, and strategy games.
+      
+      +++
+      
+      ✓ Chess AI Agent • ✓ Tic-Tac-Toe Battle • ✓ Game Strategy
 
-**Core Agent Types**
+   .. grid-item-card:: 🔧 Tool Examples
+      :shadow: lg
+      
+      **Tool Integration**
+      
+      Connect agents to APIs, databases, search engines, and external services.
+      
+      +++
+      
+      ✓ Web Search Tools • ✓ Database Tools • ✓ Custom Tools
 
-- **Simple Agents**: ``packages/haive-agents/src/haive/agents/simple/example.py``
-- **ReAct Agents**: ``packages/haive-agents/src/haive/agents/react_class/react_agent2/example.py``
-- **Multi-Agent Systems**: ``packages/haive-agents/src/haive/agents/multi/example.py``
-- **Supervisor Agents**: ``packages/haive-agents/src/haive/agents/supervisor/example_*.py``
+   .. grid-item-card:: 🔌 MCP Examples
+      :shadow: lg
+      
+      **Model Context Protocol**
+      
+      Integrate with external tools and services via MCP protocol.
+      
+      +++
+      
+      ✓ MCP Basic • ✓ MCP Advanced • ✓ MCP Custom
 
-**Conversation Agents**
+Getting Started
+---------------
 
-- **Collaborative**: ``packages/haive-agents/src/haive/agents/conversation/collaberative/example.py``
-- **Debate**: ``packages/haive-agents/src/haive/agents/conversation/debate/example.py``
-- **Directed**: ``packages/haive-agents/src/haive/agents/conversation/directed/example.py``
-- **Round Robin**: ``packages/haive-agents/src/haive/agents/conversation/round_robin/example.py``
-- **Social Media**: ``packages/haive-agents/src/haive/agents/conversation/social_media/example.py``
-
-**RAG Agents**
-
-- **Graph Database RAG**: ``packages/haive-agents/src/haive/agents/rag/db_rag/graph_db/example.py``
-- **SQL RAG**: ``packages/haive-agents/src/haive/agents/rag/db_rag/sql_rag/example.py``
-- **LLM RAG**: ``packages/haive-agents/src/haive/agents/rag/llm_rag/example.py``
-
-**Reasoning & Critique Agents**
-
-- **LATS**: ``packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/example.py``
-- **Logic**: ``packages/haive-agents/src/haive/agents/reasoning_and_critique/logic/example.py``
-- **MCTS**: ``packages/haive-agents/src/haive/agents/reasoning_and_critique/mcts/example.py``
-- **Reflexion**: ``packages/haive-agents/src/haive/agents/reasoning_and_critique/reflexion/example.py``
-- **Self-Discover**: ``packages/haive-agents/src/haive/agents/reasoning_and_critique/self_discover/example.py``
-- **Tree of Thoughts**: ``packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/example.py``
-
-**Planning Agents**
-
-- **Plan & Execute**: ``packages/haive-agents/src/haive/agents/planning/p_and_e/example.py``
-
-**Research Agents**
-
-- **STORM**: ``packages/haive-agents/src/haive/agents/research/storm/example.py``
-
-Game Examples
-~~~~~~~~~~~~~
-
-Each game includes example implementations:
-
-- **Chess**: ``packages/haive-games/src/haive/games/chess/example.py``
-- **Connect4**: ``packages/haive-games/src/haive/games/connect4/example.py``
-- **Tic Tac Toe**: ``packages/haive-games/src/haive/games/tic_tac_toe/example.py``
-- **Poker**: ``packages/haive-games/src/haive/games/holdem/example.py``
-- **Among Us**: ``packages/haive-games/src/haive/games/mafia/example.py``
-- **Monopoly**: ``packages/haive-games/src/haive/games/monopoly/example.py``
-
-Core Examples
-~~~~~~~~~~~~~
-
-- **Logging**: ``packages/haive-core/examples/logging_demo.py``
-- **Meta Agent**: ``packages/haive-core/examples/meta_agent_example.py``
-- **State Schema**: ``packages/haive-core/examples/state_schema_integration.py``
-- **Graph Visualization**: ``packages/haive-core/src/haive/core/graph/state_graph/visualization/examples.py``
-
-MCP Examples
-~~~~~~~~~~~~
-
-- **MCP Integration**: ``packages/haive-mcp/examples/mcp_example.py``
-- **Dataflow**: ``packages/haive-mcp/examples/dataflow_example.py``
-
-Running Examples
-----------------
-
-To run any example:
+**Prerequisites**
 
 .. code-block:: bash
 
-    # Navigate to the haive backend directory
-    cd /home/will/Projects/haive/backend/haive
-
-    # Run with poetry
-    poetry run python packages/haive-agents/src/haive/agents/simple/example.py
-
-    # Or activate the virtual environment
-    poetry shell
-    python packages/haive-agents/src/haive/agents/simple/example.py
-
-Example Collections
--------------------
-
-The main example directories contain additional demos:
-
-1. **Agent Examples**: ``packages/haive-agents/examples/``
+   # Install Haive with examples
+   poetry install --extras "agents tools games mcp"
    
-   - Supervisor demos
-   - Multi-agent systems
-   - Token tracking
-   - Output adapters
-   - Performance benchmarks
+   # Set up environment variables  
+   export OPENAI_API_KEY="your-api-key"
 
-2. **Game Examples**: ``packages/haive-games/examples/``
-   
-   - Chess API demo
-   - Connect4 gameplay
-   - Configurable agents
-   - Tournament systems
+**Run an Example**
 
-3. **Core Examples**: ``packages/haive-core/examples/``
-   
-   - Logging configurations
-   - State management
-   - Schema integration
+.. code-block:: bash
 
-Quick Start Examples
---------------------
+   # Navigate to any example and run it
+   cd packages/haive-agents/examples/
+   poetry run python simple_agent_tutorial.py
 
-Simple Agent
-~~~~~~~~~~~~
+Quick Start Code
+----------------
+
+**Basic Agent Example**
 
 .. code-block:: python
+   
+   from haive.agents.simple import SimpleAgent
+   from haive.core.engine.aug_llm import AugLLMConfig
+   
+   # Create agent
+   config = AugLLMConfig(temperature=0.7)
+   agent = SimpleAgent(name="assistant", engine=config)
+   
+   # Use agent
+   result = await agent.arun("Hello, how can you help?")
+   print(result)
 
-    from haive.agents.simple import SimpleAgent
-
-    agent = SimpleAgent(name="assistant")
-    response = await agent.arun("Hello, how can you help me?")
-    print(response)
-
-ReAct Agent with Tools
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: python
-
-    from haive.agents.react import ReactAgent
-    from haive.tools import WebSearchTool, CalculatorTool
-
-    agent = ReactAgent(
-    name="researcher",
-    tools=[WebSearchTool(), CalculatorTool()]
-    )
-
-    result = await agent.arun("What's the population of Tokyo?")
-
-Multi-Agent Conversation
-~~~~~~~~~~~~~~~~~~~~~~~~
+**ReactAgent with Tools**
 
 .. code-block:: python
+   
+   from haive.agents.react import ReactAgent
+   from langchain_core.tools import tool
+   
+   @tool
+   def calculator(expression: str) -> str:
+       """Calculate mathematical expressions."""
+       return str(eval(expression))
+   
+   agent = ReactAgent(
+       name="math_assistant", 
+       engine=AugLLMConfig(),
+       tools=[calculator]
+   )
+   
+   result = await agent.arun("What is 15 * 23?")
 
-    from haive.agents.conversation.debate import DebateConversation
+Available Examples
+------------------
 
-    debate = DebateConversation.create_simple_debate(
-    topic="Is AI beneficial for humanity?",
-    position_a=("Alice", "Pro-AI"),
-    position_b=("Bob", "AI-Skeptic")
-    )
+**Agent Examples** (``packages/haive-agents/examples/``)
 
-    result = await debate.arun()
+* ``simple_agent_tutorial.py`` - Basic agent with structured output
+* ``react_agent_tutorial.py`` - Tool-enabled reasoning agent
+* ``agent_with_structured_output.py`` - Advanced Pydantic integration
+* ``memory_v2_example.py`` - Long-term memory patterns
+* ``dynamic_supervisor_demo.py`` - Multi-agent coordination
 
-See Also
---------
+**Game Examples** (``packages/haive-games/examples/``)
 
-- :doc:`/agents/gallery` - Agent gallery with interactive examples
-- :doc:`/guides/index` - Step-by-step guides
-- :doc:`/api/haive/index` - Complete API reference
+* ``tic_tac_toe_demo.py`` - AI vs AI Tic-Tac-Toe battle
+* ``chess_agent_demo.py`` - Chess-playing agent  
+* ``multi_game_tournament.py`` - Tournament between game AIs
+
+**Tool & MCP Examples** (``packages/haive-tools/examples/``, ``packages/haive-mcp/examples/``)
+
+* ``web_search_integration.py`` - Connect agent to web search
+* ``database_agent.py`` - SQL database integration
+* ``mcp_server_demo.py`` - Custom MCP server creation

@@ -4,314 +4,123 @@
 🎮 Haive Games Framework
 ========================
 
-.. raw:: html
+🎯 Strategic Game Environments for AI Testing
+==============================================
 
-   <div class="agent-hero-section">
-      <div class="hero-content">
-         <h2>🎯 Strategic Game Environments for AI Testing</h2>
-         <p class="hero-description">
-            Beautiful, interactive game environments with intelligent AI opponents. Test your agents in strategic scenarios from classic board games to complex multiplayer environments.
-         </p>
-      </div>
-   </div>
+Beautiful, interactive game environments with intelligent AI opponents. Test your agents in strategic scenarios from classic board games to complex multiplayer environments.
+
+🎲 All Games
+============
+
+.. grid:: 1 2 3 3
+   :gutter: 3
+
+   .. grid-item-card:: ♟️ Chess
+      :link: ../api/src/haive/games/chess/index
+      :shadow: lg
+      
+      **Strategy Game**
+      
+      Play interactive chess against AI opponents of varying skill levels with advanced position evaluation and opening theory.
+      
+      +++
+      
+      ✓ Position Analysis • ✓ Opening Theory • ✓ Endgame AI  
+      **8x8 Board • 2 Players • 60+ Min**
+
+   .. grid-item-card:: 🎯 Tic-Tac-Toe
+      :link: ../api/src/haive/games/tic_tac_toe/index
+      :shadow: lg
+      
+      **Quick Game**
+      
+      Classic 3x3 strategy game with perfect AI opponent using minimax algorithm for optimal play.
+      
+      +++
+      
+      ✓ Perfect AI • ✓ Minimax Algorithm • ✓ Quick Play  
+      **3x3 Board • 2 Players • 2 Min**
+
+   .. grid-item-card:: 🔴 Connect Four
+      :link: ../api/src/haive/games/connect4/index
+      :shadow: lg
+      
+      **Strategy Game**
+      
+      Classic connection game with strategic depth and AI that uses pattern recognition for competitive play.
+      
+      +++
+      
+      ✓ Pattern Recognition • ✓ Strategic Depth • ✓ Threat Detection  
+      **7x6 Board • 2 Players • 10 Min**
+
+   .. grid-item-card:: 🃏 Poker
+      :link: ../api/src/haive/games/poker/index
+      :shadow: lg
+      
+      **Card Game**
+      
+      Texas Hold'em with betting, bluffing, and AI psychology that adapts to player patterns and behavior.
+      
+      +++
+      
+      ✓ Bluffing AI • ✓ Psychology • ✓ Betting Strategy  
+      **52 Cards • 2-8 Players • 30 Min**
+
+   .. grid-item-card:: 🕵️ Among Us
+      :link: ../api/src/haive/games/among_us/index
+      :shadow: lg
+      
+      **Social Deduction**
+      
+      Social deduction game with intelligent AI crewmates and imposters using behavioral analysis and deception.
+      
+      +++
+      
+      ✓ Behavioral Analysis • ✓ Deception AI • ✓ Role Playing  
+      **4-10 Players • 1-3 Imposters • 15 Min**
+
+   .. grid-item-card:: 🌍 Risk
+      :link: ../api/src/haive/games/risk/index
+      :shadow: lg
+      
+      **Strategy Game**
+      
+      World domination strategy with AI diplomacy, warfare tactics, and long-term strategic planning.
+      
+      +++
+      
+      ✓ Diplomacy AI • ✓ Warfare Tactics • ✓ Territory Control  
+      **42 Territories • 2-6 Players • 120 Min**
+
+   .. grid-item-card:: 🎲 Monopoly
+      :link: ../api/src/haive/games/monopoly/index
+      :shadow: lg
+      
+      **Economic Game**
+      
+      Economic strategy game with AI negotiation, property trading, and financial optimization algorithms.
+      
+      +++
+      
+      ✓ AI Negotiation • ✓ Property Trading • ✓ Financial Strategy  
+      **40 Spaces • 2-8 Players • 90 Min**
+
+   .. grid-item-card:: 🧩 Mastermind
+      :link: ../api/src/haive/games/mastermind/index
+      :shadow: lg
+      
+      **Logic Game**
+      
+      Code-breaking game with AI logical deduction, pattern analysis, and optimal guessing strategies.
+      
+      +++
+      
+      ✓ Logical Deduction • ✓ Pattern Analysis • ✓ Optimal Guessing  
+      **4 Code Length • 2 Players • 20 Min**
 
 Game Categories
----------------
-
-.. raw:: html
-
-   <div class="showcase-tabs">
-      <button class="showcase-tab active">All Games</button>
-      <button class="showcase-tab">Board Games</button>
-      <button class="showcase-tab">Card Games</button>
-      <button class="showcase-tab">Strategy Games</button>
-      <button class="showcase-tab">Social Games</button>
-   </div>
-
-   <div class="showcase-content active">
-      <h3>🎲 All Games</h3>
-      <div class="games-showcase">
-         <div class="game-card">
-            <div class="game-header">
-               <div class="game-emoji">♟️</div>
-               <h3 class="game-title">Chess</h3>
-               <div class="game-category">Strategy</div>
-            </div>
-            <p class="game-description">
-               Play interactive chess against AI opponents of varying skill levels with advanced position evaluation and opening theory.
-            </p>
-            <div class="game-features">
-               <span class="game-feature">Position Analysis</span>
-               <span class="game-feature">Opening Theory</span>
-               <span class="game-feature">Endgame AI</span>
-               <span class="game-feature">Difficulty Scaling</span>
-            </div>
-            <div class="game-stats">
-               <div class="game-stat">
-                  <span class="game-stat-value">8x8</span>
-                  <span class="game-stat-label">Board Size</span>
-               </div>
-               <div class="game-stat">
-                  <span class="game-stat-value">2</span>
-                  <span class="game-stat-label">Players</span>
-               </div>
-               <div class="game-stat">
-                  <span class="game-stat-value">60+</span>
-                  <span class="game-stat-label">Min Play</span>
-               </div>
-            </div>
-            <div class="game-actions">
-               <a href="../api/games/chess/index.html" class="game-action primary">Documentation</a>
-               <a href="demos/chess-demo.html" class="game-action secondary">Play Demo</a>
-            </div>
-         </div>
-
-         <div class="game-card">
-            <div class="game-header">
-               <div class="game-emoji">🎯</div>
-               <h3 class="game-title">Tic-Tac-Toe</h3>
-               <div class="game-category">Quick Game</div>
-            </div>
-            <p class="game-description">
-               Classic 3x3 strategy game with perfect AI opponent using minimax algorithm for optimal play.
-            </p>
-            <div class="game-features">
-               <span class="game-feature">Perfect AI</span>
-               <span class="game-feature">Minimax Algorithm</span>
-               <span class="game-feature">Quick Play</span>
-               <span class="game-feature">Learning Mode</span>
-            </div>
-            <div class="game-stats">
-               <div class="game-stat">
-                  <span class="game-stat-value">3x3</span>
-                  <span class="game-stat-label">Board Size</span>
-               </div>
-               <div class="game-stat">
-                  <span class="game-stat-value">2</span>
-                  <span class="game-stat-label">Players</span>
-               </div>
-               <div class="game-stat">
-                  <span class="game-stat-value">2</span>
-                  <span class="game-stat-label">Min Play</span>
-               </div>
-            </div>
-            <div class="game-actions">
-               <a href="../api/games/tic_tac_toe/index.html" class="game-action primary">Documentation</a>
-               <a href="demos/tictactoe-demo.html" class="game-action secondary">Play Demo</a>
-            </div>
-         </div>
-
-         <div class="game-card">
-            <div class="game-header">
-               <div class="game-emoji">🔴</div>
-               <h3 class="game-title">Connect Four</h3>
-               <div class="game-category">Strategy</div>
-            </div>
-            <p class="game-description">
-               Classic connection game with strategic depth and AI that uses pattern recognition for competitive play.
-            </p>
-            <div class="game-features">
-               <span class="game-feature">Pattern Recognition</span>
-               <span class="game-feature">Strategic Depth</span>
-               <span class="game-feature">Threat Detection</span>
-               <span class="game-feature">Multi-Level AI</span>
-            </div>
-            <div class="game-stats">
-               <div class="game-stat">
-                  <span class="game-stat-value">7x6</span>
-                  <span class="game-stat-label">Board Size</span>
-               </div>
-               <div class="game-stat">
-                  <span class="game-stat-value">2</span>
-                  <span class="game-stat-label">Players</span>
-               </div>
-               <div class="game-stat">
-                  <span class="game-stat-value">10</span>
-                  <span class="game-stat-label">Min Play</span>
-               </div>
-            </div>
-            <div class="game-actions">
-               <a href="../api/games/connect4/index.html" class="game-action primary">Documentation</a>
-               <a href="demos/connect4-demo.html" class="game-action secondary">Play Demo</a>
-            </div>
-         </div>
-
-         <div class="game-card">
-            <div class="game-header">
-               <div class="game-emoji">🃏</div>
-               <h3 class="game-title">Poker</h3>
-               <div class="game-category">Card Game</div>
-            </div>
-            <p class="game-description">
-               Texas Hold'em with betting, bluffing, and AI psychology that adapts to player patterns and behavior.
-            </p>
-            <div class="game-features">
-               <span class="game-feature">Bluffing AI</span>
-               <span class="game-feature">Psychology</span>
-               <span class="game-feature">Betting Strategy</span>
-               <span class="game-feature">Pattern Learning</span>
-            </div>
-            <div class="game-stats">
-               <div class="game-stat">
-                  <span class="game-stat-value">2-8</span>
-                  <span class="game-stat-label">Players</span>
-               </div>
-               <div class="game-stat">
-                  <span class="game-stat-value">52</span>
-                  <span class="game-stat-label">Card Deck</span>
-               </div>
-               <div class="game-stat">
-                  <span class="game-stat-value">30</span>
-                  <span class="game-stat-label">Min Play</span>
-               </div>
-            </div>
-            <div class="game-actions">
-               <a href="../api/games/poker/index.html" class="game-action primary">Documentation</a>
-               <a href="demos/poker-demo.html" class="game-action secondary">Play Demo</a>
-            </div>
-         </div>
-
-         <div class="game-card">
-            <div class="game-header">
-               <div class="game-emoji">🕵️</div>
-               <h3 class="game-title">Among Us</h3>
-               <div class="game-category">Social Deduction</div>
-            </div>
-            <p class="game-description">
-               Social deduction game with intelligent AI crewmates and imposters that use behavioral analysis and deception.
-            </p>
-            <div class="game-features">
-               <span class="game-feature">Behavioral Analysis</span>
-               <span class="game-feature">Deception AI</span>
-               <span class="game-feature">Role Playing</span>
-               <span class="game-feature">Group Dynamics</span>
-            </div>
-            <div class="game-stats">
-               <div class="game-stat">
-                  <span class="game-stat-value">4-10</span>
-                  <span class="game-stat-label">Players</span>
-               </div>
-               <div class="game-stat">
-                  <span class="game-stat-value">1-3</span>
-                  <span class="game-stat-label">Imposters</span>
-               </div>
-               <div class="game-stat">
-                  <span class="game-stat-value">15</span>
-                  <span class="game-stat-label">Min Play</span>
-               </div>
-            </div>
-            <div class="game-actions">
-               <a href="../api/games/among_us/index.html" class="game-action primary">Documentation</a>
-               <a href="demos/among_us-demo.html" class="game-action secondary">Play Demo</a>
-            </div>
-         </div>
-
-         <div class="game-card">
-            <div class="game-header">
-               <div class="game-emoji">🌍</div>
-               <h3 class="game-title">Risk</h3>
-               <div class="game-category">Strategy</div>
-            </div>
-            <p class="game-description">
-               World domination strategy with AI diplomacy, warfare tactics, and long-term strategic planning.
-            </p>
-            <div class="game-features">
-               <span class="game-feature">Diplomacy AI</span>
-               <span class="game-feature">Warfare Tactics</span>
-               <span class="game-feature">Territory Control</span>
-               <span class="game-feature">Long-term Planning</span>
-            </div>
-            <div class="game-stats">
-               <div class="game-stat">
-                  <span class="game-stat-value">2-6</span>
-                  <span class="game-stat-label">Players</span>
-               </div>
-               <div class="game-stat">
-                  <span class="game-stat-value">42</span>
-                  <span class="game-stat-label">Territories</span>
-               </div>
-               <div class="game-stat">
-                  <span class="game-stat-value">120</span>
-                  <span class="game-stat-label">Min Play</span>
-               </div>
-            </div>
-            <div class="game-actions">
-               <a href="../api/games/risk/index.html" class="game-action primary">Documentation</a>
-               <a href="demos/risk-demo.html" class="game-action secondary">Play Demo</a>
-            </div>
-         </div>
-
-         <div class="game-card">
-            <div class="game-header">
-               <div class="game-emoji">🎲</div>
-               <h3 class="game-title">Monopoly</h3>
-               <div class="game-category">Economic</div>
-            </div>
-            <p class="game-description">
-               Economic strategy game with AI negotiation, property trading, and financial optimization algorithms.
-            </p>
-            <div class="game-features">
-               <span class="game-feature">AI Negotiation</span>
-               <span class="game-feature">Property Trading</span>
-               <span class="game-feature">Financial Strategy</span>
-               <span class="game-feature">Risk Assessment</span>
-            </div>
-            <div class="game-stats">
-               <div class="game-stat">
-                  <span class="game-stat-value">2-8</span>
-                  <span class="game-stat-label">Players</span>
-               </div>
-               <div class="game-stat">
-                  <span class="game-stat-value">40</span>
-                  <span class="game-stat-label">Spaces</span>
-               </div>
-               <div class="game-stat">
-                  <span class="game-stat-value">90</span>
-                  <span class="game-stat-label">Min Play</span>
-               </div>
-            </div>
-            <div class="game-actions">
-               <a href="../api/games/monopoly/index.html" class="game-action primary">Documentation</a>
-               <a href="demos/monopoly-demo.html" class="game-action secondary">Play Demo</a>
-            </div>
-         </div>
-
-         <div class="game-card">
-            <div class="game-header">
-               <div class="game-emoji">🧩</div>
-               <h3 class="game-title">Mastermind</h3>
-               <div class="game-category">Logic</div>
-            </div>
-            <p class="game-description">
-               Code-breaking game with AI logical deduction, pattern analysis, and optimal guessing strategies.
-            </p>
-            <div class="game-features">
-               <span class="game-feature">Logical Deduction</span>
-               <span class="game-feature">Pattern Analysis</span>
-               <span class="game-feature">Optimal Guessing</span>
-               <span class="game-feature">Information Theory</span>
-            </div>
-            <div class="game-stats">
-               <div class="game-stat">
-                  <span class="game-stat-value">2</span>
-                  <span class="game-stat-label">Players</span>
-               </div>
-               <div class="game-stat">
-                  <span class="game-stat-value">4</span>
-                  <span class="game-stat-label">Code Length</span>
-               </div>
-               <div class="game-stat">
-                  <span class="game-stat-value">20</span>
-                  <span class="game-stat-label">Min Play</span>
-               </div>
-            </div>
-            <div class="game-actions">
-               <a href="../api/games/mastermind/index.html" class="game-action primary">Documentation</a>
-               <a href="demos/mastermind-demo.html" class="game-action secondary">Play Demo</a>
-            </div>
-         </div>
-      </div>
-   </div>
+===============
 
    <div class="showcase-content">
       <h3>🎯 Board Games</h3>
