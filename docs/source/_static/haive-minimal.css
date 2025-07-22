@@ -47,8 +47,84 @@
 }
 
 /* ==========================================================================
-   FURO INTEGRATION OVERRIDES (Minimal)
+   ENHANCED FURO INTEGRATION (Advanced Features)
    ========================================================================== */
+
+/* Better API documentation styling with Furo variables */
+.sig-name {
+  color: var(--color-api-name) !important;
+  font-weight: 600;
+}
+
+.sig-param {
+  color: var(--color-api-pre-name);
+}
+
+.sig-paren {
+  color: var(--color-api-paren);
+}
+
+.sig-object {
+  font-family: var(--font-stack--monospace);
+}
+
+/* Enhanced search results with Furo integration */
+.search-results__item {
+  border-radius: 8px;
+  margin: 0.5rem 0;
+  transition: all 0.2s ease;
+  background: var(--color-search-background);
+  border: 1px solid var(--color-search-border);
+}
+
+.search-results__item:hover {
+  background: var(--color-background-hover--transparent);
+  border-color: var(--color-search-border--focus);
+  transform: translateX(4px);
+}
+
+/* Better mobile navigation with Furo */
+@media (max-width: 767px) {
+  .mobile-header {
+    background: linear-gradient(
+      135deg,
+      var(--haive-primary),
+      var(--haive-primary-light)
+    );
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* Enhanced table of contents */
+.contents.local > ul {
+  border-left: 3px solid var(--color-brand-primary);
+  padding-left: 1rem;
+  margin-left: 0.5rem;
+}
+
+/* Improved admonition styling with Furo variables */
+.admonition {
+  border-radius: 8px;
+  border-left: 4px solid;
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  background: var(--color-card-marginals-background);
+}
+
+.admonition.note {
+  border-left-color: var(--color-brand-primary);
+  background: rgba(0, 102, 204, 0.05);
+}
+
+.admonition.warning {
+  border-left-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.05);
+}
+
+.admonition.danger {
+  border-left-color: var(--color-problematic);
+  background: rgba(220, 38, 38, 0.05);
+}
 
 /* Enhance Furo headings with brand colors */
 .furo-content h1 {
@@ -281,6 +357,132 @@
 /* ==========================================================================
    CRITICAL VISUAL FIXES - PHASE 1
    ========================================================================== */
+
+/* QUICK FIX 1: Fix white-on-white card issues */
+.sd-card {
+  background: #f8f9fa !important; /* Light gray background */
+  border: 1px solid #dee2e6 !important; /* Visible border */
+}
+
+[data-theme="dark"] .sd-card {
+  background: #2d3748 !important; /* Dark mode card bg */
+  border: 1px solid #4a5568 !important;
+}
+
+/* QUICK FIX 2: Fix code block alignment */
+.highlight {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100% !important;
+}
+
+.highlight pre {
+  margin: 0 !important;
+  padding: 1.5rem !important;
+}
+
+/* QUICK FIX 3: Fix sidebar spacing and padding */
+.sidebar-tree {
+  font-size: 0.9rem !important;
+}
+
+.sidebar-search-container {
+  padding: 0.5rem 1rem !important; /* Add padding to search */
+}
+
+.sidebar-search-container input {
+  padding: 0.5rem !important; /* Smaller search input */
+  font-size: 0.875rem !important;
+}
+
+/* QUICK FIX 4: Fix main content width issues */
+.furo-content {
+  max-width: 100% !important; /* Use full available width */
+}
+
+article.furo-content {
+  padding: 2rem !important; /* Consistent padding */
+}
+
+/* QUICK FIX 5: Fix agent/game card styling */
+.sd-grid-item-card {
+  height: 100% !important;
+}
+
+.sd-card-body {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  padding: 1.5rem !important;
+}
+
+.sd-card-body > p:last-child {
+  margin-top: auto !important; /* Push buttons to bottom */
+}
+
+/* Fix grid layout for better card proportions */
+.sd-row.sd-g-3 {
+  gap: 1.5rem !important;
+}
+
+.sd-col {
+  margin-bottom: 1.5rem !important;
+}
+
+/* Ensure cards have minimum height */
+.sd-card {
+  min-height: 200px !important;
+}
+
+/* Fix card title styling */
+.sd-card-title {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 1rem !important;
+  color: var(--haive-primary) !important;
+}
+
+/* Fix horizontal line styling */
+.sd-card hr {
+  margin: 1rem 0 !important;
+  border-color: #e5e7eb !important;
+}
+
+/* QUICK FIX 6: Fix badge colors for visibility */
+.sd-badge {
+  background: var(--haive-primary) !important;
+  color: white !important;
+  border: none !important;
+}
+
+.sd-badge.sd-bg-primary {
+  background: var(--haive-primary) !important;
+}
+
+.sd-badge.sd-bg-secondary {
+  background: var(--haive-secondary) !important;
+}
+
+.sd-badge.sd-bg-success {
+  background: var(--haive-accent) !important;
+}
+
+/* QUICK FIX 7: Better nav hierarchy indentation */
+.toctree-l1 {
+  margin-left: 0 !important;
+}
+
+.toctree-l2 {
+  margin-left: 1rem !important;
+}
+
+.toctree-l3 {
+  margin-left: 2rem !important;
+}
+
+.toctree-l4 {
+  margin-left: 3rem !important;
+}
 
 /* 1. FIX DUPLICATE COPY BUTTONS - Only show one copy button per code block */
 .highlight .copy-button:not(:first-of-type) {
@@ -1044,4 +1246,172 @@ p {
 .why-haive .benefit-desc {
   font-size: 0.875rem;
   opacity: 0.9;
+}
+
+/* ==========================================================================
+   FINAL VISUAL POLISH - COMPREHENSIVE FIXES
+   ========================================================================== */
+
+/* Fix table styling for better readability */
+table.docutils {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin: 1.5rem 0 !important;
+  background: white !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+table.docutils th {
+  background: var(--haive-primary) !important;
+  color: white !important;
+  padding: 1rem !important;
+  text-align: left !important;
+  font-weight: 600 !important;
+}
+
+table.docutils td {
+  padding: 0.75rem 1rem !important;
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+table.docutils tbody tr:hover {
+  background: #f8f9fa !important;
+}
+
+table.docutils tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+/* Fix list styling in cards */
+.sd-card ul {
+  padding-left: 1.5rem !important;
+  margin: 0.5rem 0 !important;
+}
+
+.sd-card li {
+  margin: 0.25rem 0 !important;
+  line-height: 1.5 !important;
+}
+
+/* Better button styling */
+.sd-btn {
+  text-decoration: none !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+.sd-btn:hover {
+  text-decoration: none !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Fix admonitions */
+.admonition {
+  border-radius: 8px !important;
+  border-left: 4px solid var(--haive-primary) !important;
+  background: #f8f9fa !important;
+  padding: 1rem 1.5rem !important;
+  margin: 1.5rem 0 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+}
+
+.admonition-title {
+  font-weight: 600 !important;
+  color: var(--haive-primary) !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Fix dropdown styling */
+details.sd-dropdown {
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  margin: 1rem 0 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+}
+
+summary.sd-dropdown-title {
+  background: #f8f9fa !important;
+  padding: 1rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  border-radius: 8px 8px 0 0 !important;
+}
+
+.sd-dropdown-content {
+  padding: 1rem !important;
+  background: white !important;
+}
+
+/* Fix blockquote styling */
+blockquote {
+  border-left: 4px solid var(--haive-primary) !important;
+  background: #f8f9fa !important;
+  padding: 1rem 1.5rem !important;
+  margin: 1.5rem 0 !important;
+  border-radius: 0 8px 8px 0 !important;
+}
+
+/* Fix inline code styling */
+code.literal {
+  background: #f1f5f9 !important;
+  color: #334155 !important;
+  padding: 0.2rem 0.4rem !important;
+  border-radius: 4px !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+}
+
+/* Fix section headers */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  scroll-margin-top: 80px !important; /* Account for fixed header */
+}
+
+/* Fix responsive grid issues */
+@media (max-width: 768px) {
+  .sd-grid .sd-col {
+    margin-bottom: 1rem !important;
+  }
+
+  .sd-card {
+    margin-bottom: 1rem !important;
+  }
+
+  table.docutils {
+    font-size: 0.875rem !important;
+  }
+
+  table.docutils th,
+  table.docutils td {
+    padding: 0.5rem !important;
+  }
+}
+
+/* Fix print styles */
+@media print {
+  .sd-card {
+    break-inside: avoid !important;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+
+  .hero-section {
+    background: none !important;
+    color: black !important;
+  }
+
+  table.docutils th {
+    background: #f0f0f0 !important;
+    color: black !important;
+  }
 }

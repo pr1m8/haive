@@ -199,12 +199,73 @@ html_js_files = [
     "agent-demo-utils.js",  # Agent demo visualization utilities
 ]
 
-# Furo theme options - SHOWCASE OPTIMIZED
+# Furo theme options - ENHANCED WITH ADVANCED FEATURES
 html_theme_options = {
     # === SIDEBAR ===
     "sidebar_hide_name": False,
     "navigation_with_keys": True,
-    "top_of_page_buttons": ["edit", "view"],
+    "top_of_page_buttons": ["edit", "view"],  # Remove download for cleaner look
+    "show_prev_next": True,  # Add prev/next navigation
+    # === NAVIGATION ENHANCEMENTS ===
+    "navigation_depth": 4,  # Show up to 4 levels in navigation
+    "collapse_navigation": False,  # Keep navigation expanded
+    "titles_only": False,  # Show full navigation tree
+    # === ADVANCED CSS VARIABLES ===
+    "light_css_variables": {
+        # Layout enhancements - REDUCED SIDEBAR
+        "sidebar-width": "18rem",  # Reduced from 22rem for better balance
+        "content-width": "50rem",  # Increased content width
+        "content-padding": "2rem",  # Reduced padding for more space
+        # Typography improvements
+        "font-stack--headings": "'Inter', system-ui, -apple-system, sans-serif",
+        "font-size--small--2": "0.75rem",
+        "font-size--small--3": "0.6875rem",
+        "line-height--normal": "1.7",
+        "line-height--small": "1.5",
+        # Advanced color variables for better API documentation
+        "color-foreground-muted": "#6b7280",
+        "color-background-hover--transparent": "#f3f4f6",
+        "color-background-item": "#e5e7eb",
+        "color-problematic": "#dc2626",
+        "color-inline-code-background": "#f1f5f9",
+        "color-inline-code-foreground": "#334155",
+        # API documentation specific styling
+        "color-api-background": "#f8fafc",
+        "color-api-background-hover": "#f1f5f9",
+        "color-api-overall": "#64748b",
+        "color-api-name": "#0f172a",
+        "color-api-pre-name": "#475569",
+        "color-api-paren": "#94a3b8",
+        "color-api-keyword": "#7c3aed",
+        # Enhanced shadows and borders
+        "color-card-border": "#e2e8f0",
+        "color-card-marginals-background": "#f8fafc",
+        # Code block improvements
+        "color-code-tab-size": "4",
+        "color-code-max-lines": "none",
+        "font-size--code": "0.875rem",
+        "font-size--code--small": "0.8125rem",
+        # Search enhancements
+        "color-search-background": "#ffffff",
+        "color-search-foreground": "#1f2937",
+        "color-search-border": "#d1d5db",
+        "color-search-border--focus": "#3b82f6",
+    },
+    "dark_css_variables": {
+        # Dark mode equivalents
+        "color-foreground-muted": "#9ca3af",
+        "color-background-hover--transparent": "#374151",
+        "color-inline-code-background": "#1e293b",
+        "color-inline-code-foreground": "#cbd5e1",
+        "color-api-background": "#0f172a",
+        "color-api-background-hover": "#1e293b",
+        "color-card-border": "#334155",
+        "color-card-marginals-background": "#1e293b",
+        "color-search-background": "#1f2937",
+        "color-search-foreground": "#f9fafb",
+        "color-search-border": "#4b5563",
+        "color-search-border--focus": "#60a5fa",
+    },
     # === PYGMENTS STYLES ===
     "pygments_light_style": "default",
     "pygments_dark_style": "github-dark",
@@ -302,8 +363,8 @@ html_sidebars = {
 
 # === AUTOAPI - BEST-IN-CLASS API DOCUMENTATION ===
 autoapi_type = "python"
+# Point to the src directories but we'll fix the paths in preprocessing
 autoapi_dirs = [
-    # Point to src directories (will generate haive.* namespace)
     "../../packages/haive-core/src",
     "../../packages/haive-agents/src",  # ✅ ENABLED - fixed import issues
     "../../packages/haive-tools/src",
@@ -316,41 +377,171 @@ autoapi_options = [
     "members",
     "show-inheritance",
     "show-module-summary",
-    # "undoc-members",  # Skip undocumented members to reduce noise
-    # "imported-members",  # Skip imported members to avoid duplicates
+    "special-members",  # Show __init__, __call__, etc.
+    "private-members",  # Show documented private methods
 ]
 autoapi_keep_files = True
 autoapi_add_toctree_entry = True
-autoapi_member_order = "bysource"
-autoapi_python_class_content = "class"  # Only show class docstring, not init
+autoapi_member_order = "groupwise"  # Group by type (methods, attributes, etc.)
+autoapi_python_class_content = "both"  # Show both class and __init__ docs
 autoapi_python_use_implicit_namespaces = True  # Handle namespace packages
 
+# Enhanced AutoAPI configuration for better API docs
+autoapi_generate_api_docs = True
 
-# Clean up module names to remove src. prefix
+# Use custom templates to fix src path issue
+autoapi_template_dir = "_templates/autoapi"
+
+
+# AutoAPI event handlers to fix module paths
 def autoapi_skip_member(app, what, name, obj, skip, options):
-    """Skip certain members during autoapi generation."""
+    """Skip certain members and fix paths during autoapi generation."""
+    # Skip test files
+    if "test_" in name or "_test" in name:
+        return True
+
+    # Skip files that were causing import issues
+    for pattern in ["debug", "demo", "example", "ui.py", "main.py", "app.py", "cli.py"]:
+        if pattern in name.lower():
+            return True
+
+    # Don't try to modify the object - AutoAPI objects are mostly read-only
+    # We'll fix paths in post-processing instead
+
     return skip
 
 
-def autoapi_prepare_jinja_env(jinja_env):
+# Configure AutoAPI Jinja environment - MUST be connected to AutoAPI
+def prepare_autoapi_jinja_env(jinja_env):
     """Prepare the Jinja environment for autoapi."""
 
     def fix_module_name(name):
         # Remove src. prefix if present
-        if name.startswith("src."):
-            name = name[4:]
+        if name and name.startswith("src."):
+            return name[4:]
         return name
 
+    def fix_path(path):
+        # Fix paths in toctree references
+        if path and "/src/haive/" in path:
+            return path.replace("/src/haive/", "/haive/")
+        if path and "src/haive/" in path:
+            return path.replace("src/haive/", "haive/")
+        return path
+
+    def fix_include_path(path):
+        # Fix include paths for toctree entries
+        if path and "/src/" in path:
+            return path.replace("/src/", "/")
+        return path
+
     jinja_env.filters["fix_module_name"] = fix_module_name
+    jinja_env.filters["fix_path"] = fix_path
+    jinja_env.filters["fix_include_path"] = fix_include_path
     return jinja_env
 
 
-# Custom hook to modify autoapi objects
-def autoapi_process_docstring(app, what, name, obj, options, lines):
-    """Process docstrings to clean up module names."""
-    if what == "module" and name.startswith("src."):
-        # Update the module name in the object
-        obj.name = name[4:]  # Remove "src." prefix
+# Connect to AutoAPI
+autoapi_prepare_jinja_env = prepare_autoapi_jinja_env
+
+
+def fix_autoapi_paths(app, exception):
+    """Fix AutoAPI paths after build."""
+    logger.info("🔧 Running fix_autoapi_paths function")
+    if exception is not None:
+        logger.warning(f"Build had exception: {exception}")
+        return
+
+    import os
+    import re
+    import shutil
+    from pathlib import Path
+
+    # First fix the source API files
+    api_dir = Path(app.srcdir) / "api"
+    logger.info(f"Looking for API dir: {api_dir}")
+    if api_dir.exists():
+        logger.info(f"Found API directory: {api_dir}")
+        # Find all RST files with src in the path
+        rst_files = list(api_dir.rglob("*.rst"))
+        logger.info(f"Found {len(rst_files)} RST files to process")
+
+        for rst_file in rst_files:
+            try:
+                content = rst_file.read_text()
+                original_content = content
+
+                # Fix module declarations
+                content = re.sub(r"src\.haive\.", "haive.", content)
+
+                # Fix toctree paths
+                content = re.sub(r"/api/src/haive/", "/api/haive/", content)
+                content = re.sub(r"src/haive/", "haive/", content)
+
+                # Write back if changed
+                if content != original_content:
+                    rst_file.write_text(content)
+                    logger.info(f"Fixed content in {rst_file}")
+            except Exception as e:
+                logger.warning(f"Failed to fix {rst_file}: {e}")
+
+        # Rename directories from src/haive to haive
+        src_dir = api_dir / "src"
+        logger.info(f"Looking for src directory: {src_dir}")
+        if src_dir.exists() and (src_dir / "haive").exists():
+            logger.info("Found src/haive directory - moving to haive/")
+            haive_dir = src_dir / "haive"
+            target_dir = api_dir / "haive"
+            if target_dir.exists():
+                shutil.rmtree(target_dir)
+            shutil.move(str(haive_dir), str(target_dir))
+            logger.info(f"Moved {haive_dir} to {target_dir}")
+            # Remove empty src directory
+            try:
+                if not list(src_dir.iterdir()):
+                    src_dir.rmdir()
+                    logger.info("Removed empty src directory")
+            except Exception as e:
+                logger.warning(f"Could not remove src directory: {e}")
+    else:
+        logger.warning(f"API directory not found: {api_dir}")
+
+    # Also fix the built HTML files
+    html_api_dir = Path(app.outdir) / "api"
+    if html_api_dir.exists():
+        # Fix HTML files
+        for html_file in html_api_dir.rglob("*.html"):
+            try:
+                content = html_file.read_text()
+
+                # Fix module references in HTML
+                content = re.sub(r"src\.haive\.", "haive.", content)
+
+                # Fix URLs
+                content = re.sub(
+                    r'href="[^"]*api/src/haive/', 'href="../../api/haive/', content
+                )
+                content = re.sub(r"/api/src/haive/", "/api/haive/", content)
+
+                # Write back
+                html_file.write_text(content)
+            except Exception as e:
+                logger.warning(f"Failed to fix HTML {html_file}: {e}")
+
+        # Move HTML directories if needed
+        html_src_dir = html_api_dir / "src"
+        if html_src_dir.exists() and (html_src_dir / "haive").exists():
+            haive_dir = html_src_dir / "haive"
+            target_dir = html_api_dir / "haive"
+            if target_dir.exists():
+                shutil.rmtree(target_dir)
+            shutil.move(str(haive_dir), str(target_dir))
+            # Remove empty src directory
+            try:
+                if not list(html_src_dir.iterdir()):
+                    html_src_dir.rmdir()
+            except:
+                pass
 
 
 # === NAPOLEON - GOOGLE DOCSTRINGS ===
@@ -369,12 +560,15 @@ napoleon_use_keyword = True
 napoleon_preprocess_types = True
 napoleon_attr_annotations = True
 
-# === AUTODOC & TYPE HINTS ===
-autodoc_typehints = "description"
+# === AUTODOC & TYPE HINTS (ENHANCED FOR FURO) ===
+autodoc_typehints = "both"  # Show in signature AND description
 typehints_document_rtype = True
 typehints_use_signature = True
 typehints_use_signature_return = True
+typehints_format = "short"  # Use short format for better readability
 always_document_param_types = True
+autodoc_preserve_defaults = True  # Show default values
+autodoc_member_order = "groupwise"  # Match AutoAPI groupwise ordering
 autodoc_type_aliases = {
     "Agent": "haive.agents.base.Agent",
     "StateSchema": "haive.core.schema.StateSchema",
@@ -625,6 +819,9 @@ autoapi_keep_files = True  # Keep generated API files for debugging
 
 # AutoAPI error handling
 autoapi_ignore = [
+    "**/__pycache__/**",  # Ignore all Python cache files
+    "**/*.pyc",  # Ignore compiled Python files
+    "**/*.pyo",  # Ignore optimized Python files
     "**/test_*.py",
     "**/tests/**",
     "**/*_test.py",
@@ -666,6 +863,10 @@ autoapi_ignore = [
     # Additional problematic imports fixed
     "**/archive/meta/agent.py",  # Contains MetaAgentState that may conflict
     "**/self_healing_code/agent.py",  # Complex agent with potential issues
+    "**/haive_discovery/**",  # Redundant naming structure causes issues
+    "**/.venv/**",  # Ignore virtual environments within packages
+    "**/haive_agent_mcp_integration.py",  # Problematic file name
+    "**/*.code-workspace",  # VS Code workspace files
 ]
 
 # ==============================================================================
@@ -717,9 +918,9 @@ def setup(app):
     # Add custom CSS for enhanced styling
     app.add_css_file("haive-enhanced.css")
 
-    # Connect autoapi hooks for cleaner URLs (disabled when autoapi is off)
-    # app.connect("autoapi-skip-member", autoapi_skip_member)
-    # app.connect("autodoc-process-docstring", autoapi_process_docstring)
+    # Connect autoapi hooks for cleaner URLs
+    app.connect("autoapi-skip-member", autoapi_skip_member)
+    app.connect("build-finished", fix_autoapi_paths)
 
     return {
         "version": "1.0",

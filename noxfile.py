@@ -151,8 +151,8 @@ def docs(session):
     log_file = create_log_file(session, "docs_build")
 
     # Install dependencies
-    session.log("📦 Installing dependencies...")
-    session.run("poetry", "install", "--all-extras", external=True)
+    session.log("📦 Installing documentation dependencies...")
+    session.run("poetry", "install", "--with", "docs", external=True)
 
     # Set environment for incremental builds
     os.environ["SPHINX_AUTOSUMMARY_GENERATE"] = (
@@ -233,8 +233,8 @@ def docs_full(session):
     log_file = create_log_file(session, "docs_full_build")
 
     # Install dependencies
-    session.log("📦 Installing dependencies...")
-    session.run("poetry", "install", "--all-extras", external=True)
+    session.log("📦 Installing documentation dependencies...")
+    session.run("poetry", "install", "--with", "docs", external=True)
 
     # Set environment for full regeneration
     os.environ["SPHINX_AUTOSUMMARY_GENERATE"] = "true"  # Force autosummary regeneration
@@ -352,8 +352,8 @@ def docs_autobuild(session):
         session.log("ℹ️  No existing processes to kill")
 
     # Install dependencies
-    session.log("📦 Installing dependencies...")
-    session.run("poetry", "install", "--all-extras", external=True)
+    session.log("📦 Installing documentation dependencies...")
+    session.run("poetry", "install", "--with", "docs", external=True)
 
     # Set environment for graceful handling
     os.environ["SPHINX_AUTOSUMMARY_GENERATE"] = "false"  # Faster for serving
@@ -765,8 +765,8 @@ def docs_linkcheck(session):
     log_file = create_log_file(session, "docs_linkcheck")
 
     # Install dependencies
-    session.log("📦 Installing dependencies...")
-    session.run("poetry", "install", "--all-extras", external=True)
+    session.log("📦 Installing documentation dependencies...")
+    session.run("poetry", "install", "--with", "docs", external=True)
 
     # Run sphinx linkcheck
     cmd = [
@@ -807,8 +807,8 @@ def docs_coverage(session):
     log_file = create_log_file(session, "docs_coverage")
 
     # Install dependencies
-    session.log("📦 Installing dependencies...")
-    session.run("poetry", "install", "--all-extras", external=True)
+    session.log("📦 Installing documentation dependencies...")
+    session.run("poetry", "install", "--with", "docs", external=True)
 
     # Run coverage check
     cmd = [
@@ -842,8 +842,8 @@ def docs_pdf(session):
     log_file = create_log_file(session, "docs_pdf")
 
     # Install dependencies
-    session.log("📦 Installing dependencies...")
-    session.run("poetry", "install", "--all-extras", external=True)
+    session.log("📦 Installing documentation dependencies...")
+    session.run("poetry", "install", "--with", "docs", external=True)
 
     # First build HTML (required for simplepdf)
     session.log("🔨 Building HTML first...")

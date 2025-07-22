@@ -6,233 +6,174 @@
 
 **Comprehensive collection of 80+ intelligent AI agents for every use case**
 
-.. raw:: html
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :padding: 2
 
-   <div class="agent-hero-section">
-      <div class="hero-content">
-         <h2>🚀 80+ Intelligent Agents Ready to Use</h2>
-         <p class="hero-description">
-            From simple chat to complex multi-agent systems with planning, reasoning, and memory. 
-            Production-ready agents with comprehensive documentation and examples.
-         </p>
-         <div class="hero-stats">
-            <div class="stat">
-               <div class="stat-number">80+</div>
-               <div class="stat-label">Agent Types</div>
-            </div>
-            <div class="stat">
-               <div class="stat-number">8</div>
-               <div class="stat-label">Categories</div>
-            </div>
-            <div class="stat">
-               <div class="stat-number">20+</div>
-               <div class="stat-label">RAG Variants</div>
-            </div>
+   .. grid-item::
+      
+      .. raw:: html
+         
+         <div class="metric-card">
+             <span class="value">80+</span>
+             <span class="label">Agent Types</span>
          </div>
-      </div>
-   </div>
+
+   .. grid-item::
+      
+      .. raw:: html
+         
+         <div class="metric-card">
+             <span class="value">8</span>
+             <span class="label">Categories</span>
+         </div>
+
+   .. grid-item::
+      
+      .. raw:: html
+         
+         <div class="metric-card">
+             <span class="value">20+</span>
+             <span class="label">RAG Variants</span>
+         </div>
+
+   .. grid-item::
+      
+      .. raw:: html
+         
+         <div class="metric-card">
+             <span class="value">100%</span>
+             <span class="label">Type Safe</span>
+         </div>
 
 Agent Categories
 ----------------
 
-.. raw:: html
+🤖 All Agents
+==============
 
-   <div class="showcase-tabs">
-      <button class="showcase-tab active">All Categories</button>
-      <button class="showcase-tab">Core Agents</button>
-      <button class="showcase-tab">RAG Agents</button>
-      <button class="showcase-tab">Conversation</button>
-      <button class="showcase-tab">Planning</button>
-      <button class="showcase-tab">Research</button>
-      <button class="showcase-tab">Multi-Agent</button>
-      <button class="showcase-tab">Memory</button>
-      <button class="showcase-tab">Specialized</button>
-   </div>
+.. grid:: 1 2 3 3
+   :gutter: 3
 
-   <div class="showcase-content active">
-      <h3>🤖 All Agents</h3>
-      <div class="agent-showcase">
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">💬</div>
-               <div>
-                  <h3 class="agent-title">SimpleAgent</h3>
-                  <p class="agent-subtitle">Basic Conversational Agent</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               General-purpose conversational agent for straightforward interactions and basic task completion. Perfect starting point for custom agents.
-            </p>
-            <ul class="agent-features">
-               <li>Natural language processing</li>
-               <li>Context-aware responses</li>
-               <li>Memory integration</li>
-               <li>Customizable prompts</li>
-            </ul>
-            <a href="../api/agents/simple/index.html" class="agent-link">View Documentation</a>
-         </div>
+   .. grid-item-card:: 💬 SimpleAgent
+      :link: ../api/haive/agents/simple/index
+      :shadow: lg
+      
+      **Basic Conversational Agent**
+      
+      General-purpose conversational agent for straightforward interactions and basic task completion. Perfect starting point for custom agents.
+      
+      +++
+      
+      ✓ Natural language processing  
+      ✓ Context-aware responses  
+      ✓ Memory integration  
+      ✓ Customizable prompts  
 
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">🧠</div>
-               <div>
-                  <h3 class="agent-title">ReactAgent</h3>
-                  <p class="agent-subtitle">Reasoning & Acting Agent</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Advanced reasoning agent that can use tools to solve complex problems through iterative thought and action cycles.
-            </p>
-            <ul class="agent-features">
-               <li>Tool integration</li>
-               <li>Multi-step reasoning</li>
-               <li>Self-reflection capabilities</li>
-               <li>Error recovery</li>
-            </ul>
-            <a href="../api/agents/react/index.html" class="agent-link">View Documentation</a>
-         </div>
+   .. grid-item-card:: 🧠 ReactAgent
+      :link: ../api/haive/agents/react/index
+      :shadow: lg
+      
+      **Reasoning & Acting Agent**
+      
+      Advanced reasoning agent that can use tools to solve complex problems through iterative thought and action cycles.
+      
+      +++
+      
+      ✓ Tool integration  
+      ✓ Multi-step reasoning  
+      ✓ Self-reflection capabilities  
+      ✓ Error recovery  
 
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">📚</div>
-               <div>
-                  <h3 class="agent-title">RAGAgent</h3>
-                  <p class="agent-subtitle">Retrieval-Augmented Generation</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Knowledge-grounded agents that combine retrieval systems with generation for accurate, up-to-date responses.
-            </p>
-            <ul class="agent-features">
-               <li>Vector search integration</li>
-               <li>Knowledge base queries</li>
-               <li>Source attribution</li>
-               <li>Adaptive retrieval</li>
-            </ul>
-            <a href="../api/agents/rag/index.html" class="agent-link">View Documentation</a>
-         </div>
+   .. grid-item-card:: 📚 RAGAgent
+      :link: ../api/haive/agents/rag/index
+      :shadow: lg
+      
+      **Retrieval-Augmented Generation**
+      
+      Knowledge-grounded agents that combine retrieval systems with generation for accurate, up-to-date responses.
+      
+      +++
+      
+      ✓ Vector search integration  
+      ✓ Knowledge base queries  
+      ✓ Source attribution  
+      ✓ Adaptive retrieval  
 
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">📚</div>
-               <div>
-                  <h3 class="agent-title">RAGAgent</h3>
-                  <p class="agent-subtitle">Retrieval-Augmented Generation</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Knowledge-grounded agents that combine retrieval systems with generation for accurate, up-to-date responses.
-            </p>
-            <ul class="agent-features">
-               <li>Vector search integration</li>
-               <li>Knowledge base queries</li>
-               <li>Source attribution</li>
-               <li>Adaptive retrieval</li>
-            </ul>
-            <a href="../api/agents/rag/index.html" class="agent-link">View Documentation</a>
-         </div>
+   .. grid-item-card:: 🔬 ResearchAgent
+      :link: ../api/src/haive/agents/research/index
+      :shadow: lg
+      
+      **Advanced Research & Analysis**
+      
+      Specialized agents for comprehensive research, information gathering, and multi-source analysis.
+      
+      +++
+      
+      ✓ Multi-source research  
+      ✓ Fact verification  
+      ✓ Report generation  
+      ✓ Citation management  
 
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">🔬</div>
-               <div>
-                  <h3 class="agent-title">ResearchAgent</h3>
-                  <p class="agent-subtitle">Advanced Research & Analysis</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Specialized agents for comprehensive research, information gathering, and multi-source analysis.
-            </p>
-            <ul class="agent-features">
-               <li>Multi-source research</li>
-               <li>Fact verification</li>
-               <li>Report generation</li>
-               <li>Citation management</li>
-            </ul>
-            <a href="../api/agents/research/index.html" class="agent-link">View Documentation</a>
-         </div>
+   .. grid-item-card:: 🎭 ConversationAgent
+      :link: ../api/src/haive/agents/conversation/index
+      :shadow: lg
+      
+      **Multi-Party Dialogue**
+      
+      Sophisticated dialogue management for multi-party conversations, debates, and collaborative discussions.
+      
+      +++
+      
+      ✓ Multi-participant management  
+      ✓ Turn-taking protocols  
+      ✓ Debate facilitation  
+      ✓ Consensus building  
 
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">🎭</div>
-               <div>
-                  <h3 class="agent-title">ConversationAgent</h3>
-                  <p class="agent-subtitle">Multi-Party Dialogue</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Sophisticated dialogue management for multi-party conversations, debates, and collaborative discussions.
-            </p>
-            <ul class="agent-features">
-               <li>Multi-participant management</li>
-               <li>Turn-taking protocols</li>
-               <li>Debate facilitation</li>
-               <li>Consensus building</li>
-            </ul>
-            <a href="../api/agents/conversation/index.html" class="agent-link">View Documentation</a>
-         </div>
+   .. grid-item-card:: 🎯 PlanningAgent
+      :link: ../api/src/haive/agents/planning/index
+      :shadow: lg
+      
+      **Task Planning & Execution**
+      
+      Advanced planning agents for task decomposition, workflow orchestration, and multi-step execution.
+      
+      +++
+      
+      ✓ Task decomposition  
+      ✓ Workflow planning  
+      ✓ Resource allocation  
+      ✓ Progress tracking  
 
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">🎯</div>
-               <div>
-                  <h3 class="agent-title">PlanningAgent</h3>
-                  <p class="agent-subtitle">Task Planning & Execution</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Advanced planning agents for task decomposition, workflow orchestration, and multi-step execution.
-            </p>
-            <ul class="agent-features">
-               <li>Task decomposition</li>
-               <li>Workflow planning</li>
-               <li>Resource allocation</li>
-               <li>Progress tracking</li>
-            </ul>
-            <a href="../api/agents/planning/index.html" class="agent-link">View Documentation</a>
-         </div>
+   .. grid-item-card:: 🌐 MultiAgent
+      :link: ../api/src/haive/agents/multi/index
+      :shadow: lg
+      
+      **Coordinated Agent Systems**
+      
+      Sophisticated multi-agent systems for complex problem-solving through coordinated collaboration.
+      
+      +++
+      
+      ✓ Agent coordination  
+      ✓ Workflow orchestration  
+      ✓ State synchronization  
+      ✓ Distributed processing  
 
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">🌐</div>
-               <div>
-                  <h3 class="agent-title">MultiAgent</h3>
-                  <p class="agent-subtitle">Coordinated Agent Systems</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Sophisticated multi-agent systems for complex problem-solving through coordinated collaboration.
-            </p>
-            <ul class="agent-features">
-               <li>Agent coordination</li>
-               <li>Workflow orchestration</li>
-               <li>State synchronization</li>
-               <li>Distributed processing</li>
-            </ul>
-            <a href="../api/agents/multi/index.html" class="agent-link">View Documentation</a>
-         </div>
-
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">🔍</div>
-               <div>
-                  <h3 class="agent-title">SearchAgent</h3>
-                  <p class="agent-subtitle">Perplexity-Style Search</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Advanced search agents including QuickSearch, ProSearch, DeepResearch, and Labs automation capabilities.
-            </p>
-            <ul class="agent-features">
-               <li>Multi-tier search (Quick/Pro/Deep)</li>
-               <li>Source verification</li>
-               <li>Interactive dashboards</li>
-               <li>Automated workflows</li>
-            </ul>
-            <a href="../api/agents/research/perplexity/index.html" class="agent-link">View Documentation</a>
-         </div>
-      </div>
-   </div>
+   .. grid-item-card:: 🔍 SearchAgent
+      :link: ../api/src/haive/agents/research/perplexity/index
+      :shadow: lg
+      
+      **Perplexity-Style Search**
+      
+      Advanced search agents including QuickSearch, ProSearch, DeepResearch, and Labs automation capabilities.
+      
+      +++
+      
+      ✓ Multi-tier search (Quick/Pro/Deep)  
+      ✓ Source verification  
+      ✓ Interactive dashboards  
+      ✓ Automated workflows  
 
    <div class="showcase-content">
       <h3>💬 Simple Agents</h3>

@@ -108,102 +108,71 @@
          </style>
 
 🎯 Core Capabilities
-===================
+=====================
 
 .. grid:: 1 2 3 3
    :gutter: 3
    :padding: 2
 
-   .. grid-item-card:: 
-      :class: feature-card
+   .. grid-item-card:: 🧠 AI Agents
       :shadow: lg
+      :link: agents/index
       
-      .. raw:: html
+      Build intelligent agents with memory, personality, and advanced reasoning capabilities.
+      
+      +++
+      
+      **Available Types:** SimpleAgent • ReactAgent • RAG Systems
 
-         <span class="icon">🧠</span>
-         <h3>AI Agents</h3>
-         <p>Build intelligent agents with memory, personality, and advanced reasoning capabilities.</p>
-         <div class="agent-badges">
-             <span class="agent-badge simple">SimpleAgent</span>
-             <span class="agent-badge react">ReactAgent</span>
-             <span class="agent-badge rag">RAG Systems</span>
-         </div>
-         <a href="agents/index.html" class="stretched-link"></a>
-
-   .. grid-item-card::
-      :class: feature-card
+   .. grid-item-card:: 🎮 Game Intelligence
       :shadow: lg
+      :link: games/index
       
-      .. raw:: html
+      Create AI opponents for Chess, Go, Poker, and other strategic games with advanced algorithms.
+      
+      +++
+      
+      **Available Types:** Chess Engine • Board Games • Strategy AI
 
-         <span class="icon">🎮</span>
-         <h3>Game Intelligence</h3>
-         <p>Create AI opponents for Chess, Go, Poker, and other strategic games with advanced algorithms.</p>
-         <div class="agent-badges">
-             <span class="agent-badge simple">Chess Engine</span>
-             <span class="agent-badge react">Board Games</span>
-         </div>
-         <a href="games/index.html" class="stretched-link"></a>
-
-   .. grid-item-card::
-      :class: feature-card
+   .. grid-item-card:: 🔧 Tool Orchestration  
       :shadow: lg
+      :link: tools/index
       
-      .. raw:: html
+      Connect agents to APIs, databases, search engines, and external services seamlessly.
+      
+      +++
+      
+      **Supported:** Web APIs • Databases • File Systems
 
-         <span class="icon">🔧</span>
-         <h3>Tool Orchestration</h3>
-         <p>Connect agents to APIs, databases, search engines, and external services seamlessly.</p>
-         <div class="agent-badges">
-             <span class="agent-badge rag">Web APIs</span>
-             <span class="agent-badge multi">Databases</span>
-         </div>
-         <a href="tools/index.html" class="stretched-link"></a>
+   .. grid-item-card:: 🔄 Dynamic MCP
+      :shadow: lg  
+      :link: mcp/index
+      
+      1,960+ servers with hot-reload capabilities and AI-powered discovery.
+      
+      +++
+      
+      **Features:** Auto-Discovery • Hot-Reload • Plugin System
 
-   .. grid-item-card::
-      :class: feature-card
+   .. grid-item-card:: 📖 API Reference
       :shadow: lg
+      :link: api/index
       
-      .. raw:: html
+      Comprehensive API documentation with examples and implementation details.
+      
+      +++
+      
+      **Coverage:** Core API • Agent Classes • Tools
 
-         <span class="icon">🔄</span>
-         <h3>Dynamic MCP</h3>
-         <p>1,960+ servers with hot-reload capabilities and AI-powered discovery.</p>
-         <div class="agent-badges">
-             <span class="agent-badge simple">Auto-Discovery</span>
-             <span class="agent-badge react">Hot-Reload</span>
-         </div>
-         <a href="mcp/index.html" class="stretched-link"></a>
-
-   .. grid-item-card::
-      :class: feature-card
+   .. grid-item-card:: 📚 Examples
       :shadow: lg
+      :link: examples/index
       
-      .. raw:: html
-
-         <span class="icon">📖</span>
-         <h3>API Reference</h3>
-         <p>Comprehensive API documentation with examples and implementation details.</p>
-         <div class="agent-badges">
-             <span class="agent-badge rag">Core API</span>
-             <span class="agent-badge multi">Agent Classes</span>
-         </div>
-         <a href="api/index.html" class="stretched-link"></a>
-
-   .. grid-item-card::
-      :class: feature-card
-      :shadow: lg
+      Step-by-step tutorials and real-world examples to get started quickly.
       
-      .. raw:: html
-
-         <span class="icon">📚</span>
-         <h3>Examples</h3>
-         <p>Step-by-step tutorials and real-world examples to get started quickly.</p>
-         <div class="agent-badges">
-             <span class="agent-badge simple">Tutorials</span>
-             <span class="agent-badge react">Guides</span>
-         </div>
-         <a href="gallery.html" class="stretched-link"></a>
+      +++
+      
+      **Content:** Tutorials • Guides • Code Samples
 
 .. raw:: html
 
@@ -430,9 +399,9 @@
    :caption: 🧑‍💻 Guides & Examples
    :hidden:
 
+   examples/index
    gallery
    guides/index
-   examples/index
    reference/index
 
 Quick Links
