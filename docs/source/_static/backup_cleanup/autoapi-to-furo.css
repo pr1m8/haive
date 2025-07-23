@@ -1,0 +1,613 @@
+/* ==============================================================================
+ * AutoAPI to Furo Translation Layer
+ * Forces AutoAPI-generated pages to use Furo theme styling
+ * Ensures seamless integration with unified interface
+ * ============================================================================== */
+
+/* === AUTOAPI CONTAINER OVERRIDES === */
+
+/* Remove default AutoAPI styling and apply Furo structure */
+.autoapi-container,
+div[class*="autoapi"] {
+    font-family: var(--font-stack, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif) !important;
+    color: var(--color-foreground-primary, #1a1a1a) !important;
+    background: var(--color-background-primary, #ffffff) !important;
+    line-height: 1.6 !important;
+}
+
+/* === AUTOAPI SECTION HEADERS === */
+
+/* Main API section headers */
+section[id*="autoapi"] h1,
+.autoapi-section h1 {
+    font-size: 2.5rem !important;
+    font-weight: 700 !important;
+    margin: 2rem 0 1.5rem 0 !important;
+    color: var(--color-foreground-primary, #1a1a1a) !important;
+    border-bottom: 3px solid transparent !important;
+    background: var(--haive-gradient-main, linear-gradient(135deg, #667eea 0%, #764ba2 100%)) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    position: relative !important;
+}
+
+section[id*="autoapi"] h1::after,
+.autoapi-section h1::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -8px !important;
+    left: 0 !important;
+    width: 80px !important;
+    height: 4px !important;
+    background: var(--haive-gradient-main, linear-gradient(135deg, #667eea 0%, #764ba2 100%)) !important;
+    border-radius: 2px !important;
+}
+
+/* Subsection headers */
+section[id*="autoapi"] h2,
+.autoapi-section h2 {
+    font-size: 1.8rem !important;
+    font-weight: 600 !important;
+    margin: 2rem 0 1rem 0 !important;
+    color: var(--color-foreground-primary, #1a1a1a) !important;
+    border-left: 4px solid var(--haive-primary, #667eea) !important;
+    padding-left: 1rem !important;
+}
+
+section[id*="autoapi"] h3,
+.autoapi-section h3 {
+    font-size: 1.4rem !important;
+    font-weight: 600 !important;
+    margin: 1.5rem 0 0.75rem 0 !important;
+    color: var(--color-foreground-primary, #1a1a1a) !important;
+}
+
+/* === AUTOAPI CLASS/FUNCTION DOCUMENTATION === */
+
+/* Class and function signature containers */
+.autoapi-class,
+.autoapi-function,
+.autoapi-method,
+.autoapi-attribute,
+dl.py.class,
+dl.py.function,
+dl.py.method,
+dl.py.attribute {
+    background: var(--haive-gradient-card, linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)) !important;
+    border: 2px solid transparent !important;
+    border-radius: 12px !important;
+    padding: 1.5rem !important;
+    margin: 1.5rem 0 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.autoapi-class::before,
+.autoapi-function::before,
+.autoapi-method::before,
+.autoapi-attribute::before,
+dl.py.class::before,
+dl.py.function::before,
+dl.py.method::before,
+dl.py.attribute::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 4px !important;
+    background: var(--haive-gradient-main, linear-gradient(135deg, #667eea 0%, #764ba2 100%)) !important;
+    opacity: 0 !important;
+    transition: opacity 0.3s ease !important;
+}
+
+.autoapi-class:hover,
+.autoapi-function:hover,
+.autoapi-method:hover,
+.autoapi-attribute:hover,
+dl.py.class:hover,
+dl.py.function:hover,
+dl.py.method:hover,
+dl.py.attribute:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
+    border-color: rgba(102, 126, 234, 0.2) !important;
+}
+
+.autoapi-class:hover::before,
+.autoapi-function:hover::before,
+.autoapi-method:hover::before,
+.autoapi-attribute:hover::before,
+dl.py.class:hover::before,
+dl.py.function:hover::before,
+dl.py.method:hover::before,
+dl.py.attribute:hover::before {
+    opacity: 1 !important;
+}
+
+/* === SIGNATURE STYLING === */
+
+/* Function/method/class signatures */
+.sig,
+.sig-name,
+.autoapi-signature,
+dt.sig.sig-object {
+    font-family: var(--font-family-mono, 'Cascadia Code', 'JetBrains Mono', 'Fira Code', 'Consolas', monospace) !important;
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+    background: rgba(102, 126, 234, 0.05) !important;
+    padding: 1rem !important;
+    border-radius: 8px !important;
+    border-left: 4px solid var(--haive-primary, #667eea) !important;
+    margin-bottom: 1rem !important;
+    overflow-x: auto !important;
+}
+
+/* Signature name highlighting */
+.sig-name,
+.autoapi-signature .sig-name,
+.descname {
+    color: var(--haive-primary, #667eea) !important;
+    font-weight: 700 !important;
+}
+
+/* Parameters */
+.sig-param,
+.autoapi-signature .sig-param {
+    color: var(--color-foreground-secondary, #666666) !important;
+}
+
+/* Type annotations */
+.sig-return,
+.sig-return-icon,
+.sig-return-typehint {
+    color: var(--haive-secondary, #764ba2) !important;
+    font-style: italic !important;
+}
+
+/* === PARAMETER DOCUMENTATION === */
+
+/* Parameter lists */
+.field-list,
+.autoapi-field-list,
+dl.field-list {
+    background: var(--color-background-secondary, #f8f9fa) !important;
+    border-radius: 12px !important;
+    padding: 1.5rem !important;
+    margin: 1.5rem 0 !important;
+    border: 1px solid var(--color-background-border, #e1e4e8) !important;
+}
+
+.field-list dt,
+.autoapi-field-list dt,
+dl.field-list dt {
+    font-weight: 700 !important;
+    color: var(--haive-primary, #667eea) !important;
+    margin-bottom: 0.5rem !important;
+    font-size: 0.95rem !important;
+}
+
+.field-list dd,
+.autoapi-field-list dd,
+dl.field-list dd {
+    margin-bottom: 1rem !important;
+    padding-left: 1.5rem !important;
+    border-left: 2px solid rgba(102, 126, 234, 0.2) !important;
+    color: var(--color-foreground-secondary, #666666) !important;
+}
+
+/* === DOCSTRING CONTENT === */
+
+/* Main docstring content */
+.autoapi-docstring,
+.autoapi-content,
+dd.field-body,
+.py .attribute .sig + dd,
+.py .class .sig + dd,
+.py .function .sig + dd,
+.py .method .sig + dd {
+    color: var(--color-foreground-secondary, #666666) !important;
+    line-height: 1.7 !important;
+    margin: 1rem 0 !important;
+}
+
+/* Docstring paragraphs */
+.autoapi-docstring p,
+.autoapi-content p,
+dd.field-body p {
+    margin-bottom: 1rem !important;
+    line-height: 1.7 !important;
+}
+
+/* === INHERITANCE AND RELATIONSHIPS === */
+
+/* Inheritance information */
+.autoapi-inheritance,
+.inheritance,
+.bases {
+    background: rgba(102, 126, 234, 0.05) !important;
+    padding: 0.75rem 1rem !important;
+    border-radius: 8px !important;
+    margin: 1rem 0 !important;
+    border-left: 3px solid var(--haive-primary, #667eea) !important;
+    font-size: 0.9rem !important;
+}
+
+.autoapi-inheritance strong,
+.inheritance strong {
+    color: var(--haive-primary, #667eea) !important;
+}
+
+/* === SOURCE LINKS === */
+
+/* View source links */
+.viewcode-link,
+.autoapi-source-link,
+a[title*="source"] {
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 0.5rem 1rem !important;
+    background: var(--haive-gradient-main, linear-gradient(135deg, #667eea 0%, #764ba2 100%)) !important;
+    color: white !important;
+    text-decoration: none !important;
+    border-radius: 6px !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+    margin-left: 1rem !important;
+    float: right !important;
+}
+
+.viewcode-link:hover,
+.autoapi-source-link:hover,
+a[title*="source"]:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3) !important;
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.viewcode-link::after,
+.autoapi-source-link::after,
+a[title*="source"]::after {
+    content: ' 📄' !important;
+    margin-left: 0.5rem !important;
+}
+
+/* === NAVIGATION ELEMENTS === */
+
+/* AutoAPI navigation elements */
+.autoapi-nav,
+.autoapi-toc,
+.toctree-wrapper.compound {
+    background: var(--color-background-secondary, #f8f9fa) !important;
+    border-radius: 12px !important;
+    padding: 1.5rem !important;
+    margin: 1.5rem 0 !important;
+    border: 1px solid var(--color-background-border, #e1e4e8) !important;
+}
+
+.autoapi-nav ul,
+.autoapi-toc ul,
+.toctree-wrapper.compound ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.autoapi-nav li,
+.autoapi-toc li,
+.toctree-wrapper.compound li {
+    margin-bottom: 0.5rem !important;
+}
+
+.autoapi-nav a,
+.autoapi-toc a,
+.toctree-wrapper.compound a {
+    display: block !important;
+    padding: 0.5rem 1rem !important;
+    color: var(--color-foreground-primary, #1a1a1a) !important;
+    text-decoration: none !important;
+    border-radius: 6px !important;
+    transition: all 0.3s ease !important;
+}
+
+.autoapi-nav a:hover,
+.autoapi-toc a:hover,
+.toctree-wrapper.compound a:hover {
+    background: rgba(102, 126, 234, 0.1) !important;
+    color: var(--haive-primary, #667eea) !important;
+    transform: translateX(4px) !important;
+}
+
+.autoapi-nav a.current,
+.autoapi-toc a.current,
+.toctree-wrapper.compound a.current {
+    background: var(--haive-gradient-main, linear-gradient(135deg, #667eea 0%, #764ba2 100%)) !important;
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+/* === SEARCH AND FILTERING === */
+
+/* AutoAPI search elements */
+.autoapi-search,
+.autoapi-filter {
+    background: white !important;
+    border: 2px solid var(--color-background-border, #e1e4e8) !important;
+    border-radius: 12px !important;
+    padding: 1rem !important;
+    font-size: 1rem !important;
+    transition: all 0.3s ease !important;
+    width: 100% !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.autoapi-search:focus,
+.autoapi-filter:focus {
+    outline: none !important;
+    border-color: var(--haive-primary, #667eea) !important;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+}
+
+/* === ADMONITIONS IN AUTOAPI === */
+
+/* Admonitions within AutoAPI content */
+.autoapi-content .admonition,
+.autoapi-docstring .admonition {
+    border-radius: 12px !important;
+    padding: 1.5rem !important;
+    margin: 1.5rem 0 !important;
+    border-left: 4px solid !important;
+}
+
+.autoapi-content .admonition.note,
+.autoapi-docstring .admonition.note {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%) !important;
+    border-left-color: #2196f3 !important;
+}
+
+.autoapi-content .admonition.warning,
+.autoapi-docstring .admonition.warning {
+    background: linear-gradient(135deg, #fff3e0 0%, #fce4ec 100%) !important;
+    border-left-color: #ff9800 !important;
+}
+
+.autoapi-content .admonition.tip,
+.autoapi-docstring .admonition.tip {
+    background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%) !important;
+    border-left-color: #4caf50 !important;
+}
+
+/* === CODE BLOCKS IN AUTOAPI === */
+
+/* Code examples within AutoAPI */
+.autoapi-content .highlight,
+.autoapi-docstring .highlight,
+.autoapi-content pre,
+.autoapi-docstring pre {
+    background: var(--haive-gradient-code, linear-gradient(135deg, #1e1e1e 0%, #2d2d30 100%)) !important;
+    border-radius: 12px !important;
+    padding: 1.5rem !important;
+    margin: 1.5rem 0 !important;
+    overflow-x: auto !important;
+    position: relative !important;
+    border: 1px solid #333 !important;
+}
+
+.autoapi-content .highlight::before,
+.autoapi-docstring .highlight::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 3px !important;
+    background: var(--haive-gradient-main, linear-gradient(135deg, #667eea 0%, #764ba2 100%)) !important;
+    border-radius: 12px 12px 0 0 !important;
+}
+
+.autoapi-content .highlight code,
+.autoapi-docstring .highlight code,
+.autoapi-content pre code,
+.autoapi-docstring pre code {
+    color: #d4d4d4 !important;
+    font-family: var(--font-family-mono, 'Cascadia Code', 'JetBrains Mono', 'Fira Code', 'Consolas', monospace) !important;
+    font-size: 0.9rem !important;
+    line-height: 1.7 !important;
+}
+
+/* === RESPONSIVE DESIGN === */
+
+@media (max-width: 768px) {
+    .autoapi-container,
+    div[class*="autoapi"] {
+        padding: 1rem !important;
+    }
+    
+    .autoapi-class,
+    .autoapi-function,
+    .autoapi-method,
+    .autoapi-attribute,
+    dl.py.class,
+    dl.py.function,
+    dl.py.method,
+    dl.py.attribute {
+        padding: 1rem !important;
+        margin: 1rem 0 !important;
+    }
+    
+    .sig,
+    .sig-name,
+    .autoapi-signature,
+    dt.sig.sig-object {
+        font-size: 0.85rem !important;
+        padding: 0.75rem !important;
+    }
+    
+    section[id*="autoapi"] h1,
+    .autoapi-section h1 {
+        font-size: 2rem !important;
+    }
+    
+    section[id*="autoapi"] h2,
+    .autoapi-section h2 {
+        font-size: 1.5rem !important;
+    }
+}
+
+/* === DARK THEME SUPPORT === */
+
+@media (prefers-color-scheme: dark) {
+    .autoapi-container,
+    div[class*="autoapi"] {
+        background: var(--color-background-primary, #1a202c) !important;
+        color: var(--color-foreground-primary, #e2e8f0) !important;
+    }
+    
+    .autoapi-class,
+    .autoapi-function,
+    .autoapi-method,
+    .autoapi-attribute,
+    dl.py.class,
+    dl.py.function,
+    dl.py.method,
+    dl.py.attribute {
+        background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%) !important;
+        border-color: #4a5568 !important;
+    }
+    
+    .field-list,
+    .autoapi-field-list,
+    dl.field-list {
+        background: #2d3748 !important;
+        border-color: #4a5568 !important;
+    }
+    
+    .autoapi-nav,
+    .autoapi-toc,
+    .toctree-wrapper.compound {
+        background: #2d3748 !important;
+        border-color: #4a5568 !important;
+    }
+    
+    .autoapi-search,
+    .autoapi-filter {
+        background: #2d3748 !important;
+        border-color: #4a5568 !important;
+        color: #e2e8f0 !important;
+    }
+}
+
+/* === FURO SPECIFIC OVERRIDES === */
+
+/* Ensure AutoAPI content integrates with Furo's article structure */
+.rst-content .autoapi-container,
+article .autoapi-container {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Furo's content area adjustments */
+.content .autoapi-container {
+    font-size: inherit !important;
+    line-height: inherit !important;
+}
+
+/* Furo sidebar integration */
+.sidebar .autoapi-nav {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* === PRINT STYLES === */
+
+@media print {
+    .autoapi-class,
+    .autoapi-function,
+    .autoapi-method,
+    .autoapi-attribute,
+    dl.py.class,
+    dl.py.function,
+    dl.py.method,
+    dl.py.attribute {
+        break-inside: avoid !important;
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+    }
+    
+    .viewcode-link,
+    .autoapi-source-link,
+    a[title*="source"] {
+        display: none !important;
+    }
+}
+
+/* === FINAL INTEGRATION LAYER === */
+
+/* Ensure all AutoAPI elements follow Furo conventions */
+.autoapi-container * {
+    box-sizing: border-box !important;
+}
+
+/* Force AutoAPI to respect Furo's layout constraints */
+.autoapi-container .section {
+    margin-bottom: 2rem !important;
+}
+
+/* Integrate with existing Furo navigation styles */
+.autoapi-container .toctree-wrapper a {
+    border-radius: 6px !important;
+    padding: 0.5rem 1rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.autoapi-container .toctree-wrapper a:hover {
+    background: rgba(102, 126, 234, 0.1) !important;
+    transform: translateX(2px) !important;
+}
+
+/* === PERFORMANCE OPTIMIZATIONS === */
+
+/* Enable GPU acceleration for smooth animations */
+.autoapi-class,
+.autoapi-function,
+.autoapi-method,
+.autoapi-attribute,
+dl.py.class,
+dl.py.function,
+dl.py.method,
+dl.py.attribute {
+    will-change: transform !important;
+    backface-visibility: hidden !important;
+    transform: translateZ(0) !important;
+}
+
+/* === ACCESSIBILITY IMPROVEMENTS === */
+
+/* Ensure proper focus states for AutoAPI elements */
+.autoapi-container a:focus,
+.autoapi-container button:focus {
+    outline: 2px solid var(--haive-primary, #667eea) !important;
+    outline-offset: 2px !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .autoapi-class,
+    .autoapi-function,
+    .autoapi-method,
+    .autoapi-attribute,
+    dl.py.class,
+    dl.py.function,
+    dl.py.method,
+    dl.py.attribute {
+        border: 2px solid !important;
+    }
+}

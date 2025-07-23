@@ -399,9 +399,12 @@
    :caption: 🧑‍💻 Guides & Examples
    :hidden:
 
+   simple_agent_guide
+   conversation_showcase
    examples/index
    gallery
    guides/index
+   real_examples
    reference/index
 
 Quick Links

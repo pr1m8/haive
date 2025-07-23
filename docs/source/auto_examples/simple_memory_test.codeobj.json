@@ -1,0 +1,65 @@
+{
+  "AugLLMConfig": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "haive.core.engine.aug_llm",
+      "module_short": "haive.core",
+      "name": "AugLLMConfig"
+    }
+  ],
+  "MemoryClassifier": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "haive.agents.memory.core.classifier",
+      "module_short": "haive.agents.memory.core.classifier",
+      "name": "MemoryClassifier"
+    }
+  ],
+  "MemoryClassifierConfig": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "haive.agents.memory.core.classifier",
+      "module_short": "haive.agents.memory.core.classifier",
+      "name": "MemoryClassifierConfig"
+    }
+  ],
+  "StoreManager": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "haive.core.tools.store_manager",
+      "module_short": "haive.core.tools.store_manager",
+      "name": "StoreManager"
+    }
+  ],
+  "StoreType.MEMORY": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "haive.core.persistence.store.types.StoreType",
+      "module_short": "haive.core.persistence.store.types.StoreType",
+      "name": "MEMORY"
+    }
+  ],
+  "__name__": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "builtins",
+      "module_short": "builtins",
+      "name": "str"
+    }
+  ],
+  "asyncio.run": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "asyncio",
+      "module_short": "asyncio",
+      "name": "run"
+    }
+  ]
+}

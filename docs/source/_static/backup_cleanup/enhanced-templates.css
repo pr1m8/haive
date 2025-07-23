@@ -1,0 +1,672 @@
+/**
+ * Enhanced Agent & Game Templates for Haive Documentation
+ * Modern, interactive showcase designs
+ */
+
+/* =============================================================================
+   Agent Showcase Templates
+   ============================================================================= */
+
+/* Agent Card Container */
+.agent-showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--space-xl);
+  margin: var(--space-2xl) 0;
+}
+
+.agent-card {
+  background: linear-gradient(135deg, var(--color-background-primary) 0%, var(--color-background-secondary) 100%);
+  border: 1px solid var(--color-background-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+  height: fit-content;
+}
+
+.agent-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-content));
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.agent-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-brand-primary);
+}
+
+.agent-card:hover::before {
+  opacity: 1;
+}
+
+/* Agent Header */
+.agent-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.agent-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-content));
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.agent-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-foreground-primary);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.agent-subtitle {
+  font-size: 0.875rem;
+  color: var(--color-foreground-secondary);
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Agent Content */
+.agent-description {
+  color: var(--color-foreground-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-lg);
+}
+
+/* Agent Features */
+.agent-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.agent-feature {
+  background: var(--color-api-background);
+  border: 1px solid var(--color-api-background-hover);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-foreground-primary);
+  transition: all var(--transition-fast);
+}
+
+.agent-feature:hover {
+  background: var(--color-brand-primary);
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Agent Actions */
+.agent-actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.agent-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-brand-primary);
+  color: white;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  border: none;
+  cursor: pointer;
+}
+
+.agent-button:hover {
+  background: var(--color-brand-content);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.agent-button-secondary {
+  background: transparent;
+  color: var(--color-brand-primary);
+  border: 1px solid var(--color-brand-primary);
+}
+
+.agent-button-secondary:hover {
+  background: var(--color-brand-primary);
+  color: white;
+}
+
+/* Agent Code Preview */
+.agent-code-preview {
+  background: var(--color-api-background);
+  border: 1px solid var(--color-api-background-hover);
+  border-radius: var(--radius-md);
+  margin: var(--space-lg) 0;
+  overflow: hidden;
+}
+
+.agent-code-header {
+  background: var(--color-background-secondary);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-api-background-hover);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-foreground-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.agent-code-content {
+  padding: var(--space-md);
+  font-family: var(--font-family-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--color-foreground-primary);
+  overflow-x: auto;
+}
+
+/* =============================================================================
+   Game Showcase Templates
+   ============================================================================= */
+
+/* Game Gallery */
+.game-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-xl);
+  margin: var(--space-2xl) 0;
+}
+
+.game-card {
+  background: var(--color-background-primary);
+  border: 1px solid var(--color-background-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-base);
+  position: relative;
+  height: fit-content;
+}
+
+.game-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-brand-primary);
+}
+
+/* Game Image/Preview */
+.game-preview {
+  position: relative;
+  height: 200px;
+  background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-content));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.game-preview::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.1) 20%, transparent 50%);
+}
+
+.game-icon {
+  font-size: 3rem;
+  color: white;
+  z-index: 1;
+  position: relative;
+}
+
+.game-screenshot {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Game Content */
+.game-content {
+  padding: var(--space-lg);
+}
+
+.game-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-foreground-primary);
+  margin: 0 0 var(--space-sm) 0;
+  line-height: 1.3;
+}
+
+.game-category {
+  display: inline-block;
+  background: var(--color-brand-primary);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+}
+
+.game-description {
+  color: var(--color-foreground-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-lg);
+  font-size: 0.925rem;
+}
+
+/* Game Stats */
+.game-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.game-stat {
+  text-align: center;
+  padding: var(--space-sm);
+  background: var(--color-background-secondary);
+  border-radius: var(--radius-md);
+}
+
+.game-stat-value {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-brand-primary);
+  line-height: 1;
+}
+
+.game-stat-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-foreground-secondary);
+  margin-top: var(--space-xs);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+/* Game Actions */
+.game-actions {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.game-play-button {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-content));
+  color: white;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  transition: all var(--transition-base);
+  border: none;
+  cursor: pointer;
+}
+
+.game-play-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  filter: brightness(1.1);
+}
+
+.game-info-button {
+  padding: var(--space-md);
+  background: transparent;
+  color: var(--color-brand-primary);
+  border: 1px solid var(--color-brand-primary);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-info-button:hover {
+  background: var(--color-brand-primary);
+  color: white;
+}
+
+/* =============================================================================
+   Enhanced Navigation Components
+   ============================================================================= */
+
+/* Breadcrumb Navigation */
+.enhanced-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-md);
+  background: var(--color-background-secondary);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+}
+
+.enhanced-breadcrumb-item {
+  color: var(--color-foreground-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.enhanced-breadcrumb-item:hover {
+  color: var(--color-brand-primary);
+}
+
+.enhanced-breadcrumb-separator {
+  color: var(--color-foreground-secondary);
+  opacity: 0.5;
+}
+
+.enhanced-breadcrumb-current {
+  color: var(--color-brand-primary);
+  font-weight: 600;
+}
+
+/* Section Navigation */
+.section-nav {
+  background: var(--color-background-primary);
+  border: 1px solid var(--color-background-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin: var(--space-2xl) 0;
+}
+
+.section-nav-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-foreground-primary);
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.section-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-md);
+}
+
+.section-nav-item {
+  background: var(--color-background-secondary);
+  border: 1px solid var(--color-background-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  text-decoration: none;
+  color: var(--color-foreground-primary);
+  transition: all var(--transition-base);
+  display: block;
+}
+
+.section-nav-item:hover {
+  background: var(--color-brand-primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.section-nav-item-title {
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+}
+
+.section-nav-item-desc {
+  font-size: 0.875rem;
+  opacity: 0.8;
+  line-height: 1.4;
+}
+
+/* =============================================================================
+   Interactive Elements
+   ============================================================================= */
+
+/* Collapsible Sections */
+.collapsible {
+  border: 1px solid var(--color-background-border);
+  border-radius: var(--radius-md);
+  margin: var(--space-lg) 0;
+  overflow: hidden;
+}
+
+.collapsible-header {
+  background: var(--color-background-secondary);
+  padding: var(--space-md) var(--space-lg);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.collapsible-header:hover {
+  background: var(--color-api-background-hover);
+}
+
+.collapsible-title {
+  font-weight: 600;
+  color: var(--color-foreground-primary);
+  margin: 0;
+}
+
+.collapsible-icon {
+  transition: transform var(--transition-fast);
+  color: var(--color-foreground-secondary);
+}
+
+.collapsible.expanded .collapsible-icon {
+  transform: rotate(90deg);
+}
+
+.collapsible-content {
+  padding: var(--space-lg);
+  display: none;
+}
+
+.collapsible.expanded .collapsible-content {
+  display: block;
+}
+
+/* Tabs */
+.tabs {
+  border: 1px solid var(--color-background-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin: var(--space-lg) 0;
+}
+
+.tab-list {
+  display: flex;
+  background: var(--color-background-secondary);
+  border-bottom: 1px solid var(--color-background-border);
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  padding: var(--space-md) var(--space-lg);
+  font-weight: 600;
+  color: var(--color-foreground-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border-bottom: 3px solid transparent;
+}
+
+.tab-button:hover {
+  color: var(--color-foreground-primary);
+  background: var(--color-api-background-hover);
+}
+
+.tab-button.active {
+  color: var(--color-brand-primary);
+  border-bottom-color: var(--color-brand-primary);
+  background: var(--color-background-primary);
+}
+
+.tab-content {
+  padding: var(--space-lg);
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* =============================================================================
+   Responsive Design Enhancements
+   ============================================================================= */
+
+@media (max-width: 768px) {
+  .agent-showcase {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  
+  .agent-card {
+    padding: var(--space-lg);
+  }
+  
+  .agent-features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .game-gallery {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  
+  .game-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .section-nav-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tab-list {
+    flex-wrap: wrap;
+  }
+  
+  .tab-button {
+    flex: 1;
+    min-width: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .agent-features {
+    grid-template-columns: 1fr;
+  }
+  
+  .agent-actions {
+    flex-direction: column;
+  }
+  
+  .game-actions {
+    flex-direction: column;
+  }
+  
+  .game-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .enhanced-breadcrumb {
+    flex-wrap: wrap;
+  }
+}
+
+/* =============================================================================
+   Animation Classes
+   ============================================================================= */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.6s ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Stagger animations for multiple elements */
+.stagger-animation > * {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.stagger-animation > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-animation > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-animation > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-animation > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-animation > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-animation > *:nth-child(6) { animation-delay: 0.6s; }

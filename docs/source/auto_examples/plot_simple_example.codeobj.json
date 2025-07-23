@@ -1,0 +1,189 @@
+{
+  "np.linspace": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "numpy",
+      "module_short": "numpy",
+      "name": "_ArrayFunctionDispatcher"
+    },
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "numpy",
+      "module_short": "numpy",
+      "name": "linspace"
+    }
+  ],
+  "np.pi": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "builtins",
+      "module_short": "builtins",
+      "name": "float"
+    },
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "numpy",
+      "module_short": "numpy",
+      "name": "pi"
+    }
+  ],
+  "np.sin": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "numpy",
+      "module_short": "numpy",
+      "name": "ufunc"
+    },
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "numpy",
+      "module_short": "numpy",
+      "name": "sin"
+    }
+  ],
+  "plt.figure": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "builtins",
+      "module_short": "builtins",
+      "name": "function"
+    },
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "matplotlib.pyplot",
+      "module_short": "matplotlib.pyplot",
+      "name": "figure"
+    }
+  ],
+  "plt.grid": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "builtins",
+      "module_short": "builtins",
+      "name": "function"
+    },
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "matplotlib.pyplot",
+      "module_short": "matplotlib.pyplot",
+      "name": "grid"
+    }
+  ],
+  "plt.plot": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "builtins",
+      "module_short": "builtins",
+      "name": "function"
+    },
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "matplotlib.pyplot",
+      "module_short": "matplotlib.pyplot",
+      "name": "plot"
+    }
+  ],
+  "plt.show": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "builtins",
+      "module_short": "builtins",
+      "name": "function"
+    },
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "matplotlib.pyplot",
+      "module_short": "matplotlib.pyplot",
+      "name": "show"
+    }
+  ],
+  "plt.title": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "builtins",
+      "module_short": "builtins",
+      "name": "function"
+    },
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "matplotlib.pyplot",
+      "module_short": "matplotlib.pyplot",
+      "name": "title"
+    }
+  ],
+  "plt.xlabel": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "builtins",
+      "module_short": "builtins",
+      "name": "function"
+    },
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "matplotlib.pyplot",
+      "module_short": "matplotlib.pyplot",
+      "name": "xlabel"
+    }
+  ],
+  "plt.ylabel": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "builtins",
+      "module_short": "builtins",
+      "name": "function"
+    },
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "matplotlib.pyplot",
+      "module_short": "matplotlib.pyplot",
+      "name": "ylabel"
+    }
+  ],
+  "result": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "builtins",
+      "module_short": "builtins",
+      "name": "int"
+    }
+  ],
+  "x": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "numpy",
+      "module_short": "numpy",
+      "name": "ndarray"
+    }
+  ],
+  "y": [
+    {
+      "is_class": false,
+      "is_explicit": false,
+      "module": "numpy",
+      "module_short": "numpy",
+      "name": "ndarray"
+    }
+  ]
+}
