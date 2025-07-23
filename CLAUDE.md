@@ -8,10 +8,12 @@
 
 - **Directory**: `/home/will/Projects/haive/backend/haive`
 - **Branch**: `feature/fix_everything`
+- **Structure**: Monorepo with Git submodules (7 packages)
 - **Core Rules**:
   - Always use `poetry run` prefix for ALL Python commands
   - Real components only - NO MOCKS EVER in tests
   - Always use explicit imports: `from haive.core.*`
+  - Be EXTREMELY careful with submodules - each is its own repo
 
 ## 📚 Essential Documentation
 
@@ -43,6 +45,8 @@
 
 ## 🔥 Git Safety Protocol (CRITICAL)
 
+### Main Repository Safety
+
 ```bash
 # BEFORE ANY WORK
 git status && git diff
@@ -58,6 +62,47 @@ poetry run pytest          # Run tests
 # COMMIT SAFELY
 git add specific_file.py   # Add individually
 git commit -m "feat: clear description"
+```
+
+### Submodule Safety (EXTRA CRITICAL!)
+
+```bash
+# BEFORE working in ANY submodule
+cd packages/haive-{package}
+git status                    # Check current state
+git branch -vv               # Check current branch
+git log --oneline -5         # Recent history
+
+# ALWAYS create backups before major changes
+git branch backup-$(date +%Y%m%d-%H%M%S)
+
+# When switching branches in submodules
+git fetch origin
+git checkout -b new-branch   # Create new branch
+# OR
+git checkout existing-branch # Switch carefully
+
+# NEVER force push in submodules without discussion
+# NEVER delete branches without checking with user
+# NEVER reset --hard without explicit permission
+
+# After submodule changes
+cd ../..                     # Back to main repo
+git add packages/haive-{package}
+git commit -m "Update submodule reference"
+```
+
+### Recovery Patterns
+
+```bash
+# If something goes wrong in a submodule
+cd packages/haive-{package}
+git reflog                   # Find lost commits
+git branch recovery-branch HEAD@{n}  # Recover
+
+# If submodule is in detached HEAD
+git checkout -b temp-branch  # Save current state
+git push origin temp-branch  # Backup to remote
 ```
 
 ## 🛠️ Most Used Commands
@@ -78,22 +123,54 @@ poetry run ruff check
 find packages/ -name "*.py" | xargs grep -l "YourPattern" | head -5
 ```
 
-## 📦 Project Structure
+## 📦 Project Structure - Namespaced Polyrepo
+
+This is a **namespaced polyrepo** - multiple repositories managed as submodules:
 
 ```
-packages/
-├── haive-core/     # Engines, graphs, schemas (foundation)
-├── haive-agents/   # Agent implementations
-├── haive-tools/    # Tool implementations
-├── haive-games/    # Game environments
-├── haive-mcp/      # MCP integration
-└── haive-prebuilt/ # Pre-configured components
+packages/                          # Each package is its own Git repository!
+├── haive-core/     # github.com/pr1m8/haive-core (foundation)
+├── haive-agents/   # github.com/pr1m8/haive-agents (agent implementations)
+├── haive-tools/    # github.com/pr1m8/haive-tools (tool implementations)
+├── haive-games/    # github.com/pr1m8/haive-games (game environments)
+├── haive-mcp/      # github.com/pr1m8/haive-mcp (MCP integration)
+├── haive-prebuilt/ # github.com/pr1m8/haive-prebuilt (pre-configured)
+└── haive-dataflow/ # github.com/pr1m8/haive-dataflow (data processing)
 
-project_docs/
+project_docs/       # Documentation in main repo only
 ├── active/         # Current standards & architecture
 ├── sessions/       # Working memory
 └── {package}/      # Package-specific docs
 ```
+
+### ⚠️ Polyrepo Implications:
+
+1. **Each package has its own**:
+   - Git history
+   - Branches
+   - Tags
+   - Issues/PRs
+   - CI/CD
+
+2. **Working with submodules**:
+
+   ```bash
+   # Update all submodules
+   git submodule update --init --recursive
+
+   # Work in a submodule
+   cd packages/haive-agents
+   git checkout -b my-feature
+   # Make changes, commit, push
+   cd ../..
+   git add packages/haive-agents
+   git commit -m "Update haive-agents submodule"
+   ```
+
+3. **CRITICAL**: Changes in submodules must be:
+   - Committed in the submodule first
+   - Pushed to the submodule's remote
+   - Then referenced in main repo
 
 ## 🎯 Critical Development Rules
 
