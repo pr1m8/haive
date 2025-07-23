@@ -28,4 +28,4 @@
 [submodule "packages/haive-agents"]
 	path = packages/haive-agents
 	url = https://github.com/pr1m8/haive-agents.git
-	branch = feature/fix_everything
+	branch = feature/fix_everything_v2
