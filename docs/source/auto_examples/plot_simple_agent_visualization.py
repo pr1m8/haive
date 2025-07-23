@@ -13,6 +13,7 @@ and visualize its workflow graph using the built-in visualization method.
 
 import os
 import time
+
 from haive.agents.simple import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 
@@ -26,16 +27,11 @@ os.environ["HAIVE_DISABLE_CHECKPOINTER"] = "true"
 
 # Create configuration
 config = AugLLMConfig(
-    temperature=0.7,
-    max_tokens=500,
-    system_message="You are a helpful AI assistant."
+    temperature=0.7, max_tokens=500, system_message="You are a helpful AI assistant."
 )
 
 # Create the agent
-agent = SimpleAgent(
-    name="visualization_demo",
-    engine=config
-)
+agent = SimpleAgent(name="visualization_demo", engine=config)
 
 print(f"Created agent: {agent.name}")
 print(f"Agent type: {type(agent).__name__}")
@@ -69,7 +65,7 @@ response = agent.run("What are the benefits of using AI agents?")
 execution_time = time.time() - start_time
 
 print(f"Execution time: {execution_time:.2f} seconds")
-print(f"Agent response preview: {response[:200]}...")
+print(f"Agent response preview: {str(response)[:200]}...")
 
 # %%
 # Display Agent Capabilities
@@ -78,7 +74,7 @@ print(f"Agent response preview: {response[:200]}...")
 
 print("\n=== SimpleAgent Capabilities ===")
 print(f"✓ Name: {agent.name}")
-print(f"✓ Engine Type: {agent.engine.model}")
+print(f"✓ Engine Type: {getattr(agent.engine, 'model', 'N/A')}")
 print(f"✓ Temperature: {agent.engine.temperature}")
 print(f"✓ Max Tokens: {agent.engine.max_tokens}")
 print(f"✓ Graph Compiled: {agent.graph is not None}")

@@ -36,74 +36,36 @@
 - @project_docs/active/architecture/multi_agent_meta_agent_memory_hub.md
 - @project_docs/active/architecture/meta_state_pattern.md
 - @project_docs/active/architecture/agent_as_tool_pattern.md
+- **Generalized Hook System** - Enhanced base agent with pre/post processing hooks
 
 ## 🚀 Current Focus
 
 - **Active Work**: MultiAgent Sequential Pattern (ReactAgent → SimpleAgent)
 - **Issues**: @project_docs/sessions/active/current_issues.md
-- **Recent Achievements**: See @memory_index/by_date/2025-01-16/
+- **Recent Achievements**: See @memory_index/by_date/2025-01-23/
 
 ## 🔥 Git Safety Protocol (CRITICAL)
 
-### Main Repository Safety
+### Essential Safety Commands
 
 ```bash
 # BEFORE ANY WORK
 git status && git diff
 
-# BEFORE CREATING FILES
-find . -name "similar_file*"  # Check if exists
-
 # BEFORE COMMITTING
-git diff --cached           # Review staged changes
-trunk check --all          # Run linting
-poetry run pytest          # Run tests
+git diff --cached && trunk check --all && poetry run pytest
+git add specific_file.py && git commit -m "feat: clear description"
 
-# COMMIT SAFELY
-git add specific_file.py   # Add individually
-git commit -m "feat: clear description"
+# SUBMODULE SAFETY
+cd packages/haive-{package} && git status && git branch -vv
+git branch backup-$(date +%Y%m%d-%H%M%S)  # Create backup
+
+# RECOVERY
+git reflog  # Find lost commits
+git branch recovery-branch HEAD@{n}
 ```
 
-### Submodule Safety (EXTRA CRITICAL!)
-
-```bash
-# BEFORE working in ANY submodule
-cd packages/haive-{package}
-git status                    # Check current state
-git branch -vv               # Check current branch
-git log --oneline -5         # Recent history
-
-# ALWAYS create backups before major changes
-git branch backup-$(date +%Y%m%d-%H%M%S)
-
-# When switching branches in submodules
-git fetch origin
-git checkout -b new-branch   # Create new branch
-# OR
-git checkout existing-branch # Switch carefully
-
-# NEVER force push in submodules without discussion
-# NEVER delete branches without checking with user
-# NEVER reset --hard without explicit permission
-
-# After submodule changes
-cd ../..                     # Back to main repo
-git add packages/haive-{package}
-git commit -m "Update submodule reference"
-```
-
-### Recovery Patterns
-
-```bash
-# If something goes wrong in a submodule
-cd packages/haive-{package}
-git reflog                   # Find lost commits
-git branch recovery-branch HEAD@{n}  # Recover
-
-# If submodule is in detached HEAD
-git checkout -b temp-branch  # Save current state
-git push origin temp-branch  # Backup to remote
-```
+**Key Rules**: Never force push submodules, always create backups, check status before work.
 
 ## 🛠️ Most Used Commands
 
@@ -181,6 +143,9 @@ project_docs/       # Documentation in main repo only
 5. **Pydantic Patterns**: Never override `__init__`, use Field validation
 6. **Git Safety**: Always check diff before commits
 7. **Use TodoWrite**: For planning and tracking
+8. **System vs Human Messages**: System message in AugLLMConfig, human message in ChatPromptTemplate
+9. **Agent Composition**: Use MultiAgent for combining agents, not complex inheritance
+10. **Keep It Simple**: One line compositions like `MultiAgent([Agent1, Agent2], mode="sequential")`
 
 ## 📝 Quick Code Reference
 
@@ -192,10 +157,12 @@ from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.prebuilt.messages_state import MessagesState
 from haive.core.schema.prebuilt.meta_state import MetaStateSchema
 
-# Agents
-from haive.agents.simple.agent import SimpleAgent
+# Agents - Use V3 versions for enhanced features
+from haive.agents.simple.agent_v3 import SimpleAgentV3
 from haive.agents.react.agent import ReactAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
+from haive.agents.rag.simple.answer_agent import AnswerAgent
+from haive.agents.multi.enhanced_multi_agent_v4 import EnhancedMultiAgentV4
 
 # Tools
 from langchain_core.tools import Tool, tool
@@ -205,18 +172,24 @@ from langchain_core.messages import HumanMessage, AIMessage
 ### Agent Configuration Patterns
 
 ```python
-# AugLLMConfig (NEVER set model parameter directly)
+# AugLLMConfig - System message goes HERE, not in prompt template
 config = AugLLMConfig()  # Uses defaults
 config = AugLLMConfig(
     temperature=0.7,
     max_tokens=1000,
-    system_message="You are a helpful assistant"
+    system_message="You are a helpful assistant"  # System message in AugLLMConfig
 )
 
-# SimpleAgent
-agent = SimpleAgent(
+# SimpleAgentV3 - Use V3 for enhanced features
+from haive.agents.simple.agent_v3 import SimpleAgentV3
+
+agent = SimpleAgentV3(
     name="my_agent",
-    engine=config
+    engine=config,
+    prompt_template=ChatPromptTemplate.from_messages([
+        ("system", "System message from AugLLMConfig"),
+        ("human", "User message template with {variables}")
+    ])
 )
 
 # ReactAgent with tools
@@ -230,6 +203,660 @@ agent = ReactAgent(
     engine=config,
     tools=[calculator]
 )
+
+# RAG Pattern - SIMPLE composition
+from haive.agents.rag.base.agent import BaseRAGAgent
+from haive.agents.rag.simple.answer_agent import AnswerAgent
+from haive.agents.multi.enhanced_multi_agent_v4 import EnhancedMultiAgentV4
+
+# Simple RAG = BaseRAGAgent + AnswerAgent in sequence
+SimpleRAGAgent = EnhancedMultiAgentV4([BaseRAGAgent, AnswerAgent], mode="sequential")
+```
+
+### More Agent Examples
+
+#### 1. Research Assistant Agent
+
+```python
+@tool
+def web_search(query: str) -> str:
+    """Search the web for information."""
+    # Implementation here
+    return f"Search results for: {query}"
+
+@tool
+def document_summarizer(text: str) -> str:
+    """Summarize long documents."""
+    # Implementation here
+    return f"Summary of: {text[:100]}..."
+
+research_agent = ReactAgent(
+    name="research_assistant",
+    engine=AugLLMConfig(
+        temperature=0.3,
+        system_message="You are a thorough research assistant. Always cite sources."
+    ),
+    tools=[web_search, document_summarizer]
+)
+
+# Usage
+result = research_agent.run("Research the latest developments in AI safety")
+```
+
+#### 2. Code Review Agent with Structured Output
+
+```python
+class CodeReviewResult(BaseModel):
+    """Structured code review output."""
+    overall_rating: int = Field(ge=1, le=10, description="Code quality rating")
+    issues: List[str] = Field(description="List of issues found")
+    suggestions: List[str] = Field(description="Improvement suggestions")
+    security_concerns: List[str] = Field(default_factory=list)
+
+code_reviewer = SimpleAgentV3(
+    name="code_reviewer",
+    engine=AugLLMConfig(
+        temperature=0.2,
+        structured_output_model=CodeReviewResult,
+        system_message="You are an expert code reviewer focusing on quality, security, and best practices."
+    ),
+    prompt_template=ChatPromptTemplate.from_messages([
+        ("system", "Review the following code and provide structured feedback."),
+        ("human", "Code to review:\n\n{code}\n\nLanguage: {language}")
+    ])
+)
+
+# Usage
+review = code_reviewer.run({
+    "code": "def unsafe_function(user_input): exec(user_input)",
+    "language": "Python"
+})
+```
+
+#### 3. Customer Service Agent
+
+```python
+class CustomerResponse(BaseModel):
+    """Structured customer service response."""
+    response: str = Field(description="Response to customer")
+    sentiment: str = Field(description="Customer sentiment: positive/negative/neutral")
+    urgency: str = Field(description="Urgency level: low/medium/high")
+    follow_up_needed: bool = Field(description="Whether follow-up is required")
+
+@tool
+def lookup_order(order_id: str) -> str:
+    """Look up customer order information."""
+    return f"Order {order_id} details: Status: Shipped, Date: 2025-01-20"
+
+@tool
+def check_inventory(product_id: str) -> str:
+    """Check product inventory."""
+    return f"Product {product_id}: 15 units in stock"
+
+customer_service_agent = ReactAgent(
+    name="customer_service",
+    engine=AugLLMConfig(
+        temperature=0.6,
+        structured_output_model=CustomerResponse,
+        system_message="You are a helpful customer service representative. Be empathetic and solution-focused."
+    ),
+    tools=[lookup_order, check_inventory]
+)
+
+# Usage
+response = customer_service_agent.run("My order #12345 hasn't arrived yet and I'm worried")
+```
+
+#### 4. Content Creation Workflow
+
+```python
+# Multi-agent content creation pipeline
+content_planner = SimpleAgentV3(
+    name="content_planner",
+    engine=AugLLMConfig(
+        temperature=0.7,
+        system_message="You create detailed content plans and outlines."
+    )
+)
+
+content_writer = SimpleAgentV3(
+    name="content_writer",
+    engine=AugLLMConfig(
+        temperature=0.8,
+        system_message="You write engaging, high-quality content based on plans."
+    )
+)
+
+content_editor = SimpleAgentV3(
+    name="content_editor",
+    engine=AugLLMConfig(
+        temperature=0.3,
+        system_message="You edit and refine content for clarity and quality."
+    )
+)
+
+# Compose into workflow
+ContentCreationWorkflow = EnhancedMultiAgentV4([
+    content_planner,
+    content_writer,
+    content_editor
+], mode="sequential")
+
+# Usage
+final_content = ContentCreationWorkflow.run("Create a blog post about AI in healthcare")
+```
+
+### Memory Management Patterns
+
+#### 1. Agent with Persistent Memory
+
+```python
+from haive.core.memory import ConversationBufferMemory, VectorStoreMemory
+
+# Agent with conversation memory
+memory_agent = SimpleAgentV3(
+    name="memory_agent",
+    engine=AugLLMConfig(temperature=0.7),
+    memory=ConversationBufferMemory(
+        memory_key="chat_history",
+        return_messages=True,
+        max_token_limit=2000
+    )
+)
+
+# Usage with memory
+result1 = memory_agent.run("My name is Alice and I like Python programming")
+result2 = memory_agent.run("What do you remember about me?")  # Will remember Alice + Python
+```
+
+#### 2. RAG Agent with Vector Memory
+
+```python
+from haive.core.memory.vector_store import ChromaVectorStore
+
+# Create vector store for long-term memory
+vector_memory = VectorStoreMemory(
+    vector_store=ChromaVectorStore(
+        collection_name="agent_memory",
+        persist_directory="./memory_data"
+    ),
+    memory_key="relevant_context",
+    input_key="query"
+)
+
+# Agent with vector-based memory
+smart_agent = SimpleAgentV3(
+    name="smart_agent",
+    engine=AugLLMConfig(temperature=0.6),
+    memory=vector_memory
+)
+
+# Usage - agent remembers across sessions
+smart_agent.run("I work at TechCorp as a data scientist")
+smart_agent.run("My favorite tools are pandas and scikit-learn")
+# Later session
+result = smart_agent.run("What do you know about my work?")  # Retrieves relevant memories
+```
+
+#### 3. Multi-Agent with Shared Memory
+
+```python
+from haive.core.memory import SharedMemory
+
+# Shared memory between agents
+shared_memory = SharedMemory(
+    memory_type="redis",  # or "in_memory", "file"
+    connection_params={"host": "localhost", "port": 6379}
+)
+
+# Multiple agents sharing memory
+researcher = ReactAgent(
+    name="researcher",
+    engine=AugLLMConfig(),
+    tools=[web_search],
+    memory=shared_memory
+)
+
+writer = SimpleAgentV3(
+    name="writer",
+    engine=AugLLMConfig(),
+    memory=shared_memory
+)
+
+# Usage - agents share context
+researcher.run("Research AI trends for 2025")
+writer.run("Write an article based on the research")  # Access researcher's findings
+```
+
+#### 4. Memory with Custom Retrieval
+
+```python
+class CustomMemoryRetriever:
+    """Custom memory retrieval strategy."""
+
+    def retrieve_relevant_memories(self, query: str, k: int = 5) -> List[str]:
+        """Retrieve memories relevant to query."""
+        # Custom logic for memory retrieval
+        return ["relevant memory 1", "relevant memory 2"]
+
+    def store_memory(self, content: str, metadata: dict = None):
+        """Store new memory with metadata."""
+        # Custom storage logic
+        pass
+
+custom_memory = CustomMemoryRetriever()
+
+# Agent with custom memory strategy
+specialized_agent = SimpleAgentV3(
+    name="specialized_agent",
+    engine=AugLLMConfig(),
+    memory=custom_memory
+)
+```
+
+#### 5. Memory-First Routing Agent
+
+```python
+from haive.agents.memory.routing_agent import MemoryRoutingAgent
+
+# Agent that routes based on memory context
+routing_agent = MemoryRoutingAgent(
+    name="memory_router",
+    engine=AugLLMConfig(),
+    agents={
+        "technical": ReactAgent(name="tech", tools=[code_analyzer]),
+        "creative": SimpleAgentV3(name="creative", engine=creative_config),
+        "research": ReactAgent(name="research", tools=[web_search])
+    },
+    routing_strategy="memory_similarity",  # Route based on memory similarity
+    memory=vector_memory
+)
+
+# Usage - routes to appropriate agent based on memory
+routing_agent.run("Fix this Python bug")  # Routes to technical agent
+routing_agent.run("Write a poem")        # Routes to creative agent
+```
+
+#### 6. Hierarchical Memory System
+
+```python
+class HierarchicalMemory:
+    """Multi-level memory system."""
+
+    def __init__(self):
+        self.short_term = ConversationBufferMemory(max_token_limit=1000)
+        self.working_memory = ConversationBufferMemory(max_token_limit=5000)
+        self.long_term = VectorStoreMemory(vector_store=ChromaVectorStore())
+
+    def get_context(self, query: str) -> str:
+        """Get context from all memory levels."""
+        recent = self.short_term.get_relevant_context(query)
+        working = self.working_memory.get_relevant_context(query)
+        long_term = self.long_term.get_relevant_context(query)
+
+        return f"Recent: {recent}\nWorking: {working}\nLong-term: {long_term}"
+
+hierarchical_memory = HierarchicalMemory()
+
+# Agent with hierarchical memory
+advanced_agent = SimpleAgentV3(
+    name="advanced_agent",
+    engine=AugLLMConfig(),
+    memory=hierarchical_memory
+)
+```
+
+## 🏗️ How to Write Agents - CORRECT Patterns
+
+### 1. System vs Human Message Pattern
+
+```python
+# ✅ CORRECT - System message in AugLLMConfig, Human message in ChatPromptTemplate
+class AnswerAgent(SimpleAgentV3):
+    engine: AugLLMConfig = Field(
+        default_factory=lambda: AugLLMConfig(
+            temperature=0.7,
+            system_message="You are a helpful assistant."  # System message HERE
+        )
+    )
+
+    prompt_template: ChatPromptTemplate = Field(
+        default_factory=lambda: ChatPromptTemplate.from_messages([
+            ("system", "System message from AugLLMConfig"),
+            ("human", "User question: {query}\nContext: {context}")  # Human template HERE
+        ])
+    )
+
+# ❌ WRONG - Everything in one template
+prompt_template = ChatPromptTemplate.from_template(
+    "System: You are helpful\nHuman: {query}"  # DON'T DO THIS
+)
+```
+
+### 2. Agent Composition Pattern - Pydantic Classes
+
+```python
+# ✅ CORRECT - Pydantic class extending EnhancedMultiAgentV4
+class SimpleRAGAgent(EnhancedMultiAgentV4):
+    """Simple RAG = BaseRAGAgent + AnswerAgent in sequence."""
+
+    agents: List = Field(
+        default_factory=lambda: [
+            BaseRAGAgent(name="retriever"),
+            AnswerAgent(name="answerer")
+        ]
+    )
+
+    execution_mode: str = Field(default="sequential")
+
+# ✅ CORRECT - Collective RAG with multiple sources
+class CollectiveRAGAgent(EnhancedMultiAgentV4):
+    """Collective RAG = Multiple SimpleRAGAgent + SynthesisAgent."""
+
+    agents: List = Field(
+        default_factory=lambda: [
+            SimpleRAGAgent(name="rag_source_1"),
+            SimpleRAGAgent(name="rag_source_2"),
+            SimpleRAGAgent(name="rag_source_3"),
+            SynthesisAgent(name="synthesizer")
+        ]
+    )
+
+    execution_mode: str = Field(default="parallel_then_sequential")
+
+# ❌ WRONG - Complex inheritance and post_init
+class ComplexRAGAgent(Agent):
+    def model_post_init(self):
+        # Don't build complex custom classes
+        super().model_post_init()
+        self.agents = [...]  # Overcomplicating
+```
+
+### 3. Base Agent Pattern - Generic Engines
+
+```python
+# ✅ CORRECT - Base agent with generic engine that works by default
+class BaseRAGAgent(RetrieverMixin, Agent):
+    engine: BaseRetrieverConfig | VectorStoreConfig = Field(
+        default_factory=lambda: VectorStoreConfig(
+            name="default_vectorstore",
+            provider="InMemory",
+            embedding_config=HuggingFaceEmbeddingConfig()  # Works by default
+        )
+    )
+
+# ✅ CORRECT - Simple agent extension
+class AnswerAgent(SimpleAgentV3):
+    """SimpleAgentV3 with specific RAG configuration."""
+
+    engine: AugLLMConfig = Field(
+        default_factory=lambda: AugLLMConfig(
+            temperature=0.7,
+            system_message="You are a helpful assistant."
+        )
+    )
+
+    prompt_template: ChatPromptTemplate = Field(...)
+
+# ❌ WRONG - Building everything from scratch
+class MyComplexAgent(Agent):
+    def __init__(self):
+        # Don't reinvent the wheel
+        pass
+```
+
+### 4. Testing Pattern (NO MOCKS)
+
+```python
+# ✅ CORRECT - Real components, real execution
+def test_simple_rag_agent():
+    """Test with REAL components."""
+    # Create instance - uses default HuggingFace embeddings
+    rag_agent = SimpleRAGAgent(name="test_rag")
+
+    # Real execution
+    result = rag_agent.run("What is machine learning?")
+    assert isinstance(result, str)
+    assert len(result) > 0
+
+    # Verify structure
+    assert len(rag_agent.agents) == 2
+    assert rag_agent.execution_mode == "sequential"
+
+# ❌ WRONG - Mocks and fake responses
+def test_with_mocks():
+    mock_llm = Mock()
+    mock_llm.return_value = "fake response"  # NOT REAL TESTING
+```
+
+## 🎯 Structured Output with Pydantic
+
+### Basic Pattern
+
+```python
+from pydantic import BaseModel, Field
+from typing import List, Optional
+
+class AnalysisResult(BaseModel):
+    """Structured output model."""
+    sentiment: str = Field(description="Overall sentiment")
+    confidence: float = Field(ge=0.0, le=1.0, description="Confidence score")
+    key_themes: List[str] = Field(description="Main themes found")
+
+# Use in agent
+class AnalysisAgent(SimpleAgentV3):
+    engine: AugLLMConfig = Field(
+        default_factory=lambda: AugLLMConfig(
+            temperature=0.3,
+            structured_output_model=AnalysisResult,  # Pydantic model HERE
+            system_message="You are an expert analyst."
+        )
+    )
+```
+
+### Multi-Agent Structured Workflow
+
+```python
+# Define output models for each step
+class Plan(BaseModel):
+    questions: List[str] = Field(description="Research questions")
+    search_terms: List[str] = Field(description="Search terms")
+
+class Findings(BaseModel):
+    results: List[str] = Field(description="Key findings")
+    sources: List[str] = Field(description="Source references")
+
+class Report(BaseModel):
+    summary: str = Field(max_length=500, description="Executive summary")
+    recommendations: List[str] = Field(description="Action items")
+
+# Create workflow
+StructuredWorkflow = EnhancedMultiAgentV4([
+    SimpleAgentV3(engine=AugLLMConfig(structured_output_model=Plan)),
+    SimpleAgentV3(engine=AugLLMConfig(structured_output_model=Findings)),
+    SimpleAgentV3(engine=AugLLMConfig(structured_output_model=Report))
+], mode="sequential")
+```
+
+## 📁 Branch Examples & Implementation Locations
+
+### Current RAG Implementation
+
+**Branch**: `feature/fix_everything`
+
+**Files**:
+
+- `packages/haive-agents/src/haive/agents/rag/base/agent.py` - BaseRAGAgent with HuggingFace embeddings
+- `packages/haive-agents/src/haive/agents/rag/simple/answer_agent.py` - AnswerAgent with document prompt
+- `packages/haive-agents/src/haive/agents/rag/simple/agent.py` - SimpleRAGAgent Pydantic class
+
+**Usage**:
+
+```python
+# Import the Pydantic class
+from haive.agents.rag.simple.agent import SimpleRAGAgent
+
+# Create instance - uses default HuggingFace embeddings
+rag_agent = SimpleRAGAgent(name="my_rag")
+
+# Execute RAG workflow
+result = rag_agent.run("What is machine learning?")
+print(result)
+```
+
+### Enhanced Agent Architecture
+
+**Branch**: `feature/fix_everything`
+
+**Key Files**:
+
+- `packages/haive-agents/src/haive/agents/simple/agent_v3.py` - SimpleAgentV3 with hooks
+- `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_v4.py` - Multi-agent orchestration
+- `packages/haive-core/src/haive/core/schema/prebuilt/meta_state.py` - MetaStateSchema
+
+**Pattern**:
+
+```python
+# Enhanced agents with recompilation, hooks, dynamic tools
+from haive.agents.simple.agent_v3 import SimpleAgentV3
+
+agent = SimpleAgentV3(
+    name="enhanced_agent",
+    engine=AugLLMConfig(system_message="System message here"),
+    prompt_template=ChatPromptTemplate.from_messages([
+        ("system", "From AugLLMConfig"),
+        ("human", "Template with {variables}")
+    ])
+)
+```
+
+### Multi-Agent Patterns
+
+**Branch**: `feature/fix_everything`
+
+**Files**:
+
+- `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_v4.py` - Core multi-agent
+- `packages/haive-agents/src/haive/agents/rag/simple_rag_agent_v4.py` - RAG V4 example
+- `packages/haive-agents/src/haive/agents/rag/collective_rag_agent_v4.py` - Collective RAG
+
+**Simple Composition**:
+
+```python
+# Sequential: Agent A → Agent B → Agent C
+MyWorkflow = EnhancedMultiAgentV4([AgentA, AgentB, AgentC], mode="sequential")
+```
+
+### Generalized Hook System
+
+**New in Enhanced Base Agent**: All agents now support comprehensive hook system for monitoring, pre/post processing, reflection, and structured output workflows.
+
+**Key Features**:
+
+- Pre/post processing agents with message transformation
+- Reflection and grading hooks
+- Structured output hooks
+- Multi-stage workflow monitoring
+- Factory patterns for common use cases
+
+**Files**:
+
+- `packages/haive-agents/src/haive/agents/base/hooks.py` - Hook system core
+- `packages/haive-agents/src/haive/agents/base/pre_post_agent_mixin.py` - Pre/post processing mixin
+- `packages/haive-agents/examples/generalized_hooks_example.py` - Comprehensive examples
+
+**Basic Hook Usage**:
+
+```python
+from haive.agents.simple.agent_v3 import SimpleAgentV3
+from haive.core.engine.aug_llm import AugLLMConfig
+
+agent = SimpleAgentV3(name="writer", engine=AugLLMConfig())
+
+# Add hooks using decorators
+@agent.before_run
+def log_start(context):
+    print(f"Starting {context.agent_name}")
+
+@agent.after_run
+def log_end(context):
+    print(f"Completed {context.agent_name}")
+
+@agent.before_reflection
+def track_reflection(context):
+    print("Starting reflection analysis")
+
+# Execute with hook monitoring
+result = await agent.arun("Write a story")
+```
+
+**Pre/Post Processing Pattern**:
+
+```python
+# Create main agent
+main_agent = SimpleAgentV3(name="writer", engine=config)
+
+# Create reflection agent
+reflection_agent = SimpleAgentV3(name="critic", engine=reflection_config)
+
+# Set up post-processing with message transformation
+main_agent.post_agent = reflection_agent
+main_agent.use_post_transform = True
+main_agent.post_transform_type = "reflection"
+
+# Execute with automatic pre/post processing
+result = await main_agent.arun("Write and improve a story")
+```
+
+**Factory Pattern for Reflection**:
+
+```python
+from haive.agents.base.pre_post_agent_mixin import create_reflection_agent
+
+# Create agent with reflection capabilities
+enhanced_agent = create_reflection_agent(
+    main_agent=SimpleAgentV3(name="writer", engine=config)
+)
+
+result = await enhanced_agent.arun("Complex writing task")
+```
+
+**Multi-Stage Workflow Monitoring**:
+
+```python
+from haive.agents.base.hooks import create_multi_stage_hook
+
+# Track complex workflows
+stages = ["analysis", "grading", "reflection", "improvement"]
+hook = create_multi_stage_hook(stages)
+
+agent.add_hook(HookEvent.PRE_PROCESS, hook)
+agent.add_hook(HookEvent.POST_PROCESS, hook)
+
+# Execute with comprehensive monitoring
+result = await agent.arun("Complex analytical task")
+
+# Parallel then sequential: [A, B, C] → D
+MyWorkflow = EnhancedMultiAgentV4([AgentA, AgentB, AgentC, AgentD], mode="parallel_then_sequential")
+```
+
+### Documentation & Memory
+
+**Branch**: `feature/fix_everything`
+
+**Key Docs**:
+
+- `CLAUDE.md` - This file - central memory and patterns
+- `project_docs/active/architecture/multi_agent_meta_agent_memory_hub.md` - Multi-agent architecture
+- `project_docs/active/architecture/meta_state_pattern.md` - MetaStateSchema guide
+- `project_docs/active/standards/testing/philosophy.md` - No-mocks testing
+
+**Memory References**:
+
+```python
+# Use @ to reference memory documents
+# @project_docs/active/architecture/multi_agent_meta_agent_memory_hub.md
+# @project_docs/active/standards/testing/philosophy.md
 ```
 
 ### Testing Pattern (NO MOCKS)
@@ -245,133 +872,35 @@ def test_agent_real_execution():
     assert len(result) > 0
 ```
 
-## 🧠 Incremental Development Workflow
+## 🧠 Development Workflow
 
-### 1. Start Work Protocol
+### Essential Steps
 
-```bash
-# Check current state
-git status && git diff
+1. **Research First**: `find packages/ -name "*.py" | xargs grep -l "YourPattern"`
+2. **Plan with TodoWrite**: Break down tasks into steps
+3. **Build & Test Incrementally**: Create minimal → test → add feature → test
+4. **Use Real Components**: No mocks, test with actual LLMs and tools
 
-# Load relevant memories
-# @project_docs/haive-agents/README.md (if working on agents)
-# @project_docs/haive-core/README.md (if working on core)
-
-# Create session workspace
-mkdir -p project_docs/claude_sessions/claude_$(date +%Y%m%d_%H%M%S)_${purpose}
-```
-
-### 2. Research & Plan (ALWAYS FIRST)
-
-```bash
-# Find existing patterns
-find packages/ -name "*.py" | xargs grep -l "YourPattern" | head -5
-
-# Check existing tests
-find packages/ -name "test_*.py" | xargs grep -l "similar_concept"
-
-# Use TodoWrite for planning
-```
-
-### 3. Build Incrementally (Test Each Step)
+### Test-Driven Pattern
 
 ```python
-# Step 1: Create minimal class
+# 1. Write test first
+def test_my_agent_creation():
+    agent = MyAgent()
+    assert agent is not None
+
+# 2. Make it pass
 class MyAgent:
     def __init__(self):
         pass
 
-# Step 2: Test basic creation
-def test_agent_creation():
-    agent = MyAgent()
-    assert agent is not None
-
-# Step 3: Add one feature
-class MyAgent:
-    def __init__(self, name: str):
-        self.name = name
-
-# Step 4: Test that feature
-def test_agent_with_name():
-    agent = MyAgent("test")
-    assert agent.name == "test"
-
-# Continue this pattern...
-```
-
-### 4. Testing Strategy - Build As You Go
-
-#### Test File Locations
-
-```
-packages/haive-{package}/
-├── src/haive/{package}/
-│   └── my_module.py           # Your source code
-└── tests/
-    └── test_my_module.py      # Test for that module
-```
-
-#### Test Each Addition Immediately
-
-```python
-# ✅ CORRECT - Test each piece as you build
-def test_step_1_basic_creation():
-    """Test basic agent creation works."""
-    agent = MyAgent()
-    assert agent is not None
-
-def test_step_2_with_config():
-    """Test agent with configuration."""
-    config = AugLLMConfig()
-    agent = MyAgent(config=config)
-    assert agent.config == config
-
-def test_step_3_basic_execution():
-    """Test basic agent execution."""
+# 3. Add feature test
+def test_my_agent_execution():
     agent = MyAgent(config=AugLLMConfig())
     result = agent.run("Hello")
     assert isinstance(result, str)
-    assert len(result) > 0
-```
 
-#### Ask for Help When Stuck
-
-```python
-# When you encounter issues:
-# 1. Check existing similar implementations
-# 2. Look at test patterns in other packages
-# 3. Ask specific questions like:
-#    "How do other agents handle configuration?"
-#    "What's the pattern for tool integration?"
-#    "How should I structure this test?"
-```
-
-### 5. Memory Management for Agents & Instances
-
-#### Agent-Specific Memories
-
-```python
-# When working with specific agents, load their memories:
-# @project_docs/haive-agents/simple/patterns.md
-# @project_docs/haive-agents/react/implementation.md
-# @project_docs/haive-agents/rag/configuration.md
-
-# For agent instances in tests:
-# @project_docs/haive-agents/testing/real_component_patterns.md
-```
-
-#### Instance Management
-
-```python
-# When creating agent instances, document patterns:
-# @project_docs/sessions/active/agent_instance_patterns.md
-
-# Common instance patterns:
-config = AugLLMConfig(temperature=0.1)  # Low temp for tests
-agent = SimpleAgent(name="test_agent", engine=config)
-
-# Store instance patterns for reuse
-test_config = AugLLMConfig(temperature=0.0)  # Deterministic
+# Continue incrementally...
 ```
 
 ## 🔗 Package Import Hierarchy
@@ -876,359 +1405,61 @@ mv SOMETHING_SUMMARY.md project_docs/summaries/
 
 ## 📚 Documentation Standards
 
-### Google-Style Docstrings (Required for Sphinx AutoAPI)
+### Required Patterns
+
+- **Google-style docstrings** on all public functions/classes
+- **Type hints** on all parameters and returns
+- **Examples** in docstrings for complex functions
+- **@ references** for memory documents: `@project_docs/path/to/doc.md`
+
+### Docstring Template
 
 ```python
-def process_agent_data(
-    agent_name: str,
-    data: List[Dict[str, Any]],
-    config: Optional[ProcessConfig] = None,
-    validate: bool = True
-) -> ProcessResult:
-    """Process raw agent data with optional validation.
-
-    This function takes raw agent data and processes it according to
-    the provided configuration. It supports batch processing and
-    optional validation.
+def my_function(param: str, config: Optional[Config] = None) -> Result:
+    """Brief description of what this does.
 
     Args:
-        agent_name: Name of the agent processing the data.
-        data: List of dictionaries containing raw data entries.
-            Each entry must have 'id' and 'content' keys.
-        config: Optional configuration for processing behavior.
-            If None, uses default configuration.
-        validate: Whether to validate data before processing.
-            Defaults to True.
+        param: Description of parameter.
+        config: Optional configuration.
 
     Returns:
-        ProcessResult: Object containing:
-            - processed_data: List of processed entries
-            - errors: List of any errors encountered
-            - metadata: Processing metadata including timing
-
-    Raises:
-        ValueError: If agent_name is empty or data is malformed.
-        ProcessingError: If processing fails after retries.
-        ValidationError: If validate=True and data fails validation.
+        Result object with processed data.
 
     Examples:
-        Basic usage:
-
-        >>> data = [{'id': 1, 'content': 'Hello'}]
-        >>> result = process_agent_data('analyzer', data)
-        >>> print(result.processed_data)
-        [{'id': 1, 'content': 'Hello', 'processed': True}]
-
-        With configuration:
-
-        >>> config = ProcessConfig(batch_size=10, timeout=30)
-        >>> result = process_agent_data('analyzer', data, config=config)
-
-    Note:
-        This function is thread-safe and can be used in concurrent
-        processing pipelines. For large datasets, consider using
-        the async version: process_agent_data_async().
-
-    See Also:
-        process_agent_data_async: Async version of this function.
-        ProcessConfig: Configuration options documentation.
-        validate_agent_data: Standalone validation function.
+        >>> result = my_function("test")
+        >>> print(result.data)
     """
 ```
 
-### Class Documentation
-
-```python
-class AgentProcessor:
-    """Handles processing of agent-specific data streams.
-
-    This class provides a high-level interface for processing
-    data streams from various agent types. It supports real-time
-    and batch processing modes.
-
-    Attributes:
-        name: Processor identifier.
-        config: Current processing configuration.
-        metrics: Performance metrics collector.
-        is_running: Whether processor is actively processing.
-
-    Example:
-        >>> processor = AgentProcessor(
-        ...     name="main_processor",
-        ...     config=ProcessConfig(mode="realtime")
-        ... )
-        >>> processor.start()
-        >>> processor.process(data_stream)
-    """
-
-    def __init__(
-        self,
-        name: str,
-        config: ProcessConfig,
-        metrics_enabled: bool = True
-    ):
-        """Initialize the agent processor.
-
-        Args:
-            name: Unique processor identifier.
-            config: Processing configuration.
-            metrics_enabled: Whether to collect metrics.
-        """
-```
-
-### Module Documentation
-
-```python
-"""Agent processing utilities for the Haive framework.
-
-This module provides core functionality for processing agent data
-streams, including validation, transformation, and persistence.
-
-Key Features:
-    - Real-time and batch processing modes
-    - Automatic retry with exponential backoff
-    - Comprehensive validation framework
-    - Performance metrics collection
-
-Basic Usage:
-    >>> from haive.core.processing import AgentProcessor
-    >>> processor = AgentProcessor("main", config)
-    >>> result = processor.process(data)
-
-Advanced Usage:
-    See the examples/ directory for complex processing pipelines
-    and integration patterns.
-
-Module Structure:
-    - processor.py: Main AgentProcessor class
-    - validators.py: Data validation utilities
-    - transformers.py: Data transformation functions
-    - metrics.py: Performance monitoring
-
-See Also:
-    - haive.agents: Agent implementations
-    - haive.core.engine: Processing engines
-"""
-```
-
-### README.md Structure for Packages
+### Package README Structure
 
 ````markdown
-# haive-agents
+# Package Name
 
-Agent implementations for the Haive framework.
-
-## Overview
-
-This package provides various agent types including:
-
-- SimpleAgent: Basic conversational agents
-- ReactAgent: Reasoning and action agents with tool use
-- RAG Agents: Retrieval-augmented generation agents
-- Multi-Agent Systems: Coordinated agent groups
+Brief description.
 
 ## Installation
 
-```bash
-poetry add haive-agents
-```
-````
+`poetry add package-name`
 
 ## Quick Start
 
 ```python
-from haive.agents.simple import SimpleAgent
-from haive.core.engine.aug_llm import AugLLMConfig
-
-# Create agent
-config = AugLLMConfig(temperature=0.7)
-agent = SimpleAgent(name="assistant", engine=config)
-
-# Use agent
-response = agent.run("Hello, how can you help?")
+# Basic usage example
 ```
+````
 
 ## Features
 
-- **Type Safety**: Full type hints and Pydantic models
-- **Real Components**: No mocks, tested with real LLMs
-- **Extensible**: Easy to create custom agents
-- **Async Support**: All agents support async execution
+- Key feature list
 
 ## Documentation
 
-- [API Reference](https://haive.readthedocs.io/api/agents)
-- [User Guide](../../project_docs/guides/agents_guide.md)
-- [Examples](../../examples/agents/)
+- Links to guides and API docs
 
-## Testing
-
-```bash
-poetry run pytest packages/haive-agents/tests/
-```
-
-## Contributing
-
-See [CONTRIBUTING.md](../../CONTRIBUTING.md)
-
-````
-
-### Using '@' for Memory References
-
-```python
-# In code comments and docstrings, use @ to reference memories:
-
-def complex_implementation():
-    """Implement complex multi-agent pattern.
-
-    This implementation follows the pattern described in
-    @project_docs/active/architecture/multi_agent_meta_agent_memory_hub.md
-
-    For state management details, see:
-    @project_docs/active/architecture/meta_state_pattern.md
-    """
-
-    # Load configuration as per @project_docs/active/standards/coding/PYDANTIC_PATTERNS.md
-    config = load_config()
-
-    # Follow testing approach from @project_docs/active/standards/testing/philosophy.md
-    validate_real_components(config)
-````
-
-### Documentation Hierarchy
-
-```
-1. Code-Level Documentation (Highest Priority)
-   - Google-style docstrings on ALL public functions/classes
-   - Type hints on ALL parameters and returns
-   - Examples in docstrings for complex functions
-
-2. Module-Level Documentation
-   - Module docstring explaining purpose and structure
-   - README.md in each package root
-   - __init__.py docstrings for public API
-
-3. Package-Level Documentation
-   - Comprehensive README.md with examples
-   - API reference (auto-generated by Sphinx)
-   - Migration guides for version changes
-
-4. Project-Level Documentation
-   - project_docs/ for architecture and decisions
-   - Memory documents with @ references
-   - Implementation guides and patterns
-```
-
-### Sphinx AutoAPI Configuration
-
-```python
-# docs/source/conf.py additions for AutoAPI
-extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.napoleon',  # For Google-style docstrings
-    'sphinx.ext.viewcode',
-    'sphinx.ext.intersphinx',
-    'sphinx_autodoc_typehints',
-    'autoapi.extension',
-]
-
-# AutoAPI configuration
-autoapi_type = 'python'
-autoapi_dirs = [
-    '../../packages/haive-core/src',
-    '../../packages/haive-agents/src',
-    '../../packages/haive-tools/src',
-]
-autoapi_options = [
-    'members',
-    'undoc-members',
-    'show-inheritance',
-    'show-module-summary',
-    'imported-members',
-]
-
-# Napoleon settings for Google-style
-napoleon_google_docstring = True
-napoleon_numpy_docstring = False
-napoleon_include_init_with_doc = True
-napoleon_include_private_with_doc = False
-napoleon_include_special_with_doc = True
-```
-
-### Documentation Checklist
-
-```markdown
-## Before Committing Code
-
-- [ ] All public functions have Google-style docstrings
-- [ ] All parameters have type hints
-- [ ] Return types are specified
-- [ ] Complex functions include Examples section
-- [ ] Exceptions are documented in Raises section
-- [ ] Related functions listed in See Also section
-- [ ] Module has comprehensive docstring
-- [ ] Package has updated README.md
-- [ ] Memory references use @ notation
-- [ ] Run `poetry run sphinx-build -b html docs/source docs/build`
-```
-
-### Writing Tests - NO MOCKS PATTERN
-
-```python
-# packages/haive-agents/tests/test_simple_agent.py
-
-from haive.agents.simple import SimpleAgent
-from haive.core.engine.aug_llm import AugLLMConfig
-
-def test_simple_agent_real_execution():
-    """Test with REAL components - NO MOCKS."""
-    # Create real config (don't set model param)
-    config = AugLLMConfig()
-
-    # Create real agent
-    agent = SimpleAgent(engine=config)
-
-    # Test real behavior
-    result = agent.run("Hello")
-    assert isinstance(result, str)
-    assert len(result) > 0
-
-# ❌ NEVER USE MOCKS
-# ✅ ALWAYS USE REAL COMPONENTS
-```
-
-### Build-Test-Build Pattern
-
-```python
-# Step 1: Write minimal test
-def test_agent_creation():
-    """Test agent can be created."""
-    agent = MyAgent()
-    assert agent is not None
-
-# Step 2: Write minimal code to pass
-class MyAgent:
-    def __init__(self):
-        pass
-
-# Step 3: Run test
-poetry run pytest tests/test_my_agent.py::test_agent_creation -v
-
-# Step 4: Add next feature test
-def test_agent_with_config():
-    """Test agent accepts configuration."""
-    config = AugLLMConfig()
-    agent = MyAgent(config=config)
-    assert agent.config == config
-
-# Step 5: Update code to pass
-class MyAgent:
-    def __init__(self, config=None):
-        self.config = config
-
-# Continue this pattern...
 ```
 
 ---
 
 **Remember**: This file loads at every session. Keep frequently-used info here, import the rest!
+```
