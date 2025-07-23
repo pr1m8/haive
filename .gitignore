@@ -621,3 +621,25 @@ notebooks/*.ipynb
 # Examples and testing
 examples/multi_agent_showcase.py
 .venv-py312-backup/
+# =============================================================================
+# 🧹 Temporary development files (moved to organized locations)
+# =============================================================================
+# Debug/analysis scripts (moved to scripts/)
+debug_*.py
+analyze_*.py
+fix_*.py
+comprehensive_*.py
+test_*.py
+
+# Status/report files (moved to project_docs/)
+*_STATUS*.md
+*_ANALYSIS*.md
+*_RECOVERY*.md
+*_REPORT*.md
+
+# Log and temporary files
+*.log
+nohup.out
+server.log
+dynamic_graph.log
+
