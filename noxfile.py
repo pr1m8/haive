@@ -2,7 +2,8 @@
 
 Documentation Commands:
 -----------------------
-    nox -s docs                 # Fast incremental sphinx-build (recommended)
+    nox -s docs_fast            # FASTEST: Build docs ignoring errors (NEW!)
+    nox -s docs                 # Standard incremental sphinx-build
     nox -s docs_full            # Full rebuild with autosummary regeneration (slower)
     nox -s docs_autobuild       # Auto-build with hot reload and live updates
     nox -s docs_serve           # Serve pre-existing build (simple HTTP server)
@@ -20,6 +21,14 @@ Development Commands:
 --------------------
     nox -s lint                 # Run linters
     nox -s test                 # Run tests
+
+Example Commands:
+-----------------
+    nox -s examples             # Run all examples with visualizations
+    nox -s examples_simple      # Run SimpleAgent examples only
+    nox -s examples_react       # Run ReactAgent examples only
+    nox -s examples_rag         # Run RAG agent examples only
+    nox -s examples_docs        # Generate examples for documentation
 """
 
 import os
@@ -140,6 +149,97 @@ def run_with_graceful_handling(
         with open(log_file, "a") as f:
             f.write(f"\nFATAL ERROR: {e}\n")
         return status
+
+
+@nox.session(python=PYTHON_VERSIONS)
+def docs_fast(session):
+    """Fast documentation build that continues on errors with last 20 lines output."""
+    session.log("🚀 Running FAST documentation build (continues on errors)...")
+
+    # Create log file
+    log_file = create_log_file(session, "docs_fast_build")
+
+    # Install dependencies (reuses cache from poetry)
+    session.log("📦 Installing documentation dependencies...")
+    session.run("poetry", "install", "--with", "docs", external=True)
+
+    # Set environment for fastest builds
+    os.environ["SPHINX_AUTOSUMMARY_GENERATE"] = "false"
+    os.environ["HAIVE_DOCS_MODE"] = "true"
+
+    # Fast sphinx-build command with maximum error tolerance
+    cmd = [
+        "poetry",
+        "run",
+        "sphinx-build",
+        "-b", "html",
+        "-j", "auto",  # Parallel build
+        "--keep-going",  # Continue on ALL errors
+        str(SOURCE_DIR),
+        str(BUILD_DIR),
+    ]
+
+    # Run command and capture output
+    session.log("🔨 Building documentation (continuing on errors)...")
+    output_lines = []
+    try:
+        with open(log_file, "w") as f:
+            process = subprocess.Popen(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                universal_newlines=True,
+            )
+            
+            # Capture all output to list for showing last 20 lines
+            while True:
+                output = process.stdout.readline()
+                if output == "" and process.poll() is not None:
+                    break
+                if output:
+                    f.write(output)
+                    f.flush()
+                    output_lines.append(output.strip())
+            
+            returncode = process.poll()
+        
+        # Show last 20 lines of output
+        session.log("📄 Last 20 lines of build output:")
+        session.log("-" * 50)
+        for line in output_lines[-20:]:
+            if line:
+                session.log(line)
+        session.log("-" * 50)
+        
+        # Quick check for output
+        if BUILD_DIR.exists():
+            html_files = list(BUILD_DIR.glob("*.html"))
+            if html_files:
+                session.log(f"✅ Built {len(html_files)} HTML files!")
+                if (BUILD_DIR / "index.html").exists():
+                    session.log(f"🌐 View docs: file://{(BUILD_DIR / 'index.html').absolute()}")
+                else:
+                    session.log(f"🌐 View docs: file://{html_files[0].absolute()}")
+                session.log(f"📋 Full build log: {log_file}")
+                return True
+            else:
+                session.log("❌ No HTML files generated")
+                session.log(f"📋 Check full log: {log_file}")
+                return False
+        else:
+            session.log("❌ Build directory not created")
+            session.log(f"📋 Check full log: {log_file}")
+            return False
+            
+    except subprocess.TimeoutExpired:
+        session.log("⏱️  Build timed out after 5 minutes")
+        session.log(f"📋 Check log: {log_file}")
+        return False
+    except Exception as e:
+        session.log(f"❌ Build failed: {e}")
+        session.log(f"📋 Check log: {log_file}")
+        return False
 
 
 @nox.session(python=PYTHON_VERSIONS)
@@ -898,3 +998,87 @@ def test(session):
     """Run tests."""
     session.run("poetry", "install", "--with", "test", external=True)
     session.run("poetry", "run", "pytest", "-v", external=True)
+
+
+# =============================================================================
+# Example Runner Sessions
+# =============================================================================
+
+@nox.session(python=PYTHON_VERSIONS)
+def examples(session):
+    """Run all agent examples with visualizations."""
+    session.log("🚀 Running all agent examples...")
+    
+    # Install dependencies
+    session.run("poetry", "install", "--all-extras", external=True)
+    
+    # Run the universal example runner
+    session.run(
+        "poetry", "run", "python", "run_all_examples.py",
+        "--concurrent", "3", "--timeout", "300",
+        external=True
+    )
+
+
+@nox.session(python=PYTHON_VERSIONS)
+def examples_simple(session):
+    """Run SimpleAgent examples only."""
+    session.log("🤖 Running SimpleAgent examples...")
+    
+    # Install dependencies
+    session.run("poetry", "install", "--all-extras", external=True)
+    
+    # Run agent-specific examples
+    session.run(
+        "poetry", "run", "python", "run_agent_examples.py",
+        "--agent", "SimpleAgent", "--visualize",
+        external=True
+    )
+
+
+@nox.session(python=PYTHON_VERSIONS)
+def examples_react(session):
+    """Run ReactAgent examples only."""
+    session.log("🧠 Running ReactAgent examples...")
+    
+    # Install dependencies
+    session.run("poetry", "install", "--all-extras", external=True)
+    
+    # Run agent-specific examples
+    session.run(
+        "poetry", "run", "python", "run_agent_examples.py",
+        "--agent", "ReactAgent", "--visualize",
+        external=True
+    )
+
+
+@nox.session(python=PYTHON_VERSIONS)
+def examples_rag(session):
+    """Run RAG agent examples only."""
+    session.log("📚 Running RAG agent examples...")
+    
+    # Install dependencies
+    session.run("poetry", "install", "--all-extras", external=True)
+    
+    # Run agent-specific examples
+    session.run(
+        "poetry", "run", "python", "run_agent_examples.py",
+        "--agent", "RAGAgent", "--visualize",
+        external=True
+    )
+
+
+@nox.session(python=PYTHON_VERSIONS)
+def examples_docs(session):
+    """Generate examples for documentation."""
+    session.log("📚 Generating examples for documentation...")
+    
+    # Install dependencies
+    session.run("poetry", "install", "--all-extras", external=True)
+    
+    # Change to docs directory and run docs example generator
+    session.chdir("docs")
+    session.run(
+        "poetry", "run", "python", "run_examples_for_docs.py",
+        external=True
+    )

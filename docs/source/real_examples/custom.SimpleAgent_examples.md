@@ -83,7 +83,7 @@ Real examples and outputs from the custom.SimpleAgent agent.
     },
     {
       "step_id": "3bb384aa-d41f-4424-b00c-27b73f8cae56",
-     
+
 
 ... (truncated)
 
@@ -172,7 +172,7 @@ Real examples and outputs from the custom.SimpleAgent agent.
     },
     {
       "step_id": "b154eb48-c3f4-4844-89a2-91d4dd074a13",
-  
+
 
 ... (truncated)
 
@@ -261,7 +261,7 @@ Real examples and outputs from the custom.SimpleAgent agent.
     },
     {
       "step_id": "4f46061e-03ae-4aad-a06a-93c9d28a7438",
-  
+
 
 ... (truncated)
 
@@ -350,7 +350,7 @@ Real examples and outputs from the custom.SimpleAgent agent.
     },
     {
       "step_id": "f5cd1f50-9a47-4178-ba29-f2ef31ffc35c",
-     
+
 
 ... (truncated)
 
@@ -701,4 +701,3 @@ Real examples and outputs from the custom.SimpleAgent agent.
 ```
 
 ---
-

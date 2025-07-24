@@ -492,7 +492,6 @@ async def test_enhanced_rewoo_agent():
 
     if result.get("status") == "completed":
     else:
-        pass
 
 
 if __name__ == "__main__":

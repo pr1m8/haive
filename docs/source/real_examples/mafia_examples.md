@@ -67,10 +67,8 @@ For a complete example with error handling and additional options, see the `exam
 
 The game follows this state machine:
 
-1. **Setup P
+1. \*\*Setup P
 
 ... (truncated)
 
-
 ---
-

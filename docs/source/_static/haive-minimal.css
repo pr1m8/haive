@@ -47,6 +47,68 @@
 }
 
 /* ==========================================================================
+   DEMO BUTTONS AND INTERACTIVE ELEMENTS
+   ========================================================================== */
+
+.btn {
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8125rem;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: var(--haive-primary);
+  border: 1px solid var(--haive-primary);
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: var(--haive-primary-dark);
+  border-color: var(--haive-primary-dark);
+  text-decoration: none;
+}
+
+.demo-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--haive-gradient-1);
+  border: none;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s ease;
+}
+
+.demo-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl);
+  text-decoration: none;
+}
+
+.demo-icon {
+  font-size: 1.5rem;
+}
+
+/* ==========================================================================
    ENHANCED FURO INTEGRATION (Advanced Features)
    ========================================================================== */
 
@@ -1414,4 +1476,129 @@ h6 {
     background: #f0f0f0 !important;
     color: black !important;
   }
+}
+
+/* ==========================================================================
+   CRITICAL ALIGNMENT FIX - DISABLE ALL CENTERING
+   ========================================================================== */
+
+/* Force all content to align left by default */
+body, main, article, section, div, p, h1, h2, h3, h4, h5, h6, .sd-card, .sd-card-body {
+  text-align: left !important;
+}
+
+/* Only allow specific centering for hero sections */
+.hero-section,
+.hero-section h1,
+.hero-section p,
+.showcase-header,
+.showcase-header h2 {
+  text-align: center !important;
+}
+
+/* ==========================================================================
+   GAME STREAMING STYLES
+   ========================================================================== */
+
+/* Game demo container */
+.game-demo-container {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: var(--shadow-md);
+}
+
+/* Game state visualization */
+.game-state-display {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  font-family: var(--font-stack--monospace);
+  white-space: pre-wrap;
+  overflow-x: auto;
+  box-shadow: var(--shadow-sm);
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+/* Game controls */
+.game-controls {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.game-controls button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--haive-primary);
+  background: white;
+  color: var(--haive-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.game-controls button:hover {
+  background: var(--haive-primary);
+  color: white;
+}
+
+/* Live game streaming indicator */
+.streaming-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #10b981;
+  color: white;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.streaming-indicator::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Game move history */
+.move-history {
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.move-history .move {
+  padding: 0.25rem 0;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.875rem;
+}
+
+.move-history .move:last-child {
+  border-bottom: none;
 }

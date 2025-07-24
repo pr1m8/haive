@@ -50,10 +50,8 @@ Nim is fundamental to understanding:
 - **Combinatorial Game Theory**: Foundation for analyzing perfect information games
 - **Optimal Strategy**: Algorithmic approach to perfect play
 
-## Mathematical 
+## Mathematical
 
 ... (truncated)
 
-
 ---
-

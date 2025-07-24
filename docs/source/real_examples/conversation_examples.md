@@ -84,6 +84,7 @@ The base conversation system provides the foundation for all conversation agent 
 ## Architecture
 
 ```
+
 BaseConversationAgent (Abstract)
 ├── Speaker Selection Logic
 ├── Agent Execution & Error Handling
@@ -95,7 +96,8 @@ ConversationState (Extends MessagesState)
 ├── Speaker History Management
 ├── Computed Progress Properties
 └── Reducer-Based State Updates
-```
+
+````
 
 ## Key Features
 
@@ -113,7 +115,7 @@ This module is part of the `haive-agents` package. Install it using:
 
 ```bash
 pip install haive-agents[conversation]
-```
+````
 
 ## Quick Start
 
@@ -153,12 +155,14 @@ The Round Robin Conversation agent implements a simple yet effective conversatio
 ## Architecture
 
 ```
+
 RoundRobinConversation (extends BaseConversationAgent)
 ├── Sequential Speaker Selection
 ├── Automatic Round Progression
 ├── Turn Equality Enforcement
 └── Progress Tracking & Analytics
-```
+
+````
 
 ## Key Features
 
@@ -176,7 +180,7 @@ This module is part of the `haive-agents` package. Install it using:
 
 ```bash
 pip install haive-agents[conversation]
-```
+````
 
 ## Quick Start
 
@@ -221,13 +225,15 @@ The Debate Conversation agent implements formal debate structures where particip
 ## Architecture
 
 ```
+
 DebateConversation (extends BaseConversationAgent)
 ├── Position Management (Pro/Con/Judge)
 ├── Phase-Based Flow Control
 ├── Argument & Rebuttal Tracking
 ├── Scoring & Evaluation System
 └── Multiple Debate Formats
-```
+
+````
 
 ## Key Features
 
@@ -246,7 +252,7 @@ This module is part of the `haive-agents` package. Install it using:
 
 ```bash
 pip install haive-agents[conversation]
-```
+````
 
 ## Quick Start
 
@@ -283,21 +289,23 @@ The Directed Conversation agent implements a natural conversation pattern where 
 ## Architecture
 
 ```
+
 DirectedConversation (extends BaseConversationAgent)
 ├── Mention Detection System
-│   ├── Direct Mentions (@name)
-│   ├── Name References (name, name:)
-│   └── Question Targeting
+│ ├── Direct Mentions (@name)
+│ ├── Name References (name, name:)
+│ └── Question Targeting
 ├── Structured Speaker Selection
-│   ├── Mention-based Priority
-│   ├── Fallback Strategies
-│   └── Least-Active Selection
+│ ├── Mention-based Priority
+│ ├── Fallback Strategies
+│ └── Least-Active Selection
 ├── Interaction Tracking
-│   ├── Speaker Relationships
-│   ├── Mention Patterns
-│   └── Engagement Metrics
+│ ├── Speaker Relationships
+│ ├── Mention Patterns
+│ └── Engagement Metrics
 └── Context-Aware Response Generation
-```
+
+````
 
 ## Key Features
 
@@ -316,7 +324,7 @@ This module is part of the `haive-agents` package. Install it using:
 
 ```bash
 pip install haive-agents[conversation]
-```
+````
 
 ## Quick Start
 
@@ -350,26 +358,28 @@ The Social Media Conversation agent simulates realistic social media interaction
 ## Architecture
 
 ```
+
 SocialMediaConversation (extends BaseConversationAgent)
 ├── Platform Configuration
-│   ├── Twitter (280 chars, retweets)
-│   ├── Instagram (visual, hashtags)
-│   ├── TikTok (short, trendy)
-│   └── Generic (customizable)
+│ ├── Twitter (280 chars, retweets)
+│ ├── Instagram (visual, hashtags)
+│ ├── TikTok (short, trendy)
+│ └── Generic (customizable)
 ├── Engagement System
-│   ├── Likes & Reactions
-│   ├── Shares & Retweets
-│   ├── Reply Threads
-│   └── Follower Dynamics
+│ ├── Likes & Reactions
+│ ├── Shares & Retweets
+│ ├── Reply Threads
+│ └── Follower Dynamics
 ├── Viral Mechanics
-│   ├── Engagement Tracking
-│   ├── Viral Threshold
-│   └── Trending Topics
+│ ├── Engagement Tracking
+│ ├── Viral Threshold
+│ └── Trending Topics
 └── Social Tools
-    ├── Like Tool
-    ├── Reply Tool
-    └── Share Tool
-```
+├── Like Tool
+├── Reply Tool
+└── Share Tool
+
+````
 
 ## Key Features
 
@@ -388,7 +398,7 @@ This module is part of the `haive-agents` package. Install it using:
 
 ```bash
 pip install haive-agents[conversation]
-```
+````
 
 ## Quick Start
 
@@ -406,3 +416,4 @@ influencer = SimpleAgent(name="TechGuru", followers=10000
 
 ---
 
+```

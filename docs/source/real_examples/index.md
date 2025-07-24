@@ -383,4 +383,3 @@ These are actual outputs from agents, games, and conversations - not mock data.
 - **Path**: `docs/captures/TextSummarizerAgent_c9e09adb-29f0-4662-b877-f45abcdd97c9_20250626_113523.json`
 - **Agent Type**: custom.SimpleAgent
 - **Steps**: 5
-

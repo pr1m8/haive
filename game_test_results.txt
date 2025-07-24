@@ -1,0 +1,98 @@
+Game Test Results
+============================================================
+
+Working Games:
+  ✅ checkers
+  ✅ chess
+  ✅ dominoes
+  ✅ fox_and_geese
+  ✅ mafia
+  ✅ mancala
+  ✅ mastermind
+  ✅ risk
+
+
+Failing Games:
+  ❌ battleship
+     Error: Timeout - possibly waiting for user input
+
+  ❌ clue
+     Error: Timeout - possibly waiting for user input
+
+  ❌ connect4
+     Error: Timeout - possibly waiting for user input
+
+  ❌ debate
+     Error: │   269 │   │   │   )                                                          │
+│   270                                                                        │
+╰──────────────────────────────────────────────────────────────────────────────╯
+ValueError: Graph must have an entrypoint: add at least one edge from START to 
+another node
+
+  ❌ debate_v2
+     Error:   File "/home/will/Projects/haive/backend/haive/.venv/lib/python3.12/site-packages/pydantic/_internal/_decorators.py", line 549, in inspect_validator
+    raise PydanticUserError(
+pydantic.errors.PydanticUserError: Unrecognized field_validator function signature for <bound method DebateConversation.validate_debate_setup of <class 'haive.agents.conversation.debate.agent.DebateConversation'>> with `mode=after`:() -> 'DebateConversation'
+
+For further information visit https://errors.pydantic.dev/2.11/u/validator-signature
+
+  ❌ base_example
+     Error: Traceback (most recent call last):
+  File "/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/example.py", line 15, in <module>
+    from haive.games.chess import ChessAgent, ChessConfig
+ImportError: cannot import name 'ChessAgent' from 'haive.games.chess' (/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/chess/__init__.py)
+
+  ❌ go
+     Error:   File "/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/go/state.py", line 29, in <module>
+    from haive.games.go import go_engine as sente
+  File "/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/go/go_engine.py", line 10, in <module>
+    import sgfmill.boards
+ModuleNotFoundError: No module named 'sgfmill'
+
+  ❌ hold_em
+     Error: Timeout - possibly waiting for user input
+
+  ❌ monopoly
+     Error: https://errors.pydantic.dev/2.11/v/string_too_short
+rent
+  List should have at least 6 items after validation, not 1 [type=too_short, 
+input_value=[0], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.11/v/too_short
+
+  ❌ nim
+     Error: 
+
+  ❌ poker
+     Error: Timeout - possibly waiting for user input
+
+  ❌ reversi
+     Error: │   269 │   │   │   )                                                          │
+│   270                                                                        │
+╰──────────────────────────────────────────────────────────────────────────────╯
+ValueError: Graph must have an entrypoint: add at least one edge from START to 
+another node
+
+  ❌ single_player
+     Error: Traceback (most recent call last):
+  File "/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/single_player/example.py", line 1, in <module>
+    def run_interactive_game(agent: SinglePlayerGameAgent, commands: List[str] = None):
+                                    ^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'SinglePlayerGameAgent' is not defined
+
+  ❌ flow_free
+     Error:   File "/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/single_player/flow_free/example.py", line 17, in <module>
+    from haive.games.single_player.base import GameDifficulty, GameMode, PlayerType
+  File "/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/single_player/__init__.py", line 3, in <module>
+    from single_player.base import (
+ModuleNotFoundError: No module named 'single_player'
+
+  ❌ wordle
+     Error:   File "/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/single_player/wordle/example.py", line 8, in <module>
+    from haive.games.single_player.wordle.agent import WordConnectionsAgent
+  File "/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/single_player/__init__.py", line 3, in <module>
+    from single_player.base import (
+ModuleNotFoundError: No module named 'single_player'
+
+  ❌ tic_tac_toe
+     Error: Timeout - possibly waiting for user input
+

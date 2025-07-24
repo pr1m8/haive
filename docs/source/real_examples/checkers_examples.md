@@ -47,10 +47,8 @@ Checkers demonstrates key strategic concepts:
 - **Tactical Combinations**: Multi-move sequences leading to material gain
 - **Positional Play**: Control of key squares and piece development
 - **Endgame Technique**: King vs. men advantages and opposition principles
-- **Sacrifice Patterns*
+- \*_Sacrifice Patterns_
 
 ... (truncated)
 
-
 ---
-

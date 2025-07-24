@@ -10,43 +10,45 @@ Interactive game demonstrations with playable interfaces and AI opponents.
         <p>Experience our game environments with intelligent AI opponents of varying skill levels.</p>
     </div>
 
+.. grid:: 2 2 3 3
+   :gutter: 3
 
-   .. card::
+   .. grid-item-card:: ♟️ Chess
       :link: chess-demo
       :link-type: doc
       :class-card: game-demo-card
 
       Classic chess with AI agents of varying skill levels
 
-   .. card::
+   .. grid-item-card:: ⭕ Tic Tac Toe
       :link: tictactoe-demo
       :link-type: doc
       :class-card: game-demo-card
 
       Simple 3x3 grid game with perfect play AI
 
-   .. card::
+   .. grid-item-card:: 🔴 Checkers
       :link: checkers-demo
       :link-type: doc
       :class-card: game-demo-card
 
       Classic checkers with jumping and king promotion
 
-   .. card::
+   .. grid-item-card:: 🏨 Monopoly
       :link: monopoly-demo
       :link-type: doc
       :class-card: game-demo-card
 
       Economic strategy game with property trading and AI negotiation
 
-   .. card::
+   .. grid-item-card:: 🚀 Among Us
       :link: among_us-demo
       :link-type: doc
       :class-card: game-demo-card
 
       Social deduction with AI crewmates and imposters
 
-   .. card::
+   .. grid-item-card:: 🟤 Mancala
       :link: mancala-demo
       :link-type: doc
       :class-card: game-demo-card
@@ -79,16 +81,16 @@ Interactive game demonstrations with playable interfaces and AI opponents.
         text-align: center;
         margin: 2rem 0;
     }
-    
+
     .games-hero h2 {
         font-size: 2.5rem;
         margin-bottom: 1rem;
     }
-    
+
     .game-demo-card {
         transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    
+
     .game-demo-card:hover {
         transform: translateY(-4px);
         box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
@@ -101,7 +103,7 @@ Features
 All game demos include:
 
 - **🎮 Interactive Interface**: Click to play directly in your browser
-- **🤖 AI Opponents**: Multiple difficulty levels with different strategies  
+- **🤖 AI Opponents**: Multiple difficulty levels with differents
 - **📊 Move Analysis**: See AI reasoning and move suggestions
 - **📈 Game History**: Track moves and analyze gameplay
 - **🎯 Strategy Tips**: Learn optimal play techniques

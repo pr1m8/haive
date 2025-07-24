@@ -15,7 +15,7 @@ Economic strategy game with property trading and AI negotiation
                     <p class="game-complexity">Complexity: High</p>
                 </div>
             </div>
-            
+
             <div class="game-stats">
                 <div class="stat">
                     <label>Board Size:</label>
@@ -26,7 +26,7 @@ Economic strategy game with property trading and AI negotiation
                     <span>3</span>
                 </div>
             </div>
-            
+
             <div class="game-features">
                 <span class="feature-tag">Property Trading</span>
                 <span class="feature-tag">AI Negotiation</span>
@@ -51,14 +51,14 @@ Economic strategy game with property trading and AI negotiation
                     Start New Game
                 </button>
             </div>
-            
+
             <div id="monopoly-board" class="game-board">
                 <!-- Game board will be rendered here -->
                 <div class="board-placeholder">
                     <p>Click "Start New Game" to begin playing Monopoly</p>
                 </div>
             </div>
-            
+
             <div class="game-status">
                 <div id="monopoly-status" class="status-display">
                     Ready to play
@@ -84,15 +84,15 @@ Economic strategy game with property trading and AI negotiation
         const board = document.getElementById(gameId + '-board');
         const status = document.getElementById(gameId + '-status');
         const aiLevel = document.getElementById(gameId + '-ai-level').value;
-        
+
         // Initialize game board based on game type
         initializeGameBoard(gameId, board);
         status.textContent = `Playing against ${aiLevel} AI`;
-        
+
         // Show game-specific interface
         showGameInterface(gameId);
     }
-    
+
     function initializeGameBoard(gameId, boardElement) {
         // This would be replaced with actual game implementation
         boardElement.innerHTML = `
@@ -105,7 +105,7 @@ Economic strategy game with property trading and AI negotiation
             </div>
         `;
     }
-    
+
     function generateDemoBoard(gameId) {
         if (gameId === 'chess' || gameId === 'checkers') {
             let squares = '';
@@ -118,11 +118,44 @@ Economic strategy game with property trading and AI negotiation
             for (let i = 0; i < 9; i++) {
                 cells += '<div class="cell" onclick="makeMove(this)"></div>';
             }
-            return `<div class="board-3x3">${cells}</div>`;
+            return `<div class="board-3x3">${cells}
+        <!-- Live Game Stream -->
+        <div class="game-streaming">
+            <h3>Live Game Visualization</h3>
+            <div class="streaming-indicator">
+                Live Stream
+            </div>
+            <div class="game-state-display">
+                <pre id="monopoly-state">
+Board Position:
+┌─────┬─────┬─────┬─────┬─────┐
+│ GO  │ P1  │     │ P2  │ JAIL│
+├─────┼─────┴─────┴─────┼─────┤
+│     │   MONOPOLY      │     │
+│ P3  │     BOARD       │ P4  │
+├─────┼─────┬─────┬─────┼─────┤
+│     │     │ P5  │     │     │
+└─────┴─────┴─────┴─────┴─────┘
+
+P1: $1500 | P2: $1450 | P3: $1600
+Turn: Player 1 | Dice: Ready
+Status: Game in progress
+                </pre>
+            </div>
+            <div class="move-history">
+                <h4>Move History</h4>
+                <div id="monopoly-moves-stream">
+                    <div class="move">1. P1: Rolled 7, landed on Baltic Ave</div>
+                    <div class="move">2. P2: Rolled 5, bought Vermont Ave</div>
+                    <div class="move">3. P3: Rolled 12, passed GO</div>
+                </div>
+            </div>
+        </div>
+    </div>`;
         }
         return '<div class="custom-board">Game board visualization</div>';
     }
-    
+
     function makeMove(cell) {
         if (cell.textContent === '') {
             cell.textContent = 'X';
@@ -130,7 +163,7 @@ Economic strategy game with property trading and AI negotiation
             setTimeout(() => aiMove(), 500);
         }
     }
-    
+
     function aiMove() {
         const emptyCells = document.querySelectorAll('.cell:empty');
         if (emptyCells.length > 0) {
@@ -138,7 +171,7 @@ Economic strategy game with property trading and AI negotiation
             randomCell.textContent = 'O';
         }
     }
-    
+
     function showGameInterface(gameId) {
         // Enable game-specific interactions
         console.log(`Started ${gameId} game`);
@@ -150,32 +183,32 @@ Economic strategy game with property trading and AI negotiation
         max-width: 1200px;
         margin: 0 auto;
     }
-    
+
     .game-overview-card {
         background: var(--color-background-secondary);
         border-radius: 12px;
         padding: 2rem;
         margin-bottom: 2rem;
     }
-    
+
     .game-header {
         display: flex;
         align-items: center;
         gap: 1rem;
         margin-bottom: 1.5rem;
     }
-    
+
     .game-icon {
         font-size: 3rem;
     }
-    
+
     .game-stats {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 1rem;
         margin: 1rem 0;
     }
-    
+
     .stat {
         display: flex;
         justify-content: space-between;
@@ -183,14 +216,14 @@ Economic strategy game with property trading and AI negotiation
         background: var(--color-background-primary);
         border-radius: 6px;
     }
-    
+
     .game-features {
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
         margin-top: 1rem;
     }
-    
+
     .feature-tag {
         background: var(--color-brand-primary);
         color: white;
@@ -198,14 +231,14 @@ Economic strategy game with property trading and AI negotiation
         border-radius: 1rem;
         font-size: 0.875rem;
     }
-    
+
     .game-interface {
         background: var(--color-background-secondary);
         border-radius: 12px;
         padding: 2rem;
         margin-bottom: 2rem;
     }
-    
+
     .game-controls {
         display: flex;
         align-items: center;
@@ -213,7 +246,7 @@ Economic strategy game with property trading and AI negotiation
         margin-bottom: 2rem;
         flex-wrap: wrap;
     }
-    
+
     .start-game-btn {
         background: var(--color-brand-primary);
         color: white;
@@ -223,7 +256,7 @@ Economic strategy game with property trading and AI negotiation
         cursor: pointer;
         font-weight: 600;
     }
-    
+
     .game-board {
         min-height: 400px;
         background: var(--color-background-primary);
@@ -232,7 +265,7 @@ Economic strategy game with property trading and AI negotiation
         padding: 2rem;
         text-align: center;
     }
-    
+
     .board-8x8 {
         display: grid;
         grid-template-columns: repeat(8, 1fr);
@@ -240,7 +273,7 @@ Economic strategy game with property trading and AI negotiation
         max-width: 400px;
         margin: 0 auto;
     }
-    
+
     .board-3x3 {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -248,7 +281,7 @@ Economic strategy game with property trading and AI negotiation
         max-width: 300px;
         margin: 0 auto;
     }
-    
+
     .square, .cell {
         aspect-ratio: 1;
         background: #f0f0f0;
@@ -259,22 +292,22 @@ Economic strategy game with property trading and AI negotiation
         font-size: 2rem;
         cursor: pointer;
     }
-    
+
     .square:nth-child(odd) {
         background: #d4c4b0;
     }
-    
+
     .cell:hover {
         background: #e0e0e0;
     }
-    
+
     .game-status {
         margin-top: 1rem;
         padding: 1rem;
         background: var(--color-background-primary);
         border-radius: 6px;
     }
-    
+
     .game-analysis {
         background: var(--color-background-secondary);
         border-radius: 12px;
@@ -317,7 +350,7 @@ Code Example
 
     # Get game history
     for move in game.history:
-    print(f"{move.player}: {move.action}")
+        print(f"{move.player}: {move.action}")
 
 See Also
 --------

@@ -66,3 +66,4 @@ from haive.games.monopoly.utils import create_board, create_p
 
 ---
 
+```

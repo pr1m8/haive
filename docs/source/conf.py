@@ -97,7 +97,7 @@ release = "1.0.0"
 
 extensions = [
     # === CORE API DOCUMENTATION ===
-    "autoapi.extension",  # ✅ RE-ENABLED - working on full module support
+    # "autoapi.extension",  # Disabled due to remaining KeyError issues
     "sphinx.ext.napoleon",  # Google/NumPy docstring support
     "sphinx.ext.viewcode",  # [source] links
     "sphinx.ext.linkcode",  # GitHub source links
@@ -187,7 +187,7 @@ html_static_path = ["_static"]
 
 # Minimal CSS - Streamlined design system
 html_css_files = [
-    "haive-minimal.css",  # 🎨 Streamlined design system with Sphinx Design integration
+    "haive-minimal.css",  # 🎨 ENABLED - includes demo button styles
 ]
 
 html_js_files = [
@@ -210,10 +210,13 @@ html_theme_options = {
     "navigation_depth": 4,  # Show up to 4 levels in navigation
     "collapse_navigation": False,  # Keep navigation expanded
     "titles_only": False,  # Show full navigation tree
+    # === TABLE OF CONTENTS (RIGHT SIDEBAR) ===
+    "show_toc_level": 3,  # Show up to 3 levels in page TOC
+    "toc_title": "On this page",  # Title for the TOC
     # === ADVANCED CSS VARIABLES ===
     "light_css_variables": {
         # Layout enhancements - REDUCED SIDEBAR
-        "sidebar-width": "18rem",  # Reduced from 22rem for better balance
+        "sidebar-width": "15rem",  # Reduced from 22rem for better balance
         "content-width": "50rem",  # Increased content width
         "content-padding": "2rem",  # Reduced padding for more space
         # Typography improvements
@@ -288,7 +291,7 @@ html_theme_options = {
         "font-size--small": "0.875rem",
         "font-size--normal": "1rem",
         "font-size--medium": "1.125rem",
-        "sidebar-width": "20rem",
+        "sidebar-width": "15rem",
         "sidebar-item-spacing-vertical": "0.5rem",
         "sidebar-item-spacing-horizontal": "1rem",
         "sidebar-item-font-size": "0.9rem",
@@ -347,6 +350,8 @@ html_theme_options = {
 }
 
 # === SIDEBAR CONFIGURATION FOR FURO ===
+# Furo automatically handles the right sidebar (page table of contents)
+# The left sidebar configuration:
 html_sidebars = {
     "**": [
         "sidebar/brand.html",
@@ -829,6 +834,7 @@ autoapi_ignore = [
     "**/debug*.py",
     "**/bin/**",
     "**/cli.py",
+    "**/compiled_agent.py",  # 🚨 TEMPORARILY IGNORED - has import issues with CompiledStateGraph
     "**/litellm_cli.py",
     "**/aug_llms.py",
     "**/example*.py",
@@ -867,6 +873,18 @@ autoapi_ignore = [
     "**/.venv/**",  # Ignore virtual environments within packages
     "**/haive_agent_mcp_integration.py",  # Problematic file name
     "**/*.code-workspace",  # VS Code workspace files
+    # Fix for the specific KeyError issue
+    "**/enhanced_multi_agent_v4.py",  # Has wrong import reference
+    "**/multi_agent_state.py",  # Has wrong import reference
+    # Fix the agent import issue
+    "**/agents/base/agent.py",  # Skip base agent.py - Agent is exported from __init__.py
+    "**/agents/base/agent_structured_output_mixin.py",  # Skip mixin causing KeyError
+    "**/agents/base/agent_with_token_tracking.py",  # Skip problematic file
+    "**/agents/base/compiled_agent.py",  # Skip compiled agent causing KeyError
+    "**/agents/reflection/agent.py",  # Skip reflection agent
+    "**/agents/structured_output/agent.py",  # Skip structured output agent
+    "**/agents/document/agent.py",  # Skip document agent
+    "**/agents/supervisor/**",  # Skip all supervisor agents for now
 ]
 
 # ==============================================================================
@@ -904,6 +922,15 @@ def linkcode_resolve(domain, info):
 # ==============================================================================
 
 
+def autoapi_before_find_module(app, module_name, module_path, options):
+    """Fix module paths before AutoAPI processes them."""
+    # Fix the problematic base.agent.Agent reference
+    if module_name == "haive.agents.base.agent":
+        # Skip the agent.py file - Agent is exported from __init__
+        return True  # Skip this module
+    return None  # Process normally
+
+
 def setup(app):
     """Setup function for custom modifications."""
     logger.info("Running optimized Sphinx setup function")
@@ -919,9 +946,13 @@ def setup(app):
     app.add_css_file("haive-enhanced.css")
 
     # Connect autoapi hooks for cleaner URLs
-    app.connect("autoapi-skip-member", autoapi_skip_member)
-    app.connect("build-finished", fix_autoapi_paths)
-
+    # app.connect("autoapi-skip-member", autoapi_skip_member)  # Disabled with autoapi
+    # app.connect("build-finished", fix_autoapi_paths)  # Disabled with autoapi
+    
+    # Add hook to fix module resolution
+    # if hasattr(app, 'setup_extension'):
+    #     app.setup_extension('autoapi.extension')  # Disabled while autoapi is off
+    
     return {
         "version": "1.0",
         "parallel_read_safe": True,

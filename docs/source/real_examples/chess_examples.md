@@ -72,3 +72,4 @@ from haive.games.chess import ChessAgent, ChessConfig
 
 ---
 
+```

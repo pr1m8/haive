@@ -26,7 +26,7 @@ class PackageValidator:
             "haive-prebuilt",
         ]
 
-    def check_package_syntax(self, package_name: str) -> Dict[str, List[str]]:
+    def check_package_syntax(self, package_name: str) -> dict[str, list[str]]:
         """Check syntax for all Python files in a package."""
         package_dir = self.packages_dir / package_name
         if not package_dir.exists():
@@ -56,11 +56,11 @@ class PackageValidator:
             except py_compile.PyCompileError as e:
                 error_msg = f"SYNTAX ERROR in {py_file}: {e}"
                 errors.append(error_msg)
-                logger.error(error_msg)
+                logger.exception(error_msg)
             except Exception as e:
                 error_msg = f"COMPILE ERROR in {py_file}: {e}"
                 errors.append(error_msg)
-                logger.error(error_msg)
+                logger.exception(error_msg)
 
         logger.info(
             f"Package {package_name}: {len(files_checked)} files OK, {len(errors)} errors"
@@ -75,6 +75,7 @@ class PackageValidator:
             # Check if there are changes to commit
             result = subprocess.run(
                 ["git", "status", "--porcelain", str(package_dir)],
+                check=False,
                 capture_output=True,
                 text=True,
                 cwd=self.packages_dir.parent,
@@ -104,7 +105,7 @@ class PackageValidator:
             return True
 
         except subprocess.CalledProcessError as e:
-            logger.error(f"Failed to commit {package_name}: {e}")
+            logger.exception(f"Failed to commit {package_name}: {e}")
             return False
 
     def push_changes(self) -> bool:
@@ -114,10 +115,10 @@ class PackageValidator:
             logger.info("✅ Pushed all changes to remote")
             return True
         except subprocess.CalledProcessError as e:
-            logger.error(f"Failed to push changes: {e}")
+            logger.exception(f"Failed to push changes: {e}")
             return False
 
-    def validate_all_packages(self) -> Dict[str, Dict]:
+    def validate_all_packages(self) -> dict[str, dict]:
         """Validate syntax in all packages."""
         results = {}
 
@@ -126,7 +127,7 @@ class PackageValidator:
 
         return results
 
-    def fix_basic_syntax_errors(self, package_name: str) -> List[str]:
+    def fix_basic_syntax_errors(self, package_name: str) -> list[str]:
         """Fix basic syntax errors we can detect automatically."""
         fixed_files = []
         package_dir = self.packages_dir / package_name
@@ -161,7 +162,7 @@ class PackageValidator:
             return False
 
         try:
-            with open(py_file, "r", encoding="utf-8") as f:
+            with open(py_file, encoding="utf-8") as f:
                 content = f.read()
 
             original_content = content
@@ -200,11 +201,11 @@ class PackageValidator:
                     return False
 
         except Exception as e:
-            logger.error(f"Error fixing {py_file}: {e}")
+            logger.exception(f"Error fixing {py_file}: {e}")
 
         return False
 
-    def run_fix_and_commit_cycle(self) -> Dict[str, bool]:
+    def run_fix_and_commit_cycle(self) -> dict[str, bool]:
         """Run the complete fix and commit cycle for all packages."""
         results = {}
 
@@ -271,19 +272,11 @@ def main():
     results = validator.run_fix_and_commit_cycle()
 
     # Summary
-    print("\n" + "=" * 50)
-    print("📊 PACKAGE VALIDATION & COMMIT SUMMARY")
-    print("=" * 50)
 
-    success_count = sum(1 for success in results.values() if success)
+    sum(1 for success in results.values() if success)
 
-    for package_name, success in results.items():
-        status = "✅ SUCCESS" if success else "❌ FAILED"
-        print(f"{package_name:15} | {status}")
-
-    print(
-        f"\n📈 RESULTS: {success_count}/{len(results)} packages processed successfully"
-    )
+    for _package_name, success in results.items():
+        passLED"
 
 
 if __name__ == "__main__":

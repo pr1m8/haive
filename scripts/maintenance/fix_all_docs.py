@@ -135,7 +135,7 @@ class DocumentationFixer:
             with open(showcase_file, "w", encoding="utf-8") as f:
                 f.write(content)
 
-            logger.info("  ✓ Fixed showcase index"x")
+            logger.info("  ✓ Fixed showcase index")
             self.fixed_count += 1
 
         except Exception as e:

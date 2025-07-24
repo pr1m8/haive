@@ -58,3 +58,4 @@ The game board consists of 14 pits:
 
 ---
 
+```

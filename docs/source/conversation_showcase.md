@@ -58,6 +58,7 @@ Product Ideas:
 ```
 
 **Key Features Demonstrated:**
+
 - ✅ **Balanced Participation**: Each agent contributed equally (5 contributions each)
 - ✅ **Structured Sections**: Problem Statement → Product Ideas → Features → Target Market → Next Steps
 - ✅ **Role-Based Expertise**: Each agent contributed according to their role
@@ -79,9 +80,9 @@ Here's a real example of 4 technical experts (SecurityExpert, BackendLead, DevOp
 
 [SecurityExpert]: # Overview
 
-In this collaborative session, we are reviewing a newly implemented authentication 
-microservice designed to handle user authentication using JSON Web Tokens (JWT) and 
-Redis caching. The microservice is intended to provide secure, scalable, and efficient 
+In this collaborative session, we are reviewing a newly implemented authentication
+microservice designed to handle user authentication using JSON Web Tokens (JWT) and
+Redis caching. The microservice is intended to provide secure, scalable, and efficient
 authentication and session management for a distributed system.
 
 ## Strengths
@@ -89,26 +90,29 @@ authentication and session management for a distributed system.
 [SecurityExpert]: ## Strengths
 
 ### Security
-- **Robust JWT Structure**: The microservice leverages the inherent security features 
-  of JWT, including payload encryption and signature verification, to maintain data 
+
+- **Robust JWT Structure**: The microservice leverages the inherent security features
+  of JWT, including payload encryption and signature verification, to maintain data
   integrity and authenticity, reducing the risk of tampering and unauthorized access.
-- **Token Expiry Strategy**: Implementing token expiration times is an effective 
-  security measure to prevent replay attacks, ensuring that JWTs are only valid for 
+- **Token Expiry Strategy**: Implementing token expiration times is an effective
+  security measure to prevent replay attacks, ensuring that JWTs are only valid for
   a limited period.
 
 [BackendLead]: ## Enhancements to Strengths
 
 ### Security Enhancements
-- **Advanced JWT Features**: Consider using advanced features like scopes or claims 
+
+- **Advanced JWT Features**: Consider using advanced features like scopes or claims
   within JWTs to provide more granular control over user access levels.
-- **Secure Transmission**: Ensure all tokens are transmitted over secure channels 
+- **Secure Transmission**: Ensure all tokens are transmitted over secure channels
   (HTTPS) to prevent interception and unauthorized access.
 
 [DevOpsEngineer]: ## Additional Considerations to Strengths
 
 ### Scalability and Performance
-- **Horizontal Scaling**: Ensure that the architecture supports horizontal scaling by 
-  deploying the microservice across multiple nodes or regions, which is crucial for 
+
+- **Horizontal Scaling**: Ensure that the architecture supports horizontal scaling by
+  deploying the microservice across multiple nodes or regions, which is crucial for
   handling varying loads and maintaining performance.
 
 ## Issues
@@ -116,35 +120,39 @@ authentication and session management for a distributed system.
 [SecurityExpert]: ## Issues
 
 ### Security Concerns
-- **Token Storage**: If JWTs are stored improperly on the client-side (e.g., in local 
+
+- **Token Storage**: If JWTs are stored improperly on the client-side (e.g., in local
   storage), they are vulnerable to XSS attacks, potentially exposing user sessions.
-- **Token Revocation**: There is typically no built-in mechanism for revoking JWTs, 
-  which can be problematic if a token needs to be invalidated before its expiration 
+- **Token Revocation**: There is typically no built-in mechanism for revoking JWTs,
+  which can be problematic if a token needs to be invalidated before its expiration
   due to security concerns.
 
 [BackendLead]: ## Enhancements to Issues
-- **Token Storage**: Encourage storing JWTs in secure cookies with the `HttpOnly` and 
+
+- **Token Storage**: Encourage storing JWTs in secure cookies with the `HttpOnly` and
   `Secure` flags to mitigate XSS vulnerabilities and enforce HTTPS for token transmission.
 
 ## Conclusion
 
 [SecurityExpert]: ## Conclusion
 
-Throughout this code review session, we have thoroughly examined the new authentication 
-microservice that utilizes JWT tokens and Redis caching. Our collaborative analysis 
-highlighted several key areas of strength, including scalability, security, and 
+Throughout this code review session, we have thoroughly examined the new authentication
+microservice that utilizes JWT tokens and Redis caching. Our collaborative analysis
+highlighted several key areas of strength, including scalability, security, and
 integration within a microservices architecture.
 
 ### Next Steps:
-1. **Prioritize Security Enhancements**: Implement secure token storage practices and 
+
+1. **Prioritize Security Enhancements**: Implement secure token storage practices and
    develop a comprehensive token revocation strategy to mitigate vulnerabilities.
-2. **Optimize Performance**: Adjust Redis configurations and caching strategies based 
+2. **Optimize Performance**: Adjust Redis configurations and caching strategies based
    on performance metrics and conduct regular load testing.
-3. **Strengthen Architecture**: Configure Redis for high availability and explore 
+3. **Strengthen Architecture**: Configure Redis for high availability and explore
    service mesh integration to enhance inter-service communication and resilience.
 ```
 
 **Key Features Demonstrated:**
+
 - ✅ **Expert Role Specialization**: Each agent contributed from their domain expertise
 - ✅ **Iterative Enhancement**: Agents built upon each other's contributions
 - ✅ **Comprehensive Coverage**: Security, performance, architecture, and operations
@@ -158,7 +166,7 @@ The debate agent orchestrates structured arguments between multiple positions. H
 ### Available Debate Formats
 
 1. **Simple Debate** - Two-sided arguments on a topic
-2. **Panel Debate** - Multiple participants with different viewpoints  
+2. **Panel Debate** - Multiple participants with different viewpoints
 3. **Oxford Debate** - Formal structured debate with proposition/opposition
 4. **Socratic Dialogue** - Question-based philosophical discussions
 
@@ -182,6 +190,7 @@ Final verdict: [Based on strength of arguments presented]
 These conversation agents can be integrated into your applications to provide:
 
 ### Business Applications
+
 - **Project Planning**: Multi-stakeholder collaborative planning sessions
 - **Code Reviews**: Technical team collaboration on code quality
 - **Strategy Sessions**: Cross-functional brainstorming and decision making
@@ -204,7 +213,7 @@ participants = {
         )
     ),
     "Engineer": SimpleAgent(
-        name="Engineer", 
+        name="Engineer",
         engine=AugLLMConfig(
             system_message="You are a software engineer focused on technical feasibility.",
             temperature=0.5
@@ -235,7 +244,7 @@ print(result.final_document)  # Complete collaborative output
 All examples on this page come from real outputs in the codebase:
 
 - **Brainstorming Example**: `packages/haive-agents/src/haive/agents/conversation/collaberative/outputs/brainstorming.md`
-- **Code Review Example**: `packages/haive-agents/src/haive/agents/conversation/collaberative/outputs/code_review.md`  
+- **Code Review Example**: `packages/haive-agents/src/haive/agents/conversation/collaberative/outputs/code_review.md`
 - **Debate Examples**: `packages/haive-agents/src/haive/agents/conversation/debate/outputs/`
 - **Working Code**: `packages/haive-agents/src/haive/agents/conversation/*/example.py`
 

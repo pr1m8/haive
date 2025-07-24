@@ -32,11 +32,8 @@ async def analyze_agents(args):
         # Analyze specific agent
         agent = analyzer.get_agent_by_name(args.agent_name)
         if agent:
-            print(f"Agent: {agent.name}")
-            print(f"Architecture: {agent.architecture}")
-            print(f"File: {agent.file_path}")
         else:
-            print(f"Agent '{args.agent_name}' not found")
+            pass
     else:
         # Analyze all agents
         agents = analyzer.discover_all_agents()
@@ -46,9 +43,8 @@ async def analyze_agents(args):
             if args.output:
                 with open(args.output, "w") as f:
                     f.write(report)
-                print(f"Report saved to {args.output}")
             else:
-                print(report)
+                pass
         else:
 
             # Group by architecture
@@ -69,7 +65,7 @@ async def analyze_agents(args):
                     if agent.streaming_support:
                         capabilities.append("stream")
 
-                    cap_str = f" [{', '.join(capabilities)}]" if capabilities else ""
+                    f" [{', '.join(capabilities)}]" if capabilities else ""
 
 
 async def run_examples(args):
@@ -88,23 +84,23 @@ async def run_examples(args):
         result = await runner.run_example(args.example_path, config)
 
         if result.agent_info:
-            print(f"Agent: {result.agent_info.name}")
+            pass
 
         if result.error:
-            print(f"Error: {result.error}")
+            pass
 
         if result.visualization_path:
-            print(f"Visualization: {result.visualization_path}")
+            pass
 
         if result.output_file:
-            print(f"Output: {result.output_file}")
+            pass
 
     elif args.discover:
         # Discover all examples
         examples = await runner.discover_all_examples()
 
         for example in sorted(examples):
-            print(f"Found example: {example}")
+            pass
 
     elif args.run_all:
         # Run all examples
@@ -121,7 +117,7 @@ async def run_examples(args):
             with open(args.output, "w") as f:
                 f.write(report)
         else:
-            print(report)
+            pass
 
 
 async def visualize_agents(args):
@@ -145,11 +141,11 @@ async def visualize_agents(args):
             result = await viz_manager.visualize_agent(agent, output_path, config)
 
             if result.success:
-                print(f"✅ Generated visualization for {agent.name}")
+                pass")
             else:
-                print(f"❌ Failed to generate visualization for {agent.name}")
+                pass")
         else:
-            print(f"Agent '{args.agent_name}' not found")
+            pass
 
     elif args.compare:
         # Create comparison visualization
@@ -163,9 +159,9 @@ async def visualize_agents(args):
         )
 
         if result.success:
-            print(f"✅ Generated comparison visualization: {output_path}")
+            pass")
         else:
-            print(f"❌ Failed to generate comparison visualization")
+            pass")
 
     else:
         # Visualize all agents
@@ -178,9 +174,9 @@ async def visualize_agents(args):
             result = await viz_manager.visualize_agent(agent, viz_path, config)
 
             if result.success:
-                print(f"✅ Generated {viz_path}")
+                pass")
             else:
-                print(f"❌ Failed to generate {viz_path}")
+                pass")
 
 
 async def generate_docs(args):
@@ -211,20 +207,20 @@ async def generate_docs(args):
 
             if result.success:
                 for file_path in result.output_files:
-                    print(f"✅ Generated documentation: {file_path}")
+                    pass")
             else:
-                print(f"❌ Failed to generate documentation for {agent.name}")
+                pass")
         else:
-            print(f"Agent '{args.agent_name}' not found")
+            pass
 
     else:
         # Generate project-wide documentation
         result = await doc_generator.generate_project_documentation(output_dir, config)
 
         if result.success:
-            print("Documentation generation successful")
+            pass
         else:
-            print("Documentation generation failed")
+            pass
 
 
 def create_parser():
