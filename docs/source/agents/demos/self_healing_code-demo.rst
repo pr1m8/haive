@@ -1,7 +1,7 @@
-Reflection Agent Demo
-=====================
+Self-Healing Code Agent Demo
+============================
 
-Self-reflects on outputs and improves them
+Automatically fixes code errors and issues
 
 .. raw:: html
 
@@ -9,34 +9,34 @@ Self-reflects on outputs and improves them
         <!-- Agent Overview -->
         <div class="agent-overview-card">
             <div class="agent-header">
-                <div class="agent-icon">🪞</div>
+                <div class="agent-icon">🔧</div>
                 <div>
-                    <h2>Reflection Agent</h2>
-                    <p class="agent-category">Category: Quality</p>
+                    <h2>Self-Healing Code Agent</h2>
+                    <p class="agent-category">Category: Development</p>
                 </div>
             </div>
 
             <div class="agent-features">
-                <span class="feature-tag">Self-evaluation</span>
-                <span class="feature-tag">Improvement suggestions</span>
-                <span class="feature-tag">Quality metrics</span>
-                <span class="feature-tag">Iterative refinement</span>
+                <span class="feature-tag">Error detection</span>
+                <span class="feature-tag">Auto-fixing</span>
+                <span class="feature-tag">Test generation</span>
+                <span class="feature-tag">Code optimization</span>
             </div>
         </div>
 
         <!-- Interactive Demo -->
         <div class="agent-interface">
             <div class="demo-controls">
-                <h3>Try Reflection Agent</h3>
+                <h3>Try Self-Healing Code Agent</h3>
                 <div class="input-area">
-                    <textarea id="reflection-input" placeholder="Enter your input here..." rows="4"></textarea>
+                    <textarea id="self_healing_code-input" placeholder="Enter your input here..." rows="4"></textarea>
                 </div>
-                <button onclick="runAgent('reflection')" class="run-agent-btn">
+                <button onclick="runAgent('self_healing_code')" class="run-agent-btn">
                     Run Agent
                 </button>
             </div>
 
-            <div id="reflection-output" class="agent-output">
+            <div id="self_healing_code-output" class="agent-output">
                 <!-- Agent output will appear here -->
                 <div class="output-placeholder">
                     <p>Enter input and click "Run Agent" to see results</p>
@@ -51,15 +51,18 @@ Self-reflects on outputs and improves them
                 Live Stream
             </div>
             <div class="execution-display">
-                <pre id="reflection-execution">
-Initial Output: "The data shows improvement"
+                <pre id="self_healing_code-execution">
+Code Analysis:
+✗ Syntax error on line 42
+✗ Undefined variable 'user_data'
+✗ Missing import statement
 
-Reflection:
-- Too vague ⚠️
-- Lacks specifics ⚠️
-- No metrics ⚠️
+Auto-fixes applied:
+✓ Fixed syntax error
+✓ Initialized variable
+✓ Added missing import
 
-Improved Output: "Sales data shows 23% improvement in Q3 2024 compared to Q2, driven by new marketing campaign
+All tests passing ✓
                 </pre>
             </div>
             <div class="execution-stats">
@@ -82,7 +85,7 @@ Improved Output: "Sales data shows 23% improvement in Q3 2024 compared to Q2, dr
 How It Works
 ------------
 
-The Reflection Agent operates by:
+The Self-Healing Code Agent operates by:
 
 1. Receiving input from the user or system
 2. Processing through its specialized pipeline
@@ -92,7 +95,7 @@ The Reflection Agent operates by:
 Use Cases
 ---------
 
-- Ideal for quality tasks
+- Ideal for development tasks
 - Can be integrated into larger workflows
 - Supports both synchronous and asynchronous execution
 
@@ -101,12 +104,12 @@ Code Example
 
 .. code-block:: python
 
-    from haive.agents.reflection.agent import ReflectionAgent
+    from haive.agents.self_healing_code.agent import Self-HealingCodeAgent
     from haive.core.engine import AugLLMConfig
 
     # Create agent
-    agent = ReflectionAgent(
-        name="my_reflection",
+    agent = Self-HealingCodeAgent(
+        name="my_self_healing_code",
         engine=AugLLMConfig(temperature=0.7)
     )
 
@@ -129,6 +132,6 @@ Configuration Options
 See Also
 --------
 
-- :doc:`/api/haive/agents/reflection/index` - API documentation
+- :doc:`/api/haive/agents/self_healing_code/index` - API documentation
 - :doc:`/guides/building_agents` - Agent development guide
 - :doc:`/examples/agent_patterns` - Common patterns

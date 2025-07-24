@@ -1,7 +1,7 @@
-Reflection Agent Demo
-=====================
+Planning Agent Demo
+===================
 
-Self-reflects on outputs and improves them
+Creates and executes strategic plans
 
 .. raw:: html
 
@@ -9,34 +9,34 @@ Self-reflects on outputs and improves them
         <!-- Agent Overview -->
         <div class="agent-overview-card">
             <div class="agent-header">
-                <div class="agent-icon">🪞</div>
+                <div class="agent-icon">📋</div>
                 <div>
-                    <h2>Reflection Agent</h2>
-                    <p class="agent-category">Category: Quality</p>
+                    <h2>Planning Agent</h2>
+                    <p class="agent-category">Category: Strategy</p>
                 </div>
             </div>
 
             <div class="agent-features">
-                <span class="feature-tag">Self-evaluation</span>
-                <span class="feature-tag">Improvement suggestions</span>
-                <span class="feature-tag">Quality metrics</span>
-                <span class="feature-tag">Iterative refinement</span>
+                <span class="feature-tag">Goal decomposition</span>
+                <span class="feature-tag">Step generation</span>
+                <span class="feature-tag">Resource allocation</span>
+                <span class="feature-tag">Timeline creation</span>
             </div>
         </div>
 
         <!-- Interactive Demo -->
         <div class="agent-interface">
             <div class="demo-controls">
-                <h3>Try Reflection Agent</h3>
+                <h3>Try Planning Agent</h3>
                 <div class="input-area">
-                    <textarea id="reflection-input" placeholder="Enter your input here..." rows="4"></textarea>
+                    <textarea id="planning-input" placeholder="Enter your input here..." rows="4"></textarea>
                 </div>
-                <button onclick="runAgent('reflection')" class="run-agent-btn">
+                <button onclick="runAgent('planning')" class="run-agent-btn">
                     Run Agent
                 </button>
             </div>
 
-            <div id="reflection-output" class="agent-output">
+            <div id="planning-output" class="agent-output">
                 <!-- Agent output will appear here -->
                 <div class="output-placeholder">
                     <p>Enter input and click "Run Agent" to see results</p>
@@ -51,15 +51,19 @@ Self-reflects on outputs and improves them
                 Live Stream
             </div>
             <div class="execution-display">
-                <pre id="reflection-execution">
-Initial Output: "The data shows improvement"
+                <pre id="planning-execution">
+Generated Plan:
+Goal: Launch new product
 
-Reflection:
-- Too vague ⚠️
-- Lacks specifics ⚠️
-- No metrics ⚠️
+Steps:
+1. Market research (2 weeks)
+2. Design phase (3 weeks)
+3. Development (6 weeks)
+4. Testing (2 weeks)
+5. Launch prep (1 week)
 
-Improved Output: "Sales data shows 23% improvement in Q3 2024 compared to Q2, driven by new marketing campaign
+Total Duration: 14 weeks
+Resources: 5 team members
                 </pre>
             </div>
             <div class="execution-stats">
@@ -82,7 +86,7 @@ Improved Output: "Sales data shows 23% improvement in Q3 2024 compared to Q2, dr
 How It Works
 ------------
 
-The Reflection Agent operates by:
+The Planning Agent operates by:
 
 1. Receiving input from the user or system
 2. Processing through its specialized pipeline
@@ -92,7 +96,7 @@ The Reflection Agent operates by:
 Use Cases
 ---------
 
-- Ideal for quality tasks
+- Ideal for strategy tasks
 - Can be integrated into larger workflows
 - Supports both synchronous and asynchronous execution
 
@@ -101,12 +105,12 @@ Code Example
 
 .. code-block:: python
 
-    from haive.agents.reflection.agent import ReflectionAgent
+    from haive.agents.planning.agent import PlanningAgent
     from haive.core.engine import AugLLMConfig
 
     # Create agent
-    agent = ReflectionAgent(
-        name="my_reflection",
+    agent = PlanningAgent(
+        name="my_planning",
         engine=AugLLMConfig(temperature=0.7)
     )
 
@@ -129,6 +133,6 @@ Configuration Options
 See Also
 --------
 
-- :doc:`/api/haive/agents/reflection/index` - API documentation
+- :doc:`/api/haive/agents/planning/index` - API documentation
 - :doc:`/guides/building_agents` - Agent development guide
 - :doc:`/examples/agent_patterns` - Common patterns
