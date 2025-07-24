@@ -1,7 +1,7 @@
-Reflection Agent Demo
-=====================
+Dynamic Supervisor Demo
+=======================
 
-Self-reflects on outputs and improves them
+Dynamically manages and coordinates multiple agents
 
 .. raw:: html
 
@@ -9,34 +9,34 @@ Self-reflects on outputs and improves them
         <!-- Agent Overview -->
         <div class="agent-overview-card">
             <div class="agent-header">
-                <div class="agent-icon">🪞</div>
+                <div class="agent-icon">👔</div>
                 <div>
-                    <h2>Reflection Agent</h2>
-                    <p class="agent-category">Category: Quality</p>
+                    <h2>Dynamic Supervisor</h2>
+                    <p class="agent-category">Category: Orchestration</p>
                 </div>
             </div>
 
             <div class="agent-features">
-                <span class="feature-tag">Self-evaluation</span>
-                <span class="feature-tag">Improvement suggestions</span>
-                <span class="feature-tag">Quality metrics</span>
-                <span class="feature-tag">Iterative refinement</span>
+                <span class="feature-tag">Dynamic routing</span>
+                <span class="feature-tag">Load balancing</span>
+                <span class="feature-tag">Task delegation</span>
+                <span class="feature-tag">Performance monitoring</span>
             </div>
         </div>
 
         <!-- Interactive Demo -->
         <div class="agent-interface">
             <div class="demo-controls">
-                <h3>Try Reflection Agent</h3>
+                <h3>Try Dynamic Supervisor</h3>
                 <div class="input-area">
-                    <textarea id="reflection-input" placeholder="Enter your input here..." rows="4"></textarea>
+                    <textarea id="dynamic_supervisor-input" placeholder="Enter your input here..." rows="4"></textarea>
                 </div>
-                <button onclick="runAgent('reflection')" class="run-agent-btn">
+                <button onclick="runAgent('dynamic_supervisor')" class="run-agent-btn">
                     Run Agent
                 </button>
             </div>
 
-            <div id="reflection-output" class="agent-output">
+            <div id="dynamic_supervisor-output" class="agent-output">
                 <!-- Agent output will appear here -->
                 <div class="output-placeholder">
                     <p>Enter input and click "Run Agent" to see results</p>
@@ -51,15 +51,16 @@ Self-reflects on outputs and improves them
                 Live Stream
             </div>
             <div class="execution-display">
-                <pre id="reflection-execution">
-Initial Output: "The data shows improvement"
+                <pre id="dynamic_supervisor-execution">
+Supervision Status:
+Active Agents: 4
+Tasks Completed: 12/15
+Average Response: 1.2s
 
-Reflection:
-- Too vague ⚠️
-- Lacks specifics ⚠️
-- No metrics ⚠️
-
-Improved Output: "Sales data shows 23% improvement in Q3 2024 compared to Q2, driven by new marketing campaign
+Current Assignments:
+- Research Agent → Market analysis
+- Writer Agent → Report draft
+- Review Agent → Quality check
                 </pre>
             </div>
             <div class="execution-stats">
@@ -82,7 +83,7 @@ Improved Output: "Sales data shows 23% improvement in Q3 2024 compared to Q2, dr
 How It Works
 ------------
 
-The Reflection Agent operates by:
+The Dynamic Supervisor operates by:
 
 1. Receiving input from the user or system
 2. Processing through its specialized pipeline
@@ -92,7 +93,7 @@ The Reflection Agent operates by:
 Use Cases
 ---------
 
-- Ideal for quality tasks
+- Ideal for orchestration tasks
 - Can be integrated into larger workflows
 - Supports both synchronous and asynchronous execution
 
@@ -101,12 +102,12 @@ Code Example
 
 .. code-block:: python
 
-    from haive.agents.reflection.agent import ReflectionAgent
+    from haive.agents.dynamic_supervisor.agent import DynamicSupervisor
     from haive.core.engine import AugLLMConfig
 
     # Create agent
-    agent = ReflectionAgent(
-        name="my_reflection",
+    agent = DynamicSupervisor(
+        name="my_dynamic_supervisor",
         engine=AugLLMConfig(temperature=0.7)
     )
 
@@ -129,6 +130,6 @@ Configuration Options
 See Also
 --------
 
-- :doc:`/api/haive/agents/reflection/index` - API documentation
+- :doc:`/api/haive/agents/dynamic_supervisor/index` - API documentation
 - :doc:`/guides/building_agents` - Agent development guide
 - :doc:`/examples/agent_patterns` - Common patterns

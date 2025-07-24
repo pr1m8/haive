@@ -1,7 +1,7 @@
-Reflection Agent Demo
-=====================
+Research Agent Demo
+===================
 
-Self-reflects on outputs and improves them
+Conducts comprehensive research on topics
 
 .. raw:: html
 
@@ -9,34 +9,34 @@ Self-reflects on outputs and improves them
         <!-- Agent Overview -->
         <div class="agent-overview-card">
             <div class="agent-header">
-                <div class="agent-icon">🪞</div>
+                <div class="agent-icon">🔬</div>
                 <div>
-                    <h2>Reflection Agent</h2>
-                    <p class="agent-category">Category: Quality</p>
+                    <h2>Research Agent</h2>
+                    <p class="agent-category">Category: Investigation</p>
                 </div>
             </div>
 
             <div class="agent-features">
-                <span class="feature-tag">Self-evaluation</span>
-                <span class="feature-tag">Improvement suggestions</span>
-                <span class="feature-tag">Quality metrics</span>
-                <span class="feature-tag">Iterative refinement</span>
+                <span class="feature-tag">Multi-source search</span>
+                <span class="feature-tag">Fact verification</span>
+                <span class="feature-tag">Bibliography</span>
+                <span class="feature-tag">Synthesis</span>
             </div>
         </div>
 
         <!-- Interactive Demo -->
         <div class="agent-interface">
             <div class="demo-controls">
-                <h3>Try Reflection Agent</h3>
+                <h3>Try Research Agent</h3>
                 <div class="input-area">
-                    <textarea id="reflection-input" placeholder="Enter your input here..." rows="4"></textarea>
+                    <textarea id="research-input" placeholder="Enter your input here..." rows="4"></textarea>
                 </div>
-                <button onclick="runAgent('reflection')" class="run-agent-btn">
+                <button onclick="runAgent('research')" class="run-agent-btn">
                     Run Agent
                 </button>
             </div>
 
-            <div id="reflection-output" class="agent-output">
+            <div id="research-output" class="agent-output">
                 <!-- Agent output will appear here -->
                 <div class="output-placeholder">
                     <p>Enter input and click "Run Agent" to see results</p>
@@ -51,15 +51,18 @@ Self-reflects on outputs and improves them
                 Live Stream
             </div>
             <div class="execution-display">
-                <pre id="reflection-execution">
-Initial Output: "The data shows improvement"
+                <pre id="research-execution">
+Research Report: AI in Healthcare
 
-Reflection:
-- Too vague ⚠️
-- Lacks specifics ⚠️
-- No metrics ⚠️
+Sources Analyzed: 47
+Key Findings: 12
+Confidence Level: High
 
-Improved Output: "Sales data shows 23% improvement in Q3 2024 compared to Q2, driven by new marketing campaign
+Executive Summary:
+AI adoption in healthcare has increased 40% in 2024...
+
+Full report: 2,500 words
+Citations: 23
                 </pre>
             </div>
             <div class="execution-stats">
@@ -82,7 +85,7 @@ Improved Output: "Sales data shows 23% improvement in Q3 2024 compared to Q2, dr
 How It Works
 ------------
 
-The Reflection Agent operates by:
+The Research Agent operates by:
 
 1. Receiving input from the user or system
 2. Processing through its specialized pipeline
@@ -92,7 +95,7 @@ The Reflection Agent operates by:
 Use Cases
 ---------
 
-- Ideal for quality tasks
+- Ideal for investigation tasks
 - Can be integrated into larger workflows
 - Supports both synchronous and asynchronous execution
 
@@ -101,12 +104,12 @@ Code Example
 
 .. code-block:: python
 
-    from haive.agents.reflection.agent import ReflectionAgent
+    from haive.agents.research.agent import ResearchAgent
     from haive.core.engine import AugLLMConfig
 
     # Create agent
-    agent = ReflectionAgent(
-        name="my_reflection",
+    agent = ResearchAgent(
+        name="my_research",
         engine=AugLLMConfig(temperature=0.7)
     )
 
@@ -129,6 +132,6 @@ Configuration Options
 See Also
 --------
 
-- :doc:`/api/haive/agents/reflection/index` - API documentation
+- :doc:`/api/haive/agents/research/index` - API documentation
 - :doc:`/guides/building_agents` - Agent development guide
 - :doc:`/examples/agent_patterns` - Common patterns

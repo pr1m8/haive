@@ -1,233 +1,212 @@
 Agent Demos
 ===========
 
-Interactive demonstrations of all Haive agents with graph visualization, state tracking, and live examples.
+Interactive demonstrations of all Haive agents with live execution and state tracking.
+
+.. grid:: 1 2 3 3
+   :gutter: 3
+
+   .. grid-item-card:: 🔍 Discovery Agent
+      :link: discovery-demo
+      :link-type: doc
+
+      Discovers patterns and insights in data
+
+      **Category**: Analysis
+
+   .. grid-item-card:: 🤔 Reasoning & Critique Agent
+      :link: reasoning_and_critique-demo
+      :link-type: doc
+
+      Provides logical reasoning and critical analysis
+
+      **Category**: Analysis
+
+   .. grid-item-card:: ✍️ Wiki Writer Agent
+      :link: wiki_writer-demo
+      :link-type: doc
+
+      Creates wiki-style documentation
+
+      **Category**: Content
+
+   .. grid-item-card:: 🔄 React Agent
+      :link: react-demo
+      :link-type: doc
+
+      Reasoning and action agent
+
+      **Category**: Core
+
+   .. grid-item-card:: 💬 Simple Agent
+      :link: simple-demo
+      :link-type: doc
+
+      Basic conversational agent
+
+      **Category**: Core
+
+   .. grid-item-card:: 📊 Structured Output
+      :link: structuredoutput-demo
+      :link-type: doc
+
+      Schema-compliant outputs
+
+      **Category**: Data
+
+   .. grid-item-card:: 📊 Structured Output Agent
+      :link: structured_output-demo
+      :link-type: doc
+
+      Generates structured, schema-compliant outputs
+
+      **Category**: Data
+
+   .. grid-item-card:: 🔧 Self-Healing Code Agent
+      :link: self_healing_code-demo
+      :link-type: doc
+
+      Automatically fixes code errors and issues
+
+      **Category**: Development
+
+   .. grid-item-card:: 💭 Conversation Agent
+      :link: conversation-demo
+      :link-type: doc
+
+      Manages multi-turn conversations with context
+
+      **Category**: Dialogue
+
+   .. grid-item-card:: 📄 Document Agent
+      :link: document-demo
+      :link-type: doc
+
+      Processes and analyzes documents
+
+      **Category**: Document Processing
+
+   .. grid-item-card:: 🔬 Research Agent
+      :link: research-demo
+      :link-type: doc
+
+      Conducts comprehensive research on topics
+
+      **Category**: Investigation
+
+   .. grid-item-card:: 🎯 Adaptive RAG
+      :link: adaptiverag-demo
+      :link-type: doc
+
+      Adaptive retrieval
+
+      **Category**: Knowledge
+
+   .. grid-item-card:: 📚 Base RAG
+      :link: baserag-demo
+      :link-type: doc
+
+      Basic RAG implementation
+
+      **Category**: Knowledge
+
+   .. grid-item-card:: 📚 RAG Agent
+      :link: rag-demo
+      :link-type: doc
+
+      Retrieval-Augmented Generation for accurate responses
+
+      **Category**: Knowledge
+
+   .. grid-item-card:: 🧠 Long-Term Memory Agent
+      :link: long_term_memory-demo
+      :link-type: doc
+
+      Manages persistent memory across sessions
+
+      **Category**: Memory
+
+   .. grid-item-card:: 👔 Dynamic Supervisor
+      :link: dynamic_supervisor-demo
+      :link-type: doc
+
+      Dynamically manages and coordinates multiple agents
+
+      **Category**: Orchestration
+
+   .. grid-item-card:: 👨‍💼 Supervisor Agent
+      :link: supervisor-demo
+      :link-type: doc
+
+      Supervises and coordinates agent teams
+
+      **Category**: Orchestration
+
+   .. grid-item-card:: 📈 Task Analysis Agent
+      :link: task_analysis-demo
+      :link-type: doc
+
+      Analyzes and decomposes complex tasks
+
+      **Category**: Planning
+
+   .. grid-item-card:: 🪞 Reflection Agent
+      :link: reflection-demo
+      :link-type: doc
+
+      Self-reflects on outputs and improves them
+
+      **Category**: Quality
+
+   .. grid-item-card:: 📋 Planning Agent
+      :link: planning-demo
+      :link-type: doc
+
+      Creates and executes strategic plans
+
+      **Category**: Strategy
+
+   .. grid-item-card:: 🔗 Chain Agent
+      :link: chain-demo
+      :link-type: doc
+
+      Executes chains of operations in sequence
+
+      **Category**: Workflow
+
+   .. grid-item-card:: ➡️ Sequential Agent
+      :link: sequential-demo
+      :link-type: doc
+
+      Executes tasks in sequential order
+
+      **Category**: Workflow
+
+
 
 .. toctree::
    :maxdepth: 1
-   :caption: Agent Demonstrations
+   :hidden:
 
-
-🤖 Simple Agents
-~~~~~~~~~~~~~~~~~~~~~
-
-   simple-demo
-   structuredoutput-demo
-
-🧠 React Agents
-~~~~~~~~~~~~~~~~~~~~
-
-   react-demo
-   reactwithmemory-demo
-
-📚 Rag Agents
-~~~~~~~~~~~~~~~~~~
-
-   baserag-demo
    adaptiverag-demo
-
-📋 Planning Agents
-~~~~~~~~~~~~~~~~~~~~~~~
-
-   planandexecute-demo
-
-💬 Conversation Agents
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-   debate-demo
-
-🔬 Research Agents
-~~~~~~~~~~~~~~~~~~~~~~~
-
-   personresearch-demo
-
-📄 Document_Modifiers Agents
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-   summarizer-demo
-
-🎯 Reasoning_And_Critique Agents
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+   baserag-demo
+   chain-demo
+   conversation-demo
+   discovery-demo
+   document-demo
+   dynamic_supervisor-demo
+   long_term_memory-demo
+   planning-demo
+   rag-demo
+   react-demo
+   reasoning_and_critique-demo
    reflection-demo
-
-
-.. raw:: html
-
-    <style>
-    .agent-demo-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        margin: 2rem 0;
-    }
-
-    .demo-card {
-        background: var(--color-background-secondary);
-        border: 1px solid var(--color-background-border);
-        border-radius: 12px;
-        padding: 1.5rem;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .demo-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    }
-
-    .demo-card h3 {
-        margin-top: 0;
-        color: var(--color-brand-primary);
-    }
-
-    .demo-features {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin: 1rem 0;
-    }
-
-    .feature-tag {
-        background: var(--color-brand-primary);
-        color: white;
-        padding: 0.25rem 0.75rem;
-        border-radius: 1rem;
-        font-size: 0.75rem;
-        font-weight: 500;
-    }
-    </style>
-
-    <div class="agent-demo-grid">
-
-        <div class="demo-card">
-            <h3>🤖 SimpleAgent</h3>
-            <p>SimpleAgent - Basic conversational agents for straightforward tasks</p>
-            <div class="demo-features">
-                <span class="feature-tag">Interactive</span>
-                <span class="feature-tag">Visualized</span>
-                <span class="feature-tag">Stateful</span>
-                <span class="feature-tag">Async</span>
-            </div>
-            <a href="simple-demo.html" class="demo-link">View Demo →</a>
-        </div>
-
-        <div class="demo-card">
-            <h3>🤖 StructuredOutputAgent</h3>
-            <p>StructuredOutputAgent - Basic conversational agents for straightforward tasks</p>
-            <div class="demo-features">
-                <span class="feature-tag">Interactive</span>
-                <span class="feature-tag">Visualized</span>
-                <span class="feature-tag">Stateful</span>
-                <span class="feature-tag">Async</span>
-            </div>
-            <a href="structuredoutput-demo.html" class="demo-link">View Demo →</a>
-        </div>
-
-        <div class="demo-card">
-            <h3>🧠 ReactAgent</h3>
-            <p>ReactAgent - Reasoning and Acting agents that think before they act</p>
-            <div class="demo-features">
-                <span class="feature-tag">Interactive</span>
-                <span class="feature-tag">Visualized</span>
-                <span class="feature-tag">Stateful</span>
-                <span class="feature-tag">Async</span>
-            </div>
-            <a href="react-demo.html" class="demo-link">View Demo →</a>
-        </div>
-
-        <div class="demo-card">
-            <h3>🧠 ReactWithMemoryAgent</h3>
-            <p>ReactWithMemoryAgent - Reasoning and Acting agents that think before they act</p>
-            <div class="demo-features">
-                <span class="feature-tag">Interactive</span>
-                <span class="feature-tag">Visualized</span>
-                <span class="feature-tag">Stateful</span>
-                <span class="feature-tag">Async</span>
-            </div>
-            <a href="reactwithmemory-demo.html" class="demo-link">View Demo →</a>
-        </div>
-
-        <div class="demo-card">
-            <h3>📚 BaseRAGAgent</h3>
-            <p>BaseRAGAgent - Retrieval-Augmented Generation agents with knowledge</p>
-            <div class="demo-features">
-                <span class="feature-tag">Interactive</span>
-                <span class="feature-tag">Visualized</span>
-                <span class="feature-tag">Stateful</span>
-                <span class="feature-tag">Async</span>
-            </div>
-            <a href="baserag-demo.html" class="demo-link">View Demo →</a>
-        </div>
-
-        <div class="demo-card">
-            <h3>📚 AdaptiveRAGAgent</h3>
-            <p>AdaptiveRAGAgent - Retrieval-Augmented Generation agents with knowledge</p>
-            <div class="demo-features">
-                <span class="feature-tag">Interactive</span>
-                <span class="feature-tag">Visualized</span>
-                <span class="feature-tag">Stateful</span>
-                <span class="feature-tag">Async</span>
-            </div>
-            <a href="adaptiverag-demo.html" class="demo-link">View Demo →</a>
-        </div>
-
-        <div class="demo-card">
-            <h3>📋 PlanAndExecuteAgent</h3>
-            <p>PlanAndExecuteAgent - Multi-step planning and execution agents</p>
-            <div class="demo-features">
-                <span class="feature-tag">Interactive</span>
-                <span class="feature-tag">Visualized</span>
-                <span class="feature-tag">Stateful</span>
-                <span class="feature-tag">Async</span>
-            </div>
-            <a href="planandexecute-demo.html" class="demo-link">View Demo →</a>
-        </div>
-
-        <div class="demo-card">
-            <h3>💬 DebateAgent</h3>
-            <p>DebateAgent - Multi-agent conversation and collaboration</p>
-            <div class="demo-features">
-                <span class="feature-tag">Interactive</span>
-                <span class="feature-tag">Visualized</span>
-                <span class="feature-tag">Stateful</span>
-                <span class="feature-tag">Async</span>
-            </div>
-            <a href="debate-demo.html" class="demo-link">View Demo →</a>
-        </div>
-
-        <div class="demo-card">
-            <h3>🔬 PersonResearchAgent</h3>
-            <p>PersonResearchAgent - Deep research and analysis agents</p>
-            <div class="demo-features">
-                <span class="feature-tag">Interactive</span>
-                <span class="feature-tag">Visualized</span>
-                <span class="feature-tag">Stateful</span>
-                <span class="feature-tag">Async</span>
-            </div>
-            <a href="personresearch-demo.html" class="demo-link">View Demo →</a>
-        </div>
-
-        <div class="demo-card">
-            <h3>📄 SummarizerAgent</h3>
-            <p>SummarizerAgent - Document processing and transformation agents</p>
-            <div class="demo-features">
-                <span class="feature-tag">Interactive</span>
-                <span class="feature-tag">Visualized</span>
-                <span class="feature-tag">Stateful</span>
-                <span class="feature-tag">Async</span>
-            </div>
-            <a href="summarizer-demo.html" class="demo-link">View Demo →</a>
-        </div>
-
-        <div class="demo-card">
-            <h3>🎯 ReflectionAgent</h3>
-            <p>ReflectionAgent - Advanced reasoning and self-critique agents</p>
-            <div class="demo-features">
-                <span class="feature-tag">Interactive</span>
-                <span class="feature-tag">Visualized</span>
-                <span class="feature-tag">Stateful</span>
-                <span class="feature-tag">Async</span>
-            </div>
-            <a href="reflection-demo.html" class="demo-link">View Demo →</a>
-        </div>
-    </div>
+   research-demo
+   self_healing_code-demo
+   sequential-demo
+   simple-demo
+   structured_output-demo
+   structuredoutput-demo
+   supervisor-demo
+   task_analysis-demo
+   wiki_writer-demo
