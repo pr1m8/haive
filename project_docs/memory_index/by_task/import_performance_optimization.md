@@ -7,6 +7,7 @@
 ## Problem
 
 Import times were severely impacting developer experience:
+
 - SimpleAgentV3: 30.7 seconds
 - AugLLMConfig: ~20 seconds
 - 5365 modules loaded including NumExpr/pandas
@@ -25,16 +26,16 @@ def __getattr__(name: str):
     """Lazy load heavy components."""
     if name in _LAZY_IMPORTS:
         module_path, class_name = _LAZY_IMPORTS[name]
-        
+
         # Import only when accessed
         import importlib
         module = importlib.import_module(module_path)
         component = getattr(module, class_name)
-        
+
         # Cache for subsequent access
         globals()[name] = component
         return component
-    
+
     raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
 
 # Include in __all__ for proper behavior

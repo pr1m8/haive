@@ -8,6 +8,7 @@
 ## Problem Statement
 
 Importing SimpleAgentV3 was taking 30.7 seconds with 320+ lines of auto-registry output. The import chain was triggering:
+
 - 5365 modules loaded including NumExpr and pandas
 - Full document loader auto-registry initialization (230+ loaders)
 - Schema composer initialization (17+ seconds)
@@ -16,6 +17,7 @@ Importing SimpleAgentV3 was taking 30.7 seconds with 320+ lines of auto-registry
 ## Root Cause Analysis
 
 The import chain was:
+
 1. `haive.agents.simple.agent_v3` → `haive.agents.base` → `haive.core`
 2. `haive.core.__init__.py` directly imported `AugLLMConfig`
 3. `AugLLMConfig` → `haive.core.engine` → document/embedding/vectorstore modules
@@ -61,8 +63,8 @@ Made all heavy components lazy-loaded:
 ```python
 # Component sets for lazy loading
 _AGENT_COMPONENTS = {
-    "AGENT_REGISTRY", "Agent", "AgentConfig", "AgentProtocol", 
-    "PatternConfig", "PatternManager", "PersistentAgentProtocol", 
+    "AGENT_REGISTRY", "Agent", "AgentConfig", "AgentProtocol",
+    "PatternConfig", "PatternManager", "PersistentAgentProtocol",
     "StreamingAgentProtocol"
 }
 
@@ -110,7 +112,7 @@ Made all agent imports lazy:
 ```python
 _AGENT_IMPORTS = {
     "Agent": ("haive.agents.base", "Agent"),
-    "MultiAgent": ("haive.agents.multi.clean", "MultiAgent"), 
+    "MultiAgent": ("haive.agents.multi.clean", "MultiAgent"),
     "ReactAgent": ("haive.agents.react.agent", "ReactAgent"),
     "SimpleAgent": ("haive.agents.simple", "SimpleAgent"),
 }
@@ -144,11 +146,11 @@ def __getattr__(name: str):
 
 ### Import Time Improvements
 
-| Component | Before | After | Improvement |
-|-----------|--------|-------|-------------|
-| AugLLMConfig | ~20s | 3.78s | 81% |
-| SimpleAgentV3 | 30.7s | 4.59s | 85% |
-| Module count | 5365 | ~500 | 91% |
+| Component     | Before | After | Improvement |
+| ------------- | ------ | ----- | ----------- |
+| AugLLMConfig  | ~20s   | 3.78s | 81%         |
+| SimpleAgentV3 | 30.7s  | 4.59s | 85%         |
+| Module count  | 5365   | ~500  | 91%         |
 
 ### Key Achievements
 
@@ -180,11 +182,13 @@ python -c "from haive.agents.simple import SimpleAgentV3; agent = SimpleAgentV3(
 ## Files Modified
 
 ### haive-core
+
 - `src/haive/core/__init__.py` - Core module lazy loading
 - `src/haive/core/engine/__init__.py` - Engine components lazy loading
 - `src/haive/core/models/__init__.py` - Models submodules lazy loading
 
 ### haive-agents
+
 - `src/haive/agents/__init__.py` - Agent classes lazy loading
 - `src/haive/agents/simple/__init__.py` - SimpleAgent variants lazy loading
 

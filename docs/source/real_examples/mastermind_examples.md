@@ -66,9 +66,6 @@ final_state = agent.run_game(visualize=True)
 
 The game can be customized through the `MastermindConfig` class:
 
-
 ... (truncated)
 
-
 ---
-

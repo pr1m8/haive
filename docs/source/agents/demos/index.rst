@@ -12,8 +12,6 @@ Interactive demonstrations of all Haive agents with graph visualization, state t
 ~~~~~~~~~~~~~~~~~~~~~
 
    simple-demo
-   simple-demo-test
-   simple-demo-cached
    structuredoutput-demo
 
 🧠 React Agents
@@ -63,7 +61,7 @@ Interactive demonstrations of all Haive agents with graph visualization, state t
         gap: 2rem;
         margin: 2rem 0;
     }
-    
+
     .demo-card {
         background: var(--color-background-secondary);
         border: 1px solid var(--color-background-border);
@@ -71,24 +69,24 @@ Interactive demonstrations of all Haive agents with graph visualization, state t
         padding: 1.5rem;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    
+
     .demo-card:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     }
-    
+
     .demo-card h3 {
         margin-top: 0;
         color: var(--color-brand-primary);
     }
-    
+
     .demo-features {
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
         margin: 1rem 0;
     }
-    
+
     .feature-tag {
         background: var(--color-brand-primary);
         color: white;

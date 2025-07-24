@@ -455,6 +455,10 @@ python-language-server = "^0.36.2"
 [tool.poetry.group.experimental.dependencies]
 langmem = "^0.0.28"
 
+
+[tool.poetry.group.search_tools.dependencies]
+google-search-results = "^2.4.2"
+
 [tool.poetry.extras]
 cpu = ["torch", "torchvision", "torchaudio"]
 cuda = ["torch", "torchvision", "torchaudio"]

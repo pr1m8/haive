@@ -239,11 +239,10 @@ Real examples and outputs from the custom.ReactAgent agent.
         }
       },
       "metadata": {}
-   
+
 
 ... (truncated)
 
 ```
 
 ---
-

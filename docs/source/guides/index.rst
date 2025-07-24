@@ -40,14 +40,15 @@ Working with Tools
    tool_routing
    agent_visualization
 
-Documentation
--------------
+Documentation & Examples
+------------------------
 
 .. toctree::
    :maxdepth: 2
 
    documentation/index
    executable_examples
+   running_examples
 
 Integration Guides
 ------------------

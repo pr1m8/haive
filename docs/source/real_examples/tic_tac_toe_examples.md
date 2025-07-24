@@ -51,10 +51,8 @@ final_state = agent.run_game(visualize=True)
 print(f"Game result: {final_state.get('game_status', 'unknown')}")
 ```
 
-### Rich 
+### Rich
 
 ... (truncated)
 
-
 ---
-

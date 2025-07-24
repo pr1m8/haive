@@ -69,6 +69,12 @@ Agent Categories
       ✓ Context-aware responses  
       ✓ Memory integration  
       ✓ Customizable prompts  
+      
+      .. raw:: html
+      
+         <div style="margin-top: 10px;">
+            <a href="demos/simple-demo.html" class="btn btn-sm btn-primary">Try Demo</a>
+         </div>
 
    .. grid-item-card:: 🧠 ReactAgent
       :link: ../api/haive/agents/react/index
@@ -84,6 +90,12 @@ Agent Categories
       ✓ Multi-step reasoning  
       ✓ Self-reflection capabilities  
       ✓ Error recovery  
+      
+      .. raw:: html
+      
+         <div style="margin-top: 10px;">
+            <a href="demos/react-demo.html" class="btn btn-sm btn-primary">Try Demo</a>
+         </div>
 
    .. grid-item-card:: 📚 RAGAgent
       :link: ../api/haive/agents/rag/index
@@ -647,6 +659,25 @@ Related Components
       </div>
    </div>
 
+Interactive Demos
+-----------------
+
+.. raw:: html
+
+   <div class="showcase-section">
+      <div class="showcase-header">
+         <h2>🎮 Try Agent Demos</h2>
+         <p>Interactive demonstrations with live graph visualization</p>
+      </div>
+      
+      <div class="agent-showcase">
+         <a href="demos/index.html" class="demo-button">
+            <span class="demo-icon">🚀</span>
+            <span class="demo-text">Launch Interactive Demos</span>
+         </a>
+      </div>
+   </div>
+
 API Reference
 -------------
 
@@ -654,6 +685,7 @@ API Reference
    :maxdepth: 2
    :hidden:
 
+   demos/index
    ../api/agents/index
    gallery
    showcase

@@ -15,7 +15,7 @@ Social deduction with AI crewmates and imposters
                     <p class="game-complexity">Complexity: Medium</p>
                 </div>
             </div>
-            
+
             <div class="game-stats">
                 <div class="stat">
                     <label>Board Size:</label>
@@ -26,7 +26,7 @@ Social deduction with AI crewmates and imposters
                     <span>3</span>
                 </div>
             </div>
-            
+
             <div class="game-features">
                 <span class="feature-tag">Social Deduction</span>
                 <span class="feature-tag">Task Completion</span>
@@ -51,14 +51,14 @@ Social deduction with AI crewmates and imposters
                     Start New Game
                 </button>
             </div>
-            
+
             <div id="among_us-board" class="game-board">
                 <!-- Game board will be rendered here -->
                 <div class="board-placeholder">
                     <p>Click "Start New Game" to begin playing Among Us</p>
                 </div>
             </div>
-            
+
             <div class="game-status">
                 <div id="among_us-status" class="status-display">
                     Ready to play
@@ -84,15 +84,15 @@ Social deduction with AI crewmates and imposters
         const board = document.getElementById(gameId + '-board');
         const status = document.getElementById(gameId + '-status');
         const aiLevel = document.getElementById(gameId + '-ai-level').value;
-        
+
         // Initialize game board based on game type
         initializeGameBoard(gameId, board);
         status.textContent = `Playing against ${aiLevel} AI`;
-        
+
         // Show game-specific interface
         showGameInterface(gameId);
     }
-    
+
     function initializeGameBoard(gameId, boardElement) {
         // This would be replaced with actual game implementation
         boardElement.innerHTML = `
@@ -105,7 +105,7 @@ Social deduction with AI crewmates and imposters
             </div>
         `;
     }
-    
+
     function generateDemoBoard(gameId) {
         if (gameId === 'chess' || gameId === 'checkers') {
             let squares = '';
@@ -118,11 +118,46 @@ Social deduction with AI crewmates and imposters
             for (let i = 0; i < 9; i++) {
                 cells += '<div class="cell" onclick="makeMove(this)"></div>';
             }
-            return `<div class="board-3x3">${cells}</div>`;
+            return `<div class="board-3x3">${cells}
+        <!-- Live Game Stream -->
+        <div class="game-streaming">
+            <h3>Live Game Visualization</h3>
+            <div class="streaming-indicator">
+                Live Stream
+            </div>
+            <div class="game-state-display">
+                <pre id="among_us-state">
+Emergency Meeting Called!
+
+Crewmates: 6
+Imposters: 2
+Tasks: 45% Complete
+
+Discussion Phase
+Time Remaining: 45s
+
+Chat:
+Red: "I saw Blue vent in Electrical!"
+Blue: "No way, I was doing wires!"
+Green: "I was with Yellow in MedBay"
+
+Vote Status: Waiting...
+                </pre>
+            </div>
+            <div class="move-history">
+                <h4>Move History</h4>
+                <div id="among_us-moves-stream">
+                    <div class="move">1. Emergency Meeting called by Red</div>
+                    <div class="move">2. Blue voted for Red</div>
+                    <div class="move">3. Green voted for Blue</div>
+                </div>
+            </div>
+        </div>
+    </div>`;
         }
         return '<div class="custom-board">Game board visualization</div>';
     }
-    
+
     function makeMove(cell) {
         if (cell.textContent === '') {
             cell.textContent = 'X';
@@ -130,7 +165,7 @@ Social deduction with AI crewmates and imposters
             setTimeout(() => aiMove(), 500);
         }
     }
-    
+
     function aiMove() {
         const emptyCells = document.querySelectorAll('.cell:empty');
         if (emptyCells.length > 0) {
@@ -138,7 +173,7 @@ Social deduction with AI crewmates and imposters
             randomCell.textContent = 'O';
         }
     }
-    
+
     function showGameInterface(gameId) {
         // Enable game-specific interactions
         console.log(`Started ${gameId} game`);
@@ -150,32 +185,32 @@ Social deduction with AI crewmates and imposters
         max-width: 1200px;
         margin: 0 auto;
     }
-    
+
     .game-overview-card {
         background: var(--color-background-secondary);
         border-radius: 12px;
         padding: 2rem;
         margin-bottom: 2rem;
     }
-    
+
     .game-header {
         display: flex;
         align-items: center;
         gap: 1rem;
         margin-bottom: 1.5rem;
     }
-    
+
     .game-icon {
         font-size: 3rem;
     }
-    
+
     .game-stats {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 1rem;
         margin: 1rem 0;
     }
-    
+
     .stat {
         display: flex;
         justify-content: space-between;
@@ -183,14 +218,14 @@ Social deduction with AI crewmates and imposters
         background: var(--color-background-primary);
         border-radius: 6px;
     }
-    
+
     .game-features {
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
         margin-top: 1rem;
     }
-    
+
     .feature-tag {
         background: var(--color-brand-primary);
         color: white;
@@ -198,14 +233,14 @@ Social deduction with AI crewmates and imposters
         border-radius: 1rem;
         font-size: 0.875rem;
     }
-    
+
     .game-interface {
         background: var(--color-background-secondary);
         border-radius: 12px;
         padding: 2rem;
         margin-bottom: 2rem;
     }
-    
+
     .game-controls {
         display: flex;
         align-items: center;
@@ -213,7 +248,7 @@ Social deduction with AI crewmates and imposters
         margin-bottom: 2rem;
         flex-wrap: wrap;
     }
-    
+
     .start-game-btn {
         background: var(--color-brand-primary);
         color: white;
@@ -223,7 +258,7 @@ Social deduction with AI crewmates and imposters
         cursor: pointer;
         font-weight: 600;
     }
-    
+
     .game-board {
         min-height: 400px;
         background: var(--color-background-primary);
@@ -232,7 +267,7 @@ Social deduction with AI crewmates and imposters
         padding: 2rem;
         text-align: center;
     }
-    
+
     .board-8x8 {
         display: grid;
         grid-template-columns: repeat(8, 1fr);
@@ -240,7 +275,7 @@ Social deduction with AI crewmates and imposters
         max-width: 400px;
         margin: 0 auto;
     }
-    
+
     .board-3x3 {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -248,7 +283,7 @@ Social deduction with AI crewmates and imposters
         max-width: 300px;
         margin: 0 auto;
     }
-    
+
     .square, .cell {
         aspect-ratio: 1;
         background: #f0f0f0;
@@ -259,22 +294,22 @@ Social deduction with AI crewmates and imposters
         font-size: 2rem;
         cursor: pointer;
     }
-    
+
     .square:nth-child(odd) {
         background: #d4c4b0;
     }
-    
+
     .cell:hover {
         background: #e0e0e0;
     }
-    
+
     .game-status {
         margin-top: 1rem;
         padding: 1rem;
         background: var(--color-background-primary);
         border-radius: 6px;
     }
-    
+
     .game-analysis {
         background: var(--color-background-secondary);
         border-radius: 12px;
@@ -317,7 +352,7 @@ Code Example
 
     # Get game history
     for move in game.history:
-    print(f"{move.player}: {move.action}")
+        print(f"{move.player}: {move.action}")
 
 See Also
 --------

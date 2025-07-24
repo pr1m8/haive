@@ -15,7 +15,7 @@ Classic chess with AI agents of varying skill levels
                     <p class="game-complexity">Complexity: High</p>
                 </div>
             </div>
-            
+
             <div class="game-stats">
                 <div class="stat">
                     <label>Board Size:</label>
@@ -26,7 +26,7 @@ Classic chess with AI agents of varying skill levels
                     <span>4</span>
                 </div>
             </div>
-            
+
             <div class="game-features">
                 <span class="feature-tag">8x8 Board</span>
                 <span class="feature-tag">AI Opponents</span>
@@ -52,14 +52,14 @@ Classic chess with AI agents of varying skill levels
                     Start New Game
                 </button>
             </div>
-            
+
             <div id="chess-board" class="game-board">
                 <!-- Game board will be rendered here -->
                 <div class="board-placeholder">
                     <p>Click "Start New Game" to begin playing Chess</p>
                 </div>
             </div>
-            
+
             <div class="game-status">
                 <div id="chess-status" class="status-display">
                     Ready to play
@@ -77,6 +77,37 @@ Classic chess with AI agents of varying skill levels
                 <p>Start a game to see AI analysis and move suggestions.</p>
             </div>
         </div>
+
+        <!-- Live Game Stream -->
+        <div class="game-streaming">
+            <h3>Live Game Visualization</h3>
+            <div class="streaming-indicator">
+                Live Stream
+            </div>
+            <div class="game-state-display">
+                <pre id="chess-state">
+♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜
+♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+♙ ♙ ♙ ♙ ♙ ♙ ♙ ♙
+♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖
+
+Turn: White | Move: 1
+Status: Game in progress
+                </pre>
+            </div>
+            <div class="move-history">
+                <h4>Move History</h4>
+                <div id="chess-moves-stream">
+                    <div class="move">1. e4 e5</div>
+                    <div class="move">2. Nf3 Nc6</div>
+                    <div class="move">3. Bb5 a6</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -85,15 +116,15 @@ Classic chess with AI agents of varying skill levels
         const board = document.getElementById(gameId + '-board');
         const status = document.getElementById(gameId + '-status');
         const aiLevel = document.getElementById(gameId + '-ai-level').value;
-        
+
         // Initialize game board based on game type
         initializeGameBoard(gameId, board);
         status.textContent = `Playing against ${aiLevel} AI`;
-        
+
         // Show game-specific interface
         showGameInterface(gameId);
     }
-    
+
     function initializeGameBoard(gameId, boardElement) {
         // This would be replaced with actual game implementation
         boardElement.innerHTML = `
@@ -106,7 +137,7 @@ Classic chess with AI agents of varying skill levels
             </div>
         `;
     }
-    
+
     function generateDemoBoard(gameId) {
         if (gameId === 'chess' || gameId === 'checkers') {
             let squares = '';
@@ -123,7 +154,7 @@ Classic chess with AI agents of varying skill levels
         }
         return '<div class="custom-board">Game board visualization</div>';
     }
-    
+
     function makeMove(cell) {
         if (cell.textContent === '') {
             cell.textContent = 'X';
@@ -131,7 +162,7 @@ Classic chess with AI agents of varying skill levels
             setTimeout(() => aiMove(), 500);
         }
     }
-    
+
     function aiMove() {
         const emptyCells = document.querySelectorAll('.cell:empty');
         if (emptyCells.length > 0) {
@@ -139,7 +170,7 @@ Classic chess with AI agents of varying skill levels
             randomCell.textContent = 'O';
         }
     }
-    
+
     function showGameInterface(gameId) {
         // Enable game-specific interactions
         console.log(`Started ${gameId} game`);
@@ -151,32 +182,32 @@ Classic chess with AI agents of varying skill levels
         max-width: 1200px;
         margin: 0 auto;
     }
-    
+
     .game-overview-card {
         background: var(--color-background-secondary);
         border-radius: 12px;
         padding: 2rem;
         margin-bottom: 2rem;
     }
-    
+
     .game-header {
         display: flex;
         align-items: center;
         gap: 1rem;
         margin-bottom: 1.5rem;
     }
-    
+
     .game-icon {
         font-size: 3rem;
     }
-    
+
     .game-stats {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 1rem;
         margin: 1rem 0;
     }
-    
+
     .stat {
         display: flex;
         justify-content: space-between;
@@ -184,14 +215,14 @@ Classic chess with AI agents of varying skill levels
         background: var(--color-background-primary);
         border-radius: 6px;
     }
-    
+
     .game-features {
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
         margin-top: 1rem;
     }
-    
+
     .feature-tag {
         background: var(--color-brand-primary);
         color: white;
@@ -199,14 +230,14 @@ Classic chess with AI agents of varying skill levels
         border-radius: 1rem;
         font-size: 0.875rem;
     }
-    
+
     .game-interface {
         background: var(--color-background-secondary);
         border-radius: 12px;
         padding: 2rem;
         margin-bottom: 2rem;
     }
-    
+
     .game-controls {
         display: flex;
         align-items: center;
@@ -214,7 +245,7 @@ Classic chess with AI agents of varying skill levels
         margin-bottom: 2rem;
         flex-wrap: wrap;
     }
-    
+
     .start-game-btn {
         background: var(--color-brand-primary);
         color: white;
@@ -224,7 +255,7 @@ Classic chess with AI agents of varying skill levels
         cursor: pointer;
         font-weight: 600;
     }
-    
+
     .game-board {
         min-height: 400px;
         background: var(--color-background-primary);
@@ -233,7 +264,7 @@ Classic chess with AI agents of varying skill levels
         padding: 2rem;
         text-align: center;
     }
-    
+
     .board-8x8 {
         display: grid;
         grid-template-columns: repeat(8, 1fr);
@@ -241,7 +272,7 @@ Classic chess with AI agents of varying skill levels
         max-width: 400px;
         margin: 0 auto;
     }
-    
+
     .board-3x3 {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -249,7 +280,7 @@ Classic chess with AI agents of varying skill levels
         max-width: 300px;
         margin: 0 auto;
     }
-    
+
     .square, .cell {
         aspect-ratio: 1;
         background: #f0f0f0;
@@ -260,22 +291,22 @@ Classic chess with AI agents of varying skill levels
         font-size: 2rem;
         cursor: pointer;
     }
-    
+
     .square:nth-child(odd) {
         background: #d4c4b0;
     }
-    
+
     .cell:hover {
         background: #e0e0e0;
     }
-    
+
     .game-status {
         margin-top: 1rem;
         padding: 1rem;
         background: var(--color-background-primary);
         border-radius: 6px;
     }
-    
+
     .game-analysis {
         background: var(--color-background-secondary);
         border-radius: 12px;
@@ -319,7 +350,7 @@ Code Example
 
     # Get game history
     for move in game.history:
-    print(f"{move.player}: {move.action}")
+        print(f"{move.player}: {move.action}")
 
 See Also
 --------

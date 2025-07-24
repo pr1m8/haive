@@ -54,6 +54,4 @@ For detailed API documentation, see the [API Reference](../../../docs/source/api
 - [`single_player.wordle`](./wordle/): TODO: Add description
 - [`single_player.flow_free`](./flow_free/): TODO: Add description
 
-
 ---
-

@@ -71,6 +71,4 @@ python src/haive/games/fox_and_geese/example.py
 
 ... (truncated)
 
-
 ---
-
