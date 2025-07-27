@@ -78,11 +78,11 @@ extensions = [
 
 autoapi_type = "python"
 
-# Point to src directories
+# Point to src directories (skip prebuilt for now due to syntax errors)
 autoapi_dirs = [
     str(packages_dir / package / "src")
     for package in package_names
-    if (packages_dir / package / "src").exists()
+    if (packages_dir / package / "src").exists() and package != "haive-prebuilt"
 ]
 
 autoapi_root = "api"
@@ -159,6 +159,8 @@ autoapi_ignore = [
     "**/planning_langgraph_entrypoint.py",
     "**/haive_agent_mcp_integration.py",
     "**/compiled_agent.py",
+    "**/startup/**",  # Syntax errors in pitchdeck agent
+    "**/scientific_paper_agent/**",  # Syntax errors in nodes
 ]
 
 # ==============================================================================
