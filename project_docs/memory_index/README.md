@@ -20,6 +20,8 @@ memory_index/
 
 ### Recent Important Memories
 
+- @memory_index/by_task/documentation/autoapi_namespace_fix.md - **COMPLETE AutoAPI fix - 1,877 RST files**
+- @memory_index/by_date/2025-07-27/README.md - **July 27: Documentation system overhaul**
 - @memory_index/by_error/containers_tilebag_keyerror.md - Fixed critical AutoAPI KeyError
 - @memory_index/by_task/documentation_97_percent_fix.md - Reduced doc errors by 97%
 - @memory_index/by_pattern/meta_state_schema.md - MetaStateSchema async pattern
@@ -34,6 +36,7 @@ memory_index/
 
 ## 📅 Navigation by Date
 
+- [2025-07-27](by_date/2025-07-27/README.md) - **AutoAPI system complete overhaul - 1,877 RST files**
 - [2025-01-16](by_date/2025-01-16/README.md) - Documentation fixes, error reduction
 - [2025-01-15](by_date/2025-01-15/README.md) - MetaStateSchema async, Agent-as-Tool
 - [2025-01-14](by_date/2025-01-14/README.md) - PostgreSQL Store fixes

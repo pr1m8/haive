@@ -55,20 +55,17 @@ for package in package_names:
 extensions = [
     # Core AutoAPI
     "autoapi.extension",
-    
     # Essential Sphinx
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
     "sphinx.ext.intersphinx",
-    
     # Documentation enhancement
     "sphinx_copybutton",
     "sphinx_design",
     "myst_parser",
     "sphinxcontrib.mermaid",
-    
     # Examples and galleries
-    "sphinx_gallery",
+    "sphinx_gallery.gen_gallery",
     "sphinx_exec_directive",
 ]
 
@@ -82,7 +79,8 @@ autoapi_type = "python"
 autoapi_dirs = [
     str(packages_dir / package / "src" / "haive")
     for package in package_names
-    if (packages_dir / package / "src" / "haive").exists() and package != "haive-prebuilt"
+    if (packages_dir / package / "src" / "haive").exists()
+    and package != "haive-prebuilt"
 ]
 
 autoapi_root = "api"
@@ -116,41 +114,34 @@ autoapi_ignore = [
     "**/testing/**",
     "**/fixtures/**",
     "**/conftest.py",
-    
     # Build artifacts
     "**/__pycache__/**",
     "**/build/**",
     "**/dist/**",
     "**/*.egg-info/**",
     "**/.git/**",
-    
     # Examples and demos
     "**/examples/**",
     "**/example_*.py",
     "**/demo_*.py",
     "**/demo/**",
-    
     # Debug and development files
     "**/debug_*.py",
     "**/debug/**",
     "**/*_debug.py",
-    
     # CLI and UI files
     "**/ui.py",
     "**/cli.py",
     "**/main.py",
     "**/app.py",
     "**/run.py",
-    
     # Deprecated and experimental
     "**/deprecated/**",
     "**/legacy/**",
     "**/experimental/**",
     "**/archive/**",
-    
     # Private modules
     "**/_*.py",
-    
     # Specific problematic files
     "**/supervisor/**",
     "**/sequential_planner.py",
@@ -167,32 +158,39 @@ autoapi_ignore = [
 # AutoAPI Customization
 # ==============================================================================
 
+
 def fix_module_name(name):
     """Remove src. prefix from module names."""
     if name.startswith("src."):
         return name[4:]
     return name
 
+
 def prepare_jinja_env(jinja_env):
     """Add custom filters to Jinja environment."""
     jinja_env.filters["fix_module_name"] = fix_module_name
     return jinja_env
 
+
 autoapi_prepare_jinja_env = prepare_jinja_env
+
 
 # Skip problematic members
 def autoapi_skip_member(app, what, name, obj, skip, options):
     """Skip certain members from documentation."""
     # Skip test-related
-    if any(pattern in name.lower() for pattern in ["test_", "_test", "mock", "fixture"]):
+    if any(
+        pattern in name.lower() for pattern in ["test_", "_test", "mock", "fixture"]
+    ):
         return True
-    
+
     # Skip private members unless explicitly documented
     if name.startswith("_") and not name.startswith("__"):
         if not (hasattr(obj, "docstring") and obj.docstring):
             return True
-    
+
     return skip
+
 
 # ==============================================================================
 # Theme Configuration
@@ -252,6 +250,7 @@ intersphinx_mapping = {
 # ==============================================================================
 # Setup
 # ==============================================================================
+
 
 def setup(app):
     """Setup Sphinx application."""
