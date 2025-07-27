@@ -78,11 +78,11 @@ extensions = [
 
 autoapi_type = "python"
 
-# Point to src directories (skip prebuilt for now due to syntax errors)
+# Point directly to haive namespace directories (skip prebuilt for now due to syntax errors)
 autoapi_dirs = [
-    str(packages_dir / package / "src")
+    str(packages_dir / package / "src" / "haive")
     for package in package_names
-    if (packages_dir / package / "src").exists() and package != "haive-prebuilt"
+    if (packages_dir / package / "src" / "haive").exists() and package != "haive-prebuilt"
 ]
 
 autoapi_root = "api"
