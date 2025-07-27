@@ -158,6 +158,7 @@ asyncpg = "^0.30.0"
 langchain-google-vertexai = "^2.0.27"
 nox = "^2025.5.1"
 tomli = "^2.2.1"
+sgfmill = "^1.1.1"
 
 
 [tool.poetry.dependencies.graphviz]
