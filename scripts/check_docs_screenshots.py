@@ -18,12 +18,12 @@ async def take_screenshots():
     screenshots_dir.mkdir(parents=True, exist_ok=True)
 
     urls_to_check = [
-        ("http://localhost:8003/", "index"),
-        ("http://localhost:8003/agents/index.html", "agents_index"),
-        ("http://localhost:8003/games/index.html", "games_index"),
-        ("http://localhost:8003/gallery.html", "gallery"),
-        ("http://localhost:8003/api/index.html", "api_index"),
-        ("http://localhost:8003/examples/index.html", "examples_index"),
+        ("http://localhost:8004/", "index"),
+        ("http://localhost:8004/agents/index.html", "agents_index"),
+        ("http://localhost:8004/games/index.html", "games_index"),
+        ("http://localhost:8004/gallery.html", "gallery"),
+        ("http://localhost:8004/api/index.html", "api_index"),
+        ("http://localhost:8004/examples/index.html", "examples_index"),
     ]
 
     async with async_playwright() as p:
