@@ -4,3 +4,4 @@
 .nox
 *.ipynb
 *.log
+*tests
