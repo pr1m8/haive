@@ -158,6 +158,7 @@ asyncpg = "^0.30.0"
 langchain-google-vertexai = "^2.0.27"
 nox = "^2025.5.1"
 tomli = "^2.2.1"
+pip-api = "^0.0.34"
 
 
 [tool.poetry.dependencies.graphviz]
@@ -213,9 +214,9 @@ pyright = "^1.1.399"
 sourcery = "^1.35.0"
 coverage = "^7.8.0"
 # Documentation automation tools for destroying 20,374 issues 🔥
-interrogate = "^1.5.0"          # Find missing docstrings
-pydocstyle = "^6.3.0"           # Docstring style enforcement  
-darglint = "^1.8.1"             # Docstring-code sync validation
+interrogate = "^1.5.0"                    # Find missing docstrings
+pydocstyle = "^6.3.0"                     # Docstring style enforcement  
+darglint = "^1.8.1"                       # Docstring-code sync validation
 mimesis = "^18.0.0"
 factory-boy = "^3.3.3"
 hypothesis = "^6.131.6"
@@ -254,6 +255,47 @@ allure-pytest = "^2.14.3"
 pipdeptree = "^2.27.0"
 autopep8 = "^2.3.2"
 pycodestyle = "^2.14.0"
+ci-py = "^1.0.0"
+pygithub = "^2.6.1"
+gitpython = "^3.1.45"
+fabric-cicd = "^0.1.23"
+multi-repo-automation = "^1.7.0"
+automated-marking = "^0.1.7"
+workflow-manager = "^0.4"
+commitizen = "^4.8.3"
+bump2version = "^1.0.1"
+gitchangelog = "^3.0.4"
+build = "^1.2.2.post1"
+wheel = "^0.45.1"
+setuptools-scm = "^8.3.1"
+flit = "^3.12.0"
+typing-extensions = "^4.14.1"
+pytest-benchmark = "^5.1.0"
+pyperf = "^2.9.0"
+types-toml = "^0.10.8.20240310"
+types-pyyaml = "^6.0.12.20250516"
+types-setuptools = "^80.9.0.20250529"
+types-python-dateutil = "^2.9.0.20250708"
+types-urllib3 = "^1.26.25.14"
+logzero = "^1.7.0"
+log-symbols = "^0.0.14"
+minilog = "^2.3.1"
+line-profiler = "^5.0.0"
+memory-profiler = "^0.61.0"
+pyinstrument = "^5.0.3"
+pip-audit = "^2.9.0"
+snakeviz = "^2.2.2"
+gprof2dot = "^2025.4.14"
+pympler = "^1.1"
+pylint = "^3.3.7"
+pyflakes = "^3.4.0"
+pylama = "^8.4.1"
+mccabe = "^0.7.0"
+radon = "^6.0.1"
+xenon = "^0.9.3"
+cohesion = "^1.2.0"
+blacken-docs = "^1.19.1"
+docformatter = "^1.7.7"
 
 
 [tool.poetry.group.docs]
