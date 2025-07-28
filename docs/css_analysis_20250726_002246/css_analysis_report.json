@@ -1,0 +1,497 @@
+[
+  {
+    "page": "homepage",
+    "url": "http://localhost:8003/",
+    "issues": [
+      {
+        "type": "code-block",
+        "element": "code-block-0",
+        "issue": "Narrow code block: 382.8125px",
+        "fix": "Code blocks should use full content width"
+      },
+      {
+        "type": "code-block",
+        "element": "code-block-1",
+        "issue": "Narrow code block: 380.8125px",
+        "fix": "Code blocks should use full content width"
+      },
+      {
+        "type": "code-block",
+        "element": "code-block-2",
+        "issue": "Narrow code block: 382.8125px",
+        "fix": "Code blocks should use full content width"
+      },
+      {
+        "type": "code-block",
+        "element": "code-block-3",
+        "issue": "Narrow code block: 380.8125px",
+        "fix": "Code blocks should use full content width"
+      },
+      {
+        "type": "sidebar",
+        "element": "sidebar",
+        "issue": "Sidebar too wide: 494.890625px",
+        "fix": "Reduce sidebar width to ~250-300px"
+      },
+      {
+        "type": "css",
+        "element": "stylesheets",
+        "issue": "Too many CSS files loaded: 18",
+        "fix": "Consolidate CSS files",
+        "details": [
+          "http://localhost:8003/_static/pygments.css?v=b86133f3",
+          "http://localhost:8003/_static/styles/furo.css?v=354aac6f",
+          "http://localhost:8003/_static/tabs.css?v=4c969af8",
+          "http://localhost:8003/_static/togglebutton.css?v=13237357",
+          "http://localhost:8003/_static/copybutton.css?v=76b2166b",
+          "http://localhost:8003/_static/graphviz.css?v=4ae1632d",
+          "http://localhost:8003/_static/haive-enhanced.css?v=e048bef6",
+          "http://localhost:8003/_static/sphinx-design.min.css?v=95c83b7e",
+          "http://localhost:8003/_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277",
+          "http://localhost:8003/_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840",
+          "http://localhost:8003/_static/sphinx-needs/common_css/needstable.css?v=5e1b6797",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_style.css?v=92936fa5",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_core.css?v=f5b60a78",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_links.css?v=2150a916",
+          "http://localhost:8003/_static/sphinx-needs/modern.css?v=803738c0",
+          "http://localhost:8003/_static/styles/furo-extensions.css?v=302659d7",
+          "http://localhost:8003/_static/haive-minimal.css?v=4a912b1e"
+        ]
+      }
+    ],
+    "metrics": {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "contentWidth": 0,
+      "sidebarWidth": 494.890625,
+      "codeBlockCount": 4,
+      "stylesheetCount": 18,
+      "themeClasses": [
+        "supports-custom-properties",
+        "supports-intersection-observer",
+        "js-focus-visible"
+      ],
+      "bodyClasses": [
+        "showcase-loaded"
+      ]
+    },
+    "timestamp": "2025-07-26T00:22:51.773483"
+  },
+  {
+    "page": "agents_index",
+    "url": "http://localhost:8003/agents/index.html",
+    "issues": [
+      {
+        "type": "sidebar",
+        "element": "sidebar",
+        "issue": "Sidebar too wide: 494.890625px",
+        "fix": "Reduce sidebar width to ~250-300px"
+      },
+      {
+        "type": "css",
+        "element": "stylesheets",
+        "issue": "Too many CSS files loaded: 18",
+        "fix": "Consolidate CSS files",
+        "details": [
+          "http://localhost:8003/_static/pygments.css?v=b86133f3",
+          "http://localhost:8003/_static/styles/furo.css?v=354aac6f",
+          "http://localhost:8003/_static/tabs.css?v=4c969af8",
+          "http://localhost:8003/_static/togglebutton.css?v=13237357",
+          "http://localhost:8003/_static/copybutton.css?v=76b2166b",
+          "http://localhost:8003/_static/graphviz.css?v=4ae1632d",
+          "http://localhost:8003/_static/haive-enhanced.css?v=e048bef6",
+          "http://localhost:8003/_static/sphinx-design.min.css?v=95c83b7e",
+          "http://localhost:8003/_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277",
+          "http://localhost:8003/_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840",
+          "http://localhost:8003/_static/sphinx-needs/common_css/needstable.css?v=5e1b6797",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_style.css?v=92936fa5",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_core.css?v=f5b60a78",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_links.css?v=2150a916",
+          "http://localhost:8003/_static/sphinx-needs/modern.css?v=803738c0",
+          "http://localhost:8003/_static/styles/furo-extensions.css?v=302659d7",
+          "http://localhost:8003/_static/haive-minimal.css?v=4a912b1e"
+        ]
+      }
+    ],
+    "metrics": {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "contentWidth": 0,
+      "sidebarWidth": 494.890625,
+      "codeBlockCount": 8,
+      "stylesheetCount": 18,
+      "themeClasses": [
+        "supports-custom-properties",
+        "supports-intersection-observer",
+        "js-focus-visible"
+      ],
+      "bodyClasses": [
+        "showcase-loaded"
+      ]
+    },
+    "timestamp": "2025-07-26T00:22:57.235242"
+  },
+  {
+    "page": "simple_agent",
+    "url": "http://localhost:8003/agents/simple.html",
+    "issues": [],
+    "metrics": {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "contentWidth": 0,
+      "sidebarWidth": 0,
+      "codeBlockCount": 0,
+      "stylesheetCount": 0,
+      "themeClasses": [],
+      "bodyClasses": []
+    },
+    "timestamp": "2025-07-26T00:22:59.912758"
+  },
+  {
+    "page": "react_agent",
+    "url": "http://localhost:8003/agents/react.html",
+    "issues": [],
+    "metrics": {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "contentWidth": 0,
+      "sidebarWidth": 0,
+      "codeBlockCount": 0,
+      "stylesheetCount": 0,
+      "themeClasses": [],
+      "bodyClasses": []
+    },
+    "timestamp": "2025-07-26T00:23:02.623031"
+  },
+  {
+    "page": "games_index",
+    "url": "http://localhost:8003/games/index.html",
+    "issues": [
+      {
+        "type": "sidebar",
+        "element": "sidebar",
+        "issue": "Sidebar too wide: 494.890625px",
+        "fix": "Reduce sidebar width to ~250-300px"
+      },
+      {
+        "type": "css",
+        "element": "stylesheets",
+        "issue": "Too many CSS files loaded: 18",
+        "fix": "Consolidate CSS files",
+        "details": [
+          "http://localhost:8003/_static/pygments.css?v=b86133f3",
+          "http://localhost:8003/_static/styles/furo.css?v=354aac6f",
+          "http://localhost:8003/_static/tabs.css?v=4c969af8",
+          "http://localhost:8003/_static/togglebutton.css?v=13237357",
+          "http://localhost:8003/_static/copybutton.css?v=76b2166b",
+          "http://localhost:8003/_static/graphviz.css?v=4ae1632d",
+          "http://localhost:8003/_static/haive-enhanced.css?v=e048bef6",
+          "http://localhost:8003/_static/sphinx-design.min.css?v=95c83b7e",
+          "http://localhost:8003/_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277",
+          "http://localhost:8003/_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840",
+          "http://localhost:8003/_static/sphinx-needs/common_css/needstable.css?v=5e1b6797",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_style.css?v=92936fa5",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_core.css?v=f5b60a78",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_links.css?v=2150a916",
+          "http://localhost:8003/_static/sphinx-needs/modern.css?v=803738c0",
+          "http://localhost:8003/_static/styles/furo-extensions.css?v=302659d7",
+          "http://localhost:8003/_static/haive-minimal.css?v=4a912b1e"
+        ]
+      }
+    ],
+    "metrics": {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "contentWidth": 0,
+      "sidebarWidth": 494.890625,
+      "codeBlockCount": 4,
+      "stylesheetCount": 18,
+      "themeClasses": [
+        "supports-custom-properties",
+        "supports-intersection-observer",
+        "js-focus-visible"
+      ],
+      "bodyClasses": [
+        "showcase-loaded"
+      ]
+    },
+    "timestamp": "2025-07-26T00:23:06.437271"
+  },
+  {
+    "page": "gallery",
+    "url": "http://localhost:8003/gallery.html",
+    "issues": [
+      {
+        "type": "sidebar",
+        "element": "sidebar",
+        "issue": "Sidebar too wide: 494.890625px",
+        "fix": "Reduce sidebar width to ~250-300px"
+      },
+      {
+        "type": "css",
+        "element": "stylesheets",
+        "issue": "Too many CSS files loaded: 18",
+        "fix": "Consolidate CSS files",
+        "details": [
+          "http://localhost:8003/_static/pygments.css?v=b86133f3",
+          "http://localhost:8003/_static/styles/furo.css?v=354aac6f",
+          "http://localhost:8003/_static/tabs.css?v=4c969af8",
+          "http://localhost:8003/_static/togglebutton.css?v=13237357",
+          "http://localhost:8003/_static/copybutton.css?v=76b2166b",
+          "http://localhost:8003/_static/graphviz.css?v=4ae1632d",
+          "http://localhost:8003/_static/haive-enhanced.css?v=e048bef6",
+          "http://localhost:8003/_static/sphinx-design.min.css?v=95c83b7e",
+          "http://localhost:8003/_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277",
+          "http://localhost:8003/_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840",
+          "http://localhost:8003/_static/sphinx-needs/common_css/needstable.css?v=5e1b6797",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_style.css?v=92936fa5",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_core.css?v=f5b60a78",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_links.css?v=2150a916",
+          "http://localhost:8003/_static/sphinx-needs/modern.css?v=803738c0",
+          "http://localhost:8003/_static/styles/furo-extensions.css?v=302659d7",
+          "http://localhost:8003/_static/haive-minimal.css?v=4a912b1e"
+        ]
+      }
+    ],
+    "metrics": {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "contentWidth": 0,
+      "sidebarWidth": 494.890625,
+      "codeBlockCount": 6,
+      "stylesheetCount": 18,
+      "themeClasses": [
+        "supports-custom-properties",
+        "supports-intersection-observer",
+        "js-focus-visible"
+      ],
+      "bodyClasses": [
+        "showcase-loaded"
+      ]
+    },
+    "timestamp": "2025-07-26T00:23:09.445296"
+  },
+  {
+    "page": "api_index",
+    "url": "http://localhost:8003/api/index.html",
+    "issues": [
+      {
+        "type": "sidebar",
+        "element": "sidebar",
+        "issue": "Sidebar too wide: 494.890625px",
+        "fix": "Reduce sidebar width to ~250-300px"
+      },
+      {
+        "type": "css",
+        "element": "stylesheets",
+        "issue": "Too many CSS files loaded: 18",
+        "fix": "Consolidate CSS files",
+        "details": [
+          "http://localhost:8003/_static/pygments.css?v=b86133f3",
+          "http://localhost:8003/_static/styles/furo.css?v=354aac6f",
+          "http://localhost:8003/_static/tabs.css?v=4c969af8",
+          "http://localhost:8003/_static/togglebutton.css?v=13237357",
+          "http://localhost:8003/_static/copybutton.css?v=76b2166b",
+          "http://localhost:8003/_static/graphviz.css?v=4ae1632d",
+          "http://localhost:8003/_static/haive-enhanced.css?v=e048bef6",
+          "http://localhost:8003/_static/sphinx-design.min.css?v=95c83b7e",
+          "http://localhost:8003/_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277",
+          "http://localhost:8003/_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840",
+          "http://localhost:8003/_static/sphinx-needs/common_css/needstable.css?v=5e1b6797",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_style.css?v=92936fa5",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_core.css?v=f5b60a78",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_links.css?v=2150a916",
+          "http://localhost:8003/_static/sphinx-needs/modern.css?v=803738c0",
+          "http://localhost:8003/_static/styles/furo-extensions.css?v=302659d7",
+          "http://localhost:8003/_static/haive-minimal.css?v=4a912b1e"
+        ]
+      }
+    ],
+    "metrics": {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "contentWidth": 0,
+      "sidebarWidth": 494.890625,
+      "codeBlockCount": 0,
+      "stylesheetCount": 18,
+      "themeClasses": [
+        "supports-custom-properties",
+        "supports-intersection-observer",
+        "js-focus-visible"
+      ],
+      "bodyClasses": [
+        "showcase-loaded"
+      ]
+    },
+    "timestamp": "2025-07-26T00:23:12.169786"
+  },
+  {
+    "page": "api_agents",
+    "url": "http://localhost:8003/api/haive.agents.html",
+    "issues": [],
+    "metrics": {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "contentWidth": 0,
+      "sidebarWidth": 0,
+      "codeBlockCount": 0,
+      "stylesheetCount": 0,
+      "themeClasses": [],
+      "bodyClasses": []
+    },
+    "timestamp": "2025-07-26T00:23:14.859905"
+  },
+  {
+    "page": "api_core",
+    "url": "http://localhost:8003/api/haive.core.html",
+    "issues": [],
+    "metrics": {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "contentWidth": 0,
+      "sidebarWidth": 0,
+      "codeBlockCount": 0,
+      "stylesheetCount": 0,
+      "themeClasses": [],
+      "bodyClasses": []
+    },
+    "timestamp": "2025-07-26T00:23:17.544547"
+  },
+  {
+    "page": "examples",
+    "url": "http://localhost:8003/examples/index.html",
+    "issues": [
+      {
+        "type": "sidebar",
+        "element": "sidebar",
+        "issue": "Sidebar too wide: 494.890625px",
+        "fix": "Reduce sidebar width to ~250-300px"
+      },
+      {
+        "type": "css",
+        "element": "stylesheets",
+        "issue": "Too many CSS files loaded: 18",
+        "fix": "Consolidate CSS files",
+        "details": [
+          "http://localhost:8003/_static/pygments.css?v=b86133f3",
+          "http://localhost:8003/_static/styles/furo.css?v=354aac6f",
+          "http://localhost:8003/_static/tabs.css?v=4c969af8",
+          "http://localhost:8003/_static/togglebutton.css?v=13237357",
+          "http://localhost:8003/_static/copybutton.css?v=76b2166b",
+          "http://localhost:8003/_static/graphviz.css?v=4ae1632d",
+          "http://localhost:8003/_static/haive-enhanced.css?v=e048bef6",
+          "http://localhost:8003/_static/sphinx-design.min.css?v=95c83b7e",
+          "http://localhost:8003/_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277",
+          "http://localhost:8003/_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840",
+          "http://localhost:8003/_static/sphinx-needs/common_css/needstable.css?v=5e1b6797",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_style.css?v=92936fa5",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_core.css?v=f5b60a78",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_links.css?v=2150a916",
+          "http://localhost:8003/_static/sphinx-needs/modern.css?v=803738c0",
+          "http://localhost:8003/_static/styles/furo-extensions.css?v=302659d7",
+          "http://localhost:8003/_static/haive-minimal.css?v=4a912b1e"
+        ]
+      }
+    ],
+    "metrics": {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "contentWidth": 0,
+      "sidebarWidth": 494.890625,
+      "codeBlockCount": 8,
+      "stylesheetCount": 18,
+      "themeClasses": [
+        "supports-custom-properties",
+        "supports-intersection-observer",
+        "js-focus-visible"
+      ],
+      "bodyClasses": [
+        "showcase-loaded"
+      ]
+    },
+    "timestamp": "2025-07-26T00:23:20.822641"
+  },
+  {
+    "page": "getting_started",
+    "url": "http://localhost:8003/getting_started.html",
+    "issues": [
+      {
+        "type": "sidebar",
+        "element": "sidebar",
+        "issue": "Sidebar too wide: 494.890625px",
+        "fix": "Reduce sidebar width to ~250-300px"
+      },
+      {
+        "type": "css",
+        "element": "stylesheets",
+        "issue": "Too many CSS files loaded: 18",
+        "fix": "Consolidate CSS files",
+        "details": [
+          "http://localhost:8003/_static/pygments.css?v=b86133f3",
+          "http://localhost:8003/_static/styles/furo.css?v=354aac6f",
+          "http://localhost:8003/_static/tabs.css?v=4c969af8",
+          "http://localhost:8003/_static/togglebutton.css?v=13237357",
+          "http://localhost:8003/_static/copybutton.css?v=76b2166b",
+          "http://localhost:8003/_static/graphviz.css?v=4ae1632d",
+          "http://localhost:8003/_static/haive-enhanced.css?v=e048bef6",
+          "http://localhost:8003/_static/sphinx-design.min.css?v=95c83b7e",
+          "http://localhost:8003/_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277",
+          "http://localhost:8003/_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840",
+          "http://localhost:8003/_static/sphinx-needs/common_css/needstable.css?v=5e1b6797",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_style.css?v=92936fa5",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_core.css?v=f5b60a78",
+          "http://localhost:8003/_static/sphinx-needs/common_css/need_links.css?v=2150a916",
+          "http://localhost:8003/_static/sphinx-needs/modern.css?v=803738c0",
+          "http://localhost:8003/_static/styles/furo-extensions.css?v=302659d7",
+          "http://localhost:8003/_static/haive-minimal.css?v=4a912b1e"
+        ]
+      }
+    ],
+    "metrics": {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "contentWidth": 0,
+      "sidebarWidth": 494.890625,
+      "codeBlockCount": 20,
+      "stylesheetCount": 18,
+      "themeClasses": [
+        "supports-custom-properties",
+        "supports-intersection-observer",
+        "js-focus-visible"
+      ],
+      "bodyClasses": [
+        "showcase-loaded"
+      ]
+    },
+    "timestamp": "2025-07-26T00:23:24.168156"
+  }
+]

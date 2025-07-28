@@ -1,0 +1,164 @@
+{
+ "Any": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Any"
+  }
+ ],
+ "Path": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pathlib",
+   "module_short": "pathlib",
+   "name": "Path"
+  }
+ ],
+ "UTC": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "datetime",
+   "module_short": "datetime",
+   "name": "UTC"
+  }
+ ],
+ "__name__": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "aiohttp.ClientSession": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "aiohttp",
+   "module_short": "aiohttp",
+   "name": "ClientSession"
+  }
+ ],
+ "aiohttp.ClientTimeout": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "aiohttp",
+   "module_short": "aiohttp",
+   "name": "ClientTimeout"
+  }
+ ],
+ "asyncio.run": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "asyncio",
+   "module_short": "asyncio",
+   "name": "run"
+  }
+ ],
+ "asyncio.sleep": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "asyncio",
+   "module_short": "asyncio",
+   "name": "sleep"
+  }
+ ],
+ "base64.b64decode": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "base64",
+   "module_short": "base64",
+   "name": "b64decode"
+  }
+ ],
+ "datetime.fromisoformat": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "datetime.datetime",
+   "module_short": "datetime.datetime",
+   "name": "fromisoformat"
+  }
+ ],
+ "datetime.now": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "datetime.datetime",
+   "module_short": "datetime.datetime",
+   "name": "now"
+  }
+ ],
+ "json.dump": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "json",
+   "module_short": "json",
+   "name": "dump"
+  }
+ ],
+ "json.load": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "json",
+   "module_short": "json",
+   "name": "load"
+  }
+ ],
+ "logging.INFO": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "logging",
+   "module_short": "logging",
+   "name": "INFO"
+  }
+ ],
+ "logging.basicConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "logging",
+   "module_short": "logging",
+   "name": "basicConfig"
+  }
+ ],
+ "logging.getLogger": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "logging",
+   "module_short": "logging",
+   "name": "getLogger"
+  }
+ ],
+ "os.environ.get": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "os.environ",
+   "module_short": "os.environ",
+   "name": "get"
+  }
+ ],
+ "re.search": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "re",
+   "module_short": "re",
+   "name": "search"
+  }
+ ]
+}

@@ -1,0 +1,119 @@
+{
+ "Any": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Any"
+  }
+ ],
+ "GeneralMCPDownloader": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "src.haive.mcp.downloader",
+   "module_short": "src.haive.mcp.downloader",
+   "name": "GeneralMCPDownloader"
+  }
+ ],
+ "InstallationMethod.MANUAL": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "src.haive.mcp.downloader.InstallationMethod",
+   "module_short": "src.haive.mcp.downloader.InstallationMethod",
+   "name": "MANUAL"
+  }
+ ],
+ "MCPInstaller": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "src.haive.mcp.downloader",
+   "module_short": "src.haive.mcp.downloader",
+   "name": "MCPInstaller"
+  }
+ ],
+ "Path": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pathlib",
+   "module_short": "pathlib",
+   "name": "Path"
+  }
+ ],
+ "ServerConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "src.haive.mcp.downloader",
+   "module_short": "src.haive.mcp.downloader",
+   "name": "ServerConfig"
+  }
+ ],
+ "ServerTemplate": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "src.haive.mcp.downloader",
+   "module_short": "src.haive.mcp.downloader",
+   "name": "ServerTemplate"
+  }
+ ],
+ "__name__": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "aiohttp.ClientSession": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "aiohttp",
+   "module_short": "aiohttp",
+   "name": "ClientSession"
+  }
+ ],
+ "asyncio.run": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "asyncio",
+   "module_short": "asyncio",
+   "name": "run"
+  }
+ ],
+ "stat.S_IEXEC": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "stat",
+   "module_short": "stat",
+   "name": "S_IEXEC"
+  }
+ ],
+ "subprocess.run": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "subprocess",
+   "module_short": "subprocess",
+   "name": "run"
+  }
+ ],
+ "sys.path.insert": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sys.path",
+   "module_short": "sys.path",
+   "name": "insert"
+  }
+ ]
+}

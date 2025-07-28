@@ -1,0 +1,92 @@
+{
+ "AugLLMConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.core.engine.aug_llm",
+   "module_short": "haive.core",
+   "name": "AugLLMConfig"
+  }
+ ],
+ "LLMConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.core.models.llm.base",
+   "module_short": "haive.core.models.llm",
+   "name": "LLMConfig"
+  }
+ ],
+ "MCPAgent": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.mcp.agents",
+   "module_short": "haive.mcp.agents",
+   "name": "MCPAgent"
+  }
+ ],
+ "MCPConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.mcp.config",
+   "module_short": "haive.mcp.config",
+   "name": "MCPConfig"
+  }
+ ],
+ "MCPDocumentationAgent.create_for_mcp_research": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.mcp.agents.MCPDocumentationAgent",
+   "module_short": "haive.mcp.agents.MCPDocumentationAgent",
+   "name": "create_for_mcp_research"
+  }
+ ],
+ "MCPDocumentationAgent.create_for_mcp_setup": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.mcp.agents.MCPDocumentationAgent",
+   "module_short": "haive.mcp.agents.MCPDocumentationAgent",
+   "name": "create_for_mcp_setup"
+  }
+ ],
+ "MCPServerConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.mcp.config",
+   "module_short": "haive.mcp.config",
+   "name": "MCPServerConfig"
+  }
+ ],
+ "TransferableMCPAgent.create_collaborative_agents": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.mcp.agents.TransferableMCPAgent",
+   "module_short": "haive.mcp.agents.TransferableMCPAgent",
+   "name": "create_collaborative_agents"
+  }
+ ],
+ "__name__": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "asyncio.run": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "asyncio",
+   "module_short": "asyncio",
+   "name": "run"
+  }
+ ]
+}

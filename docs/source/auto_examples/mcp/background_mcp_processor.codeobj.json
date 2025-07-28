@@ -1,0 +1,272 @@
+{
+ "Any": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Any"
+  }
+ ],
+ "Path": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pathlib",
+   "module_short": "pathlib",
+   "name": "Path"
+  }
+ ],
+ "RotatingFileHandler": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "logging.handlers",
+   "module_short": "logging.handlers",
+   "name": "RotatingFileHandler"
+  }
+ ],
+ "UTC": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "datetime",
+   "module_short": "datetime",
+   "name": "UTC"
+  }
+ ],
+ "__name__": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "aiohttp.ClientSession": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "aiohttp",
+   "module_short": "aiohttp",
+   "name": "ClientSession"
+  }
+ ],
+ "aiohttp.ClientTimeout": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "aiohttp",
+   "module_short": "aiohttp",
+   "name": "ClientTimeout"
+  }
+ ],
+ "asdict": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "dataclasses",
+   "module_short": "dataclasses",
+   "name": "asdict"
+  }
+ ],
+ "asyncio.gather": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "asyncio",
+   "module_short": "asyncio",
+   "name": "gather"
+  }
+ ],
+ "asyncio.run": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "asyncio",
+   "module_short": "asyncio",
+   "name": "run"
+  }
+ ],
+ "asyncio.sleep": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "asyncio",
+   "module_short": "asyncio",
+   "name": "sleep"
+  }
+ ],
+ "dataclass": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "dataclasses",
+   "module_short": "dataclasses",
+   "name": "dataclass"
+  }
+ ],
+ "datetime.fromisoformat": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "datetime.datetime",
+   "module_short": "datetime.datetime",
+   "name": "fromisoformat"
+  }
+ ],
+ "datetime.now": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "datetime.datetime",
+   "module_short": "datetime.datetime",
+   "name": "now"
+  }
+ ],
+ "hashlib.md5": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "hashlib",
+   "module_short": "hashlib",
+   "name": "md5"
+  }
+ ],
+ "json.dump": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "json",
+   "module_short": "json",
+   "name": "dump"
+  }
+ ],
+ "json.dumps": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "json",
+   "module_short": "json",
+   "name": "dumps"
+  }
+ ],
+ "json.load": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "json",
+   "module_short": "json",
+   "name": "load"
+  }
+ ],
+ "logging.DEBUG": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "logging",
+   "module_short": "logging",
+   "name": "DEBUG"
+  }
+ ],
+ "logging.Formatter": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "logging",
+   "module_short": "logging",
+   "name": "Formatter"
+  }
+ ],
+ "logging.INFO": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "logging",
+   "module_short": "logging",
+   "name": "INFO"
+  }
+ ],
+ "logging.StreamHandler": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "logging",
+   "module_short": "logging",
+   "name": "StreamHandler"
+  }
+ ],
+ "logging.getLogger": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "logging",
+   "module_short": "logging",
+   "name": "getLogger"
+  }
+ ],
+ "os.environ.get": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "os.environ",
+   "module_short": "os.environ",
+   "name": "get"
+  }
+ ],
+ "signal.SIGINT": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "signal",
+   "module_short": "signal",
+   "name": "SIGINT"
+  }
+ ],
+ "signal.SIGTERM": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "signal",
+   "module_short": "signal",
+   "name": "SIGTERM"
+  }
+ ],
+ "signal.signal": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "signal",
+   "module_short": "signal",
+   "name": "signal"
+  }
+ ],
+ "sys.exit": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sys",
+   "module_short": "sys",
+   "name": "exit"
+  }
+ ],
+ "time.time": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "time",
+   "module_short": "time",
+   "name": "time"
+  }
+ ],
+ "timedelta": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "datetime",
+   "module_short": "datetime",
+   "name": "timedelta"
+  }
+ ]
+}

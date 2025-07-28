@@ -1,0 +1,198 @@
+/**
+ * Haive CSS Fixes v2 - Improved Layout Without Hard Margins
+ * Purpose: Fix code blocks and layout issues while working WITH Furo theme
+ */
+
+/* ==========================================================================
+   CODE BLOCK IMPROVEMENTS
+   ========================================================================== */
+
+/* Ensure code blocks use full available width */
+.highlight,
+div.highlight,
+.code-block,
+.literal-block {
+  width: 100%;
+  max-width: 100%;
+  margin: 1rem 0;
+  overflow: visible;
+}
+
+.highlight pre {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre;
+  padding: 1rem;
+}
+
+/* Fix code block containers */
+div[class*="highlight-"] {
+  margin: 1rem 0;
+  width: 100%;
+}
+
+/* ==========================================================================
+   CONTENT LAYOUT - Work WITH Furo's grid system
+   ========================================================================== */
+
+/* Let Furo handle the main layout, just ensure proper content width */
+.furo-content {
+  max-width: none;  /* Remove width constraints */
+  width: 100%;
+}
+
+article {
+  max-width: 1200px;  /* Reasonable reading width */
+  margin: 0 auto;     /* Center the content */
+  padding: 2rem;
+}
+
+/* ==========================================================================
+   SIDEBAR IMPROVEMENTS
+   ========================================================================== */
+
+/* Use CSS custom properties that Furo provides */
+:root {
+  --sidebar-width: 19rem;  /* Match what's in conf.py */
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+/* Mobile and tablet view */
+@media (max-width: 82rem) {
+  article {
+    padding: 1rem;
+  }
+  
+  /* Code blocks on mobile */
+  .highlight pre {
+    font-size: 0.875rem;
+  }
+}
+
+/* ==========================================================================
+   API DOCUMENTATION
+   ========================================================================== */
+
+/* Better spacing for API docs */
+.py.class,
+.py.function,
+.py.method,
+.py.attribute {
+  margin: 2rem 0;
+}
+
+/* Parameters and return types */
+dl.field-list {
+  margin: 1rem 0;
+  background-color: var(--color-background-secondary);
+  padding: 1rem;
+  border-radius: 0.25rem;
+}
+
+/* ==========================================================================
+   SPHINX-GALLERY SUPPORT
+   ========================================================================== */
+
+/* Gallery examples */
+.sphx-glr-example-title {
+  margin: 2rem 0 1rem 0;
+}
+
+.sphx-glr-script-out {
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: var(--color-background-secondary);
+  border-radius: 0.25rem;
+}
+
+/* Gallery thumbnails */
+.sphx-glr-thumbcontainer {
+  margin: 1rem 0;
+}
+
+/* ==========================================================================
+   TABLE OF CONTENTS
+   ========================================================================== */
+
+/* Right sidebar TOC - let Furo handle positioning */
+.toc-tree {
+  font-size: 0.875rem;
+}
+
+.toc-tree li {
+  margin: 0.25rem 0;
+}
+
+/* ==========================================================================
+   SEARCH IMPROVEMENTS
+   ========================================================================== */
+
+/* Search results */
+.search-results {
+  max-width: 100%;
+}
+
+.search-results .search-result {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid var(--color-background-border);
+  border-radius: 0.25rem;
+}
+
+/* ==========================================================================
+   UTILITY CLASSES
+   ========================================================================== */
+
+/* Full width utility */
+.full-width {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Code output blocks */
+.output {
+  background-color: var(--color-background-secondary);
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 0.25rem;
+  overflow-x: auto;
+}
+
+/* Warning and note boxes */
+.admonition {
+  margin: 1.5rem 0;
+}
+
+/* ==========================================================================
+   HOMEPAGE SPECIFIC
+   ========================================================================== */
+
+/* Hero section */
+.hero-section {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+/* Feature cards */
+.sd-card {
+  height: 100%;
+  transition: transform 0.2s;
+}
+
+.sd-card:hover {
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   DEBUGGING AIDS - Remove in production
+   ========================================================================== */
+
+/* Uncomment to debug layout issues
+.furo-sidebar { background: rgba(255,0,0,0.1); }
+.furo-content { background: rgba(0,255,0,0.1); }
+article { background: rgba(0,0,255,0.1); }
+*/

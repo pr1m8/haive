@@ -1,0 +1,1108 @@
+{
+ "AugLLMConfig": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.aug_llm.config",
+   "module_short": "haive.core",
+   "name": "AugLLMConfig"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.aug_llm",
+   "module_short": "haive.core",
+   "name": "AugLLMConfig"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core",
+   "name": "AugLLMConfig"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "AugLLMConfig"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "AugLLMConfig"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.common.mixins.tool_route_mixin",
+   "module_short": "haive.core.common.mixins",
+   "name": "ToolRouteMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.common.mixins",
+   "module_short": "haive.core.common.mixins",
+   "name": "ToolRouteMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.common",
+   "module_short": "haive.core.common",
+   "name": "ToolRouteMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "ToolRouteMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "ToolRouteMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.common.mixins.structured_output_mixin",
+   "module_short": "haive.core.common.mixins",
+   "name": "StructuredOutputMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.common.mixins",
+   "module_short": "haive.core.common.mixins",
+   "name": "StructuredOutputMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.common",
+   "module_short": "haive.core.common",
+   "name": "StructuredOutputMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "StructuredOutputMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "StructuredOutputMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base.base",
+   "module_short": "haive.core.engine.base.base",
+   "name": "InvokableEngine[Union[str, dict[str, Any], list[BaseMessage]], Union[BaseMessage, dict[str, Any]]]"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base",
+   "module_short": "haive.core.engine.base",
+   "name": "InvokableEngine[Union[str, dict[str, Any], list[BaseMessage]], Union[BaseMessage, dict[str, Any]]]"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core.engine",
+   "name": "InvokableEngine[Union[str, dict[str, Any], list[BaseMessage]], Union[BaseMessage, dict[str, Any]]]"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "InvokableEngine[Union[str, dict[str, Any], list[BaseMessage]], Union[BaseMessage, dict[str, Any]]]"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "InvokableEngine[Union[str, dict[str, Any], list[BaseMessage]], Union[BaseMessage, dict[str, Any]]]"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pydantic.main",
+   "module_short": "pydantic",
+   "name": "BaseModel"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pydantic",
+   "module_short": "pydantic",
+   "name": "BaseModel"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base.base",
+   "module_short": "haive.core",
+   "name": "InvokableEngine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base",
+   "module_short": "haive.core",
+   "name": "InvokableEngine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core",
+   "name": "InvokableEngine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "InvokableEngine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "InvokableEngine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base.base",
+   "module_short": "haive.core",
+   "name": "Engine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base",
+   "module_short": "haive.core",
+   "name": "Engine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core",
+   "name": "Engine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "Engine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "Engine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "abc",
+   "module_short": "abc",
+   "name": "ABC"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Generic"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.core.engine.aug_llm",
+   "module_short": "haive.core",
+   "name": "AugLLMConfig"
+  }
+ ],
+ "HookContext": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.hooks",
+   "module_short": "haive.agents.base",
+   "name": "HookContext"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "HookContext"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "HookContext"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "HookContext"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pydantic.main",
+   "module_short": "pydantic",
+   "name": "BaseModel"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pydantic",
+   "module_short": "pydantic",
+   "name": "BaseModel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base.hooks",
+   "module_short": "haive.agents.base",
+   "name": "HookContext"
+  }
+ ],
+ "HookEvent.AFTER_RUN": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base.hooks",
+   "module_short": "haive.agents.base",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base.hooks.HookEvent",
+   "module_short": "haive.agents.base.hooks.HookEvent",
+   "name": "AFTER_RUN"
+  }
+ ],
+ "HookEvent.AFTER_STRUCTURED_OUTPUT": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base.hooks",
+   "module_short": "haive.agents.base",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base.hooks.HookEvent",
+   "module_short": "haive.agents.base.hooks.HookEvent",
+   "name": "AFTER_STRUCTURED_OUTPUT"
+  }
+ ],
+ "HookEvent.BEFORE_RUN": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base.hooks",
+   "module_short": "haive.agents.base",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base.hooks.HookEvent",
+   "module_short": "haive.agents.base.hooks.HookEvent",
+   "name": "BEFORE_RUN"
+  }
+ ],
+ "HookEvent.ON_ERROR": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base.hooks",
+   "module_short": "haive.agents.base",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base.hooks.HookEvent",
+   "module_short": "haive.agents.base.hooks.HookEvent",
+   "name": "ON_ERROR"
+  }
+ ],
+ "HookEvent.POST_PROCESS": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base.hooks",
+   "module_short": "haive.agents.base",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base.hooks.HookEvent",
+   "module_short": "haive.agents.base.hooks.HookEvent",
+   "name": "POST_PROCESS"
+  }
+ ],
+ "HookEvent.PRE_PROCESS": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base.hooks",
+   "module_short": "haive.agents.base",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "HookEvent"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base.hooks.HookEvent",
+   "module_short": "haive.agents.base.hooks.HookEvent",
+   "name": "PRE_PROCESS"
+  }
+ ],
+ "SimpleAgent": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.simple.agent",
+   "module_short": "haive.agents.simple.agent",
+   "name": "SimpleAgent"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.simple",
+   "module_short": "haive.agents.simple",
+   "name": "SimpleAgent"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "SimpleAgent"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "SimpleAgent"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.agent",
+   "module_short": "haive.agents.base",
+   "name": "Agent"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "Agent"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "Agent"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "Agent"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base.base",
+   "module_short": "haive.core.engine.base.base",
+   "name": "InvokableEngine[BaseModel, BaseModel]"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base",
+   "module_short": "haive.core.engine.base",
+   "name": "InvokableEngine[BaseModel, BaseModel]"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core.engine",
+   "name": "InvokableEngine[BaseModel, BaseModel]"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "InvokableEngine[BaseModel, BaseModel]"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "InvokableEngine[BaseModel, BaseModel]"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins.execution_mixin",
+   "module_short": "haive.agents.base",
+   "name": "ExecutionMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins",
+   "module_short": "haive.agents.base",
+   "name": "ExecutionMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "ExecutionMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "ExecutionMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "ExecutionMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins.state_mixin",
+   "module_short": "haive.agents.base",
+   "name": "StateMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins",
+   "module_short": "haive.agents.base",
+   "name": "StateMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "StateMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "StateMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "StateMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins.persistence_mixin",
+   "module_short": "haive.agents.base",
+   "name": "PersistenceMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins",
+   "module_short": "haive.agents.base",
+   "name": "PersistenceMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "PersistenceMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "PersistenceMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "PersistenceMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.serialization_mixin",
+   "module_short": "haive.agents.base",
+   "name": "SerializationMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "SerializationMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "SerializationMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "SerializationMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.agent_structured_output_mixin",
+   "module_short": "haive.agents.base.agent_structured_output_mixin",
+   "name": "StructuredOutputMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "StructuredOutputMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "StructuredOutputMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "StructuredOutputMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "abc",
+   "module_short": "abc",
+   "name": "ABC"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base.base",
+   "module_short": "haive.core",
+   "name": "InvokableEngine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base",
+   "module_short": "haive.core",
+   "name": "InvokableEngine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core",
+   "name": "InvokableEngine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "InvokableEngine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "InvokableEngine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base.base",
+   "module_short": "haive.core",
+   "name": "Engine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base",
+   "module_short": "haive.core",
+   "name": "Engine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core",
+   "name": "Engine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "Engine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "Engine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pydantic.main",
+   "module_short": "pydantic",
+   "name": "BaseModel"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pydantic",
+   "module_short": "pydantic",
+   "name": "BaseModel"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Generic"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.simple.agent",
+   "module_short": "haive.agents.simple.agent",
+   "name": "SimpleAgent"
+  }
+ ],
+ "__name__": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "asyncio.run": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "asyncio",
+   "module_short": "asyncio",
+   "name": "run"
+  }
+ ],
+ "comprehensive_workflow_hook": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base.hooks",
+   "module_short": "haive.agents.base.hooks",
+   "name": "comprehensive_workflow_hook"
+  }
+ ],
+ "create_graded_reflection_agent": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base.pre_post_agent_mixin",
+   "module_short": "haive.agents.base.pre_post_agent_mixin",
+   "name": "create_graded_reflection_agent"
+  }
+ ],
+ "create_multi_stage_hook": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base.hooks",
+   "module_short": "haive.agents.base.hooks",
+   "name": "create_multi_stage_hook"
+  }
+ ],
+ "create_reflection_agent": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.base.pre_post_agent_mixin",
+   "module_short": "haive.agents.base.pre_post_agent_mixin",
+   "name": "create_reflection_agent"
+  }
+ ],
+ "example_basic_hooks": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "example_custom_hook_development": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "example_graded_reflection_pattern": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "example_multi_stage_monitoring": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "example_pre_post_processing": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "example_reflection_factory_pattern": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "logger": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "logging",
+   "module_short": "logging",
+   "name": "Logger"
+  }
+ ],
+ "logging.INFO": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "logging",
+   "module_short": "logging",
+   "name": "INFO"
+  }
+ ],
+ "logging.basicConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "logging",
+   "module_short": "logging",
+   "name": "basicConfig"
+  }
+ ],
+ "logging.getLogger": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "logging",
+   "module_short": "logging",
+   "name": "getLogger"
+  }
+ ],
+ "main": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "time.time": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "time",
+   "module_short": "time",
+   "name": "time"
+  }
+ ],
+ "traceback.print_exc": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "traceback",
+   "module_short": "traceback",
+   "name": "print_exc"
+  }
+ ]
+}

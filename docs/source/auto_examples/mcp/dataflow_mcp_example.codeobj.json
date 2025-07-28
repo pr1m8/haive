@@ -1,0 +1,143 @@
+{
+ "ClientSession": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "mcp.client",
+   "module_short": "mcp.client",
+   "name": "ClientSession"
+  }
+ ],
+ "MCPServerConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.mcp.integration.aug_llm_mcp_extension",
+   "module_short": "haive.mcp.integration.aug_llm_mcp_extension",
+   "name": "MCPServerConfig"
+  }
+ ],
+ "Path": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pathlib",
+   "module_short": "pathlib",
+   "name": "Path"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pathlib",
+   "module_short": "pathlib",
+   "name": "PurePath"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pathlib",
+   "module_short": "pathlib",
+   "name": "Path"
+  }
+ ],
+ "StdioServerParameters": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "mcp.client",
+   "module_short": "mcp.client",
+   "name": "StdioServerParameters"
+  }
+ ],
+ "__name__": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "asyncio.run": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "asyncio",
+   "module_short": "asyncio",
+   "name": "run"
+  }
+ ],
+ "create_mcp_enabled_aug_config": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.mcp.integration.aug_llm_mcp_extension",
+   "module_short": "haive.mcp.integration.aug_llm_mcp_extension",
+   "name": "create_mcp_enabled_aug_config"
+  }
+ ],
+ "logging.INFO": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "logging",
+   "module_short": "logging",
+   "name": "INFO"
+  }
+ ],
+ "logging.basicConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "logging",
+   "module_short": "logging",
+   "name": "basicConfig"
+  }
+ ],
+ "logging.getLogger": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "logging",
+   "module_short": "logging",
+   "name": "getLogger"
+  }
+ ],
+ "stdio_client": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "mcp.client.stdio",
+   "module_short": "mcp.client.stdio",
+   "name": "stdio_client"
+  }
+ ]
+}

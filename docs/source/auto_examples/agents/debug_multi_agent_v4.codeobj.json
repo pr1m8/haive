@@ -1,0 +1,65 @@
+{
+ "AugLLMConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.core.engine.aug_llm",
+   "module_short": "haive.core",
+   "name": "AugLLMConfig"
+  }
+ ],
+ "EnhancedMultiAgentV4": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.multi.enhanced_multi_agent_v4",
+   "module_short": "haive.agents.multi.enhanced_multi_agent_v4",
+   "name": "EnhancedMultiAgentV4"
+  }
+ ],
+ "HumanMessage": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "langchain_core.messages",
+   "module_short": "langchain_core.messages",
+   "name": "HumanMessage"
+  }
+ ],
+ "SimpleAgentV3": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.simple.agent_v3",
+   "module_short": "haive.agents.simple",
+   "name": "SimpleAgentV3"
+  }
+ ],
+ "__name__": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "asyncio.run": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "asyncio",
+   "module_short": "asyncio",
+   "name": "run"
+  }
+ ],
+ "traceback.print_exc": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "traceback",
+   "module_short": "traceback",
+   "name": "print_exc"
+  }
+ ]
+}

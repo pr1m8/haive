@@ -1,0 +1,1629 @@
+{
+ "AugLLMConfig": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.aug_llm.config",
+   "module_short": "haive.core",
+   "name": "AugLLMConfig"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.aug_llm",
+   "module_short": "haive.core",
+   "name": "AugLLMConfig"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core",
+   "name": "AugLLMConfig"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "AugLLMConfig"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "AugLLMConfig"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.common.mixins.tool_route_mixin",
+   "module_short": "haive.core.common.mixins",
+   "name": "ToolRouteMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.common.mixins",
+   "module_short": "haive.core.common.mixins",
+   "name": "ToolRouteMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.common",
+   "module_short": "haive.core.common",
+   "name": "ToolRouteMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "ToolRouteMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "ToolRouteMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.common.mixins.structured_output_mixin",
+   "module_short": "haive.core.common.mixins",
+   "name": "StructuredOutputMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.common.mixins",
+   "module_short": "haive.core.common.mixins",
+   "name": "StructuredOutputMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.common",
+   "module_short": "haive.core.common",
+   "name": "StructuredOutputMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "StructuredOutputMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "StructuredOutputMixin"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base.base",
+   "module_short": "haive.core.engine.base.base",
+   "name": "InvokableEngine[Union[str, dict[str, Any], list[BaseMessage]], Union[BaseMessage, dict[str, Any]]]"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base",
+   "module_short": "haive.core.engine.base",
+   "name": "InvokableEngine[Union[str, dict[str, Any], list[BaseMessage]], Union[BaseMessage, dict[str, Any]]]"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core.engine",
+   "name": "InvokableEngine[Union[str, dict[str, Any], list[BaseMessage]], Union[BaseMessage, dict[str, Any]]]"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "InvokableEngine[Union[str, dict[str, Any], list[BaseMessage]], Union[BaseMessage, dict[str, Any]]]"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "InvokableEngine[Union[str, dict[str, Any], list[BaseMessage]], Union[BaseMessage, dict[str, Any]]]"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pydantic.main",
+   "module_short": "pydantic",
+   "name": "BaseModel"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pydantic",
+   "module_short": "pydantic",
+   "name": "BaseModel"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base.base",
+   "module_short": "haive.core",
+   "name": "InvokableEngine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base",
+   "module_short": "haive.core",
+   "name": "InvokableEngine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core",
+   "name": "InvokableEngine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "InvokableEngine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "InvokableEngine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base.base",
+   "module_short": "haive.core",
+   "name": "Engine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base",
+   "module_short": "haive.core",
+   "name": "Engine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core",
+   "name": "Engine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "Engine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "Engine"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "abc",
+   "module_short": "abc",
+   "name": "ABC"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Generic"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.core.engine.aug_llm",
+   "module_short": "haive.core",
+   "name": "AugLLMConfig"
+  }
+ ],
+ "DynamicReactAgent.create_with_discovery": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.react.dynamic_react_agent",
+   "module_short": "haive.agents.react.dynamic_react_agent",
+   "name": "DynamicReactAgent.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.react",
+   "module_short": "haive.agents.react",
+   "name": "DynamicReactAgent.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "DynamicReactAgent.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "DynamicReactAgent.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.react.agent",
+   "module_short": "haive.agents.react.agent",
+   "name": "ReactAgent.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.react",
+   "module_short": "haive.agents.react",
+   "name": "ReactAgent.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "ReactAgent.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "ReactAgent.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.simple.agent_v2",
+   "module_short": "haive.agents.simple.agent_v2",
+   "name": "SimpleAgentV2.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.simple",
+   "module_short": "haive.agents.simple",
+   "name": "SimpleAgentV2.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "SimpleAgentV2.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "SimpleAgentV2.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.agent",
+   "module_short": "haive.agents.base.agent",
+   "name": "Agent.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "Agent.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "Agent.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "Agent.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base.base",
+   "module_short": "haive.core.engine.base.base",
+   "name": "InvokableEngine[BaseModel, BaseModel].create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base",
+   "module_short": "haive.core.engine.base",
+   "name": "InvokableEngine[BaseModel, BaseModel].create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core.engine",
+   "name": "InvokableEngine[BaseModel, BaseModel].create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "InvokableEngine[BaseModel, BaseModel].create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "InvokableEngine[BaseModel, BaseModel].create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins.execution_mixin",
+   "module_short": "haive.agents.base.mixins.execution_mixin",
+   "name": "ExecutionMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins",
+   "module_short": "haive.agents.base.mixins",
+   "name": "ExecutionMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "ExecutionMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "ExecutionMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "ExecutionMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins.state_mixin",
+   "module_short": "haive.agents.base.mixins.state_mixin",
+   "name": "StateMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins",
+   "module_short": "haive.agents.base.mixins",
+   "name": "StateMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "StateMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "StateMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "StateMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins.persistence_mixin",
+   "module_short": "haive.agents.base.mixins.persistence_mixin",
+   "name": "PersistenceMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins",
+   "module_short": "haive.agents.base.mixins",
+   "name": "PersistenceMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "PersistenceMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "PersistenceMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "PersistenceMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.serialization_mixin",
+   "module_short": "haive.agents.base.serialization_mixin",
+   "name": "SerializationMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "SerializationMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "SerializationMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "SerializationMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.agent_structured_output_mixin",
+   "module_short": "haive.agents.base.agent_structured_output_mixin",
+   "name": "StructuredOutputMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "StructuredOutputMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "StructuredOutputMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "StructuredOutputMixin.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "abc",
+   "module_short": "abc",
+   "name": "ABC.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base.base",
+   "module_short": "haive.core.engine.base.base",
+   "name": "InvokableEngine.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base",
+   "module_short": "haive.core.engine.base",
+   "name": "InvokableEngine.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core.engine",
+   "name": "InvokableEngine.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "InvokableEngine.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "InvokableEngine.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base.base",
+   "module_short": "haive.core.engine.base.base",
+   "name": "Engine.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base",
+   "module_short": "haive.core.engine.base",
+   "name": "Engine.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core.engine",
+   "name": "Engine.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "Engine.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "Engine.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pydantic.main",
+   "module_short": "pydantic.main",
+   "name": "BaseModel.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pydantic",
+   "module_short": "pydantic",
+   "name": "BaseModel.create_with_discovery"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Generic.create_with_discovery"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.react.dynamic_react_agent.DynamicReactAgent",
+   "module_short": "haive.agents.react.dynamic_react_agent.DynamicReactAgent",
+   "name": "create_with_discovery"
+  }
+ ],
+ "DynamicReactAgent.create_with_rag_tooling": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.react.dynamic_react_agent",
+   "module_short": "haive.agents.react.dynamic_react_agent",
+   "name": "DynamicReactAgent.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.react",
+   "module_short": "haive.agents.react",
+   "name": "DynamicReactAgent.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "DynamicReactAgent.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "DynamicReactAgent.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.react.agent",
+   "module_short": "haive.agents.react.agent",
+   "name": "ReactAgent.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.react",
+   "module_short": "haive.agents.react",
+   "name": "ReactAgent.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "ReactAgent.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "ReactAgent.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.simple.agent_v2",
+   "module_short": "haive.agents.simple.agent_v2",
+   "name": "SimpleAgentV2.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.simple",
+   "module_short": "haive.agents.simple",
+   "name": "SimpleAgentV2.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "SimpleAgentV2.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "SimpleAgentV2.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.agent",
+   "module_short": "haive.agents.base.agent",
+   "name": "Agent.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "Agent.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "Agent.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "Agent.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base.base",
+   "module_short": "haive.core.engine.base.base",
+   "name": "InvokableEngine[BaseModel, BaseModel].create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base",
+   "module_short": "haive.core.engine.base",
+   "name": "InvokableEngine[BaseModel, BaseModel].create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core.engine",
+   "name": "InvokableEngine[BaseModel, BaseModel].create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "InvokableEngine[BaseModel, BaseModel].create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "InvokableEngine[BaseModel, BaseModel].create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins.execution_mixin",
+   "module_short": "haive.agents.base.mixins.execution_mixin",
+   "name": "ExecutionMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins",
+   "module_short": "haive.agents.base.mixins",
+   "name": "ExecutionMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "ExecutionMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "ExecutionMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "ExecutionMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins.state_mixin",
+   "module_short": "haive.agents.base.mixins.state_mixin",
+   "name": "StateMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins",
+   "module_short": "haive.agents.base.mixins",
+   "name": "StateMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "StateMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "StateMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "StateMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins.persistence_mixin",
+   "module_short": "haive.agents.base.mixins.persistence_mixin",
+   "name": "PersistenceMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins",
+   "module_short": "haive.agents.base.mixins",
+   "name": "PersistenceMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "PersistenceMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "PersistenceMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "PersistenceMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.serialization_mixin",
+   "module_short": "haive.agents.base.serialization_mixin",
+   "name": "SerializationMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "SerializationMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "SerializationMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "SerializationMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.agent_structured_output_mixin",
+   "module_short": "haive.agents.base.agent_structured_output_mixin",
+   "name": "StructuredOutputMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "StructuredOutputMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "StructuredOutputMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "StructuredOutputMixin.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "abc",
+   "module_short": "abc",
+   "name": "ABC.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base.base",
+   "module_short": "haive.core.engine.base.base",
+   "name": "InvokableEngine.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base",
+   "module_short": "haive.core.engine.base",
+   "name": "InvokableEngine.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core.engine",
+   "name": "InvokableEngine.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "InvokableEngine.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "InvokableEngine.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base.base",
+   "module_short": "haive.core.engine.base.base",
+   "name": "Engine.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base",
+   "module_short": "haive.core.engine.base",
+   "name": "Engine.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core.engine",
+   "name": "Engine.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "Engine.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "Engine.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pydantic.main",
+   "module_short": "pydantic.main",
+   "name": "BaseModel.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pydantic",
+   "module_short": "pydantic",
+   "name": "BaseModel.create_with_rag_tooling"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Generic.create_with_rag_tooling"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.react.dynamic_react_agent.DynamicReactAgent",
+   "module_short": "haive.agents.react.dynamic_react_agent.DynamicReactAgent",
+   "name": "create_with_rag_tooling"
+  }
+ ],
+ "DynamicReactAgent.create_with_tools": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.react.dynamic_react_agent",
+   "module_short": "haive.agents.react.dynamic_react_agent",
+   "name": "DynamicReactAgent.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.react",
+   "module_short": "haive.agents.react",
+   "name": "DynamicReactAgent.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "DynamicReactAgent.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "DynamicReactAgent.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.react.agent",
+   "module_short": "haive.agents.react",
+   "name": "ReactAgent.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.react",
+   "module_short": "haive.agents.react",
+   "name": "ReactAgent.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "ReactAgent.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "ReactAgent.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.simple.agent_v2",
+   "module_short": "haive.agents.simple.agent_v2",
+   "name": "SimpleAgentV2.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.simple",
+   "module_short": "haive.agents.simple",
+   "name": "SimpleAgentV2.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "SimpleAgentV2.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "SimpleAgentV2.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.agent",
+   "module_short": "haive.agents.base.agent",
+   "name": "Agent.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "Agent.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "Agent.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "Agent.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base.base",
+   "module_short": "haive.core.engine.base.base",
+   "name": "InvokableEngine[BaseModel, BaseModel].create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base",
+   "module_short": "haive.core.engine.base",
+   "name": "InvokableEngine[BaseModel, BaseModel].create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core.engine",
+   "name": "InvokableEngine[BaseModel, BaseModel].create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "InvokableEngine[BaseModel, BaseModel].create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "InvokableEngine[BaseModel, BaseModel].create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins.execution_mixin",
+   "module_short": "haive.agents.base.mixins.execution_mixin",
+   "name": "ExecutionMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins",
+   "module_short": "haive.agents.base.mixins",
+   "name": "ExecutionMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "ExecutionMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "ExecutionMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "ExecutionMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins.state_mixin",
+   "module_short": "haive.agents.base.mixins.state_mixin",
+   "name": "StateMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins",
+   "module_short": "haive.agents.base.mixins",
+   "name": "StateMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "StateMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "StateMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "StateMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins.persistence_mixin",
+   "module_short": "haive.agents.base.mixins.persistence_mixin",
+   "name": "PersistenceMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.mixins",
+   "module_short": "haive.agents.base.mixins",
+   "name": "PersistenceMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "PersistenceMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "PersistenceMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "PersistenceMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.serialization_mixin",
+   "module_short": "haive.agents.base.serialization_mixin",
+   "name": "SerializationMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "SerializationMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "SerializationMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "SerializationMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base.agent_structured_output_mixin",
+   "module_short": "haive.agents.base.agent_structured_output_mixin",
+   "name": "StructuredOutputMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents.base",
+   "module_short": "haive.agents.base",
+   "name": "StructuredOutputMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.agents",
+   "module_short": "haive.agents",
+   "name": "StructuredOutputMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "StructuredOutputMixin.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "abc",
+   "module_short": "abc",
+   "name": "ABC.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base.base",
+   "module_short": "haive.core.engine.base.base",
+   "name": "InvokableEngine.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base",
+   "module_short": "haive.core.engine.base",
+   "name": "InvokableEngine.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core.engine",
+   "name": "InvokableEngine.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "InvokableEngine.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "InvokableEngine.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base.base",
+   "module_short": "haive.core.engine.base.base",
+   "name": "Engine.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine.base",
+   "module_short": "haive.core.engine.base",
+   "name": "Engine.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core.engine",
+   "module_short": "haive.core.engine",
+   "name": "Engine.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive.core",
+   "module_short": "haive.core",
+   "name": "Engine.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "haive",
+   "module_short": "haive",
+   "name": "Engine.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pydantic.main",
+   "module_short": "pydantic.main",
+   "name": "BaseModel.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pydantic",
+   "module_short": "pydantic",
+   "name": "BaseModel.create_with_tools"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Generic.create_with_tools"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.react.dynamic_react_agent.DynamicReactAgent",
+   "module_short": "haive.agents.react.dynamic_react_agent.DynamicReactAgent",
+   "name": "create_with_tools"
+  }
+ ],
+ "DynamicToolState": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.agents.react.dynamic_react_agent",
+   "module_short": "haive.agents.react.dynamic_react_agent",
+   "name": "DynamicToolState"
+  }
+ ],
+ "__name__": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "calculator": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "langchain_core.tools.structured",
+   "module_short": "langchain_core.tools",
+   "name": "StructuredTool"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "langchain_core.tools",
+   "module_short": "langchain_core.tools",
+   "name": "StructuredTool"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "langchain_core",
+   "module_short": "langchain_core",
+   "name": "StructuredTool"
+  }
+ ],
+ "contextlib.suppress": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "contextlib",
+   "module_short": "contextlib",
+   "name": "suppress"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "contextlib",
+   "module_short": "contextlib",
+   "name": "AbstractContextManager"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "abc",
+   "module_short": "abc",
+   "name": "ABC"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "contextlib",
+   "module_short": "contextlib",
+   "name": "suppress"
+  }
+ ],
+ "main": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "text_processor": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "langchain_core.tools.structured",
+   "module_short": "langchain_core.tools",
+   "name": "StructuredTool"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "langchain_core.tools",
+   "module_short": "langchain_core.tools",
+   "name": "StructuredTool"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "langchain_core",
+   "module_short": "langchain_core",
+   "name": "StructuredTool"
+  }
+ ],
+ "tool": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "langchain_core.tools",
+   "module_short": "langchain_core.tools",
+   "name": "tool"
+  }
+ ],
+ "tool.name": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "langchain_core.tools.tool",
+   "module_short": "langchain_core.tools.tool",
+   "name": "name"
+  }
+ ]
+}

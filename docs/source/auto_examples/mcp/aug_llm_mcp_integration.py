@@ -1,0 +1,311 @@
+#!/usr/bin/env python3
+"""Example demonstrating MCP integration with AugLLMConfig using the MCPMixin.
+
+This example shows how the MCPMixin can be used to add MCP support to
+AugLLMConfig, enabling automatic tool discovery, resource management,
+and prompt enhancement.
+"""
+
+import asyncio
+import logging
+from pathlib import Path
+
+from haive.core.common.mixins import MCPMixin, ToolRouteMixin
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import LLMConfig
+
+# MCP imports
+from haive.mcp.config import MCPConfig, MCPServerConfig
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
+class MCPAugLLMConfig(MCPMixin, ToolRouteMixin, AugLLMConfig):
+    """AugLLMConfig enhanced with MCP support via mixins.
+
+    This demonstrates how to properly integrate MCP into AugLLMConfig
+    using the mixin pattern, which is the preferred approach in Haive.
+    """
+
+    async def setup(self) -> None:
+        """Setup both AugLLMConfig and MCP integration."""
+        # Initialize MCP
+        await self.setup_mcp()
+
+        # Enhance system prompt with MCP information
+        if hasattr(self, "system_message") and self.system_message:
+            self.system_message = self.enhance_system_prompt_with_mcp(
+                self.system_message
+            )
+
+        # The MCP tools are automatically added via ToolRouteMixin
+        # when _discover_mcp_tools calls add_tool()
+
+        logger.info(f"Setup complete with {len(self.get_mcp_tools())} MCP tools")
+
+
+async def demonstrate_basic_integration():
+    """Basic example of MCP integration with AugLLMConfig."""
+    logger.info("\n=== Basic MCP Integration ===")
+
+    # Create MCP configuration
+    mcp_config = MCPConfig(
+        enabled=True,
+        servers={
+            "filesystem": MCPServerConfig(
+                name="filesystem",
+                transport="stdio",
+                command="npx",
+                args=["-y", "@modelcontextprotocol/server-filesystem"],
+                env={"ALLOWED_PATHS": "/tmp"},
+            )
+        },
+    )
+
+    # Create AugLLMConfig with MCP support
+    config = MCPAugLLMConfig(
+        name="mcp_agent",
+        llm_config=LLMConfig(provider="openai", model="gpt-4o-mini"),
+        system_message="You are a helpful AI assistant.",
+        mcp_config=mcp_config,
+        tools=["calculator"],  # Non-MCP tools can still be added
+        temperature=0.7,
+    )
+
+    # Setup (discovers MCP tools, resources, prompts)
+    await config.setup()
+
+    # Show discovered MCP tools
+    mcp_tools = config.get_mcp_tools()
+    logger.info(f"Discovered {len(mcp_tools)} MCP tools:")
+    for tool in mcp_tools:
+        logger.info(f"  - {tool.name}: {tool.description}")
+
+    # Show tool routes (from ToolRouteMixin)
+    logger.info("\nTool Routes:")
+    for name, route in config.tool_routes.items():
+        metadata = config.get_tool_metadata(name)
+        server = metadata.get("mcp_server", "unknown") if metadata else "unknown"
+        logger.info(f"  - {name} -> {route} (server: {server})")
+
+    # Show MCP resources
+    resources = config.get_mcp_resources()
+    if resources:
+        logger.info(f"\nDiscovered {len(resources)} MCP resources:")
+        for resource in resources:
+            logger.info(f"  - {resource.uri}: {resource.name}")
+
+    # Show enhanced system prompt
+    logger.info("\nEnhanced System Prompt:")
+    logger.info(config.system_message[:200] + "...")
+
+    # Cleanup
+    config.cleanup_mcp()
+
+
+async def demonstrate_dataflow_server():
+    """Example using the custom dataflow MCP server."""
+    logger.info("\n=== Dataflow MCP Server Integration ===")
+
+    # Path to dataflow server
+    server_path = (
+        Path(__file__).parent.parent
+        / "src"
+        / "haive"
+        / "mcp"
+        / "servers"
+        / "dataflow_mcp_server.py"
+    )
+
+    # Create MCP configuration for dataflow server
+    mcp_config = MCPConfig(
+        enabled=True,
+        servers={
+            "dataflow": MCPServerConfig(
+                name="dataflow",
+                transport="stdio",
+                command="python",
+                args=[str(server_path)],
+            )
+        },
+    )
+
+    # Create enhanced config
+    config = MCPAugLLMConfig(
+        name="dataflow_agent",
+        llm_config=LLMConfig(provider="openai", model="gpt-4o-mini"),
+        system_message="You are an AI assistant with access to Haive's dataflow system.",
+        mcp_config=mcp_config,
+    )
+
+    # Setup
+    await config.setup()
+
+    # Show dataflow tools
+    mcp_tools = config.get_mcp_tools()
+    logger.info("Dataflow tools available:")
+    for tool in mcp_tools:
+        if "dataflow" in tool.name:
+            logger.info(f"  - {tool.name}: {tool.description}")
+
+    # Get tools by route
+    mcp_route_tools = config.get_tools_by_route("mcp_tool")
+    logger.info(f"\nTools with 'mcp_tool' route: {len(mcp_route_tools)}")
+
+    # Access a resource (if available)
+    resources = config.get_mcp_resources()
+    if resources:
+        logger.info(f"\nDataflow resources: {len(resources)}")
+        # Could fetch resource content
+        # content = await config.get_mcp_resource_content(resources[0].uri)
+
+    # Cleanup
+    config.cleanup_mcp()
+
+
+async def demonstrate_multiple_servers():
+    """Example with multiple MCP servers."""
+    logger.info("\n=== Multiple MCP Servers ===")
+
+    # Configure multiple servers
+    mcp_config = MCPConfig(
+        enabled=True,
+        servers={
+            "filesystem": MCPServerConfig(
+                name="filesystem",
+                transport="stdio",
+                command="npx",
+                args=["-y", "@modelcontextprotocol/server-filesystem"],
+                env={"ALLOWED_PATHS": "/tmp"},
+            ),
+            "example": MCPServerConfig(
+                name="example",
+                transport="stdio",
+                command="python",
+                args=[
+                    str(
+                        Path(__file__).parent.parent
+                        / "src"
+                        / "haive"
+                        / "mcp"
+                        / "servers"
+                        / "example_server_fastmcp.py"
+                    )
+                ],
+            ),
+        },
+    )
+
+    # Create config
+    config = MCPAugLLMConfig(
+        name="multi_server_agent",
+        llm_config=LLMConfig(provider="openai", model="gpt-4o-mini"),
+        system_message="You are an AI assistant with access to multiple MCP servers.",
+        mcp_config=mcp_config,
+        auto_discover_mcp_tools=True,
+        inject_mcp_resources=True,
+        use_mcp_prompts=True,
+    )
+
+    # Setup
+    await config.setup()
+
+    # Group tools by server
+    tools_by_server: dict[str, list] = {}
+    for tool in config.get_mcp_tools():
+        server = tool.name.split("_")[0]
+        if server not in tools_by_server:
+            tools_by_server[server] = []
+        tools_by_server[server].append(tool)
+
+    logger.info("Tools by server:")
+    for server, tools in tools_by_server.items():
+        logger.info(f"\n{server} server ({len(tools)} tools):")
+        for tool in tools[:3]:  # Show first 3
+            logger.info(f"  - {tool.name}")
+
+    # Show prompts if any
+    prompts = config.get_mcp_prompts()
+    if prompts:
+        logger.info(f"\nMCP Prompts available: {len(prompts)}")
+        for name, prompt in list(prompts.items())[:3]:
+            logger.info(f"  - {name}: {prompt.description}")
+
+    # Cleanup
+    config.cleanup_mcp()
+
+
+async def demonstrate_prompt_usage():
+    """Example using MCP prompts."""
+    logger.info("\n=== MCP Prompt Usage ===")
+
+    # Use example server with prompts
+    mcp_config = MCPConfig(
+        enabled=True,
+        servers={
+            "example": MCPServerConfig(
+                name="example",
+                transport="stdio",
+                command="python",
+                args=[
+                    str(
+                        Path(__file__).parent.parent
+                        / "src"
+                        / "haive"
+                        / "mcp"
+                        / "servers"
+                        / "example_server_fastmcp.py"
+                    )
+                ],
+            )
+        },
+    )
+
+    config = MCPAugLLMConfig(
+        name="prompt_agent",
+        llm_config=LLMConfig(provider="openai", model="gpt-4o-mini"),
+        mcp_config=mcp_config,
+    )
+
+    await config.setup()
+
+    # List available prompts
+    prompts = config.get_mcp_prompts()
+    if prompts:
+        logger.info(f"Available prompts: {list(prompts.keys())}")
+
+        # Try to call a prompt
+        try:
+            messages = await config.call_mcp_prompt(
+                "code_review_prompt",
+                arguments={
+                    "code": "def add(a, b):\n    return a + b",
+                    "language": "python",
+                },
+            )
+            logger.info("\nGenerated prompt messages:")
+            for msg in messages:
+                logger.info(f"  [{msg['role']}]: {msg['content'][:100]}...")
+        except Exception as e:
+            logger.error(f"Error calling prompt: {e}")
+
+    config.cleanup_mcp()
+
+
+async def main():
+    """Run all demonstration examples."""
+    logger.info("=== MCP Integration with AugLLMConfig Examples ===")
+
+    # Run examples
+    await demonstrate_basic_integration()
+    await demonstrate_dataflow_server()
+    await demonstrate_multiple_servers()
+    await demonstrate_prompt_usage()
+
+    logger.info("\n=== Examples Complete ===")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

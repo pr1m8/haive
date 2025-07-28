@@ -1,0 +1,68 @@
+[
+  {
+    "page": "homepage",
+    "url": "http://localhost:8004/",
+    "error": "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8004/\nCall log:\n  - navigating to \"http://localhost:8004/\", waiting until \"networkidle\"\n",
+    "timestamp": "2025-07-26T00:17:18.558973"
+  },
+  {
+    "page": "agents_index",
+    "url": "http://localhost:8004/agents/index.html",
+    "error": "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8004/agents/index.html\nCall log:\n  - navigating to \"http://localhost:8004/agents/index.html\", waiting until \"networkidle\"\n",
+    "timestamp": "2025-07-26T00:17:18.607186"
+  },
+  {
+    "page": "simple_agent",
+    "url": "http://localhost:8004/agents/simple.html",
+    "error": "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8004/agents/simple.html\nCall log:\n  - navigating to \"http://localhost:8004/agents/simple.html\", waiting until \"networkidle\"\n",
+    "timestamp": "2025-07-26T00:17:18.625567"
+  },
+  {
+    "page": "react_agent",
+    "url": "http://localhost:8004/agents/react.html",
+    "error": "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8004/agents/react.html\nCall log:\n  - navigating to \"http://localhost:8004/agents/react.html\", waiting until \"networkidle\"\n",
+    "timestamp": "2025-07-26T00:17:18.641245"
+  },
+  {
+    "page": "games_index",
+    "url": "http://localhost:8004/games/index.html",
+    "error": "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8004/games/index.html\nCall log:\n  - navigating to \"http://localhost:8004/games/index.html\", waiting until \"networkidle\"\n",
+    "timestamp": "2025-07-26T00:17:18.662011"
+  },
+  {
+    "page": "gallery",
+    "url": "http://localhost:8004/gallery.html",
+    "error": "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8004/gallery.html\nCall log:\n  - navigating to \"http://localhost:8004/gallery.html\", waiting until \"networkidle\"\n",
+    "timestamp": "2025-07-26T00:17:18.674735"
+  },
+  {
+    "page": "api_index",
+    "url": "http://localhost:8004/api/index.html",
+    "error": "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8004/api/index.html\nCall log:\n  - navigating to \"http://localhost:8004/api/index.html\", waiting until \"networkidle\"\n",
+    "timestamp": "2025-07-26T00:17:18.685823"
+  },
+  {
+    "page": "api_agents",
+    "url": "http://localhost:8004/api/haive.agents.html",
+    "error": "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8004/api/haive.agents.html\nCall log:\n  - navigating to \"http://localhost:8004/api/haive.agents.html\", waiting until \"networkidle\"\n",
+    "timestamp": "2025-07-26T00:17:18.697936"
+  },
+  {
+    "page": "api_core",
+    "url": "http://localhost:8004/api/haive.core.html",
+    "error": "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8004/api/haive.core.html\nCall log:\n  - navigating to \"http://localhost:8004/api/haive.core.html\", waiting until \"networkidle\"\n",
+    "timestamp": "2025-07-26T00:17:18.713624"
+  },
+  {
+    "page": "examples",
+    "url": "http://localhost:8004/examples/index.html",
+    "error": "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8004/examples/index.html\nCall log:\n  - navigating to \"http://localhost:8004/examples/index.html\", waiting until \"networkidle\"\n",
+    "timestamp": "2025-07-26T00:17:18.722049"
+  },
+  {
+    "page": "getting_started",
+    "url": "http://localhost:8004/getting_started.html",
+    "error": "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8004/getting_started.html\nCall log:\n  - navigating to \"http://localhost:8004/getting_started.html\", waiting until \"networkidle\"\n",
+    "timestamp": "2025-07-26T00:17:18.732028"
+  }
+]
