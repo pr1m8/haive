@@ -326,6 +326,7 @@ pyspy = "^0.1.1"
 heartrate = "^0.2.2"
 pdbp = "^1.7.1"
 birdseye = "^0.9.5"
+dead = "^2.1.0"
 
 
 [tool.poetry.group.docs]
