@@ -9,18 +9,20 @@ This implementation creates a sophisticated LLM Compiler that:
 """
 
 import asyncio
-import logging
 from dataclasses import dataclass
 from enum import Enum
+import logging
 from typing import Any
+
+from langchain_core.tools import tool
+from pydantic import BaseModel, Field, computed_field, field_validator
 
 from haive.agents.base.agent import Agent
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.prebuilt.messages_state import MessagesState
-from langchain_core.tools import tool
-from pydantic import BaseModel, Field, computed_field, field_validator
+
 
 logger = logging.getLogger(__name__)
 
@@ -312,7 +314,7 @@ class EnhancedLLMCompiler(Agent):
         """Setup compiler and execution agents."""
         # Create compiler with structured output
         self.compiler_agent = SimpleAgent(
-            name=f"{self.name}_compiler",
+            name=f"{self.name}_compilef",
             engine=self.engine.model_copy(
                 update={
                     "structured_output_model": CompiledGraph,
@@ -325,20 +327,20 @@ class EnhancedLLMCompiler(Agent):
         # Create executor agents for different node types
         self.executor_agents = {
             NodeType.TOOL_CALL: ReactAgent(
-                name=f"{self.name}_tool_executor",
+                name=f"{self.name}_tool_executof",
                 engine=self.engine.model_copy(update={"temperature": 0.1}),
                 tools=self._get_available_tools(),
             ),
             NodeType.LLM_REASONING: SimpleAgent(
-                name=f"{self.name}_reasoning_executor",
+                name=f"{self.name}_reasoning_executof",
                 engine=self.engine.model_copy(update={"temperature": 0.7}),
             ),
             NodeType.DATA_TRANSFORM: SimpleAgent(
-                name=f"{self.name}_transform_executor",
+                name=f"{self.name}_transform_executof",
                 engine=self.engine.model_copy(update={"temperature": 0.1}),
             ),
             NodeType.FINAL_OUTPUT: SimpleAgent(
-                name=f"{self.name}_output_executor",
+                name=f"{self.name}_output_executof",
                 engine=self.engine.model_copy(
                     update={
                         "structured_output_model": CompilerOutput,
@@ -350,7 +352,7 @@ class EnhancedLLMCompiler(Agent):
 
         # Create orchestrator
         self.orchestrator_agent = SimpleAgent(
-            name=f"{self.name}_orchestrator",
+            name=f"{self.name}_orchestratof",
             engine=self.engine.model_copy(
                 update={
                     "system_message": "You are an execution orchestrator. Coordinate parallel execution and handle errors."
@@ -675,6 +677,7 @@ async def test_enhanced_llm_compiler():
     )
 
     if result.get("status") == "completed":
+        pass
     else:
         pass
 

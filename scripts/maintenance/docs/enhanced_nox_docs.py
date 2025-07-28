@@ -98,8 +98,12 @@ def run_sphinx_build(session, cmd, operation, log_file):
             status["success"] = True
             session.log(f"✅ {operation} completed successfully!")
         elif status["output_exists"]:
-            session.log(f"⚠️  {operation} completed with issues but documentation was built!")
-            session.log(f"📊 Found {status['warnings']} warnings, {status['errors']} errors")
+            session.log(
+                f"⚠️  {operation} completed with issues but documentation was built!"
+            )
+            session.log(
+                f"📊 Found {status['warnings']} warnings, {status['errors']} errors"
+            )
         else:
             session.log(f"❌ {operation} failed - no output generated")
 
@@ -131,13 +135,21 @@ def docs_enhanced(session):
     # Pre-build syntax check
     session.log("🔍 Running pre-build syntax check...")
     try:
-        session.run("poetry", "run", "python", "pre_build_syntax_check.py", external=True)
+        session.run(
+            "poetry", "run", "python", "pre_build_syntax_check.py", external=True
+        )
         session.log("✅ Pre-build syntax check passed")
     except Exception as e:
         session.log(f"⚠️  Pre-build syntax check found issues: {e}")
         session.log("🔧 Running automatic syntax fixes...")
         try:
-            session.run("poetry", "run", "python", "fix_critical_syntax_errors.py", external=True)
+            session.run(
+                "poetry",
+                "run",
+                "python",
+                "fix_critical_syntax_errors.py",
+                external=True,
+            )
             session.log("✅ Applied automatic syntax fixes")
         except Exception:
             session.log("⚠️  Some syntax fixes failed - continuing with build")

@@ -58,9 +58,6 @@ def fix_logging_imports():
 
             fixed_count += 1
         else:
-            passh}")
-
-
-
+            pass
 if __name__ == "__main__":
     fix_logging_imports()

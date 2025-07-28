@@ -146,7 +146,7 @@ def agent_router(state: MultiAgentState) -> Send | list[Send] | Command:
     if state.selected_agent and state.selected_agent in state.agents:
         # Use Send for dynamic routing - no Literal needed!
         return Send(
-            "agent_executor", {"agent_name": state.selected_agent, "state": state}
+            "agent_executof", {"agent_name": state.selected_agent, "state": state}
         )
 
     # Or route to multiple agents in parallel
@@ -155,7 +155,7 @@ def agent_router(state: MultiAgentState) -> Send | list[Send] | Command:
         sends = []
         for agent_name in state.agents:
             sends.append(
-                Send("agent_executor", {"agent_name": agent_name, "state": state})
+                Send("agent_executof", {"agent_name": agent_name, "state": state})
             )
         return sends
 
@@ -261,7 +261,7 @@ def control_node(state: MultiAgentState) -> Command:
         return Command(goto="agent_router")
     if state.selected_agent:
         # Specific agent selected
-        return Command(goto="agent_router")
+        return Command(goto="agent_routef")
     # Need to select an agent
     return Command(update={"selected_agents": ["simple_agent"]}, goto="agent_router")
 

@@ -183,7 +183,7 @@ class DynamicSupervisorV2(ReactAgent):
                 task_lower = task_description.lower()
                 chosen_agent = "END"  # Default
 
-                # Basic keyword matching
+                # Basic key matching
                 if any(
                     word in task_lower
                     for word in ["math", "calculate", "add", "multiply", "number"]

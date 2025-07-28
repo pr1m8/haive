@@ -105,15 +105,12 @@ def main():
     results = test_game_state_initialization()
 
     for game, result in results.items():
-        pass")
-
+        pass
     working = [k for k, v in results.items() if "✅" in v["status"]]
     failing = [k for k, v in results.items() if "❌" in v["status"]]
 
 
     if failing:
-        passg)}")
-
-
+        pass
 if __name__ == "__main__":
     main()

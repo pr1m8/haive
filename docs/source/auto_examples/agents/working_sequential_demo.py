@@ -19,8 +19,8 @@ class FinalReport(BaseModel):
 
     title: str = Field(description="Report title")
     analysis_summary: str = Field(description="Summary of the analysis")
-    key_findings: List[str] = Field(description="Top 3-5 key findings")
-    recommendations: List[str] = Field(description="Actionable recommendations")
+    key_findings: list[str] = Field(description="Top 3-5 key findings")
+    recommendations: list[str] = Field(description="Actionable recommendations")
     confidence_score: float = Field(ge=0.0, le=1.0, description="Overall confidence")
 
 

@@ -49,7 +49,7 @@ try:
 
     if html_files:
     else:
-        pass")
+        print("pass")
 
 except Exception as e:
-    pass")
+    print("pass")

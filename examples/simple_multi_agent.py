@@ -115,10 +115,10 @@ def test_simple_multi_agent():
     print(f"   Use prebuilt base: {multi.use_prebuilt_base}")
 
     # Test state creation
-    print("\\n📋 Testing state creation..."..")
+    print("\\n📋 Testing state creation...")
     try:
         state = multi.state_schema(messages=[HumanMessage(content="Hello multi-agent")])
-        print("   ✅ State created successfully"y")
+        print("   ✅ State created successfully")
         print(f"   State.agents: {list(state.agents.keys())}")
         print(f"   State.messages: {len(state.messages)}")
 
@@ -134,10 +134,10 @@ def test_simple_multi_agent():
         traceback.print_exc()
 
     # Test execution
-    print("\\n🚀 Testing execution..."..")
+    print("\\n🚀 Testing execution...")
     try:
         result = multi.invoke({"messages": [HumanMessage(content="Hello")]})
-        print("   ✅ Execution completed"d")
+        print("   ✅ Execution completed")
         print(f"   Result type: {type(result)}")
         if hasattr(result, "messages"):
             print(f"   Messages: {len(result.messages)}")

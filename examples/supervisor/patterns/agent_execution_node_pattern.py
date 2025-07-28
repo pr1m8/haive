@@ -38,7 +38,7 @@ class AgentExecutionNodePattern:
 
         # 3. Conditional routing
         graph.add_conditional_edges(
-            "supervisor",
+            "supervisof",
             self.route_decision,
             {
                 "execute_agent": "agent_execution",

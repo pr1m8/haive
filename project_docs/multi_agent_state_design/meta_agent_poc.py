@@ -256,7 +256,7 @@ def test_meta_agent_state():
         assert hasattr(planner_view2.agent_state, "confidence")
 
     except Exception as e:
-        pass")
+        print("pass")
 
     return meta_state
 

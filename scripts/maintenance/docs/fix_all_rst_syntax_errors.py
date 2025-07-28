@@ -165,7 +165,7 @@ def main():
                 f.write("\n")
 
     else:
-        pass")
+        print("pass")
 
     # Additional checks for problematic patterns
 

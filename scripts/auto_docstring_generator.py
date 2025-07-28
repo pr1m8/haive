@@ -492,15 +492,11 @@ def main():
 
     if target.is_file():
         if generator.process_file(target, args.dry_run):
-            pass")
-    elif target.is_dir():
+            pass
         files = list(target.rglob("*.py"))
         for file in files:
             if "__pycache__" not in str(file):
                 if generator.process_file(file, args.dry_run):
-                    pass")
-
-
-
+                    pass
 if __name__ == "__main__":
     main()

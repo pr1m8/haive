@@ -131,15 +131,15 @@ class DocumentationAnalyzer:
     def __init__(self, module_path: Path):
         """Initialize analyzer with module path."""
         self.module_path = module_path
-        self.classes: List[str] = []
-        self.functions: List[str] = []
-        self.imports: List[str] = []
-        self.constants: List[str] = []
+        self.classes: list[str] = []
+        self.functions: list[str] = []
+        self.imports: list[str] = []
+        self.constants: list[str] = []
 
-    def analyze_module(self) -> Dict[str, any]:
+    def analyze_module(self) -> dict[str, any]:
         """Analyze module and extract components."""
         try:
-            with open(self.module_path, "r", encoding="utf-8") as f:
+            with open(self.module_path, encoding="utf-8") as f:
                 content = f.read()
 
             tree = ast.parse(content)
@@ -177,7 +177,7 @@ class DocumentationAnalyzer:
             return {}
 
 
-def generate_module_docstring(module_path: Path, analysis: Dict) -> str:
+def generate_module_docstring(module_path: Path, analysis: dict) -> str:
     """Generate intelligent module docstring based on analysis."""
 
     # Extract module information
@@ -232,7 +232,7 @@ def generate_module_docstring(module_path: Path, analysis: Dict) -> str:
     )
 
 
-def generate_all_exports(analysis: Dict) -> List[str]:
+def generate_all_exports(analysis: dict) -> list[str]:
     """Generate __all__ exports based on analysis."""
     exports = []
 
@@ -258,7 +258,7 @@ def add_missing_all_exports(init_file: Path) -> bool:
     try:
         # Read current content
         if init_file.exists():
-            with open(init_file, "r", encoding="utf-8") as f:
+            with open(init_file, encoding="utf-8") as f:
                 content = f.read()
         else:
             content = ""
@@ -300,7 +300,7 @@ def add_missing_module_docstring(py_file: Path) -> bool:
     """Add missing module docstring to Python file."""
     try:
         # Read current content
-        with open(py_file, "r", encoding="utf-8") as f:
+        with open(py_file, encoding="utf-8") as f:
             content = f.read()
 
         # Check if docstring already exists

@@ -1,0 +1,56 @@
+{
+ "Optional": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Optional"
+  }
+ ],
+ "__name__": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "json.loads": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "json",
+   "module_short": "json",
+   "name": "loads"
+  }
+ ],
+ "requests.delete": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "requests",
+   "module_short": "requests",
+   "name": "delete"
+  }
+ ],
+ "requests.get": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "requests",
+   "module_short": "requests",
+   "name": "get"
+  }
+ ],
+ "requests.post": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "requests",
+   "module_short": "requests",
+   "name": "post"
+  }
+ ]
+}

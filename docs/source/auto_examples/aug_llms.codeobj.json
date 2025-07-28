@@ -1,0 +1,74 @@
+{
+ "AugLLMConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.core.engine.aug_llm",
+   "module_short": "haive.core.engine.aug_llm",
+   "name": "AugLLMConfig"
+  }
+ ],
+ "AzureLLMConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.core.models.llm.base",
+   "module_short": "haive.core.models.llm.base",
+   "name": "AzureLLMConfig"
+  }
+ ],
+ "ChatPromptTemplate": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "langchain.prompts",
+   "module_short": "langchain.prompts",
+   "name": "ChatPromptTemplate"
+  }
+ ],
+ "ChatPromptTemplate.from_messages": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "langchain.prompts.ChatPromptTemplate",
+   "module_short": "langchain.prompts.ChatPromptTemplate",
+   "name": "from_messages"
+  }
+ ],
+ "ChessAnalysis": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.models",
+   "module_short": "haive.games.chess.models",
+   "name": "ChessAnalysis"
+  }
+ ],
+ "ChessPlayerDecision": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.models",
+   "module_short": "haive.games.chess.models",
+   "name": "ChessPlayerDecision"
+  }
+ ],
+ "DeepSeekLLMConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.core.models.llm.base",
+   "module_short": "haive.core.models.llm.base",
+   "name": "DeepSeekLLMConfig"
+  }
+ ],
+ "LLMConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.core.models.llm.base",
+   "module_short": "haive.core.models.llm.base",
+   "name": "LLMConfig"
+  }
+ ]
+}

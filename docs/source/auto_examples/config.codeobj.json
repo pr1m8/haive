@@ -1,0 +1,92 @@
+{
+ "Any": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Any"
+  }
+ ],
+ "BaseGameConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.core.config",
+   "module_short": "haive.games.core.config",
+   "name": "BaseGameConfig"
+  }
+ ],
+ "ChessState": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.state",
+   "module_short": "haive.games.chess.state",
+   "name": "ChessState"
+  }
+ ],
+ "Field": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pydantic",
+   "module_short": "pydantic",
+   "name": "Field"
+  }
+ ],
+ "GamePlayerRole": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.core.config",
+   "module_short": "haive.games.core.config",
+   "name": "GamePlayerRole"
+  }
+ ],
+ "PlayerAgentConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.core.agent.player_agent",
+   "module_short": "haive.games.core.agent.player_agent",
+   "name": "PlayerAgentConfig"
+  }
+ ],
+ "RecursionConfig.configure_runnable": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.utils.recursion_config.RecursionConfig",
+   "module_short": "haive.games.utils.recursion_config.RecursionConfig",
+   "name": "configure_runnable"
+  }
+ ],
+ "build_chess_aug_llms": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.engines",
+   "module_short": "haive.games.chess.engines",
+   "name": "build_chess_aug_llms"
+  }
+ ],
+ "create_generic_chess_engines": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.generic_engines",
+   "module_short": "haive.games.chess.generic_engines",
+   "name": "create_generic_chess_engines"
+  }
+ ],
+ "model_validator": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pydantic",
+   "module_short": "pydantic",
+   "name": "model_validator"
+  }
+ ]
+}

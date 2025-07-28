@@ -1,6 +1,6 @@
 """Demo of enhanced tool management with validation routing."""
 
-from typing import Any, Dict, List
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -88,7 +88,7 @@ def demonstrate_routing_decisions(routing_state: ValidationRoutingState):
     # Get routing decision data
     decision_data = routing_state.get_routing_decision()
 
-    print("📊 Validation Summary:"y:")
+    print("📊 Validation Summary:")
     print(f"   • Total tools: {decision_data['total_count']}")
     print(f"   • Valid: {decision_data['valid_count']}")
     print(f"   • Invalid: {decision_data['invalid_count']}")
@@ -99,7 +99,7 @@ def demonstrate_routing_decisions(routing_state: ValidationRoutingState):
     print(f"🎯 Target Nodes: {decision_data['target_nodes']}")
 
     # Demonstrate conditional branching logic
-    print("\n🔀 Conditional Branching:"g:")
+    print("\n🔀 Conditional Branching:")
     print(
         f"   • Should continue execution: {routing_state.should_continue_execution()}"
     )
@@ -227,7 +227,7 @@ def demonstrate_conditional_branching(state: dict[str, Any]):
         print("   → REASON: Unexpected state")
 
     # Show available branch conditions for complex routing
-    print("\n📋 Available Branch Conditions:"s:")
+    print("\n📋 Available Branch Conditions:")
     for key, value in routing_data.items():
         print(f"   • {key}: {value}")
 

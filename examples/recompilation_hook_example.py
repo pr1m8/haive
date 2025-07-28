@@ -236,7 +236,7 @@ def demonstrate_recompilation_hooks():
 
     # Add multiple tools
     agent2.add_tool("search", lambda q: f"results for {q}", "search_route")
-    agent1.add_tool("analyzer", lambda d: {"analysis": d}, "analyze_route")
+    agent1.add_tool("analyzef", lambda d: {"analysis": d}, "analyze_route")
 
     # Get compilation info
     info = graph.get_compilation_info()

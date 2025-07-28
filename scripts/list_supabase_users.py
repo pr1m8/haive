@@ -3,11 +3,10 @@
 
 import asyncio
 import os
-import sys
-from datetime import datetime
 
 import asyncpg
 from dotenv import load_dotenv
+
 
 # Load environment variables
 load_dotenv()
@@ -15,7 +14,6 @@ load_dotenv()
 
 async def list_supabase_users():
     """List all users from auth.users table."""
-
     # Get database URL
     database_url = (
         os.getenv("DATABASE_URL")

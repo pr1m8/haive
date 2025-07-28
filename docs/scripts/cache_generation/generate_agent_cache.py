@@ -22,13 +22,13 @@ class AgentExecutionCapture:
     """Captures comprehensive execution data from agent runs."""
     
     def __init__(self):
-        self.execution_trace: List[Dict[str, Any]] = []
-        self.state_history: List[Dict[str, Any]] = []
-        self.graph_data: Dict[str, Any] = {}
-        self.visualization_data: Dict[str, Any] = {}
-        self.streaming_events: List[Dict[str, Any]] = []
-        self.start_time: Optional[datetime] = None
-        self.end_time: Optional[datetime] = None
+        self.execution_trace: list[dict[str, Any]] = []
+        self.state_history: list[dict[str, Any]] = []
+        self.graph_data: dict[str, Any] = {}
+        self.visualization_data: dict[str, Any] = {}
+        self.streaming_events: list[dict[str, Any]] = []
+        self.start_time: datetime | None = None
+        self.end_time: datetime | None = None
         
     def start_capture(self):
         """Start capturing execution data."""
@@ -41,7 +41,7 @@ class AgentExecutionCapture:
         duration = (self.end_time - self.start_time).total_seconds()
         logger.info(f"🎬 Finished agent execution capture. Duration: {duration:.2f}s")
         
-    def capture_stream_event(self, event: Dict[str, Any]):
+    def capture_stream_event(self, event: dict[str, Any]):
         """Capture a streaming event."""
         timestamp = datetime.now().isoformat()
         event_data = {
@@ -72,7 +72,7 @@ class AgentExecutionCapture:
                 "output": event.get("data", {}).get("output", {})
             })
             
-    def capture_state_update(self, state: Dict[str, Any]):
+    def capture_state_update(self, state: dict[str, Any]):
         """Capture state update."""
         timestamp = datetime.now().isoformat()
         state_snapshot = {
@@ -82,15 +82,15 @@ class AgentExecutionCapture:
         }
         self.state_history.append(state_snapshot)
         
-    def capture_graph_data(self, graph_info: Dict[str, Any]):
+    def capture_graph_data(self, graph_info: dict[str, Any]):
         """Capture graph structure and visualization data."""
         self.graph_data = graph_info
         
-    def capture_visualization_data(self, viz_data: Dict[str, Any]):
+    def capture_visualization_data(self, viz_data: dict[str, Any]):
         """Capture visualization data from agent methods."""
         self.visualization_data.update(viz_data)
         
-    def get_summary(self) -> Dict[str, Any]:
+    def get_summary(self) -> dict[str, Any]:
         """Get execution summary."""
         duration = None
         if self.start_time and self.end_time:
@@ -113,7 +113,7 @@ class AgentExecutionCapture:
         }
 
 
-async def run_simple_agent_with_streaming(input_text: str) -> Dict[str, Any]:
+async def run_simple_agent_with_streaming(input_text: str) -> dict[str, Any]:
     """
     Run SimpleAgent with comprehensive streaming capture.
     
@@ -183,7 +183,7 @@ async def run_simple_agent_with_streaming(input_text: str) -> Dict[str, Any]:
                 agent.arun(input_text) if hasattr(agent, 'arun') else asyncio.to_thread(agent.run, input_text),
                 timeout=120.0  # 2 minute timeout
             )
-        except asyncio.TimeoutError:
+        except TimeoutError:
             logger.error("Agent execution timed out after 2 minutes")
             response = "Agent execution timed out - this would be a real response in production"
         except Exception as e:
@@ -252,7 +252,7 @@ async def run_simple_agent_with_streaming(input_text: str) -> Dict[str, Any]:
         return result
 
 
-async def run_react_agent_with_streaming(input_text: str) -> Dict[str, Any]:
+async def run_react_agent_with_streaming(input_text: str) -> dict[str, Any]:
     """
     Run ReactAgent with comprehensive streaming capture and tool calls.
     

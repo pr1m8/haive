@@ -1,0 +1,182 @@
+{
+ "Any": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Any"
+  }
+ ],
+ "BackgroundTasks": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "fastapi",
+   "module_short": "fastapi",
+   "name": "BackgroundTasks"
+  }
+ ],
+ "BaseModel": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pydantic",
+   "module_short": "pydantic",
+   "name": "BaseModel"
+  }
+ ],
+ "ChessAgent": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.agent",
+   "module_short": "haive.games.chess.agent",
+   "name": "ChessAgent"
+  }
+ ],
+ "ChessConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.config",
+   "module_short": "haive.games.chess.config",
+   "name": "ChessConfig"
+  }
+ ],
+ "ChessState": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.state",
+   "module_short": "haive.games.chess.state",
+   "name": "ChessState"
+  }
+ ],
+ "Dict": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Dict"
+  }
+ ],
+ "FastAPI": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "fastapi",
+   "module_short": "fastapi",
+   "name": "FastAPI"
+  }
+ ],
+ "Field": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pydantic",
+   "module_short": "pydantic",
+   "name": "Field"
+  }
+ ],
+ "HTTPException": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "fastapi",
+   "module_short": "fastapi",
+   "name": "HTTPException"
+  }
+ ],
+ "List": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "List"
+  }
+ ],
+ "Optional": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Optional"
+  }
+ ],
+ "StreamingResponse": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "fastapi.responses",
+   "module_short": "fastapi.responses",
+   "name": "StreamingResponse"
+  }
+ ],
+ "__name__": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "create_chess_engines_simple": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.llm_utils",
+   "module_short": "haive.games.chess.llm_utils",
+   "name": "create_chess_engines_simple"
+  }
+ ],
+ "datetime.utcnow": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "datetime.datetime",
+   "module_short": "datetime.datetime",
+   "name": "utcnow"
+  }
+ ],
+ "get_available_chess_providers": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.llm_utils",
+   "module_short": "haive.games.chess.llm_utils",
+   "name": "get_available_chess_providers"
+  }
+ ],
+ "json.dumps": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "json",
+   "module_short": "json",
+   "name": "dumps"
+  }
+ ],
+ "uuid.uuid4": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "uuid",
+   "module_short": "uuid",
+   "name": "uuid4"
+  }
+ ],
+ "uvicorn.run": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "uvicorn",
+   "module_short": "uvicorn",
+   "name": "run"
+  }
+ ]
+}

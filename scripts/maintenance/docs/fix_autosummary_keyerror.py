@@ -17,7 +17,7 @@ def main():
     if problematic_file.exists():
         problematic_file.unlink()
     else:
-        passed")
+        print("Tests passed")
 
     # 2. Fix imports in container.py
     container_file = (

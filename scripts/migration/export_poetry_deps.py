@@ -1,9 +1,10 @@
 import logging
-import sys
 from pathlib import Path
+import sys
 from typing import Any
 
 import toml
+
 
 logger = logging.getLogger(__name__)
 

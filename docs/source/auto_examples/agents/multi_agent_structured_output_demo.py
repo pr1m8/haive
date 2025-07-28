@@ -34,9 +34,9 @@ class MarketAnalysis(BaseModel):
     market_name: str = Field(description="Name of the market analyzed")
     market_size: str = Field(description="Current market size")
     growth_rate: float = Field(description="Annual growth rate percentage")
-    key_players: List[str] = Field(description="Major companies in the market")
-    opportunities: List[str] = Field(description="Market opportunities")
-    risks: List[str] = Field(description="Market risks")
+    key_players: list[str] = Field(description="Major companies in the market")
+    opportunities: list[str] = Field(description="Market opportunities")
+    risks: list[str] = Field(description="Market risks")
     recommendation: str = Field(description="Investment recommendation")
     confidence: float = Field(ge=0.0, le=1.0, description="Confidence in analysis")
 

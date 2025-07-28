@@ -6,15 +6,13 @@ using various tools and packages.
 """
 
 import ast
-import logging
-import re
-import subprocess
-import sys
 from dataclasses import dataclass
+import logging
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any
 
 import click
+
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -31,7 +29,7 @@ class AutomationSolution:
     tool_command: str
     install_command: str
     confidence: float  # 0.0-1.0
-    applies_to: List[str]  # File patterns
+    applies_to: list[str]  # File patterns
     estimated_fixes: int
     notes: str
 
@@ -44,7 +42,7 @@ class DocumentationAutomationFinder:
         self.solutions = self._initialize_solutions()
         self.issues_found = {}
 
-    def _initialize_solutions(self) -> List[AutomationSolution]:
+    def _initialize_solutions(self) -> list[AutomationSolution]:
         """Initialize available automation solutions."""
         return [
             # Docstring Generation
@@ -198,7 +196,7 @@ class DocumentationAutomationFinder:
             ),
         ]
 
-    def analyze_codebase(self) -> Dict[str, Any]:
+    def analyze_codebase(self) -> dict[str, Any]:
         """Analyze codebase to categorize documentation issues."""
         analysis = {
             "missing_docstrings": self._find_missing_docstrings(),
@@ -210,7 +208,7 @@ class DocumentationAutomationFinder:
 
         return analysis
 
-    def _find_missing_docstrings(self) -> Dict[str, int]:
+    def _find_missing_docstrings(self) -> dict[str, int]:
         """Find files with missing docstrings."""
         stats = {
             "modules_missing": 0,
@@ -224,7 +222,7 @@ class DocumentationAutomationFinder:
                 continue
 
             try:
-                with open(py_file, "r", encoding="utf-8") as f:
+                with open(py_file, encoding="utf-8") as f:
                     tree = ast.parse(f.read())
 
                 # Check module docstring
@@ -247,7 +245,7 @@ class DocumentationAutomationFinder:
 
         return stats
 
-    def _find_poor_type_hints(self) -> Dict[str, int]:
+    def _find_poor_type_hints(self) -> dict[str, int]:
         """Find functions without proper type hints."""
         stats = {"no_return_type": 0, "no_param_types": 0, "any_types": 0}
 
@@ -256,7 +254,7 @@ class DocumentationAutomationFinder:
                 continue
 
             try:
-                with open(py_file, "r", encoding="utf-8") as f:
+                with open(py_file, encoding="utf-8") as f:
                     content = f.read()
                     tree = ast.parse(content)
 
@@ -280,7 +278,7 @@ class DocumentationAutomationFinder:
 
         return stats
 
-    def _find_formatting_issues(self) -> Dict[str, int]:
+    def _find_formatting_issues(self) -> dict[str, int]:
         """Find code formatting issues."""
         stats = {
             "long_lines": 0,
@@ -293,7 +291,7 @@ class DocumentationAutomationFinder:
                 continue
 
             try:
-                with open(py_file, "r", encoding="utf-8") as f:
+                with open(py_file, encoding="utf-8") as f:
                     lines = f.readlines()
 
                 for line in lines:
@@ -310,7 +308,7 @@ class DocumentationAutomationFinder:
 
         return stats
 
-    def _find_import_issues(self) -> Dict[str, int]:
+    def _find_import_issues(self) -> dict[str, int]:
         """Find import-related issues."""
         stats = {"unused_imports": 0, "star_imports": 0, "relative_imports": 0}
 
@@ -319,7 +317,7 @@ class DocumentationAutomationFinder:
                 continue
 
             try:
-                with open(py_file, "r", encoding="utf-8") as f:
+                with open(py_file, encoding="utf-8") as f:
                     content = f.read()
                     tree = ast.parse(content)
 
@@ -369,8 +367,8 @@ class DocumentationAutomationFinder:
         return False
 
     def recommend_solutions(
-        self, analysis: Dict[str, Any]
-    ) -> List[Tuple[AutomationSolution, int]]:
+        self, analysis: dict[str, Any]
+    ) -> list[tuple[AutomationSolution, int]]:
         """Recommend solutions based on analysis."""
         recommendations = []
 
@@ -386,7 +384,7 @@ class DocumentationAutomationFinder:
         return recommendations
 
     def _calculate_impact(
-        self, solution: AutomationSolution, analysis: Dict[str, Any]
+        self, solution: AutomationSolution, analysis: dict[str, Any]
     ) -> int:
         """Calculate estimated impact of a solution."""
         if solution.category == "docstring_generation":
@@ -396,19 +394,19 @@ class DocumentationAutomationFinder:
                 + analysis["missing_docstrings"]["functions_missing"]
             )
 
-        elif solution.category == "type_annotation":
+        if solution.category == "type_annotation":
             return (
                 analysis["poor_type_hints"]["no_return_type"]
                 + analysis["poor_type_hints"]["no_param_types"]
             )
 
-        elif solution.category == "code_cleanup":
+        if solution.category == "code_cleanup":
             return analysis["import_issues"]["unused_imports"]
 
-        elif solution.category == "code_formatting":
+        if solution.category == "code_formatting":
             return analysis["formatting_issues"]["long_lines"]
 
-        elif solution.category == "ai_documentation":
+        if solution.category == "ai_documentation":
             # AI tools can help with everything
             total_issues = sum(
                 [
@@ -422,7 +420,7 @@ class DocumentationAutomationFinder:
         return solution.estimated_fixes
 
     def generate_automation_plan(
-        self, recommendations: List[Tuple[AutomationSolution, int]]
+        self, recommendations: list[tuple[AutomationSolution, int]]
     ) -> str:
         """Generate a comprehensive automation plan."""
         plan = []
@@ -521,7 +519,6 @@ class DocumentationAutomationFinder:
 @click.option("--analyze-only", is_flag=True, help="Only analyze, don't generate plan")
 def main(root: str, output: str, analyze_only: bool):
     """Find automated solutions for documentation issues."""
-
     finder = DocumentationAutomationFinder(root)
 
     print("🔍 Analyzing codebase for documentation issues...")
@@ -538,7 +535,7 @@ def main(root: str, output: str, analyze_only: bool):
         print("\n🚀 Generating automation recommendations...")
         recommendations = finder.recommend_solutions(analysis)
 
-        print(f"\n📋 Top 5 Recommended Solutions:")
+        print("\n📋 Top 5 Recommended Solutions:")
         for i, (solution, impact) in enumerate(recommendations[:5], 1):
             print(
                 f"{i}. {solution.name} - {impact} fixes ({solution.confidence:.0%} confidence)"

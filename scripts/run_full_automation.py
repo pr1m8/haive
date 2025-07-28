@@ -5,12 +5,10 @@ This script runs all available automation tools in the correct order
 to maximize code quality improvements.
 """
 
-import subprocess
-import sys
-import time
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Tuple
+import subprocess
+import time
 
 
 class AutomationRunner:
@@ -18,10 +16,10 @@ class AutomationRunner:
 
     def __init__(self, target_path: str = "packages/"):
         self.target_path = Path(target_path)
-        self.results: Dict[str, Dict] = {}
+        self.results: dict[str, dict] = {}
         self.start_time = time.time()
 
-    def run_command(self, cmd: List[str], description: str) -> Tuple[bool, str, float]:
+    def run_command(self, cmd: list[str], description: str) -> tuple[bool, str, float]:
         """Run a command and track results."""
         print(f"\n🔧 {description}...")
         print(f"   Command: {' '.join(cmd)}")

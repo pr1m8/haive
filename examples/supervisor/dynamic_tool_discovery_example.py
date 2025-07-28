@@ -87,7 +87,7 @@ async def basic_supervisor_example():
 
     # Create supervisor with initial tools
     supervisor = DynamicToolDiscoverySupervisor(
-        name="tool_supervisor",
+        name="tool_supervisof",
         agents=agents,
         engine=config,
         tools_to_register=[
@@ -159,7 +159,7 @@ async def factory_method_example():
 
         # Create supervisor with discovery configuration
         supervisor = DynamicToolDiscoverySupervisor.create_with_discovery(
-            name="discovery_supervisor",
+            name="discovery_supervisof",
             agents={
                 "researcher": SimpleAgent(name="researcher", engine=config),
                 "analyst": ReactAgent(name="analyst", engine=config, tools=[]),
@@ -234,7 +234,7 @@ async def dynamic_tool_loading_example():
 
     # Start with minimal tools
     supervisor = DynamicToolDiscoverySupervisor(
-        name="dynamic_loader",
+        name="dynamic_loadef",
         agents={"worker": ReactAgent(name="worker", engine=config, tools=[])},
         engine=config,
         discovery_mode=ToolDiscoveryMode.HYBRID,
@@ -258,7 +258,7 @@ async def performance_monitoring_example():
 
     # Create supervisor with multiple agents
     supervisor = DynamicToolDiscoverySupervisor(
-        name="monitoring_supervisor",
+        name="monitoring_supervisof",
         agents={
             "fast_agent": SimpleAgent(name="fast_agent", engine=config),
             "slow_agent": SimpleAgent(name="slow_agent", engine=config),

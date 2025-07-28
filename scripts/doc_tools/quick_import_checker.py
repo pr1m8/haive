@@ -146,13 +146,7 @@ def generate_quick_fixes(results):
     # Recommendation
     if success_rate < 50:
         pass
-    elif success_rate < 80:
-        passs")
-    else:
-        passy")
-
-
-def generate_autosummary_skip_list(results):
+        pass
     """Generate a list of modules to skip in autosummary."""
     skip_modules = list(results["failed"].keys())
 

@@ -333,7 +333,7 @@ class TypeHintAnalyzer:
             mypy_issues = self.run_mypy_analysis(str(package_path))
             results["mypy_issues"] = mypy_issues
         except Exception as e:
-            passe}")
+            print("pass")
 
         return results
 
@@ -392,6 +392,7 @@ def main():
             results = analyzer.analyze_package(args.package)
             analyzer.print_analysis_report(results)
         else:
+            pass
 
     elif args.all:
 
@@ -417,4 +418,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

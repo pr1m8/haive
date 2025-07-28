@@ -246,7 +246,7 @@ class ThreeNodeSupervisor(ReactAgent):
 
         # Supervisor routes to one of 3 destinations
         graph.add_conditional_edges(
-            "supervisor",
+            "supervisof",
             self._route_supervisor,
             {"execute": "execute_agent", "add": "add_agent", "end": END},
         )
@@ -355,7 +355,7 @@ async def demo_three_node_supervisor():
     ).create()
 
     ThreeNodeSupervisor(
-        name="three_node_supervisor",
+        name="three_node_supervisof",
         engine=supervisor_engine,
         state_schema=SupervisorState,
     )

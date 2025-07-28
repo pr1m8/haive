@@ -1,0 +1,56 @@
+{
+ "ChessAgent": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.agent",
+   "module_short": "haive.games.chess.agent",
+   "name": "ChessAgent"
+  }
+ ],
+ "ChessConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.config",
+   "module_short": "haive.games.chess.config",
+   "name": "ChessConfig"
+  }
+ ],
+ "ChessState": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.state",
+   "module_short": "haive.games.chess.state",
+   "name": "ChessState"
+  }
+ ],
+ "__name__": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "traceback.print_exc": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "traceback",
+   "module_short": "traceback",
+   "name": "print_exc"
+  }
+ ],
+ "uuid.uuid4": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "uuid",
+   "module_short": "uuid",
+   "name": "uuid4"
+  }
+ ]
+}

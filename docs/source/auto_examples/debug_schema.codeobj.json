@@ -1,0 +1,119 @@
+{
+ "ChessPlayerDecision": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.models",
+   "module_short": "haive.games.chess.models",
+   "name": "ChessPlayerDecision"
+  }
+ ],
+ "ChessPlayerDecision.model_fields": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.models.ChessPlayerDecision",
+   "module_short": "haive.games.chess.models.ChessPlayerDecision",
+   "name": "model_fields"
+  }
+ ],
+ "ChessPlayerDecision.model_json_schema": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.models.ChessPlayerDecision",
+   "module_short": "haive.games.chess.models.ChessPlayerDecision",
+   "name": "model_json_schema"
+  }
+ ],
+ "ChessState": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.state",
+   "module_short": "haive.games.chess.state",
+   "name": "ChessState"
+  }
+ ],
+ "ChessState.model_fields": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.state.ChessState",
+   "module_short": "haive.games.chess.state.ChessState",
+   "name": "model_fields"
+  }
+ ],
+ "ChessState.model_json_schema": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.state.ChessState",
+   "module_short": "haive.games.chess.state.ChessState",
+   "name": "model_json_schema"
+  }
+ ],
+ "SegmentedAnalysis": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.models",
+   "module_short": "haive.games.chess.models",
+   "name": "SegmentedAnalysis"
+  }
+ ],
+ "SegmentedAnalysis.model_fields": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.models.SegmentedAnalysis",
+   "module_short": "haive.games.chess.models.SegmentedAnalysis",
+   "name": "model_fields"
+  }
+ ],
+ "SegmentedAnalysis.model_json_schema": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.models.SegmentedAnalysis",
+   "module_short": "haive.games.chess.models.SegmentedAnalysis",
+   "name": "model_json_schema"
+  }
+ ],
+ "__name__": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "get_args": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "get_args"
+  }
+ ],
+ "get_origin": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "get_origin"
+  }
+ ],
+ "inspect.getmembers": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "inspect",
+   "module_short": "inspect",
+   "name": "getmembers"
+  }
+ ]
+}

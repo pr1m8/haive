@@ -12,13 +12,15 @@ import asyncio
 import logging
 from typing import Any
 
+from langchain_core.tools import tool
+from pydantic import BaseModel, Field, computed_field, field_validator
+
 from haive.agents.base.agent import Agent
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.prebuilt.messages_state import MessagesState
-from langchain_core.tools import tool
-from pydantic import BaseModel, Field, computed_field, field_validator
+
 
 logger = logging.getLogger(__name__)
 
@@ -210,7 +212,7 @@ class EnhancedReWOOAgent(Agent):
         """Setup specialized agents for ReWOO workflow."""
         # Create planner with structured output
         self.planner_agent = SimpleAgent(
-            name=f"{self.name}_planner",
+            name=f"{self.name}_plannef",
             engine=self.engine.model_copy(
                 update={
                     "structured_output_model": ParallelExecutionPlan,
@@ -222,7 +224,7 @@ class EnhancedReWOOAgent(Agent):
 
         # Create executor with tools
         self.executor_agent = ReactAgent(
-            name=f"{self.name}_executor",
+            name=f"{self.name}_executof",
             engine=self.engine.model_copy(
                 update={"temperature": 0.1}  # More deterministic for execution
             ),
@@ -231,7 +233,7 @@ class EnhancedReWOOAgent(Agent):
 
         # Create synthesizer with structured output
         self.synthesizer_agent = SimpleAgent(
-            name=f"{self.name}_synthesizer",
+            name=f"{self.name}_synthesizef",
             engine=self.engine.model_copy(
                 update={
                     "structured_output_model": ReWOOSynthesis,
@@ -300,7 +302,7 @@ Be thorough and reference specific evidence when making claims."""
             evidence_results = await self._collect_evidence_parallel(plan)
 
             # Phase 3: Synthesis
-            logger.info("Phase 3: Synthesizing final answer")
+            logger.info("Phase 3: Synthesizing final answef")
             synthesis = await self._synthesize_answer(plan, evidence_results)
 
             return {
@@ -491,6 +493,7 @@ async def test_enhanced_rewoo_agent():
     )
 
     if result.get("status") == "completed":
+        pass
     else:
         pass
 

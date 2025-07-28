@@ -53,20 +53,13 @@ for package in package_names:
 # ==============================================================================
 
 extensions = [
-    # Core AutoAPI
-    "autoapi.extension",
     # Essential Sphinx
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
-    "sphinx.ext.intersphinx",
     # Documentation enhancement
-    "sphinx_copybutton",
-    "sphinx_design",
     "myst_parser",
-    "sphinxcontrib.mermaid",
     # Examples and galleries
     "sphinx_gallery.gen_gallery",
-    "sphinx_exec_directive",
 ]
 
 # ==============================================================================
@@ -75,12 +68,10 @@ extensions = [
 
 autoapi_type = "python"
 
-# Point directly to haive namespace directories (skip prebuilt for now due to syntax errors)
+# Point directly to haive namespace directories (skip problematic packages for now)
+# Start with just games package to test sphinx_gallery
 autoapi_dirs = [
-    str(packages_dir / package / "src" / "haive")
-    for package in package_names
-    if (packages_dir / package / "src" / "haive").exists()
-    and package != "haive-prebuilt"
+    str(packages_dir / "haive-games" / "src" / "haive"),
 ]
 
 autoapi_root = "api"
@@ -175,21 +166,7 @@ def prepare_jinja_env(jinja_env):
 autoapi_prepare_jinja_env = prepare_jinja_env
 
 
-# Skip problematic members
-def autoapi_skip_member(app, what, name, obj, skip, options):
-    """Skip certain members from documentation."""
-    # Skip test-related
-    if any(
-        pattern in name.lower() for pattern in ["test_", "_test", "mock", "fixture"]
-    ):
-        return True
-
-    # Skip private members unless explicitly documented
-    if name.startswith("_") and not name.startswith("__"):
-        if not (hasattr(obj, "docstring") and obj.docstring):
-            return True
-
-    return skip
+# AutoAPI skip function removed - causing event name errors
 
 
 # ==============================================================================
@@ -248,10 +225,67 @@ intersphinx_mapping = {
 }
 
 # ==============================================================================
+# Sphinx Gallery Configuration
+# ==============================================================================
+
+sphinx_gallery_conf = {
+    # Specify path to Python files
+    'examples_dirs': [
+        str(packages_dir / 'haive-games' / 'src' / 'haive' / 'games' / 'chess'),
+        str(packages_dir / 'haive-games' / 'src' / 'haive' / 'games' / 'tic_tac_toe'),
+    ],
+    # Gallery directories in documentation
+    'gallery_dirs': ['examples/chess', 'examples/tic_tac_toe'],
+    
+    # Pattern for files to include in the gallery
+    'filename_pattern': r'/example.*\.py$',
+    
+    # Directory where images should be saved
+    'download_all_examples': False,
+    
+    # Remove config comments from examples
+    'remove_config_comments': True,
+    
+    # Matplotlib settings
+    'matplotlib_animations': True,
+    'image_scrapers': ('matplotlib',),
+    
+    # Gallery styling
+    'within_subsection_order': 'FileNameSortKey',
+    'line_numbers': False,
+    'nested_sections': True,
+    
+    # First cell text
+    'first_notebook_cell': (
+        "# This example was auto-generated from a Python file\n"
+        "# To run: python {0}"
+    ),
+}
+
+# ==============================================================================
 # Setup
 # ==============================================================================
 
 
 def setup(app):
     """Setup Sphinx application."""
-    app.connect("autoapi-skip-member", autoapi_skip_member)
+    pass
+
+# ==============================================================================
+# Sphinx Gallery Configuration - CHESS EXAMPLE
+# ==============================================================================
+
+sphinx_gallery_conf = {
+    'examples_dirs': [
+        str(packages_dir / "haive-games" / "src" / "haive" / "games" / "chess"),
+    ],
+    'gallery_dirs': ['auto_examples'],
+    'filename_pattern': '/example\\.py$',  # Only match example.py
+    'plot_gallery': False,  # No plotting for chess
+    'download_all_examples': True,
+    'show_memory': True,
+    'expected_failing_examples': [],
+    'min_reported_time': 0,
+    'abort_on_example_error': False,
+    'reset_modules': ('matplotlib', 'seaborn'),
+}

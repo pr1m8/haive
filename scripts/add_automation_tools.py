@@ -6,7 +6,6 @@ various aspects of the development workflow.
 """
 
 import subprocess
-from typing import List, Tuple
 
 
 def run_command(cmd: list[str]) -> tuple[bool, str]:
@@ -55,7 +54,6 @@ def add_automation_tools():
         ("memray", "latest", "Memory profiler"),
     ]
 
-
     added = []
     skipped = []
     failed = []
@@ -100,14 +98,19 @@ def add_automation_tools():
     if added:
 
         if "docformatter" in added:
+            pass
 
         if "vulture" in added:
+            pass
 
         if "radon" in added:
+            pass
 
         if "pyupgrade" in added:
+            pass
 
         if "unimport" in added:
+            pass
 
 
 def create_automation_config():
@@ -164,7 +167,6 @@ paths_to_mutate = "packages/"
 tests_dir = "tests/"
 runner = "python -m pytest -x"
 """
-
 
 
 if __name__ == "__main__":

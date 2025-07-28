@@ -51,9 +51,9 @@ class ProblemAnalysis(BaseModel):
         description="Type of problem: technical, business, or research"
     )
     complexity_level: str = Field(description="Complexity: simple, medium, or complex")
-    key_challenges: List[str] = Field(description="Main challenges identified")
+    key_challenges: list[str] = Field(description="Main challenges identified")
     recommended_approach: str = Field(description="Recommended solution approach")
-    required_resources: List[str] = Field(description="Resources needed")
+    required_resources: list[str] = Field(description="Resources needed")
 
 
 class FormattedSolution(BaseModel):
@@ -62,11 +62,11 @@ class FormattedSolution(BaseModel):
     title: str = Field(description="Solution title")
     executive_summary: str = Field(description="Brief summary for executives")
     detailed_solution: str = Field(description="Comprehensive solution details")
-    implementation_timeline: List[str] = Field(
+    implementation_timeline: list[str] = Field(
         description="Implementation steps with timeline"
     )
-    success_metrics: List[str] = Field(description="How to measure success")
-    risk_mitigation: List[str] = Field(description="Risk mitigation strategies")
+    success_metrics: list[str] = Field(description="How to measure success")
+    risk_mitigation: list[str] = Field(description="Risk mitigation strategies")
 
 
 async def demo_react_to_simple_structured():

@@ -46,7 +46,7 @@ class FileReport:
     high_issues: int = 0
     medium_issues: int = 0
     low_issues: int = 0
-    issues: List[DocIssue] = field(default_factory=list)
+    issues: list[DocIssue] = field(default_factory=list)
 
     def add_issue(self, issue: DocIssue):
         """Add an issue to the report."""
@@ -68,11 +68,11 @@ class DocstringAnalyzer(ast.NodeVisitor):
     def __init__(self, file_path: str, source_code: str):
         self.file_path = file_path
         self.source_lines = source_code.splitlines()
-        self.issues: List[DocIssue] = []
+        self.issues: list[DocIssue] = []
         self.current_class = None
         self.has_module_docstring = False
-        self.module_exports: Set[str] = set()
-        self.defined_names: Set[str] = set()
+        self.module_exports: set[str] = set()
+        self.defined_names: set[str] = set()
 
     def visit_Module(self, node: ast.Module) -> None:
         """Check module-level documentation."""
@@ -434,7 +434,7 @@ def analyze_file(file_path: Path) -> FileReport:
     return report
 
 
-def find_python_files(root_dir: Path, exclude_dirs: Set[str] = None) -> List[Path]:
+def find_python_files(root_dir: Path, exclude_dirs: set[str] = None) -> list[Path]:
     """Find all Python files in directory tree."""
     if exclude_dirs is None:
         exclude_dirs = {".venv", "__pycache__", ".git", ".nox", "build", "dist", ".tox"}
@@ -455,7 +455,7 @@ def find_python_files(root_dir: Path, exclude_dirs: Set[str] = None) -> List[Pat
     return sorted(python_files)
 
 
-def generate_report(reports: List[FileReport], output_format: str = "text") -> str:
+def generate_report(reports: list[FileReport], output_format: str = "text") -> str:
     """Generate summary report from file reports."""
     total_files = len(reports)
     total_issues = sum(r.total_issues for r in reports)

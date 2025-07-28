@@ -2,14 +2,15 @@
 """Enhanced documentation build with comprehensive error handling and extension utilization."""
 
 import ast
+from datetime import datetime
 import json
 import os
+from pathlib import Path
 import shutil
 import subprocess
 import sys
 import traceback
-from datetime import datetime
-from pathlib import Path
+
 
 # Configuration
 DOCS_DIR = Path("docs")
@@ -392,9 +393,7 @@ def main():
 
     # Final summary
 
-    if build_status["success"]:
-        pass
-    elif build_status["output_exists"]:
+    if build_status["success"] or build_status["output_exists"]:
         pass
     else:
         pass

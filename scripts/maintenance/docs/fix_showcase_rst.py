@@ -21,7 +21,7 @@ def fix_showcase_file(file_path):
     content = re.sub(r"\s+\*\*", " **", content)
 
     # Fix section underlines
-    content = re.sub(r"\n-{3,}\n", lambda m: "\n" + "-" * len(m.group().strip()) + "\n", content)
+    content = re.sub(f"\n-{3,}\n", lambda m: "\n" + "-" * len(m.group().strip()) + "\n", content)
 
     # Fix JSON indentation in code blocks
     lines = content.split("\n")

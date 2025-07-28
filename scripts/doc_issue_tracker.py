@@ -5,13 +5,9 @@ This script provides a comprehensive tracking system for documentation issues,
 progress monitoring, and automated solution integration.
 """
 
-import json
-import sqlite3
-import time
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from datetime import datetime
-from pathlib import Path
-from typing import Dict, List, Optional, Set
+import sqlite3
 
 import click
 
@@ -27,12 +23,12 @@ class DocumentationIssue:
     severity: str  # critical, high, medium, low
     description: str
     auto_fixable: bool
-    suggested_tool: Optional[str]
+    suggested_tool: str | None
     estimated_effort: int  # minutes
     status: str  # open, in_progress, fixed, ignored
     created_at: str
     updated_at: str
-    fixed_by: Optional[str]  # human, tool_name, or None
+    fixed_by: str | None  # human, tool_name, or None
 
 
 class DocumentationTracker:
@@ -133,7 +129,7 @@ class DocumentationTracker:
             conn.close()
 
     def update_issue_status(
-        self, issue_id: str, status: str, fixed_by: Optional[str] = None
+        self, issue_id: str, status: str, fixed_by: str | None = None
     ):
         """Update the status of an issue."""
         conn = sqlite3.connect(self.db_path)
@@ -151,7 +147,7 @@ class DocumentationTracker:
         conn.commit()
         conn.close()
 
-    def get_issues_by_category(self) -> Dict[str, List[DocumentationIssue]]:
+    def get_issues_by_category(self) -> dict[str, list[DocumentationIssue]]:
         """Get issues grouped by category."""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -170,7 +166,7 @@ class DocumentationTracker:
 
         return categories
 
-    def get_auto_fixable_issues(self) -> List[DocumentationIssue]:
+    def get_auto_fixable_issues(self) -> list[DocumentationIssue]:
         """Get all auto-fixable issues."""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -195,7 +191,7 @@ class DocumentationTracker:
         issues_fixed: int,
         run_time: float,
         success: bool,
-        error_message: Optional[str] = None,
+        error_message: str | None = None,
     ):
         """Record the results of an automation run."""
         conn = sqlite3.connect(self.db_path)
@@ -425,16 +421,12 @@ class DocumentationTracker:
 @click.group()
 def cli():
     """Documentation Issue Tracker CLI."""
-    pass
 
 
 @cli.command()
 @click.option("--root", default="packages/", help="Root directory to scan")
 def scan(root: str):
     """Scan codebase and populate issue database."""
-    from .analyze_missing_docstrings import main as analyze_docstrings
-    from .find_syntax_errors import main as find_syntax_errors
-
     tracker = DocumentationTracker()
 
     print("🔍 Scanning codebase for documentation issues...")

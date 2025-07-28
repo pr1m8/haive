@@ -158,7 +158,7 @@ async def discovery_sources_example():
 
         # Create supervisor with discovery sources
         supervisor = DynamicAgentDiscoverySupervisor.create_with_discovery(
-            name="discovery_supervisor",
+            name="discovery_supervisof",
             agents={"assistant": SimpleAgent(name="assistant", engine=config)},
             engine=config,
             discovery_mode=AgentDiscoveryMode.HYBRID,
@@ -185,7 +185,7 @@ async def dynamic_team_building_example():
 
     # Start with just a project manager
     supervisor = DynamicAgentDiscoverySupervisor(
-        name="project_supervisor",
+        name="project_supervisof",
         agents={"project_manager": SimpleAgent(name="project_manager", engine=config)},
         engine=config,
     )
@@ -284,7 +284,7 @@ async def performance_tracking_example():
 
     # Create team
     supervisor = DynamicAgentDiscoverySupervisor.create_with_agent_specs(
-        name="performance_supervisor",
+        name="performance_supervisof",
         initial_agent_specs=[
             {
                 "name": "agent_a",

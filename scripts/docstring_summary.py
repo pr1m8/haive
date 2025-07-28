@@ -4,15 +4,14 @@
 Quick overview of the documentation status across packages.
 """
 
+from collections import defaultdict
 import os
 import re
-from collections import defaultdict
 
 
 def analyze_summary(report_path: str) -> None:
     """Analyze the report and show key statistics."""
-
-    with open(report_path, "r") as f:
+    with open(report_path) as f:
         content = f.read()
 
     # Extract total counts

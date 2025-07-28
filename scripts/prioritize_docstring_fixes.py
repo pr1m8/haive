@@ -5,12 +5,10 @@ This script analyzes the docstring report and creates a prioritized action plan
 for fixing the most important documentation issues first.
 """
 
-import json
+from collections import defaultdict
 import os
 import re
-from collections import defaultdict
-from pathlib import Path
-from typing import Dict, List, Tuple
+
 
 # Core packages in order of importance for AutoAPI
 CORE_PACKAGES = [
@@ -62,7 +60,7 @@ AUTOAPI_CRITICAL = [
 ]
 
 
-def parse_report_line(line: str) -> Tuple[str, int, str, str, str]:
+def parse_report_line(line: str) -> tuple[str, int, str, str, str]:
     """Parse a report line to extract file info.
 
     Args:
@@ -152,7 +150,7 @@ def calculate_priority_score(file_path: str, item_type: str, item_name: str) -> 
     return max(score, 0)
 
 
-def analyze_report(report_path: str) -> Dict[str, List]:
+def analyze_report(report_path: str) -> dict[str, list]:
     """Analyze the docstring report and prioritize issues.
 
     Args:
@@ -163,7 +161,7 @@ def analyze_report(report_path: str) -> Dict[str, List]:
     """
     issues = []
 
-    with open(report_path, "r") as f:
+    with open(report_path) as f:
         content = f.read()
 
     # Extract issues from HIGH PRIORITY and MEDIUM PRIORITY sections
@@ -236,7 +234,7 @@ def analyze_report(report_path: str) -> Dict[str, List]:
     }
 
 
-def generate_action_plan(analysis: Dict) -> str:
+def generate_action_plan(analysis: dict) -> str:
     """Generate a concrete action plan for fixing docstrings.
 
     Args:

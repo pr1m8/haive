@@ -1,8 +1,8 @@
 # agent_analyzer.py
+from collections import defaultdict
 import json
 import os
 import sys
-from collections import defaultdict
 
 
 def analyze_agent_structure(agent_dir):
@@ -105,6 +105,7 @@ if __name__ == "__main__":
 
     # Output summary
     for agent, data in results.items():
+        pass
 
     # Output common patterns
     patterns = find_common_patterns(results)

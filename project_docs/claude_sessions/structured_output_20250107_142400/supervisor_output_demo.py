@@ -69,7 +69,7 @@ Always explain your reasoning step by step.""",
 
             # Show the decision
             if result.get("next_agent"):
-                pass")
+                print("pass")
             else:
                 passt)")
 

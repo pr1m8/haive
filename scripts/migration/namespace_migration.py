@@ -30,14 +30,15 @@ Options:
 import argparse
 import logging
 import os
+from pathlib import Path
 import re
 import shutil
 import subprocess
 import sys
-from pathlib import Path
 
 import tomli
 import tomli_w
+
 
 # Set up logging
 logging.basicConfig(
@@ -332,7 +333,7 @@ class PackageMigrator:
                     pyproject["tool"]["setuptools"] = {}
 
                 pyproject["tool"]["setuptools"]["packages"] = ["haive"]
-                pyproject["tool"]["setuptools"]["package-dir"] = {"": "src"}
+                pyproject["tool"]["setuptools"]["package-dif"] = {"": "src"}
 
             # Write back the updated pyproject.toml
             if not self.dry_run:
@@ -571,7 +572,7 @@ except ImportError:
                         pyproject["tool"]["setuptools"] = {}
 
                     pyproject["tool"]["setuptools"]["packages"] = ["haive"]
-                    pyproject["tool"]["setuptools"]["package-dir"] = {"": "src"}
+                    pyproject["tool"]["setuptools"]["package-dif"] = {"": "src"}
 
                 # Update dependencies
                 if "project" in pyproject and "dependencies" in pyproject["project"]:
@@ -631,7 +632,7 @@ except ImportError:
                     },
                 },
                 "tool": {
-                    "setuptools": {"packages": ["haive"], "package-dir": {"": "src"}}
+                    "setuptools": {"packages": ["haive"], "package-dif": {"": "src"}}
                 },
             }
 

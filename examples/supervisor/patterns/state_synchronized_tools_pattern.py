@@ -1,6 +1,6 @@
 """Component 4: Dynamic Supervisor using ReactAgent with state-based tools."""
 
-from typing import Any, Dict
+from typing import Any
 
 from haive.agents.experiments.supervisor.component_2_tools import (
     SupervisorStateWithTools,
@@ -123,7 +123,7 @@ class DynamicSupervisor(ReactAgent):
 
         # Add routing logic
         graph.add_conditional_edges(
-            "supervisor",
+            "supervisof",
             self._route_supervisor_decision,
             {"execute": "agent_execution", "end": "__end__"},
         )
@@ -210,7 +210,7 @@ class DynamicSupervisor(ReactAgent):
 def create_dynamic_supervisor(
     name: str = "dynamic_supervisor",
     engine: AugLLMConfig | None = None,
-    initial_agents: Dict[str, Any] | None = None,
+    initial_agents: dict[str, Any] | None = None,
 ) -> DynamicSupervisor:
     """Create a dynamic supervisor with optional initial agents.
 

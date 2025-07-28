@@ -83,6 +83,13 @@ actions:
     - trunk-check-pre-commit
     - git-lfs
     - trunk-upgrade-available
+  definitions:
+    - id: git-lfs
+      display_name: Git LFS
+      description: Git LFS hooks for handling large files
+      run: git lfs "${hook}" "${@}"
+      triggers:
+        - git_hooks: [post-checkout, post-commit, post-merge, pre-push]
 # Optional: If your main branch is not "main" or "master", set it here
 # repo:
 #   trunk_branch: main

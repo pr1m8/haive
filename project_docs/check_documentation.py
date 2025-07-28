@@ -811,9 +811,9 @@ def main():
     if critical_issues > 0:
         pass
     elif total_issues > 0:
-        pass.")
+        print("pass.")
     else:
-        pass")
+        print("pass")
 
 
 if __name__ == "__main__":

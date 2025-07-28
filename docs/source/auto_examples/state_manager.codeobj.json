@@ -1,0 +1,29 @@
+{
+ "ChessState": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.state",
+   "module_short": "haive.games.chess.state",
+   "name": "ChessState"
+  }
+ ],
+ "chess.Board": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "chess",
+   "module_short": "chess",
+   "name": "Board"
+  }
+ ],
+ "chess.Move.from_uci": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "chess.Move",
+   "module_short": "chess.Move",
+   "name": "from_uci"
+  }
+ ]
+}

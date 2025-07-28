@@ -12,7 +12,7 @@ a registry-based approach for agent configuration and instantiation.
 # Import the core agent system components.
 
 import os
-from typing import Any, Dict
+from typing import Any
 
 from haive.agents.base.agent import Agent, AgentConfig, register_agent
 from haive.core.schema.message import BaseMessage

@@ -1,0 +1,92 @@
+{
+ "Any": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Any"
+  }
+ ],
+ "AugLLMConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.core.engine.aug_llm",
+   "module_short": "haive.core.engine.aug_llm",
+   "name": "AugLLMConfig"
+  }
+ ],
+ "ChessAnalysis": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.models",
+   "module_short": "haive.games.chess.models",
+   "name": "ChessAnalysis"
+  }
+ ],
+ "ChessPlayerDecision": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.models",
+   "module_short": "haive.games.chess.models",
+   "name": "ChessPlayerDecision"
+  }
+ ],
+ "Dict": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Dict"
+  }
+ ],
+ "GameLLMFactory.create_llm_config": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.llm_config_factory.GameLLMFactory",
+   "module_short": "haive.games.llm_config_factory.GameLLMFactory",
+   "name": "create_llm_config"
+  }
+ ],
+ "GameLLMFactory.get_available_providers": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.llm_config_factory.GameLLMFactory",
+   "module_short": "haive.games.llm_config_factory.GameLLMFactory",
+   "name": "get_available_providers"
+  }
+ ],
+ "Optional": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Optional"
+  }
+ ],
+ "generate_analysis_prompt": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.aug_llms",
+   "module_short": "haive.games.chess.aug_llms",
+   "name": "generate_analysis_prompt"
+  }
+ ],
+ "generate_move_prompt": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.aug_llms",
+   "module_short": "haive.games.chess.aug_llms",
+   "name": "generate_move_prompt"
+  }
+ ]
+}

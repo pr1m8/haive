@@ -88,9 +88,9 @@ async def demonstrate_enhanced_simple_agent():
 
     # 6. Show the clean inheritance
     print("6. Clean inheritance hierarchy:")
-    print(f"   EnhancedSimpleAgent is Agent[AugLLMConfig]")
-    print(f"   Inherits from enhanced Agent base")
-    print(f"   Engine type is locked to AugLLMConfig")
+    print("   EnhancedSimpleAgent is Agent[AugLLMConfig]")
+    print("   Inherits from enhanced Agent base")
+    print("   Engine type is locked to AugLLMConfig")
     print("")
 
     # 7. Execution would work with real LLM

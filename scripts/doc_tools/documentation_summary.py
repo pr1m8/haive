@@ -151,7 +151,7 @@ def create_documentation_summary():
 
     for fix_category in summary["fixes_implemented"]:
         for item in fix_category["items"]:
-            pass")
+            print("pass")
 
 
     for feature in summary["new_features"]:

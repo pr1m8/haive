@@ -6,16 +6,15 @@ detailed categorization, quality scoring, and intelligent prioritization.
 """
 
 import ast
-import inspect
-import logging
-import re
-import sys
 from dataclasses import dataclass, field
 from enum import Enum
+import logging
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple, Union
+import re
+from typing import Any
 
 import click
+
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -94,13 +93,13 @@ class RefinedIssue:
     # Fix information
     auto_fixable: bool = False
     fix_confidence: float = 0.0  # 0-1 scale
-    fix_tools: List[str] = field(default_factory=list)
+    fix_tools: list[str] = field(default_factory=list)
     fix_effort_minutes: int = 0
     fix_suggestion: str = ""
 
     # Dependencies and relationships
-    related_issues: List[str] = field(default_factory=list)
-    blocks_issues: List[str] = field(default_factory=list)
+    related_issues: list[str] = field(default_factory=list)
+    blocks_issues: list[str] = field(default_factory=list)
 
     # Metadata
     detected_by: str = ""
@@ -113,8 +112,8 @@ class RefinedDocumentationAnalyzer:
 
     def __init__(self, root_path: str = "packages/"):
         self.root_path = Path(root_path)
-        self.issues: List[RefinedIssue] = []
-        self.file_metrics: Dict[str, Dict[str, Any]] = {}
+        self.issues: list[RefinedIssue] = []
+        self.file_metrics: dict[str, dict[str, Any]] = {}
 
         # Patterns for different issues
         self.google_docstring_sections = {
@@ -157,13 +156,13 @@ class RefinedDocumentationAnalyzer:
             r"typing\.Union\[",
         ]
 
-    def analyze_file(self, file_path: Path) -> List[RefinedIssue]:
+    def analyze_file(self, file_path: Path) -> list[RefinedIssue]:
         """Analyze a single Python file comprehensively."""
         if self._should_skip_file(file_path):
             return []
 
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, encoding="utf-8") as f:
                 content = f.read()
                 lines = content.splitlines()
 
@@ -191,7 +190,7 @@ class RefinedDocumentationAnalyzer:
 
         return file_issues
 
-    def _calculate_file_metrics(self, content: str, tree: ast.AST) -> Dict[str, Any]:
+    def _calculate_file_metrics(self, content: str, tree: ast.AST) -> dict[str, Any]:
         """Calculate comprehensive file metrics."""
         lines = content.splitlines()
 
@@ -238,18 +237,18 @@ class RefinedDocumentationAnalyzer:
         complexity = 1  # Base complexity
 
         for child in ast.walk(node):
-            if isinstance(child, (ast.If, ast.While, ast.For, ast.AsyncFor)):
-                complexity += 1
-            elif isinstance(child, ast.ExceptHandler):
-                complexity += 1
-            elif isinstance(child, (ast.And, ast.Or)):
+            if (
+                isinstance(child, (ast.If, ast.While, ast.For, ast.AsyncFor))
+                or isinstance(child, ast.ExceptHandler)
+                or isinstance(child, (ast.And, ast.Or))
+            ):
                 complexity += 1
 
         return complexity
 
     def _analyze_docstrings(
-        self, file_path: Path, content: str, lines: List[str], tree: ast.AST
-    ) -> List[RefinedIssue]:
+        self, file_path: Path, content: str, lines: list[str], tree: ast.AST
+    ) -> list[RefinedIssue]:
         """Analyze docstring quality comprehensively."""
         issues = []
 
@@ -312,8 +311,8 @@ class RefinedDocumentationAnalyzer:
         return issues
 
     def _analyze_function_docstring(
-        self, file_path: Path, node: ast.FunctionDef, lines: List[str]
-    ) -> List[RefinedIssue]:
+        self, file_path: Path, node: ast.FunctionDef, lines: list[str]
+    ) -> list[RefinedIssue]:
         """Analyze function docstring quality."""
         issues = []
 
@@ -368,8 +367,8 @@ class RefinedDocumentationAnalyzer:
         return issues
 
     def _analyze_class_docstring(
-        self, file_path: Path, node: ast.ClassDef, lines: List[str]
-    ) -> List[RefinedIssue]:
+        self, file_path: Path, node: ast.ClassDef, lines: list[str]
+    ) -> list[RefinedIssue]:
         """Analyze class docstring quality."""
         issues = []
 
@@ -425,7 +424,7 @@ class RefinedDocumentationAnalyzer:
         has_return: bool,
         is_public: bool,
         is_class: bool = False,
-    ) -> List[RefinedIssue]:
+    ) -> list[RefinedIssue]:
         """Analyze the quality of an existing docstring."""
         issues = []
 
@@ -442,7 +441,7 @@ class RefinedDocumentationAnalyzer:
                     line_number=line_no,
                     category=IssueCategory.DOCSTRING_WRONG_STYLE,
                     severity=IssueSeverity.MEDIUM,
-                    title=f"Docstring not in Google style",
+                    title="Docstring not in Google style",
                     description="Missing structured sections (Args:, Returns:, etc.)",
                     context=(
                         docstring[:200] + "..." if len(docstring) > 200 else docstring
@@ -536,8 +535,8 @@ class RefinedDocumentationAnalyzer:
         return issues
 
     def _analyze_type_hints(
-        self, file_path: Path, content: str, lines: List[str], tree: ast.AST
-    ) -> List[RefinedIssue]:
+        self, file_path: Path, content: str, lines: list[str], tree: ast.AST
+    ) -> list[RefinedIssue]:
         """Analyze type hint quality and coverage."""
         issues = []
 
@@ -576,7 +575,7 @@ class RefinedDocumentationAnalyzer:
 
     def _analyze_function_type_hints(
         self, file_path: Path, node: ast.FunctionDef, content: str
-    ) -> List[RefinedIssue]:
+    ) -> list[RefinedIssue]:
         """Analyze type hints for a specific function."""
         issues = []
 
@@ -650,8 +649,8 @@ class RefinedDocumentationAnalyzer:
         return issues
 
     def _analyze_code_quality(
-        self, file_path: Path, content: str, lines: List[str], tree: ast.AST
-    ) -> List[RefinedIssue]:
+        self, file_path: Path, content: str, lines: list[str], tree: ast.AST
+    ) -> list[RefinedIssue]:
         """Analyze general code quality issues."""
         issues = []
 
@@ -741,8 +740,8 @@ class RefinedDocumentationAnalyzer:
         return issues
 
     def _analyze_imports(
-        self, file_path: Path, content: str, lines: List[str], tree: ast.AST
-    ) -> List[RefinedIssue]:
+        self, file_path: Path, content: str, lines: list[str], tree: ast.AST
+    ) -> list[RefinedIssue]:
         """Analyze import-related issues."""
         issues = []
 
@@ -826,8 +825,8 @@ class RefinedDocumentationAnalyzer:
         return issues
 
     def _analyze_api_design(
-        self, file_path: Path, content: str, lines: List[str], tree: ast.AST
-    ) -> List[RefinedIssue]:
+        self, file_path: Path, content: str, lines: list[str], tree: ast.AST
+    ) -> list[RefinedIssue]:
         """Analyze API design quality."""
         issues = []
 
@@ -907,7 +906,7 @@ class RefinedDocumentationAnalyzer:
             and "debug" not in str(file_path).lower()
         )
 
-    def _get_function_signature(self, node: ast.FunctionDef, lines: List[str]) -> str:
+    def _get_function_signature(self, node: ast.FunctionDef, lines: list[str]) -> str:
         """Extract function signature from source."""
         try:
             start_line = node.lineno - 1
@@ -947,7 +946,7 @@ class RefinedDocumentationAnalyzer:
 
         return any(pattern in str(file_path) for pattern in skip_patterns)
 
-    def analyze_codebase(self) -> List[RefinedIssue]:
+    def analyze_codebase(self) -> list[RefinedIssue]:
         """Analyze entire codebase and return all issues."""
         self.issues = []
 
@@ -1097,13 +1096,12 @@ class RefinedDocumentationAnalyzer:
 def main(
     root: str,
     output: str,
-    category: Tuple[str],
-    severity: Tuple[str],
+    category: tuple[str],
+    severity: tuple[str],
     auto_fixable_only: bool,
     min_priority: float,
 ):
     """Refined documentation and code quality analyzer."""
-
     analyzer = RefinedDocumentationAnalyzer(root)
 
     print("🔍 Analyzing codebase comprehensively...")
@@ -1122,7 +1120,7 @@ def main(
     if min_priority > 0:
         issues = [i for i in issues if i.priority_score >= min_priority]
 
-    print(f"\n📊 Analysis Complete:")
+    print("\n📊 Analysis Complete:")
     print(f"Total issues found: {len(analyzer.issues)}")
     print(f"After filters: {len(issues)}")
     print(f"Auto-fixable: {len([i for i in issues if i.auto_fixable])}")

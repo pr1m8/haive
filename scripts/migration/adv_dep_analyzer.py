@@ -1,10 +1,11 @@
 # scripts/migration/advanced_dependency_analyzer.py
 
-import logging
 from collections import defaultdict
+import logging
 from pathlib import Path
 
 import toml
+
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")

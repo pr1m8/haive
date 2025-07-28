@@ -44,7 +44,7 @@ def fix_python_syntax_errors():
                     f.write(content)
 
         except Exception as e:
-            pass")
+            print("pass")
 
 
 def fix_rst_indentation():
@@ -94,7 +94,7 @@ def fix_rst_indentation():
                     f.write(content)
 
         except Exception as e:
-            pass")
+            print("pass")
 
 
 def remove_problematic_files():

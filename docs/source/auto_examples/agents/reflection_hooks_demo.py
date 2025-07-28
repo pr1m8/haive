@@ -30,8 +30,8 @@ class ContentQuality(BaseModel):
     completeness_score: float = Field(ge=0.0, le=1.0, description="Completeness rating")
     accuracy_score: float = Field(ge=0.0, le=1.0, description="Accuracy rating")
     overall_score: float = Field(ge=0.0, le=1.0, description="Overall quality score")
-    improvement_areas: List[str] = Field(description="Areas needing improvement")
-    strengths: List[str] = Field(description="Strong points in the content")
+    improvement_areas: list[str] = Field(description="Areas needing improvement")
+    strengths: list[str] = Field(description="Strong points in the content")
 
 
 class ReflectionResult(BaseModel):
@@ -39,7 +39,7 @@ class ReflectionResult(BaseModel):
 
     original_content: str = Field(description="Original content analyzed")
     quality_assessment: ContentQuality = Field(description="Quality scores")
-    suggested_improvements: List[str] = Field(description="Specific improvements")
+    suggested_improvements: list[str] = Field(description="Specific improvements")
     revised_content: str = Field(description="Improved version of content")
 
 
@@ -48,9 +48,9 @@ class FinalOutput(BaseModel):
 
     title: str = Field(description="Content title")
     content: str = Field(description="Final polished content")
-    metadata: Dict[str, Any] = Field(description="Additional metadata")
+    metadata: dict[str, Any] = Field(description="Additional metadata")
     quality_metrics: ContentQuality = Field(description="Final quality scores")
-    revision_history: List[str] = Field(description="History of revisions")
+    revision_history: list[str] = Field(description="History of revisions")
 
 
 async def demo_reflection_workflow():
@@ -379,7 +379,7 @@ Improve the content to achieve a quality score above {threshold}.""",
     workflow.build()
 
     # Add conditional routing based on quality
-    def check_quality(state: Dict[str, Any]) -> str:
+    def check_quality(state: dict[str, Any]) -> str:
         """Route based on quality score."""
         # Get quality score from evaluator output
         eval_result = state.get("evaluator", {})
@@ -465,7 +465,7 @@ async def demo_hook_monitoring_system():
             self.state_snapshots = {}
             self.errors = []
 
-        def log_event(self, event_type: str, details: Dict[str, Any]):
+        def log_event(self, event_type: str, details: dict[str, Any]):
             self.events.append(
                 {
                     "type": event_type,

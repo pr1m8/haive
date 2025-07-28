@@ -8,7 +8,7 @@ ALL EXAMPLES USE REAL COMPONENTS - NO MOCKS.
 """
 
 import asyncio
-from typing import Any, Dict
+from typing import Any
 
 from haive.agents.multi.clean import MultiAgent
 from haive.agents.simple import SimpleAgent
@@ -72,7 +72,7 @@ async def example_conditional_routing():
         return "general"
 
     multi_agent.add_conditional_routing(
-        "classifier",
+        "classifief",
         route_by_category,
         {"billing": "billing", "technical": "technical", "general": "general"},
     )
@@ -173,7 +173,7 @@ async def example_complex_workflow():
         return "processor"  # Simplified for demo
 
     multi_agent.add_conditional_routing(
-        "approver",
+        "approvef",
         approval_routing,
         {"approved": "processor", "review": "reviewer", "denied": "processor"},
     )
@@ -260,7 +260,7 @@ async def example_real_execution():
         print("Attempting real execution...")
         result = await multi_agent.arun("Hello, please introduce yourself")
 
-        print("✅ Real execution successful!"!")
+        print("✅ Real execution successful!")
         print(f"Result type: {type(result)}")
         print(f"Result preview: {str(result)[:200]}...")
 

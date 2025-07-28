@@ -29,8 +29,8 @@ class ResearchAnalysis(BaseModel):
     """Research analysis from ReactAgent."""
 
     topic: str = Field(description="Research topic")
-    key_findings: List[str] = Field(description="Important findings")
-    data_points: List[str] = Field(description="Supporting data")
+    key_findings: list[str] = Field(description="Important findings")
+    data_points: list[str] = Field(description="Supporting data")
     confidence_level: float = Field(
         ge=0.0, le=1.0, description="Confidence in findings"
     )
@@ -41,9 +41,9 @@ class ExecutiveReport(BaseModel):
 
     title: str = Field(description="Report title")
     executive_summary: str = Field(description="Executive summary (2-3 sentences)")
-    strategic_insights: List[str] = Field(description="Key strategic insights")
-    recommendations: List[str] = Field(description="Actionable recommendations")
-    next_steps: List[str] = Field(description="Immediate next steps")
+    strategic_insights: list[str] = Field(description="Key strategic insights")
+    recommendations: list[str] = Field(description="Actionable recommendations")
+    next_steps: list[str] = Field(description="Immediate next steps")
     confidence_score: float = Field(ge=0.0, le=1.0, description="Overall confidence")
 
 

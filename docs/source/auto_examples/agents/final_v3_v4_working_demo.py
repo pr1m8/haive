@@ -29,7 +29,7 @@ class MarketAnalysis(BaseModel):
     """Market analysis output."""
 
     market_name: str = Field(description="Name of the market analyzed")
-    key_findings: List[str] = Field(description="Top 3-5 key findings")
+    key_findings: list[str] = Field(description="Top 3-5 key findings")
     growth_rate: str = Field(description="Estimated growth rate")
     confidence_score: float = Field(ge=0.0, le=1.0, description="Analysis confidence")
 

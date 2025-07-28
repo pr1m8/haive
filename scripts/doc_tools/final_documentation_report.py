@@ -200,12 +200,12 @@ def generate_final_report():
 
     status = report["current_status"]
     for key, value in status.items():
-        pass")
+        print("pass")
 
     commands = report["usage_commands"]
 
     for step in report["next_steps"][:3]:  # Show top 3
-        pass")
+        print("pass")
 
 
     return report

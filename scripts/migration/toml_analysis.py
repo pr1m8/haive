@@ -54,8 +54,7 @@ for src in sources:
 overlap = set(top_level_deps.keys()) & group_dep_set
 overlap.discard("python")
 if overlap:
-    pass)}")
-
+    pass
 for dep, version in poetry.get("dependencies", {}).items():
     if dep != "python":
         pass

@@ -338,6 +338,7 @@ just = "^0.8.165"
 rstcheck-core = "^1.2.2"
 flake8-docstrings = "^1.7.0"
 pydoclint = { extras = ["flake8"], version = "^0.6.6" }
+rope = "^1.14.0"
 
 
 [tool.poetry.group.docs]
@@ -430,7 +431,6 @@ language-tool-python = "^2.9.4"
 pyspelling = "^2.10"
 jupytext = "^1.17.2"
 pytest-doctestplus = "^1.4.0"
-language-check = "^1.1"
 pydoclint = "^0.6.6"
 pydocstyle = "^6.3.0"
 pytest-sphinx = "^0.6.3"

@@ -1602,7 +1602,7 @@ class CategoryOrganizer:
                     {"server": server, "metrics": metrics.to_dict()}
                     for server, metrics in servers[:5]
                 ],  # Top 5 by quality
-                "install_methods": list(set(m.install_method for m in metrics_list)),
+                "install_methods": list({m.install_method for m in metrics_list}),
                 "common_tags": self._get_common_tags([m.tags for m in metrics_list]),
                 "complexity_distribution": self._get_complexity_distribution(
                     metrics_list

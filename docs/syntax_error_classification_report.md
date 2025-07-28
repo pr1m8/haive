@@ -1,51 +1,15 @@
 # Syntax Error Classification Report
-Generated: 2025-07-27 19:52:12
+Generated: 2025-07-28 14:28:39
 ## Summary
-Total errors found: 100
+Total errors found: 65
 
 ### By Category:
-- **incomplete_assignment**: 1 errors
-- **incomplete_comparison**: 1 errors
-- **missing_block**: 30 errors
-- **unclosed_parenthesis**: 1 errors
+- **incomplete_variable**: 1 errors
+- **missing_block**: 3 errors
 - **unknown**: 1 errors
-- **unterminated_string**: 66 errors
+- **unterminated_string**: 60 errors
 
 ## Examples by Category
-
-### Incomplete Comparison
-**Pattern**: missing value after comparison operator
-**Description**: Comparison operator without right operand
-**Fix Strategy**: Add placeholder value or remove incomplete comparison
-**Example**: `if x >=:`
-
-**Found 1 instances:**
-
-📄 `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/nodes.py` (Line 87)
-```python
-84:     """Node to let the LLM judge the quality of its own final answe."""
-85:     # End execution if the LLM failed to provide a good answer twice.
-86:     num_feedback_requests = state.ge("num_feedback_requests", 0)
->>> 87:     if num_feedback_requests >=:
-FIX:     if num_feedback_requests >= 0:
-```
-
-### Incomplete Assignment
-**Pattern**: missing value after assignment
-**Description**: Assignment operator without value
-**Fix Strategy**: Add default value or remove line
-**Example**: `max_retries =`
-
-**Found 1 instances:**
-
-📄 `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py` (Line 78)
-```python
-75:         # Perform search with retry logic
-76:         search_results = []
-77:         retry_count = 0
->>> 78:         max_retries =
-FIX:         max_retries = 0  # TODO: Add proper value
-```
 
 ### Unterminated String
 **Pattern**: unterminated string literal
@@ -53,33 +17,33 @@ FIX:         max_retries = 0  # TODO: Add proper value
 **Fix Strategy**: Close string or fix quotes
 **Example**: `print("Hello!"!")`
 
-**Found 66 instances:**
+**Found 60 instances:**
 
-📄 `packages/haive-prebuilt/src/haive/prebuilt/constituional_agent/utils.py` (Line 111)
+📄 `packages/haive-prebuilt/src/haive/prebuilt/tldr2/tools.py` (Line 198)
 ```python
-108: 
-109:     @validate_call
-110:     def check_profanity(self, text: str) -> bool:
->>> 111:         for module i["profanity_check", "better_profanit"]:
+195:             soup.find("article"),
+196:             soup.find("div", class_="article-content"),
+197:             soup.find("div", class_="entry-content"),
+>>> 198:             soup.find("div", class ="post-content"),
 ```
 
-📄 `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py` (Line 137)
+📄 `packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py` (Line 289)
 ```python
-134:             focus_area=["methodology", "result", "implication"],
-135:         ),
-136:         report_config=ReportConfig(
->>> 137:             report_style="comprehensiv", max_categories=8, articles_per_category=),
+286:     print()
+287:     return {"reference": [response]}
+288:     def aggregator(state: AgentState):
+>>> 289:     print("AGGREGATMake a title for this systematic review based on the abstract. Write it in markdow."),
 ```
 
-📄 `packages/haive-prebuilt/src/haive/prebuilt/journalism_/models.py` (Line 118)
+📄 `packages/haive-prebuilt/src/haive/prebuilt/startup/prompts.py` (Line 938)
 ```python
-115:         if self.statements:
-116:             self.total_claims = len(self.statements)
-117:             self.confirmed_count = sum(
->>> 118:                 for s in self.statements if s.statu == "confirmed"
+935:     market_agent = market_research_aug_llm.create_runnable()
+936:     market_research = market_agent.invoke(
+937:         {
+>>> 938:             "idea_nam": ideas.ideas[]["nam"],
 ```
 
-... and 63 more
+... and 57 more
 
 ### Missing Block
 **Pattern**: expected an indented block
@@ -88,52 +52,50 @@ FIX:         max_retries = 0  # TODO: Add proper value
 **Example**: `if condition:
 # missing block`
 
-**Found 30 instances:**
+**Found 3 instances:**
 
-📄 `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py` (Line 615)
+📄 `packages/haive-agents/tests/persistence/verify_message_quality.py` (Line 112)
 ```python
-612:         )
-613: 
-614:         # Update stage based on validation
->>> 615:         if len(self.validation_results) >= and self.stage == IdeaStage.RESEARCHED:
-FIX:         if len(self.validation_results) >= and self.stage == IdeaStage.RESEARCHED:
+109:                 sslmode = match.group(1)
+110: 
+111:                 if sslmode == "require":
+>>> 112:         else:
+FIX:         else:
             pass  # TODO: Implement
 ```
 
-📄 `packages/haive-agents/tests/test_single_vs_multi.py` (Line 26)
+📄 `packages/haive-agents/tests/utilities/view_metadata_details.py` (Line 130)
 ```python
-23:     if hasattr(main_engine, "add_tool"):
-24:         main_engine.add_tool(add)
-25:     else:
->>> 26: react_agent.compile()
-FIX: react_agent.compile()
-    pass  # TODO: Implement
+127:                                 pass
+128: 
+129:                         except Exception as e:
+>>> 130:                     else:
+FIX:                     else:
+                        pass  # TODO: Implement
 ```
 
-📄 `packages/haive-agents/tests/test_self_discover_agent.py` (Line 99)
+📄 `packages/haive-agents/tests/integration/supabase/fix_prepared_statements.py` (Line 76)
 ```python
-96:     success = await test_self_discover_agent()
-97: 
-98:     if success:
->>> 99:     else:
-FIX:     else:
-        pass  # TODO: Implement
+73:                 count = (await cur.fetchone())[0]
+74: 
+75:                 if count > 0:
+>>> 76:                 else:
+FIX:                 else:
+                    pass  # TODO: Implement
 ```
 
-... and 27 more
-
-### Unclosed Parenthesis
-**Pattern**: parenthesis was never closed
-**Description**: Missing closing parenthesis
-**Fix Strategy**: Add closing parenthesis
-**Example**: `func(arg1, arg2`
+### Incomplete Variable
+**Pattern**: incomplete variable name
+**Description**: Variable name cut off or typo
+**Fix Strategy**: Complete variable name
+**Example**: `state.revision_coun`
 
 **Found 1 instances:**
 
-📄 `packages/haive-prebuilt/src/haive/prebuilt/journalism_/engines.py` (Line 136)
+📄 `packages/haive-prebuilt/src/haive/prebuilt/perplexity/base/state.py` (Line 240)
 ```python
-133: Create a comprehensive summary following the guideline.""")
-134:     ])
-135: 
->>> 136:     return AugLLMConfig(
+237:         """Add a search result to the stat."""
+238:         self.search_results.append(result)
+239:         self.search_iteration += 1
+>>> 240:         self.performance_metrics.total_searches += 1        self.performance_metrics.documents_processed += len(result.documents)
 ```

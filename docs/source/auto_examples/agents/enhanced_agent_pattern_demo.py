@@ -47,7 +47,7 @@ class ReasoningEngine(Engine):
 class MultiModalEngine(Engine):
     """Engine that handles text, images, audio."""
 
-    def __init__(self, modalities: List[str]):
+    def __init__(self, modalities: list[str]):
         self.modalities = modalities
 
 
@@ -87,7 +87,7 @@ class Agent(Workflow, Generic[EngineT]):
     def __init__(self, name: str, engine: EngineT):
         self.name = name
         self.engine = engine
-        self.history: List[Dict[str, Any]] = []
+        self.history: list[dict[str, Any]] = []
 
     async def execute(self, input_data: Any) -> Any:
         """Execute using the engine."""
@@ -135,7 +135,7 @@ class RAGAgent(Agent[RetrieverEngine]):
     The RetrieverEngine type provides retrieval capabilities.
     """
 
-    async def retrieve(self, query: str) -> List[str]:
+    async def retrieve(self, query: str) -> list[str]:
         """Retrieve relevant documents - available because engine is RetrieverEngine."""
         # Type-safe access to retriever-specific features
         return [f"Retrieved from {self.engine.index_name}: Doc about {query}"]
@@ -161,7 +161,7 @@ class MultiModalAgent(Agent[MultiModalEngine]):
     Handles multiple modalities based on engine capabilities.
     """
 
-    def supported_modalities(self) -> List[str]:
+    def supported_modalities(self) -> list[str]:
         """Get supported modalities from engine."""
         return self.engine.modalities
 
@@ -186,7 +186,7 @@ class MultiAgent(Agent[AugLLMConfig]):
     an LLM to coordinate. The agents it coordinates can be any type.
     """
 
-    def __init__(self, name: str, engine: AugLLMConfig, agents: Dict[str, Agent[Any]]):
+    def __init__(self, name: str, engine: AugLLMConfig, agents: dict[str, Agent[Any]]):
         super().__init__(name, engine)
         self.agents = agents
 
@@ -202,7 +202,7 @@ class MultiAgent(Agent[AugLLMConfig]):
 
         return {"coordinator": self.name, "decision": decision, "results": results}
 
-    def list_agents(self) -> List[AgentRef]:
+    def list_agents(self) -> list[AgentRef]:
         """List all coordinated agents with their types."""
         return [
             AgentRef(name=name, agent_type=repr(agent))

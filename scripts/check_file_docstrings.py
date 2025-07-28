@@ -7,13 +7,12 @@ on what needs to be documented for AutoAPI compatibility.
 
 import ast
 import os
-import sys
-from typing import Any, Dict, List
+from typing import Any
 
 from analyze_missing_docstrings import DocstringAnalyzer
 
 
-def analyze_file_detailed(file_path: str) -> Dict[str, Any]:
+def analyze_file_detailed(file_path: str) -> dict[str, Any]:
     """Analyze a single file in detail and provide recommendations.
 
     Args:
@@ -26,7 +25,7 @@ def analyze_file_detailed(file_path: str) -> Dict[str, Any]:
         return {"error": f"File not found: {file_path}"}
 
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(file_path, encoding="utf-8") as f:
             source_code = f.read()
     except Exception as e:
         return {"error": f"Could not read file: {e}"}
@@ -82,8 +81,8 @@ def analyze_file_detailed(file_path: str) -> Dict[str, Any]:
 
 
 def generate_file_recommendations(
-    file_path: str, issues: Dict, stats: Dict
-) -> List[str]:
+    file_path: str, issues: dict, stats: dict
+) -> list[str]:
     """Generate specific recommendations for a file.
 
     Args:
@@ -186,7 +185,7 @@ def generate_file_recommendations(
     return recommendations
 
 
-def print_file_analysis(analysis: Dict[str, Any]) -> None:
+def print_file_analysis(analysis: dict[str, Any]) -> None:
     """Print a detailed analysis of a file's docstring status.
 
     Args:

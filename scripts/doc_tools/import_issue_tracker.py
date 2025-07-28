@@ -6,14 +6,15 @@ tracks failures, and generates reports to help fix documentation issues.
 """
 
 import ast
+from datetime import datetime
 import importlib
 import json
+from pathlib import Path
 import sys
 import traceback
-from datetime import datetime
-from pathlib import Path
 
 import yaml
+
 
 # Setup paths
 workspace_root = Path(__file__).resolve().parents[2]

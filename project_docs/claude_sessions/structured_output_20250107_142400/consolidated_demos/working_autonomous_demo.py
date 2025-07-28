@@ -79,7 +79,7 @@ Show your thinking process clearly.""",
                 # Show supervisor's decision process
                 for msg in result["messages"]:
                     if hasattr(msg, "content") and msg.content:
-                        passn")
+                        print("pass")
 
                     # Show tool calls if any
                     if hasattr(msg, "tool_calls") and msg.tool_calls:
@@ -87,7 +87,7 @@ Show your thinking process clearly.""",
 
             # Show outcome
             if result.get("next_agent"):
-                pass")
+                print("pass")
             else:
                 passnt")
 

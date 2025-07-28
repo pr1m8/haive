@@ -208,7 +208,7 @@ def main():
         for fix in fixes:
             pass
     else:
-        pass")
+        print("pass")
 
     return 0
 

@@ -1,0 +1,74 @@
+{
+ "ChessAgent": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.agent",
+   "module_short": "haive.games.chess.agent",
+   "name": "ChessAgent"
+  }
+ ],
+ "ConfigurableChessConfig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.configurable_config",
+   "module_short": "haive.games.chess.configurable_config",
+   "name": "ConfigurableChessConfig"
+  }
+ ],
+ "__name__": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "asyncio.run": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "asyncio",
+   "module_short": "asyncio",
+   "name": "run"
+  }
+ ],
+ "create_chess_config": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.configurable_config",
+   "module_short": "haive.games.chess.configurable_config",
+   "name": "create_chess_config"
+  }
+ ],
+ "create_chess_config_from_example": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.configurable_config",
+   "module_short": "haive.games.chess.configurable_config",
+   "name": "create_chess_config_from_example"
+  }
+ ],
+ "create_chess_config_from_player_configs": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.chess.configurable_config",
+   "module_short": "haive.games.chess.configurable_config",
+   "name": "create_chess_config_from_player_configs"
+  }
+ ],
+ "create_player_config": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "haive.games.core.agent.player_agent",
+   "module_short": "haive.games.core.agent.player_agent",
+   "name": "create_player_config"
+  }
+ ]
+}

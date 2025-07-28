@@ -364,7 +364,7 @@ def main():
                     total_functions_processed += 1
                     file_modified = True
                 else:
-                    pass")
+                    print("pass")
 
             if file_modified:
                 files_modified += 1

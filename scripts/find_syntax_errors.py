@@ -2,25 +2,23 @@
 """Find Python files with syntax errors in the source code."""
 
 import ast
-import sys
 from pathlib import Path
-from typing import List, Tuple
 
 
-def check_syntax(file_path: Path) -> Tuple[bool, str]:
+def check_syntax(file_path: Path) -> tuple[bool, str]:
     """Check if Python file has valid syntax."""
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(file_path, encoding="utf-8") as f:
             content = f.read()
         ast.parse(content)
         return True, ""
     except SyntaxError as e:
         return False, f"Line {e.lineno}: {e.msg}"
     except Exception as e:
-        return False, f"Error: {str(e)}"
+        return False, f"Error: {e!s}"
 
 
-def find_syntax_errors(base_path: Path, limit: int = 10) -> List[Tuple[Path, str]]:
+def find_syntax_errors(base_path: Path, limit: int = 10) -> list[tuple[Path, str]]:
     """Find Python files with syntax errors."""
     errors = []
 
@@ -60,7 +58,7 @@ def main():
 
         # Show the problematic lines
         try:
-            with open(file_path, "r") as f:
+            with open(file_path) as f:
                 lines = f.readlines()
                 if "Line" in error:
                     line_no = int(error.split("Line ")[1].split(":")[0])

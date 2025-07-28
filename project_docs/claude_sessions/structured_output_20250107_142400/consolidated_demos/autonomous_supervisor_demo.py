@@ -85,9 +85,9 @@ async def demo_autonomous_supervisor():
 
         # For demo, just show what would happen
         if "coding" in task["description"].lower():
-            pass")
+            print("pass")
         elif "data" in task["description"].lower():
-            pass")
+            print("pass")
         elif "content" in task["description"].lower():
             pass")
 

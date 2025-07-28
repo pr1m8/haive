@@ -38,32 +38,32 @@ class CreativeResult(BaseModel):
     """Result from creative processing."""
 
     creative_output: str = Field(description="Creative work produced")
-    inspiration_sources: List[str] = Field(description="Sources of inspiration used")
+    inspiration_sources: list[str] = Field(description="Sources of inspiration used")
     creativity_score: float = Field(
         ge=0.0, le=1.0, description="Self-assessed creativity"
     )
-    additional_ideas: List[str] = Field(description="Additional creative ideas")
+    additional_ideas: list[str] = Field(description="Additional creative ideas")
 
 
 class AnalyticalResult(BaseModel):
     """Result from analytical processing."""
 
     analysis: str = Field(description="Detailed analysis")
-    key_findings: List[str] = Field(description="Main findings from analysis")
+    key_findings: list[str] = Field(description="Main findings from analysis")
     confidence_level: float = Field(
         ge=0.0, le=1.0, description="Confidence in analysis"
     )
-    recommendations: List[str] = Field(description="Actionable recommendations")
-    data_sources: List[str] = Field(description="Sources used in analysis")
+    recommendations: list[str] = Field(description="Actionable recommendations")
+    data_sources: list[str] = Field(description="Sources used in analysis")
 
 
 class TechnicalResult(BaseModel):
     """Result from technical processing."""
 
     solution: str = Field(description="Technical solution provided")
-    implementation_steps: List[str] = Field(description="Steps to implement")
+    implementation_steps: list[str] = Field(description="Steps to implement")
     complexity_assessment: str = Field(description="Technical complexity assessment")
-    required_skills: List[str] = Field(description="Skills needed for implementation")
+    required_skills: list[str] = Field(description="Skills needed for implementation")
     estimated_effort: str = Field(description="Effort estimate")
 
 
@@ -75,8 +75,8 @@ class FinalSummary(BaseModel):
     quality_score: float = Field(
         ge=0.0, le=1.0, description="Overall quality assessment"
     )
-    key_outputs: List[str] = Field(description="Main outputs produced")
-    next_steps: Optional[List[str]] = Field(description="Suggested next steps")
+    key_outputs: list[str] = Field(description="Main outputs produced")
+    next_steps: list[str] | None = Field(description="Suggested next steps")
 
 
 # ========================================================================

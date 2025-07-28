@@ -2,13 +2,12 @@
 """Classify and fix syntax errors in Python files with backup and rollback capability."""
 
 import ast
-import json
-import re
-import shutil
 from dataclasses import dataclass
 from datetime import datetime
+import json
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+import re
+import shutil
 
 
 @dataclass
@@ -20,7 +19,7 @@ class ErrorPattern:
     description: str
     fix_strategy: str
     example: str
-    regex: Optional[str] = None
+    regex: str | None = None
 
 
 @dataclass
@@ -31,10 +30,10 @@ class SyntaxErrorInfo:
     line_number: int
     error_message: str
     line_content: str
-    context_before: List[str]
-    context_after: List[str]
-    category: Optional[str] = None
-    suggested_fix: Optional[str] = None
+    context_before: list[str]
+    context_after: list[str]
+    category: str | None = None
+    suggested_fix: str | None = None
 
 
 class SyntaxErrorClassifier:
@@ -44,10 +43,10 @@ class SyntaxErrorClassifier:
         self.backup_dir = backup_dir
         self.backup_dir.mkdir(exist_ok=True)
         self.error_patterns = self._define_error_patterns()
-        self.errors: Dict[str, List[SyntaxErrorInfo]] = {}
-        self.fix_history: List[Dict] = []
+        self.errors: dict[str, list[SyntaxErrorInfo]] = {}
+        self.fix_history: list[dict] = []
 
-    def _define_error_patterns(self) -> List[ErrorPattern]:
+    def _define_error_patterns(self) -> list[ErrorPattern]:
         """Define common error patterns."""
         return [
             ErrorPattern(
@@ -116,10 +115,10 @@ class SyntaxErrorClassifier:
             ),
         ]
 
-    def analyze_file(self, file_path: Path) -> Optional[SyntaxErrorInfo]:
+    def analyze_file(self, file_path: Path) -> SyntaxErrorInfo | None:
         """Analyze a file for syntax errors."""
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, encoding="utf-8") as f:
                 content = f.read()
             ast.parse(content)
             return None  # No syntax error
@@ -172,18 +171,18 @@ class SyntaxErrorClassifier:
         # Specific checks
         if "unterminated string" in error_msg:
             return "unterminated_string"
-        elif "expected an indented block" in error_msg:
+        if "expected an indented block" in error_msg:
             return "missing_block"
-        elif ">=" in line and line.strip().endswith(":"):
+        if ">=" in line and line.strip().endswith(":"):
             return "incomplete_comparison"
-        elif "=" in line and line.strip().endswith("="):
+        if "=" in line and line.strip().endswith("="):
             return "incomplete_assignment"
-        elif "was never closed" in error_msg:
+        if "was never closed" in error_msg:
             return "unclosed_parenthesis"
 
         return "unknown"
 
-    def _suggest_fix(self, error_info: SyntaxErrorInfo) -> Optional[str]:
+    def _suggest_fix(self, error_info: SyntaxErrorInfo) -> str | None:
         """Suggest a fix for the error."""
         line = error_info.line_content
         category = error_info.category
@@ -192,11 +191,11 @@ class SyntaxErrorClassifier:
             # Add a placeholder value
             if ">=" in line:
                 return line.replace(">=:", ">= 0:")
-            elif "<=" in line:
+            if "<=" in line:
                 return line.replace("<=:", "<= 0:")
-            elif ">" in line and line.strip().endswith(">"):
+            if ">" in line and line.strip().endswith(">"):
                 return line.replace(">", "> 0")
-            elif "<" in line and line.strip().endswith("<"):
+            if "<" in line and line.strip().endswith("<"):
                 return line.replace("<", "< 0")
 
         elif category == "incomplete_assignment":
@@ -216,14 +215,12 @@ class SyntaxErrorClassifier:
                 # Odd number of double quotes
                 if line.rstrip().endswith('"'):
                     return line
-                else:
-                    return line.rstrip() + '"'
-            elif single_quotes % 2 != 0:
+                return line.rstrip() + '"'
+            if single_quotes % 2 != 0:
                 # Odd number of single quotes
                 if line.rstrip().endswith("'"):
                     return line
-                else:
-                    return line.rstrip() + "'"
+                return line.rstrip() + "'"
 
         elif category == "missing_block":
             # Add pass statement
@@ -234,7 +231,7 @@ class SyntaxErrorClassifier:
             # Fix common typos
             if " i[" in line or ' i["' in line:
                 return line.replace(" i[", " in [")
-            elif " i " in line and "for " in line:
+            if " i " in line and "for " in line:
                 return re.sub(r"\s+i\s+", " in ", line)
 
         elif category == "incomplete_variable":
@@ -245,7 +242,7 @@ class SyntaxErrorClassifier:
                 # Common completions
                 if attr.endswith("coun"):
                     return line.replace(f"{obj}.{attr}", f"{obj}.{attr}t")
-                elif attr.endswith("statu"):
+                if attr.endswith("statu"):
                     return line.replace(f"{obj}.{attr}", f"{obj}.{attr}s")
 
         return None
@@ -264,7 +261,7 @@ class SyntaxErrorClassifier:
         return backup_path
 
     def apply_fix(
-        self, error_info: SyntaxErrorInfo, custom_fix: Optional[str] = None
+        self, error_info: SyntaxErrorInfo, custom_fix: str | None = None
     ) -> bool:
         """Apply a fix to the file."""
         if not error_info.suggested_fix and not custom_fix:
@@ -274,7 +271,7 @@ class SyntaxErrorClassifier:
         backup_path = self.backup_file(error_info.file_path)
 
         try:
-            with open(error_info.file_path, "r", encoding="utf-8") as f:
+            with open(error_info.file_path, encoding="utf-8") as f:
                 lines = f.readlines()
 
             # Apply fix
@@ -309,10 +306,9 @@ class SyntaxErrorClassifier:
                 # Verify fix
                 if self.analyze_file(error_info.file_path) is None:
                     return True
-                else:
-                    # Rollback if still has errors
-                    shutil.copy2(backup_path, error_info.file_path)
-                    return False
+                # Rollback if still has errors
+                shutil.copy2(backup_path, error_info.file_path)
+                return False
 
         except Exception as e:
             print(f"Error applying fix: {e}")
@@ -411,5 +407,5 @@ class SyntaxErrorClassifier:
     def load_fix_history(self, path: Path) -> None:
         """Load fix history from JSON file."""
         if path.exists():
-            with open(path, "r") as f:
+            with open(path) as f:
                 self.fix_history = json.load(f)
