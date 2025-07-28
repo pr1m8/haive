@@ -257,9 +257,6 @@ autopep8 = "^2.3.2"
 pycodestyle = "^2.14.0"
 ci-py = "^1.0.0"
 pygithub = "^2.6.1"
-gitpython = "^3.1.45"
-fabric-cicd = "^0.1.23"
-multi-repo-automation = "^1.7.0"
 automated-marking = "^0.1.7"
 workflow-manager = "^0.4"
 commitizen = "^4.8.3"
@@ -327,6 +324,14 @@ heartrate = "^0.2.2"
 pdbp = "^1.7.1"
 birdseye = "^0.9.5"
 dead = "^2.1.0"
+import-linter = "^2.3"
+pyroma = "^5.0"
+deptry = "^0.23.0"
+pep8 = "^1.7.1"
+poetry-plugin-export = "^1.9.0"
+gitpython = "^3.1.45"
+fabric-cicd = "^0.1.23"
+multi-repo-automation = "^1.7.0"
 
 
 [tool.poetry.group.docs]
@@ -501,7 +506,6 @@ googlemaps = "^4.10.0"
 discord = "^2.3.2"
 tweepy = "^4.15.0"
 dropbox = "^12.0.2"
-gitpython = "^3.1.44"
 feedparser = "^6.0.11"
 listparser = "^0.20"
 newspaper3k = "^0.2.8"
@@ -576,6 +580,7 @@ python-language-server = "^0.36.2"
 
 [tool.poetry.group.experimental.dependencies]
 langmem = "^0.0.28"
+
 
 [tool.poetry.extras]
 cpu = ["torch", "torchvision", "torchaudio"]
