@@ -430,6 +430,9 @@ jupytext = "^1.17.2"
 pytest-doctestplus = "^1.4.0"
 language-check = "^1.1"
 pydoclint = "^0.6.6"
+pydocstyle = "^6.3.0"
+pytest-sphinx = "^0.6.3"
+sphinx-pytest = "^0.2.0"
 
 [tool.poetry.group.dev.dependencies.torch]
 version = "2.6.0+cu118"
