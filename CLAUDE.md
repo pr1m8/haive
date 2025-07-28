@@ -7,20 +7,98 @@
 ## 🎯 Project Context
 
 - **Directory**: `/home/will/Projects/haive/backend/haive`
-- **Branch**: `feature/fix_everything`
+- **Branch**: `docs/autoapi-namespace-fix-2025`
+- **Documentation Status**: ✅ **44,450 issues analyzed, 80% tools ready!**
 - **Core Rules**:
   - Always use `poetry run` prefix for ALL Python commands
   - Real components only - NO MOCKS EVER in tests
   - Always use explicit imports: `from haive.core.*`
+
+## 🚨 CRITICAL: Git Submodule Structure
+
+**WARNING**: This is NOT a monorepo! Each package is a separate Git submodule:
+
+```bash
+git submodule status
++de5abc2 packages/haive-agents (recovery-critical-20250722-225154-21-gde5abc2)
++3ed9253 packages/haive-core (heads/feature/fix_everything)
++4d88163 packages/haive-dataflow (heads/feature/fix_everything)
++6693859 packages/haive-games (heads/experiment/dev-tools-testing)
++ed3b681 packages/haive-mcp (heads/feature/fix_everything)
++37e35cf packages/haive-prebuilt (heads/feature/fix_everything)
++c849894 packages/haive-tools (heads/feature/fix_everything)
+```
+
+### Submodule Workflow Rules
+
+**NEVER** run Git commands from root that affect package files:
+
+- ❌ `find packages/ -name "*.py"` (spans multiple repos)
+- ❌ `git add packages/haive-core/` (wrong repo context)
+- ❌ `git commit -m "fix across packages"` (can't commit across submodules)
+
+**ALWAYS** work within individual package directories:
+
+```bash
+# ✅ CORRECT - Work in each submodule separately
+cd packages/haive-core/
+git status && git diff
+git checkout -b fix/state-schema-dict-compat
+# Make changes in haive-core only
+git add . && git commit -m "fix: add dict compatibility to StateSchema"
+
+cd ../haive-agents/
+git status && git diff
+git checkout -b fix/use-dict-compatible-states
+# Make changes in haive-agents only
+git add . && git commit -m "feat: use dict-compatible StateSchema"
+
+# Back to root to update submodule references
+cd ../../
+git add packages/haive-core packages/haive-agents
+git commit -m "update: submodule refs for dict compatibility fix"
+```
+
+### Cross-Package Development Strategy
+
+1. **Start with haive-core**: Make foundational changes first
+2. **Test in isolation**: Each submodule tests independently
+3. **Update dependents**: haive-agents, haive-tools depend on haive-core
+4. **Coordinate releases**: Version bumps across related packages
+5. **Update parent repo**: Commit submodule reference updates
+
+### Submodule-Aware Commands
+
+```bash
+# Check all submodule status
+git submodule foreach git status
+
+# Pull updates across all submodules
+git submodule foreach git pull origin main
+
+# Create branches in multiple submodules
+git submodule foreach 'git checkout -b feature/new-feature || true'
+
+# Run tests in each package
+git submodule foreach 'poetry run pytest || true'
+```
 
 ## 📚 Essential Documentation
 
 ### 🧠 Memory Index System
 
 - **@memory_index/README.md** - Central memory index for all discoveries
-- **@memory_index/quick_reference.md** - Most-used patterns and fixes
+- **@memory_index/quick_reference.md** - Most-used patterns and fixes ✅ **UPDATED 2025-07-28**
 - **@memory_index/by_date/** - Chronological memory tracking
 - **@project_docs/README.md** - Main project documentation hub
+
+### 📊 Documentation Automation (NEW 2025-07-28)
+
+- **@project_docs/documentation_fix/COMPREHENSIVE_GOOGLE_STYLE_SUMMARY.md** - 80% tools ready!
+- **@project_docs/documentation_fix/REFINED_AUTOMATION_PLAN.md** - Complete execution plan
+- **@memory_index/by_date/2025-07-28/documentation_automation_discovery.md** - Major findings
+- **@scripts/refined_doc_analyzer.py** - Advanced issue detection (21K+ issues found)
+- **@scripts/doc_issue_tracker.py** - SQLite progress tracking system
 
 ### Standards & Guides (Import for details)
 
@@ -37,27 +115,96 @@
 
 ## 🚀 Current Focus
 
-- **Active Work**: MultiAgent Sequential Pattern (ReactAgent → SimpleAgent)
-- **Issues**: @project_docs/sessions/active/current_issues.md
-- **Recent Achievements**: See @memory_index/by_date/2025-01-16/
+### 📊 Documentation Automation (2025-07-28)
 
-## 🔥 Git Safety Protocol (CRITICAL)
+- **44,450 documentation issues** analyzed and categorized
+- **42,417 auto-fixable** with 95.4% confidence
+- **80% of Google-style tools** already in dev dependencies!
+- **36 critical functions** need immediate documentation
+- **Ready to execute**: See quick commands in @memory_index/quick_reference.md
+
+### Previous Work (StateSchema Dict Compatibility)
+
+- **CRITICAL ISSUE IDENTIFIED**: StateSchema Dict Compatibility
+  - `state["key"]` fails with "not subscriptable" error
+  - `state.get("key")` works but LangGraph expects dict access
+  - Affects EnhancedMultiAgentV4 and all multi-agent workflows
+  - **Solution**: Add `__getitem__`, `__setitem__`, `__contains__` to StateSchema
+  - **Plan**: @STATE_SCHEMA_DICT_COMPATIBILITY_FIX_PLAN.md
+
+- **Active Work**: Documentation Automation & Google-style Enforcement
+- **Issues**: @project_docs/sessions/active/current_issues.md
+- **Recent Achievements**: See @memory_index/by_date/2025-07-28/
+
+## 🔥 Git Safety Protocol (CRITICAL) - Submodule Aware
+
+### For Root Repository (Parent Repo)
 
 ```bash
 # BEFORE ANY WORK
 git status && git diff
+git submodule status      # Check all submodule states
+
+# BEFORE COMMITTING (root only commits submodule references)
+git diff --cached         # Review staged changes
+git status                # Should only show packages/*/
+
+# COMMIT SAFELY (only submodule reference updates)
+git add packages/haive-core packages/haive-agents
+git commit -m "update: submodule refs for [specific change]"
+```
+
+### For Individual Packages (Submodules)
+
+```bash
+# ALWAYS work within the specific package directory
+cd packages/haive-core/   # or haive-agents/, haive-tools/, etc.
+
+# BEFORE ANY WORK IN SUBMODULE
+git status && git diff
+pwd                       # Confirm you're in the right submodule
 
 # BEFORE CREATING FILES
-find . -name "similar_file*"  # Check if exists
+find . -name "similar_file*" -not -path "./.*"  # Check if exists (in this submodule only)
 
-# BEFORE COMMITTING
-git diff --cached           # Review staged changes
-trunk check --all          # Run linting
-poetry run pytest          # Run tests
+# BEFORE COMMITTING IN SUBMODULE
+git diff --cached         # Review staged changes
+trunk check --all        # Run linting (if available in this package)
+poetry run pytest        # Run tests for THIS package only
 
-# COMMIT SAFELY
-git add specific_file.py   # Add individually
-git commit -m "feat: clear description"
+# COMMIT SAFELY IN SUBMODULE
+git add specific_file.py  # Add individually within this submodule
+git commit -m "feat: clear description within [package-name]"
+
+# AFTER COMMITTING IN SUBMODULE
+cd ../../                 # Return to root
+git status                # Will show modified submodule
+git add packages/[package-name]
+git commit -m "update: [package-name] submodule ref for [change]"
+```
+
+### Cross-Package Changes (Multi-Submodule)
+
+```bash
+# 1. Start with foundational package (usually haive-core)
+cd packages/haive-core/
+git checkout -b fix/state-schema-dict-compat
+# Make changes, test, commit
+git add . && git commit -m "fix: add dict compatibility to StateSchema"
+
+# 2. Update dependent packages
+cd ../haive-agents/
+git checkout -b fix/use-dict-compatible-states
+# Make changes, test, commit
+git add . && git commit -m "feat: use dict-compatible StateSchema"
+
+# 3. Update parent repo with new submodule references
+cd ../../
+git add packages/haive-core packages/haive-agents
+git commit -m "update: submodule refs for dict compatibility across core and agents"
+
+# 4. Test integration from root
+poetry run pytest packages/haive-agents/tests/test_enhanced_multi_agent_v4_single_agent.py
 ```
 
 ## 🛠️ Most Used Commands
