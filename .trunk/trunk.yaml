@@ -67,6 +67,7 @@ lint:
         - .venv/**
         - venv/**
         - ENV/**
+        - project_docs/**
         - "*.egg-info/**"
         # Allow packages to be linted now
         - packages/**/test_*.py
