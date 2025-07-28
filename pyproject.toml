@@ -335,6 +335,7 @@ multi-repo-automation = "^1.7.0"
 taskipy = "^1.14.1"
 invoke = "^2.2.0"
 just = "^0.8.165"
+rstcheck-core = "^1.2.2"
 
 
 [tool.poetry.group.docs]
