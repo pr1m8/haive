@@ -383,6 +383,7 @@ sphinxcontrib-packages = "^1.2.0"
 sphinx-documatt-theme = "^0.0.6"
 sphinx-immaterial-igwn = "^0.2.0"
 sphinx-immaterial = "^0.13.5"
+autodocumentation-python = "^2.0"
 
 [tool.poetry.group.dev.dependencies.torch]
 version = "2.6.0+cu118"
