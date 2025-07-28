@@ -1,0 +1,6 @@
+[darglint]
+docstring_style = google
+strictness = short
+ignore = DAR003,DAR203
+message_template = {path}:{line} {msg_id} {msg}
+enable_disabled_checks = DAR103,DAR203
