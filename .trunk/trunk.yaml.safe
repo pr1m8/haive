@@ -1,0 +1,91 @@
+# .trunk/trunk.yaml.safe - SAFE FOR PYLANCE
+# See: https://docs.trunk.io/reference/trunk-yaml
+version: 0.1
+
+cli:
+  version: 1.24.0
+plugins:
+  sources:
+    - id: trunk
+      ref: v1.7.1
+      uri: https://github.com/trunk-io/plugins
+
+runtimes:
+  enabled:
+    - go@1.21.0
+    - node@22.16.0
+    - python@3.10.8
+
+lint:
+  enabled:
+    - actionlint@1.7.7
+    - bandit@1.8.6
+    - black@25.1.0
+    - checkov@3.2.454
+    - dotenv-linter@3.3.0
+    - git-diff-check
+    - hadolint@2.12.1-beta
+    - isort@6.0.1
+    - markdownlint@0.45.0
+    # DISABLED: mypy@1.17.0  # CONFLICTS WITH PYLANCE - KEEP DISABLED
+    - osv-scanner@2.0.3
+    - oxipng@9.1.5
+    - prettier@3.6.2
+    - ruff@0.12.5
+    - shellcheck@0.10.0
+    - shfmt@3.6.0
+    - taplo@0.9.3
+    - trufflehog@3.90.2
+    - yamllint@1.37.1
+  disabled:
+    - mypy  # CRITICAL: Disabled to avoid conflict with Pylance
+  ignore:
+    - linters: [ALL]
+      paths:
+        # COMPLETELY EXCLUDE ALL PACKAGES - THEY MANAGE THEMSELVES
+        - packages/**
+        
+        # Standard exclusions for main repo only
+        - "**/migrations/**"
+        - "**/__pycache__/**"
+        - .history/**
+        - .venv/**
+        - node_modules/**
+        - projects/**
+        - data/**
+        - resources/**
+        - assets/**
+        - dist/**
+        - build/**
+        - tests/**
+        - tmp/**
+        - plugins/**
+        - tools/**
+        - logs/**
+        - actions/**
+        - docs/**
+        - scripts/**
+        - scratches/**
+        - notifications/**
+        - .secrets/**
+        - venv/**
+        - ENV/**
+        - project_docs/**
+        - "*.egg-info/**"
+
+actions:
+  disabled:
+    - trunk-announce
+  enabled:
+    - trunk-check-pre-push
+    - trunk-fmt-pre-commit
+    - trunk-check-pre-commit
+    - git-lfs
+    - trunk-upgrade-available
+  definitions:
+    - id: git-lfs
+      display_name: Git LFS
+      description: Git LFS hooks for handling large files
+      run: git lfs "${hook}" "${@}"
+      triggers:
+        - git_hooks: [post-checkout, post-commit, post-merge, pre-push]
