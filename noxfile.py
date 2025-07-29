@@ -150,9 +150,9 @@ def docs(session):
     # Create log file
     log_file = create_log_file(session, "docs_build")
 
-    # Install dependencies
+    # Install dependencies - docs now depend on tools for google-search-results
     session.log("📦 Installing documentation dependencies...")
-    session.run("poetry", "install", "--with", "docs", external=True)
+    session.run("poetry", "install", "--with", "docs,tools", external=True)
 
     # Set environment for incremental builds
     os.environ["SPHINX_AUTOSUMMARY_GENERATE"] = (
@@ -232,9 +232,9 @@ def docs_full(session):
     # Create log file
     log_file = create_log_file(session, "docs_full_build")
 
-    # Install dependencies
+    # Install dependencies - docs now depend on tools for google-search-results
     session.log("📦 Installing documentation dependencies...")
-    session.run("poetry", "install", "--with", "docs", external=True)
+    session.run("poetry", "install", "--with", "docs,tools", external=True)
 
     # Set environment for full regeneration
     os.environ["SPHINX_AUTOSUMMARY_GENERATE"] = "true"  # Force autosummary regeneration
@@ -351,9 +351,9 @@ def docs_autobuild(session):
     except:
         session.log("ℹ️  No existing processes to kill")
 
-    # Install dependencies
+    # Install dependencies - docs now depend on tools for google-search-results
     session.log("📦 Installing documentation dependencies...")
-    session.run("poetry", "install", "--with", "docs", external=True)
+    session.run("poetry", "install", "--with", "docs,tools", external=True)
 
     # Set environment for graceful handling
     os.environ["SPHINX_AUTOSUMMARY_GENERATE"] = "false"  # Faster for serving
@@ -764,9 +764,9 @@ def docs_linkcheck(session):
     # Create log file
     log_file = create_log_file(session, "docs_linkcheck")
 
-    # Install dependencies
+    # Install dependencies - docs now depend on tools for google-search-results
     session.log("📦 Installing documentation dependencies...")
-    session.run("poetry", "install", "--with", "docs", external=True)
+    session.run("poetry", "install", "--with", "docs,tools", external=True)
 
     # Run sphinx linkcheck
     cmd = [
@@ -806,9 +806,9 @@ def docs_coverage(session):
     # Create log file
     log_file = create_log_file(session, "docs_coverage")
 
-    # Install dependencies
+    # Install dependencies - docs now depend on tools for google-search-results
     session.log("📦 Installing documentation dependencies...")
-    session.run("poetry", "install", "--with", "docs", external=True)
+    session.run("poetry", "install", "--with", "docs,tools", external=True)
 
     # Run coverage check
     cmd = [
@@ -841,9 +841,9 @@ def docs_pdf(session):
     # Create log file
     log_file = create_log_file(session, "docs_pdf")
 
-    # Install dependencies
+    # Install dependencies - docs now depend on tools for google-search-results
     session.log("📦 Installing documentation dependencies...")
-    session.run("poetry", "install", "--with", "docs", external=True)
+    session.run("poetry", "install", "--with", "docs,tools", external=True)
 
     # First build HTML (required for simplepdf)
     session.log("🔨 Building HTML first...")
