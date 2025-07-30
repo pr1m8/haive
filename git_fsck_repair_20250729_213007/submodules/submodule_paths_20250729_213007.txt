@@ -1,0 +1,14 @@
+=== Submodule: packages/haive-agents ===
+/home/will/Projects/haive/backend/haive/packages/haive-agents
+=== Submodule: packages/haive-core ===
+/home/will/Projects/haive/backend/haive/packages/haive-core
+=== Submodule: packages/haive-dataflow ===
+/home/will/Projects/haive/backend/haive/packages/haive-dataflow
+=== Submodule: packages/haive-games ===
+/home/will/Projects/haive/backend/haive/packages/haive-games
+=== Submodule: packages/haive-mcp ===
+/home/will/Projects/haive/backend/haive/packages/haive-mcp
+=== Submodule: packages/haive-prebuilt ===
+/home/will/Projects/haive/backend/haive/packages/haive-prebuilt
+=== Submodule: packages/haive-tools ===
+/home/will/Projects/haive/backend/haive/packages/haive-tools

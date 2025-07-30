@@ -1,0 +1,12 @@
+commit eff19e4df8424f719606db83f253db052975771f
+Merge: c1fda95e 7e13d11a
+Author: pr1m8 <william.astley@algebraicwealth.com>
+Date:   Tue Jul 22 18:38:36 2025 -0400
+
+    WIP on docs/fix-documentation-20250121: c1fda95 feat(docs): comprehensive documentation styling and structure overhaul
+
+ docs/screenshots/api_documentation_all_6_packages | Bin 108100 -> 131 bytes
+ docs/screenshots/complete_documentation_homepage  | Bin 1235415 -> 132 bytes
+ docs/screenshots/haive_agents_api_documentation   | Bin 28885 -> 130 bytes
+ docs/source/conf.py                               |   2 +-
+ 4 files changed, 1 insertion(+), 1 deletion(-)

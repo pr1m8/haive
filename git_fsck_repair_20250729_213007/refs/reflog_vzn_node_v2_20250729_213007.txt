@@ -1,0 +1,7 @@
+086f545f vzn/node_v2@{2025-05-02 16:20:46 -0400}: commit: Update .gitignore to exclude project documentation directory
+653a9509 vzn/node_v2@{2025-05-02 14:52:28 -0400}: commit: Enhance documentation and node system implementation
+34d1023c vzn/node_v2@{2025-05-02 14:24:48 -0400}: commit: Update .gitignore to exclude Claude settings files
+71797c29 vzn/node_v2@{2025-05-01 20:47:43 -0400}: commit: Implement new node system with streamlined API and improved state integration
+27a2b504 vzn/node_v2@{2025-05-01 19:06:27 -0400}: commit: added claude-code
+8f555280 vzn/node_v2@{2025-05-01 17:58:28 -0400}: commit: Add documentation for LangGraph's branching, interrupt handling, configuration management, retry policies, tool nodes, and validation nodes. This includes detailed explanations, code examples, and implementation patterns to support the Haive node system redesign.
+23991ff2 vzn/node_v2@{2025-05-01 17:44:34 -0400}: branch: Created from HEAD

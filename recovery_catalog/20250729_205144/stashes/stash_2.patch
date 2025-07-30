@@ -1,0 +1,29 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index 40616f13..5907a6f7 100755
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -553,6 +553,24 @@ lines-after-imports = 2
+ # Instruct Trailrunner to skip any .cache/trunk or .trunk directories
+ exclude = ["**/.cache/trunk/**", "**/.trunk/**"]
+ 
++# 🚀 Taskipy Development Workflow Tasks
++[tool.taskipy.tasks]
++# 🧠 Intelligent Error Analysis & Categorization
++analyze-errors = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only"
++analyze-errors-verbose = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only --verbose"
++
++# 🚨 Safety-Level Fixes (Progressive Approach)
++emergency-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 1"
++surgical-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 2"
++moderate-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 3"
++
++# 👁️ Preview Modes  
++preview-emergency = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --preview --safety-level 1"
++preview-surgical = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --preview --safety-level 2"
++
++# 🚀 Quick Workflows
++quick-fix = "poetry run task emergency-fix && poetry run task surgical-fix"
++health-check = "find packages/haive-prebuilt/src -name '*.py' -exec python3 -m py_compile {} \\; 2>&1 | grep -c 'SyntaxError\\|IndentationError' || echo '✅ All files compile successfully'"
+ 
+ [build-system]
+ requires = ["poetry-core"]

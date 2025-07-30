@@ -1,0 +1,31 @@
+stash@{2025-07-29 19:37:59 -0400}: On feature/fix_everything: emergency-checkpoint-before-direct-fixes-20250729_193759
+stash@{2025-07-29 19:36:18 -0400}: On feature/fix_everything_v2: error-analyzer-checkpoint-20250729_193609
+stash@{2025-07-29 19:19:41 -0400}: On feature/fix_everything: error-analyzer-checkpoint-20250729_191934
+stash@{2025-07-29 19:18:03 -0400}: On feature/fix_everything_v2: error-analyzer-checkpoint-20250729_191756
+stash@{2025-07-29 18:40:10 -0400}: On feature/fix_everything_v2: PRE_FLIGHT_SYNTAX_20250729_184010
+stash@{2025-07-29 18:36:02 -0400}: On feature/fix_everything_v2: PRE_FLIGHT_SYNTAX_20250729_183602
+stash@{2025-07-29 18:23:40 -0400}: On feature/fix_everything_v2: SYSTEMATIC_FIXER_MASTER_20250729_182340
+stash@{2025-07-29 18:13:55 -0400}: On feature/fix_everything: INDENTATION_FIX_autopep8_20250729_181355
+stash@{2025-07-29 17:49:30 -0400}: On feature/fix_everything_v2: MODERNIZATION_CHECKPOINT_20250729_174930
+stash@{2025-07-29 17:44:22 -0400}: On feature/fix_everything: CONFIG_SYNC_CHECKPOINT_20250729_174422
+stash@{2025-07-29 17:41:47 -0400}: On feature/fix_everything_v2: IMPORT_MANAGER_CHECKPOINT_20250729_174147
+stash@{2025-07-29 11:37:23 -0400}: On (no branch): WIP: all changes including untracked
+stash@{2025-07-29 11:37:07 -0400}: On (no branch): WIP: detached HEAD changes
+stash@{2025-07-28 23:03:11 -0400}: On feature/fix_everything: Save all current work before July 27 reset
+stash@{2025-07-28 09:32:58 -0400}: On feature/fix_everything: WIP: Before testing unterminated string fixes
+stash@{2025-07-28 04:51:46 -0400}: On feature/fix_everything: Safety backup before haive-core documentation fixes 20250728_045146
+stash@{2025-07-28 04:06:30 -0400}: On feature/fix_everything: Keep CLAUDE.md warning updates
+stash@{2025-07-28 03:32:37 -0400}: On feature/fix_everything: Accidental changes - reverting to docs branch
+stash@{2025-07-27 20:46:40 -0400}: On feature/fix_everything: WIP: docstring and syntax fixes
+stash@{2025-07-27 16:18:06 -0400}: On feature/fix_everything: Pre-AutoAPI fix work - documentation analysis
+stash@{2025-07-27 16:08:11 -0400}: On feature/fix_everything: Temporary stash for branch switching
+stash@{2025-07-27 15:45:07 -0400}: On feature/fix_everything: Current docs work
+stash@{2025-07-23 03:34:33 -0400}: WIP on feature/fix_everything: b4e66d1 feat(haive-core): implement comprehensive lazy loading for import performance
+stash@{2025-07-22 23:08:13 -0400}: On feature/fix_everything: Screenshots to handle later
+stash@{2025-07-22 22:13:48 -0400}: On feature/fix_everything: searching for missing files
+stash@{2025-07-22 18:38:36 -0400}: WIP on docs/fix-documentation-20250121: c1fda95 feat(docs): comprehensive documentation styling and structure overhaul
+stash@{2025-07-22 15:46:01 -0400}: WIP on docs/fix-documentation-20250121: c1fda95 feat(docs): comprehensive documentation styling and structure overhaul
+stash@{2025-07-22 15:44:47 -0400}: WIP on feature/node-system-organization: c1fda95 feat(docs): comprehensive documentation styling and structure overhaul
+stash@{2025-07-05 04:37:04 -0400}: WIP on refactor/schema-engine-backwards-compatible: 927b7e6 Update .gitignore to exclude state_history directory
+stash@{2025-07-02 17:07:12 -0400}: On fix/import-issues: temporary stash before schema analysis
+stash@{2025-06-16 12:56:36 -0400}: WIP on feature/schema_v4: eecb13a Add haive-mcp as submodule

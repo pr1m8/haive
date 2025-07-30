@@ -1,0 +1,74 @@
+diff --git a/CLAUDE.md b/CLAUDE.md
+index e1708152..47a5fe16 100644
+--- a/CLAUDE.md
++++ b/CLAUDE.md
+@@ -46,17 +46,56 @@
+ 
+ ## 🔥 Git Safety Protocol (CRITICAL)
+ 
++### 🚨 **ABSOLUTELY NEVER RUN THESE COMMANDS** 🚨
++
++```bash
++# ❌❌❌ FORBIDDEN - DESTROYS SUBMODULE BRANCHES ❌❌❌
++git submodule update          # PUTS SUBMODULES IN DETACHED HEAD!!!
++git submodule update --init   # DESTROYS BRANCH STATE!!!  
++git submodule update --recursive  # CATASTROPHIC!!!
++
++# ❌❌❌ THESE COMMANDS BREAK EVERYTHING ❌❌❌
++# NEVER EVER USE THESE - THEY RESET SUBMODULES TO COMMIT HASHES
++# INSTEAD OF KEEPING THEM ON BRANCHES!!!
++```
++
++### ✅ **CORRECT Way to Fix Detached HEAD Submodules**
++
++When submodules get put into detached HEAD (because someone ran the forbidden commands above):
++
++```bash
++# Fix each submodule individually - go into each directory
++cd packages/haive-mcp
++git checkout feature/fix_everything
++cd ../haive-prebuilt
++git checkout feature/fix_everything  
++cd ../haive-dataflow
++git checkout feature/fix_everything
++cd ../haive-tools
++git checkout feature/fix_everything
++cd ../haive-core
++git checkout feature/fix_everything
++cd ../haive-agents
++git checkout feature/fix_everything
++cd ../../  # Back to root
++
++# THEN commit the submodule reference updates from root
++git add packages/haive-mcp packages/haive-prebuilt packages/haive-dataflow packages/haive-tools packages/haive-core packages/haive-agents
++git commit -m "fix: restore submodules to feature/fix_everything branches"
++```
++
+ ### Essential Safety Commands
+ 
+ ```bash
+ # BEFORE ANY WORK
+ git status && git diff
++git submodule status  # Check submodule states
+ 
+ # BEFORE COMMITTING
+ git diff --cached && trunk check --all && poetry run pytest
+ git add specific_file.py && git commit -m "feat: clear description"
+ 
+-# SUBMODULE SAFETY
++# SUBMODULE SAFETY CHECK
+ cd packages/haive-{package} && git status && git branch -vv
+ git branch backup-$(date +%Y%m%d-%H%M%S)  # Create backup
+ 
+@@ -65,7 +104,10 @@ git reflog  # Find lost commits
+ git branch recovery-branch HEAD@{n}
+ ```
+ 
+-**Key Rules**: Never force push submodules, always create backups, check status before work.
++**Key Rules**: 
++- **NEVER** run `git submodule update` commands
++- Always keep submodules on branches, not detached HEADs
++- Never force push submodules, always create backups, check status before work
+ 
+ ## 🛠️ Most Used Commands
+ 

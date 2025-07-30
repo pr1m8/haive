@@ -1,0 +1,70 @@
+commit 35ba700c786b2683e90b3942507445234d85c788
+Merge: 15ca1591 f3b2fb7e
+Author: pr1m8 <william.astley@algebraicwealth.com>
+Date:   Tue Jul 29 17:41:47 2025 -0400
+
+    On feature/fix_everything_v2: IMPORT_MANAGER_CHECKPOINT_20250729_174147
+
+ docs/AGENT_CAPTURE_SYSTEM.md                       |    287 -
+ docs/DOCUMENTATION_FIX_SUMMARY.md                  |    163 -
+ docs/README_GIT_LFS.md                             |    184 -
+ docs/TEMPLATE_CONVERSION_WORKFLOW.md               |    481 -
+ docs/TESTING_README.md                             |    241 -
+ docs/add_function_docstrings.py                    |    375 -
+ docs/agent_showcase_data.json                      |   5495 -
+ .../archive_old_docs/DOCUMENTATION_ISSUES_AUDIT.md |   1366 -
+ .../DOCUMENTATION_REQUIREMENTS_SPEC.md             |    617 -
+ docs/archive_old_docs/ORGANIZATION_OVERVIEW.md     |    199 -
+ .../SESSION_MEMORY_COMPLETE_2025_07_18.md          |    262 -
+ .../comprehensive_import_analysis.md               |    286 -
+ .../AGENT_SYSTEM_IMPROVEMENT_PLAN.md               |    257 -
+ .../developer-guides/multi-agent-development.md    |    461 -
+ docs/archive_old_docs/documentation-guide.md       |     82 -
+ .../documentation_memory_structure.md              |    152 -
+ .../error_reports/autosummary_keyerror_analysis.md |     77 -
+ .../error_reports/build_report_20250716_041122.md  |    314 -
+ .../error_reports/build_report_20250721_025146.md  |     96 -
+ .../error_reports/build_report_20250721_025609.md  |     91 -
+ .../error_reports/build_report_20250721_030256.md  |     86 -
+ .../error_reports/build_report_20250721_035308.md  |     67 -
+ .../comprehensive_doc_build_fix_summary.md         |    104 -
+ docs/archive_old_docs/implementation_plan.md       |    182 -
+ .../quick_import_check_20250625_163103.json        |     86 -
+ .../quick_import_check_20250625_164402.json        |     86 -
+ docs/archive_old_docs/import_warnings_summary.md   |     58 -
+ docs/archive_old_docs/modernization_comparison.md  |    237 -
+ .../build_system/html_truncation_issue.md          |     54 -
+ .../project_docs/documentation_build_strategy.md   |    511 -
+ .../project_docs/documentation_issues.md           |    123 -
+ .../project_docs/tools_documentation_approach.md   |    268 -
+ docs/archive_old_docs/remaining_issues_status.md   |    268 -
+ docs/audit_results/DOCUMENTATION_ACTION_PLAN.md    |    588 -
+ docs/audit_results/audit_log.txt                   |      2 -
+ docs/audit_results/current_audit.txt               |  54611 ------
+ docs/audit_results/full_audit.json                 | 156784 ------------------
+ docs/audit_results/worst_files_summary.txt         |    200 -
+ docs/auto_build.sh                                 |     86 -
+ docs/autobuild.sh                                  |     40 -
+ docs/check_navigation_status.sh                    |     49 -
+ docs/cleanup_and_build.py                          |    245 -
+ docs/docstring_templates.py                        |    383 -
+ docs/generate_agent_demos.py                       |    516 -
+ docs/generate_game_demos.py                        |    545 -
+ docs/import_analysis.txt                           |    124 -
+ docs/monitor_build.sh                              |     70 -
+ docs/quick_rebuild.sh                              |     13 -
+ docs/run_all_doc_tests.py                          |    263 -
+ docs/run_examples_for_docs.py                      |    426 -
+ docs/serve.sh                                      |     23 -
+ docs/source/conf.py                                |    156 +-
+ docs/start_docs.sh                                 |    122 -
+ docs/start_docs_server.sh                          |    477 -
+ docs/take_screenshot_both.py                       |     60 -
+ docs/take_screenshot_quick.py                      |     32 -
+ docs/test_scripts_summary.md                       |    112 -
+ docs/validate_css_fixes.py                         |    232 -
+ docs/validate_game_demos.py                        |    293 -
+ docs/visualize_agent_example.py                    |      0
+ noxfile.py                                         |    596 +-
+ pyproject.toml                                     |    279 +-
+ 62 files changed, 991 insertions(+), 229952 deletions(-)

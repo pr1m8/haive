@@ -1,0 +1,8 @@
+commit 6079a4e555b45d67ff48c3bd3366dbc75373b54d
+Merge: 15ca1591 380d82cb
+Author: pr1m8 <william.astley@algebraicwealth.com>
+Date:   Tue Jul 29 18:36:02 2025 -0400
+
+    On feature/fix_everything_v2: PRE_FLIGHT_SYNTAX_20250729_183602
+
+pyproject.toml

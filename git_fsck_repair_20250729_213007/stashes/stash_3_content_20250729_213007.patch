@@ -1,0 +1,581 @@
+diff --git a/.github/actions/python-detect-package-manager/action.yml b/.github/actions/python-detect-package-manager/action.yml
+new file mode 100644
+index 00000000..c3a6ea8a
+--- /dev/null
++++ b/.github/actions/python-detect-package-manager/action.yml
+@@ -0,0 +1,56 @@
++name: "Detect Package Manager"
++description: "Detects if this project uses requirements.txt, Poetry, Pipenv, or setup.py and sets outputs."
++inputs: {}
++outputs:
++  manager:
++    description: "One of requirements, poetry, pipenv, setup"
++  manifest:
++    description: "The manifest file to use (e.g. requirements.txt or pyproject.toml)"
++runs:
++  using: "composite"
++  steps:
++    - name: Check for requirements.txt
++      id: req
++      run: |
++        if [[ -f requirements.txt ]]; then
++          echo "manager=requirements" >> $GITHUB_OUTPUT
++          echo "manifest=requirements.txt" >> $GITHUB_OUTPUT
++          exit 0
++        fi
++        echo "req_missing=true" >> $GITHUB_OUTPUT
++
++    - name: Check for Poetry
++      id: poetry
++      run: |
++        if [[ -f pyproject.toml ]] && grep -q '\[tool.poetry\]' pyproject.toml; then
++          echo "manager=poetry" >> $GITHUB_OUTPUT
++          echo "manifest=pyproject.toml" >> $GITHUB_OUTPUT
++          exit 0
++        fi
++        echo "poetry_missing=true" >> $GITHUB_OUTPUT
++
++    - name: Check for Pipenv
++      id: pipenv
++      run: |
++        if [[ -f Pipfile ]]; then
++          echo "manager=pipenv" >> $GITHUB_OUTPUT
++          echo "manifest=Pipfile" >> $GITHUB_OUTPUT
++          exit 0
++        fi
++        echo "pipenv_missing=true" >> $GITHUB_OUTPUT
++
++    - name: Check for setup.py
++      id: setup
++      run: |
++        if [[ -f setup.py ]]; then
++          echo "manager=setup" >> $GITHUB_OUTPUT
++          echo "manifest=setup.py" >> $GITHUB_OUTPUT
++          exit 0
++        fi
++        echo "setup_missing=true" >> $GITHUB_OUTPUT
++
++    - name: Fail if no manager found
++      if: ${{ always() && (needs.detect.outputs.manager == '') }}
++      run: |
++        echo "No supported manifest found" >&2
++        exit 1
+diff --git a/.github/actions/python-generate-requirements/action.yml b/.github/actions/python-generate-requirements/action.yml
+new file mode 100644
+index 00000000..7b82e14f
+--- /dev/null
++++ b/.github/actions/python-generate-requirements/action.yml
+@@ -0,0 +1,51 @@
++name: "Generate Requirements"
++description: "Generates requirements.txt based on detected package manager and Python version."
++inputs:
++  manager:
++    description: "Package manager (requirements|poetry|pipenv|setup)"
++    required: true
++  manifest:
++    description: "Manifest filename"
++    required: true
++runs:
++  using: "composite"
++  steps:
++    - name: Setup Python
++      uses: actions/setup-python@v4
++      with:
++        python-version: ${{ inputs.python_version }}
++
++    - name: Install dependencies
++      if: ${{ inputs.manager == 'poetry' }}
++      run: |
++        curl -sSL https://install.python-poetry.org | python3 -
++        echo "$HOME/.local/bin" >> $GITHUB_PATH
++        poetry install --no-dev
++
++    - name: Install dependencies
++      if: ${{ inputs.manager == 'pipenv' }}
++      run: |
++        pip install pipenv
++        pipenv install --dev --deploy
++
++    - name: Generate requirements.txt from Poetry
++      if: ${{ inputs.manager == 'poetry' }}
++      run: poetry export --without-hashes --without dev -f requirements.txt -o requirements.txt
++
++    - name: Generate requirements.txt from Pipenv
++      if: ${{ inputs.manager == 'pipenv' }}
++      run: pipenv lock -r > requirements.txt
++
++    - name: Copy existing requirements.txt
++      if: ${{ inputs.manager == 'requirements' }}
++      run: cp requirements.txt requirements.txt
++
++    - name: Generate requirements.txt from setup.py
++      if: ${{ inputs.manager == 'setup' }}
++      run: pip install pipreqs && pipreqs . --force
++
++    - name: Upload requirements
++      uses: actions/upload-artifact@v3
++      with:
++        name: requirements
++        path: requirements.txt
+diff --git a/.github/workflows/python_get_requirements.txt b/.github/workflows/python_get_requirements.txt
+new file mode 100644
+index 00000000..7b82e14f
+--- /dev/null
++++ b/.github/workflows/python_get_requirements.txt
+@@ -0,0 +1,51 @@
++name: "Generate Requirements"
++description: "Generates requirements.txt based on detected package manager and Python version."
++inputs:
++  manager:
++    description: "Package manager (requirements|poetry|pipenv|setup)"
++    required: true
++  manifest:
++    description: "Manifest filename"
++    required: true
++runs:
++  using: "composite"
++  steps:
++    - name: Setup Python
++      uses: actions/setup-python@v4
++      with:
++        python-version: ${{ inputs.python_version }}
++
++    - name: Install dependencies
++      if: ${{ inputs.manager == 'poetry' }}
++      run: |
++        curl -sSL https://install.python-poetry.org | python3 -
++        echo "$HOME/.local/bin" >> $GITHUB_PATH
++        poetry install --no-dev
++
++    - name: Install dependencies
++      if: ${{ inputs.manager == 'pipenv' }}
++      run: |
++        pip install pipenv
++        pipenv install --dev --deploy
++
++    - name: Generate requirements.txt from Poetry
++      if: ${{ inputs.manager == 'poetry' }}
++      run: poetry export --without-hashes --without dev -f requirements.txt -o requirements.txt
++
++    - name: Generate requirements.txt from Pipenv
++      if: ${{ inputs.manager == 'pipenv' }}
++      run: pipenv lock -r > requirements.txt
++
++    - name: Copy existing requirements.txt
++      if: ${{ inputs.manager == 'requirements' }}
++      run: cp requirements.txt requirements.txt
++
++    - name: Generate requirements.txt from setup.py
++      if: ${{ inputs.manager == 'setup' }}
++      run: pip install pipreqs && pipreqs . --force
++
++    - name: Upload requirements
++      uses: actions/upload-artifact@v3
++      with:
++        name: requirements
++        path: requirements.txt
+diff --git a/.github/workflows/safe-refactoring.yml b/.github/workflows/safe-refactoring.yml
+new file mode 100644
+index 00000000..baed20f0
+--- /dev/null
++++ b/.github/workflows/safe-refactoring.yml
+@@ -0,0 +1,246 @@
++name: 🔄 Safe Refactoring Workflow
++
++on:
++  workflow_dispatch:
++    inputs:
++      operation:
++        description: 'Refactoring operation to perform'
++        required: true
++        default: 'check-safety'
++        type: choice
++        options:
++          - check-safety
++          - find-usages
++          - rename-function
++          - rename-variable
++          - extract-method
++      
++      old_name:
++        description: 'Old symbol name (for rename operations)'
++        required: false
++        type: string
++      
++      new_name:
++        description: 'New symbol name (for rename operations)'
++        required: false
++        type: string
++      
++      target_directory:
++        description: 'Target directory (default: src/)'
++        required: false
++        default: 'src/'
++        type: string
++      
++      file_path:
++        description: 'File path (for extract-method)'
++        required: false
++        type: string
++      
++      start_line:
++        description: 'Start line (for extract-method)'
++        required: false
++        type: string
++      
++      end_line:
++        description: 'End line (for extract-method)'
++        required: false
++        type: string
++
++  pull_request:
++    paths:
++      - '**/*.py'
++    types: [opened, synchronize]
++
++jobs:
++  safety-check:
++    name: 🔍 Safety Check
++    runs-on: ubuntu-latest
++    if: github.event_name == 'pull_request' || github.event.inputs.operation == 'check-safety'
++    
++    steps:
++      - name: 📥 Checkout Code
++        uses: actions/checkout@v4
++        with:
++          fetch-depth: 0
++      
++      - name: 🐍 Setup Python
++        uses: actions/setup-python@v5
++        with:
++          python-version: '3.12'
++      
++      - name: 📦 Install Poetry
++        uses: snok/install-poetry@v1
++        with:
++          version: latest
++          virtualenvs-create: true
++          virtualenvs-in-project: true
++      
++      - name: 🔧 Install Dependencies
++        run: |
++          poetry install --only dev
++          poetry add --group dev rope bowler
++      
++      - name: 🔍 Run Safety Check
++        run: |
++          chmod +x dev-tools/scripts/safe-refactor.sh
++          ./dev-tools/scripts/safe-refactor.sh check-safety ${{ github.event.inputs.target_directory || 'src/' }}
++      
++      - name: 📊 Syntax Validation
++        run: |
++          echo "🔍 Running comprehensive syntax check..."
++          find . -name "*.py" -path "./packages/*" -exec python -m py_compile {} \;
++          echo "✅ All Python files have valid syntax"
++
++  refactoring-operation:
++    name: 🔄 Refactoring Operation
++    runs-on: ubuntu-latest
++    if: github.event_name == 'workflow_dispatch' && github.event.inputs.operation != 'check-safety'
++    
++    steps:
++      - name: 📥 Checkout Code
++        uses: actions/checkout@v4
++        with:
++          token: ${{ secrets.GITHUB_TOKEN }}
++          fetch-depth: 0
++      
++      - name: 🐍 Setup Python
++        uses: actions/setup-python@v5
++        with:
++          python-version: '3.12'
++      
++      - name: 📦 Install Poetry
++        uses: snok/install-poetry@v1
++        with:
++          version: latest
++          virtualenvs-create: true
++          virtualenvs-in-project: true
++      
++      - name: 🔧 Install Dependencies
++        run: |
++          poetry install --only dev
++          poetry add --group dev rope bowler
++      
++      - name: 🛡️ Create Safety Backup
++        run: |
++          git config --local user.email "action@github.com"
++          git config --local user.name "GitHub Action"
++          git stash push -m "AUTOMATED_REFACTOR_BACKUP_$(date +%Y%m%d_%H%M%S)"
++      
++      - name: 🔄 Execute Refactoring
++        run: |
++          chmod +x dev-tools/scripts/safe-refactor.sh
++          
++          case "${{ github.event.inputs.operation }}" in
++            "rename-function")
++              ./dev-tools/scripts/safe-refactor.sh rename-function \
++                "${{ github.event.inputs.old_name }}" \
++                "${{ github.event.inputs.new_name }}" \
++                "${{ github.event.inputs.target_directory }}"
++              ;;
++            "rename-variable")
++              ./dev-tools/scripts/safe-refactor.sh rename-variable \
++                "${{ github.event.inputs.old_name }}" \
++                "${{ github.event.inputs.new_name }}" \
++                "${{ github.event.inputs.target_directory }}"
++              ;;
++            "extract-method")
++              ./dev-tools/scripts/safe-refactor.sh extract-method \
++                "${{ github.event.inputs.file_path }}" \
++                "${{ github.event.inputs.start_line }}" \
++                "${{ github.event.inputs.end_line }}" \
++                "${{ github.event.inputs.new_name }}"
++              ;;
++            "find-usages")
++              ./dev-tools/scripts/safe-refactor.sh find-usages \
++                "${{ github.event.inputs.old_name }}" \
++                "${{ github.event.inputs.target_directory }}"
++              ;;
++          esac
++      
++      - name: 🔍 Post-Refactor Safety Check
++        run: |
++          echo "🔍 Verifying refactoring safety..."
++          ./dev-tools/scripts/safe-refactor.sh check-safety
++          
++          echo "🧪 Running basic tests..."
++          # Add your test command here, e.g.:
++          # poetry run pytest tests/ -x --tb=short
++      
++      - name: 📝 Commit Changes
++        if: success()
++        run: |
++          git add .
++          if git diff --staged --quiet; then
++            echo "No changes to commit"
++          else
++            git commit -m "🔄 Automated refactoring: ${{ github.event.inputs.operation }}
++            
++            Operation: ${{ github.event.inputs.operation }}
++            Old name: ${{ github.event.inputs.old_name }}
++            New name: ${{ github.event.inputs.new_name }}
++            Directory: ${{ github.event.inputs.target_directory }}
++            
++            Generated by GitHub Actions workflow"
++            
++            git push
++          fi
++      
++      - name: 📊 Generate Refactoring Report
++        if: always()
++        run: |
++          echo "# 🔄 Refactoring Report" > refactoring-report.md
++          echo "" >> refactoring-report.md
++          echo "**Operation:** ${{ github.event.inputs.operation }}" >> refactoring-report.md
++          echo "**Target:** ${{ github.event.inputs.target_directory }}" >> refactoring-report.md
++          echo "**Status:** ${{ job.status }}" >> refactoring-report.md
++          echo "" >> refactoring-report.md
++          
++          if [ "${{ github.event.inputs.operation }}" = "find-usages" ]; then
++            echo "## 🔍 Usage Results" >> refactoring-report.md
++            echo "\`\`\`" >> refactoring-report.md
++            ./dev-tools/scripts/safe-refactor.sh find-usages \
++              "${{ github.event.inputs.old_name }}" \
++              "${{ github.event.inputs.target_directory }}" >> refactoring-report.md || true
++            echo "\`\`\`" >> refactoring-report.md
++          fi
++      
++      - name: 📎 Upload Report
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: refactoring-report
++          path: refactoring-report.md
++
++  lint-after-refactor:
++    name: 🧹 Lint After Refactor
++    runs-on: ubuntu-latest
++    needs: [refactoring-operation]
++    if: always() && needs.refactoring-operation.result == 'success'
++    
++    steps:
++      - name: 📥 Checkout Code
++        uses: actions/checkout@v4
++      
++      - name: 🐍 Setup Python
++        uses: actions/setup-python@v5
++        with:
++          python-version: '3.12'
++      
++      - name: 📦 Install Poetry
++        uses: snok/install-poetry@v1
++      
++      - name: 🔧 Install Dependencies
++        run: poetry install --only dev
++      
++      - name: 🧹 Run Automated Cleanup
++        run: |
++          chmod +x dev-tools/scripts/bulk_package_fix.sh
++          # Run the proven cleanup methodology
++          ./dev-tools/scripts/bulk_package_fix.sh haive-games || true
++          ./dev-tools/scripts/bulk_package_fix.sh haive-dataflow || true
++          ./dev-tools/scripts/bulk_package_fix.sh haive-mcp || true
++      
++      - name: 📊 Final Health Check
++        run: |
++          chmod +x dev-tools/scripts/monitor-progress.sh
++          ./dev-tools/scripts/monitor-progress.sh 
+\ No newline at end of file
+diff --git a/noxfile.py b/noxfile.py
+index 8e6063bf..98f38d24 100644
+--- a/noxfile.py
++++ b/noxfile.py
+@@ -3,6 +3,7 @@
+ Documentation Commands:
+ -----------------------
+     nox -s docs_fast            # FASTEST: Build docs ignoring errors (NEW!)
++    nox -s docs_rich            # 🎨 Rich UI with progress tracking and caching (NEW!)
+     nox -s docs                 # Standard incremental sphinx-build
+     nox -s docs_full            # Full rebuild with autosummary regeneration (slower)
+     nox -s docs_autobuild       # Auto-build with hot reload and live updates
+@@ -986,6 +987,23 @@ def docs_pdf(session):
+     return status["success"]
+ 
+ 
++@nox.session(python=PYTHON_VERSIONS)
++def docs_rich(session):
++    """Build documentation with rich UI, progress tracking, and caching."""
++    session.log("🎨 Building documentation with rich UI...")
++    
++    # Install dependencies
++    session.log("📦 Installing documentation dependencies...")
++    session.run("poetry", "install", "--with", "docs", external=True)
++    
++    # Run the rich docs builder
++    session.run(
++        "poetry", "run", "python", 
++        "scripts/rich_docs_builder.py",
++        external=True
++    )
++
++
+ @nox.session(python=PYTHON_VERSIONS)
+ def lint(session):
+     """Run linters."""
+diff --git a/pyproject.toml b/pyproject.toml
+index 40616f13..0d49205c 100755
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -87,7 +87,7 @@ duckduckgo-search = "^7.5.2"
+ html2text = "^2024.2.26"
+ markdownify = "^1.1.0"
+ pandas = "^2.2.3"
+-rich = "^13.9.4"
++rich = "^14.1.0"
+ psycopg2 = "^2.9.10"
+ langchain-anthropic = "^0.3.10"
+ langchain-deepseek = "^0.1.2"
+@@ -218,6 +218,9 @@ interrogate = "^1.5.0"          # Find missing docstrings
+ pydocstyle = "^6.3.0"           # Docstring style enforcement  
+ darglint = "^1.8.1"             # Docstring-code sync validation
+ mimesis = "^18.0.0"
++taskipy = "^1.14.0"
++pyupgrade = "^3.19.0"
++autoimport = "^1.5.0"
+ factory-boy = "^3.3.3"
+ hypothesis = "^6.131.6"
+ tomlkit = "^0.13.2"
+@@ -553,6 +556,92 @@ lines-after-imports = 2
+ # Instruct Trailrunner to skip any .cache/trunk or .trunk directories
+ exclude = ["**/.cache/trunk/**", "**/.trunk/**"]
+ 
++# 🚀 Taskipy Development Workflow Tasks
++[tool.taskipy.tasks]
++
++# 🧠 Intelligent Error Analysis & Categorization
++analyze-errors = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only"
++analyze-errors-verbose = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only --verbose"
++analyze-all = "dev-tools/scripts/intelligent-error-analyzer.sh packages/ --analyze-only"
++
++# 🚨 Safety-Level Fixes (Progressive Approach)
++emergency-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 1"
++surgical-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 2"
++moderate-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 3"
++conservative-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 4"
++cosmetic-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 5"
++
++# 👁️ Preview Modes (See Changes Before Applying)
++preview-emergency = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --preview --safety-level 1"
++preview-surgical = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --preview --safety-level 2"
++preview-moderate = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --preview --safety-level 3"
++preview-full = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --preview --safety-level 5"
++
++# 📊 Error Analysis Reports
++error-report = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only --report markdown"
++error-report-json = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only --report json"
++error-report-all = "dev-tools/scripts/intelligent-error-analyzer.sh packages/ --analyze-only --report markdown"
++
++# 🔄 Systematic Code Fixing (Master Workflows)
++fix-code = "dev-tools/scripts/systematic-code-fixer.sh packages/haive-prebuilt/src"
++fix-code-preview = "dev-tools/scripts/systematic-code-fixer.sh packages/haive-prebuilt/src --preview"
++fix-code-step1 = "dev-tools/scripts/systematic-code-fixer.sh packages/haive-prebuilt/src --step=1"
++fix-code-step2 = "dev-tools/scripts/systematic-code-fixer.sh packages/haive-prebuilt/src --step=2"
++fix-code-step3 = "dev-tools/scripts/systematic-code-fixer.sh packages/haive-prebuilt/src --step=3"
++fix-code-step4 = "dev-tools/scripts/systematic-code-fixer.sh packages/haive-prebuilt/src --step=4"
++
++# 🚨 Pre-flight Syntax Fixes
++fix-syntax = "dev-tools/scripts/pre-flight-syntax-fixer.sh packages/haive-prebuilt/src"
++fix-syntax-preview = "dev-tools/scripts/pre-flight-syntax-fixer.sh packages/haive-prebuilt/src --preview"
++fix-syntax-games = "dev-tools/scripts/pre-flight-syntax-fixer.sh packages/haive-games/src"
++fix-syntax-dataflow = "dev-tools/scripts/pre-flight-syntax-fixer.sh packages/haive-dataflow/src"
++fix-syntax-mcp = "dev-tools/scripts/pre-flight-syntax-fixer.sh packages/haive-mcp/src"
++
++# 🔧 Modern Indentation Tools
++fix-indentation = "dev-tools/scripts/modern-indentation-fixer.sh packages/haive-prebuilt/src autopep8"
++fix-indentation-preview = "dev-tools/scripts/modern-indentation-fixer.sh packages/haive-prebuilt/src autopep8 --preview"
++fix-indentation-black = "dev-tools/scripts/modern-indentation-fixer.sh packages/haive-prebuilt/src black"
++fix-indentation-yapf = "dev-tools/scripts/modern-indentation-fixer.sh packages/haive-prebuilt/src yapf"
++fix-indentation-ruff = "dev-tools/scripts/modern-indentation-fixer.sh packages/haive-prebuilt/src ruff"
++
++# 📦 Import Management (3-Way System)
++fix-imports = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-prebuilt/src"
++fix-imports-preview = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-prebuilt/src --preview"
++fix-imports-games = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-games/src"
++fix-imports-dataflow = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-dataflow/src"
++fix-imports-mcp = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-mcp/src"
++check-imports = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-prebuilt/src --check-only"
++
++# 🐍 Python Modernization  
++modernize-code = "dev-tools/scripts/syntax-and-modernization-fixer.sh packages/haive-prebuilt/src"
++modernize-code-preview = "dev-tools/scripts/syntax-and-modernization-fixer.sh packages/haive-prebuilt/src --preview"
++modernize-games = "dev-tools/scripts/syntax-and-modernization-fixer.sh packages/haive-games/src"
++modernize-dataflow = "dev-tools/scripts/syntax-and-modernization-fixer.sh packages/haive-dataflow/src"
++
++# 🔄 Package Configuration Management
++sync-configs = "dev-tools/scripts/sync-package-configs.sh"
++sync-configs-fix = "dev-tools/scripts/sync-package-configs.sh --fix"
++check-package-configs = "dev-tools/scripts/sync-package-configs.sh --preview"
++
++# 🔍 Debugging and Analysis
++debug-syntax = "dev-tools/scripts/debug-and-fix-syntax.sh packages/haive-prebuilt/src"
++debug-syntax-fix = "dev-tools/scripts/debug-and-fix-syntax.sh packages/haive-prebuilt/src --fix"
++check-health = "find packages/ -name '*.py' -exec python3 -m py_compile {} \\; 2>&1 | grep -c 'SyntaxError\\|IndentationError' || echo 'All files compile successfully'"
++
++# 🧹 Cleanup and Maintenance
++clean-backups = "find packages/ -name '*.py.bak' -delete && find packages/ -name '*~' -delete"
++clean-cache = "find packages/ -name '__pycache__' -type d -exec rm -rf {} + 2>/dev/null || true"
++clean-all = "poetry run task clean-backups && poetry run task clean-cache"
++
++# 🚀 Quick Start Workflows
++quick-fix = "poetry run task emergency-fix && poetry run task surgical-fix"
++full-fix = "poetry run task fix-code"
++health-check = "poetry run task analyze-errors && poetry run task check-health"
++
++# 📚 Documentation and Help
++help-tasks = "echo '🧠 Available tasks:' && poetry run task --list"
++help-scripts = "echo '📁 Script documentation in dev-tools/README.md'"
++
+ 
+ [build-system]
+ requires = ["poetry-core"]

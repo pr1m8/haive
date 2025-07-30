@@ -1,0 +1,6 @@
+docs/screenshots/api_documentation_all_6_packages
+docs/screenshots/complete_documentation_homepage
+docs/screenshots/haive_agents_api_documentation
+docs/source/index.rst
+noxfile.py
+project_docs/README.md

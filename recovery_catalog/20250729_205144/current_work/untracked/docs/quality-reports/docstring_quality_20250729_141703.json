@@ -1,0 +1,27 @@
+{
+  "test_name": "docstring_quality",
+  "timestamp": "2025-07-29T14:17:03.096757",
+  "results": {
+    "interrogate": {
+      "status": "failed",
+      "error": "Returned code 1"
+    },
+    "darglint": {
+      "status": "failed",
+      "error": "Returned code 123"
+    },
+    "pydocstyle": {
+      "status": "passed"
+    },
+    "docstr-coverage": {
+      "status": "failed",
+      "error": "Returned code 1"
+    }
+  },
+  "summary": {
+    "total": 4,
+    "passed": 1,
+    "failed": 3,
+    "skipped": 0
+  }
+}

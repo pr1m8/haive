@@ -1,0 +1,11 @@
+commit eff19e4df8424f719606db83f253db052975771f
+Merge: c1fda95e 7e13d11a
+Author: pr1m8 <william.astley@algebraicwealth.com>
+Date:   Tue Jul 22 18:38:36 2025 -0400
+
+    WIP on docs/fix-documentation-20250121: c1fda95 feat(docs): comprehensive documentation styling and structure overhaul
+
+docs/screenshots/api_documentation_all_6_packages
+docs/screenshots/complete_documentation_homepage
+docs/screenshots/haive_agents_api_documentation
+docs/source/conf.py

@@ -1,0 +1,80 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index 40616f13..58d7d852 100755
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -554,6 +554,75 @@ lines-after-imports = 2
+ exclude = ["**/.cache/trunk/**", "**/.trunk/**"]
+ 
+ 
++
++# 🚀 Taskipy Development Workflow Tasks
++[tool.taskipy.tasks]
++
++# 🧠 Intelligent Error Analysis & Categorization
++analyze-errors = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only"
++analyze-errors-verbose = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only --verbose"
++analyze-all = "dev-tools/scripts/intelligent-error-analyzer.sh packages/ --analyze-only"
++
++# 🚨 Safety-Level Fixes (Progressive Approach)
++emergency-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 1"
++surgical-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 2"
++moderate-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 3"
++conservative-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 4"
++cosmetic-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 5"
++
++# 👁️ Preview Modes (See Changes Before Applying)
++preview-emergency = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --preview --safety-level 1"
++preview-surgical = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --preview --safety-level 2"
++preview-moderate = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --preview --safety-level 3"
++preview-full = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --preview --safety-level 5"
++
++# 📊 Error Analysis Reports
++error-report = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only --report markdown"
++error-report-json = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only --report json"
++
++# 🔄 Systematic Code Fixing (Master Workflows)
++fix-code = "dev-tools/scripts/systematic-code-fixer.sh packages/haive-prebuilt/src"
++fix-code-preview = "dev-tools/scripts/systematic-code-fixer.sh packages/haive-prebuilt/src --preview"
++
++# 🚨 Pre-flight Syntax Fixes
++fix-syntax = "dev-tools/scripts/pre-flight-syntax-fixer.sh packages/haive-prebuilt/src"
++fix-syntax-preview = "dev-tools/scripts/pre-flight-syntax-fixer.sh packages/haive-prebuilt/src --preview"
++
++# 🔧 Modern Indentation Tools
++fix-indentation = "dev-tools/scripts/modern-indentation-fixer.sh packages/haive-prebuilt/src autopep8"
++fix-indentation-preview = "dev-tools/scripts/modern-indentation-fixer.sh packages/haive-prebuilt/src autopep8 --preview"
++
++# 📦 Import Management (3-Way System)
++fix-imports = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-prebuilt/src"
++fix-imports-preview = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-prebuilt/src --preview"
++
++# 🐍 Python Modernization
++modernize-code = "dev-tools/scripts/syntax-and-modernization-fixer.sh packages/haive-prebuilt/src"
++modernize-code-preview = "dev-tools/scripts/syntax-and-modernization-fixer.sh packages/haive-prebuilt/src --preview"
++
++# 🔄 Configuration Management
++fix-rich-dependency = "dev-tools/scripts/fix-rich-dependency-permanently.sh"
++validate-rich = "dev-tools/scripts/validate-rich-dependency.sh"
++restore-taskipy = "dev-tools/scripts/restore-taskipy-config.sh"
++
++# 🔍 Debugging and Analysis
++debug-syntax = "dev-tools/scripts/debug-and-fix-syntax.sh packages/haive-prebuilt/src"
++debug-syntax-fix = "dev-tools/scripts/debug-and-fix-syntax.sh packages/haive-prebuilt/src --fix"
++
++# 🧹 Cleanup and Maintenance
++clean-backups = "find packages/ -name '*.py.bak' -delete && find packages/ -name '*~' -delete"
++clean-cache = "find packages/ -name '__pycache__' -type d -exec rm -rf {} + 2>/dev/null || true"
++clean-all = "poetry run task clean-backups && poetry run task clean-cache"
++
++# 🚀 Quick Start Workflows
++quick-fix = "poetry run task emergency-fix && poetry run task surgical-fix"
++full-fix = "poetry run task fix-code"
++health-check = "find packages/haive-prebuilt/src -name '*.py' -exec python3 -m py_compile {} \\; 2>&1 | grep -c 'SyntaxError\\|IndentationError' || echo '✅ All files compile successfully'"
++
++# 📚 Documentation and Help
++help-tasks = "echo '🧠 Available tasks:' && poetry run task --list"
++help-scripts = "echo '📁 Script documentation in dev-tools/README.md'"
++
+ [build-system]
+ requires = ["poetry-core"]
+ build-backend = "poetry.core.masonry.api"
