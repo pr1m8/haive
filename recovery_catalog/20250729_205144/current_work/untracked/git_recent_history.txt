@@ -1,0 +1,103 @@
+*   6c4d0b4c (refs/stash) On feature/fix_everything: emergency-checkpoint-before-direct-fixes-20250729_193759
+|\  
+| * db92c29a index on feature/fix_everything: 3568665c feat: add comprehensive Sphinx extensions installation script
+|/  
+* 3568665c (HEAD, feature/fix_everything) feat: add comprehensive Sphinx extensions installation script
+* 8f0c1086 feat: add new documentation for ValidationNodeV2 and SimpleAgentV3 integration
+* 15ca1591 chore: remove sphinx-docsearch dependency and add Safe Dev Dependencies Change Workflow documentation
+* 58977bec (origin/feature/fix_everything) chore: add sgfmill dependency to pyproject.toml
+* 79370282 chore: update .clocignore to exclude test files
+* 851ab5e3 fix: update localhost URLs to new port in screenshot checking script
+* 0870bf87 feat: add comprehensive fix strategy documentation and enhance validation scripts
+* 88047762 chore: update submodules for circular import fixes
+* 7d6b2fc7 docs: add comprehensive demo pages for all games and agents
+* 8f965286 docs: fix alignment issues and add game streaming visualization
+* 24676df7 chore: update submodules for PostgreSQL and structured output fixes
+* a3d6f30c chore: update haive-core submodule for PostgreSQL env var fix
+* b1bba5b0 chore: update haive-agents submodule reference for PostgreSQL test fixes
+* 442c0495 chore: update haive-core submodule reference for PostgreSQL fix
+* 9741a0fe feat: enhance CLAUDE.md with agent examples and fix visualization script
+* 13d79616 chore: update haive-agents submodule reference
+* 3680f1c1 fix(haive-games): resolve 4 syntax errors
+* d8e30792 fix(haive-agents): resolve 38 syntax errors
+* c9d0c5e0 fix(haive-core): resolve 38 syntax errors
+* a378b26f added examples
+* d91098e3 updated project docs
+* 7811d584 feat: add documentation utilities and scripts for agent analysis, visualization, and validation
+* 4b60397e chore: update linting configuration to allow package tests
+* 80b94ae7 feat: comprehensive logging fixes and haive-agents documentation organization
+* b4e66d1a feat(haive-core): implement comprehensive lazy loading for import performance
+* e45c409c docs: add namespaced polyrepo structure and submodule safety to CLAUDE.md
+| * 30cc1ca7 (docs/autoapi-namespace-fix-2025) chore: update pyproject.toml with new dependencies
+| | * 0948e00e (cleanup/root-project-docs-20250728, backup-root-before-july27-reset, backup-broken-state) update: haive-core submodule reference to latest commit
+| | * 9f08167b (origin/cleanup/root-project-docs-20250728) update: haive-games submodule reference to latest commit
+| | * 0a7d423f feat: add trunk.yaml.safe configuration for Pylance compatibility
+| | * c4db3310 update: submodule references for haive packages
+| | * e4fb8f5c fix: format pydoclint dependency in pyproject.toml
+| | * 2eb18747 update: modify documentation dependency installation to include tools
+| | * b676727d feat: add google-search-results dependency to tools group
+| | * 814e9097 update: submodule references for trunk cleanup across packages
+| | * d16f2a09 organize: clean up scattered root directory files
+| | * b56acba6 organize: complete examples directory cleanup
+| | * 7bae6a1d organize: examples directory structure reorganization
+| | * 6d72c695 update: haive-core submodule ref after trunk cleanup
+| | * bff48493 cleanup: massive root directory and project_docs reorganization
+| |/  
+| * 618be97d (origin/docs/autoapi-namespace-fix-2025) chore: remove test file after successful hooks integration test
+| * 2695c66d test: verify git-lfs + trunk hooks integration working
+| * 8a390bb9 feat: add scripts for auto-generating module and package docstrings
+| * dcd311f5 chore: add new linting dependencies for improved documentation checks
+| * fc80c637 feat: introduce expanded agent graph visualization inventory and documentation automation plan
+| * a5239ed5 feat: add comprehensive documentation tools inventory and recommendations
+| * 07288978 chore: update submodule branch for haive-agents in .gitmodules
+| * 17759060 feat: add project structure and submodule disaster recovery documentation
+| * 47ab0e42 chore: add new linting dependencies in pyproject.toml
+| * 9ba94149 chore: update submodule branches in .gitmodules
+| * ee8908f4 chore: update dependencies in pyproject.toml
+| * f6b22095 feat: add MultiAgent documentation and analysis files
+| * 2c8ff3b1 feat: add Haive-Core Automation Results documentation
+| * ba2faa70 update: haive-games submodule with monopoly linting fixes
+| * a5940ede feat: introduce comprehensive documentation updates and analysis
+| * 720e21ce chore: include project_docs in linting configuration
+| * a85924a4 chore: add pydoclint dependency for docstring linting
+| * 28a8956a feat: add docstring analysis report for Python files
+| * c0ed4491 test: verify trunk pre-commit is working
+| * e184684b feat: introduce comprehensive documentation automation tools
+| * 0560c757 chore: add darglint configuration for docstring validation
+| * 448f317f feat: add comprehensive documentation and examples for agents
+| * 547e95db chore: update dependencies in trunk.yaml and refine .gitignore
+| * 659d3350 chore: update .gitignore to include poetry.lock
+| * 956d2654 feat: add rstcheck-core dependency to pyproject.toml
+| * aa9685ac feat: enhance documentation and submodule management guidelines
+| * 5ab695ee feat: add syntax error examples for code validation
+| * 58d5794f feat: add configuration files for code style enforcement
+| * a2c32346 feat: update pyproject.toml with new task management dependencies
+| * 9314aa7b feat: update pyproject.toml with additional dependencies for enhanced functionality
+| * 49eb79bc feat: add dead dependency to pyproject.toml
+| * 37141422 feat: update pyproject.toml with additional logging and debugging dependencies
+| * e0de0b5e feat: add diff-cover dependency to pyproject.toml
+| * 929b3d7a feat: update pyproject.toml with new dependencies for configuration validation and code identification
+| * 913405e1 feat: update pyproject.toml with new dependencies for enhanced functionality
+| * dc27d059 feat: add autodocumentation-python dependency to pyproject.toml
+| * 8c535eed feat: update pyproject.toml with additional Sphinx dependencies
+| * bc4e68ef feat: update pyproject.toml with additional dependencies
+| * 7db3ea90 feat: enhance pyproject.toml with additional dependencies
+| * a3fb7493 feat: update pyproject.toml with new dependencies
+| * bef164b1 feat: add git-cliff configuration for changelog generation
+| * 5dc8ba89 docs: fix sphinx-gallery warning and update memory index
+| * c40dfa14 feat(docs): fix AutoAPI namespace package configuration - RST generation working
+| * f0300c0d feat(docs): ✅ FIXED AutoAPI paths\! Perfect namespace handling
+| * a01561ec docs(autoapi): major progress - 1,877 RST files generated!
+| * 959cda6c feat(docs): fix AutoAPI configuration for namespace packages
+| * c6c181b6 docs(autoapi): backup current conf.py before changes
+| * 464da59d baseline metrics
+|/  
+* 3d1fa180 (docs/fix-documentation-20250121) fix: update .gitmodules to reflect correct branches
+* 25f3578f feat(recovery): complete submodule recovery and conflict resolution
+* c1fda95e (origin/docs/fix-documentation-20250121, feature/node-system-organization) feat(docs): comprehensive documentation styling and structure overhaul
+* cf6da01b feat(docs): comprehensive documentation styling and structure overhaul
+* 35fbeeb8 fix: massive compilation error cleanup across all packages
+* 2a706e1d fixed conf and .css
+* 9bce642d updated project-docs
+* bf02ff89 chore: update submodules with Enhanced MultiAgent V3 implementation
+* f9f29ff5 feat(multi-agent): implement Enhanced MultiAgent V3 with comprehensive features

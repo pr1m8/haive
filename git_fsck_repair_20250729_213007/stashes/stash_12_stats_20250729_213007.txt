@@ -1,0 +1,34 @@
+commit ff5bb517864abdac34cd8583e3850b3fee86e2fe
+Merge: f6e3673f 5087d7e7
+Author: pr1m8 <william.astley@algebraicwealth.com>
+Date:   Tue Jul 29 11:37:07 2025 -0400
+
+    On (no branch): WIP: detached HEAD changes
+
+ docs/screenshots/api_documentation_all_6_packages  |  Bin 108100 -> 131 bytes
+ docs/screenshots/complete_documentation_homepage   |  Bin 1235415 -> 132 bytes
+ docs/screenshots/haive_agents_api_documentation    |  Bin 28885 -> 130 bytes
+ docs/scripts/agent_demos/agent_cache_loader.py     |  233 +--
+ .../cache_generation/generate_agent_cache.py       |  484 +++---
+ .../_extensions/auto_module_discovery.py           |    2 +-
+ .../extensions_dev/_extensions/mock_handler.py     |    1 -
+ docs/source/_extensions/auto_module_discovery.py   |    2 +-
+ docs/source/_extensions/mock_handler.py            |    1 -
+ docs/source/conf.py                                |   25 +-
+ .../specific_loaders/web_loaders.py                |   34 +-
+ examples/advanced_multi_agent_patterns.py          |  252 +--
+ examples/business_multi_agent_workflows.py         |  342 ++--
+ examples/complex_multi_agent_workflows.py          |  345 ++--
+ examples/dynamic_supervisor_demo.py                |    4 +-
+ examples/enhanced_tool_management_demo.py          |    7 +-
+ .../supervisor/basic/basic_supervisor_example.py   |    4 +-
+ package.json                                       |    4 +
+ pnpm-lock.yaml                                     | 1693 +++++++++++++++++++-
+ .../original_implementation_backup.py              |   47 +-
+ .../basegraph2_recompilation_integration.py        |   28 +-
+ .../dynamic_multi_agent_example.py                 |   13 +-
+ .../recompilation_hook_example.py                  |   11 +-
+ .../T001_enhanced_tool_route_mixin.py              |   32 +-
+ .../T003_unified_implementation.py                 |   17 +-
+ .../implementation/enhanced_tool_route_mixin.py    |   22 +-
+ 26 files changed, 2698 insertions(+), 905 deletions(-)

@@ -1,0 +1,14 @@
+commit 7ace6eb94a0e5859ef0064619c17bd4e93930f3b
+Merge: 3568665c 4b3fc0d5
+Author: pr1m8 <william.astley@algebraicwealth.com>
+Date:   Tue Jul 29 19:18:03 2025 -0400
+
+    On feature/fix_everything_v2: error-analyzer-checkpoint-20250729_191756
+
+ .../python-detect-package-manager/action.yml       |  56 +++++
+ .../python-generate-requirements/action.yml        |  51 +++++
+ .github/workflows/python_get_requirements.txt      |  51 +++++
+ .github/workflows/safe-refactoring.yml             | 246 +++++++++++++++++++++
+ noxfile.py                                         |  18 ++
+ pyproject.toml                                     |  91 +++++++-
+ 6 files changed, 512 insertions(+), 1 deletion(-)

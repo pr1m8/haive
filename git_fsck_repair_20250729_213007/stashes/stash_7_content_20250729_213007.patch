@@ -1,0 +1,13 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index 40616f13..2f76052d 100755
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -87,7 +87,7 @@ duckduckgo-search = "^7.5.2"
+ html2text = "^2024.2.26"
+ markdownify = "^1.1.0"
+ pandas = "^2.2.3"
+-rich = "^13.9.4"
++rich = "^14.1.0"
+ psycopg2 = "^2.9.10"
+ langchain-anthropic = "^0.3.10"
+ langchain-deepseek = "^0.1.2"

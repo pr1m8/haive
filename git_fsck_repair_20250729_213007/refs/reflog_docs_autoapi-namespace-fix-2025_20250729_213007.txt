@@ -1,0 +1,50 @@
+30cc1ca7 docs/autoapi-namespace-fix-2025@{2025-07-28 23:47:13 -0400}: commit: chore: update pyproject.toml with new dependencies
+618be97d docs/autoapi-namespace-fix-2025@{2025-07-28 16:15:18 -0400}: commit: chore: remove test file after successful hooks integration test
+2695c66d docs/autoapi-namespace-fix-2025@{2025-07-28 16:14:56 -0400}: commit: test: verify git-lfs + trunk hooks integration working
+8a390bb9 docs/autoapi-namespace-fix-2025@{2025-07-28 05:13:21 -0400}: commit: feat: add scripts for auto-generating module and package docstrings
+dcd311f5 docs/autoapi-namespace-fix-2025@{2025-07-28 05:13:06 -0400}: commit: chore: add new linting dependencies for improved documentation checks
+fc80c637 docs/autoapi-namespace-fix-2025@{2025-07-28 05:12:51 -0400}: commit: feat: introduce expanded agent graph visualization inventory and documentation automation plan
+a5239ed5 docs/autoapi-namespace-fix-2025@{2025-07-28 04:44:20 -0400}: commit: feat: add comprehensive documentation tools inventory and recommendations
+07288978 docs/autoapi-namespace-fix-2025@{2025-07-28 04:27:32 -0400}: commit: chore: update submodule branch for haive-agents in .gitmodules
+17759060 docs/autoapi-namespace-fix-2025@{2025-07-28 04:20:39 -0400}: commit: feat: add project structure and submodule disaster recovery documentation
+47ab0e42 docs/autoapi-namespace-fix-2025@{2025-07-28 04:20:28 -0400}: commit: chore: add new linting dependencies in pyproject.toml
+9ba94149 docs/autoapi-namespace-fix-2025@{2025-07-28 04:18:50 -0400}: commit: chore: update submodule branches in .gitmodules
+ee8908f4 docs/autoapi-namespace-fix-2025@{2025-07-28 04:18:32 -0400}: commit: chore: update dependencies in pyproject.toml
+f6b22095 docs/autoapi-namespace-fix-2025@{2025-07-28 03:08:48 -0400}: commit: feat: add MultiAgent documentation and analysis files
+2c8ff3b1 docs/autoapi-namespace-fix-2025@{2025-07-28 03:02:03 -0400}: commit: feat: add Haive-Core Automation Results documentation
+ba2faa70 docs/autoapi-namespace-fix-2025@{2025-07-28 02:56:24 -0400}: commit: update: haive-games submodule with monopoly linting fixes
+a5940ede docs/autoapi-namespace-fix-2025@{2025-07-28 02:48:01 -0400}: commit: feat: introduce comprehensive documentation updates and analysis
+720e21ce docs/autoapi-namespace-fix-2025@{2025-07-28 02:47:38 -0400}: commit: chore: include project_docs in linting configuration
+a85924a4 docs/autoapi-namespace-fix-2025@{2025-07-28 02:47:28 -0400}: commit: chore: add pydoclint dependency for docstring linting
+28a8956a docs/autoapi-namespace-fix-2025@{2025-07-28 02:42:10 -0400}: commit: feat: add docstring analysis report for Python files
+c0ed4491 docs/autoapi-namespace-fix-2025@{2025-07-28 01:17:17 -0400}: commit: test: verify trunk pre-commit is working
+e184684b docs/autoapi-namespace-fix-2025@{2025-07-28 01:16:23 -0400}: commit: feat: introduce comprehensive documentation automation tools
+0560c757 docs/autoapi-namespace-fix-2025@{2025-07-28 01:15:51 -0400}: commit: chore: add darglint configuration for docstring validation
+448f317f docs/autoapi-namespace-fix-2025@{2025-07-28 01:13:54 -0400}: commit: feat: add comprehensive documentation and examples for agents
+547e95db docs/autoapi-namespace-fix-2025@{2025-07-28 01:12:07 -0400}: commit: chore: update dependencies in trunk.yaml and refine .gitignore
+659d3350 docs/autoapi-namespace-fix-2025@{2025-07-28 00:51:24 -0400}: commit: chore: update .gitignore to include poetry.lock
+956d2654 docs/autoapi-namespace-fix-2025@{2025-07-28 00:50:27 -0400}: commit: feat: add rstcheck-core dependency to pyproject.toml
+aa9685ac docs/autoapi-namespace-fix-2025@{2025-07-28 00:45:46 -0400}: commit: feat: enhance documentation and submodule management guidelines
+5ab695ee docs/autoapi-namespace-fix-2025@{2025-07-28 00:45:30 -0400}: commit: feat: add syntax error examples for code validation
+58d5794f docs/autoapi-namespace-fix-2025@{2025-07-28 00:36:50 -0400}: commit: feat: add configuration files for code style enforcement
+a2c32346 docs/autoapi-namespace-fix-2025@{2025-07-28 00:33:20 -0400}: commit: feat: update pyproject.toml with new task management dependencies
+9314aa7b docs/autoapi-namespace-fix-2025@{2025-07-28 00:32:52 -0400}: commit: feat: update pyproject.toml with additional dependencies for enhanced functionality
+49eb79bc docs/autoapi-namespace-fix-2025@{2025-07-28 00:29:14 -0400}: commit: feat: add dead dependency to pyproject.toml
+37141422 docs/autoapi-namespace-fix-2025@{2025-07-28 00:21:31 -0400}: commit: feat: update pyproject.toml with additional logging and debugging dependencies
+e0de0b5e docs/autoapi-namespace-fix-2025@{2025-07-28 00:07:44 -0400}: commit: feat: add diff-cover dependency to pyproject.toml
+929b3d7a docs/autoapi-namespace-fix-2025@{2025-07-28 00:06:14 -0400}: commit: feat: update pyproject.toml with new dependencies for configuration validation and code identification
+913405e1 docs/autoapi-namespace-fix-2025@{2025-07-28 00:03:17 -0400}: commit: feat: update pyproject.toml with new dependencies for enhanced functionality
+dc27d059 docs/autoapi-namespace-fix-2025@{2025-07-27 23:58:18 -0400}: commit: feat: add autodocumentation-python dependency to pyproject.toml
+8c535eed docs/autoapi-namespace-fix-2025@{2025-07-27 23:57:49 -0400}: commit: feat: update pyproject.toml with additional Sphinx dependencies
+bc4e68ef docs/autoapi-namespace-fix-2025@{2025-07-27 23:54:38 -0400}: commit: feat: update pyproject.toml with additional dependencies
+7db3ea90 docs/autoapi-namespace-fix-2025@{2025-07-27 23:52:50 -0400}: commit: feat: enhance pyproject.toml with additional dependencies
+a3fb7493 docs/autoapi-namespace-fix-2025@{2025-07-27 23:27:17 -0400}: commit: feat: update pyproject.toml with new dependencies
+bef164b1 docs/autoapi-namespace-fix-2025@{2025-07-27 23:23:12 -0400}: commit: feat: add git-cliff configuration for changelog generation
+5dc8ba89 docs/autoapi-namespace-fix-2025@{2025-07-27 18:05:05 -0400}: commit: docs: fix sphinx-gallery warning and update memory index
+c40dfa14 docs/autoapi-namespace-fix-2025@{2025-07-27 17:52:26 -0400}: commit: feat(docs): fix AutoAPI namespace package configuration - RST generation working
+f0300c0d docs/autoapi-namespace-fix-2025@{2025-07-27 17:30:37 -0400}: commit: feat(docs): ✅ FIXED AutoAPI paths\! Perfect namespace handling
+a01561ec docs/autoapi-namespace-fix-2025@{2025-07-27 17:12:53 -0400}: commit: docs(autoapi): major progress - 1,877 RST files generated!
+959cda6c docs/autoapi-namespace-fix-2025@{2025-07-27 16:49:11 -0400}: commit: feat(docs): fix AutoAPI configuration for namespace packages
+c6c181b6 docs/autoapi-namespace-fix-2025@{2025-07-27 16:47:58 -0400}: commit: docs(autoapi): backup current conf.py before changes
+464da59d docs/autoapi-namespace-fix-2025@{2025-07-27 16:47:28 -0400}: commit: baseline metrics
+3d1fa180 docs/autoapi-namespace-fix-2025@{2025-07-27 16:18:15 -0400}: branch: Created from HEAD

@@ -1,0 +1,152 @@
+diff --git a/docs/screenshots/api_documentation_all_6_packages b/docs/screenshots/api_documentation_all_6_packages
+index badeeae7..0c560ef7 100644
+Binary files a/docs/screenshots/api_documentation_all_6_packages and b/docs/screenshots/api_documentation_all_6_packages differ
+diff --git a/docs/screenshots/complete_documentation_homepage b/docs/screenshots/complete_documentation_homepage
+index 628f398a..f9ce606a 100644
+Binary files a/docs/screenshots/complete_documentation_homepage and b/docs/screenshots/complete_documentation_homepage differ
+diff --git a/docs/screenshots/haive_agents_api_documentation b/docs/screenshots/haive_agents_api_documentation
+index 82f1d72e..11839e8e 100644
+Binary files a/docs/screenshots/haive_agents_api_documentation and b/docs/screenshots/haive_agents_api_documentation differ
+diff --git a/docs/source/conf.py b/docs/source/conf.py
+index 93298641..a52242a1 100644
+--- a/docs/source/conf.py
++++ b/docs/source/conf.py
+@@ -120,21 +120,28 @@ autoapi_ignore = [
+     "**/dist/**",
+     "**/*.egg-info/**",
+     "**/.git/**",
+-    # Examples and demos
+-    "**/examples/**",
+-    "**/example_*.py",
+-    "**/demo_*.py",
+-    "**/demo/**",
++    # Examples and demos - REMOVED to allow sphinx-gallery
++    # Note: sphinx-gallery will handle examples separately
++    # Only ignore test examples and debug demos
++    "**/test*/examples/**",
++    "**/debug*/examples/**",
++    "**/test*example*.py",
++    "**/debug*demo*.py",
+     # Debug and development files
+     "**/debug_*.py",
+     "**/debug/**",
+     "**/*_debug.py",
+-    # CLI and UI files
+-    "**/ui.py",
+-    "**/cli.py",
+-    "**/main.py",
+-    "**/app.py",
+-    "**/run.py",
++    # CLI and UI files - BE MORE SPECIFIC
++    # Only ignore test/debug/example CLIs, not user-facing ones
++    "**/test*/cli.py",
++    "**/test*/main.py",
++    "**/debug*/cli.py",
++    "**/debug*/main.py",
++    "**/example*/cli.py",
++    "**/example*/main.py",
++    "**/ui.py",  # Keep UI files ignored for now
++    "**/app.py",  # Keep app files for later evaluation
++    "**/run.py",  # Keep run files for later evaluation
+     # Deprecated and experimental
+     "**/deprecated/**",
+     "**/legacy/**",
+@@ -214,6 +221,12 @@ html_theme_options = {
+ # Other Settings
+ # ==============================================================================
+ 
++# Static files
++html_static_path = ["_static"]
++html_css_files = [
++    "haive-css-fixes-v2.css",  # Our improved CSS (no hard margins)
++]
++
+ # Source file handling
+ source_suffix = {
+     ".rst": "restructuredtext",
+@@ -247,6 +260,58 @@ intersphinx_mapping = {
+     "pydantic": ("https://docs.pydantic.dev", None),
+ }
+ 
++# ==============================================================================
++# Sphinx-Gallery Configuration - Examples with Output
++# ==============================================================================
++
++sphinx_gallery_conf = {
++    # Example directories to process
++    'examples_dirs': [
++        '../../packages/haive-agents/examples',
++        '../../packages/haive-mcp/examples',
++    ],
++    
++    # Output directories for gallery
++    'gallery_dirs': [
++        'auto_examples/agents',
++        'auto_examples/mcp',
++    ],
++    
++    # Process files ending in _example.py or _demo.py
++    'filename_pattern': r'/.*(_example|_demo)\.py$',
++    
++    # Ignore test files and __init__.py
++    'ignore_pattern': r'__init__\.py|test_.*\.py|.*_test\.py',
++    
++    # Gallery features
++    'download_all_examples': False,  # Start conservative
++    'plot_gallery': True,            # Generate plots
++    'remove_config_comments': True,  # Clean output
++    
++    # Execution settings
++    'abort_on_example_error': False,  # Don't stop build on errors
++    'run_stale_examples': False,      # Only run changed examples
++    'expected_failing_examples': [],  # List any known failures
++    
++    # Notebook configuration
++    'first_notebook_cell': '%matplotlib inline',
++    'notebook_extensions': {'.md': 'markdown', '.py': 'python'},
++    
++    # Image handling
++    'compress_images': ['images', 'thumbnails'],
++    'image_scrapers': ('matplotlib',),
++    
++    # Reference links
++    'reference_url': {
++        'haive': None,  # Will link to our API docs
++    },
++    
++    # Gallery appearance
++    'min_reported_time': 1,  # Only show timing if > 1 second
++    'show_memory': True,      # Show memory usage
++    'within_subsection_order': 'FileNameSortKey',
++}
++
+ # ==============================================================================
+ # Setup
+ # ==============================================================================
+diff --git a/pyproject.toml b/pyproject.toml
+index 970cbe8a..aa483cdc 100755
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -254,6 +254,12 @@ allure-pytest = "^2.14.3"
+ pipdeptree = "^2.27.0"
+ autopep8 = "^2.3.2"
+ pycodestyle = "^2.14.0"
++nox-poetry = "^1.2.0"
++import-linter = "^2.3"
++dead = "^2.1.0"
++nox = "^2025.5.1"
++invoke = "^2.2.0"
++taskipy = "^1.14.1"
+ 
+ 
+ [tool.poetry.group.docs]
+@@ -298,6 +304,9 @@ pydata-sphinx-theme = "^0.16.1"
+ sphinx-prompt = "^1.10.0"
+ sphinx-codeautolink = "^0.15.0"
+ sphinx-jinja2 = "^0.0.1"
++sphinx-tippy = "^0.4.3"
++sphinx-hoverxref = "^1.4.2"
++sphinx-lint = "^1.0.0"
+ 
+ [tool.poetry.group.dev.dependencies.torch]
+ version = "2.6.0+cu118"

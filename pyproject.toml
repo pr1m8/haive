@@ -87,7 +87,7 @@ duckduckgo-search = "^7.5.2"
 html2text = "^2024.2.26"
 markdownify = "^1.1.0"
 pandas = "^2.2.3"
-rich = "^13.9.4"
+rich = "^14.1.0"
 psycopg2 = "^2.9.10"
 langchain-anthropic = "^0.3.10"
 langchain-deepseek = "^0.1.2"
@@ -208,6 +208,7 @@ pytest-sugar = "^1.0.0"
 ipdb = "^0.13.13"
 viztracer = "^1.0.3"
 memray = "^1.17.1"
+taskipy = "^1.14.0"
 py-spy = "^0.4.0"
 ruff = "^0.11.6"
 pyright = "^1.1.399"
@@ -255,6 +256,24 @@ allure-pytest = "^2.14.3"
 pipdeptree = "^2.27.0"
 autopep8 = "^2.3.2"
 pycodestyle = "^2.14.0"
+docstr-coverage = "^2.3.2"
+docformatter = "^1.7.7"
+rstcheck-core = "^1.2.2"
+pyspelling = "^2.10"
+codespell = "^2.4.1"
+proselint = "^0.14.0"
+vale = "^3.12.0.0"
+pytest-doctestplus = "^1.4.0"
+pytest-checkdocs = "^2.13.0"
+sphinx-testing = "^1.0.1"
+pytest-markdown-docs = "^0.9.0"
+pyroma = "^5.0"
+antsibull-docs = "^2.20.0"
+flake8-docstrings = "^1.7.0"
+flake8-rst-docstrings = "^0.3.1"
+flake8-bugbear = "^24.12.12"
+flake8-comprehensions = "^3.16.0"
+flake8-simplify = "^0.22.0"
 
 
 [tool.poetry.group.docs]
@@ -298,6 +317,118 @@ pydata-sphinx-theme = "^0.16.1"
 sphinx-prompt = "^1.10.0"
 sphinx-codeautolink = "^0.15.0"
 sphinx-jinja2 = "^0.0.1"
+sphinx-argparse = "^0.5.2"
+sphinx-click = "^6.0.0"
+sphinx-issues = "^5.0.1"
+sphinx-jsonschema = "^1.19.1"
+sphinx-tippy = "^0.4.3"
+sphinx-hoverxref = "^1.4.2"
+sphinxemoji = "^0.3.1"
+sphinx-last-updated-by-git = "^0.3.8"
+sphinx-paramlinks = "^0.6.0"
+sphinxext-rediraffe = "^0.2.7"
+sphinx-math-dollar = "^1.2.1"
+sphinx-lint = "^1.0.0"
+autodoc-pydantic = "^2.2.0"
+sphinxcontrib-plantuml = "^0.30"
+sphinxcontrib-drawio = "^0.0.17"
+sphinxcontrib-images = "^1.0.1"
+sphinxcontrib-seqdiag = "^3.0.0"
+sphinxcontrib-blockdiag = "^3.0.0"
+sphinx-autodocgen = "^1.4"
+sphinxcontrib-fulltoc = "^1.2.0"
+sphinx-external-toc = "^1.0.1"
+sphinx-thebe = "^0.3.1"
+mkdocs = "^1.6.1"
+mkdocs-material = "^9.6.16"
+mkdocstrings = "^0.30.0"
+pdoc = "^15.0.4"
+sphinx-autosummary-accessors = "^2025.3.1"
+sphinx-pyproject = "^0.3.0"
+sphinx-modern-theme = "^1.0.5"
+sphinx-basic-ng = "^1.0.0b2"
+myst-nb = "^1.3.0"
+sphinx-typlog-theme = "^0.8.0"
+autodocsumm = "^0.2.14"
+sphinx-favicon = "^1.0.1"
+sphinx-notfound-page = "^1.1.0"
+sphinx-intl = "^2.3.1"
+sphinx-git = "^11.0.0"
+sphinx-version-warning = "^1.1.2"
+sphinx-contributors = "^0.2.7"
+sphinx-substitution-extensions = "^2025.6.6"
+sphinx-selective-exclude = "^1.0.3"
+sphinx-revealjs = "^3.2.0"
+sphinx-proof = "^0.2.1"
+sphinx-exercise = "^1.0.1"
+sphinx-jinja = "^2.0.2"
+sphinx-examples = "^0.0.5"
+sphinx-removed-in = "^0.2.3"
+sphinx-pyscript = "^0.1.0"
+nbsite = "^0.8.7"
+sphinx-autofixture = "^0.4.1"
+sphinx-automagicdoc = "^0.0.2"
+sphinx-me = "^0.3"
+sphinx-autoissues = "^0.0.1"
+sphinx-autoindex = "^0.1.5"
+sphinx-autopackagesummary = "^1.3"
+sphinx-autopages = "^0.0.3"
+sphinx-automodapi = "^0.20.0"
+sphinx-autorun = "^2.0.0"
+sphinx-cache = "^0.0.1"
+sphinx-btn = "^0.1.2"
+sphinx-changelog = "^1.6.0"
+sphinx-carousel = "^1.2.0"
+sphinx-charts = "^0.2.1"
+sphinx-cmd = "^0.5.0"
+sphinx-codefence = "^0.1.0"
+sphinx-codelinks = "^0.1.2"
+sphinx-collapse = "^0.1.3"
+sphinx-collections = "^0.2.0"
+sphinx-combine = "^2024.12.30.1"
+sphinx-comments = "^0.0.3"
+sphinx-debuginfo = "^0.2.2.post1"
+sphinx-desktop = "^20240301"
+sphinx-diagrams = "^0.4.0"
+sphinx-disqus = "^1.3.0"
+sphinx-dust = "^1.2.4"
+sphinx-fasvg = "^2.0.2"
+sphinx-feedback = "^0.1.0"
+sphinx-galleria = "^2.1.0"
+sphinx-mindmap = "^0.5.2"
+sphinx-multiproject = "^1.0.0"
+sphinx-openapi = "^1.0.10"
+sphinx-polyversion = "^1.1.0"
+sphinx-refdoc = "^0.3.1"
+sphinx-reports = "^0.9.7"
+sphinx-reredirects = "^1.0.0"
+sphinx-sql = "^1.3.5"
+sphinx-social = "^0.0.0"
+sphinx-tags = "^0.4"
+sphinx-tagtoctree = "^1.0.0"
+sphinx-thebelab = "^0.0.6"
+sphinx-timeline = "^0.2.1"
+sphinx-toggleprompt = "^0.6.0"
+sphinx-toml = "^0.0.4"
+sphinx-treeview = "^1.1.1"
+sphinx-uml = "^0.3.2"
+sphinx-typesafe = "^0.3"
+sphinx-tsegsearch = "^1.2"
+sphinx-variations = "^1.0.5"
+sphinx-versions = "^1.1.3"
+sphinx-versioning = "^0.1.5"
+sphinx-visualized = "^0.4.0"
+sphinx-watch = "^0.1.2"
+sphinx-webtools = "^0.2.2"
+sphinx-icontract = "^2.0.3"
+sphinx-inlinecode = "^2.0.1"
+sphinx-inplace = "^0.0.7"
+sphinx-interrogatedb = "^1.3.1"
+sphinx-invoke = "^0.2.1"
+sphinx-lastupdate = "^1.0.0"
+sphinx-library = "^1.1.3"
+sphinx-mcp = "^0.1.1"
+sphinx-markdown = "^1.0.2"
 
 [tool.poetry.group.dev.dependencies.torch]
 version = "2.6.0+cu118"
@@ -529,7 +660,8 @@ select = [
   "PL",
   "TRY",
   "RUF",
-  "TID252",
+  "TID251",     # Banned relative imports (enforce absolute)
+  "TID252",     # Relative imports from parent modules
 ]
 ignore = ["E501", "D100", "D104", "D107", "D203", "D213", "RET504", "TRY003"]
 
@@ -549,6 +681,62 @@ known-first-party = ["haive"]
 combine-as-imports = true
 force-sort-within-sections = true
 lines-after-imports = 2
+
+# 📦 AutoImport Configuration for Namespaced Poly Repo
+[tool.autoimport]
+# Disable moving to top to preserve existing structure
+disable_move_to_top = false
+
+# Force absolute imports for haive namespace
+force_absolute_imports = true
+
+# Exclude certain directories from auto-import processing
+exclude_dirs = [
+    "docs",
+    "tests/fixtures", 
+    "build",
+    ".git",
+    "__pycache__",
+    ".trunk",
+    ".cache"
+]
+
+# Common statements for haive namespace
+[tool.autoimport.common_statements]
+# Core haive imports
+"haive.core" = "from haive import core"
+"haive.agents" = "from haive import agents"
+"haive.tools" = "from haive import tools"
+"haive.games" = "from haive import games"
+"haive.dataflow" = "from haive import dataflow"
+"haive.mcp" = "from haive import mcp"
+
+# Common Python patterns
+"np" = "import numpy as np"
+"pd" = "import pandas as pd"
+"plt" = "import matplotlib.pyplot as plt"
+"Path" = "from pathlib import Path"
+"Optional" = "from typing import Optional"
+"Union" = "from typing import Union"
+"List" = "from typing import List"
+"Dict" = "from typing import Dict"
+"Any" = "from typing import Any"
+
+# LangChain common imports
+"BaseModel" = "from pydantic import BaseModel"
+"Field" = "from pydantic import Field"
+
+# 🔧 Import Organization Rules
+[tool.autoimport.import_rules]
+# Always use absolute imports for haive namespace
+prefer_absolute = ["haive.*"]
+
+# Detect and flag relative imports as errors
+flag_relative_imports = true
+
+# Auto-fix common import issues
+auto_fix_imports = true
+
 [tool.trailrunner]
 # Instruct Trailrunner to skip any .cache/trunk or .trunk directories
 exclude = ["**/.cache/trunk/**", "**/.trunk/**"]
@@ -557,3 +745,90 @@ exclude = ["**/.cache/trunk/**", "**/.trunk/**"]
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+# Add taskipy configuration for coordinated workflow management
+
+[tool.taskipy.tasks]
+# 🚀 Main Package Operations
+fix-package = "dev-tools/scripts/bulk_package_fix.sh"
+fix-games = "dev-tools/scripts/bulk_package_fix.sh haive-games"
+fix-dataflow = "dev-tools/scripts/bulk_package_fix.sh haive-dataflow" 
+fix-mcp = "dev-tools/scripts/bulk_package_fix.sh haive-mcp"
+fix-agents = "dev-tools/scripts/bulk_package_fix.sh haive-agents"
+fix-all = "task fix-games && task fix-dataflow && task fix-mcp && task fix-agents"
+
+# 🎯 Targeted Operations
+eliminate-prints-old = "dev-tools/scripts/print-eliminator.sh"
+modernize-syntax = "dev-tools/scripts/pyupgrade-modernizer.sh"
+format-code = "ruff format"
+check-code = "ruff check"
+check-stats = "ruff check --statistics"
+
+# 📦 Import Management (3-Way Approach for Namespaced Poly Repo)
+fix-imports = "dev-tools/scripts/comprehensive-import-manager.sh"
+fix-imports-games = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-games/src --fix"
+fix-imports-dataflow = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-dataflow/src --fix"
+fix-imports-mcp = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-mcp/src --fix"
+fix-imports-agents = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-agents/src --fix"
+preview-imports = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-games/src"
+check-imports = "ruff check --select I,F401,F821,TID251,TID252"
+
+# 🔄 Workflow Combinations
+quick-fix = "task eliminate-prints && task modernize-syntax && task format-code"
+full-check = "task check-stats && echo '📊 Baseline established'"
+clean-and-check = "task quick-fix && task check-stats"
+
+# 🛡️ Safety Operations  
+stash-save = "git stash push -m 'TASKIPY_CHECKPOINT_$(date +%Y%m%d_%H%M%S)'"
+stash-list = "git stash list"
+stash-restore = "git stash pop"
+
+# 📋 Development Workflow
+dev-setup = "pre-commit install && echo '✅ Pre-commit hooks installed'"
+dev-clean = "find . -name '__pycache__' -exec rm -rf {} + && find . -name '*.pyc' -delete"
+dev-lint = "task check-code --fix"
+dev-format = "task format-code"
+dev-all = "task dev-clean && task dev-lint && task dev-format"
+
+# 🚀 Power Commands (Multi-step workflows)
+nuclear-fix = "task stash-save && task fix-all && echo '🎉 All packages fixed!'"
+safe-experiment = "task stash-save && task quick-fix"
+rollback = "task stash-restore && echo '🔄 Changes rolled back'"
+
+# 📊 Monitoring & Dashboard
+dashboard = "dev-tools/scripts/monitor-progress.sh"
+watch-dashboard = "dev-tools/scripts/monitor-progress.sh --watch"
+health-check = "task dashboard && echo ''"
+report = "task dashboard > health-report-$(date +%Y%m%d_%H%M%S).txt && echo '📊 Report saved'"
+
+# 🔍 Dependency Management
+check-deps = "dev-tools/scripts/dependency-conflict-checker.sh"
+fix-deps = "dev-tools/scripts/dependency-conflict-checker.sh --fix"
+sync-deps = "task fix-deps && poetry lock && poetry install"
+
+# 🔄 Safe Refactoring Operations
+refactor = "dev-tools/scripts/safe-refactor.sh"
+refactor-help = "dev-tools/scripts/safe-refactor.sh"
+rename-function = "dev-tools/scripts/safe-refactor.sh rename-function"
+rename-variable = "dev-tools/scripts/safe-refactor.sh rename-variable"
+extract-method = "dev-tools/scripts/safe-refactor.sh extract-method"
+find-usages = "dev-tools/scripts/safe-refactor.sh find-usages"
+check-refactor-safety = "dev-tools/scripts/safe-refactor.sh check-safety"
+
+# 🔥 Fixit Advanced Auto-Fixing
+fixit-preview = "dev-tools/scripts/fixit-modernizer.sh"
+fixit-fix = "dev-tools/scripts/fixit-modernizer.sh src/ --fix"
+fixit-games = "dev-tools/scripts/fixit-modernizer.sh packages/haive-games/src/ --fix"
+fixit-mcp = "dev-tools/scripts/fixit-modernizer.sh packages/haive-mcp/src/ --fix"
+fixit-dataflow = "dev-tools/scripts/fixit-modernizer.sh packages/haive-dataflow/src/ --fix"
+
+# 📦 Auto-Import Management
+auto-import = "dev-tools/scripts/auto-import-manager.sh"
+auto-import-fix = "dev-tools/scripts/auto-import-manager.sh src/ --fix"
+auto-import-games = "dev-tools/scripts/auto-import-manager.sh packages/haive-games/src/ --fix"
+auto-import-mcp = "dev-tools/scripts/auto-import-manager.sh packages/haive-mcp/src/ --fix"
+
+# 🖨️ Print Statement Management  
+eliminate-prints = "dev-tools/scripts/print-statement-eliminator.sh"
+eliminate-prints-safe = "dev-tools/scripts/print-statement-eliminator.sh src/ --safe"
+eliminate-prints-mcp = "dev-tools/scripts/print-statement-eliminator.sh packages/haive-mcp/src/ --safe"

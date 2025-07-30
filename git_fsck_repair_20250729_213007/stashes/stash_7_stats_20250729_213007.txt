@@ -1,0 +1,9 @@
+commit a4426517a6f0ab32d17d4cf89365db49d677db23
+Merge: 15ca1591 74fc8e7e
+Author: pr1m8 <william.astley@algebraicwealth.com>
+Date:   Tue Jul 29 18:13:55 2025 -0400
+
+    On feature/fix_everything: INDENTATION_FIX_autopep8_20250729_181355
+
+ pyproject.toml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)

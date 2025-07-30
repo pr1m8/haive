@@ -104,15 +104,18 @@ extensions = [
     "sphinx.ext.intersphinx",  # Cross-project references
     "sphinx.ext.autosummary",  # Summary tables
     "sphinx.ext.autodoc",  # Autodoc support
+    "sphinx.ext.doctest",  # ✨ Test code examples in documentation
+    "sphinx.ext.coverage",  # 📊 Documentation coverage reports
+    "sphinx.ext.todo",  # 📝 TODO list generation and tracking
     # === ENHANCED CONTENT & INTERACTIVITY ===
     "sphinx_design",  # 🎨 Cards, grids, badges, dropdowns
-    "sphinx_tabs",  # 📑 Tabbed content sections
+    "sphinx_tabs.tabs",  # 📑 Tabbed content sections - FIXED import path
     "sphinx_inline_tabs",  # Inline tabbed content
     "sphinx_togglebutton",  # 🔽 Collapsible sections
     "sphinx_copybutton",  # 📋 Copy code buttons
     "sphinx_exec_directive",  # ⚡ Execute Python code in docs
     # === MARKDOWN & CONTENT ===
-    "myst_parser",  # 📝 Markdown support (MyST)
+    # "myst_parser",  # 📝 Markdown support (MyST) - REPLACED by myst_nb
     # Note: sphinx_mdinclude disabled to avoid conflicts with myst_parser
     # === DIAGRAMS & MEDIA ===
     "sphinxcontrib.mermaid",  # 📊 Mermaid diagrams
@@ -125,7 +128,7 @@ extensions = [
     # === SOCIAL & SEO ===
     "sphinxext.opengraph",  # 📱 Open Graph metadata
     # === EXAMPLES & GALLERIES ===
-    "sphinx_gallery",  # 🖼️ Example gallery generation - NOW ENABLED
+    "sphinx_gallery.gen_gallery",  # 🖼️ Example gallery generation - FIXED import path
     # === TYPE HINTS & DOCUMENTATION ===
     "sphinx_autodoc_typehints",  # 🎯 Beautiful type hints
     # === REQUIREMENTS & DATA ===
@@ -139,6 +142,45 @@ extensions = [
     # "sphinx_simplepdf",  # 📄 PDF generation (enable when needed)
     # === VERSIONING ===
     # "sphinx_multiversion",  # 📚 Multi-version docs (enable when needed)
+    "sphinx_external_toc",  # 📋 External table of contents management
+    # === INTERACTIVE CONTENT ===
+    "sphinx_exercise",          # 🎯 Interactive exercises with solutions
+    "sphinx_proof",             # 📐 Mathematical proofs and theorems  
+    "hoverxref.extension",      # 🖱️ Hover tooltips for cross-references
+    # === ADVANCED DIAGRAMS ===
+    "sphinxcontrib.blockdiag",  # 📊 Block diagrams (architecture)
+    "sphinxcontrib.plantuml",   # 🏗️ UML diagrams (system design)
+    "sphinxcontrib.seqdiag",    # 📈 Sequence diagrams (API flows)
+    # === PROFESSIONAL POLISH ===
+    "notfound.extension",       # 📄 Custom 404 pages  
+    "sphinx_contributors",      # 👥 Automatic contributor lists (correct import name)
+    "sphinx_issues",            # 🐛 GitHub issues integration (correct import name)
+    # === ENHANCED UX ===
+    "sphinxemoji.sphinxemoji",  # 😀 Emoji support in docs
+    "sphinx_math_dollar",       # 📐 LaTeX math with $ syntax
+    "sphinxcontrib.images",     # 🖼️ Image thumbnails and galleries
+    
+    # === TOP 20 PREMIUM EXTENSIONS (TESTED & WORKING) ===
+    "myst_nb",                  # 📓 Jupyter notebook integration + MyST parser (REPLACES myst_parser)
+    "sphinx_thebe",             # 🎯 Live code execution in browser
+    "sphinx_favicon",           # 🎨 Custom favicon support
+    "sphinx_git",               # 🔗 Advanced Git integration
+    "sphinx_gallery.gen_gallery", # 🖼️ Example gallery generation (fixed import)
+    "sphinx_exec_directive",    # ⚡ Execute Python code in docs
+    "sphinx_revealjs",          # 🎯 Generate presentations from docs
+    "sphinx_prompt",            # 💻 Professional command prompts
+    "sphinx_substitution_extensions", # 🔄 Advanced text substitutions
+    "sphinx_pdf_generate",      # 📄 PDF generation
+    "sphinx_simplepdf",         # 📄 Simple PDF export
+    "sphinx_multiversion",      # 📚 Multi-version documentation
+    "sphinx_sitemap",           # 🗺️ SEO sitemap generation
+    "sphinx_removed_in",        # 📝 Deprecation notices
+    # "sphinx_pyproject",         # 📦 pyproject.toml integration - NO SETUP FUNCTION
+    "sphinx_data_viewer",       # 📊 Interactive data visualization
+    # "sphinx_intl",              # 🌍 Internationalization support - NO SETUP FUNCTION
+    "sphinxcontrib.mermaid",    # 📊 Mermaid diagrams
+    "sphinxcontrib.plantuml",   # 🏗️ PlantUML diagrams
+    "sphinxcontrib.youtube",    # 📹 YouTube video embedding
 ]
 
 # ==============================================================================
@@ -574,6 +616,92 @@ typehints_format = "short"  # Use short format for better readability
 always_document_param_types = True
 autodoc_preserve_defaults = True  # Show default values
 autodoc_member_order = "groupwise"  # Match AutoAPI groupwise ordering
+
+# === SPHINX DOCTEST CONFIGURATION ===
+doctest_global_setup = '''
+# Common imports for all doctests
+import sys
+import os
+from pathlib import Path
+
+# Add package paths for imports
+workspace_dir = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(workspace_dir))
+
+# Add all package source paths
+packages = ["haive-core", "haive-agents", "haive-tools", "haive-games", "haive-mcp", "haive-dataflow"]
+for pkg in packages:
+    src_path = workspace_dir / "packages" / pkg / "src"
+    if src_path.exists():
+        sys.path.insert(0, str(src_path))
+
+# Essential Haive imports
+try:
+    from haive.core.engine.aug_llm import AugLLMConfig
+    from haive.agents.simple.agent import SimpleAgent
+except ImportError:
+    pass  # Skip if packages not available during doctest
+'''
+
+doctest_test_doctest_blocks = "default"  # Test .. doctest:: blocks
+doctest_global_cleanup = ""  # Cleanup after doctests
+
+# === SPHINX COVERAGE CONFIGURATION ===
+coverage_write_headline = False  # Don't write "Undocumented Python objects" headline
+coverage_show_missing_items = True  # Show what's missing in coverage report
+coverage_ignore_modules = [
+    "haive.*.tests.*",  # Ignore test modules
+    "haive.*.__main__",  # Ignore main modules
+    "haive.*.migrations.*",  # Ignore migration modules
+]
+coverage_ignore_functions = [
+    "__repr__", "__str__", "__init__"  # Ignore common dunder methods
+]
+
+# === TODO EXTENSION CONFIGURATION ===
+todo_include_todos = True  # Include TODO items in output
+todo_emit_warnings = False  # Don't emit warnings for TODOs (they're intentional)
+todo_link_only = False  # Show full TODO text, not just links
+
+# === EXTERNAL TOC CONFIGURATION ===
+external_toc_path = "_toc.yml"  # Use external TOC file (optional)
+external_toc_exclude_missing = True  # Don't break build for missing TOC entries
+
+# === INTERACTIVE EXERCISES CONFIGURATION ===
+exercise_include_exercises = True  # Include exercises in output
+exercise_include_solutions = True  # Include solutions in output
+
+# === MATHEMATICAL PROOFS CONFIGURATION ===  
+proof_theorem_types = {
+    "algorithm": "Algorithm",
+    "axiom": "Axiom", 
+    "definition": "Definition",
+    "example": "Example",
+    "lemma": "Lemma",
+    "theorem": "Theorem",
+    "property": "Property",
+}
+
+# === HOVERXREF CONFIGURATION ===
+hoverxref_auto_ref = True  # Enable automatic hover references
+hoverxref_domains = ["py"]  # Enable for Python domain
+hoverxref_roles = ["ref", "class", "func", "meth", "attr", "exc", "data"]
+
+# === GITHUB ISSUES INTEGRATION ===
+issues_github_path = "pr1m8/haive"  # Your GitHub repository
+
+# === CONTRIBUTORS CONFIGURATION ===
+contributors_github_repo = "pr1m8/haive"
+contributors_file = "CONTRIBUTORS.md"
+
+# === CUSTOM 404 PAGE CONFIGURATION ===
+notfound_pagename = "404"
+notfound_template = "404.html"
+notfound_context = {
+    "title": "Page Not Found",
+    "body": "The page you're looking for doesn't exist. Try searching or check our main documentation.",
+}
+
 autodoc_type_aliases = {
     "Agent": "haive.agents.base.Agent",
     "StateSchema": "haive.core.schema.StateSchema",
@@ -659,31 +787,15 @@ sphinx_gallery_conf = {
     "last_notebook_cell": "# End of example",
     # Enhanced gallery features
     "promote_jupyter_magic": True,
-    "binder_conf": {
+    "binder": {
         "org": "haive",
         "repo": "haive",
         "branch": "main",
         "binderhub_url": "https://mybinder.org",
         "dependencies": ["../../pyproject.toml"],
     },
-    "gallery_dirs_config": {
-        "gallery_beginner": {
-            "expected_failing_examples": [],
-            "description": "🌱 Beginner-friendly tutorials for your first Haive agents",
-        },
-        "gallery_intermediate": {
-            "expected_failing_examples": [],
-            "description": "🌿 Intermediate patterns for multi-agent coordination",
-        },
-        "gallery_advanced": {
-            "expected_failing_examples": [],
-            "description": "🌲 Advanced workflows and custom patterns",
-        },
-        "gallery_games": {
-            "expected_failing_examples": [],
-            "description": "🎮 AI agents playing games and strategic thinking",
-        },
-    },
+    # Note: gallery_dirs_config is not a valid sphinx_gallery configuration key
+    # Gallery descriptions can be added via README.rst files in each gallery directory
 }
 
 # === JUPYTER CACHE - NOTEBOOK INTEGRATION ===

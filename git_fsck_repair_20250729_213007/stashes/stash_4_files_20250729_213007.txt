@@ -1,0 +1,1 @@
+dev-tools/configs/.pre-commit-config.yaml

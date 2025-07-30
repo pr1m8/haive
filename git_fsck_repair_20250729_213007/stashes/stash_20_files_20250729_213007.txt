@@ -1,0 +1,8 @@
+.gitignore
+docs/screenshots/api_documentation_all_6_packages
+docs/screenshots/complete_documentation_homepage
+docs/screenshots/haive_agents_api_documentation
+project_docs/README.md
+scripts/comprehensive_error_detector.py
+scripts/fixes/comprehensive_dev_fix.py
+scripts/fixes/comprehensive_syntax_fixer.py

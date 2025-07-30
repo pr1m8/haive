@@ -1,0 +1,107 @@
+diff --git a/.trunk/trunk.yaml b/.trunk/trunk.yaml
+index 020fd2a9..a589c0ce 100644
+--- a/.trunk/trunk.yaml
++++ b/.trunk/trunk.yaml
+@@ -18,6 +18,10 @@ runtimes:
+ 
+ lint:
+   enabled:
++    - autopep8@2.3.2
++    - flake8@7.3.0
++    - pylint@3.3.7
++    - pyright@1.1.403
+     - actionlint@1.7.7
+     - bandit@1.8.6
+     - black@25.1.0
+diff --git a/docs/screenshots/api_documentation_all_6_packages b/docs/screenshots/api_documentation_all_6_packages
+index badeeae7..0c560ef7 100644
+Binary files a/docs/screenshots/api_documentation_all_6_packages and b/docs/screenshots/api_documentation_all_6_packages differ
+diff --git a/docs/screenshots/complete_documentation_homepage b/docs/screenshots/complete_documentation_homepage
+index 628f398a..f9ce606a 100644
+Binary files a/docs/screenshots/complete_documentation_homepage and b/docs/screenshots/complete_documentation_homepage differ
+diff --git a/docs/screenshots/haive_agents_api_documentation b/docs/screenshots/haive_agents_api_documentation
+index 82f1d72e..11839e8e 100644
+Binary files a/docs/screenshots/haive_agents_api_documentation and b/docs/screenshots/haive_agents_api_documentation differ
+diff --git a/project_docs/memory_index/quick_reference.md b/project_docs/memory_index/quick_reference.md
+index 7627523f..32195609 100644
+--- a/project_docs/memory_index/quick_reference.md
++++ b/project_docs/memory_index/quick_reference.md
+@@ -32,6 +32,27 @@ poetry run python -c "from haive.core import *; print('OK')"
+ poetry install --all-extras
+ ```
+ 
++### Import Performance (NEW! 2025-01-23)
++
++```python
++# Lazy loading pattern for fast imports
++_LAZY_IMPORTS = {
++    "Component": ("module.path", "ClassName"),
++}
++
++def __getattr__(name: str):
++    if name in _LAZY_IMPORTS:
++        module_path, class_name = _LAZY_IMPORTS[name]
++        import importlib
++        module = importlib.import_module(module_path)
++        component = getattr(module, class_name)
++        globals()[name] = component
++        return component
++    raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
++```
++
++See: @memory_index/by_date/2025-01-23/lazy_loading_optimization.md
++
+ ### Test Failures
+ 
+ ```python
+@@ -159,8 +180,15 @@ python -m http.server 8003 --directory docs/build/html/
+ 
+ #no-mocks #poetry-run #documentation #import-errors #pydantic-patterns #no-factories #prompt-partials #reflection-pattern
+ 
+-## 🆕 Latest Discoveries (2025-01-18)
++## 🆕 Latest Discoveries
++
++### 2025-01-23
++- **Lazy Loading Optimization**: Reduced import time from 30.7s to 3.78s (87% improvement)
++  - @memory_index/by_date/2025-01-23/lazy_loading_optimization.md
++  - Module-level `__getattr__` pattern for transparent lazy loading
++  - Avoided numpy/pandas, document auto-registry, and schema_composer
+ 
++### 2025-01-18
+ - **Reflection Pattern**: @memory_index/by_date/2025-01-18/reflection_pattern_insights.md
+ - **Message-Only Challenge**: Agents only accept messages, use prompt partials for structured data
+ - **No model_post_init**: Usually unnecessary, just use field defaults
+diff --git a/pyproject.toml b/pyproject.toml
+index 970cbe8a..a19899da 100755
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -213,9 +213,9 @@ pyright = "^1.1.399"
+ sourcery = "^1.35.0"
+ coverage = "^7.8.0"
+ # Documentation automation tools for destroying 20,374 issues 🔥
+-interrogate = "^1.5.0"          # Find missing docstrings
+-pydocstyle = "^6.3.0"           # Docstring style enforcement  
+-darglint = "^1.8.1"             # Docstring-code sync validation
++interrogate = "^1.5.0"             # Find missing docstrings
++pydocstyle = "^6.3.0"              # Docstring style enforcement  
++darglint = "^1.8.1"                # Docstring-code sync validation
+ mimesis = "^18.0.0"
+ factory-boy = "^3.3.3"
+ hypothesis = "^6.131.6"
+@@ -254,6 +254,8 @@ allure-pytest = "^2.14.3"
+ pipdeptree = "^2.27.0"
+ autopep8 = "^2.3.2"
+ pycodestyle = "^2.14.0"
++abs2rel = "^1.1.0"
++reorder-python-imports = "^3.15.0"
+ 
+ 
+ [tool.poetry.group.docs]
+@@ -298,6 +300,7 @@ pydata-sphinx-theme = "^0.16.1"
+ sphinx-prompt = "^1.10.0"
+ sphinx-codeautolink = "^0.15.0"
+ sphinx-jinja2 = "^0.0.1"
++sphinxcontrib-programoutput = "^0.18"
+ 
+ [tool.poetry.group.dev.dependencies.torch]
+ version = "2.6.0+cu118"

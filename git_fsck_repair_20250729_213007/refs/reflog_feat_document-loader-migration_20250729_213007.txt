@@ -1,0 +1,3 @@
+927b7e6a feat/document-loader-migration@{2025-07-05 01:26:33 -0400}: commit: Update .gitignore to exclude state_history directory
+565b5f1a feat/document-loader-migration@{2025-07-03 22:12:30 -0400}: commit: Update .gitignore to include node_modules directory
+46af0645 feat/document-loader-migration@{2025-07-03 20:23:11 -0400}: branch: Created from HEAD
