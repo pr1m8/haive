@@ -8,7 +8,7 @@ This module defines project metadata including:
 """
 
 from datetime import datetime
-from typing import Any, Dict, Optional
+from typing import Any
 
 
 def get_config(
@@ -17,7 +17,7 @@ def get_config(
     version: str = "1.0",
     release: str = "1.0.0",
     language: str = "en",
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Get project information configuration.
 
     Args:
@@ -89,7 +89,7 @@ def get_config(
     return config
 
 
-def get_minimal_config() -> Dict[str, Any]:
+def get_minimal_config() -> dict[str, Any]:
     """Get minimal project configuration.
 
     Returns:

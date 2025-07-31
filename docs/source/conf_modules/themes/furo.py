@@ -7,7 +7,7 @@ This module provides comprehensive Furo theme configuration with:
 - Professional typography and layout
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 
 def get_config(
@@ -15,9 +15,9 @@ def get_config(
     sidebar_width: str = "15rem",
     content_width: str = "50rem",
     enable_announcement: bool = False,
-    github_url: Optional[str] = None,
-    pypi_url: Optional[str] = None,
-) -> Dict[str, Any]:
+    github_url: str | None = None,
+    pypi_url: str | None = None,
+) -> dict[str, Any]:
     """Get Furo theme configuration.
 
     Args:
@@ -84,9 +84,9 @@ def _get_theme_options(
     sidebar_width: str,
     content_width: str,
     enable_announcement: bool,
-    github_url: Optional[str],
-    pypi_url: Optional[str],
-) -> Dict[str, Any]:
+    github_url: str | None,
+    pypi_url: str | None,
+) -> dict[str, Any]:
     """Get Furo theme options."""
     options = {
         # === SIDEBAR ===
@@ -133,7 +133,7 @@ def _get_theme_options(
     return options
 
 
-def _get_light_css_variables(sidebar_width: str, content_width: str) -> Dict[str, str]:
+def _get_light_css_variables(sidebar_width: str, content_width: str) -> dict[str, str]:
     """Get light mode CSS variables."""
     return {
         # === LAYOUT ===
@@ -209,7 +209,7 @@ def _get_light_css_variables(sidebar_width: str, content_width: str) -> Dict[str
     }
 
 
-def _get_dark_css_variables() -> Dict[str, str]:
+def _get_dark_css_variables() -> dict[str, str]:
     """Get dark mode CSS variables."""
     return {
         # === COLORS ===
@@ -245,7 +245,7 @@ def _get_dark_css_variables() -> Dict[str, str]:
     }
 
 
-def _get_github_icon(github_url: str) -> Dict[str, str]:
+def _get_github_icon(github_url: str) -> dict[str, str]:
     """Get GitHub footer icon configuration."""
     return {
         "name": "GitHub",
@@ -259,7 +259,7 @@ def _get_github_icon(github_url: str) -> Dict[str, str]:
     }
 
 
-def _get_pypi_icon(pypi_url: str) -> Dict[str, str]:
+def _get_pypi_icon(pypi_url: str) -> dict[str, str]:
     """Get PyPI footer icon configuration."""
     return {
         "name": "PyPI",
@@ -273,7 +273,7 @@ def _get_pypi_icon(pypi_url: str) -> Dict[str, str]:
     }
 
 
-def get_minimal_config() -> Dict[str, Any]:
+def get_minimal_config() -> dict[str, Any]:
     """Get minimal Furo theme configuration."""
     return get_config(
         project_name="Project",
@@ -281,7 +281,7 @@ def get_minimal_config() -> Dict[str, Any]:
     )
 
 
-def get_standard_config() -> Dict[str, Any]:
+def get_standard_config() -> dict[str, Any]:
     """Get standard Furo theme configuration."""
     return get_config(
         project_name="Haive",
@@ -290,7 +290,7 @@ def get_standard_config() -> Dict[str, Any]:
     )
 
 
-def get_full_config() -> Dict[str, Any]:
+def get_full_config() -> dict[str, Any]:
     """Get full Furo theme configuration."""
     return get_config(
         project_name="Haive",

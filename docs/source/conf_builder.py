@@ -7,9 +7,7 @@ This module helps create different types of Sphinx configurations:
 - Custom: Pick and choose features
 """
 
-from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
 
 
 class SphinxConfigBuilder:
@@ -43,7 +41,7 @@ language = 'en'
         )
         return self
 
-    def add_paths(self, packages: Optional[List[str]] = None) -> "SphinxConfigBuilder":
+    def add_paths(self, packages: list[str] | None = None) -> "SphinxConfigBuilder":
         """Add path configuration."""
         packages = packages or [
             "haive-core",
@@ -101,7 +99,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.intersphinx",
     "sphinx.ext.todo",
-    
+
     # Enhanced features
     "sphinx_copybutton",
     "myst_parser",
@@ -195,7 +193,7 @@ html_theme_options = {
             self.components.append(
                 """
 # ==============================================================================
-# Theme Configuration  
+# Theme Configuration
 # ==============================================================================
 
 html_theme = "sphinx_rtd_theme"
@@ -223,13 +221,13 @@ extensions.extend([
     "sphinx.ext.coverage",
     "sphinx.ext.doctest",
     "sphinx_autodoc_typehints",
-    
+
     # Enhanced features
     "sphinx_design",
     "sphinx_tabs.tabs",
     "sphinx_togglebutton",
     "sphinx_favicon",
-    
+
     # External integrations
     "sphinxcontrib.mermaid",
     "sphinx_sitemap",
@@ -363,17 +361,14 @@ if __name__ == "__main__":
     # Minimal
     minimal = create_minimal_conf()
     Path("conf_minimal.py").write_text(minimal)
-    print("Created conf_minimal.py")
 
     # Standard
     standard = create_standard_conf()
     Path("conf_standard.py").write_text(standard)
-    print("Created conf_standard.py")
 
     # Full
     full = create_full_conf()
     Path("conf_full.py").write_text(full)
-    print("Created conf_full.py")
 
     # Custom
     custom = (
@@ -385,4 +380,3 @@ if __name__ == "__main__":
         .build()
     )
     Path("conf_custom.py").write_text(custom)
-    print("Created conf_custom.py")

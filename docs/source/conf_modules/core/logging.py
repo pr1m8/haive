@@ -8,14 +8,14 @@ This module sets up logging for debugging Sphinx builds including:
 
 import logging
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any
 
 
 def get_config(
     log_level: str = "INFO",
-    log_file: Optional[str] = "sphinx_debug.log",
+    log_file: str | None = "sphinx_debug.log",
     console_output: bool = True,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Configure logging for Sphinx.
 
     Args:
@@ -71,7 +71,7 @@ def get_config(
     return config
 
 
-def get_debug_config() -> Dict[str, Any]:
+def get_debug_config() -> dict[str, Any]:
     """Get debug logging configuration.
 
     Returns:
@@ -82,24 +82,24 @@ def get_debug_config() -> Dict[str, Any]:
     )
 
 
-def get_minimal_config() -> Dict[str, Any]:
+def get_minimal_config() -> dict[str, Any]:
     """Get minimal logging configuration."""
     return get_config(log_level="WARNING", log_file=None, console_output=True)
 
 
-def get_standard_config() -> Dict[str, Any]:
+def get_standard_config() -> dict[str, Any]:
     """Get standard logging configuration."""
     return get_config(log_level="INFO", log_file="sphinx.log", console_output=True)
 
 
-def get_full_config() -> Dict[str, Any]:
+def get_full_config() -> dict[str, Any]:
     """Get full logging configuration with debug."""
     return get_config(
         log_level="DEBUG", log_file="sphinx_debug.log", console_output=True
     )
 
 
-def get_quiet_config() -> Dict[str, Any]:
+def get_quiet_config() -> dict[str, Any]:
     """Get quiet logging configuration.
 
     Returns:

@@ -9,7 +9,7 @@ This module configures extensions for external integrations:
 - API documentation: OpenAPI, HTTP domains
 """
 
-from typing import Any, Dict
+from typing import Any
 
 
 def get_config(
@@ -21,7 +21,7 @@ def get_config(
     enable_api_docs: bool = True,
     github_repo: str = "pr1m8/haive",
     base_url: str = "https://haive.readthedocs.io/",
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Get external integration extension configuration.
 
     Args:
@@ -82,7 +82,7 @@ def get_config(
     return config
 
 
-def _get_intersphinx_config() -> Dict[str, Any]:
+def _get_intersphinx_config() -> dict[str, Any]:
     """Get Intersphinx configuration."""
     return {
         "intersphinx_mapping": {
@@ -99,7 +99,7 @@ def _get_intersphinx_config() -> Dict[str, Any]:
     }
 
 
-def _get_opengraph_config(base_url: str) -> Dict[str, Any]:
+def _get_opengraph_config(base_url: str) -> dict[str, Any]:
     """Get Open Graph configuration."""
     return {
         "ogp_site_url": base_url,
@@ -114,7 +114,7 @@ def _get_opengraph_config(base_url: str) -> Dict[str, Any]:
     }
 
 
-def _get_sitemap_config(base_url: str) -> Dict[str, Any]:
+def _get_sitemap_config(base_url: str) -> dict[str, Any]:
     """Get sitemap configuration."""
     return {
         "sitemap_url_scheme": "{link}",
@@ -122,7 +122,7 @@ def _get_sitemap_config(base_url: str) -> Dict[str, Any]:
     }
 
 
-def _get_github_config(github_repo: str) -> Dict[str, Any]:
+def _get_github_config(github_repo: str) -> dict[str, Any]:
     """Get GitHub integration configuration."""
     return {
         "issues_github_path": github_repo,
@@ -131,7 +131,7 @@ def _get_github_config(github_repo: str) -> Dict[str, Any]:
     }
 
 
-def get_hover_config() -> Dict[str, Any]:
+def get_hover_config() -> dict[str, Any]:
     """Get hover tooltips configuration."""
     return {
         "hoverxref_auto_ref": True,  # Enable automatic hover references
@@ -140,7 +140,7 @@ def get_hover_config() -> Dict[str, Any]:
     }
 
 
-def get_needs_config() -> Dict[str, Any]:
+def get_needs_config() -> dict[str, Any]:
     """Get requirements management configuration."""
     return {
         "needs_types": [
@@ -176,7 +176,7 @@ def get_needs_config() -> Dict[str, Any]:
     }
 
 
-def get_minimal_config() -> Dict[str, Any]:
+def get_minimal_config() -> dict[str, Any]:
     """Get minimal external integration configuration."""
     return get_config(
         enable_intersphinx=True,
@@ -188,7 +188,7 @@ def get_minimal_config() -> Dict[str, Any]:
     )
 
 
-def get_standard_config() -> Dict[str, Any]:
+def get_standard_config() -> dict[str, Any]:
     """Get standard external integration configuration."""
     return get_config(
         enable_intersphinx=True,
@@ -200,7 +200,7 @@ def get_standard_config() -> Dict[str, Any]:
     )
 
 
-def get_full_config() -> Dict[str, Any]:
+def get_full_config() -> dict[str, Any]:
     """Get full external integration configuration."""
     config = get_config(
         enable_intersphinx=True,

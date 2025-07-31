@@ -8,7 +8,7 @@ This module configures extensions for documentation quality and testing:
 - Link checking: Validate external links
 """
 
-from typing import Any, Dict, List
+from typing import Any
 
 
 def get_config(
@@ -17,7 +17,7 @@ def get_config(
     enable_todo: bool = True,
     enable_linkcheck: bool = False,
     enable_spelling: bool = False,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Get quality and testing extension configuration.
 
     Args:
@@ -60,7 +60,7 @@ def get_config(
     return config
 
 
-def _get_doctest_config() -> Dict[str, Any]:
+def _get_doctest_config() -> dict[str, Any]:
     """Get doctest configuration."""
     return {
         "doctest_global_setup": """
@@ -92,7 +92,7 @@ except ImportError:
     }
 
 
-def _get_coverage_config() -> Dict[str, Any]:
+def _get_coverage_config() -> dict[str, Any]:
     """Get documentation coverage configuration."""
     return {
         "coverage_write_headline": False,  # Don't write "Undocumented" headline
@@ -110,7 +110,7 @@ def _get_coverage_config() -> Dict[str, Any]:
     }
 
 
-def _get_todo_config() -> Dict[str, Any]:
+def _get_todo_config() -> dict[str, Any]:
     """Get TODO extension configuration."""
     return {
         "todo_include_todos": True,  # Include TODO items in output
@@ -119,7 +119,7 @@ def _get_todo_config() -> Dict[str, Any]:
     }
 
 
-def _get_spelling_config() -> Dict[str, Any]:
+def _get_spelling_config() -> dict[str, Any]:
     """Get spell checking configuration."""
     return {
         "spelling_lang": "en_US",
@@ -133,7 +133,7 @@ def _get_spelling_config() -> Dict[str, Any]:
     }
 
 
-def get_linkcheck_config() -> Dict[str, Any]:
+def get_linkcheck_config() -> dict[str, Any]:
     """Get link checking configuration.
 
     Note: This is used with sphinx-build -b linkcheck, not as an extension.
@@ -150,7 +150,7 @@ def get_linkcheck_config() -> Dict[str, Any]:
     }
 
 
-def get_minimal_config() -> Dict[str, Any]:
+def get_minimal_config() -> dict[str, Any]:
     """Get minimal quality configuration."""
     return get_config(
         enable_doctest=False,
@@ -161,7 +161,7 @@ def get_minimal_config() -> Dict[str, Any]:
     )
 
 
-def get_standard_config() -> Dict[str, Any]:
+def get_standard_config() -> dict[str, Any]:
     """Get standard quality configuration."""
     return get_config(
         enable_doctest=True,
@@ -172,7 +172,7 @@ def get_standard_config() -> Dict[str, Any]:
     )
 
 
-def get_full_config() -> Dict[str, Any]:
+def get_full_config() -> dict[str, Any]:
     """Get full quality configuration."""
     return get_config(
         enable_doctest=True,

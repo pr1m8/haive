@@ -80,7 +80,8 @@ def get_myst_extensions() -> List[str]:
     """Get MyST extensions with debugging."""
     logger.info("📝 Loading MyST extensions...")
 
-    extensions = ["myst_parser", "myst_nb"]
+    # Temporarily disable myst_nb to fix transform conflict
+    extensions = ["myst_parser"]  # Removed "myst_nb" temporarily
 
     # Test if MyST is available
     available_extensions = []
@@ -274,9 +275,9 @@ def get_enhanced_extensions() -> List[str]:
         "sphinx_uml": "sphinx_uml",
         "sphinx_mindmap": "sphinx_mindmap",
         "sphinx_diagrams": "sphinx_diagrams",
-        # Markdown Integration
-        "sphinx_markdown": "sphinx_markdown",
-        "sphinx_mdinclude": "sphinx_mdinclude",
+        # Markdown Integration - DISABLED due to conflict with myst_parser
+        # "sphinx_markdown": "sphinx_markdown",
+        # "sphinx_mdinclude": "sphinx_mdinclude",
         # Social and External Integration
         "sphinx_disqus": "sphinx_disqus",
         "sphinx_social": "sphinx_social",

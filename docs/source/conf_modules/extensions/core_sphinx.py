@@ -10,30 +10,30 @@ This module configures essential Sphinx extensions including:
 - coverage
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 
-def get_config() -> Dict[str, Any]:
+def get_config() -> dict[str, Any]:
     """Get standard core Sphinx extensions configuration."""
     return _get_config_impl(minimal=False)
 
 
-def get_minimal_config() -> Dict[str, Any]:
+def get_minimal_config() -> dict[str, Any]:
     """Get minimal core Sphinx extensions configuration."""
     return _get_config_impl(minimal=True)
 
 
-def get_standard_config() -> Dict[str, Any]:
+def get_standard_config() -> dict[str, Any]:
     """Get standard core Sphinx extensions configuration."""
     return _get_config_impl(minimal=False)
 
 
-def get_full_config() -> Dict[str, Any]:
+def get_full_config() -> dict[str, Any]:
     """Get full core Sphinx extensions configuration."""
     return _get_config_impl(minimal=False)
 
 
-def _get_config_impl(minimal: bool = False) -> Dict[str, Any]:
+def _get_config_impl(minimal: bool = False) -> dict[str, Any]:
     """Get core Sphinx extensions configuration.
 
     Args:
@@ -142,7 +142,7 @@ def _get_config_impl(minimal: bool = False) -> Dict[str, Any]:
     return config
 
 
-def get_minimal_extensions() -> List[str]:
+def get_minimal_extensions() -> list[str]:
     """Get minimal list of extensions for simple projects.
 
     Returns:

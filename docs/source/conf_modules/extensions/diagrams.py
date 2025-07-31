@@ -8,7 +8,7 @@ This module configures extensions for creating diagrams and visualizations:
 - Image galleries and thumbnails
 """
 
-from typing import Any, Dict
+from typing import Any
 
 
 def get_config(
@@ -17,7 +17,7 @@ def get_config(
     enable_blockdiag: bool = True,
     enable_seqdiag: bool = True,
     enable_images: bool = True,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Get diagram and visualization extension configuration.
 
     Args:
@@ -60,7 +60,7 @@ def get_config(
     return config
 
 
-def _get_mermaid_config() -> Dict[str, Any]:
+def _get_mermaid_config() -> dict[str, Any]:
     """Get Mermaid diagram configuration."""
     return {
         "mermaid_version": "10.6.1",
@@ -81,19 +81,18 @@ mermaid.initialize({
     }
 
 
-def _get_plantuml_config() -> Dict[str, Any]:
+def _get_plantuml_config() -> dict[str, Any]:
     """Get PlantUML diagram configuration."""
     return {
         # PlantUML server (use local if available, otherwise remote)
         "plantuml": "java -jar plantuml.jar",
         # Alternative: use online server
-        # "plantuml": "http://www.plantuml.com/plantuml",
         "plantuml_output_format": "svg",
         "plantuml_epstopdf": "epstopdf",
     }
 
 
-def _get_images_config() -> Dict[str, Any]:
+def _get_images_config() -> dict[str, Any]:
     """Get image gallery configuration."""
     return {
         "images_config": {
@@ -104,7 +103,7 @@ def _get_images_config() -> Dict[str, Any]:
     }
 
 
-def get_blockdiag_config() -> Dict[str, Any]:
+def get_blockdiag_config() -> dict[str, Any]:
     """Get block diagram configuration."""
     return {
         "blockdiag_html_image_format": "SVG",
@@ -112,7 +111,7 @@ def get_blockdiag_config() -> Dict[str, Any]:
     }
 
 
-def get_seqdiag_config() -> Dict[str, Any]:
+def get_seqdiag_config() -> dict[str, Any]:
     """Get sequence diagram configuration."""
     return {
         "seqdiag_html_image_format": "SVG",
@@ -120,7 +119,7 @@ def get_seqdiag_config() -> Dict[str, Any]:
     }
 
 
-def get_minimal_config() -> Dict[str, Any]:
+def get_minimal_config() -> dict[str, Any]:
     """Get minimal diagram configuration."""
     return get_config(
         enable_mermaid=True,
@@ -131,7 +130,7 @@ def get_minimal_config() -> Dict[str, Any]:
     )
 
 
-def get_standard_config() -> Dict[str, Any]:
+def get_standard_config() -> dict[str, Any]:
     """Get standard diagram configuration."""
     return get_config(
         enable_mermaid=True,
@@ -142,7 +141,7 @@ def get_standard_config() -> Dict[str, Any]:
     )
 
 
-def get_full_config() -> Dict[str, Any]:
+def get_full_config() -> dict[str, Any]:
     """Get full diagram configuration."""
     return get_config(
         enable_mermaid=True,

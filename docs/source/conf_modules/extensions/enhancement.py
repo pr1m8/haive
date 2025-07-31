@@ -7,7 +7,7 @@ This module configures extensions that enhance content presentation:
 - Math support and emojis
 """
 
-from typing import Any, Dict, List
+from typing import Any
 
 
 def get_config(
@@ -16,7 +16,7 @@ def get_config(
     enable_copybutton: bool = True,
     enable_math: bool = True,
     enable_emoji: bool = True,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Get content enhancement extension configuration.
 
     Args:
@@ -73,7 +73,7 @@ def get_config(
     return config
 
 
-def _get_copybutton_config() -> Dict[str, Any]:
+def _get_copybutton_config() -> dict[str, Any]:
     """Get copy button configuration."""
     return {
         "copybutton_prompt_text": (
@@ -84,7 +84,7 @@ def _get_copybutton_config() -> Dict[str, Any]:
     }
 
 
-def get_tabs_config() -> Dict[str, Any]:
+def get_tabs_config() -> dict[str, Any]:
     """Get additional tabs configuration if needed."""
     return {
         # sphinx-tabs works out of the box
@@ -92,7 +92,7 @@ def get_tabs_config() -> Dict[str, Any]:
     }
 
 
-def get_design_config() -> Dict[str, Any]:
+def get_design_config() -> dict[str, Any]:
     """Get sphinx-design configuration."""
     return {
         # sphinx-design works out of the box
@@ -100,7 +100,7 @@ def get_design_config() -> Dict[str, Any]:
     }
 
 
-def get_minimal_config() -> Dict[str, Any]:
+def get_minimal_config() -> dict[str, Any]:
     """Get minimal enhancement configuration."""
     return get_config(
         enable_design=False,
@@ -110,7 +110,7 @@ def get_minimal_config() -> Dict[str, Any]:
     )
 
 
-def get_standard_config() -> Dict[str, Any]:
+def get_standard_config() -> dict[str, Any]:
     """Get standard enhancement configuration."""
     return get_config(
         enable_design=True,
@@ -121,7 +121,7 @@ def get_standard_config() -> Dict[str, Any]:
     )
 
 
-def get_full_config() -> Dict[str, Any]:
+def get_full_config() -> dict[str, Any]:
     """Get full enhancement configuration."""
     return get_config(
         enable_design=True,
