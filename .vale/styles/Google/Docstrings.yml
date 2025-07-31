@@ -1,0 +1,9 @@
+extends: existence
+message: "Google-style docstrings should have proper sections: Args, Returns, Raises, Examples"
+link: https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings
+level: warning
+scope: raw
+tokens:
+  - '"""[^"]*Args:[^"]*"""'
+  - '"""[^"]*Returns:[^"]*"""'
+  - '"""[^"]*Examples:[^"]*"""'

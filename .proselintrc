@@ -1,0 +1,12 @@
+{
+  "checks": {
+    "typography.diacritical_marks": false,
+    "typography.exclamation": false,
+    "leonard.exclamation.30ppm": false,
+    "misc.annotations": false,
+    "lexical_illusions.misc": false,
+    "misc.debased": false,
+    "security.credit_card": false,
+    "security.password": false
+  }
+}
