@@ -4,24 +4,8 @@
 # ===================================================================
 
 repos:
-  # 🔧 Trunk Integration (Local Hooks)
-  - repo: local
-    hooks:
-      - id: trunk-fmt
-        name: Trunk Format
-        entry: trunk fmt
-        language: system
-        pass_filenames: true
-        stages: [pre-commit]
-        description: Auto-format code with trunk formatters
-
-      - id: trunk-check-fix
-        name: Trunk Check & Fix
-        entry: trunk check --fix
-        language: system
-        pass_filenames: true
-        stages: [pre-commit]
-        description: Run trunk checks and auto-fix issues (includes security)
+  # 🔧 Note: Trunk manages git hooks directly via trunk-fmt-pre-commit and trunk-check-pre-push
+  # No need for trunk hooks in pre-commit - trunk handles this automatically
 
   # 🚀 Core Python Formatting & Linting
   - repo: https://github.com/astral-sh/ruff-pre-commit
