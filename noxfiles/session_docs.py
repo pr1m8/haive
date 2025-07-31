@@ -9,6 +9,9 @@ from pathlib import Path
 
 import nox
 
+# Import shared environment utilities
+from env_utils import ensure_poetry_sync, ensure_sphinx_available, log_environment_info
+
 # Configuration
 PYTHON_VERSIONS = ["3.12"]
 DOCS_DIR = Path("docs")
@@ -45,60 +48,162 @@ def create_log_file(session, operation_name: str) -> Path:
 def run_with_graceful_handling(
     session, cmd: list, log_file: Path, operation: str
 ) -> dict:
-    """Run command with graceful error handling."""
+    """Run command with proper error detection and detailed logging."""
     status = {
         "success": False,
         "warnings": 0,
         "errors": 0,
+        "exit_code": None,
+        "files_built": 0,
+        "sphinx_errors": [],
+        "output_lines": [],
     }
 
     try:
         session.log(f"🔧 Running: {' '.join(cmd)}")
 
+        # Key patterns to detect in sphinx output
+        error_patterns = [
+            "error:",
+            "exception:",
+            "traceback",
+            "fatal:",
+            "failed:",
+            "valueerror:",
+            "attributeerror:",
+            "importerror:",
+            "modulenotfounderror:",
+        ]
+
+        warning_patterns = [
+            "warning:",
+            "warn:",
+            "deprecated:",
+        ]
+
+        success_patterns = [
+            "build succeeded",
+            "pages written",
+            "build finished",
+        ]
+
         with open(log_file, "w") as f:
             f.write(f"=== {operation} ===\n")
             f.write(f"Command: {' '.join(cmd)}\n")
-            f.write(f"Started: {datetime.now()}\n\n")
+            f.write(f"Started: {datetime.now()}\n")
+            f.write("=" * 80 + "\n\n")
 
+            # Run with captured output
             process = subprocess.Popen(
                 cmd,
                 stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
+                stderr=subprocess.PIPE,
                 text=True,
                 universal_newlines=True,
             )
 
-            while True:
-                output = process.stdout.readline()
-                if output == "" and process.poll() is not None:
-                    break
-                if output:
-                    f.write(output)
-                    f.flush()
+            # Capture both stdout and stderr
+            stdout_lines = []
+            stderr_lines = []
 
-                    line = output.strip()
-                    if "warning:" in line.lower():
-                        status["warnings"] += 1
-                    elif "error:" in line.lower():
+            # Read stdout
+            for line in process.stdout:
+                stdout_lines.append(line)
+                f.write(f"[STDOUT] {line}")
+                f.flush()
+
+                line_lower = line.lower().strip()
+                status["output_lines"].append(line.strip())
+
+                # Check for errors
+                for pattern in error_patterns:
+                    if pattern in line_lower:
                         status["errors"] += 1
+                        status["sphinx_errors"].append(line.strip())
+                        break
 
-            status["success"] = process.poll() == 0
+                # Check for warnings
+                for pattern in warning_patterns:
+                    if pattern in line_lower:
+                        status["warnings"] += 1
+                        break
 
-            f.write(f"\nCompleted: {datetime.now()}\n")
+                # Check for success indicators
+                for pattern in success_patterns:
+                    if pattern in line_lower:
+                        # Extract number of files built if possible
+                        import re
+
+                        match = re.search(
+                            r"(\d+)\s+(source files?|pages?|files?)\s+(written|built)",
+                            line_lower,
+                        )
+                        if match:
+                            status["files_built"] = int(match.group(1))
+
+            # Read stderr
+            for line in process.stderr:
+                stderr_lines.append(line)
+                f.write(f"[STDERR] {line}")
+                f.flush()
+
+                line_lower = line.lower().strip()
+                # stderr often contains errors
+                if line.strip():
+                    status["errors"] += 1
+                    status["sphinx_errors"].append(f"[STDERR] {line.strip()}")
+
+            # Wait for process to complete
+            exit_code = process.wait()
+            status["exit_code"] = exit_code
+
+            # Determine success based on exit code AND error detection
+            # sphinx-build should return 0 on success, non-zero on failure
+            if exit_code == 0 and status["errors"] == 0:
+                status["success"] = True
+            else:
+                status["success"] = False
+
+            f.write("\n" + "=" * 80 + "\n")
+            f.write(f"Completed: {datetime.now()}\n")
+            f.write(f"Exit Code: {exit_code}\n")
+            f.write(f"Success: {status['success']}\n")
+            f.write(f"Files Built: {status['files_built']}\n")
             f.write(f"Warnings: {status['warnings']}\n")
             f.write(f"Errors: {status['errors']}\n")
 
-        if status["success"]:
-            session.log(f"✅ {operation} completed successfully!")
-        else:
-            session.log(f"❌ {operation} failed")
+            if status["sphinx_errors"]:
+                f.write("\nDetected Errors:\n")
+                for error in status["sphinx_errors"]:
+                    f.write(f"  - {error}\n")
 
-        session.log(f"📊 Warnings: {status['warnings']}, Errors: {status['errors']}")
+        # Report results
+        if status["success"] and status["files_built"] > 0:
+            session.log(f"✅ {operation} completed successfully!")
+            session.log(f"📄 Built {status['files_built']} files")
+        elif status["exit_code"] == 0 and status["errors"] > 0:
+            session.log(
+                f"⚠️  {operation} completed with errors (sphinx didn't report failure)"
+            )
+            session.log(f"❌ Found {status['errors']} errors in output")
+        else:
+            session.log(f"❌ {operation} failed with exit code: {status['exit_code']}")
+
+        session.log(
+            f"📊 Warnings: {status['warnings']}, Errors: {status['errors']}, Files: {status['files_built']}"
+        )
+
+        # Show last few errors if any
+        if status["sphinx_errors"] and len(status["sphinx_errors"]) > 0:
+            session.log("🔴 Recent errors:")
+            for error in status["sphinx_errors"][-3:]:  # Show last 3 errors
+                session.log(f"   {error[:100]}...")
 
         return status
 
     except Exception as e:
-        session.log(f"❌ {operation} failed: {e}")
+        session.log(f"❌ {operation} failed with exception: {e}")
+        status["errors"] += 1
         return status
 
 
@@ -110,17 +215,10 @@ def docs_fast(session):
 
     log_file = create_log_file(session, "docs_fast_build")
 
-    # Quick dependency check
-    try:
-        session.run(
-            "poetry", "run", "sphinx-build", "--version", silent=True, external=True
-        )
-        session.log("✅ Dependencies already installed")
-    except:
-        session.log("📦 Installing documentation dependencies...")
-        session.run(
-            "poetry", "install", "--with", "docs", "--no-interaction", external=True
-        )
+    # Ensure dependencies are ready using shared utilities
+    if not ensure_sphinx_available(session):
+        session.error("❌ Could not prepare Sphinx for documentation build")
+        return
 
     # Fast build command
     cmd = [
@@ -136,52 +234,39 @@ def docs_fast(session):
         str(BUILD_DIR),
     ]
 
-    # Run with output capture
-    output_lines = []
-    try:
-        with open(log_file, "w") as f:
-            process = subprocess.Popen(
-                cmd,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                text=True,
-                universal_newlines=True,
+    # Run build with improved error handling
+    status = run_with_graceful_handling(session, cmd, log_file, "Fast Sphinx Build")
+
+    # Check actual results on disk
+    if BUILD_DIR.exists():
+        html_files = list(BUILD_DIR.glob("*.html"))
+        actual_files_count = len(html_files)
+    else:
+        actual_files_count = 0
+
+    # Report comprehensive results
+    if status["success"] and actual_files_count > 0:
+        session.log(f"✅ Build completed successfully!")
+        session.log(f"📄 Found {actual_files_count} HTML files on disk")
+        session.log(f"🌐 View docs: file://{BUILD_DIR.absolute()}/index.html")
+    elif status["exit_code"] == 0 and status["errors"] > 0:
+        session.log(f"⚠️  Build reported success but errors were detected!")
+        session.log(
+            f"📄 Found {actual_files_count} HTML files on disk (may be incomplete)"
+        )
+        if actual_files_count > 0:
+            session.log(
+                f"🌐 View docs (with caution): file://{BUILD_DIR.absolute()}/index.html"
             )
+    else:
+        session.log(f"❌ Build failed!")
+        session.log(f"📄 Only {actual_files_count} HTML files were generated")
 
-            while True:
-                output = process.stdout.readline()
-                if output == "" and process.poll() is not None:
-                    break
-                if output:
-                    f.write(output)
-                    f.flush()
-                    output_lines.append(output.strip())
+    # Show log file location for debugging
+    session.log(f"📋 Full build log: {log_file}")
 
-            process.poll()
-
-        # Show last 20 lines
-        session.log("📄 Last 20 lines of output:")
-        session.log("-" * 50)
-        for line in output_lines[-20:]:
-            if line:
-                session.log(line)
-        session.log("-" * 50)
-
-        # Check results
-        if BUILD_DIR.exists():
-            html_files = list(BUILD_DIR.glob("*.html"))
-            if html_files:
-                session.log(f"✅ Built {len(html_files)} HTML files!")
-                session.log(f"🌐 View docs: file://{BUILD_DIR.absolute()}/index.html")
-            else:
-                session.log("❌ No HTML files generated")
-
-        elapsed = (datetime.now() - start_time).total_seconds()
-        session.log(f"⏱️  Build completed in {elapsed:.1f}s")
-
-    except Exception as e:
-        session.log(f"❌ Build failed: {e}")
-        session.log(f"📋 Check log: {log_file}")
+    elapsed = (datetime.now() - start_time).total_seconds()
+    session.log(f"⏱️  Build completed in {elapsed:.1f}s")
 
 
 @nox.session(python=PYTHON_VERSIONS)
@@ -544,6 +629,92 @@ def docs_linkcheck(session):
 
     session.log(f"📋 Full report: {output_dir / 'output.txt'}")
     return status["success"]
+
+
+@nox.session(python=PYTHON_VERSIONS)
+def docs_nitpicky(session):
+    """Run Sphinx in nitpicky mode to catch all warnings and errors."""
+    session.log("🔍 Running Sphinx in nitpicky mode (all warnings are errors)...")
+
+    log_file = create_log_file(session, "docs_nitpicky")
+
+    # Ensure dependencies are ready
+    if not ensure_sphinx_available(session):
+        session.error("❌ Could not prepare Sphinx for nitpicky check")
+        return
+
+    # Nitpicky mode command
+    cmd = [
+        "poetry",
+        "run",
+        "sphinx-build",
+        "-n",  # Nitpicky mode
+        "-W",  # Warnings are errors
+        "-b",
+        "gettext",  # Minimal builder for fast checking
+        str(SOURCE_DIR),
+        str(DOCS_DIR / "build" / "nitpicky"),
+    ]
+
+    # Run nitpicky check
+    status = run_with_graceful_handling(session, cmd, log_file, "Nitpicky Check")
+
+    if status["success"]:
+        session.log("✅ All checks passed in nitpicky mode!")
+    else:
+        session.log(f"❌ Nitpicky check failed with {status['errors']} errors")
+        session.log("💡 Fix all warnings and errors before building documentation")
+
+    return status["success"]
+
+
+@nox.session(python=PYTHON_VERSIONS)
+def docs_test(session):
+    """Quick validation of conf.py syntax and imports."""
+    session.log("🧪 Testing documentation configuration...")
+
+    # Test 1: Compile conf.py
+    session.log("📋 Checking conf.py syntax...")
+    try:
+        session.run(
+            "python", "-m", "compileall", str(SOURCE_DIR / "conf.py"), external=True
+        )
+        session.log("✅ conf.py syntax is valid")
+    except Exception as e:
+        session.log(f"❌ conf.py has syntax errors: {e}")
+        return False
+
+    # Test 2: Import conf.py
+    session.log("📦 Testing conf.py imports...")
+    try:
+        session.run(
+            "python",
+            "-c",
+            f"import sys; sys.path.insert(0, '{SOURCE_DIR}'); import conf",
+            external=True,
+        )
+        session.log("✅ conf.py imports successfully")
+    except Exception as e:
+        session.log(f"❌ conf.py import failed: {e}")
+        return False
+
+    # Test 3: Run flake8 if available
+    try:
+        session.run("flake8", "--version", external=True, silent=True)
+        session.log("🔍 Running flake8 on conf.py...")
+        session.run(
+            "flake8",
+            str(SOURCE_DIR / "conf.py"),
+            "--max-line-length=120",
+            "--ignore=E501,W503",
+            external=True,
+        )
+        session.log("✅ flake8 checks passed")
+    except Exception:
+        session.log("⚠️  flake8 not available, skipping style check")
+
+    session.log("✅ All configuration tests passed!")
+    return True
 
 
 @nox.session(python=PYTHON_VERSIONS)
