@@ -82,6 +82,23 @@ def get_debug_config() -> Dict[str, Any]:
     )
 
 
+def get_minimal_config() -> Dict[str, Any]:
+    """Get minimal logging configuration."""
+    return get_config(log_level="WARNING", log_file=None, console_output=True)
+
+
+def get_standard_config() -> Dict[str, Any]:
+    """Get standard logging configuration."""
+    return get_config(log_level="INFO", log_file="sphinx.log", console_output=True)
+
+
+def get_full_config() -> Dict[str, Any]:
+    """Get full logging configuration with debug."""
+    return get_config(
+        log_level="DEBUG", log_file="sphinx_debug.log", console_output=True
+    )
+
+
 def get_quiet_config() -> Dict[str, Any]:
     """Get quiet logging configuration.
 
