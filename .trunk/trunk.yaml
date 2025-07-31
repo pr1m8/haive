@@ -54,13 +54,13 @@ lint:
         - "build/**"
         - "*.egg-info/**"
 
-# Keep trunk actions minimal - let pre-commit handle the workflow
+# Trunk Actions - Following trunk's recommended defaults
 actions:
   disabled:
-    - trunk-announce
-    - trunk-fmt-pre-commit
-    - trunk-check-pre-commit
-    - trunk-check-pre-push-always
+    - trunk-announce # Disable announcements only
   enabled:
     - git-lfs
+    - trunk-fmt-pre-commit # ✅ Auto-format on commit
+    - trunk-check-pre-push # ✅ Check before push
+    - trunk-cache-prune
     - trunk-upgrade-available
