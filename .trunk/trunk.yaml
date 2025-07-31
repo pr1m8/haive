@@ -18,6 +18,7 @@ runtimes:
 
 lint:
   enabled:
+    - pre-commit-hooks@5.0.0
     - actionlint@1.7.7
     - bandit@1.8.6
     - black@25.1.0
@@ -37,6 +38,13 @@ lint:
     - taplo@0.9.3
     - trufflehog@3.90.0
     - yamllint@1.37.1
+  definitions:
+    - name: isort
+      commands:
+        - run: isort --profile black ${target}
+    - name: black
+      commands:
+        - run: black --skip-string-normalization ${target}
   ignore:
     - linters: [ALL]
       paths:
@@ -68,6 +76,47 @@ actions:
     - trunk-check-pre-commit
     - git-lfs
     - trunk-upgrade-available
+    - haive-import-validation
+    - haive-memory-integrity
+  definitions:
+    - id: haive-import-validation
+      display_name: "Haive Import Validation"
+      description: "Validate critical Haive imports work correctly"
+      triggers:
+        - git_hooks: [pre-commit]
+      run: |
+        echo "🔍 Validating Haive imports..."
+        poetry run python -c "
+        try:
+            from haive.core.engine.aug_llm import AugLLMConfig
+            from haive.agents.simple.agent_v3 import SimpleAgentV3
+            from haive.core.schema.prebuilt.messages_state import MessagesState
+            print('✅ All critical imports successful')
+        except ImportError as e:
+            print(f'❌ Import error: {e}')
+            exit(1)
+        "
+      interactive: optional
+      notify_on_error: true
+
+    - id: haive-memory-integrity
+      display_name: "Memory System Check"
+      description: "Validate CLAUDE.md and memory system integrity"
+      triggers:
+        - git_hooks: [pre-commit]
+      run: |
+        echo "🧠 Checking memory system integrity..."
+        if [ ! -f "CLAUDE.md" ]; then
+          echo "❌ CLAUDE.md missing"
+          exit 1
+        fi
+        if [ ! -d "project_docs" ]; then
+          echo "❌ project_docs directory missing"
+          exit 1
+        fi
+        echo "✅ Memory system intact"
+      interactive: optional
+      notify_on_error: true
 # Optional: If your main branch is not "main" or "master", set it here
 # repo:
 #   trunk_branch: main
