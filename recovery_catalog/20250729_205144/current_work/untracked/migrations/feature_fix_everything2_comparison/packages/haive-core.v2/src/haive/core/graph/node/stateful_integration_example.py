@@ -5,9 +5,9 @@ This example shows how the stateful node architecture integrates with the existi
 SimpleAgent, LLMState, and MetaStateSchema to provide truly dynamic discovery.
 """
 
-from haive.agents.simple.agent import SimpleAgent
 from langchain_core.messages import AIMessage, HumanMessage
 
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.stateful_node_config import (
     StatefulParserNodeConfig,
@@ -15,6 +15,7 @@ from haive.core.graph.node.stateful_node_config import (
 )
 from haive.core.schema.prebuilt.llm_state import LLMState
 from haive.core.schema.prebuilt.meta_state import MetaStateSchema
+
 
 # =============================================================================
 # EXAMPLE 1: SimpleAgent with Stateful Nodes

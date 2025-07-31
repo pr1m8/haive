@@ -14,6 +14,7 @@ from pydantic import Field
 
 from haive.agents.simple.agent import SimpleAgent
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -22,8 +23,8 @@ RAG_ANSWER_GENERATION = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            """You are a helpful AI assistant that answers questions based on retrieved documents. 
-Your responses should be accurate, well-sourced, and acknowledge any limitations 
+            """You are a helpful AI assistant that answers questions based on retrieved documents.
+Your responses should be accurate, well-sourced, and acknowledge any limitations
 in the available information. Always cite specific sources when possible.""",
         ),
         (
@@ -202,7 +203,7 @@ class SimpleAnswerAgent(SimpleAgent):
             return enhanced_result
 
         except Exception as e:
-            logger.error(f"❌ SimpleAnswerAgent error: {e}")
+            logger.exception(f"❌ SimpleAnswerAgent error: {e}")
             error_result = {
                 "answer": f"I apologize, but I encountered an error while generating the answer: {e!s}",
                 "error": str(e),

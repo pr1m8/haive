@@ -18,8 +18,8 @@ This module provides convenience functions for creating different types of nodes
 and extracting information from schemas for node integration.
 """
 
-import logging
 from collections.abc import Callable
+import logging
 from typing import Any
 
 from langgraph.types import RetryPolicy
@@ -28,6 +28,7 @@ from pydantic import BaseModel
 from haive.core.graph.node.config import NodeConfig
 from haive.core.graph.node.factory import NodeFactory
 from haive.core.graph.node.types import CommandGoto, NodeType
+
 
 logger = logging.getLogger(__name__)
 

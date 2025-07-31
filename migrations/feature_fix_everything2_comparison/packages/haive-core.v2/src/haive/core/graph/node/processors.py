@@ -16,11 +16,11 @@ Functions:
 # src/haive/core/graph/node/processors.py
 
 import asyncio
+from collections.abc import Callable
+from datetime import datetime
 import inspect
 import logging
 import traceback
-from collections.abc import Callable
-from datetime import datetime
 
 # Setup detailed logging
 from typing import Any
@@ -33,6 +33,7 @@ from haive.core.config.runnable import RunnableConfigManager
 from haive.core.engine.base import EngineType
 from haive.core.graph.node.config import NodeConfig
 from haive.core.graph.node.registry import register_node_processor
+
 
 logger = logging.getLogger(__name__)
 

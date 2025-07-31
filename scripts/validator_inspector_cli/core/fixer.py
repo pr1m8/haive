@@ -99,7 +99,7 @@ class SelfImportAdder(cst.CSTTransformer):
 
         # If no typing import, prepend one
         new_import = cst.parse_statement("from typing import Self\n")
-        return updated_node.with_changes(body=[new_import] + list(updated_node.body))
+        return updated_node.with_changes(body=[new_import, *list(updated_node.body)])
 
 
 def fix_validators(filepath: str) -> cst.Module:

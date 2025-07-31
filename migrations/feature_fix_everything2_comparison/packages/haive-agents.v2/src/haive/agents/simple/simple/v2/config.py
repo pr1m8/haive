@@ -6,12 +6,13 @@ with support for structured outputs, schema composition, and explicit input/outp
 
 import logging
 
-from haive.core.engine.agent.agent import Agent, register_agent
-from haive.core.graph.dynamic_graph_builder import DynamicGraph
-from haive.core.graph.node.config import NodeConfig
 from langgraph.graph import END
 
 from haive.agents.simple.config import SimpleAgentConfig
+from haive.core.engine.agent.agent import Agent, register_agent
+from haive.core.graph.dynamic_graph_builder import DynamicGraph
+from haive.core.graph.node.config import NodeConfig
+
 
 # Set up logging
 logger = logging.getLogger(__name__)

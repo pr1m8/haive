@@ -12,6 +12,7 @@ from haive.agents.reasoning_and_critique.self_discover.executor.prompts import (
     EXECUTOR_SYSTEM_MESSAGE,
 )
 
+
 __all__ = [
     "EXECUTOR_PROMPT",
     "EXECUTOR_SYSTEM_MESSAGE",

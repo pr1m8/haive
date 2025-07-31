@@ -12,24 +12,11 @@ Key Features:
 - Context-aware component matching
 """
 
-import logging
 from dataclasses import dataclass, field
 from enum import Enum
+import logging
 from typing import Any, Protocol
 
-from haive.core.registry import (
-    ComponentMetadata,
-    ComponentType,
-    EnhancedComponentRegistry,
-    Optional,
-    Union,
-    create_component_registry,
-)
-from haive.core.utils.haive_discovery import (
-    UnifiedHaiveDiscovery,
-    discover_tools,
-    get_all_tools,
-)
 from langchain_community.vectorstores import Chroma
 from langchain_core.documents import Document
 from langchain_core.vectorstores import VectorStore
@@ -44,6 +31,20 @@ from haive.agents.discovery.selection_strategies import (
     EnsembleSelectionStrategy,
     SemanticSelectionStrategy,
 )
+from haive.core.registry import (
+    ComponentMetadata,
+    ComponentType,
+    EnhancedComponentRegistry,
+    Optional,
+    Union,
+    create_component_registry,
+)
+from haive.core.utils.haive_discovery import (
+    UnifiedHaiveDiscovery,
+    discover_tools,
+    get_all_tools,
+)
+
 
 logger = logging.getLogger(__name__)
 

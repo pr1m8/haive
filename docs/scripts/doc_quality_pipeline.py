@@ -1,18 +1,14 @@
 #!/usr/bin/env python3
-"""
-Comprehensive Documentation Quality Pipeline with Enhanced Logging
-"""
+"""Comprehensive Documentation Quality Pipeline with Enhanced Logging."""
 
 import asyncio
 import json
 import logging
-import os
 import subprocess
 import sys
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
 
 # Configure logging
 logging.basicConfig(
@@ -29,7 +25,7 @@ logger = logging.getLogger(__name__)
 class DocumentationQualityPipeline:
     """Enhanced documentation quality pipeline with comprehensive logging."""
 
-    def __init__(self, base_dir: Path = None):
+    def __init__(self, base_dir: Path | None = None):
         self.base_dir = base_dir or Path.cwd()
         self.docs_dir = self.base_dir / "docs"
         self.logs_dir = self.docs_dir / "logs"
@@ -87,15 +83,20 @@ class DocumentationQualityPipeline:
         )
 
     def run_command(
-        self, cmd: List[str], stage_id: Optional[str] = None, timeout: int = 600
-    ) -> Tuple[bool, str, str]:
+        self, cmd: list[str], stage_id: str | None = None, timeout: int = 600
+    ) -> tuple[bool, str, str]:
         """Run a command with enhanced logging."""
         cmd_str = " ".join(cmd)
         logger.info(f"🔧 Running: {cmd_str}")
 
         try:
             result = subprocess.run(
-                cmd, capture_output=True, text=True, timeout=timeout, cwd=self.base_dir
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=timeout,
+                cwd=self.base_dir,
+                check=False,
             )
 
             success = result.returncode == 0
@@ -119,7 +120,7 @@ class DocumentationQualityPipeline:
             return success, result.stdout, result.stderr
 
         except subprocess.TimeoutExpired:
-            logger.error(f"⏰ Command timed out after {timeout}s")
+            logger.exception(f"⏰ Command timed out after {timeout}s")
             self.metrics["errors"].append(
                 {
                     "command": cmd_str,
@@ -130,7 +131,7 @@ class DocumentationQualityPipeline:
             return False, "", f"Timeout after {timeout}s"
 
         except Exception as e:
-            logger.error(f"💥 Exception running command: {e}")
+            logger.exception(f"💥 Exception running command: {e}")
             self.metrics["errors"].append(
                 {
                     "command": cmd_str,
@@ -152,7 +153,7 @@ import importlib
 
 extensions_to_check = [
     "sphinx_tabs.tabs",
-    "sphinx_gallery.gen_gallery", 
+    "sphinx_gallery.gen_gallery",
     "sphinx_design",
     "sphinxcontrib.mermaid",
     "myst_parser"
@@ -189,7 +190,7 @@ else:
             return True
 
         except Exception as e:
-            logger.error(f"Extension check failed: {e}")
+            logger.exception(f"Extension check failed: {e}")
             self.log_stage_end(stage_id, False, str(e))
             return False
 
@@ -279,7 +280,7 @@ else:
 
             success = return_code == 0
             if success:
-                logger.info(f"✅ Sphinx build completed successfully")
+                logger.info("✅ Sphinx build completed successfully")
                 logger.info(
                     f"📊 Pages: {pages_count}, Errors: {errors_count}, Warnings: {warnings_count}"
                 )
@@ -294,11 +295,11 @@ else:
             return success
 
         except Exception as e:
-            logger.error(f"Sphinx build exception: {e}")
+            logger.exception(f"Sphinx build exception: {e}")
             self.log_stage_end(stage_id, False, str(e))
             return False
 
-    async def analyze_build_results(self) -> Dict:
+    async def analyze_build_results(self) -> dict:
         """Analyze build results and generate report."""
         stage_id = self.log_stage_start("result_analysis")
 
@@ -322,7 +323,7 @@ else:
                 "problematic_pages": [],
             }
 
-            with open(latest_log, "r") as f:
+            with open(latest_log) as f:
                 lines = f.readlines()
                 analysis["total_lines"] = len(lines)
 
@@ -399,7 +400,7 @@ else:
             return analysis
 
         except Exception as e:
-            logger.error(f"Build analysis failed: {e}")
+            logger.exception(f"Build analysis failed: {e}")
             self.log_stage_end(stage_id, False, str(e))
             return {}
 
@@ -419,7 +420,7 @@ else:
             self.metrics["build_success"] = build_success
 
             # Stage 3: Analyze results (always run, even if build failed)
-            analysis = await self.analyze_build_results()
+            await self.analyze_build_results()
 
             # Generate final report
             self.metrics["end_time"] = time.time()
@@ -448,7 +449,7 @@ else:
             return build_success
 
         except Exception as e:
-            logger.error(f"💥 Pipeline failed with exception: {e}")
+            logger.exception(f"💥 Pipeline failed with exception: {e}")
             self.metrics["errors"].append(
                 {
                     "stage": "pipeline",

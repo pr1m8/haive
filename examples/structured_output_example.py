@@ -4,6 +4,8 @@ This script demonstrates how to use StructuredOutputAgent to convert
 any agent's output into structured formats.
 """
 
+from pydantic import BaseModel, Field
+
 from haive.agents.react import ReactAgent
 from haive.agents.simple import SimpleAgent
 from haive.agents.structured import GenericStructuredOutput, StructuredOutputAgent
@@ -12,7 +14,6 @@ from haive.agents.structured.models import AnalysisOutput
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.agent_node_v3 import create_agent_node_v3
 from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
-from pydantic import BaseModel, Field
 
 
 def example_1_basic_usage():

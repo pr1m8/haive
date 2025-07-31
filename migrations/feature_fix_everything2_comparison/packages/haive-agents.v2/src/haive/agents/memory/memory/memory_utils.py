@@ -8,16 +8,17 @@ Functions:
     save_unstructured_memories: Save Unstructured Memories functionality.
 """
 
+from collections.abc import Callable
 import datetime
 import logging
-import uuid
-from collections.abc import Callable
 from typing import Any
+import uuid
 
 from agents.react.memory.state import KnowledgeTriple, MemoryItem
 from langchain_core.documents import Document
 from langchain_core.embeddings import Embeddings
 from langchain_core.vectorstores import VectorStore
+
 
 logger = logging.getLogger(__name__)
 

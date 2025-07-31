@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+
 """Agent Node V3 - Hierarchical state projection for multi-agent systems.
 
 This module provides AgentNodeV3 which enables sophisticated multi-agent workflows
@@ -83,6 +84,7 @@ from haive.core.graph.common.types import ConfigLike, NodeType, StateLike
 from haive.core.graph.node.base_node_config import BaseNodeConfig
 from haive.core.schema.field_definition import FieldDefinition
 from haive.core.schema.field_registry import StandardFields
+
 
 # Handle Agent import - use TYPE_CHECKING to avoid circular import
 if TYPE_CHECKING:

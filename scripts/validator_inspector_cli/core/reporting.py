@@ -2,7 +2,6 @@ import json
 import os
 from datetime import datetime
 from pathlib import Path
-from typing import List, Tuple
 
 from rich.console import Console
 from rich.panel import Panel
@@ -17,26 +16,21 @@ LOG_FILE = DATA_DIR / "debug.log"
 
 
 def setup_report_dirs() -> None:
-    """
-    Ensure the data directories exist for logging and report output.
-    """
+    """Ensure the data directories exist for logging and report output."""
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     LOG_FILE.touch(exist_ok=True)
 
 
 def log_debug(message: str) -> None:
-    """
-    Append a debug message to the log file with a timestamp.
-    """
+    """Append a debug message to the log file with a timestamp."""
     timestamp = datetime.now().isoformat()
     with LOG_FILE.open("a", encoding="utf-8") as f:
         f.write(f"[{timestamp}] {message}\n")
 
 
-def write_report(filepath: str, issues: List[Tuple[str, str]]) -> None:
-    """
-    Save a JSON report of issues discovered in a file to the reports directory.
+def write_report(filepath: str, issues: list[tuple[str, str]]) -> None:
+    """Save a JSON report of issues discovered in a file to the reports directory.
     The path is flattened to be filesystem-safe.
     """
     try:
@@ -59,10 +53,8 @@ def write_report(filepath: str, issues: List[Tuple[str, str]]) -> None:
         json.dump(report_data, f, indent=2)
 
 
-def report_and_log(filepath: str, issues: List[Tuple[str, str]]) -> None:
-    """
-    Display issues in the Rich console, write a structured report, and log the result.
-    """
+def report_and_log(filepath: str, issues: list[tuple[str, str]]) -> None:
+    """Display issues in the Rich console, write a structured report, and log the result."""
     setup_report_dirs()
 
     if issues:

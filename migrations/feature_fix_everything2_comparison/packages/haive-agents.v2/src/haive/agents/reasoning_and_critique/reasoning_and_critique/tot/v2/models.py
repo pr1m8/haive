@@ -12,13 +12,14 @@ Functions:
     get_content_str: Get Content Str functionality.
 """
 
-import json
-import uuid
 from datetime import datetime
+import json
 from typing import Any, Generic, Literal, TypeVar
+import uuid
 
 from langchain_core.messages import BaseMessage
 from pydantic import BaseModel, Field, field_validator
+
 
 # Generic type for candidate content
 T = TypeVar("T")

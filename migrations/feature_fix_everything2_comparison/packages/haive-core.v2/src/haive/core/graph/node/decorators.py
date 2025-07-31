@@ -16,8 +16,8 @@ This module provides decorators that make it easy to create various types
 of nodes from functions, with proper configuration and registration.
 """
 
-import logging
 from collections.abc import Callable
+import logging
 from typing import Any
 
 from langgraph.types import RetryPolicy
@@ -31,6 +31,7 @@ from haive.core.graph.node.types import (
     StateInput,
     StateOutput,
 )
+
 
 logger = logging.getLogger(__name__)
 
@@ -252,10 +253,10 @@ def debug_node(name: str | None = None):
                 console.print(
                     Panel.fit(
                         "[bold yellow]Command Object Detected:[/bold yellow]\n"
-                        + f"Type: {type(result).__name__}\n"
-                        + f"Attributes: {dir(result)}\n"
-                        + f"Update: {getattr(result, 'update', None)}\n"
-                        + f"Branch: {getattr(result, 'branch', None)}",
+                        f"Type: {type(result).__name__}\n"
+                        f"Attributes: {dir(result)}\n"
+                        f"Update: {getattr(result, 'update', None)}\n"
+                        f"Branch: {getattr(result, 'branch', None)}",
                         border_style="yellow",
                     )
                 )

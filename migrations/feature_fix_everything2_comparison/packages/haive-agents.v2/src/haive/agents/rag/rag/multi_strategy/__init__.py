@@ -11,6 +11,7 @@ from multi_strategy.config import MultiStrategyRAGConfig
 from multi_strategy.query_types import QueryType
 from multi_strategy.state import MultiStrategyRAGState
 
+
 __all__ = [
     "MultiStrategyRAGAgent",
     "MultiStrategyRAGConfig",

@@ -3,13 +3,10 @@
 
 import hashlib
 import json
-import os
 import subprocess
 import sys
 import time
-from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
 
 from rich.console import Console
 from rich.layout import Layout
@@ -80,7 +77,7 @@ class DocsCache:
         self.cache_file = self.cache_dir / "build_cache.json"
         self.cache_data = self._load_cache()
 
-    def _load_cache(self) -> Dict:
+    def _load_cache(self) -> dict:
         """Load cache from disk."""
         if self.cache_file.exists():
             try:
@@ -118,7 +115,7 @@ class DocsCache:
 
         return False
 
-    def get_changed_files(self, directory: Path, pattern: str = "*.py") -> List[Path]:
+    def get_changed_files(self, directory: Path, pattern: str = "*.py") -> list[Path]:
         """Get list of changed files."""
         changed = []
         for filepath in directory.rglob(pattern):
@@ -220,7 +217,7 @@ class RichDocsBuilder:
 
         return Panel(tree, title="📝 Activity Log", border_style="cyan")
 
-    def count_source_files(self) -> Dict[str, int]:
+    def count_source_files(self) -> dict[str, int]:
         """Count source files by type."""
         counts = {"python": 0, "rst": 0, "md": 0, "total": 0}
 
@@ -247,7 +244,7 @@ class RichDocsBuilder:
             if filepath.is_file():
                 self.stats.add_file(str(filepath))
 
-    def run_sphinx_build(self, task_id) -> Tuple[bool, str]:
+    def run_sphinx_build(self, task_id) -> tuple[bool, str]:
         """Run the actual Sphinx build."""
         cmd = [
             "poetry",
@@ -325,7 +322,7 @@ class RichDocsBuilder:
         # Create layout
         layout = self.create_layout()
 
-        with Live(layout, refresh_per_second=4, console=console) as live:
+        with Live(layout, refresh_per_second=4, console=console):
             # Update initial UI
             layout["stats"].update(self.update_stats_panel())
             layout["progress"].update(self.update_progress_panel())
@@ -383,7 +380,7 @@ class RichDocsBuilder:
         else:
             console.print("❌ [bold red]Documentation build failed![/bold red]")
 
-        console.print(f"\n📊 Build Summary:")
+        console.print("\n📊 Build Summary:")
         console.print(f"   • Duration: {self.stats.duration():.1f} seconds")
         console.print(f"   • HTML pages: {self.stats.html_files}")
         console.print(f"   • Total files: {self.stats.total_files}")

@@ -40,13 +40,12 @@ Example:
     Task completed: True
 """
 
-import logging
-import time
 from abc import ABC, abstractmethod
 from datetime import datetime
+import logging
+import time
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage
 
 from haive.agents.base.agent import Agent
@@ -63,6 +62,8 @@ from haive.agents.supervisor_new.base.prompts import (
 )
 from haive.agents.supervisor_new.base.state import BaseSupervisorState
 from haive.agents.supervisor_new.base.tools import SupervisorToolFactory
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 logger = logging.getLogger(__name__)
 
@@ -253,7 +254,7 @@ class BaseSupervisor(ReactAgent[BaseSupervisorState], ABC):
         if hasattr(self, "state") and self.state:
             self.state.supervisor_name = self.name
             # Register agent names in state
-            for agent_name in self.registered_agents.keys():
+            for agent_name in self.registered_agents:
                 self.state.register_agent_name(agent_name)
 
     def _format_initial_agents(self, agents: dict[str, Agent]) -> str:
@@ -549,7 +550,7 @@ class BaseSupervisor(ReactAgent[BaseSupervisorState], ABC):
                 self.state.complete_task(result_obj)
                 self.state.set_error(error_msg)
 
-            logger.error(f"Error executing agent {agent_name}: {e}")
+            logger.exception(f"Error executing agent {agent_name}: {e}")
             return f"Error executing agent {agent_name}: {error_msg}"
 
     @abstractmethod
@@ -575,7 +576,7 @@ class BaseSupervisor(ReactAgent[BaseSupervisorState], ABC):
         state = BaseSupervisorState(supervisor_name=self.name)
 
         # Register agent names
-        for agent_name in self.registered_agents.keys():
+        for agent_name in self.registered_agents:
             state.register_agent_name(agent_name)
 
         return state

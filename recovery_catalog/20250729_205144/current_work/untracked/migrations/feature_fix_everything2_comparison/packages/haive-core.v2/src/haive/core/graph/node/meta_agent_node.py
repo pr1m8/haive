@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+
 """Meta agent node for executing embedded agents from meta state.
 
 This module provides MetaAgentNodeConfig, a specialized node configuration
@@ -33,9 +34,9 @@ Example:
 """
 
 
+from datetime import datetime
 import logging
 import traceback
-from datetime import datetime
 from typing import Any
 
 from langgraph.types import Command, Send
@@ -44,6 +45,7 @@ from pydantic import Field
 from haive.core.graph.common.types import ConfigLike, StateLike
 from haive.core.graph.node.base_config import NodeConfig
 from haive.core.graph.node.types import NodeType
+
 
 # Get module logger
 logger = logging.getLogger(__name__)

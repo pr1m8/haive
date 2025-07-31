@@ -22,6 +22,7 @@ from haive.core.graph.common.types import ConfigLike, StateLike
 from haive.core.graph.node.base_config import NodeConfig
 from haive.core.graph.node.types import NodeType
 
+
 logger = logging.getLogger(__name__)
 
 

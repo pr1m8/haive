@@ -4,8 +4,6 @@ Literally just: BaseRAGAgent → SimpleAgent with RAG prompt template.
 Uses EnhancedMultiAgent for sequential execution.
 """
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 
 # Use EnhancedMultiAgent V3 for the pattern
@@ -13,6 +11,8 @@ from haive.agents.multi.enhanced_multi_agent_v3 import EnhancedMultiAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.rag.common.answer_generators.prompts import RAG_ANSWER_STANDARD
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 
 class SimpleRAGAgent(EnhancedMultiAgent):
@@ -111,7 +111,7 @@ class SimpleRAGAgent(EnhancedMultiAgent):
 def create_simple_rag_pattern(
     documents: list[Document], llm_config: LLMConfig | None = None
 ):
-    """Literally: SimpleRAGAgent = EnhancedMulti([BaseRAGAgent, SimpleAgent], mode=Sequential)"""
+    """Literally: SimpleRAGAgent = EnhancedMulti([BaseRAGAgent, SimpleAgent], mode=Sequential)."""
     # Create the agents
     base_rag = BaseRAGAgent.from_documents(documents=documents, name="retriever")
 
@@ -140,5 +140,5 @@ def create_simple_rag_pattern(
 
 # For even more direct usage - alias pattern
 def SimpleRAG(documents: list[Document], llm_config: LLMConfig | None = None, **kwargs):
-    """Direct function pattern: SimpleRAG(documents) -> working RAG agent"""
+    """Direct function pattern: SimpleRAG(documents) -> working RAG agent."""
     return create_simple_rag_pattern(documents, llm_config)

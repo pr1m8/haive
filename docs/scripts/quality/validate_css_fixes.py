@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-CSS validation script for documentation.
+"""CSS validation script for documentation.
 
 Validates that CSS fixes for alignment and game streaming content
 are properly applied in the built documentation.
@@ -12,7 +11,6 @@ Usage:
 import re
 import subprocess
 from pathlib import Path
-from typing import Dict, List, Tuple
 
 
 class CSSValidator:
@@ -21,12 +19,11 @@ class CSSValidator:
     def __init__(self):
         self.source_css = Path("docs/source/_static/haive-minimal.css")
         self.build_dir = Path("docs/build/html")
-        self.results: Dict[str, List[Tuple[str, bool, str]]] = {}
+        self.results: dict[str, list[tuple[str, bool, str]]] = {}
 
     def validate_source_css(self) -> bool:
         """Validate the source CSS file has required fixes."""
         if not self.source_css.exists():
-            print("❌ Source CSS file not found: docs/source/_static/haive-minimal.css")
             return False
 
         content = self.source_css.read_text()
@@ -76,20 +73,17 @@ class CSSValidator:
     def validate_built_css(self) -> bool:
         """Validate CSS in built documentation."""
         if not self.build_dir.exists():
-            print("❌ Build directory not found. Run 'poetry run nox -s docs' first.")
             return False
 
         # Find all CSS files in build
         css_files = list(self.build_dir.rglob("*.css"))
 
         if not css_files:
-            print("❌ No CSS files found in build directory")
             return False
 
         # Check if haive-minimal.css is copied
         haive_css = self.build_dir / "_static" / "haive-minimal.css"
         if not haive_css.exists():
-            print("❌ haive-minimal.css not found in build directory")
             return False
 
         # Validate it matches source
@@ -170,25 +164,14 @@ class CSSValidator:
 
     def print_report(self):
         """Print validation report."""
-        print("=" * 60)
-        print("CSS VALIDATION REPORT")
-        print("=" * 60)
-
-        for section, checks in self.results.items():
-            print(f"\n## {section.replace('_', ' ').title()}")
-            print("-" * 40)
+        for _section, checks in self.results.items():
 
             passed = sum(1 for _, p, _ in checks if p)
-            total = len(checks)
+            len(checks)
 
-            print(f"Passed: {passed}/{total}")
-            print()
-
-            for description, passed, details in checks:
-                status = "✅" if passed else "❌"
-                print(f"{status} {description}")
+            for _description, passed, _details in checks:
                 if not passed:
-                    print(f"   → {details}")
+                    pass
 
         # Overall summary
         all_checks = []
@@ -198,26 +181,14 @@ class CSSValidator:
         total_passed = sum(1 for _, p, _ in all_checks if p)
         total_checks = len(all_checks)
 
-        print("\n" + "=" * 60)
-        print(f"OVERALL: {total_passed}/{total_checks} checks passed")
-
         if total_passed == total_checks:
-            print("✅ All CSS validation checks passed!")
+            pass
         else:
-            print("❌ Some CSS validation checks failed.")
-            print("\nTo fix:")
-            print(
-                "1. Update docs/source/_static/haive-minimal.css with required styles"
-            )
-            print("2. Rebuild documentation: poetry run nox -s docs")
-            print("3. Run this validator again")
+            pass
 
     def run_validation(self):
         """Run all validation checks."""
-        print("Starting CSS validation...\n")
-
         # Build docs first
-        print("Building documentation...")
         result = subprocess.run(
             [
                 "poetry",
@@ -230,14 +201,11 @@ class CSSValidator:
             ],
             capture_output=True,
             text=True,
+            check=False,
         )
 
         if result.returncode != 0:
-            print("❌ Documentation build failed!")
-            print(result.stderr)
             return
-
-        print("✅ Documentation built successfully\n")
 
         # Run validations
         self.validate_source_css()

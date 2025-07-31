@@ -8,13 +8,13 @@ import time
 from typing import Any
 from uuid import uuid4
 
-from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from langchain_core.messages import BaseMessage
 from pydantic import BaseModel, Field, computed_field
 
 from haive.agents.supervisor.dynamic_state import (
     DynamicSupervisorState,
 )
+from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 
 
 class AgentRegistryState(BaseModel):

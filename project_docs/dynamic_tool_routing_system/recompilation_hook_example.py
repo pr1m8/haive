@@ -4,11 +4,10 @@ This demonstrates how to extend BaseGraph2 to automatically detect
 when tool routes change and signal recompilation needs.
 """
 
+import logging
 from collections.abc import Callable
 from datetime import datetime
-import logging
 from typing import Any
-
 
 logger = logging.getLogger(__name__)
 
@@ -85,7 +84,9 @@ class RecompilationAwareGraph:
                 "tool_route_removed", {"tool_name": tool_name, "old_route": old_route}
             )
 
-    def register_recompile_callback(self, callback: Callable[[str, dict], None]) -> None:
+    def register_recompile_callback(
+        self, callback: Callable[[str, dict], None]
+    ) -> None:
         """Register a callback for recompilation events."""
         self._recompile_callbacks.append(callback)
 
@@ -199,7 +200,9 @@ class DynamicToolAgent:
         """Execute agent logic."""
         # Check if recompilation is needed before execution
         if self.graph.needs_recompile():
-            logger.warning(f"Agent {self.name} executing but graph needs recompilation!")
+            logger.warning(
+                f"Agent {self.name} executing but graph needs recompilation!"
+            )
             # In production, this might trigger automatic recompilation
 
         # Normal agent execution

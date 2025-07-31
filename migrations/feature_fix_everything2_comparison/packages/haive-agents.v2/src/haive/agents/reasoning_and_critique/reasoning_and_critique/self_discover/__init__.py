@@ -52,6 +52,7 @@ from haive.agents.reasoning_and_critique.sself_discover.self_discover_multiagent
     get_default_reasoning_modules,
 )
 
+
 __all__ = [
     "AdaptedModule",
     "ModuleAdaptationResult",

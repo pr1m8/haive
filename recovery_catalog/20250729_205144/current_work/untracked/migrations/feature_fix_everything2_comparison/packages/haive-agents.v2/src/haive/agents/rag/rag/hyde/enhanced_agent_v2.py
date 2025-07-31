@@ -12,9 +12,6 @@ This version integrates the new enhanced prompt system with:
 from enum import Enum
 from typing import Any
 
-from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field, model_validator
@@ -38,6 +35,9 @@ from haive.agents.rag.common.query_constructors.hyde.enhanced_prompts import (
 )
 from haive.agents.rag.models import HyDEResult
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 
 class HyDEGenerationMode(str, Enum):
@@ -589,8 +589,9 @@ class EnhancedHyDERetrieverV2(Agent):
     embedding_model: str | None = Field(default=None)
 
     def build_graph(self) -> Any:
-        from haive.core.graph.state_graph.base_graph2 import BaseGraph
         from langgraph.graph import END, START
+
+        from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
         graph = BaseGraph(name="EnhancedHyDERetrieverV2")
 
@@ -662,8 +663,9 @@ class EnsembleHyDERetriever(Agent):
     ensemble_mode: bool = Field(default=False)
 
     def build_graph(self) -> Any:
-        from haive.core.graph.state_graph.base_graph2 import BaseGraph
         from langgraph.graph import END, START
+
+        from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
         graph = BaseGraph(name="EnsembleHyDERetriever")
 
@@ -753,8 +755,9 @@ class MultiDomainHyDERetriever(Agent):
     domain_types: list[str] = Field(default_factory=list)
 
     def build_graph(self) -> Any:
-        from haive.core.graph.state_graph.base_graph2 import BaseGraph
         from langgraph.graph import END, START
+
+        from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
         graph = BaseGraph(name="MultiDomainHyDERetriever")
 

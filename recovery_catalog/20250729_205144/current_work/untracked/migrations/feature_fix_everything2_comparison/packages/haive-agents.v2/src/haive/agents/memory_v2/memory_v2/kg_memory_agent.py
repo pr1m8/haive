@@ -9,13 +9,12 @@ This agent extends the existing KG transformer capabilities with:
 Based on existing ParallelKGTransformer but optimized for memory workflows.
 """
 
-import logging
 from datetime import datetime
 from enum import Enum
+import logging
 from typing import Any
 from uuid import uuid4
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.documents import Document
 from langchain_core.messages import BaseMessage
 from pydantic import BaseModel, ConfigDict, Field
@@ -27,12 +26,14 @@ from haive.agents.document_modifiers.kg.kg_map_merge.models import (
     EntityRelationship,
     KnowledgeGraph,
 )
+from haive.core.engine.aug_llm import AugLLMConfig
 
 # Import our memory components
 from .memory_state_original import (
     EnhancedMemoryItem,
 )
 from .message_document_converter import MessageDocumentConverter
+
 
 logger = logging.getLogger(__name__)
 
@@ -166,10 +167,12 @@ class GraphDatabaseConnector:
             logger.info(f"Connected to Neo4j at {self.config.neo4j_uri}")
 
         except ImportError:
-            logger.error("Neo4j driver not available. Install with: pip install neo4j")
+            logger.exception(
+                "Neo4j driver not available. Install with: pip install neo4j"
+            )
             raise
         except Exception as e:
-            logger.error(f"Failed to connect to Neo4j: {e}")
+            logger.exception(f"Failed to connect to Neo4j: {e}")
             raise
 
     async def _connect_file_storage(self) -> None:
@@ -183,7 +186,10 @@ class GraphDatabaseConnector:
         logger.info(f"Initialized file storage at {storage_path}")
 
     async def store_knowledge_graph(
-        self, graph: KnowledgeGraph, graph_id: str, metadata: dict[str, Any] = None
+        self,
+        graph: KnowledgeGraph,
+        graph_id: str,
+        metadata: dict[str, Any] | None = None,
     ) -> bool:
         """Store knowledge graph in configured backend."""
         if not self._connection:
@@ -200,7 +206,7 @@ class GraphDatabaseConnector:
             return False
 
         except Exception as e:
-            logger.error(f"Failed to store graph {graph_id}: {e}")
+            logger.exception(f"Failed to store graph {graph_id}: {e}")
             return False
 
     async def _store_neo4j(
@@ -368,7 +374,7 @@ class GraphDatabaseConnector:
             # Neo4j retrieval would go here
 
         except Exception as e:
-            logger.error(f"Failed to retrieve graph {graph_id}: {e}")
+            logger.exception(f"Failed to retrieve graph {graph_id}: {e}")
 
         return None
 
@@ -457,8 +463,8 @@ class KGMemoryAgent:
             metadata = {
                 "source": "memory_processing",
                 "memory_count": len(memories),
-                "memory_types": list(set(m.memory_type.value for m in memories)),
-                "importance_levels": list(set(m.importance.value for m in memories)),
+                "memory_types": list({m.memory_type.value for m in memories}),
+                "importance_levels": list({m.importance.value for m in memories}),
                 "created_at": datetime.now().isoformat(),
                 "confidence_threshold": self.config.confidence_threshold,
             }
@@ -478,7 +484,7 @@ class KGMemoryAgent:
             return graph_id, unified_graph
 
         except Exception as e:
-            logger.error(f"Failed to process memories to graph: {e}")
+            logger.exception(f"Failed to process memories to graph: {e}")
             raise
 
     async def process_conversation_to_graph(
@@ -546,7 +552,7 @@ class KGMemoryAgent:
             return graph_id, unified_graph
 
         except Exception as e:
-            logger.error(f"Failed to process conversation to graph: {e}")
+            logger.exception(f"Failed to process conversation to graph: {e}")
             raise
 
     async def retrieve_memory_graph(self, graph_id: str) -> KnowledgeGraph | None:
@@ -639,7 +645,7 @@ class KGMemoryAgent:
                     related_rels = [
                         rel
                         for rel in graph.relationships
-                        if rel.source == node.id or rel.target == node.id
+                        if node.id in (rel.source, rel.target)
                     ]
 
                     results.append(

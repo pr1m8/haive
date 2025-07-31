@@ -4,19 +4,21 @@ Handles intelligent routing decisions using DynamicChoiceModel and LLM-based ana
 Provides context-aware agent selection with validation and fallback mechanisms.
 """
 
+from abc import ABC, abstractmethod
 import logging
 import time
-from abc import ABC, abstractmethod
 from typing import Any
 
-from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
-from haive.core.engine.base import InvokableEngine
 from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
 from langchain_core.runnables import RunnableConfig
 from langgraph.types import Command
 from pydantic import BaseModel, Field
 from rich.console import Console
 from rich.table import Table
+
+from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
+from haive.core.engine.base import InvokableEngine
+
 
 logger = logging.getLogger(__name__)
 console = Console()

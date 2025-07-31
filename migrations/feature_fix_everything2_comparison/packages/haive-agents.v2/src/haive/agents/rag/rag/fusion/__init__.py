@@ -15,6 +15,7 @@ from fusion.agent import (
     perform_rrf_fusion,
 )
 
+
 __all__ = [
     "FusionResult",
     "MultiQueryRetrievalAgent",

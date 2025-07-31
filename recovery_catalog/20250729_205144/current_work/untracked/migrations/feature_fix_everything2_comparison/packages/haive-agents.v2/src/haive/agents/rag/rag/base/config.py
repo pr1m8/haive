@@ -11,12 +11,9 @@ Functions:
     setup_engine: Setup Engine functionality.
 """
 
-import uuid
 from typing import Any
+import uuid
 
-from haive.core.engine.agent.agent import AgentConfig
-from haive.core.engine.retriever import BaseRetrieverConfig, VectorStoreRetrieverConfig
-from haive.core.engine.vectorstore import VectorStoreConfig
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 # Import state models
@@ -25,6 +22,9 @@ from haive.agents.rag.base.state import (
     BaseRAGOutputState,
     BaseRAGState,
 )
+from haive.core.engine.agent.agent import AgentConfig
+from haive.core.engine.retriever import BaseRetrieverConfig, VectorStoreRetrieverConfig
+from haive.core.engine.vectorstore import VectorStoreConfig
 
 
 class BaseRAGConfig(AgentConfig):

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Game demo content validation script.
+"""Game demo content validation script.
 
 Validates that game demos have proper streaming content,
 asciinema players, and interactive elements.
@@ -9,11 +8,9 @@ Usage:
     poetry run python docs/validate_game_demos.py
 """
 
-import json
 import re
 import subprocess
 from pathlib import Path
-from typing import Dict, List, Tuple
 
 
 class GameDemoValidator:
@@ -22,7 +19,7 @@ class GameDemoValidator:
     def __init__(self):
         self.source_dir = Path("docs/source/games/demos")
         self.build_dir = Path("docs/build/html/games/demos")
-        self.results: Dict[str, List[Tuple[str, bool, str]]] = {}
+        self.results: dict[str, list[tuple[str, bool, str]]] = {}
 
         # Game demos to validate
         self.game_demos = [
@@ -80,7 +77,6 @@ class GameDemoValidator:
     def validate_built_html(self) -> bool:
         """Validate built HTML files have proper content."""
         if not self.build_dir.exists():
-            print("❌ Build directory not found. Run 'poetry run nox -s docs' first.")
             return False
 
         self.results["built_html"] = []
@@ -192,45 +188,15 @@ class GameDemoValidator:
 
     def check_example_structure(self):
         """Check if proper example structure is in place."""
-        example_template = """
-.. class:: game-demo streaming-content
-
-   .. raw:: html
-
-      <div id="player-{game_name}"></div>
-      <script src="https://asciinema.org/a/{cast_id}.js" 
-              id="asciicast-{cast_id}" 
-              async 
-              data-autoplay="true"
-              data-theme="monokai"
-              data-size="medium">
-      </script>
-"""
-
-        print("\n📝 Example Game Demo Structure:")
-        print("-" * 60)
-        print(example_template)
-        print("-" * 60)
-        print("\nEnsure your game demo RST files follow this structure!")
 
     def print_report(self):
         """Print validation report."""
-        print("=" * 60)
-        print("GAME DEMO VALIDATION REPORT")
-        print("=" * 60)
-
-        for section, checks in self.results.items():
+        for _section, checks in self.results.items():
             if not checks:
                 continue
 
-            print(f"\n## {section.replace('_', ' ').title()}")
-            print("-" * 40)
-
             passed = sum(1 for _, p, _ in checks if p)
-            total = len(checks)
-
-            print(f"Passed: {passed}/{total}")
-            print()
+            len(checks)
 
             # Group by file
             by_file = {}
@@ -240,19 +206,16 @@ class GameDemoValidator:
                     by_file[file_part] = []
                 by_file[file_part].append((description, passed, details))
 
-            for file_name, file_checks in by_file.items():
-                file_passed = all(p for _, p, _ in file_checks)
-                file_status = "✅" if file_passed else "❌"
-                print(f"\n{file_status} {file_name}")
+            for _file_name, file_checks in by_file.items():
+                all(p for _, p, _ in file_checks)
 
                 for description, passed, details in file_checks:
                     if not passed:
-                        check_name = (
+                        (
                             description.split(": ", 1)[1]
                             if ": " in description
                             else description
                         )
-                        print(f"   ❌ {check_name} - {details}")
 
         # Overall summary
         all_checks = []
@@ -262,27 +225,16 @@ class GameDemoValidator:
         total_passed = sum(1 for _, p, _ in all_checks if p)
         total_checks = len(all_checks)
 
-        print("\n" + "=" * 60)
-        print(f"OVERALL: {total_passed}/{total_checks} checks passed")
-
         if total_passed == total_checks:
-            print("✅ All game demo validation checks passed!")
+            pass
         else:
-            print("❌ Some game demo validation checks failed.")
-            print("\nTo fix:")
-            print("1. Add streaming content to game demo RST files")
-            print("2. Use asciinema or similar for game recordings")
-            print("3. Include proper CSS classes (game-demo, streaming-content)")
-            print("4. Rebuild documentation: poetry run nox -s docs")
+            pass
 
         self.check_example_structure()
 
     def run_validation(self):
         """Run all validation checks."""
-        print("Starting game demo validation...\n")
-
         # Build docs first
-        print("Building documentation...")
         result = subprocess.run(
             [
                 "poetry",
@@ -295,14 +247,11 @@ class GameDemoValidator:
             ],
             capture_output=True,
             text=True,
+            check=False,
         )
 
         if result.returncode != 0:
-            print("❌ Documentation build failed!")
-            print(result.stderr)
             return
-
-        print("✅ Documentation built successfully\n")
 
         # Run validations
         self.validate_source_files()

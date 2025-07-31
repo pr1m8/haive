@@ -1,12 +1,12 @@
 """Configuration for Language Agent Tree Search (LATS) agent."""
 
 # from haive.tools.tools.search_tools import tavily_search_tool  # Commented out - import chain issue
-from haive.core.engine.agent.agent import AgentConfig
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.tools import BaseTool, StructuredTool
 from pydantic import BaseModel, Field
 
 from haive.agents.reasoning_and_critique.lats.state import TreeState
+from haive.core.engine.agent.agent import AgentConfig
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 class LATSAgentConfig(AgentConfig):

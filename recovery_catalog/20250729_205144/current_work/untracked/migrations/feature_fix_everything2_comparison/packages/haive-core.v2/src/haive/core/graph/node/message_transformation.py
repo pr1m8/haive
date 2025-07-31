@@ -13,9 +13,9 @@ Functions:
 
 # src/haive/core/graph/node/message_transformation_node_config.py
 
-import logging
 from collections.abc import Callable
 from enum import Enum
+import logging
 from typing import Self
 
 from langchain_core.messages import (
@@ -32,6 +32,7 @@ from rich.console import Console
 from haive.core.graph.common.types import ConfigLike, StateLike
 from haive.core.graph.node.base_config import NodeConfig
 from haive.core.graph.node.types import NodeType
+
 
 logger = logging.getLogger(__name__)
 console = Console()

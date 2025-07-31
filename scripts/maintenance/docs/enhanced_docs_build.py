@@ -172,7 +172,7 @@ def pre_build_validation() -> dict:
     # Report results
 
     if results["syntax_errors"]:
-        for err in results["syntax_errors"][:5]:  # Show first 5
+        for _err in results["syntax_errors"][:5]:  # Show first 5
             pass
         if len(results["syntax_errors"]) > 5:
             pass
@@ -386,15 +386,11 @@ def main():
     build_status = run_sphinx_build_enhanced(log_file)
 
     # Generate comprehensive report
-    report_file = generate_build_report(
-        validation_results, extension_results, build_status, log_file
-    )
+    generate_build_report(validation_results, extension_results, build_status, log_file)
 
     # Final summary
 
-    if build_status["success"]:
-        pass
-    elif build_status["output_exists"]:
+    if build_status["success"] or build_status["output_exists"]:
         pass
     else:
         pass

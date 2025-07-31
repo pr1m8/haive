@@ -8,8 +8,10 @@ concerns from the main Agent class while ensuring proper serialization.
 import logging
 from typing import Any
 
-from haive.core.persistence.types import CheckpointerMode
 from langchain_core.runnables import RunnableConfig
+
+from haive.core.persistence.types import CheckpointerMode
+
 
 logger = logging.getLogger(__name__)
 

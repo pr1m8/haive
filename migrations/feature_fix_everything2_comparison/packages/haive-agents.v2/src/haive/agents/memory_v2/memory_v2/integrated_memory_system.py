@@ -7,12 +7,11 @@ This system shows how to use multiple memory strategies together:
 """
 
 import asyncio
-import json
 from datetime import datetime
 from enum import Enum
+import json
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.tools import tool
 
 from haive.agents.memory_v2.graph_memory_agent import (
@@ -24,6 +23,7 @@ from haive.agents.memory_v2.long_term_memory_agent import LongTermMemoryAgent
 from haive.agents.memory_v2.react_memory_agent import ReactMemoryAgent
 from haive.agents.multi.simple.agent import SimpleMultiAgent
 from haive.agents.react.agent import ReactAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 class MemorySystemMode(str, Enum):
@@ -489,8 +489,6 @@ async def demo_integrated_memory():
         },
     )
 
-    print("=== Integrated Memory System Demo ===\n")
-
     # Store different types of memories
     memories = [
         # Structured knowledge
@@ -505,11 +503,8 @@ async def demo_integrated_memory():
         "Yesterday, John and Sarah presented the Q4 roadmap to the board.",
     ]
 
-    print("Storing memories...\n")
     for memory in memories:
         result = await system.store_memory(memory, mode=MemorySystemMode.INTELLIGENT)
-        print(f"Stored in: {result['systems_used']}")
-        print(f"Content: {memory[:50]}...\n")
 
     # Query memories in different ways
     queries = [
@@ -520,24 +515,16 @@ async def demo_integrated_memory():
         "What is John's contact information?",
     ]
 
-    print("\nQuerying memories...\n")
     for query in queries:
         result = await system.query_memory(query, mode=MemorySystemMode.INTELLIGENT)
-        print(f"Query: {query}")
-        print(f"Systems used: {result['systems_queried']}")
         if "combined_answer" in result:
-            print(f"Answer: {result['combined_answer'][:200]}...")
-        print()
+            pass
 
     # Get analytics
-    print("\nMemory System Analytics:")
-    analytics = await system.get_memory_analytics()
-    print(json.dumps(analytics, indent=2))
+    await system.get_memory_analytics()
 
     # Consolidate memories
-    print("\nConsolidating memories...")
-    consolidation = await system.consolidate_all_memories()
-    print(f"Consolidation complete: {consolidation['systems_consolidated']}")
+    await system.consolidate_all_memories()
 
 
 # Advanced example with custom agent

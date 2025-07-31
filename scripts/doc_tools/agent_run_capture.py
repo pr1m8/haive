@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Agent Run Capture System for Documentation
+"""Agent Run Capture System for Documentation.
 
 This module provides utilities for capturing agent execution outputs,
 including logs, state transitions, and graph visualizations for documentation.
@@ -97,7 +97,7 @@ class AgentRunner:
     - Generating graph visualizations
     """
 
-    def __init__(self, output_dir: str | Path = None):
+    def __init__(self, output_dir: str | Path | None = None):
         """Initialize the runner."""
         if output_dir is None:
             output_dir = workspace_root / "docs" / "resources" / "agent_runs"
@@ -411,24 +411,21 @@ def capture_example_agents():
 
         for agent, input_data in agents_to_capture:
             try:
-                print(f"Capturing {agent.name}...")
                 capture = runner.run_agent(agent, input_data)
 
                 # Save capture
                 output_path = runner.save_capture(capture)
-                print(f"  Saved to: {output_path}")
 
                 # Generate RST
                 rst_path = output_path.with_suffix(".rst")
                 with open(rst_path, "w") as f:
                     f.write(runner.create_rst_snippet(capture))
-                print(f"  RST snippet: {rst_path}")
 
-            except Exception as e:
-                print(f"  Failed: {e}")
+            except Exception:
+                pass
 
-    except ImportError as e:
-        print(f"Could not import example agents: {e}")
+    except ImportError:
+        pass
 
 
 if __name__ == "__main__":

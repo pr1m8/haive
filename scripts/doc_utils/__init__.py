@@ -1,5 +1,4 @@
-"""
-Haive Documentation Utilities
+"""Haive Documentation Utilities.
 
 A comprehensive toolkit for agent analysis, example discovery, and documentation generation.
 This module provides utilities to systematically analyze and document the Haive agent ecosystem.
@@ -37,14 +36,14 @@ __version__ = "1.0.0"
 __all__ = [
     # Main classes
     "AgentAnalyzer",
-    "UniversalExampleRunner",
-    "DocumentationGenerator",
-    "VisualizationManager",
+    "AgentArchitecture",
     # Data classes and configs
     "AgentInfo",
-    "AgentArchitecture",
-    "ExecutionResult",
-    "ExecutionConfig",
     "DocumentationConfig",
+    "DocumentationGenerator",
+    "ExecutionConfig",
+    "ExecutionResult",
+    "UniversalExampleRunner",
     "VisualizationConfig",
+    "VisualizationManager",
 ]

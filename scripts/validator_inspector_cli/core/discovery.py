@@ -3,7 +3,6 @@ from pathlib import Path
 import libcst as cst
 import libcst.matchers as m
 from rich.console import Console
-from rich.panel import Panel
 
 console = Console()
 
@@ -53,29 +52,23 @@ class ValidatorInspector(cst.CSTVisitor):
                     )
 
 
-from pathlib import Path
-
 import libcst as cst
-
-# from validator_inspector_cli.core.discovery import ValidatorInspector
 from validator_inspector_cli.core.reporting import report_and_log
 
 
 def analyze_validators(filepath: str) -> None:
-    """
-    Analyze a Python file for validator-related issues.
-    """
+    """Analyze a Python file for validator-related issues."""
     file_path = Path(filepath)
     try:
         source = file_path.read_text(encoding="utf-8")
     except Exception as e:
-        report_and_log(filepath, [(f"<read_error>", f"Failed to read file: {e}")])
+        report_and_log(filepath, [("<read_error>", f"Failed to read file: {e}")])
         return
 
     try:
         tree = cst.parse_module(source)
     except Exception as e:
-        report_and_log(filepath, [(f"<parse_error>", f"Failed to parse CST: {e}")])
+        report_and_log(filepath, [("<parse_error>", f"Failed to parse CST: {e}")])
         return
 
     inspector = ValidatorInspector()

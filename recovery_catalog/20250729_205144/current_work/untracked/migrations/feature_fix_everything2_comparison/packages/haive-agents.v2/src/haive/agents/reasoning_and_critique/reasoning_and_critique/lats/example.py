@@ -4,12 +4,14 @@ import logging
 import os
 import sys
 
+
 # Add project root to path for imports
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from agents.lats.agent import create_lats_agent
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_community.utilities.tavily_search import TavilySearchAPIWrapper
+
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)

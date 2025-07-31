@@ -8,9 +8,7 @@ intelligent analysis of function signatures and naming patterns.
 import argparse
 import ast
 import re
-import sys
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
 
 
 class TypeHintFixer:
@@ -188,9 +186,9 @@ class TypeHintFixer:
             return "Dict[str, Any]"
         if param_name.endswith("_count"):
             return "int"
-        elif param_name.endswith(("_enabled", "_flag")):
+        if param_name.endswith(("_enabled", "_flag")):
             return "bool"
-        elif param_name.endswith("_config"):
+        if param_name.endswith("_config"):
             return "Dict[str, Any]"
 
         # Agent-specific patterns
@@ -239,9 +237,9 @@ class TypeHintFixer:
             return "Any"
         if func_name.startswith(("list_", "all_")):
             return "List[Any]"
-        elif func_name == "__init__":
-            return "None"
-        elif func_name.startswith("_") and not has_explicit_return:
+        if func_name == "__init__" or (
+            func_name.startswith("_") and not has_explicit_return
+        ):
             return "None"
 
         # Based on return analysis

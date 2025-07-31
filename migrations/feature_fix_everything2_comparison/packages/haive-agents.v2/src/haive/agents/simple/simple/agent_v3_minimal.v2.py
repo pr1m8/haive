@@ -30,6 +30,7 @@ Usage:
 
 from typing import TYPE_CHECKING
 
+
 if TYPE_CHECKING:
     # Import types only for static analysis
     from haive.agents.simple.agent_v3 import SimpleAgentV3 as _SimpleAgentV3

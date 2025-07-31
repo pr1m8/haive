@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+
 """Multi-agent state with hierarchical agent management and recompilation support.
 
 This module provides a comprehensive state schema for managing multiple agents in
@@ -108,6 +109,7 @@ from rich.table import Table
 from rich.tree import Tree
 
 from haive.core.schema.prebuilt.tool_state import ToolState
+
 
 # Import Agent using TYPE_CHECKING to avoid circular imports entirely
 if TYPE_CHECKING:

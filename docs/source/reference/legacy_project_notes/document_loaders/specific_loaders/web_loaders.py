@@ -10,12 +10,8 @@ from urllib.parse import urlparse
 
 from pydantic import Field, HttpUrl
 
-from ..source_implementation import (
-    BaseSource,
-    CredentialManager,
-    RemoteSource,
-    auto_source,
-)
+from ..source_implementation import (BaseSource, CredentialManager,
+                                     RemoteSource, auto_source)
 
 
 @auto_source
@@ -107,12 +103,9 @@ class WebPageSource(RemoteSource):
         """Create an AsyncHtmlLoader for faster loading of multiple pages."""
         try:
             from langchain_community.document_loaders import (
-                AsyncChromiumLoader,
-                AsyncHtmlLoader,
-            )
-            from langchain_community.document_transformers import (
-                BeautifulSoupTransformer,
-            )
+                AsyncChromiumLoader, AsyncHtmlLoader)
+            from langchain_community.document_transformers import \
+                BeautifulSoupTransformer
 
             # Create loader
             loader = AsyncHtmlLoader([str(self.url)])
@@ -132,7 +125,8 @@ class WebPageSource(RemoteSource):
     def create_javascript_loader(self):
         """Create a PlaywrightURLLoader for JavaScript-heavy sites."""
         try:
-            from langchain_community.document_loaders import PlaywrightURLLoader
+            from langchain_community.document_loaders import \
+                PlaywrightURLLoader
 
             # Default configuration for most sites
             return PlaywrightURLLoader(
@@ -662,7 +656,8 @@ class GitHubSource(RemoteSource):
 
             # Use GitHubFileLoader for the root directory
             try:
-                from langchain_community.document_loaders import GitHubFileLoader
+                from langchain_community.document_loaders import \
+                    GitHubFileLoader
                 return GitHubFileLoader(
                     owner=url_info['owner'],
                     repo=url_info['repo'],
@@ -955,7 +950,8 @@ class HuggingFaceSource(RemoteSource):
     def create_dataset_loader(self):
         """Create a HuggingFaceDatasetLoader."""
         try:
-            from langchain_community.document_loaders import HuggingFaceDatasetLoader
+            from langchain_community.document_loaders import \
+                HuggingFaceDatasetLoader
 
             # Parse HuggingFace URL
             url_info = self._parse_huggingface_url()
@@ -1223,12 +1219,8 @@ from urllib.parse import urlparse
 
 from pydantic import Field, HttpUrl
 
-from ..source_implementation import (
-    BaseSource,
-    CredentialManager,
-    RemoteSource,
-    auto_source,
-)
+from ..source_implementation import (BaseSource, CredentialManager,
+                                     RemoteSource, auto_source)
 
 
 @auto_source(domain_patterns=["arxiv.org"])

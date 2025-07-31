@@ -8,7 +8,6 @@ import logging
 import re
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from pydantic import BaseModel, Field
 
 from haive.agents.memory.core.types import (
@@ -18,6 +17,8 @@ from haive.agents.memory.core.types import (
     MemoryQueryIntent,
     MemoryType,
 )
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 logger = logging.getLogger(__name__)
 
@@ -459,7 +460,7 @@ Determine:
         entities.extend(capitalized)
 
         # Extract common entity patterns
-        email_pattern = f"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
+        email_pattern = f"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\b"
         emails = re.findall(email_pattern, text)
         entities.extend(emails)
 

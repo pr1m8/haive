@@ -9,9 +9,10 @@ import time
 from typing import Any
 from uuid import uuid4
 
-from haive.core.schema.state_schema import StateSchema
 from langchain_core.messages import BaseMessage
 from pydantic import BaseModel, Field, computed_field
+
+from haive.core.schema.state_schema import StateSchema
 
 
 class AgentExecutionConfig(BaseModel):

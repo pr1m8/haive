@@ -13,8 +13,8 @@ Key Features:
 - Type-safe parameter extraction with automatic field detection
 """
 
-import logging
 from abc import ABC, abstractmethod
+import logging
 from typing import Any, get_type_hints
 
 from langchain_core.messages import BaseMessage
@@ -24,6 +24,7 @@ from pydantic import BaseModel, Field
 from haive.core.graph.common.types import ConfigLike, StateLike
 from haive.core.graph.node.base_node_config import BaseNodeConfig
 from haive.core.graph.node.types import NodeType
+
 
 logger = logging.getLogger(__name__)
 

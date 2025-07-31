@@ -11,6 +11,7 @@ from haive.agents.rag.base.state import (
     BaseRAGState,
 )
 
+
 __all__ = [
     "BaseRAGAgent",
     "BaseRAGConfig",

@@ -25,6 +25,7 @@ from haive.core.graph.node.config import NodeConfig
 from haive.core.graph.node.types import NodeType
 from haive.core.registry.base import AbstractRegistry
 
+
 logger = logging.getLogger(__name__)
 
 

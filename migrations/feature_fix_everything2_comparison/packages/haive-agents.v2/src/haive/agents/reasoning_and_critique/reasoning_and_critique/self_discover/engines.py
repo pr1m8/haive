@@ -10,8 +10,6 @@ Functions:
 
 # src/haive/agents/selfdiscover/engines.py
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
 
 from haive.agents.reasoning_and_critique.self_discover.models import (
@@ -20,6 +18,8 @@ from haive.agents.reasoning_and_critique.self_discover.models import (
     ReasoningOutput,
     ReasoningStructure,
 )
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
 
 
 def create_select_engine(

@@ -1,5 +1,4 @@
-"""
-SimpleAgent Workflow Visualization
+"""SimpleAgent Workflow Visualization.
 ==================================
 
 This example demonstrates how to create a SimpleAgent from haive.agents
@@ -33,8 +32,6 @@ config = AugLLMConfig(
 # Create the agent
 agent = SimpleAgent(name="visualization_demo", engine=config)
 
-print(f"Created agent: {agent.name}")
-print(f"Agent type: {type(agent).__name__}")
 
 # %%
 # Compile and Visualize the Agent
@@ -43,12 +40,10 @@ print(f"Agent type: {type(agent).__name__}")
 
 # Compile the agent
 agent.compile()
-print("Agent compiled successfully!")
 
 # Generate visualization
 visualization_path = "simple_agent_workflow_demo.png"
 agent.visualize_graph(visualization_path)
-print(f"Workflow visualization saved to: {visualization_path}")
 
 # %%
 # Test Agent Execution
@@ -64,21 +59,12 @@ response = agent.run("What are the benefits of using AI agents?")
 # Calculate execution time
 execution_time = time.time() - start_time
 
-print(f"Execution time: {execution_time:.2f} seconds")
-print(f"Agent response preview: {str(response)[:200]}...")
 
 # %%
 # Display Agent Capabilities
 # --------------------------
 # Show what the agent can do.
 
-print("\n=== SimpleAgent Capabilities ===")
-print(f"✓ Name: {agent.name}")
-print(f"✓ Engine Type: {getattr(agent.engine, 'model', 'N/A')}")
-print(f"✓ Temperature: {agent.engine.temperature}")
-print(f"✓ Max Tokens: {agent.engine.max_tokens}")
-print(f"✓ Graph Compiled: {agent.graph is not None}")
-print(f"✓ Visualization Available: {hasattr(agent, 'visualize_graph')}")
 
 # %%
 # Workflow Structure
@@ -94,5 +80,3 @@ print(f"✓ Visualization Available: {hasattr(agent, 'visualize_graph')}")
 #     END
 #
 # This simple structure makes it ideal for straightforward conversational AI tasks.
-
-print("\nExample completed! Check the generated visualization file.")

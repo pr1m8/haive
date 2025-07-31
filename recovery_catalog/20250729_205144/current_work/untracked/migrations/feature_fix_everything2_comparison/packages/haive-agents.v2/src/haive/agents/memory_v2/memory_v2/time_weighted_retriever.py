@@ -6,9 +6,9 @@ Combines semantic similarity with recency weighting for optimal memory retrieval
 Reference: https://python.langchain.com/docs/versions/migrating_memory/long_term_memory_agent/
 """
 
+from datetime import UTC, datetime
 import logging
 import math
-from datetime import UTC, datetime
 from typing import Any
 from uuid import uuid4
 
@@ -19,6 +19,7 @@ from langchain_core.vectorstores import VectorStore
 from pydantic import BaseModel, Field
 
 from .message_document_converter import TimestampedDocument
+
 
 logger = logging.getLogger(__name__)
 
@@ -271,8 +272,8 @@ class MemoryRetrievalSession:
     def __init__(
         self,
         retriever: TimeWeightedRetriever,
-        session_id: str = None,
-        user_id: str = None,
+        session_id: str | None = None,
+        user_id: str | None = None,
     ):
         """Initialize retrieval session."""
         self.retriever = retriever

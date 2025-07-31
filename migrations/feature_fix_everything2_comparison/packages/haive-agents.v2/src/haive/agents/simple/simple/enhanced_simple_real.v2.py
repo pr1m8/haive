@@ -26,6 +26,7 @@ from typing import TYPE_CHECKING, Any, Literal
 
 from pydantic import Field, model_validator
 
+
 # Carefully import to avoid cycles
 if TYPE_CHECKING:
     from haive.core.graph.state_graph.base_graph2 import BaseGraph
@@ -125,11 +126,12 @@ class SimpleAgent(EnhancedAgentBase):
     def build_graph(self) -> "BaseGraph":
         """Build minimal graph for SimpleAgent."""
         # Import here to avoid circular imports
+        from langchain_core.messages import AIMessage
+        from langgraph.graph import END, START
+
         from haive.core.graph.node.engine_node import EngineNodeConfig
         from haive.core.graph.node.tool_node_config_v2 import ToolNodeConfig
         from haive.core.graph.state_graph.base_graph2 import BaseGraph
-        from langchain_core.messages import AIMessage
-        from langgraph.graph import END, START
 
         graph = BaseGraph(name=self.name)
 
@@ -169,12 +171,9 @@ class SimpleAgent(EnhancedAgentBase):
 # Example usage
 if __name__ == "__main__":
     # This would work with proper imports
-    print("Enhanced SimpleAgent implementation")
-    print("SimpleAgent = Agent[AugLLMConfig]")
 
     # Minimal demo without full imports
     agent = SimpleAgent(name="demo", temperature=0.5)
-    print(f"\nCreated: {agent}")
 
     # In full implementation:
     # - SimpleAgent inherits from Agent[AugLLMConfig]

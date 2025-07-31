@@ -16,6 +16,7 @@ from haive.agents.conversation.directed.example import (
 )
 from haive.agents.conversation.directed.state import DirectedState
 
+
 __all__ = [
     "DirectedConversation",
     "DirectedConversationConfig",

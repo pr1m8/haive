@@ -8,8 +8,6 @@ import logging
 import pickle
 from typing import Any
 
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.schema.state_schema import StateSchema
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 from langchain_core.tools import BaseTool, tool
 from pydantic import BaseModel, Field, model_validator
@@ -22,6 +20,9 @@ from haive.agents.experiments.dynamic_supervisor import (
     create_forward_message_tool,
 )
 from haive.agents.react.agent import ReactAgent
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.schema.state_schema import StateSchema
+
 
 logger = logging.getLogger(__name__)
 
@@ -80,7 +81,7 @@ class SupervisorReactState(StateSchema):
         registered agents.
         """
         # Create handoff tools for any agents missing them
-        for agent_name, agent_entry in self.registered_agents.items():
+        for agent_name, _agent_entry in self.registered_agents.items():
             if agent_name not in self.handoff_tools:
                 # Create handoff tool for this agent
                 # Note: We need a supervisor instance to create the tool

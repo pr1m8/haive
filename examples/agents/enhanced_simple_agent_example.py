@@ -9,6 +9,7 @@ import asyncio
 import os
 import sys
 
+
 # Add the packages to the path
 sys.path.insert(
     0, os.path.join(os.path.dirname(__file__), "../../packages/haive-agents/src")
@@ -23,12 +24,13 @@ async def demonstrate_enhanced_simple_agent():
     print("=== Enhanced SimpleAgent Demo ===\n")
 
     # Import here to show the pattern
+    from langchain_core.tools import tool
+
     from haive.agents.simple.enhanced_simple_agent import (
         EnhancedSimpleAgent,
         create_simple_agent,
     )
     from haive.core.engine.aug_llm import AugLLMConfig
-    from langchain_core.tools import tool
 
     # 1. Basic Creation - SimpleAgent is just Agent[AugLLMConfig]
     print("1. Basic Enhanced SimpleAgent:")
@@ -88,9 +90,9 @@ async def demonstrate_enhanced_simple_agent():
 
     # 6. Show the clean inheritance
     print("6. Clean inheritance hierarchy:")
-    print(f"   EnhancedSimpleAgent is Agent[AugLLMConfig]")
-    print(f"   Inherits from enhanced Agent base")
-    print(f"   Engine type is locked to AugLLMConfig")
+    print("   EnhancedSimpleAgent is Agent[AugLLMConfig]")
+    print("   Inherits from enhanced Agent base")
+    print("   Engine type is locked to AugLLMConfig")
     print("")
 
     # 7. Execution would work with real LLM

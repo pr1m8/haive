@@ -11,9 +11,9 @@ Examples:
 """
 
 from collections.abc import Callable
+import contextlib
 from typing import Any, Generic, TypeVar
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import BaseMessage
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
@@ -21,6 +21,8 @@ from pydantic import BaseModel, Field
 from haive.agents.base.agent import Agent
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 # Type variable for structured output models
 OutputT = TypeVar("OutputT", bound=BaseModel)
@@ -163,19 +165,16 @@ Provide the structured output now:""",
                 input_data = self.hooks.pre_process(input_data)
 
             if self.debug:
-                print(f"\n🔄 Sequential Pattern: {self.name}")
-                print(f"   First Agent: {self.first_agent.name}")
-                print(f"   Second Agent: {self.second_agent.name}")
+                pass
 
             # Step 1: Run first agent
             if self.debug:
-                print(f"\n📍 Step 1: Running {self.first_agent.name}...")
+                pass
 
             first_result = await self.first_agent.arun(input_data, **kwargs)
 
             if self.debug:
-                print("   ✅ First agent completed")
-                print(f"   Result type: {type(first_result)}")
+                pass
 
             # Transform intermediate result if hook provided
             if self.hooks.intermediate_transform:
@@ -188,15 +187,12 @@ Provide the structured output now:""",
 
             # Step 2: Run structured output agent
             if self.debug:
-                print(
-                    f"\n📍 Step 2: Structuring output with {self.second_agent.name}..."
-                )
+                pass
 
             structured_result = await self.second_agent.arun(structured_input, **kwargs)
 
             if self.debug:
-                print("   ✅ Structured output completed")
-                print(f"   Output type: {type(structured_result)}")
+                pass
 
             # Extract the actual structured output from the result
             if hasattr(structured_result, "messages") and structured_result.messages:
@@ -242,12 +238,10 @@ Provide the structured output now:""",
 
                 # Try to parse as the model if it's a dict
                 if isinstance(structured_result, dict):
-                    try:
+                    with contextlib.suppress(Exception):
                         structured_result = self.structured_output_model(
                             **structured_result
                         )
-                    except:
-                        pass
 
             # Post-process if hook provided
             if self.hooks.post_process:

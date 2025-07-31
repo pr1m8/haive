@@ -14,11 +14,11 @@ Functions:
 import operator
 from typing import Annotated, Any
 
-from haive.core.schema.prebuilt.messages_state import MessagesState
 from langchain_core.messages import HumanMessage
 from pydantic import Field, computed_field
 
 from haive.agents.reasoning_and_critique.lats.v2.models import TreeNode
+from haive.core.schema.prebuilt.messages_state import MessagesState
 
 
 def update_nodes(

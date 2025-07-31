@@ -10,6 +10,7 @@ from pydantic import Field, field_validator
 
 from haive.agents.multi.enhanced_supervisor_agent import SupervisorAgent
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -166,7 +167,7 @@ class DynamicSupervisor(SupervisorAgent):
             return True
 
         except Exception as e:
-            logger.error(f"Failed to create worker from template: {e}")
+            logger.exception(f"Failed to create worker from template: {e}")
             return False
 
     def remove_idle_worker(self) -> str | None:
@@ -202,7 +203,7 @@ class DynamicSupervisor(SupervisorAgent):
         """
         # Auto-scale if needed
         if self.should_scale_up() and self.worker_templates:
-            template_name = list(self.worker_templates.keys())[0]
+            template_name = next(iter(self.worker_templates.keys()))
             worker_name = f"dynamic_worker_{len(self.workers)}"
             self.add_worker_from_template(template_name, worker_name)
 
@@ -324,37 +325,24 @@ if __name__ == "__main__":
         },
     )
 
-    print(f"Created: {supervisor}")
-    print(f"Auto-scaling: {supervisor.auto_scale}")
-    print(f"Worker limits: {supervisor.min_workers}-{supervisor.max_workers}")
-
     # Simulate task assignment
-    print("\nSimulating task flow:")
 
     # Add initial workers
     supervisor.add_worker_from_template("analyst", "analyst_1")
     supervisor.add_worker_from_template("processor", "processor_1")
-    print(f"Initial state: {supervisor}")
 
     # Assign tasks
     task1 = supervisor.assign_task("task_001")
-    print(f"Assigned task_001 to: {task1}")
 
     task2 = supervisor.assign_task("task_002")
-    print(f"Assigned task_002 to: {task2}")
 
     # All workers busy, should trigger scale up
     task3 = supervisor.assign_task("task_003")
-    print(f"Assigned task_003 to: {task3}")
-    print(f"After scaling: {supervisor}")
 
     # Complete some tasks
     supervisor.complete_task("task_001", success=True, duration=5.0)
     supervisor.complete_task("task_002", success=False, duration=3.0)
 
     # Check metrics
-    print("\nWorker metrics:")
-    for name, metrics in supervisor.get_worker_metrics().items():
-        print(
-            f"  {name}: success_rate={metrics['success_rate']:.2f}, avg_time={metrics['average_time']:.2f}s"
-        )
+    for _name, _metrics in supervisor.get_worker_metrics().items():
+        pass

@@ -1,7 +1,5 @@
 """Reflection Evaluator Agent for LATS v3 - Evaluates and scores actions."""
 
-from haive.core.engine.aug_llm import AugLLMConfig
-
 from haive.agents.reasoning_and_critique.lats.v3.models.action_models import (
     CandidateAction,
 )
@@ -11,6 +9,7 @@ from haive.agents.reasoning_and_critique.lats.v3.models.evaluation_models import
 )
 from haive.agents.reasoning_and_critique.lats.v3.models.tree_models import LATSNode
 from haive.agents.simple.agent_v3 import SimpleAgentV3
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 class ReflectionEvaluator:

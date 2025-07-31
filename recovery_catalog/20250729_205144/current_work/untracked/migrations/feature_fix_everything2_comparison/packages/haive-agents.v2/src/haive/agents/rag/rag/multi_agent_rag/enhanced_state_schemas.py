@@ -6,7 +6,6 @@ solving the issue of storing agent-specific configuration in a clean way.
 
 from typing import Any
 
-from haive.core.schema.prebuilt.rag_state import RAGState
 from pydantic import Field
 
 from haive.agents.rag.multi_agent_rag.grading_components import (
@@ -14,6 +13,7 @@ from haive.agents.rag.multi_agent_rag.grading_components import (
     DocumentGrade,
     HallucinationGrade,
 )
+from haive.core.schema.prebuilt.rag_state import RAGState
 
 
 class ConfigurableRAGState(RAGState):

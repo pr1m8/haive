@@ -9,7 +9,6 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
-
 # Add to ToolRouteMixin class:
 
 # NEW: Actual tool storage
@@ -157,7 +156,11 @@ def _analyze_tool(self, tool: Any) -> Tuple[str, dict[str, Any] | None]:
     """Analyze tool with AugLLM-specific routing logic."""
     # Check if this is the structured output model
     if self.structured_output_model and tool == self.structured_output_model:
-        route = "structured_output_tool" if self.structured_output_version == "v2" else "parser"
+        route = (
+            "structured_output_tool"
+            if self.structured_output_version == "v2"
+            else "parser"
+        )
         metadata = {
             "purpose": "structured_output",
             "version": self.structured_output_version,
@@ -190,7 +193,11 @@ def _setup_structured_output_as_tool(self):
         self.tool_metadata[model_name] = existing_metadata
     else:
         # Add as new tool
-        route = "structured_output_tool" if self.structured_output_version == "v2" else "parser"
+        route = (
+            "structured_output_tool"
+            if self.structured_output_version == "v2"
+            else "parser"
+        )
         self.add_tool(
             self.structured_output_model,
             route=route,
@@ -262,7 +269,9 @@ def setup_response_schema(self, schema: dict | type[BaseModel]):
         schema: Response schema as dict or Pydantic model
     """
     if not self.llm_config.supports_response_schema:
-        logger.warning(f"Provider {self.llm_config.provider} doesn't support response_schema")
+        logger.warning(
+            f"Provider {self.llm_config.provider} doesn't support response_schema"
+        )
         return
 
     if isinstance(schema, type) and issubclass(schema, BaseModel):

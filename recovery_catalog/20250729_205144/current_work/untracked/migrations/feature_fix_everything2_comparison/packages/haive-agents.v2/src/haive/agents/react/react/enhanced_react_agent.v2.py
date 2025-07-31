@@ -6,9 +6,6 @@ ReactAgent = Agent[AugLLMConfig] + reasoning loop with tools.
 import logging
 from typing import Any, Literal
 
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.node.tool_node_config_v2 import ToolNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import AIMessage
 from langchain_core.tools import BaseTool
 from langgraph.graph import END
@@ -18,6 +15,10 @@ from pydantic import Field, model_validator
 # from haive.agents.base.enhanced_agent import Agent
 # For now, using a minimal base
 from haive.agents.simple.enhanced_simple_real import EnhancedAgentBase as Agent
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.node.tool_node_config_v2 import ToolNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
 
 logger = logging.getLogger(__name__)
 

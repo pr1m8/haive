@@ -6,9 +6,10 @@ Classes:
     LongTermMemoryState: LongTermMemoryState implementation.
 """
 
+from pydantic import BaseModel, Field
+
 from agents.long_term_memory.models import KnowledgeTriple
 from agents.react_agent.state import AgentState
-from pydantic import BaseModel, Field
 
 
 class LongTermMemoryState(AgentState):

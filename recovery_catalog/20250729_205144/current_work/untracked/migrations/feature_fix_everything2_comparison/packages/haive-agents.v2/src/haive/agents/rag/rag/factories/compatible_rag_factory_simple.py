@@ -3,10 +3,9 @@
 Simplified version without legacy functions that have import issues.
 """
 
-import logging
 from enum import Enum
+import logging
 
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 
 from haive.agents.multi.base import SequentialAgent
@@ -29,6 +28,8 @@ from haive.agents.rag.query_decomposition.agent import (
 )
 from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+
 
 logger = logging.getLogger(__name__)
 

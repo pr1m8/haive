@@ -38,6 +38,7 @@ from haive.agents.reasoning_and_critique.tot.v2.state import (
     update_candidates,
 )
 
+
 __all__ = [
     "Candidate",
     "CandidateEvaluation",

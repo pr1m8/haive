@@ -28,29 +28,19 @@ async def solve_maze_problem():
         num_candidates=3,
     )
 
-    print(f"🎯 Problem: {problem}")
-    print(f"🎯 Goal: {goal}")
-    print("=" * 60)
-
     # Run the LATS algorithm
     solution = await orchestrator.solve()
 
     # Display results
-    print("\n📊 LATS Search Results:")
-    print(f"   Iterations: {solution['iterations']}")
-    print(f"   Tree size: {solution['tree_size']}")
-    print(f"   Max depth: {solution['max_depth_reached']}")
 
     if solution["best_path"]:
-        print("\n🏆 Best Path Found:")
-        for i, node in enumerate(solution["best_path"]):
-            print(f"   {i+1}. {node.action} (reward: {node.average_reward():.2f})")
+        for _i, _node in enumerate(solution["best_path"]):
+            pass
 
     if solution["solution"]:
-        print("\n✅ Solution Found!")
-        print(f"   {solution['solution']}")
+        pass
     else:
-        print("\n❌ No complete solution found within limits")
+        pass
 
 
 async def solve_math_problem():
@@ -73,31 +63,21 @@ async def solve_math_problem():
         num_candidates=4,  # More candidates for diverse approaches
     )
 
-    print(f"🧮 Math Problem: {problem.strip()}")
-    print(f"🎯 Goal: {goal}")
-    print("=" * 60)
-
     # Solve the problem
     solution = await orchestrator.solve()
 
     # Show the solution process
-    print("\n📊 Solution Process:")
     if solution["search_history"]:
-        for i, step in enumerate(solution["search_history"][:5]):  # Show first 5 steps
-            print(f"\n   Step {i+1}:")
+        for _i, step in enumerate(solution["search_history"][:5]):  # Show first 5 steps
             if "selected_node" in step:
-                print(f"   - Selected: {step['selected_node']}")
+                pass
             if "action" in step:
-                print(f"   - Action: {step['action']}")
+                pass
             if "evaluation" in step:
-                print(f"   - Score: {step['evaluation']}")
-
-    print("\n📈 Final Statistics:")
-    print(f"   Total iterations: {solution['iterations']}")
-    print(f"   Tree size: {solution['tree_size']}")
+                pass
 
     if solution["solution"]:
-        print(f"\n✅ Solution: {solution['solution']}")
+        pass
 
 
 async def test_lats_components():
@@ -111,9 +91,6 @@ async def test_lats_components():
     from haive.agents.reasoning_and_critique.lats.v3.agents.reflection_evaluator import (
         ReflectionEvaluator,
     )
-
-    print("🧪 Testing LATS v3 Components")
-    print("=" * 60)
 
     # Test data
     problem = "Plan a trip to Japan"
@@ -148,47 +125,30 @@ async def test_lats_components():
     }
 
     # Test NodeSelector
-    print("\n1️⃣ Testing NodeSelector")
     selector = NodeSelector()
     selection = await selector.select_node(nodes, problem, debug=False)
-    print(f"   Selected: {selection.selected_node_id}")
-    print(f"   Reasoning: {selection.selection_reasoning[:80]}...")
 
     # Test ActionGenerator
-    print("\n2️⃣ Testing ActionGenerator")
     generator = ActionGenerator()
     selected_node = nodes[selection.selected_node_id]
     actions = await generator.generate_actions(selected_node, problem)
-    print(f"   Generated {len(actions.candidate_actions)} actions:")
-    for i, action in enumerate(actions.candidate_actions[:3], 1):
-        print(f"   {i}. {action.action[:60]}...")
+    for _i, _action in enumerate(actions.candidate_actions[:3], 1):
+        pass
 
     # Test ReflectionEvaluator
-    print("\n3️⃣ Testing ReflectionEvaluator")
     evaluator = ReflectionEvaluator()
-    evaluation = await evaluator.evaluate_actions(
+    await evaluator.evaluate_actions(
         selected_node, actions.candidate_actions, problem, goal
     )
-    print(f"   Best action: {evaluation.best_action_recommendation[:80]}...")
-    print(f"   Termination: {evaluation.termination_recommendation[:80]}...")
-
-    print("\n✅ All components working!")
 
 
 async def main():
     """Run all examples."""
-    print("🚀 LATS v3 Examples")
-    print("=" * 80)
-
     # Test individual components first
     await test_lats_components()
 
-    print("\n" + "=" * 80 + "\n")
-
     # Run maze solving example
     await solve_maze_problem()
-
-    print("\n" + "=" * 80 + "\n")
 
     # Run math problem example
     await solve_math_problem()

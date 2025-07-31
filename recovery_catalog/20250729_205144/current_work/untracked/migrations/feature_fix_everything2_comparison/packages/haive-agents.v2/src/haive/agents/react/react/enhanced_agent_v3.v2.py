@@ -14,12 +14,13 @@ Key Features:
 import logging
 from typing import Any
 
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langgraph.graph import END
 from pydantic import Field
 
 # Import the enhanced SimpleAgent as our base
 from haive.agents.simple.enhanced_agent_v3 import EnhancedSimpleAgent
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
 
 logger = logging.getLogger(__name__)
 

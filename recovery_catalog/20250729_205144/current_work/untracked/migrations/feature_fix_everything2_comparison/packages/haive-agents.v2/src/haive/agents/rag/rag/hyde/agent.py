@@ -6,14 +6,15 @@ Implements architecture from rag-architectures-flows.md:
 Query -> Generate Hypothetical Doc -> Embed -> Retrieve Real Docs -> Generate
 """
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 
 from haive.agents.multi import MultiAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+
 
 HYDE_GENERATION_PROMPT = ChatPromptTemplate.from_messages(
     [

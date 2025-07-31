@@ -90,7 +90,6 @@ class AgentRunCaptureDirective(SphinxDirective):
         paginated = "paginated" in self.options
         page_size = self.options.get("page-size", 10)
         show_graph = "show-graph" in self.options
-        show_logs = "show-logs" in self.options
         show_metrics = "show-metrics" in self.options
 
         # Create main container
@@ -214,7 +213,7 @@ class AgentRunCaptureDirective(SphinxDirective):
         # Create steps as numbered list
         step_list = nodes.enumerated_list()
 
-        for i, step in enumerate(display_steps):
+        for _i, step in enumerate(display_steps):
             list_item = nodes.list_item()
 
             # Step header with type and timestamp
@@ -538,7 +537,7 @@ class AgentDiscovery:
                 return True
 
         # Skip non-Python files or __init__.py files
-        return bool(not file_path.suffix == ".py" or file_path.name == "__init__.py")
+        return bool(file_path.suffix != ".py" or file_path.name == "__init__.py")
 
     def extract_agent_info_from_ast(self, file_path: Path) -> list[AgentInfo]:
         """Extract agent information from Python AST without importing."""

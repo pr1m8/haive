@@ -3,11 +3,11 @@ Add these methods to the existing ToolRouteMixin class
 Location: /haive-core/src/haive/core/common/mixins/tool_route_mixin.py.
 """
 
+import inspect
+
 # Add these imports at the top
 from datetime import datetime
-import inspect
 from typing import get_type_hints
-
 
 # Add these methods to the ToolRouteMixin class:
 
@@ -106,7 +106,9 @@ def _get_callable_metadata(self, callable_obj: Callable) -> Dict[str, Any]:
     return metadata
 
 
-def route_pydantic_model(self, model: Type[BaseModel], context: Optional[str] = None) -> str:
+def route_pydantic_model(
+    self, model: Type[BaseModel], context: Optional[str] = None
+) -> str:
     """Determine appropriate route for a Pydantic model based on context.
 
     This method provides smart routing for Pydantic models:
@@ -122,7 +124,10 @@ def route_pydantic_model(self, model: Type[BaseModel], context: Optional[str] = 
         Route string for the model
     """
     # Check if this is a structured output model
-    if hasattr(self, "structured_output_model") and model == self.structured_output_model:
+    if (
+        hasattr(self, "structured_output_model")
+        and model == self.structured_output_model
+    ):
         # Route based on structured output version
         if hasattr(self, "structured_output_version"):
             if self.structured_output_version == "v2":

@@ -12,125 +12,125 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 PACKAGE_PATH="${1}"
-PACKAGE_NAME=$(basename "$PACKAGE_PATH")
+PACKAGE_NAME=$(basename "${PACKAGE_PATH}")
 
-if [ -z "$PACKAGE_PATH" ]; then
+if [[ -z "${PACKAGE_PATH}" ]]; then
 	echo -e "${RED}Usage: $0 <package-path>${NC}"
 	echo "Example: $0 packages/haive-games"
 	exit 1
 fi
 
-if [ ! -d "$PACKAGE_PATH" ]; then
-	echo -e "${RED}Package path does not exist: $PACKAGE_PATH${NC}"
+if [[ ! -d "${PACKAGE_PATH}" ]]; then
+	echo -e "${RED}Package path does not exist: ${PACKAGE_PATH}${NC}"
 	exit 1
 fi
 
-if [ ! -f "$PACKAGE_PATH/pyproject.toml" ]; then
-	echo -e "${RED}No pyproject.toml found in: $PACKAGE_PATH${NC}"
+if [[ ! -f "${PACKAGE_PATH}/pyproject.toml" ]]; then
+	echo -e "${RED}No pyproject.toml found in: ${PACKAGE_PATH}${NC}"
 	exit 1
 fi
 
-echo -e "${BLUE}🎯 Optimizing Package: $PACKAGE_NAME${NC}"
+echo -e "${BLUE}🎯 Optimizing Packag${: $PACKAGE_N}AME${NC}"
 echo "========================================"
 
 # Create tracking directory
-TRACK_DIR="tests/utils/dev-optimization/results/$PACKAGE_NAME"
-mkdir -p "$TRACK_DIR"
+TRACK_DIR="tests/utils/dev-optimization/results/${PACKAGE_NAME}"
+mkdir -p "${TRACK_DIR}"
 TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 
 # Setup safety measures
 setup_safety() {
-	echo -e "${BLUE}📍 Setting up safety measures for $PACKAGE_NAME...${NC}"
+	echo -e "${BLUE}📍 Setting up safety measures f${r $PACKAGE_N}AME...${NC}"
 
 	# Create package-specific checkpoint
-	CHECKPOINT_TAG="checkpoint-$PACKAGE_NAME-$TIMESTAMP"
-	git tag "$CHECKPOINT_TAG" 2>/dev/null || true
-	echo -e "${GREEN}✅ Git checkpoint: $CHECKPOINT_TAG${NC}"
+	CHECKPOINT_TAG="checkpoint-${PACKAGE_NAME}-${TIMESTAMP}"
+	git tag "${CHECKPOINT_TAG}" 2>/dev/null || true
+	echo -e "${GREEN}✅ Git checkpoint${ $CHECKPOINT_T}AG${NC}"
 
 	# Backup package files
 	echo "Creating backups..."
-	cp "$PACKAGE_PATH/pyproject.toml" "$TRACK_DIR/pyproject.toml.backup"
-	[ -f "$PACKAGE_PATH/poetry.lock" ] && cp "$PACKAGE_PATH/poetry.lock" "$TRACK_DIR/poetry.lock.backup"
-	[ -f "$PACKAGE_PATH/.pre-commit-config.yaml" ] && cp "$PACKAGE_PATH/.pre-commit-config.yaml" "$TRACK_DIR/pre-commit-config.yaml.backup"
+	cp "${PACKAGE_PATH}/pyproject.toml" "${TRACK_DIR}/pyproject.toml.backup"
+	[[ -f "${PACKAGE_PATH}/poetry.lock" ]] && cp "${PACKAGE_PATH}/poetry.lock" "${TRACK_DIR}/poetry.lock.backup"
+	[[ -f "${PACKAGE_PATH}/.pre-commit-config.yaml" ]] && cp "${PACKAGE_PATH}/.pre-commit-config.yaml" "${TRACK_DIR}/pre-commit-config.yaml.backup"
 
-	echo -e "${GREEN}✅ Backups created in: $TRACK_DIR${NC}"
+	echo -e "${GREEN}✅ Backups created in${ $TRACK_D}IR${NC}"
 }
 
 # Analyze current state
 analyze_current_state() {
-	echo -e "${BLUE}📊 Analyzing current state of $PACKAGE_NAME...${NC}"
+	echo -e "${BLUE}📊 Analyzing current state ${f $PACKAGE_N}AME...${NC}"
 
 	# Create analysis report
-	cat >"$TRACK_DIR/analysis-$TIMESTAMP.md" <<EOF
-# $PACKAGE_NAME Development Dependencies Analysis
+	cat >"${TRACK_DIR}/analysis-${TIMESTAMP}.md" <<EOF
+# ${PACKAGE_NAME} Development Dependencies Analysis
 Generated: $(date)
 
 ## Current Dependencies
 EOF
 
-	echo "### Dev Dependencies" >>"$TRACK_DIR/analysis-$TIMESTAMP.md"
-	if grep -A 20 "\[tool.poetry.group.dev.dependencies\]" "$PACKAGE_PATH/pyproject.toml" | grep -E "^[a-zA-Z]" >>"$TRACK_DIR/analysis-$TIMESTAMP.md" 2>/dev/null; then
+	echo "### Dev Dependencies" >>"${TRACK_DIR}/analysis-${TIMESTAMP}.md"
+	if grep -A 20 "\[tool.poetry.group.dev.dependencies\]" "${PACKAGE_PATH}/pyproject.toml" | grep -E "^[a-zA-Z]" >>"${TRACK_DIR}/analysis-${TIMESTAMP}.md" 2>/dev/null; then
 		echo "✅ Dev dependencies found"
 	else
-		echo "⚠️  No dev dependencies section found" >>"$TRACK_DIR/analysis-$TIMESTAMP.md"
+		echo "⚠️  No dev dependencies section found"${>>"$TRACK}_DIR/analy${is-$TIMES}TAMP.md"
 	fi
 
 	# Check for redundant tools
-	echo -e "\n### Redundancy Analysis" >>"$TRACK_DIR/analysis-$TIMESTAMP.md"
-	if grep -q "black.*=" "$PACKAGE_PATH/pyproject.toml" && grep -q "isort.*=" "$PACKAGE_PATH/pyproject.toml"; then
-		echo "❌ **ISSUE**: Both black and isort present (can be replaced by ruff)" >>"$TRACK_DIR/analysis-$TIMESTAMP.md"
+	echo -e "\n### Redundancy Analysis" >>"${TRACK_DIR}/analysis-${TIMESTAMP}.md"
+	if grep -q "black.*=" "${PACKAGE_PATH}/pyproject.toml" && grep -q "isort.*=" "${PACKAGE_PATH}/pyproject.toml"; then
+		echo "❌ **ISSUE**: Both black and isort present (can be replaced by ruff)" >${"$TRACK_D}IR/analysi${-$TIMESTA}MP.md"
 		echo -e "${YELLOW}   Found: black + isort redundancy${NC}"
 	fi
 
-	if grep -q "ruff.*=" "$PACKAGE_PATH/pyproject.toml"; then
-		echo "✅ Ruff already present" >>"$TRACK_DIR/analysis-$TIMESTAMP.md"
+	if grep -q "ruff.*=" "${PACKAGE_PATH}/pyproject.toml"; then
+		echo "✅ Ruff already present" >${"$TRACK_D}IR/analysi${-$TIMESTA}MP.md"
 	else
-		echo "⚠️  Ruff not found - will be added" >>"$TRACK_DIR/analysis-$TIMESTAMP.md"
+		echo "⚠️  Ruff not found - will be added"${>>"$TRACK}_DIR/analy${is-$TIMES}TAMP.md"
 	fi
 
-	if grep -q "monkeytype.*=" "$PACKAGE_PATH/pyproject.toml"; then
-		echo "✅ MonkeyType already present" >>"$TRACK_DIR/analysis-$TIMESTAMP.md"
+	if grep -q "monkeytype.*=" "${PACKAGE_PATH}/pyproject.toml"; then
+		echo "✅ MonkeyType already present" >${"$TRACK_D}IR/analysi${-$TIMESTA}MP.md"
 	else
-		echo "📝 MonkeyType not found - will be added" >>"$TRACK_DIR/analysis-$TIMESTAMP.md"
+		echo "📝 MonkeyType not found - will be added" ${>"$TRACK_}DIR/analys${s-$TIMEST}AMP.md"
 	fi
 
-	echo -e "${GREEN}✅ Analysis saved to: $TRACK_DIR/analysis-$TIMESTAMP.md${NC}"
+	echo -e "${GREEN}✅ Analysis saved to${ $TRACK_D}IR/analysi${-$TIMESTA}MP.md${NC}"
 }
 
 # Test changes (dry-run)
 test_changes() {
-	echo -e "${BLUE}🧪 Testing changes for $PACKAGE_NAME (dry-run)...${NC}"
+	echo -e "${BLUE}🧪 Testing changes f${r $PACKAGE_N}AME (dry-run)...${NC}"
 
-	cd "$PACKAGE_PATH"
+	cd "${PACKAGE_PATH}"
 
 	# Test dependency changes
 	echo "Testing dependency removals..."
-	poetry remove black isort --group dev --dry-run >"$TRACK_DIR/removal-test-$TIMESTAMP.log" 2>&1 || echo "   (black/isort not found or already removed)"
+	poetry remove black isort --group dev --dry-run >"${TRACK_DIR}/removal-test-${TIMESTAMP}.log" 2>&1 || echo "   (black/isort not found or already removed)"
 
 	echo "Testing ruff addition..."
-	poetry add ruff --group dev --dry-run >"$TRACK_DIR/ruff-addition-test-$TIMESTAMP.log" 2>&1 || echo "   (ruff already present)"
+	poetry add ruff --group dev --dry-run >"${TRACK_DIR}/ruff-addition-test-${TIMESTAMP}.log" 2>&1 || echo "   (ruff already present)"
 
 	echo "Testing monkeytype..."
-	poetry add monkeytype --group dev --dry-run >"$TRACK_DIR/monkeytype-test-$TIMESTAMP.log" 2>&1 || echo "   (monkeytype already present)"
+	poetry add monkeytype --group dev --dry-run >"${TRACK_DIR}/monkeytype-test-${TIMESTAMP}.log" 2>&1 || echo "   (monkeytype already present)"
 
 	# Test ruff functionality if available
 	if command -v ruff >/dev/null 2>&1; then
 		echo "Testing ruff check..."
-		ruff check . --statistics >"$TRACK_DIR/ruff-check-before-$TIMESTAMP.log" 2>&1 || true
+		ruff check . --statistics >"${TRACK_DIR}/ruff-check-before-${TIMESTAMP}.log" 2>&1 || true
 
 		echo "Testing ruff format..."
-		ruff format . --diff >"$TRACK_DIR/ruff-format-preview-$TIMESTAMP.log" 2>&1 || true
+		ruff format . --diff >"${TRACK_DIR}/ruff-format-preview-${TIMESTAMP}.log" 2>&1 || true
 	fi
 
 	cd - >/dev/null
-	echo -e "${GREEN}✅ Dry-run tests completed - logs in $TRACK_DIR${NC}"
+	echo -e "${GREEN}✅ Dry-run tests completed - logs i${ $TRACK_D}IR${NC}"
 }
 
 # Apply optimizations
 apply_optimizations() {
-	echo -e "${BLUE}🔄 Applying optimizations to $PACKAGE_NAME...${NC}"
+	echo -e "${BLUE}🔄 Applying optimizations ${o $PACKAGE_N}AME...${NC}"
 
-	cd "$PACKAGE_PATH"
+	cd "${PACKAGE_PATH}"
 
 	echo "Phase 1: Removing redundant tools..."
 	poetry remove black isort --group dev 2>/dev/null || echo "   black/isort not found (ok)"
@@ -232,9 +232,9 @@ EOF
 
 # Verify optimizations
 verify_optimizations() {
-	echo -e "${BLUE}🔍 Verifying optimizations for $PACKAGE_NAME...${NC}"
+	echo -e "${BLUE}🔍 Verifying optimizations f${r $PACKAGE_N}AME...${NC}"
 
-	cd "$PACKAGE_PATH"
+	cd "${PACKAGE_PATH}"
 
 	# Test imports
 	echo "1. Testing package imports..."
@@ -250,7 +250,7 @@ verify_optimizations() {
 		echo -e "${GREEN}   ✅ Ruff available${NC}"
 
 		# Run ruff check and save results
-		poetry run ruff check . --statistics >"$TRACK_DIR/ruff-check-after-$TIMESTAMP.log" 2>&1 || true
+		poetry run ruff check . --statistics >"${TRACK_DIR}/ruff-check-after-${TIMESTAMP}.log" 2>&1 || true
 		echo "   📊 Ruff check results saved"
 
 		# Test ruff format
@@ -269,7 +269,7 @@ verify_optimizations() {
 
 	# Test pre-commit
 	echo "4. Testing pre-commit setup..."
-	if [ -f .pre-commit-config.yaml ]; then
+	if [[ -f .pre-commit-config.yaml ]]; then
 		echo -e "${GREEN}   ✅ Pre-commit config exists${NC}"
 		if command -v pre-commit >/dev/null 2>&1; then
 			if pre-commit run --all-files >/dev/null 2>&1; then
@@ -286,16 +286,16 @@ verify_optimizations() {
 
 # Generate final report
 generate_report() {
-	echo -e "${BLUE}📋 Generating final report for $PACKAGE_NAME...${NC}"
+	echo -e "${BLUE}📋 Generating final report f${r $PACKAGE_N}AME...${NC}"
 
-	cat >"$TRACK_DIR/optimization-report-$TIMESTAMP.md" <<EOF
-# $PACKAGE_NAME Optimization Report
+	cat >"${TRACK_DIR}/optimization-report-${TIMESTAMP}.md" <<EOF
+# ${PACKAGE_NAME} Optimization Report
 Generated: $(date)
-Package: $PACKAGE_PATH
+Package: ${PACKAGE_PATH}
 
 ## Summary
-- ✅ Safety checkpoint created: checkpoint-$PACKAGE_NAME-$TIMESTAMP
-- ✅ Backup files saved in: $TRACK_DIR
+- ✅ Safety checkpoint created: checkpoin${-$PACKAGE_NA}M${-$TIMESTA}MP
+- ✅ Backup files saved in${ $TRACK_D}IR
 - ✅ Optimizations applied successfully
 
 ## Changes Made
@@ -322,15 +322,15 @@ Package: $PACKAGE_PATH
 ## Rollback Instructions
 If needed, rollback with:
 \`\`\`bash
-git reset --hard checkpoint-$PACKAGE_NAME-$TIMESTAMP
-cp $TRACK_DIR/pyproject.toml.backup $PACKAGE_PATH/pyproject.toml
-cd $PACKAGE_PATH && poetry install
+git reset --hard checkpoint-${PACKAGE_NAME}-${TIMESTAMP}
+cp ${TRACK_DIR}/pyproject.toml.backup ${PACKAGE_PATH}/pyproject.toml
+cd ${PACKAGE_PATH} && poetry install
 \`\`\`
 
 ## Next Steps
 1. Test the optimized workflow:
    \`\`\`bash
-   cd $PACKAGE_PATH
+   cd ${PACKAGE_PATH}
    poetry run ruff format .
    poetry run ruff check --fix .
    poetry run monkeytype run -m pytest
@@ -338,31 +338,31 @@ cd $PACKAGE_PATH && poetry install
 
 2. Commit changes if satisfied:
    \`\`\`bash
-   git add $PACKAGE_PATH/pyproject.toml $PACKAGE_PATH/.pre-commit-config.yaml
-   git commit -m "optimize: dev dependencies for $PACKAGE_NAME"
+   git add ${PACKAGE_PATH}/pyproject.toml ${PACKAGE_PATH}/.pre-commit-config.yaml
+   git commit -m "optimize: dev dependencies for ${PACKAGE_NAME}"
    \`\`\`
 EOF
 
-	echo -e "${GREEN}✅ Report saved: $TRACK_DIR/optimization-report-$TIMESTAMP.md${NC}"
+	echo -e "${GREEN}✅ Report saved${ $TRACK_D}IR/optimization-repor${-$TIMESTA}MP.md${NC}"
 }
 
 # Emergency rollback
 rollback() {
-	echo -e "${RED}🚨 Emergency Rollback for $PACKAGE_NAME${NC}"
+	echo -e "${RED}🚨 Emergency Rollback f${r $PACKAGE_N}AME${NC}"
 
-	LATEST_CHECKPOINT=$(git tag -l "checkpoint-$PACKAGE_NAME-*" | sort | tail -1)
+	LATEST_CHECKPOINT=$(git tag -l "checkpoint-${PACKAGE_NAME}-*" | sort | tail -1)
 
-	if [ -n "$LATEST_CHECKPOINT" ]; then
-		echo "Rolling back to: $LATEST_CHECKPOINT"
-		git reset --hard "$LATEST_CHECKPOINT"
+	if [[ -n "${LATEST_CHECKPOINT}" ]]; then
+		echo "Rolling back to: ${LATEST_CHECKPOINT}"
+		git reset --hard "${LATEST_CHECKPOINT}"
 	fi
 
 	# Restore backups
-	[ -f "$TRACK_DIR/pyproject.toml.backup" ] && cp "$TRACK_DIR/pyproject.toml.backup" "$PACKAGE_PATH/pyproject.toml"
-	[ -f "$TRACK_DIR/poetry.lock.backup" ] && cp "$TRACK_DIR/poetry.lock.backup" "$PACKAGE_PATH/poetry.lock"
-	[ -f "$TRACK_DIR/pre-commit-config.yaml.backup" ] && cp "$TRACK_DIR/pre-commit-config.yaml.backup" "$PACKAGE_PATH/.pre-commit-config.yaml"
+	[[ -f "${TRACK_DIR}/pyproject.toml.backup" ]] && cp "${TRACK_DIR}/pyproject.toml.backup" "${PACKAGE_PATH}/pyproject.toml"
+	[[ -f "${TRACK_DIR}/poetry.lock.backup" ]] && cp "${TRACK_DIR}/poetry.lock.backup" "${PACKAGE_PATH}/poetry.lock"
+	[[ -f "${TRACK_DIR}/pre-commit-config.yaml.backup" ]] && cp "${TRACK_DIR}/pre-commit-config.yaml.backup" "${PACKAGE_PATH}/.pre-commit-config.yaml"
 
-	cd "$PACKAGE_PATH" && poetry install
+	cd "${PACKAGE_PATH}" && poetry install
 	echo -e "${GREEN}✅ Rollback complete${NC}"
 }
 
@@ -416,5 +416,5 @@ case "${2:-all}" in
 esac
 
 echo ""
-echo -e "${BLUE}🎉 $PACKAGE_NAME optimization workflow complete!${NC}"
-echo "📁 Tracking data: $TRACK_DIR"
+echo -e "${BLUE}�${� $PACKAGE_N}AME optimization workflow complete!${NC}"
+echo "📁 Tracking dat${: $TRACK_}DIR"

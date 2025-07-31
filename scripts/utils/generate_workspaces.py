@@ -26,7 +26,7 @@ DEPS = {
 def generate_workspace(name, dependencies):
     # Compose list of folder paths relative to ROOT
     folders = [{"name": "root", "path": "."}]
-    all_names = list(dict.fromkeys(dependencies + [name]))  # dedupe, preserve order
+    all_names = list(dict.fromkeys([*dependencies, name]))  # dedupe, preserve order
     folders += [{"name": n, "path": f"./packages/{n}"} for n in all_names]
 
     # Shared settings
@@ -63,7 +63,6 @@ def generate_workspace(name, dependencies):
 
     out_file = WORKSPACE_DIR / f"{name}.code-workspace"
     out_file.write_text(json.dumps(workspace_data, indent=2))
-    print(f"✅ Generated: {out_file.relative_to(ROOT)}")
 
 
 def main():

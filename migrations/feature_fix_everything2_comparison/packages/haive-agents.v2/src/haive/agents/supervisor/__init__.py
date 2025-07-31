@@ -57,6 +57,7 @@ from haive.agents.experiments.supervisor.tools import (
     sync_tools_with_state,
 )
 
+
 __all__ = [
     "AgentMetadata",
     # Supervisor classes

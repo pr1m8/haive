@@ -13,16 +13,11 @@ Key Features:
 """
 
 import asyncio
-import logging
 from collections.abc import Callable
 from enum import Enum
+import logging
 from typing import Any, Protocol
 
-from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
-from haive.core.registry import (
-    ComponentMetadata,
-    Optional,
-)
 from langchain_core.messages import BaseMessage, HumanMessage, ToolMessage
 from langchain_core.tools import BaseTool, StructuredTool
 from pydantic import BaseModel, Field, model_validator
@@ -32,6 +27,12 @@ from haive.agents.discovery.semantic_discovery import (
     SemanticDiscoveryEngine,
     ToolSelectionStrategy,
 )
+from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
+from haive.core.registry import (
+    ComponentMetadata,
+    Optional,
+)
+
 
 logger = logging.getLogger(__name__)
 

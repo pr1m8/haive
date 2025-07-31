@@ -16,17 +16,17 @@ PURPLE='\033[0;35m'
 NC='\033[0m'
 
 echo -e "${CYAN}🔄 PACKAGE CONFIGURATION SYNC - POLY REPO${NC}"
-echo -e "${BLUE}🔧 Mode: $MODE${NC}"
+echo -e "${BLUE}🔧 Mod$${:} $M}ODE${NC}"
 echo ""
 
 # Define packages to sync
 PACKAGES=(
-    "packages/haive-core"
-    "packages/haive-agents" 
-    "packages/haive-tools"
-    "packages/haive-games"
-    "packages/haive-dataflow"
-    "packages/haive-mcp"
+	"packages/haive-core"
+	"packages/haive-agents"
+	"packages/haive-tools"
+	"packages/haive-games"
+	"packages/haive-dataflow"
+	"packages/haive-mcp"
 )
 
 # Standard ruff configuration for all packages
@@ -97,46 +97,46 @@ echo ""
 
 # Check current status
 for package in "${PACKAGES[@]}"; do
-    if [ -d "$package" ]; then
-        CONFIG_FILE="$package/pyproject.toml"
-        if [ -f "$CONFIG_FILE" ]; then
-            HAS_RUFF=$(grep -q "\\[tool\\.ruff\\]" "$CONFIG_FILE" && echo "✅" || echo "❌")
-            HAS_ISORT=$(grep -q "\\[tool\\.ruff\\.lint\\.isort\\]" "$CONFIG_FILE" && echo "✅" || echo "❌")
-            HAS_TID251=$(grep -q "TID251" "$CONFIG_FILE" && echo "✅" || echo "❌")
-            HAS_AUTOIMPORT=$(grep -q "\\[tool\\.autoimport\\]" "$CONFIG_FILE" && echo "✅" || echo "❌")
-            
-            echo -e "${BLUE}📦 $(basename $package):${NC}"
-            echo "  Ruff config: $HAS_RUFF"
-            echo "  Import rules: $HAS_ISORT"  
-            echo "  Absolute imports (TID251): $HAS_TID251"
-            echo "  AutoImport config: $HAS_AUTOIMPORT"
-            echo ""
-        else
-            echo -e "${RED}❌ $(basename $package): No pyproject.toml found${NC}"
-            echo ""
-        fi
-    fi
+	if [[ -d "${package}" ]]; then
+		CONFIG_FILE="${package}/pyproject.toml"
+		if [[ -f "${CONFIG_FILE}" ]]; then
+			HAS_RUFF=$(grep -q '\[tool\.ruff\]' "${CONFIG_FILE}" && echo "✅" || echo "❌")
+			HAS_ISORT=$(grep -q '\[tool\.ruff\.lint\.isort\]' "${CONFIG_FILE}" && echo "✅" || echo "❌")
+			HAS_TID251=$(grep -q "TID251" "${CONFIG_FILE}" && echo "✅" || echo "❌")
+			HAS_AUTOIMPORT=$(grep -q '\[tool\.autoimport\]' "${CONFIG_FILE}" && echo "✅" || echo "❌")
+
+			echo -e "${BLUE}📦 $(basena"${e $p}ack"age):${NC}"
+			echo "  Ruff config: ${HAS_RUFF}"
+			echo "  Import rules: ${HAS_ISORT}"
+			echo "  Absolute imports (TID251): ${HAS_TID251}"
+			echo "  AutoImport config: ${HAS_AUTOIMPORT}"
+			echo ""
+		else
+			echo -e "${RED}❌ $(basenam"${ $pac}ka"ge): No pyproject.toml found${NC}"
+			echo ""
+		fi
+	fi
 done
 
-if [ "$MODE" = "--fix" ]; then
-    echo -e "${PURPLE}🔧 APPLYING CONFIGURATION SYNC...${NC}"
-    echo ""
-    
-    for package in "${PACKAGES[@]}"; do
-        if [ -d "$package" ]; then
-            CONFIG_FILE="$package/pyproject.toml"
-            if [ -f "$CONFIG_FILE" ]; then
-                echo -e "${BLUE}🔄 Syncing $(basename $package)...${NC}"
-                
-                # Check if ruff config already exists
-                if grep -q "\\[tool\\.ruff\\]" "$CONFIG_FILE"; then
-                    echo "  ⚠️ Ruff config exists, updating..."
-                    # Remove existing ruff sections to avoid conflicts
-                    python3 -c "
+if [[ "${MODE}" = "--fix" ]]; then
+	echo -e "${PURPLE}🔧 APPLYING CONFIGURATION SYNC...${NC}"
+	echo ""
+
+	for package in "${PACKAGES[@]}"; do
+		if [[ -d "${package}" ]]; then
+			CONFIG_FILE="${package}/pyproject.toml"
+			if [[ -f "${CONFIG_FILE}" ]]; then
+				echo -e "${BLUE}🔄 Syncing $(basena"${e $p}ack"age)...${NC}"
+
+				# Check if ruff config already exists
+				if grep -q '\[tool\.ruff\]' "${CONFIG_FILE}"; then
+					echo "  ⚠️ Ruff config exists, updating..."
+					# Remove existing ruff sections to avoid conflicts
+					python3 -c "
 import re
 import sys
 
-with open('$CONFIG_FILE', 'r') as f:
+with open('${CONFIG_FILE}', 'r') as f:
     content = f.read()
 
 # Remove existing ruff and autoimport sections
@@ -145,51 +145,51 @@ content = re.sub(r'\\n\\[tool\\.autoimport\\].*?(?=\\n\\[|$)', '', content, flag
 
 # Add new config at the end
 content = content.rstrip() + '''
-$RUFF_CONFIG
+${RUFF_CONFIG}
 '''
 
-with open('$CONFIG_FILE', 'w') as f:
+with open('${CONFIG_FILE}', 'w') as f:
     f.write(content)
 "
-                else
-                    echo "  ✅ Adding ruff config..."
-                    # Append ruff config to end of file
-                    echo "$RUFF_CONFIG" >> "$CONFIG_FILE"
-                fi
-                
-                echo "  ✅ Configuration synced"
-                echo ""
-            fi
-        fi
-    done
-    
-    echo -e "${GREEN}🎉 CONFIGURATION SYNC COMPLETE!${NC}"
-    echo ""
-    echo -e "${YELLOW}📊 RESULTS:${NC}"
-    echo "  • ✅ Synchronized ruff configuration across all packages"
-    echo "  • ✅ Added TID251/TID252 rules for absolute import enforcement"
-    echo "  • ✅ Configured autoimport for haive namespace"
-    echo "  • ✅ Standardized isort settings"
-    echo ""
-    echo -e "${BLUE}🔍 Next steps:${NC}"
-    echo "  1. Run 'task check-imports' to see import violations"
-    echo "  2. Run 'task fix-imports-mcp' to fix haive-mcp imports"
-    echo "  3. Run 'task fix-imports-dataflow' to fix haive-dataflow imports"
-    echo ""
-    
-elif [ "$MODE" = "--preview" ]; then
-    echo -e "${YELLOW}👀 PREVIEW MODE - Would apply the following changes:${NC}"
-    echo ""
-    echo -e "${CYAN}🔧 CONFIGURATION TO APPLY TO ALL PACKAGES:${NC}"
-    echo "  • ✅ Ruff linting with import enforcement"
-    echo "  • ✅ TID251/TID252 rules for absolute imports"
-    echo "  • ✅ AutoImport with haive namespace awareness"
-    echo "  • ✅ Consistent isort configuration"
-    echo "  • ✅ Standard line length (88 characters)"
-    echo ""
-    echo -e "${GREEN}Run with --fix to apply these changes${NC}"
+				else
+					echo "  ✅ Adding ruff config..."
+					# Append ruff config to end of file
+					echo "${RUFF_CONFIG}" >>"${CONFIG_FILE}"
+				fi
+
+				echo "  ✅ Configuration synced"
+				echo ""
+			fi
+		fi
+	done
+
+	echo -e "${GREEN}🎉 CONFIGURATION SYNC COMPLETE!${NC}"
+	echo ""
+	echo -e "${YELLOW}📊 RESULTS:${NC}"
+	echo "  • ✅ Synchronized ruff configuration across all packages"
+	echo "  • ✅ Added TID251/TID252 rules for absolute import enforcement"
+	echo "  • ✅ Configured autoimport for haive namespace"
+	echo "  • ✅ Standardized isort settings"
+	echo ""
+	echo -e "${BLUE}🔍 Next steps:${NC}"
+	echo "  1. Run 'task check-imports' to see import violations"
+	echo "  2. Run 'task fix-imports-mcp' to fix haive-mcp imports"
+	echo "  3. Run 'task fix-imports-dataflow' to fix haive-dataflow imports"
+	echo ""
+
+elif [[ "${MODE}" = "--preview" ]]; then
+	echo -e "${YELLOW}👀 PREVIEW MODE - Would apply the following changes:${NC}"
+	echo ""
+	echo -e "${CYAN}🔧 CONFIGURATION TO APPLY TO ALL PACKAGES:${NC}"
+	echo "  • ✅ Ruff linting with import enforcement"
+	echo "  • ✅ TID251/TID252 rules for absolute imports"
+	echo "  • ✅ AutoImport with haive namespace awareness"
+	echo "  • ✅ Consistent isort configuration"
+	echo "  • ✅ Standard line length (88 characters)"
+	echo ""
+	echo -e "${GREEN}Run with --fix to apply these changes${NC}"
 fi
 
 echo ""
 echo -e "${CYAN}🚀 Package Configuration Sync Complete!${NC}"
-echo -e "${BLUE}💡 All packages will have consistent import management${NC}" 
+echo -e "${BLUE}💡 All packages will have consistent import management${NC}"

@@ -12,11 +12,6 @@ This combines the enhanced agent pattern with the clean multi-agent approach:
 import logging
 from typing import Any, Literal
 
-from haive.core.engine.aug_llm.config import AugLLMConfig
-from haive.core.graph.node.agent_node_v3 import AgentNodeV3Config
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.schema.state_schema import StateSchema
 from langchain_core.messages import BaseMessage
 from langgraph.graph import END, START
 from pydantic import Field, field_validator, model_validator
@@ -25,6 +20,12 @@ from typing_extensions import TypedDict
 # Import base enhanced agent when available
 # from haive.agents.base.enhanced_agent import Agent
 from haive.agents.simple.enhanced_simple_real import EnhancedAgentBase as Agent
+from haive.core.engine.aug_llm.config import AugLLMConfig
+from haive.core.graph.node.agent_node_v3 import AgentNodeV3Config
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.schema.state_schema import StateSchema
+
 
 logger = logging.getLogger(__name__)
 
@@ -368,9 +369,6 @@ if __name__ == "__main__":
         },
     )
 
-    print(f"Created: {sequential}")
-    print(f"Agents: {sequential.get_agent_names()}")
-
     # Parallel multi-agent
     parallel = EnhancedMultiAgent(
         name="expert_ensemble",
@@ -382,9 +380,6 @@ if __name__ == "__main__":
         mode="parallel",
         state_strategy="container",
     )
-
-    print(f"\nCreated: {parallel}")
-    print(f"State strategy: {parallel.state_strategy}")
 
     # With MetaStateSchema (when imports work)
     # from haive.core.schema.prebuilt.meta_state import MetaStateSchema

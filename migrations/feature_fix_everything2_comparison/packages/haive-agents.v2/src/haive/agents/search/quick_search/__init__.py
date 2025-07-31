@@ -10,6 +10,7 @@ from quick_search.agent import (
 )
 from quick_search.models import Config, QuickSearchRequest, QuickSearchResponse
 
+
 __all__ = [
     "Config",
     "QuickSearchAgent",

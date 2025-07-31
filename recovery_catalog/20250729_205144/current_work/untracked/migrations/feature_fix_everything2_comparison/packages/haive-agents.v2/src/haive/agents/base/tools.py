@@ -4,14 +4,15 @@ This module provides common tools used across all supervisor implementations
 for agent management, routing, and coordination.
 """
 
-import logging
 from collections.abc import Callable
+import logging
 from typing import Any
 
 from langchain_core.tools import BaseTool, tool
 from pydantic import BaseModel, Field
 
 from .models import AgentInfo
+
 
 logger = logging.getLogger(__name__)
 
@@ -54,7 +55,7 @@ def create_list_agents_tool(get_agents_func: Callable[[], dict[str, str]]) -> Ba
             return "\n".join(lines)
 
         except Exception as e:
-            logger.error(f"Error listing agents: {e}")
+            logger.exception(f"Error listing agents: {e}")
             return f"Error listing agents: {e!s}"
 
     return list_agents
@@ -87,7 +88,7 @@ def create_forward_message_tool() -> BaseTool:
             return f"Message forwarded successfully: {forwarded_msg}"
 
         except Exception as e:
-            logger.error(f"Error forwarding message: {e}")
+            logger.exception(f"Error forwarding message: {e}")
             return f"Error forwarding message: {e!s}"
 
     return forward_message
@@ -119,7 +120,7 @@ def create_end_supervision_tool() -> BaseTool:
             return result
 
         except Exception as e:
-            logger.error(f"Error ending supervision: {e}")
+            logger.exception(f"Error ending supervision: {e}")
             return f"Error ending supervision: {e!s}"
 
     return end_supervision
@@ -170,7 +171,7 @@ def create_get_agent_info_tool(
             return "\n".join(info_lines)
 
         except Exception as e:
-            logger.error(f"Error getting agent info: {e}")
+            logger.exception(f"Error getting agent info: {e}")
             return f"Error getting agent info: {e!s}"
 
     return get_agent_info
@@ -224,7 +225,7 @@ def create_get_performance_stats_tool(
             return "\n".join(lines)
 
         except Exception as e:
-            logger.error(f"Error getting performance stats: {e}")
+            logger.exception(f"Error getting performance stats: {e}")
             return f"Error getting performance stats: {e!s}"
 
     return get_performance_stats
@@ -249,13 +250,13 @@ def create_handoff_tool(
     @tool
     def handoff_tool(task: str, context: str = "") -> str:
         f"""Hand off a task to {agent_name}.
-        
+
         {agent_description}
-        
+
         Args:
             task: The task to hand off to {agent_name}
             context: Optional additional context for the task
-            
+
         Returns:
             Result from {agent_name}
         """
@@ -273,7 +274,7 @@ def create_handoff_tool(
             return f"Result from {agent_name}: {result}"
 
         except Exception as e:
-            logger.error(f"Error executing {agent_name}: {e}")
+            logger.exception(f"Error executing {agent_name}: {e}")
             return f"Error executing {agent_name}: {e!s}"
 
     # Set the tool name dynamically

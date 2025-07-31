@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Haive Documentation Utilities Runner
+"""Haive Documentation Utilities Runner.
 
 Convenient entry point for the documentation utilities system.
 This script provides easy access to all documentation tools.

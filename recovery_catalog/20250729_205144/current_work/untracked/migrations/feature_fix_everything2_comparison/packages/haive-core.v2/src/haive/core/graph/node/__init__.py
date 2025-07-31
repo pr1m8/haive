@@ -104,6 +104,7 @@ from pydantic import BaseModel
 # ===== ENGINE NODES =====
 from .engine_node import EngineNodeConfig
 
+
 # Try to import additional engine nodes
 try:
     from .engine_node_generic import GenericEngineNode
@@ -112,6 +113,7 @@ except ImportError:
 
 # ===== AGENT NODES =====
 from .agent_node_v3 import AgentNodeV3Config as AgentNodeV3
+
 
 # Try to import additional agent nodes
 try:
@@ -187,6 +189,7 @@ from .utils import (
     create_send_node,
     extract_io_mapping_from_schema,
 )
+
 
 # ===== FACTORY FUNCTIONS (Keep existing API) =====
 

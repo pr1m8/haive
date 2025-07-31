@@ -6,15 +6,10 @@ This module provides the abstract base agent class that all agents inherit from,
 including execution, state management, and persistence functionality through mixins.
 """
 
+from abc import ABC, abstractmethod
 import logging
 import re
-from abc import ABC, abstractmethod
 from typing import Any, Literal
-
-from haive.core.engine.base import Engine, EngineType, InvokableEngine
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.schema.schema_composer import SchemaComposer
-from haive.core.schema.state_schema import StateSchema
 
 # Import BaseOutputParser to ensure it's available for LangGraph type
 # evaluation
@@ -33,6 +28,11 @@ from haive.agents.base.mixins.execution_mixin import ExecutionMixin
 from haive.agents.base.mixins.persistence_mixin import PersistenceMixin
 from haive.agents.base.mixins.state_mixin import StateMixin
 from haive.agents.base.serialization_mixin import SerializationMixin
+from haive.core.engine.base import Engine, EngineType, InvokableEngine
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.schema.schema_composer import SchemaComposer
+from haive.core.schema.state_schema import StateSchema
+
 
 # Configure rich logging
 logging.basicConfig(
@@ -1273,8 +1273,8 @@ class Agent(
             return
 
         try:
-            import os
             from datetime import datetime
+            import os
 
             if not output_path:
                 # Use default path

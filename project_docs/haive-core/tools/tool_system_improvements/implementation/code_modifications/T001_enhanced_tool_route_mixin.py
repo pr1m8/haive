@@ -9,9 +9,9 @@ Key improvements:
 4. Smart routing based on tool type
 """
 
+import inspect
 from collections.abc import Callable
 from datetime import datetime
-import inspect
 from typing import (
     Any,
     Union,
@@ -20,7 +20,6 @@ from typing import (
 
 from langchain_core.tools import BaseTool, StructuredTool, Tool
 from pydantic import BaseModel, Field, field_validator, model_validator
-
 
 # Define proper tool types following LangGraph pattern
 ToolType = Union[BaseTool, Tool, StructuredTool, type[BaseModel], Callable]
@@ -234,7 +233,10 @@ class ToolRouteMixin(BaseModel):
                 metadata["callable_kind"] = "method"
             elif inspect.isfunction(callable_obj):
                 metadata["callable_kind"] = "function"
-            elif hasattr(callable_obj, "__name__") and callable_obj.__name__ == "<lambda>":
+            elif (
+                hasattr(callable_obj, "__name__")
+                and callable_obj.__name__ == "<lambda>"
+            ):
                 metadata["callable_kind"] = "lambda"
             else:
                 metadata["callable_kind"] = "callable_object"
@@ -278,7 +280,11 @@ class ToolRouteMixin(BaseModel):
         Returns:
             List of BaseTool/Tool/StructuredTool instances
         """
-        return [tool for tool in self.tools if isinstance(tool, BaseTool | Tool | StructuredTool)]
+        return [
+            tool
+            for tool in self.tools
+            if isinstance(tool, BaseTool | Tool | StructuredTool)
+        ]
 
     def get_pydantic_tools(self) -> list[type[BaseModel]]:
         """Get only Pydantic model tools.
@@ -287,7 +293,9 @@ class ToolRouteMixin(BaseModel):
             List of Pydantic model classes
         """
         return [
-            tool for tool in self.tools if isinstance(tool, type) and issubclass(tool, BaseModel)
+            tool
+            for tool in self.tools
+            if isinstance(tool, type) and issubclass(tool, BaseModel)
         ]
 
     def get_callable_tools(self) -> list[Callable]:
@@ -296,7 +304,9 @@ class ToolRouteMixin(BaseModel):
         Returns:
             List of callable tools
         """
-        return [tool for tool in self.tools if callable(tool) and not isinstance(tool, type)]
+        return [
+            tool for tool in self.tools if callable(tool) and not isinstance(tool, type)
+        ]
 
     def convert_to_structured_tools(self) -> list[StructuredTool]:
         """Convert all tools to StructuredTool format where possible.
@@ -327,7 +337,9 @@ class ToolRouteMixin(BaseModel):
             # Convert regular callables
             elif callable(tool):
                 # This would need actual conversion logic
-                logger.debug(f"Callable {getattr(tool, '__name__', 'unknown')} needs conversion")
+                logger.debug(
+                    f"Callable {getattr(tool, '__name__', 'unknown')} needs conversion"
+                )
 
         return structured_tools
 

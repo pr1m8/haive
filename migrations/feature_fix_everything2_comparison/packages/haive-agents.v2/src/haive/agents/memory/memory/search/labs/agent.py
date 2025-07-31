@@ -4,12 +4,11 @@ Provides interactive project automation with tools and workflows.
 Similar to Perplexity's Labs feature that creates apps, dashboards, and automated workflows.
 """
 
-import logging
-import uuid
 from datetime import datetime
+import logging
 from typing import Any
+import uuid
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.tools import Tool, tool
 
 from haive.agents.memory.search.base import BaseSearchAgent, SearchResponse
@@ -20,6 +19,8 @@ from haive.agents.memory.search.labs.models import (
     ProjectAsset,
     WorkflowStep,
 )
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 logger = logging.getLogger(__name__)
 

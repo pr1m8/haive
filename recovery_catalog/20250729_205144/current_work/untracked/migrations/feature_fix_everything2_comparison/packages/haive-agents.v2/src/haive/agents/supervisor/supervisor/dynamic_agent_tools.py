@@ -9,12 +9,13 @@ for routing and state management.
 import logging
 from typing import Any
 
-from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel, Field
 from rich.console import Console
 
 from haive.agents.base.agent import Agent
+from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
+
 
 logger = logging.getLogger(__name__)
 console = Console()

@@ -4,11 +4,12 @@ This configuration utilizes all available documentation dependencies
 for a professional, feature-rich documentation experience.
 """
 
+from datetime import datetime
 import logging
+from pathlib import Path
 import sys
 import warnings
-from datetime import datetime
-from pathlib import Path
+
 
 # Set up logging for debugging
 log_file = Path(__file__).parent / "sphinx_debug.log"
@@ -144,43 +145,42 @@ extensions = [
     # "sphinx_multiversion",  # 📚 Multi-version docs (enable when needed)
     "sphinx_external_toc",  # 📋 External table of contents management
     # === INTERACTIVE CONTENT ===
-    "sphinx_exercise",          # 🎯 Interactive exercises with solutions
-    "sphinx_proof",             # 📐 Mathematical proofs and theorems  
-    "hoverxref.extension",      # 🖱️ Hover tooltips for cross-references
+    "sphinx_exercise",  # 🎯 Interactive exercises with solutions
+    "sphinx_proof",  # 📐 Mathematical proofs and theorems
+    "hoverxref.extension",  # 🖱️ Hover tooltips for cross-references
     # === ADVANCED DIAGRAMS ===
     "sphinxcontrib.blockdiag",  # 📊 Block diagrams (architecture)
-    "sphinxcontrib.plantuml",   # 🏗️ UML diagrams (system design)
-    "sphinxcontrib.seqdiag",    # 📈 Sequence diagrams (API flows)
+    "sphinxcontrib.plantuml",  # 🏗️ UML diagrams (system design)
+    "sphinxcontrib.seqdiag",  # 📈 Sequence diagrams (API flows)
     # === PROFESSIONAL POLISH ===
-    "notfound.extension",       # 📄 Custom 404 pages  
-    "sphinx_contributors",      # 👥 Automatic contributor lists (correct import name)
-    "sphinx_issues",            # 🐛 GitHub issues integration (correct import name)
+    "notfound.extension",  # 📄 Custom 404 pages
+    "sphinx_contributors",  # 👥 Automatic contributor lists (correct import name)
+    "sphinx_issues",  # 🐛 GitHub issues integration (correct import name)
     # === ENHANCED UX ===
     "sphinxemoji.sphinxemoji",  # 😀 Emoji support in docs
-    "sphinx_math_dollar",       # 📐 LaTeX math with $ syntax
-    "sphinxcontrib.images",     # 🖼️ Image thumbnails and galleries
-    
+    "sphinx_math_dollar",  # 📐 LaTeX math with $ syntax
+    "sphinxcontrib.images",  # 🖼️ Image thumbnails and galleries
     # === TOP 20 PREMIUM EXTENSIONS (TESTED & WORKING) ===
-    "myst_nb",                  # 📓 Jupyter notebook integration + MyST parser (REPLACES myst_parser)
-    "sphinx_thebe",             # 🎯 Live code execution in browser
-    "sphinx_favicon",           # 🎨 Custom favicon support
-    "sphinx_git",               # 🔗 Advanced Git integration
-    "sphinx_gallery.gen_gallery", # 🖼️ Example gallery generation (fixed import)
-    "sphinx_exec_directive",    # ⚡ Execute Python code in docs
-    "sphinx_revealjs",          # 🎯 Generate presentations from docs
-    "sphinx_prompt",            # 💻 Professional command prompts
-    "sphinx_substitution_extensions", # 🔄 Advanced text substitutions
-    "sphinx_pdf_generate",      # 📄 PDF generation
-    "sphinx_simplepdf",         # 📄 Simple PDF export
-    "sphinx_multiversion",      # 📚 Multi-version documentation
-    "sphinx_sitemap",           # 🗺️ SEO sitemap generation
-    "sphinx_removed_in",        # 📝 Deprecation notices
+    "myst_nb",  # 📓 Jupyter notebook integration + MyST parser (REPLACES myst_parser)
+    "sphinx_thebe",  # 🎯 Live code execution in browser
+    "sphinx_favicon",  # 🎨 Custom favicon support
+    "sphinx_git",  # 🔗 Advanced Git integration
+    "sphinx_gallery.gen_gallery",  # 🖼️ Example gallery generation (fixed import)
+    "sphinx_exec_directive",  # ⚡ Execute Python code in docs
+    "sphinx_revealjs",  # 🎯 Generate presentations from docs
+    "sphinx_prompt",  # 💻 Professional command prompts
+    "sphinx_substitution_extensions",  # 🔄 Advanced text substitutions
+    "sphinx_pdf_generate",  # 📄 PDF generation
+    "sphinx_simplepdf",  # 📄 Simple PDF export
+    "sphinx_multiversion",  # 📚 Multi-version documentation
+    "sphinx_sitemap",  # 🗺️ SEO sitemap generation
+    "sphinx_removed_in",  # 📝 Deprecation notices
     # "sphinx_pyproject",         # 📦 pyproject.toml integration - NO SETUP FUNCTION
-    "sphinx_data_viewer",       # 📊 Interactive data visualization
+    "sphinx_data_viewer",  # 📊 Interactive data visualization
     # "sphinx_intl",              # 🌍 Internationalization support - NO SETUP FUNCTION
-    "sphinxcontrib.mermaid",    # 📊 Mermaid diagrams
-    "sphinxcontrib.plantuml",   # 🏗️ PlantUML diagrams
-    "sphinxcontrib.youtube",    # 📹 YouTube video embedding
+    "sphinxcontrib.mermaid",  # 📊 Mermaid diagrams
+    "sphinxcontrib.plantuml",  # 🏗️ PlantUML diagrams
+    "sphinxcontrib.youtube",  # 📹 YouTube video embedding
 ]
 
 # ==============================================================================
@@ -499,10 +499,9 @@ def fix_autoapi_paths(app, exception):
         logger.warning(f"Build had exception: {exception}")
         return
 
-    import os
+    from pathlib import Path
     import re
     import shutil
-    from pathlib import Path
 
     # First fix the source API files
     api_dir = Path(app.srcdir) / "api"
@@ -618,7 +617,7 @@ autodoc_preserve_defaults = True  # Show default values
 autodoc_member_order = "groupwise"  # Match AutoAPI groupwise ordering
 
 # === SPHINX DOCTEST CONFIGURATION ===
-doctest_global_setup = '''
+doctest_global_setup = """
 # Common imports for all doctests
 import sys
 import os
@@ -641,7 +640,7 @@ try:
     from haive.agents.simple.agent import SimpleAgent
 except ImportError:
     pass  # Skip if packages not available during doctest
-'''
+"""
 
 doctest_test_doctest_blocks = "default"  # Test .. doctest:: blocks
 doctest_global_cleanup = ""  # Cleanup after doctests
@@ -655,7 +654,9 @@ coverage_ignore_modules = [
     "haive.*.migrations.*",  # Ignore migration modules
 ]
 coverage_ignore_functions = [
-    "__repr__", "__str__", "__init__"  # Ignore common dunder methods
+    "__repr__",
+    "__str__",
+    "__init__",  # Ignore common dunder methods
 ]
 
 # === TODO EXTENSION CONFIGURATION ===
@@ -671,10 +672,10 @@ external_toc_exclude_missing = True  # Don't break build for missing TOC entries
 exercise_include_exercises = True  # Include exercises in output
 exercise_include_solutions = True  # Include solutions in output
 
-# === MATHEMATICAL PROOFS CONFIGURATION ===  
+# === MATHEMATICAL PROOFS CONFIGURATION ===
 proof_theorem_types = {
     "algorithm": "Algorithm",
-    "axiom": "Axiom", 
+    "axiom": "Axiom",
     "definition": "Definition",
     "example": "Example",
     "lemma": "Lemma",
@@ -1060,11 +1061,11 @@ def setup(app):
     # Connect autoapi hooks for cleaner URLs
     # app.connect("autoapi-skip-member", autoapi_skip_member)  # Disabled with autoapi
     # app.connect("build-finished", fix_autoapi_paths)  # Disabled with autoapi
-    
+
     # Add hook to fix module resolution
     # if hasattr(app, 'setup_extension'):
     #     app.setup_extension('autoapi.extension')  # Disabled while autoapi is off
-    
+
     return {
         "version": "1.0",
         "parallel_read_safe": True,
@@ -1079,9 +1080,11 @@ def setup(app):
 # Import agent demo data
 import sys
 
+
 sys.path.insert(0, str(conf_dir))
 from agent_cache_loader import get_agent_demo_context, get_available_agent_types
 from agent_demo_data import AVAILABLE_AGENTS, get_agent_context
+
 
 # Configure Jinja2 contexts for sphinx-jinja2
 jinja2_contexts = {

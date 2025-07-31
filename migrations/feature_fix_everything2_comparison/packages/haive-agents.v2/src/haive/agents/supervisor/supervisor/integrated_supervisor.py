@@ -11,8 +11,6 @@ This module provides a complete integration of:
 import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import AIMessage
 from langgraph.graph import START
 from rich.console import Console
@@ -24,6 +22,9 @@ from haive.agents.supervisor.dynamic_supervisor import DynamicSupervisorAgent
 from haive.agents.supervisor.multi_agent_dynamic_state import (
     MultiAgentDynamicSupervisorState,
 )
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
 
 logger = logging.getLogger(__name__)
 console = Console()

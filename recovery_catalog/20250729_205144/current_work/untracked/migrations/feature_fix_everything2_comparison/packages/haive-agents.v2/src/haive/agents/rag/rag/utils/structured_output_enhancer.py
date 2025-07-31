@@ -8,16 +8,16 @@ the pattern of keeping prompts focused on generation while parsers handle struct
 
 from typing import Any
 
+from langchain_core.prompts import ChatPromptTemplate
+from pydantic import BaseModel
+
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import LLMConfig
 from haive.core.utils.pydantic_utils.base_model_to_prompt import (
     PromptGenerator,
     PromptStyle,
 )
-from langchain_core.prompts import ChatPromptTemplate
-from pydantic import BaseModel
-
-from haive.agents.simple.agent import SimpleAgent
 
 
 class StructuredOutputEnhancer:

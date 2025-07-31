@@ -4,28 +4,24 @@ This agent follows V3 enhanced patterns with automatic summarization when approa
 token limits, similar to LangMem's approach.
 """
 
-import logging
 from datetime import datetime
+import logging
 from typing import Any
 
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.schema import StateSchema
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
 from langgraph.types import Command
 from pydantic import BaseModel, Field
 
-from haive.agents.simple.enhanced_agent_v3 import EnhancedSimpleAgent
-
-from ..base.memory_state_original import (  # Import original models for compatibility
+from agents.base.memory_state_original import (
     EnhancedMemoryItem,
     ImportanceLevel,
     MemoryState,
     MemoryType,
 )
-from ..base.token_state import MemoryStateWithTokens
-from ..core.memory_tools import (
+from agents.base.token_state import MemoryStateWithTokens
+from agents.core.memory_tools import (
     MemoryConfig,
     classify_memory,
     get_memory_stats,
@@ -33,7 +29,11 @@ from ..core.memory_tools import (
     search_memory,
     store_memory,
 )
-from ..core.token_tracker import TokenThresholds, TokenTracker
+from agents.core.token_tracker import TokenThresholds, TokenTracker
+from haive.agents.simple.enhanced_agent_v3 import EnhancedSimpleAgent
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.schema import StateSchema
+
 
 # Graph transformer imports - optional
 try:
@@ -66,6 +66,7 @@ except ImportError:
 
 from langchain_core.documents import Document
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -87,11 +88,18 @@ Guidelines:
 6. Note any important patterns or recurring themes
 7. Maintain the original meaning and nuance
 
-Output a summary that captures the essence of the memories while reducing token usage by approximately 70%."""), HumanMessage(
-            content="Please summarize the following memories:\n\n{memories_text}\n\nTarget token count: {target_tokens}"), ])
+Output a summary that captures the essence of the memories while reducing token usage by approximately 70%."""
+        ),
+        HumanMessage(
+            content="Please summarize the following memories:\n\n{memories_text}\n\nTarget token count: {target_tokens}"
+        ),
+    ]
+)
 
-RUNNING_SUMMARY_UPDATE_PROMPT = ChatPromptTemplate.from_messages([SystemMessage(
-    content="""You are updating a running summary of conversation memories. You need to integrate new information into the existing summary while keeping it concise and comprehensive.
+RUNNING_SUMMARY_UPDATE_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        SystemMessage(
+            content="""You are updating a running summary of conversation memories. You need to integrate new information into the existing summary while keeping it concise and comprehensive.
 
 Guidelines:
 1. Merge new information with existing summary
@@ -99,13 +107,19 @@ Guidelines:
 3. Preserve all important information
 4. Remove redundancies
 5. Maintain chronological awareness
-6. Keep the summary coherent and well-structured"""), HumanMessage(content="""Current Summary:
+6. Keep the summary coherent and well-structured"""
+        ),
+        HumanMessage(
+            content="""Current Summary:
 {current_summary}
 
 New Memories to Integrate:
 {new_memories}
 
-Updated Summary (target tokens: {target_tokens}):"""), ])
+Updated Summary (target tokens: {target_tokens}):"""
+        ),
+    ]
+)
 
 MEMORY_REWRITE_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -117,8 +131,13 @@ Guidelines:
 2. Combine related facts into single statements
 3. Remove unnecessary words and phrases
 4. Preserve all entities, relationships, and key information
-5. Maintain the original intent and nuance"""), HumanMessage(
-            content="Rewrite this memory more concisely:\n\n{memory_content}\n\nCompression target: {compression_ratio}% of original"), ])
+5. Maintain the original intent and nuance"""
+        ),
+        HumanMessage(
+            content="Rewrite this memory more concisely:\n\n{memory_content}\n\nCompression target: {compression_ratio}% of original"
+        ),
+    ]
+)
 
 
 # ============================================================================
@@ -236,8 +255,7 @@ class SimpleMemoryAgent(EnhancedSimpleAgent):
     """
 
     # Use MemoryStateWithTokens as prebuilt base schema
-    state_schema: type[StateSchema] = Field(
-        default=MemoryStateWithTokens, exclude=True)
+    state_schema: type[StateSchema] = Field(default=MemoryStateWithTokens, exclude=True)
     use_prebuilt_base: bool = Field(default=True, exclude=True)
 
     # Memory-specific configuration
@@ -267,8 +285,8 @@ class SimpleMemoryAgent(EnhancedSimpleAgent):
     )
 
     graph_enabled: bool = Field(
-        default=True,
-        description="Whether to enable graph transformation capabilities")
+        default=True, description="Whether to enable graph transformation capabilities"
+    )
 
     # Prompts storage (since we can't add to engine)
     memory_summarization_prompt: Optional[ChatPromptTemplate] = Field(
@@ -317,8 +335,7 @@ class SimpleMemoryAgent(EnhancedSimpleAgent):
                     or input_data.get("content", "")
                 )
                 if content:
-                    input_data["messages"] = [
-                        HumanMessage(content=str(content))]
+                    input_data["messages"] = [HumanMessage(content=str(content))]
                 else:
                     input_data["messages"] = []
             return input_data
@@ -331,8 +348,7 @@ class SimpleMemoryAgent(EnhancedSimpleAgent):
         return {"messages": [HumanMessage(content=str(input_data))]}
 
     def setup_agent(self) -> None:
-        """Setup memory agent with token tracking and tools.
-        """
+        """Setup memory agent with token tracking and tools."""
         logger.info(f"Setting up SimpleMemoryAgent: {self.name}")
 
         # Call parent setup
@@ -381,20 +397,16 @@ class SimpleMemoryAgent(EnhancedSimpleAgent):
         )
 
     def _setup_summarization_prompts(self) -> None:
-        """Setup summarization prompts.
-        """
+        """Setup summarization prompts."""
         # Store prompts in agent, not engine
         self.memory_summarization_prompt = MEMORY_SUMMARIZATION_PROMPT
         self.running_summary_prompt = RUNNING_SUMMARY_UPDATE_PROMPT
         self.memory_rewrite_prompt = MEMORY_REWRITE_PROMPT
 
     def _setup_graph_transformer(self) -> None:
-        """Setup graph transformer for knowledge graph generation.
-        """
+        """Setup graph transformer for knowledge graph generation."""
         try:
-            if not hasattr(
-                    self,
-                    "graph_transformer") or self.graph_transformer is None:
+            if not hasattr(self, "graph_transformer") or self.graph_transformer is None:
                 # Initialize the graph transformer
                 self.graph_transformer = GraphTransformer()
                 logger.info("Graph transformer initialized successfully")
@@ -408,8 +420,7 @@ class SimpleMemoryAgent(EnhancedSimpleAgent):
             self.graph_enabled = False
 
     def _setup_graph_prompts(self) -> None:
-        """Setup graph-specific prompts for entity and relationship extraction.
-        """
+        """Setup graph-specific prompts for entity and relationship extraction."""
         # Entity extraction prompt
         self.entity_extraction_prompt = ChatPromptTemplate.from_messages(
             [
@@ -423,8 +434,13 @@ For each entity, provide:
 2. Type: The category of entity (Person, Place, Concept, Organization, etc.)
 3. Properties: Key attributes and facts about the entity
 
-Focus on entities that are meaningful and likely to appear in future conversations."""), HumanMessage(
-                    content="Extract entities from this content:\n\n{content}"), ])
+Focus on entities that are meaningful and likely to appear in future conversations."""
+                ),
+                HumanMessage(
+                    content="Extract entities from this content:\n\n{content}"
+                ),
+            ]
+        )
 
         # Relationship extraction prompt
         self.relationship_extraction_prompt = ChatPromptTemplate.from_messages(
@@ -441,8 +457,13 @@ For each relationship, provide:
 4. Confidence: How confident you are in this relationship (0.0 to 1.0)
 5. Evidence: Brief text supporting this relationship
 
-Focus on relationships that are explicitly mentioned or strongly implied."""), HumanMessage(
-                    content="Extract relationships from this content:\n\n{content}\n\nKnown entities:\n{entities}"), ])
+Focus on relationships that are explicitly mentioned or strongly implied."""
+                ),
+                HumanMessage(
+                    content="Extract relationships from this content:\n\n{content}\n\nKnown entities:\n{entities}"
+                ),
+            ]
+        )
 
     # ========================================================================
     # GRAPH BUILDING
@@ -462,8 +483,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
             START -> pre_hook -> {process_memory, summarize_critical, summarize_warning}
                               -> [optional: update_summary] -> END
         """
-        logger.debug(
-            f"Building memory graph with pre-hook system for {self.name}")
+        logger.debug(f"Building memory graph with pre-hook system for {self.name}")
 
         graph = BaseGraph(
             name=f"{
@@ -492,9 +512,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
             graph.add_node("transform_to_graph", self.transform_to_graph_node)
             graph.add_node("update_graph", self.update_graph_node)
             graph.add_node("extract_entities", self.extract_entities_node)
-            graph.add_node(
-                "extract_relationships",
-                self.extract_relationships_node)
+            graph.add_node("extract_relationships", self.extract_relationships_node)
 
         # START WITH PRE-HOOK
         graph.add_edge(START, "pre_hook")
@@ -522,8 +540,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
                 }
             )
 
-        graph.add_conditional_edges(
-            "pre_hook", self.route_from_pre_hook, routing_map)
+        graph.add_conditional_edges("pre_hook", self.route_from_pre_hook, routing_map)
 
         # ALL ROUTES END (or continue to optional summary update)
         if self.memory_config.enable_running_summary:
@@ -702,8 +719,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
             valid_routes.update({"transform_to_graph", "update_graph"})
 
         if route not in valid_routes:
-            logger.warning(
-                f"Invalid route '{route}', falling back to 'process'")
+            logger.warning(f"Invalid route '{route}', falling back to 'process'")
             return "process"
 
         return route
@@ -730,11 +746,9 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
             )
 
             # Determine operation type and execute
-            operation_result = {
-                "operation_timestamp": datetime.now().isoformat()}
+            operation_result = {"operation_timestamp": datetime.now().isoformat()}
 
-            if any(word in content.lower()
-                   for word in ["remember", "store", "save"]):
+            if any(word in content.lower() for word in ["remember", "store", "save"]):
                 # Store memory operation
                 result = store_memory.invoke(
                     {
@@ -801,8 +815,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
             return Command(update={"operation_error": str(e)})
 
     def summarize_critical_node(self, state: MemoryStateWithTokens) -> Command:
-        """Critical summarization when approaching token limits.
-        """
+        """Critical summarization when approaching token limits."""
         try:
             logger.info("Executing critical summarization")
 
@@ -811,9 +824,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
 
             if not prep_data:
                 logger.warning("No summarization prep data found")
-                return Command(
-                    update={
-                        "summarization_skipped": "No prep data"})
+                return Command(update={"summarization_skipped": "No prep data"})
 
             # Get data to summarize
             messages_to_summarize = prep_data.get("messages_to_summarize", [])
@@ -821,9 +832,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
             target_tokens = prep_data.get("target_tokens", 1000)
 
             if not messages_to_summarize and not memories_to_summarize:
-                return Command(
-                    update={
-                        "summarization_skipped": "Nothing to summarize"})
+                return Command(update={"summarization_skipped": "Nothing to summarize"})
 
             # Create comprehensive summary using engine
             if self.engine and self.memory_summarization_prompt:
@@ -838,8 +847,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
 
                 # Add memories
                 for mem in memories_to_summarize:
-                    content_parts.append(
-                        f"[{mem.metadata.memory_type}] {mem.content}")
+                    content_parts.append(f"[{mem.metadata.memory_type}] {mem.content}")
 
                 content_text = "\n\n".join(content_parts)
 
@@ -878,21 +886,19 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
                         "original_content_length": len(content_text),
                         "summary_length": len(summary_text),
                         "compression_ratio": (
-                            len(summary_text) /
-                            len(content_text) if content_text else 0),
-                    })
+                            len(summary_text) / len(content_text) if content_text else 0
+                        ),
+                    }
+                )
 
-            return Command(
-                update={
-                    "summarization_error": "No engine available"})
+            return Command(update={"summarization_error": "No engine available"})
 
         except Exception as e:
             logger.exception(f"Error in critical summarization: {e}")
             return Command(update={"summarization_error": str(e)})
 
     def summarize_warning_node(self, state: MemoryStateWithTokens) -> Command:
-        """Warning-level summarization for memory consolidation.
-        """
+        """Warning-level summarization for memory consolidation."""
         try:
             logger.info("Executing warning-level summarization")
 
@@ -900,9 +906,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
             prep_data = state.get("summarization_prep", {})
 
             if not prep_data:
-                return Command(
-                    update={
-                        "summarization_skipped": "No prep data"})
+                return Command(update={"summarization_skipped": "No prep data"})
 
             # For warning level, only summarize older content
             memories_to_summarize = prep_data.get("memories_to_summarize", [])
@@ -954,17 +958,14 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
                     }
                 )
 
-            return Command(
-                update={
-                    "summarization_error": "No engine available"})
+            return Command(update={"summarization_error": "No engine available"})
 
         except Exception as e:
             logger.exception(f"Error in warning summarization: {e}")
             return Command(update={"summarization_error": str(e)})
 
     def emergency_compress_node(self, state: MemoryStateWithTokens) -> Command:
-        """Emergency compression when critically over limits.
-        """
+        """Emergency compression when critically over limits."""
         logger.info("Executing emergency compression")
 
         # Drastic measures: keep only essential content
@@ -997,10 +998,8 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
             }
         )
 
-    def consolidate_memories_node(
-            self, state: MemoryStateWithTokens) -> Command:
-        """Consolidate related memories to reduce count.
-        """
+    def consolidate_memories_node(self, state: MemoryStateWithTokens) -> Command:
+        """Consolidate related memories to reduce count."""
         logger.info("Consolidating related memories")
 
         # Group memories by type and similarity
@@ -1017,7 +1016,8 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
             if len(memories) > 3:
                 # Combine into single consolidated memory
                 combined_content = f"Consolidated {mem_type} memories:\n" + "\n".join(
-                    [f"- {mem.content[:100]}..." for mem in memories])
+                    [f"- {mem.content[:100]}..." for mem in memories]
+                )
 
                 consolidated_memory = EnhancedMemoryItem(
                     id=f"consolidated_{mem_type}_{datetime.now().timestamp()}",
@@ -1043,8 +1043,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
         )
 
     def create_summary_node(self, state: MemoryStateWithTokens) -> Command:
-        """Create initial running summary.
-        """
+        """Create initial running summary."""
         logger.info("Creating initial running summary")
 
         if state.running_summary:
@@ -1078,8 +1077,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
         )
 
     def update_summary_node(self, state: MemoryStateWithTokens) -> Command:
-        """Update existing running summary.
-        """
+        """Update existing running summary."""
         logger.info("Updating running summary")
 
         if not state.running_summary:
@@ -1103,8 +1101,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
             lines = updated_summary.split("\n")
             keep_start = lines[:10]
             keep_end = lines[-10:]
-            updated_summary = "\n".join(
-                [*keep_start, "...[trimmed]...", *keep_end])
+            updated_summary = "\n".join([*keep_start, "...[trimmed]...", *keep_end])
 
         return Command(
             update={
@@ -1119,12 +1116,11 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
     # ========================================================================
 
     def transform_to_graph_node(self, state: MemoryStateWithTokens) -> Command:
-        """Transform memories and messages into a knowledge graph.
-        """
+        """Transform memories and messages into a knowledge graph."""
         if not self.graph_enabled or not self.graph_transformer:
             return Command(
-                update={
-                    "graph_transform_skipped": "Graph transformer not available"})
+                update={"graph_transform_skipped": "Graph transformer not available"}
+            )
 
         try:
             logger.info("Transforming content to knowledge graph")
@@ -1146,8 +1142,8 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
 
             if not content_parts:
                 return Command(
-                    update={
-                        "graph_transform_skipped": "No content to transform"})
+                    update={"graph_transform_skipped": "No content to transform"}
+                )
 
             # Create document for graph transformation
             combined_content = "\n\n".join(content_parts)
@@ -1159,9 +1155,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
             )
 
             if not graph_docs:
-                return Command(
-                    update={
-                        "graph_transform_skipped": "No graph generated"})
+                return Command(update={"graph_transform_skipped": "No graph generated"})
 
             # Extract nodes and relationships from graph documents
             all_nodes = []
@@ -1171,7 +1165,8 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
                 # Convert graph nodes to EntityNodes
                 for node in graph_doc.nodes:
                     entity_node = EntityNode(
-                        id=node.id, type=node.type, properties=node.properties or {})
+                        id=node.id, type=node.type, properties=node.properties or {}
+                    )
                     all_nodes.append(entity_node)
 
                 # Convert graph relationships to EntityRelationships
@@ -1221,12 +1216,11 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
             return Command(update={"graph_transform_error": str(e)})
 
     def update_graph_node(self, state: MemoryStateWithTokens) -> Command:
-        """Update existing knowledge graph with new content.
-        """
+        """Update existing knowledge graph with new content."""
         if not self.graph_enabled or not self.graph_transformer:
             return Command(
-                update={
-                    "graph_update_skipped": "Graph transformer not available"})
+                update={"graph_update_skipped": "Graph transformer not available"}
+            )
 
         try:
             logger.info("Updating knowledge graph")
@@ -1252,8 +1246,8 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
 
             if not new_memories and len(recent_messages) < 2:
                 return Command(
-                    update={
-                        "graph_update_skipped": "No new content to process"})
+                    update={"graph_update_skipped": "No new content to process"}
+                )
 
             # Process new content only
             content_parts = []
@@ -1270,8 +1264,8 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
 
             if not content_parts:
                 return Command(
-                    update={
-                        "graph_update_skipped": "No new meaningful content"})
+                    update={"graph_update_skipped": "No new meaningful content"}
+                )
 
             # Extract entities and relationships from new content
             combined_content = "\n\n".join(content_parts)
@@ -1290,8 +1284,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
                     )
                     # Parse entity response (would need structured output in
                     # real implementation)
-                    logger.debug(
-                        f"Entity extraction response: {entity_response}")
+                    logger.debug(f"Entity extraction response: {entity_response}")
                 except Exception as e:
                     logger.warning(f"Entity extraction failed: {e}")
 
@@ -1307,8 +1300,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
                             content=combined_content, entities=entities_text
                         )
                     )
-                    logger.debug(
-                        f"Relationship extraction response: {rel_response}")
+                    logger.debug(f"Relationship extraction response: {rel_response}")
                 except Exception as e:
                     logger.warning(f"Relationship extraction failed: {e}")
 
@@ -1329,17 +1321,14 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
 
             # Update tracking
             update_data = {
-                "graph_nodes": state.graph_nodes +
-                new_nodes,
-                "graph_relationships": state.graph_relationships +
-                new_relationships,
+                "graph_nodes": state.graph_nodes + new_nodes,
+                "graph_relationships": state.graph_relationships + new_relationships,
                 "last_graph_update": {
                     "timestamp": datetime.now().isoformat(),
                     "nodes_added": len(new_nodes),
                     "relationships_added": len(new_relationships),
                     "content_processed": len(content_parts),
-                    "memory_count": len(
-                        state.current_memories),
+                    "memory_count": len(state.current_memories),
                     "update_type": "incremental",
                 },
                 "graph_update_completed": True,
@@ -1356,23 +1345,19 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
             return Command(update={"graph_update_error": str(e)})
 
     def extract_entities_node(self, state: MemoryStateWithTokens) -> Command:
-        """Extract entities from content using LLM.
-        """
+        """Extract entities from content using LLM."""
         # This would be used for more granular entity extraction
         # Implementation would depend on structured output capabilities
         return Command(update={"entity_extraction_completed": True})
 
-    def extract_relationships_node(
-            self, state: MemoryStateWithTokens) -> Command:
-        """Extract relationships from content using LLM.
-        """
+    def extract_relationships_node(self, state: MemoryStateWithTokens) -> Command:
+        """Extract relationships from content using LLM."""
         # This would be used for more granular relationship extraction
         # Implementation would depend on structured output capabilities
         return Command(update={"relationship_extraction_completed": True})
 
     def check_tokens_node(self, state: MemoryState) -> dict[str, Any]:
-        """Check token usage and determine if action needed.
-        """
+        """Check token usage and determine if action needed."""
         status = self.token_tracker.get_status()
         usage_summary = self.token_tracker.get_usage_summary()
 
@@ -1393,8 +1378,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
         return {"token_status": status, "token_usage": usage_summary}
 
     def route_by_token_status(self, state: dict[str, Any]) -> str:
-        """Route based on token usage status.
-        """
+        """Route based on token usage status."""
         status = state.get("token_status", "OK")
 
         if status == "EMERGENCY":
@@ -1406,19 +1390,16 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
         return "ok"
 
     def summarize_memories_node(self, state: MemoryState) -> dict[str, Any]:
-        """Summarize memories to reduce token usage.
-        """
+        """Summarize memories to reduce token usage."""
         try:
             # Get memories to summarize (exclude recent ones)
             all_memories = state.current_memories
             if len(all_memories) <= self.memory_config.preserve_recent_memories:
-                return {
-                    "summarization_skipped": "Too few memories to summarize"}
+                return {"summarization_skipped": "Too few memories to summarize"}
 
             # Split into memories to summarize and preserve
-            to_summarize = all_memories[: -
-                                        self.memory_config.preserve_recent_memories]
-            to_preserve = all_memories[-self.memory_config.preserve_recent_memories:]
+            to_summarize = all_memories[: -self.memory_config.preserve_recent_memories]
+            to_preserve = all_memories[-self.memory_config.preserve_recent_memories :]
 
             # Create text from memories to summarize
             memories_text = "\n\n".join(
@@ -1492,8 +1473,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
             return {"summarization_error": str(e)}
 
     def rewrite_memories_node(self, state: MemoryState) -> dict[str, Any]:
-        """Rewrite memories for maximum compression.
-        """
+        """Rewrite memories for maximum compression."""
         try:
             # Similar to summarization but more aggressive
             # Rewrite each memory individually for compression
@@ -1506,8 +1486,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
                     continue
 
                 # Use rewrite prompt
-                if self.engine and hasattr(
-                        self.engine, "memory_rewrite_prompt"):
+                if self.engine and hasattr(self.engine, "memory_rewrite_prompt"):
                     prompt = self.engine.memory_rewrite_prompt
                     rewrite_input = prompt.format_messages(
                         memory_content=memory.content,
@@ -1532,9 +1511,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
                         importance=memory.importance,
                         tags=memory.tags,
                         confidence=memory.confidence,
-                        metadata={
-                            **memory.metadata,
-                            "original_source": memory.source},
+                        metadata={**memory.metadata, "original_source": memory.source},
                     )
                     rewritten_memories.append(rewritten_memory)
                 else:
@@ -1556,10 +1533,8 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
             logger.exception(f"Error in memory rewriting: {e}")
             return {"rewrite_error": str(e)}
 
-    def update_running_summary_node(
-            self, state: MemoryState) -> dict[str, Any]:
-        """Update the running summary with new memories.
-        """
+    def update_running_summary_node(self, state: MemoryState) -> dict[str, Any]:
+        """Update the running summary with new memories."""
         try:
             if not self.memory_config.enable_running_summary:
                 return {}
@@ -1586,8 +1561,8 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
 
                 response = self.engine.invoke(update_input)
                 self.running_summary = (
-                    response.content if hasattr(
-                        response, "content") else str(response))
+                    response.content if hasattr(response, "content") else str(response)
+                )
             else:
                 # Create initial summary
                 self.running_summary = f"Summary of memories:\n{new_memories_text}"
@@ -1609,8 +1584,7 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
     # ========================================================================
 
     def get_memory_status(self) -> dict[str, Any]:
-        """Get comprehensive memory and token status.
-        """
+        """Get comprehensive memory and token status."""
         token_summary = self.token_tracker.get_usage_summary()
 
         return {
@@ -1625,13 +1599,14 @@ Focus on relationships that are explicitly mentioned or strongly implied."""), H
             "last_summarization": self.last_summarization,
             "has_running_summary": self.running_summary is not None,
             "running_summary_tokens": (
-                self.token_tracker.estimate_tokens_for_content(
-                    self.running_summary) if self.running_summary else 0),
+                self.token_tracker.estimate_tokens_for_content(self.running_summary)
+                if self.running_summary
+                else 0
+            ),
         }
 
     def __repr__(self) -> str:
-        """String representation.
-        """
+        """String representation."""
         token_status = self.token_tracker.get_status()
         return (
             f"SimpleMemoryAgent(name='{self.name}', "

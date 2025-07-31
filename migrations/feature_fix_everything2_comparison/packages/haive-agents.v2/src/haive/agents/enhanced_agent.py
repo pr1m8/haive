@@ -14,14 +14,11 @@ Key features:
 - Type safety when needed, flexibility when desired
 """
 
+from abc import ABC, abstractmethod
 import logging
 import re
-from abc import ABC, abstractmethod
 from typing import Any, Generic, Literal, TypeVar
 
-from haive.core.engine.base import Engine, EngineType, InvokableEngine
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.schema.schema_composer import SchemaComposer
 from langchain_core.runnables import RunnableConfig
 from langgraph.graph.graph import CompiledGraph
 from pydantic import BaseModel, Field, PrivateAttr, model_validator
@@ -39,6 +36,10 @@ from haive.agents.base.mixins.state_mixin import StateMixin
 # Import pre/post processing mixin
 from haive.agents.base.pre_post_agent_mixin import PrePostAgentMixin
 from haive.agents.base.serialization_mixin import SerializationMixin
+from haive.core.engine.base import Engine, EngineType, InvokableEngine
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.schema.schema_composer import SchemaComposer
+
 
 logger = logging.getLogger(__name__)
 
@@ -312,9 +313,9 @@ class Agent(
 
             # STEP 2: Call subclass setup hook for field syncing
             self.setup_agent()
-            
+
             # STEP 2.5: Set up pre/post processing transformers if mixin is available
-            if hasattr(self, 'setup_transformers'):
+            if hasattr(self, "setup_transformers"):
                 self.setup_transformers()
 
             # STEP 3: Generate schemas from engines
@@ -853,9 +854,7 @@ class Agent(
 
                 # Compile with checkpointer and store
                 self._app = lg_graph.compile(
-                    checkpointer=self.checkpointer,
-                    store=self.store,
-                    **kwargs
+                    checkpointer=self.checkpointer, store=self.store, **kwargs
                 )
                 self._compiled_graph = self._app
                 self._is_compiled = True
@@ -915,9 +914,7 @@ class Agent(
         # Default to empty dict
         return {}
 
-    def create_runnable(
-        self, runnable_config: dict[str, Any] | None = None
-    ) -> Any:
+    def create_runnable(self, runnable_config: dict[str, Any] | None = None) -> Any:
         """Create and compile the runnable with proper schema kwargs.
 
         This implements the abstract method from Engine base class.

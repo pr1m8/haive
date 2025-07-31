@@ -5,11 +5,11 @@ Tools are designed to be used by memory agents and can be easily tested
 and composed together.
 """
 
-import json
-import uuid
 from datetime import datetime
+import json
 from pathlib import Path
 from typing import Any
+import uuid
 
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field, field_validator
@@ -126,8 +126,7 @@ def _load_memories_from_file(
 
         namespace_data = data.get(namespace, [])
         return [MemoryEntry.model_validate(entry) for entry in namespace_data]
-    except Exception as e:
-        print(f"Error loading memories from file: {e}")
+    except Exception:
         return []
 
 
@@ -151,8 +150,8 @@ def _save_memories_to_file(
         # Save back
         with open(path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
-    except Exception as e:
-        print(f"Error saving memories to file: {e}")
+    except Exception:
+        pass
 
 
 @tool

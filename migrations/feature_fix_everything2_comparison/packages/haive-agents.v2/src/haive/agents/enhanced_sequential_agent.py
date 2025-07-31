@@ -6,15 +6,16 @@ SequentialAgent = Agent[AugLLMConfig] + sequential execution of agents.
 import logging
 from typing import Any
 
-from haive.core.engine.aug_llm.config import AugLLMConfig
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langgraph.graph import END, START
 from pydantic import Field, field_validator
 
 # Import base enhanced agent when available
 # from haive.agents.base.enhanced_agent import Agent
 from haive.agents.simple.enhanced_simple_real import EnhancedAgentBase as Agent
+from haive.core.engine.aug_llm.config import AugLLMConfig
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
 
 logger = logging.getLogger(__name__)
 
@@ -255,7 +256,7 @@ Always preserve key information while improving clarity and structure."""
                 current_input = output
 
             except Exception as e:
-                logger.error(f"Error in step {i+1}: {e}")
+                logger.exception(f"Error in step {i+1}: {e}")
                 if not self.continue_on_error:
                     raise
                 outputs.append({"error": str(e)})
@@ -298,20 +299,10 @@ if __name__ == "__main__":
         return_all_outputs=True,
     )
 
-    print(f"Created: {pipeline}")
-    print(f"Pipeline: {pipeline.get_pipeline_description()}")
-
     # Add another step
     pipeline.add_agent(MockAgent("formatter", "FORMAT"))
-    print(f"Updated pipeline: {pipeline.get_pipeline_description()}")
 
     # Example execution flow
-    print("\nExample execution:")
-    print("Input: 'Raw text data'")
-    print("Step 1: cleaner: CLEAN(Raw text data)")
-    print("Step 2: analyzer: ANALYZE(cleaner: CLEAN(Raw text data))")
-    print("Step 3: summarizer: SUMMARIZE(analyzer: ANALYZE(...))")
-    print("Step 4: formatter: FORMAT(summarizer: SUMMARIZE(...))")
 
     # With intermediate processing
     pipeline_enhanced = SequentialAgent(
@@ -320,6 +311,3 @@ if __name__ == "__main__":
         process_between_steps=True,
         system_message="Enhance outputs between steps",
     )
-
-    print(f"\nEnhanced pipeline: {pipeline_enhanced}")
-    print("Coordinator processes and enhances data between each step")

@@ -23,7 +23,6 @@ import asyncio
 import operator
 from typing import Any
 
-from haive.core.exceptions import ConversationError
 from langchain_core.messages import AIMessage, HumanMessage
 from pydantic import Field
 
@@ -33,6 +32,8 @@ from haive.agents.conversation.base import (
     get_conversation_progress,
 )
 from haive.agents.simple import SimpleAgent
+from haive.core.exceptions import ConversationError
+
 
 logger = logging.getLogger(__name__)
 

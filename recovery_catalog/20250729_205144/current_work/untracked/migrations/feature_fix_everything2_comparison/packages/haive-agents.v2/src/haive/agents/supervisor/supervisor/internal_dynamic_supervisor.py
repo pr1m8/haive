@@ -7,11 +7,12 @@ not external management calls.
 import logging
 from typing import Any, Literal
 
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import HumanMessage
 from pydantic import Field, PrivateAttr
 
 from haive.agents.multi.agent import MultiAgent
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
 
 logger = logging.getLogger(__name__)
 

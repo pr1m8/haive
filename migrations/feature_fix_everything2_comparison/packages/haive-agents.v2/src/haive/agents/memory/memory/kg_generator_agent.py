@@ -4,11 +4,10 @@ This agent specializes in extracting and maintaining knowledge graphs from memor
 building entity relationships and semantic connections across the memory system.
 """
 
-import logging
 from datetime import datetime
+import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.prompts import PromptTemplate
 from pydantic import BaseModel, ConfigDict, Field
@@ -18,6 +17,8 @@ from haive.agents.memory.core.classifier import MemoryClassifier
 from haive.agents.memory.core.stores import MemoryStoreManager
 from haive.agents.memory.core.types import MemoryType
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 logger = logging.getLogger(__name__)
 

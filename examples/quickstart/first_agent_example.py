@@ -98,8 +98,8 @@ print(f"Agent: {response3}")
 #
 # We can visualize how the conversation flows through the agent.
 
-import matplotlib.patches as patches
 import matplotlib.pyplot as plt
+from matplotlib import patches
 
 fig, ax = plt.subplots(figsize=(10, 6))
 
@@ -217,7 +217,7 @@ ax.set_title("Agent Response Times")
 ax.grid(True, alpha=0.3, axis="y")
 
 # Add value labels
-for bar, time in zip(bars, response_times):
+for bar, time in zip(bars, response_times, strict=False):
     height = bar.get_height()
     ax.text(
         bar.get_x() + bar.get_width() / 2.0,

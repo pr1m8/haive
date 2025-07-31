@@ -52,6 +52,7 @@ from haive.agents.discovery.semantic_discovery import (
     update_selection_strategy,
 )
 
+
 __all__ = [
     "AdaptiveSelectionStrategy",
     "BaseSelectionStrategy",

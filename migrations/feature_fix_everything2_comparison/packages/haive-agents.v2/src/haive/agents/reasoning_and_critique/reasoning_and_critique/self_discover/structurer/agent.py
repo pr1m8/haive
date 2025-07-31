@@ -1,8 +1,7 @@
 """Self-Discover Structurer Agent implementation."""
 
-from haive.core.engine.aug_llm import AugLLMConfig
-
 from haive.agents.simple import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 from .models import ReasoningStructure
 from .prompts import STRUCTURER_PROMPT, STRUCTURER_SYSTEM_MESSAGE

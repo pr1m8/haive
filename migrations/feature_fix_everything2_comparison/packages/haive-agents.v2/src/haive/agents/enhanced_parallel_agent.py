@@ -7,15 +7,16 @@ import asyncio
 import logging
 from typing import Any, Literal
 
-from haive.core.engine.aug_llm.config import AugLLMConfig
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langgraph.graph import END, START
 from pydantic import Field, field_validator
 
 # Import base enhanced agent when available
 # from haive.agents.base.enhanced_agent import Agent
 from haive.agents.simple.enhanced_simple_real import EnhancedAgentBase as Agent
+from haive.core.engine.aug_llm.config import AugLLMConfig
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
 
 logger = logging.getLogger(__name__)
 
@@ -375,10 +376,6 @@ if __name__ == "__main__":
         timeout_per_agent=2.0,
     )
 
-    print(f"Created: {ensemble}")
-    print(f"Experts: {[agent.name for agent in ensemble.agents]}")
-    print(f"Strategy: {ensemble.aggregation_strategy}")
-
     # Different aggregation strategies
     strategies = {
         "all": "Returns all expert opinions",
@@ -388,16 +385,7 @@ if __name__ == "__main__":
         "merge": "LLM merges all responses",
     }
 
-    print("\nAggregation strategies:")
-    for strategy, description in strategies.items():
-        print(f"  {strategy}: {description}")
+    for _strategy, _description in strategies.items():
+        pass
 
     # Example execution
-    print("\nExample parallel execution:")
-    print("Input: 'Should we expand to European markets?'")
-    print("\nAll experts analyze simultaneously...")
-    print("- Alice (Finance): Financial feasibility analysis")
-    print("- Bob (Technology): Technical infrastructure needs")
-    print("- Carol (Marketing): Market opportunity assessment")
-    print("- Dave (Operations): Operational requirements")
-    print("\nResults aggregated based on strategy")

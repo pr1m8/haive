@@ -180,6 +180,7 @@ poetry update
 ## 🎯 Key Features
 
 ### 1. Flexible Agent Types
+
 - **SimpleAgent**: Basic LLM-powered agent
 - **ReactAgent**: Reasoning and tool usage
 - **PlannerAgent**: Strategic planning
@@ -187,6 +188,7 @@ poetry update
 - **MultiAgent**: Agent coordination
 
 ### 2. Advanced Capabilities
+
 - **Structured Output**: Pydantic model outputs
 - **Memory Systems**: Short and long-term memory
 - **Tool Integration**: Easy tool creation and usage
@@ -194,6 +196,7 @@ poetry update
 - **Async Support**: Full async/await compatibility
 
 ### 3. Production Ready
+
 - **No Mocks Testing**: Real component testing
 - **Type Safety**: Full type hints and validation
 - **Error Handling**: Comprehensive error management
@@ -203,6 +206,7 @@ poetry update
 ## 📖 Examples
 
 Find examples in the `examples/` directory:
+
 - `simple_agent_example.py` - Basic agent usage
 - `react_agent_tools.py` - Tool integration
 - `multi_agent_workflow.py` - Complex workflows
@@ -220,6 +224,7 @@ Find examples in the `examples/` directory:
 7. Open a Pull Request
 
 ### Development Guidelines
+
 - Follow the coding standards in `project_docs/active/standards/`
 - No mock testing - use real components
 - Include tests for new features
@@ -240,6 +245,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 🙏 Acknowledgments
 
 Built with:
+
 - [LangChain](https://langchain.com/) - LLM application framework
 - [Pydantic](https://pydantic-docs.helpmanual.io/) - Data validation
 - [Poetry](https://python-poetry.org/) - Dependency management

@@ -11,11 +11,6 @@ Implements all RAG architectures from rag-architectures-flows.md including:
 
 from enum import Enum
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.fixtures.documents import conversation_documents
-from haive.core.graph.node.callable_node import CallableNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.schema.prebuilt.rag_state import MultiAgentRAGState
 from langchain_core.documents import Document
 from langgraph.graph import END, START
 
@@ -23,6 +18,11 @@ from haive.agents.base.agent import Agent
 from haive.agents.multi.base import ConditionalAgent, SequentialAgent
 from haive.agents.rag.base.agent import SimpleRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.fixtures.documents import conversation_documents
+from haive.core.graph.node.callable_node import CallableNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.schema.prebuilt.rag_state import MultiAgentRAGState
 
 
 class RAGQuality(str, Enum):

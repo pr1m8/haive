@@ -27,6 +27,7 @@ from haive.core.graph.common.types import ConfigLike, StateLike
 from haive.core.graph.node.parser_node_config import ParserNodeConfig
 from haive.core.graph.node.types import NodeType
 
+
 logger = logging.getLogger(__name__)
 console = Console()
 logger.setLevel(logging.WARNING)

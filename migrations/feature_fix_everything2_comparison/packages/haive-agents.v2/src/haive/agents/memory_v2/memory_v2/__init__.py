@@ -58,6 +58,7 @@ from haive.agents.memory_v2.standalone_rag_memory import (
     create_unified_memory_agent,
 )
 
+
 # Optional components that may have import issues - try to import gracefully
 try:
     from haive.agents.memory_v2.time_weighted_retriever import (  # noqa: F401
@@ -92,18 +93,18 @@ except ImportError:
 
 # Core exports (always available with BaseRAGAgent)
 __all__ = [
-    # RAG-based memory agents (working)
-    "UnifiedMemoryRAGAgent",
     "ConversationMemoryAgent",
     "FactualMemoryAgent",
-    "PreferencesMemoryAgent",
-    "StandaloneMemoryItem",
+    "ImportanceLevel",
     "MemoryRAGConfig",
     "MemoryType",
-    "ImportanceLevel",
+    "PreferencesMemoryAgent",
+    "StandaloneMemoryItem",
+    # RAG-based memory agents (working)
+    "UnifiedMemoryRAGAgent",
+    "create_conversation_memory_agent",
     # Factory functions
     "create_unified_memory_agent",
-    "create_conversation_memory_agent",
 ]
 
 # Add optional exports if available

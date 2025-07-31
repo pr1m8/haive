@@ -22,11 +22,12 @@ that can select and execute agents based on runtime decisions.
 import logging
 from typing import Any
 
-from haive.core.schema.prebuilt.messages_state import MessagesState
 from pydantic import BaseModel, Field, computed_field
 
 from haive.agents.base.agent import Agent
 from haive.agents.react.agent import ReactAgent
+from haive.core.schema.prebuilt.messages_state import MessagesState
+
 
 logger = logging.getLogger(__name__)
 

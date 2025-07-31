@@ -7,7 +7,6 @@ with tools for flexible memory operations.
 from datetime import datetime
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
@@ -15,6 +14,7 @@ from langchain_core.tools import tool
 
 from haive.agents.memory_v2.time_weighted_retriever import TimeWeightedRetriever
 from haive.agents.react.agent import ReactAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 class ReactMemoryAgent:
@@ -455,21 +455,16 @@ async def example_basic_usage():
     )
 
     # First conversation
-    response1 = await agent.arun(
+    await agent.arun(
         "Hi, I'm Alice. I work as a data scientist at TechCorp and I love hiking.",
         auto_save=True,
     )
-    print("Response 1:", response1)
 
     # Later conversation - agent should remember
-    response2 = await agent.arun("What do you remember about my job?", auto_save=True)
-    print("Response 2:", response2)
+    await agent.arun("What do you remember about my job?", auto_save=True)
 
     # Search specific memories
-    response3 = await agent.arun(
-        "Search my memories for information about hiking", auto_save=False
-    )
-    print("Response 3:", response3)
+    await agent.arun("Search my memories for information about hiking", auto_save=False)
 
     # Save vector store
     agent.save_vector_store("alice_memories")
@@ -499,11 +494,10 @@ async def example_with_custom_tools():
     )
 
     # Use both memory and custom tools
-    response = await agent.arun(
+    await agent.arun(
         "Store a memory that I started my new job on 2024-01-15, "
         "then calculate how many days I've been working there."
     )
-    print("Response:", response)
 
 
 if __name__ == "__main__":

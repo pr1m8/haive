@@ -100,7 +100,7 @@ Task: {task}
 
 Consider what capabilities are required:
 - Domain expertise needed
-- Technical skills required  
+- Technical skills required
 - Tool access needed
 - Processing complexity
 - Output format requirements

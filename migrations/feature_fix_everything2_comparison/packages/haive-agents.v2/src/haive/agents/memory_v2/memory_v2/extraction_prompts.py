@@ -13,6 +13,7 @@ from langchain_core.prompts import (
     SystemMessagePromptTemplate,
 )
 
+
 # ============================================================================
 # CORE MEMORY EXTRACTION PROMPTS
 # ============================================================================
@@ -49,7 +50,7 @@ Output Format:
   ],
   "professional_relationships": [
     {
-      "person1": "Name1", 
+      "person1": "Name1",
       "relationship": "reports_to|manages|collaborates_with|works_with",
       "person2": "Name2",
       "context": "Description",
@@ -90,7 +91,7 @@ Output Format:
     {
       "person": "Name",
       "category": "interest|family|education|value|preference|goal|habit",
-      "content": "Detailed description", 
+      "content": "Detailed description",
       "importance": "low|medium|high|critical",
       "confidence": 0.0-1.0,
       "supporting_evidence": "Direct quote or reference"
@@ -149,7 +150,7 @@ Output Format:
   ],
   "technical_opinions": [
     {
-      "person": "Name", 
+      "person": "Name",
       "subject": "Technology/tool/approach",
       "opinion": "positive|negative|neutral",
       "reasoning": "Why they hold this opinion",
@@ -184,7 +185,7 @@ PROJECT_AND_TASK_EXTRACTOR = ChatPromptTemplate.from_messages(
 
 Focus on identifying:
 1. Current and upcoming projects
-2. Specific tasks and deliverables  
+2. Specific tasks and deliverables
 3. Timelines, deadlines, and milestones
 4. Project status and progress
 5. Dependencies and blockers
@@ -210,7 +211,7 @@ Output Format:
   ],
   "tasks": [
     {
-      "task": "Specific task description", 
+      "task": "Specific task description",
       "assignee": "Person responsible",
       "due_date": "Deadline or timeframe",
       "priority": "low|medium|high|critical",
@@ -224,7 +225,7 @@ Output Format:
       "event": "Meeting/event name",
       "participants": ["List of attendees"],
       "date_time": "When it's scheduled",
-      "purpose": "What it's about", 
+      "purpose": "What it's about",
       "location": "Where (if mentioned)",
       "recurring": true/false,
       "confidence": 0.0-1.0
@@ -247,7 +248,7 @@ ENTITY_RELATIONSHIP_EXTRACTOR = ChatPromptTemplate.from_messages(
 
 Your task is to identify:
 1. People and their attributes
-2. Organizations and their properties  
+2. Organizations and their properties
 3. Locations and geographic information
 4. Products, tools, and technologies
 5. Concepts and abstract entities
@@ -278,7 +279,7 @@ Output Format:
     {
       "source": "entity_id_1",
       "relationship": "WORKS_AT|LOCATED_IN|USES|KNOWS|PART_OF|MANAGES|etc",
-      "target": "entity_id_2", 
+      "target": "entity_id_2",
       "properties": {
         "duration": "How long",
         "context": "In what context",
@@ -334,7 +335,7 @@ Output Format:
   "user_feedback": [
     {
       "feedback": "What users said/want",
-      "user_segment": "Which users", 
+      "user_segment": "Which users",
       "pain_point": "Specific problem",
       "suggested_solution": "Proposed fix",
       "impact": "How important/widespread",
@@ -488,7 +489,7 @@ Output Format:
   "action_items": [
     {
       "action": "Specific task",
-      "owner": "Who's responsible", 
+      "owner": "Who's responsible",
       "due_date": "Deadline",
       "dependencies": ["What needs to happen first"],
       "success_criteria": "How to measure completion",
@@ -541,7 +542,7 @@ Output Format:
     "main_topics": [
       {
         "topic": "Topic name",
-        "importance": "low|medium|high|critical", 
+        "importance": "low|medium|high|critical",
         "resolution_status": "resolved|in_progress|unresolved",
         "key_points": ["Important points discussed"]
       }
@@ -633,7 +634,7 @@ class ExtractionOrchestrator:
             self.llm = llm_config.instantiate()
 
     async def extract_all(
-        self, conversation_text: str, extraction_types: list[str] = None
+        self, conversation_text: str, extraction_types: list[str] | None = None
     ) -> dict[str, Any]:
         """Run multiple extractors on the same conversation.
 

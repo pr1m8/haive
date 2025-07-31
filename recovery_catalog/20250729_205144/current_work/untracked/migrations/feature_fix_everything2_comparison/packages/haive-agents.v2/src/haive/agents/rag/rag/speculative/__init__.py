@@ -17,6 +17,7 @@ from speculative.agent import (
     verify_hypotheses_parallel,
 )
 
+
 __all__ = [
     "Hypothesis",
     "HypothesisConfidence",

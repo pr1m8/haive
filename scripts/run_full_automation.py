@@ -6,11 +6,9 @@ to maximize code quality improvements.
 """
 
 import subprocess
-import sys
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Tuple
 
 
 class AutomationRunner:
@@ -18,32 +16,22 @@ class AutomationRunner:
 
     def __init__(self, target_path: str = "packages/"):
         self.target_path = Path(target_path)
-        self.results: Dict[str, Dict] = {}
+        self.results: dict[str, dict] = {}
         self.start_time = time.time()
 
-    def run_command(self, cmd: List[str], description: str) -> Tuple[bool, str, float]:
+    def run_command(self, cmd: list[str], description: str) -> tuple[bool, str, float]:
         """Run a command and track results."""
-        print(f"\n🔧 {description}...")
-        print(f"   Command: {' '.join(cmd)}")
-
         start = time.time()
         try:
             result = subprocess.run(cmd, capture_output=True, text=True, check=True)
             elapsed = time.time() - start
-            print(f"   ✅ Success ({elapsed:.1f}s)")
             return True, result.stdout, elapsed
         except subprocess.CalledProcessError as e:
             elapsed = time.time() - start
-            print(f"   ❌ Failed ({elapsed:.1f}s)")
-            print(f"   Error: {e.stderr[:200]}")
             return False, e.stderr, elapsed
 
     def phase1_parse_fixes(self):
         """Phase 1: Fix parse errors and syntax issues."""
-        print("\n" + "=" * 60)
-        print("📋 PHASE 1: Parse Error Fixes")
-        print("=" * 60)
-
         # Fix common parse patterns
         if Path("scripts/fix_parse_patterns.py").exists():
             success, output, elapsed = self.run_command(
@@ -74,10 +62,6 @@ class AutomationRunner:
 
     def phase2_imports_cleanup(self):
         """Phase 2: Clean up imports and unused code."""
-        print("\n" + "=" * 60)
-        print("🧹 PHASE 2: Import & Dead Code Cleanup")
-        print("=" * 60)
-
         # Remove unused imports with autoflake
         success, output, elapsed = self.run_command(
             [
@@ -107,10 +91,6 @@ class AutomationRunner:
 
     def phase3_type_hints(self):
         """Phase 3: Add and fix type hints."""
-        print("\n" + "=" * 60)
-        print("🏷️ PHASE 3: Type Hint Improvements")
-        print("=" * 60)
-
         # Run our custom type hint fixer
         if Path("scripts/type_hint_fixer.py").exists():
             for package in ["haive-core", "haive-agents", "haive-tools"]:
@@ -144,10 +124,6 @@ class AutomationRunner:
 
     def phase4_formatting(self):
         """Phase 4: Format code consistently."""
-        print("\n" + "=" * 60)
-        print("✨ PHASE 4: Code Formatting")
-        print("=" * 60)
-
         # Format with black
         success, output, elapsed = self.run_command(
             ["poetry", "run", "black", str(self.target_path)], "Formatting with black"
@@ -175,10 +151,6 @@ class AutomationRunner:
 
     def phase5_documentation(self):
         """Phase 5: Check and improve documentation."""
-        print("\n" + "=" * 60)
-        print("📚 PHASE 5: Documentation Checks")
-        print("=" * 60)
-
         # Check docstring coverage
         success, output, elapsed = self.run_command(
             ["poetry", "run", "interrogate", str(self.target_path), "-vv"],
@@ -220,10 +192,6 @@ class AutomationRunner:
 
     def phase6_quality_checks(self):
         """Phase 6: Run quality and type checks."""
-        print("\n" + "=" * 60)
-        print("🔍 PHASE 6: Quality & Type Checks")
-        print("=" * 60)
-
         # Run ruff linter
         success, output, elapsed = self.run_command(
             ["poetry", "run", "ruff", "check", str(self.target_path)],
@@ -257,10 +225,6 @@ class AutomationRunner:
 
     def phase7_testing(self):
         """Phase 7: Run tests to ensure nothing broke."""
-        print("\n" + "=" * 60)
-        print("🧪 PHASE 7: Testing")
-        print("=" * 60)
-
         # Run tests with coverage
         success, output, elapsed = self.run_command(
             ["poetry", "run", "pytest", "--cov=haive", "-n", "auto"],
@@ -270,22 +234,12 @@ class AutomationRunner:
 
     def generate_report(self):
         """Generate summary report."""
-        print("\n" + "=" * 60)
-        print("📊 AUTOMATION SUMMARY REPORT")
-        print("=" * 60)
-
         total_time = time.time() - self.start_time
         successful = sum(1 for r in self.results.values() if r["success"])
         failed = len(self.results) - successful
 
-        print(f"\n⏱️  Total Time: {total_time:.1f}s")
-        print(f"✅ Successful: {successful}/{len(self.results)}")
-        print(f"❌ Failed: {failed}/{len(self.results)}")
-
-        print("\n📋 Detailed Results:")
         for tool, result in self.results.items():
-            status = "✅" if result["success"] else "❌"
-            print(f"   {status} {tool}: {result['time']:.1f}s")
+            "✅" if result["success"] else "❌"
 
         # Save detailed report
         report_path = Path(
@@ -306,14 +260,8 @@ class AutomationRunner:
                 f.write(f"Time: {result['time']:.1f}s\n")
                 f.write(f"Output:\n{result['output'][:1000]}\n")
 
-        print(f"\n📄 Detailed report saved to: {report_path}")
-
     def run_all_phases(self):
         """Run all automation phases."""
-        print("🚀 HAIVE FULL AUTOMATION WORKFLOW")
-        print(f"📁 Target: {self.target_path}")
-        print(f"🕐 Started: {datetime.now()}")
-
         # Run phases in order
         self.phase1_parse_fixes()
         self.phase2_imports_cleanup()
@@ -325,8 +273,6 @@ class AutomationRunner:
 
         # Generate report
         self.generate_report()
-
-        print("\n✨ Automation workflow complete!")
 
 
 def main():

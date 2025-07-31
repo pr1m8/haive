@@ -9,10 +9,10 @@ This module extends NodeSchemaComposer with advanced patterns for:
 5. Automatic signature inspection
 """
 
-import inspect
-import logging
 from collections.abc import Callable
 from functools import wraps
+import inspect
+import logging
 from typing import Any, TypeVar, get_type_hints
 
 from langgraph.types import Command, Send
@@ -23,6 +23,7 @@ from haive.core.graph.node.composer.node_schema_composer import (
     NodeSchemaComposer,
 )
 from haive.core.graph.node.composer.protocols import ExtractFunction, UpdateFunction
+
 
 logger = logging.getLogger(__name__)
 

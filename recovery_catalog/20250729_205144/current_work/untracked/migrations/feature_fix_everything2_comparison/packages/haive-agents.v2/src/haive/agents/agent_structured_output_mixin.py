@@ -11,6 +11,7 @@ from typing import TYPE_CHECKING, Any, TypeVar
 
 from pydantic import BaseModel
 
+
 if TYPE_CHECKING:
     from langchain_core.prompts import ChatPromptTemplate
 

@@ -1,19 +1,20 @@
 # haive/core/engine/agent/mixins/execution_mixin.py
 
 import asyncio
-import logging
-import uuid
 from collections.abc import AsyncGenerator, Generator
+import logging
 from typing import TYPE_CHECKING, Any, cast
+import uuid
 
-from haive.core.config.runnable import RunnableConfigManager
-from haive.core.persistence.handlers import prepare_merged_input
 from langchain_core.messages import BaseMessage, HumanMessage
 from langchain_core.runnables import RunnableConfig
 from pydantic import BaseModel
 
 # Import debug utilities
 from haive.agents.base.debug_utils import debug_logger, get_agent_debugger
+from haive.core.config.runnable import RunnableConfigManager
+from haive.core.persistence.handlers import prepare_merged_input
+
 
 if TYPE_CHECKING:
     from haive.agents.base.mixins.agent_protocol import AgentProtocol

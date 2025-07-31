@@ -5,15 +5,16 @@ based on BaseGraph2 limitations and requirements.
 """
 
 import asyncio
-import logging
 from collections.abc import Callable
+import logging
 from typing import Any
 
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from pydantic import Field
 
 from haive.agents.react.agent import ReactAgent
 from haive.agents.supervisor.dynamic_state import DynamicSupervisorState
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
 
 logger = logging.getLogger(__name__)
 

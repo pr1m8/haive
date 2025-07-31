@@ -2,6 +2,7 @@
 
 from langchain_core.prompts import PromptTemplate
 
+
 ADAPTER_SYSTEM_MESSAGE = """You are an expert at adapting abstract reasoning frameworks to specific problem contexts.
 
 Your role is to take selected reasoning modules and transform them into concrete, actionable steps tailored to the specific task at hand. You excel at bridging the gap between general cognitive strategies and practical application."""

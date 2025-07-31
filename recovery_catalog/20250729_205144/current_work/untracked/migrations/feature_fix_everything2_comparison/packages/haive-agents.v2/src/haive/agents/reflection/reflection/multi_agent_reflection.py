@@ -11,7 +11,6 @@ Main Agent → Response → Convert to prompt partial → Message Transform → 
 
 import logging
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 from langchain_core.tools import Tool
 from pydantic import BaseModel, Field
@@ -19,6 +18,8 @@ from pydantic import BaseModel, Field
 from haive.agents.multi.enhanced_multi_agent_v3 import EnhancedMultiAgent
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 logger = logging.getLogger(__name__)
 

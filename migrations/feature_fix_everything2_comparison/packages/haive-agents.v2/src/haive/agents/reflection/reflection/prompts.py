@@ -6,6 +6,7 @@ from langchain_core.prompts import (
     SystemMessagePromptTemplate,
 )
 
+
 # Simple reflection prompt
 REFLECTION_SYSTEM_PROMPT = """You are a helpful assistant that reflects on responses to improve them.
 

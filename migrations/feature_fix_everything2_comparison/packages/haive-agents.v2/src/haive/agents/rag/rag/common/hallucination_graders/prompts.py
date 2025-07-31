@@ -5,6 +5,7 @@ This module provides prompts functionality for the Haive framework.
 
 from langchain_core.prompts import ChatPromptTemplate
 
+
 RAG_HALLUCINATION_DETECTION_COMPREHENSIVE = ChatPromptTemplate.from_messages(
     [
         (

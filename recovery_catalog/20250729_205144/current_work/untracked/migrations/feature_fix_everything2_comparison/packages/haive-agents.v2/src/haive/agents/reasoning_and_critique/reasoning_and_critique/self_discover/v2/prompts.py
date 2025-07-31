@@ -8,6 +8,7 @@ This module provides prompts functionality for the Haive framework.
 
 from langchain_core.prompts import ChatPromptTemplate
 
+
 # Select reasoning modules prompt
 select_prompt = ChatPromptTemplate.from_messages(
     [

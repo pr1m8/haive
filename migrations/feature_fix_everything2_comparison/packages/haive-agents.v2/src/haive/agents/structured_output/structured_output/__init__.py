@@ -26,6 +26,7 @@ from haive.agents.structured_output.models import (
     ValidationResult,
 )
 
+
 __all__ = [
     "Analysis",
     "Critique",

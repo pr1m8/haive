@@ -20,6 +20,7 @@ and managed by the LTM agent.
 
 from pydantic import BaseModel, Field
 
+
 # ============================================================================
 # BASIC MEMORY SCHEMA (from LangMem)
 # ============================================================================

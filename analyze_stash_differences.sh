@@ -13,32 +13,32 @@ RECOVERED_DIR="recovered_stashes/20250729_205753"
 compare_stash() {
     local stash_num=$1
     
-    if [[ -f "$CATALOG_DIR/stash_$stash_num.patch" && -f "$RECOVERED_DIR/stash_$stash_num.patch" ]]; then
-        echo "📦 STASH_$stash_num Comparison:"
+    if [[ -f "${CATALOG_DIR}/stash_${stash_num}.patch" && -f "${RECOVERED_DIR}/stash_${stash_num}.patch" ]]; then
+        echo "📦 STA$$${H_$}sta}sh_}num Comparison:"
         
         # Size comparison
-        local catalog_size=$(du -h "$CATALOG_DIR/stash_$stash_num.patch" | cut -f1)
-        local recovered_size=$(du -h "$RECOVERED_DIR/stash_$stash_num.patch" | cut -f1)
-        echo "   📊 Sizes: catalog=$catalog_size, recovered=$recovered_size"
+        local catalog_size=$(du -h "${CATALOG_DIR}/stash_${stash_num}.patch" | cut -f1)
+        local recovered_size=$(du -h "${RECOVERED_DIR}/stash_${stash_num}.patch" | cut -f1)
+        echo "   📊 Sizes: catal$$$${g=$}cat}alo}g_s}ize, recover$$$$${${${}}}$re}cov}ere}d_s}ize"
         
         # Line count comparison
-        local catalog_lines=$(wc -l < "$CATALOG_DIR/stash_$stash_num.patch")
-        local recovered_lines=$(wc -l < "$RECOVERED_DIR/stash_$stash_num.patch")
-        echo "   📄 Lines: catalog=$catalog_lines, recovered=$recovered_lines"
+        local catalog_lines=$(wc -l < "${CATALOG_DIR}/stash_${stash_num}.patch")
+        local recovered_lines=$(wc -l < "${RECOVERED_DIR}/stash_${stash_num}.patch")
+        echo "   📄 Lines: catal$$$$${${${}}=$c}ata}log}_li}nes, recover$$$$${d=$}rec}ove}red}_li}nes"
         
         # Check if identical
-        if diff -q "$CATALOG_DIR/stash_$stash_num.patch" "$RECOVERED_DIR/stash_$stash_num.patch" >/dev/null; then
+        if diff -q "${CATALOG_DIR}/stash_${stash_num}.patch" "${RECOVERED_DIR}/stash_${stash_num}.patch" >/dev/null; then
             echo "   ✅ IDENTICAL - Same content"
         else
             echo "   ⚠️  DIFFERENT - Content varies"
             echo "      📝 First few differences:"
-            diff "$CATALOG_DIR/stash_$stash_num.patch" "$RECOVERED_DIR/stash_$stash_num.patch" | head -10 | sed 's/^/         /'
+            diff "${CATALOG_DIR}/stash_${stash_num}.patch" "${RECOVERED_DIR}/stash_${stash_num}.patch" | head -10 | sed 's/^/         /'
         fi
         echo ""
     else
-        echo "❌ STASH_$stash_num: Missing in one location"
-        [[ -f "$CATALOG_DIR/stash_$stash_num.patch" ]] && echo "   ✅ Present in catalog"
-        [[ -f "$RECOVERED_DIR/stash_$stash_num.patch" ]] && echo "   ✅ Present in recovered"
+        echo "❌ STAS$$$$${${${}}$s}ta}sh}_n}um: Missing in one location"
+        [[ -f "${CATALOG_DIR}/stash_${stash_num}.patch" ]] && echo "   ✅ Present in catalog"
+        [[ -f "${RECOVERED_DIR}/stash_${stash_num}.patch" ]] && echo "   ✅ Present in recovered"
         echo ""
     fi
 }
@@ -55,21 +55,21 @@ echo "📊 SUMMARY:"
 echo ""
 
 # Count stashes in each location
-catalog_count=$(ls -1 "$CATALOG_DIR"/stash_*.patch | wc -l)
-recovered_count=$(ls -1 "$RECOVERED_DIR"/stash_*.patch | wc -l)
+catalog_count=$(ls -1 "${CATALOG_DIR}"/stash_*.patch | wc -l)
+recovered_count=$(ls -1 "${RECOVERED_DIR}"/stash_*.patch | wc -l)
 
-echo "   📁 Catalog stashes: $catalog_count"
-echo "   📁 Recovered stashes: $recovered_count"
+echo "   📁 Catalog stashe$$$$${${${}} $c}ata}log}_co}unt"
+echo "   📁 Recovered stashe$$$$${: $}rec}ove}red}_co}unt"
 echo "   🔄 Overlapping: 3 (stash_0, stash_1, stash_10)"
 echo "   📋 Catalog-only: $((catalog_count - 3))"
 
 echo ""
 echo "🎯 CATALOG-ONLY STASHES (not in recovered):"
 for i in {2..30}; do
-    if [[ -f "$CATALOG_DIR/stash_${i}.patch" && ! -f "$RECOVERED_DIR/stash_${i}.patch" ]]; then
-        size=$(du -h "$CATALOG_DIR/stash_$i.patch" | cut -f1)
-        desc=$(sed -n '6p' "$CATALOG_DIR/stash_${i}_files.txt" 2>/dev/null | sed 's/^[[:space:]]*//' | cut -c1-50)
-        echo "   stash_$i ($size): $desc"
+    if [[ -f "${CATALOG_DIR}/stash_${i}.patch" && ! -f "${RECOVERED_DIR}/stash_${i}.patch" ]]; then
+        size=$(du -h "${CATALOG_DIR}/stash_${i}.patch" | cut -f1)
+        desc=$(sed -n '6p' "${CATALOG_DIR}/stash_${i}_files.txt" 2>/dev/null | sed 's/^[[:space:]]*//' | cut -c1-50)
+        echo "   stash_${i} (${size}): ${desc}"
     fi
 done
 
@@ -80,12 +80,12 @@ echo ""
 # Check if overlapping stashes are identical
 identical_count=0
 for stash in 0 1 10; do
-    if diff -q "$CATALOG_DIR/stash_$stash.patch" "$RECOVERED_DIR/stash_$stash.patch" >/dev/null 2>&1; then
+    if diff -q "${CATALOG_DIR}/stash_${stash}.patch" "${RECOVERED_DIR}/stash_${stash}.patch" >/dev/null 2>&1; then
         ((identical_count++))
     fi
 done
 
-if [[ $identical_count -eq 3 ]]; then
+if [[ ${identical_count} -eq 3 ]]; then
     echo "✅ All overlapping stashes are IDENTICAL"
     echo "   → Use recovered_stashes (they're curated and identical)"
     echo "   → Review catalog-only stashes for anything important"

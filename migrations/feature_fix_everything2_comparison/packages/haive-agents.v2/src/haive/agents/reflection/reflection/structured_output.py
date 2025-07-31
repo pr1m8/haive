@@ -7,13 +7,14 @@ combined with a post-processing hook pattern for extracting results.
 import asyncio
 from typing import Any, TypeVar
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel
 
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 from .models import ReflectionResult
+
 
 # Type variable for any Pydantic model
 T = TypeVar("T", bound=BaseModel)
@@ -95,7 +96,7 @@ class StructuredReflectionAgent:
         # Default reflection prompt
         if not system_prompt:
             system_prompt = """You are a reflection agent that analyzes and critiques responses.
-        
+
 Your role is to:
 1. Identify strengths and weaknesses in the provided response
 2. Suggest specific improvements
@@ -166,10 +167,10 @@ class StructuredImprovementAgent:
                 (
                     "system",
                     """You are an improvement agent that creates better versions of responses.
-        
+
 You will receive:
 1. An original query
-2. An original response  
+2. An original response
 3. Structured feedback about the response
 
 Your task is to create an improved version that addresses the feedback while
@@ -349,55 +350,39 @@ def create_reflection_loop(
 # Example usage functions
 async def example_basic_reflection():
     """Example: Basic response reflection with structured analysis."""
-    print("\n=== Basic Reflection Example ===\n")
-
     # Create reflection agent
     reflector = create_reflection_agent()
 
     # Original query and response to analyze
     query = "Explain quantum computing"
     response = """
-    Quantum computing uses quantum mechanics to process information. 
+    Quantum computing uses quantum mechanics to process information.
     It's faster than regular computers and uses qubits instead of bits.
     This makes it good for solving complex problems.
     """
-
-    print(f"Query: {query}")
-    print(f"Response: {response}")
 
     # Run reflection analysis
     reflection = await reflector.reflect(query, response)
 
     if reflection:
-        print("\n✅ Reflection Analysis:")
-        print(f"Summary: {reflection.summary}")
-        print(f"Overall Quality: {reflection.critique.overall_quality:.2f}")
-        print(f"Needs Revision: {reflection.critique.needs_revision}")
-        print(f"Confidence: {reflection.confidence:.2f}")
 
-        print("\nStrengths:")
-        for strength in reflection.critique.strengths:
-            print(f"  • {strength}")
+        for _strength in reflection.critique.strengths:
+            pass
 
-        print("\nWeaknesses:")
-        for weakness in reflection.critique.weaknesses:
-            print(f"  • {weakness}")
+        for _weakness in reflection.critique.weaknesses:
+            pass
 
-        print("\nSuggestions:")
-        for suggestion in reflection.critique.suggestions:
-            print(f"  • {suggestion}")
+        for _suggestion in reflection.critique.suggestions:
+            pass
 
-        print("\nAction Items:")
-        for action in reflection.action_items:
-            print(f"  • {action}")
+        for _action in reflection.action_items:
+            pass
     else:
-        print("❌ Failed to extract reflection analysis")
+        pass
 
 
 async def example_reflection_with_improvement():
     """Example: Full reflection loop with improvement."""
-    print("\n\n=== Reflection + Improvement Example ===\n")
-
     # Create agents
     reflector = create_reflection_agent()
     improver = create_improvement_agent()
@@ -409,54 +394,34 @@ async def example_reflection_with_improvement():
     like solar and wind that don't run out. It's clean and helps reduce pollution.
     """
 
-    print(f"Query: {query}")
-    print(f"Original Response: {original_response}")
-
     # Step 1: Reflect on original response
     reflection = await reflector.reflect(query, original_response)
 
     if reflection:
-        print("\n📊 Reflection Analysis:")
-        print(f"Quality Score: {reflection.critique.overall_quality:.2f}")
-        print(f"Needs Revision: {reflection.critique.needs_revision}")
 
         # Step 2: Apply improvements if needed
         if reflection.critique.needs_revision:
-            print("\n🔧 Applying improvements...")
 
             improved_response = await improver.improve(
                 query, original_response, reflection
             )
 
-            print("\n✨ Improved Response:")
-            print(improved_response)
-
             # Optional: Reflect on the improvement
-            print("\n🔍 Re-analyzing improved response.")
 
             second_reflection = await reflector.reflect(query, improved_response)
 
             if second_reflection:
-                print(
-                    f"New Quality Score: {second_reflection.critique.overall_quality:.2f}"
-                )
-                print(
-                    f"Still Needs Revision: {second_reflection.critique.needs_revision}"
-                )
 
-                improvement = (
+                (
                     second_reflection.critique.overall_quality
                     - reflection.critique.overall_quality
                 )
-                print(f"Quality Improvement: {improvement:+.2f}")
         else:
-            print("\n✅ No revision needed - original response is good!")
+            pass
 
 
 async def example_iterative_reflection():
     """Example: Iterative reflection until quality threshold is met."""
-    print("\n\n=== Iterative Reflection Example ===\n")
-
     # Create reflection loop
     loop = create_reflection_loop(max_iterations=3, quality_threshold=0.8)
 
@@ -464,22 +429,8 @@ async def example_iterative_reflection():
     query = "Explain machine learning algorithms"
     initial_response = "Machine learning is when computers learn from data."
 
-    print(f"Query: {query}")
-    print(f"Starting Response: {initial_response}")
-    print(f"Target Quality: {loop.quality_threshold}")
-    print(f"Max Iterations: {loop.max_iterations}")
-
     # Run iterative improvement
-    result = await loop.iterate(query, initial_response)
-
-    print("\n📈 Final Results:")
-    print(f"Iterations completed: {result['iterations']}")
-    print(
-        f"Quality progression: {' → '.join(f'{q:.2f}' for q in result['quality_scores'])}"
-    )
-    print(f"Improved: {result['improved']}")
-    print("\nFinal Response:")
-    print(result["final_response"])
+    await loop.iterate(query, initial_response)
 
 
 async def main():

@@ -22,6 +22,7 @@ from core.types import (
     update_access,
 )
 
+
 __all__ = [
     "MemoryClassificationResult",
     "MemoryClassifier",

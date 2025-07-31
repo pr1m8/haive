@@ -18,6 +18,7 @@ from pro_search.models import (
     SearchRefinement,
 )
 
+
 __all__ = [
     "Config",
     "ContextualInsight",

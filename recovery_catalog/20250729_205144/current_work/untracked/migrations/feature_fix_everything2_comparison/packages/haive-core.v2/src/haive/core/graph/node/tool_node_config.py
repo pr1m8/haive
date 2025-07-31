@@ -12,8 +12,8 @@ Functions:
 
 # src/haive/core/graph/node/tool_node_config.py
 
-import logging
 from collections.abc import Callable
+import logging
 from typing import Any
 
 from langchain_core.messages import AIMessage, ToolMessage
@@ -23,6 +23,7 @@ from pydantic import Field
 
 from haive.core.graph.node.base_config import NodeConfig
 from haive.core.graph.node.types import NodeType
+
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

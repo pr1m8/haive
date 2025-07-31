@@ -6,12 +6,12 @@ Classes:
     ReactAgentConfig: ReactAgentConfig implementation.
 """
 
-from haive.core.graph.branches.branch import Branch
-from haive.core.types import Tool_Type
 from langgraph.types import RetryPolicy
 from pydantic import Field
 
 from haive.agents.simple.config import SimpleAgentConfig
+from haive.core.graph.branches.branch import Branch
+from haive.core.types import Tool_Type
 
 
 class ReactAgentConfig(SimpleAgentConfig):

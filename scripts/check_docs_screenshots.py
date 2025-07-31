@@ -2,7 +2,6 @@
 """Take screenshots of documentation pages to check CSS fixes."""
 
 import asyncio
-import os
 from datetime import datetime
 from pathlib import Path
 
@@ -11,7 +10,6 @@ from playwright.async_api import async_playwright
 
 async def take_screenshots():
     """Take screenshots of key documentation pages."""
-
     # Create screenshots directory
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     screenshots_dir = Path(f"docs/screenshots/css_fixes_{timestamp}")
@@ -45,7 +43,6 @@ async def take_screenshots():
 
             for url, name in urls_to_check:
                 try:
-                    print(f"Capturing {name} at {viewport['name']} size...")
 
                     # Navigate to page
                     await page.goto(url, wait_until="networkidle")
@@ -90,26 +87,15 @@ async def take_screenshots():
                                     / f"{name}_{viewport['name']}_{element_name}.png"
                                 )
                                 await element.screenshot(path=str(screenshot_path))
-                        except Exception as e:
-                            print(f"  Could not capture {element_name}: {e}")
+                        except Exception:
+                            pass
 
-                except Exception as e:
-                    print(f"Error capturing {name}: {e}")
+                except Exception:
+                    pass
 
             await context.close()
 
         await browser.close()
-
-    print(f"\nScreenshots saved to: {screenshots_dir}")
-    print("\nChecklist of CSS fixes to verify:")
-    print("✓ Cards should have light gray background (#f8f9fa)")
-    print("✓ Cards should have visible borders (#dee2e6)")
-    print("✓ Code blocks should be full width with no margins")
-    print("✓ Sidebar should be narrower (18rem)")
-    print("✓ Search bar should have proper padding")
-    print("✓ Navigation should have clear hierarchy indentation")
-    print("✓ Badges should have colored backgrounds")
-    print("✓ Content should use full available width")
 
 
 if __name__ == "__main__":

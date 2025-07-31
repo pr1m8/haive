@@ -17,6 +17,7 @@ from haive.agents.multi.archive.base import ExecutionMode
 # Import everything from the current implementation (clean.py is the modern approach)
 from haive.agents.multi.clean import MultiAgent
 
+
 # Create aliases for backward compatibility
 # Note: These all resolve to MultiAgent since the modern implementation
 # uses execution_mode strings instead of separate classes

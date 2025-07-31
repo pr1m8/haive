@@ -85,13 +85,9 @@ if __name__ == "__main__":
     config = AugLLMConfig()
     agent = SimpleAgent(name="demo", engine=config)
 
-    print(f"Created: {agent}")
-    print(f"Engine type: {type(agent.engine).__name__}")
-
     # Execute
     async def demo():
-        result = await agent.execute("Hello world")
-        print(f"Result: {result}")
+        await agent.execute("Hello world")
 
     asyncio.run(demo())
 

@@ -11,10 +11,6 @@ ReactAgent-based supervisor with:
 import logging
 import time
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.engine.base.base import Engine
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.schema.prebuilt.messages_state import MessagesState
 from langchain_core.messages import AIMessage
 from langchain_core.tools import tool
 from langgraph.graph import END
@@ -24,6 +20,11 @@ from rich.panel import Panel
 
 from haive.agents.base.agent import Agent
 from haive.agents.react.agent import ReactAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.engine.base.base import Engine
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.schema.prebuilt.messages_state import MessagesState
+
 
 logger = logging.getLogger(__name__)
 console = Console()

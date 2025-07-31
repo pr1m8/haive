@@ -14,6 +14,7 @@ from haive.agents.conversation.collaberative.state import (
     merge_document_sections,
 )
 
+
 __all__ = [
     "CollaborativeConversation",
     "CollaborativeState",

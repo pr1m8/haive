@@ -1,5 +1,4 @@
-"""
-A simple example
+"""A simple example.
 ================
 
 This is a simple example to test Sphinx Gallery.
@@ -18,9 +17,9 @@ y = np.sin(x)
 
 plt.figure(figsize=(8, 6))
 plt.plot(x, y)
-plt.title('Simple Sine Wave')
-plt.xlabel('x')
-plt.ylabel('sin(x)')
+plt.title("Simple Sine Wave")
+plt.xlabel("x")
+plt.ylabel("sin(x)")
 plt.grid(True)
 plt.show()
 
@@ -30,6 +29,3 @@ plt.show()
 # Let's do a simple calculation.
 
 result = 2 + 2
-print(f"2 + 2 = {result}")
-
-print("Gallery example completed!")

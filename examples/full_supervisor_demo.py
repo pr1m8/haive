@@ -9,12 +9,14 @@ This shows the supervisor actually executing agent handoffs with real state mana
 import asyncio
 import logging
 
+from langchain_core.messages import HumanMessage
+
 from haive.agents.experiments.dynamic_supervisor import (
     DynamicSupervisorAgent,
     SupervisorState,
     create_test_registry,
 )
-from langchain_core.messages import HumanMessage
+
 
 # Enable info logging to see the workflow
 logging.basicConfig(

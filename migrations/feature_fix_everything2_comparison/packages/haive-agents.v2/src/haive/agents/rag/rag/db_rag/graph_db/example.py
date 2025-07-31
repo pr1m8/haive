@@ -28,6 +28,7 @@ Example:
 import asyncio
 import json
 import logging
+import sys
 import time
 
 from haive.agents.rag.db_rag.graph_db.agent import GraphDBRAGAgent
@@ -36,6 +37,7 @@ from haive.agents.rag.db_rag.graph_db.config import (
     GraphDBConfig,
     GraphDBRAGConfig,
 )
+
 
 # Configure logging for better debugging
 logging.basicConfig(
@@ -649,4 +651,4 @@ if __name__ == "__main__":
         main()
     except Exception as e:
         logger.exception(f"Fatal error: {e}")
-        exit(1)
+        sys.exit(1)

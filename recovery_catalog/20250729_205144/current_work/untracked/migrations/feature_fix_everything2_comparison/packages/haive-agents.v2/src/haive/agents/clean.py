@@ -87,11 +87,11 @@ from __future__ import annotations
 from collections.abc import Callable
 from typing import Any
 
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
 from pydantic import Field, model_validator
 
 from haive.agents.base.agent import Agent
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
 
 
 class MultiAgent(Agent):

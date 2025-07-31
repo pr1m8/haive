@@ -64,9 +64,8 @@ def create_example_graph():
         return state
 
     # Routing validation node
-    from haive.core.graph.node.routing_validation_node import (
-        create_routing_validation_node,
-    )
+    from haive.core.graph.node.routing_validation_node import \
+        create_routing_validation_node
 
     routing_validator = create_routing_validation_node(
         engine_name="main_engine",

@@ -6,8 +6,6 @@ using the class method approach with future annotations.
 
 from __future__ import annotations
 
-from typing import Dict, List
-
 from haive.agents.react import ReactAgent
 from haive.agents.simple import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
@@ -23,10 +21,10 @@ class ResearchResult(BaseModel):
 
     topic: str = Field(description="Research topic")
     summary: str = Field(description="Executive summary")
-    key_findings: List[str] = Field(description="Key findings")
-    sources: List[str] = Field(description="Information sources")
+    key_findings: list[str] = Field(description="Key findings")
+    sources: list[str] = Field(description="Information sources")
     confidence: float = Field(ge=0.0, le=1.0, description="Confidence level")
-    next_steps: List[str] = Field(default_factory=list)
+    next_steps: list[str] = Field(default_factory=list)
 
 
 class PlanningResult(BaseModel):
@@ -34,11 +32,11 @@ class PlanningResult(BaseModel):
 
     objective: str = Field(description="Main objective")
     strategy: str = Field(description="Overall strategy")
-    phases: List[Dict[str, str]] = Field(description="Implementation phases")
+    phases: list[dict[str, str]] = Field(description="Implementation phases")
     timeline: str = Field(description="Expected timeline")
-    resources: List[str] = Field(description="Required resources")
-    risks: List[str] = Field(default_factory=list)
-    success_metrics: List[str] = Field(default_factory=list)
+    resources: list[str] = Field(description="Required resources")
+    risks: list[str] = Field(default_factory=list)
+    success_metrics: list[str] = Field(default_factory=list)
 
 
 def example_1_class_method_usage():
@@ -72,19 +70,19 @@ def example_1_class_method_usage():
 
         # Research output fields
         summary: str = ""
-        key_findings: List[str] = Field(default_factory=list)
-        sources: List[str] = Field(default_factory=list)
+        key_findings: list[str] = Field(default_factory=list)
+        sources: list[str] = Field(default_factory=list)
         confidence: float = 0.0
-        next_steps: List[str] = Field(default_factory=list)
+        next_steps: list[str] = Field(default_factory=list)
 
         # Planning output fields
         objective: str = ""
         strategy: str = ""
-        phases: List[Dict[str, str]] = Field(default_factory=list)
+        phases: list[dict[str, str]] = Field(default_factory=list)
         timeline: str = ""
-        resources: List[str] = Field(default_factory=list)
-        risks: List[str] = Field(default_factory=list)
-        success_metrics: List[str] = Field(default_factory=list)
+        resources: list[str] = Field(default_factory=list)
+        risks: list[str] = Field(default_factory=list)
+        success_metrics: list[str] = Field(default_factory=list)
 
     # Initialize workflow
     state = ResearchPlanningState(
@@ -268,11 +266,11 @@ def example_5_multi_agent_with_fallback():
     # Define a complex output model
     class ComplexAnalysis(BaseModel):
         executive_summary: str
-        quantitative_metrics: Dict[str, float]
-        qualitative_insights: List[str]
-        recommendations: List[Dict[str, str]]
-        confidence_scores: Dict[str, float]
-        limitations: List[str] = Field(default_factory=list)
+        quantitative_metrics: dict[str, float]
+        qualitative_insights: list[str]
+        recommendations: list[dict[str, str]]
+        confidence_scores: dict[str, float]
+        limitations: list[str] = Field(default_factory=list)
 
     # Create analyzer with structured output
     analyzer, structurer = ReactAgent.with_structured_output(
@@ -287,11 +285,11 @@ def example_5_multi_agent_with_fallback():
 
         # Complex analysis fields
         executive_summary: str = ""
-        quantitative_metrics: Dict[str, float] = Field(default_factory=dict)
-        qualitative_insights: List[str] = Field(default_factory=list)
-        recommendations: List[Dict[str, str]] = Field(default_factory=list)
-        confidence_scores: Dict[str, float] = Field(default_factory=dict)
-        limitations: List[str] = Field(default_factory=list)
+        quantitative_metrics: dict[str, float] = Field(default_factory=dict)
+        qualitative_insights: list[str] = Field(default_factory=list)
+        recommendations: list[dict[str, str]] = Field(default_factory=list)
+        confidence_scores: dict[str, float] = Field(default_factory=dict)
+        limitations: list[str] = Field(default_factory=list)
 
     state = AnalysisState(
         agents=[analyzer, structurer],

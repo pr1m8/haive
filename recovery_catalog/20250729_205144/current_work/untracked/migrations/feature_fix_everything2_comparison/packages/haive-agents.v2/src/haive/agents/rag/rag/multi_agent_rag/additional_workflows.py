@@ -5,10 +5,9 @@ This module implements additional RAG architectures beyond the simple enhanced w
 including memory-based, multi-query, fusion, and advanced reasoning patterns.
 """
 
-from haive.core.schema.prebuilt.rag_state import RAGState
-
 from haive.agents.multi.base import ExecutionMode, MultiAgent
 from haive.agents.simple import SimpleAgent
+from haive.core.schema.prebuilt.rag_state import RAGState
 
 
 class MemoryRAGState(RAGState):

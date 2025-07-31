@@ -3,9 +3,9 @@
 """Check that Poetry lock files are in sync with pyproject.toml files."""
 
 import os
-from pathlib import Path
 import subprocess
 import sys
+from pathlib import Path
 
 
 def find_packages():
@@ -33,7 +33,11 @@ def find_packages():
 def check_lock_file(package_dir):
     """Check if lock file is in sync with pyproject.toml."""
     result = subprocess.run(
-        ["poetry", "lock", "--check"], cwd=package_dir, capture_output=True, text=True, check=False
+        ["poetry", "lock", "--check"],
+        cwd=package_dir,
+        capture_output=True,
+        text=True,
+        check=False,
     )
     return result.returncode == 0, result.stderr if result.returncode != 0 else ""
 

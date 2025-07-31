@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Universal Example Runner - Execute any agent example with streaming and visualization.
+"""Universal Example Runner - Execute any agent example with streaming and visualization.
 
 This module provides a unified interface to run any agent example across the Haive ecosystem,
 regardless of agent type, architecture, or execution pattern. It handles streaming output,
@@ -13,10 +12,9 @@ import logging
 import sys
 import time
 import traceback
-from contextlib import asynccontextmanager, contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, AsyncGenerator, Callable, Dict, List, Optional, Union
+from typing import Any
 
 from .agent_analyzer import AgentAnalyzer, AgentArchitecture, AgentInfo
 
@@ -30,11 +28,11 @@ class ExecutionConfig:
     max_output_size: int = 10_000_000  # 10MB max output
     chunk_size: int = 1024  # 1KB chunks for streaming
     enable_visualization: bool = True
-    visualization_path: Optional[Path] = None
+    visualization_path: Path | None = None
     timeout_seconds: int = 300  # 5 minute timeout
     stream_output: bool = True
     save_full_output: bool = True
-    output_file: Optional[Path] = None
+    output_file: Path | None = None
 
 
 @dataclass
@@ -43,12 +41,12 @@ class ExecutionResult:
 
     success: bool
     output: str = ""
-    error: Optional[str] = None
+    error: str | None = None
     execution_time: float = 0.0
-    agent_info: Optional[AgentInfo] = None
-    visualization_path: Optional[Path] = None
-    output_file: Optional[Path] = None
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    agent_info: AgentInfo | None = None
+    visualization_path: Path | None = None
+    output_file: Path | None = None
+    metadata: dict[str, Any] = field(default_factory=dict)
 
 
 class OutputStreamer:
@@ -57,8 +55,8 @@ class OutputStreamer:
     def __init__(self, config: ExecutionConfig):
         self.config = config
         self.total_size = 0
-        self.chunks: List[str] = []
-        self.full_output_file: Optional[Path] = None
+        self.chunks: list[str] = []
+        self.full_output_file: Path | None = None
 
     def add_chunk(self, chunk: str) -> bool:
         """Add a chunk of output.
@@ -82,7 +80,7 @@ class OutputStreamer:
 
         if self.config.stream_output:
             # Stream chunk to stdout
-            print(chunk, end="", flush=True)
+            pass
 
         return True
 
@@ -100,15 +98,14 @@ class OutputStreamer:
                 if final_chunk:
                     f.write(final_chunk)
 
-            print(f"\n\n[OUTPUT TOO LARGE - Saved to: {self.full_output_file}]")
         except Exception as e:
-            logger.error(f"Failed to save output to file: {e}")
+            logger.exception(f"Failed to save output to file: {e}")
 
     def get_output(self) -> str:
         """Get the complete output."""
         return "".join(self.chunks)
 
-    def finalize(self) -> Optional[Path]:
+    def finalize(self) -> Path | None:
         """Finalize output and return file path if output was saved to file."""
         if self.total_size > self.config.max_output_size:
             if not self.full_output_file:
@@ -120,7 +117,7 @@ class OutputStreamer:
 class UniversalExampleRunner:
     """Universal runner for any agent example."""
 
-    def __init__(self, project_root: Optional[Path] = None):
+    def __init__(self, project_root: Path | None = None):
         """Initialize the runner.
 
         Args:
@@ -129,7 +126,7 @@ class UniversalExampleRunner:
         self.analyzer = AgentAnalyzer(project_root)
         self.project_root = self.analyzer.project_root
 
-    async def discover_all_examples(self) -> List[Path]:
+    async def discover_all_examples(self) -> list[Path]:
         """Discover all example files across the project.
 
         Returns:
@@ -169,7 +166,7 @@ class UniversalExampleRunner:
         return list(set(example_files))  # Remove duplicates
 
     async def run_example(
-        self, example_path: Union[str, Path], config: Optional[ExecutionConfig] = None
+        self, example_path: str | Path, config: ExecutionConfig | None = None
     ) -> ExecutionResult:
         """Run a single example with full monitoring and streaming.
 
@@ -237,7 +234,7 @@ class UniversalExampleRunner:
 
         except Exception as e:
             execution_time = time.time() - start_time
-            logger.error(f"Failed to run example {example_path}: {e}")
+            logger.exception(f"Failed to run example {example_path}: {e}")
 
             return ExecutionResult(
                 success=False,
@@ -250,9 +247,7 @@ class UniversalExampleRunner:
                 },
             )
 
-    async def _detect_agent_for_example(
-        self, example_path: Path
-    ) -> Optional[AgentInfo]:
+    async def _detect_agent_for_example(self, example_path: Path) -> AgentInfo | None:
         """Detect which agent is associated with an example.
 
         Args:
@@ -288,8 +283,8 @@ class UniversalExampleRunner:
             return None
 
     async def _generate_visualization(
-        self, agent_info: AgentInfo, viz_path: Optional[Path] = None
-    ) -> Optional[Path]:
+        self, agent_info: AgentInfo, viz_path: Path | None = None
+    ) -> Path | None:
         """Generate visualization for an agent.
 
         Args:
@@ -359,7 +354,7 @@ class UniversalExampleRunner:
 
     async def _execute_example_safely(
         self, example_path: Path, streamer: OutputStreamer, config: ExecutionConfig
-    ) -> tuple[bool, str, Optional[str]]:
+    ) -> tuple[bool, str, str | None]:
         """Execute an example with safety measures and output streaming.
 
         Args:
@@ -372,7 +367,7 @@ class UniversalExampleRunner:
         """
         try:
             # First, try to detect execution pattern by reading the file
-            with open(example_path, "r", encoding="utf-8") as f:
+            with open(example_path, encoding="utf-8") as f:
                 content = f.read()
 
             # Check if it's async
@@ -384,17 +379,16 @@ class UniversalExampleRunner:
 
             if is_async:
                 return await self._execute_async_example(example_path, streamer, config)
-            else:
-                return await self._execute_sync_example(example_path, streamer, config)
+            return await self._execute_sync_example(example_path, streamer, config)
 
         except Exception as e:
-            error_msg = f"Execution failed: {str(e)}\n{traceback.format_exc()}"
+            error_msg = f"Execution failed: {e!s}\n{traceback.format_exc()}"
             streamer.add_chunk(f"ERROR: {error_msg}\n")
             return False, streamer.get_output(), error_msg
 
     async def _execute_async_example(
         self, example_path: Path, streamer: OutputStreamer, config: ExecutionConfig
-    ) -> tuple[bool, str, Optional[str]]:
+    ) -> tuple[bool, str, str | None]:
         """Execute an async example."""
         try:
             # Import and execute the module
@@ -433,7 +427,7 @@ class UniversalExampleRunner:
 
             return True, streamer.get_output(), None
 
-        except asyncio.TimeoutError:
+        except TimeoutError:
             error_msg = (
                 f"Example execution timed out after {config.timeout_seconds} seconds"
             )
@@ -441,17 +435,16 @@ class UniversalExampleRunner:
             return False, streamer.get_output(), error_msg
 
         except Exception as e:
-            error_msg = f"Async execution failed: {str(e)}"
+            error_msg = f"Async execution failed: {e!s}"
             streamer.add_chunk(f"ERROR: {error_msg}\n")
             return False, streamer.get_output(), error_msg
 
     async def _execute_sync_example(
         self, example_path: Path, streamer: OutputStreamer, config: ExecutionConfig
-    ) -> tuple[bool, str, Optional[str]]:
+    ) -> tuple[bool, str, str | None]:
         """Execute a sync example."""
         try:
             import asyncio
-            import subprocess
 
             # Run the example as a subprocess with timeout
             process = await asyncio.create_subprocess_exec(
@@ -481,22 +474,21 @@ class UniversalExampleRunner:
 
                 if process.returncode == 0:
                     return True, streamer.get_output(), None
-                else:
-                    error_msg = f"Process exited with code {process.returncode}"
-                    return False, streamer.get_output(), error_msg
+                error_msg = f"Process exited with code {process.returncode}"
+                return False, streamer.get_output(), error_msg
 
-            except asyncio.TimeoutError:
+            except TimeoutError:
                 process.terminate()
                 error_msg = f"Process timed out after {config.timeout_seconds} seconds"
                 streamer.add_chunk(f"TIMEOUT: {error_msg}\n")
                 return False, streamer.get_output(), error_msg
 
         except Exception as e:
-            error_msg = f"Sync execution failed: {str(e)}"
+            error_msg = f"Sync execution failed: {e!s}"
             streamer.add_chunk(f"ERROR: {error_msg}\n")
             return False, streamer.get_output(), error_msg
 
-    def _chunk_string(self, text: str, chunk_size: int) -> List[str]:
+    def _chunk_string(self, text: str, chunk_size: int) -> list[str]:
         """Split string into chunks of specified size.
 
         Args:
@@ -510,10 +502,10 @@ class UniversalExampleRunner:
 
     async def run_multiple_examples(
         self,
-        example_paths: List[Union[str, Path]],
-        config: Optional[ExecutionConfig] = None,
+        example_paths: list[str | Path],
+        config: ExecutionConfig | None = None,
         max_concurrent: int = 3,
-    ) -> List[ExecutionResult]:
+    ) -> list[ExecutionResult]:
         """Run multiple examples concurrently.
 
         Args:
@@ -536,7 +528,7 @@ class UniversalExampleRunner:
         tasks = [run_with_semaphore(path) for path in example_paths]
         return await asyncio.gather(*tasks, return_exceptions=True)
 
-    def generate_example_report(self, results: List[ExecutionResult]) -> str:
+    def generate_example_report(self, results: list[ExecutionResult]) -> str:
         """Generate a report from multiple execution results.
 
         Args:

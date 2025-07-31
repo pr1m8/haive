@@ -3,10 +3,9 @@
 This agent rewrites queries to improve retrieval using existing models from common.
 """
 
-from haive.core.engine.aug_llm import AugLLMConfig
-
 from haive.agents.rag.common.query_refinement.models import QueryRefinementResponse
 from haive.agents.simple import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 def create_query_rewriter_agent(

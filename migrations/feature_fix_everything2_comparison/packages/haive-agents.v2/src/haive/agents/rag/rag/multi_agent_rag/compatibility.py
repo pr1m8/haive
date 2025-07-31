@@ -4,20 +4,20 @@ This module provides comprehensive compatibility testing for RAG agents using th
 compatibility module without modifying or breaking existing agents.
 """
 
-import logging
 from dataclasses import dataclass
 from enum import Enum
+import logging
 from typing import Any
 
+from haive.agents.base.agent import Agent
+from haive.agents.rag.multi_agent_rag.agents import DocumentGradingAgent
+from haive.agents.rag.multi_agent_rag.state import MultiAgentRAGState
 from haive.core.schema.compatibility import (
     ConverterRegistry,
     TypeAnalyzer,
 )
 from haive.core.schema.compatibility.reports import generate_report
 
-from haive.agents.base.agent import Agent
-from haive.agents.rag.multi_agent_rag.agents import DocumentGradingAgent
-from haive.agents.rag.multi_agent_rag.state import MultiAgentRAGState
 
 logger = logging.getLogger(__name__)
 

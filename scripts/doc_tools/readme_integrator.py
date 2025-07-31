@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""README Integration Tool for Haive Documentation
+"""README Integration Tool for Haive Documentation.
 
 This script discovers README files throughout the codebase and integrates
 them into the Sphinx documentation.
@@ -256,9 +256,7 @@ the Haive codebase, organized by category.
 
     def integrate_readmes(self) -> None:
         """Main integration process."""
-        print("Discovering README files...")
         readme_files = self.discover_readmes()
-        print(f"Found {len(readme_files)} README files")
 
         # Clean output directory
         if self.output_dir.exists():
@@ -268,20 +266,15 @@ the Haive codebase, organized by category.
         # Process each README
         processed_files = []
         for readme_path, relative_path in readme_files:
-            print(f"Processing: {relative_path}")
             try:
                 output_path = self.process_readme(readme_path, relative_path)
                 metadata = self.extract_readme_metadata(readme_path)
                 processed_files.append((output_path, metadata))
-            except Exception as e:
-                print(f"  Error: {e}")
+            except Exception:
+                pass
 
         # Create index files
-        print("Creating index files...")
         self.create_index_files(processed_files)
-
-        print(f"\nIntegration complete! Processed {len(processed_files)} files")
-        print(f"Output directory: {self.output_dir}")
 
         # Create summary file
         summary_path = self.output_dir / "summary.yaml"
@@ -308,8 +301,6 @@ the Haive codebase, organized by category.
 
         with open(summary_path, "w") as f:
             yaml.dump(summary_data, f, default_flow_style=False)
-
-        print(f"Summary saved to: {summary_path}")
 
 
 def main():

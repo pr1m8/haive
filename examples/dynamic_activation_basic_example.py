@@ -16,13 +16,15 @@ import asyncio
 import logging
 from typing import Any
 
+from langchain_core.tools import tool
+
 from haive.agents.react.dynamic_react_agent import DynamicReactAgent
 from haive.agents.supervisor.dynamic_activation_supervisor import (
     DynamicActivationSupervisor,
 )
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.registry import RegistryItem
-from langchain_core.tools import tool
+
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

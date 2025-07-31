@@ -7,8 +7,6 @@ This module provides agent functionality for the Haive framework.
 """Self-Discovery agent implementation using SimpleAgent and ProperMultiAgent."""
 
 
-from haive.core.engine.aug_llm import AugLLMConfig
-
 from haive.agents.multi.proper_base import ProperMultiAgent
 from haive.agents.reasoning_and_critique.self_discover.v2.models import (
     AdaptedModules,
@@ -23,6 +21,8 @@ from haive.agents.reasoning_and_critique.self_discover.v2.prompts import (
     structured_prompt,
 )
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 # Default reasoning modules
 default_reasoning_modules = [
@@ -112,6 +112,7 @@ reason_agent = SimpleAgent(name="final_reasoning", engine=reason_engine)
 from haive.agents.reasoning_and_critique.self_discover.v2.state import (
     SelfDiscoveryState,
 )
+
 
 # Create the ProperMultiAgent with sequential execution and our state schema
 self_discovery = ProperMultiAgent(
