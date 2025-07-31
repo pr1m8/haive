@@ -231,7 +231,7 @@ pyright = "^1.1.399"
 sourcery = "^1.35.0"
 coverage = "^7.8.0"
 # Documentation automation tools for destroying 20,374 issues 🔥
-interrogate = "^1.5.0"            # Find missing docstrings
+interrogate = "^1.7.0"            # Find missing docstrings
 pydocstyle = "^6.3.0"             # Docstring style enforcement  
 darglint = "^1.8.1"               # Docstring-code sync validation
 mimesis = "^18.0.0"
@@ -273,7 +273,6 @@ pipdeptree = "^2.27.0"
 autopep8 = "^2.3.2"
 pycodestyle = "^2.14.0"
 docstr-coverage = "^2.3.2"
-docformatter = "^1.7.7"
 rstcheck-core = "^1.2.2"
 pyspelling = "^2.10"
 codespell = "^2.4.1"
@@ -290,6 +289,7 @@ flake8-rst-docstrings = "^0.3.1"
 flake8-bugbear = "^24.12.12"
 flake8-comprehensions = "^3.16.0"
 flake8-simplify = "^0.22.0"
+docformatter = "^1.7.7"
 
 [tool.poetry.group.dev.dependencies.torch]
 version = "2.6.0+cu118"
@@ -830,6 +830,13 @@ changelog-preview = "poetry run towncrier build --draft"
 changelog-build = "poetry run towncrier build"
 changelog-check = "poetry run towncrier check"
 changelog-create = "echo '📝 Create changelog fragment in changes/{type}/{issue}.{description}.md'"
+
+# 🔧 Pre-commit Management
+precommit-install = "poetry run pre-commit install"
+precommit-run = "poetry run pre-commit run --all-files"
+precommit-update = "poetry run pre-commit autoupdate"
+precommit-clean = "poetry run pre-commit clean"
+precommit-check = "poetry run pre-commit run --all-files --show-diff-on-failure"
 
 # ===================================================================
 # 📰 Towncrier Configuration - Changelog Management
