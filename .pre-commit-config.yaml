@@ -4,6 +4,25 @@
 # ===================================================================
 
 repos:
+  # 🔧 Trunk Integration (Local Hooks)
+  - repo: local
+    hooks:
+      - id: trunk-fmt
+        name: Trunk Format
+        entry: trunk fmt
+        language: system
+        pass_filenames: true
+        stages: [pre-commit]
+        description: Auto-format code with trunk formatters
+
+      - id: trunk-check-fix
+        name: Trunk Check & Fix
+        entry: trunk check --fix
+        language: system
+        pass_filenames: true
+        stages: [pre-commit]
+        description: Run trunk checks and auto-fix issues (includes security)
+
   # 🚀 Core Python Formatting & Linting
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.11.6
@@ -383,6 +402,10 @@ repos:
 # ===================================================================
 # 📋 Pre-commit Configuration Settings
 # ===================================================================
+# 🔧 Trunk Integration - Now using trunk's native pre-commit-hooks linter
+# Trunk now manages git hooks with pre-commit-hooks@5.0.0 enabled
+# This reads our .pre-commit-config.yaml automatically!
+
 default_stages: [pre-commit]
 minimum_pre_commit_version: "3.0.0"
 fail_fast: false
