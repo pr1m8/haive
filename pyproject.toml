@@ -163,7 +163,6 @@ sgfmill = "^1.1.1"
 
 [tool.poetry.dependencies.graphviz]
 version = "^0.20.3"
-source = "pypi"
 
 [tool.poetry.dependencies.faiss-gpu-cu12]
 version = "^1.10.0"
@@ -184,6 +183,21 @@ optional = true
 [tool.poetry.dependencies.websockets]
 version = "15.0.1"
 python = "<3.12"
+
+[tool.poetry.dependencies.torch]
+version = "2.6.0+cu118"
+source = "pytorch_cuda"
+optional = true
+
+[tool.poetry.dependencies.torchvision]
+version = "0.21.0+cu118"
+source = "pytorch_cuda"
+optional = true
+
+[tool.poetry.dependencies.torchaudio]
+version = "2.6.0+cu118"
+source = "pytorch_cuda"
+optional = true
 
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.1.1"
@@ -209,15 +223,17 @@ ipdb = "^0.13.13"
 viztracer = "^1.0.3"
 memray = "^1.17.1"
 taskipy = "^1.14.0"
+pyupgrade = "^3.19.0"
+autoimport = "^1.5.0"
 py-spy = "^0.4.0"
 ruff = "^0.11.6"
 pyright = "^1.1.399"
 sourcery = "^1.35.0"
 coverage = "^7.8.0"
 # Documentation automation tools for destroying 20,374 issues 🔥
-interrogate = "^1.5.0"          # Find missing docstrings
-pydocstyle = "^6.3.0"           # Docstring style enforcement  
-darglint = "^1.8.1"             # Docstring-code sync validation
+interrogate = "^1.5.0"            # Find missing docstrings
+pydocstyle = "^6.3.0"             # Docstring style enforcement  
+darglint = "^1.8.1"               # Docstring-code sync validation
 mimesis = "^18.0.0"
 factory-boy = "^3.3.3"
 hypothesis = "^6.131.6"
@@ -275,6 +291,17 @@ flake8-bugbear = "^24.12.12"
 flake8-comprehensions = "^3.16.0"
 flake8-simplify = "^0.22.0"
 
+[tool.poetry.group.dev.dependencies.torch]
+version = "2.6.0+cu118"
+source = "pytorch_cuda"
+
+[tool.poetry.group.dev.dependencies.torchvision]
+version = "0.21.0+cu118"
+source = "pytorch_cuda"
+
+[tool.poetry.group.dev.dependencies.torchaudio]
+version = "2.6.0+cu118"
+source = "pytorch_cuda"
 
 [tool.poetry.group.docs]
 optional = true
@@ -429,18 +456,6 @@ sphinx-lastupdate = "^1.0.0"
 sphinx-library = "^1.1.3"
 sphinx-mcp = "^0.1.1"
 sphinx-markdown = "^1.0.2"
-
-[tool.poetry.group.dev.dependencies.torch]
-version = "2.6.0+cu118"
-source = "pytorch_cuda"
-
-[tool.poetry.group.dev.dependencies.torchvision]
-version = "0.21.0+cu118"
-source = "pytorch_cuda"
-
-[tool.poetry.group.dev.dependencies.torchaudio]
-version = "2.6.0+cu118"
-source = "pytorch_cuda"
 
 [tool.poetry.group.gmail_toolkit.dependencies]
 google-api-python-client = "^2.165.0"
@@ -660,8 +675,8 @@ select = [
   "PL",
   "TRY",
   "RUF",
-  "TID251",     # Banned relative imports (enforce absolute)
-  "TID252",     # Relative imports from parent modules
+  "TID251", # Banned relative imports (enforce absolute)
+  "TID252", # Relative imports from parent modules
 ]
 ignore = ["E501", "D100", "D104", "D107", "D203", "D213", "RET504", "TRY003"]
 
@@ -692,13 +707,13 @@ force_absolute_imports = true
 
 # Exclude certain directories from auto-import processing
 exclude_dirs = [
-    "docs",
-    "tests/fixtures", 
-    "build",
-    ".git",
-    "__pycache__",
-    ".trunk",
-    ".cache"
+  "docs",
+  "tests/fixtures",
+  "build",
+  ".git",
+  "__pycache__",
+  ".trunk",
+  ".cache",
 ]
 
 # Common statements for haive namespace
@@ -742,93 +757,161 @@ auto_fix_imports = true
 exclude = ["**/.cache/trunk/**", "**/.trunk/**"]
 
 
+# 🚀 Taskipy Development Workflow Tasks
+[tool.taskipy.tasks]
+
+# 🧠 Intelligent Error Analysis & Categorization
+analyze-errors = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only"
+analyze-errors-verbose = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only --verbose"
+analyze-all = "dev-tools/scripts/intelligent-error-analyzer.sh packages/ --analyze-only"
+
+# 🚨 Safety-Level Fixes (Progressive Approach)
+emergency-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 1"
+surgical-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 2"
+moderate-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 3"
+conservative-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 4"
+cosmetic-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 5"
+
+# 👁️ Preview Modes (See Changes Before Applying)
+preview-emergency = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --preview --safety-level 1"
+preview-surgical = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --preview --safety-level 2"
+preview-moderate = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --preview --safety-level 3"
+preview-full = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --preview --safety-level 5"
+
+# 📊 Error Analysis Reports
+error-report = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only --report markdown"
+error-report-json = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only --report json"
+
+# 🔄 Systematic Code Fixing (Master Workflows)
+fix-code = "dev-tools/scripts/systematic-code-fixer.sh packages/haive-prebuilt/src"
+fix-code-preview = "dev-tools/scripts/systematic-code-fixer.sh packages/haive-prebuilt/src --preview"
+
+# 🚨 Pre-flight Syntax Fixes
+fix-syntax = "dev-tools/scripts/pre-flight-syntax-fixer.sh packages/haive-prebuilt/src"
+fix-syntax-preview = "dev-tools/scripts/pre-flight-syntax-fixer.sh packages/haive-prebuilt/src --preview"
+
+# 🔧 Modern Indentation Tools
+fix-indentation = "dev-tools/scripts/modern-indentation-fixer.sh packages/haive-prebuilt/src autopep8"
+fix-indentation-preview = "dev-tools/scripts/modern-indentation-fixer.sh packages/haive-prebuilt/src autopep8 --preview"
+
+# 📦 Import Management (3-Way System)
+fix-imports = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-prebuilt/src"
+fix-imports-preview = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-prebuilt/src --preview"
+
+# 🐍 Python Modernization
+modernize-code = "dev-tools/scripts/syntax-and-modernization-fixer.sh packages/haive-prebuilt/src"
+modernize-code-preview = "dev-tools/scripts/syntax-and-modernization-fixer.sh packages/haive-prebuilt/src --preview"
+
+# 🔄 Configuration Management
+fix-rich-dependency = "dev-tools/scripts/fix-rich-dependency-permanently.sh"
+validate-rich = "dev-tools/scripts/validate-rich-dependency.sh"
+restore-taskipy = "dev-tools/scripts/restore-taskipy-config.sh"
+
+# 🔍 Debugging and Analysis
+debug-syntax = "dev-tools/scripts/debug-and-fix-syntax.sh packages/haive-prebuilt/src"
+debug-syntax-fix = "dev-tools/scripts/debug-and-fix-syntax.sh packages/haive-prebuilt/src --fix"
+
+# 🧹 Cleanup and Maintenance
+clean-backups = "find packages/ -name '*.py.bak' -delete && find packages/ -name '*~' -delete"
+clean-cache = "find packages/ -name '__pycache__' -type d -exec rm -rf {} + 2>/dev/null || true"
+clean-all = "poetry run task clean-backups && poetry run task clean-cache"
+
+# 🚀 Quick Start Workflows
+quick-fix = "poetry run task emergency-fix && poetry run task surgical-fix"
+full-fix = "poetry run task fix-code"
+health-check = "find packages/haive-prebuilt/src -name '*.py' -exec python3 -m py_compile {} \\; 2>&1 | grep -c 'SyntaxError\\|IndentationError' || echo '✅ All files compile successfully'"
+
+# 📚 Documentation and Help
+help-tasks = "echo '🧠 Available tasks:' && poetry run task --list"
+help-scripts = "echo '📁 Script documentation in dev-tools/README.md'"
+
+# 📰 Changelog Management
+changelog-preview = "poetry run towncrier build --draft"
+changelog-build = "poetry run towncrier build"
+changelog-check = "poetry run towncrier check"
+changelog-create = "echo '📝 Create changelog fragment in changes/{type}/{issue}.{description}.md'"
+
+# ===================================================================
+# 📰 Towncrier Configuration - Changelog Management
+# ===================================================================
+
+[tool.towncrier]
+package = "haive"
+filename = "CHANGELOG.md"
+directory = "changes"
+title_format = "# Changelog\n\nAll notable changes to this project will be documented in this file.\n\nThe format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),\nand this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).\n\n<!-- towncrier release notes start -->"
+issue_format = "[#{issue}](https://github.com/prim8/haive/issues/{issue})"
+# template = "changes/.template.md"  # Using default template
+start_string = "<!-- towncrier release notes start -->"
+underlines = ["", "", ""]
+all_bullets = false
+# Ignore directories and common non-fragment files
+ignore = [
+  "README.md",
+  ".template.md",
+  ".gitkeep",
+  "feature",
+  "bugfix",
+  "improvement",
+  "deprecation",
+  "breaking",
+  "security",
+  "performance",
+  "docs",
+  "dev",
+  "misc",
+]
+
+[[tool.towncrier.type]]
+directory = "feature"
+name = "🚀 Features"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "bugfix"
+name = "🐛 Bug Fixes"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "improvement"
+name = "✨ Improvements"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "deprecation"
+name = "🗑️ Deprecations"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "breaking"
+name = "💥 Breaking Changes"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "security"
+name = "🔒 Security"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "performance"
+name = "⚡ Performance"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "docs"
+name = "📚 Documentation"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "dev"
+name = "🔧 Development"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "misc"
+name = "🔀 Miscellaneous"
+showcontent = true
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-# Add taskipy configuration for coordinated workflow management
-
-[tool.taskipy.tasks]
-# 🚀 Main Package Operations
-fix-package = "dev-tools/scripts/bulk_package_fix.sh"
-fix-games = "dev-tools/scripts/bulk_package_fix.sh haive-games"
-fix-dataflow = "dev-tools/scripts/bulk_package_fix.sh haive-dataflow" 
-fix-mcp = "dev-tools/scripts/bulk_package_fix.sh haive-mcp"
-fix-agents = "dev-tools/scripts/bulk_package_fix.sh haive-agents"
-fix-all = "task fix-games && task fix-dataflow && task fix-mcp && task fix-agents"
-
-# 🎯 Targeted Operations
-eliminate-prints-old = "dev-tools/scripts/print-eliminator.sh"
-modernize-syntax = "dev-tools/scripts/pyupgrade-modernizer.sh"
-format-code = "ruff format"
-check-code = "ruff check"
-check-stats = "ruff check --statistics"
-
-# 📦 Import Management (3-Way Approach for Namespaced Poly Repo)
-fix-imports = "dev-tools/scripts/comprehensive-import-manager.sh"
-fix-imports-games = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-games/src --fix"
-fix-imports-dataflow = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-dataflow/src --fix"
-fix-imports-mcp = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-mcp/src --fix"
-fix-imports-agents = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-agents/src --fix"
-preview-imports = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-games/src"
-check-imports = "ruff check --select I,F401,F821,TID251,TID252"
-
-# 🔄 Workflow Combinations
-quick-fix = "task eliminate-prints && task modernize-syntax && task format-code"
-full-check = "task check-stats && echo '📊 Baseline established'"
-clean-and-check = "task quick-fix && task check-stats"
-
-# 🛡️ Safety Operations  
-stash-save = "git stash push -m 'TASKIPY_CHECKPOINT_$(date +%Y%m%d_%H%M%S)'"
-stash-list = "git stash list"
-stash-restore = "git stash pop"
-
-# 📋 Development Workflow
-dev-setup = "pre-commit install && echo '✅ Pre-commit hooks installed'"
-dev-clean = "find . -name '__pycache__' -exec rm -rf {} + && find . -name '*.pyc' -delete"
-dev-lint = "task check-code --fix"
-dev-format = "task format-code"
-dev-all = "task dev-clean && task dev-lint && task dev-format"
-
-# 🚀 Power Commands (Multi-step workflows)
-nuclear-fix = "task stash-save && task fix-all && echo '🎉 All packages fixed!'"
-safe-experiment = "task stash-save && task quick-fix"
-rollback = "task stash-restore && echo '🔄 Changes rolled back'"
-
-# 📊 Monitoring & Dashboard
-dashboard = "dev-tools/scripts/monitor-progress.sh"
-watch-dashboard = "dev-tools/scripts/monitor-progress.sh --watch"
-health-check = "task dashboard && echo ''"
-report = "task dashboard > health-report-$(date +%Y%m%d_%H%M%S).txt && echo '📊 Report saved'"
-
-# 🔍 Dependency Management
-check-deps = "dev-tools/scripts/dependency-conflict-checker.sh"
-fix-deps = "dev-tools/scripts/dependency-conflict-checker.sh --fix"
-sync-deps = "task fix-deps && poetry lock && poetry install"
-
-# 🔄 Safe Refactoring Operations
-refactor = "dev-tools/scripts/safe-refactor.sh"
-refactor-help = "dev-tools/scripts/safe-refactor.sh"
-rename-function = "dev-tools/scripts/safe-refactor.sh rename-function"
-rename-variable = "dev-tools/scripts/safe-refactor.sh rename-variable"
-extract-method = "dev-tools/scripts/safe-refactor.sh extract-method"
-find-usages = "dev-tools/scripts/safe-refactor.sh find-usages"
-check-refactor-safety = "dev-tools/scripts/safe-refactor.sh check-safety"
-
-# 🔥 Fixit Advanced Auto-Fixing
-fixit-preview = "dev-tools/scripts/fixit-modernizer.sh"
-fixit-fix = "dev-tools/scripts/fixit-modernizer.sh src/ --fix"
-fixit-games = "dev-tools/scripts/fixit-modernizer.sh packages/haive-games/src/ --fix"
-fixit-mcp = "dev-tools/scripts/fixit-modernizer.sh packages/haive-mcp/src/ --fix"
-fixit-dataflow = "dev-tools/scripts/fixit-modernizer.sh packages/haive-dataflow/src/ --fix"
-
-# 📦 Auto-Import Management
-auto-import = "dev-tools/scripts/auto-import-manager.sh"
-auto-import-fix = "dev-tools/scripts/auto-import-manager.sh src/ --fix"
-auto-import-games = "dev-tools/scripts/auto-import-manager.sh packages/haive-games/src/ --fix"
-auto-import-mcp = "dev-tools/scripts/auto-import-manager.sh packages/haive-mcp/src/ --fix"
-
-# 🖨️ Print Statement Management  
-eliminate-prints = "dev-tools/scripts/print-statement-eliminator.sh"
-eliminate-prints-safe = "dev-tools/scripts/print-statement-eliminator.sh src/ --safe"
-eliminate-prints-mcp = "dev-tools/scripts/print-statement-eliminator.sh packages/haive-mcp/src/ --safe"
