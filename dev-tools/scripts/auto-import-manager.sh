@@ -24,9 +24,9 @@ echo -e "${CYAN}📦 AUTO-IMPORT MANAGER${NC}"
 echo -e "${BLUE}Directory: $DIRECTORY${NC}"
 echo ""
 
-# Safety checkpoint
+# Safety checkpoint (ONLY for target directory)
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-git stash push -m "AUTO_IMPORT_CHECKPOINT_${TIMESTAMP}" || echo "⚠️ No changes to stash"
+git stash push -m "AUTO_IMPORT_CHECKPOINT_${TIMESTAMP}" -- "$DIRECTORY" || echo "⚠️ No changes to stash"
 
 # Check and install required tools
 echo -e "${BLUE}🔍 Checking import management tools...${NC}"

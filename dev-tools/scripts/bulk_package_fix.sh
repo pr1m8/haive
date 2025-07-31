@@ -25,7 +25,8 @@ cd "$PACKAGE_DIR"
 # Phase 1: Safety Checkpoint
 echo "📋 PHASE 1: Creating safety checkpoint..."
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-git stash push -m "SAFETY_CHECKPOINT_${PACKAGE_NAME}_${TIMESTAMP}" || echo "⚠️ No changes to stash"
+# Since we're already in the package directory, stash only current directory
+git stash push -m "SAFETY_CHECKPOINT_${PACKAGE_NAME}_${TIMESTAMP}" -- . || echo "⚠️ No changes to stash"
 
 # Get baseline error count
 echo "📊 Getting baseline error count..."
@@ -64,4 +65,4 @@ echo "✅ AFTER:  $FINAL_ERRORS errors"
 echo "🎯 FIXED:  $IMPROVEMENT errors ($PERCENTAGE% improvement)"
 echo ""
 echo "🔄 ROLLBACK: git stash apply stash@{0} (if needed)"
-echo "✅ PACKAGE FIXED: $PACKAGE_NAME" 
+echo "✅ PACKAGE FIXED: $PACKAGE_NAME"

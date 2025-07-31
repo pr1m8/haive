@@ -160,6 +160,29 @@ nox = "^2025.5.1"
 tomli = "^2.2.1"
 sgfmill = "^1.1.1"
 
+# CLI Dependencies
+click = "^8.2.1"
+typer = "^0.16.0"
+questionary = "^2.1.0"
+inquirerpy = "^0.3.4"
+invoke = "^2.2.0"
+fabric = "^3.2.2"
+plumbum = "^1.9.0"
+sh = "^2.2.2"
+click-repl = "^0.3.0"
+simple-term-menu = "^1.6.6"
+pick = "^2.4.0"
+halo = "^0.0.31"
+rich-click = "^1.8.9"
+alive-progress = "^3.3.0"
+pyfiglet = "^1.0.3"
+art = "^6.5"
+log-symbols = "^0.0.14"
+textual = "^5.0.1"
+blessed = "^1.21.0"
+shellingham = "^1.5.4"
+pexpect = "^4.9.0"
+
 
 [tool.poetry.dependencies.graphviz]
 version = "^0.20.3"
@@ -232,7 +255,7 @@ sourcery = "^1.35.0"
 coverage = "^7.8.0"
 # Documentation automation tools for destroying 20,374 issues 🔥
 interrogate = "^1.7.0"            # Find missing docstrings
-pydocstyle = "^6.3.0"             # Docstring style enforcement  
+pydocstyle = "^6.3.0"             # Docstring style enforcement
 darglint = "^1.8.1"               # Docstring-code sync validation
 mimesis = "^18.0.0"
 factory-boy = "^3.3.3"
@@ -451,7 +474,6 @@ sphinx-icontract = "^2.0.3"
 sphinx-inlinecode = "^2.0.1"
 sphinx-inplace = "^0.0.7"
 sphinx-interrogatedb = "^1.3.1"
-sphinx-invoke = "^0.2.1"
 sphinx-lastupdate = "^1.0.0"
 sphinx-library = "^1.1.3"
 sphinx-mcp = "^0.1.1"
@@ -600,6 +622,8 @@ python-language-server = "^0.36.2"
 
 [tool.poetry.group.experimental.dependencies]
 langmem = "^0.0.28"
+
+
 
 
 [tool.poetry.group.search_tools.dependencies]
