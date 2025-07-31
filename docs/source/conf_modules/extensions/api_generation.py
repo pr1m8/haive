@@ -7,7 +7,7 @@ This module configures extensions for automatically generating API documentation
 - Type hints: Enhanced type hint documentation
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 
 def get_config(
@@ -15,8 +15,8 @@ def get_config(
     enable_autodoc: bool = True,
     enable_napoleon: bool = True,
     enable_typehints: bool = True,
-    packages: Optional[List[str]] = None,
-) -> Dict[str, Any]:
+    packages: list[str] | None = None,
+) -> dict[str, Any]:
     """Get API generation extension configuration.
 
     Args:
@@ -62,7 +62,7 @@ def get_config(
     return config
 
 
-def _get_autodoc_config() -> Dict[str, Any]:
+def _get_autodoc_config() -> dict[str, Any]:
     """Get autodoc configuration."""
     return {
         "autodoc_member_order": "groupwise",
@@ -90,7 +90,7 @@ def _get_autodoc_config() -> Dict[str, Any]:
     }
 
 
-def _get_napoleon_config() -> Dict[str, Any]:
+def _get_napoleon_config() -> dict[str, Any]:
     """Get Napoleon (Google docstrings) configuration."""
     return {
         "napoleon_google_docstring": True,
@@ -110,7 +110,7 @@ def _get_napoleon_config() -> Dict[str, Any]:
     }
 
 
-def _get_typehints_config() -> Dict[str, Any]:
+def _get_typehints_config() -> dict[str, Any]:
     """Get type hints configuration."""
     return {
         "typehints_document_rtype": True,
@@ -121,7 +121,7 @@ def _get_typehints_config() -> Dict[str, Any]:
     }
 
 
-def _get_autoapi_config(packages: Optional[List[str]] = None) -> Dict[str, Any]:
+def _get_autoapi_config(packages: list[str] | None = None) -> dict[str, Any]:
     """Get AutoAPI configuration."""
     packages = packages or [
         "haive-core",
@@ -169,7 +169,7 @@ def _get_autoapi_config(packages: Optional[List[str]] = None) -> Dict[str, Any]:
     }
 
 
-def get_minimal_config() -> Dict[str, Any]:
+def get_minimal_config() -> dict[str, Any]:
     """Get minimal API generation configuration."""
     return get_config(
         enable_autoapi=False,
@@ -177,12 +177,12 @@ def get_minimal_config() -> Dict[str, Any]:
     )
 
 
-def get_standard_config() -> Dict[str, Any]:
+def get_standard_config() -> dict[str, Any]:
     """Get standard API generation configuration."""
     return get_config()
 
 
-def get_full_config() -> Dict[str, Any]:
+def get_full_config() -> dict[str, Any]:
     """Get full API generation configuration with all features."""
     return get_config(
         enable_autoapi=True,

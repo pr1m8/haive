@@ -4,10 +4,10 @@ This module provides configuration dictionaries for extensions that require
 special settings beyond just being included in the extensions list.
 """
 
-from typing import Any, Dict, List
+from typing import Any
 
 
-def get_mermaid_config() -> Dict[str, Any]:
+def get_mermaid_config() -> dict[str, Any]:
     """Configuration for Mermaid diagrams."""
     return {
         "mermaid_output_format": "svg",
@@ -27,7 +27,7 @@ def get_mermaid_config() -> Dict[str, Any]:
     }
 
 
-def get_plantuml_config() -> Dict[str, Any]:
+def get_plantuml_config() -> dict[str, Any]:
     """Configuration for PlantUML diagrams."""
     return {
         "plantuml": "java -jar plantuml.jar",
@@ -37,7 +37,7 @@ def get_plantuml_config() -> Dict[str, Any]:
     }
 
 
-def get_bibtex_config() -> Dict[str, Any]:
+def get_bibtex_config() -> dict[str, Any]:
     """Configuration for bibliography."""
     return {
         "bibtex_bibfiles": ["references.bib"],
@@ -46,7 +46,7 @@ def get_bibtex_config() -> Dict[str, Any]:
     }
 
 
-def get_openapi_config() -> Dict[str, Any]:
+def get_openapi_config() -> dict[str, Any]:
     """Configuration for OpenAPI documentation."""
     return {
         "openapi_spec_url": "/openapi.json",
@@ -55,7 +55,7 @@ def get_openapi_config() -> Dict[str, Any]:
     }
 
 
-def get_httpdomain_config() -> Dict[str, Any]:
+def get_httpdomain_config() -> dict[str, Any]:
     """Configuration for HTTP domain."""
     return {
         "http_index_ignore_prefixes": ["/internal/", "/debug/"],
@@ -64,7 +64,7 @@ def get_httpdomain_config() -> Dict[str, Any]:
     }
 
 
-def get_images_config() -> Dict[str, Any]:
+def get_images_config() -> dict[str, Any]:
     """Configuration for image handling."""
     return {
         "images_config": {
@@ -77,7 +77,7 @@ def get_images_config() -> Dict[str, Any]:
     }
 
 
-def get_youtube_config() -> Dict[str, Any]:
+def get_youtube_config() -> dict[str, Any]:
     """Configuration for YouTube embedding."""
     return {
         "youtube_cmd": ('youtube-dl -f "best[height<=480]" --get-url {url}'),
@@ -86,7 +86,7 @@ def get_youtube_config() -> Dict[str, Any]:
     }
 
 
-def get_copybutton_config() -> Dict[str, Any]:
+def get_copybutton_config() -> dict[str, Any]:
     """Configuration for copy button."""
     return {
         "copybutton_prompt_text": r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: ",
@@ -96,7 +96,7 @@ def get_copybutton_config() -> Dict[str, Any]:
     }
 
 
-def get_design_config() -> Dict[str, Any]:
+def get_design_config() -> dict[str, Any]:
     """Configuration for sphinx-design."""
     return {
         "sd_fontawesome_latex": True,
@@ -107,7 +107,7 @@ def get_design_config() -> Dict[str, Any]:
     }
 
 
-def get_external_toc_config() -> Dict[str, Any]:
+def get_external_toc_config() -> dict[str, Any]:
     """Configuration for external TOC."""
     return {
         "external_toc_path": "_toc.yml",
@@ -115,7 +115,7 @@ def get_external_toc_config() -> Dict[str, Any]:
     }
 
 
-def get_sitemap_config() -> Dict[str, Any]:
+def get_sitemap_config() -> dict[str, Any]:
     """Configuration for sitemap generation."""
     return {
         "html_baseurl": "https://haive.readthedocs.io/",
@@ -125,7 +125,7 @@ def get_sitemap_config() -> Dict[str, Any]:
     }
 
 
-def get_opengraph_config() -> Dict[str, Any]:
+def get_opengraph_config() -> dict[str, Any]:
     """Configuration for OpenGraph meta tags."""
     return {
         "ogp_site_url": "https://haive.readthedocs.io/",
@@ -140,7 +140,7 @@ def get_opengraph_config() -> Dict[str, Any]:
     }
 
 
-def get_versioning_config() -> Dict[str, Any]:
+def get_versioning_config() -> dict[str, Any]:
     """Configuration for documentation versioning."""
     return {
         "scv_root_ref": "main",
@@ -151,7 +151,7 @@ def get_versioning_config() -> Dict[str, Any]:
     }
 
 
-def get_rediraffe_config() -> Dict[str, Any]:
+def get_rediraffe_config() -> dict[str, Any]:
     """Configuration for redirects."""
     return {
         "rediraffe_branch": "main",
@@ -162,7 +162,7 @@ def get_rediraffe_config() -> Dict[str, Any]:
     }
 
 
-def get_fulltoc_config() -> Dict[str, Any]:
+def get_fulltoc_config() -> dict[str, Any]:
     """Configuration for full table of contents."""
     return {
         "html_theme_options": {
@@ -171,7 +171,7 @@ def get_fulltoc_config() -> Dict[str, Any]:
     }
 
 
-def get_all_extension_configs(available_extensions: List[str]) -> Dict[str, Any]:
+def get_all_extension_configs(available_extensions: list[str]) -> dict[str, Any]:
     """Get all configuration for available extensions."""
     configs = {}
 
@@ -205,7 +205,7 @@ def get_all_extension_configs(available_extensions: List[str]) -> Dict[str, Any]
     return configs
 
 
-def get_extension_dependencies() -> Dict[str, List[str]]:
+def get_extension_dependencies() -> dict[str, list[str]]:
     """Get dependencies between extensions."""
     return {
         "sphinxcontrib.plantuml": ["plantuml"],  # Requires PlantUML Java
@@ -218,7 +218,7 @@ def get_extension_dependencies() -> Dict[str, List[str]]:
     }
 
 
-def get_autodoc_pydantic_config() -> Dict[str, Any]:
+def get_autodoc_pydantic_config() -> dict[str, Any]:
     """Configuration for autodoc-pydantic extension."""
     return {
         # Pydantic model settings
@@ -249,7 +249,7 @@ def get_autodoc_pydantic_config() -> Dict[str, Any]:
     }
 
 
-def get_autodocsumm_config() -> Dict[str, Any]:
+def get_autodocsumm_config() -> dict[str, Any]:
     """Configuration for autodocsumm extension."""
     return {
         # Autodocsumm settings
@@ -269,7 +269,7 @@ def get_autodocsumm_config() -> Dict[str, Any]:
     }
 
 
-def get_conditional_configs(extensions: List[str]) -> Dict[str, Any]:
+def get_conditional_configs(extensions: list[str]) -> dict[str, Any]:
     """Get configurations that depend on multiple extensions being present."""
     configs = {}
 

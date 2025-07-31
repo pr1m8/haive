@@ -9,7 +9,7 @@ This module configures extensions for exporting documentation to different forma
 - Data visualization
 """
 
-from typing import Any, Dict
+from typing import Any
 
 
 def get_config(
@@ -20,7 +20,7 @@ def get_config(
     enable_favicon: bool = True,
     enable_data_viewer: bool = False,
     enable_git_integration: bool = True,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Get export and output extension configuration.
 
     Args:
@@ -82,7 +82,7 @@ def get_config(
     return config
 
 
-def _get_pdf_config() -> Dict[str, Any]:
+def _get_pdf_config() -> dict[str, Any]:
     """Get PDF generation configuration."""
     return {
         # LaTeX configuration for PDF output
@@ -115,7 +115,7 @@ def _get_pdf_config() -> Dict[str, Any]:
     }
 
 
-def _get_revealjs_config() -> Dict[str, Any]:
+def _get_revealjs_config() -> dict[str, Any]:
     """Get reveal.js presentation configuration."""
     return {
         "revealjs_script_conf": {
@@ -138,7 +138,7 @@ def _get_revealjs_config() -> Dict[str, Any]:
     }
 
 
-def _get_multiversion_config() -> Dict[str, Any]:
+def _get_multiversion_config() -> dict[str, Any]:
     """Get multi-version documentation configuration."""
     return {
         "smv_tag_whitelist": r"^v\d+\.\d+\.\d+$",  # Only version tags
@@ -149,7 +149,7 @@ def _get_multiversion_config() -> Dict[str, Any]:
     }
 
 
-def _get_404_config() -> Dict[str, Any]:
+def _get_404_config() -> dict[str, Any]:
     """Get custom 404 page configuration."""
     return {
         "notfound_pagename": "404",
@@ -162,7 +162,7 @@ def _get_404_config() -> Dict[str, Any]:
     }
 
 
-def _get_favicon_config() -> Dict[str, Any]:
+def _get_favicon_config() -> dict[str, Any]:
     """Get favicon configuration."""
     return {
         "favicons": [
@@ -188,7 +188,7 @@ def _get_favicon_config() -> Dict[str, Any]:
     }
 
 
-def _get_data_viewer_config() -> Dict[str, Any]:
+def _get_data_viewer_config() -> dict[str, Any]:
     """Get data viewer configuration."""
     return {
         "data_viewer_defaults": {
@@ -198,7 +198,7 @@ def _get_data_viewer_config() -> Dict[str, Any]:
     }
 
 
-def _get_git_config() -> Dict[str, Any]:
+def _get_git_config() -> dict[str, Any]:
     """Get advanced Git integration configuration."""
     return {
         "git_commit_link": "https://github.com/pr1m8/haive/commit/{commit}",
@@ -207,7 +207,7 @@ def _get_git_config() -> Dict[str, Any]:
     }
 
 
-def get_epub_config() -> Dict[str, Any]:
+def get_epub_config() -> dict[str, Any]:
     """Get EPUB e-book configuration."""
     return {
         "epub_title": "Haive AI Agent Framework",
@@ -231,7 +231,7 @@ def get_epub_config() -> Dict[str, Any]:
     }
 
 
-def get_minimal_config() -> Dict[str, Any]:
+def get_minimal_config() -> dict[str, Any]:
     """Get minimal export configuration."""
     return get_config(
         enable_pdf=False,
@@ -244,7 +244,7 @@ def get_minimal_config() -> Dict[str, Any]:
     )
 
 
-def get_standard_config() -> Dict[str, Any]:
+def get_standard_config() -> dict[str, Any]:
     """Get standard export configuration."""
     return get_config(
         enable_pdf=False,
@@ -257,7 +257,7 @@ def get_standard_config() -> Dict[str, Any]:
     )
 
 
-def get_full_config() -> Dict[str, Any]:
+def get_full_config() -> dict[str, Any]:
     """Get full export configuration."""
     config = get_config(
         enable_pdf=True,

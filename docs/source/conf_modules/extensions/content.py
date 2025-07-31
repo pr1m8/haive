@@ -8,7 +8,7 @@ This module configures extensions for processing different content types:
 - External TOC: External table of contents management
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 
 def get_config(
@@ -18,8 +18,8 @@ def get_config(
     enable_jinja: bool = True,
     enable_external_toc: bool = True,
     enable_live_code: bool = False,
-    packages: Optional[List[str]] = None,
-) -> Dict[str, Any]:
+    packages: list[str] | None = None,
+) -> dict[str, Any]:
     """Get content processing extension configuration.
 
     Args:
@@ -72,7 +72,7 @@ def get_config(
     return config
 
 
-def _get_myst_config() -> Dict[str, Any]:
+def _get_myst_config() -> dict[str, Any]:
     """Get MyST parser configuration."""
     return {
         "myst_enable_extensions": [
@@ -92,7 +92,7 @@ def _get_myst_config() -> Dict[str, Any]:
     }
 
 
-def _get_jupyter_config() -> Dict[str, Any]:
+def _get_jupyter_config() -> dict[str, Any]:
     """Get Jupyter notebook configuration."""
     return {
         "jupyter_cache": "../../.jupyter_cache",
@@ -106,7 +106,7 @@ def _get_jupyter_config() -> Dict[str, Any]:
     }
 
 
-def _get_gallery_config(packages: Optional[List[str]] = None) -> Dict[str, Any]:
+def _get_gallery_config(packages: list[str] | None = None) -> dict[str, Any]:
     """Get example gallery configuration."""
     packages = packages or [
         "haive-agents",
@@ -152,21 +152,19 @@ def _get_gallery_config(packages: Optional[List[str]] = None) -> Dict[str, Any]:
     }
 
 
-def _get_jinja_config() -> Dict[str, Any]:
+def _get_jinja_config() -> dict[str, Any]:
     """Get Jinja2 template processing configuration."""
     return {
         "jinja2_contexts": {
             "agent_demo": {
                 # These will be imported from agent demo modules
-                # "get_agent_context": get_agent_context,
-                # "available_agents": AVAILABLE_AGENTS,
             }
         },
         "jinja2_debug": False,
     }
 
 
-def _get_external_toc_config() -> Dict[str, Any]:
+def _get_external_toc_config() -> dict[str, Any]:
     """Get external table of contents configuration."""
     return {
         "external_toc_path": "_toc.yml",  # Use external TOC file (optional)
@@ -174,7 +172,7 @@ def _get_external_toc_config() -> Dict[str, Any]:
     }
 
 
-def _get_thebe_config() -> Dict[str, Any]:
+def _get_thebe_config() -> dict[str, Any]:
     """Get Thebe (live code) configuration."""
     return {
         "thebe_config": {
@@ -186,7 +184,7 @@ def _get_thebe_config() -> Dict[str, Any]:
     }
 
 
-def get_exec_config() -> Dict[str, Any]:
+def get_exec_config() -> dict[str, Any]:
     """Get code execution configuration."""
     return {
         "exec_code_working_dir": "../..",  # Project root
@@ -196,7 +194,7 @@ def get_exec_config() -> Dict[str, Any]:
     }
 
 
-def get_exercise_config() -> Dict[str, Any]:
+def get_exercise_config() -> dict[str, Any]:
     """Get interactive exercises configuration."""
     return {
         "exercise_include_exercises": True,  # Include exercises in output
@@ -204,7 +202,7 @@ def get_exercise_config() -> Dict[str, Any]:
     }
 
 
-def get_proof_config() -> Dict[str, Any]:
+def get_proof_config() -> dict[str, Any]:
     """Get mathematical proofs configuration."""
     return {
         "proof_theorem_types": {
@@ -219,7 +217,7 @@ def get_proof_config() -> Dict[str, Any]:
     }
 
 
-def get_minimal_config() -> Dict[str, Any]:
+def get_minimal_config() -> dict[str, Any]:
     """Get minimal content processing configuration."""
     return get_config(
         enable_myst=True,
@@ -231,7 +229,7 @@ def get_minimal_config() -> Dict[str, Any]:
     )
 
 
-def get_standard_config() -> Dict[str, Any]:
+def get_standard_config() -> dict[str, Any]:
     """Get standard content processing configuration."""
     return get_config(
         enable_myst=True,
@@ -243,7 +241,7 @@ def get_standard_config() -> Dict[str, Any]:
     )
 
 
-def get_full_config() -> Dict[str, Any]:
+def get_full_config() -> dict[str, Any]:
     """Get full content processing configuration."""
     config = get_config(
         enable_myst=True,
