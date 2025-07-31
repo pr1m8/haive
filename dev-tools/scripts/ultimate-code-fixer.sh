@@ -18,15 +18,26 @@ set -e
 DIRECTORY=${1:-"packages/haive-prebuilt/src"}
 MODE=${2:-"--preview"}
 
-# Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-CYAN='\033[0;36m'
-PURPLE='\033[0;35m'
-BOLD='\033[1m'
-NC='\033[0m'
+# Colors for output (disable if not a terminal)
+if [[ -t 1 ]]; then
+	RED='\033[0;31m'
+	GREEN='\033[0;32m'
+	YELLOW='\033[1;33m'
+	BLUE='\033[0;34m'
+	CYAN='\033[0;36m'
+	PURPLE='\033[0;35m'
+	BOLD='\033[1m'
+	NC='\033[0m'
+else
+	RED=''
+	GREEN=''
+	YELLOW=''
+	BLUE=''
+	CYAN=''
+	PURPLE=''
+	BOLD=''
+	NC=''
+fi
 
 # Global variables for tracking
 TOOLS_INSTALLED=0
@@ -39,7 +50,6 @@ CHECKPOINT_CREATED=""
 # ===================================================================
 
 print_header() {
-	clear
 	echo -e "${BOLD}${CYAN}╔══════════════════════════════════════════════════════════════╗${NC}"
 	echo -e "${BOLD}${CYAN}║                  🚀 ULTIMATE CODE FIXER                     ║${NC}"
 	echo -e "${BOLD}${CYAN}║              2024 All-in-One Python Enhancement             ║${NC}"
@@ -90,15 +100,15 @@ install_and_verify_tools() {
 
 		if poetry show "$tool" >/dev/null 2>&1; then
 			echo -e "${GREEN}   ✅ Already installed${NC}"
-			((installed++))
+			installed=$((installed + 1))
 		else
 			echo -e "${YELLOW}   📥 Installing $tool...${NC}"
 			if poetry add --group dev "$tool" >/dev/null 2>&1; then
 				echo -e "${GREEN}   ✅ Successfully installed${NC}"
-				((installed++))
+				installed=$((installed + 1))
 			else
 				echo -e "${RED}   ❌ Failed to install${NC}"
-				((failed++))
+				failed=$((failed + 1))
 			fi
 		fi
 	done
