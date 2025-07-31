@@ -131,13 +131,13 @@ def generate_module_docstring(module_name: str, module_path: str) -> str:
         if module_path_parts[-2] in game_types:
             docstring = f"""{display_name} {game_type} implementation.
 
-This module provides a complete implementation of {display_name} for the Haive 
+This module provides a complete implementation of {display_name} for the Haive
 games framework, including game state management, rules enforcement, move validation,
 and agent integration.
 
 Example:
-    >>> from haive.games.{actual_module_name} import {display_name.replace(' ', '')}Agent
-    >>> agent = {display_name.replace(' ', '')}Agent()
+    >>> from haive.games.{actual_module_name} import {display_name.replace(" ", "")}Agent
+    >>> agent = {display_name.replace(" ", "")}Agent()
     >>> final_state = agent.run_game(visualize=True)
 
 Typical usage:
@@ -162,8 +162,8 @@ This module provides data models for representing {display_name} game elements,
 including board state, pieces, players, moves, and analysis results.
 
 Example:
-    >>> from haive.games.{actual_module_name}.models import {display_name.replace(' ', '')}Move
-    >>> move = {display_name.replace(' ', '')}Move(position=(0, 0), player="X")
+    >>> from haive.games.{actual_module_name}.models import {display_name.replace(" ", "")}Move
+    >>> move = {display_name.replace(" ", "")}Move(position=(0, 0), player="X")
 """
     elif module_path.endswith("state.py"):
         docstring = f"""State representation for {display_name} game.
@@ -173,8 +173,8 @@ complete game state including board position, player information, turn tracking,
 and game status.
 
 Example:
-    >>> from haive.games.{actual_module_name}.state import {display_name.replace(' ', '')}State
-    >>> state = {display_name.replace(' ', '')}State.initialize()
+    >>> from haive.games.{actual_module_name}.state import {display_name.replace(" ", "")}State
+    >>> state = {display_name.replace(" ", "")}State.initialize()
 """
     elif module_path.endswith("state_manager.py"):
         docstring = f"""State manager for {display_name} game logic and mechanics.
@@ -183,8 +183,8 @@ This module handles core operations like initializing the board, validating and 
 moves, evaluating win conditions, and updating the state with engine analyses.
 
 Example:
-    >>> from haive.games.{actual_module_name}.state_manager import {display_name.replace(' ', '')}StateManager
-    >>> manager = {display_name.replace(' ', '')}StateManager()
+    >>> from haive.games.{actual_module_name}.state_manager import {display_name.replace(" ", "")}StateManager
+    >>> manager = {display_name.replace(" ", "")}StateManager()
     >>> new_state = manager.apply_move(state, move)
 """
     elif module_path.endswith("agent.py"):
@@ -194,8 +194,8 @@ This module provides an agent for playing {display_name}, handling strategic dec
 making, move generation, and game management.
 
 Example:
-    >>> from haive.games.{actual_module_name}.agent import {display_name.replace(' ', '')}Agent
-    >>> agent = {display_name.replace(' ', '')}Agent()
+    >>> from haive.games.{actual_module_name}.agent import {display_name.replace(" ", "")}Agent
+    >>> agent = {display_name.replace(" ", "")}Agent()
     >>> result = agent.run_game()
 """
     elif module_path.endswith("config.py"):
@@ -205,8 +205,8 @@ This module defines the configuration options for {display_name} games,
 including game parameters, player settings, and engine configurations.
 
 Example:
-    >>> from haive.games.{actual_module_name}.config import {display_name.replace(' ', '')}Config
-    >>> config = {display_name.replace(' ', '')}Config(first_player="X")
+    >>> from haive.games.{actual_module_name}.config import {display_name.replace(" ", "")}Config
+    >>> config = {display_name.replace(" ", "")}Config(first_player="X")
 """
     elif module_path.endswith("engines.py"):
         docstring = f"""Engine configurations for {display_name} game.
@@ -235,8 +235,8 @@ This module provides UI components for visualizing and interacting with
 {display_name} games, including console-based and rich terminal interfaces.
 
 Example:
-    >>> from haive.games.{actual_module_name}.ui import {display_name.replace(' ', '')}UI
-    >>> ui = {display_name.replace(' ', '')}UI()
+    >>> from haive.games.{actual_module_name}.ui import {display_name.replace(" ", "")}UI
+    >>> ui = {display_name.replace(" ", "")}UI()
     >>> ui.display(game_state)
 """
     else:
@@ -246,7 +246,7 @@ Example:
 This module provides supporting functionality for {display_name} games.
 
 Example:
-    >>> from haive.games.{actual_module_name}.{module_path_parts[-1].replace('.py', '')} import some_function
+    >>> from haive.games.{actual_module_name}.{module_path_parts[-1].replace(".py", "")} import some_function
     >>> result = some_function()
 """
 
@@ -298,7 +298,7 @@ Example:
     ...     first_player="player1",
     ...     enable_analysis=True
     ... )
-    >>> agent = {display_name.replace(' ', '')}Agent(config)
+    >>> agent = {display_name.replace(" ", "")}Agent(config)
 """
 
     if class_name.endswith("State"):
@@ -400,7 +400,7 @@ Example:
     >>> player = {class_name}(id="p1", name="Player 1")
 """
 
-    if class_name.endswith("UI") or class_name.endswith("Renderer"):
+    if class_name.endswith(("UI", "Renderer")):
         return f"""User interface component for {display_name}.
 
 This class provides visualization and interaction capabilities for
@@ -477,7 +477,7 @@ def generate_function_docstring(
     # Extract parameters from the function definition
     params = []
     for arg in func_def.args.args:
-        if arg.arg != "self" and arg.arg != "cls":
+        if arg.arg not in {"self", "cls"}:
             params.append(arg.arg)
 
     # Generate function description based on common naming patterns
@@ -526,29 +526,28 @@ def generate_function_docstring(
 
     # Determine return type based on function annotation if available
     return_desc = "The result of the operation."
-    if func_def.returns:
-        if isinstance(func_def.returns, ast.Name):
-            return_type = func_def.returns.id
-            if return_type == "bool":
-                return_desc = "True if successful, False otherwise."
-            elif return_type == "str":
-                return_desc = "A string representation or result."
-            elif return_type == "int":
-                return_desc = "A numeric result or status code."
-            elif return_type == "float":
-                return_desc = "A numeric value or score."
-            elif return_type == "list":
-                return_desc = "A list of results."
-            elif return_type == "dict":
-                return_desc = "A dictionary containing result data."
-            elif return_type == "None":
-                return_desc = "None"
-            elif "State" in return_type:
-                return_desc = f"Updated {display_name} game state."
-            elif "Move" in return_type:
-                return_desc = f"Generated {display_name} move."
-            elif "Analysis" in return_type:
-                return_desc = f"Analysis result for the {display_name} position."
+    if func_def.returns and isinstance(func_def.returns, ast.Name):
+        return_type = func_def.returns.id
+        if return_type == "bool":
+            return_desc = "True if successful, False otherwise."
+        elif return_type == "str":
+            return_desc = "A string representation or result."
+        elif return_type == "int":
+            return_desc = "A numeric result or status code."
+        elif return_type == "float":
+            return_desc = "A numeric value or score."
+        elif return_type == "list":
+            return_desc = "A list of results."
+        elif return_type == "dict":
+            return_desc = "A dictionary containing result data."
+        elif return_type == "None":
+            return_desc = "None"
+        elif "State" in return_type:
+            return_desc = f"Updated {display_name} game state."
+        elif "Move" in return_type:
+            return_desc = f"Generated {display_name} move."
+        elif "Analysis" in return_type:
+            return_desc = f"Analysis result for the {display_name} position."
 
     return f"""{desc}
 
@@ -646,8 +645,7 @@ def add_docstrings_to_file(file_path: str, dry_run: bool = False) -> dict[str, i
     try:
         with open(file_path) as f:
             file_content = f.read()
-    except Exception as e:
-        print(f"Error reading file {file_path}: {e}")
+    except Exception:
         return stats
 
     # Extract module name from path
@@ -669,8 +667,7 @@ def add_docstrings_to_file(file_path: str, dry_run: bool = False) -> dict[str, i
     # Parse the file
     try:
         tree = ast.parse(file_content)
-    except SyntaxError as e:
-        print(f"Syntax error in {file_path}: {e}")
+    except SyntaxError:
         return stats
 
     # Find nodes that need docstrings
@@ -734,9 +731,8 @@ def add_docstrings_to_file(file_path: str, dry_run: bool = False) -> dict[str, i
         try:
             with open(file_path, "w") as f:
                 f.write(new_content)
-            print(f"Updated {file_path} with {len(modifications)} docstrings")
-        except Exception as e:
-            print(f"Error writing to file {file_path}: {e}")
+        except Exception:
+            pass
 
     # Add skipped stats
     stats["module_skipped"] = len(
@@ -763,7 +759,6 @@ def create_module_readme(module_path: str, dry_run: bool = False) -> bool:
     try:
         readme_path = os.path.join(module_path, "README.md")
         if os.path.exists(readme_path):
-            print(f"README already exists at {readme_path}")
             return False
 
         # Extract module name from path
@@ -838,8 +833,7 @@ def create_module_readme(module_path: str, dry_run: bool = False) -> bool:
                                 components.append(f"{display_name} Models")
                         else:
                             components.append(component_name)
-        except Exception as e:
-            print(f"Warning: Error analyzing components in {module_path}: {e}")
+        except Exception:
             # Default component if analysis fails
             components = [f"{display_name}Component"]
 
@@ -892,15 +886,15 @@ def create_module_readme(module_path: str, dry_run: bool = False) -> bool:
 
         # Basic usage example
         usage_example = f"""```python
-from haive.games.{module_name} import {display_name.replace(' ', '')}Agent
-from haive.games.{module_name} import {display_name.replace(' ', '')}Config
+from haive.games.{module_name} import {display_name.replace(" ", "")}Agent
+from haive.games.{module_name} import {display_name.replace(" ", "")}Config
 
 # Create a game agent with custom configuration
-config = {display_name.replace(' ', '')}Config(
+config = {display_name.replace(" ", "")}Config(
     enable_analysis=True,
     visualize=True
 )
-agent = {display_name.replace(' ', '')}Agent(config)
+agent = {display_name.replace(" ", "")}Agent(config)
 
 # Run a complete game
 final_state = agent.run_game()
@@ -941,16 +935,12 @@ This module is designed to work seamlessly with the Haive agent framework, provi
             try:
                 with open(readme_path, "w") as f:
                     f.write(readme_content)
-                print(f"Created README at {readme_path}")
                 return True
-            except Exception as e:
-                print(f"Error creating README at {readme_path}: {e}")
+            except Exception:
                 return False
         else:
-            print(f"Would create README at {readme_path}")
             return True
-    except Exception as e:
-        print(f"Error processing README for {module_path}: {e}")
+    except Exception:
         return False
 
 
@@ -993,8 +983,7 @@ def process_directory(dir_path: str, dry_run: bool = False) -> dict[str, int]:
                     stats["function_docstrings_skipped"] += file_stats[
                         "function_skipped"
                     ]
-                except Exception as e:
-                    print(f"Error processing file {file_path}: {e}")
+                except Exception:
                     stats["errors"] += 1
 
     # Generate README files for modules
@@ -1009,8 +998,7 @@ def process_directory(dir_path: str, dry_run: bool = False) -> dict[str, int]:
                     stats["readmes_added"] += 1
                 else:
                     stats["readmes_skipped"] += 1
-            except Exception as e:
-                print(f"Error creating README for {root}: {e}")
+            except Exception:
                 stats["errors"] += 1
 
     return stats
@@ -1036,23 +1024,9 @@ def main():
     args = parser.parse_args()
 
     if not os.path.exists(args.path) or not os.path.isdir(args.path):
-        print(f"Error: Path {args.path} does not exist or is not a directory.")
         sys.exit(1)
 
-    print(f"Processing {args.path} {'(dry run)' if args.dry_run else ''}...")
-    stats = process_directory(args.path, args.dry_run)
-
-    print("\nDocumentation generation complete!")
-    print(f"Files processed: {stats['files_processed']}")
-    print(f"Module docstrings added: {stats['module_docstrings_added']}")
-    print(f"Class docstrings added: {stats['class_docstrings_added']}")
-    print(f"Function docstrings added: {stats['function_docstrings_added']}")
-    print(f"Module docstrings skipped: {stats['module_docstrings_skipped']}")
-    print(f"Class docstrings skipped: {stats['class_docstrings_skipped']}")
-    print(f"Function docstrings skipped: {stats['function_docstrings_skipped']}")
-    print(f"READMEs added: {stats['readmes_added']}")
-    print(f"READMEs skipped: {stats['readmes_skipped']}")
-    print(f"Errors: {stats['errors']}")
+    process_directory(args.path, args.dry_run)
 
 
 if __name__ == "__main__":

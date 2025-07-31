@@ -1,0 +1,51 @@
+{
+  "component_info": {
+    "name": "get_openlibrary_cover_image",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.openlibrary_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get the cover image URL from an OpenLibrary ID (for book or author)",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:29.070551",
+    "schema": {
+      "description": "Input schema for the cover image retrieval tool.\n\nAttributes:\n    olid: The OpenLibrary ID for a book or author.\n    is_author: Boolean flag indicating if the OLID is for an author.",
+      "properties": {
+        "olid": {
+          "description": "The OpenLibrary ID for a book or author",
+          "title": "Olid",
+          "type": "string"
+        },
+        "is_author": {
+          "default": false,
+          "description": "Set to true if the OLID is for an author",
+          "title": "Is Author",
+          "type": "boolean"
+        }
+      },
+      "required": ["olid"],
+      "title": "CoverInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_openlibrary_cover_image",
+    "tool_description": "Get the cover image URL from an OpenLibrary ID (for book or author)"
+  },
+  "document": {
+    "page_content": "# get_openlibrary_cover_image\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.openlibrary_toolkit\n**Class:** StructuredTool\n\n## Description\nGet the cover image URL from an OpenLibrary ID (for book or author)\n\n## Schema\n```json\n{\n  \"description\": \"Input schema for the cover image retrieval tool.\\n\\nAttributes:\\n    olid: The OpenLibrary ID for a book or author.\\n    is_author: Boolean flag indicating if the OLID is for an author.\",\n  \"properties\": {\n    \"olid\": {\n      \"description\": \"The OpenLibrary ID for a book or author\",\n      \"title\": \"Olid\",\n      \"type\": \"string\"\n    },\n    \"is_author\": {\n      \"default\": false,\n      \"description\": \"Set to true if the OLID is for an author\",\n      \"title\": \"Is Author\",\n      \"type\": \"boolean\"\n    }\n  },\n  \"required\": [\n    \"olid\"\n  ],\n  \"title\": \"CoverInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `get_openlibrary_cover_image`\n**Description:** Get the cover image URL from an OpenLibrary ID (for book or author)\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "get_openlibrary_cover_image",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.openlibrary_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:29.070551",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

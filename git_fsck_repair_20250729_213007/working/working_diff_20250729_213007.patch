@@ -1,0 +1,31 @@
+# Working Directory Diff Captured: 2025-07-29T21:30:07-04:00
+diff --git a/packages/haive-dataflow b/packages/haive-dataflow
+--- a/packages/haive-dataflow
++++ b/packages/haive-dataflow
+@@ -1 +1 @@
+-Subproject commit 626f825992c61d14d993638a3d3bc04c3dd88889
++Subproject commit 626f825992c61d14d993638a3d3bc04c3dd88889-dirty
+diff --git a/packages/haive-games b/packages/haive-games
+--- a/packages/haive-games
++++ b/packages/haive-games
+@@ -1 +1 @@
+-Subproject commit b646fe34406fba42af198cb307d49faa5fb77092
++Subproject commit b646fe34406fba42af198cb307d49faa5fb77092-dirty
+diff --git a/packages/haive-mcp b/packages/haive-mcp
+--- a/packages/haive-mcp
++++ b/packages/haive-mcp
+@@ -1 +1 @@
+-Subproject commit 240c072f3ea838d4d1d8257606ff0a2ef83dac70
++Subproject commit 240c072f3ea838d4d1d8257606ff0a2ef83dac70-dirty
+diff --git a/packages/haive-prebuilt b/packages/haive-prebuilt
+--- a/packages/haive-prebuilt
++++ b/packages/haive-prebuilt
+@@ -1 +1 @@
+-Subproject commit 31923f9d308afddbee67ac76d076711de66b1525
++Subproject commit 31923f9d308afddbee67ac76d076711de66b1525-dirty
+diff --git a/packages/haive-tools b/packages/haive-tools
+--- a/packages/haive-tools
++++ b/packages/haive-tools
+@@ -1 +1 @@
+-Subproject commit 7bb991f70d4a71bae90cbae7f76d713cfbbf9313
++Subproject commit 7bb991f70d4a71bae90cbae7f76d713cfbbf9313-dirty

@@ -1,0 +1,44 @@
+{
+  "component_info": {
+    "name": "search_chuck_jokes",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.chuck_norris_jokes_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Search for Chuck Norris jokes matching a text query",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:29.044436",
+    "schema": {
+      "description": "Search for Chuck Norris jokes containing the specified query string.\n\nArgs:\n    query (str): The search term to look for in jokes.\n\nReturns:\n    List[Joke]: A list of joke objects matching the search query.\n\nRaises:\n    requests.RequestException: If the API request fails.",
+      "properties": {
+        "query": {
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"],
+      "title": "search_chuck_jokes",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "search_chuck_jokes",
+    "tool_description": "Search for Chuck Norris jokes matching a text query"
+  },
+  "document": {
+    "page_content": "# search_chuck_jokes\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.chuck_norris_jokes_toolkit\n**Class:** StructuredTool\n\n## Description\nSearch for Chuck Norris jokes matching a text query\n\n## Schema\n```json\n{\n  \"description\": \"Search for Chuck Norris jokes containing the specified query string.\\n\\nArgs:\\n    query (str): The search term to look for in jokes.\\n\\nReturns:\\n    List[Joke]: A list of joke objects matching the search query.\\n\\nRaises:\\n    requests.RequestException: If the API request fails.\",\n  \"properties\": {\n    \"query\": {\n      \"title\": \"Query\",\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"query\"\n  ],\n  \"title\": \"search_chuck_jokes\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `search_chuck_jokes`\n**Description:** Search for Chuck Norris jokes matching a text query\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "search_chuck_jokes",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.chuck_norris_jokes_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:29.044436",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

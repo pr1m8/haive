@@ -1,0 +1,633 @@
+/* docs/source/_static/custom.css */
+
+/* ============================================================================
+   Root Variables and Theme Overrides
+   ============================================================================ */
+
+:root {
+    --haive-primary: #2962ff;
+    --haive-secondary: #4fc3f7;
+    --haive-success: #00c853;
+    --haive-warning: #ffab00;
+    --haive-danger: #ff1744;
+    --haive-info: #00b0ff;
+    
+    /* Enhanced theme colors */
+    --haive-gradient-primary: linear-gradient(135deg, #2962ff 0%, #4fc3f7 100%);
+    --haive-gradient-secondary: linear-gradient(135deg, #4fc3f7 0%, #00c853 100%);
+    --haive-shadow-soft: 0 4px 20px rgba(41, 98, 255, 0.1);
+    --haive-shadow-strong: 0 8px 32px rgba(41, 98, 255, 0.2);
+    --haive-border-radius: 12px;
+    --haive-border-radius-small: 6px;
+}
+
+/* ============================================================================
+   General Typography and Layout
+   ============================================================================ */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ============================================================================
+   Enhanced Code Blocks for PyData Theme
+   ============================================================================ */
+
+/* Better code blocks with improved contrast */
+.highlight {
+    border-radius: 8px;
+    margin: 1rem 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid var(--pst-color-border, #dee2e6);
+}
+
+.highlight pre {
+    padding: 1rem;
+    margin: 0;
+    overflow-x: auto;
+    background-color: var(--pst-color-surface, #ffffff);
+    color: var(--pst-color-text-base, #212529);
+}
+
+/* Inline code with better contrast */
+code.literal {
+    background-color: var(--pst-color-inline-code-bg, rgba(27, 31, 35, 0.05));
+    color: var(--pst-color-inline-code-text, #d73a49);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-size: 0.875em;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+}
+
+/* Code hyperlinks - CRITICAL for navigation */
+.highlight .nc a, 
+.highlight .nf a,
+.highlight .nd a {
+    color: var(--pst-color-primary, #0d6efd) !important;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+.highlight .nc a:hover, 
+.highlight .nf a:hover,
+.highlight .nd a:hover {
+    border-bottom-color: var(--pst-color-primary, #0d6efd);
+}
+
+/* Source code links styling */
+.viewcode-link {
+    float: right;
+    font-size: 0.875rem;
+    color: var(--pst-color-secondary, #6c757d);
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    transition: all 0.2s ease;
+}
+
+.viewcode-link:hover {
+    background-color: var(--pst-color-primary, #0d6efd);
+    color: white;
+}
+
+/* ============================================================================
+   API Documentation Styling
+   ============================================================================ */
+
+/* Class and function signatures */
+dl.py {
+    margin: 1.5rem 0;
+}
+
+dl.py dt {
+    background-color: var(--color-api-background) !important;
+    border-radius: 8px;
+    padding: 0.75rem 1rem !important;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    border: 1px solid var(--color-api-background-hover);
+    transition: all 0.2s ease;
+}
+
+dl.py dt:hover {
+    background-color: var(--color-api-background-hover) !important;
+    transform: translateX(4px);
+}
+
+/* Parameter lists */
+dl.field-list {
+    background-color: var(--color-api-background);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+/* ============================================================================
+   Cards and Grid Enhancements
+   ============================================================================ */
+
+.sd-card {
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.1);
+    height: 100%;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+.sd-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    border-color: var(--haive-primary);
+}
+
+.sd-card-header {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--haive-primary);
+}
+
+/* Package cards specific styling */
+.package-card {
+    padding-top: 120px; /* Space for background image */
+    position: relative;
+    overflow: hidden;
+}
+
+.package-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--haive-primary), var(--haive-secondary));
+    z-index: 1;
+}
+
+.package-card .sd-card-img-top {
+    height: 120px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.package-card:hover .sd-card-img-top {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.package-card .sd-card-title {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 0.5rem;
+}
+
+.package-card .sd-card-text {
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================================================
+   Agent and Game Gallery Styling
+   ============================================================================ */
+
+/* Agent cards */
+.agent-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.agent-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--haive-primary), var(--haive-secondary));
+}
+
+/* Game showcase */
+.game-showcase {
+    margin: 2rem 0;
+    padding: 2rem;
+    background: var(--color-api-background);
+    border-radius: 12px;
+}
+
+.game-screenshot {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    max-width: 100%;
+    height: auto;
+}
+
+/* ============================================================================
+   Tabs Enhancement
+   ============================================================================ */
+
+.sphinx-tabs {
+    margin: 1.5rem 0;
+}
+
+.sphinx-tabs-tab {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.sphinx-tabs-tab[aria-selected="true"] {
+    border-bottom-color: var(--haive-primary);
+    color: var(--haive-primary);
+}
+
+.sphinx-tabs-panel {
+    padding: 1.5rem 0;
+}
+
+/* ============================================================================
+   Admonitions (Notes, Warnings, etc.)
+   ============================================================================ */
+
+.admonition {
+    border-radius: 8px;
+    border-left: 4px solid;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.admonition.note {
+    border-left-color: var(--haive-info);
+    background-color: rgba(0, 176, 255, 0.1);
+}
+
+.admonition.warning {
+    border-left-color: var(--haive-warning);
+    background-color: rgba(255, 171, 0, 0.1);
+}
+
+.admonition.danger {
+    border-left-color: var(--haive-danger);
+    background-color: rgba(255, 23, 68, 0.1);
+}
+
+.admonition.tip {
+    border-left-color: var(--haive-success);
+    background-color: rgba(0, 200, 83, 0.1);
+}
+
+/* ============================================================================
+   PyData Theme Navigation and Sidebar Enhancements
+   ============================================================================ */
+
+/* PyData theme sidebar improvements */
+.bd-sidebar {
+    background-color: var(--pst-color-sidebar-background, #f8f9fa);
+}
+
+/* Primary sidebar navigation */
+.bd-sidebar .bd-toc-item .reference {
+    color: var(--pst-color-text-base, #212529);
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.25rem;
+    transition: all 0.2s ease;
+}
+
+.bd-sidebar .bd-toc-item .reference:hover {
+    background-color: var(--pst-color-sidebar-link-hover, rgba(13, 110, 253, 0.1));
+    color: var(--pst-color-primary, #0d6efd);
+    text-decoration: none;
+}
+
+.bd-sidebar .bd-toc-item.current > .reference {
+    font-weight: 600;
+    color: var(--pst-color-primary, #0d6efd);
+    background-color: var(--pst-color-sidebar-link-active, rgba(13, 110, 253, 0.15));
+}
+
+/* Secondary sidebar (page TOC) improvements */
+.bd-toc .onthispage {
+    font-weight: 600;
+    color: var(--pst-color-text-muted, #6c757d);
+    margin-bottom: 0.5rem;
+}
+
+.bd-toc .toc-entry {
+    border-left: 2px solid transparent;
+    padding-left: 0.5rem;
+    transition: border-color 0.2s ease;
+}
+
+.bd-toc .toc-entry:hover {
+    border-left-color: var(--pst-color-primary, #0d6efd);
+}
+
+.bd-toc .toc-entry.current {
+    border-left-color: var(--pst-color-primary, #0d6efd);
+}
+
+.bd-toc .toc-entry.current > a {
+    font-weight: 600;
+    color: var(--pst-color-primary, #0d6efd);
+}
+
+.toc-tree li.current > a {
+    border-left: 3px solid var(--haive-secondary);
+    padding-left: calc(1rem - 3px);
+    color: #ffffff; /* Make current TOC item white for visibility */
+}
+
+/* Table of contents colors */
+.toc-tree a {
+    color: #e9ecef; /* Light color for TOC */
+}
+
+.toc-tree a:hover {
+    color: #ffffff; /* White on hover */
+}
+
+/* Collapsible sidebar navigation */
+.sidebar-tree .toctree-l1 > .reference {
+    font-weight: 600;
+    color: #f8f9fa; /* Much lighter color for better visibility */
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-tree .toctree-l1 {
+    margin-bottom: 0.5rem;
+}
+
+.sidebar-tree .toctree-l1 > ul {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+    opacity: 0;
+    transition: max-height 0.5s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.sidebar-tree .toctree-l1.current > ul {
+    max-height: 4000px; /* Large enough to fit content */
+    opacity: 1;
+}
+
+/* Style for the toggle indicator - JS will add this element */
+.sidebar-toggle-indicator {
+    display: inline-block;
+    margin-right: 0.5rem;
+    font-size: 0.75rem;
+    transition: transform 0.3s ease;
+    color: var(--haive-primary);
+}
+
+/* Enhanced styling for sidebar items */
+.sidebar-tree .toctree-l1 > .reference {
+    padding: 0.4rem 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.sidebar-tree .toctree-l1 > .reference:hover {
+    background-color: rgba(255,255,255,0.15); /* Lighter hover background for visibility */
+}
+
+.sidebar-tree .toctree-l1.current > .reference {
+    background-color: rgba(79, 195, 247, 0.2); /* Lighter secondary color background */
+}
+
+/* Improved styling for child items */
+.sidebar-tree .toctree-l1 > ul > li {
+    margin-left: 1rem;
+    border-left: 1px solid rgba(255,255,255,0.3); /* Lighter border for better visibility */
+    padding-left: 0.5rem;
+}
+
+.sidebar-tree .toctree-l1 > ul > li > .reference {
+    font-weight: normal;
+    font-size: 0.95rem;
+    padding: 0.2rem 0;
+    display: block;
+    transition: color 0.2s ease, transform 0.2s ease;
+    color: #e9ecef; /* Light color for child items */
+}
+
+.sidebar-tree .toctree-l1 > ul > li > .reference:hover {
+    color: var(--haive-secondary);
+    transform: translateX(2px);
+}
+
+.sidebar-tree .toctree-l1 > ul > li.current > .reference {
+    color: var(--haive-secondary);
+    font-weight: 600;
+}
+
+/* ============================================================================
+   Search Results
+   ============================================================================ */
+
+.highlighted {
+    background-color: rgba(255, 214, 10, 0.5);
+    padding: 0 3px;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+/* ============================================================================
+   Tables
+   ============================================================================ */
+
+table.docutils {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+table.docutils thead {
+    background-color: var(--haive-primary);
+    color: white;
+}
+
+table.docutils thead th {
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+}
+
+table.docutils tbody tr:hover {
+    background-color: var(--color-api-background-hover);
+}
+
+/* ============================================================================
+   Example Output Styling
+   ============================================================================ */
+
+.example-output {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.example-output::-webkit-scrollbar {
+    width: 8px;
+}
+
+.example-output::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.example-output::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.example-output::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* ============================================================================
+   Mermaid Diagram Styling
+   ============================================================================ */
+
+.mermaid {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+/* ============================================================================
+   Mobile Responsive
+   ============================================================================ */
+
+@media (max-width: 768px) {
+    .sd-card {
+        margin-bottom: 1rem;
+    }
+    
+    dl.py dt {
+        font-size: 0.875rem;
+        padding: 0.5rem !important;
+    }
+    
+    .sphinx-tabs-tab {
+        font-size: 0.875rem;
+        padding: 0.375rem 0.75rem;
+    }
+}
+
+/* ============================================================================
+   Print Styles
+   ============================================================================ */
+
+@media print {
+    .sidebar,
+    .headerlink,
+    .page-toc,
+    .editthispage {
+        display: none !important;
+    }
+}
+
+/* ============================================================================
+   Animations
+   ============================================================================ */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sd-card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* ============================================================================
+   Utility Classes
+   ============================================================================ */
+
+.text-center {
+    text-align: center;
+}
+
+.mt-4 {
+    margin-top: 2rem;
+}
+
+.mb-4 {
+    margin-bottom: 2rem;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 4px;
+    background-color: var(--haive-primary);
+    color: white;
+}
+
+/* Beta indicator styling */
+.beta-notice {
+    display: inline-block;
+    background-color: #fff8f0;
+    color: #ff7b00;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+}
+
+/* Enhanced autosummary tables */
+table.longtable.docutils {
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+table.longtable.docutils tr td:first-child {
+    width: 30%;
+    font-family: monospace;
+    white-space: nowrap;
+}
+
+/* Better module layout */
+.rst-content dl:not(.docutils) dt {
+    border-top: solid 3px var(--haive-primary);
+}
+
+/* Make auto-generated API links more prominent */
+.py.function {
+    margin-bottom: 1.5rem;
+}
+
+.rubric {
+    font-size: 1.25rem;
+    color: var(--haive-primary);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding-bottom: 0.5rem;
+}

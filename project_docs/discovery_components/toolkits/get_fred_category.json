@@ -1,0 +1,45 @@
+{
+  "component_info": {
+    "name": "get_fred_category",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.fred_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get a FRED category by ID",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:29.038529",
+    "schema": {
+      "description": "Input schema for FRED category queries.",
+      "properties": {
+        "category_id": {
+          "description": "The FRED category ID to fetch (e.g., 0 for root)",
+          "title": "Category Id",
+          "type": "integer"
+        }
+      },
+      "required": ["category_id"],
+      "title": "CategoryInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_fred_category",
+    "tool_description": "Get a FRED category by ID"
+  },
+  "document": {
+    "page_content": "# get_fred_category\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.fred_toolkit\n**Class:** StructuredTool\n\n## Description\nGet a FRED category by ID\n\n## Schema\n```json\n{\n  \"description\": \"Input schema for FRED category queries.\",\n  \"properties\": {\n    \"category_id\": {\n      \"description\": \"The FRED category ID to fetch (e.g., 0 for root)\",\n      \"title\": \"Category Id\",\n      \"type\": \"integer\"\n    }\n  },\n  \"required\": [\n    \"category_id\"\n  ],\n  \"title\": \"CategoryInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `get_fred_category`\n**Description:** Get a FRED category by ID\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "get_fred_category",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.fred_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:29.038529",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

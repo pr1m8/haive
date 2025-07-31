@@ -1,0 +1,13 @@
+commit 6ebb564e757678777a58556031ac6e966d95412a
+Merge: 5dc8ba89 20126bb8
+Author: pr1m8 <william.astley@algebraicwealth.com>
+Date:   Sun Jul 27 20:46:40 2025 -0400
+
+    On feature/fix_everything: WIP: docstring and syntax fixes
+
+ docs/screenshots/api_documentation_all_6_packages | Bin 108100 -> 131 bytes
+ docs/screenshots/complete_documentation_homepage  | Bin 1235415 -> 132 bytes
+ docs/screenshots/haive_agents_api_documentation   | Bin 28885 -> 130 bytes
+ docs/source/conf.py                               |  87 +++++++++++++++++++---
+ pyproject.toml                                    |   9 +++
+ 5 files changed, 85 insertions(+), 11 deletions(-)

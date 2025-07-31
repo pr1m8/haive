@@ -1,0 +1,52 @@
+{
+  "component_info": {
+    "name": "get_todays_useless_fact",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.useless_facts_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get today's useless fact. Optionally specify the language ('en' or 'de').",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:29.063949",
+    "schema": {
+      "description": "Input schema for the useless facts tools.\n\nAttributes:\n    language: Language code for the fact (en or de)",
+      "properties": {
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "Language of the fact. Supports 'en' or 'de'.",
+          "title": "Language"
+        }
+      },
+      "title": "FactInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_todays_useless_fact",
+    "tool_description": "Get today's useless fact. Optionally specify the language ('en' or 'de')."
+  },
+  "document": {
+    "page_content": "# get_todays_useless_fact\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.useless_facts_toolkit\n**Class:** StructuredTool\n\n## Description\nGet today's useless fact. Optionally specify the language ('en' or 'de').\n\n## Schema\n```json\n{\n  \"description\": \"Input schema for the useless facts tools.\\n\\nAttributes:\\n    language: Language code for the fact (en or de)\",\n  \"properties\": {\n    \"language\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": \"en\",\n      \"description\": \"Language of the fact. Supports 'en' or 'de'.\",\n      \"title\": \"Language\"\n    }\n  },\n  \"title\": \"FactInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `get_todays_useless_fact`\n**Description:** Get today's useless fact. Optionally specify the language ('en' or 'de').\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "get_todays_useless_fact",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.useless_facts_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:29.063949",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

@@ -1,6 +1,6 @@
 {Game Name} {game type} implementation.
 
-This module provides a complete implementation of {Game Name} for the Haive 
+This module provides a complete implementation of {Game Name} for the Haive
 games framework, including game state management, rules enforcement, move validation,
 and agent integration.
 

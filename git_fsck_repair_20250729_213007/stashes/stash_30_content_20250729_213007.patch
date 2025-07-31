@@ -1,0 +1,72 @@
+diff --git a/docs/source/index.rst b/docs/source/index.rst
+index 0cebaed4..1f052f5f 100644
+--- a/docs/source/index.rst
++++ b/docs/source/index.rst
+@@ -6,3 +6,66 @@ Welcome to Haive's Documentation!
+    :caption: Contents:
+ 
+    api/index
++
++API Reference
++=============
++
++Core Package
++------------
++
++.. autosummary::
++   :toctree: api/core
++   :template: autosummary/module.rst
++   :recursive:
++
++   haive.core
++
++Agents Package
++--------------
++
++.. autosummary::
++   :toctree: api/agents
++   :template: autosummary/module.rst
++   :recursive:
++
++   haive.agents
++
++Tools Package
++-------------
++
++.. autosummary::
++   :toctree: api/tools
++   :template: autosummary/module.rst
++   :recursive:
++
++   haive.tools
++
++Games Package
++-------------
++
++.. autosummary::
++   :toctree: api/games
++   :template: autosummary/module.rst
++   :recursive:
++
++   haive.games
++
++Prebuilt Package
++----------------
++
++.. autosummary::
++   :toctree: api/prebuilt
++   :template: autosummary/module.rst
++   :recursive:
++
++   haive.prebuilt
++
++Dataflow Package
++----------------
++
++.. autosummary::
++   :toctree: api/dataflow
++   :template: autosummary/module.rst
++   :recursive:
++
++   haive.dataflow
+\ No newline at end of file

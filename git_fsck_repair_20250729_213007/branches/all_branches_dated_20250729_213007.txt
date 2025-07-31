@@ -1,0 +1,44 @@
+2025-06-30 03:57:59 -0400	analysis-backup-20250630-041245	33aa9e81e29ee5d526252e047db0f55978fa94de	pr1m8	Implement comprehensive configurable agent system for games
+2025-06-30 03:45:14 -0400	backup-before-workspace-migration	77a124b028ef414b6fcebbabd15b481aa761a65f	pr1m8	Pre-migration backup: Save current state before workspace migration
+2025-07-28 22:15:54 -0400	backup-broken-state	0948e00ef265ff250af7da451f16e09f64875bfb	pr1m8	update: haive-core submodule reference to latest commit
+2025-07-28 22:15:54 -0400	backup-root-before-july27-reset	0948e00ef265ff250af7da451f16e09f64875bfb	pr1m8	update: haive-core submodule reference to latest commit
+2025-04-17 11:20:57 -0400	backup/v4-dirty-20250417_112057	a26a560aa408b656bddd584dc967a9aba0d79d29	0rac130fD31phi	Backup of uncommitted and untracked state on branch v4
+2025-07-28 22:15:54 -0400	cleanup/root-project-docs-20250728	0948e00ef265ff250af7da451f16e09f64875bfb	pr1m8	update: haive-core submodule reference to latest commit
+2025-06-30 09:21:34 -0400	coordination-redesign-backup-20250630-044246	16e83ab485c83338098419f626d6270ab707db44	pr1m8	Add comprehensive consistency & coherency analysis
+2025-02-23 00:26:14 -0500	core	7ef63f24629ab4590daae592dd7899a89290483f	0rac130fD31phi	update
+2025-03-06 17:04:03 -0500	core_v2	7786028a99ab37bc32dc5a649a3e7b8769c98ee2	0rac130fD31phi	update
+2025-04-08 20:04:22 -0400	core_v3	590664d799a3d7ac17b326fef59c7d4d974c5cae	0rac130fD31phi	Add background process management, execution logging, role-based access control, remote command execution, and secure shell execution features.
+2025-07-28 23:47:13 -0400	docs/autoapi-namespace-fix-2025	30cc1ca7b27abfc53908b19b7730285d39259f2e	pr1m8	chore: update pyproject.toml with new dependencies
+2025-07-22 23:05:31 -0400	docs/fix-documentation-20250121	3d1fa180e9619243feb3ab0eb3bc8b71d268616b	pr1m8	fix: update .gitmodules to reflect correct branches
+2025-07-05 01:26:33 -0400	feat/document-loader-migration	927b7e6a63518662278ce57fc19b651509dee50b	pr1m8	Update .gitignore to exclude state_history directory
+2025-07-14 13:11:14 -0400	feature/agent-as-tool-pattern	ccbde9d833fd2a7cadf26fe5d35a07abee1c5735	pr1m8	docs(store-tools): add comprehensive integration documentation for store tools
+2025-06-30 11:59:07 -0400	feature/agent-consistency-fixes	5a4db92c31c9c50a9444fded4a9237627de3d16a	pr1m8	feat: complete documentation build system setup
+2025-07-11 00:07:24 -0400	feature/engine-typing-generics	7c406e7b770d601c4d5f63504785ed75b0788ca1	pr1m8	empty
+2025-07-05 16:01:27 -0400	feature/enhanced-tool-management	f378e7c497cd18824661e8dd1caa01e17c9d1c05	pr1m8	Enhance Nox configuration for Haive project
+2025-07-11 00:43:35 -0400	feature/fix_everythign	57079243333b7bb29fcb18c709f1fd8974e91248	pr1m8	chore: Update .gitignore to include additional directories for better file management
+2025-07-29 18:53:56 -0400	feature/fix_everything	3568665cd7cb46c882c871ec88a83d6b0eb37de1	pr1m8	feat: add comprehensive Sphinx extensions installation script
+2025-07-22 13:31:23 -0400	feature/node-system-organization	c1fda95e01f10468faa00913c51c522f6c1329ff	pr1m8	feat(docs): comprehensive documentation styling and structure overhaul
+2025-06-30 04:23:49 -0400	feature/root-coordination-redesign	d7bcd1080c933a598e9a371ecce12fa4ffdc894e	pr1m8	Add haive-mcp to pytest pythonpath configuration
+2025-07-05 16:01:27 -0400	feature/schema-simplification	f378e7c497cd18824661e8dd1caa01e17c9d1c05	pr1m8	Enhance Nox configuration for Haive project
+2025-06-16 12:47:31 -0400	feature/schema_v4	eecb13a3db1f0c102e900c907b9d060f694b8056	pr1m8	Add haive-mcp as submodule
+2025-05-20 16:45:33 -0400	feature/state_graph	099bfdf871c36cc8c8157a591887e48c82152ba5	pr1m8	Update workspace configuration, dependencies, and linting tools
+2025-07-08 14:48:57 -0400	feature/structured-output-generalization	090d8f4f07557e3cf12f50ca0a9c3c48946becb0	pr1m8	fix: Improve MessageList serialization with proper BaseMessage checking and engine metadata preservation
+2025-07-06 15:20:32 -0400	fix/autosummary-module-detection	941b43fc1969dd59ddf6f35c0c6680ed0aaeee9d	pr1m8	current update - things working schema refactor
+2025-06-30 04:23:49 -0400	main	d7bcd1080c933a598e9a371ecce12fa4ffdc894e	pr1m8	Add haive-mcp to pytest pythonpath configuration
+2025-04-11 00:20:08 -0400	master	1a41be118ba20affe5eba17adb3d29038257cb5e	0rac130fD31phi	update
+2025-06-30 03:45:14 -0400	migration/phase-1-fix-packages	77a124b028ef414b6fcebbabd15b481aa761a65f	pr1m8	Pre-migration backup: Save current state before workspace migration
+2025-06-30 03:45:14 -0400	migration/phase-2-workspace-setup	77a124b028ef414b6fcebbabd15b481aa761a65f	pr1m8	Pre-migration backup: Save current state before workspace migration
+2025-06-30 03:45:14 -0400	migration/phase-3-dependencies	77a124b028ef414b6fcebbabd15b481aa761a65f	pr1m8	Pre-migration backup: Save current state before workspace migration
+2025-06-30 03:45:14 -0400	migration/phase-4-docs-update	77a124b028ef414b6fcebbabd15b481aa761a65f	pr1m8	Pre-migration backup: Save current state before workspace migration
+2025-06-30 03:45:14 -0400	migration/phase-5-testing	77a124b028ef414b6fcebbabd15b481aa761a65f	pr1m8	Pre-migration backup: Save current state before workspace migration
+2025-04-20 21:28:10 -0400	namespace-migration	f6904bccb9c2fedaff81cdf9835e11478b46acbd	pr1m8	chore: add 'resources/' directory to .gitignore for better file management
+2025-03-14 20:07:04 -0400	nb	466f81888c6f1e692bca33868635c20cac8f9bce	0rac130fD31phi	update
+2025-07-29 18:53:56 -0400	recovery/stash_10_20250729_205753	3568665cd7cb46c882c871ec88a83d6b0eb37de1	pr1m8	feat: add comprehensive Sphinx extensions installation script
+2025-07-29 18:53:56 -0400	recovery/stash_1_20250729_205753	3568665cd7cb46c882c871ec88a83d6b0eb37de1	pr1m8	feat: add comprehensive Sphinx extensions installation script
+2025-07-05 01:26:33 -0400	refactor/basegraph2-modular-architecture	927b7e6a63518662278ce57fc19b651509dee50b	pr1m8	Update .gitignore to exclude state_history directory
+2025-07-05 01:26:33 -0400	refactor/schema-engine-backwards-compatible	927b7e6a63518662278ce57fc19b651509dee50b	pr1m8	Update .gitignore to exclude state_history directory
+2025-04-17 20:44:57 -0400	temp_merge_branch	9aee667ca1934f380c93d5099b8b7766c9309389	0rac130fD31phi	Final updates before merging to main
+2025-04-17 20:44:57 -0400	v4	9aee667ca1934f380c93d5099b8b7766c9309389	0rac130fD31phi	Final updates before merging to main
+2025-06-30 11:59:07 -0400	vzn/dab	5a4db92c31c9c50a9444fded4a9237627de3d16a	pr1m8	feat: complete documentation build system setup
+2025-07-03 19:19:58 -0400	vzn/dav	46af06459e9f068394b8a6bd5f0cf83d87be3ded	pr1m8	added in sphinx gasllery and othe rrelated documentation packages
+2025-05-02 16:20:46 -0400	vzn/node_v2	086f545f0e542608e9a361db904fbafafc22d7ad	pr1m8	Update .gitignore to exclude project documentation directory

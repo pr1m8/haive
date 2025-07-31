@@ -1,0 +1,8 @@
+5a4db92c feature/agent-consistency-fixes@{2025-06-30 11:59:07 -0400}: commit: feat: complete documentation build system setup
+f7efc4b1 feature/agent-consistency-fixes@{2025-06-30 11:37:02 -0400}: commit: feat: reorganize documentation structure and clean up codebase
+2f6abc06 feature/agent-consistency-fixes@{2025-06-30 11:35:41 -0400}: commit: Fix Go game by replacing sente with sgfmill wrapper - 22/24 games working
+4797f026 feature/agent-consistency-fixes@{2025-06-30 11:26:02 -0400}: commit: Fix remaining syntax errors in games - 21/24 games now working
+e0135662 feature/agent-consistency-fixes@{2025-06-30 09:52:29 -0400}: reset: moving to HEAD~1
+e933e171 feature/agent-consistency-fixes@{2025-06-30 09:34:38 -0400}: commit: Simplify architecture with GraphNode base class
+e0135662 feature/agent-consistency-fixes@{2025-06-30 09:29:52 -0400}: commit: Phase 1: Add CompiledStateGraph architecture foundation
+16e83ab4 feature/agent-consistency-fixes@{2025-06-30 09:21:38 -0400}: branch: Created from HEAD

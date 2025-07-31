@@ -1,154 +1,133 @@
-# Haive Project Documentation Index
+# Haive Project Documentation
 
-This directory contains all project-related documentation, reports, and organizational materials for the Haive AI agent framework.
+**Version**: 4.0
+**Last Updated**: 2025-01-23
+**Status**: Reorganized and Decluttered
 
-## Directory Structure
+Welcome to the Haive AI Agent Framework documentation. This README serves as your navigation hub for all project documentation.
 
+## 📋 Recent Organization (January 2025)
+
+This documentation system has been comprehensively reorganized with:
+
+- **✅ Root Directory Declutter**: ~150 files moved from root to organized locations
+- **✅ Test Organization**: 18 test files moved to appropriate package test directories
+- **✅ Documentation Structure**: 45 MD files organized into project_docs/ subdirectories
+- **✅ Script Organization**: Python scripts organized into scripts/ with categories
+- **✅ Gitignore Updates**: Enhanced patterns to prevent future accumulation
+- **✅ Logging Fixes**: Replaced all custom `get_logger` usage with standard `logging.getLogger`
+
+### File Movement Summary
+
+**Test Files** → `packages/haive-*/tests/`
+
+- Multi-agent tests → `packages/haive-agents/tests/multi/`
+- Core tests → `packages/haive-core/tests/`
+- Debug tests → `packages/haive-core/tests/debug/`
+
+**Documentation** → `project_docs/`
+
+- Implementation guides → `project_docs/guides/`
+- Status reports → `project_docs/build-reports/`
+- Analysis documents → `project_docs/analysis/`
+- Architecture docs → `project_docs/active/architecture/`
+
+**Scripts** → `scripts/`
+
+- Debug utilities → `scripts/debug/`
+- Maintenance tools → `scripts/maintenance/`
+- Documentation scripts → `scripts/maintenance/docs/`
+
+**Package Documentation** → `project_docs/packages/`
+
+- haive-agents documentation → `project_docs/packages/haive-agents/`
+  - Guides, implementation, patterns, examples organized by category
+  - ~20 agent-related files consolidated from scattered locations
+
+## 🏗️ Framework Overview
+
+Haive provides a modular architecture for creating sophisticated AI agents that can:
+
+- Execute complex workflows with planning and reasoning
+- Use external tools and APIs
+- Maintain conversation memory and context
+- Collaborate in multi-agent systems
+- Play games and interact with environments
+- Process documents and data with RAG capabilities
+
+## 🚀 Quick Start
+
+**New to Haive?** Start here:
+
+- [Getting Started](quick_start/README.md) - First-time setup and overview
+- [Development Setup](quick_start/development_setup.md) - Environment configuration
+- [Create Your First Agent](quick_start/first_agent.md) - Step-by-step tutorial
+
+```bash
+# Install with poetry
+poetry install
+
+# Run tests
+poetry run pytest
+
+# Build documentation
+poetry run nox -s docs_fast
+
+# See all available commands
+poetry run nox -s list
 ```
-project_docs/
-├── README.md                           # This index file
-├── documentation_cleanup/              # Documentation cleanup project
-│   ├── README.md                       # Complete project overview
-│   ├── planning/                       # Project planning documents
-│   │   ├── DOCUMENTATION_CONSOLIDATION_PLAN.md
-│   │   ├── DOCUMENTATION_SETUP.md
-│   │   ├── DOCUMENTATION_SETUP_SUMMARY.md
-│   │   └── DOCUMENTATION_CLEANUP_SUMMARY.md
-│   ├── implementation/                 # Implementation details
-│   │   └── TEST_MIGRATION_SUMMARY.md
-│   ├── final_reports/                  # Completion reports
-│   │   ├── DOCUMENTATION_CLEANUP_COMPLETED.md
-│   │   └── SHOWCASE_DOCUMENTATION_COMPLETE.md
-│   └── archive/                        # Legacy data
-│       ├── DOCUMENTATION_FIXES_SUMMARY.json
-│       └── FINAL_DOCUMENTATION_REPORT.json
-└── logs_and_data/                     # Organized logs and datasets
-    ├── debug_logs/                    # Debug and test logs
-    │   ├── vault_cli_*.log
-    │   ├── poker_*.log
-    │   ├── monopoly_test.log
-    │   ├── benchmark.log
-    │   └── debug_simple_agent.log
-    └── model_data/                    # LLM model datasets
-        ├── anthropic_models.csv
-        ├── deepseek_models.csv
-        ├── mistral_models.csv
-        ├── openai_models.csv
-        └── all_models.csv
-```
 
-## Project Categories
+## 🧠 Memory Index System
 
-### 📚 Documentation Projects
+**UPDATED!** Centralized memory indexing for all discoveries and knowledge:
 
-#### [Documentation Cleanup Project](./documentation_cleanup/)
+- **[Memory Index](memory_index/README.md)** - Central index for all memories
+  - [Quick Reference](memory_index/quick_reference.md) - Most-used patterns and fixes
+  - [By Date](memory_index/by_date/) - Chronological memories
+  - [By Error](memory_index/by_error/) - Error solutions and fixes
+  - [By Task](memory_index/by_task/) - Task-specific knowledge
+  - [By Agent](memory_index/by_agent/) - Agent patterns and implementations
+  - [By Package](memory_index/by_package/) - Package discoveries and patterns
 
-**Status**: ✅ Complete  
-**Duration**: ~40 hours over multiple sessions  
-**Impact**: Transformed chaotic documentation into professional showcase
+Use `@memory_index/` to reference specific memories throughout the project.
 
-**Key Achievements**:
+## 📦 Package Documentation
 
-- Consolidated 50+ scattered documentation files
-- Migrated all tests to proper `packages/haive-*/tests/` structure
-- Generated 311 module READMEs and updated 312 `__init__.py` files
-- Created stunning agent showcase with interactive gallery
-- Reduced build warnings by 67% (5090 → 1679)
-- Simplified Sphinx configuration by 59% (800+ → 330 lines)
+Organized documentation for each Haive framework package:
 
-**Deliverables**:
+- **[Packages Overview](packages/README.md)** - Package documentation hub
+- **[haive-agents](packages/haive-agents/README.md)** - Agent implementations, patterns, and guides
+  - [User Guides](packages/haive-agents/guides/) - Tutorials and usage examples
+  - [Implementation Details](packages/haive-agents/implementation/) - Technical implementation
+  - [Design Patterns](packages/haive-agents/patterns/) - Common patterns and fixes
+  - [Architecture](packages/haive-agents/architecture/) - Agent architecture documentation
+- **haive-core** - Core framework documentation (see [Active Architecture](active/architecture/))
+- **haive-tools** - Tool integration guides (planned)
+- **haive-games** - Game environment documentation (planned)
 
-- ✅ Automated migration scripts (`scripts/migrate_tests.py`, `scripts/generate_module_docs.py`)
-- ✅ Modern documentation configuration and styling
-- ✅ Professional agent showcase with search and filtering
-- ✅ Complete module documentation system
-- ✅ Comprehensive project reports and documentation
+## 📚 Documentation Navigation
 
-### 🔧 Development Data
+- **Full Documentation**: Run `poetry run nox -s docs_serve` and visit http://localhost:8000
+- **Developer Hub**: See [CLAUDE.md](../CLAUDE.md) for central development information
+- **API Reference**: Built with Sphinx from source code docstrings
+- **Active Development**: See [Active Documentation](active/README.md) for current standards and architecture
 
-#### [Logs and Data](./logs_and_data/)
+## Architecture
 
-**Purpose**: Organized storage for debug logs and model datasets
+The framework is organized into focused packages:
 
-**Debug Logs**:
+- **haive-core**: Core agent engine and infrastructure
+- **haive-agents**: Pre-built agent implementations
+- **haive-tools**: Tool integrations and toolkits
+- **haive-games**: Game environments and agents
+- **haive-dataflow**: Streaming and data processing
+- **haive-mcp**: Model Context Protocol integration
+- **haive-prebuilt**: Ready-to-use agent configurations
 
-- `vault_cli_*.log`: CLI tool debug sessions
-- `poker_*.log`: Game development debugging
-- `monopoly_test.log`: Game testing logs
-- `benchmark.log`: Performance benchmarking data
-- `debug_simple_agent.log`: Agent development debugging
+## Development
 
-**Model Data**:
+See [CLAUDE.md](./CLAUDE.md) for detailed development information and project structure.
 
-- `anthropic_models.csv`: Anthropic AI model specifications
-- `deepseek_models.csv`: DeepSeek model configurations
-- `mistral_models.csv`: Mistral AI model data
-- `openai_models.csv`: OpenAI model specifications
-- `all_models.csv`: Consolidated model dataset
+## License
 
-## Usage Guidelines
-
-### For Developers
-
-1. **Documentation Standards**: Reference [Documentation Cleanup](./documentation_cleanup/) for templates and best practices
-2. **Project History**: Use this index to understand project evolution and decisions
-3. **Debug Data**: Check [logs_and_data](./logs_and_data/) for debugging patterns and model comparisons
-
-### For Maintenance
-
-1. **Keep Organized**: Add new project documentation to appropriate subdirectories
-2. **Update Index**: Update this README when adding new major projects
-3. **Archive Old**: Move completed project artifacts to archive folders
-4. **Follow Patterns**: Use established directory structure for consistency
-
-## Key Project Insights
-
-### Documentation Project Lessons
-
-1. **Automation is Critical**: Scripts saved 30+ hours of manual work
-2. **Templates Ensure Consistency**: Standardized templates maintain quality
-3. **Modern Tools Matter**: Updated Sphinx configuration reduced complexity significantly
-4. **Visual Impact**: Professional showcase transforms user perception
-5. **Proper Organization**: Structured approach enables future scalability
-
-### Technical Decisions
-
-1. **Kept Notebooks in Root**: Preserved `/notebooks/` for easy access
-2. **Package-based Testing**: Moved all tests to `packages/haive-*/tests/`
-3. **Gradient-heavy Design**: Created impressive visual impact for agent showcase
-4. **Automated Documentation**: Generated comprehensive module docs programmatically
-5. **Performance Focus**: Optimized build process and reduced warnings
-
-## Future Projects
-
-### Potential Additions
-
-- **API Documentation Enhancement**: Automated API doc generation improvements
-- **Performance Monitoring**: Agent performance dashboards and metrics
-- **Integration Testing**: Comprehensive test suite for multi-agent interactions
-- **User Experience**: Enhanced documentation search and navigation
-- **Developer Tools**: Additional automation scripts for maintenance
-
-### Maintenance Schedule
-
-- **Monthly**: Review and organize new logs and data
-- **Quarterly**: Update documentation templates and standards
-- **Annually**: Comprehensive project documentation audit
-
-## Contact and Contribution
-
-This project documentation structure was established during the comprehensive documentation cleanup project. For questions about the organization or to contribute improvements:
-
-1. Follow established templates and patterns
-2. Update relevant index files when adding content
-3. Maintain the directory structure for consistency
-4. Document decisions and rationale for future reference
-
-## Historical Context
-
-The Haive project has evolved significantly, and this documentation structure represents the culmination of organizing years of development work into a professional, maintainable system. The documentation cleanup project in particular transformed the entire presentation and usability of the project.
-
-**Before**: Scattered files, inconsistent documentation, poor organization  
-**After**: Professional showcase, comprehensive documentation, automated maintenance
-
-This foundation supports the continued growth and development of the Haive AI agent ecosystem.
+MIT License - see LICENSE file for details.

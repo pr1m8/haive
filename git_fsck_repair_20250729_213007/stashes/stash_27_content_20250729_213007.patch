@@ -1,0 +1,602 @@
+diff --git a/docs/screenshots/api_documentation_all_6_packages b/docs/screenshots/api_documentation_all_6_packages
+index badeeae7..0c560ef7 100644
+Binary files a/docs/screenshots/api_documentation_all_6_packages and b/docs/screenshots/api_documentation_all_6_packages differ
+diff --git a/docs/screenshots/complete_documentation_homepage b/docs/screenshots/complete_documentation_homepage
+index 628f398a..f9ce606a 100644
+Binary files a/docs/screenshots/complete_documentation_homepage and b/docs/screenshots/complete_documentation_homepage differ
+diff --git a/docs/screenshots/haive_agents_api_documentation b/docs/screenshots/haive_agents_api_documentation
+index 82f1d72e..11839e8e 100644
+Binary files a/docs/screenshots/haive_agents_api_documentation and b/docs/screenshots/haive_agents_api_documentation differ
+diff --git a/docs/source/agents/index.rst b/docs/source/agents/index.rst
+index b67b8469..88d51e33 100644
+--- a/docs/source/agents/index.rst
++++ b/docs/source/agents/index.rst
+@@ -101,7 +101,7 @@ Agent Categories
+       ✓ Adaptive retrieval  
+ 
+    .. grid-item-card:: 🔬 ResearchAgent
+-      :link: ../api/src/haive/agents/research/index
++      :link: ../api/haive/agents/research/index
+       :shadow: lg
+       
+       **Advanced Research & Analysis**
+@@ -116,7 +116,7 @@ Agent Categories
+       ✓ Citation management  
+ 
+    .. grid-item-card:: 🎭 ConversationAgent
+-      :link: ../api/src/haive/agents/conversation/index
++      :link: ../api/haive/agents/conversation/index
+       :shadow: lg
+       
+       **Multi-Party Dialogue**
+@@ -131,7 +131,7 @@ Agent Categories
+       ✓ Consensus building  
+ 
+    .. grid-item-card:: 🎯 PlanningAgent
+-      :link: ../api/src/haive/agents/planning/index
++      :link: ../api/haive/agents/planning/index
+       :shadow: lg
+       
+       **Task Planning & Execution**
+@@ -146,7 +146,7 @@ Agent Categories
+       ✓ Progress tracking  
+ 
+    .. grid-item-card:: 🌐 MultiAgent
+-      :link: ../api/src/haive/agents/multi/index
++      :link: ../api/haive/agents/multi/index
+       :shadow: lg
+       
+       **Coordinated Agent Systems**
+@@ -161,7 +161,7 @@ Agent Categories
+       ✓ Distributed processing  
+ 
+    .. grid-item-card:: 🔍 SearchAgent
+-      :link: ../api/src/haive/agents/research/perplexity/index
++      :link: ../api/haive/agents/research/perplexity/index
+       :shadow: lg
+       
+       **Perplexity-Style Search**
+diff --git a/docs/source/conf.py b/docs/source/conf.py
+index 9e4ecd10..f9d783d1 100644
+--- a/docs/source/conf.py
++++ b/docs/source/conf.py
+@@ -97,7 +97,7 @@ release = "1.0.0"
+ 
+ extensions = [
+     # === CORE API DOCUMENTATION ===
+-    "autoapi.extension",  # ✅ RE-ENABLED - working on full module support
++    # "autoapi.extension",  # ❌ DISABLED - causing KeyError issues, focus on Sphinx Gallery first
+     "sphinx.ext.napoleon",  # Google/NumPy docstring support
+     "sphinx.ext.viewcode",  # [source] links
+     "sphinx.ext.linkcode",  # GitHub source links
+@@ -125,7 +125,7 @@ extensions = [
+     # === SOCIAL & SEO ===
+     "sphinxext.opengraph",  # 📱 Open Graph metadata
+     # === EXAMPLES & GALLERIES ===
+-    "sphinx_gallery",  # 🖼️ Example gallery generation - NOW ENABLED
++    "sphinx_gallery.gen_gallery",  # 🖼️ Example gallery generation - NOW ENABLED
+     # === TYPE HINTS & DOCUMENTATION ===
+     "sphinx_autodoc_typehints",  # 🎯 Beautiful type hints
+     # === REQUIREMENTS & DATA ===
+@@ -362,188 +362,173 @@ html_sidebars = {
+ # ==============================================================================
+ 
+ # === AUTOAPI - BEST-IN-CLASS API DOCUMENTATION ===
+-autoapi_type = "python"
+-# Point to the src directories but we'll fix the paths in preprocessing
+-autoapi_dirs = [
+-    "../../packages/haive-core/src",
+-    "../../packages/haive-agents/src",  # ✅ ENABLED - fixed import issues
+-    "../../packages/haive-tools/src",
+-    "../../packages/haive-dataflow/src",
+-    "../../packages/haive-games/src",  # ✅ ENABLED - adding games
+-    "../../packages/haive-mcp/src",  # ✅ ENABLED - adding MCP
+-]
+-autoapi_root = "api"
+-autoapi_options = [
+-    "members",
+-    "show-inheritance",
+-    "show-module-summary",
+-    "special-members",  # Show __init__, __call__, etc.
+-    "private-members",  # Show documented private methods
+-]
+-autoapi_keep_files = True
+-autoapi_add_toctree_entry = True
+-autoapi_member_order = "groupwise"  # Group by type (methods, attributes, etc.)
+-autoapi_python_class_content = "both"  # Show both class and __init__ docs
+-autoapi_python_use_implicit_namespaces = True  # Handle namespace packages
+-
+-# Enhanced AutoAPI configuration for better API docs
+-autoapi_generate_api_docs = True
+-
+-# Use custom templates to fix src path issue
+-autoapi_template_dir = "_templates/autoapi"
+-
+-
+-# AutoAPI event handlers to fix module paths
+-def autoapi_skip_member(app, what, name, obj, skip, options):
+-    """Skip certain members and fix paths during autoapi generation."""
+-    # Skip test files
+-    if "test_" in name or "_test" in name:
+-        return True
+-
+-    # Skip files that were causing import issues
+-    for pattern in ["debug", "demo", "example", "ui.py", "main.py", "app.py", "cli.py"]:
+-        if pattern in name.lower():
+-            return True
+-
+-    # Don't try to modify the object - AutoAPI objects are mostly read-only
+-    # We'll fix paths in post-processing instead
+-
+-    return skip
+-
+-
+-# Configure AutoAPI Jinja environment - MUST be connected to AutoAPI
+-def prepare_autoapi_jinja_env(jinja_env):
+-    """Prepare the Jinja environment for autoapi."""
+-
+-    def fix_module_name(name):
+-        # Remove src. prefix if present
+-        if name and name.startswith("src."):
+-            return name[4:]
+-        return name
+-
+-    def fix_path(path):
+-        # Fix paths in toctree references
+-        if path and "/src/haive/" in path:
+-            return path.replace("/src/haive/", "/haive/")
+-        if path and "src/haive/" in path:
+-            return path.replace("src/haive/", "haive/")
+-        return path
+-
+-    def fix_include_path(path):
+-        # Fix include paths for toctree entries
+-        if path and "/src/" in path:
+-            return path.replace("/src/", "/")
+-        return path
+-
+-    jinja_env.filters["fix_module_name"] = fix_module_name
+-    jinja_env.filters["fix_path"] = fix_path
+-    jinja_env.filters["fix_include_path"] = fix_include_path
+-    return jinja_env
+-
+-
+-# Connect to AutoAPI
+-autoapi_prepare_jinja_env = prepare_autoapi_jinja_env
+-
+-
+-def fix_autoapi_paths(app, exception):
+-    """Fix AutoAPI paths after build."""
+-    logger.info("🔧 Running fix_autoapi_paths function")
+-    if exception is not None:
+-        logger.warning(f"Build had exception: {exception}")
+-        return
+-
+-    import os
+-    import re
+-    import shutil
+-    from pathlib import Path
+-
+-    # First fix the source API files
+-    api_dir = Path(app.srcdir) / "api"
+-    logger.info(f"Looking for API dir: {api_dir}")
+-    if api_dir.exists():
+-        logger.info(f"Found API directory: {api_dir}")
+-        # Find all RST files with src in the path
+-        rst_files = list(api_dir.rglob("*.rst"))
+-        logger.info(f"Found {len(rst_files)} RST files to process")
+-
+-        for rst_file in rst_files:
+-            try:
+-                content = rst_file.read_text()
+-                original_content = content
+-
+-                # Fix module declarations
+-                content = re.sub(r"src\.haive\.", "haive.", content)
+-
+-                # Fix toctree paths
+-                content = re.sub(r"/api/src/haive/", "/api/haive/", content)
+-                content = re.sub(r"src/haive/", "haive/", content)
+-
+-                # Write back if changed
+-                if content != original_content:
+-                    rst_file.write_text(content)
+-                    logger.info(f"Fixed content in {rst_file}")
+-            except Exception as e:
+-                logger.warning(f"Failed to fix {rst_file}: {e}")
+-
+-        # Rename directories from src/haive to haive
+-        src_dir = api_dir / "src"
+-        logger.info(f"Looking for src directory: {src_dir}")
+-        if src_dir.exists() and (src_dir / "haive").exists():
+-            logger.info("Found src/haive directory - moving to haive/")
+-            haive_dir = src_dir / "haive"
+-            target_dir = api_dir / "haive"
+-            if target_dir.exists():
+-                shutil.rmtree(target_dir)
+-            shutil.move(str(haive_dir), str(target_dir))
+-            logger.info(f"Moved {haive_dir} to {target_dir}")
+-            # Remove empty src directory
+-            try:
+-                if not list(src_dir.iterdir()):
+-                    src_dir.rmdir()
+-                    logger.info("Removed empty src directory")
+-            except Exception as e:
+-                logger.warning(f"Could not remove src directory: {e}")
+-    else:
+-        logger.warning(f"API directory not found: {api_dir}")
+-
+-    # Also fix the built HTML files
+-    html_api_dir = Path(app.outdir) / "api"
+-    if html_api_dir.exists():
+-        # Fix HTML files
+-        for html_file in html_api_dir.rglob("*.html"):
+-            try:
+-                content = html_file.read_text()
+-
+-                # Fix module references in HTML
+-                content = re.sub(r"src\.haive\.", "haive.", content)
+-
+-                # Fix URLs
+-                content = re.sub(
+-                    r'href="[^"]*api/src/haive/', 'href="../../api/haive/', content
+-                )
+-                content = re.sub(r"/api/src/haive/", "/api/haive/", content)
+-
+-                # Write back
+-                html_file.write_text(content)
+-            except Exception as e:
+-                logger.warning(f"Failed to fix HTML {html_file}: {e}")
+-
+-        # Move HTML directories if needed
+-        html_src_dir = html_api_dir / "src"
+-        if html_src_dir.exists() and (html_src_dir / "haive").exists():
+-            haive_dir = html_src_dir / "haive"
+-            target_dir = html_api_dir / "haive"
+-            if target_dir.exists():
+-                shutil.rmtree(target_dir)
+-            shutil.move(str(haive_dir), str(target_dir))
+-            # Remove empty src directory
+-            try:
+-                if not list(html_src_dir.iterdir()):
+-                    html_src_dir.rmdir()
+-            except:
+-                pass
+-
+-
++# ❌ DISABLED - Causing KeyError issues, focus on Sphinx Gallery first
++# autoapi_type = "python"
++# autoapi_dirs = [
++#     "../../packages/haive-core/src",
++#     "../../packages/haive-agents/src",
++#     "../../packages/haive-tools/src",
++#     "../../packages/haive-dataflow/src",
++#     "../../packages/haive-games/src",
++#     "../../packages/haive-mcp/src",
++# ]
++# autoapi_root = "api"
++# autoapi_options = ["members", "show-inheritance", "show-module-summary"]
++# autoapi_keep_files = True
++# autoapi_template_dir = "_templates/autoapi"
++
++# === SPHINX GALLERY - EXAMPLE GALLERY GENERATION ===
++# (Moved to single configuration below)
++
++
++# ❌ DISABLED - AutoAPI event handlers disabled
++# def autoapi_skip_member(app, what, name, obj, skip, options):
++#     """Skip certain members and fix paths during autoapi generation."""
++#     # Skip test files
++#     if "test_" in name or "_test" in name:
++#         return True
++#     # Skip files that were causing import issues
++#     for pattern in ["debug", "demo", "example", "ui.py", "main.py", "app.py", "cli.py"]:
++#         if pattern in name.lower():
++#             return True
++#     # Don't try to modify the object - AutoAPI objects are mostly read-only
++#     # We'll fix paths in post-processing instead
++#     return skip
++
++
++# ❌ DISABLED - AutoAPI Jinja environment setup
++# # def prepare_autoapi_jinja_env(jinja_env):
++#     """Prepare the Jinja environment for autoapi."""
++# 
++#     def fix_module_name(name):
++#         # Remove src. prefix if present
++#         if name and name.startswith("src."):
++#             return name[4:]
++#         return name
++# 
++#     def fix_path(path):
++#         # Fix paths in toctree references
++#         if path and "/src/haive/" in path:
++#             return path.replace("/src/haive/", "/haive/")
++#         if path and "src/haive/" in path:
++#             return path.replace("src/haive/", "haive/")
++#         return path
++# 
++#     def fix_include_path(path):
++#         # Fix include paths for toctree entries
++#         if path and "/src/" in path:
++#             return path.replace("/src/", "/")
++#         return path
++# 
++#     jinja_env.filters["fix_module_name"] = fix_module_name
++#     jinja_env.filters["fix_path"] = fix_path
++#     jinja_env.filters["fix_include_path"] = fix_include_path
++#     return jinja_env
++# 
++# 
++# # Connect to AutoAPI
++# # autoapi_prepare_jinja_env = prepare_autoapi_jinja_env
++
++
++# # def fix_autoapi_paths(app, exception):
++#     """Fix AutoAPI paths after build."""
++#     logger.info("🔧 Running fix_autoapi_paths function")
++#     if exception is not None:
++#         logger.warning(f"Build had exception: {exception}")
++#         return
++# 
++#     import os
++#     import re
++#     import shutil
++#     from pathlib import Path
++# 
++#     # First fix the source API files
++#     api_dir = Path(app.srcdir) / "api"
++#     logger.info(f"Looking for API dir: {api_dir}")
++#     if api_dir.exists():
++#         logger.info(f"Found API directory: {api_dir}")
++#         # Find all RST files with src in the path
++#         rst_files = list(api_dir.rglob("*.rst"))
++#         logger.info(f"Found {len(rst_files)} RST files to process")
++# 
++#         for rst_file in rst_files:
++#             try:
++#                 content = rst_file.read_text()
++#                 original_content = content
++# 
++#                 # Fix module declarations
++#                 content = re.sub(r"src\.haive\.", "haive.", content)
++# 
++#                 # Fix toctree paths
++#                 content = re.sub(r"/api/src/haive/", "/api/haive/", content)
++#                 content = re.sub(r"src/haive/", "haive/", content)
++# 
++#                 # Write back if changed
++#                 if content != original_content:
++#                     rst_file.write_text(content)
++#                     logger.info(f"Fixed content in {rst_file}")
++#             except Exception as e:
++#                 logger.warning(f"Failed to fix {rst_file}: {e}")
++# 
++#         # Rename directories from src/haive to haive
++#         src_dir = api_dir / "src"
++#         logger.info(f"Looking for src directory: {src_dir}")
++#         if src_dir.exists() and (src_dir / "haive").exists():
++#             logger.info("Found src/haive directory - moving to haive/")
++#             haive_dir = src_dir / "haive"
++#             target_dir = api_dir / "haive"
++#             if target_dir.exists():
++#                 shutil.rmtree(target_dir)
++#             shutil.move(str(haive_dir), str(target_dir))
++#             logger.info(f"Moved {haive_dir} to {target_dir}")
++#             # Remove empty src directory
++#             try:
++#                 if not list(src_dir.iterdir()):
++#                     src_dir.rmdir()
++#                     logger.info("Removed empty src directory")
++#             except Exception as e:
++#                 logger.warning(f"Could not remove src directory: {e}")
++#     else:
++#         logger.warning(f"API directory not found: {api_dir}")
++# 
++#     # Also fix the built HTML files
++#     html_api_dir = Path(app.outdir) / "api"
++#     if html_api_dir.exists():
++#         # Fix HTML files
++#         for html_file in html_api_dir.rglob("*.html"):
++#             try:
++#                 content = html_file.read_text()
++# 
++#                 # Fix module references in HTML
++#                 content = re.sub(r"src\.haive\.", "haive.", content)
++# 
++#                 # Fix URLs
++#                 content = re.sub(
++#                     r'href="[^"]*api/src/haive/', 'href="../../api/haive/', content
++#                 )
++#                 content = re.sub(r"/api/src/haive/", "/api/haive/", content)
++# 
++#                 # Write back
++#                 html_file.write_text(content)
++#             except Exception as e:
++#                 logger.warning(f"Failed to fix HTML {html_file}: {e}")
++# 
++#         # Move HTML directories if needed
++#         html_src_dir = html_api_dir / "src"
++#         if html_src_dir.exists() and (html_src_dir / "haive").exists():
++#             haive_dir = html_src_dir / "haive"
++#             target_dir = html_api_dir / "haive"
++#             if target_dir.exists():
++#                 shutil.rmtree(target_dir)
++#             shutil.move(str(haive_dir), str(target_dir))
++#             # Remove empty src directory
++#             try:
++#                 if not list(html_src_dir.iterdir()):
++#                     html_src_dir.rmdir()
++#             except:
++#                 pass
++# 
++# 
+ # === NAPOLEON - GOOGLE DOCSTRINGS ===
+ napoleon_google_docstring = True
+ napoleon_numpy_docstring = False
+@@ -624,61 +609,24 @@ mermaid.initialize({
+ # === SPHINX GALLERY - EXAMPLE GALLERIES ===
+ sphinx_gallery_conf = {
+     "examples_dirs": [
+-        # Use directories that actually exist with examples
+-        "../../packages/haive-agents/examples",
+-        "../../packages/haive-games/examples",
+-        "../../packages/haive-mcp/examples",
+-        # "../../packages/haive-tools/examples",  # TODO: Create examples
+-        # "../../packages/haive-core/examples",   # TODO: Create examples
++        "../../examples",  # Main examples directory
+     ],
+     "gallery_dirs": [
+-        # Corresponding output directories
+-        "auto_examples/agents",
+-        "auto_examples/games",
+-        "auto_examples/mcp",
+-        # "auto_examples/tools",  # TODO: Enable when examples exist
+-        # "auto_examples/core",   # TODO: Enable when examples exist
++        "auto_examples",  # Gallery output directory
+     ],
+-    "filename_pattern": "/.*tutorial|.*guide|.*example",
+-    "ignore_pattern": "__init__.py|debug_*|test_*",
+-    "download_all_examples": True,
+-    "show_memory": True,
+-    "remove_config_comments": True,
+-    "expected_failing_examples": [],
+-    "thumbnail_size": (300, 200),
+-    "subsection_order": "ExplicitOrder",
+-    "within_subsection_order": "FileNameSortKey",
+-    "show_signature": True,
+-    "plot_gallery": False,  # We don't need matplotlib plots
+-    "first_notebook_cell": "%matplotlib inline",
+-    "last_notebook_cell": "# End of example",
+-    # Enhanced gallery features
+-    "promote_jupyter_magic": True,
+-    "binder_conf": {
+-        "org": "haive",
+-        "repo": "haive",
+-        "branch": "main",
+-        "binderhub_url": "https://mybinder.org",
+-        "dependencies": ["../../pyproject.toml"],
+-    },
+-    "gallery_dirs_config": {
+-        "gallery_beginner": {
+-            "expected_failing_examples": [],
+-            "description": "🌱 Beginner-friendly tutorials for your first Haive agents",
+-        },
+-        "gallery_intermediate": {
+-            "expected_failing_examples": [],
+-            "description": "🌿 Intermediate patterns for multi-agent coordination",
+-        },
+-        "gallery_advanced": {
+-            "expected_failing_examples": [],
+-            "description": "🌲 Advanced workflows and custom patterns",
+-        },
+-        "gallery_games": {
+-            "expected_failing_examples": [],
+-            "description": "🎮 AI agents playing games and strategic thinking",
+-        },
+-    },
++    "filename_pattern": "/plot_",  # Match files starting with plot_
++    "ignore_pattern": r"__init__\.py",  # Ignore init files
++    "plot_gallery": True,  # Enable matplotlib plots
++    "download_all_examples": True,  # Allow downloading examples
++    "show_memory": False,  # Don't show memory usage
++    "remove_config_comments": True,  # Clean up comments
++    "expected_failing_examples": [],  # No expected failures
++    "thumbnail_size": (400, 300),  # Thumbnail dimensions
++    "show_signature": True,  # Show function signatures
++    "first_notebook_cell": "%matplotlib inline",  # Jupyter setup
++    "min_reported_time": 0,  # Report all execution times
++    "abort_on_example_error": False,  # Continue on errors
++    "matplotlib_animations": True,  # Support animations
+ }
+ 
+ # === JUPYTER CACHE - NOTEBOOK INTEGRATION ===
+@@ -918,9 +866,9 @@ def setup(app):
+     # Add custom CSS for enhanced styling
+     app.add_css_file("haive-enhanced.css")
+ 
+-    # Connect autoapi hooks for cleaner URLs
+-    app.connect("autoapi-skip-member", autoapi_skip_member)
+-    app.connect("build-finished", fix_autoapi_paths)
++    # ❌ DISABLED - AutoAPI hooks disabled 
++    # app.connect("autoapi-skip-member", autoapi_skip_member)
++    # app.connect("build-finished", fix_autoapi_paths)
+ 
+     return {
+         "version": "1.0",
+diff --git a/docs/source/games/index.rst b/docs/source/games/index.rst
+index 0369a88d..c72c3fbf 100644
+--- a/docs/source/games/index.rst
++++ b/docs/source/games/index.rst
+@@ -16,7 +16,7 @@ Beautiful, interactive game environments with intelligent AI opponents. Test you
+    :gutter: 3
+ 
+    .. grid-item-card:: ♟️ Chess
+-      :link: ../api/src/haive/games/chess/index
++      :link: ../api/haive/games/chess/index
+       :shadow: lg
+       
+       **Strategy Game**
+@@ -29,7 +29,7 @@ Beautiful, interactive game environments with intelligent AI opponents. Test you
+       **8x8 Board • 2 Players • 60+ Min**
+ 
+    .. grid-item-card:: 🎯 Tic-Tac-Toe
+-      :link: ../api/src/haive/games/tic_tac_toe/index
++      :link: ../api/haive/games/tic_tac_toe/index
+       :shadow: lg
+       
+       **Quick Game**
+@@ -42,7 +42,7 @@ Beautiful, interactive game environments with intelligent AI opponents. Test you
+       **3x3 Board • 2 Players • 2 Min**
+ 
+    .. grid-item-card:: 🔴 Connect Four
+-      :link: ../api/src/haive/games/connect4/index
++      :link: ../api/haive/games/connect4/index
+       :shadow: lg
+       
+       **Strategy Game**
+@@ -55,7 +55,7 @@ Beautiful, interactive game environments with intelligent AI opponents. Test you
+       **7x6 Board • 2 Players • 10 Min**
+ 
+    .. grid-item-card:: 🃏 Poker
+-      :link: ../api/src/haive/games/poker/index
++      :link: ../api/haive/games/poker/index
+       :shadow: lg
+       
+       **Card Game**
+@@ -68,7 +68,7 @@ Beautiful, interactive game environments with intelligent AI opponents. Test you
+       **52 Cards • 2-8 Players • 30 Min**
+ 
+    .. grid-item-card:: 🕵️ Among Us
+-      :link: ../api/src/haive/games/among_us/index
++      :link: ../api/haive/games/among_us/index
+       :shadow: lg
+       
+       **Social Deduction**
+@@ -81,7 +81,7 @@ Beautiful, interactive game environments with intelligent AI opponents. Test you
+       **4-10 Players • 1-3 Imposters • 15 Min**
+ 
+    .. grid-item-card:: 🌍 Risk
+-      :link: ../api/src/haive/games/risk/index
++      :link: ../api/haive/games/risk/index
+       :shadow: lg
+       
+       **Strategy Game**
+@@ -94,7 +94,7 @@ Beautiful, interactive game environments with intelligent AI opponents. Test you
+       **42 Territories • 2-6 Players • 120 Min**
+ 
+    .. grid-item-card:: 🎲 Monopoly
+-      :link: ../api/src/haive/games/monopoly/index
++      :link: ../api/haive/games/monopoly/index
+       :shadow: lg
+       
+       **Economic Game**
+@@ -107,7 +107,7 @@ Beautiful, interactive game environments with intelligent AI opponents. Test you
+       **40 Spaces • 2-8 Players • 90 Min**
+ 
+    .. grid-item-card:: 🧩 Mastermind
+-      :link: ../api/src/haive/games/mastermind/index
++      :link: ../api/haive/games/mastermind/index
+       :shadow: lg
+       
+       **Logic Game**

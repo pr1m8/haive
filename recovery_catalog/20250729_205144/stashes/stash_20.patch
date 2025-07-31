@@ -1,0 +1,1028 @@
+diff --git a/.gitignore b/.gitignore
+index 8febfb6a..d9e73535 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -98,7 +98,7 @@ resources/visualization/
+ *.gif
+ *.pdf
+ *.eps
+-
++*.reg
+ # =============================================================================
+ # 🧰 IDEs and editors
+ # =============================================================================
+diff --git a/docs/screenshots/api_documentation_all_6_packages b/docs/screenshots/api_documentation_all_6_packages
+index badeeae7..0c560ef7 100644
+Binary files a/docs/screenshots/api_documentation_all_6_packages and b/docs/screenshots/api_documentation_all_6_packages differ
+diff --git a/docs/screenshots/complete_documentation_homepage b/docs/screenshots/complete_documentation_homepage
+index 628f398a..f9ce606a 100644
+Binary files a/docs/screenshots/complete_documentation_homepage and b/docs/screenshots/complete_documentation_homepage differ
+diff --git a/docs/screenshots/haive_agents_api_documentation b/docs/screenshots/haive_agents_api_documentation
+index 82f1d72e..11839e8e 100644
+Binary files a/docs/screenshots/haive_agents_api_documentation and b/docs/screenshots/haive_agents_api_documentation differ
+diff --git a/project_docs/README.md b/project_docs/README.md
+index 6192afa4..51d2b025 100644
+--- a/project_docs/README.md
++++ b/project_docs/README.md
+@@ -116,6 +116,7 @@ Historical documentation and deprecated content:
+ - **Adding tools**: See [Tool Integration](active/implementation/tool_integration/)
+ - **Testing approaches**: See [Testing Standards](active/standards/testing/)
+ - **Code style**: See [Coding Standards](active/standards/coding/)
++- **Fixing documentation build**: See [Documentation Fix Initiative](documentation_fix/README.md)
+ 
+ ### For Architects
+ 
+@@ -133,6 +134,7 @@ Historical documentation and deprecated content:
+ 
+ ### Recent Changes
+ 
++- **2025-01-27**: Created comprehensive [Documentation Fix Initiative](documentation_fix/README.md)
+ - **2025-01-09**: Major reorganization - improved structure and navigation
+ - **2025-01-09**: Removed 6.7MB of duplicate files
+ - **2025-01-09**: Created modular memory system
+diff --git a/scripts/comprehensive_error_detector.py b/scripts/comprehensive_error_detector.py
+new file mode 100644
+index 00000000..3a4a5e35
+--- /dev/null
++++ b/scripts/comprehensive_error_detector.py
+@@ -0,0 +1,378 @@
++#!/usr/bin/env python3
++"""Comprehensive Error Detection System for Haive Packages.
++
++This script scans all packages for various types of errors that could
++cause build failures, import issues, or other problems.
++"""
++
++import ast
++import logging
++import re
++import sys
++from pathlib import Path
++from typing import Dict, List, Set, Tuple
++
++# Set up logging
++logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
++logger = logging.getLogger(__name__)
++
++
++class ErrorDetector:
++    """Comprehensive error detection for Python packages."""
++
++    def __init__(self, packages_dir: Path):
++        self.packages_dir = packages_dir
++        self.errors = []
++        self.warnings = []
++
++    def detect_all_errors(self) -> Dict[str, List[str]]:
++        """Detect all types of errors across packages."""
++        logger.info("Starting comprehensive error detection...")
++
++        results = {
++            "syntax_errors": [],
++            "import_errors": [],
++            "naming_errors": [],
++            "unicode_errors": [],
++            "circular_imports": [],
++            "missing_files": [],
++            "invalid_structures": [],
++        }
++
++        # Get all Python files
++        python_files = list(self.packages_dir.rglob("*.py"))
++        logger.info(f"Found {len(python_files)} Python files to analyze")
++
++        for py_file in python_files:
++            try:
++                # Skip __pycache__ and .venv directories
++                if any(
++                    part.startswith(".") or part == "__pycache__"
++                    for part in py_file.parts
++                ):
++                    continue
++
++                # Check syntax errors
++                syntax_errors = self._check_syntax_errors(py_file)
++                if syntax_errors:
++                    results["syntax_errors"].extend(syntax_errors)
++
++                # Check import errors
++                import_errors = self._check_import_errors(py_file)
++                if import_errors:
++                    results["import_errors"].extend(import_errors)
++
++                # Check naming conventions
++                naming_errors = self._check_naming_conventions(py_file)
++                if naming_errors:
++                    results["naming_errors"].extend(naming_errors)
++
++                # Check Unicode issues
++                unicode_errors = self._check_unicode_issues(py_file)
++                if unicode_errors:
++                    results["unicode_errors"].extend(unicode_errors)
++
++            except Exception as e:
++                logger.error(f"Error processing {py_file}: {e}")
++                results["invalid_structures"].append(f"{py_file}: {e}")
++
++        # Check for missing __init__.py files
++        missing_files = self._check_missing_init_files()
++        results["missing_files"].extend(missing_files)
++
++        # Check for circular imports (basic detection)
++        circular_imports = self._detect_basic_circular_imports(python_files)
++        results["circular_imports"].extend(circular_imports)
++
++        return results
++
++    def _check_syntax_errors(self, py_file: Path) -> List[str]:
++        """Check for Python syntax errors."""
++        errors = []
++
++        try:
++            with open(py_file, "r", encoding="utf-8") as f:
++                content = f.read()
++
++            # Try to parse with AST
++            try:
++                ast.parse(content, filename=str(py_file))
++            except SyntaxError as e:
++                errors.append(f"SYNTAX ERROR in {py_file}:{e.lineno}: {e.msg}")
++            except Exception as e:
++                errors.append(f"PARSE ERROR in {py_file}: {e}")
++
++        except UnicodeDecodeError as e:
++            errors.append(f"ENCODING ERROR in {py_file}: {e}")
++        except Exception as e:
++            errors.append(f"FILE READ ERROR in {py_file}: {e}")
++
++        return errors
++
++    def _check_import_errors(self, py_file: Path) -> List[str]:
++        """Check for import-related errors."""
++        errors = []
++
++        try:
++            with open(py_file, "r", encoding="utf-8") as f:
++                content = f.read()
++
++            # Check for invalid module names in imports
++            import_patterns = [
++                r"from\s+([^\s]+)\s+import",
++                r"import\s+([^\s,\n]+)",
++            ]
++
++            for i, line in enumerate(content.splitlines(), 1):
++                for pattern in import_patterns:
++                    matches = re.findall(pattern, line)
++                    for match in matches:
++                        # Check for hyphens in module names
++                        if "-" in match and not match.startswith("."):
++                            errors.append(
++                                f"INVALID MODULE NAME in {py_file}:{i}: '{match}' contains hyphens"
++                            )
++
++                        # Check for invalid relative imports
++                        if match.startswith("..") and match.count(".") > 2:
++                            errors.append(
++                                f"SUSPICIOUS RELATIVE IMPORT in {py_file}:{i}: '{match}'"
++                            )
++
++        except Exception as e:
++            errors.append(f"IMPORT CHECK ERROR in {py_file}: {e}")
++
++        return errors
++
++    def _check_naming_conventions(self, py_file: Path) -> List[str]:
++        """Check file and directory naming conventions."""
++        errors = []
++
++        # Check if filename contains hyphens (invalid for Python modules)
++        if "-" in py_file.stem and py_file.suffix == ".py":
++            errors.append(
++                f"INVALID FILENAME: {py_file} contains hyphens (not importable)"
++            )
++
++        # Check parent directories for hyphens in package structure
++        for parent in py_file.parents:
++            if parent.name and "-" in parent.name and not parent.name.startswith("."):
++                # Allow hyphens in top-level package names like haive-core
++                if parent.parent.name != "packages":
++                    errors.append(f"INVALID DIRECTORY NAME: {parent} contains hyphens")
++
++        return errors
++
++    def _check_unicode_issues(self, py_file: Path) -> List[str]:
++        """Check for Unicode and string formatting issues."""
++        errors = []
++
++        try:
++            with open(py_file, "r", encoding="utf-8") as f:
++                content = f.read()
++
++            lines = content.splitlines()
++            for i, line in enumerate(lines, 1):
++                # Check for malformed Unicode strings
++                if "🏛️" in line:
++                    # Look for patterns like "text"* emoji" which are syntax errors
++                    if re.search(r'"[^"]*"\s*\*\s*🏛️', line):
++                        errors.append(
++                            f"MALFORMED UNICODE STRING in {py_file}:{i}: {line.strip()}"
++                        )
++
++                # Check for unescaped backslashes in strings
++                if "\\" in line and not line.strip().startswith("#"):
++                    # Look for potential escape sequence issues
++                    string_matches = re.findall(r'["\']([^"\']*\\[^"\']*)["\']', line)
++                    for match in string_matches:
++                        if "\\" in match and not any(
++                            seq in match
++                            for seq in ["\\n", "\\t", "\\r", '\\"', "\\'", "\\\\"]
++                        ):
++                            errors.append(
++                                f"POTENTIAL ESCAPE SEQUENCE ISSUE in {py_file}:{i}: {line.strip()}"
++                            )
++
++        except Exception as e:
++            errors.append(f"UNICODE CHECK ERROR in {py_file}: {e}")
++
++        return errors
++
++    def _check_missing_init_files(self) -> List[str]:
++        """Check for missing __init__.py files in package directories."""
++        errors = []
++
++        # Find all directories that contain Python files
++        python_dirs = set()
++        for py_file in self.packages_dir.rglob("*.py"):
++            python_dirs.add(py_file.parent)
++
++        for py_dir in python_dirs:
++            # Skip if it's in __pycache__ or .venv
++            if any(
++                part.startswith(".") or part == "__pycache__" for part in py_dir.parts
++            ):
++                continue
++
++            # Check if __init__.py exists
++            init_file = py_dir / "__init__.py"
++            if not init_file.exists():
++                # Check if this directory has Python files that would be imported
++                py_files = list(py_dir.glob("*.py"))
++                if py_files:
++                    errors.append(f"MISSING __init__.py in {py_dir}")
++
++        return errors
++
++    def _detect_basic_circular_imports(self, python_files: List[Path]) -> List[str]:
++        """Detect basic circular import patterns."""
++        errors = []
++
++        # Build import graph
++        import_graph = {}
++
++        for py_file in python_files:
++            try:
++                with open(py_file, "r", encoding="utf-8") as f:
++                    content = f.read()
++
++                # Extract imports
++                imports = []
++                for line in content.splitlines():
++                    if line.strip().startswith(("import ", "from ")):
++                        imports.append(line.strip())
++
++                module_name = self._get_module_name(py_file)
++                if module_name:
++                    import_graph[module_name] = imports
++
++            except Exception:
++                continue
++
++        # Simple circular import detection (A imports B, B imports A)
++        for module, imports in import_graph.items():
++            for import_line in imports:
++                # Extract imported module name
++                if import_line.startswith("from "):
++                    match = re.match(r"from\s+([^\s]+)\s+import", import_line)
++                    if match:
++                        imported_module = match.group(1)
++                        # Check if imported module imports this module back
++                        if imported_module in import_graph:
++                            for other_import in import_graph[imported_module]:
++                                if module in other_import:
++                                    errors.append(
++                                        f"POTENTIAL CIRCULAR IMPORT: {module} ↔ {imported_module}"
++                                    )
++
++        return errors
++
++    def _get_module_name(self, py_file: Path) -> str:
++        """Get the module name for a Python file."""
++        try:
++            # Get relative path from packages directory
++            relative_path = py_file.relative_to(self.packages_dir)
++
++            # Convert to module name
++            parts = list(relative_path.parts)
++            if parts[-1] == "__init__.py":
++                parts = parts[:-1]
++            else:
++                parts[-1] = parts[-1].replace(".py", "")
++
++            return ".".join(parts)
++        except:
++            return ""
++
++    def generate_report(self, results: Dict[str, List[str]]) -> str:
++        """Generate a comprehensive error report."""
++        report_lines = ["🚨 COMPREHENSIVE ERROR DETECTION REPORT 🚨", "=" * 50, ""]
++
++        total_errors = sum(len(errors) for errors in results.values())
++
++        if total_errors == 0:
++            report_lines.extend(
++                ["✅ NO ERRORS DETECTED!", "All packages appear to be error-free.", ""]
++            )
++        else:
++            report_lines.extend([f"📊 SUMMARY: {total_errors} total issues found", ""])
++
++            for category, errors in results.items():
++                if errors:
++                    report_lines.extend(
++                        [
++                            f"🔍 {category.upper().replace('_', ' ')} ({len(errors)} issues):",
++                            "-" * 40,
++                        ]
++                    )
++
++                    for error in errors:
++                        report_lines.append(f"  • {error}")
++
++                    report_lines.append("")
++
++        # Add recommendations
++        report_lines.extend(
++            [
++                "🛠️  RECOMMENDED ACTIONS:",
++                "-" * 30,
++                "1. Fix syntax errors first (they prevent parsing)",
++                "2. Rename files with hyphens to use underscores",
++                "3. Fix import statements to use valid module names",
++                "4. Add missing __init__.py files where needed",
++                "5. Resolve Unicode string formatting issues",
++                "6. Review and resolve circular imports",
++                "",
++            ]
++        )
++
++        return "\n".join(report_lines)
++
++    def save_report(self, results: Dict[str, List[str]], output_file: Path) -> None:
++        """Save the error report to a file."""
++        report = self.generate_report(results)
++
++        with open(output_file, "w", encoding="utf-8") as f:
++            f.write(report)
++
++        logger.info(f"Error report saved to: {output_file}")
++
++
++def main():
++    """Main execution function."""
++    # Get packages directory
++    script_dir = Path(__file__).parent
++    packages_dir = script_dir.parent / "packages"
++
++    if not packages_dir.exists():
++        logger.error(f"Packages directory not found: {packages_dir}")
++        sys.exit(1)
++
++    # Create error detector
++    detector = ErrorDetector(packages_dir)
++
++    # Detect all errors
++    logger.info("Starting comprehensive error detection...")
++    results = detector.detect_all_errors()
++
++    # Generate report
++    report = detector.generate_report(results)
++    print(report)
++
++    # Save report
++    output_file = script_dir.parent / "comprehensive_error_report.txt"
++    detector.save_report(results, output_file)
++
++    # Exit with error code if issues found
++    total_errors = sum(len(errors) for errors in results.values())
++    if total_errors > 0:
++        logger.error(f"Found {total_errors} issues that need attention")
++        sys.exit(1)
++    else:
++        logger.info("✅ No errors detected!")
++        sys.exit(0)
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/scripts/fixes/comprehensive_dev_fix.py b/scripts/fixes/comprehensive_dev_fix.py
+new file mode 100644
+index 00000000..48f22126
+--- /dev/null
++++ b/scripts/fixes/comprehensive_dev_fix.py
+@@ -0,0 +1,340 @@
++#!/usr/bin/env python3
++"""Comprehensive automated fix using all our dev dependencies.
++
++This uses trunk, ruff, black, isort, and custom logic to fix:
++1. Import issues (relative vs absolute)
++2. Syntax errors (regex patterns, quotes, etc.)
++3. Code formatting
++4. Common Python issues
++"""
++
++import ast
++import re
++import subprocess
++import sys
++from pathlib import Path
++from typing import Dict, List, Tuple
++
++
++class DevToolsFixer:
++    """Use all available dev tools to fix issues."""
++
++    def __init__(self, base_dir: Path):
++        self.base_dir = base_dir
++        self.packages = [
++            "haive-core",
++            "haive-agents",
++            "haive-games",
++            "haive-tools",
++            "haive-mcp",
++        ]
++        self.results = {
++            "trunk_fixes": 0,
++            "ruff_fixes": 0,
++            "syntax_fixes": 0,
++            "import_fixes": 0,
++            "black_formatted": 0,
++            "total_files": 0,
++            "still_broken": [],
++        }
++
++    def run_comprehensive_fix(self):
++        """Run all fixes in the optimal order."""
++
++        # Step 1: Fix basic syntax errors first
++        self.fix_basic_syntax_errors()
++
++        # Step 2: Run ruff to fix many issues automatically
++        self.run_ruff_fixes()
++
++        # Step 3: Fix import issues
++        self.fix_import_issues()
++
++        # Step 4: Format with black
++        self.run_black_formatting()
++
++        # Step 5: Organize imports with isort
++        self.run_isort()
++
++        # Step 6: Run trunk check for final cleanup
++        self.run_trunk_check()
++
++        # Step 7: Validate results
++        self.validate_results()
++
++        self.print_summary()
++
++    def fix_basic_syntax_errors(self):
++        """Fix basic syntax errors that prevent parsing."""
++        for package in self.packages:
++            package_dir = self.base_dir / "packages" / package / "src"
++            if not package_dir.exists():
++                continue
++
++            py_files = list(package_dir.rglob("*.py"))
++
++            for py_file in py_files:
++                if self._should_skip_file(py_file):
++                    continue
++
++                self.results["total_files"] += 1
++                if self._fix_syntax_errors(py_file):
++                    self.results["syntax_fixes"] += 1
++
++    def _should_skip_file(self, file_path: Path) -> bool:
++        """Skip certain files."""
++        skip_patterns = [
++            ".ipynb_checkpoints",
++            "__pycache__",
++            "test_",
++            "_test.py",
++            "temp_",
++            "fix_",
++        ]
++        return any(pattern in str(file_path) for pattern in skip_patterns)
++
++    def _fix_syntax_errors(self, file_path: Path) -> bool:
++        """Fix common syntax errors in a file."""
++        try:
++            content = file_path.read_text(encoding="utf-8")
++            original_content = content
++
++            # Fix common regex pattern issues
++            fixes = [
++                # Fix unterminated strings with regex
++                (r'"""([^"]*\\[ws]\+[^"]*)"""', r'"""\\1"""'),
++                (r'"([^"]*\\[ws]\+[^"]*)"', r'"\\1"'),
++                # Fix arrow characters
++                (r"→", "->"),
++                # Fix incomplete function calls
++                (r"(\w+)\(\s*$", r"\\1()"),
++                # Fix missing closing quotes
++                (r'"""([^"]*?)$', r'"""\\1"""'),
++                # Fix invalid escape sequences
++                (r"\\([ws])\+", r"\\\\\\1+"),
++                # Fix incomplete imports
++                (r"from\s+(\w+)\s*$", r"from \\1 import"),
++            ]
++
++            for pattern, replacement in fixes:
++                content = re.sub(
++                    pattern, replacement, content, flags=re.MULTILINE | re.DOTALL
++                )
++
++            # Test if it's valid Python now
++            try:
++                ast.parse(content)
++                if content != original_content:
++                    file_path.write_text(content, encoding="utf-8")
++                    return True
++            except SyntaxError:
++                # If still broken, revert
++                if content != original_content:
++                    file_path.write_text(original_content, encoding="utf-8")
++
++        except Exception as e:
++            pass")
++
++        return False
++
++    def run_ruff_fixes(self):
++        """Run ruff to auto-fix many issues."""
++        for package in self.packages:
++            package_dir = self.base_dir / "packages" / package
++            if not package_dir.exists():
++                continue
++
++            try:
++                result = subprocess.run(
++                    [
++                        "poetry",
++                        "run",
++                        "ruff",
++                        "check",
++                        str(package_dir / "src"),
++                        "--fix",
++                        "--unsafe-fixes",
++                    ],
++                    check=False, cwd=self.base_dir,
++                    capture_output=True,
++                    text=True,
++                )
++
++                if "fixed" in result.stdout.lower():
++                    self.results["ruff_fixes"] += 1
++
++            except Exception as e:
++                pass")
++
++    def fix_import_issues(self):
++        """Fix common import issues."""
++        for package in self.packages:
++            package_dir = self.base_dir / "packages" / package / "src"
++            if not package_dir.exists():
++                continue
++
++            # Fix common import patterns
++            for py_file in package_dir.rglob("*.py"):
++                if self._should_skip_file(py_file):
++                    continue
++
++                if self._fix_imports(py_file, package):
++                    self.results["import_fixes"] += 1
++
++    def _fix_imports(self, file_path: Path, package: str) -> bool:
++        """Fix imports in a specific file."""
++        try:
++            content = file_path.read_text(encoding="utf-8")
++            original_content = content
++
++            # Package-specific import fixes
++            if package == "haive-core":
++                # Fix config and persistence circular imports
++                content = re.sub(
++                    r"^from (config|persistence)\.(\w+)",
++                    r"from .\\2",
++                    content,
++                    flags=re.MULTILINE,
++                )
++
++                # Fix absolute imports within core
++                content = re.sub(
++                    r"^from haive\.core\.(config|persistence)\.(\w+)",
++                    r"from .\\2",
++                    content,
++                    flags=re.MULTILINE,
++                )
++
++            # General fixes for all packages
++            content = re.sub(
++                r"^from haive\.(\w+)\.src\.haive\.\\1\.",
++                r"from .",
++                content,
++                flags=re.MULTILINE,
++            )
++
++            if content != original_content:
++                file_path.write_text(content, encoding="utf-8")
++                return True
++
++        except Exception as e:
++            pass")
++
++        return False
++
++    def run_black_formatting(self):
++        """Run black to format code."""
++        for package in self.packages:
++            package_dir = self.base_dir / "packages" / package / "src"
++            if not package_dir.exists():
++                continue
++
++            try:
++                result = subprocess.run(
++                    [
++                        "poetry",
++                        "run",
++                        "black",
++                        str(package_dir),
++                        "--line-length",
++                        "88",
++                        "--skip-string-normalization",
++                    ],
++                    check=False, cwd=self.base_dir,
++                    capture_output=True,
++                    text=True,
++                )
++
++                if "reformatted" in result.stdout:
++                    self.results["black_formatted"] += 1
++
++            except Exception as e:
++                pass")
++
++    def run_isort(self):
++        """Run isort to organize imports."""
++        for package in self.packages:
++            package_dir = self.base_dir / "packages" / package / "src"
++            if not package_dir.exists():
++                continue
++
++            try:
++                subprocess.run(
++                    [
++                        "poetry",
++                        "run",
++                        "isort",
++                        str(package_dir),
++                        "--profile",
++                        "black",
++                        "--line-length",
++                        "88",
++                    ],
++                    check=False, cwd=self.base_dir,
++                    capture_output=True,
++                    text=True,
++                )
++
++
++            except Exception as e:
++                pass")
++
++    def run_trunk_check(self):
++        """Run trunk check for final validation."""
++        try:
++            result = subprocess.run(
++                ["trunk", "check", "--fix", "--all"],
++                check=False, cwd=self.base_dir,
++                capture_output=True,
++                text=True,
++            )
++
++            if result.returncode == 0:
++                self.results["trunk_fixes"] += 1
++            else:
++                pass..")
++
++        except Exception as e:
++            pass")
++
++    def validate_results(self):
++        """Validate that files can be imported."""
++
++        test_imports = [
++            "haive.core.config",
++            "haive.core.persistence",
++            "haive.agents.simple",
++            "haive.agents.base",
++        ]
++
++        for import_name in test_imports:
++            try:
++                subprocess.run(
++                    ["poetry", "run", "python", "-c", f"import {import_name}"],
++                    cwd=self.base_dir,
++                    check=True,
++                    capture_output=True,
++                )
++
++            except subprocess.CalledProcessError:
++                self.results["still_broken"].append(import_name)
++
++    def print_summary(self):
++        """Print summary of all fixes."""
++
++        if self.results["still_broken"]:
++            for broken in self.results["still_broken"]:
++                pass
++        else:
++            pass!")
++
++
++def main():
++    """Run comprehensive dev tools fix."""
++    base_dir = Path("/home/will/Projects/haive/backend/haive")
++    fixer = DevToolsFixer(base_dir)
++    fixer.run_comprehensive_fix()
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/scripts/fixes/comprehensive_syntax_fixer.py b/scripts/fixes/comprehensive_syntax_fixer.py
+new file mode 100644
+index 00000000..4ccb6cfe
+--- /dev/null
++++ b/scripts/fixes/comprehensive_syntax_fixer.py
+@@ -0,0 +1,250 @@
++#!/usr/bin/env python3
++"""
++Comprehensive syntax error finder and fixer.
++This script will:
++1. Find ALL files with syntax errors
++2. Attempt automatic fixes for common patterns
++3. Report unfixable issues for manual review
++"""
++
++import ast
++import os
++import re
++import subprocess
++from pathlib import Path
++from typing import Dict, List, Tuple
++
++
++def check_python_syntax(file_path: str) -> Tuple[bool, str]:
++    """Check if a Python file has valid syntax."""
++    try:
++        with open(file_path, "r", encoding="utf-8") as f:
++            content = f.read()
++        ast.parse(content)
++        return True, "OK"
++    except SyntaxError as e:
++        return False, f"SyntaxError: {e}"
++    except Exception as e:
++        return False, f"Other error: {e}"
++
++
++def fix_common_regex_patterns(content: str) -> str:
++    """Fix common regex patterns that cause syntax errors."""
++    fixes = [
++        # Basic regex escapes that shouldn't be there
++        (r"\\s\+", " "),
++        (r"\\w\+", ""),
++        (r"\\d\+", ""),
++        (r"\\n\+", ""),
++        (r"\\t\+", ""),
++        # Fix field definitions
++        (r"\\s\+nam\\w\+=", "name="),
++        (r"\\s\+descriptio\\w\+=", "description="),
++        (r"\\s\+conten\\w\+=", "content="),
++        # Fix class names
++        (r"AgentConfi\\w\+", "AgentConfig"),
++        (r"BaseMode\\w\+", "BaseModel"),
++        (r"Tru\\w\+", "True"),
++        (r"lambd\\w\+", "lambda"),
++        (r"ValueErro\\w\+", "ValueError"),
++        (r"field_validato\\w\+", "field_validator"),
++        (r"prin\\w\+", "print"),
++        (r"mai\\w\+", "main"),
++        (r"__name_\\w\+", "__name__"),
++        (r"confi\\w\+", "config"),
++        (r"kwarg\\w\+", "kwargs"),
++        (r"An\\w\+", "Any"),
++        # Fix numeric patterns
++        (r"2\\w\+\.\\d\+", "25.0"),
++        (r"5\\w\+\.\\d\+", "50.0"),
++        (r"7\\w\+\.\\d\+", "75.0"),
++        (r"90\.\\d\+", "90.0"),
++        (r"40\.\\d\+", "40.0"),
++        (r"\\w\+\.\\d\+", "2.0"),
++        (r"10\\d\+", "100"),
++        (r"le=\\d\+", "le=10"),
++        # Fix variable patterns
++        (r"v\.ge\\w\+", "v.get"),
++        (r"compliance_check\\w\+=", "compliance_checks="),
++        (r"variable_nam\\w\+=", "variable_name="),
++        # Fix string issues
++        (r'"\\s\+', '"'),
++        (r'\\s\+"', '"'),
++        (r'"\\w\+', '"'),
++        (r'\\w\+"', '"'),
++        # Fix print statements with regex
++        (r'print\("([^"]*)"([^"]*)"([^"]*)"\)', r'print("\1\3")'),
++        # Fix datetime format
++        (r"'%Y%m%d_%H%M%\\w\+'", "'%Y%m%d_%H%M%S'"),
++        # Fix statements
++        (r"if\\s\+", "if "),
++        (r"or\\s\+", "or "),
++        (r"raise\\s\+", "raise "),
++        # Fix unclosed strings with regex
++        (r'(["\'])([^"\']*\\[sw]\+[^"\']*)\1', r"\1\2\1"),
++        # Fix __all__ lists with regex
++        (r"__all__ = \[([^\]]*\\[sw]\+[^\]]*)\]", r"__all__ = []"),
++        # Fix incomplete function calls
++        (r"(\w+)\(\s*$", r"\1()"),
++        # Fix malformed dictionary entries
++        (r"{\s*([^}]*\\[sw]\+[^}]*)\s*}", r"{}"),
++    ]
++
++    for pattern, replacement in fixes:
++        content = re.sub(pattern, replacement, content)
++
++    return content
++
++
++def fix_indentation_issues(content: str) -> str:
++    """Fix common indentation issues."""
++    lines = content.split("\n")
++    fixed_lines = []
++    current_indent = 0
++
++    for line in lines:
++        stripped = line.strip()
++
++        # Skip empty lines
++        if not stripped:
++            fixed_lines.append("")
++            continue
++
++        # Calculate expected indentation based on context
++        if stripped.startswith("class ") or stripped.startswith("def "):
++            current_indent = 0
++        elif stripped.startswith(("if ", "for ", "while ", "with ", "try:")):
++            # These increase indentation for next line
++            pass
++        elif stripped.startswith(("except", "finally", "else", "elif")):
++            # These should be at same level as their parent
++            pass
++        elif stripped.startswith(('"', "'")):
++            # Docstrings should be indented
++            pass
++
++        # Apply consistent 4-space indentation
++        if line.startswith(" ") and not line.startswith("    "):
++            # Fix inconsistent indentation
++            leading_spaces = len(line) - len(line.lstrip())
++            if leading_spaces > 0:
++                # Convert to 4-space indentation
++                indent_level = (
++                    leading_spaces + 2
++                ) // 4  # Round to nearest 4-space level
++                fixed_line = "    " * indent_level + stripped
++                fixed_lines.append(fixed_line)
++            else:
++                fixed_lines.append(line)
++        else:
++            fixed_lines.append(line)
++
++    return "\n".join(fixed_lines)
++
++
++def run_autopep8_fix(file_path: str) -> bool:
++    """Run autopep8 to fix the file."""
++    try:
++        result = subprocess.run(
++            [
++                "python",
++                "-m",
++                "autopep8",
++                "--in-place",
++                "--aggressive",
++                "--aggressive",
++                "--max-line-length=100",
++                file_path,
++            ],
++            capture_output=True,
++            text=True,
++        )
++        return result.returncode == 0
++    except:
++        return False
++
++
++def find_and_fix_all_syntax_errors():
++    """Find and fix all syntax errors in the packages."""
++
++    base_dir = Path("/home/will/Projects/haive/backend/haive")
++
++    # Find all Python files
++    python_files = []
++    for package_dir in [
++        "packages/haive-core/src",
++        "packages/haive-agents/src",
++        "packages/haive-tools/src",
++        "packages/haive-games/src",
++        "packages/haive-prebuilt/src",
++        "packages/haive-mcp/src",
++    ]:
++        package_path = base_dir / package_dir
++        if package_path.exists():
++            python_files.extend(package_path.rglob("*.py"))
++
++    print(f"Found {len(python_files)} Python files to check...")
++
++    syntax_errors = []
++    fixed_count = 0
++
++    for py_file in python_files:
++        file_path_str = str(py_file)
++
++        # Check initial syntax
++        is_valid, error_msg = check_python_syntax(file_path_str)
++
++        if not is_valid:
++            print(f"❌ Syntax error: {py_file.relative_to(base_dir)}")
++            print(f"   Error: {error_msg}")
++
++            try:
++                # Try to fix it
++                with open(file_path_str, "r", encoding="utf-8") as f:
++                    original_content = f.read()
++
++                # Apply regex fixes
++                fixed_content = fix_common_regex_patterns(original_content)
++
++                # Apply indentation fixes
++                fixed_content = fix_indentation_issues(fixed_content)
++
++                # Write the fixed content
++                with open(file_path_str, "w", encoding="utf-8") as f:
++                    f.write(fixed_content)
++
++                # Run autopep8 for additional fixes
++                run_autopep8_fix(file_path_str)
++
++                # Check if fixed
++                is_fixed, _ = check_python_syntax(file_path_str)
++
++                if is_fixed:
++                    print(f"✅ Fixed: {py_file.relative_to(base_dir)}")
++                    fixed_count += 1
++                else:
++                    print(f"⚠️  Partially fixed: {py_file.relative_to(base_dir)}")
++                    syntax_errors.append((py_file, error_msg))
++
++            except Exception as e:
++                print(f"💥 Failed to fix: {py_file.relative_to(base_dir)} - {e}")
++                syntax_errors.append((py_file, f"Fix failed: {e}"))
++
++    print(f"\n📊 Summary:")
++    print(f"  Total files checked: {len(python_files)}")
++    print(f"  Files fixed: {fixed_count}")
++    print(f"  Files still with errors: {len(syntax_errors)}")
++
++    if syntax_errors:
++        print(f"\n🚨 Files that still need manual fixing:")
++        for file_path, error in syntax_errors[:10]:  # Show first 10
++            print(f"  {file_path.relative_to(base_dir)}: {error}")
++
++        if len(syntax_errors) > 10:
++            print(f"  ... and {len(syntax_errors) - 10} more files")
++
++    return syntax_errors
++
++
++if __name__ == "__main__":
++    find_and_fix_all_syntax_errors()

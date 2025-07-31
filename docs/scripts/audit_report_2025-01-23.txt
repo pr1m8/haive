@@ -1,0 +1,672 @@
+================================================================================
+DOCUMENTATION AUDIT REPORT
+================================================================================
+
+Total Files Analyzed: 23
+Total Issues Found: 263
+
+Issue Breakdown by Severity:
+  🔴 Critical: 0
+  🟠 High: 228
+  🟡 Medium: 35
+  🟢 Low: 0
+
+Issue Types:
+  - missing_returns_documentation: 81
+  - missing_args_documentation: 75
+  - missing_type_hint: 31
+  - missing_return_type: 27
+  - missing_examples: 20
+  - missing_function_docstring: 10
+  - missing_args_section: 7
+  - poor_module_docstring: 4
+  - missing_attributes_section: 3
+  - missing_class_docstring: 2
+  - missing_raises_documentation: 1
+  - missing_module_docstring: 1
+  - missing___all__: 1
+
+================================================================================
+DETAILED ISSUES BY FILE
+================================================================================
+
+
+📁 extensions_dev/_extensions/haive_sphinx_ext.py
+   Issues: 47 (C:0 H:45 M:2 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+   🟡 Line 28: Class 'AgentInfo' docstring missing Attributes section
+      Context: Add 'Attributes:' section
+   🟠 Line 69: Function 'run' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 69: Function 'run' missing return type hint
+      Context: Add -> ReturnType
+   🟠 Line 425: Function 'run' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 425: Function 'run' missing return type hint
+      Context: Add -> ReturnType
+   🟠 Line 494: Class 'AgentDiscovery' docstring missing Args section
+      Context: Add 'Args:' section for __init__ parameters
+   🟠 Line 523: Function '__init__' missing Args documentation
+      Context: Parameters: self, workspace_root
+   🟠 Line 531: Function 'should_skip_file' missing Args documentation
+      Context: Parameters: self, file_path
+   🟠 Line 531: Function 'should_skip_file' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 543: Function 'extract_agent_info_from_ast' missing Args documentation
+      Context: Parameters: self, file_path
+   🟠 Line 543: Function 'extract_agent_info_from_ast' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 571: Function 'analyze_class_node' missing Args documentation
+      Context: Parameters: self, node, file_path, module_docstring
+   🟠 Line 571: Function 'analyze_class_node' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 622: Function 'looks_like_agent' missing Args documentation
+      Context: Parameters: self, class_name, node
+   🟠 Line 622: Function 'looks_like_agent' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 636: Function 'get_base_class_name' missing Args documentation
+      Context: Parameters: self, base_node
+   🟠 Line 636: Function 'get_base_class_name' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 646: Function 'file_path_to_module_path' missing Args documentation
+      Context: Parameters: self, file_path
+   🟠 Line 646: Function 'file_path_to_module_path' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 669: Function 'categorize_agent' missing Args documentation
+      Context: Parameters: self, file_path, class_name, docstring
+   🟠 Line 669: Function 'categorize_agent' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 716: Function 'get_package_name' missing Args documentation
+      Context: Parameters: self, file_path
+   🟠 Line 716: Function 'get_package_name' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 727: Function 'extract_features' missing Args documentation
+      Context: Parameters: self, node, docstring
+   🟠 Line 727: Function 'extract_features' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 758: Function 'determine_complexity' missing Args documentation
+      Context: Parameters: self, node, docstring, features
+   🟠 Line 758: Function 'determine_complexity' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 783: Function 'extract_description' missing Args documentation
+      Context: Parameters: self, docstring, module_docstring
+   🟠 Line 783: Function 'extract_description' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 802: Function 'discover_agents' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 817: Function 'scan_package' missing Args documentation
+      Context: Parameters: self, package_path
+   🟠 Line 817: Function 'scan_package' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 826: Function 'scan_directory' missing Args documentation
+      Context: Parameters: self, directory
+   🟠 Line 826: Function 'scan_directory' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 841: Function 'generate_agent_showcase' missing Args documentation
+      Context: Parameters: workspace_root, output_dir
+   🟠 Line 841: Function 'generate_agent_showcase' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 929: Function 'generate_showcase_content' missing Args documentation
+      Context: Parameters: data
+   🟠 Line 929: Function 'generate_showcase_content' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 1048: Function 'generate_complete_index' missing Args documentation
+      Context: Parameters: agents
+   🟠 Line 1048: Function 'generate_complete_index' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 1092: Function 'discover_readmes' missing Args documentation
+      Context: Parameters: app, config
+   🟠 Line 1092: Function 'discover_readmes' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 1155: Function 'generate_agent_showcase_hook' missing Args documentation
+      Context: Parameters: app, config
+   🟠 Line 1155: Function 'generate_agent_showcase_hook' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 1176: Function 'setup' missing Args documentation
+      Context: Parameters: app
+   🟠 Line 1176: Function 'setup' missing Returns documentation
+      Context: Add 'Returns:' section
+
+
+📁 extensions_dev/_extensions/fix_autosummary.py
+   Issues: 25 (C:0 H:24 M:1 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+   🟠 Line 17: Function 'is_haive_module' missing Args documentation
+      Context: Parameters: name
+   🟠 Line 17: Function 'is_haive_module' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 17: Parameter 'name' in 'is_haive_module' missing type hint
+      Context: def is_haive_module
+   🟠 Line 17: Function 'is_haive_module' missing return type hint
+      Context: Add -> ReturnType
+   🟠 Line 42: Function 'fix_generated_file' missing Args documentation
+      Context: Parameters: filepath
+   🟠 Line 42: Parameter 'filepath' in 'fix_generated_file' missing type hint
+      Context: def fix_generated_file
+   🟠 Line 85: Function 'process_autosummary_toc' missing Args documentation
+      Context: Parameters: app, what, name, obj, options, lines
+   🟠 Line 85: Parameter 'app' in 'process_autosummary_toc' missing type hint
+      Context: def process_autosummary_toc
+   🟠 Line 85: Parameter 'what' in 'process_autosummary_toc' missing type hint
+      Context: def process_autosummary_toc
+   🟠 Line 85: Parameter 'name' in 'process_autosummary_toc' missing type hint
+      Context: def process_autosummary_toc
+   🟠 Line 85: Parameter 'obj' in 'process_autosummary_toc' missing type hint
+      Context: def process_autosummary_toc
+   🟠 Line 85: Parameter 'options' in 'process_autosummary_toc' missing type hint
+      Context: def process_autosummary_toc
+   🟠 Line 85: Parameter 'lines' in 'process_autosummary_toc' missing type hint
+      Context: def process_autosummary_toc
+   🟠 Line 93: Function 'fix_autosummary_files' missing Args documentation
+      Context: Parameters: app, exception
+   🟠 Line 93: Parameter 'app' in 'fix_autosummary_files' missing type hint
+      Context: def fix_autosummary_files
+   🟠 Line 93: Parameter 'exception' in 'fix_autosummary_files' missing type hint
+      Context: def fix_autosummary_files
+   🟠 Line 107: Function 'setup' missing Args documentation
+      Context: Parameters: app
+   🟠 Line 107: Function 'setup' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 107: Parameter 'app' in 'setup' missing type hint
+      Context: def setup
+   🟠 Line 107: Function 'setup' missing return type hint
+      Context: Add -> ReturnType
+   🟠 Line 115: Function 'patched_get_items' missing Args documentation
+      Context: Parameters: self, names
+   🟠 Line 115: Function 'patched_get_items' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 115: Parameter 'names' in 'patched_get_items' missing type hint
+      Context: def patched_get_items
+   🟠 Line 115: Function 'patched_get_items' missing return type hint
+      Context: Add -> ReturnType
+
+
+📁 documentation_audit.py
+   Issues: 20 (C:0 H:16 M:4 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+   🟡 Line 28: Class 'DocIssue' docstring missing Attributes section
+      Context: Add 'Attributes:' section
+   🟡 Line 40: Class 'FileReport' docstring missing Attributes section
+      Context: Add 'Attributes:' section
+   🟠 Line 51: Function 'add_issue' missing Args documentation
+      Context: Parameters: self, issue
+   🟠 Line 65: Class 'DocstringAnalyzer' docstring missing Args section
+      Context: Add 'Args:' section for __init__ parameters
+   🟡 Line 68: Function '__init__' has no docstring
+      Context: class DocstringAnalyzer
+   🟠 Line 77: Function 'visit_Module' missing Args documentation
+      Context: Parameters: self, node
+   🟠 Line 77: Function 'visit_Module' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 101: Function 'visit_ClassDef' missing Args documentation
+      Context: Parameters: self, node
+   🟠 Line 101: Function 'visit_ClassDef' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 134: Function 'visit_FunctionDef' missing Args documentation
+      Context: Parameters: self, node
+   🟠 Line 134: Function 'visit_FunctionDef' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 169: Function 'visit_AsyncFunctionDef' missing Args documentation
+      Context: Parameters: self, node
+   🟠 Line 169: Function 'visit_AsyncFunctionDef' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 408: Function 'analyze_file' missing Args documentation
+      Context: Parameters: file_path
+   🟠 Line 408: Function 'analyze_file' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 437: Function 'find_python_files' missing Args documentation
+      Context: Parameters: root_dir, exclude_dirs
+   🟠 Line 437: Function 'find_python_files' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 458: Function 'generate_report' missing Args documentation
+      Context: Parameters: reports, output_format
+   🟠 Line 458: Function 'generate_report' missing Returns documentation
+      Context: Add 'Returns:' section
+
+
+📁 extensions_dev/_extensions/namespace_autosummary.py
+   Issues: 19 (C:0 H:18 M:1 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+   🟠 Line 17: Function 'safe_import_by_name' missing Args documentation
+      Context: Parameters: name, prefixes
+   🟠 Line 17: Function 'safe_import_by_name' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 68: Class 'DummyModule' has no docstring
+      Context: class DummyModule
+   🟠 Line 85: Function 'get_items' missing Args documentation
+      Context: Parameters: self, names
+   🟠 Line 85: Function 'get_items' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 101: Function 'get_module_members' missing Args documentation
+      Context: Parameters: module_name
+   🟠 Line 101: Function 'get_module_members' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 126: Function 'process_namespace_packages' missing Args documentation
+      Context: Parameters: app, what, name, obj, options, lines
+   🟠 Line 126: Parameter 'app' in 'process_namespace_packages' missing type hint
+      Context: def process_namespace_packages
+   🟠 Line 126: Parameter 'what' in 'process_namespace_packages' missing type hint
+      Context: def process_namespace_packages
+   🟠 Line 126: Parameter 'name' in 'process_namespace_packages' missing type hint
+      Context: def process_namespace_packages
+   🟠 Line 126: Parameter 'obj' in 'process_namespace_packages' missing type hint
+      Context: def process_namespace_packages
+   🟠 Line 126: Parameter 'options' in 'process_namespace_packages' missing type hint
+      Context: def process_namespace_packages
+   🟠 Line 126: Parameter 'lines' in 'process_namespace_packages' missing type hint
+      Context: def process_namespace_packages
+   🟠 Line 155: Function 'setup' missing Args documentation
+      Context: Parameters: app
+   🟠 Line 155: Function 'setup' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 155: Parameter 'app' in 'setup' missing type hint
+      Context: def setup
+   🟠 Line 155: Function 'setup' missing return type hint
+      Context: Add -> ReturnType
+
+
+📁 extensions_dev/_extensions/games_autodoc.py
+   Issues: 18 (C:0 H:14 M:4 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+   🟠 Line 16: Class 'GameCategory' docstring missing Args section
+      Context: Add 'Args:' section for __init__ parameters
+   🟡 Line 19: Function '__init__' has no docstring
+      Context: class GameCategory
+   🟠 Line 26: Class 'GameInfo' docstring missing Args section
+      Context: Add 'Args:' section for __init__ parameters
+   🟡 Line 29: Function '__init__' has no docstring
+      Context: class GameInfo
+   🟠 Line 279: Function 'categorize_game' missing Args documentation
+      Context: Parameters: cls, game_name
+   🟠 Line 279: Function 'categorize_game' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 279: Parameter 'cls' in 'categorize_game' missing type hint
+      Context: def categorize_game
+   🟠 Line 290: Class 'GameDocumentationGenerator' docstring missing Args section
+      Context: Add 'Args:' section for __init__ parameters
+   🟡 Line 293: Function '__init__' has no docstring
+      Context: class GameDocumentationGenerator
+   🟠 Line 323: Function 'generate_category_index' missing Args documentation
+      Context: Parameters: self, category
+   🟠 Line 323: Function 'generate_category_index' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 413: Function 'generate_main_index' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 551: Function 'run' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 551: Function 'run' missing return type hint
+      Context: Add -> ReturnType
+   🟠 Line 601: Function 'setup' missing Args documentation
+      Context: Parameters: app
+   🟠 Line 601: Function 'setup' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 601: Function 'setup' missing return type hint
+      Context: Add -> ReturnType
+
+
+📁 cache_generation/generate_agent_cache.py
+   Issues: 16 (C:0 H:14 M:2 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+   🟠 Line 21: Class 'AgentExecutionCapture' docstring missing Args section
+      Context: Add 'Args:' section for __init__ parameters
+   🟡 Line 24: Function '__init__' has no docstring
+      Context: class AgentExecutionCapture
+   🟠 Line 44: Function 'capture_stream_event' missing Args documentation
+      Context: Parameters: self, event
+   🟠 Line 75: Function 'capture_state_update' missing Args documentation
+      Context: Parameters: self, state
+   🟠 Line 85: Function 'capture_graph_data' missing Args documentation
+      Context: Parameters: self, graph_info
+   🟠 Line 89: Function 'capture_visualization_data' missing Args documentation
+      Context: Parameters: self, viz_data
+   🟠 Line 93: Function 'get_summary' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 275: Function 'calculator' missing Args documentation
+      Context: Parameters: expression
+   🟠 Line 275: Function 'calculator' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 284: Function 'word_counter' missing Args documentation
+      Context: Parameters: text
+   🟠 Line 284: Function 'word_counter' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 444: Function 'generate_simple_agent_cache' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 444: Function 'generate_simple_agent_cache' missing return type hint
+      Context: Add -> ReturnType
+   🟠 Line 488: Function 'generate_react_agent_cache' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 488: Function 'generate_react_agent_cache' missing return type hint
+      Context: Add -> ReturnType
+
+
+📁 extensions_dev/_extensions/haive_sidebar_titles.py
+   Issues: 12 (C:0 H:10 M:2 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should start with single-line summary (<79 chars)
+      Context: First line of docstring
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+   🟠 Line 62: Function 'get_readable_title' missing Args documentation
+      Context: Parameters: module_name
+   🟠 Line 62: Function 'get_readable_title' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 85: Function 'process_toctree_entries' missing Args documentation
+      Context: Parameters: app, doctree, docname
+   🟠 Line 85: Function 'process_toctree_entries' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 107: Function 'add_module_title_to_page' missing Args documentation
+      Context: Parameters: app, pagename, templatename, context, doctree
+   🟠 Line 107: Function 'add_module_title_to_page' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 133: Function 'source_read_handler' missing Args documentation
+      Context: Parameters: app, docname, source
+   🟠 Line 133: Function 'source_read_handler' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 156: Function 'setup' missing Args documentation
+      Context: Parameters: app
+   🟠 Line 156: Function 'setup' missing Returns documentation
+      Context: Add 'Returns:' section
+
+
+📁 extensions_dev/_extensions/safe_autosummary.py
+   Issues: 12 (C:0 H:11 M:1 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+   🟠 Line 14: Function 'run' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 14: Function 'run' missing return type hint
+      Context: Add -> ReturnType
+   🟠 Line 28: Function 'safe_import_by_name' missing Args documentation
+      Context: Parameters: name, prefixes
+   🟠 Line 28: Function 'safe_import_by_name' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 28: Parameter 'name' in 'safe_import_by_name' missing type hint
+      Context: def safe_import_by_name
+   🟠 Line 28: Parameter 'prefixes' in 'safe_import_by_name' missing type hint
+      Context: def safe_import_by_name
+   🟠 Line 28: Function 'safe_import_by_name' missing return type hint
+      Context: Add -> ReturnType
+   🟠 Line 39: Function 'setup' missing Args documentation
+      Context: Parameters: app
+   🟠 Line 39: Function 'setup' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 39: Parameter 'app' in 'setup' missing type hint
+      Context: def setup
+   🟠 Line 39: Function 'setup' missing return type hint
+      Context: Add -> ReturnType
+
+
+📁 agent_demos/generate_agent_demos.py
+   Issues: 11 (C:0 H:11 M:0 L:0)
+------------------------------------------------------------
+   🟠 Line 57: Function 'generate_mock_graph_data' missing Args documentation
+      Context: Parameters: agent_type, agent_name
+   🟠 Line 57: Function 'generate_mock_graph_data' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 226: Function 'generate_mock_state_history' missing Args documentation
+      Context: Parameters: agent_type
+   🟠 Line 226: Function 'generate_mock_state_history' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 280: Function 'get_agent_info' missing Args documentation
+      Context: Parameters: module_path, class_name
+   🟠 Line 280: Function 'get_agent_info' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 333: Function 'create_agent_demo_page' missing Args documentation
+      Context: Parameters: agent_info, output_dir
+   🟠 Line 333: Function 'create_agent_demo_page' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 371: Function 'scan_agent_modules' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 393: Function 'create_demo_index' missing Args documentation
+      Context: Parameters: agents, output_dir
+   🟠 Line 393: Function 'create_demo_index' missing Returns documentation
+      Context: Add 'Returns:' section
+
+
+📁 extensions_dev/_extensions/auto_module_discovery.py
+   Issues: 11 (C:0 H:10 M:1 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+   🟠 Line 9: Function 'discover_modules' missing Args documentation
+      Context: Parameters: package_name, base_path
+   🟠 Line 9: Function 'discover_modules' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 9: Parameter 'package_name' in 'discover_modules' missing type hint
+      Context: def discover_modules
+   🟠 Line 9: Parameter 'base_path' in 'discover_modules' missing type hint
+      Context: def discover_modules
+   🟠 Line 9: Function 'discover_modules' missing return type hint
+      Context: Add -> ReturnType
+   🟠 Line 46: Function 'discover_haive_modules' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 46: Function 'discover_haive_modules' missing return type hint
+      Context: Add -> ReturnType
+   🟠 Line 68: Function 'generate_autosummary_rst' missing Args documentation
+      Context: Parameters: modules_dict, output_file
+   🟠 Line 68: Parameter 'modules_dict' in 'generate_autosummary_rst' missing type hint
+      Context: def generate_autosummary_rst
+   🟠 Line 68: Parameter 'output_file' in 'generate_autosummary_rst' missing type hint
+      Context: def generate_autosummary_rst
+
+
+📁 build_tools/generate_package_docs.py
+   Issues: 9 (C:0 H:8 M:1 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+   🟠 Line 250: Function 'create_module_index' missing Args documentation
+      Context: Parameters: package_name, module_name, module_info, package_prefix
+   🟠 Line 250: Function 'create_module_index' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 328: Function 'create_package_index' missing Args documentation
+      Context: Parameters: package_name, package_info
+   🟠 Line 328: Function 'create_package_index' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 392: Function 'create_submodule_index' missing Args documentation
+      Context: Parameters: package_name, module_name, submodule_name, package_prefix
+   🟠 Line 392: Function 'create_submodule_index' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 441: Function 'create_module_direct_doc' missing Args documentation
+      Context: Parameters: package_name, module_name, package_prefix
+   🟠 Line 441: Function 'create_module_direct_doc' missing Returns documentation
+      Context: Add 'Returns:' section
+
+
+📁 build_tools/restructure_navigation.py
+   Issues: 9 (C:0 H:7 M:2 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should start with single-line summary (<79 chars)
+      Context: First line of docstring
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+   🟠 Line 140: Function 'create_haive_root_index' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 202: Function 'create_package_index' missing Args documentation
+      Context: Parameters: package_name, package_info
+   🟠 Line 202: Function 'create_package_index' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 267: Function 'create_module_index' missing Args documentation
+      Context: Parameters: package_name, module_name, submodules
+   🟠 Line 267: Function 'create_module_index' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 334: Function 'create_submodule_doc' missing Args documentation
+      Context: Parameters: package_name, module_name, submodule_name
+   🟠 Line 334: Function 'create_submodule_doc' missing Returns documentation
+      Context: Add 'Returns:' section
+
+
+📁 fix_parse_errors.py
+   Issues: 9 (C:0 H:8 M:1 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+   🟠 Line 9: Function 'load_parse_errors' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 9: Function 'load_parse_errors' missing return type hint
+      Context: Add -> ReturnType
+   🟠 Line 38: Function 'fix_common_issues' missing Args documentation
+      Context: Parameters: file_path
+   🟠 Line 38: Function 'fix_common_issues' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 38: Parameter 'file_path' in 'fix_common_issues' missing type hint
+      Context: def fix_common_issues
+   🟠 Line 38: Function 'fix_common_issues' missing return type hint
+      Context: Add -> ReturnType
+   🟠 Line 94: Function 'main' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 94: Function 'main' missing return type hint
+      Context: Add -> ReturnType
+
+
+📁 extensions_dev/_extensions/agent_docs.py
+   Issues: 8 (C:0 H:7 M:1 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should start with single-line summary (<79 chars)
+      Context: First line of docstring
+   🟠 Line 193: Function 'run' has no docstring
+      Context: class AgentDocDirective
+   🟠 Line 193: Function 'run' missing return type hint
+      Context: Add -> ReturnType
+   🟠 Line 377: Function 'run' has no docstring
+      Context: class AgentGalleryDirective
+   🟠 Line 377: Function 'run' missing return type hint
+      Context: Add -> ReturnType
+   🟠 Line 436: Function 'setup' missing Args documentation
+      Context: Parameters: app
+   🟠 Line 436: Function 'setup' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 436: Function 'setup' missing return type hint
+      Context: Add -> ReturnType
+
+
+📁 extensions_dev/_extensions/mock_handler.py
+   Issues: 8 (C:0 H:5 M:3 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+   🟠 Line 93: Function 'mock_missing_modules' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 93: Function 'mock_missing_modules' missing return type hint
+      Context: Add -> ReturnType
+   🟠 Line 105: Class 'MockClass' has no docstring
+      Context: class MockClass
+   🟡 Line 106: Function '__init__' has no docstring
+      Context: class MockClass
+   🟡 Line 109: Function '__getattr__' has no docstring
+      Context: class MockClass
+   🟠 Line 109: Parameter 'name' in '__getattr__' missing type hint
+      Context: def __getattr__
+   🟠 Line 109: Function '__getattr__' missing return type hint
+      Context: Add -> ReturnType
+
+
+📁 agent_demos/agent_demo_data.py
+   Issues: 6 (C:0 H:4 M:2 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+   🟠 Line 310: Function 'get_agent_context' missing Args documentation
+      Context: Parameters: agent_id
+   🟠 Line 310: Function 'get_agent_context' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟡 Line 310: Function 'get_agent_context' raises exceptions but missing Raises documentation
+      Context: Add 'Raises:' section
+   🟠 Line 310: Parameter 'agent_id' in 'get_agent_context' missing type hint
+      Context: def get_agent_context
+   🟠 Line 310: Function 'get_agent_context' missing return type hint
+      Context: Add -> ReturnType
+
+
+📁 fix_prebuilt_init_files.py
+   Issues: 6 (C:0 H:5 M:1 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+   🟠 Line 8: Function 'fix_prebuilt_init_files' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 8: Function 'fix_prebuilt_init_files' missing return type hint
+      Context: Add -> ReturnType
+   🟠 Line 27: Function 'replacement' has no docstring
+      Context: module-level
+   🟠 Line 27: Parameter 'match' in 'replacement' missing type hint
+      Context: def replacement
+   🟠 Line 27: Function 'replacement' missing return type hint
+      Context: Add -> ReturnType
+
+
+📁 agent_demos/generate_game_demos.py
+   Issues: 5 (C:0 H:4 M:1 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+   🟠 Line 85: Function 'create_game_demo_page' missing Args documentation
+      Context: Parameters: game, output_dir
+   🟠 Line 85: Function 'create_game_demo_page' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 435: Function 'create_games_index' missing Args documentation
+      Context: Parameters: output_dir
+   🟠 Line 435: Function 'create_games_index' missing Returns documentation
+      Context: Add 'Returns:' section
+
+
+📁 agent_demos/agent_cache_loader.py
+   Issues: 4 (C:0 H:3 M:1 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+   🟠 Line 16: Class 'AgentCacheLoader' docstring missing Args section
+      Context: Add 'Args:' section for __init__ parameters
+   🟠 Line 19: Function '__init__' missing Args documentation
+      Context: Parameters: self, cache_dir
+   🟠 Line 278: Function 'get_available_agent_types' missing Returns documentation
+      Context: Add 'Returns:' section
+
+
+📁 build_tools/fix_doc_warnings.py
+   Issues: 3 (C:0 H:2 M:1 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+   🟠 Line 8: Function 'fix_rst_files' missing Returns documentation
+      Context: Add 'Returns:' section
+   🟠 Line 8: Function 'fix_rst_files' missing return type hint
+      Context: Add -> ReturnType
+
+
+📁 build_tools/update_sidebar_structure.py
+   Issues: 2 (C:0 H:0 M:2 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should start with single-line summary (<79 chars)
+      Context: First line of docstring
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section
+
+
+📁 extensions_dev/_extensions/__init__.py
+   Issues: 2 (C:0 H:2 M:0 L:0)
+------------------------------------------------------------
+   🟠 Line 1: Module has no docstring
+      Context: Add module-level docstring with description and examples
+   🟠 Line 1: Module __init__.py missing __all__ exports
+      Context: Add __all__ = ['exported', 'names']
+
+
+📁 extensions_dev/_extensions/autosummary_mock.py
+   Issues: 1 (C:0 H:0 M:1 L:0)
+------------------------------------------------------------
+   🟡 Line 1: Module docstring should include usage examples
+      Context: Add 'Example:' or 'Usage:' section

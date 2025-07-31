@@ -1,0 +1,6 @@
+.trunk/trunk.yaml
+docs/screenshots/api_documentation_all_6_packages
+docs/screenshots/complete_documentation_homepage
+docs/screenshots/haive_agents_api_documentation
+project_docs/memory_index/quick_reference.md
+pyproject.toml

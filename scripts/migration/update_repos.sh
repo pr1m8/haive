@@ -3,8 +3,8 @@
 
 set -e # Exit on error
 
-MAIN_DIR="$HOME/Projects/haive/backend/haive"
-cd "$MAIN_DIR"
+MAIN_DIR="${HOME}/Projects/haive/backend/haive"
+cd "${MAIN_DIR}"
 
 # List of all packages
 PACKAGES=(
@@ -20,25 +20,25 @@ echo "==== Starting package updates ===="
 
 # Process each package
 for pkg in "${PACKAGES[@]}"; do
-	echo -e "\n\n==== Processing $pkg ===="
-	cd "$MAIN_DIR/packages/$pkg"
+	echo -e "\n\n==== Processing ${pkg} ===="
+	cd "${MAIN_DIR}/packages/${pkg}"
 
 	# Check and fix package structure if needed
-	if [ ! -d "$pkg" ] && [ ! -d "${pkg//-/_}" ] && [ ! -d "src" ]; then
-		echo "Creating proper package structure for $pkg..."
+	if [[ ! -d ${pkg} ]] && [[ ! -d ${pkg//-/_} ]] && [[ ! -d "src" ]]; then
+		echo "Creating proper package structure for ${pkg}..."
 		pkg_dir="${pkg//-/_}"
-		mkdir -p "$pkg_dir"
-		touch "$pkg_dir/__init__.py"
+		mkdir -p "${pkg_dir}"
+		touch "${pkg_dir}/__init__.py"
 
 		# Update pyproject.toml to include the package
 		if ! grep -q "packages" pyproject.toml; then
 			echo "Updating pyproject.toml to specify package location..."
 			# Insert packages section before [build-system]
-			sed -i "/\[build-system\]/i \[tool.poetry\]\npackages = [{include = \"$pkg_dir\"}]\n" pyproject.toml
+			sed -i "/\[build-system\]/i \[tool.poetry\]\npackages = [{include = \"${pkg_dir}\"}]\n" pyproject.toml
 		fi
 	fi
 
-	if [ "$pkg" == "haive-core" ]; then
+	if [[ ${pkg} == "haive-core" ]]; then
 		echo "Special handling for haive-core..."
 		# Try to fix potential torch issues in lock file
 		rm -f poetry.lock
@@ -54,25 +54,25 @@ for pkg in "${PACKAGES[@]}"; do
 
 	echo "Committing changes..."
 	git add .
-	git commit -m "Update dependencies for $pkg" || echo "No changes to commit"
+	git commit -m "Update dependencies for ${pkg}" || echo "No changes to commit"
 
 	echo "Pushing to origin/main..."
 	git push origin main || echo "Push failed, continuing anyway"
 
-	echo "==== Completed $pkg ===="
+	echo "==== Completed ${pkg} ===="
 done
 
 # Process main repository
 echo -e "\n\n==== Processing main repository ===="
-cd "$MAIN_DIR"
+cd "${MAIN_DIR}"
 
 # Fix dependency references in main pyproject.toml
 echo "Checking main repository dependencies..."
 for pkg in "${PACKAGES[@]}"; do
-	pkg_path="packages/$pkg"
-	if grep -q "path = \"../.*$pkg\"" pyproject.toml; then
-		echo "Fixing path reference for $pkg..."
-		sed -i "s|path = \"../.*$pkg\"|path = \"$pkg_path\"|g" pyproject.toml
+	pkg_path="packages/${pkg}"
+	if grep -q "path = \"../.*${pkg}\"" pyproject.toml; then
+		echo "Fixing path reference for ${pkg}..."
+		sed -i "s|path = \"../.*${pkg}\"|path = \"${pkg_path}\"|g" pyproject.toml
 	fi
 done
 

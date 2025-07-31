@@ -1,0 +1,23 @@
+# PyDocStyle Configuration for Haive
+# Google-style docstring enforcement
+
+[pydocstyle]
+convention = google
+add-ignore =
+    D100,   # Missing docstring in public module (too strict)
+    D104,   # Missing docstring in public package (too strict)
+    D105,   # Missing docstring in magic method (not needed)
+    D107,   # Missing docstring in __init__ (Pydantic handles this)
+
+# Match files
+match = *.py
+match-dir = packages/*/src
+
+# Exclude patterns
+ignore-paths =
+    tests,
+    examples,
+    build,
+    dist,
+    .venv,
+    __pycache__

@@ -1,0 +1,225 @@
+diff --git a/docs/source/conf.py b/docs/source/conf.py
+index 807671a6..3fe364ab 100644
+--- a/docs/source/conf.py
++++ b/docs/source/conf.py
+@@ -97,7 +97,7 @@ release = "1.0.0"
+ 
+ extensions = [
+     # === CORE API DOCUMENTATION ===
+-    # "autoapi.extension",  # Disabled due to remaining KeyError issues
++    "autoapi.extension",  # ✅ RE-ENABLED with improved configuration
+     "sphinx.ext.napoleon",  # Google/NumPy docstring support
+     "sphinx.ext.viewcode",  # [source] links
+     "sphinx.ext.linkcode",  # GitHub source links
+@@ -188,6 +188,7 @@ html_static_path = ["_static"]
+ # Minimal CSS - Streamlined design system
+ html_css_files = [
+     "haive-minimal.css",  # 🎨 ENABLED - includes demo button styles
++    "haive-css-fixes.css",  # 🔧 FIX - Sidebar width and code block issues
+ ]
+ 
+ html_js_files = [
+@@ -368,14 +369,15 @@ html_sidebars = {
+ 
+ # === AUTOAPI - BEST-IN-CLASS API DOCUMENTATION ===
+ autoapi_type = "python"
+-# Point to the src directories but we'll fix the paths in preprocessing
++# All packages enabled for full API documentation
++# Point directly to haive namespace to avoid 'src' in generated paths
+ autoapi_dirs = [
+-    "../../packages/haive-core/src",
+-    "../../packages/haive-agents/src",  # ✅ ENABLED - fixed import issues
+-    "../../packages/haive-tools/src",
+-    "../../packages/haive-dataflow/src",
+-    "../../packages/haive-games/src",  # ✅ ENABLED - adding games
+-    "../../packages/haive-mcp/src",  # ✅ ENABLED - adding MCP
++    "../../packages/haive-core/src/haive",
++    "../../packages/haive-agents/src/haive",  # ✅ ENABLED - comprehensive agent docs
++    "../../packages/haive-tools/src/haive",  # ✅ ENABLED - tool integrations
++    "../../packages/haive-dataflow/src/haive",  # ✅ ENABLED - data processing
++    "../../packages/haive-games/src/haive",  # ✅ ENABLED - game environments
++    "../../packages/haive-mcp/src/haive",  # ✅ ENABLED - MCP integration
+ ]
+ autoapi_root = "api"
+ autoapi_options = [
+@@ -383,7 +385,8 @@ autoapi_options = [
+     "show-inheritance",
+     "show-module-summary",
+     "special-members",  # Show __init__, __call__, etc.
+-    "private-members",  # Show documented private methods
++    # "private-members",  # Disabled to reduce import issues
++    # "imported-members",  # Disabled to avoid circular imports
+ ]
+ autoapi_keep_files = True
+ autoapi_add_toctree_entry = True
+@@ -394,6 +397,10 @@ autoapi_python_use_implicit_namespaces = True  # Handle namespace packages
+ # Enhanced AutoAPI configuration for better API docs
+ autoapi_generate_api_docs = True
+ 
++# Additional configuration for error resilience
++autoapi_ignore_invalid_imports = True  # Ignore imports that can't be resolved
++autoapi_include_inheritance_graphs = False  # Skip inheritance graphs to avoid issues
++
+ # Use custom templates to fix src path issue
+ autoapi_template_dir = "_templates/autoapi"
+ 
+@@ -808,12 +815,16 @@ html_show_copyright = True
+ # Search
+ html_search_language = "en"
+ 
+-# Suppress warnings
++# Suppress warnings - Enhanced for AutoAPI
+ suppress_warnings = [
+     "autosummary.import_cycle",
+     "autodoc.import_object",
+     "ref.citation",
+     "misc.highlighting_failure",
++    # AutoAPI specific warnings
++    "autoapi.python_import_resolution",  # Suppress circular import warnings
++    "autoapi.not_readable",  # Suppress file read warnings
++    "autoapi.import_cycle",  # Suppress AutoAPI import cycle warnings
+ ]
+ 
+ # Enhanced error handling
+@@ -822,69 +833,52 @@ keep_warnings = True  # Keep warnings in output
+ autodoc_warningiserror = False  # Don't treat autodoc warnings as errors
+ autoapi_keep_files = True  # Keep generated API files for debugging
+ 
+-# AutoAPI error handling
++# AutoAPI error handling - Streamlined ignore patterns
+ autoapi_ignore = [
+-    "**/__pycache__/**",  # Ignore all Python cache files
+-    "**/*.pyc",  # Ignore compiled Python files
+-    "**/*.pyo",  # Ignore optimized Python files
++    # Essential system files
++    "**/__pycache__/**",
++    "**/*.pyc",
++    "**/*.pyo",
++    "**/.ipynb_checkpoints/**",
++    "**/.venv/**",
++    "**/*.code-workspace",
++    # Test and example files
+     "**/test_*.py",
+     "**/tests/**",
+     "**/*_test.py",
++    "**/examples/**",
++    "**/example*.py",
++    "**/*_example.py",
+     "**/demo*.py",
++    "**/*demo*/**",
+     "**/debug*.py",
+-    "**/bin/**",
++    # Application entry points and scripts
++    "**/app.py",
++    "**/main.py",
+     "**/cli.py",
+-    "**/compiled_agent.py",  # 🚨 TEMPORARILY IGNORED - has import issues with CompiledStateGraph
++    "**/scripts/**",
++    "**/bin/**",
++    # Known problematic files with syntax errors
++    "**/conversation/social_media/example.py",
++    "**/document_modifiers/kg/kg_base/example.py",
++    "**/rag/db_rag/graph_db/example.py",
++    "**/reasoning_and_critique/*/example.py",
++    "**/react_class/react_agent2/example.py",
++    "**/conversation/collaberative/example.py",
++    # Complex/experimental modules causing import issues
++    "**/compiled_agent.py",
++    "**/agents/supervisor/**",
++    "**/archive/**",
++    "**/experimental/**",
++    "**/agents/base/agent.py",  # Causing KeyError: 'haive.agents.base.agent.Agent'
++    # Specific problematic files
+     "**/litellm_cli.py",
+     "**/aug_llms.py",
+-    "**/example*.py",
+-    "**/.ipynb_checkpoints/**",  # Jupyter checkpoint files
+-    "**/checkpoint*.py",  # Checkpoint files
+-    "**/containers_tilebag/**",  # Problematic container files
+-    "**/spaces_and_parentheses/**",  # Files with invalid names
+-    "**/logger.py",  # Ignore logger modules
+-    "**/*logger*",  # Ignore anything with logger in name
+-    "**/examples/**",  # Ignore examples
+-    "**/scripts/**",  # Ignore scripts
+-    "**/*_example.py",  # Ignore example files
+-    "**/blackjack/**",  # Ignore game examples
+-    "**/app.py",  # Ignore app files
+-    "**/main.py",  # Ignore main files
+-    "**/background_process_manager/**",
+-    "**/automatic_test_case_generator/**",
+-    "**/code_smell_detector/**",
+-    "**/complexity_analyzer/**",
+-    "**/universal_loader_demo/**",  # Add this specific problem directory
+-    "**/*demo*/**",  # Ignore all demo directories
+-    "**/create_agentic_router_declarative*",  # Ignore this specific problem file
+-    "**/chain/examples/**",  # Ignore chain examples
+-    "**/conversation/social_media/example.py",  # Syntax error: unmatched '}'
+-    "**/document_modifiers/kg/kg_base/example.py",  # Syntax error: unterminated string
+-    "**/rag/db_rag/graph_db/example.py",  # Syntax error: indentation
+-    "**/reasoning_and_critique/lats/example.py",  # Syntax error: indentation
+-    "**/reasoning_and_critique/self_discover/example.py",  # Syntax error: indentation
+-    "**/reasoning_and_critique/tot/modular/example.py",  # Syntax error: indentation
+-    "**/react_class/react_agent2/example.py",  # Syntax error: indentation
+-    "**/conversation/collaberative/example.py",  # Syntax error: indentation
+-    # Additional problematic imports fixed
+-    "**/archive/meta/agent.py",  # Contains MetaAgentState that may conflict
+-    "**/self_healing_code/agent.py",  # Complex agent with potential issues
+-    "**/haive_discovery/**",  # Redundant naming structure causes issues
+-    "**/.venv/**",  # Ignore virtual environments within packages
+-    "**/haive_agent_mcp_integration.py",  # Problematic file name
+-    "**/*.code-workspace",  # VS Code workspace files
+-    # Fix for the specific KeyError issue
+-    "**/enhanced_multi_agent_v4.py",  # Has wrong import reference
+-    "**/multi_agent_state.py",  # Has wrong import reference
+-    # Fix the agent import issue
+-    "**/agents/base/agent.py",  # Skip base agent.py - Agent is exported from __init__.py
+-    "**/agents/base/agent_structured_output_mixin.py",  # Skip mixin causing KeyError
+-    "**/agents/base/agent_with_token_tracking.py",  # Skip problematic file
+-    "**/agents/base/compiled_agent.py",  # Skip compiled agent causing KeyError
+-    "**/agents/reflection/agent.py",  # Skip reflection agent
+-    "**/agents/structured_output/agent.py",  # Skip structured output agent
+-    "**/agents/document/agent.py",  # Skip document agent
+-    "**/agents/supervisor/**",  # Skip all supervisor agents for now
++    "**/haive_agent_mcp_integration.py",
++    "**/create_agentic_router_declarative*",
++    "**/universal_loader_demo/**",
++    "**/containers_tilebag/**",
++    "**/spaces_and_parentheses/**",
+ ]
+ 
+ # ==============================================================================
+@@ -922,13 +916,7 @@ def linkcode_resolve(domain, info):
+ # ==============================================================================
+ 
+ 
+-def autoapi_before_find_module(app, module_name, module_path, options):
+-    """Fix module paths before AutoAPI processes them."""
+-    # Fix the problematic base.agent.Agent reference
+-    if module_name == "haive.agents.base.agent":
+-        # Skip the agent.py file - Agent is exported from __init__
+-        return True  # Skip this module
+-    return None  # Process normally
++# Function removed - event name was invalid
+ 
+ 
+ def setup(app):
+@@ -946,13 +934,12 @@ def setup(app):
+     app.add_css_file("haive-enhanced.css")
+ 
+     # Connect autoapi hooks for cleaner URLs
+-    # app.connect("autoapi-skip-member", autoapi_skip_member)  # Disabled with autoapi
+-    # app.connect("build-finished", fix_autoapi_paths)  # Disabled with autoapi
+-    
+-    # Add hook to fix module resolution
+-    # if hasattr(app, 'setup_extension'):
+-    #     app.setup_extension('autoapi.extension')  # Disabled while autoapi is off
+-    
++    app.connect("autoapi-skip-member", autoapi_skip_member)  # ✅ RE-ENABLED
++    app.connect("build-finished", fix_autoapi_paths)  # ✅ RE-ENABLED
++    # app.connect("autoapi-before-find-module", autoapi_before_find_module)  # ❌ INVALID EVENT NAME
++
++    # AutoAPI is now enabled
++
+     return {
+         "version": "1.0",
+         "parallel_read_safe": True,

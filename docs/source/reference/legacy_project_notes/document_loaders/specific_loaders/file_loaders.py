@@ -532,8 +532,8 @@ class TSVSource(LocalSource):
         except ImportError:
             # Fallback to pandas if available
             try:
-                from langchain_community.document_loaders import DataFrameLoader
                 import pandas as pd
+                from langchain_community.document_loaders import DataFrameLoader
 
                 # Read TSV into pandas DataFrame
                 df = pd.read_csv(
@@ -1409,8 +1409,8 @@ class GutenbergSource(RemoteSource):
         except ImportError:
             # Fallback to web scraping
             try:
-                from bs4 import BeautifulSoup
                 import requests
+                from bs4 import BeautifulSoup
 
                 # Determine URL
                 url = self.url

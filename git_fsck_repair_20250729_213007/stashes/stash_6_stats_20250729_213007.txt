@@ -1,0 +1,10 @@
+commit f5db872a09037cc70c43805e501ceacea00cefa6
+Merge: 15ca1591 ebb32572
+Author: pr1m8 <william.astley@algebraicwealth.com>
+Date:   Tue Jul 29 18:23:40 2025 -0400
+
+    On feature/fix_everything_v2: SYSTEMATIC_FIXER_MASTER_20250729_182340
+
+ docs/source/conf.py | 93 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ pyproject.toml      |  2 +-
+ 2 files changed, 94 insertions(+), 1 deletion(-)

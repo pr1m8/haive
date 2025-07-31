@@ -3,9 +3,9 @@
 """Check that Poetry lock files are in sync with pyproject.toml files."""
 
 import os
+from pathlib import Path
 import subprocess
 import sys
-from pathlib import Path
 
 
 def find_packages():
@@ -48,11 +48,10 @@ def main():
         if not is_sync:
             all_good = False
         else:
-            pass")
+            pass
 
     if not all_good:
         sys.exit(1)
-
 
 
 if __name__ == "__main__":

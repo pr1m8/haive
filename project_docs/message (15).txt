@@ -77,7 +77,7 @@ const ws = new WebSocket('ws://192.168.2.13:8000/ws/chat/thread-123');
 The system supports four specialized agent types:
 
 - `chat_agent` - General conversation and assistance
-- `summarizer_agent` - Content summarization and analysis  
+- `summarizer_agent` - Content summarization and analysis
 - `code_agent` - Code generation and programming assistance
 - `data_agent` - Data analysis and visualization
 
@@ -100,7 +100,7 @@ The system supports four specialized agent types:
 ##### Agent Request (WebSocket)
 ```json
 {
-  "type": "agent_request", 
+  "type": "agent_request",
   "agent_id": "code_agent",
   "content": "Write a Python function to calculate fibonacci",
   "thread_id": "thread-uuid",
@@ -120,7 +120,7 @@ The system supports four specialized agent types:
 ```json
 {
   "type": "reload",
-  "agent_id": "data_agent", 
+  "agent_id": "data_agent",
   "content": "Regenerate the last response",
   "thread_id": "thread-uuid"
 }
@@ -163,7 +163,7 @@ The server streams responses in the following sequence:
 ##### 4. Tool Results (Optional)
 ```json
 {
-  "type": "tool_result", 
+  "type": "tool_result",
   "tool_call_id": "call-123",
   "result": {
     "results": [
@@ -194,7 +194,7 @@ The server streams responses in the following sequence:
   "field": "generated_code",
   "content": {
     "type": "code",
-    "language": "python", 
+    "language": "python",
     "title": "Fibonacci Calculator",
     "content": "def fibonacci(n):\n    if n <= 1:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)"
   },
@@ -208,7 +208,7 @@ The server streams responses in the following sequence:
   "type": "message",
   "message": {
     "id": "msg-uuid",
-    "role": "assistant", 
+    "role": "assistant",
     "content": "Complete response with the code above...",
     "thread_id": "thread-uuid",
     "created_at": "2024-01-01T00:00:00Z"
@@ -250,7 +250,7 @@ The server streams responses in the following sequence:
 ```json
 {
   "type": "tool_call",
-  "field": "code_execution", 
+  "field": "code_execution",
   "writes": {
     "code": "print('Hello World')",
     "language": "python",
@@ -289,13 +289,13 @@ The server streams responses in the following sequence:
 **Result Format:**
 ```json
 {
-  "type": "tool_result", 
+  "type": "tool_result",
   "result": {
     "summary": "Overall sales increased by 15%...",
     "insights": ["North region shows strongest growth"],
     "charts": [{
       "type": "bar",
-      "title": "Sales by Region", 
+      "title": "Sales by Region",
       "data": {...}
     }],
     "tables": [{
@@ -320,7 +320,7 @@ The server streams responses in the following sequence:
   "content": {
     "type": "code",
     "language": "python",
-    "title": "Data Processing Script", 
+    "title": "Data Processing Script",
     "content": "def process_data():\n    pass"
   }
 }
@@ -347,7 +347,7 @@ The server streams responses in the following sequence:
   "content": {
     "type": "image",
     "title": "Sales Chart",
-    "content": "data:image/png;base64,..." 
+    "content": "data:image/png;base64,..."
   }
 }
 ```
@@ -395,7 +395,7 @@ import { createLangGraphRuntime } from "@/lib/assistant-ui/langgraph-runtime";
 
 const runtime = createLangGraphRuntime({
   threadId: "thread-123",
-  agentId: "chat_agent", 
+  agentId: "chat_agent",
   onThinking: (thought) => console.log(thought),
   onArtifact: (key, artifact) => setArtifacts(prev => ({...prev, [key]: artifact}))
 });
@@ -442,7 +442,7 @@ socket.on('agentResponse', (data) => {
 ### Agent Processing Errors
 ```json
 {
-  "type": "error", 
+  "type": "error",
   "content": "Agent processing failed",
   "error_code": "AGENT_ERROR",
   "details": "Detailed error message",
@@ -589,7 +589,7 @@ ws.onmessage = (event) => {
 };
 ws.send(JSON.stringify(message));
 
-// New Socket.io code  
+// New Socket.io code
 const socket = io('http://192.168.2.13:8001');
 socket.on('agentResponse', (data) => {
   // data is already parsed

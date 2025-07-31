@@ -117,4 +117,3 @@ if __name__ == "__main__":
     # Output detailed results to JSON
     with open("agent_analysis.json", "w") as f:
         json.dump(results, f, indent=2)
-

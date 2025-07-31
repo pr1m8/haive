@@ -1,0 +1,60 @@
+{
+  "component_info": {
+    "name": "GitHubActionsLoader",
+    "component_type": "document_loader",
+    "module_path": "packages.haive-core.src.haive.core.engine.document.loaders.specific.web_github_enhanced",
+    "class_name": "GitHubActionsLoader",
+    "description": "Custom loader for GitHub Actions workflows and runs.",
+    "source_code": "class GitHubActionsLoader(BaseLoader):\n    \"\"\"Custom loader for GitHub Actions workflows and runs.\"\"\"\n\n    def __init__(\n        self,\n        repo_url: str,\n        workflow_name: Optional[str] = None,\n        status: Optional[str] = None,\n        include_logs: bool = False,\n        max_runs: int = 50,\n        access_token: Optional[str] = None,\n    ):\n        self.repo_url = repo_url\n        self.workflow_name = workflow_name\n        self.status = status\n        self.include_logs = include_logs\n        self.max_runs = max_runs\n        self.access_token = access_token\n\n        # Parse repo info\n        parsed = urlparse(repo_url)\n        path_parts = parsed.path.strip(\"/\").split(\"/\")\n        if len(path_parts) >= 2:\n            self.owner = path_parts[0]\n            self.repo = path_parts[1]\n        else:\n            raise ValueError(f\"Invalid GitHub URL: {repo_url}\")\n\n    def load(self) -> List[Document]:\n        \"\"\"Load GitHub Actions data.\"\"\"\n        try:\n            import requests\n\n            documents = []\n            headers = {\"Accept\": \"application/vnd.github.v3+json\"}\n            if self.access_token:\n                headers[\"Authorization\"] = f\"token {self.access_token}\"\n\n            # First get workflows\n            url = f\"https://api.github.com/repos/{self.owner}/{self.repo}/actions/workflows\"\n            response = requests.get(url, headers=headers)\n\n            if response.status_code == 200:\n                workflows = response.json().get(\"workflows\", [])\n\n                for workflow in workflows:\n                    if self.workflow_name and workflow[\"name\"] != self.workflow_name:\n                        continue\n\n                    # Get runs for this workflow\n                    runs_url = f\"https://api.github.com/repos/{self.owner}/{self.repo}/actions/workflows/{workflow['id']}/runs\"\n                    params = {\"per_page\": min(self.max_runs, 100)}\n                    if self.status:\n                        params[\"status\"] = self.status\n\n                    runs_response = requests.get(\n                        runs_url, headers=headers, params=params\n                    )\n\n                    if runs_response.status_code == 200:\n                        runs = runs_response.json().get(\"workflow_runs\", [])\n\n                        for run in runs[: self.max_runs]:\n                            content = f\"# Workflow Run: {workflow['name']}\\n\"\n                            content += f\"**Run Number:** {run['run_number']}\\n\"\n                            content += f\"**Status:** {run['status']}\\n\"\n                            content += f\"**Conclusion:** {run['conclusion']}\\n\"\n                            content += f\"**Branch:** {run['head_branch']}\\n\"\n                            content += f\"**Commit:** {run['head_sha'][:8]}\\n\"\n                            content += f\"**Started:** {run['run_started_at']}\\n\"\n                            content += f\"**Event:** {run['event']}\\n\\n\"\n\n                            metadata = {\n                                \"source\": run[\"html_url\"],\n                                \"type\": \"github_action_run\",\n                                \"workflow_name\": workflow[\"name\"],\n                                \"run_number\": run[\"run_number\"],\n                                \"status\": run[\"status\"],\n                                \"conclusion\": run[\"conclusion\"],\n                                \"branch\": run[\"head_branch\"],\n                                \"commit\": run[\"head_sha\"],\n                                \"event\": run[\"event\"],\n                            }\n\n                            documents.append(\n                                Document(page_content=content, metadata=metadata)\n                            )\n\n            return documents\n\n        except Exception as e:\n            logger.error(f\"Failed to load GitHub Actions: {e}\")\n            return []\n",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:40.357688",
+    "schema": {
+      "properties": {
+        "repo_url": {
+          "type": "<class 'str'>",
+          "default": null
+        },
+        "workflow_name": {
+          "type": "typing.Optional[str]",
+          "default": null
+        },
+        "status": {
+          "type": "typing.Optional[str]",
+          "default": null
+        },
+        "include_logs": {
+          "type": "<class 'bool'>",
+          "default": "False"
+        },
+        "max_runs": {
+          "type": "<class 'int'>",
+          "default": "50"
+        },
+        "access_token": {
+          "type": "typing.Optional[str]",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "load_documents_githubactionsloader",
+    "tool_description": "Load documents using GitHubActionsLoader: Custom loader for GitHub Actions workflows and runs."
+  },
+  "document": {
+    "page_content": "# GitHubActionsLoader\n**Type:** document_loader\n**Module:** packages.haive-core.src.haive.core.engine.document.loaders.specific.web_github_enhanced\n**Class:** GitHubActionsLoader\n\n## Description\nCustom loader for GitHub Actions workflows and runs.\n\n## Schema\n```json\n{\n  \"properties\": {\n    \"repo_url\": {\n      \"type\": \"<class 'str'>\",\n      \"default\": null\n    },\n    \"workflow_name\": {\n      \"type\": \"typing.Optional[str]\",\n      \"default\": null\n    },\n    \"status\": {\n      \"type\": \"typing.Optional[str]\",\n      \"default\": null\n    },\n    \"include_logs\": {\n      \"type\": \"<class 'bool'>\",\n      \"default\": \"False\"\n    },\n    \"max_runs\": {\n      \"type\": \"<class 'int'>\",\n      \"default\": \"50\"\n    },\n    \"access_token\": {\n      \"type\": \"typing.Optional[str]\",\n      \"default\": null\n    }\n  }\n}\n```\n\n## Usage as Tool\n**Tool Name:** `load_documents_githubactionsloader`\n**Description:** Load documents using GitHubActionsLoader: Custom loader for GitHub Actions workflows and runs.\n\n## Source Code\n```python\nclass GitHubActionsLoader(BaseLoader):\n    \"\"\"Custom loader for GitHub Actions workflows and runs.\"\"\"\n\n    def __init__(\n        self,\n        repo_url: str,\n        workflow_name: Optional[str] = None,\n        status: Optional[str] = None,\n        include_logs: bool = False,\n        max_runs: int = 50,\n        access_token: Optional[str] = None,\n    ):\n        self.repo_url = repo_url\n        self.workflow_name = workflow_name\n        self.status = status\n        self.include_logs = include_logs\n        self.max_runs = max_runs\n        self.access_token = access_token\n\n        # Parse repo info\n        parsed = urlparse(repo_url)\n        path_parts = parsed.path.strip(\"/\").split(\"/\")\n        if len(path_parts) >= 2:\n            self.owner = path_parts[0]\n            self.repo = path_parts[1]\n        else:\n            raise ValueError(f\"Invalid GitHub URL: {repo_url}\")\n\n    def load(self) -> List[Document]:\n        \"\"\"Load GitHub Actions data.\"\"\"\n        try:\n            import requests\n\n            documents = []\n            headers = {\"Accept\": \"application/vnd.github.v3+json\"}\n            if self.access_token:\n                headers[\"Authorization\"] = f\"token {self.access_token}\"\n\n            # First get workflows\n            url = f\"https://api.github.com/repos/{self.owner}/{self.repo}/actions/workflows\"\n            response = requests.get(url, headers=headers)\n\n            if response.status_code == 200:\n                workflows = response.json().get(\"workflows\", [])\n\n                for workflow in workflows:\n                    if self.workflow_name and workflow[\"name\"] != self.workflow_name:\n                        continue\n\n                    # Get runs for this workflow\n                    runs_url = f\"https://api.github.com/repos/{self.owner}/{self.repo}/actions/workflows/{workflow['id']}/runs\"\n                    params = {\"per_page\": min(self.max_runs, 100)}\n                    if self.status:\n                        params[\"status\"] = self.status\n\n                    runs_response = requests.get(\n                        runs_url, headers=headers, params=params\n                    )\n\n                    if runs_response.status_code == 200:\n                        runs = runs_response.json().get(\"workflow_runs\", [])\n\n                        for run in runs[: self.max_runs]:\n                            content = f\"# Workflow Run: {workflow['name']}\\n\"\n                            content += f\"**Run Number:** {run['run_number']}\\n\"\n                            content += f\"**Status:** {run['status']}\\n\"\n                            content += f\"**Conclusion:** {run['conclusion']}\\n\"\n                            content += f\"**Branch:** {run['head_branch']}\\n\"\n                            content += f\"**Commit:** {run['head_sha'][:8]}\\n\"\n                            content += f\"**Started:** {run['run_started_at']}\\n\"\n                            content += f\"**Event:** {run['event']}\\n\\n\"\n\n                            metadata = {\n                                \"source\": run[\"html_url\"],\n                                \"type\": \"github_action_run\",\n                                \"workflow_name\": workflow[\"name\"],\n                                \"run_number\": run[\"run_number\"],\n                                \"status\": run[\"status\"],\n                                \"conclusion\": run[\"conclusion\"],\n                                \"branch\": run[\"head_branch\"],\n                                \"commit\": run[\"head_sha\"],\n                                \"event\": run[\"event\"],\n                            }\n\n                            documents.append(\n                                Document(page_content=content, metadata=metadata)\n                            )\n\n            return documents\n\n        except Exception as e:\n            logger.error(f\"Failed to load GitHub Actions: {e}\")\n            return []\n\n```",
+    "metadata": {
+      "name": "GitHubActionsLoader",
+      "component_type": "document_loader",
+      "module_path": "packages.haive-core.src.haive.core.engine.document.loaders.specific.web_github_enhanced",
+      "class_name": "GitHubActionsLoader",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:40.357688",
+      "category": "document_loaders"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

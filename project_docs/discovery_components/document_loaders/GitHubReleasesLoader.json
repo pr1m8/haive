@@ -1,0 +1,64 @@
+{
+  "component_info": {
+    "name": "GitHubReleasesLoader",
+    "component_type": "document_loader",
+    "module_path": "packages.haive-core.src.haive.core.engine.document.loaders.specific.web_github_enhanced",
+    "class_name": "GitHubReleasesLoader",
+    "description": "Custom loader for GitHub Releases.",
+    "source_code": "class GitHubReleasesLoader(BaseLoader):\n    \"\"\"Custom loader for GitHub Releases.\"\"\"\n\n    def __init__(\n        self,\n        repo_url: str,\n        include_prereleases: bool = False,\n        include_drafts: bool = False,\n        max_releases: int = 50,\n        include_release_notes: bool = True,\n        include_assets: bool = True,\n        access_token: Optional[str] = None,\n    ):\n        self.repo_url = repo_url\n        self.include_prereleases = include_prereleases\n        self.include_drafts = include_drafts\n        self.max_releases = max_releases\n        self.include_release_notes = include_release_notes\n        self.include_assets = include_assets\n        self.access_token = access_token\n\n        # Parse repo info\n        parsed = urlparse(repo_url)\n        path_parts = parsed.path.strip(\"/\").split(\"/\")\n        if len(path_parts) >= 2:\n            self.owner = path_parts[0]\n            self.repo = path_parts[1]\n        else:\n            raise ValueError(f\"Invalid GitHub URL: {repo_url}\")\n\n    def load(self) -> List[Document]:\n        \"\"\"Load GitHub releases.\"\"\"\n        try:\n            import requests\n\n            documents = []\n            headers = {\"Accept\": \"application/vnd.github.v3+json\"}\n            if self.access_token:\n                headers[\"Authorization\"] = f\"token {self.access_token}\"\n\n            url = f\"https://api.github.com/repos/{self.owner}/{self.repo}/releases\"\n            params = {\"per_page\": min(self.max_releases, 100)}\n\n            response = requests.get(url, headers=headers, params=params)\n\n            if response.status_code == 200:\n                releases = response.json()\n\n                for release in releases[: self.max_releases]:\n                    if not self.include_drafts and release.get(\"draft\"):\n                        continue\n                    if not self.include_prereleases and release.get(\"prerelease\"):\n                        continue\n\n                    content = f\"# Release: {release['name'] or release['tag_name']}\\n\"\n                    content += f\"**Tag:** {release['tag_name']}\\n\"\n                    content += f\"**Published:** {release['published_at']}\\n\"\n                    content += f\"**Author:** {release['author']['login']}\\n\"\n                    content += f\"**Draft:** {release['draft']}\\n\"\n                    content += f\"**Pre-release:** {release['prerelease']}\\n\\n\"\n\n                    if self.include_release_notes:\n                        content += f\"## Release Notes\\n\\n{release['body']}\\n\\n\"\n\n                    if self.include_assets and release.get(\"assets\"):\n                        content += \"## Assets\\n\\n\"\n                        for asset in release[\"assets\"]:\n                            content += (\n                                f\"- **{asset['name']}** ({asset['size']} bytes)\\n\"\n                            )\n                            content += f\"  - Downloads: {asset['download_count']}\\n\"\n                            content += f\"  - URL: {asset['browser_download_url']}\\n\\n\"\n\n                    metadata = {\n                        \"source\": release[\"html_url\"],\n                        \"type\": \"github_release\",\n                        \"tag_name\": release[\"tag_name\"],\n                        \"name\": release[\"name\"],\n                        \"draft\": release[\"draft\"],\n                        \"prerelease\": release[\"prerelease\"],\n                        \"published_at\": release[\"published_at\"],\n                        \"author\": release[\"author\"][\"login\"],\n                    }\n\n                    documents.append(Document(page_content=content, metadata=metadata))\n\n            return documents\n\n        except Exception as e:\n            logger.error(f\"Failed to load GitHub releases: {e}\")\n            return []\n",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:40.408536",
+    "schema": {
+      "properties": {
+        "repo_url": {
+          "type": "<class 'str'>",
+          "default": null
+        },
+        "include_prereleases": {
+          "type": "<class 'bool'>",
+          "default": "False"
+        },
+        "include_drafts": {
+          "type": "<class 'bool'>",
+          "default": "False"
+        },
+        "max_releases": {
+          "type": "<class 'int'>",
+          "default": "50"
+        },
+        "include_release_notes": {
+          "type": "<class 'bool'>",
+          "default": "True"
+        },
+        "include_assets": {
+          "type": "<class 'bool'>",
+          "default": "True"
+        },
+        "access_token": {
+          "type": "typing.Optional[str]",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "load_documents_githubreleasesloader",
+    "tool_description": "Load documents using GitHubReleasesLoader: Custom loader for GitHub Releases."
+  },
+  "document": {
+    "page_content": "# GitHubReleasesLoader\n**Type:** document_loader\n**Module:** packages.haive-core.src.haive.core.engine.document.loaders.specific.web_github_enhanced\n**Class:** GitHubReleasesLoader\n\n## Description\nCustom loader for GitHub Releases.\n\n## Schema\n```json\n{\n  \"properties\": {\n    \"repo_url\": {\n      \"type\": \"<class 'str'>\",\n      \"default\": null\n    },\n    \"include_prereleases\": {\n      \"type\": \"<class 'bool'>\",\n      \"default\": \"False\"\n    },\n    \"include_drafts\": {\n      \"type\": \"<class 'bool'>\",\n      \"default\": \"False\"\n    },\n    \"max_releases\": {\n      \"type\": \"<class 'int'>\",\n      \"default\": \"50\"\n    },\n    \"include_release_notes\": {\n      \"type\": \"<class 'bool'>\",\n      \"default\": \"True\"\n    },\n    \"include_assets\": {\n      \"type\": \"<class 'bool'>\",\n      \"default\": \"True\"\n    },\n    \"access_token\": {\n      \"type\": \"typing.Optional[str]\",\n      \"default\": null\n    }\n  }\n}\n```\n\n## Usage as Tool\n**Tool Name:** `load_documents_githubreleasesloader`\n**Description:** Load documents using GitHubReleasesLoader: Custom loader for GitHub Releases.\n\n## Source Code\n```python\nclass GitHubReleasesLoader(BaseLoader):\n    \"\"\"Custom loader for GitHub Releases.\"\"\"\n\n    def __init__(\n        self,\n        repo_url: str,\n        include_prereleases: bool = False,\n        include_drafts: bool = False,\n        max_releases: int = 50,\n        include_release_notes: bool = True,\n        include_assets: bool = True,\n        access_token: Optional[str] = None,\n    ):\n        self.repo_url = repo_url\n        self.include_prereleases = include_prereleases\n        self.include_drafts = include_drafts\n        self.max_releases = max_releases\n        self.include_release_notes = include_release_notes\n        self.include_assets = include_assets\n        self.access_token = access_token\n\n        # Parse repo info\n        parsed = urlparse(repo_url)\n        path_parts = parsed.path.strip(\"/\").split(\"/\")\n        if len(path_parts) >= 2:\n            self.owner = path_parts[0]\n            self.repo = path_parts[1]\n        else:\n            raise ValueError(f\"Invalid GitHub URL: {repo_url}\")\n\n    def load(self) -> List[Document]:\n        \"\"\"Load GitHub releases.\"\"\"\n        try:\n            import requests\n\n            documents = []\n            headers = {\"Accept\": \"application/vnd.github.v3+json\"}\n            if self.access_token:\n                headers[\"Authorization\"] = f\"token {self.access_token}\"\n\n            url = f\"https://api.github.com/repos/{self.owner}/{self.repo}/releases\"\n            params = {\"per_page\": min(self.max_releases, 100)}\n\n            response = requests.get(url, headers=headers, params=params)\n\n            if response.status_code == 200:\n                releases = response.json()\n\n                for release in releases[: self.max_releases]:\n                    if not self.include_drafts and release.get(\"draft\"):\n                        continue\n                    if not self.include_prereleases and release.get(\"prerelease\"):\n                        continue\n\n                    content = f\"# Release: {release['name'] or release['tag_name']}\\n\"\n                    content += f\"**Tag:** {release['tag_name']}\\n\"\n                    content += f\"**Published:** {release['published_at']}\\n\"\n                    content += f\"**Author:** {release['author']['login']}\\n\"\n                    content += f\"**Draft:** {release['draft']}\\n\"\n                    content += f\"**Pre-release:** {release['prerelease']}\\n\\n\"\n\n                    if self.include_release_notes:\n                        content += f\"## Release Notes\\n\\n{release['body']}\\n\\n\"\n\n                    if self.include_assets and release.get(\"assets\"):\n                        content += \"## Assets\\n\\n\"\n                        for asset in release[\"assets\"]:\n                            content += (\n                                f\"- **{asset['name']}** ({asset['size']} bytes)\\n\"\n                            )\n                            content += f\"  - Downloads: {asset['download_count']}\\n\"\n                            content += f\"  - URL: {asset['browser_download_url']}\\n\\n\"\n\n                    metadata = {\n                        \"source\": release[\"html_url\"],\n                        \"type\": \"github_release\",\n                        \"tag_name\": release[\"tag_name\"],\n                        \"name\": release[\"name\"],\n                        \"draft\": release[\"draft\"],\n                        \"prerelease\": release[\"prerelease\"],\n                        \"published_at\": release[\"published_at\"],\n                        \"author\": release[\"author\"][\"login\"],\n                    }\n\n                    documents.append(Document(page_content=content, metadata=metadata))\n\n            return documents\n\n        except Exception as e:\n            logger.error(f\"Failed to load GitHub releases: {e}\")\n            return []\n\n```",
+    "metadata": {
+      "name": "GitHubReleasesLoader",
+      "component_type": "document_loader",
+      "module_path": "packages.haive-core.src.haive.core.engine.document.loaders.specific.web_github_enhanced",
+      "class_name": "GitHubReleasesLoader",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:40.408536",
+      "category": "document_loaders"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

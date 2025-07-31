@@ -1,0 +1,16 @@
+0948e00e cleanup/root-project-docs-20250728@{2025-07-28 22:15:54 -0400}: commit: update: haive-core submodule reference to latest commit
+9f08167b cleanup/root-project-docs-20250728@{2025-07-28 21:43:48 -0400}: commit: update: haive-games submodule reference to latest commit
+0a7d423f cleanup/root-project-docs-20250728@{2025-07-28 21:37:51 -0400}: commit: feat: add trunk.yaml.safe configuration for Pylance compatibility
+c4db3310 cleanup/root-project-docs-20250728@{2025-07-28 21:32:53 -0400}: commit: update: submodule references for haive packages
+e4fb8f5c cleanup/root-project-docs-20250728@{2025-07-28 21:24:50 -0400}: commit: fix: format pydoclint dependency in pyproject.toml
+2eb18747 cleanup/root-project-docs-20250728@{2025-07-28 21:19:21 -0400}: commit: update: modify documentation dependency installation to include tools
+b676727d cleanup/root-project-docs-20250728@{2025-07-28 18:49:25 -0400}: commit: feat: add google-search-results dependency to tools group
+814e9097 cleanup/root-project-docs-20250728@{2025-07-28 17:28:18 -0400}: commit: update: submodule references for trunk cleanup across packages
+d16f2a09 cleanup/root-project-docs-20250728@{2025-07-28 16:59:50 -0400}: commit: organize: clean up scattered root directory files
+b56acba6 cleanup/root-project-docs-20250728@{2025-07-28 16:58:04 -0400}: commit: organize: complete examples directory cleanup
+7bae6a1d cleanup/root-project-docs-20250728@{2025-07-28 16:57:05 -0400}: commit: organize: examples directory structure reorganization
+6d72c695 cleanup/root-project-docs-20250728@{2025-07-28 16:54:34 -0400}: commit: update: haive-core submodule ref after trunk cleanup
+bff48493 cleanup/root-project-docs-20250728@{2025-07-28 16:53:06 -0400}: reset: moving to HEAD~1
+ddff5f9f cleanup/root-project-docs-20250728@{2025-07-28 16:52:50 -0400}: commit: update: haive-mcp submodule ref after trunk cleanup
+bff48493 cleanup/root-project-docs-20250728@{2025-07-28 16:50:01 -0400}: commit: cleanup: massive root directory and project_docs reorganization
+618be97d cleanup/root-project-docs-20250728@{2025-07-28 16:45:00 -0400}: branch: Created from HEAD

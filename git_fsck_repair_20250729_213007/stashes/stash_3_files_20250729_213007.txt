@@ -1,0 +1,6 @@
+.github/actions/python-detect-package-manager/action.yml
+.github/actions/python-generate-requirements/action.yml
+.github/workflows/python_get_requirements.txt
+.github/workflows/safe-refactoring.yml
+noxfile.py
+pyproject.toml

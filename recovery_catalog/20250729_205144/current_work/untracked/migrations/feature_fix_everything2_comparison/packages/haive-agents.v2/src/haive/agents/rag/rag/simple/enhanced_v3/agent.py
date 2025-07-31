@@ -1,0 +1,556 @@
+"""SimpleRAG V3 - Enhanced MultiAgent Implementation.
+
+This module implements SimpleRAG using Enhanced MultiAgent V3 with the pattern:
+SimpleRAG = EnhancedMultiAgent[RetrieverAgent, SimpleAnswerAgent]
+
+The implementation provides:
+- Type-safe agent composition
+- Performance tracking and optimization
+- Debug support and monitoring
+- Adaptive routing capabilities
+- Comprehensive state management
+
+Examples:
+    Basic usage::
+
+        rag = SimpleRAGV3.from_documents(
+            documents=documents,
+            embedding_config=embedding_config,
+            performance_mode=True
+        )
+
+        result = await rag.arun("What is machine learning?")
+
+    Advanced usage with monitoring::
+
+        rag = SimpleRAGV3(
+            name="qa_system",
+            vector_store_config=vector_store_config,
+            performance_mode=True,
+            debug_mode=True,
+            adaptation_rate=0.2
+        )
+
+        result = await rag.arun("Complex query")
+        analysis = rag.analyze_agent_performance()
+"""
+
+from __future__ import annotations
+
+import logging
+import uuid
+from typing import Any, Dict, List, Optional, Type
+
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.engine.vectorstore import VectorStoreConfig
+from haive.core.schema.prebuilt.enhanced_multi_agent_state import (
+    EnhancedMultiAgentState,
+)
+from langchain_core.documents import Document
+from pydantic import BaseModel, Field, field_validator, model_validator
+
+from haive.agents.multi.enhanced_multi_agent_v3 import EnhancedMultiAgent
+
+from .answer_generator_agent import SimpleAnswerAgent
+from .retriever_agent import RetrieverAgent
+from .state import SimpleRAGState
+
+logger = logging.getLogger(__name__)
+
+
+# Type alias for the specific agent collection
+RAGAgentCollection = List[RetrieverAgent | SimpleAnswerAgent]
+
+
+class SimpleRAGV3(EnhancedMultiAgent[RAGAgentCollection]):
+    """SimpleRAG V3 - Enhanced MultiAgent implementation.
+
+    This class implements SimpleRAG using Enhanced MultiAgent V3 with the pattern:
+    SimpleRAGV3 = EnhancedMultiAgent[RetrieverAgent, SimpleAnswerAgent]
+
+    The sequential execution flow is:
+    1. RetrieverAgent: Retrieves relevant documents from vector store
+    2. SimpleAnswerAgent: Generates answer using retrieved documents
+
+    Key Features:
+        - Type-safe agent composition using Enhanced MultiAgent V3
+        - Performance tracking and adaptive optimization
+        - Debug support with comprehensive monitoring
+        - Automatic state management and transfer
+        - Factory methods for easy creation
+        - Backward compatibility with existing SimpleRAG
+
+    State Management:
+        Uses SimpleRAGState when enhanced features are enabled,
+        falls back to EnhancedMultiAgentState for basic usage.
+
+    Examples:
+        From documents::
+
+            rag = SimpleRAGV3.from_documents(
+                documents=my_documents,
+                embedding_config=embedding_config,
+                performance_mode=True,
+                debug_mode=True
+            )
+
+            result = await rag.arun("What is machine learning?")
+
+        From vector store::
+
+            rag = SimpleRAGV3.from_vectorstore(
+                vector_store_config=vs_config,
+                llm_config=AugLLMConfig(temperature=0.7),
+                performance_mode=True
+            )
+
+        With structured output::
+
+            class QAResponse(BaseModel):
+                answer: str
+                sources: List[str]
+                confidence: float
+
+            rag = SimpleRAGV3(
+                name="structured_rag",
+                vector_store_config=vs_config,
+                structured_output_model=QAResponse,
+                performance_mode=True
+            )
+    """
+
+    # No need to override agents field - MultiAgent handles list or dict automatically
+
+    # =============================
+    # RAG Configuration Fields
+    # =============================
+
+    # Vector store and retrieval
+    vector_store_config: VectorStoreConfig = Field(
+        ..., description="Vector store configuration for document retrieval"
+    )
+
+    # LLM configuration
+    llm_config: AugLLMConfig = Field(
+        default_factory=lambda: AugLLMConfig(temperature=0.7),
+        description="LLM configuration for answer generation",
+    )
+
+    # Retrieval parameters
+    top_k: int = Field(
+        default=5, ge=1, le=50, description="Number of documents to retrieve"
+    )
+
+    similarity_threshold: float = Field(
+        default=0.0,
+        ge=0.0,
+        le=1.0,
+        description="Minimum similarity score for retrieved documents",
+    )
+
+    # Generation parameters
+    structured_output_model: Optional[Type[BaseModel]] = Field(
+        default=None, description="Pydantic model for structured output"
+    )
+
+    max_context_length: int = Field(
+        default=4000,
+        ge=500,
+        le=32000,
+        description="Maximum context length for answer generation",
+    )
+
+    # Citation and source handling
+    include_citations: bool = Field(
+        default=True, description="Include source citations in answers"
+    )
+
+    citation_style: str = Field(
+        default="inline",
+        description="Citation style: 'inline', 'footnote', or 'numbered'",
+    )
+
+    # Custom prompt templates
+    context_template: Optional[str] = Field(
+        default=None, description="Custom context template for answer generation"
+    )
+
+    system_prompt_template: Optional[str] = Field(
+        default=None, description="Custom system prompt template"
+    )
+
+    # =============================
+    # Enhanced Features (inherited from EnhancedMultiAgent V3)
+    # =============================
+
+    # These are inherited but documented here for clarity:
+    # performance_mode: bool = Field(default=True)
+    # debug_mode: bool = Field(default=False)
+    # adaptation_rate: float = Field(default=0.1)
+    # advanced_routing: bool = Field(default=False)
+
+    # =============================
+    # Validation and Setup
+    # =============================
+
+    @field_validator("citation_style")
+    @classmethod
+    def validate_citation_style(cls, v: str) -> str:
+        """Validate citation style."""
+        allowed_styles = {"inline", "footnote", "numbered"}
+        if v not in allowed_styles:
+            raise ValueError(f"Citation style must be one of: {allowed_styles}")
+        return v
+
+    @model_validator(mode="before")
+    @classmethod
+    def ensure_agents_is_list(cls, values: dict) -> dict:
+        """Ensure agents field starts as an empty list for our List type."""
+        if "agents" not in values:
+            # Provide empty list to match our generic type
+            values["agents"] = []
+        return values
+
+    @model_validator(mode="after")
+    def setup_rag_pipeline(self) -> "SimpleRAGV3":
+        """Setup the RAG pipeline with RetrieverAgent and SimpleAnswerAgent."""
+
+        # Create RetrieverAgent
+        retriever_agent = RetrieverAgent(
+            name=f"{self.name}_retriever",
+            engine=self.vector_store_config,
+            top_k=self.top_k,
+            score_threshold=self.similarity_threshold,
+            performance_mode=self.performance_mode,
+            debug_mode=self.debug_mode,
+            quality_scoring=True,  # Enable quality scoring for enhanced tracking
+        )
+
+        # Create SimpleAnswerAgent
+        answer_agent = SimpleAnswerAgent(
+            name=f"{self.name}_answer_generator",
+            engine=self.llm_config,
+            structured_output_model=self.structured_output_model,
+            max_context_length=self.max_context_length,
+            include_citations=self.include_citations,
+            citation_style=self.citation_style,
+            performance_mode=self.performance_mode,
+            debug_mode=self.debug_mode,
+        )
+
+        # Apply custom templates if provided
+        if self.context_template:
+            answer_agent.context_template = self.context_template
+        if self.system_prompt_template:
+            answer_agent.system_prompt_template = self.system_prompt_template
+            # Update engine system message
+            if hasattr(answer_agent.engine, "system_message"):
+                answer_agent.engine.system_message = self.system_prompt_template
+
+        # Set up the agents as a list - parent class will normalize to dict
+        self.agents = [retriever_agent, answer_agent]
+
+        # Configure execution mode
+        self.execution_mode = "sequential"  # RetrieverAgent → SimpleAnswerAgent
+
+        # Setup state schema based on enabled features
+        if self.state_schema is None:
+            # Use SimpleRAGState for enhanced RAG-specific tracking
+            if any([self.performance_mode, self.debug_mode, self.advanced_routing]):
+                self.state_schema = SimpleRAGState
+            else:
+                self.state_schema = EnhancedMultiAgentState  # Basic fallback
+
+        # Call parent setup
+        super().setup_agent()
+
+        return self
+
+    # =============================
+    # Factory Methods
+    # =============================
+
+    @classmethod
+    def from_documents(
+        cls,
+        documents: List[Document],
+        embedding_config: Any,
+        llm_config: Optional[AugLLMConfig] = None,
+        name: Optional[str] = None,
+        **kwargs,
+    ) -> "SimpleRAGV3":
+        """Create SimpleRAG V3 from a list of documents.
+
+        Args:
+            documents: List of documents to create vector store from
+            embedding_config: Embedding configuration for vector store
+            llm_config: LLM configuration for answer generation
+            name: Name for the RAG system
+            **kwargs: Additional configuration parameters
+
+        Returns:
+            Configured SimpleRAGV3 instance
+
+        Examples:
+            Basic usage::
+
+                rag = SimpleRAGV3.from_documents(
+                    documents=my_documents,
+                    embedding_config=embedding_config
+                )
+
+            With enhanced features::
+
+                rag = SimpleRAGV3.from_documents(
+                    documents=my_documents,
+                    embedding_config=embedding_config,
+                    llm_config=AugLLMConfig(temperature=0.3),
+                    performance_mode=True,
+                    debug_mode=True,
+                    top_k=10
+                )
+        """
+        if name is None:
+            name = f"SimpleRAGV3_from_docs_{uuid.uuid4().hex[:8]}"
+
+        if llm_config is None:
+            llm_config = AugLLMConfig(temperature=0.7)
+
+        # Create vector store from documents
+        # This would use the embedding_config to create a VectorStoreConfig
+        # For now, we'll use a placeholder that would be implemented based on
+        # the specific vector store backend being used
+
+        # Use RetrieverAgent's from_documents method to get proper config
+        temp_retriever = RetrieverAgent.from_documents(
+            documents=documents,
+            embedding_model=embedding_config,
+            name=f"{name}_temp_retriever",
+        )
+
+        return cls(
+            name=name,
+            vector_store_config=temp_retriever.engine,
+            llm_config=llm_config,
+            **kwargs,
+        )
+
+    @classmethod
+    def from_vectorstore(
+        cls,
+        vector_store_config: VectorStoreConfig,
+        llm_config: Optional[AugLLMConfig] = None,
+        name: Optional[str] = None,
+        **kwargs,
+    ) -> "SimpleRAGV3":
+        """Create SimpleRAG V3 from existing vector store configuration.
+
+        Args:
+            vector_store_config: Vector store configuration
+            llm_config: LLM configuration for answer generation
+            name: Name for the RAG system
+            **kwargs: Additional configuration parameters
+
+        Returns:
+            Configured SimpleRAGV3 instance
+
+        Examples:
+            Basic usage::
+
+                rag = SimpleRAGV3.from_vectorstore(
+                    vector_store_config=vs_config,
+                    llm_config=AugLLMConfig()
+                )
+
+            With monitoring::
+
+                rag = SimpleRAGV3.from_vectorstore(
+                    vector_store_config=vs_config,
+                    llm_config=AugLLMConfig(temperature=0.5),
+                    performance_mode=True,
+                    adaptation_rate=0.2
+                )
+        """
+        if name is None:
+            name = f"SimpleRAGV3_from_vs_{uuid.uuid4().hex[:8]}"
+
+        if llm_config is None:
+            llm_config = AugLLMConfig(temperature=0.7)
+
+        return cls(
+            name=name,
+            vector_store_config=vector_store_config,
+            llm_config=llm_config,
+            **kwargs,
+        )
+
+    # =============================
+    # RAG-Specific Methods
+    # =============================
+
+    def get_retriever_agent(self) -> RetrieverAgent:
+        """Get the retriever agent."""
+        return self.agents[0]  # First agent is always RetrieverAgent
+
+    def get_answer_agent(self) -> SimpleAnswerAgent:
+        """Get the answer generation agent."""
+        return self.agents[1]  # Second agent is always SimpleAnswerAgent
+
+    async def retrieve_documents(
+        self,
+        query: str,
+        k: Optional[int] = None,
+        score_threshold: Optional[float] = None,
+        **kwargs,
+    ) -> Dict[str, Any]:
+        """Retrieve documents using the retriever agent.
+
+        Args:
+            query: Query string for retrieval
+            k: Number of documents to retrieve (defaults to self.top_k)
+            score_threshold: Minimum similarity score (defaults to self.similarity_threshold)
+            **kwargs: Additional retrieval parameters
+
+        Returns:
+            Retrieval result with documents and metadata
+        """
+        retrieval_input = {
+            "query": query,
+            "k": k or self.top_k,
+            "score_threshold": score_threshold or self.similarity_threshold,
+            **kwargs,
+        }
+
+        retriever = self.get_retriever_agent()
+        return await retriever.arun(retrieval_input)
+
+    async def generate_answer(
+        self, query: str, documents: List[Document], **kwargs
+    ) -> Any:
+        """Generate answer using the answer generation agent.
+
+        Args:
+            query: Original query
+            documents: Retrieved documents for context
+            **kwargs: Additional generation parameters
+
+        Returns:
+            Generated answer (format depends on structured_output_model)
+        """
+        answer_input = {"query": query, "documents": documents, **kwargs}
+
+        answer_agent = self.get_answer_agent()
+        return await answer_agent.arun(answer_input, **kwargs)
+
+    def get_rag_info(self) -> Dict[str, Any]:
+        """Get comprehensive information about the RAG configuration."""
+        return {
+            "name": self.name,
+            "execution_mode": self.execution_mode,
+            "agents": {
+                "retriever": self.get_retriever_agent().get_retrieval_summary(),
+                "answer_generator": self.get_answer_agent().get_generation_summary(),
+            },
+            "configuration": {
+                "top_k": self.top_k,
+                "similarity_threshold": self.similarity_threshold,
+                "max_context_length": self.max_context_length,
+                "include_citations": self.include_citations,
+                "citation_style": self.citation_style,
+                "structured_output": self.structured_output_model is not None,
+            },
+            "enhanced_features": {
+                "performance_mode": self.performance_mode,
+                "debug_mode": self.debug_mode,
+                "advanced_routing": self.advanced_routing,
+                "adaptation_rate": self.adaptation_rate,
+            },
+            "state_schema": self.state_schema.__name__ if self.state_schema else None,
+        }
+
+    async def arun(
+        self, input_data: str | Dict[str, Any], debug: bool = False, **kwargs
+    ) -> Any:
+        """Execute RAG pipeline using Enhanced MultiAgent V3 sequential execution.
+
+        This leverages the Enhanced MultiAgent V3 infrastructure for:
+        - Performance tracking and optimization
+        - Debug support and monitoring
+        - Adaptive routing capabilities
+        - Comprehensive state management
+
+        Args:
+            input_data: Query string or structured input with 'query' field
+            debug: Enable debug logging and detailed output
+            **kwargs: Additional execution parameters
+
+        Returns:
+            Generated response from the answer generation agent
+
+        Raises:
+            ValueError: If input validation fails
+            RuntimeError: If pipeline execution fails
+        """
+        # Extract query from input
+        if isinstance(input_data, str):
+            query = input_data
+        elif isinstance(input_data, dict) and "query" in input_data:
+            query = input_data["query"]
+        else:
+            raise ValueError("Input must be a string or dict with 'query' field")
+
+        if debug or self.debug_mode:
+            logger.info(f"🚀 SimpleRAGV3 '{self.name}' processing query: {query}")
+            logger.info(f"🔧 Configuration: {self.get_rag_info()}")
+
+        # Use Enhanced MultiAgent V3's sequential execution
+        # This automatically handles:
+        # - RetrieverAgent → SimpleAnswerAgent flow
+        # - Performance tracking per agent
+        # - State management and transfer
+        # - Debug information collection
+        # - Adaptive optimization
+        result = await super().arun(input_data, debug=debug, **kwargs)
+
+        if debug or self.debug_mode:
+            logger.info("✅ SimpleRAGV3 completed successfully")
+
+            # Display performance summary if enabled
+            if self.performance_mode:
+                performance_summary = self.analyze_agent_performance()
+                logger.info("📊 Performance Summary:")
+                for agent_name, metrics in performance_summary.get(
+                    "agents", {}
+                ).items():
+                    logger.info(
+                        f"  {agent_name}: {metrics['success_rate']:.1%} success, {metrics['avg_duration']:.3f}s avg"
+                    )
+
+        return result
+
+    def __repr__(self) -> str:
+        """String representation showing Enhanced MultiAgent V3 structure."""
+        return (
+            f"SimpleRAGV3(EnhancedMultiAgent[{len(self.agents)} agents])("
+            f"name='{self.name}', "
+            f"mode='{self.execution_mode}', "
+            f"top_k={self.top_k}, "
+            f"performance_mode={self.performance_mode}"
+            f")"
+        )
+
+
+# ================================
+# Aliases and Exports
+# ================================
+
+# Legacy compatibility
+SimpleRAGAgent = SimpleRAGV3
+EnhancedSimpleRAG = SimpleRAGV3
+
+__all__ = [
+    "SimpleRAGV3",
+    "SimpleRAGAgent",  # Legacy
+    "EnhancedSimpleRAG",  # Legacy
+    "RAGAgentCollection",
+]
