@@ -93,6 +93,13 @@ repos:
         name: "Security Check"
         args: [-c, pyproject.toml]
 
+  # 📝 Lazy Logger (f string logger linting)
+  - repo: https://github.com/dmar1n/lazy-log-formatter
+    rev: 0.6.2
+    hooks:
+      - id: lazy-log-formatter
+        args: [--fix]
+
   # 📊 Type Checking
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.15.0
@@ -366,7 +373,7 @@ repos:
 
       # 📦 Update Poetry Requirements
       - id: update-requirements
-        name: "Export Poetry requirements to docs/"
+        name: Export Poetry requirements to docs/
         entry: scripts/dev/update_requirements.sh
         language: system
         pass_filenames: false

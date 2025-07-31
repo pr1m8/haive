@@ -38,13 +38,6 @@ lint:
     - taplo@0.9.3
     - trufflehog@3.90.0
     - yamllint@1.37.1
-  definitions:
-    - name: isort
-      commands:
-        - run: isort --profile black ${target}
-    - name: black
-      commands:
-        - run: black --skip-string-normalization ${target}
   ignore:
     - linters: [ALL]
       paths:
@@ -78,10 +71,11 @@ actions:
     - trunk-upgrade-available
     - haive-import-validation
     - haive-memory-integrity
+    - haive-precommit-integration
   definitions:
     - id: haive-import-validation
-      display_name: "Haive Import Validation"
-      description: "Validate critical Haive imports work correctly"
+      display_name: Haive Import Validation
+      description: Validate critical Haive imports work correctly
       triggers:
         - git_hooks: [pre-commit]
       run: |
@@ -100,8 +94,8 @@ actions:
       notify_on_error: true
 
     - id: haive-memory-integrity
-      display_name: "Memory System Check"
-      description: "Validate CLAUDE.md and memory system integrity"
+      display_name: Memory System Check
+      description: Validate CLAUDE.md and memory system integrity
       triggers:
         - git_hooks: [pre-commit]
       run: |
@@ -115,6 +109,35 @@ actions:
           exit 1
         fi
         echo "✅ Memory system intact"
+      interactive: optional
+      notify_on_error: true
+
+    - id: haive-precommit-integration
+      display_name: Pre-commit Integration (Optional)
+      description: Run existing pre-commit hooks via trunk (manual execution only)
+      run: |
+        echo "🔗 Running existing pre-commit configuration..."
+        echo "ℹ️  This temporarily disables trunk hooks to avoid conflicts"
+
+        # Save current hooks path
+        ORIGINAL_HOOKS_PATH=$(git config core.hooksPath || echo "")
+
+        # Temporarily unset to allow pre-commit installation
+        if [ ! -z "$ORIGINAL_HOOKS_PATH" ]; then
+          git config --unset core.hooksPath
+        fi
+
+        # Install and run pre-commit
+        poetry run pre-commit install --overwrite --hook-type pre-commit
+        echo "Running pre-commit on staged files..."
+        poetry run pre-commit run
+
+        # Restore original hooks path
+        if [ ! -z "$ORIGINAL_HOOKS_PATH" ]; then
+          git config core.hooksPath "$ORIGINAL_HOOKS_PATH"
+        fi
+
+        echo "✅ Pre-commit integration completed"
       interactive: optional
       notify_on_error: true
 # Optional: If your main branch is not "main" or "master", set it here
