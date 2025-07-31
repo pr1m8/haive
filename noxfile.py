@@ -11,29 +11,60 @@ noxfiles_dir = Path(__file__).parent / "noxfiles"
 sys.path.insert(0, str(noxfiles_dir))
 
 # Import all documentation sessions
-from session_docs import (docs, docs_autobuild, docs_clean, docs_coverage,
-                          docs_debug, docs_fast, docs_full, docs_history,
-                          docs_linkcheck, docs_logs, docs_pdf, docs_quality,
-                          docs_serve)
+from session_docs import (
+    docs,
+    docs_autobuild,
+    docs_clean,
+    docs_coverage,
+    docs_debug,
+    docs_fast,
+    docs_full,
+    docs_history,
+    docs_linkcheck,
+    docs_logs,
+    docs_pdf,
+    docs_quality,
+    docs_serve,
+)
+
 # Import documentation testing sessions
-from session_docs_testing import (docs_test_all, docs_test_docstrings,
-                                  docs_test_examples, docs_test_metadata,
-                                  docs_test_notebooks, docs_test_pipeline,
-                                  docs_test_prose, docs_test_spelling)
+from session_docs_testing import (
+    docs_test_all,
+    docs_test_docstrings,
+    docs_test_examples,
+    docs_test_metadata,
+    docs_test_notebooks,
+    docs_test_pipeline,
+    docs_test_prose,
+    docs_test_spelling,
+)
+
 # Import example sessions
-from session_examples import (examples, examples_docs, examples_rag,
-                              examples_react, examples_simple, run_example,
-                              validate_examples)
+from session_examples import (
+    examples,
+    examples_docs,
+    examples_rag,
+    examples_react,
+    examples_simple,
+    run_example,
+    validate_examples,
+)
+
 # Import linting sessions
 from session_lint import format, lint, mypy, security
+
 # Import testing sessions
 from session_test import test, test_integration, test_package, test_quick
 
 # Import memory-aware sessions if available
 try:
-    from session_docs_memory import (docs_adaptive, docs_autobuild_memory,
-                                     docs_fast_memory, docs_memory_safe,
-                                     docs_monitor)
+    from session_docs_memory import (
+        docs_adaptive,
+        docs_autobuild_memory,
+        docs_fast_memory,
+        docs_memory_safe,
+        docs_monitor,
+    )
 
     MEMORY_SESSIONS_AVAILABLE = True
 except ImportError:
