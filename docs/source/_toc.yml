@@ -1,0 +1,10 @@
+# Sphinx external table of contents
+#
+# This file is used by sphinx_external_toc extension
+# to define the structure of the documentation.
+
+root: index
+entries:
+  - file: getting_started
+  - file: user_guide
+  - file: api/index
