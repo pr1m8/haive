@@ -12,17 +12,17 @@ repos:
     rev: v0.11.6
     hooks:
       - id: ruff
-        name: "Ruff Linter"
+        name: Ruff Linter
         args: [--fix, --exit-non-zero-on-fix]
       - id: ruff-format
-        name: "Ruff Formatter"
+        name: Ruff Formatter
 
   # 🧹 Code Cleanup
   - repo: https://github.com/PyCQA/autoflake
     rev: v2.3.1
     hooks:
       - id: autoflake
-        name: "Remove Unused Imports"
+        name: Remove Unused Imports
         args:
           - --remove-all-unused-imports
           - --remove-unused-variables
@@ -33,14 +33,14 @@ repos:
     rev: v3.2.0
     hooks:
       - id: add-trailing-comma
-        name: "Add Trailing Commas"
+        name: Add Trailing Commas
         args: [--py36-plus]
 
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.20.0
     hooks:
       - id: pyupgrade
-        name: "Modernize Python Syntax"
+        name: Modernize Python Syntax
         args: [--py312-plus]
 
   # 📝 Docstring Formatting & Quality
@@ -48,7 +48,7 @@ repos:
     rev: v1.7.7
     hooks:
       - id: docformatter
-        name: "Format Docstrings"
+        name: Format Docstrings
         args:
           - --in-place
           - --recursive
@@ -62,7 +62,7 @@ repos:
     rev: 1.8.0
     hooks:
       - id: bandit
-        name: "Security Check"
+        name: Security Check
         args: [-c, pyproject.toml]
 
   # 📝 Lazy Logger (f string logger linting)
@@ -77,7 +77,7 @@ repos:
     rev: v1.15.0
     hooks:
       - id: mypy
-        name: "Type Check"
+        name: Type Check
         additional_dependencies: [types-requests, types-PyYAML]
         args: [--ignore-missing-imports, --no-strict-optional]
 
@@ -86,24 +86,24 @@ repos:
     rev: v5.0.0
     hooks:
       - id: trailing-whitespace
-        name: "Remove Trailing Whitespace"
+        name: Remove Trailing Whitespace
       - id: end-of-file-fixer
-        name: "Fix End of Files"
+        name: Fix End of Files
       - id: check-yaml
-        name: "Check YAML"
+        name: Check YAML
       - id: check-toml
-        name: "Check TOML"
+        name: Check TOML
       - id: check-merge-conflict
-        name: "Check Merge Conflicts"
+        name: Check Merge Conflicts
       - id: debug-statements
-        name: "Check Debug Statements"
+        name: Check Debug Statements
 
   # 🛠️ Custom Haive Dev-Tools Integration
   - repo: local
     hooks:
       # 📦 Import Quality Management
       - id: import-quality-check
-        name: "Import Quality Check"
+        name: Import Quality Check
         entry: bash
         args:
           [
@@ -116,7 +116,7 @@ repos:
 
       # 🎯 Print Statement Management (Ruff T201)
       - id: ruff-print-check
-        name: "Remove Print Statements"
+        name: Remove Print Statements
         entry: poetry run ruff check --select T201 --fix
         language: system
         types: [python]
@@ -126,14 +126,14 @@ repos:
   - repo: local
     hooks:
       - id: autotyping
-        name: "Auto-add Type Annotations"
+        name: Auto-add Type Annotations
         entry: poetry run autotyping
         language: system
         types: [python]
         pass_filenames: true
 
       - id: monkeytype-apply
-        name: "Apply MonkeyType Annotations"
+        name: Apply MonkeyType Annotations
         entry: bash
         args:
           [
@@ -148,7 +148,7 @@ repos:
   - repo: local
     hooks:
       - id: pydocstringformatter
-        name: "Format Docstrings (Alternative)"
+        name: Format Docstrings (Alternative)
         entry: poetry run pydocstringformatter
         args: [--write]
         language: system
@@ -156,7 +156,7 @@ repos:
         pass_filenames: true
 
       - id: docstr-coverage-check
-        name: "Docstring Coverage Analysis"
+        name: Docstring Coverage Analysis
         entry: poetry run docstr-coverage
         args: [--fail-under, "80"]
         language: system
@@ -167,7 +167,7 @@ repos:
   - repo: local
     hooks:
       - id: yapf-format
-        name: "YAPF Code Formatting"
+        name: YAPF Code Formatting
         entry: poetry run yapf
         args: [--in-place, --parallel]
         language: system
@@ -175,7 +175,7 @@ repos:
         pass_filenames: true
 
       - id: autopep8-format
-        name: "AutoPEP8 Additional Formatting"
+        name: AutoPEP8 Additional Formatting
         entry: poetry run autopep8
         args: [--in-place, --aggressive, --aggressive]
         language: system
@@ -186,7 +186,7 @@ repos:
   - repo: local
     hooks:
       - id: flake8-comprehensive
-        name: "Flake8 + All Plugins"
+        name: Flake8 + All Plugins
         entry: poetry run flake8
         args: [--config, ".flake8"]
         language: system
@@ -194,7 +194,7 @@ repos:
         pass_filenames: true
 
       - id: pycodestyle-pep8
-        name: "PEP 8 Style Check"
+        name: PEP 8 Style Check
         entry: poetry run pycodestyle
         args: ["--max-line-length=88", "--ignore=E203,W503"]
         language: system
@@ -202,7 +202,7 @@ repos:
         pass_filenames: true
 
       - id: vulture-dead-code
-        name: "Find Dead Code (Vulture)"
+        name: Find Dead Code (Vulture)
         entry: poetry run vulture
         args: [--min-confidence=80]
         language: system
@@ -210,7 +210,7 @@ repos:
         pass_filenames: true
 
       - id: eradicate-commented-code
-        name: "Remove Commented Code"
+        name: Remove Commented Code
         entry: poetry run eradicate
         args: [--in-place]
         language: system
@@ -221,14 +221,14 @@ repos:
   - repo: local
     hooks:
       - id: absolufy-imports
-        name: "Convert to Absolute Imports"
+        name: Convert to Absolute Imports
         entry: poetry run absolufy-imports
         language: system
         types: [python]
         pass_filenames: true
 
       - id: abs-imports
-        name: "Additional Import Fixes"
+        name: Additional Import Fixes
         entry: poetry run abs-imports
         language: system
         types: [python]
@@ -238,7 +238,7 @@ repos:
   - repo: local
     hooks:
       - id: codespell-check
-        name: "Spell Check Code"
+        name: Spell Check Code
         entry: poetry run codespell
         args: [--write-changes]
         language: system
@@ -246,7 +246,7 @@ repos:
 
       # Proselint for documentation quality (configured to avoid false positives)
       - id: proselint-prose
-        name: "Prose Quality Check"
+        name: Prose Quality Check
         entry: poetry run proselint
         language: system
         files: '\.(md|rst|txt)$'
@@ -255,7 +255,7 @@ repos:
 
       # Pyspelling - now configured to only check specific files
       - id: pyspelling-advanced
-        name: "Advanced Spell Check"
+        name: Advanced Spell Check
         entry: bash
         args:
           [
@@ -268,7 +268,7 @@ repos:
 
       # Vale for Google-style docstrings
       - id: vale-prose-lint
-        name: "Vale Google Docstrings"
+        name: Vale Google Docstrings
         entry: poetry run vale
         language: system
         files: '\.py$'
@@ -280,7 +280,7 @@ repos:
     hooks:
       # Commenting out as it's taking too long
       # - id: pytest-doctests
-      #   name: "Enhanced Doctest Validation"
+      #   name: Enhanced Doctest Validation
       #   entry: poetry run pytest
       #   args: [--doctest-modules, --doctest-plus, packages/]
       #   language: system
@@ -288,14 +288,14 @@ repos:
 
       # Commenting out slow/problematic hooks
       # - id: pytest-checkdocs
-      #   name: "Documentation Validation"
+      #   name: Documentation Validation
       #   entry: poetry run pytest
       #   args: [--checkdocs, packages/]
       #   language: system
       #   pass_filenames: false
 
       # - id: pytest-markdown-docs
-      #   name: "Markdown Documentation Testing"
+      #   name: Markdown Documentation Testing
       #   entry: poetry run pytest
       #   args: [--markdown-docs, project_docs/]
       #   language: system
@@ -311,7 +311,7 @@ repos:
       # 🧠 Intelligent Error Pre-Check (Warning Only)
       # Commenting out - takes too long scanning all packages
       # - id: syntax-quality-check
-      #   name: "Syntax Quality Pre-Check"
+      #   name: Syntax Quality Pre-Check
       #   entry: bash
       #   args:
       #     - -c
@@ -327,7 +327,7 @@ repos:
 
       # 📋 Changelog Fragment Check (Warning Only)
       - id: changelog-fragment-check
-        name: "Changelog Fragment Check"
+        name: Changelog Fragment Check
         entry: bash
         args:
           - -c
@@ -360,7 +360,7 @@ repos:
 # This reads our .pre-commit-config.yaml automatically!
 
 default_stages: [pre-commit]
-minimum_pre_commit_version: "3.0.0"
+minimum_pre_commit_version: 3.0.0
 fail_fast: false
 default_language_version:
   python: python3.12
