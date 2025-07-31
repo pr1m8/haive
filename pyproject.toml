@@ -314,6 +314,9 @@ flake8-bugbear = "^24.12.12"
 flake8-comprehensions = "^3.16.0"
 flake8-simplify = "^0.22.0"
 docformatter = "^1.7.7"
+pydoclint = "^0.6.6"
+pydoctest = "^0.2.1"
+darglint2 = "^1.8.2"
 
 [tool.poetry.group.dev.dependencies.torch]
 version = "2.6.0+cu118"
@@ -479,6 +482,7 @@ sphinx-lastupdate = "^1.0.0"
 sphinx-library = "^1.1.3"
 sphinx-mcp = "^0.1.1"
 sphinx-markdown = "^1.0.2"
+darglint2 = "^1.8.2"
 
 [tool.poetry.group.gmail_toolkit.dependencies]
 google-api-python-client = "^2.165.0"
@@ -665,50 +669,54 @@ ignore-words-list = "haive,agentic,nd,te,ot,od,ue"
 count = true
 quiet-level = 2
 
+
 [tool.ruff]
 line-length = 100
 target-version = "py312"
 
 [tool.ruff.lint]
+# Core linting, formatting, complexity, and docstring checks
 select = [
   "E",
   "F",
-  "W",
+  "W",      # pycodestyle (E/W) and pyflakes (F)
+  "B",      # bugbear
   "C90",
-  "I",
-  "N",
-  "D",
-  "UP",
-  "B",
-  "A",
-  "C4",
+  "C4",     # flake8-comprehensions
   "DTZ",
   "T10",
-  "ISC",
+  "T20",    # blanket-flake-8 plug-in codes
   "G",
+  "I",
+  "N",      # naming, imports, unused-names
   "PIE",
-  "T20",
-  "PT",
-  "Q",
-  "RSE",
-  "RET",
-  "SIM",
   "ARG",
-  "ERA",
+  "ERA",    # productivity rules
+  "RET",
+  "RSE",
+  "SIM",    # return, refactor, simplify
   "PL",
   "TRY",
-  "RUF",
-  "TID251", # Banned relative imports (enforce absolute)
-  "TID252", # Relative imports from parent modules
+  "RUF",    # pylintrc and Ruff-specific
+  "UP",     # pyupgrade
+  "Q",      # qcodes
+  "TID251",
+  "TID252", # enforce absolute imports
 ]
-ignore = ["E501", "D100", "D104", "D107", "D203", "D213", "RET504", "TRY003"]
+ignore = [
+  "E501",   # let ruff format handle long lines
+  "D100",   # allow missing __init__ doc
+  "D104",   # allow missing package doc
+  "D107",   # allow missing __str__/__repr__ doc
+  "D203",   # no blank line after one-line summary (Google style)
+  "D213",   # no blank before closing quotes
+  "RET504", # optional semantics rules
+  "TRY003", # optional try-except style
+]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**/*.py" = ["D", "S101", "PLR2004"]
 "examples/**/*.py" = ["D", "T20"]
-
-[tool.ruff.lint.pydocstyle]
-convention = "google"
 
 [tool.ruff.lint.mccabe]
 max-complexity = 12
@@ -719,6 +727,31 @@ known-first-party = ["haive"]
 combine-as-imports = true
 force-sort-within-sections = true
 lines-after-imports = 2
+
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+
+# =============================
+# 📚 Google-Style Docstring Enforcement
+# =============================
+[tool.pydocstyle]
+# Strict Google conventions
+convention = "google"
+match = "(?!test_).*\\.py"
+add-ignore = ["D100", "D203"] # align with Ruff ignores
+
+
+[tool.docformatter]
+style = "google"
+in-place = true
+
+[tool.darglint2]
+# Use Google style conventions and enforce on public functions only
+strictness = 2        # 0 = lenient, 1 = moderate, 2 = strict, 3 = very strict
+ignore_regex = "^_.*" # Skip private/internal functions starting with underscore
+
 
 # 📦 AutoImport Configuration for Namespaced Poly Repo
 [tool.autoimport]
