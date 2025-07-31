@@ -549,6 +549,7 @@ Session.vim
 .git/
 .gitattributes.bak
 .gitignore.bak
+.git-rewrite/
 .svn/
 .hg/
 .bzr/
@@ -642,4 +643,3 @@ test_*.py
 nohup.out
 server.log
 dynamic_graph.log
-

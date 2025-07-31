@@ -1,0 +1,7 @@
+extends: existence
+message: "Be consistent with return/returns usage"
+level: warning
+ignorecase: true
+tokens:
+  - returns
+  - return
