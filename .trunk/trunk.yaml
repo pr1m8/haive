@@ -4,6 +4,7 @@ version: 0.1
 
 cli:
   version: 1.24.0
+
 plugins:
   sources:
     - id: trunk
@@ -46,108 +47,20 @@ lint:
         - ".history/**"
         - ".venv/**"
         - "node_modules/**"
-        - "projects/**"
-        - "haive-core/**"
         - "data/**"
-        #- "docs/**"
         - "resources/**"
         - "assets/**"
         - "dist/**"
         - "build/**"
         - "*.egg-info/**"
-        # Allow packages to be linted now
-        - "packages/**/test_*.py"
-        - "packages/**/*test*.py"
-        - "packages/**/.venv/**"
 
+# Keep trunk actions minimal - let pre-commit handle the workflow
 actions:
   disabled:
     - trunk-announce
+    - trunk-fmt-pre-commit
+    - trunk-check-pre-commit
+    - trunk-check-pre-push-always
   enabled:
-    - trunk-fmt-pre-commit # Re-enabled: Native trunk git hooks
-    - trunk-check-pre-commit # Re-enabled: Native trunk git hooks
-    - trunk-check-pre-push-always # Enabled: Always run on push
     - git-lfs
     - trunk-upgrade-available
-    - haive-import-validation
-    - haive-memory-integrity
-  definitions:
-    - id: haive-import-validation
-      display_name: Haive Import Validation
-      description: Validate critical Haive imports work correctly
-      triggers:
-        - git_hooks: [pre-commit]
-      run: |
-        echo "🔍 Validating Haive imports..."
-        poetry run python -c "
-        try:
-            from haive.core.engine.aug_llm import AugLLMConfig
-            from haive.agents.simple.agent_v3 import SimpleAgentV3
-            from haive.core.schema.prebuilt.messages_state import MessagesState
-            print('✅ All critical imports successful')
-        except ImportError as e:
-            print(f'❌ Import error: {e}')
-            exit(1)
-        "
-      interactive: optional
-      notify_on_error: true
-
-    - id: haive-memory-integrity
-      display_name: Memory System Check
-      description: Validate CLAUDE.md and memory system integrity
-      triggers:
-        - git_hooks: [pre-commit]
-      run: |
-        echo "🧠 Checking memory system integrity..."
-        if [ ! -f "CLAUDE.md" ]; then
-          echo "❌ CLAUDE.md missing"
-          exit 1
-        fi
-        if [ ! -d "project_docs" ]; then
-          echo "❌ project_docs directory missing"
-          exit 1
-        fi
-        echo "✅ Memory system intact"
-      interactive: optional
-      notify_on_error: true
-
-    - id: haive-precommit-integration
-      display_name: Pre-commit Integration (Optional)
-      description: Run existing pre-commit hooks via trunk (manual execution only)
-      run: |
-        echo "🔗 Running existing pre-commit configuration..."
-        echo "ℹ️  This temporarily disables trunk hooks to avoid conflicts"
-
-        # Save current hooks path
-        ORIGINAL_HOOKS_PATH=$(git config core.hooksPath || echo "")
-
-        # Temporarily unset to allow pre-commit installation
-        if [ ! -z "$ORIGINAL_HOOKS_PATH" ]; then
-          git config --unset core.hooksPath
-        fi
-
-        # Install and run pre-commit
-        poetry run pre-commit install --overwrite --hook-type pre-commit
-        echo "Running pre-commit on staged files..."
-        poetry run pre-commit run
-
-        # Restore original hooks path
-        if [ ! -z "$ORIGINAL_HOOKS_PATH" ]; then
-          git config core.hooksPath "$ORIGINAL_HOOKS_PATH"
-        fi
-
-        echo "✅ Pre-commit integration completed"
-      interactive: optional
-      notify_on_error: true
-
-    # Override trunk's default pre-push hook to only check staged files
-    - id: trunk-check-pre-push
-      display_name: Trunk Pre-Push Check (Staged Files Only)
-      description: Run trunk checks on staged files only during git push
-      run: trunk check --staged --fix --all
-      triggers:
-        - git_hooks: [pre-push]
-      
-# Optional: If your main branch is not "main" or "master", set it here
-# repo:
-#   trunk_branch: main
