@@ -4,7 +4,7 @@
 #
 # 🎯 Uses modern tools instead of old reindent:
 # - autopep8: Targets specific indentation errors (E101, E111, E114, E121, E122, E124, E125, E127, E128)
-# - black: Opinionated 4-space formatting  
+# - black: Opinionated 4-space formatting
 # - yapf: Configurable Google-style formatting
 # - Custom libcst-based fixer for complex cases
 
@@ -37,10 +37,10 @@ echo -e "${BLUE}🔧 Mode: $MODE${NC}"
 echo -e "${BLUE}🛠️  Tool: $TOOL_NAME${NC}"
 echo ""
 
-# Safety checkpoint
+# Safety checkpoint (ONLY for target directory)
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-echo -e "${PURPLE}🛡️ Creating safety checkpoint...${NC}"
-git stash push -m "INDENTATION_FIX_${TOOL_NAME}_${TIMESTAMP}" || echo "⚠️ No changes to stash"
+echo -e "${PURPLE}🛡️ Creating safety checkpoint for $DIRECTORY...${NC}"
+git stash push -m "INDENTATION_FIX_${TOOL_NAME}_${TIMESTAMP}" -- "$DIRECTORY" || echo "⚠️ No changes to stash"
 
 # ===================================================================
 # 🔍 PHASE 1: ANALYZE INDENTATION ISSUES
@@ -91,7 +91,7 @@ E101_FILES=$(ruff check "$DIRECTORY" --select E101 --output-format=concise 2>/de
 
 TOTAL_INDENT_ISSUES=$((INDENTATION_ERRORS + E101_FILES))
 
-# Get additional ruff indentation codes  
+# Get additional ruff indentation codes
 E111_FILES=$(ruff check "$DIRECTORY" --select E111 --preview --output-format=concise 2>/dev/null | wc -l || echo "0")
 E112_FILES=$(ruff check "$DIRECTORY" --select E112 --preview --output-format=concise 2>/dev/null | wc -l || echo "0")
 E113_FILES=$(ruff check "$DIRECTORY" --select E113 --preview --output-format=concise 2>/dev/null | wc -l || echo "0")
@@ -102,7 +102,7 @@ echo -e "${YELLOW}📊 ACTUAL INDENTATION ISSUES DETECTED:${NC}"
 echo "  🔴 Files with IndentationError: $INDENTATION_ERRORS"
 echo "  🔴 Files with SyntaxError: $SYNTAX_ERRORS"
 echo "  🔴 E101 (mixed tabs/spaces): $E101_FILES line-level issues"
-echo "  🔴 E111 (indentation-with-invalid-multiple): $E111_FILES"  
+echo "  🔴 E111 (indentation-with-invalid-multiple): $E111_FILES"
 echo "  🔴 E112 (no-indented-block): $E112_FILES"
 echo "  🔴 E113 (unexpected-indentation): $E113_FILES"
 echo "  🔴 E116 (unexpected-indentation-comment): $E116_FILES"
@@ -118,7 +118,7 @@ echo ""
 if [ "$MODE" = "--fix" ]; then
     echo -e "${PURPLE}🔧 PHASE 2: APPLYING $TOOL_NAME INDENTATION FIXES...${NC}"
     echo ""
-    
+
     case $TOOL_NAME in
         "autopep8")
             echo -e "${BLUE}🎯 Using autopep8 for targeted indentation fixes...${NC}"
@@ -126,13 +126,13 @@ if [ "$MODE" = "--fix" ]; then
             echo "  • Using 4-space indentation"
             echo "  • Aggressive mode for stubborn issues"
             echo ""
-            
+
             # Target only indentation-related errors
             AUTOPEP8_SELECT="E101,E111,E114,E121,E122,E124,E125,E127,E128"
-            
+
             find "$DIRECTORY" -name "*.py" -type f | while read -r file; do
                 echo -e "${BLUE}🔧 Fixing indentation: $(basename "$file")${NC}"
-                
+
                 # Try gentle fix first
                 if poetry run autopep8 --in-place --select="$AUTOPEP8_SELECT" --indent-size=4 "$file" 2>/dev/null; then
                     echo "  ✅ Gentle fix applied"
@@ -146,28 +146,28 @@ if [ "$MODE" = "--fix" ]; then
                 fi
             done
             ;;
-            
+
         "black")
             echo -e "${BLUE}🎯 Using Black for opinionated 4-space formatting...${NC}"
             echo "  • Zero configuration required"
             echo "  • Enforces 4-space indentation"
             echo "  • Handles modern Python syntax"
             echo ""
-            
+
             if poetry run black "$DIRECTORY" 2>/dev/null; then
                 echo "  ✅ Black formatting applied"
             else
                 echo "  ⚠️ Black could not format some files (syntax errors?)"
             fi
             ;;
-            
+
         "yapf")
             echo -e "${BLUE}🎯 Using YAPF for configurable Google-style formatting...${NC}"
-            echo "  • Using Google style configuration"  
+            echo "  • Using Google style configuration"
             echo "  • 4-space indentation with hanging indents"
             echo "  • Configurable via .style.yapf"
             echo ""
-            
+
             # Create temporary style config for indentation focus
             cat > /tmp/yapf_indent_style.yapf << 'EOF'
 [style]
@@ -177,27 +177,27 @@ continuation_indent_width = 4
 allow_multiline_lambdas = false
 indent_closing_brackets = false
 EOF
-            
+
             if poetry run yapf --in-place --style=/tmp/yapf_indent_style.yapf --recursive "$DIRECTORY" 2>/dev/null; then
                 echo "  ✅ YAPF formatting applied"
             else
                 echo "  ⚠️ YAPF could not format some files (syntax errors?)"
             fi
-            
+
             rm -f /tmp/yapf_indent_style.yapf
             ;;
-            
+
         "ruff")
             echo -e "${BLUE}🎯 Using Ruff for fast indentation fixes...${NC}"
             echo "  • Rust-based high performance"
             echo "  • Fixes safe indentation issues only"
             echo "  • Integrates linting + formatting"
             echo ""
-            
+
             # Use ruff to fix indentation issues
             if ruff check "$DIRECTORY" --select E101,E111,E114,E121,E122,E124,E125,E127,E128 --fix 2>/dev/null; then
                 echo "  ✅ Ruff indentation fixes applied"
-                
+
                 # Follow up with ruff format for consistency
                 if ruff format "$DIRECTORY" 2>/dev/null; then
                     echo "  ✅ Ruff formatting applied"
@@ -206,14 +206,14 @@ EOF
                 echo "  ⚠️ Ruff could not fix some files (syntax errors?)"
             fi
             ;;
-            
+
         *)
             echo -e "${RED}❌ Unknown tool: $TOOL_NAME${NC}"
             echo "Available tools: autopep8, black, yapf, ruff"
             exit 1
             ;;
     esac
-    
+
     echo -e "${GREEN}✅ $TOOL_NAME indentation fixes completed${NC}"
     echo ""
 fi
@@ -231,16 +231,16 @@ if [ "$MODE" = "--fix" ]; then
     FINAL_E111=$(ruff check "$DIRECTORY" --select E111 2>/dev/null | wc -l || echo "0")
     FINAL_E114=$(ruff check "$DIRECTORY" --select E114 2>/dev/null | wc -l || echo "0")
     FINAL_TOTAL=$((FINAL_E101 + FINAL_E111 + FINAL_E114))
-    
+
     FIXED_ISSUES=$((TOTAL_INDENT_ISSUES - FINAL_TOTAL))
-    
+
     # Show git changes
     if git diff --quiet; then
         echo -e "${YELLOW}ℹ️  No changes were made${NC}"
     else
         echo -e "${GREEN}🎉 INDENTATION CHANGES APPLIED:${NC}"
         echo ""
-        
+
         # Show summary of changed files
         echo -e "${BLUE}📋 Modified files:${NC}"
         git diff --name-only | head -10 | while read -r file; do
@@ -248,23 +248,23 @@ if [ "$MODE" = "--fix" ]; then
         done
         [ $(git diff --name-only | wc -l) -gt 10 ] && echo "  ... and more"
         echo ""
-        
+
         # Show sample diff
         echo -e "${BLUE}🔍 Sample changes:${NC}"
         git diff | head -30
         echo ""
-        
+
         echo -e "${YELLOW}💡 TO REVIEW ALL CHANGES:${NC}"
         echo "  git diff                    # See all changes"
         echo "  git diff --stat             # Summary of changes"
         echo ""
     fi
-    
+
     echo -e "${BLUE}📊 INDENTATION FIX RESULTS:${NC}"
     echo "  🔴 Original issues: $TOTAL_INDENT_ISSUES"
     echo "  🔴 Remaining issues: $FINAL_TOTAL"
     echo "  ✅ Fixed issues: $FIXED_ISSUES"
-    
+
     if [ "$FINAL_TOTAL" -eq 0 ]; then
         echo ""
         echo -e "${GREEN}🎯 ALL INDENTATION ISSUES RESOLVED!${NC}"
@@ -272,11 +272,11 @@ if [ "$MODE" = "--fix" ]; then
         echo ""
         echo -e "${YELLOW}📈 PROGRESS MADE! Fixed $FIXED_ISSUES indentation issues${NC}"
     fi
-    
+
 elif [ "$MODE" = "--preview" ]; then
     echo -e "${YELLOW}👀 PREVIEW MODE - Would apply the following fixes with $TOOL_NAME:${NC}"
     echo ""
-    
+
     case $TOOL_NAME in
         "autopep8")
             echo -e "${CYAN}🎯 AUTOPEP8 STRATEGY:${NC}"
@@ -286,7 +286,7 @@ elif [ "$MODE" = "--preview" ]; then
             echo "  4. Preserve other formatting choices"
             ;;
         "black")
-            echo -e "${CYAN}🎯 BLACK STRATEGY:${NC}" 
+            echo -e "${CYAN}🎯 BLACK STRATEGY:${NC}"
             echo "  1. Apply opinionated 4-space indentation"
             echo "  2. Reformat entire files for consistency"
             echo "  3. Zero configuration needed"
@@ -307,7 +307,7 @@ elif [ "$MODE" = "--preview" ]; then
             echo "  4. Excellent performance on large codebases"
             ;;
     esac
-    
+
     echo ""
     echo -e "${GREEN}Run with --fix to apply $TOOL_NAME indentation fixes${NC}"
 fi
@@ -316,4 +316,4 @@ echo ""
 echo -e "${CYAN}🚀 Modern Indentation Fixer Complete!${NC}"
 echo -e "${BLUE}💡 Consider trying different tools if one doesn't work${NC}"
 echo -e "${BLUE}💡 autopep8 is best for surgical indentation fixes${NC}"
-echo -e "${BLUE}💡 black is best for full reformatting with indentation${NC}" 
+echo -e "${BLUE}💡 black is best for full reformatting with indentation${NC}"

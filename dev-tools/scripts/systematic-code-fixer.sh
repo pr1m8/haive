@@ -4,7 +4,7 @@
 #
 # 🎯 SYSTEMATIC APPROACH:
 # Step 1: 🚨 Pre-flight syntax fixes (typos, obvious errors)
-# Step 2: 🔧 Indentation and formatting fixes  
+# Step 2: 🔧 Indentation and formatting fixes
 # Step 3: 📦 Import management (missing, unused, sorting)
 # Step 4: 🐍 Python modernization (f-strings, typing, etc.)
 
@@ -85,6 +85,28 @@ echo "  ✅ Healthy files: $((TOTAL_FILES - INITIAL_SYNTAX_ERRORS - INITIAL_INDE
 echo ""
 
 # ===================================================================
+# 🤖 STEP 0: AUTO-IMPORT MISSING IMPORTS
+# ===================================================================
+
+if [ "$STEP_NUM" = "all" ] || [ "$STEP_NUM" = "0" ]; then
+    echo -e "${BOLD}${GREEN}🤖 STEP 0: AUTO-IMPORT MISSING IMPORTS${NC}"
+    echo -e "${BLUE}═══════════════════════════════════════════════════${NC}"
+    echo -e "${YELLOW}🎯 Goal: Automatically add missing imports for undefined names (F821)${NC}"
+    echo ""
+
+    if [ "$MODE" = "--fix" ]; then
+        echo -e "${BLUE}🔧 Running autoimport to fix undefined names...${NC}"
+        poetry run autoimport "$DIRECTORY" || echo -e "${YELLOW}⚠️ Autoimport completed with warnings${NC}"
+
+        echo -e "${GREEN}✅ STEP 0 COMPLETE: Missing imports added${NC}"
+        echo ""
+    else
+        echo -e "${BLUE}👀 Preview: Would run autoimport to add missing imports${NC}"
+        echo ""
+    fi
+fi
+
+# ===================================================================
 # 🚨 STEP 1: PRE-FLIGHT SYNTAX FIXES
 # ===================================================================
 
@@ -93,11 +115,11 @@ if [ "$STEP_NUM" = "all" ] || [ "$STEP_NUM" = "1" ]; then
     echo -e "${BLUE}═══════════════════════════════════════════════════${NC}"
     echo -e "${YELLOW}🎯 Goal: Fix obvious typos that prevent tools from working${NC}"
     echo ""
-    
+
     if [ "$MODE" = "--fix" ]; then
         echo -e "${BLUE}🔧 Running pre-flight syntax fixer...${NC}"
         ./dev-tools/scripts/pre-flight-syntax-fixer.sh "$DIRECTORY" --fix
-        
+
         # Verify step 1 results
         STEP1_RESULT=$(python3 -c "
 import os
@@ -122,12 +144,12 @@ print(f'{syntax_errors}|{indentation_errors}')
 ")
 
         IFS='|' read -r STEP1_SYNTAX STEP1_INDENT <<< "$STEP1_RESULT"
-        
+
         echo -e "${GREEN}✅ STEP 1 COMPLETE:${NC}"
         echo "  🚨 SyntaxErrors: $INITIAL_SYNTAX_ERRORS → $STEP1_SYNTAX (fixed: $((INITIAL_SYNTAX_ERRORS - STEP1_SYNTAX)))"
         echo "  🔧 IndentationErrors: $INITIAL_INDENT_ERRORS → $STEP1_INDENT"
         echo ""
-        
+
         if [ "$STEP1_SYNTAX" -gt 0 ]; then
             echo -e "${YELLOW}⚠️  Still have $STEP1_SYNTAX syntax errors - may need manual fixes${NC}"
             echo ""
@@ -148,7 +170,7 @@ if [ "$STEP_NUM" = "all" ] || [ "$STEP_NUM" = "2" ]; then
     echo -e "${BLUE}═══════════════════════════════════════════════════${NC}"
     echo -e "${YELLOW}🎯 Goal: Fix indentation and apply consistent formatting${NC}"
     echo ""
-    
+
     if [ "$MODE" = "--fix" ]; then
         # Check if we have too many syntax errors to proceed
         CURRENT_SYNTAX=$(python3 -c "
@@ -175,7 +197,7 @@ print(syntax_errors)
         else
             echo -e "${BLUE}🔧 Running modern indentation fixer (autopep8)...${NC}"
             ./dev-tools/scripts/modern-indentation-fixer.sh "$DIRECTORY" --fix --tool=autopep8
-            
+
             echo -e "${GREEN}✅ STEP 2 COMPLETE: Indentation fixes applied${NC}"
             echo ""
         fi
@@ -195,12 +217,12 @@ if [ "$STEP_NUM" = "all" ] || [ "$STEP_NUM" = "3" ]; then
     echo -e "${BLUE}═══════════════════════════════════════════════════${NC}"
     echo -e "${YELLOW}🎯 Goal: Fix imports (missing, unused, sorting, absolute)${NC}"
     echo ""
-    
+
     if [ "$MODE" = "--fix" ]; then
         if command -v "./dev-tools/scripts/comprehensive-import-manager.sh" &> /dev/null; then
             echo -e "${BLUE}🔧 Running comprehensive import manager...${NC}"
             ./dev-tools/scripts/comprehensive-import-manager.sh "$DIRECTORY" --fix
-            
+
             echo -e "${GREEN}✅ STEP 3 COMPLETE: Import management applied${NC}"
             echo ""
         else
@@ -227,12 +249,12 @@ if [ "$STEP_NUM" = "all" ] || [ "$STEP_NUM" = "4" ]; then
     echo -e "${BLUE}═══════════════════════════════════════════════════${NC}"
     echo -e "${YELLOW}🎯 Goal: Modernize Python syntax (f-strings, typing, etc.)${NC}"
     echo ""
-    
+
     if [ "$MODE" = "--fix" ]; then
         if command -v "./dev-tools/scripts/syntax-and-modernization-fixer.sh" &> /dev/null; then
             echo -e "${BLUE}🔧 Running syntax and modernization fixer...${NC}"
             ./dev-tools/scripts/syntax-and-modernization-fixer.sh "$DIRECTORY" --fix
-            
+
             echo -e "${GREEN}✅ STEP 4 COMPLETE: Python modernization applied${NC}"
             echo ""
         else
@@ -284,7 +306,7 @@ print(f'{syntax_errors}|{indentation_errors}|{clean_files}')
 ")
 
     IFS='|' read -r FINAL_SYNTAX FINAL_INDENT CLEAN_FILES <<< "$FINAL_ASSESSMENT"
-    
+
     echo -e "${GREEN}🎉 SYSTEMATIC FIXES COMPLETE!${NC}"
     echo ""
     echo -e "${YELLOW}📊 BEFORE → AFTER:${NC}"
@@ -292,17 +314,17 @@ print(f'{syntax_errors}|{indentation_errors}|{clean_files}')
     echo "  🔧 IndentationErrors: $INITIAL_INDENT_ERRORS → $FINAL_INDENT"
     echo "  ✅ Clean files: $((TOTAL_FILES - INITIAL_SYNTAX_ERRORS - INITIAL_INDENT_ERRORS)) → $CLEAN_FILES"
     echo ""
-    
+
     SYNTAX_FIXED=$((INITIAL_SYNTAX_ERRORS - FINAL_SYNTAX))
     INDENT_FIXED=$((INITIAL_INDENT_ERRORS - FINAL_INDENT))
-    
+
     if [ "$SYNTAX_FIXED" -gt 0 ]; then
         echo -e "${GREEN}✅ Fixed $SYNTAX_FIXED syntax errors${NC}"
     fi
     if [ "$INDENT_FIXED" -gt 0 ]; then
         echo -e "${GREEN}✅ Fixed $INDENT_FIXED indentation errors${NC}"
     fi
-    
+
     if [ "$FINAL_SYNTAX" -eq 0 ] && [ "$FINAL_INDENT" -eq 0 ]; then
         echo ""
         echo -e "${BOLD}${GREEN}🎯 ALL FILES NOW COMPILE SUCCESSFULLY! 🎉${NC}"
@@ -312,14 +334,14 @@ print(f'{syntax_errors}|{indentation_errors}|{clean_files}')
         [ "$FINAL_SYNTAX" -gt 0 ] && echo "   🚨 $FINAL_SYNTAX files with syntax errors"
         [ "$FINAL_INDENT" -gt 0 ] && echo "   🔧 $FINAL_INDENT files with indentation errors"
     fi
-    
+
     # Show git changes summary
     if ! git diff --quiet; then
         echo ""
         echo -e "${BLUE}📋 Files modified:${NC}"
         git diff --name-only | wc -l | xargs echo "  📝 Total changed files:"
         echo ""
-        
+
         echo -e "${YELLOW}💡 TO REVIEW ALL CHANGES:${NC}"
         echo "  git diff --stat              # Summary of changes"
         echo "  git diff                     # See all changes"
@@ -330,12 +352,12 @@ print(f'{syntax_errors}|{indentation_errors}|{clean_files}')
         echo "  git commit -m 'Systematic code quality fixes'"
         echo ""
     fi
-    
+
 elif [ "$MODE" = "--preview" ]; then
     echo -e "${YELLOW}👀 PREVIEW MODE COMPLETE${NC}"
     echo ""
     echo -e "${CYAN}🎯 SYSTEMATIC FIX PLAN:${NC}"
-    echo "  1. 🚨 Fix obvious syntax typos (retur→return, st→str)"
+    echo "  1. 🚨 Fix obvious syntax typos (return→return, st→str)"
     echo "  2. 🔧 Apply indentation and formatting fixes"
     echo "  3. 📦 Manage imports (add missing, remove unused, sort)"
     echo "  4. 🐍 Modernize Python syntax (f-strings, typing)"
@@ -351,4 +373,4 @@ echo "  git stash apply stash@{1}    # Restore master checkpoint"
 echo ""
 
 echo -e "${BOLD}${CYAN}🚀 Systematic Code Fixer Complete!${NC}"
-echo -e "${BLUE}💡 Safe, step-by-step code quality improvement${NC}" 
+echo -e "${BLUE}💡 Safe, step-by-step code quality improvement${NC}"

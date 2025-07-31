@@ -25,7 +25,7 @@ echo -e "${BLUE}Meta's advanced auto-fixing linter powered by LibCST${NC}"
 
 # Safety checkpoint
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-git stash push -m "FIXIT_CHECKPOINT_${TIMESTAMP}" || echo "⚠️ No changes to stash"
+git stash push -m "FIXIT_CHECKPOINT_${TIMESTAMP}" -- "$DIRECTORY" || echo "⚠️ No changes to stash"
 
 # Check if fixit is available
 if ! poetry show fixit >/dev/null 2>&1; then
@@ -40,14 +40,14 @@ echo -e "${YELLOW}🚨 Found issues in $BASELINE_ISSUES files${NC}"
 
 if [ "$FIX_MODE" = "--fix" ]; then
     echo -e "${GREEN}🔧 Applying auto-fixes...${NC}"
-    
+
     # Apply Fixit auto-fixes
     poetry run fixit fix --automatic "$DIRECTORY" || echo "⚠️ Some fixes may need manual review"
-    
+
     # Check final status
     FINAL_ISSUES=$(poetry run fixit lint "$DIRECTORY" 2>/dev/null | grep -c "file.*error" || echo "0")
     FIXED_ISSUES=$((BASELINE_ISSUES - FINAL_ISSUES))
-    
+
     echo ""
     echo -e "${GREEN}🎉 FIXIT RESULTS:${NC}"
     echo -e "${BLUE}📊 BEFORE: $BASELINE_ISSUES files with issues${NC}"
@@ -63,7 +63,7 @@ if [ "$FIX_MODE" = "--fix" ]; then
 else
     echo -e "${BLUE}🔍 Showing preview of available fixes...${NC}"
     poetry run fixit lint --diff "$DIRECTORY" | head -50
-    
+
     echo ""
     echo -e "${GREEN}💡 TO APPLY FIXES:${NC}"
     echo "  ./dev-tools/scripts/fixit-modernizer.sh $DIRECTORY --fix"
@@ -83,4 +83,4 @@ if [ "$FIX_MODE" = "--fix" ]; then
     echo "  • Modernize haive API usage"
     echo ""
     echo -e "${BLUE}📚 Learn more: https://fixit.readthedocs.io/en/stable/${NC}"
-fi 
+fi

@@ -14,7 +14,7 @@ echo "🖨️ PRINT ELIMINATOR: $SRC_DIR"
 
 # Safety checkpoint
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-git stash push -m "SAFETY_CHECKPOINT_print_elimination_${TIMESTAMP}" || echo "⚠️ No changes to stash"
+git stash push -m "SAFETY_CHECKPOINT_print_elimination_${TIMESTAMP}" -- "$SRC_DIR" || echo "⚠️ No changes to stash"
 
 # Count current print statements
 PRINT_COUNT=$(grep -r "print(" "$SRC_DIR" --include="*.py" | wc -l || echo "0")
@@ -51,4 +51,4 @@ echo "📊 BEFORE: $PRINT_COUNT print statements"
 echo "✅ AFTER:  $FINAL_COUNT print statements"
 echo "🎯 ELIMINATED: $ELIMINATED print statements"
 echo ""
-echo "🔄 ROLLBACK: git stash apply stash@{0} (if needed)" 
+echo "🔄 ROLLBACK: git stash apply stash@{0} (if needed)"

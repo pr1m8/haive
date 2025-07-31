@@ -5,7 +5,7 @@
 # 🎯 This safely handles syntax issues in order:
 # 1. ANALYZE and DEBUG what's actually broken
 # 2. FIX invalid imports (haive-package patterns)
-# 3. FIX indentation errors using reindent 
+# 3. FIX indentation errors using reindent
 # 4. SHOW git diffs for review
 # 5. SAFE rollback if needed
 
@@ -39,7 +39,7 @@ echo ""
 
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 echo -e "${PURPLE}🛡️ Creating safety checkpoint...${NC}"
-git stash push -m "DEBUG_SYNTAX_CHECKPOINT_${TIMESTAMP}" || echo "⚠️ No changes to stash"
+git stash push -m "DEBUG_SYNTAX_CHECKPOINT_${TIMESTAMP}" -- "$DIRECTORY" || echo "⚠️ No changes to stash"
 
 # ===================================================================
 # 🔍 PHASE 1: DEBUG - Find the actual problems
@@ -61,11 +61,11 @@ while IFS= read -r -d '' file; do
     if grep -q "from haive-[^.]*\.src\.haive\." "$file" 2>/dev/null; then
         INVALID_IMPORT_FILES+=("$file")
     fi
-    
+
     # Try to parse with Python to catch syntax errors
     if ! python3 -m py_compile "$file" 2>/dev/null; then
         SYNTAX_ERROR_FILES+=("$file")
-        
+
         # Check if it's an indentation error specifically
         if python3 -m py_compile "$file" 2>&1 | grep -q "IndentationError\|unindent"; then
             INDENTATION_ERROR_FILES+=("$file")
@@ -101,13 +101,13 @@ fi
 if [ "$MODE" = "--fix" ] && [ ${#INVALID_IMPORT_FILES[@]} -gt 0 ]; then
     echo -e "${PURPLE}🚨 PHASE 2: FIXING INVALID IMPORT PATTERNS...${NC}"
     echo ""
-    
+
     for file in "${INVALID_IMPORT_FILES[@]}"; do
         echo -e "${BLUE}🔧 Fixing imports in: $(basename "$file")${NC}"
-        
+
         # Create backup
         cp "$file" "$file.backup"
-        
+
         # Fix invalid import patterns
         sed -i '
             # Fix the main problematic patterns
@@ -116,7 +116,7 @@ if [ "$MODE" = "--fix" ] && [ ${#INVALID_IMPORT_FILES[@]} -gt 0 ]; then
             s/import haive-[a-z]*\.src\.haive\./import haive./g
             s/from haive-[a-z]*\.tests\./from haive./g
         ' "$file"
-        
+
         # Check if fix worked
         if python3 -m py_compile "$file" 2>/dev/null; then
             echo "  ✅ Import fixes successful"
@@ -126,7 +126,7 @@ if [ "$MODE" = "--fix" ] && [ ${#INVALID_IMPORT_FILES[@]} -gt 0 ]; then
             rm "$file.backup"
         fi
     done
-    
+
     echo -e "${GREEN}✅ Invalid import patterns fixed${NC}"
     echo ""
 fi
@@ -138,16 +138,16 @@ fi
 if [ "$MODE" = "--fix" ] && [ ${#INDENTATION_ERROR_FILES[@]} -gt 0 ]; then
     echo -e "${PURPLE}🔧 PHASE 3: FIXING INDENTATION ERRORS...${NC}"
     echo ""
-    
+
     # Try to fix indentation for files that still have errors
     FIXED_FILES=()
-    
+
     for file in "${INDENTATION_ERROR_FILES[@]}"; do
         echo -e "${BLUE}🔧 Fixing indentation in: $(basename "$file")${NC}"
-        
+
         # Create backup
         cp "$file" "$file.backup"
-        
+
         # Try using reindent (Tim Peters' tool)
         if poetry run python -m reindent -n "$file" 2>/dev/null; then
             # Check if it's now syntactically valid
@@ -176,7 +176,7 @@ if [ "$MODE" = "--fix" ] && [ ${#INDENTATION_ERROR_FILES[@]} -gt 0 ]; then
             mv "$file.backup" "$file"  # Restore backup
         fi
     done
-    
+
     echo -e "${GREEN}✅ Fixed indentation in ${#FIXED_FILES[@]} files${NC}"
     echo ""
 fi
@@ -195,14 +195,14 @@ if [ "$MODE" = "--fix" ]; then
     else
         echo -e "${GREEN}🎉 CHANGES APPLIED:${NC}"
         echo ""
-        
+
         # Show summary of changed files
         echo -e "${BLUE}📋 Modified files:${NC}"
         git diff --name-only | while read -r file; do
             echo "  📝 $file"
         done
         echo ""
-        
+
         # Show sample diff for first few files
         echo -e "${BLUE}🔍 Sample changes (first 3 files):${NC}"
         git diff --name-only | head -3 | while read -r file; do
@@ -213,11 +213,11 @@ if [ "$MODE" = "--fix" ]; then
                 echo "  ... (truncated, use 'git diff $file' to see all)"
             fi
         done
-        
+
         echo ""
         echo -e "${YELLOW}💡 TO REVIEW ALL CHANGES:${NC}"
         echo "  git diff                    # See all changes"
-        echo "  git diff --stat             # Summary of changes" 
+        echo "  git diff --stat             # Summary of changes"
         echo "  git stash                   # Stash changes to review later"
         echo ""
         echo -e "${YELLOW}💡 TO COMMIT CHANGES:${NC}"
@@ -228,7 +228,7 @@ if [ "$MODE" = "--fix" ]; then
         echo "  git stash"
         echo "  git stash apply stash@{1}   # Restore checkpoint"
     fi
-    
+
     # Recheck syntax errors
     REMAINING_SYNTAX_FILES=()
     while IFS= read -r -d '' file; do
@@ -236,12 +236,12 @@ if [ "$MODE" = "--fix" ]; then
             REMAINING_SYNTAX_FILES+=("$file")
         fi
     done < <(find "$DIRECTORY" -name "*.py" -print0)
-    
+
     echo -e "${BLUE}📊 FINAL STATUS:${NC}"
     echo "  🔴 Original syntax error files: ${#SYNTAX_ERROR_FILES[@]}"
     echo "  🔴 Remaining syntax error files: ${#REMAINING_SYNTAX_FILES[@]}"
     echo "  ✅ Fixed files: $((${#SYNTAX_ERROR_FILES[@]} - ${#REMAINING_SYNTAX_FILES[@]}))"
-    
+
     if [ ${#REMAINING_SYNTAX_FILES[@]} -eq 0 ]; then
         echo ""
         echo -e "${GREEN}🎯 ALL SYNTAX ERRORS RESOLVED!${NC}"
@@ -251,7 +251,7 @@ if [ "$MODE" = "--fix" ]; then
         echo -e "${BLUE}🔍 Remaining problem files:${NC}"
         printf '  %s\n' "${REMAINING_SYNTAX_FILES[@]}" | head -5
     fi
-    
+
 elif [ "$MODE" = "--preview" ]; then
     echo -e "${YELLOW}👀 PREVIEW MODE - Would apply the following fixes:${NC}"
     echo ""
@@ -265,4 +265,4 @@ fi
 
 echo ""
 echo -e "${CYAN}🚀 Debug and Fix Syntax Complete!${NC}"
-echo -e "${BLUE}💡 Safe rollback available via git stash if needed${NC}" 
+echo -e "${BLUE}💡 Safe rollback available via git stash if needed${NC}"

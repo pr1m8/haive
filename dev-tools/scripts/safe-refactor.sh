@@ -50,25 +50,26 @@ fi
 # Safety checkpoint function
 create_safety_checkpoint() {
     local desc=$1
+    local directory=${2:-"."}  # Default to current directory if not specified
     TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-    git stash push -m "REFACTOR_CHECKPOINT_${desc}_${TIMESTAMP}" || echo "⚠️ No changes to stash"
-    echo -e "${GREEN}🛡️ Safety checkpoint created: REFACTOR_CHECKPOINT_${desc}_${TIMESTAMP}${NC}"
+    git stash push -m "REFACTOR_CHECKPOINT_${desc}_${TIMESTAMP}" -- "$directory" || echo "⚠️ No changes to stash"
+    echo -e "${GREEN}🛡️ Safety checkpoint created for $directory: REFACTOR_CHECKPOINT_${desc}_${TIMESTAMP}${NC}"
 }
 
 # Check if required tools are available
 check_dependencies() {
     echo -e "${BLUE}🔍 Checking dependencies...${NC}"
-    
+
     if ! poetry show rope >/dev/null 2>&1; then
         echo -e "${YELLOW}📦 Installing rope...${NC}"
         poetry add --group dev rope
     fi
-    
+
     if ! poetry show bowler >/dev/null 2>&1; then
         echo -e "${YELLOW}📦 Installing bowler...${NC}"
         poetry add --group dev bowler
     fi
-    
+
     echo -e "${GREEN}✅ Dependencies ready${NC}"
 }
 
@@ -77,9 +78,9 @@ rope_rename_function() {
     local old_name=$1
     local new_name=$2
     local directory=${3:-"src/"}
-    
+
     echo -e "${BLUE}🔄 Renaming function: $old_name → $new_name${NC}"
-    
+
     poetry run python -c "
 import sys
 from rope.base.project import Project
@@ -88,7 +89,7 @@ from rope.base.utils import pyobjectsdef
 
 try:
     project = Project('.')
-    
+
     # Find all occurrences of the function
     for root, dirs, files in project.root.walk():
         for file in files:
@@ -105,7 +106,7 @@ try:
                         print(f'Updated: {file.path}')
                 except Exception as e:
                     print(f'Error processing {file.path}: {e}')
-                    
+
     print('✅ Function rename completed')
     project.close()
 except Exception as e:
@@ -119,9 +120,9 @@ bowler_rename_function() {
     local old_name=$1
     local new_name=$2
     local directory=${3:-"src/"}
-    
+
     echo -e "${BLUE}🔄 Bowler rename: $old_name → $new_name${NC}"
-    
+
     poetry run python -c "
 from bowler import Query
 
@@ -130,15 +131,15 @@ try:
     query = (Query('$directory')
              .select_function('$old_name')
              .rename('$new_name'))
-    
+
     # Show diff first
     print('📋 Preview of changes:')
     query.diff()
-    
+
     # Execute changes
     query.execute()
     print('✅ Bowler rename completed')
-    
+
 except Exception as e:
     print(f'❌ Bowler error: {e}')
     import sys
@@ -152,59 +153,59 @@ case $OPERATION in
         OLD_NAME=$1
         NEW_NAME=$2
         DIRECTORY=${3:-"src/"}
-        
+
         if [ -z "$OLD_NAME" ] || [ -z "$NEW_NAME" ]; then
             echo -e "${RED}❌ Usage: rename-function <old_name> <new_name> [directory]${NC}"
             exit 1
         fi
-        
-        create_safety_checkpoint "rename_function_${OLD_NAME}_to_${NEW_NAME}"
+
+        create_safety_checkpoint "rename_function_${OLD_NAME}_to_${NEW_NAME}" "$DIRECTORY"
         check_dependencies
-        
+
         echo -e "${CYAN}🔄 RENAME FUNCTION: $OLD_NAME → $NEW_NAME${NC}"
         echo -e "${YELLOW}📁 Directory: $DIRECTORY${NC}"
-        
+
         # Use bowler for safer refactoring
         bowler_rename_function "$OLD_NAME" "$NEW_NAME" "$DIRECTORY"
         ;;
-        
+
     "rename-variable")
         OLD_NAME=$1
         NEW_NAME=$2
         DIRECTORY=${3:-"src/"}
-        
+
         if [ -z "$OLD_NAME" ] || [ -z "$NEW_NAME" ]; then
             echo -e "${RED}❌ Usage: rename-variable <old_name> <new_name> [directory]${NC}"
             exit 1
         fi
-        
-        create_safety_checkpoint "rename_variable_${OLD_NAME}_to_${NEW_NAME}"
+
+        create_safety_checkpoint "rename_variable_${OLD_NAME}_to_${NEW_NAME}" "$DIRECTORY"
         check_dependencies
-        
+
         echo -e "${CYAN}🔄 RENAME VARIABLE: $OLD_NAME → $NEW_NAME${NC}"
-        
+
         # Simple text-based replacement with safety checks
         find "$DIRECTORY" -name "*.py" -exec sed -i "s/\b$OLD_NAME\b/$NEW_NAME/g" {} \;
         echo -e "${GREEN}✅ Variable rename completed${NC}"
         ;;
-        
+
     "extract-method")
         FILE=$1
         START_LINE=$2
         END_LINE=$3
         METHOD_NAME=$4
-        
+
         if [ -z "$FILE" ] || [ -z "$START_LINE" ] || [ -z "$END_LINE" ] || [ -z "$METHOD_NAME" ]; then
             echo -e "${RED}❌ Usage: extract-method <file> <start_line> <end_line> <new_method_name>${NC}"
             exit 1
         fi
-        
-        create_safety_checkpoint "extract_method_${METHOD_NAME}"
+
+        create_safety_checkpoint "extract_method_${METHOD_NAME}" "$DIRECTORY"
         check_dependencies
-        
+
         echo -e "${CYAN}🔄 EXTRACT METHOD: Lines $START_LINE-$END_LINE → $METHOD_NAME()${NC}"
         echo -e "${YELLOW}📁 File: $FILE${NC}"
-        
+
         # Use rope for method extraction
         poetry run python -c "
 from rope.base.project import Project
@@ -213,16 +214,16 @@ from rope.refactor.extract import ExtractMethod
 try:
     project = Project('.')
     resource = project.get_resource('$FILE')
-    
+
     # Calculate byte offsets from line numbers
     lines = resource.read().split('\n')
     start_offset = sum(len(line) + 1 for line in lines[:$START_LINE-1])
     end_offset = sum(len(line) + 1 for line in lines[:$END_LINE])
-    
+
     extractor = ExtractMethod(project, resource, start_offset, end_offset)
     changes = extractor.get_changes('$METHOD_NAME')
     project.do(changes)
-    
+
     print('✅ Method extraction completed')
     project.close()
 except Exception as e:
@@ -231,33 +232,33 @@ except Exception as e:
     sys.exit(1)
 "
         ;;
-        
+
     "find-usages")
         SYMBOL=$1
         DIRECTORY=${2:-"src/"}
-        
+
         if [ -z "$SYMBOL" ]; then
             echo -e "${RED}❌ Usage: find-usages <symbol_name> [directory]${NC}"
             exit 1
         fi
-        
+
         echo -e "${CYAN}🔍 FIND USAGES: $SYMBOL${NC}"
         echo -e "${YELLOW}📁 Directory: $DIRECTORY${NC}"
         echo ""
-        
+
         grep -rn --include="*.py" "$SYMBOL" "$DIRECTORY" | head -20
         ;;
-        
+
     "check-safety")
         DIRECTORY=${1:-"src/"}
-        
+
         echo -e "${CYAN}🔍 SAFETY CHECK: $DIRECTORY${NC}"
         echo ""
-        
+
         # Check for syntax errors
         echo -e "${BLUE}📝 Checking Python syntax...${NC}"
         find "$DIRECTORY" -name "*.py" -exec python -m py_compile {} \; 2>&1 | head -10
-        
+
         # Check for import errors
         echo -e "${BLUE}📦 Checking imports...${NC}"
         poetry run python -c "
@@ -283,7 +284,7 @@ else:
     print('✅ No syntax errors found')
 "
         ;;
-        
+
     *)
         echo -e "${RED}❌ Unknown operation: $OPERATION${NC}"
         echo "Run without arguments to see available operations"
@@ -293,4 +294,4 @@ esac
 
 echo ""
 echo -e "${GREEN}🎉 Refactoring operation completed!${NC}"
-echo -e "${YELLOW}🔄 Rollback: git stash apply stash@{0} (if needed)${NC}" 
+echo -e "${YELLOW}🔄 Rollback: git stash apply stash@{0} (if needed)${NC}"

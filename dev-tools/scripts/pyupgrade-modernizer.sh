@@ -17,7 +17,7 @@ echo "🐍 Target Python Version: 3.$PYTHON_VERSION+"
 
 # Safety checkpoint
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-git stash push -m "SAFETY_CHECKPOINT_pyupgrade_modernization_${TIMESTAMP}" || echo "⚠️ No changes to stash"
+git stash push -m "SAFETY_CHECKPOINT_pyupgrade_modernization_${TIMESTAMP}" -- "$DIRECTORY" || echo "⚠️ No changes to stash"
 
 # Count files that need modernization
 echo "🔍 Scanning for modernization opportunities..."
@@ -27,7 +27,7 @@ echo "📁 Found $TOTAL_FILES Python files"
 # Get baseline of specific issues pyupgrade fixes
 echo "📊 Checking current modernization issues..."
 UP006_COUNT=$(poetry run ruff check "$SRC_DIR" --select UP006 2>/dev/null | grep "UP006" | wc -l || echo "0")
-UP007_COUNT=$(poetry run ruff check "$SRC_DIR" --select UP007 2>/dev/null | grep "UP007" | wc -l || echo "0") 
+UP007_COUNT=$(poetry run ruff check "$SRC_DIR" --select UP007 2>/dev/null | grep "UP007" | wc -l || echo "0")
 UP035_COUNT=$(poetry run ruff check "$SRC_DIR" --select UP035 2>/dev/null | grep "UP035" | wc -l || echo "0")
 UP008_COUNT=$(poetry run ruff check "$SRC_DIR" --select UP008 2>/dev/null | grep "UP008" | wc -l || echo "0")
 
@@ -35,7 +35,7 @@ TOTAL_ISSUES=$((UP006_COUNT + UP007_COUNT + UP035_COUNT + UP008_COUNT))
 
 echo "🚨 BASELINE MODERNIZATION ISSUES:"
 echo "  📝 UP006 (non-pep585-annotation): $UP006_COUNT"
-echo "  📝 UP007 (non-pep604-annotation-union): $UP007_COUNT" 
+echo "  📝 UP007 (non-pep604-annotation-union): $UP007_COUNT"
 echo "  📝 UP035 (deprecated-import): $UP035_COUNT"
 echo "  📝 UP008 (super-call-with-parameters): $UP008_COUNT"
 echo "  🎯 TOTAL: $TOTAL_ISSUES issues"
@@ -69,7 +69,7 @@ poetry run ruff check "$SRC_DIR" --select UP --fix || echo "⚠️ ruff complete
 echo "📊 Checking final results..."
 FINAL_UP006=$(poetry run ruff check "$SRC_DIR" --select UP006 2>/dev/null | grep "UP006" | wc -l || echo "0")
 FINAL_UP007=$(poetry run ruff check "$SRC_DIR" --select UP007 2>/dev/null | grep "UP007" | wc -l || echo "0")
-FINAL_UP035=$(poetry run ruff check "$SRC_DIR" --select UP035 2>/dev/null | grep "UP035" | wc -l || echo "0") 
+FINAL_UP035=$(poetry run ruff check "$SRC_DIR" --select UP035 2>/dev/null | grep "UP035" | wc -l || echo "0")
 FINAL_UP008=$(poetry run ruff check "$SRC_DIR" --select UP008 2>/dev/null | grep "UP008" | wc -l || echo "0")
 
 FINAL_TOTAL=$((FINAL_UP006 + FINAL_UP007 + FINAL_UP035 + FINAL_UP008))
@@ -88,4 +88,4 @@ echo "  • X | Y instead of Union[X, Y] (PEP 604)"
 echo "  • Removed deprecated imports"
 echo "  • Simplified super() calls"
 echo ""
-echo "🔄 ROLLBACK: git stash apply stash@{0} (if needed)" 
+echo "🔄 ROLLBACK: git stash apply stash@{0} (if needed)"
