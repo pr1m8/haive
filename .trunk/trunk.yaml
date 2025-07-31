@@ -64,14 +64,13 @@ actions:
   disabled:
     - trunk-announce
   enabled:
-    - trunk-check-pre-push
-    - trunk-fmt-pre-commit
-    - trunk-check-pre-commit
+    - trunk-fmt-pre-commit # Re-enabled: Native trunk git hooks
+    - trunk-check-pre-commit # Re-enabled: Native trunk git hooks
+    - trunk-check-pre-push-always # Enabled: Always run on push
     - git-lfs
     - trunk-upgrade-available
     - haive-import-validation
     - haive-memory-integrity
-    - haive-precommit-integration
   definitions:
     - id: haive-import-validation
       display_name: Haive Import Validation
