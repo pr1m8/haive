@@ -1,5 +1,4 @@
-# Final integration test for trunk + pre-commit
-print("Testing trunk + pre-commit integration - updated")
+# Final integration test for trunk + pre-commit - SIMPLIFIED VERSION
 
 
 def test_function():
@@ -9,4 +8,3 @@ def test_function():
 
 def another_test():
     """Another test function."""
-    pass
