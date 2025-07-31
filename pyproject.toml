@@ -151,6 +151,7 @@ haive-dataflow = { path = "packages/haive-dataflow", develop = true }
 haive-games = { path = "packages/haive-games", develop = true }
 haive-prebuilt = { path = "packages/haive-prebuilt", develop = true }
 haive-tools = { path = "packages/haive-tools", develop = true }
+haive-mcp = { path = "packages/haive-mcp", develop = true }
 websocket = "^0.2.1"
 mcp = "^1.10.1"
 langchain-mcp-adapters = "^0.1.8"
@@ -160,7 +161,7 @@ nox = "^2025.5.1"
 tomli = "^2.2.1"
 sgfmill = "^1.1.1"
 
-# CLI Dependencies
+# CLI Dependencies - will make a group 
 click = "^8.2.1"
 typer = "^0.16.0"
 questionary = "^2.1.0"
