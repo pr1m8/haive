@@ -1,0 +1,10 @@
+{
+  "game": "poker",
+  "timestamp": "20250630_094544",
+  "result": {
+    "success": false,
+    "error": "Import failed: cannot import name 'PokerConfig' from 'haive.games.poker' (/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/poker/__init__.py)",
+    "error_type": "ImportError",
+    "stage": "module_import"
+  }
+}

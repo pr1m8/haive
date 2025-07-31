@@ -1,0 +1,47 @@
+{
+  "component_info": {
+    "name": "scrape_webpages",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.search_tools",
+    "class_name": "StructuredTool",
+    "description": "Scrape web pages using WebBaseLoader to extract detailed content information.\n\n    This tool uses langchain's WebBaseLoader to fetch and parse content from specified URLs,\n    returning the extracted content in a formatted document structure.\n\n    Args:\n        urls (List[str]): The list of URLs to scrape for content.\n\n    Returns:\n        str: The scraped content from all URLs in a structured format with document titles.\n\n    Raises:\n        Exception: If URL scraping fails due to network issues, invalid URLs, or access restrictions.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:28.983911",
+    "schema": {
+      "description": "Scrape web pages using WebBaseLoader to extract detailed content information.\n\nThis tool uses langchain's WebBaseLoader to fetch and parse content from specified URLs,\nreturning the extracted content in a formatted document structure.\n\nArgs:\n    urls (List[str]): The list of URLs to scrape for content.\n\nReturns:\n    str: The scraped content from all URLs in a structured format with document titles.\n\nRaises:\n    Exception: If URL scraping fails due to network issues, invalid URLs, or access restrictions.",
+      "properties": {
+        "urls": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Urls",
+          "type": "array"
+        }
+      },
+      "required": ["urls"],
+      "title": "scrape_webpages",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "scrape_webpages",
+    "tool_description": "Scrape web pages using WebBaseLoader to extract detailed content information.\n\n    This tool uses langchain's WebBaseLoader to fetch and parse content from specified URLs,\n    returning the extracted content in a formatted document structure.\n\n    Args:\n        urls (List[str]): The list of URLs to scrape for content.\n\n    Returns:\n        str: The scraped content from all URLs in a structured format with document titles.\n\n    Raises:\n        Exception: If URL scraping fails due to network issues, invalid URLs, or access restrictions."
+  },
+  "document": {
+    "page_content": "# scrape_webpages\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.tools.search_tools\n**Class:** StructuredTool\n\n## Description\nScrape web pages using WebBaseLoader to extract detailed content information.\n\n    This tool uses langchain's WebBaseLoader to fetch and parse content from specified URLs,\n    returning the extracted content in a formatted document structure.\n\n    Args:\n        urls (List[str]): The list of URLs to scrape for content.\n\n    Returns:\n        str: The scraped content from all URLs in a structured format with document titles.\n\n    Raises:\n        Exception: If URL scraping fails due to network issues, invalid URLs, or access restrictions.\n\n## Schema\n```json\n{\n  \"description\": \"Scrape web pages using WebBaseLoader to extract detailed content information.\\n\\nThis tool uses langchain's WebBaseLoader to fetch and parse content from specified URLs,\\nreturning the extracted content in a formatted document structure.\\n\\nArgs:\\n    urls (List[str]): The list of URLs to scrape for content.\\n\\nReturns:\\n    str: The scraped content from all URLs in a structured format with document titles.\\n\\nRaises:\\n    Exception: If URL scraping fails due to network issues, invalid URLs, or access restrictions.\",\n  \"properties\": {\n    \"urls\": {\n      \"items\": {\n        \"type\": \"string\"\n      },\n      \"title\": \"Urls\",\n      \"type\": \"array\"\n    }\n  },\n  \"required\": [\n    \"urls\"\n  ],\n  \"title\": \"scrape_webpages\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `scrape_webpages`\n**Description:** Scrape web pages using WebBaseLoader to extract detailed content information.\n\n    This tool uses langchain's WebBaseLoader to fetch and parse content from specified URLs,\n    returning the extracted content in a formatted document structure.\n\n    Args:\n        urls (List[str]): The list of URLs to scrape for content.\n\n    Returns:\n        str: The scraped content from all URLs in a structured format with document titles.\n\n    Raises:\n        Exception: If URL scraping fails due to network issues, invalid URLs, or access restrictions.\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "scrape_webpages",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.tools.search_tools",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:28.983911",
+      "category": "individual_tools"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

@@ -1,0 +1,44 @@
+{
+  "component_info": {
+    "name": "LoaderConfig",
+    "component_type": "document_loader",
+    "module_path": "packages.haive-core.src.haive.core.engine.document.loaders.base.base",
+    "class_name": "LoaderConfig",
+    "description": "Config for a loader (legacy interface).",
+    "source_code": "class LoaderConfig(ABC):\n    \"\"\"Config for a loader (legacy interface).\"\"\"\n\n    # loader\n    @abstractmethod\n    def load(self, input: dict[str, Any]) -> dict[str, Any]:\n        \"\"\"Load the data from the input.\"\"\"\n        raise NotImplementedError(\"Subclasses must implement this method.\")\n\n    @classmethod\n    def from_config(cls, config: BaseModel) -> \"LoaderConfig\":\n        \"\"\"Create a loader from a config.\"\"\"\n        return cls(**config.model_dump())\n\n    @classmethod\n    def from_dict(cls, config: dict) -> \"LoaderConfig\":\n        \"\"\"Create a loader from a dict.\"\"\"\n        return cls(**config)\n\n    @classmethod\n    def create_runnable(cls, config: BaseModel) -> \"LoaderConfig\":\n        \"\"\"Create a runnable from a config.\"\"\"\n        return cls.from_config(config)\n",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:40.263046",
+    "schema": {
+      "properties": {
+        "args": {
+          "type": "Any",
+          "default": null
+        },
+        "kwargs": {
+          "type": "Any",
+          "default": null
+        }
+      }
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "load_documents_loaderconfig",
+    "tool_description": "Load documents using LoaderConfig: Config for a loader (legacy interface)."
+  },
+  "document": {
+    "page_content": "# LoaderConfig\n**Type:** document_loader\n**Module:** packages.haive-core.src.haive.core.engine.document.loaders.base.base\n**Class:** LoaderConfig\n\n## Description\nConfig for a loader (legacy interface).\n\n## Schema\n```json\n{\n  \"properties\": {\n    \"args\": {\n      \"type\": \"Any\",\n      \"default\": null\n    },\n    \"kwargs\": {\n      \"type\": \"Any\",\n      \"default\": null\n    }\n  }\n}\n```\n\n## Usage as Tool\n**Tool Name:** `load_documents_loaderconfig`\n**Description:** Load documents using LoaderConfig: Config for a loader (legacy interface).\n\n## Source Code\n```python\nclass LoaderConfig(ABC):\n    \"\"\"Config for a loader (legacy interface).\"\"\"\n\n    # loader\n    @abstractmethod\n    def load(self, input: dict[str, Any]) -> dict[str, Any]:\n        \"\"\"Load the data from the input.\"\"\"\n        raise NotImplementedError(\"Subclasses must implement this method.\")\n\n    @classmethod\n    def from_config(cls, config: BaseModel) -> \"LoaderConfig\":\n        \"\"\"Create a loader from a config.\"\"\"\n        return cls(**config.model_dump())\n\n    @classmethod\n    def from_dict(cls, config: dict) -> \"LoaderConfig\":\n        \"\"\"Create a loader from a dict.\"\"\"\n        return cls(**config)\n\n    @classmethod\n    def create_runnable(cls, config: BaseModel) -> \"LoaderConfig\":\n        \"\"\"Create a runnable from a config.\"\"\"\n        return cls.from_config(config)\n\n```",
+    "metadata": {
+      "name": "LoaderConfig",
+      "component_type": "document_loader",
+      "module_path": "packages.haive-core.src.haive.core.engine.document.loaders.base.base",
+      "class_name": "LoaderConfig",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:40.263046",
+      "category": "document_loaders"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

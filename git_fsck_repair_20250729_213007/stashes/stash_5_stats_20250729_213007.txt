@@ -1,0 +1,12 @@
+commit 6079a4e555b45d67ff48c3bd3366dbc75373b54d
+Merge: 15ca1591 380d82cb
+Author: pr1m8 <william.astley@algebraicwealth.com>
+Date:   Tue Jul 29 18:36:02 2025 -0400
+
+    On feature/fix_everything_v2: PRE_FLIGHT_SYNTAX_20250729_183602
+
+ .../src/haive/agents/dynamic/prompts.py            |   0
+ .../kai_validation_node_v2_memories_20250729.md    | 118 ++++++++++++++++
+ .../active/validation_node_v2_analysis_20250729.md | 154 +++++++++++++++++++++
+ pyproject.toml                                     |  77 ++++++++++-
+ 4 files changed, 348 insertions(+), 1 deletion(-)

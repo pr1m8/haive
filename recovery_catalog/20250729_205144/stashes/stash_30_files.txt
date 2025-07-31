@@ -1,0 +1,8 @@
+commit 60dc1ca324ff9a9017888990aaa0a472e56203b2
+Merge: eecb13a3 efc20078
+Author: pr1m8 <william.astley@algebraicwealth.com>
+Date:   Mon Jun 16 12:56:36 2025 -0400
+
+    WIP on feature/schema_v4: eecb13a Add haive-mcp as submodule
+
+docs/source/index.rst

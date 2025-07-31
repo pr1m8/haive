@@ -1,0 +1,14 @@
+{
+  "exclude": [
+    "**/.trunk/**",
+    "**/test_data/**",
+    "**/.cache/**",
+    "**/node_modules/**",
+    "**/__pycache__/**",
+    "**/.*"
+  ],
+  "reportMissingImports": true,
+  "reportMissingTypeStubs": false,
+  "pythonVersion": "3.12",
+  "typeCheckingMode": "basic"
+}

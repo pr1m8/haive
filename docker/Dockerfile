@@ -19,54 +19,67 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN useradd -m haiveuser
 
 ###########################################
-# === Builder Stage: Poetry Install & Deps
+# === Dependencies Stage: Poetry + Deps ===
 ###########################################
-FROM base AS builder
+FROM base AS deps
 
 ENV POETRY_VERSION=2.1.2 \
     POETRY_HOME="/opt/poetry" \
     POETRY_VIRTUALENVS_CREATE=false \
+    POETRY_NO_INTERACTION=1 \
+    POETRY_CACHE_DIR=/tmp/poetry_cache \
     PATH="/opt/poetry/bin:$PATH"
 
 RUN pip install "poetry==$POETRY_VERSION"
 
 WORKDIR /app
 
-# Copy root files for context/debug
-COPY pyproject.toml poetry.lock README.md ./
+# Copy only dependency files first for better caching
+COPY pyproject.toml poetry.lock ./
 
-# Copy all packages — needed before per-package install
-COPY packages ./packages
+# Copy only the pyproject.toml files from packages for dependency resolution
+RUN mkdir -p packages
+COPY packages/*/pyproject.toml packages/
+RUN find packages -name "pyproject.toml" -exec dirname {} \; | while read dir; do \
+    echo "Found package: $dir"; \
+    done
 
-# ✅ DEBUG: Show package structure
-RUN echo "📂 Contents of packages/:" && tree -L 2 packages || true
+# Install main dependencies
+RUN poetry install --no-root --only main --no-interaction
 
-# 🔁 Loop install per package (safe)
-RUN set -ex && for d in packages/haive-*; do \
-    echo "🔧 Installing $d" && \
-    if [ -d "$d" ]; then \
-    cd "$d" && \
-    poetry install --no-root --only main --no-interaction && \
-    cd -; \
-    else \
-    echo "⚠️  Skipping $d (not a directory)"; \
+# Install each package's dependencies individually
+RUN for pkg in packages/*/pyproject.toml; do \
+    if [ -f "$pkg" ]; then \
+        pkg_dir=$(dirname "$pkg"); \
+        echo "Installing dependencies for $pkg_dir"; \
+        cd "$pkg_dir" && \
+        if [ -f "poetry.lock" ]; then \
+            poetry install --no-root --only main --no-interaction || echo "Failed to install $pkg_dir"; \
+        else \
+            echo "No poetry.lock in $pkg_dir, skipping"; \
+        fi && \
+        cd /app; \
     fi; \
     done
 
+# Clean up poetry cache
+RUN rm -rf $POETRY_CACHE_DIR
+
 ###############################################
-# === Final Runtime Stage: Clean & Minimal ===
+# === Runtime Stage: Final Image ===
 ###############################################
 FROM base AS runtime
 
 WORKDIR /app
 
-# Copy Python site-packages
-COPY --from=builder /usr/local/lib/python3.12 /usr/local/lib/python3.12
+# Copy Python packages from deps stage
+COPY --from=deps /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
+COPY --from=deps /usr/local/bin /usr/local/bin
 
-# Copy source
-COPY pyproject.toml poetry.lock README.md ./
+# Copy application files
+COPY pyproject.toml poetry.lock ./
 COPY packages ./packages
-COPY src ./src
+COPY haive ./haive
 
 # ⚡ Optional: Torch (skip if bundled in Poetry deps)
 ARG TORCH_INDEX_URL=https://download.pytorch.org/whl/cpu

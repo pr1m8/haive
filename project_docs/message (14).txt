@@ -64,12 +64,12 @@ Your agent should send messages in this order:
         "snippet": "Brief description..."
       }
     ],
-    
+
     // For code_execution:
     "output": "Hello World\n",
     "exitCode": 0,
     "executionTime": 125,
-    
+
     // For data_analysis:
     "summary": "Analysis complete",
     "insights": ["Key finding 1", "Key finding 2"],

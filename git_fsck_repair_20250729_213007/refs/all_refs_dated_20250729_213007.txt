@@ -1,0 +1,297 @@
+2025-06-30 03:57:59 -0400	refs/heads/analysis-backup-20250630-041245	33aa9e81e29ee5d526252e047db0f55978fa94de	Implement comprehensive configurable agent system for games
+2025-06-30 03:45:14 -0400	refs/heads/backup-before-workspace-migration	77a124b028ef414b6fcebbabd15b481aa761a65f	Pre-migration backup: Save current state before workspace migration
+2025-07-28 22:15:54 -0400	refs/heads/backup-broken-state	0948e00ef265ff250af7da451f16e09f64875bfb	update: haive-core submodule reference to latest commit
+2025-07-28 22:15:54 -0400	refs/heads/backup-root-before-july27-reset	0948e00ef265ff250af7da451f16e09f64875bfb	update: haive-core submodule reference to latest commit
+2025-04-17 11:20:57 -0400	refs/heads/backup/v4-dirty-20250417_112057	a26a560aa408b656bddd584dc967a9aba0d79d29	Backup of uncommitted and untracked state on branch v4
+2025-07-28 22:15:54 -0400	refs/heads/cleanup/root-project-docs-20250728	0948e00ef265ff250af7da451f16e09f64875bfb	update: haive-core submodule reference to latest commit
+2025-06-30 09:21:34 -0400	refs/heads/coordination-redesign-backup-20250630-044246	16e83ab485c83338098419f626d6270ab707db44	Add comprehensive consistency & coherency analysis
+2025-02-23 00:26:14 -0500	refs/heads/core	7ef63f24629ab4590daae592dd7899a89290483f	update
+2025-03-06 17:04:03 -0500	refs/heads/core_v2	7786028a99ab37bc32dc5a649a3e7b8769c98ee2	update
+2025-04-08 20:04:22 -0400	refs/heads/core_v3	590664d799a3d7ac17b326fef59c7d4d974c5cae	Add background process management, execution logging, role-based access control, remote command execution, and secure shell execution features.
+2025-07-28 23:47:13 -0400	refs/heads/docs/autoapi-namespace-fix-2025	30cc1ca7b27abfc53908b19b7730285d39259f2e	chore: update pyproject.toml with new dependencies
+2025-07-22 23:05:31 -0400	refs/heads/docs/fix-documentation-20250121	3d1fa180e9619243feb3ab0eb3bc8b71d268616b	fix: update .gitmodules to reflect correct branches
+2025-07-05 01:26:33 -0400	refs/heads/feat/document-loader-migration	927b7e6a63518662278ce57fc19b651509dee50b	Update .gitignore to exclude state_history directory
+2025-07-14 13:11:14 -0400	refs/heads/feature/agent-as-tool-pattern	ccbde9d833fd2a7cadf26fe5d35a07abee1c5735	docs(store-tools): add comprehensive integration documentation for store tools
+2025-06-30 11:59:07 -0400	refs/heads/feature/agent-consistency-fixes	5a4db92c31c9c50a9444fded4a9237627de3d16a	feat: complete documentation build system setup
+2025-07-11 00:07:24 -0400	refs/heads/feature/engine-typing-generics	7c406e7b770d601c4d5f63504785ed75b0788ca1	empty
+2025-07-05 16:01:27 -0400	refs/heads/feature/enhanced-tool-management	f378e7c497cd18824661e8dd1caa01e17c9d1c05	Enhance Nox configuration for Haive project
+2025-07-11 00:43:35 -0400	refs/heads/feature/fix_everythign	57079243333b7bb29fcb18c709f1fd8974e91248	chore: Update .gitignore to include additional directories for better file management
+2025-07-29 18:53:56 -0400	refs/heads/feature/fix_everything	3568665cd7cb46c882c871ec88a83d6b0eb37de1	feat: add comprehensive Sphinx extensions installation script
+2025-07-22 13:31:23 -0400	refs/heads/feature/node-system-organization	c1fda95e01f10468faa00913c51c522f6c1329ff	feat(docs): comprehensive documentation styling and structure overhaul
+2025-06-30 04:23:49 -0400	refs/heads/feature/root-coordination-redesign	d7bcd1080c933a598e9a371ecce12fa4ffdc894e	Add haive-mcp to pytest pythonpath configuration
+2025-07-05 16:01:27 -0400	refs/heads/feature/schema-simplification	f378e7c497cd18824661e8dd1caa01e17c9d1c05	Enhance Nox configuration for Haive project
+2025-06-16 12:47:31 -0400	refs/heads/feature/schema_v4	eecb13a3db1f0c102e900c907b9d060f694b8056	Add haive-mcp as submodule
+2025-05-20 16:45:33 -0400	refs/heads/feature/state_graph	099bfdf871c36cc8c8157a591887e48c82152ba5	Update workspace configuration, dependencies, and linting tools
+2025-07-08 14:48:57 -0400	refs/heads/feature/structured-output-generalization	090d8f4f07557e3cf12f50ca0a9c3c48946becb0	fix: Improve MessageList serialization with proper BaseMessage checking and engine metadata preservation
+2025-07-06 15:20:32 -0400	refs/heads/fix/autosummary-module-detection	941b43fc1969dd59ddf6f35c0c6680ed0aaeee9d	current update - things working schema refactor
+2025-06-30 04:23:49 -0400	refs/heads/main	d7bcd1080c933a598e9a371ecce12fa4ffdc894e	Add haive-mcp to pytest pythonpath configuration
+2025-04-11 00:20:08 -0400	refs/heads/master	1a41be118ba20affe5eba17adb3d29038257cb5e	update
+2025-06-30 03:45:14 -0400	refs/heads/migration/phase-1-fix-packages	77a124b028ef414b6fcebbabd15b481aa761a65f	Pre-migration backup: Save current state before workspace migration
+2025-06-30 03:45:14 -0400	refs/heads/migration/phase-2-workspace-setup	77a124b028ef414b6fcebbabd15b481aa761a65f	Pre-migration backup: Save current state before workspace migration
+2025-06-30 03:45:14 -0400	refs/heads/migration/phase-3-dependencies	77a124b028ef414b6fcebbabd15b481aa761a65f	Pre-migration backup: Save current state before workspace migration
+2025-06-30 03:45:14 -0400	refs/heads/migration/phase-4-docs-update	77a124b028ef414b6fcebbabd15b481aa761a65f	Pre-migration backup: Save current state before workspace migration
+2025-06-30 03:45:14 -0400	refs/heads/migration/phase-5-testing	77a124b028ef414b6fcebbabd15b481aa761a65f	Pre-migration backup: Save current state before workspace migration
+2025-04-20 21:28:10 -0400	refs/heads/namespace-migration	f6904bccb9c2fedaff81cdf9835e11478b46acbd	chore: add 'resources/' directory to .gitignore for better file management
+2025-03-14 20:07:04 -0400	refs/heads/nb	466f81888c6f1e692bca33868635c20cac8f9bce	update
+2025-07-29 18:53:56 -0400	refs/heads/recovery/stash_10_20250729_205753	3568665cd7cb46c882c871ec88a83d6b0eb37de1	feat: add comprehensive Sphinx extensions installation script
+2025-07-29 18:53:56 -0400	refs/heads/recovery/stash_1_20250729_205753	3568665cd7cb46c882c871ec88a83d6b0eb37de1	feat: add comprehensive Sphinx extensions installation script
+2025-07-05 01:26:33 -0400	refs/heads/refactor/basegraph2-modular-architecture	927b7e6a63518662278ce57fc19b651509dee50b	Update .gitignore to exclude state_history directory
+2025-07-05 01:26:33 -0400	refs/heads/refactor/schema-engine-backwards-compatible	927b7e6a63518662278ce57fc19b651509dee50b	Update .gitignore to exclude state_history directory
+2025-04-17 20:44:57 -0400	refs/heads/temp_merge_branch	9aee667ca1934f380c93d5099b8b7766c9309389	Final updates before merging to main
+2025-04-17 20:44:57 -0400	refs/heads/v4	9aee667ca1934f380c93d5099b8b7766c9309389	Final updates before merging to main
+2025-06-30 11:59:07 -0400	refs/heads/vzn/dab	5a4db92c31c9c50a9444fded4a9237627de3d16a	feat: complete documentation build system setup
+2025-07-03 19:19:58 -0400	refs/heads/vzn/dav	46af06459e9f068394b8a6bd5f0cf83d87be3ded	added in sphinx gasllery and othe rrelated documentation packages
+2025-05-02 16:20:46 -0400	refs/heads/vzn/node_v2	086f545f0e542608e9a361db904fbafafc22d7ad	Update .gitignore to exclude project documentation directory
+2025-04-17 11:20:57 -0400	refs/original/refs/heads/backup/v4-dirty-20250417_112057	a26a560aa408b656bddd584dc967a9aba0d79d29	Backup of uncommitted and untracked state on branch v4
+2025-04-20 20:04:00 -0400	refs/original/refs/heads/main	10c7730fd30f9391aeea33e6ec9d2145210b4528	updated entry point for namespace
+2025-04-11 00:20:08 -0400	refs/original/refs/heads/master	1a41be118ba20affe5eba17adb3d29038257cb5e	update
+2025-04-20 20:35:09 -0400	refs/original/refs/heads/namespace-migration	4a4e39ae538e9c3b00297352790e8118c67bee58	updated .gitignore
+2025-04-17 20:44:57 -0400	refs/original/refs/heads/temp_merge_branch	9aee667ca1934f380c93d5099b8b7766c9309389	Final updates before merging to main
+2025-04-17 20:44:57 -0400	refs/original/refs/heads/v4	9aee667ca1934f380c93d5099b8b7766c9309389	Final updates before merging to main
+2025-04-20 20:04:00 -0400	refs/original/refs/remotes/origin/main	10c7730fd30f9391aeea33e6ec9d2145210b4528	updated entry point for namespace
+2025-04-11 00:20:08 -0400	refs/original/refs/remotes/origin/master	1a41be118ba20affe5eba17adb3d29038257cb5e	update
+2025-03-14 20:07:04 -0400	refs/original/refs/remotes/origin/nb	466f81888c6f1e692bca33868635c20cac8f9bce	update
+2025-04-17 20:44:57 -0400	refs/original/refs/remotes/origin/v4	9aee667ca1934f380c93d5099b8b7766c9309389	Final updates before merging to main
+2025-07-11 08:56:24 +0000	refs/remotes/origin/HEAD	54465eb34f1ae21b1c2dbf7f49695c4e3846106a	ci: update .deepsource.toml
+2025-07-28 21:43:48 -0400	refs/remotes/origin/cleanup/root-project-docs-20250728	9f08167bc438bf54c27916a5db06330cd5558869	update: haive-games submodule reference to latest commit
+2025-06-30 08:19:32 -0400	refs/remotes/origin/coordination-redesign-backup-20250630-044246	d6e0913734c46256baecab7f833154c331c5386c	Documentation fixes and project updates
+2025-02-23 00:26:14 -0500	refs/remotes/origin/core	245fac41ac07da56d7758cc42bf4a60e3e5da32a	update
+2025-03-06 17:04:03 -0500	refs/remotes/origin/core_v2	ab59a445199fcb35a05c18fb2b7709699f7d593c	update
+2025-04-05 23:56:35 -0400	refs/remotes/origin/core_v3	37a0bebf8e95e535aeae59d4acad59418b99e927	Refactor imports and create simple agents for document extraction, QA generation, summarization, tagging, and query processing. Updated configurations and prompt templates for enhanced functionality.
+2025-07-28 16:15:18 -0400	refs/remotes/origin/docs/autoapi-namespace-fix-2025	618be97df219f65fd01be066d8f35562781bd1cc	chore: remove test file after successful hooks integration test
+2025-07-22 13:31:23 -0400	refs/remotes/origin/docs/fix-documentation-20250121	c1fda95e01f10468faa00913c51c522f6c1329ff	feat(docs): comprehensive documentation styling and structure overhaul
+2025-07-11 00:09:27 -0400	refs/remotes/origin/feature/fix_everythign	7a129113dff81172e18092cbe0e946b50fd4e644	empty
+2025-07-27 15:43:36 -0400	refs/remotes/origin/feature/fix_everything	58977bec0243d2ceb190e593ce827504f7692926	chore: add sgfmill dependency to pyproject.toml
+2025-06-16 12:47:31 -0400	refs/remotes/origin/feature/schema_v4	eecb13a3db1f0c102e900c907b9d060f694b8056	Add haive-mcp as submodule
+2025-05-20 02:59:25 -0400	refs/remotes/origin/feature/state_graph	458fa48c43481371800e0b66f512a7cc27dac74d	Updated .gitignore to exclude docs/_build and docs/source/*.rst except index.rst
+2025-07-06 15:20:32 -0400	refs/remotes/origin/fix/autosummary-module-detection	941b43fc1969dd59ddf6f35c0c6680ed0aaeee9d	current update - things working schema refactor
+2025-07-11 08:56:24 +0000	refs/remotes/origin/main	54465eb34f1ae21b1c2dbf7f49695c4e3846106a	ci: update .deepsource.toml
+2025-04-11 00:20:08 -0400	refs/remotes/origin/master	e7c07626e2047e2990ac603fa40af4aa6fb0ddd1	update
+2025-04-20 21:28:10 -0400	refs/remotes/origin/namespace-migration	f6904bccb9c2fedaff81cdf9835e11478b46acbd	chore: add 'resources/' directory to .gitignore for better file management
+2025-03-14 20:07:04 -0400	refs/remotes/origin/nb	e95e974cc5bf836b5ecd9004f839be162c8019cb	update
+2025-04-17 20:44:57 -0400	refs/remotes/origin/v4	c05fe20554a97f08134a1e12f80256a39c16038e	Final updates before merging to main
+2025-07-03 19:19:58 -0400	refs/remotes/origin/vzn/dav	46af06459e9f068394b8a6bd5f0cf83d87be3ded	added in sphinx gasllery and othe rrelated documentation packages
+2025-05-02 16:20:46 -0400	refs/remotes/origin/vzn/node_v2	086f545f0e542608e9a361db904fbafafc22d7ad	Update .gitignore to exclude project documentation directory
+2025-02-18 05:10:48 -0500	refs/replace/005cf467604b02274092d44ca314f2341e24023d	1efd7612c7bc94cfe8cb03c472bc8ffc1c406f9f	update
+2025-02-22 22:29:57 -0500	refs/replace/00edfc3d10fbaf81c5b39c2632f434b110c1cc7b	f566c0ccb4b8de77b8ba60e22e40e2553ea8db1b	update
+2025-04-15 04:35:23 -0400	refs/replace/0113e2e2a94a01380f58a0c183022d098a571c48	23580f6cc5aeecd9df530c56d477db7df69dbc5d	added tests for graphbuilder, siople agent, persistence test, schema composer, schema manager
+2025-04-05 23:56:15 -0400	refs/replace/04a49c9fc153d3ab63520787077537f98093bf0b	60b80f20d0ef84fa7499d14b92353b57471c9bed	updated import path for get_random_corporate_bs in test_corporate_bs_tool.py
+2025-04-17 23:50:12 -0400	refs/replace/0766a30fb1b0e77a3fc6ba430803214433528094	e5e94a5e9c3dc8307eba7b1324c0c1a5c1e2dd0b	Update all dependencies and submodule references
+2025-03-25 00:07:24 -0400	refs/replace/0983bc002369c30c2046895a08797c86dfabef9d	0663ca4b1e743e22df38ba884dfb16d1996c328c	update
+2025-02-19 02:19:30 -0500	refs/replace/0b13fe17463266a0406e79d4f5a9bfed7b9d2c75	a28abe2e428071b6e2eadd0814a663f36ecc75fb	Implement ReWOO Agent with Structured Planning and Tool Execution
+2025-02-19 02:20:30 -0500	refs/replace/0c207c59d42b492a6e4b671e9cc45932797d1e03	dcf43ba291e9a1674203fd9511b80a5a7ba3f11f	Add error handling and logging to runnable composition in AugLLMFactory
+2025-02-17 18:15:27 -0500	refs/replace/0ce0acaa5fb1bd7077436e2506d7ddc33b8c7f22	b919ae8a9927b3b798e87d5e38b02596a5b19259	Initialize FLSTAESR (Flexible State Expansion and Reasoning) module structure
+2025-03-06 12:44:10 -0500	refs/replace/0da1572530df6213eb7b96ccae0a46e5dd740ddb	ac9877e79bd00d9c1a3023b7ad6d1d4f4a0d2ccf	update
+2025-04-17 18:58:09 -0400	refs/replace/0e80aad60c6349cf64f61732a443be0caf275cf6	db7f6c7156b41767a533dab27a91470b066d3ab0	Add GitHub Actions workflows for caching, publishing packages, testing, and code quality checks to enhance CI/CD processes and project maintainability.
+2025-02-17 18:13:13 -0500	refs/replace/0f3e0152bead0c1482c00226f36d6b4e47e8fe01	84b82b44a3cdaafe9bed8c442d05b3c0d2e68d3e	Add Plan and Execute agent implementation files
+2025-02-17 18:12:58 -0500	refs/replace/0f6946e418bb32aa7e91aa6ee0d3ad9a0e7ada3f	5ded067fa8467d98518b087f924b634fdc64e22b	Add ReWOO graph agent implementation files
+2025-04-20 20:33:32 -0400	refs/replace/11cd1cf19c7d50c35cfc8cb5029dadf1722017a3	385abbb1a9333c5db14a161fd684f33473991dbf	updated .gitignore
+2025-04-08 20:46:22 -0400	refs/replace/1636fbfe3ad4ca016ed41eb851e17fab2e662cb3	fbe037ffc53cfbcb5dff2f025a55fd4c767122bf	Fix infinite loop in Mastermind game and add version tracking
+2025-04-08 12:26:00 -0400	refs/replace/19049641601a0be84b34eaffb0085d0c6e98020e	ee13a4ee34ec0d7700d6f760da26feeff8dcafac	Add GitHub workflows for daily LLM data updates, documentation build and deployment, and linting. Updated Python version and dependencies in workflows. Enhanced documentation deployment process with new action and improved structure.
+2025-04-20 20:28:28 -0400	refs/replace/192c8c831f0c4f3bcec982d5c943dcdae0e7375a	f1ccbf31b5ec6b135cf192fe535d8552a6293d40	updated namespace
+2025-04-17 11:03:18 -0400	refs/replace/1a5524c58343a12ad42f69660af20033d4123786	36e79306d23f080901ea5d5954c78ebcfa9fc8e3	Add comprehensive .gitignore file to exclude various Python artifacts, virtual environments, logs, IDE configurations, and build files, enhancing project organization and file management.
+2025-04-18 01:16:45 -0400	refs/replace/1a56a2ad73724fc607bafbf32c62cd872d2f391c	45467a1d4d05fcc2f5cc4b364145eaed089e7cc1	attempting to fix test action
+2025-02-17 18:12:31 -0500	refs/replace/1a90c1e71fdc7b348e654c4a9d473e832959df93	8d21a2b0552a59059bdfb40fcc29a5834b44ad04	Add base LLM configuration and provider support
+2025-04-17 19:13:49 -0400	refs/replace/1b6fabc13ff1c79b4c6a69038841813438bd234b	f183bfdc26e263f0d56d32b8142b2d5d3c35c151	Update submodule configuration: remove old haive submodules and add new packages for haive-core, haive-games, haive-dataflow, haive-prebuilt, and haive-tools. This change enhances project structure and aligns with the new repository organization.
+2025-04-20 20:04:00 -0400	refs/replace/1c5cd22e4ec52e5a18c87acb2e060c5251b68ec0	10c7730fd30f9391aeea33e6ec9d2145210b4528	updated entry point for namespace
+2025-04-17 22:59:05 -0400	refs/replace/1d285c38dc176bc82c17f85945c81fcaf193c472	2813d40fc0be2bd62d7f8c1a51633d3b82b037fc	Remove unintended nested repository
+2025-02-19 02:20:12 -0500	refs/replace/1d464b9f3645caddcc1fd39d2a7759e38fec91b5	60db41bf57554de14b2dbf8f07b4ec6a5a758684	Initialize Reflection Agent module structure
+2025-02-17 18:15:00 -0500	refs/replace/1dcc3612d5a6c60610a8753c7143cf88a94c135e	394c8cced206c6a6664d5fe6e9a6839e4935b9e1	Add configuration module with environment and settings management
+2025-04-17 18:58:18 -0400	refs/replace/1e5eb33ceb363ad8da51b655e61a3783f253fc73	38e4b296475e9f4fc806da02c741572d43a9e39c	Add .pre-commit-config.yaml to establish a comprehensive pre-commit hook setup for code quality checks, linting, type checking, and documentation enforcement, enhancing development workflow and project maintainability.
+2025-02-21 20:13:51 -0500	refs/replace/201ca1b8291f9bb64a50409526f066b7a262ec4c	0c84d40a2a89b36d40238b6fd84095b484c6024d	added submodules
+2025-04-20 21:10:21 -0400	refs/replace/214ba7fdad43254d04998fdb5388f04aeb1e48dd	d4b589212a8671f197535bd9f79d72a5f864c07b	chore: reorganize and update .gitignore to streamline ignored files and directories
+2025-04-17 22:59:05 -0400	refs/replace/2281f2f94d1f0f1e8dfeed8ef28eb45757675b67	2813d40fc0be2bd62d7f8c1a51633d3b82b037fc	Remove unintended nested repository
+2025-04-17 11:14:50 -0400	refs/replace/22ae732c1e88e8a63adf3803a51f735f888f9301	e5f836f9f1b838a74a11adcfcf0f2b30da7c24bc	Enhance .gitignore by adding a specific entry for Jupyter Notebook files, improving organization and management of ignored resources.
+2025-04-17 11:20:57 -0400	refs/replace/23894efbc02a92338cee8304e8dae08acfe13f73	a26a560aa408b656bddd584dc967a9aba0d79d29	Backup of uncommitted and untracked state on branch v4
+2025-02-23 00:26:14 -0500	refs/replace/245fac41ac07da56d7758cc42bf4a60e3e5da32a	7ef63f24629ab4590daae592dd7899a89290483f	update
+2025-02-17 18:16:59 -0500	refs/replace/24d656496ba5b81d59860afe59f77287a550f6ef	35782117bf5a903579d9ea91c0120272d033ff7c	Add project dependencies to requirements.txt
+2025-04-20 20:55:35 -0400	refs/replace/25b53f5baad224997be8df0ec1701d9e0cc67ae3	023c72ca65546fd2e1bd443bf705efb853adf838	Trigger GitHub Actions
+2025-04-17 22:44:40 -0400	refs/replace/2635862581938c3ac044f8058664e1820409f947	9fdd36a91fe1cd43ed6307591d150c58c558a33a	update
+2025-04-20 20:04:00 -0400	refs/replace/2672377bab7d007d2d758ccedac5fda21f76ca8b	10c7730fd30f9391aeea33e6ec9d2145210b4528	updated entry point for namespace
+2025-04-20 21:12:39 -0400	refs/replace/2ae2af306e95640368640c8d54dad74a36e317df	6836515ed1c7087e232d90e89fc329e2e4051222	chore: expand .gitignore to include notebooks, logs, JSON dumps, and LangChain cache
+2025-04-17 18:57:50 -0400	refs/replace/2af3cecfe125e8ce162ff7eca39627f8e3893b1e	2ce94facd0f9c72320df1c0fd98815a294ff1851	Add .codespellignore file and update .gitignore to exclude history files, improving project organization and management of ignored resources.
+2025-04-19 12:54:02 -0400	refs/replace/2d9ca6a0bae58e92a5e214034665ccd31ae61899	0260419f72cfdadce64441776625c0d3e5c96d5a	updated docs, coverage
+2025-04-19 23:31:46 -0400	refs/replace/2f40a164f4514aa5756069ecf69eb36dd10af9fd	bca5de64b3aaf4897885c352b43790ff42e83ac5	added docker workflow
+2025-04-05 23:59:55 -0400	refs/replace/2f4182fa78ce80777bfe308b04d64e8939957dea	3226464ad2457b923f31305f4e3504eb461c0dee	Refactor Checkers game implementation by enhancing state management, updating models, and improving agent configurations. Introduced a new state manager, refined move and analysis handling, and added comprehensive game state tracking. Updated configurations for better flexibility and integrated new prompt templates for move generation and analysis.
+2025-04-17 11:07:15 -0400	refs/replace/2f5dd1e6ec91b4fd2d006dd0bb02a94f7428a53c	424fec5e8a630af94dff9d8abfcfe9930d129b93	Add new dependencies to pyproject.toml: simsimd, mermaid, mermaid-python, ipykernel, langchain-huggingface, pytest-rich, and pytest-asyncio to enhance project functionality and testing capabilities.
+2025-04-20 20:58:38 -0400	refs/replace/323d5a0f3933da11e380cfb9bb03790cb7a159c3	43fadacb9683d349041c1ba1e8f365258b94c61a	chore: ignore model cache
+2025-04-20 20:29:55 -0400	refs/replace/333a6a3a330bccc0b7c897e4be9d5daa9f80d06b	c6b16cb5d9f2a0ccdab3ae9d39782989bc78e4ed	updated .gitignore
+2025-04-20 20:18:10 -0400	refs/replace/33c3fb77a724cb6a0db3c569ca0278ef38025a23	083680dae0cb1e0b94ba55f2e2fc9cc6fffd9c30	Set up root namespace package
+2025-04-18 01:09:03 -0400	refs/replace/33fb1fcf84bfb7d82599b36c9d3397e371f18055	33e0c82065edfc13d4de5fe2d4dfb5c263281295	updated dockerfile, precomit python vzn, github workflows
+2025-04-17 19:13:49 -0400	refs/replace/346a291943170c7808d01325d70592bff68fcb33	f183bfdc26e263f0d56d32b8142b2d5d3c35c151	Update submodule configuration: remove old haive submodules and add new packages for haive-core, haive-games, haive-dataflow, haive-prebuilt, and haive-tools. This change enhances project structure and aligns with the new repository organization.
+2025-04-19 12:54:02 -0400	refs/replace/36d5a38603daffeba56815c0101587a2532d95aa	0260419f72cfdadce64441776625c0d3e5c96d5a	updated docs, coverage
+2025-04-05 23:56:35 -0400	refs/replace/37a0bebf8e95e535aeae59d4acad59418b99e927	00fe53745751d910ef270f4e3abcdc539e8946fc	Refactor imports and create simple agents for document extraction, QA generation, summarization, tagging, and query processing. Updated configurations and prompt templates for enhanced functionality.
+2025-04-20 20:48:30 -0400	refs/replace/3816bd303e79c1595a643ad84b904db29a033bf8	08cdf9a1e954dcbc3112826f776659a6e88eaf39	Update haive-core submodule to latest commit
+2025-04-17 19:40:41 -0400	refs/replace/397043630ee08a995021063d21714b60c1d79ccd	b789a143191ba171c08a83f30029fab6ec3177dd	Add type checking script for CI pipeline
+2025-04-17 19:37:20 -0400	refs/replace/3a4e6bc0d3ba4221f937b2295c4a1e2f82a36d72	629e3cac601a2d5cd8bd5560263840062b4d9e41	Add migration scripts and analysis tools for Haive project structure
+2025-02-19 02:18:42 -0500	refs/replace/3d04fe9d84218c72bb1084fd87fe979ec5212a20	339f67af4aa3d680e36ff3d92fb3bc2f77ecbf24	Add Web Navigation Agent with Playwright and LangGraph
+2025-04-17 22:56:50 -0400	refs/replace/3d1075cc6ed64ec4ab770b2eaa02fd7cc4c96738	449e7c9c8c3a91ed9024f82bad245759fc894f1f	Update all submodules to track main branch instead of specific commits
+2025-02-17 18:14:24 -0500	refs/replace/3ee92227aad65068fece51546f39a3c99b40c6e9	95bf6e2ce61c5373ba0382e8bfaba500a598fba0	Implement Self-RAG graph agent node functions
+2025-04-17 23:45:27 -0400	refs/replace/3f49cdcf3514ba803875f39b433df87da82ce15d	4d9b2b965edeb42d9f0a58ddfeb3405a18135131	Update all dependencies and submodule references
+2025-04-18 01:16:45 -0400	refs/replace/3fb0c66937488341f71b6beabd3724dd95ccc9af	45467a1d4d05fcc2f5cc4b364145eaed089e7cc1	attempting to fix test action
+2025-04-09 14:27:53 -0400	refs/replace/46dbd71c455fb55f711310b7b2761f32a0621e66	0decb5d2e671e877c7970eb193a31b5877ad6fb1	Update .gitignore to include reports/ directory, enhancing file management by ensuring report files are ignored in the project.
+2025-04-17 22:53:46 -0400	refs/replace/499b7f595e843c7d6152b9875e4eff185f5f466f	06bac9f1e8b8230012dac79cda37d06756dcb7ca	Update haive-agents submodule to latest commit
+2025-02-21 18:20:37 -0500	refs/replace/4ab412be8a936ad130741bce503c5b32443f4cdf	b2f25e889d8bc6673e56ae38f6f5cc17d9ace36c	added basic sphinx docs for agents, flsteasr
+2025-04-18 00:05:54 -0400	refs/replace/4acbdedaf25035fa8aa9fc7f9285053a2ee5fb59	6dc23dfcb9b1e10f0b9f3790c88f6bf48970e5ec	Update all dependencies and submodule references
+2025-04-17 10:59:49 -0400	refs/replace/4d4a70bd8fbbda2fa3558ce292cd38b42dae8b8a	b4760c3974ecf5ce1c64c4dd2c653450ead2adfe	cred
+2025-04-09 13:33:14 -0400	refs/replace/4f0ca70f43f70aa05ca503bad116cc795022bda3	046c9429dc23d03ed107b9aa763cee8f01b170e0	Update .gitignore to streamline ignored files and directories, including Python cache, virtual environments, environment files, and IDE configurations. Added entries for Jupyter notebooks, Poetry, and various credential and certificate files for improved project organization.
+2025-04-17 23:42:14 -0400	refs/replace/4fa713899921baaaca876deca9ef29bae6370e0a	c7999b1df7fcd8e0cda408a7d96bd63a4807c1b3	Update all dependencies and submodule references
+2025-04-17 11:11:31 -0400	refs/replace/506aefa35e9292bb4b4e4bc3f0b0d6cb0e1355c9	30295eee472d2085ecfdb99246befc9ac40e4a95	Update .gitignore to include Jupyter Notebook files and checkpoints, improving file management and organization of ignored resources.
+2025-04-17 23:24:03 -0400	refs/replace/534f22a852ddd47371a4f0d3d5b045549301d578	6cbc882d51cf179f438f45b376b2e7c01c53150c	Update all dependencies and submodule references
+2025-04-17 20:34:05 -0400	refs/replace/54ea1dcea23795cd1e30b5111e59838c46dd3e95	3cfd34267b16a7de242383311b2ebf32cb9faecb	Refactor litellm_cli.py for improved readability and organization
+2025-04-17 23:42:14 -0400	refs/replace/55baba4a2c40656a7cd95427d3d70d70e562c630	c7999b1df7fcd8e0cda408a7d96bd63a4807c1b3	Update all dependencies and submodule references
+2025-02-17 18:17:54 -0500	refs/replace/57ee4b79a37cbbca9aa2737cd3e395890af3ddf6	d419e65433739d2aed800f5557149832c97fc97d	Add project initialization and CLI management files
+2025-03-19 15:10:19 -0400	refs/replace/58e48ee407bafbd34df9d553d70a0d9a6cc06129	9e390b79bd45b59d857e6f96f0b5d7a3ed8c041a	added doc folder, setup intiial conf.py
+2025-04-09 14:27:53 -0400	refs/replace/596941df016eb8877863e25890ea20a18078c1f0	0decb5d2e671e877c7970eb193a31b5877ad6fb1	Update .gitignore to include reports/ directory, enhancing file management by ensuring report files are ignored in the project.
+2025-04-17 18:57:50 -0400	refs/replace/5cf9a43a3d9cad28447c28b5a9a2f2d605d01268	2ce94facd0f9c72320df1c0fd98815a294ff1851	Add .codespellignore file and update .gitignore to exclude history files, improving project organization and management of ignored resources.
+2025-04-06 00:00:32 -0400	refs/replace/5f00d90567ec664dcf95b529d0b423059796b8a8	67c1e4d04d7a3505b986b0c80dc9b6b5855c0b94	Add project manager agent implementation with state management, task scheduling, and risk assessment. Introduced data models for tasks, dependencies, and team members. Added workflow nodes for task generation, scheduling, allocation, risk assessment, and insight generation. Included README for project documentation.
+2025-02-19 02:19:16 -0500	refs/replace/61bfa530a7a68022bfcdca5f80fc65df27be251a	c19bea3dc70e6f7626965479e39779d7892d09aa	Add base document source classes and graph database configuration
+2025-02-19 02:17:21 -0500	refs/replace/62e0660e8fd6c38d003c8df5809f5b9f7a848f5c	a960b9ff36f0abf25d94caf5b345338f6ec4e8f4	Add Graph Database Agent with Neo4j Integration
+2025-02-19 02:16:33 -0500	refs/replace/62e986eaee441f310b55cf8a3e0bc97810316f73	6e29bb5d0bf534209a1a4ce5fb9f06e2acb90641	Add Checkers game agent implementation
+2025-04-06 00:01:19 -0400	refs/replace/63eb56f49685f52a47f643044fd13ffd0a0d9484	5b3a3542240166d7f4a5a6beb7ebe8593b55340b	Refactor import paths across multiple agent modules to align with the new directory structure. Updated imports for visualization utilities, configuration settings, and tool utilities to ensure consistency and maintainability.
+2025-02-22 00:21:45 -0500	refs/replace/65083151948284431fc4087fe47bc49f99c02910	69adf6e151c2614d26e393655380454686d3251e	added weather loader, but I need to debug and add api to the config
+2025-04-06 00:00:14 -0400	refs/replace/65ec8b0484c273e83a2bebd43db63aee5c80739c	ebd4e0fe5eea85d92e46f269240e919c35a76d46	Refactor Dominoes game implementation by enhancing agent functionality, improving state management, and updating models. Introduced new methods for player moves and analysis, refined game initialization, and added comprehensive logging for better debugging. Updated configurations and integrated a dynamic workflow for game execution.
+2025-02-19 02:22:28 -0500	refs/replace/66f391761237bfd86f32a03ffa1c5b1765e76d36	bc8def215b9a36dc790f3aa2cab2a3c010c252ef	Add Web Navigation Agent with Comprehensive Web Interaction Tools
+2025-04-19 12:55:37 -0400	refs/replace/67426fc9b0e86dd93a815f014de0bc04379c8242	1f94cf05753f0e34d688df53339bfd917fe0b53b	updated test workflow
+2025-04-11 00:20:08 -0400	refs/replace/680a862fe0b354d6e85812cdc7052f3380038f6c	1a41be118ba20affe5eba17adb3d29038257cb5e	update
+2025-04-18 00:59:01 -0400	refs/replace/683f883e94b38249c4c903352a070036b6fad63f	bf101d20bf308abd3b71df4036bd83b2cace5644	🔧 Fix submodule linkage for haive-agents and haive-core
+2025-04-17 20:44:57 -0400	refs/replace/6a9edae4ee271691c3f63ec4150936387e330f2e	9aee667ca1934f380c93d5099b8b7766c9309389	Final updates before merging to main
+2025-04-09 14:11:49 -0400	refs/replace/6aaa01a6d55a412dec0582cc189ae29e140127e9	7186f16b79a33f3b88029c1c1c768dff133b1a38	Update .gitignore to include .log files and .ipynb_checkpoints directory, improving file management by ensuring additional temporary files are ignored.
+2025-03-19 15:10:02 -0400	refs/replace/6abcc7eaff3311df7d9f85bfc2140360d19523e2	b7bcd66c8fa1b87f1995c4c0b07c44b4ef1253f9	added noxfile
+2025-04-18 00:55:40 -0400	refs/replace/6cb86941316c4da542aa18ff6ca4285f497b8c38	49c61005ded7ae6cb7147fffe5d5d77749895af2	Update submodules
+2025-02-21 20:06:02 -0500	refs/replace/6cbe661de0803766ba6324756cb7992d4fc255e2	f075ed06e195ba9a41fe5eb11439e5efd4f23ac3	Removed existing directories from index to add submodules
+2025-04-19 13:02:27 -0400	refs/replace/6d60ece592a142d94b764ff929475b43d03f8df3	f03be19f18a7fce280c4f51283c7e8bcb102c8b8	Add noxfile.py for docs
+2025-02-21 20:04:04 -0500	refs/replace/6d84b1bbdbef9487c16532a9e70f94c004a60d1c	e796f72492485da0859d01e6daa09b847a4f50cf	Removed directories from index to add submodules
+2025-02-21 20:06:17 -0500	refs/replace/6e598306dd303b112b41972e3d83bae9b0df095c	e3ff5b4261a3efb1c717411bc7c71c9451cbe661	Removed existing directories from index to add submodules
+2025-04-20 20:22:48 -0400	refs/replace/6e7169f3d82f7077467fce7b827e72bc0337cc7d	b6dc617b7dc31652439f468d45a3ce5296f39b01	updated poetry adction and coverage workflow
+2025-04-17 20:03:20 -0400	refs/replace/6f4eaf8d5143f6804fc0b3ae316811599ebfdf6c	e0ce75be483118a3c54a16176ac0ac89ecd63b06	Add scripts for dependency and registry checks
+2025-04-17 19:14:35 -0400	refs/replace/6fcbec7c1073b944342458fb4c7989c6c02193af	27c5e94366498f836d9b24355fdd95bde4c1a58c	Update .gitignore to include entries for sensitive files and secrets, enhancing security by preventing accidental commits of sensitive information. Remove multiple Jupyter Notebook files to declutter the project and improve organization.
+2025-04-17 20:09:41 -0400	refs/replace/6fea5319408200428339e878838e537aeac9c252	cf9ecbc5e15fb56fd1ea40269d931b1b9a64994c	Add pytest configuration file
+2025-04-17 11:11:31 -0400	refs/replace/708b5f73b7b35d21ca5f3c68ae984b268ac71a65	30295eee472d2085ecfdb99246befc9ac40e4a95	Update .gitignore to include Jupyter Notebook files and checkpoints, improving file management and organization of ignored resources.
+2025-02-17 18:13:56 -0500	refs/replace/71ced3b7283674c26dff212a2843a4830ff39e30	f6828db0fb2d659ccddb8e10a3adfaa80a4df64b	Add Self-RAG graph agent implementation files
+2025-04-15 04:35:23 -0400	refs/replace/73d034525c29b746546f38c74eaae33480fc6179	23580f6cc5aeecd9df530c56d477db7df69dbc5d	added tests for graphbuilder, siople agent, persistence test, schema composer, schema manager
+2025-02-17 18:16:06 -0500	refs/replace/764c63c855ec3aae3be4e43cdae009ad8c7ccaa2	72f2f58156ce4c5d328d7fee0b0d9c55afeae1d3	Add utility modules for common project functionality
+2025-04-19 13:02:27 -0400	refs/replace/766b959ec326a8518a6bf405a87970d15effcdd7	f03be19f18a7fce280c4f51283c7e8bcb102c8b8	Add noxfile.py for docs
+2025-04-17 23:45:27 -0400	refs/replace/7cadf917d896cdd4d2ddfa4056c9e61ed173c44f	4d9b2b965edeb42d9f0a58ddfeb3405a18135131	Update all dependencies and submodule references
+2025-04-20 21:05:16 -0400	refs/replace/7fe68235a6779280d75b3bee071805636b233cfb	641b1be6808c578866b21629097ba947fcdc97e2	chore: sync .gitignore to submodules and clean .pytest_cache
+2025-04-17 20:34:05 -0400	refs/replace/8191d59ddc569a8ff9d0815206237eab7df3ae01	3cfd34267b16a7de242383311b2ebf32cb9faecb	Refactor litellm_cli.py for improved readability and organization
+2025-02-24 20:19:46 -0500	refs/replace/8273ea22f45dd8da69bff996db59c0c0eeab7b9a	0a0694059f45f9b2a3261d3cd7cd421fff5530c8	update
+2025-04-17 22:55:48 -0400	refs/replace/82e49945271fbb643265726bc0fb25d62e1f0696	6f18c43aa973da7ed24ce567e75d58c94273f9b2	Update haive-agents submodule to track main branch
+2025-04-17 23:29:01 -0400	refs/replace/83f6b56e53a26eea819b15102e10c630faf9ba70	229f685d0188ef67b7253e696a4af918c1832b10	Update all dependencies and fix PyTorch dependencies
+2025-04-09 14:25:20 -0400	refs/replace/8602568e61bec428cfa43dfbe4eb3a5c2f6d1b0d	3c45c16c6763106ce6eda72d550ee2622f4bc6e1	Add FastAPI, Uvicorn, Websockets, and Supabase dependencies to pyproject.toml for enhanced web application support.
+2025-04-17 19:40:41 -0400	refs/replace/881c971165c4ea0e944d555cd8c06071b66644f3	b789a143191ba171c08a83f30029fab6ec3177dd	Add type checking script for CI pipeline
+2025-04-20 20:22:48 -0400	refs/replace/8984512cbbd9a1cfbe3c2931d7c629245ca426f0	951c0cec199106b954278463fd9c98e1eda1dc6a	updated poetry adction and coverage workflow
+2025-04-17 20:03:20 -0400	refs/replace/8baa7404205bdac59548255a582d13f1f5d5df2f	e0ce75be483118a3c54a16176ac0ac89ecd63b06	Add scripts for dependency and registry checks
+2025-04-19 12:49:07 -0400	refs/replace/8ca9f4b3bce8b830ce6bf3cdebfb118fc1c11d16	010aa17c1ec7a1263fe511945d73fbff01045c1a	updated poetry info aciton
+2025-04-17 11:03:18 -0400	refs/replace/8cb503fc522ed4bd4dc2fdf6bef2d96148f1b236	36e79306d23f080901ea5d5954c78ebcfa9fc8e3	Add comprehensive .gitignore file to exclude various Python artifacts, virtual environments, logs, IDE configurations, and build files, enhancing project organization and file management.
+2025-02-19 02:19:58 -0500	refs/replace/8d96bef618052eefdbd71cde1965aa032a91b15c	4771ce3d50dfd8db3e767d4eb246747732a5aa61	Add Neo4j configuration and update project directory structure
+2025-04-17 22:58:22 -0400	refs/replace/8dbab8e7c12d410f3bfc51bfd1b1eee03d4d6692	4f50a618ff121b257c03f0301f0e5ba3ca9edae7	Update submodules to latest main branch commits
+2025-04-17 22:58:22 -0400	refs/replace/8dc71587ca88c52bd7208c6eaf90217bca982f8f	4f50a618ff121b257c03f0301f0e5ba3ca9edae7	Update submodules to latest main branch commits
+2025-02-19 02:18:15 -0500	refs/replace/8e2fac5821a2773c6f02327a0fc14e1bdc672186	a6d345ec7102efb65ee5e87f0703604d3ca8ebb3	Add LLM Compiler Agent with Task Scheduling and Parsing
+2025-02-21 20:04:59 -0500	refs/replace/921e2a7e0cb5a2e5cfe849b054efbb8928730cd9	6a5a4c542e6a5b6a0e455c6dae9896ac2b6b4261	update
+2025-04-17 22:55:48 -0400	refs/replace/9506d32599a93c79c0d366afcd8aa76dbb9bb2a8	6f18c43aa973da7ed24ce567e75d58c94273f9b2	Update haive-agents submodule to track main branch
+2025-02-17 18:16:44 -0500	refs/replace/97bf1f4f67ddbc95981d4cd50a272bed600d20a0	2dc9628db8095bc24e8590094951d9da4adbe82d	Add vector store and retriever base configuration
+2025-04-17 18:58:50 -0400	refs/replace/98b9537db9e4961f1df8f45d2db1b1f3a1519524	6ef37d5bbb86d0065669e2cf4458deed14fac2f0	Add unit tests for NodeConfig class in test_node_config.py to validate initialization, engine resolution, serialization, and mapping functionalities, enhancing test coverage and reliability of the graph node configuration.
+2025-04-20 20:29:55 -0400	refs/replace/9a06a7ab4235a7d4abd6f89135d7db360a70e310	daf8422dca74beaa6e23fed6cf10e9904298d1b5	updated .gitignore
+2025-04-20 20:40:35 -0400	refs/replace/9a79d6736c3a6aa2fe545800c380696c04f6a2f0	ed0a6055dd84c24dabcaf66e74c595a058be7bfa	updated .gitignore
+2025-04-17 20:09:41 -0400	refs/replace/9b406524b5858626d261a99c0a7a5e626b309714	cf9ecbc5e15fb56fd1ea40269d931b1b9a64994c	Add pytest configuration file
+2025-04-20 20:35:09 -0400	refs/replace/9bc8605d03743b98ed9d16e02a80ffe614594a28	cae00218ea06645940bc4664d49ad953eade383a	updated .gitignore
+2025-02-19 02:20:44 -0500	refs/replace/9c42b804196815b48170fc820ec8ac9b7cbf2a1e	4b0a8c8f8e2b5685f8701483329f7c45fe6688c9	Add Math Tools for LLM Compiler with Numerical Expression Evaluation
+2025-04-17 11:05:07 -0400	refs/replace/9ca40425f3e0639103bd748a2f359451e9581388	2c69831a617f9878fcafb799cce7e290e1dc5b60	Revise .gitignore to improve organization by categorizing ignored files, adding new entries for IDE configurations, logs, temporary outputs, and cache directories, while removing outdated sections. This enhances project cleanliness and file management.
+2025-03-18 00:53:12 -0400	refs/replace/9cbeb2a4c82ad5a1cec26eef8e460c1f406cd45c	ec5abf27eacd8b702785baa2bcab1aa02f9c5585	updated .gitignore to include resources
+2025-04-17 23:11:50 -0400	refs/replace/9cd120ce85286957302a86c5c53f23187469654d	ea1ff89d8cd5093ca6ba34ff54149dbb2ce4731d	Update submodule references
+2025-04-20 20:35:09 -0400	refs/replace/9d58331d9abef79ee54d8e0a82ad0f5951a0a2db	4a4e39ae538e9c3b00297352790e8118c67bee58	updated .gitignore
+2025-04-17 20:11:54 -0400	refs/replace/9dca1a131b2db9f321b61a8caf7500937c29b6ce	efb21c4ba26efafa6c9fb1c3b1a0d17bb15c407c	Add tests for Monopoly game components
+2025-04-17 23:29:01 -0400	refs/replace/9f9223a9c5c9ea19e26f4c66cdaebd2363fa036f	229f685d0188ef67b7253e696a4af918c1832b10	Update all dependencies and fix PyTorch dependencies
+2025-02-17 18:11:33 -0500	refs/replace/9fcaab6b02d4af7414d82762029b169d3870a3cb	8654587c50bc84ee5d7fe1eea775db7d69fb3978	Initial commit
+2025-04-08 20:04:22 -0400	refs/replace/a3568c70021342cc93fc9c96a6d8831261dd123e	590664d799a3d7ac17b326fef59c7d4d974c5cae	Add background process management, execution logging, role-based access control, remote command execution, and secure shell execution features.
+2025-04-19 13:00:11 -0400	refs/replace/a358bb89ad4dab3d38ad3b210dbee8c2ab5452d9	6b6ac0d2a5563b11a9d75d017bce162762786d1f	updated workflows with static name
+2025-02-19 02:17:05 -0500	refs/replace/a3689937bd8363cc79704667e0642915b48ff43e	4153b547dc6a1ae639a9df2f48357a37b4f65639	Implement Go Game Agent with Strategic AI and LangGraph Workflow
+2025-04-17 20:06:25 -0400	refs/replace/a379989a027d717e180ed59ac3ca336a9a2c11f3	94d25da8731f8e80166b19623317406a46dfdc7d	Update submodule commits for haive-agents, haive-core, haive-dataflow, haive-games, haive-prebuilt, and haive-tools to latest versions. This change ensures all packages are aligned with the most recent updates, enhancing overall project consistency and functionality.
+2025-04-17 22:56:50 -0400	refs/replace/a47a5a309e0862271fe542ef1681f10426bc8148	449e7c9c8c3a91ed9024f82bad245759fc894f1f	Update all submodules to track main branch instead of specific commits
+2025-04-11 10:45:43 -0400	refs/replace/a497379ff4076ed24f87d12043ee6379e859fe26	f32692658a614c7275fcd4e5b73342b3871e24f9	v4
+2025-02-17 18:12:17 -0500	refs/replace/a53dca10fb41df6f5274fb759c7881d27eb37a93	aa04093b4f97a2e0bf42fe48dcd8d5810157e4a1	Initialize project structure with configuration files
+2025-04-17 18:58:18 -0400	refs/replace/a5fd188f0a2a29b27d23054f9bb5c6688ddb0487	38e4b296475e9f4fc806da02c741572d43a9e39c	Add .pre-commit-config.yaml to establish a comprehensive pre-commit hook setup for code quality checks, linting, type checking, and documentation enforcement, enhancing development workflow and project maintainability.
+2025-04-17 20:11:54 -0400	refs/replace/a60225fd09912b8adc424cd775747aacd3c60aeb	efb21c4ba26efafa6c9fb1c3b1a0d17bb15c407c	Add tests for Monopoly game components
+2025-02-19 02:19:44 -0500	refs/replace/a6417ef40d2cd06f40a0df1609d873fdb6d88677	f82cf13d3fd51da7ace0d1c97d1cd8cf0514dacf	Add Web Navigation Utility Scripts for Element Marking and Parsing
+2025-03-21 19:46:52 -0400	refs/replace/a79392ab9f5192db3e031dc1ad6912d6c5770995	f7b5a9751307565385a1c2c58069a873b0dcc67d	added initial cli
+2025-03-06 17:04:03 -0500	refs/replace/ab59a445199fcb35a05c18fb2b7709699f7d593c	7786028a99ab37bc32dc5a649a3e7b8769c98ee2	update
+2025-02-19 02:16:43 -0500	refs/replace/ad989ebcf7af468d633bf2739928f0c9651614df	255a8321c60b729255fd6ccf39962c3178210585	Refactor Chess Agent with Enhanced State Management and Workflow
+2025-04-17 23:24:03 -0400	refs/replace/adb764633150c089b26863ff7b33f063356f5ddd	6cbc882d51cf179f438f45b376b2e7c01c53150c	Update all dependencies and submodule references
+2025-04-17 19:14:35 -0400	refs/replace/af586e8d5aac316c6c347519e5679a3336954473	27c5e94366498f836d9b24355fdd95bde4c1a58c	Update .gitignore to include entries for sensitive files and secrets, enhancing security by preventing accidental commits of sensitive information. Remove multiple Jupyter Notebook files to declutter the project and improve organization.
+2025-04-17 13:29:28 -0400	refs/replace/b24eb885dd7082f8ec559e17b275117135752902	d5a70d71aac383dee1955e212f3a803cd99c94e4	Refactor Jupyter Notebook files to standardize nbformat version and update Python kernel display names. Remove deprecated agent backup files and clean up unused agent configurations, enhancing project organization and maintainability.
+2025-04-09 13:54:28 -0400	refs/replace/b250015b2e6f8b594f5b7278719e5e420750825c	97d0e860dd9d85afa625452e934058d66cb0c740	Update .gitignore to remove .env.example entry, ensuring only relevant environment files are ignored. This change simplifies the ignored files list and aligns with recent updates to environment variable management.
+2025-04-19 12:54:39 -0400	refs/replace/b2745d6c5a05ea7e5b3d4efb885114847fcb9ebe	ddd8d0f43a9c07cf330b0427473465ddfb2255d1	updated release
+2025-04-17 23:11:50 -0400	refs/replace/b4d7521e5acc758282b495383c91caf44b0bd60c	ea1ff89d8cd5093ca6ba34ff54149dbb2ce4731d	Update submodule references
+2025-04-05 23:57:46 -0400	refs/replace/b853358658ca1acbb02b1f9ccc8578f53300cc54	af425eb68ff0e30c4367be04bd50dbe7131b1c14	Refactor Battleship game implementation by enhancing state management, updating models, and improving agent configurations. Removed deprecated augmented LLM configurations and streamlined prompt templates for ship placement, move selection, and strategic analysis. Added comprehensive game state tracking and improved error handling for game phases.
+2025-04-17 19:42:48 -0400	refs/replace/bb1a6030aaee2f3a1de0041cbe126d24c115a986	540f96bbdb6d19cb092ed6902b854799357688e8	Remove multiple KYC report files for Bitfinex, streamlining the documentation and eliminating outdated or redundant reports. This cleanup enhances project organization and ensures that only relevant reports are maintained.
+2025-02-19 02:20:52 -0500	refs/replace/bb40991e932be3737b46f7d5759c306b93472bab	da7ce25babff8402b761772a1645951688fd1869	Initialize Reflexion Agent module initialization file
+2025-04-05 23:58:13 -0400	refs/replace/bb4b2dc64de4df239c9e732af0e198a50427a753	0397a895f46515021d613d7adde9dc864af299a4	Add new dependencies for SQL parsing, PDF processing, and PostgreSQL support in pyproject.toml
+2025-02-19 02:20:59 -0500	refs/replace/bb8c11d9a3f02712c4c05e7d16d1f937d7a99ed9	b2f76d07a1b5328434a7cdccc107d2ca94f7d40a	Update graph visualization utility to use configurable image directory
+2025-04-17 22:52:54 -0400	refs/replace/bd455b3ee987343ff8637771f93c213445aabb95	23f1c826979d183f238aa30d805b58a1406e2376	Update haive-agents submodule URL to pr1m8 repository
+2025-04-17 20:44:57 -0400	refs/replace/c05fe20554a97f08134a1e12f80256a39c16038e	9aee667ca1934f380c93d5099b8b7766c9309389	Final updates before merging to main
+2025-04-17 11:07:15 -0400	refs/replace/c0e70eb3993d9aa4f6b76733d81770d831c9bd3b	424fec5e8a630af94dff9d8abfcfe9930d129b93	Add new dependencies to pyproject.toml: simsimd, mermaid, mermaid-python, ipykernel, langchain-huggingface, pytest-rich, and pytest-asyncio to enhance project functionality and testing capabilities.
+2025-04-18 01:13:04 -0400	refs/replace/c10bfcb08ac1be1e9ce0ca598c71fccbf9e46e66	7f3daf5735f32bc6407d137c81f69a1f31b224ef	trunkj attempt2
+2025-04-17 10:59:49 -0400	refs/replace/c1c22ac07d7895142c0007fc7573ab7ef4181925	b4760c3974ecf5ce1c64c4dd2c653450ead2adfe	cred
+2025-04-18 01:13:04 -0400	refs/replace/c3ea617e0f344092e099ff715231253a74c8ab4c	7f3daf5735f32bc6407d137c81f69a1f31b224ef	trunkj attempt2
+2025-02-17 18:15:15 -0500	refs/replace/c3f341ed7421347190dc74b1cbf56a7e95184184	c52bfd28ba39fedf138fde11349bacac628fe91f	Add LATS (Look-Ahead Tree Search) agent implementation
+2025-04-17 11:14:50 -0400	refs/replace/c463e43115ddb83bb04d14cce4717a569af225c3	e5f836f9f1b838a74a11adcfcf0f2b30da7c24bc	Enhance .gitignore by adding a specific entry for Jupyter Notebook files, improving organization and management of ignored resources.
+2025-04-05 23:58:08 -0400	refs/replace/c51da14dbd05d68d5ae1b5886795b65b3c6caa37	45ab5f6bdbb6bc819303a33e4b0e3abc254221bc	Remove compiled Python bytecode files from the utils cache directory to clean up unnecessary artifacts.
+2025-04-17 20:06:25 -0400	refs/replace/c52721f786026f2a056202e3ffa9f60849fef43d	94d25da8731f8e80166b19623317406a46dfdc7d	Update submodule commits for haive-agents, haive-core, haive-dataflow, haive-games, haive-prebuilt, and haive-tools to latest versions. This change ensures all packages are aligned with the most recent updates, enhancing overall project consistency and functionality.
+2025-04-18 00:55:40 -0400	refs/replace/c636e842f3bc8d0dbf0997d00f8ee16af0fe3122	49c61005ded7ae6cb7147fffe5d5d77749895af2	Update submodules
+2025-04-17 11:20:57 -0400	refs/replace/c6dea8bc8a00914951d8d33237385e14ab24960d	a26a560aa408b656bddd584dc967a9aba0d79d29	Backup of uncommitted and untracked state on branch v4
+2025-04-17 18:58:50 -0400	refs/replace/c73e6ffb8794acc408ea306eaf2ec06ee27cfc00	6ef37d5bbb86d0065669e2cf4458deed14fac2f0	Add unit tests for NodeConfig class in test_node_config.py to validate initialization, engine resolution, serialization, and mapping functionalities, enhancing test coverage and reliability of the graph node configuration.
+2025-04-06 00:01:05 -0400	refs/replace/c9535d46d878aaee56c85b0af5a25999f6da183e	0d4652fd58f1d3bf2cb91d7301b9d97293ec0029	Add recursive tree planner agent implementation with state management, task execution, and reflection capabilities. Introduced models for reasoning modules, execution plans, and reflections. Added configuration for agent setup and integrated multiple engines for module selection, planning, execution, and final answer generation. Included example usage for demonstration.
+2025-04-09 14:11:07 -0400	refs/replace/cd98be2b87dd359c9f579bf59f84034daf475876	f6dcd00eca9f03a77d3a1c34fb7b797d1057fe5c	Update .gitignore to include .pkl files and the scratches/ directory, enhancing project organization by ensuring temporary and unnecessary files are ignored.
+2025-04-17 19:42:48 -0400	refs/replace/ce276f100949c4e2a892e935bf0e2adc4bce785d	540f96bbdb6d19cb092ed6902b854799357688e8	Remove multiple KYC report files for Bitfinex, streamlining the documentation and eliminating outdated or redundant reports. This cleanup enhances project organization and ensures that only relevant reports are maintained.
+2025-04-20 20:28:28 -0400	refs/replace/d0320dd0dfb8a7bff9baaf6a4fd94796737e2630	3ec4751918cac7ccb5d3addc446a6128cabba817	updated namespace
+2025-04-17 20:09:19 -0400	refs/replace/d0b6b7301a561dfad6ea20f3fd856d82f117381c	f01bd3741890201ad3d3da943ee53de11ee8cecf	Update .gitignore to include additional files and directories for exclusion, improving project organization and preventing unnecessary file tracking.
+2025-04-09 13:54:28 -0400	refs/replace/d0e15b53489d0552eac9fbd7d61f162493e1ef8c	97d0e860dd9d85afa625452e934058d66cb0c740	Update .gitignore to remove .env.example entry, ensuring only relevant environment files are ignored. This change simplifies the ignored files list and aligns with recent updates to environment variable management.
+2025-02-19 02:19:02 -0500	refs/replace/d0e6869084c7d3710001be660599084162ce706c	3e25e89e936ffac84e1bf4e532c5169cd690f30f	Add dependencies for graph, documentation, and game-related libraries
+2025-04-17 11:05:07 -0400	refs/replace/d169638da96b17f9a1cca89872a3e208980b14d3	2c69831a617f9878fcafb799cce7e290e1dc5b60	Revise .gitignore to improve organization by categorizing ignored files, adding new entries for IDE configurations, logs, temporary outputs, and cache directories, while removing outdated sections. This enhances project cleanliness and file management.
+2025-04-19 12:55:37 -0400	refs/replace/d33522ba963a3fbd8ea8d2b741a1c418bb70bbd6	1f94cf05753f0e34d688df53339bfd917fe0b53b	updated test workflow
+2025-02-21 18:34:51 -0500	refs/replace/d546485c36beba60dda5a868d1e5dcd908e6d06b	4caa7c03a6065e7be7f0764a45e3fa6f4f75f265	enhanced documentation
+2025-03-19 15:11:15 -0400	refs/replace/d5d5970be1a073f365b50b562c9a71392971e22b	249cf9281e851da4f5199e3d089d0d90306e0e36	added .readthedocs.yaml
+2025-02-17 18:38:51 -0500	refs/replace/d97b59b96d8e91c1b88300342530af21d6585fb1	24658df0226c58d5b10daeb649b55fb1a5570e54	Add Tavily search tools for advanced web research and content extraction
+2025-04-17 22:52:54 -0400	refs/replace/d996756b65eb60c02494063cdfe67f32dc0dd84d	23f1c826979d183f238aa30d805b58a1406e2376	Update haive-agents submodule URL to pr1m8 repository
+2025-04-20 20:18:10 -0400	refs/replace/dd53ad6f46339776464a717864e9fc5a2b634ac4	d3fd4e1d7bccd19ce187b9e9af7a7229fc170ce8	Set up root namespace package
+2025-04-09 13:54:16 -0400	refs/replace/de27bc3de72c0977e93f7224431ec4931d990e1f	5cec444e1053e9563ba8ab8987e6c3adc88945b5	Update .env.example to remove sensitive information and provide empty placeholders for environment variables. This change enhances security by ensuring no credentials are exposed in the example file, while maintaining clarity for future configuration.
+2025-03-19 14:17:38 -0400	refs/replace/deb96bdb16822869f4f90c89d0c989aef7c8893c	eb6e19bc73e3a2e9f68cda1231f77014dfed9b93	update
+2025-04-17 20:05:01 -0400	refs/replace/df2362711b4d5c1e27f086d5d5beb818c0091e2b	0b79e59e75956099671a749fb28d69e14019fe51	Update poetry.lock and pyproject.toml for Haive framework dependencies
+2025-04-17 22:44:40 -0400	refs/replace/e1e82dc7eeced71856877bc2dd2665ae2d6d2462	9fdd36a91fe1cd43ed6307591d150c58c558a33a	update
+2025-02-19 02:18:04 -0500	refs/replace/e21b3f346169b609da165f0f578392ae175dd25a	0d7f7511514f7a396f3f952e35b0e004d99e9693	Implement LATS (Learning and Adaptive Tree Search) Agent Architecture
+2025-04-17 22:53:46 -0400	refs/replace/e2b87b2dfc60fe98aad05a7b02c321e4026db11a	06bac9f1e8b8230012dac79cda37d06756dcb7ca	Update haive-agents submodule to latest commit
+2025-04-18 00:05:54 -0400	refs/replace/e3db3f2d2ac385b6b600709431695de4d0306861	6dc23dfcb9b1e10f0b9f3790c88f6bf48970e5ec	Update all dependencies and submodule references
+2025-02-18 19:53:43 -0500	refs/replace/e42b8b828f22a2780ca191e912e4d4471ba3daaa	8c1e69821878a60d44128b3fd53a0c8daa4a8b9a	agent games agent-group
+2025-04-17 18:58:09 -0400	refs/replace/e612a21df88d508b60c186e23dac6934fec6f66b	db7f6c7156b41767a533dab27a91470b066d3ab0	Add GitHub Actions workflows for caching, publishing packages, testing, and code quality checks to enhance CI/CD processes and project maintainability.
+2025-04-08 19:49:11 -0400	refs/replace/e6694f6473be3192c0490bbc98e14dc17ab7dd31	2bc10aebcebb436dd8aff4ca990df8b5f0e6d125	Remove multiple toolkit files to streamline the project structure and eliminate unused components. This includes the deletion of toolkits for Alpha Vantage, Amadeus, Azure AI Services, and various other integrations, ensuring a cleaner codebase and improved maintainability.
+2025-04-11 00:20:08 -0400	refs/replace/e7c07626e2047e2990ac603fa40af4aa6fb0ddd1	1a41be118ba20affe5eba17adb3d29038257cb5e	update
+2025-02-17 18:16:20 -0500	refs/replace/e95075e511c6631333774ec755a0469f50e1b9ea	8666812633fd17a4c7298d8b9b751910b4e26fa1	Initialize haive package with empty __init__.py
+2025-03-14 20:07:04 -0400	refs/replace/e95e974cc5bf836b5ecd9004f839be162c8019cb	466f81888c6f1e692bca33868635c20cac8f9bce	update
+2025-04-17 22:57:17 -0400	refs/replace/ea09819d717c38a3050709ca856a748700fd3580	0cc4d55727baa6573ab8017a910a5291b38fa797	Remove unintended nested repository
+2025-04-18 00:59:01 -0400	refs/replace/eb038cdb815fd8ffb234b8b7e56b8ff806a29cdc	bf101d20bf308abd3b71df4036bd83b2cace5644	🔧 Fix submodule linkage for haive-agents and haive-core
+2025-04-08 12:25:48 -0400	refs/replace/ebb3b6dbf953467e96a23a955b885fcbf43a07d7	3ffc2f680c027cbc46ca3cfb1bb00bc9e7b033e7	added .dockerignore and dockerfile
+2025-04-20 20:33:32 -0400	refs/replace/ed63c3e0115c1e039adf8c9ba5faf9f37bdffe39	a63ce07410dec88e55e1315492dccb6f85f10650	updated .gitignore
+2025-04-17 23:50:12 -0400	refs/replace/ed7232c7d558dc4fa08d5f6a4807bff39eb24bdb	e5e94a5e9c3dc8307eba7b1324c0c1a5c1e2dd0b	Update all dependencies and submodule references
+2025-04-19 12:49:07 -0400	refs/replace/ee60e44d2f00fcc7322af334b039f24613ae8ba2	010aa17c1ec7a1263fe511945d73fbff01045c1a	updated poetry info aciton
+2025-02-17 18:15:57 -0500	refs/replace/f04faa3c80bce4de6d926a7562ea3a08ca462068	55cfb7cf93b98d35fbc36a3bec82282ea33a22cd	Add Summarizer agent implementation files
+2025-04-19 13:00:11 -0400	refs/replace/f0b88e135a2d2f37749d66602b1bcd790e1041c8	6b6ac0d2a5563b11a9d75d017bce162762786d1f	updated workflows with static name
+2025-04-19 23:31:46 -0400	refs/replace/f0b980f045cc3bf150a4210bae8de06182e864dd	bca5de64b3aaf4897885c352b43790ff42e83ac5	added docker workflow
+2025-04-17 13:29:28 -0400	refs/replace/f174e4e324d9948e0d67d6ec02b0fb83b42a5caf	d5a70d71aac383dee1955e212f3a803cd99c94e4	Refactor Jupyter Notebook files to standardize nbformat version and update Python kernel display names. Remove deprecated agent backup files and clean up unused agent configurations, enhancing project organization and maintainability.
+2025-02-17 18:18:25 -0500	refs/replace/f253e57abadc92459b0a40c73a7d94e27d5beeb9	c558ae7c350d0648f803dd45f1c0bd94f5d30b5b	Add comprehensive .gitignore configuration
+2025-04-17 20:05:01 -0400	refs/replace/f26e2a4d499c13bb3ad60a609f52ae6a25a0c494	0b79e59e75956099671a749fb28d69e14019fe51	Update poetry.lock and pyproject.toml for Haive framework dependencies
+2025-03-19 15:36:34 -0400	refs/replace/f3394a5c7806d050c4464a183290a97717ab4e8e	30810fce5d9a836d3b648ea6b8318dc07496ce6c	Enhance logging and agent management capabilities; added new dependencies for Sphinx extensions and improved dynamic schema handling in the agent system.
+2025-02-23 01:28:42 -0500	refs/replace/f43b424be076b910dc15c7c196dd0b5b1942c799	5b067275271d9ea23927c3edc30cd5cf62618701	Merge branch 'main' of https://github.com/0rac130fD31phi/haive into core_v2
+2025-04-17 20:09:19 -0400	refs/replace/f474bb1869743dcbf55764337da3f180cdf90171	f01bd3741890201ad3d3da943ee53de11ee8cecf	Update .gitignore to include additional files and directories for exclusion, improving project organization and preventing unnecessary file tracking.
+2025-04-17 11:07:07 -0400	refs/replace/f4f3fa0eaf340cad26f0a9dc33f2a77e8481fc2b	32386a2ceb126dc1ee1136556a2018a06e5b0716	Update .gitignore to include the 'Graphs/' directory, enhancing organization of ignored resources and improving overall file management.
+2025-04-18 01:09:03 -0400	refs/replace/f6b95d13cd372c27dfbe374cc60d60c793b678bf	33e0c82065edfc13d4de5fe2d4dfb5c263281295	updated dockerfile, precomit python vzn, github workflows
+2025-04-19 12:46:26 -0400	refs/replace/f78860416cd3ef622aa2e538c59b0ec4f153d1b7	6afcd9b8de332dcba621b6dd3dd328f49001a40e	added new actions
+2025-03-29 20:53:19 -0400	refs/replace/f7ce2d0be7bd8abaca9f226a8bd759018bf25d2a	c28061c925026cd5b70cfd5b41be0c03f07b4c13	refactored the agent,aug_llm imports
+2025-04-11 10:45:43 -0400	refs/replace/fa8f4c80d20783af69dfa9817114d273584a6be7	f32692658a614c7275fcd4e5b73342b3871e24f9	v4
+2025-03-10 10:15:10 -0400	refs/replace/fb69f8b4dd344191f557160c5f9155f422b3f94c	3266ed8785d5ac7b43848402fe9a056f3cf44ffd	new branch
+2025-04-17 22:57:17 -0400	refs/replace/fdc92175a4af14f4f009e3e18033542ee405b977	0cc4d55727baa6573ab8017a910a5291b38fa797	Remove unintended nested repository
+2025-04-19 12:46:26 -0400	refs/replace/fe390a04f482d459ea2e37c57df160bd19e926db	6afcd9b8de332dcba621b6dd3dd328f49001a40e	added new actions
+2025-04-19 12:54:39 -0400	refs/replace/fea8b4acdf46c47641322228cd07eb54062e2376	ddd8d0f43a9c07cf330b0427473465ddfb2255d1	updated release
+2025-04-17 11:07:07 -0400	refs/replace/ff7336266633e5655749bacf7fa1a9762dd554f0	32386a2ceb126dc1ee1136556a2018a06e5b0716	Update .gitignore to include the 'Graphs/' directory, enhancing organization of ignored resources and improving overall file management.
+2025-04-17 19:37:20 -0400	refs/replace/ffa0096520d3fbcb692e3b303201cc92bb255772	629e3cac601a2d5cd8bd5560263840062b4d9e41	Add migration scripts and analysis tools for Haive project structure
+2025-07-29 19:37:59 -0400	refs/stash	6c4d0b4c0a9dd0aaa71f3e11ae0016b8381031b0	On feature/fix_everything: emergency-checkpoint-before-direct-fixes-20250729_193759

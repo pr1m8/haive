@@ -25,7 +25,7 @@ runs:
               PYTHON_VERSION="${BASH_REMATCH[1]}"
             fi
           fi
-          
+
           # Extract Poetry version from build-system
           if grep -q "poetry-core" "pyproject.toml"; then
             if [[ $(grep "poetry-core" "pyproject.toml") =~ poetry-core([><=~]+)([0-9]+\.[0-9]+\.[0-9]+) ]]; then

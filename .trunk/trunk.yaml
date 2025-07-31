@@ -19,23 +19,23 @@ runtimes:
 lint:
   enabled:
     - actionlint@1.7.7
-    - bandit@1.8.5
+    - bandit@1.8.6
     - black@25.1.0
-    - checkov@3.2.447
+    - checkov@3.2.451
     - dotenv-linter@3.3.0
     - git-diff-check
     - hadolint@2.12.1-beta
     - isort@6.0.1
     - markdownlint@0.45.0
-    - mypy@1.16.1
+    - mypy@1.17.0
     - osv-scanner@2.0.3
     - oxipng@9.1.5
     - prettier@3.6.2
-    - ruff@0.12.1
+    - ruff@0.12.3
     - shellcheck@0.10.0
     - shfmt@3.6.0
     - taplo@0.9.3
-    - trufflehog@3.89.2
+    - trufflehog@3.90.0
     - yamllint@1.37.1
   ignore:
     - linters: [ALL]
@@ -43,13 +43,30 @@ lint:
         - "**/migrations/**"
         - "**/__pycache__/**"
         - ".history/**"
+        - ".venv/**"
+        - "node_modules/**"
+        - "projects/**"
+        - "haive-core/**"
+        - "data/**"
+        #- "docs/**"
+        - "resources/**"
+        - "assets/**"
+        - "dist/**"
+        - "build/**"
+        - "*.egg-info/**"
+        # Allow packages to be linted now
+        - "packages/**/test_*.py"
+        - "packages/**/*test*.py"
+        - "packages/**/.venv/**"
 
 actions:
   disabled:
     - trunk-announce
+  enabled:
     - trunk-check-pre-push
     - trunk-fmt-pre-commit
-  enabled:
+    - trunk-check-pre-commit
+    - git-lfs
     - trunk-upgrade-available
 # Optional: If your main branch is not "main" or "master", set it here
 # repo:

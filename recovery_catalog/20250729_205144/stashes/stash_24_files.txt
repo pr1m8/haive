@@ -1,0 +1,13 @@
+commit a00f64a31b96fb5a40cc1fbf2245c049c9cd0153
+Merge: c1fda95e d3bb5657
+Author: pr1m8 <william.astley@algebraicwealth.com>
+Date:   Tue Jul 22 22:13:48 2025 -0400
+
+    On feature/fix_everything: searching for missing files
+
+docs/screenshots/api_documentation_all_6_packages
+docs/screenshots/complete_documentation_homepage
+docs/screenshots/haive_agents_api_documentation
+docs/source/index.rst
+noxfile.py
+project_docs/README.md

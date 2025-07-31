@@ -1,0 +1,1 @@
+scripts/build_tools/restructure_navigation.py

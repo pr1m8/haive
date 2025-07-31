@@ -5,12 +5,14 @@
 ### 1. Schema Composer System
 
 **What it does:**
+
 - Dynamically builds Pydantic schemas from components (engines, agents, tools)
 - Tracks field definitions with metadata, defaults, and reducers
 - Detects appropriate base class (StateSchema, MessagesState, ToolState)
 - Manages engine I/O mappings for field routing
 
 **Complexity Issues:**
+
 - Base class detection is implicit and hard to debug
 - Field extraction from multiple sources (models, engines, dicts)
 - Reducer resolution (name → function) is fragile
@@ -29,24 +31,28 @@ StateSchema (Base)
 **Key Features by Class:**
 
 **StateSchema:**
+
 - Field sharing mechanisms
 - Reducer support for state updates
 - Engine I/O tracking
 - Serialization utilities
 
 **MessagesState:**
+
 - Message filtering and counting
 - Tool call extraction
 - Conversation management
 - Message formatting utilities
 
 **ToolState:**
+
 - Tool synchronization from engines
 - Tool routing by engine type
 - Tool categorization (langchain/pydantic/function)
 - Dynamic tool updates
 
 **MetaAgentState:**
+
 - Tracks sub-agent states
 - Execution flow management
 - Error aggregation
@@ -55,12 +61,14 @@ StateSchema (Base)
 ### 3. Field Sharing Rules
 
 **When to Share Fields:**
+
 - `messages` - Always shared (conversation context)
 - `errors` - Shared for error propagation
 - `metadata` - Shared for workflow context
 - Custom fields marked with `shared=True`
 
 **When NOT to Share:**
+
 - Agent-specific state (e.g., `search_results`, `draft_content`)
 - Internal processing fields
 - Temporary computation results
@@ -69,12 +77,14 @@ StateSchema (Base)
 ### 4. Compatibility System
 
 **Current Prebuilt Schemas:**
+
 - **MessagesState**: For conversation-based workflows
 - **ToolState**: For tool-using agents
 - **PlanExecuteState**: For planning/execution patterns
 - **MultiAgentState**: For coordinating multiple agents
 
 **Compatibility Detection:**
+
 - Checks field name conflicts
 - Validates type compatibility
 - Ensures reducer compatibility
@@ -83,6 +93,7 @@ StateSchema (Base)
 ### 5. Meta State Systems
 
 **MetaAgentState Features:**
+
 - Sub-agent registry
 - Execution order tracking
 - State snapshots per agent
@@ -90,6 +101,7 @@ StateSchema (Base)
 - Result aggregation
 
 **MultiAgentStateSchema:**
+
 - Consolidates engines from all agents
 - Qualified naming (agent_name.engine_name)
 - Prevents engine collision
@@ -138,19 +150,20 @@ StateSchema (Base)
 ## 💡 Improvement Ideas
 
 ### Idea 1: Schema Templates
+
 ```python
 # Prebuilt templates for common patterns
 class ChatAgentSchema(ToolState):
     """Ready-to-use schema for chat agents"""
     query: str
     response: Optional[str] = None
-    
+
 class RAGAgentSchema(ToolState):
     """Ready-to-use schema for RAG agents"""
     query: str
     context: List[str] = Field(default_factory=list)
     response: Optional[str] = None
-    
+
 class PlannerAgentSchema(MessagesState):
     """Ready-to-use schema for planning agents"""
     objective: str
@@ -159,6 +172,7 @@ class PlannerAgentSchema(MessagesState):
 ```
 
 ### Idea 2: Simplified Agent Builder
+
 ```python
 # High-level API that hides complexity
 agent = AgentBuilder() \
@@ -172,6 +186,7 @@ agent = SimpleAgent.from_engine(my_llm)  # Infers everything
 ```
 
 ### Idea 3: Explicit Schema Composition
+
 ```python
 # Make composition explicit and debuggable
 composer = SchemaComposer()
@@ -183,6 +198,7 @@ schema = composer.build(base_class=ToolState)  # Explicit base
 ```
 
 ### Idea 4: Type-Safe Field Definitions
+
 ```python
 # Use TypedDict or similar for better type safety
 class AgentFields(TypedDict):
@@ -194,6 +210,7 @@ schema = create_schema_from_typed_dict(AgentFields)
 ```
 
 ### Idea 5: Schema Compatibility Matrix
+
 ```python
 # Precomputed compatibility rules
 COMPATIBILITY_MATRIX = {
@@ -207,6 +224,7 @@ def check_compatibility(schema1, schema2):
 ```
 
 ### Idea 6: Agent-as-Function Pattern
+
 ```python
 # Treat agents as simple functions
 @agent_function
@@ -218,6 +236,7 @@ def my_agent(query: str, context: List[str]) -> str:
 ```
 
 ### Idea 7: Visual Schema Builder
+
 ```python
 # GUI or CLI tool for building schemas
 schema = SchemaBuilder.interactive() \
@@ -229,6 +248,7 @@ schema = SchemaBuilder.interactive() \
 ```
 
 ### Idea 8: Schema Migration Tools
+
 ```python
 # Help users upgrade schemas
 migrator = SchemaMigrator()
@@ -239,24 +259,28 @@ migration_report = migrator.analyze_breaking_changes()
 ## 🎯 Recommended Approach
 
 ### Phase 1: Simplify Core Abstractions
+
 1. Make agents just nodes (no special treatment)
 2. Explicit schema templates for common patterns
 3. Clear rules for field sharing
 4. Better error messages
 
 ### Phase 2: Improve Developer Experience
+
 1. High-level builder APIs
 2. Schema visualization tools
 3. Compatibility checking utilities
 4. Migration helpers
 
 ### Phase 3: Enhance Type Safety
+
 1. TypedDict integration
 2. Runtime type validation
 3. Static analysis tools
 4. Type-safe reducers
 
 ### Phase 4: Performance & Scalability
+
 1. Schema caching
 2. Lazy field extraction
 3. Optimized tool routing

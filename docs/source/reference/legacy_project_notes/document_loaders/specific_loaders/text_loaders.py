@@ -181,8 +181,8 @@ class CSVSource(LocalSource):
     def create_pandas_loader(self):
         """Create a DataFrameLoader using pandas."""
         try:
-            from langchain_community.document_loaders import DataFrameLoader
             import pandas as pd
+            from langchain_community.document_loaders import DataFrameLoader
 
             # Read CSV into pandas DataFrame
             df = pd.read_csv(

@@ -19,7 +19,6 @@ from docutils.parsers.rst import directives
 from sphinx.application import Sphinx
 from sphinx.util import logging
 from sphinx.util.docutils import SphinxDirective
-import yaml
 
 
 logger = logging.getLogger(__name__)
@@ -83,8 +82,8 @@ class AgentRunCaptureDirective(SphinxDirective):
         try:
             with open(capture_path) as f:
                 capture_data = json.load(f)
-        except Exception as e:
-            logger.exception(f"Failed to load capture")
+        except Exception:
+            logger.exception("Failed to load capture")
             return []
 
         # Extract options
@@ -96,67 +95,77 @@ class AgentRunCaptureDirective(SphinxDirective):
 
         # Create main container
         container = nodes.container(classes=["agent-run-capture"])
-        
+
         # Add capture metadata section
         self._add_capture_metadata(container, capture_data)
-        
+
         # Add graph visualization if requested and available
         if show_graph and capture_data.get("graph_visualization_path"):
             self._add_graph_section(container, capture_data)
-        
+
         # Add execution steps
         self._add_execution_steps(container, capture_data, paginated, page_size)
-        
+
         # Add metrics if requested
         if show_metrics:
             self._add_metrics_section(container, capture_data)
-            
+
         return [container]
-    
+
     def _add_capture_metadata(self, container, capture_data):
         """Add capture metadata section."""
         metadata_section = nodes.section()
         metadata_title = nodes.title(text="Execution Overview")
         metadata_section += metadata_title
-        
+
         # Create summary table
         table = nodes.table()
         tgroup = nodes.tgroup(cols=2)
         table += tgroup
-        
+
         # Add column specifications
         tgroup += nodes.colspec(colwidth=30)
         tgroup += nodes.colspec(colwidth=70)
-        
+
         # Add table body
         tbody = nodes.tbody()
         tgroup += tbody
-        
+
         # Add metadata rows
         metadata_items = [
             ("Agent Name", capture_data.get("agent_name", "Unknown")),
             ("Agent Type", capture_data.get("agent_type", "Unknown")),
             ("Run ID", capture_data.get("run_id", "Unknown")[:8] + "..."),
-            ("Status", "✅ Success" if capture_data.get("error") is None else "❌ Failed"),
-            ("Duration", f"{capture_data.get('duration', 0):.2f}s" if capture_data.get('end_time') else "Running..."),
+            (
+                "Status",
+                "✅ Success" if capture_data.get("error") is None else "❌ Failed",
+            ),
+            (
+                "Duration",
+                (
+                    f"{capture_data.get('duration', 0):.2f}s"
+                    if capture_data.get("end_time")
+                    else "Running..."
+                ),
+            ),
             ("Steps", str(len(capture_data.get("steps", [])))),
         ]
-        
+
         for key, value in metadata_items:
             row = nodes.row()
             row += nodes.entry("", nodes.paragraph(text=key))
             row += nodes.entry("", nodes.paragraph(text=str(value)))
             tbody += row
-        
+
         metadata_section += table
         container += metadata_section
-    
+
     def _add_graph_section(self, container, capture_data):
         """Add graph visualization section."""
         graph_section = nodes.section()
         graph_title = nodes.title(text="Agent Architecture")
         graph_section += graph_title
-        
+
         graph_path = capture_data.get("graph_visualization_path")
         if graph_path:
             # Create figure node
@@ -166,104 +175,104 @@ class AgentRunCaptureDirective(SphinxDirective):
             image["alt"] = f"{capture_data.get('agent_name', 'Agent')} Graph"
             image["align"] = "center"
             figure += image
-            
+
             # Add caption
             caption = nodes.caption(text="Agent workflow graph showing the execution flow")
             figure += caption
-            
+
             graph_section += figure
-        
+
         container += graph_section
-    
+
     def _add_execution_steps(self, container, capture_data, paginated, page_size):
         """Add execution steps section."""
         steps_section = nodes.section()
         steps_title = nodes.title(text="Execution Steps")
         steps_section += steps_title
-        
+
         steps = capture_data.get("steps", [])
-        
+
         if not steps:
             steps_section += nodes.paragraph(text="No execution steps recorded.")
             container += steps_section
             return
-        
+
         # Determine which steps to show
         display_steps = steps
         if paginated and len(steps) > page_size:
             display_steps = steps[:page_size]
             remaining = len(steps) - page_size
-            
+
             # Add pagination info
             pagination_info = nodes.paragraph(
                 text=f"Showing first {page_size} of {len(steps)} steps. "
-                     f"{remaining} more steps available in full capture."
+                f"{remaining} more steps available in full capture."
             )
             pagination_info["classes"] = ["pagination-info"]
             steps_section += pagination_info
-        
+
         # Create steps as numbered list
         step_list = nodes.enumerated_list()
-        
+
         for i, step in enumerate(display_steps):
             list_item = nodes.list_item()
-            
+
             # Step header with type and timestamp
             step_type = step.get("step_type", "unknown")
             timestamp = step.get("timestamp", "")
             node_name = step.get("node_name", "")
-            
+
             header_text = f"**{step_type.title()}**"
             if node_name:
                 header_text += f" - {node_name}"
             if timestamp:
                 header_text += f" ({timestamp})"
-            
+
             header = nodes.paragraph()
             header += nodes.raw("", header_text, format="rst")
             list_item += header
-            
+
             # Step content
             content = step.get("content", {})
             if content:
                 # Create collapsible content section
                 content_container = nodes.container(classes=["step-content"])
-                
+
                 # Add content as code block
                 content_text = json.dumps(content, indent=2)
                 code_block = nodes.literal_block(content_text, content_text)
                 code_block["language"] = "json"
                 content_container += code_block
-                
+
                 list_item += content_container
-            
+
             step_list += list_item
-        
+
         steps_section += step_list
         container += steps_section
-    
+
     def _add_metrics_section(self, container, capture_data):
         """Add metrics section."""
         metrics_section = nodes.section()
         metrics_title = nodes.title(text="Performance Metrics")
         metrics_section += metrics_title
-        
+
         steps = capture_data.get("steps", [])
-        
+
         # Calculate step type distribution
         step_types = {}
         for step in steps:
             step_type = step.get("step_type", "unknown")
             step_types[step_type] = step_types.get(step_type, 0) + 1
-        
+
         # Create metrics table
         table = nodes.table()
         tgroup = nodes.tgroup(cols=2)
         table += tgroup
-        
+
         tgroup += nodes.colspec(colwidth=50)
         tgroup += nodes.colspec(colwidth=50)
-        
+
         # Add header
         thead = nodes.thead()
         header_row = nodes.row()
@@ -271,18 +280,18 @@ class AgentRunCaptureDirective(SphinxDirective):
         header_row += nodes.entry("", nodes.paragraph(text="Value"))
         thead += header_row
         tgroup += thead
-        
+
         # Add body
         tbody = nodes.tbody()
         tgroup += tbody
-        
+
         # Add step type breakdown
         for step_type, count in step_types.items():
             row = nodes.row()
             row += nodes.entry("", nodes.paragraph(text=f"{step_type.title()} Steps"))
             row += nodes.entry("", nodes.paragraph(text=str(count)))
             tbody += row
-        
+
         metrics_section += table
         container += metrics_section
         container["classes"].append("agent-run-output")
@@ -432,11 +441,7 @@ class ReadmeDiscoveryDirective(SphinxDirective):
                 continue
 
             # Check exclusions
-            if any(
-                exc.strip() in str(relative_path)
-                for exc in exclude_patterns
-                if exc.strip()
-            ):
+            if any(exc.strip() in str(relative_path) for exc in exclude_patterns if exc.strip()):
                 continue
 
             readme_files.append((readme_path, relative_path))
@@ -552,9 +557,7 @@ class AgentDiscovery:
             # Find agent classes
             for node in ast.walk(tree):
                 if isinstance(node, ast.ClassDef):
-                    agent_info = self.analyze_class_node(
-                        node, file_path, module_docstring
-                    )
+                    agent_info = self.analyze_class_node(node, file_path, module_docstring)
                     if agent_info:
                         agents.append(agent_info)
 
@@ -647,9 +650,7 @@ class AgentDiscovery:
         try:
             src_index = parts.index("src")
             module_parts = parts[src_index + 1 : -1]  # Exclude 'src' and file extension
-            module_parts = list(module_parts) + [
-                file_path.stem
-            ]  # Add filename without extension
+            module_parts = list(module_parts) + [file_path.stem]  # Add filename without extension
             return ".".join(module_parts)
         except ValueError:
             # Fallback: use relative path from packages
@@ -754,9 +755,7 @@ class AgentDiscovery:
 
         return list(set(features))  # Remove duplicates
 
-    def determine_complexity(
-        self, node: ast.ClassDef, docstring: str, features: list[str]
-    ) -> str:
+    def determine_complexity(self, node: ast.ClassDef, docstring: str, features: list[str]) -> str:
         """Determine the complexity level of an agent."""
         # Count methods
         method_count = sum(1 for item in node.body if isinstance(item, ast.FunctionDef))
@@ -787,9 +786,7 @@ class AgentDiscovery:
         if docstring:
             lines = docstring.strip().split("\n")
             first_line = lines[0].strip()
-            if first_line and not first_line.startswith(
-                ("Args:", "Parameters:", "Returns:")
-            ):
+            if first_line and not first_line.startswith(("Args:", "Parameters:", "Returns:")):
                 return first_line
 
         # Fallback to module docstring
@@ -937,7 +934,7 @@ def generate_showcase_content(data: dict[str, Any]) -> str:
 
     content = f"""# 🤖 Haive Agent Showcase
 
-Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! This showcase presents **{metadata['total_agents']} agents** across **{metadata['total_categories']} categories**, demonstrating the full breadth and power of the Haive framework.
+Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! This showcase presents **{metadata["total_agents"]} agents** across **{metadata["total_categories"]} categories**, demonstrating the full breadth and power of the Haive framework.
 
 ## 📊 Agent Ecosystem Overview
 
@@ -945,19 +942,17 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 
 | Metric | Value |
 |--------|-------|
-| **Total Agents** | {metadata['total_agents']} |
-| **Categories** | {metadata['total_categories']} |
-| **Packages** | {len(metadata['packages'])} |
-| **Complex Agents** | {stats['by_complexity'].get('complex', 0)} |
+| **Total Agents** | {metadata["total_agents"]} |
+| **Categories** | {metadata["total_categories"]} |
+| **Packages** | {len(metadata["packages"])} |
+| **Complex Agents** | {stats["by_complexity"].get("complex", 0)} |
 
 ### 🏷️ Top Agent Categories
 
 """
 
     # Add category overview
-    sorted_categories = sorted(
-        categories.items(), key=lambda x: x[1]["count"], reverse=True
-    )
+    sorted_categories = sorted(categories.items(), key=lambda x: x[1]["count"], reverse=True)
 
     content += "| Category | Agents | Primary Package |\n"
     content += "|----------|--------|----------------|\n"
@@ -982,7 +977,7 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 
 1. **Choose Your Agent Type**
    - 🌟 **New to Haive?** Start with Foundation Agents (SimpleAgent, ReactAgent)
-   - 🎯 **Building Apps?** Check out Prebuilt Solutis  
+   - 🎯 **Building Apps?** Check out Prebuilt Solutis
    - 🎮 **Want Fun?** Explore Game Agents
    - 🧠 **Advanced Use?** Try Reasoning & Critique agents
 
@@ -1031,9 +1026,7 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
                 "medium": "🟡 Medium",
                 "complex": "🔴 Complex",
             }.get(agent["complexity"], "❓ Unknown")
-            features_str = (
-                ", ".join(agent["features"][:2]) if agent["features"] else "Basic"
-            )
+            features_str = ", ".join(agent["features"][:2]) if agent["features"] else "Basic"
             if len(agent["features"]) > 2:
                 features_str += f" +{len(agent['features']) - 2}"
 
@@ -1043,7 +1036,9 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
                 else agent["description"]
             )
 
-            content += f"| **{agent['name']}** | {complexity_badge} | {features_str} | {description} |\n"
+            content += (
+                f"| **{agent['name']}** | {complexity_badge} | {features_str} | {description} |\n"
+            )
 
         content += "\n"
 
@@ -1078,18 +1073,16 @@ Alphabetical listing of all agents in the Haive ecosystem.
                 "medium": "🟡 Medium",
                 "complex": "🔴 Complex",
             }.get(agent["complexity"], "❓ Unknown")
-            features_str = (
-                ", ".join(agent["features"][:3]) if agent["features"] else "Basic"
-            )
+            features_str = ", ".join(agent["features"][:3]) if agent["features"] else "Basic"
             if len(agent["features"]) > 3:
                 features_str += f", +{len(agent['features']) - 3} more"
 
             content += f"""
-**{agent['name']}** ({complexity_badge})
-*{agent['category']} | {agent['package']}*
-{agent['description'][:150]}{'...' if len(agent['description']) > 150 else ''}
+**{agent["name"]}** ({complexity_badge})
+*{agent["category"]} | {agent["package"]}*
+{agent["description"][:150]}{"..." if len(agent["description"]) > 150 else ""}
 **Features:** {features_str}
-**Module:** `{agent['module_path']}`
+**Module:** `{agent["module_path"]}`
 
 """
 

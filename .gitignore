@@ -1,8 +1,46 @@
 # =============================================================================
-# 🧠 Haive AI – Master .gitignore
+# 🧠 Haive AI – Master .gitignore (COMPREHENSIVE VERSION)
 # =============================================================================
 
-# === 🧪 Auto-generated agent run folders ===
+# =============================================================================
+# 🚨 CRITICAL: CURSOR/VS CODE HISTORY & TRACKING ISSUES (EMERGENCY FIXES)
+# =============================================================================
+**/.history/
+**/.history
+.history/
+.history
+**/.cursor/
+.cursor/
+**/.vscode/settings.local.json
+.vscode/settings.local.json
+packages/*/.git/
+packages/*/.git
+*/.git/
+!/.git/
+# Prevent any nested git repositories
+*/**/.git/
+# Claude AI specific
+**/.claude/settings.local.json
+.claude/settings.local.json
+
+# =============================================================================
+# 💾 Large database dumps and exports (Docker build optimization)
+# =============================================================================
+data_dump.sql
+local_postgres_export.json
+supabase_import_threads.sql
+*.dump
+*.backup
+*.sql.gz
+*.sql.bz2
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+
+# =============================================================================
+# 🧪 Auto-generated agent run folders
+# =============================================================================
 simple_agent_*/
 memory_test_*/
 postgres_test_*/
@@ -10,8 +48,14 @@ summary_agent/
 test_simple_agent/
 output_file.json
 retrievers_output.json
+agent_run_*/
+test_run_*/
+experiment_*/
+benchmark_*/
 
-# === 🔬 Cache / experiment outputs ===
+# =============================================================================
+# 🔬 Cache / experiment outputs
+# =============================================================================
 .cache/
 .lc_cache/
 src/lc_cache/
@@ -19,13 +63,23 @@ pytest_cache/
 .pytest_cache/
 .mypy_cache/
 .nox/
+.tox/
 htmlcov/
 coverage.xml
+.coverage
+.coverage.*
 dist/
 build/
 .eggs/
+*.egg-info/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
 
-# === 🎮 Game history / graph renderings ===
+# =============================================================================
+# 🎮 Game history / graph renderings
+# =============================================================================
 graphs/
 game_history/
 resources/graph_images/
@@ -33,14 +87,42 @@ resources/state_history/
 resources/Graphs/
 resources/State_History/
 resources/State_History/*.json
+resources/game_logs/
+resources/visualization/
+*.gv
+*.dot
+*.svg
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.pdf
+*.eps
 
-# === 🧰 IDEs and editors ===
+# =============================================================================
+# 🧰 IDEs and editors
+# =============================================================================
 .vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 .idea/
 *.sublime-project
 *.sublime-workspace
+*.code-workspace
+.spyderproject
+.spyproject
+.ropeproject
+*.swp
+*.swo
+*~
+.#*
+\#*#
 
-# === 🔒 Lock, secret, and build files ===
+# =============================================================================
+# 🔒 Lock, secret, and build files
+# =============================================================================
 poetry.lock
 Pipfile.lock
 *.egg-info/
@@ -50,18 +132,32 @@ Pipfile.lock
 *.pem
 *.key
 *.cert
+*.crt
+*.p12
+*.pfx
 token.json
 credentials.json
+service-account*.json
 .env
 .env.*
+!.env.example
 .secrets/
-.secrets/
+secrets/
+config/secrets/
+*.secret
+api_keys.txt
+auth_tokens.json
 
-# === 📜 Logs, outputs, scratch data ===
+# =============================================================================
+# 📜 Logs, outputs, scratch data
+# =============================================================================
 *.log
 *.err
+*.out
 logs/
 logs/**
+log/
+log/**
 scratches/
 scratches/*.json
 examples/outputs/
@@ -69,10 +165,23 @@ loader_analysis/
 reports/
 out.json
 haive_vault_*.log
+debug_*.txt
+trace_*.json
+profile_*.json
+benchmark_*.json
 
-# === 🧬 Misc ===
+# =============================================================================
+# 🧬 Misc runtime and temporary files
+# =============================================================================
 *.bak
-*.out
+*.backup
+*.old
+*.orig
+*.rej
+*.tmp
+*.temp
+tmp/
+temp/
 *.so
 *.pyd
 *.pyo
@@ -82,35 +191,116 @@ Thumbs.db
 check_registry_data.py
 BaseAgent.ipynb
 Chinook.db
-EOF
+*.profraw
+*.prof
 
-# === 🧪 Mypy, Pytest, Profiler, etc ===
+# =============================================================================
+# 📦 Node Modules and JavaScript
+# =============================================================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+.npm
+.eslintcache
+
+# =============================================================================
+# 🧪 Testing, profiling, and development tools
+# =============================================================================
 .pytest_cache/
 .mypy_cache/
 .nox/
+.tox/
 .ipynb_checkpoints/
 .pytest_html/
 viztracer_*.json
 *.prof
 *.profraw
+.benchmarks/
+.hypothesis/
+test_output/
+test_outputs/
+allure-results/
+.coverage
+htmlcov/
+coverage.xml
+*.cover
+.pytest_cache/
+.cache/
+nosetests.xml
+test-results.xml
 
-# === 🍃 OS junk ===
+# =============================================================================
+# 🍃 OS junk and system files
+# =============================================================================
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
 *.swp
+*.swo
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
 
-# === 🐍 Python standard ===
+# =============================================================================
+# 🐍 Python standard and virtual environments
+# =============================================================================
 __pycache__/
 *.py[cod]
 *.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.venv/
+venv/
+ENV/
+env/
+.env/
+env.bak/
+venv.bak/
+pyvenv.cfg
 
-# === 📘 Sphinx / documentation ===
+# =============================================================================
+# 📘 Sphinx / documentation
+# =============================================================================
 docs/build/
 docs/_build/
 docs/source/_build/
-docs/source/_static/
-docs/source/_templates/
 docs/source/api/
 docs/scratch/
+_build/
 *.pdf
 *.tex
 sphinx*
@@ -119,52 +309,337 @@ readthedocs-sphinx-search/
 personal_notes/**/rendered/
 personal_notes/**/*.html
 **/rendered/
-**/*.html
 **/_build/
-**/_static/
-**/_templates/
 **/api/
+site/
+_site/
 
-# === 🔧 Temporary dev output ===
+# =============================================================================
+# 🔧 Temporary dev output and resources
+# =============================================================================
 packages/resources/State_History/
 packages/resources/embeddings_cache/
 resources/**/_agent_*/
 resources/**/test_*/
+resources/cache/
+resources/tmp/
+resources/temp/
+resources/scratch/
+resources/experiments/
+resources/benchmarks/
+resources/profiling/
 
-# === 🧪 Test logs and aux resources ===
+# =============================================================================
+# 🧪 Test logs and auxiliary resources
+# =============================================================================
 test_output/
 test_outputs/
+testing/
 allure-results/
 *.svg
 *.drawio
-*.png
+tests/persistence_debugging/state_history/
+tests/outputs/
+tests/cache/
+tests/tmp/
+performance_tests/
+load_tests/
+integration_tests/outputs/
 
-# === 🧪 Notebooks & dev outputs ===
+# =============================================================================
+# 🧪 Notebooks & dev outputs
+# =============================================================================
 *.ipynb
+.ipynb_checkpoints/
 notebooks/
 notebooks/**
-resources/
+jupyter_notebook_config.py
+.jupyter/
+.ipython/
 
-# === 🧠 Virtual environments ===
-.venv/
-venv/
-ENV/
-
-# === 🐍 Python Poetry extras ===
+# =============================================================================
+# 📦 Python Poetry and package management
+# =============================================================================
 poetry.lock
 .cache/pypoetry/
+.venv/
+poetry.toml
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.nox/
+.coverage
+.pytest_cache/
+.mypy_cache/
+dmypy.json
+.pyre/
+.pytype/
 
-# === 📦 Extra files ===
-.history/
+# =============================================================================
+# 🔗 Dependencies and lock files
+# =============================================================================
+Pipfile.lock
+poetry.lock
+package-lock.json
+yarn.lock
+composer.lock
+Gemfile.lock
+go.sum
+Cargo.lock
+requirements-dev.txt.lock
 
+# =============================================================================
+# 🚀 Deployment and CI/CD
+# =============================================================================
+.dockerignore
+Dockerfile.dev
+docker-compose.override.yml
+.kubernetes/
+k8s/
+helm/
+terraform/
+.terraform/
+*.tfstate
+*.tfstate.*
+.env.production
+.env.staging
+.env.development
 
-**/.claude/settings.local.json
-docs/source/*.rst   
-docs/source/*.rst
-!docs/source/index.rst
-docs/_build/
-# Ignore all .rst files in docs/source and its subdirectories
-docs/source/**/*.rst
+# =============================================================================
+# 🔐 Security and credentials
+# =============================================================================
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+*.pfx
+*.keystore
+.ssh/
+credentials/
+secrets/
+.aws/
+.gcp/
+.azure/
+service-account*.json
+*-key.json
+auth-*.json
+token*.txt
+api-key*.txt
 
-# Except for index.rst in the root of docs/source
-#!docs/source/index.rst
+# =============================================================================
+# 📊 Analytics and monitoring
+# =============================================================================
+.sentry-env
+.newrelic.ini
+mixpanel.json
+analytics/
+metrics/
+monitoring/
+traces/
+*.trace
+
+# =============================================================================
+# 💽 Databases and data files
+# =============================================================================
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+*.db-wal
+*.mdb
+*.accdb
+data/
+dataset/
+datasets/
+*.csv.bak
+*.json.bak
+*.parquet
+*.feather
+
+# =============================================================================
+# 🎯 Machine Learning and AI specific
+# =============================================================================
+models/
+*.model
+*.pkl
+*.pickle
+*.joblib
+*.h5
+*.hdf5
+*.onnx
+*.pb
+checkpoints/
+wandb/
+mlruns/
+.mlflow/
+tensorboard_logs/
+lightning_logs/
+.neptune/
+runs/
+
+# =============================================================================
+# 📱 Mobile and platform specific
+# =============================================================================
+.expo/
+.expo-shared/
+*.apk
+*.ipa
+*.dSYM.zip
+*.dSYM
+xcuserdata/
+.build/
+
+# =============================================================================
+# 🌐 Web development
+# =============================================================================
+.next/
+.nuxt/
+.vercel/
+.netlify/
+public/build/
+static/build/
+*.min.js
+*.min.css
+
+# =============================================================================
+# 🧪 Experimental and research
+# =============================================================================
+experiments/
+research/
+prototypes/
+poc/
+sandbox/
+playground/
+draft/
+drafts/
+archive/
+deprecated/
+
+# =============================================================================
+# 📋 Project management
+# =============================================================================
+.project
+.classpath
+.settings/
+.metadata/
+.recommenders/
+target/
+bin/
+
+# =============================================================================
+# 💻 Editor and IDE backups
+# =============================================================================
+*~
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+*.sw[op]
+.#*
+\#*#
+.*.un~
+Session.vim
+.netrwhist
+
+# =============================================================================
+# 🔄 Version control
+# =============================================================================
+.git/
+.gitattributes.bak
+.gitignore.bak
+.git-rewrite/
+.svn/
+.hg/
+.bzr/
+CVS/
+
+# =============================================================================
+# 📦 Package and distribution
+# =============================================================================
+build/
+dist/
+*.egg-info/
+*.egg
+wheels/
+*.whl
+*.tar.gz
+*.zip
+*.7z
+*.rar
+.secrets/
+.ipynb_checkpoints/
+resources/
+lc_cache/
+# End of .gitignore
+# =============================================================================
+# 📄 Documentation and temporary files cleanup
+# =============================================================================
+# Temporary fix/debug files
+*_FIX*.md
+*_GUIDE*.md
+*_SUMMARY*.md
+*_ANALYSIS*.md
+*_REPORT*.md
+fix_*.py
+debug_*.py
+auto_fix_*.py
+apply_*.py
+analyze_*.py
+create_*.py
+emergency_*.py
+explore_*.py
+implement_*.py
+proper_*.py
+quick_*.py
+safe_*.py
+simple_*.py
+test_*.py
+trace_*.py
+haive_*.py
+*_performance_fix.py
+*_import_fix.py
+*_thread_fix.py
+*_checkpoint_fix.py
+*_config_fix.py
+*_schema_fix.py
+
+# Generated documentation backups
+docs/source/conf_backup*.py
+docs/source/conf_safe.py
+docs/error_reports/
+docs/logs/
+docs/build/
+*_cleanup_*.md
+*_dependencies_*.md
+
+# Notebooks in packages
+/packages/haive-mcp/notebooks/Untitled*.ipynb
+*.ipynb_checkpoints
+notebooks/*.ipynb
+
+# Examples and testing
+examples/multi_agent_showcase.py
+.venv-py312-backup/
+# =============================================================================
+# 🧹 Temporary development files (moved to organized locations)
+# =============================================================================
+# Debug/analysis scripts (moved to scripts/)
+debug_*.py
+analyze_*.py
+fix_*.py
+comprehensive_*.py
+test_*.py
+
+# Status/report files (moved to project_docs/)
+*_STATUS*.md
+*_ANALYSIS*.md
+*_RECOVERY*.md
+*_REPORT*.md
+
+# Log and temporary files
+*.log
+nohup.out
+server.log
+dynamic_graph.log

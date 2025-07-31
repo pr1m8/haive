@@ -17,7 +17,16 @@ html:
 	@$(SPHINXBUILD) -b html "$(SOURCEDIR)" "$(BUILDDIR)/html" $(SPHINXOPTS) $(O)
 
 livehtml:
-	sphinx-autobuild "$(SOURCEDIR)" "$(BUILDDIR)/html" --port 8000
+	poetry run sphinx-autobuild "$(SOURCEDIR)" "_build/html" \
+		--port 8003 \
+		--host 0.0.0.0 \
+		--ignore "*.pyc" \
+		--ignore "*.pyo" \
+		--ignore ".git/*" \
+		--ignore "_build/*" \
+		--watch ../packages \
+		--open-browser \
+		-j auto
 
 # Catch-all target
 %: Makefile

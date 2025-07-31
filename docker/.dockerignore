@@ -1,15 +1,100 @@
+# Large database dumps and exports (Docker build optimization)
+data_dump.sql
+local_postgres_export.json
+supabase_import_threads.sql
+*.dump
+*.backup
+*.bak
+
+# Python bytecode and caches
 __pycache__/
 *.pyc
-.venv/
-.env
-.env.*
-data/
-*.sqlite
-tests/
-.git
-**/*.log
-**/tests/
-*.sqlite3
 *.pyo
 *.pyd
+.Python
+
+# Virtual environments - but keep packages' source
+.venv/
+venv/
+ENV/
+env.bak/
+venv.bak/
+*/.venv/
+*/venv/
+
+# Environment files
+.env
+.env.*
+
+# Development and testing
+.pytest_cache/
+.coverage
+.nox/
+.tox/
+*/tests/
+**/tests/
+
+# Version control
+.git/
+.gitignore
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+**/*.log
+logs/
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+
+# Large data directories
+data/
+vectorstore/
+lc_cache/
+outputs/
+debug_visualizations/
+workspaces/
+documents/
+projects/
+notebooks/
+scratches/
+examples/
+
+# Cache directories
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Documentation
+docs/build/
+docs/_build/
+project_docs/
+**/_build/
+
+# Temporary and OS files
+*.tmp
+*.temp
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# History and secrets
+.history/
+.secrets/
+*.gpg
+
+# Development tools
+.trunk/
+.claude/

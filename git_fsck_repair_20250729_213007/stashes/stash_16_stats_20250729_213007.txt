@@ -1,0 +1,9 @@
+commit 7c46c7b19762ad6735acef1fec17266a157fa44b
+Merge: 58977bec 55f37485
+Author: pr1m8 <william.astley@algebraicwealth.com>
+Date:   Mon Jul 28 04:06:30 2025 -0400
+
+    On feature/fix_everything: Keep CLAUDE.md warning updates
+
+ CLAUDE.md | 46 ++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 44 insertions(+), 2 deletions(-)

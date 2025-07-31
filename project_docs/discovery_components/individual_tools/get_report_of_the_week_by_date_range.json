@@ -1,0 +1,50 @@
+{
+  "component_info": {
+    "name": "get_report_of_the_week_by_date_range",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.report_of_the_week_tool",
+    "class_name": "StructuredTool",
+    "description": "Get reviews posted between two dates (format: YYYY-M-D).",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:28.966576",
+    "schema": {
+      "description": "Input model for retrieving reports within a specific date range.\n\nThis model defines the parameters needed to filter reviews by their\npublication date.\n\nAttributes:\n    start_date (str): The beginning date of the range in YYYY-M-D format.\n    end_date (str): The ending date of the range in YYYY-M-D format.",
+      "properties": {
+        "start_date": {
+          "description": "Start date in YYYY-M-D format.",
+          "title": "Start Date",
+          "type": "string"
+        },
+        "end_date": {
+          "description": "End date in YYYY-M-D format.",
+          "title": "End Date",
+          "type": "string"
+        }
+      },
+      "required": ["start_date", "end_date"],
+      "title": "GetReportsByDateRangeInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_report_of_the_week_by_date_range",
+    "tool_description": "Get reviews posted between two dates (format: YYYY-M-D)."
+  },
+  "document": {
+    "page_content": "# get_report_of_the_week_by_date_range\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.tools.report_of_the_week_tool\n**Class:** StructuredTool\n\n## Description\nGet reviews posted between two dates (format: YYYY-M-D).\n\n## Schema\n```json\n{\n  \"description\": \"Input model for retrieving reports within a specific date range.\\n\\nThis model defines the parameters needed to filter reviews by their\\npublication date.\\n\\nAttributes:\\n    start_date (str): The beginning date of the range in YYYY-M-D format.\\n    end_date (str): The ending date of the range in YYYY-M-D format.\",\n  \"properties\": {\n    \"start_date\": {\n      \"description\": \"Start date in YYYY-M-D format.\",\n      \"title\": \"Start Date\",\n      \"type\": \"string\"\n    },\n    \"end_date\": {\n      \"description\": \"End date in YYYY-M-D format.\",\n      \"title\": \"End Date\",\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"start_date\",\n    \"end_date\"\n  ],\n  \"title\": \"GetReportsByDateRangeInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `get_report_of_the_week_by_date_range`\n**Description:** Get reviews posted between two dates (format: YYYY-M-D).\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "get_report_of_the_week_by_date_range",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.tools.report_of_the_week_tool",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:28.966576",
+      "category": "individual_tools"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

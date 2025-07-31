@@ -1,0 +1,1 @@
+scripts/build_tools/generate_package_docs.py

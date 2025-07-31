@@ -1,0 +1,39 @@
+[33mcf6da01[m feat(docs): comprehensive documentation styling and structure overhaul
+[33m35fbeeb[m[33m ([m[1;31morigin/feature/fix_everything[m[33m, [m[1;32mfeature/fix_everything[m[33m)[m fix: massive compilation error cleanup across all packages
+[33mbf02ff8[m chore: update submodules with Enhanced MultiAgent V3 implementation
+[33m079f384[m chore: update haive-agents submodule with enhanced patterns
+[33mf01bb03[m fix: syntax errors in automation scripts and apply initial fixes
+[33me4be641[m feat: massive type hint improvements across all packages
+[33m3f5af05[m feat(docs): comprehensive documentation issues audit and screenshot automation
+[33m06a7d09[m Remove packages from git tracking to prevent double inclusion in source control
+[33m7ab5ff4[m Fix submodule branches - vzn/dav for most, feature/fix_everything for core/agents
+[33m7c406e7[m[33m ([m[1;32mfeature/engine-typing-generics[m[33m)[m empty
+[33m3ddd8f1[m empty
+[33mabcb3ce[m organize: Move test files to proper locations and create AgentNodeV3 sequential test
+[33mf4d5f01[m docs: Chess game already has comprehensive documentation
+[33m090d8f4[m[33m ([m[1;32mfeature/structured-output-generalization[m[33m)[m fix: Improve MessageList serialization with proper BaseMessage checking and engine metadata preservation
+[33m3c4390d[m feat: Add structured output generalization for agents
+[33mf4d0e42[m update
+[33me013566[m Phase 1: Add CompiledStateGraph architecture foundation
+[33m77a124b[m[33m ([m[1;32mmigration/phase-5-testing[m[33m, [m[1;32mmigration/phase-4-docs-update[m[33m, [m[1;32mmigration/phase-3-dependencies[m[33m, [m[1;32mmigration/phase-2-workspace-setup[m[33m, [m[1;32mmigration/phase-1-fix-packages[m[33m, [m[1;32mbackup-before-workspace-migration[m[33m)[m Pre-migration backup: Save current state before workspace migration
+[33mcea3a1b[m Complete documentation cleanup and enhancement
+[33m1a4420a[m Remove deprecated debug scripts and add utility script for generating workspace configurations
+[33m3a3168a[m update
+[33m3f0e0a5[m updated trunk
+[33m79796b0[m update
+[33m23991ff[m added claude code
+[33md87158f[m Update CI workflows for coverage and Docker build; adjust CSS formatting for consistency and update lint dependencies in trunk.yaml
+[33mbe96c08[m Implement namespace migration for Haive framework; update import paths across multiple modules and tests to reflect new structure
+[33m710e4f8[m Fix: update haive-agents submodule ref to 5d585fec
+[33mfffcb61[m 🔀 Updated submodules to main branches
+[33ma0aa694[m Update submodule references
+[33m361086f[m fix: sync submodules to namespace-migration branch
+[33m641b1be[m chore: sync .gitignore to submodules and clean .pytest_cache
+[33m3ec4751[m updated namespace
+[33md3fd4e1[m Set up root namespace package
+[33me5e94a5[m Update all dependencies and submodule references
+[33mc7999b1[m Update all dependencies and submodule references
+[33mea1ff89[m Update submodule references
+[33m06bac9f[m Update haive-agents submodule to latest commit
+[33m94d25da[m Update submodule commits for haive-agents, haive-core, haive-dataflow, haive-games, haive-prebuilt, and haive-tools to latest versions. This change ensures all packages are aligned with the most recent updates, enhancing overall project consistency and functionality.
+[33md5a70d7[m Refactor Jupyter Notebook files to standardize nbformat version and update Python kernel display names. Remove deprecated agent backup files and clean up unused agent configurations, enhancing project organization and maintainability.

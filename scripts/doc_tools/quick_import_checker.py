@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Quick Import Checker for Documentation Issues
+"""Quick Import Checker for Documentation Issues.
 
 A simplified version that quickly identifies problematic modules for documentation.
 """
@@ -79,20 +79,15 @@ def test_key_modules():
         "other_errors": [],
     }
 
-    print("🔍 Testing key modules for documentation issues...")
-    print("=" * 80)
 
     for i, module_name in enumerate(key_modules, 1):
-        print(f"[{i:2d}/{len(key_modules)}] {module_name}...", end=" ")
 
         try:
             importlib.import_module(module_name)
-            print("✅")
             results["successful"].append(module_name)
         except Exception as e:
             error_type = type(e).__name__
             error_msg = str(e)
-            print(f"❌ {error_type}")
 
             results["failed"][module_name] = {
                 "error_type": error_type,
@@ -105,7 +100,6 @@ def test_key_modules():
                 # Extract missing dependency
                 if "'" in error_msg:
                     missing = error_msg.split("'")[1]
-                    print(f"    Missing: {missing}")
             elif "syntax" in error_msg.lower():
                 results["syntax_errors"].append(module_name)
             elif "type" in error_type.lower() or "pydantic" in error_msg.lower():
@@ -118,15 +112,8 @@ def test_key_modules():
 
 def generate_quick_fixes(results):
     """Generate quick fix suggestions."""
-    print("\n" + "=" * 80)
-    print("📋 QUICK FIX RECOMMENDATIONS")
-    print("=" * 80)
 
     if results["missing_dependencies"]:
-        print(
-            f"\n🔧 MISSING DEPENDENCIES ({len(results['missing_dependencies'])} modules)"
-        )
-        print("Add these to autodoc_mock_imports in conf.py:")
 
         # Extract unique missing dependencies
         missing_deps = set()
@@ -137,61 +124,40 @@ def generate_quick_fixes(results):
                 missing_deps.add(dep)
 
         for dep in sorted(missing_deps):
-            print(f"    '{dep}',")
+            pass
 
     if results["type_errors"]:
-        print(f"\n🔧 TYPE/PYDANTIC ERRORS ({len(results['type_errors'])} modules)")
-        print("These modules have Pydantic/typing issues:")
         for module in results["type_errors"]:
-            print(f"    - {module}")
-        print("Consider checking Generic type annotations and BaseModel inheritance")
+            pass
 
     if results["syntax_errors"]:
-        print(f"\n🔧 SYNTAX ERRORS ({len(results['syntax_errors'])} modules)")
-        print("These modules have syntax issues:")
         for module in results["syntax_errors"]:
-            print(f"    - {module}")
+            pass
 
     if results["other_errors"]:
-        print(f"\n🔧 OTHER ERRORS ({len(results['other_errors'])} modules)")
         for module in results["other_errors"]:
             error_info = results["failed"][module]
-            print(
-                f"    - {module}: {error_info['error_type']} - {error_info['error_message'][:100]}..."
-            )
 
     # Success rate
     total = len(results["successful"]) + len(results["failed"])
     success_rate = len(results["successful"]) / total * 100 if total > 0 else 0
 
-    print("\n📊 SUMMARY:")
-    print(f"    ✅ Working: {len(results['successful'])}/{total} ({success_rate:.1f}%)")
-    print(f"    ❌ Broken: {len(results['failed'])}/{total} ({100-success_rate:.1f}%)")
 
     # Recommendation
     if success_rate < 50:
-        print(
-            "\n💡 RECOMMENDATION: Keep autosummary disabled until more modules are fixed"
-        )
+        pass
     elif success_rate < 80:
-        print("\n💡 RECOMMENDATION: Enable autosummary but exclude problematic modules")
+        passs")
     else:
-        print("\n💡 RECOMMENDATION: Most modules working - can re-enable autosummary")
+        passy")
 
 
 def generate_autosummary_skip_list(results):
     """Generate a list of modules to skip in autosummary."""
     skip_modules = list(results["failed"].keys())
 
-    print("\n🚫 AUTOSUMMARY SKIP LIST:")
-    print("Add this to your conf.py:")
-    print("```python")
-    print("# Modules to skip in autosummary due to import issues")
-    print("autosummary_skip_modules = [")
     for module in sorted(skip_modules):
-        print(f"    '{module}',")
-    print("]")
-    print("```")
+        pass
 
 
 def save_results(results):
@@ -205,24 +171,16 @@ def save_results(results):
     with open(output_file, "w") as f:
         json.dump(results, f, indent=2)
 
-    print(f"\n💾 Results saved to: {output_file}")
 
 
 def main():
     """Run the quick import checker."""
-    print("🚀 Haive Documentation Import Checker")
-    print("=" * 80)
 
     results = test_key_modules()
     generate_quick_fixes(results)
     generate_autosummary_skip_list(results)
     save_results(results)
 
-    print("\n🎯 Next Steps:")
-    print("1. Add missing dependencies to autodoc_mock_imports")
-    print("2. Fix syntax and type errors in failing modules")
-    print("3. Update autosummary configuration to skip problematic modules")
-    print("4. Test documentation build: nox -s docs")
 
 
 if __name__ == "__main__":

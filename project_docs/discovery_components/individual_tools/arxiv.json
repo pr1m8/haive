@@ -1,0 +1,45 @@
+{
+  "component_info": {
+    "name": "arxiv",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.tools.arxiv",
+    "class_name": "ArxivQueryRun",
+    "description": "A wrapper around Arxiv.org Useful for when you need to answer questions about Physics, Mathematics, Computer Science, Quantitative Biology, Quantitative Finance, Statistics, Electrical Engineering, and Economics from scientific articles on arxiv.org. Input should be a search query.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:28.966895",
+    "schema": {
+      "description": "Input for the Arxiv tool.",
+      "properties": {
+        "query": {
+          "description": "search query to look up",
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"],
+      "title": "ArxivInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "arxiv",
+    "tool_description": "A wrapper around Arxiv.org Useful for when you need to answer questions about Physics, Mathematics, Computer Science, Quantitative Biology, Quantitative Finance, Statistics, Electrical Engineering, and Economics from scientific articles on arxiv.org. Input should be a search query."
+  },
+  "document": {
+    "page_content": "# arxiv\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.tools.arxiv\n**Class:** ArxivQueryRun\n\n## Description\nA wrapper around Arxiv.org Useful for when you need to answer questions about Physics, Mathematics, Computer Science, Quantitative Biology, Quantitative Finance, Statistics, Electrical Engineering, and Economics from scientific articles on arxiv.org. Input should be a search query.\n\n## Schema\n```json\n{\n  \"description\": \"Input for the Arxiv tool.\",\n  \"properties\": {\n    \"query\": {\n      \"description\": \"search query to look up\",\n      \"title\": \"Query\",\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"query\"\n  ],\n  \"title\": \"ArxivInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `arxiv`\n**Description:** A wrapper around Arxiv.org Useful for when you need to answer questions about Physics, Mathematics, Computer Science, Quantitative Biology, Quantitative Finance, Statistics, Electrical Engineering, and Economics from scientific articles on arxiv.org. Input should be a search query.\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "arxiv",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.tools.arxiv",
+      "class_name": "ArxivQueryRun",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:28.966895",
+      "category": "individual_tools"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

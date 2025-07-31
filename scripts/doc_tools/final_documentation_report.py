@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Final Documentation Report
+"""Final Documentation Report.
 
 Comprehensive summary of all documentation fixes and the import issue analysis.
 """
@@ -191,53 +191,22 @@ def generate_final_report():
         json.dump(report, f, indent=2)
 
     # Print summary
-    print("🎉 HAIVE DOCUMENTATION SYSTEM - FINAL REPORT")
-    print("=" * 80)
-    print()
 
-    print("📊 PROBLEMS SOLVED:")
     for problem in report["problems_solved"]:
-        print(f"   {problem['status']} {problem['problem']}")
-        print(f"      → {problem['solution']}")
-    print()
 
-    print("🚀 NEW SYSTEMS CREATED:")
     for system in report["new_systems_created"]:
-        print(f"   📦 {system['name']}")
-        print(f"      File: {system['file']}")
-        print(f"      {system['description']}")
-    print()
 
-    print("📈 IMPORT ANALYSIS RESULTS:")
     results = report["import_analysis_results"]
-    print(f"   • Tested {results['total_modules_tested']} critical modules")
-    print(f"   • Success rate: {results['success_rate']}")
-    print(f"   • Working modules: {results['working_modules']}")
-    print("   • Issues identified and categorized")
-    print()
 
-    print("✅ CURRENT STATUS:")
     status = report["current_status"]
     for key, value in status.items():
-        print(f"   • {key.replace('_', ' ').title()}: {value}")
-    print()
+        pass")
 
-    print("🎯 QUICK COMMANDS:")
     commands = report["usage_commands"]
-    print(f"   • Build docs: {commands['build_docs']}")
-    print(f"   • Serve docs: {commands['serve_docs']}")
-    print(f"   • Check imports: {commands['check_imports']}")
-    print("   • View at: http://localhost:8000")
-    print()
 
-    print("🔍 NEXT STEPS:")
     for step in report["next_steps"][:3]:  # Show top 3
-        print(f"   • {step}")
-    print()
+        pass")
 
-    print(f"💾 Full report saved to: {output_file}")
-    print()
-    print("🎊 DOCUMENTATION SYSTEM IS FULLY OPERATIONAL!")
 
     return report
 

@@ -1,10 +1,11 @@
 [tool.poetry]
 name = "haive"
 version = "0.1.0"
-description = "Package for langgraph agents"
+description = "Advanced AI Agent Framework with auto-persistence, multi-agent coordination, and rich tool ecosystem"
 authors = ["pr1m8 <william.astley@algebraicwealth.com>"]
 license = "MIT"
 readme = "README.md"
+package-mode = false
 classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.12",
@@ -86,7 +87,7 @@ duckduckgo-search = "^7.5.2"
 html2text = "^2024.2.26"
 markdownify = "^1.1.0"
 pandas = "^2.2.3"
-rich = "^13.9.4"
+rich = "^14.1.0"
 psycopg2 = "^2.9.10"
 langchain-anthropic = "^0.3.10"
 langchain-deepseek = "^0.1.2"
@@ -151,13 +152,40 @@ haive-games = { path = "packages/haive-games", develop = true }
 haive-prebuilt = { path = "packages/haive-prebuilt", develop = true }
 haive-tools = { path = "packages/haive-tools", develop = true }
 websocket = "^0.2.1"
-mcp = "^1.6.0"
-langchain-mcp-adapters = "^0.0.9"
+mcp = "^1.10.1"
+langchain-mcp-adapters = "^0.1.8"
+asyncpg = "^0.30.0"
+langchain-google-vertexai = "^2.0.27"
+nox = "^2025.5.1"
+tomli = "^2.2.1"
+sgfmill = "^1.1.1"
+
+# CLI Dependencies
+click = "^8.2.1"
+typer = "^0.16.0"
+questionary = "^2.1.0"
+inquirerpy = "^0.3.4"
+invoke = "^2.2.0"
+fabric = "^3.2.2"
+plumbum = "^1.9.0"
+sh = "^2.2.2"
+click-repl = "^0.3.0"
+simple-term-menu = "^1.6.6"
+pick = "^2.4.0"
+halo = "^0.0.31"
+rich-click = "^1.8.9"
+alive-progress = "^3.3.0"
+pyfiglet = "^1.0.3"
+art = "^6.5"
+log-symbols = "^0.0.14"
+textual = "^5.0.1"
+blessed = "^1.21.0"
+shellingham = "^1.5.4"
+pexpect = "^4.9.0"
 
 
 [tool.poetry.dependencies.graphviz]
 version = "^0.20.3"
-source = "pypi"
 
 [tool.poetry.dependencies.faiss-gpu-cu12]
 version = "^1.10.0"
@@ -179,6 +207,21 @@ optional = true
 version = "15.0.1"
 python = "<3.12"
 
+[tool.poetry.dependencies.torch]
+version = "2.6.0+cu118"
+source = "pytorch_cuda"
+optional = true
+
+[tool.poetry.dependencies.torchvision]
+version = "0.21.0+cu118"
+source = "pytorch_cuda"
+optional = true
+
+[tool.poetry.dependencies.torchaudio]
+version = "2.6.0+cu118"
+source = "pytorch_cuda"
+optional = true
+
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.1.1"
 ace-tools = "^0.0"
@@ -190,7 +233,7 @@ mypy = "^1.15.0"
 pre-commit = "^4.1.0"
 twine = "^6.1.0"
 mermaid-python = "^0.1"
-langchain-huggingface = "^0.1.2"
+langchain-huggingface = "^0.3.0"
 ipykernel = "^6.29.5"
 pytest-rich = "^0.2.0"
 pytest-asyncio = "^0.26.0"
@@ -202,24 +245,89 @@ pytest-sugar = "^1.0.0"
 ipdb = "^0.13.13"
 viztracer = "^1.0.3"
 memray = "^1.17.1"
+taskipy = "^1.14.0"
+pyupgrade = "^3.19.0"
+autoimport = "^1.5.0"
 py-spy = "^0.4.0"
 ruff = "^0.11.6"
 pyright = "^1.1.399"
 sourcery = "^1.35.0"
 coverage = "^7.8.0"
+# Documentation automation tools for destroying 20,374 issues 🔥
+interrogate = "^1.7.0"            # Find missing docstrings
+pydocstyle = "^6.3.0"             # Docstring style enforcement
+darglint = "^1.8.1"               # Docstring-code sync validation
 mimesis = "^18.0.0"
 factory-boy = "^3.3.3"
 hypothesis = "^6.131.6"
 tomlkit = "^0.13.2"
 bandit = "^1.8.3"
-tomli = "^2.2.1"
 tomli-w = "^1.2.0"
 tox = "^4.25.0"
 watchdog = "^6.0.0"
 grandalf = "^0.8"
 prompt-toolkit = "^3.0.51"
 readchar = "^4.2.1"
+claude-code-sdk = "^0.0.14"
+terminal-controller = "^0.1.9"
+nbstripout = "^0.8.1"
+pymarkdownlnt = "^0.9.30"
+pyannotate = "^1.2.0"
+autotyping = "^24.9.0"
+monkeytype = "^23.3.0"
+yapf = "^0.43.0"
+pre-commit-hooks = "^5.0.0"
+towncrier = "^24.8.0"
+absolufy-imports = "^0.3.1"
+vulture = "^2.14"
+eradicate = "^3.0.0"
+torchfix = "^0.7.0"
+pydocstringformatter = "^0.7.5"
+add-trailing-comma = "^3.2.0"
+autoflake = "^2.3.1"
+syntax-checker = "^0.4.0"
+fixit = "^2.1.0"
+abs-imports = "^0.2.1"
+reindent = "^3.5.1"
+rstcheck = "^6.2.5"
+tomli = "^2.2.1"
+allure-pytest = "^2.14.3"
+pipdeptree = "^2.27.0"
+autopep8 = "^2.3.2"
+pycodestyle = "^2.14.0"
+docstr-coverage = "^2.3.2"
+rstcheck-core = "^1.2.2"
+pyspelling = "^2.10"
+codespell = "^2.4.1"
+proselint = "^0.14.0"
+vale = "^3.12.0.0"
+pytest-doctestplus = "^1.4.0"
+pytest-checkdocs = "^2.13.0"
+sphinx-testing = "^1.0.1"
+pytest-markdown-docs = "^0.9.0"
+pyroma = "^5.0"
+antsibull-docs = "^2.20.0"
+flake8-docstrings = "^1.7.0"
+flake8-rst-docstrings = "^0.3.1"
+flake8-bugbear = "^24.12.12"
+flake8-comprehensions = "^3.16.0"
+flake8-simplify = "^0.22.0"
+docformatter = "^1.7.7"
 
+[tool.poetry.group.dev.dependencies.torch]
+version = "2.6.0+cu118"
+source = "pytorch_cuda"
+
+[tool.poetry.group.dev.dependencies.torchvision]
+version = "0.21.0+cu118"
+source = "pytorch_cuda"
+
+[tool.poetry.group.dev.dependencies.torchaudio]
+version = "2.6.0+cu118"
+source = "pytorch_cuda"
+
+[tool.poetry.group.docs]
+optional = true
 
 [tool.poetry.group.docs.dependencies]
 sphinx = "^8.0.0"
@@ -247,23 +355,129 @@ sphinxcontrib-httpdomain = "^1.8.1"
 sphinx-pdf-generate = "^0.0.4"
 sphinx-simplepdf = "^1.6.0"
 readthedocs-sphinx-search = "^0.3.2"
-sphinx-docsearch = "^0.1.0"
 sphinx-multiversion = "^0.2.4"
 sphinxcontrib-versioning = "^2.2.1"
 sphinxext-opengraph = "^0.10.0"
 sphinx-needs = "^5.1.0"
-
-[tool.poetry.group.dev.dependencies.torch]
-version = "2.6.0+cu118"
-source = "pytorch_cuda"
-
-[tool.poetry.group.dev.dependencies.torchvision]
-version = "0.21.0+cu118"
-source = "pytorch_cuda"
-
-[tool.poetry.group.dev.dependencies.torchaudio]
-version = "2.6.0+cu118"
-source = "pytorch_cuda"
+langchain-google-vertexai = "^2.0.27"
+sphinx-gallery = "^0.19.0"
+sphinx-exec-directive = "^0.6"
+jupyter-cache = "^1.0.1"
+pydata-sphinx-theme = "^0.16.1"
+sphinx-prompt = "^1.10.0"
+sphinx-codeautolink = "^0.15.0"
+sphinx-jinja2 = "^0.0.1"
+sphinx-argparse = "^0.5.2"
+sphinx-click = "^6.0.0"
+sphinx-issues = "^5.0.1"
+sphinx-jsonschema = "^1.19.1"
+sphinx-tippy = "^0.4.3"
+sphinx-hoverxref = "^1.4.2"
+sphinxemoji = "^0.3.1"
+sphinx-last-updated-by-git = "^0.3.8"
+sphinx-paramlinks = "^0.6.0"
+sphinxext-rediraffe = "^0.2.7"
+sphinx-math-dollar = "^1.2.1"
+sphinx-lint = "^1.0.0"
+autodoc-pydantic = "^2.2.0"
+sphinxcontrib-plantuml = "^0.30"
+sphinxcontrib-drawio = "^0.0.17"
+sphinxcontrib-images = "^1.0.1"
+sphinxcontrib-seqdiag = "^3.0.0"
+sphinxcontrib-blockdiag = "^3.0.0"
+sphinx-autodocgen = "^1.4"
+sphinxcontrib-fulltoc = "^1.2.0"
+sphinx-external-toc = "^1.0.1"
+sphinx-thebe = "^0.3.1"
+mkdocs = "^1.6.1"
+mkdocs-material = "^9.6.16"
+mkdocstrings = "^0.30.0"
+pdoc = "^15.0.4"
+sphinx-autosummary-accessors = "^2025.3.1"
+sphinx-pyproject = "^0.3.0"
+sphinx-modern-theme = "^1.0.5"
+sphinx-basic-ng = "^1.0.0b2"
+myst-nb = "^1.3.0"
+sphinx-typlog-theme = "^0.8.0"
+autodocsumm = "^0.2.14"
+sphinx-favicon = "^1.0.1"
+sphinx-notfound-page = "^1.1.0"
+sphinx-intl = "^2.3.1"
+sphinx-git = "^11.0.0"
+sphinx-version-warning = "^1.1.2"
+sphinx-contributors = "^0.2.7"
+sphinx-substitution-extensions = "^2025.6.6"
+sphinx-selective-exclude = "^1.0.3"
+sphinx-revealjs = "^3.2.0"
+sphinx-proof = "^0.2.1"
+sphinx-exercise = "^1.0.1"
+sphinx-jinja = "^2.0.2"
+sphinx-examples = "^0.0.5"
+sphinx-removed-in = "^0.2.3"
+sphinx-pyscript = "^0.1.0"
+nbsite = "^0.8.7"
+sphinx-autofixture = "^0.4.1"
+sphinx-automagicdoc = "^0.0.2"
+sphinx-me = "^0.3"
+sphinx-autoissues = "^0.0.1"
+sphinx-autoindex = "^0.1.5"
+sphinx-autopackagesummary = "^1.3"
+sphinx-autopages = "^0.0.3"
+sphinx-automodapi = "^0.20.0"
+sphinx-autorun = "^2.0.0"
+sphinx-cache = "^0.0.1"
+sphinx-btn = "^0.1.2"
+sphinx-changelog = "^1.6.0"
+sphinx-carousel = "^1.2.0"
+sphinx-charts = "^0.2.1"
+sphinx-cmd = "^0.5.0"
+sphinx-codefence = "^0.1.0"
+sphinx-codelinks = "^0.1.2"
+sphinx-collapse = "^0.1.3"
+sphinx-collections = "^0.2.0"
+sphinx-combine = "^2024.12.30.1"
+sphinx-comments = "^0.0.3"
+sphinx-debuginfo = "^0.2.2.post1"
+sphinx-desktop = "^20240301"
+sphinx-diagrams = "^0.4.0"
+sphinx-disqus = "^1.3.0"
+sphinx-dust = "^1.2.4"
+sphinx-fasvg = "^2.0.2"
+sphinx-feedback = "^0.1.0"
+sphinx-galleria = "^2.1.0"
+sphinx-mindmap = "^0.5.2"
+sphinx-multiproject = "^1.0.0"
+sphinx-openapi = "^1.0.10"
+sphinx-polyversion = "^1.1.0"
+sphinx-refdoc = "^0.3.1"
+sphinx-reports = "^0.9.7"
+sphinx-reredirects = "^1.0.0"
+sphinx-sql = "^1.3.5"
+sphinx-social = "^0.0.0"
+sphinx-tags = "^0.4"
+sphinx-tagtoctree = "^1.0.0"
+sphinx-thebelab = "^0.0.6"
+sphinx-timeline = "^0.2.1"
+sphinx-toggleprompt = "^0.6.0"
+sphinx-toml = "^0.0.4"
+sphinx-treeview = "^1.1.1"
+sphinx-uml = "^0.3.2"
+sphinx-typesafe = "^0.3"
+sphinx-tsegsearch = "^1.2"
+sphinx-variations = "^1.0.5"
+sphinx-versions = "^1.1.3"
+sphinx-versioning = "^0.1.5"
+sphinx-visualized = "^0.4.0"
+sphinx-watch = "^0.1.2"
+sphinx-webtools = "^0.2.2"
+sphinx-icontract = "^2.0.3"
+sphinx-inlinecode = "^2.0.1"
+sphinx-inplace = "^0.0.7"
+sphinx-interrogatedb = "^1.3.1"
+sphinx-lastupdate = "^1.0.0"
+sphinx-library = "^1.1.3"
+sphinx-mcp = "^0.1.1"
+sphinx-markdown = "^1.0.2"
 
 [tool.poetry.group.gmail_toolkit.dependencies]
 google-api-python-client = "^2.165.0"
@@ -394,6 +608,27 @@ mistralai = "^1.8.0"
 deepseek = "^1.0.0"
 google-genai = "^1.16.1"
 
+
+[tool.poetry.group.persistence.dependencies]
+langgraph-checkpoint-sqlite = "^2.0.10"
+
+
+[tool.poetry.group.schemathesis.dependencies]
+detect-secrets = "^1.5.0"
+pipdeptree = "^2.27.0"
+nbstripout = "^0.8.1"
+python-language-server = "^0.36.2"
+
+
+[tool.poetry.group.experimental.dependencies]
+langmem = "^0.0.28"
+
+
+
+
+[tool.poetry.group.search_tools.dependencies]
+google-search-results = "^2.4.2"
+
 [tool.poetry.extras]
 cpu = ["torch", "torchvision", "torchaudio"]
 cuda = ["torch", "torchvision", "torchaudio"]
@@ -419,9 +654,23 @@ overrides = [
   { module = "tests.*", disallow_untyped_defs = false, disallow_incomplete_defs = false },
 ]
 
+[tool.doc8]
+max-line-length = 100
+ignore-path = ["docs/build", "*.egg-info", "**/__pycache__", ".git"]
+file-encoding = "utf-8"
+ignore = ["D001", "D002", "D004"]                                    # Ignore some line length warnings
+
+[tool.codespell]
+skip = "*.json,*.csv,poetry.lock,.git,*.pyc,*.pyo,*.egg-info,docs/build"
+ignore-words-list = "haive,agentic,nd,te,ot,od,ue"
+count = true
+quiet-level = 2
+
 [tool.ruff]
 line-length = 100
-target-version = "py311"
+target-version = "py312"
+
+[tool.ruff.lint]
 select = [
   "E",
   "F",
@@ -450,26 +699,249 @@ select = [
   "PL",
   "TRY",
   "RUF",
+  "TID251", # Banned relative imports (enforce absolute)
+  "TID252", # Relative imports from parent modules
 ]
 ignore = ["E501", "D100", "D104", "D107", "D203", "D213", "RET504", "TRY003"]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "tests/**/*.py" = ["D", "S101", "PLR2004"]
 "examples/**/*.py" = ["D", "T20"]
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "google"
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 max-complexity = 12
 
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party = ["haive"]
 combine-as-imports = true
 force-sort-within-sections = true
 lines-after-imports = 2
 
+# 📦 AutoImport Configuration for Namespaced Poly Repo
+[tool.autoimport]
+# Disable moving to top to preserve existing structure
+disable_move_to_top = false
+
+# Force absolute imports for haive namespace
+force_absolute_imports = true
+
+# Exclude certain directories from auto-import processing
+exclude_dirs = [
+  "docs",
+  "tests/fixtures",
+  "build",
+  ".git",
+  "__pycache__",
+  ".trunk",
+  ".cache",
+]
+
+# Common statements for haive namespace
+[tool.autoimport.common_statements]
+# Core haive imports
+"haive.core" = "from haive import core"
+"haive.agents" = "from haive import agents"
+"haive.tools" = "from haive import tools"
+"haive.games" = "from haive import games"
+"haive.dataflow" = "from haive import dataflow"
+"haive.mcp" = "from haive import mcp"
+
+# Common Python patterns
+"np" = "import numpy as np"
+"pd" = "import pandas as pd"
+"plt" = "import matplotlib.pyplot as plt"
+"Path" = "from pathlib import Path"
+"Optional" = "from typing import Optional"
+"Union" = "from typing import Union"
+"List" = "from typing import List"
+"Dict" = "from typing import Dict"
+"Any" = "from typing import Any"
+
+# LangChain common imports
+"BaseModel" = "from pydantic import BaseModel"
+"Field" = "from pydantic import Field"
+
+# 🔧 Import Organization Rules
+[tool.autoimport.import_rules]
+# Always use absolute imports for haive namespace
+prefer_absolute = ["haive.*"]
+
+# Detect and flag relative imports as errors
+flag_relative_imports = true
+
+# Auto-fix common import issues
+auto_fix_imports = true
+
+[tool.trailrunner]
+# Instruct Trailrunner to skip any .cache/trunk or .trunk directories
+exclude = ["**/.cache/trunk/**", "**/.trunk/**"]
+
+
+# 🚀 Taskipy Development Workflow Tasks
+[tool.taskipy.tasks]
+
+# 🧠 Intelligent Error Analysis & Categorization
+analyze-errors = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only"
+analyze-errors-verbose = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only --verbose"
+analyze-all = "dev-tools/scripts/intelligent-error-analyzer.sh packages/ --analyze-only"
+
+# 🚨 Safety-Level Fixes (Progressive Approach)
+emergency-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 1"
+surgical-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 2"
+moderate-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 3"
+conservative-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 4"
+cosmetic-fix = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --fix --safety-level 5"
+
+# 👁️ Preview Modes (See Changes Before Applying)
+preview-emergency = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --preview --safety-level 1"
+preview-surgical = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --preview --safety-level 2"
+preview-moderate = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --preview --safety-level 3"
+preview-full = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --preview --safety-level 5"
+
+# 📊 Error Analysis Reports
+error-report = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only --report markdown"
+error-report-json = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only --report json"
+
+# 🔄 Systematic Code Fixing (Master Workflows)
+fix-code = "dev-tools/scripts/systematic-code-fixer.sh packages/haive-prebuilt/src"
+fix-code-preview = "dev-tools/scripts/systematic-code-fixer.sh packages/haive-prebuilt/src --preview"
+
+# 🚨 Pre-flight Syntax Fixes
+fix-syntax = "dev-tools/scripts/pre-flight-syntax-fixer.sh packages/haive-prebuilt/src"
+fix-syntax-preview = "dev-tools/scripts/pre-flight-syntax-fixer.sh packages/haive-prebuilt/src --preview"
+
+# 🔧 Modern Indentation Tools
+fix-indentation = "dev-tools/scripts/modern-indentation-fixer.sh packages/haive-prebuilt/src autopep8"
+fix-indentation-preview = "dev-tools/scripts/modern-indentation-fixer.sh packages/haive-prebuilt/src autopep8 --preview"
+
+# 📦 Import Management (3-Way System)
+fix-imports = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-prebuilt/src"
+fix-imports-preview = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-prebuilt/src --preview"
+
+# 🐍 Python Modernization
+modernize-code = "dev-tools/scripts/syntax-and-modernization-fixer.sh packages/haive-prebuilt/src"
+modernize-code-preview = "dev-tools/scripts/syntax-and-modernization-fixer.sh packages/haive-prebuilt/src --preview"
+
+# 🔄 Configuration Management
+fix-rich-dependency = "dev-tools/scripts/fix-rich-dependency-permanently.sh"
+validate-rich = "dev-tools/scripts/validate-rich-dependency.sh"
+restore-taskipy = "dev-tools/scripts/restore-taskipy-config.sh"
+
+# 🔍 Debugging and Analysis
+debug-syntax = "dev-tools/scripts/debug-and-fix-syntax.sh packages/haive-prebuilt/src"
+debug-syntax-fix = "dev-tools/scripts/debug-and-fix-syntax.sh packages/haive-prebuilt/src --fix"
+
+# 🧹 Cleanup and Maintenance
+clean-backups = "find packages/ -name '*.py.bak' -delete && find packages/ -name '*~' -delete"
+clean-cache = "find packages/ -name '__pycache__' -type d -exec rm -rf {} + 2>/dev/null || true"
+clean-all = "poetry run task clean-backups && poetry run task clean-cache"
+
+# 🚀 Quick Start Workflows
+quick-fix = "poetry run task emergency-fix && poetry run task surgical-fix"
+full-fix = "poetry run task fix-code"
+health-check = "find packages/haive-prebuilt/src -name '*.py' -exec python3 -m py_compile {} \\; 2>&1 | grep -c 'SyntaxError\\|IndentationError' || echo '✅ All files compile successfully'"
+
+# 📚 Documentation and Help
+help-tasks = "echo '🧠 Available tasks:' && poetry run task --list"
+help-scripts = "echo '📁 Script documentation in dev-tools/README.md'"
+
+# 📰 Changelog Management
+changelog-preview = "poetry run towncrier build --draft"
+changelog-build = "poetry run towncrier build"
+changelog-check = "poetry run towncrier check"
+changelog-create = "echo '📝 Create changelog fragment in changes/{type}/{issue}.{description}.md'"
+
+# 🔧 Pre-commit Management
+precommit-install = "poetry run pre-commit install"
+precommit-run = "poetry run pre-commit run --all-files"
+precommit-update = "poetry run pre-commit autoupdate"
+precommit-clean = "poetry run pre-commit clean"
+precommit-check = "poetry run pre-commit run --all-files --show-diff-on-failure"
+
+# ===================================================================
+# 📰 Towncrier Configuration - Changelog Management
+# ===================================================================
+
+[tool.towncrier]
+package = "haive"
+filename = "CHANGELOG.md"
+directory = "changes"
+title_format = "# Changelog\n\nAll notable changes to this project will be documented in this file.\n\nThe format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),\nand this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).\n\n<!-- towncrier release notes start -->"
+issue_format = "[#{issue}](https://github.com/prim8/haive/issues/{issue})"
+# template = "changes/.template.md"  # Using default template
+start_string = "<!-- towncrier release notes start -->"
+underlines = ["", "", ""]
+all_bullets = false
+# Ignore directories and common non-fragment files
+ignore = [
+  "README.md",
+  ".template.md",
+  ".gitkeep",
+  "feature",
+  "bugfix",
+  "improvement",
+  "deprecation",
+  "breaking",
+  "security",
+  "performance",
+  "docs",
+  "dev",
+  "misc",
+]
+
+[[tool.towncrier.type]]
+directory = "feature"
+name = "🚀 Features"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "bugfix"
+name = "🐛 Bug Fixes"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "improvement"
+name = "✨ Improvements"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "deprecation"
+name = "🗑️ Deprecations"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "breaking"
+name = "💥 Breaking Changes"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "security"
+name = "🔒 Security"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "performance"
+name = "⚡ Performance"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "docs"
+name = "📚 Documentation"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "dev"
+name = "🔧 Development"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "misc"
+name = "🔀 Miscellaneous"
+showcontent = true
 
 [build-system]
 requires = ["poetry-core"]

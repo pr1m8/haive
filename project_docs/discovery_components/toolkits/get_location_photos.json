@@ -1,0 +1,97 @@
+{
+  "component_info": {
+    "name": "get_location_photos",
+    "component_type": "tool",
+    "module_path": "packages.haive-tools.src.haive.tools.toolkits.trip_advisor_toolkit",
+    "class_name": "StructuredTool",
+    "description": "Get high-quality photos for a location.\n\n    Retrieves photos from TripAdvisor for a specific location.\n\n    Args:\n        location_id: The unique identifier for a TripAdvisor location.\n        language: The language code for the response content (ISO 639-1).\n        limit: Maximum number of photos to return (1-100).\n        offset: Number of photos to skip for pagination.\n        source: Filter photos by source (tripadvisor, management).\n\n    Returns:\n        dict: Collection of photo objects with URLs and metadata.",
+    "source_code": "",
+    "env_vars": [],
+    "timestamp": "2025-07-10T19:45:29.035554",
+    "schema": {
+      "description": "Input parameters for retrieving location photos.",
+      "properties": {
+        "location_id": {
+          "description": "The unique identifier for a TripAdvisor location.",
+          "title": "Location Id",
+          "type": "integer"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "en",
+          "description": "The language code for the response content (ISO 639-1).",
+          "title": "Language"
+        },
+        "limit": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 5,
+          "description": "Maximum number of photos to return (1-100).",
+          "title": "Limit"
+        },
+        "offset": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "description": "Number of photos to skip for pagination.",
+          "title": "Offset"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Filter photos by source (tripadvisor, management).",
+          "title": "Source"
+        }
+      },
+      "required": ["location_id"],
+      "title": "LocationPhotosInput",
+      "type": "object"
+    },
+    "metadata": {},
+    "has_tool": true,
+    "tool_name": "get_location_photos",
+    "tool_description": "Get high-quality photos for a location.\n\n    Retrieves photos from TripAdvisor for a specific location.\n\n    Args:\n        location_id: The unique identifier for a TripAdvisor location.\n        language: The language code for the response content (ISO 639-1).\n        limit: Maximum number of photos to return (1-100).\n        offset: Number of photos to skip for pagination.\n        source: Filter photos by source (tripadvisor, management).\n\n    Returns:\n        dict: Collection of photo objects with URLs and metadata."
+  },
+  "document": {
+    "page_content": "# get_location_photos\n**Type:** tool\n**Module:** packages.haive-tools.src.haive.tools.toolkits.trip_advisor_toolkit\n**Class:** StructuredTool\n\n## Description\nGet high-quality photos for a location.\n\n    Retrieves photos from TripAdvisor for a specific location.\n\n    Args:\n        location_id: The unique identifier for a TripAdvisor location.\n        language: The language code for the response content (ISO 639-1).\n        limit: Maximum number of photos to return (1-100).\n        offset: Number of photos to skip for pagination.\n        source: Filter photos by source (tripadvisor, management).\n\n    Returns:\n        dict: Collection of photo objects with URLs and metadata.\n\n## Schema\n```json\n{\n  \"description\": \"Input parameters for retrieving location photos.\",\n  \"properties\": {\n    \"location_id\": {\n      \"description\": \"The unique identifier for a TripAdvisor location.\",\n      \"title\": \"Location Id\",\n      \"type\": \"integer\"\n    },\n    \"language\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": \"en\",\n      \"description\": \"The language code for the response content (ISO 639-1).\",\n      \"title\": \"Language\"\n    },\n    \"limit\": {\n      \"anyOf\": [\n        {\n          \"type\": \"integer\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": 5,\n      \"description\": \"Maximum number of photos to return (1-100).\",\n      \"title\": \"Limit\"\n    },\n    \"offset\": {\n      \"anyOf\": [\n        {\n          \"type\": \"integer\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": 0,\n      \"description\": \"Number of photos to skip for pagination.\",\n      \"title\": \"Offset\"\n    },\n    \"source\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"null\"\n        }\n      ],\n      \"default\": null,\n      \"description\": \"Filter photos by source (tripadvisor, management).\",\n      \"title\": \"Source\"\n    }\n  },\n  \"required\": [\n    \"location_id\"\n  ],\n  \"title\": \"LocationPhotosInput\",\n  \"type\": \"object\"\n}\n```\n\n## Usage as Tool\n**Tool Name:** `get_location_photos`\n**Description:** Get high-quality photos for a location.\n\n    Retrieves photos from TripAdvisor for a specific location.\n\n    Args:\n        location_id: The unique identifier for a TripAdvisor location.\n        language: The language code for the response content (ISO 639-1).\n        limit: Maximum number of photos to return (1-100).\n        offset: Number of photos to skip for pagination.\n        source: Filter photos by source (tripadvisor, management).\n\n    Returns:\n        dict: Collection of photo objects with URLs and metadata.\n\n## Source Code\n```python\n\n```",
+    "metadata": {
+      "name": "get_location_photos",
+      "component_type": "tool",
+      "module_path": "packages.haive-tools.src.haive.tools.toolkits.trip_advisor_toolkit",
+      "class_name": "StructuredTool",
+      "has_tool": true,
+      "has_engine_config": false,
+      "env_vars": [],
+      "timestamp": "2025-07-10T19:45:29.035554",
+      "category": "toolkits"
+    }
+  },
+  "tool_available": true,
+  "engine_config_available": false
+}

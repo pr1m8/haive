@@ -1,0 +1,51 @@
+name: "Generate Requirements"
+description: "Generates requirements.txt based on detected package manager and Python version."
+inputs:
+  manager:
+    description: "Package manager (requirements|poetry|pipenv|setup)"
+    required: true
+  manifest:
+    description: "Manifest filename"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ inputs.python_version }}
+
+    - name: Install dependencies
+      if: ${{ inputs.manager == 'poetry' }}
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+        echo "$HOME/.local/bin" >> $GITHUB_PATH
+        poetry install --no-dev
+
+    - name: Install dependencies
+      if: ${{ inputs.manager == 'pipenv' }}
+      run: |
+        pip install pipenv
+        pipenv install --dev --deploy
+
+    - name: Generate requirements.txt from Poetry
+      if: ${{ inputs.manager == 'poetry' }}
+      run: poetry export --without-hashes --without dev -f requirements.txt -o requirements.txt
+
+    - name: Generate requirements.txt from Pipenv
+      if: ${{ inputs.manager == 'pipenv' }}
+      run: pipenv lock -r > requirements.txt
+
+    - name: Copy existing requirements.txt
+      if: ${{ inputs.manager == 'requirements' }}
+      run: cp requirements.txt requirements.txt
+
+    - name: Generate requirements.txt from setup.py
+      if: ${{ inputs.manager == 'setup' }}
+      run: pip install pipreqs && pipreqs . --force
+
+    - name: Upload requirements
+      uses: actions/upload-artifact@v3
+      with:
+        name: requirements
+        path: requirements.txt

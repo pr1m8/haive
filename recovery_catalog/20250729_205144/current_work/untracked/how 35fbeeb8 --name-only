@@ -1,0 +1,10 @@
+[33m8f0c1086[m feat: add new documentation for ValidationNodeV2 and SimpleAgentV3 integration
+[33m8f965286[m docs: fix alignment issues and add game streaming visualization
+[33m3680f1c1[m fix(haive-games): resolve 4 syntax errors
+[33m25f3578f[m feat(recovery): complete submodule recovery and conflict resolution
+[33m35fbeeb8[m fix: massive compilation error cleanup across all packages
+[33mf01bb03c[m fix: syntax errors in automation scripts and apply initial fixes
+[33m3f5af05f[m feat(docs): comprehensive documentation issues audit and screenshot automation
+[33m06a7d09a[m Remove packages from git tracking to prevent double inclusion in source control
+[33m7ab5ff48[m Fix submodule branches - vzn/dav for most, feature/fix_everything for core/agents
+[33mabcb3ce0[m organize: Move test files to proper locations and create AgentNodeV3 sequential test

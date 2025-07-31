@@ -1,0 +1,66 @@
+commit cefc810de42334e51e4fc494cfae308a9df3708d
+Merge: 58977bec 9b634b16
+Author: pr1m8 <william.astley@algebraicwealth.com>
+Date:   Mon Jul 28 03:32:37 2025 -0400
+
+    On feature/fix_everything: Accidental changes - reverting to docs branch
+
+ README.md                                          |   8 +-
+ docs/TESTING_README.md                             |  28 +-
+ docs/docstring_templates.py                        |  51 +--
+ docs/generate_agent_demos.py                       |   1 +
+ docs/generate_game_demos.py                        |   1 +
+ docs/run_all_doc_tests.py                          | 191 +++-----
+ docs/scripts/agent_demos/agent_cache_loader.py     | 233 +++++-----
+ docs/scripts/agent_demos/generate_agent_demos.py   |   1 +
+ docs/scripts/agent_demos/generate_game_demos.py    |   1 +
+ docs/scripts/build_tools/generate_package_docs.py  |   1 +
+ docs/scripts/build_tools/restructure_navigation.py |   1 +
+ .../build_tools/update_sidebar_structure.py        |   1 +
+ .../cache_generation/generate_agent_cache.py       | 484 +++++++++++----------
+ docs/scripts/documentation_audit.py                | 150 +++----
+ .../extensions_dev/_extensions/agent_docs.py       |   1 +
+ .../_extensions/auto_module_discovery.py           |   2 +-
+ .../extensions_dev/_extensions/autosummary_mock.py |   1 +
+ .../extensions_dev/_extensions/games_autodoc.py    |   2 +-
+ .../extensions_dev/_extensions/mock_handler.py     |   1 -
+ .../_extensions/namespace_autosummary.py           |   3 +-
+ docs/scripts/integrate_real_examples.py            |   4 -
+ docs/source/_extensions/agent_docs.py              |   1 +
+ docs/source/_extensions/auto_module_discovery.py   |   2 +-
+ docs/source/_extensions/autosummary_mock.py        |   1 +
+ docs/source/_extensions/games_autodoc.py           |   2 +-
+ docs/source/_extensions/mock_handler.py            |   1 -
+ docs/source/_extensions/namespace_autosummary.py   |   3 +-
+ docs/source/agent_cache_loader.py                  |  33 +-
+ .../auto_examples/advanced_multi_agent_patterns.py | 241 +++++-----
+ docs/source/auto_examples/agentic_rag_example.py   | 107 +++--
+ .../business_multi_agent_workflows.py              | 333 +++++++-------
+ .../auto_examples/complex_multi_agent_workflows.py | 334 +++++++-------
+ docs/source/auto_examples/multi_agent_showcase.py  | 111 ++---
+ .../plot_simple_agent_visualization.py             |  18 +-
+ docs/source/auto_examples/plot_simple_example.py   |   8 +-
+ docs/source/conf.py                                |   4 +-
+ .../specific_loaders/database_and_cloud_loaders.py |   1 +
+ .../specific_loaders/file_loaders.py               |   4 +-
+ .../specific_loaders/text_loaders.py               |   2 +-
+ docs/take_screenshot_both.py                       |  12 +-
+ docs/take_screenshot_quick.py                      |   4 +-
+ docs/validate_css_fixes.py                         | 171 ++++----
+ docs/validate_game_demos.py                        | 201 ++++-----
+ examples/advanced_multi_agent_patterns.py          | 241 +++++-----
+ examples/agent_with_structured_output.py           |  53 +--
+ examples/agentic_rag_example.py                    | 107 +++--
+ examples/agents/enhanced_simple_agent_example.py   |  10 +-
+ examples/business_multi_agent_workflows.py         | 333 +++++++-------
+ examples/complex_multi_agent_workflows.py          | 334 +++++++-------
+ examples/dynamic_activation_basic_example.py       |   4 +-
+ examples/dynamic_multi_agent_example.py            |   1 +
+ examples/dynamic_react_agent_example.py            |   3 +-
+ examples/enhanced_agent_pattern_demo.py            |   5 +-
+ examples/multi_agent_v4_react_to_simple.py         | 149 +++----
+ noxfile.py                                         |  91 ++--
+ .../static_supervisor_demo.py                      |   8 +-
+ .../original_implementation_backup.py              |  39 +-
+ vscode-general-settings.json                       |  52 +--
+ 58 files changed, 2114 insertions(+), 2076 deletions(-)
