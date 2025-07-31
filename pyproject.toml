@@ -317,6 +317,7 @@ docformatter = "^1.7.7"
 pydoclint = "^0.6.6"
 pydoctest = "^0.2.1"
 darglint2 = "^1.8.2"
+lazy-log-formatter = "^0.7.0"
 
 [tool.poetry.group.dev.dependencies.torch]
 version = "2.6.0+cu118"
