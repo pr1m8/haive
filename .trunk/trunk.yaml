@@ -139,6 +139,15 @@ actions:
         echo "✅ Pre-commit integration completed"
       interactive: optional
       notify_on_error: true
+
+    # Override trunk's default pre-push hook to only check staged files
+    - id: trunk-check-pre-push
+      display_name: Trunk Pre-Push Check (Staged Files Only)
+      description: Run trunk checks on staged files only during git push
+      run: trunk check --staged --fix --all
+      triggers:
+        - git_hooks: [pre-push]
+      
 # Optional: If your main branch is not "main" or "master", set it here
 # repo:
 #   trunk_branch: main
