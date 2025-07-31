@@ -13,7 +13,27 @@ This module configures essential Sphinx extensions including:
 from typing import Any, Dict, List, Optional
 
 
-def get_config(minimal: bool = False) -> Dict[str, Any]:
+def get_config() -> Dict[str, Any]:
+    """Get standard core Sphinx extensions configuration."""
+    return _get_config_impl(minimal=False)
+
+
+def get_minimal_config() -> Dict[str, Any]:
+    """Get minimal core Sphinx extensions configuration."""
+    return _get_config_impl(minimal=True)
+
+
+def get_standard_config() -> Dict[str, Any]:
+    """Get standard core Sphinx extensions configuration."""
+    return _get_config_impl(minimal=False)
+
+
+def get_full_config() -> Dict[str, Any]:
+    """Get full core Sphinx extensions configuration."""
+    return _get_config_impl(minimal=False)
+
+
+def _get_config_impl(minimal: bool = False) -> Dict[str, Any]:
     """Get core Sphinx extensions configuration.
 
     Args:
