@@ -10,11 +10,19 @@ This module provides memory-safe versions of documentation sessions that:
 from pathlib import Path
 
 import nox
+
 # Import memory management
 from memory_manager import get_memory_safe_sphinx_args, memory_manager
+
 # Import base documentation sessions
-from session_docs import (BUILD_DIR, DOCS_DIR, PYTHON_VERSIONS, SOURCE_DIR,
-                          create_log_file, run_with_graceful_handling)
+from session_docs import (
+    BUILD_DIR,
+    DOCS_DIR,
+    PYTHON_VERSIONS,
+    SOURCE_DIR,
+    create_log_file,
+    run_with_graceful_handling,
+)
 
 
 @nox.session(python=PYTHON_VERSIONS)
