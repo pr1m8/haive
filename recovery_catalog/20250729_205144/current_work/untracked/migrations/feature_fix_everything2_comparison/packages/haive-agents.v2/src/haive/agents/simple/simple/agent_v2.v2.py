@@ -15,6 +15,14 @@ Key improvements over V1:
 import logging
 from typing import Any, Literal
 
+from langchain_core.messages import AIMessage
+
+# Import BaseOutputParser to ensure it's available for LangGraph type evaluation
+from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
+from langgraph.graph import END, START
+from pydantic import BaseModel, Field, field_validator
+
+from haive.agents.base.agent import Agent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.node.parser_node_config import ParserNodeConfig
@@ -25,14 +33,7 @@ from haive.core.graph.node.validation_router_v2 import validation_router_v2
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.models.llm.base import LLMConfig
 from haive.core.schema.schema_composer import SchemaComposer
-from langchain_core.messages import AIMessage
 
-# Import BaseOutputParser to ensure it's available for LangGraph type evaluation
-from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
-from langgraph.graph import END, START
-from pydantic import BaseModel, Field, field_validator
-
-from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 
@@ -378,7 +379,7 @@ class SimpleAgentV2(Agent):
 
         return graph
 
-    def create_runnable(self, runnable_config: dict[str, Any] = None):
+    def create_runnable(self, runnable_config: dict[str, Any] | None = None):
         """Override to ensure state includes required fields."""
         compiled = super().create_runnable(runnable_config)
 

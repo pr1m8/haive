@@ -4,6 +4,13 @@ Implements advanced RAG patterns like CRAG, Self-RAG, HYDE, and grading workflow
 using the new multi-agent base with compatibility and enhanced state management.
 """
 
+from langchain_core.documents import Document
+from langgraph.graph import END, START
+
+from haive.agents.base.agent import Agent
+from haive.agents.multi.base import ConditionalAgent, SequentialAgent
+from haive.agents.rag.base.agent import SimpleRAGAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.callable_node import (
     CallableNodeConfig,
@@ -13,13 +20,6 @@ from haive.core.graph.node.callable_node import (
 )
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.prebuilt.rag_state import MultiAgentRAGState
-from langchain_core.documents import Document
-from langgraph.graph import END, START
-
-from haive.agents.base.agent import Agent
-from haive.agents.multi.base import ConditionalAgent, SequentialAgent
-from haive.agents.rag.base.agent import SimpleRAGAgent
-from haive.agents.simple.agent import SimpleAgent
 
 
 class DocumentGradingAgent(Agent):

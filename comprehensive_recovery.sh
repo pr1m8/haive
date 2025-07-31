@@ -23,9 +23,9 @@ git diff --staged >"${RECOVERY_DIR}/current_work/staged_diff.patch" || true
 # Copy all untracked files
 echo "📁 Copying untracked files..."
 git ls-files --others --exclude-standard | while read -r file; do
-	if [[ -f $file ]]; then
-		mkdir -p "${RECOVERY_DIR}/current_work/untracked/$(dirname "$file")"
-		cp "$file" "${RECOVERY_DIR}/current_work/untracked/$file"
+	if [[ -f ${file} ]]; then
+		mkdir -p "${RECOVERY_DIR}/current_work/untracked/$(dirname "${file}")"
+		cp "${file}" "${RECOVERY_DIR}/current_work/untracked/${file}"
 	fi
 done
 
@@ -37,9 +37,9 @@ git stash list --date=iso >"${RECOVERY_DIR}/stashes/stash_list.txt"
 # Export each stash
 stash_count=$(git stash list | wc -l)
 for i in $(seq 0 $((stash_count - 1))); do
-	echo "Saving stash@{$i}..."
-	git stash show -p "stash@{$i}" >"${RECOVERY_DIR}/stashes/stash_${i}.patch" 2>/dev/null || true
-	git show --name-only "stash@{$i}" >"${RECOVERY_DIR}/stashes/stash_${i}_files.txt" 2>/dev/null || true
+	echo "Saving stash@{${i}}..."
+	git stash show -p "stash@{${i}}" >"${RECOVERY_DIR}/stashes/stash_${i}.patch" 2>/dev/null || true
+	git show --name-only "stash@{${i}}" >"${RECOVERY_DIR}/stashes/stash_${i}_files.txt" 2>/dev/null || true
 done
 
 # 3. Save all branches and references
@@ -61,10 +61,10 @@ grep "dangling commit" "${RECOVERY_DIR}/dangling/fsck_output.txt" | awk '{print 
 # Save each dangling commit
 if [[ -f "${RECOVERY_DIR}/dangling/dangling_commits.txt" ]]; then
 	while read -r commit; do
-		if [[ -n $commit ]]; then
-			echo "Saving dangling commit: $commit"
-			git show --name-only "$commit" >"${RECOVERY_DIR}/dangling/commit_${commit}_files.txt" 2>/dev/null || true
-			git show "$commit" >"${RECOVERY_DIR}/dangling/commit_${commit}.patch" 2>/dev/null || true
+		if [[ -n ${commit} ]]; then
+			echo "Saving dangling commit: ${commit}"
+			git show --name-only "${commit}" >"${RECOVERY_DIR}/dangling/commit_${commit}_files.txt" 2>/dev/null || true
+			git show "${commit}" >"${RECOVERY_DIR}/dangling/commit_${commit}.patch" 2>/dev/null || true
 		fi
 	done <"${RECOVERY_DIR}/dangling/dangling_commits.txt"
 fi

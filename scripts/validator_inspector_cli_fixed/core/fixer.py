@@ -23,7 +23,7 @@ class ValidatorFixer(cst.CSTTransformer):
                 model_validator_dec = dec
                 break
             # SKIP field_validator - never modify these
-            elif m.matches(dec, m.Call(func=m.Name("field_validator"))):
+            if m.matches(dec, m.Call(func=m.Name("field_validator"))):
                 return updated_node
 
         if not model_validator_dec:
@@ -140,11 +140,11 @@ class SelfImportAdder(cst.CSTTransformer):
 
         # If no typing import, prepend one
         new_import = cst.parse_statement("from typing import Self\n")
-        return updated_node.with_changes(body=[new_import] + list(updated_node.body))
+        return updated_node.with_changes(body=[new_import, *list(updated_node.body)])
 
 
 def fix_validators(filepath: str) -> tuple[cst.Module, bool]:
-    """Fix validators and return (tree, was_modified)"""
+    """Fix validators and return (tree, was_modified)."""
     try:
         source = Path(filepath).read_text(encoding="utf-8")
         tree = cst.parse_module(source)

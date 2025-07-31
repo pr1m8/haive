@@ -4,7 +4,6 @@ This module defines specialized engine configurations for candidate generation,
 evaluation, and selection in the Tree of Thoughts algorithm.
 """
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
@@ -12,6 +11,8 @@ from haive.agents.reasoning_and_critique.tot.models import (
     CandidateEvaluation,
     CandidateGeneration,
 )
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 # =============================
 # Default Prompts

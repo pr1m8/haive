@@ -16,30 +16,30 @@ sed -i 's/rich = "\^13\.9\.4"/rich = "^14.1.0"/' pyproject.toml
 
 # Verify the change
 if grep -q 'rich = "\^14\.1\.0"' pyproject.toml; then
-    echo "✅ Root pyproject.toml updated successfully"
+	echo "✅ Root pyproject.toml updated successfully"
 else
-    echo "❌ Failed to update root pyproject.toml"
-    exit 1
+	echo "❌ Failed to update root pyproject.toml"
+	exit 1
 fi
 
 # Check all submodule pyproject.toml files for rich dependencies
 echo "🔍 Checking submodule rich dependencies..."
 for dir in packages/*/; do
-    if [[ -f "$dir/pyproject.toml" ]]; then
-        package_name=$(basename "$dir")
-        if grep -q "rich.*=" "$dir/pyproject.toml"; then
-            current_version=$(grep "rich.*=" "$dir/pyproject.toml" | head -1)
-            echo "📦 $package_name: $current_version"
-            
-            # Update to 14.1.0 if different
-            if ! grep -q 'rich = "\^14\.1\.0"' "$dir/pyproject.toml"; then
-                echo "   📝 Updating $package_name to rich ^14.1.0..."
-                sed -i 's/rich = "[^"]*"/rich = "^14.1.0"/' "$dir/pyproject.toml"
-            fi
-        else
-            echo "📦 $package_name: No rich dependency"
-        fi
-    fi
+	if [[ -f "${dir}/pyproject.toml" ]]; then
+		package_name=$(basename "${dir}")
+		if grep -q "rich.*=" "${dir}/pyproject.toml"; then
+			current_version=$(grep "rich.*=" "${dir}/pyproject.toml" | head -1)
+			echo "�${� ${package_n}}am${: ${current_vers}}ion"
+
+			# Update to 14.1.0 if different
+			if ! grep -q 'rich = "\^14\.1\.0"' "${dir}/pyproject.toml"; then
+				echo "   📝 Updati$$$${g $}pac}kag}e_n}ame to rich ^14.1.0..."
+				sed -i 's/rich = "[^"]*"/rich = "^14.1.0"/' "${dir}/pyproject.toml"
+			fi
+		else
+			echo "�${� ${package_n}}ame: No rich dependency"
+		fi
+	fi
 done
 
 # Remove all poetry.lock files to force clean resolution
@@ -49,22 +49,22 @@ find . -name "poetry.lock" -not -path "./.git/*" -delete
 # Regenerate lock file
 echo "🔄 Regenerating poetry.lock..."
 if poetry lock; then
-    echo "✅ Poetry lock successful!"
+	echo "✅ Poetry lock successful!"
 else
-    echo "❌ Poetry lock failed - checking for remaining conflicts..."
-    exit 1
+	echo "❌ Poetry lock failed - checking for remaining conflicts..."
+	exit 1
 fi
 
 # Test the installation
 echo "🧪 Testing installation..."
 if poetry install --dry-run >/dev/null 2>&1; then
-    echo "✅ Installation test passed!"
+	echo "✅ Installation test passed!"
 else
-    echo "⚠️  Installation test failed - check dependencies"
+	echo "⚠️  Installation test failed - check dependencies"
 fi
 
 # Create a validation script to prevent future reverts
-cat > dev-tools/scripts/validate-rich-dependency.sh << 'EOF'
+cat >dev-tools/scripts/validate-rich-dependency.sh <<'EOF'
 #!/bin/bash
 # Validates that rich dependency is consistent across all packages
 
@@ -106,4 +106,4 @@ chmod +x dev-tools/scripts/validate-rich-dependency.sh
 
 echo "🎉 Rich dependency fix complete!"
 echo "📝 Run './dev-tools/scripts/validate-rich-dependency.sh' to check consistency"
-echo "🔄 If this happens again, run this script to fix it permanently" 
+echo "🔄 If this happens again, run this script to fix it permanently"

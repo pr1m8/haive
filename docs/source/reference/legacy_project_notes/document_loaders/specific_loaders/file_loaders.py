@@ -1,4 +1,4 @@
-"""File-based Document Loaders for Haive Framework
+"""File-based Document Loaders for Haive Framework.
 
 This module implements various file-based document loaders including Jupyter notebooks,
 Python files, subtitles, bibtex files, and other specialized formats.
@@ -159,26 +159,25 @@ class PythonSource(LocalSource):
                     # Function to extract docstrings from AST node
                     def extract_docstring(node):
                         if isinstance(
-                            node, (ast.Module, ast.ClassDef, ast.FunctionDef)
+                            node, ast.Module | ast.ClassDef | ast.FunctionDef
+                        ) and (
+                            len(node.body) > 0
+                            and isinstance(node.body[0], ast.Expr)
+                            and isinstance(node.body[0].value, ast.Constant)
+                            and isinstance(node.body[0].value.value, str)
                         ):
-                            if (
-                                len(node.body) > 0
-                                and isinstance(node.body[0], ast.Expr)
-                                and isinstance(node.body[0].value, ast.Constant)
-                                and isinstance(node.body[0].value.value, str)
-                            ):
-                                if isinstance(node, ast.Module):
-                                    docstrings.append(
-                                        f"Module docstring: {node.body[0].value.value}"
-                                    )
-                                elif isinstance(node, ast.ClassDef):
-                                    docstrings.append(
-                                        f"Class {node.name} docstring: {node.body[0].value.value}"
-                                    )
-                                elif isinstance(node, ast.FunctionDef):
-                                    docstrings.append(
-                                        f"Function {node.name} docstring: {node.body[0].value.value}"
-                                    )
+                            if isinstance(node, ast.Module):
+                                docstrings.append(
+                                    f"Module docstring: {node.body[0].value.value}"
+                                )
+                            elif isinstance(node, ast.ClassDef):
+                                docstrings.append(
+                                    f"Class {node.name} docstring: {node.body[0].value.value}"
+                                )
+                            elif isinstance(node, ast.FunctionDef):
+                                docstrings.append(
+                                    f"Function {node.name} docstring: {node.body[0].value.value}"
+                                )
 
                     # Visit all nodes to extract docstrings
                     for node in ast.walk(tree):
@@ -271,7 +270,7 @@ class SubtitleSource(LocalSource):
                     if len(lines) >= 3:
                         try:
                             # First line should be index number
-                            index = int(lines[0])
+                            int(lines[0])
                             # Second line is the timestamp
                             timestamp = lines[1]
                             # Rest is the text
@@ -532,8 +531,8 @@ class TSVSource(LocalSource):
         except ImportError:
             # Fallback to pandas if available
             try:
-                import pandas as pd
                 from langchain_community.document_loaders import DataFrameLoader
+                import pandas as pd
 
                 # Read TSV into pandas DataFrame
                 df = pd.read_csv(
@@ -648,8 +647,7 @@ class CHMSource(LocalSource):
                         subprocess.run(
                             ["extract_chmLib", str(self.file_path), temp_dir],
                             check=True,
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE,
+                            capture_output=True,
                         )
 
                         # Read extracted HTML files
@@ -1409,8 +1407,8 @@ class GutenbergSource(RemoteSource):
         except ImportError:
             # Fallback to web scraping
             try:
-                import requests
                 from bs4 import BeautifulSoup
+                import requests
 
                 # Determine URL
                 url = self.url

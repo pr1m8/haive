@@ -41,6 +41,7 @@ from hyde.enhanced_agent_v2 import (
     smart_retrieval,
 )
 
+
 __all__ = [
     "AdaptiveHyDEGenerator",
     "DomainAnalysisAgent",

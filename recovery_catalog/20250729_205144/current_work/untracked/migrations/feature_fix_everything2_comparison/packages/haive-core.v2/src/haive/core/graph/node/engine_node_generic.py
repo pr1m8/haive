@@ -19,6 +19,7 @@ from haive.core.graph.node.types import NodeType
 from haive.core.schema.field_definition import FieldDefinition
 from haive.core.schema.field_registry import StandardFields
 
+
 # Type variables for input/output schemas
 TInput = TypeVar("TInput", bound=BaseModel)
 TOutput = TypeVar("TOutput", bound=BaseModel)

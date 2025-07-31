@@ -12,6 +12,7 @@ from haive.agents.reasoning_and_critique.self_discover.structurer.prompts import
     STRUCTURER_SYSTEM_MESSAGE,
 )
 
+
 __all__ = [
     "STRUCTURER_PROMPT",
     "STRUCTURER_SYSTEM_MESSAGE",

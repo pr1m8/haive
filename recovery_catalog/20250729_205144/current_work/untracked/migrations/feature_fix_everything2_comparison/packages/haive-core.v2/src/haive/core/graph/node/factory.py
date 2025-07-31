@@ -15,9 +15,9 @@ Functions:
 # src/haive/core/graph/node/factory.py
 
 import asyncio
+from collections.abc import Callable
 import inspect
 import logging
-from collections.abc import Callable
 from typing import Any
 
 from langgraph.graph import END
@@ -28,6 +28,7 @@ from pydantic import BaseModel
 from haive.core.engine.base import InvokableEngine, NonInvokableEngine
 from haive.core.graph.node.config import NodeConfig
 from haive.core.graph.node.types import NodeType
+
 
 logger = logging.getLogger(__name__)
 

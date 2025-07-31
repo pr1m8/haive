@@ -1,9 +1,9 @@
 """State schema for Reflection Agent."""
 
-from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
 from pydantic import Field
 
 from haive.agents.reflection.models import Critique, Improvement
+from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
 
 
 class ReflectionState(MultiAgentState):

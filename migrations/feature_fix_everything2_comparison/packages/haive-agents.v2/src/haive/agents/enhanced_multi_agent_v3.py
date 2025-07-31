@@ -15,11 +15,17 @@ Key Features:
 - Backward compatibility with existing patterns
 """
 
+from collections.abc import Callable
 import logging
 import time
-from collections.abc import Callable
 from typing import Any, Generic, TypeVar
 
+from pydantic import Field, field_validator, model_validator
+from rich.console import Console
+from rich.table import Table
+
+# Import the enhanced base Agent
+from haive.agents.base.agent import Agent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.agent_node_v3 import AgentNodeV3Config
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
@@ -27,12 +33,7 @@ from haive.core.schema.prebuilt.enhanced_multi_agent_state import (
     EnhancedMultiAgentState,
 )
 from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
-from pydantic import Field, field_validator, model_validator
-from rich.console import Console
-from rich.table import Table
 
-# Import the enhanced base Agent
-from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 console = Console()

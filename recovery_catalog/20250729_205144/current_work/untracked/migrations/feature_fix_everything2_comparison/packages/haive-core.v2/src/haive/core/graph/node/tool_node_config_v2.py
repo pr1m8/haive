@@ -17,8 +17,8 @@ Functions:
 # TOOL NODE CONFIG V2 - WITH SCHEMA SUPPORT
 # ============================================================================
 
-import logging
 from collections.abc import Callable
+import logging
 from typing import Any, Optional, Self, TypeVar
 
 from langchain_core.messages import AIMessage, BaseMessage, ToolMessage
@@ -32,6 +32,7 @@ from haive.core.graph.common.types import ConfigLike, NodeType, StateLike
 from haive.core.graph.node.base_node_config import BaseNodeConfig
 from haive.core.schema.field_definition import FieldDefinition
 from haive.core.schema.field_registry import StandardFields
+
 
 logger = logging.getLogger(__name__)
 console = Console()

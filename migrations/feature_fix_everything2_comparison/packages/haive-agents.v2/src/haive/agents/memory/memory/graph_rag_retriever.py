@@ -5,11 +5,10 @@ traversal with vector similarity search to provide comprehensive memory retrieva
 with relationship context and semantic understanding.
 """
 
-import logging
 from datetime import datetime
+import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.prompts import PromptTemplate
 from pydantic import BaseModel, ConfigDict, Field
@@ -22,6 +21,8 @@ from haive.agents.memory.kg_generator_agent import (
     KnowledgeGraphNode,
     KnowledgeGraphRelationship,
 )
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 logger = logging.getLogger(__name__)
 

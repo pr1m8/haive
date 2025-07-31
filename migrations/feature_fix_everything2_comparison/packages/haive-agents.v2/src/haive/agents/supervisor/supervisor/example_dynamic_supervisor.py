@@ -24,8 +24,10 @@ This example shows how to create a dynamic supervisor system that can:
 import asyncio
 import logging
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage, SystemMessage
+
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -201,10 +203,9 @@ async def demonstrate_complex_workflow(supervisor):
 async def demonstrate_react_agent_integration(supervisor):
     """Show how to add a ReactAgent with tools."""
     try:
+        from haive.agents.react.agent import ReactAgent
         from haive.tools.math import calculator
         from haive.tools.web import web_search
-
-        from haive.agents.react.agent import ReactAgent
     except ImportError:
 
         # Create mock tools for demo

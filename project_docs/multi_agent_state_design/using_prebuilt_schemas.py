@@ -7,17 +7,15 @@ from base_state_schemas.py
 
 import sys
 
-
 sys.path.insert(0, "/home/will/Projects/haive/backend/haive")
 
-
-from langchain_core.messages import HumanMessage
 
 from haive.core.schema.base_state_schemas import (
     HierarchicalAgentState,
     MetaAgentState,
     MultiAgentState,
 )
+from langchain_core.messages import HumanMessage
 
 
 def test_meta_agent_state():
@@ -34,10 +32,14 @@ def test_meta_agent_state():
         name="planner", agent_type="llm", initial_state={"task": "Create project plan"}
     )
 
-    meta_state.spawn_sub_agent(name="coder", agent_type="llm", initial_state={"task": "Write code"})
+    meta_state.spawn_sub_agent(
+        name="coder", agent_type="llm", initial_state={"task": "Write code"}
+    )
 
     # Update results
-    meta_state.update_sub_agent_result("planner", {"plan": "1. Design\n2. Code\n3. Test"})
+    meta_state.update_sub_agent_result(
+        "planner", {"plan": "1. Design\n2. Code\n3. Test"}
+    )
 
     return meta_state
 
@@ -45,7 +47,9 @@ def test_meta_agent_state():
 def test_multi_agent_state():
     """Test using the prebuilt MultiAgentState."""
     # MultiAgentState provides isolation between agents
-    multi_state = MultiAgentState(messages=[HumanMessage(content="Analyze this document")])
+    multi_state = MultiAgentState(
+        messages=[HumanMessage(content="Analyze this document")]
+    )
 
     # Each agent gets its own state
     planner_state = multi_state.get_agent_state("planner")

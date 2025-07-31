@@ -11,6 +11,7 @@ from pydantic import BaseModel, Field
 
 from haive.agents.simple import SimpleAgent
 
+
 # ===== MODELS =====
 
 

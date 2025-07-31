@@ -56,7 +56,16 @@ repos:
       - id: interrogate
         name: "Docstring Coverage Check"
         entry: poetry run interrogate
-        args: [--fail-under=80, -vv, --exclude=packages/haive-prebuilt, --exclude=recovery_catalog, --exclude=git_fsck_repair, --exclude=migrations, --exclude=docs/build]
+        args:
+          [
+            --fail-under=80,
+            -vv,
+            --exclude=packages/haive-prebuilt,
+            --exclude=recovery_catalog,
+            --exclude=git_fsck_repair,
+            --exclude=migrations,
+            --exclude=docs/build,
+          ]
         language: system
         types: [python]
         pass_filenames: false
@@ -117,7 +126,11 @@ repos:
       - id: import-quality-check
         name: "Import Quality Check"
         entry: bash
-        args: ["-c", "echo '📦 Import quality check available (run: task import-quality)'"]
+        args:
+          [
+            "-c",
+            "echo '📦 Import quality check available (run: task import-quality)'",
+          ]
         language: system
         types: [python]
         pass_filenames: false
@@ -143,7 +156,11 @@ repos:
       - id: monkeytype-apply
         name: "Apply MonkeyType Annotations"
         entry: bash
-        args: ["-c", "echo '🐒 MonkeyType annotations available (run: task monkeytype-apply-all)'"]
+        args:
+          [
+            "-c",
+            "echo '🐒 MonkeyType annotations available (run: task monkeytype-apply-all)'",
+          ]
         language: system
         types: [python]
         pass_filenames: false
@@ -261,7 +278,11 @@ repos:
       - id: pyspelling-advanced
         name: "Advanced Spell Check"
         entry: bash
-        args: ["-c", "echo '📝 Advanced spell check available (run: poetry run pyspelling)'"]
+        args:
+          [
+            "-c",
+            "echo '📝 Advanced spell check available (run: poetry run pyspelling)'",
+          ]
         language: system
         files: '\.(py|md|rst)$'
         pass_filenames: false
@@ -343,15 +364,23 @@ repos:
         always_run: true
         stages: [pre-commit]
 
+      # 📦 Update Poetry Requirements
+      - id: update-requirements
+        name: "Export Poetry requirements to docs/"
+        entry: scripts/dev/update_requirements.sh
+        language: system
+        pass_filenames: false
+        files: ^(pyproject\.toml|poetry\.lock)$
+        stages: [pre-commit]
+
 # ===================================================================
 # 📋 Pre-commit Configuration Settings
 # ===================================================================
 default_stages: [pre-commit]
-minimum_pre_commit_version: '3.0.0'
+minimum_pre_commit_version: "3.0.0"
 fail_fast: false
 default_language_version:
   python: python3.12
-
 # ===================================================================
 # 🎯 Quality Standards Enforced
 # ===================================================================

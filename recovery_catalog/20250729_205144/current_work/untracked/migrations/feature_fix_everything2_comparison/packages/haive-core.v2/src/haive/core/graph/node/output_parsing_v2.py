@@ -32,6 +32,7 @@ from haive.core.schema.field_definition import FieldDefinition
 from haive.core.schema.field_registry import StandardFields
 from haive.core.schema.field_utils import create_field_name_from_model
 
+
 logger = logging.getLogger(__name__)
 console = Console()
 logger.setLevel(logging.WARNING)

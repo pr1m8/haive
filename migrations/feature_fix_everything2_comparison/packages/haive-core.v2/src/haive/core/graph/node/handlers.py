@@ -28,6 +28,7 @@ from haive.core.graph.node.registry import (
     register_output_processor,
 )
 
+
 logger = logging.getLogger(__name__)
 
 

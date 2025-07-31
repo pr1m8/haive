@@ -14,13 +14,14 @@ import logging
 # Set up logging
 from typing import Any
 
-from haive.core.engine.agent.agent import register_agent
-from haive.core.graph.GraphBuilder import DynamicGraph
 from langgraph.graph import END, START
 
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.rag.typed.config import TypedRAGConfig
 from haive.agents.rag.typed.query_types import QueryCategory
+from haive.core.engine.agent.agent import register_agent
+from haive.core.graph.GraphBuilder import DynamicGraph
+
 
 logger = logging.getLogger(__name__)
 

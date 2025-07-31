@@ -20,6 +20,7 @@ from haive.agents.reasoning_and_critique.tot.modular.models import (
     CandidateScore,
 )
 
+
 __all__ = [
     "Candidate",
     "CandidateContent",

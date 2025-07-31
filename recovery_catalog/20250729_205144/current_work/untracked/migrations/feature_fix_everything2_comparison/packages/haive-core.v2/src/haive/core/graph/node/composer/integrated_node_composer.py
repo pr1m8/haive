@@ -6,8 +6,8 @@ providing consistent patterns for node I/O configuration that work with
 StateSchema, SchemaComposer, and the broader Haive architecture.
 """
 
-import logging
 from collections.abc import Callable
+import logging
 from typing import Any, TypeVar
 
 from haive.core.common.schema.field_definition import FieldDefinition
@@ -16,6 +16,7 @@ from haive.core.graph.node.composer.field_mapping import FieldMapping
 from haive.core.graph.node.composer.node_schema_composer import NodeSchemaComposer
 from haive.core.schema import StateSchema
 from haive.core.schema.schema_composer import SchemaComposer
+
 
 logger = logging.getLogger(__name__)
 

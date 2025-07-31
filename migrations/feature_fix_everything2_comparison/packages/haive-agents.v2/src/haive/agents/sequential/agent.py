@@ -17,11 +17,12 @@ Functions:
 import logging
 from typing import Any
 
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langgraph.graph import END, START
 from langgraph.types import Command
 
 from haive.agents.multi.base import MultiAgent
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
 
 logger = logging.getLogger(__name__)
 

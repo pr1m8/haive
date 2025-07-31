@@ -42,6 +42,7 @@ from graph_db.models import (
 )
 from graph_db.state import InputState, OutputState, OverallState
 
+
 __all__ = [
     "Config",
     "CypherQueryOutput",

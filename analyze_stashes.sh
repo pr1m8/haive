@@ -6,40 +6,40 @@ RECOVERY_DIR="recovery_catalog/20250729_205144/stashes"
 
 echo "🔍 STASH ANALYSIS REPORT"
 echo "Date: $(date)"
-echo "Total stashes found: $(ls -1 $RECOVERY_DIR/stash_*.patch | wc -l)"
+echo "Total stashes found: $(ls -1 "$RECOVERY_DIR"/stash_*.patch | wc -l)"
 echo ""
 
 # Function to analyze a single stash
 analyze_stash() {
-    local stash_num=$1
-    
-    if [[ ! -f "$RECOVERY_DIR/stash_$stash_num.patch" ]]; then
-        return
-    fi
-    
-    local size=$(du -h "$RECOVERY_DIR/stash_$stash_num.patch" | cut -f1)
-    local date_line=$(sed -n '4p' "$RECOVERY_DIR/stash_${stash_num}_files.txt" 2>/dev/null)
-    local desc_line=$(sed -n '6p' "$RECOVERY_DIR/stash_${stash_num}_files.txt" 2>/dev/null | sed 's/^[[:space:]]*//')
-    
-    # Count files in this stash
-    local file_count=0
-    if [[ -f "$RECOVERY_DIR/stash_${stash_num}_files.txt" ]]; then
-        file_count=$(tail -n +8 "$RECOVERY_DIR/stash_${stash_num}_files.txt" 2>/dev/null | wc -l)
-    fi
-    
-    echo "📦 STASH_$stash_num ($size, $file_count files)"
-    echo "   📅 $date_line"
-    echo "   📝 $desc_line"
-    
-    # Show key files if available
-    if [[ -f "$RECOVERY_DIR/stash_${stash_num}_files.txt" && $file_count -gt 0 ]]; then
-        echo "   📁 Key files:"
-        tail -n +8 "$RECOVERY_DIR/stash_${stash_num}_files.txt" 2>/dev/null | head -3 | sed 's/^/      /'
-        if [[ $file_count -gt 3 ]]; then
-            echo "      ... and $((file_count - 3)) more files"
-        fi
-    fi
-    echo ""
+	local stash_num=$1
+
+	if [[ ! -f "${RECOVERY_DIR}/stash_${stash_num}.patch" ]]; then
+		return
+	fi
+
+	local size=$(du -h "${RECOVERY_DIR}/stash_${stash_num}.patch" | cut -f1)
+	local date_line=$(sed -n '4p' "${RECOVERY_DIR}/stash_${stash_num}_files.txt" 2>/dev/null)
+	local desc_line=$(sed -n '6p' "${RECOVERY_DIR}/stash_${stash_num}_files.txt" 2>/dev/null | sed 's/^[[:space:]]*//')
+
+	# Count files in this stash
+	local file_count=0
+	if [[ -f "${RECOVERY_DIR}/stash_${stash_num}_files.txt" ]]; then
+		file_count=$(tail -n +8 "${RECOVERY_DIR}/stash_${stash_num}_files.txt" 2>/dev/null | wc -l)
+	fi
+
+	echo "📦 STA${H_$stash_}nu${ ($s}iz${, $file_co}unt files)"
+	echo "   �${� $date_l}ine"
+	echo "   �${� $desc_l}ine"
+
+	# Show key files if available
+	if [[ -f "${RECOVERY_DIR}/stash_${stash_num}_files.txt" && ${file_count} -gt 0 ]]; then
+		echo "   📁 Key files:"
+		tail -n +8 "${RECOVERY_DIR}/stash_${stash_num}_files.txt" 2>/dev/null | head -3 | sed 's/^/      /'
+		if [[ ${file_count} -gt 3 ]]; then
+			echo "      ... and $((file_count - 3)) more files"
+		fi
+	fi
+	echo ""
 }
 
 echo "🎯 PRIORITY STASHES (Recommended order):"
@@ -47,7 +47,7 @@ echo ""
 
 echo "🔥 PHASE 1: Recent Emergency Checkpoints"
 analyze_stash "0"
-analyze_stash "1" 
+analyze_stash "1"
 analyze_stash "2"
 
 echo "🔧 PHASE 2: Major System Changes"
@@ -70,11 +70,11 @@ echo "📊 ALL STASHES BY SIZE:"
 echo ""
 
 # Show all stashes sorted by size
-for patch_file in $(ls -S $RECOVERY_DIR/stash_*.patch); do
-    stash_num=$(basename "$patch_file" .patch | sed 's/stash_//')
-    size=$(du -h "$patch_file" | cut -f1)
-    desc=$(sed -n '6p' "$RECOVERY_DIR/stash_${stash_num}_files.txt" 2>/dev/null | sed 's/^[[:space:]]*//' | cut -c1-60)
-    echo "   stash_$stash_num ($size): $desc"
+for patch_file in $(ls -S "$RECOVERY_DIR"/stash_*.patch); do
+	stash_num=$(basename "${patch_file}" .patch | sed 's/stash_//')
+	size=$(du -h "${patch_file}" | cut -f1)
+	desc=$(sed -n '6p' "${RECOVERY_DIR}/stash_${stash_num}_files.txt" 2>/dev/null | sed 's/^[[:space:]]*//' | cut -c1-60)
+	echo "   stash_${stash_num} (${size}): ${desc}"
 done
 
 echo ""

@@ -5,12 +5,10 @@ Perplexity's Deep Research feature that performs dozens of searches and reads hu
 of sources.
 """
 
-import logging
 from datetime import datetime
+import logging
 from typing import Any
 
-# from haive.agents.memory.document_modifiers.kg.kg_iterative_refinement import IterativeGraphTransformer
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.tools import Tool
 
 from haive.agents.memory.search.base import BaseSearchAgent, SearchResponse
@@ -19,6 +17,10 @@ from haive.agents.memory.search.deep_research.models import (
     ResearchQuery,
     ResearchSection,
 )
+
+# from haive.agents.memory.document_modifiers.kg.kg_iterative_refinement import IterativeGraphTransformer
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 logger = logging.getLogger(__name__)
 

@@ -7,12 +7,12 @@ common functionality for memory integration, tool management, and structured out
 from abc import ABC, abstractmethod
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.tools import Tool
 from pydantic import BaseModel, Field
 
 from haive.agents.memory.core.types import MemoryType
 from haive.agents.react.agent import ReactAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 class SearchResponse(BaseModel):

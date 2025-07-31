@@ -9,14 +9,13 @@ This implementation provides state-of-the-art RAG capabilities:
 """
 
 import asyncio
-import json
-import logging
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
+import json
+import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain.retrievers import EnsembleRetriever
 from langchain.retrievers.contextual_compression import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import (
@@ -33,6 +32,8 @@ from langchain_core.documents import Document
 from haive.agents.memory_v2.time_weighted_retriever import TimeWeightedRetriever
 from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 logger = logging.getLogger(__name__)
 

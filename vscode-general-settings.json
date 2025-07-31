@@ -1,7 +1,7 @@
 {
   // Cross-Platform General Settings for VS Code/Cursor
   // Copy this to your User settings.json on any machine
-  
+
   // Editor Core Settings
   "editor.fontSize": 14,
   "editor.fontFamily": "'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', 'Courier New', monospace",
@@ -23,7 +23,7 @@
   "editor.trimAutoWhitespace": true,
   "editor.renderControlCharacters": true,
   "editor.largeFileOptimizations": true,
-  
+
   // Terminal Settings - Cross-platform
   "terminal.integrated.fontSize": 14,
   "terminal.integrated.fontFamily": "'Cascadia Code', 'Fira Code', 'JetBrains Mono', monospace",
@@ -36,12 +36,12 @@
   "terminal.integrated.enablePersistentSessions": false,
   "terminal.integrated.tabs.enabled": true,
   "terminal.integrated.tabs.location": "left",
-  
+
   // Platform-specific terminal profiles
   "terminal.integrated.defaultProfile.windows": "PowerShell",
   "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.defaultProfile.linux": "bash",
-  
+
   // Git Settings - Universal
   "git.autofetch": true,
   "git.autofetchPeriod": 180,
@@ -64,7 +64,7 @@
   "git.inputValidationSubjectLength": 50,
   "git.timeline.date": "committed",
   "git.timeline.showUncommitted": true,
-  
+
   // Source Control
   "scm.alwaysShowActions": true,
   "scm.alwaysShowRepositories": true,
@@ -73,11 +73,11 @@
   "scm.diffDecorations": "all",
   "scm.diffDecorationsGutterWidth": 3,
   "scm.diffDecorationsIgnoreTrimWhitespace": "false",
-  
+
   // Timeline
   "timeline.showView": true,
   "timeline.pageSize": 50,
-  
+
   // Notification Control
   "extensions.ignoreRecommendations": true,
   "extensions.showRecommendationsOnlyOnDemand": true,
@@ -91,11 +91,11 @@
   "workbench.welcomePage.walkthroughs.openOnInstall": false,
   "editor.accessibilitySupport": "off",
   "window.newWindowDimensions": "maximized",
-  
+
   // Extension Management
   "extensions.autoCheckUpdates": false,
   "extensions.autoUpdate": false,
-  
+
   // File Management
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1000,
@@ -105,21 +105,21 @@
   "files.encoding": "utf8",
   "files.eol": "\n",
   "files.autoGuessEncoding": false,
-  
+
   // Explorer
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   "explorer.openEditors.visible": 0,
   "explorer.compactFolders": false,
   "explorer.autoReveal": true,
-  
+
   // Search
   "search.showLineNumbers": true,
   "search.smartCase": true,
   "search.useGlobalIgnoreFiles": true,
   "search.quickOpen.includeHistory": true,
   "search.followSymlinks": false,
-  
+
   // Global File Exclusions
   "files.exclude": {
     "**/.git": false,
@@ -133,7 +133,7 @@
     "**/.pytest_cache": true,
     "**/node_modules": true
   },
-  
+
   // Global Search Exclusions
   "search.exclude": {
     "**/node_modules": true,
@@ -146,7 +146,7 @@
     "**/build": true,
     "**/*.lock": true
   },
-  
+
   // Performance
   "files.watcherExclude": {
     "**/.git/objects/**": true,
@@ -157,7 +157,7 @@
     "**/venv/**": true,
     "**/env/**": true
   },
-  
+
   // Workbench
   "workbench.colorTheme": "Default Dark Modern",
   "workbench.iconTheme": "vs-seti",
@@ -175,12 +175,12 @@
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.decorations.badges": true,
   "workbench.editor.decorations.colors": true,
-  
+
   // Problems View
   "problems.autoReveal": true,
   "problems.decorations.enabled": true,
   "problems.showCurrentInStatus": true,
-  
+
   // Debug
   "debug.console.fontSize": 14,
   "debug.console.fontFamily": "default",
@@ -188,20 +188,20 @@
   "debug.internalConsoleOptions": "openOnSessionStart",
   "debug.showBreakpointsInOverviewRuler": true,
   "debug.showInlineBreakpointCandidates": true,
-  
+
   // Integrated Terminal
   "terminal.integrated.defaultLocation": "editor",
   "terminal.integrated.splitCwd": "workspaceRoot",
-  
+
   // Security
   "security.workspace.trust.enabled": false,
   "security.workspace.trust.untrustedFiles": "open",
-  
+
   // Remote Development
   "remote.autoForwardPorts": true,
   "remote.autoForwardPortsSource": "process",
   "remote.restoreForwardedPorts": true,
-  
+
   // Language-specific (Python)
   "[python]": {
     "editor.tabSize": 4,
@@ -213,7 +213,7 @@
     },
     "editor.rulers": [88, 100]
   },
-  
+
   // Language-specific (JavaScript/TypeScript)
   "[javascript]": {
     "editor.tabSize": 2,
@@ -243,15 +243,15 @@
       "strings": false
     }
   },
-  
+
   // Diff Editor
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": true,
   "diffEditor.wordWrap": "off",
-  
+
   // Merge Editor
   "mergeEditor.diffAlgorithm": "advanced",
-  
+
   // Window
   "window.title": "${dirty}${activeEditorShort}${separator}${rootName}${separator}${profileName}",
   "window.zoomLevel": 0,

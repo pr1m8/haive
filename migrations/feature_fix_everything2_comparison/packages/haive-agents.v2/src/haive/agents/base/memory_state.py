@@ -10,6 +10,7 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
+
 # Import original proven memory models
 
 logger = logging.getLogger(__name__)

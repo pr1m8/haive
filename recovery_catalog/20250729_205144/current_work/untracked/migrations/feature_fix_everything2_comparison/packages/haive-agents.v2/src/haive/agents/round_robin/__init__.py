@@ -9,6 +9,7 @@ from haive.agents.conversation.round_robin.example import (
     example_simple_round_robin,
 )
 
+
 __all__ = [
     "RoundRobinConversation",
     "example_custom_round_robin",

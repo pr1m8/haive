@@ -7,7 +7,6 @@ Similar to Perplexity's Pro Search feature that goes deeper and considers user c
 import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.tools import Tool
 
 from haive.agents.memory.search.base import BaseSearchAgent, SearchResponse
@@ -16,6 +15,8 @@ from haive.agents.memory.search.pro_search.models import (
     ProSearchResponse,
     SearchRefinement,
 )
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 logger = logging.getLogger(__name__)
 

@@ -3,8 +3,6 @@
 This module provides aug llms functionality for the Haive framework.
 """
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.utils.parser_utils import parse_reasoning_modules_to_string
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
 
@@ -12,6 +10,9 @@ from haive.agents.reasoning_and_critique.self_discover.models import (
     AdaptedModules,
     Plan,
 )
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.utils.parser_utils import parse_reasoning_modules_to_string
+
 
 reasoning_prompt = """
 Step {step_id}: {step_description}

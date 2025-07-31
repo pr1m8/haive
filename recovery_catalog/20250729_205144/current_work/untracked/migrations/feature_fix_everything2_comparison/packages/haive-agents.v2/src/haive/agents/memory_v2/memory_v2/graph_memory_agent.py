@@ -6,11 +6,11 @@ This implementation combines:
 3. Graph RAG for intelligent querying of the knowledge graph
 """
 
-import json
-import logging
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
+import json
+import logging
 from typing import Any
 
 from langchain_community.embeddings import OpenAIEmbeddings
@@ -20,6 +20,7 @@ from langchain_core.documents import Document
 from langchain_experimental.graph_transformers import LLMGraphTransformer
 from langchain_neo4j.chains.graph_qa.cypher import GraphCypherQAChain
 from langchain_neo4j.graphs.graph_document import GraphDocument
+
 
 # Optional imports - GraphMemoryAgent will work with basic functionality even if these fail
 try:
@@ -41,6 +42,7 @@ except ImportError:
     GraphDBConfig = None
     HAS_GRAPH_DB_RAG = False
 from haive.core.engine.aug_llm import AugLLMConfig
+
 
 logger = logging.getLogger(__name__)
 
@@ -170,7 +172,7 @@ class GraphMemoryAgent:
 
             self.logger.info(f"Connected to Neo4j at {self.config.neo4j_uri}")
         except Exception as e:
-            self.logger.error(f"Failed to connect to Neo4j: {e}")
+            self.logger.exception(f"Failed to connect to Neo4j: {e}")
             raise
 
     def _create_graph_constraints(self):
@@ -426,7 +428,7 @@ class GraphMemoryAgent:
 
             except Exception as e:
                 errors.append(str(e))
-                self.logger.error(f"Error storing graph document: {e}")
+                self.logger.exception(f"Error storing graph document: {e}")
 
         # Also store as Memory node for tracking
         memory_query = """
@@ -768,27 +770,22 @@ async def example_graph_memory():
     agent = GraphMemoryAgent(config)
 
     # Process a memory
-    result = await agent.run(
+    await agent.run(
         "I met John Doe at the AI Conference in San Francisco last week. "
         "He works as a Senior Engineer at TechCorp and specializes in machine learning. "
         "We discussed implementing RAG systems using knowledge graphs."
     )
 
-    print(f"Extraction and storage result: {json.dumps(result, indent=2)}")
-
     # Query the graph
-    query_result = await agent.query_graph("Who did I meet at conferences recently?")
-    print(f"Query result: {json.dumps(query_result, indent=2)}")
+    await agent.query_graph("Who did I meet at conferences recently?")
 
     # Search similar memories
-    similar = await agent.search_similar_memories(
+    await agent.search_similar_memories(
         "machine learning engineers", node_type="Person"
     )
-    print(f"Similar memories: {json.dumps(similar, indent=2)}")
 
     # Get subgraph around John Doe
-    subgraph = await agent.get_memory_subgraph("John Doe", max_depth=2)
-    print(f"Subgraph: {json.dumps(subgraph, indent=2)}")
+    await agent.get_memory_subgraph("John Doe", max_depth=2)
 
 
 if __name__ == "__main__":

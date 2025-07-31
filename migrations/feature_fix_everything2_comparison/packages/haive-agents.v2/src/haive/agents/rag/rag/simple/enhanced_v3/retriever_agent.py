@@ -13,6 +13,7 @@ from pydantic import Field
 
 from haive.agents.rag.base.agent import BaseRAGAgent
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -155,7 +156,7 @@ class RetrieverAgent(BaseRAGAgent):
             return result
 
         except Exception as e:
-            logger.error(f"❌ RetrieverAgent error: {e}")
+            logger.exception(f"❌ RetrieverAgent error: {e}")
             return {
                 "documents": [],
                 "query": query,
@@ -357,7 +358,7 @@ class RetrieverAgent(BaseRAGAgent):
             "retrieval_time": retrieval_time,
             "document_count": len(documents),
             "sources": list(
-                set(doc.metadata.get("source", "unknown") for doc in documents)
+                {doc.metadata.get("source", "unknown") for doc in documents}
             ),
             "retrieval_config": {
                 "top_k": self.top_k,

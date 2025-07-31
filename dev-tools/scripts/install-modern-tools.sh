@@ -31,19 +31,19 @@ ALREADY_INSTALLED=()
 FAILED=()
 
 for tool in "${TOOLS[@]}"; do
-	echo -e "${BLUE}📦 Checking $tool...${NC}"
+	echo -e "${BLUE}📦 Checki$${${${${${}} $t}ool...${NC}"
 
-	if poetry show "$tool" >/dev/null 2>&1; then
+	if poetry show "${tool}" >/dev/null 2>&1; then
 		echo -e "${GREEN}   ✅ Already installed${NC}"
-		ALREADY_INSTALLED+=("$tool")
+		ALREADY_INSTALLED+=("${tool}")
 	else
-		echo -e "${YELLOW}   📥 Installing $tool...${NC}"
-		if poetry add --group dev "$tool" >/dev/null 2>&1; then
+		echo -e "${YELLOW}   📥 Installi$${${${${${}} $t}ool...${NC}"
+		if poetry add --group dev "${tool}" >/dev/null 2>&1; then
 			echo -e "${GREEN}   ✅ Successfully installed${NC}"
-			INSTALLED+=("$tool")
+			INSTALLED+=("${tool}")
 		else
 			echo -e "${RED}   ❌ Failed to install${NC}"
-			FAILED+=("$tool")
+			FAILED+=("${tool}")
 		fi
 	fi
 	echo ""
@@ -52,25 +52,25 @@ done
 echo -e "${BOLD}${CYAN}📊 INSTALLATION RESULTS${NC}"
 echo "════════════════════════════════════════════"
 
-if [ ${#INSTALLED[@]} -gt 0 ]; then
+if [[ ${#INSTALLED[@]} -gt 0 ]]; then
 	echo -e "${GREEN}✅ NEWLY INSTALLED (${#INSTALLED[@]}):${NC}"
 	printf '   %s\n' "${INSTALLED[@]}"
 	echo ""
 fi
 
-if [ ${#ALREADY_INSTALLED[@]} -gt 0 ]; then
+if [[ ${#ALREADY_INSTALLED[@]} -gt 0 ]]; then
 	echo -e "${BLUE}📦 ALREADY INSTALLED (${#ALREADY_INSTALLED[@]}):${NC}"
 	printf '   %s\n' "${ALREADY_INSTALLED[@]}"
 	echo ""
 fi
 
-if [ ${#FAILED[@]} -gt 0 ]; then
+if [[ ${#FAILED[@]} -gt 0 ]]; then
 	echo -e "${RED}❌ FAILED TO INSTALL (${#FAILED[@]}):${NC}"
 	printf '   %s\n' "${FAILED[@]}"
 	echo ""
 	echo -e "${YELLOW}⚠️  Try installing failed tools manually:${NC}"
 	for tool in "${FAILED[@]}"; do
-		echo "   poetry add --group dev $tool"
+		echo "   poetry add --group dev ${tool}"
 	done
 	echo ""
 fi
@@ -83,52 +83,52 @@ WORKING=()
 NOT_WORKING=()
 
 for tool in "${TOOLS[@]}"; do
-	echo -e "${BLUE}🔍 Testing $tool...${NC}"
+	echo -e "${BLUE}🔍 Testi$${${${${${}} $t}ool...${NC}"
 
-	case "$tool" in
+	case "${tool}" in
 	"autoimport")
 		if poetry run autoimport --help >/dev/null 2>&1; then
 			echo -e "${GREEN}   ✅ Working${NC}"
-			WORKING+=("$tool")
+			WORKING+=("${tool}")
 		else
 			echo -e "${RED}   ❌ Not working${NC}"
-			NOT_WORKING+=("$tool")
+			NOT_WORKING+=("${tool}")
 		fi
 		;;
 	"autoflake")
 		if poetry run autoflake --help >/dev/null 2>&1; then
 			echo -e "${GREEN}   ✅ Working${NC}"
-			WORKING+=("$tool")
+			WORKING+=("${tool}")
 		else
 			echo -e "${RED}   ❌ Not working${NC}"
-			NOT_WORKING+=("$tool")
+			NOT_WORKING+=("${tool}")
 		fi
 		;;
 	"pyupgrade")
 		if poetry run pyupgrade --help >/dev/null 2>&1; then
 			echo -e "${GREEN}   ✅ Working${NC}"
-			WORKING+=("$tool")
+			WORKING+=("${tool}")
 		else
 			echo -e "${RED}   ❌ Not working${NC}"
-			NOT_WORKING+=("$tool")
+			NOT_WORKING+=("${tool}")
 		fi
 		;;
 	"isort")
 		if poetry run isort --help >/dev/null 2>&1; then
 			echo -e "${GREEN}   ✅ Working${NC}"
-			WORKING+=("$tool")
+			WORKING+=("${tool}")
 		else
 			echo -e "${RED}   ❌ Not working${NC}"
-			NOT_WORKING+=("$tool")
+			NOT_WORKING+=("${tool}")
 		fi
 		;;
 	"ruff")
 		if poetry run ruff --help >/dev/null 2>&1; then
 			echo -e "${GREEN}   ✅ Working${NC}"
-			WORKING+=("$tool")
+			WORKING+=("${tool}")
 		else
 			echo -e "${RED}   ❌ Not working${NC}"
-			NOT_WORKING+=("$tool")
+			NOT_WORKING+=("${tool}")
 		fi
 		;;
 	esac
@@ -140,7 +140,7 @@ echo "════════════════════════�
 
 echo -e "${GREEN}✅ WORKING TOOLS (${#WORKING[@]}/${#TOOLS[@]}):${NC}"
 for tool in "${WORKING[@]}"; do
-	case "$tool" in
+	case "${tool}" in
 	"autoimport")
 		echo "   🤖 autoimport: Fix F821 undefined names (~90% success rate)"
 		;;
@@ -159,7 +159,7 @@ for tool in "${WORKING[@]}"; do
 	esac
 done
 
-if [ ${#NOT_WORKING[@]} -gt 0 ]; then
+if [[ ${#NOT_WORKING[@]} -gt 0 ]]; then
 	echo ""
 	echo -e "${RED}❌ NOT WORKING TOOLS (${#NOT_WORKING[@]}):${NC}"
 	printf '   %s\n' "${NOT_WORKING[@]}"
@@ -209,7 +209,7 @@ echo "   poetry run ruff check --fix packages/haive-prebuilt/src  # Mass fixes"
 echo "   poetry run ruff format packages/haive-prebuilt/src   # Format code"
 echo ""
 
-if [ ${#WORKING[@]} -eq ${#TOOLS[@]} ]; then
+if [[ ${#WORKING[@]} -eq ${#TOOLS[@]} ]]; then
 	echo -e "${BOLD}${GREEN}🎉 ALL TOOLS SUCCESSFULLY INSTALLED AND READY!${NC}"
 	echo -e "${GREEN}You can now achieve 60-80% automated error reduction!${NC}"
 else

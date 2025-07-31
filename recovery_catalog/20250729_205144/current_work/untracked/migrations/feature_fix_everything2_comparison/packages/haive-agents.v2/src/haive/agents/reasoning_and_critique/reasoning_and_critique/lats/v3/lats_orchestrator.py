@@ -20,6 +20,7 @@ from haive.agents.reasoning_and_critique.lats.v3.agents.reflection_evaluator imp
 from haive.agents.reasoning_and_critique.lats.v3.models.tree_models import LATSNode
 from haive.agents.reasoning_and_critique.lats.v3.tree_manager import TreeManager
 
+
 logger = logging.getLogger(__name__)
 
 

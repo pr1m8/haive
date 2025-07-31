@@ -15,18 +15,18 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
-if [ ! -d "$DIRECTORY" ]; then
-	echo -e "${RED}❌ Directory not found: $DIRECTORY${NC}"
+if [[ ! -d "${DIRECTORY}" ]]; then
+	echo -e "${RED}❌ Directory not found${ $DIRECTO}RY${NC}"
 	exit 1
 fi
 
 echo -e "${CYAN}📦 AUTO-IMPORT MANAGER${NC}"
-echo -e "${BLUE}Directory: $DIRECTORY${NC}"
+echo -e "${BLUE}Directory: ${DIRECTORY}${NC}"
 echo ""
 
 # Safety checkpoint (ONLY for target directory)
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-git stash push -m "AUTO_IMPORT_CHECKPOINT_${TIMESTAMP}" -- "$DIRECTORY" || echo "⚠️ No changes to stash"
+git stash push -m "AUTO_IMPORT_CHECKPOINT_${TIMESTAMP}" -- "${DIRECTORY}" || echo "⚠️ No changes to stash"
 
 # Check and install required tools
 echo -e "${BLUE}🔍 Checking import management tools...${NC}"
@@ -49,10 +49,10 @@ if ! poetry show isort >/dev/null 2>&1; then
 fi
 
 # Install missing tools
-if [ ${#TOOLS_TO_INSTALL[@]} -gt 0 ]; then
+if [[ ${#TOOLS_TO_INSTALL[@]} -gt 0 ]]; then
 	echo -e "${YELLOW}📦 Installing missing tools: ${TOOLS_TO_INSTALL[*]}${NC}"
 	for tool in "${TOOLS_TO_INSTALL[@]}"; do
-		poetry add --group dev "$tool"
+		poetry add --group dev "${tool}"
 	done
 fi
 
@@ -69,7 +69,7 @@ import os
 import sys
 
 missing_count = 0
-for root, dirs, files in os.walk('$DIRECTORY'):
+for root, dirs, files in os.walk('${DIRECTORY}'):
     for file in files:
         if file.endswith('.py'):
             try:
@@ -87,44 +87,44 @@ for root, dirs, files in os.walk('$DIRECTORY'):
 print(missing_count)
 " 2>/dev/null || echo "0")
 
-UNORGANIZED_IMPORTS=$(find "$DIRECTORY" -name "*.py" | wc -l)
-IMPORT_ERRORS=$(poetry run ruff check "$DIRECTORY" --select I001,F401 2>/dev/null | wc -l || echo "0")
+UNORGANIZED_IMPORTS=$(find "${DIRECTORY}" -name "*.py" | wc -l)
+IMPORT_ERRORS=$(poetry run ruff check "${DIRECTORY}" --select I001,F401 2>/dev/null | wc -l || echo "0")
 
 echo -e "${YELLOW}📋 IMPORT ANALYSIS RESULTS:${NC}"
-echo "  🔍 Files to check: $UNORGANIZED_IMPORTS Python files"
-echo "  📦 Import errors (I001, F401): $IMPORT_ERRORS"
-echo "  ❓ Potential missing imports: $MISSING_IMPORTS"
+echo "  🔍 Files to chec${: $UNORGANIZED_IMPO}RTS Python files"
+echo "  📦 Import errors (I001, F401${: $IMPORT_ERR}ORS"
+echo "  ❓ Potential missing imports${ $MISSING_IMPOR}TS"
 echo ""
 
-if [ "$MODE" = "--fix" ]; then
+if [[ "${MODE}" = "--fix" ]]; then
 	echo -e "${GREEN}🔧 APPLYING COMPREHENSIVE IMPORT FIXES...${NC}"
 	echo ""
 
 	# Step 1: Add missing imports with autoimport
 	echo -e "${BLUE}📦 STEP 1: Adding missing imports (autoimport)...${NC}"
-	poetry run autoimport "$DIRECTORY" || echo "⚠️ autoimport completed with warnings"
+	poetry run autoimport "${DIRECTORY}" || echo "⚠️ autoimport completed with warnings"
 
 	# Step 2: Reorder imports with reorder-python-imports
 	echo -e "${BLUE}🔄 STEP 2: Reordering imports (reorder-python-imports)...${NC}"
-	find "$DIRECTORY" -name "*.py" -exec poetry run reorder-python-imports {} \; || echo "⚠️ reorder-python-imports completed with warnings"
+	find "${DIRECTORY}" -name "*.py" -exec poetry run reorder-python-imports {} \; || echo "⚠️ reorder-python-imports completed with warnings"
 
 	# Step 3: Final organization with isort (your existing tool)
 	echo -e "${BLUE}📋 STEP 3: Final organization (isort)...${NC}"
-	poetry run isort "$DIRECTORY" || echo "⚠️ isort completed with warnings"
+	poetry run isort "${DIRECTORY}" || echo "⚠️ isort completed with warnings"
 
 	# Step 4: Remove unused imports with ruff
 	echo -e "${BLUE}🧹 STEP 4: Removing unused imports (ruff)...${NC}"
-	poetry run ruff check "$DIRECTORY" --select F401 --fix || echo "⚠️ ruff completed with warnings"
+	poetry run ruff check "${DIRECTORY}" --select F401 --fix || echo "⚠️ ruff completed with warnings"
 
 	# Final assessment
-	FINAL_ERRORS=$(poetry run ruff check "$DIRECTORY" --select I001,F401 2>/dev/null | wc -l || echo "0")
+	FINAL_ERRORS=$(poetry run ruff check "${DIRECTORY}" --select I001,F401 2>/dev/null | wc -l || echo "0")
 	FIXED_ISSUES=$((IMPORT_ERRORS - FINAL_ERRORS))
 
 	echo ""
 	echo -e "${GREEN}🎉 IMPORT MANAGEMENT RESULTS:${NC}"
-	echo -e "${BLUE}📊 BEFORE: $IMPORT_ERRORS import issues${NC}"
-	echo -e "${GREEN}✅ AFTER:  $FINAL_ERRORS import issues${NC}"
-	echo -e "${CYAN}🎯 FIXED:  $FIXED_ISSUES import issues${NC}"
+	echo -e "${BLUE}📊 BEFOR${: $IMPORT_ERR}ORS import issues${NC}"
+	echo -e "${GREEN}✅ AFTER:${ $FINAL_ERRO}RS import issues${NC}"
+	echo -e "${CYAN}🎯 FIXED${  $FIXED_ISS}UES import issues${NC}"
 	echo ""
 	echo -e "${YELLOW}🔍 IMPROVEMENTS APPLIED:${NC}"
 	echo "  • Added missing imports automatically"
@@ -133,27 +133,27 @@ if [ "$MODE" = "--fix" ]; then
 	echo "  • Split multi-imports into single lines"
 	echo "  • Applied consistent import ordering"
 
-elif [ "$MODE" = "--preview" ]; then
+elif [[ "${MODE}" = "--preview" ]]; then
 	echo -e "${BLUE}🔍 PREVIEW MODE - Showing what would be fixed...${NC}"
 	echo ""
 
 	echo -e "${YELLOW}📦 Missing imports that would be added:${NC}"
-	poetry run autoimport "$DIRECTORY" 2>/dev/null | head -10 || echo "  No obvious missing imports detected"
+	poetry run autoimport "${DIRECTORY}" 2>/dev/null | head -10 || echo "  No obvious missing imports detected"
 
 	echo ""
 	echo -e "${YELLOW}🔄 Import organization preview:${NC}"
-	find "$DIRECTORY" -name "*.py" | head -3 | while read -r file; do
-		echo "  📄 $file:"
-		poetry run reorder-python-imports --diff "$file" 2>/dev/null | head -5 || echo "    No changes needed"
+	find "${DIRECTORY}" -name "*.py" | head -3 | while read -r file; do
+		echo "  �${� $f}ile:"
+		poetry run reorder-python-imports --diff "${file}" 2>/dev/null | head -5 || echo "    No changes needed"
 	done
 
 	echo ""
 	echo -e "${YELLOW}🧹 Unused imports that would be removed:${NC}"
-	poetry run ruff check "$DIRECTORY" --select F401 | head -5 || echo "  No unused imports found"
+	poetry run ruff check "${DIRECTORY}" --select F401 | head -5 || echo "  No unused imports found"
 
 	echo ""
 	echo -e "${GREEN}💡 TO APPLY ALL FIXES:${NC}"
-	echo "  ./dev-tools/scripts/auto-import-manager.sh $DIRECTORY --fix"
+	echo "  ./dev-tools/scripts/auto-import-manager.sh ${DIRECTORY} --fix"
 fi
 
 echo ""
@@ -161,7 +161,7 @@ echo -e "${GREEN}🎉 Auto-import analysis complete!${NC}"
 echo -e "${YELLOW}🔄 Rollback: git stash apply stash@{0} (if needed)${NC}"
 
 # Provide setup recommendations
-if [ "$MODE" = "--fix" ]; then
+if [[ "${MODE}" = "--fix" ]]; then
 	echo ""
 	echo -e "${CYAN}💡 EDITOR INTEGRATION RECOMMENDATIONS:${NC}"
 	echo ""

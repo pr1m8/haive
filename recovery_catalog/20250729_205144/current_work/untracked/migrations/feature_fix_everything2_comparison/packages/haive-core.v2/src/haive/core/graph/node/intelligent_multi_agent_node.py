@@ -18,6 +18,7 @@ from haive.core.graph.common.types import ConfigLike, NodeType
 from haive.core.graph.node.base_node_config import BaseNodeConfig
 from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
 
+
 logger = logging.getLogger(__name__)
 
 

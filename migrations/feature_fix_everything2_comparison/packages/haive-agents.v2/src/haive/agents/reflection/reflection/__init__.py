@@ -48,11 +48,7 @@ from haive.agents.reflection.structured_output import (
     StructuredImprovementAgent,
     StructuredReflectionAgent,
     create_improvement_agent,
-)
-from haive.agents.reflection.structured_output import (
     create_reflection_agent as create_structured_reflection_agent,
-)
-from haive.agents.reflection.structured_output import (
     create_reflection_loop,
     extract_structured_output,
 )
@@ -71,59 +67,60 @@ from .models import (  # Add new models
     validate_grade_matches_score,
 )
 
+
 # Models already imported above
 
 __all__ = [
+    "ConversationalReflectionAgent",
+    # Shared models for new patterns
+    "Critique",
     # Existing reflection patterns
     "ExpertAgent",
     "ExpertiseConfig",
     "GradedReflectionMultiAgent",
     "GradingAgent",
     "GradingResult",
+    "Improvement",
     "ImprovementSuggestion",
+    # New message transformer reflection patterns
+    "MessageTransformerReflectionAgent",
     "PrePostMultiAgent",
     "QualityScore",
     "ReflectionAgent",
     "ReflectionConfig",
+    "ReflectionLoop",
+    "ReflectionMessageFlow",
     "ReflectionMultiAgent",
     "ReflectionOutput",
+    "ReflectionResult",
     "ReflectionState",
+    "StructuredImprovementAgent",
     "StructuredOutputMultiAgent",
+    # New structured output reflection patterns
+    "StructuredReflectionAgent",
     "ToolBasedReflectionAgent",
     "add_improvement",
     "create",
+    "create_conversational_reflection_agent",
     "create_expert_agent",
     "create_expert_prompt",
     "create_graded_reflection_agent",
     "create_grading_prompt",
+    "create_improvement_agent",
     "create_improvement_prompt",
+    "create_message_transformer_reflection_agent",
     "create_reflection_agent",
+    "create_reflection_context_transformer",
+    "create_reflection_loop",
+    "create_reflection_message_flow",
     "create_reflection_prompt",
+    "create_structured_reflection_agent",
     "create_tool_based_reflection_agent",
     "enhance_agent",
+    "extract_structured_output",
     "finalize",
     "model_post_init",
     "should_continue",
     "to_prompt",
     "validate_grade_matches_score",
-    # New structured output reflection patterns
-    "StructuredReflectionAgent",
-    "StructuredImprovementAgent",
-    "ReflectionLoop",
-    "create_structured_reflection_agent",
-    "create_improvement_agent",
-    "create_reflection_loop",
-    "extract_structured_output",
-    # New message transformer reflection patterns
-    "MessageTransformerReflectionAgent",
-    "ConversationalReflectionAgent",
-    "ReflectionMessageFlow",
-    "create_message_transformer_reflection_agent",
-    "create_conversational_reflection_agent",
-    "create_reflection_message_flow",
-    "create_reflection_context_transformer",
-    # Shared models for new patterns
-    "Critique",
-    "Improvement",
-    "ReflectionResult",
 ]

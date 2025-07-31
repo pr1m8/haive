@@ -7,9 +7,7 @@ that can route tasks to different specialized agents.
 
 import asyncio
 
-from haive.agents.dynamic_supervisor import (
-    create_dynamic_supervisor,
-)
+from haive.agents.dynamic_supervisor import create_dynamic_supervisor
 from haive.agents.simple import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig

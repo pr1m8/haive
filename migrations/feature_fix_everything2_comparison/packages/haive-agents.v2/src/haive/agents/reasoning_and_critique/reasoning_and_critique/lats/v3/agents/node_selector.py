@@ -4,13 +4,12 @@ This agent implements Upper Confidence Bound (UCB) selection logic to choose
 the best node for expansion in the Monte Carlo Tree Search.
 """
 
-from haive.core.engine.aug_llm import AugLLMConfig
-
 from haive.agents.reasoning_and_critique.lats.v3.models.evaluation_models import (
     UCBSelection,
 )
 from haive.agents.reasoning_and_critique.lats.v3.models.tree_models import LATSNode
 from haive.agents.simple.agent_v3 import SimpleAgentV3
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 class NodeSelector:

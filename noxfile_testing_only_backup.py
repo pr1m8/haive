@@ -43,10 +43,9 @@ Development Commands:
     nox -l                      # List all available sessions
 """
 
-import os
-import shutil
-import subprocess
 import json
+import os
+import subprocess
 from datetime import datetime
 from pathlib import Path
 
@@ -236,7 +235,7 @@ def docs_test_docstrings(session):
     session.log("📊 Testing docstring coverage and quality...")
 
     # Create log file
-    log_file = create_log_file(session, "docs_test_docstrings")
+    create_log_file(session, "docs_test_docstrings")
 
     # Install dependencies
     session.log("📦 Installing documentation testing dependencies...")
@@ -322,7 +321,7 @@ def docs_test_examples(session):
     session.log("🧪 Testing code examples in documentation...")
 
     # Create log file
-    log_file = create_log_file(session, "docs_test_examples")
+    create_log_file(session, "docs_test_examples")
 
     # Install dependencies
     session.log("📦 Installing testing dependencies...")
@@ -423,7 +422,7 @@ def docs_test_notebooks(session):
     session.log("📓 Testing Jupyter notebooks...")
 
     # Create log file
-    log_file = create_log_file(session, "docs_test_notebooks")
+    create_log_file(session, "docs_test_notebooks")
 
     # Install dependencies
     session.log("📦 Installing notebook testing dependencies...")
@@ -457,7 +456,7 @@ def docs_test_spelling(session):
     session.log("🔤 Running advanced spell checking...")
 
     # Create log file
-    log_file = create_log_file(session, "docs_test_spelling")
+    create_log_file(session, "docs_test_spelling")
 
     # Install dependencies
     session.log("📦 Installing spell checking tools...")
@@ -534,7 +533,7 @@ def docs_test_prose(session):
     session.log("✍️ Testing prose quality...")
 
     # Create log file
-    log_file = create_log_file(session, "docs_test_prose")
+    create_log_file(session, "docs_test_prose")
 
     # Install dependencies
     session.log("📦 Installing prose linting tools...")
@@ -584,7 +583,7 @@ def docs_test_metadata(session):
     session.log("📦 Checking package metadata...")
 
     # Create log file
-    log_file = create_log_file(session, "docs_test_metadata")
+    create_log_file(session, "docs_test_metadata")
 
     # Install dependencies
     session.log("📦 Installing metadata checking tools...")

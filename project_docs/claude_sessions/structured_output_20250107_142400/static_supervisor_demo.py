@@ -2,16 +2,13 @@
 """Demo of static supervisor with ReactAgent inheritance and state sync."""
 
 import asyncio
-from pathlib import Path
 import sys
-
+from pathlib import Path
 
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
 import logging
-
-from langchain_core.messages import HumanMessage
 
 from haive.agents.experiments.static_supervisor_with_sync import (
     StaticSupervisor,
@@ -19,7 +16,7 @@ from haive.agents.experiments.static_supervisor_with_sync import (
 )
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
-
+from langchain_core.messages import HumanMessage
 
 # Configure detailed logging
 logging.basicConfig(
@@ -64,12 +61,16 @@ async def demonstrate_static_supervisor():
 
     research_agent = SimpleAgent(
         name="research_agent",
-        engine=MockEngine(name="research_engine", system_message="You are a research assistant"),
+        engine=MockEngine(
+            name="research_engine", system_message="You are a research assistant"
+        ),
     )
 
     coding_agent = ReactAgent(
         name="coding_agent",
-        engine=MockEngine(name="coding_engine", system_message="You are a Python coding expert"),
+        engine=MockEngine(
+            name="coding_engine", system_message="You are a Python coding expert"
+        ),
     )
 
     # Register agents - triggers model validator

@@ -102,14 +102,15 @@ See Also:
 import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.tools import BaseTool, tool
 from langgraph.graph import END
 from pydantic import BaseModel, Field, field_validator
 
 # Import enhanced SimpleAgentV3 as base class
 from haive.agents.simple.agent_v3 import SimpleAgentV3
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
 
 # Hooks system integration
 
@@ -406,9 +407,8 @@ class ReactAgentV3(SimpleAgentV3):
         try:
             # For now, use basic hook registration from SimpleAgentV3
             # The specific ReAct hook events can be added later when HookEvent is extended
-            if hasattr(self, "hooks_enabled") and self.hooks_enabled:
-                if self.debug:
-                    logger.debug("ReAct hooks would be registered here (placeholder)")
+            if hasattr(self, "hooks_enabled") and self.hooks_enabled and self.debug:
+                logger.debug("ReAct hooks would be registered here (placeholder)")
 
         except Exception as e:
             if self.debug:
@@ -588,7 +588,7 @@ class ReactAgentV3(SimpleAgentV3):
             or (self.engine and getattr(self.engine, "structured_output_model", None))
         )
 
-    def run(self, input_data: Any, debug: bool = None, **kwargs) -> Any:
+    def run(self, input_data: Any, debug: bool | None = None, **kwargs) -> Any:
         """Execute ReactAgent with iterative reasoning loops and structured output.
 
         Implements the full ReAct pattern with enhanced capabilities from SimpleAgentV3.
@@ -970,8 +970,3 @@ if __name__ == "__main__":
         max_iterations=5,
         debug=True,
     )
-
-    print("✅ ReactAgentV3 created successfully")
-    print(f"📊 Max iterations: {agent.max_iterations}")
-    print(f"🔧 Tools available: {len(agent.engine.tools) if agent.engine else 0}")
-    print("🚀 Ready for ReAct pattern execution!")

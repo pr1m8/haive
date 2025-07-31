@@ -20,17 +20,17 @@ setup_safety() {
 
 	# Create timestamped checkpoint
 	CHECKPOINT_TAG="checkpoint-$(date +%Y%m%d-%H%M%S)"
-	git tag "$CHECKPOINT_TAG" 2>/dev/null || true
-	echo -e "${GREEN}✅ Git checkpoint created: $CHECKPOINT_TAG${NC}"
+	git tag "${CHECKPOINT_TAG}" 2>/dev/null || true
+	echo -e "${GREEN}✅ Git checkpoint created${ $CHECKPOINT_T}AG${NC}"
 
 	# Backup critical files
 	echo "Creating backups..."
 	cp pyproject.toml pyproject.toml.backup
-	[ -f poetry.lock ] && cp poetry.lock poetry.lock.backup
-	[ -f .pre-commit-config.yaml ] && cp .pre-commit-config.yaml .pre-commit-config.yaml.backup
+	[[ -f poetry.lock ]] && cp poetry.lock poetry.lock.backup
+	[[ -f .pre-commit-config.yaml ]] && cp .pre-commit-config.yaml .pre-commit-config.yaml.backup
 
 	echo -e "${GREEN}✅ Safety measures in place${NC}"
-	echo "   - Git tag: $CHECKPOINT_TAG"
+	echo "   - Git tag: ${CHECKPOINT_TAG}"
 	echo "   - Backups: *.backup files created"
 }
 
@@ -57,7 +57,7 @@ test_changes() {
 	fi
 
 	echo "3. Testing current pre-commit setup..."
-	if [ -f .pre-commit-config.yaml ]; then
+	if [[ -f .pre-commit-config.yaml ]]; then
 		echo -e "${YELLOW}   Current pre-commit hooks:${NC}"
 		grep -E "^\s*-\s*id:" .pre-commit-config.yaml | head -10
 	else
@@ -89,10 +89,10 @@ show_current_state() {
 
 	echo "🔧 Available dev tools:"
 	for tool in ruff black isort mypy pyright pre-commit; do
-		if command -v $tool >/dev/null 2>&1; then
-			echo -e "   ✅ $tool ($(which $tool))"
+		if command -v "$tool" >/dev/null 2>&1; then
+			echo -e "   �${ $to}ol ($(whic"h $to"ol))"
 		else
-			echo -e "   ❌ $tool (not found)"
+			echo -e "   �${ $to}ol (not found)"
 		fi
 	done
 
@@ -272,17 +272,17 @@ rollback_changes() {
 	# Find the most recent checkpoint
 	LATEST_CHECKPOINT=$(git tag -l "checkpoint-*" | sort | tail -1)
 
-	if [ -n "$LATEST_CHECKPOINT" ]; then
-		echo "Rolling back to: $LATEST_CHECKPOINT"
-		git reset --hard "$LATEST_CHECKPOINT"
+	if [[ -n "${LATEST_CHECKPOINT}" ]]; then
+		echo "Rolling back to: ${LATEST_CHECKPOINT}"
+		git reset --hard "${LATEST_CHECKPOINT}"
 	else
 		echo "No checkpoint found, using backup files..."
 	fi
 
 	# Restore backup files
-	[ -f pyproject.toml.backup ] && cp pyproject.toml.backup pyproject.toml && echo "✅ pyproject.toml restored"
-	[ -f poetry.lock.backup ] && cp poetry.lock.backup poetry.lock && echo "✅ poetry.lock restored"
-	[ -f .pre-commit-config.yaml.backup ] && cp .pre-commit-config.yaml.backup .pre-commit-config.yaml && echo "✅ pre-commit config restored"
+	[[ -f pyproject.toml.backup ]] && cp pyproject.toml.backup pyproject.toml && echo "✅ pyproject.toml restored"
+	[[ -f poetry.lock.backup ]] && cp poetry.lock.backup poetry.lock && echo "✅ poetry.lock restored"
+	[[ -f .pre-commit-config.yaml.backup ]] && cp .pre-commit-config.yaml.backup .pre-commit-config.yaml && echo "✅ pre-commit config restored"
 
 	# Reinstall environment
 	echo "Reinstalling environment..."

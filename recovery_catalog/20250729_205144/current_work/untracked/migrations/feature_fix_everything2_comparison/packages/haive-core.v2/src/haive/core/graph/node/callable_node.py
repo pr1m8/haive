@@ -5,9 +5,9 @@ This module provides a way to wrap any Python callable (function, method, lambda
 as a proper graph node that returns Command or Send objects.
 """
 
+from collections.abc import Callable
 import inspect
 import logging
-from collections.abc import Callable
 from typing import Any, Self, TypeVar
 
 from langgraph.types import Command
@@ -16,6 +16,7 @@ from pydantic import BaseModel, Field, model_validator
 from haive.core.graph.common.types import ConfigLike, NodeType, StateLike
 from haive.core.graph.node.base_node_config import BaseNodeConfig
 from haive.core.schema.field_definition import FieldDefinition
+
 
 logger = logging.getLogger(__name__)
 

@@ -4,4 +4,4 @@ link: https://google.github.io/styleguide/pyguide.html#383-functions-and-methods
 level: warning
 scope: raw
 tokens:
-  - 'Args:'
+  - "Args:"

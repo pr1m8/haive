@@ -37,6 +37,7 @@ from agentic_router.agent_v2 import (
     route_to_strategy,
 )
 
+
 __all__ = [
     "AgenticRAGRouterAgent",
     "AgenticRAGRouterV2",

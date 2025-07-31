@@ -9,15 +9,16 @@ Based on: @project_docs/active/patterns/dynamic_activation_pattern.md
 
 import logging
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
-from haive.core.engine.retriever import BaseRetrieverConfig
-from haive.core.schema.prebuilt.meta_state import MetaStateSchema
-from haive.core.utils.haive_discovery import HaiveComponentDiscovery
 from langchain_core.documents import Document
 from pydantic import BaseModel, ConfigDict, Field, PrivateAttr, model_validator
 
 from haive.agents.rag.base.agent import BaseRAGAgent
+from haive.core.engine.retriever import BaseRetrieverConfig
+from haive.core.schema.prebuilt.meta_state import MetaStateSchema
+from haive.core.utils.haive_discovery import HaiveComponentDiscovery
+
 
 logger = logging.getLogger(__name__)
 
@@ -103,11 +104,11 @@ class ComponentDiscoveryAgent(BaseModel):
     )
 
     # Component instances (initialized via model_validator)
-    discovery_agent: Optional[BaseRAGAgent] = Field(
+    discovery_agent: BaseRAGAgent | None = Field(
         default=None, description="BaseRAGAgent for performing retrieval"
     )
 
-    meta_state: Optional[MetaStateSchema] = Field(
+    meta_state: MetaStateSchema | None = Field(
         default=None, description="MetaStateSchema wrapper for the discovery agent"
     )
 
@@ -122,7 +123,7 @@ class ComponentDiscoveryAgent(BaseModel):
 
     # Internal state (private attributes)
     _documents: list[Document] | None = PrivateAttr(default=None)
-    _haive_discovery: Optional[HaiveComponentDiscovery] = PrivateAttr(default=None)
+    _haive_discovery: HaiveComponentDiscovery | None = PrivateAttr(default=None)
 
     @model_validator(mode="after")
     def setup_discovery_agent(self) -> "ComponentDiscoveryAgent":
@@ -520,7 +521,7 @@ class ComponentDiscoveryAgent(BaseModel):
 
     async def load_component_from_doc(
         self, component_doc: dict[str, Any]
-    ) -> Optional[Any]:
+    ) -> Any | None:
         """Load actual component instance from component document.
 
         Args:

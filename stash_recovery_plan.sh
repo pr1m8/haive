@@ -14,8 +14,8 @@ echo "Current commit: $(git rev-parse HEAD)"
 
 # Create safety backup
 echo "📦 Creating safety backup branch..."
-git branch "$BACKUP_BRANCH"
-echo "✅ Created backup: $BACKUP_BRANCH"
+git branch "${BACKUP_BRANCH}"
+echo "✅ Created backup${ $BACKUP_BRAN}CH"
 
 # Function to safely apply a stash with conflict detection
 apply_stash_safely() {
@@ -23,72 +23,72 @@ apply_stash_safely() {
     local description=$2
     
     echo ""
-    echo "🔍 Analyzing stash_$stash_num: $description"
+    echo "🔍 Analyzing sta${h_$stash_}nu${: $descript}ion"
     
     # Check if stash exists
-    if [[ ! -f "$RECOVERY_DIR/stash_$stash_num.patch" ]]; then
-        echo "❌ Stash file not found: stash_$stash_num.patch"
+    if [[ ! -f "${RECOVERY_DIR}/stash_${stash_num}.patch" ]]; then
+        echo "❌ Stash file not found: stas${_$stash_n}um.patch"
         return 1
     fi
     
     # Show affected files
     echo "📁 Files in this stash:"
-    if [[ -f "$RECOVERY_DIR/stash_${stash_num}_files.txt" ]]; then
-        tail -n +8 "$RECOVERY_DIR/stash_${stash_num}_files.txt" | head -10
-        local total_files=$(tail -n +8 "$RECOVERY_DIR/stash_${stash_num}_files.txt" | wc -l)
-        if [[ $total_files -gt 10 ]]; then
+    if [[ -f "${RECOVERY_DIR}/stash_${stash_num}_files.txt" ]]; then
+        tail -n +8 "${RECOVERY_DIR}/stash_${stash_num}_files.txt" | head -10
+        local total_files=$(tail -n +8 "${RECOVERY_DIR}/stash_${stash_num}_files.txt" | wc -l)
+        if [[ ${total_files} -gt 10 ]]; then
             echo "   ... and $((total_files - 10)) more files"
         fi
     fi
     
     # Get file size
-    local size=$(du -h "$RECOVERY_DIR/stash_$stash_num.patch" | cut -f1)
-    echo "📊 Patch size: $size"
+    local size=$(du -h "${RECOVERY_DIR}/stash_${stash_num}.patch" | cut -f1)
+    echo "📊 Patch siz${: $s}ize"
     
     # Ask for confirmation
     echo ""
     read -p "Apply this stash? [y/N/s(skip)/q(quit)]: " choice
-    case $choice in
+    case ${choice} in
         [Yy]* )
-            echo "🔄 Applying stash_$stash_num..."
+            echo "🔄 Applying sta${h_$stash_}num..."
             
             # Try to apply with 3-way merge
-            if git apply --3way --index "$RECOVERY_DIR/stash_$stash_num.patch" 2>/dev/null; then
+            if git apply --3way --index "${RECOVERY_DIR}/stash_${stash_num}.patch" 2>/dev/null; then
                 echo "✅ Applied cleanly!"
                 git add -A
-                git commit -m "Recover stash_$stash_num: $description
+                git commit -m "Recover stash_${stash_num}: ${description}
 
-Original stash from: $(head -4 "$RECOVERY_DIR/stash_${stash_num}_files.txt" | tail -1)
-Recovery source: $RECOVERY_DIR/stash_$stash_num.patch"
+Original stash from: $(head -4 "${RECOVERY_DIR}/stash_${stash_num}_files.txt" | tail -1)
+Recovery source: ${RECOVERY_DIR}/stash_${stash_num}.patch"
             else
                 echo "⚠️  Conflicts detected. Attempting manual resolution..."
                 
                 # Try without index first
-                if git apply "$RECOVERY_DIR/stash_$stash_num.patch" 2>/dev/null; then
+                if git apply "${RECOVERY_DIR}/stash_${stash_num}.patch" 2>/dev/null; then
                     echo "✅ Applied to working tree. Please review and commit manually."
-                    echo "📝 To commit: git add -A && git commit -m 'Recover stash_$stash_num: $description'"
+                    echo "📝 To commit: git add -A && git commit -m 'Recover sta${h_$stash_}nu${: $descript}ion'"
                     read -p "Press Enter when ready to continue..."
                 else
                     echo "❌ Cannot apply automatically. Conflicts need manual resolution."
-                    echo "📁 Patch saved at: $RECOVERY_DIR/stash_$stash_num.patch"
+                    echo "📁 Patch saved a${: $RECOVERY_}DIR/sta${h_$stash_}num.patch"
                     echo "🛠️  Manual steps:"
-                    echo "   1. git apply --reject $RECOVERY_DIR/stash_$stash_num.patch"
+                    echo "   1. git apply --reject ${RECOVERY_DIR}/stash_${stash_num}.patch"
                     echo "   2. Resolve conflicts in *.rej files"
                     echo "   3. git add -A && git commit"
                     read -p "Continue with next stash? [y/N]: " continue_choice
-                    [[ $continue_choice =~ ^[Yy]$ ]] || return 1
+                    [[ ${continue_choice} =~ ^[Yy]$ ]] || return 1
                 fi
             fi
             ;;
         [Ss]* )
-            echo "⏭️  Skipped stash_$stash_num"
+            echo "⏭️  Skipped st${sh_$stash}_num"
             ;;
         [Qq]* )
             echo "🛑 Stopping recovery process"
             exit 0
             ;;
         * )
-            echo "⏭️  Skipped stash_$stash_num (default)"
+            echo "⏭️  Skipped st${sh_$stash}_num (default)"
             ;;
     esac
 }
@@ -124,13 +124,13 @@ echo ""
 echo "✅ RECOVERY COMPLETE!"
 echo ""
 echo "🔍 SUMMARY:"
-echo "   • Backup branch created: $BACKUP_BRANCH"
+echo "   • Backup branch created${ $BACKUP_BRAN}CH"
 echo "   • Current branch: $(git branch --show-current)"
-echo "   • Commits added: $(git rev-list --count $BACKUP_BRANCH..HEAD 2>/dev/null || echo '0')"
+echo "   • Commits added: $(git rev-list --coun"t $BACKUP_BRAN"CH..HEAD 2>/dev/null || echo '0')"
 echo ""
 echo "🛟 ROLLBACK INSTRUCTIONS (if needed):"
-echo "   git reset --hard $BACKUP_BRANCH"
-echo "   git branch -D $BACKUP_BRANCH"
+echo "   git reset --hard ${BACKUP_BRANCH}"
+echo "   git branch -D ${BACKUP_BRANCH}"
 echo ""
 echo "🔧 NEXT STEPS:"
 echo "   1. Test your recovered changes"
@@ -141,10 +141,10 @@ echo ""
 # Show remaining stashes
 echo "📋 REMAINING STASHES (apply manually if needed):"
 for i in {3..30}; do
-    if [[ -f "$RECOVERY_DIR/stash_${i}.patch" && ! "$i" =~ ^(7|8|10|14|17)$ ]]; then
-        size=$(du -h "$RECOVERY_DIR/stash_$i.patch" | cut -f1)
-        desc=$(sed -n '6p' "$RECOVERY_DIR/stash_${i}_files.txt" 2>/dev/null | sed 's/^[[:space:]]*//' || echo "No description")
-        echo "   stash_$i ($size): $desc"
+    if [[ -f "${RECOVERY_DIR}/stash_${i}.patch" && ! "${i}" =~ ^(7|8|10|14|17)$ ]]; then
+        size=$(du -h "${RECOVERY_DIR}/stash_${i}.patch" | cut -f1)
+        desc=$(sed -n '6p' "${RECOVERY_DIR}/stash_${i}_files.txt" 2>/dev/null | sed 's/^[[:space:]]*//' || echo "No description")
+        echo "   stash_${i} (${size}): ${desc}"
     fi
 done
 

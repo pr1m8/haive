@@ -23,6 +23,7 @@ from labs.models import (
     WorkflowStep,
 )
 
+
 __all__ = [
     "AssetType",
     "Config",

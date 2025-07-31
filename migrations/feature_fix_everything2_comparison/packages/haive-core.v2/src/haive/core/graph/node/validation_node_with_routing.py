@@ -1,8 +1,8 @@
 """Validation node configuration with tool message updates and routing state."""
 
+from collections.abc import Callable
 import logging
 import time
-from collections.abc import Callable
 from typing import Any
 
 from langchain_core.messages import AIMessage, ToolMessage
@@ -16,6 +16,7 @@ from haive.core.schema.prebuilt.tools.validation_state import (
     ValidationStateManager,
     ValidationStatus,
 )
+
 
 logger = logging.getLogger(__name__)
 
@@ -67,8 +68,8 @@ class ValidationNodeWithRouting(ValidationNodeConfig):
         """Create validation function with message updates and routing."""
 
         def validation_node_with_routing(state: dict[str, Any]) -> dict[str, Any]:
-            import traceback
             from datetime import datetime
+            import traceback
 
             start_time = time.time()
             start_datetime = datetime.now()

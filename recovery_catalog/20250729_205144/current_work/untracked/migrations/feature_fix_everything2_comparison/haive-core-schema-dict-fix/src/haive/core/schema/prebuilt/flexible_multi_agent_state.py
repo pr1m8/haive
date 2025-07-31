@@ -11,6 +11,7 @@ from typing_extensions import TypedDict
 
 from haive.core.schema.state_schema import StateSchema
 
+
 if TYPE_CHECKING:
     from haive.agents.base import Agent
 

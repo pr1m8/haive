@@ -4,17 +4,18 @@ This module provides integration between the new dynamic supervisor system
 and the existing multi-agent base classes, ensuring seamless interoperability.
 """
 
-import logging
 from collections.abc import Sequence
+import logging
 from typing import Any, Optional
 
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.schema.agent_schema_composer import AgentSchemaComposer
 from pydantic import Field, model_validator
 
 from haive.agents.base.agent import Agent
 from haive.agents.multi.base import ExecutionMode, MultiAgent
 from haive.agents.supervisor.integrated_supervisor import IntegratedDynamicSupervisor
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.schema.agent_schema_composer import AgentSchemaComposer
+
 
 logger = logging.getLogger(__name__)
 

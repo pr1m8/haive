@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
-"""
-Visualization Utilities - Universal agent visualization and workflow diagram generation.
+"""Visualization Utilities - Universal agent visualization and workflow diagram generation.
 
 This module provides comprehensive visualization capabilities for all Haive agents,
 regardless of architecture or type. It creates consistent visual outputs including
 workflow diagrams, execution traces, and performance metrics.
 """
 
-import json
 import logging
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any
 
 from .agent_analyzer import AgentArchitecture, AgentInfo
 
@@ -38,9 +36,9 @@ class VisualizationResult:
     """Result of visualization generation."""
 
     success: bool
-    output_path: Optional[Path] = None
-    error: Optional[str] = None
-    metadata: Dict[str, Any] = None
+    output_path: Path | None = None
+    error: str | None = None
+    metadata: dict[str, Any] = None
 
 
 class VisualizationManager:
@@ -53,8 +51,8 @@ class VisualizationManager:
     async def visualize_agent(
         self,
         agent_info: AgentInfo,
-        output_path: Optional[Path] = None,
-        config: Optional[VisualizationConfig] = None,
+        output_path: Path | None = None,
+        config: VisualizationConfig | None = None,
     ) -> VisualizationResult:
         """Generate visualization for any agent type.
 
@@ -93,7 +91,7 @@ class VisualizationManager:
             return result
 
         except Exception as e:
-            logger.error(f"Failed to visualize agent {agent_info.name}: {e}")
+            logger.exception(f"Failed to visualize agent {agent_info.name}: {e}")
             return VisualizationResult(success=False, error=str(e))
 
     async def _use_native_visualization(
@@ -150,7 +148,7 @@ class VisualizationManager:
             )
 
         except Exception as e:
-            logger.error(f"Native visualization failed for {agent_info.name}: {e}")
+            logger.exception(f"Native visualization failed for {agent_info.name}: {e}")
             # Fallback to synthetic visualization
             return await self._create_synthetic_visualization(
                 agent_info, output_path, config
@@ -175,19 +173,20 @@ class VisualizationManager:
                 return await self._create_mermaid_diagram(
                     agent_info, output_path, config
                 )
-            elif config.output_format == "html":
+            if config.output_format == "html":
                 return await self._create_html_visualization(
                     agent_info, output_path, config
                 )
-            elif config.output_format in ["png", "svg"]:
+            if config.output_format in ["png", "svg"]:
                 return await self._create_graph_visualization(
                     agent_info, output_path, config
                 )
-            else:
-                raise ValueError(f"Unsupported format: {config.output_format}")
+            raise ValueError(f"Unsupported format: {config.output_format}")
 
         except Exception as e:
-            logger.error(f"Synthetic visualization failed for {agent_info.name}: {e}")
+            logger.exception(
+                f"Synthetic visualization failed for {agent_info.name}: {e}"
+            )
             return VisualizationResult(success=False, error=str(e))
 
     async def _create_mermaid_diagram(
@@ -283,7 +282,7 @@ class VisualizationManager:
                     "    classDef agent fill:#4299e1,stroke:#3182ce,stroke-width:3px,color:#ffffff",
                 ]
             )
-            lines.append(f"    class Agent agent")
+            lines.append("    class Agent agent")
 
         return "\n".join(lines)
 
@@ -400,13 +399,13 @@ class VisualizationManager:
         <p><strong>Architecture:</strong> {agent_info.architecture.value}</p>
         <p><strong>File:</strong> {agent_info.file_path.name}</p>
     </div>
-    
+
     <div class="info-grid">
         <div class="info-card">
             <h3>Base Classes</h3>
             {''.join(f'<span class="tag">{base}</span>' for base in agent_info.base_classes)}
         </div>
-        
+
         <div class="info-card">
             <h3>Capabilities</h3>
             <div>
@@ -415,13 +414,13 @@ class VisualizationManager:
                 <span class="tag">{'✓' if agent_info.streaming_support else '✗'} Streaming</span>
             </div>
         </div>
-        
+
         <div class="info-card">
             <h3>Execution</h3>
             <span class="tag">{agent_info.execution_pattern.title()}</span>
             <span class="tag">{agent_info.config_pattern}</span>
         </div>
-        
+
         <div class="info-card">
             <h3>Examples</h3>
             <div>
@@ -429,7 +428,7 @@ class VisualizationManager:
             </div>
         </div>
     </div>
-    
+
     <div class="workflow">
         <h3>Typical Workflow</h3>
         <div>
@@ -442,7 +441,7 @@ class VisualizationManager:
             <span class="workflow-step">Output</span>
         </div>
     </div>
-    
+
     <div class="info-card">
         <h3>Module Information</h3>
         <p><strong>Module Path:</strong> {agent_info.module_path}</p>
@@ -479,8 +478,8 @@ class VisualizationManager:
 
             # Try matplotlib as fallback
             try:
-                import matplotlib.patches as patches
                 import matplotlib.pyplot as plt
+                from matplotlib import patches
 
                 return await self._create_matplotlib_visualization(
                     agent_info, output_path, config
@@ -494,7 +493,7 @@ class VisualizationManager:
             )
 
         except Exception as e:
-            logger.error(f"Graph visualization failed: {e}")
+            logger.exception(f"Graph visualization failed: {e}")
             return VisualizationResult(success=False, error=str(e))
 
     async def _create_matplotlib_visualization(
@@ -510,8 +509,8 @@ class VisualizationManager:
         Returns:
             Visualization result
         """
-        import matplotlib.patches as patches
         import matplotlib.pyplot as plt
+        from matplotlib import patches
 
         fig, ax = plt.subplots(1, 1, figsize=(config.width / 100, config.height / 100))
 
@@ -565,7 +564,7 @@ class VisualizationManager:
                 "",
                 xy=(x2, y2),
                 xytext=(x1, y1),
-                arrowprops=dict(arrowstyle="->", color="#4299e1", lw=2),
+                arrowprops={"arrowstyle": "->", "color": "#4299e1", "lw": 2},
             )
 
         # Add title and metadata
@@ -587,7 +586,11 @@ Visualization: {'Yes' if agent_info.has_visualization else 'No'}"""
                 fontsize=8,
                 color=text_color,
                 verticalalignment="bottom",
-                bbox=dict(boxstyle="round,pad=0.3", facecolor="#f7fafc", alpha=0.8),
+                bbox={
+                    "boxstyle": "round,pad=0.3",
+                    "facecolor": "#f7fafc",
+                    "alpha": 0.8,
+                },
             )
 
         ax.set_xlim(0, 1)
@@ -680,13 +683,12 @@ Examples: {len(agent_info.example_files)} files found
                 config = AugLLMConfig(temperature=0.1)  # Low temp for consistency
                 return agent_class(name=f"viz_{agent_info.name.lower()}", engine=config)
 
-            elif agent_info.architecture == AgentArchitecture.HAIVE_GAMES:
+            if agent_info.architecture == AgentArchitecture.HAIVE_GAMES:
                 # Game agents often need less configuration
                 return agent_class(name=f"viz_{agent_info.name.lower()}")
 
-            else:
-                # Try with default constructor
-                return agent_class()
+            # Try with default constructor
+            return agent_class()
 
         except Exception as e:
             logger.warning(f"Failed to create instance with default config: {e}")
@@ -695,7 +697,7 @@ Examples: {len(agent_info.example_files)} files found
 
     async def _extract_visualization_metadata(
         self, agent: Any, agent_info: AgentInfo
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Extract metadata from agent instance.
 
         Args:
@@ -727,9 +729,9 @@ Examples: {len(agent_info.example_files)} files found
 
     async def create_comparison_visualization(
         self,
-        agents_info: List[AgentInfo],
+        agents_info: list[AgentInfo],
         output_path: Path,
-        config: Optional[VisualizationConfig] = None,
+        config: VisualizationConfig | None = None,
     ) -> VisualizationResult:
         """Create comparison visualization for multiple agents.
 
@@ -749,23 +751,19 @@ Examples: {len(agent_info.example_files)} files found
                 return await self._create_comparison_html(
                     agents_info, output_path, config
                 )
-            else:
-                return await self._create_comparison_table(
-                    agents_info, output_path, config
-                )
+            return await self._create_comparison_table(agents_info, output_path, config)
 
         except Exception as e:
-            logger.error(f"Comparison visualization failed: {e}")
+            logger.exception(f"Comparison visualization failed: {e}")
             return VisualizationResult(success=False, error=str(e))
 
     async def _create_comparison_html(
         self,
-        agents_info: List[AgentInfo],
+        agents_info: list[AgentInfo],
         output_path: Path,
         config: VisualizationConfig,
     ) -> VisualizationResult:
         """Create HTML comparison table."""
-
         html_content = f"""
 <!DOCTYPE html>
 <html lang="en">

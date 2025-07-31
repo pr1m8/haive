@@ -15,6 +15,7 @@ from pydantic import BaseModel, Field, model_validator
 from haive.agents.conversation.base.agent import BaseConversationAgent
 from haive.agents.conversation.debate.state import DebateState
 
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
@@ -726,9 +727,8 @@ Let us begin! {next(iter(positions.keys())) if positions else 'Participants'}, p
         **kwargs,
     ) -> "DebateConversation":
         """Create a simple two-sided debate conversation."""
-        from haive.core.engine.aug_llm import AugLLMConfig
-
         from haive.agents.simple.agent import SimpleAgent
+        from haive.core.engine.aug_llm import AugLLMConfig
 
         name_a, pos_a = position_a
         name_b, pos_b = position_b

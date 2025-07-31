@@ -5,6 +5,7 @@ This module provides prompts functionality for the Haive framework.
 
 from langchain_core.prompts import ChatPromptTemplate
 
+
 rag_base_prompt = """You are an assistant for question-answering tasks.
 Use the following pieces of retrieved context to answer the question.
 If you don't know the answer, just say that you don't know. Use three sentences

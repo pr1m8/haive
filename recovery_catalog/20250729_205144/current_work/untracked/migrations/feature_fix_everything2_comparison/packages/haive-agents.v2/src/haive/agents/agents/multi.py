@@ -5,27 +5,28 @@ memory agents based on query type, context, and memory strategy optimization.
 """
 
 import asyncio
-import logging
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
+import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import DeepSeekLLMConfig
 from pydantic import BaseModel, ConfigDict, Field
 
+from agents.base.token_state import MemoryStateWithTokens
 from haive.agents.simple.agent import SimpleAgent
-
-from ..base.token_state import MemoryStateWithTokens
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import DeepSeekLLMConfig
 
 # Import memory agents
 from .simple import SimpleMemoryAgent, TokenAwareMemoryConfig
 
+
 # Optional imports with graceful fallback
 try:
-    from ..coordination.agentic_rag_coordinator import AgenticRAGCoordinator
-    from ..retrieval.advanced_rag import AdvancedRAGMemoryAgent
+    from agents.coordination.agentic_rag_coordinator import AgenticRAGCoordinator
+    from agents.retrieval.advanced_rag import AdvancedRAGMemoryAgent
+
     HAS_RAG_MEMORY = True
 except ImportError:
     AdvancedRAGMemoryAgent = None

@@ -13,6 +13,7 @@ from memory_aware.agent import (
     retrieve_memories,
 )
 
+
 __all__ = [
     "MemoryAwareRAGAgent",
     "MemoryImportance",

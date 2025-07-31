@@ -18,12 +18,12 @@ Functions:
 from collections.abc import Callable
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.prompts import ChatPromptTemplate
 
 from haive.agents.reasoning_and_critique.tot.modular.agent import ToTAgent
 from haive.agents.reasoning_and_critique.tot.modular.config import ToTAgentConfig
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
 
 
 def create_tot_agent(

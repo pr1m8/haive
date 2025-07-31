@@ -1,8 +1,7 @@
 """Self-Discover Executor Agent implementation."""
 
-from haive.core.engine.aug_llm import AugLLMConfig
-
 from haive.agents.simple import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 from .models import ExecutionResult
 from .prompts import EXECUTOR_PROMPT, EXECUTOR_SYSTEM_MESSAGE

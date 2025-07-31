@@ -24,6 +24,7 @@ from haive.agents.reasoning_and_critique.logic.models import (
     num_steps,
 )
 
+
 __all__ = [
     "ArgumentStrength",
     "ArgumentStructure",

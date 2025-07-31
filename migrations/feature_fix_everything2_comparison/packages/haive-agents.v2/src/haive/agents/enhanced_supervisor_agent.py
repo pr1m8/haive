@@ -6,9 +6,6 @@ SupervisorAgent = Agent[AugLLMConfig] + worker management + delegation.
 import logging
 from typing import Any, Literal
 
-from haive.core.engine.aug_llm.config import AugLLMConfig
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import AIMessage
 from langgraph.graph import END, START
 from pydantic import Field, field_validator, model_validator
@@ -17,6 +14,10 @@ from pydantic import Field, field_validator, model_validator
 # from haive.agents.base.enhanced_agent import Agent
 # For now, using minimal base
 from haive.agents.simple.enhanced_simple_real import EnhancedAgentBase as Agent
+from haive.core.engine.aug_llm.config import AugLLMConfig
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
 
 logger = logging.getLogger(__name__)
 
@@ -308,18 +309,7 @@ if __name__ == "__main__":
         },
     )
 
-    print(f"Created: {supervisor}")
-    print(f"Workers: {supervisor.list_workers()}")
-    print(f"Delegation strategy: {supervisor.delegation_strategy}")
-
     # Add another worker dynamically
     supervisor.add_worker("tester", MockWorker("Dave", "Quality Assurance"))
-    print(f"Updated workers: {supervisor.list_workers()}")
 
     # Example delegation scenarios
-    print("\nExample delegation scenarios:")
-    print("1. 'Analyze user engagement metrics' -> delegate to analyst")
-    print("2. 'Build a REST API' -> delegate to developer")
-    print("3. 'Create mockups for mobile app' -> delegate to designer")
-    print("4. 'Test the new features' -> delegate to tester")
-    print("5. 'Plan the project timeline' -> supervisor handles directly")

@@ -19,6 +19,7 @@ from deep_research.models import (
     ResearchSource,
 )
 
+
 __all__ = [
     "Config",
     "DeepResearchAgent",

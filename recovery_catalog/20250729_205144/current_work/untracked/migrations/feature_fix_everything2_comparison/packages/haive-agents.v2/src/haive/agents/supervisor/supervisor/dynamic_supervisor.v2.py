@@ -6,14 +6,12 @@ to LangGraph's supervisor package but with enhanced Haive-specific functionality
 """
 
 import asyncio
+from collections.abc import Callable
 import logging
 import time
-from collections.abc import Callable
 from typing import Any
 from uuid import uuid4
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import START
 from rich.console import Console
@@ -28,6 +26,9 @@ from haive.agents.supervisor.dynamic_state import (
     SupervisorDecision,
 )
 from haive.agents.supervisor.registry import AgentRegistry
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
 
 logger = logging.getLogger(__name__)
 console = Console()

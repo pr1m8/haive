@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Import Issue Tracker for Haive Documentation
+"""Import Issue Tracker for Haive Documentation.
 
 This script systematically tests imports of all modules and submodules,
 tracks failures, and generates reports to help fix documentation issues.
@@ -104,7 +104,7 @@ class ImportIssueTracker:
             return True, None, None
         except Exception as e:
             error_type = type(e).__name__
-            error_msg = str(e)
+            str(e)
             return False, error_type, e
 
     def analyze_import_error(
@@ -244,21 +244,15 @@ class ImportIssueTracker:
 
     def run_comprehensive_analysis(self) -> None:
         """Run comprehensive import analysis."""
-        print("🔍 Starting comprehensive import analysis...")
-
         modules = self.discover_modules()
-        print(f"📋 Found {len(modules)} modules to analyze")
 
-        for i, module_name in enumerate(modules, 1):
-            print(f"[{i:3d}/{len(modules)}] Testing {module_name}...", end=" ")
+        for _i, module_name in enumerate(modules, 1):
 
             success, error_type, error = self.test_import(module_name)
 
             if success:
-                print("✅")
                 self.successful_imports.add(module_name)
             else:
-                print(f"❌ {error_type}")
                 error_info = self.analyze_import_error(module_name, error_type, error)
                 self.failed_imports[module_name] = error_info
 
@@ -270,10 +264,6 @@ class ImportIssueTracker:
             # Analyze structure regardless of import success
             structure = self.analyze_module_structure(module_name)
             self.module_structure[module_name] = structure
-
-        print("\n📊 Analysis complete!")
-        print(f"   ✅ Successful: {len(self.successful_imports)}")
-        print(f"   ❌ Failed: {len(self.failed_imports)}")
 
     def generate_reports(self) -> None:
         """Generate comprehensive reports."""
@@ -337,7 +327,6 @@ class ImportIssueTracker:
             else:
                 with open(filepath, "w") as f:
                     json.dump(content, f, indent=2)
-            print(f"📄 Saved: {filepath}")
 
         # 5. Generate markdown summary
         self._generate_markdown_summary(timestamp)
@@ -365,27 +354,25 @@ class ImportIssueTracker:
     def _generate_mock_suggestions(self) -> list[str]:
         """Generate mock import suggestions for sphinx conf.py."""
         missing_deps = self._extract_missing_dependencies()
-        current_mocks = set(
-            [
-                "langchain",
-                "langchain_core",
-                "langchain_community",
-                "langchain_openai",
-                "langgraph",
-                "langsmith",
-                "neo4j",
-                "sqlalchemy",
-                "psycopg2",
-                "chromadb",
-                "faiss",
-                "pinecone",
-                "weaviate",
-                "qdrant_client",
-                "elasticsearch",
-                "supabase",
-                # ... (existing mocks from conf.py)
-            ]
-        )
+        current_mocks = {
+            "langchain",
+            "langchain_core",
+            "langchain_community",
+            "langchain_openai",
+            "langgraph",
+            "langsmith",
+            "neo4j",
+            "sqlalchemy",
+            "psycopg2",
+            "chromadb",
+            "faiss",
+            "pinecone",
+            "weaviate",
+            "qdrant_client",
+            "elasticsearch",
+            "supabase",
+            # ... (existing mocks from conf.py)
+        }
 
         new_mocks = []
         for dep in missing_deps:
@@ -495,7 +482,6 @@ autodoc_mock_imports = [
         md_path = self.output_dir / f"import_analysis_report_{timestamp}.md"
         with open(md_path, "w") as f:
             f.write(content)
-        print(f"📄 Saved: {md_path}")
 
 
 def main():
@@ -503,13 +489,6 @@ def main():
     tracker = ImportIssueTracker()
     tracker.run_comprehensive_analysis()
     tracker.generate_reports()
-
-    print(f"\n🎉 Analysis complete! Reports saved to: {tracker.output_dir}")
-    print("\n📋 Next steps:")
-    print("1. Review the detailed failure reports")
-    print("2. Add missing dependencies to autodoc_mock_imports")
-    print("3. Fix Pydantic and syntax issues in problematic modules")
-    print("4. Consider excluding persistent problem modules from autosummary")
 
 
 if __name__ == "__main__":

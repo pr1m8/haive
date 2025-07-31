@@ -20,6 +20,7 @@ from haive.agents.reasoning_and_critique.self_discover.agent2 import (
     create_self_discover_agent,
 )
 
+
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -71,8 +72,8 @@ def example_svg_interpretation():
 
 def example_logical_reasoning():
     """Example using SelfDiscover for a logical reasoning problem."""
-    problem = """Four people (Alex, Blake, Casey, and Dana) each have a different favorite color 
-(red, blue, green, and yellow) and a different favorite fruit (apple, banana, cherry, and date). 
+    problem = """Four people (Alex, Blake, Casey, and Dana) each have a different favorite color
+(red, blue, green, and yellow) and a different favorite fruit (apple, banana, cherry, and date).
 Given the following clues, determine each person\'s favorite color and fruit:
 
 1. The person who likes red also likes dates.

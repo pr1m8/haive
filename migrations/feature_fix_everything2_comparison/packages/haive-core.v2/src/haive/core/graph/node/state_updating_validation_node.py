@@ -1,8 +1,8 @@
 """Validation node that updates state AND provides dynamic routing."""
 
-import logging
 from collections.abc import Callable
 from enum import Enum
+import logging
 from typing import Any
 
 from langchain_core.messages import AIMessage, ToolMessage
@@ -15,6 +15,7 @@ from haive.core.schema.prebuilt.tools.validation_state import (
     ValidationStateManager,
     ValidationStatus,
 )
+
 
 logger = logging.getLogger(__name__)
 

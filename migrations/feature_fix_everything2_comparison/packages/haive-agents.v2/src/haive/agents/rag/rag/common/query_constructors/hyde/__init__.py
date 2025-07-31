@@ -12,6 +12,7 @@ from hyde.enhanced_prompts import (
 )
 from hyde.models import HyDEResponse, HypotheticalDocument, to_query
 
+
 __all__ = [
     "HyDEPerspective",
     "HyDEPromptConfig",

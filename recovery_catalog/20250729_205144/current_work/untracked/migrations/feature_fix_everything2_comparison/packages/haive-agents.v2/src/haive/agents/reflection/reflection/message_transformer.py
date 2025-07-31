@@ -13,11 +13,12 @@ reflection flows.
 import asyncio
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, ToolMessage
 from langchain_core.prompts import ChatPromptTemplate
 
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 # Import what we can, but handle the missing MESSAGE_TRANSFORMER gracefully
 try:
@@ -462,8 +463,6 @@ def create_reflection_message_flow(
 # Example usage functions
 async def example_message_transformer_reflection():
     """Example: Reflection using message transformer patterns."""
-    print("\n=== Message Transformer Reflection Example ===\n")
-
     # Create reflection agent using message transformation
     mt_reflector = create_message_transformer_reflection_agent()
 
@@ -479,24 +478,14 @@ async def example_message_transformer_reflection():
         AIMessage(content="AI uses algorithms and data to simulate human thinking."),
     ]
 
-    print(f"Original conversation has {len(conversation)} messages")
-
     # Apply reflection analysis with message transformation
-    reflection_result = await mt_reflector.reflect_on_conversation(
+    await mt_reflector.reflect_on_conversation(
         conversation, original_query="What is artificial intelligence?"
     )
-
-    print("\n✅ Reflection Analysis:")
-    print(f"Transformation applied: {reflection_result['transformation_applied']}")
-    print(f"Messages before: {reflection_result['message_count_before']}")
-    print(f"Messages after: {reflection_result['message_count_after']}")
-    print(f"\nAnalysis: {reflection_result['analysis'][:200]}...")
 
 
 async def example_conversational_reflection():
     """Example: Conversational reflection with context injection."""
-    print("\n\n=== Conversational Reflection Example ===\n")
-
     # Create base agent
     base_agent = SimpleAgent(
         name="chat_assistant",
@@ -518,24 +507,20 @@ async def example_conversational_reflection():
         "Are there any recent technological solutions?",
     ]
 
-    for i, query in enumerate(queries, 1):
-        print(f"\n--- Turn {i}: {query} ---")
+    for _i, query in enumerate(queries, 1):
 
         result = await conv_reflector.run_with_reflection(query)
 
-        reflection_applied = result.get("reflection_applied", False)
-        print(f"Reflection applied: {reflection_applied}")
+        result.get("reflection_applied", False)
 
         if isinstance(result, dict) and "messages" in result:
             last_message = result["messages"][-1]
             if hasattr(last_message, "content"):
-                print(f"Response: {last_message.content[:150]}...")
+                pass
 
 
 async def example_reflection_message_flow():
     """Example: Complete reflection message flow system."""
-    print("\n\n=== Reflection Message Flow Example ===\n")
-
     # Create primary agent
     primary_agent = SimpleAgent(
         name="knowledge_assistant",
@@ -553,33 +538,21 @@ async def example_reflection_message_flow():
     # Test query
     query = "Explain the concept of machine learning in simple terms"
 
-    print(f"Query: {query}")
-
     # Run with reflection
     flow_result = await reflection_flow.run_primary_with_reflection(
         query=query, include_reflection=True
     )
 
-    print("\n📊 Flow Results:")
-    print(f"Reflection included: {flow_result['reflection_included']}")
-
     if "transformation_steps" in flow_result:
-        print(
-            f"Transformation steps: {' → '.join(flow_result['transformation_steps'])}"
-        )
+        pass
 
     if "enhanced_messages" in flow_result:
         enhanced_messages = flow_result["enhanced_messages"]
-        print(f"Enhanced message count: {len(enhanced_messages)}")
 
         # Show the reflection transformation effect
-        print("\n📝 Message Flow with Reflection:")
-        for i, msg in enumerate(enhanced_messages):
-            msg_type = type(msg).__name__
-            content_preview = (
-                msg.content[:80] + "..." if len(msg.content) > 80 else msg.content
-            )
-            print(f"  {i+1}. {msg_type}: {content_preview}")
+        for _i, msg in enumerate(enhanced_messages):
+            type(msg).__name__
+            (msg.content[:80] + "..." if len(msg.content) > 80 else msg.content)
 
 
 async def main():

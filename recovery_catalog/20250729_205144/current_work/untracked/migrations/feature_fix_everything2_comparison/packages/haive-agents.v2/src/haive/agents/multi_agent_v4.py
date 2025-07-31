@@ -15,13 +15,14 @@ from __future__ import annotations
 import logging
 from typing import Any, Literal
 
-from haive.core.graph.node.agent_node_v3 import create_agent_node_v3
-from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
 from langgraph.graph import END, START, StateGraph
 from langgraph.graph.graph import CompiledGraph
 from pydantic import Field, model_validator
 
 from haive.agents.base.agent import Agent
+from haive.core.graph.node.agent_node_v3 import create_agent_node_v3
+from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
+
 
 logger = logging.getLogger(__name__)
 
@@ -217,7 +218,7 @@ class MultiAgentV4(Agent):
             return self._extract_result(final_state)
 
         except Exception as e:
-            logger.error(f"Workflow execution failed: {e}")
+            logger.exception(f"Workflow execution failed: {e}")
             raise
 
     def _create_initial_state(self, input_data: Any) -> MultiAgentState:
@@ -226,10 +227,9 @@ class MultiAgentV4(Agent):
         agents_for_state = self.agent_dict
 
         # Create state
-        if isinstance(input_data, dict):
-            state_data = input_data.copy()
-        else:
-            state_data = {"input": input_data}
+        state_data = (
+            input_data.copy() if isinstance(input_data, dict) else {"input": input_data}
+        )
 
         state_data["agents"] = agents_for_state
 
@@ -293,17 +293,8 @@ class MultiAgentV4(Agent):
 
     def display_workflow_info(self) -> None:
         """Display workflow information."""
-        print(f"\n=== MultiAgent V4: {self.name} ===")
-        print(f"Execution Mode: {self.execution_mode}")
-        print(f"Build Mode: {self.build_mode}")
-        print(f"Agents ({len(self.agent_dict)}):")
-
-        for i, (name, agent) in enumerate(self.agent_dict.items(), 1):
-            agent_type = type(agent).__name__
-            print(f"  {i}. {name} ({agent_type})")
-
-        print(f"Graph Built: {'Yes' if self.execution_graph else 'No'}")
-        print()
+        for _i, (_name, agent) in enumerate(self.agent_dict.items(), 1):
+            type(agent).__name__
 
     # ========================================================================
     # INHERITED METHODS - From enhanced base agent

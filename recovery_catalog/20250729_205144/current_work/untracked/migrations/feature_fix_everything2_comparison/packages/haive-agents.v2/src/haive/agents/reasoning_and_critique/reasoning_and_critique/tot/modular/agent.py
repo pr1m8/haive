@@ -17,11 +17,13 @@ from agents.tot.modular.branches import ToTBranch
 from agents.tot.modular.config import ToTAgentConfig
 from agents.tot.modular.models import Candidate, CandidateList, CandidateScore
 from agents.tot.modular.state import ToTState
-from haive.core.engine.agent.agent import Agent, register_agent
-from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from langchain_core.messages import AIMessage, HumanMessage
 from langgraph.types import Command
 from pydantic import BaseModel
+
+from haive.core.engine.agent.agent import Agent, register_agent
+from haive.core.graph.dynamic_graph_builder import DynamicGraph
+
 
 logger = logging.getLogger(__name__)
 

@@ -6,8 +6,6 @@ This module implements the Tree of Thoughts algorithm as a Haive agent.
 import logging
 from typing import Generic, TypeVar
 
-from haive.core.engine.agent.agent import Agent, register_agent
-from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from langchain_core.messages import HumanMessage
 from langgraph.graph import END, START
 from langgraph.types import Command, Send
@@ -19,6 +17,9 @@ from haive.agents.reasoning_and_critique.tot.models import (
     ScoredCandidate,
 )
 from haive.agents.reasoning_and_critique.tot.state import TOTState
+from haive.core.engine.agent.agent import Agent, register_agent
+from haive.core.graph.dynamic_graph_builder import DynamicGraph
+
 
 logger = logging.getLogger(__name__)
 

@@ -5,9 +5,9 @@ relying on paid APIs like OpenAI or Anthropic.
 """
 
 import asyncio
-import tempfile
 from datetime import datetime
 from pathlib import Path
+import tempfile
 from typing import Any
 
 from langchain_community.embeddings import HuggingFaceEmbeddings
@@ -58,7 +58,6 @@ class FreeMemoryAgent:
         self.storage_path.mkdir(parents=True, exist_ok=True)
 
         # Initialize embeddings (free, no API key)
-        print(f"Initializing {embedding_model} embeddings...")
         self.embeddings = HuggingFaceEmbeddings(
             model_name=embedding_model,
             model_kwargs={"device": "cpu"},
@@ -72,23 +71,19 @@ class FreeMemoryAgent:
         # Initialize memory state
         self.memory_state = MemoryState(user_id=user_id)
 
-        print(f"✅ FreeMemoryAgent initialized for user: {user_id}")
-
     def _initialize_vector_store(self) -> FAISS:
         """Initialize or load the vector store."""
         if self.vector_store_path.exists():
             try:
-                print(f"Loading existing vector store from {self.vector_store_path}")
                 return FAISS.load_local(
                     str(self.vector_store_path),
                     self.embeddings,
                     allow_dangerous_deserialization=True,
                 )
-            except Exception as e:
-                print(f"Failed to load vector store: {e}")
+            except Exception:
+                pass
 
         # Create new vector store with initial document
-        print("Creating new vector store...")
         initial_doc = Document(
             page_content="Memory system initialized",
             metadata={"type": "system", "timestamp": datetime.now().isoformat()},
@@ -144,7 +139,6 @@ class FreeMemoryAgent:
         # Save vector store
         self.save()
 
-        print(f"✅ Added memory: {memory.id} - {content[:50]}...")
         return memory.id
 
     def search_memories(
@@ -234,7 +228,6 @@ class FreeMemoryAgent:
     def save(self):
         """Save the vector store to disk."""
         self.vector_store.save_local(str(self.vector_store_path))
-        print(f"💾 Saved vector store to {self.vector_store_path}")
 
     def get_stats(self) -> dict[str, Any]:
         """Get memory statistics."""
@@ -311,8 +304,6 @@ class FreeMemoryAgent:
 
 async def test_free_memory_agent():
     """Test the free memory agent."""
-    print("\n🚀 Testing FreeMemoryAgent 🚀\n")
-
     # Create agent
     agent = FreeMemoryAgent(user_id="test_user")
 
@@ -335,26 +326,17 @@ async def test_free_memory_agent():
 
     # Process each input
     for user_input in test_inputs:
-        print(f"\n{'='*60}")
-        print(f"User: {user_input}")
-        response = await agent.process_input(user_input)
-        print(f"Agent: {response}")
+        await agent.process_input(user_input)
 
     # Show statistics
-    print(f"\n{'='*60}")
-    print("Memory Statistics:")
     stats = agent.get_stats()
-    for key, value in stats.items():
-        print(f"  {key}: {value}")
+    for _key, _value in stats.items():
+        pass
 
     # Test direct search
-    print(f"\n{'='*60}")
-    print("Direct search test - 'AI researcher':")
     results = agent.search_memories("AI researcher", k=3)
-    for i, result in enumerate(results, 1):
-        print(f"  {i}. Score: {result['score']:.3f} - {result['content'][:60]}...")
-
-    print("\n✅ FreeMemoryAgent test completed!")
+    for _i, _result in enumerate(results, 1):
+        pass
 
 
 if __name__ == "__main__":

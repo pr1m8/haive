@@ -7,15 +7,13 @@ This module provides enhancements to the existing ToolRouteMixin to support:
 - Integration with structured output detection
 """
 
-from collections.abc import Callable
 import inspect
 import logging
+from collections.abc import Callable
 from typing import Any, get_type_hints
 
-from pydantic import BaseModel, Field
-
 from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
-
+from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +29,9 @@ class EnhancedToolRouteMixin(ToolRouteMixin):
     """
 
     # Additional fields for enhanced functionality
-    dynamic_routes: bool = Field(default=True, description="Allow dynamic route updates")
+    dynamic_routes: bool = Field(
+        default=True, description="Allow dynamic route updates"
+    )
 
     structured_output_routes: dict[str, str] = Field(
         default_factory=dict, description="Routes for structured output models"
@@ -41,7 +41,9 @@ class EnhancedToolRouteMixin(ToolRouteMixin):
         default_factory=dict, description="Cache for callable analysis results"
     )
 
-    def update_tool_route(self, tool_name: str, new_route: str) -> "EnhancedToolRouteMixin":
+    def update_tool_route(
+        self, tool_name: str, new_route: str
+    ) -> "EnhancedToolRouteMixin":
         """Update an existing tool's route dynamically.
 
         Args:
@@ -250,7 +252,9 @@ class EnhancedToolRouteMixin(ToolRouteMixin):
             Self for method chaining
         """
         # Generate tool name
-        tool_name = self._generate_tool_name(tool, f"dynamic_{route}", len(self.routed_tools))
+        tool_name = self._generate_tool_name(
+            tool, f"dynamic_{route}", len(self.routed_tools)
+        )
 
         # Check if already exists
         if tool_name in self.tool_routes and not update_existing:
@@ -276,7 +280,9 @@ class EnhancedToolRouteMixin(ToolRouteMixin):
         logger.debug(f"Added enhanced routed tool '{tool_name}' with route '{route}'")
         return self
 
-    def route_pydantic_model_smart(self, model: type[BaseModel], context: str | None = None) -> str:
+    def route_pydantic_model_smart(
+        self, model: type[BaseModel], context: str | None = None
+    ) -> str:
         """Smart routing for Pydantic models based on context and capabilities.
 
         Args:

@@ -28,10 +28,11 @@ Usage:
     result = await agent.arun("Hello")  # Heavy loading happens here
 """
 
+from datetime import datetime
 import importlib
 import logging
-from datetime import datetime
 from typing import Any
+
 
 logger = logging.getLogger(__name__)
 

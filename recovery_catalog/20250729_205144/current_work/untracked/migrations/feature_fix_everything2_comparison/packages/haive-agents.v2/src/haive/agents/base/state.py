@@ -41,7 +41,6 @@ Example:
 
 from typing import Any
 
-from haive.core.schema.state_schema import StateSchema
 from langchain_core.messages import BaseMessage
 from pydantic import Field
 
@@ -51,6 +50,7 @@ from haive.agents.supervisor_new.base.models import (
     SupervisorResult,
     SupervisorTask,
 )
+from haive.core.schema.state_schema import StateSchema
 
 
 class BaseSupervisorState(StateSchema):

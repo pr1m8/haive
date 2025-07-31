@@ -14,9 +14,11 @@ from typing import (
     runtime_checkable,
 )
 
+from pydantic import BaseModel
+
 from haive.core.engine.base import Engine, InvokableEngine
 from haive.core.schema.state_schema import StateSchema
-from pydantic import BaseModel
+
 
 # ============================================================================
 # CORE TYPE VARIABLES

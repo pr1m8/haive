@@ -1,4 +1,4 @@
-"""Text-based Document Loaders for Haive Framework
+"""Text-based Document Loaders for Haive Framework.
 
 This module implements various text-based document loaders for different
 file formats including plain text, markdown, CSV, JSON, and YAML.
@@ -181,8 +181,8 @@ class CSVSource(LocalSource):
     def create_pandas_loader(self):
         """Create a DataFrameLoader using pandas."""
         try:
-            import pandas as pd
             from langchain_community.document_loaders import DataFrameLoader
+            import pandas as pd
 
             # Read CSV into pandas DataFrame
             df = pd.read_csv(

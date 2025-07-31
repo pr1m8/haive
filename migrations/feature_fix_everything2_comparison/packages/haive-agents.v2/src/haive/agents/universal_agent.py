@@ -7,16 +7,18 @@ of concerns through agent types rather than complex inheritance hierarchies.
 
 from __future__ import annotations
 
-import logging
 from abc import ABC, abstractmethod
+import logging
 from typing import Any
+
+from langchain_core.runnables import RunnableConfig
+from langgraph.graph.graph import CompiledGraph
+from pydantic import BaseModel, Field
 
 from haive.core.engine.base.agent_types import AgentType, get_agent_capabilities
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.state_schema import StateSchema
-from langchain_core.runnables import RunnableConfig
-from langgraph.graph.graph import CompiledGraph
-from pydantic import BaseModel, Field
+
 
 logger = logging.getLogger(__name__)
 

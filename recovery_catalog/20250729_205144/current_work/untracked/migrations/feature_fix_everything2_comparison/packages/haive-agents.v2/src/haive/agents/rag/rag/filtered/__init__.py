@@ -11,6 +11,7 @@ from filtered.agent import (
 from filtered.config import FilteredRAGConfig
 from filtered.state import FilteredRAGState
 
+
 __all__ = [
     "FilteredRAGAgent",
     "FilteredRAGConfig",

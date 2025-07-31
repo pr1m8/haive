@@ -52,6 +52,7 @@ from sql_rag.utils import (
     handle_tool_error,
 )
 
+
 __all__ = [
     "GradeAnswer",
     "GradeHallucinations",

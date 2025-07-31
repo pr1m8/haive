@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
-"""
-Documentation Directory Reorganization Script
-Clean up the docs directory chaos and create proper organization
+"""Documentation Directory Reorganization Script
+Clean up the docs directory chaos and create proper organization.
 """
 
-import os
 import shutil
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 
 class DocsReorganizer:
-    def __init__(self, docs_dir: Path = None):
+    def __init__(self, docs_dir: Path | None = None):
         self.docs_dir = docs_dir or Path("docs")
         self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         self.moved_files = []
@@ -19,7 +17,6 @@ class DocsReorganizer:
 
     def log_action(self, action: str):
         """Log what we're doing."""
-        print(f"📁 {action}")
 
     def create_directory_structure(self):
         """Create the proper directory structure."""
@@ -65,8 +62,7 @@ class DocsReorganizer:
                 self.moved_files.append(f"{source} → {dest}")
                 self.log_action(f"Moved {source.name} → {dest.parent.name}/ ({reason})")
                 return True
-            except Exception as e:
-                print(f"❌ Failed to move {source}: {e}")
+            except Exception:
                 return False
         return False
 
@@ -202,8 +198,8 @@ class DocsReorganizer:
                 try:
                     shutil.move(str(old_path), str(new_path))
                     self.log_action(f"Archived directory: {old_dir}")
-                except Exception as e:
-                    print(f"❌ Failed to archive {old_dir}: {e}")
+                except Exception:
+                    pass
 
     def clean_empty_files(self):
         """Remove empty log files and other clutter."""
@@ -215,8 +211,8 @@ class DocsReorganizer:
                 try:
                     log_file.unlink()
                     self.log_action(f"Removed empty file: {log_file.name}")
-                except Exception as e:
-                    print(f"❌ Failed to remove {log_file}: {e}")
+                except Exception:
+                    pass
 
         # Clean up specific empty files
         empty_files = ["Chinook.db", ".nox_cache.json"]
@@ -227,8 +223,8 @@ class DocsReorganizer:
                 try:
                     file_path.unlink()
                     self.log_action(f"Removed empty file: {empty_file}")
-                except Exception as e:
-                    print(f"❌ Failed to remove {empty_file}: {e}")
+                except Exception:
+                    pass
 
     def create_navigation_readmes(self):
         """Create README files for navigation."""
@@ -242,7 +238,7 @@ User-facing documentation and guides for the Haive project.
 ## Directory Structure
 
 - **development/**: Developer guides and workflows
-- **automation/**: Automation and tooling guides  
+- **automation/**: Automation and tooling guides
 - **architecture/**: System architecture documentation
 - **troubleshooting/**: Problem solving and debugging guides
 """,
@@ -271,7 +267,7 @@ Generated reports and analysis results.
 ## Directory Structure
 
 - **build-quality/**: Build quality and error reports
-- **test-results/**: Test execution reports  
+- **test-results/**: Test execution reports
 - **analysis/**: Code and documentation analysis
 - **performance/**: Performance benchmarks and metrics
 """,
@@ -322,7 +318,7 @@ Generated data files and examples.
 ## Structure Created
 ```
 docs/
-├── guides/          # User-facing documentation  
+├── guides/          # User-facing documentation
 ├── scripts/         # Development scripts
 ├── reports/         # Generated reports
 ├── logs/           # Build and process logs
@@ -349,9 +345,6 @@ docs/
 
     def reorganize_all(self):
         """Execute the complete reorganization."""
-        print("🚀 Starting Documentation Reorganization")
-        print("=" * 50)
-
         self.create_directory_structure()
         self.organize_guides()
         self.organize_scripts()
@@ -362,12 +355,6 @@ docs/
         self.clean_empty_files()
         self.create_navigation_readmes()
         self.create_summary_report()
-
-        print("=" * 50)
-        print("✅ Documentation reorganization complete!")
-        print(f"📊 Created {len(self.created_dirs)} directories")
-        print(f"📁 Moved {len(self.moved_files)} files")
-        print("🎯 Documentation is now properly organized!")
 
 
 if __name__ == "__main__":

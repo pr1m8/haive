@@ -9,10 +9,8 @@ Usage:
 """
 
 import ast
-import os
 import sys
 from pathlib import Path
-from typing import Dict, List, Optional, Set
 
 # =============================================================================
 # DOCSTRING TEMPLATES
@@ -31,13 +29,13 @@ Example:
     Basic usage::
 
         from {module_path} import {main_class}
-        
+
         # Create instance
         instance = {main_class}({basic_params})
-        
+
         # Use the {main_functionality}
         result = instance.{main_method}({example_input})
-        
+
         print(f"Result: {{result}}")
 
 Advanced Usage:
@@ -131,15 +129,15 @@ class DocumentationAnalyzer:
     def __init__(self, module_path: Path):
         """Initialize analyzer with module path."""
         self.module_path = module_path
-        self.classes: List[str] = []
-        self.functions: List[str] = []
-        self.imports: List[str] = []
-        self.constants: List[str] = []
+        self.classes: list[str] = []
+        self.functions: list[str] = []
+        self.imports: list[str] = []
+        self.constants: list[str] = []
 
-    def analyze_module(self) -> Dict[str, any]:
+    def analyze_module(self) -> dict[str, any]:
         """Analyze module and extract components."""
         try:
-            with open(self.module_path, "r", encoding="utf-8") as f:
+            with open(self.module_path, encoding="utf-8") as f:
                 content = f.read()
 
             tree = ast.parse(content)
@@ -172,14 +170,12 @@ class DocumentationAnalyzer:
                 "main_function": self.functions[0] if self.functions else None,
             }
 
-        except Exception as e:
-            print(f"Error analyzing {self.module_path}: {e}")
+        except Exception:
             return {}
 
 
-def generate_module_docstring(module_path: Path, analysis: Dict) -> str:
+def generate_module_docstring(module_path: Path, analysis: dict) -> str:
     """Generate intelligent module docstring based on analysis."""
-
     # Extract module information
     module_parts = module_path.parts
     module_name = module_parts[-1].replace(".py", "").replace("_", " ").title()
@@ -232,7 +228,7 @@ def generate_module_docstring(module_path: Path, analysis: Dict) -> str:
     )
 
 
-def generate_all_exports(analysis: Dict) -> List[str]:
+def generate_all_exports(analysis: dict) -> list[str]:
     """Generate __all__ exports based on analysis."""
     exports = []
 
@@ -258,14 +254,13 @@ def add_missing_all_exports(init_file: Path) -> bool:
     try:
         # Read current content
         if init_file.exists():
-            with open(init_file, "r", encoding="utf-8") as f:
+            with open(init_file, encoding="utf-8") as f:
                 content = f.read()
         else:
             content = ""
 
         # Check if __all__ already exists
         if "__all__" in content:
-            print(f"✅ {init_file} already has __all__")
             return False
 
         # Analyze the file
@@ -277,10 +272,7 @@ def add_missing_all_exports(init_file: Path) -> bool:
             exports = []
 
         # Generate new content
-        if exports:
-            all_line = f"\n__all__ = {exports}\n"
-        else:
-            all_line = "\n__all__ = []\n"
+        all_line = f"\n__all__ = {exports}\n" if exports else "\n__all__ = []\n"
 
         # Add to file
         new_content = content + all_line
@@ -288,11 +280,9 @@ def add_missing_all_exports(init_file: Path) -> bool:
         with open(init_file, "w", encoding="utf-8") as f:
             f.write(new_content)
 
-        print(f"✅ Added __all__ to {init_file} ({len(exports)} exports)")
         return True
 
-    except Exception as e:
-        print(f"❌ Error processing {init_file}: {e}")
+    except Exception:
         return False
 
 
@@ -300,7 +290,7 @@ def add_missing_module_docstring(py_file: Path) -> bool:
     """Add missing module docstring to Python file."""
     try:
         # Read current content
-        with open(py_file, "r", encoding="utf-8") as f:
+        with open(py_file, encoding="utf-8") as f:
             content = f.read()
 
         # Check if docstring already exists
@@ -320,11 +310,9 @@ def add_missing_module_docstring(py_file: Path) -> bool:
         with open(py_file, "w", encoding="utf-8") as f:
             f.write(new_content)
 
-        print(f"✅ Added module docstring to {py_file}")
         return True
 
-    except Exception as e:
-        print(f"❌ Error processing {py_file}: {e}")
+    except Exception:
         return False
 
 
@@ -336,16 +324,12 @@ def add_missing_module_docstring(py_file: Path) -> bool:
 def main():
     """Main execution function."""
     if len(sys.argv) < 2:
-        print("Usage: python docstring_templates.py <packages_dir>")
         sys.exit(1)
 
     packages_dir = Path(sys.argv[1])
 
     if not packages_dir.exists():
-        print(f"Error: {packages_dir} does not exist")
         sys.exit(1)
-
-    print(f"🚀 Starting documentation improvements for {packages_dir}")
 
     # Find all Python files
     init_files = list(packages_dir.rglob("__init__.py"))
@@ -355,28 +339,17 @@ def main():
     init_files = [f for f in init_files if "/tests/" not in str(f)]
     py_files = [f for f in py_files if "/tests/" not in str(f)]
 
-    print(f"Found {len(init_files)} __init__.py files")
-    print(f"Found {len(py_files)} Python files")
-
     # Add missing __all__ exports
-    print("\n📋 Adding missing __all__ exports...")
     all_added = 0
     for init_file in init_files:
         if add_missing_all_exports(init_file):
             all_added += 1
 
-    print(f"✅ Added __all__ to {all_added} files")
-
     # Add missing module docstrings
-    print("\n📝 Adding missing module docstrings...")
     docs_added = 0
     for py_file in py_files[:20]:  # Start with first 20 files
         if add_missing_module_docstring(py_file):
             docs_added += 1
-
-    print(f"✅ Added module docstrings to {docs_added} files")
-
-    print("\n🎉 Documentation improvements complete!")
 
 
 if __name__ == "__main__":

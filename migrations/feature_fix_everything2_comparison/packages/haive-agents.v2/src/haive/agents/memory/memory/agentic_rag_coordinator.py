@@ -5,11 +5,10 @@ multiple retrieval strategies based on query analysis and context.
 """
 
 import asyncio
-import logging
 from datetime import datetime
+import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.prompts import PromptTemplate
 from pydantic import BaseModel, ConfigDict, Field
@@ -24,6 +23,8 @@ from haive.agents.memory.graph_rag_retriever import (
 )
 from haive.agents.memory.kg_generator_agent import KGGeneratorAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 logger = logging.getLogger(__name__)
 

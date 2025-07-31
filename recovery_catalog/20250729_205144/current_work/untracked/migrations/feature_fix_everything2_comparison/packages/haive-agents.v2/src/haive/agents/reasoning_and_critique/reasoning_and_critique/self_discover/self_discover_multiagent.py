@@ -13,8 +13,6 @@ This showcases sequential execution with the unified MultiAgent.
 import asyncio
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.schema import StateSchema
 from langchain_core.prompts import PromptTemplate
 from pydantic import Field
 
@@ -25,6 +23,8 @@ from haive.agents.reasoning_and_critique.self_discover.models import (
     SelectedModule,
 )
 from haive.agents.simple import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.schema import StateSchema
 
 
 # State schema for self-discover workflow

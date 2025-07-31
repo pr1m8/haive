@@ -44,12 +44,13 @@ Examples:
 """
 
 import logging
-from typing import Any, Dict, Generic, List, Optional, TypeVar
+from typing import Any, Optional, TypeVar
 
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 from pydantic import BaseModel, Field
 
-from haive.agents.base.hooks import HookContext, HookEvent
+from haive.agents.base.hooks import HookEvent
+
 
 logger = logging.getLogger(__name__)
 
@@ -74,7 +75,7 @@ class MessageTransformer:
         self.transformation_type = transformation_type
         self.preserve_first = preserve_first
 
-    def transform_messages(self, messages: List[BaseMessage]) -> List[BaseMessage]:
+    def transform_messages(self, messages: list[BaseMessage]) -> list[BaseMessage]:
         """Transform messages according to the transformation type.
 
         Args:
@@ -191,7 +192,7 @@ class PrePostAgentMixin:
                 transformation_type=self.post_transform_type, preserve_first=True
             )
 
-    async def run_with_pre_post_processing(self, input_data: Any) -> Dict[str, Any]:
+    async def run_with_pre_post_processing(self, input_data: Any) -> dict[str, Any]:
         """Execute the agent with pre/post processing stages.
 
         This method orchestrates the full pre → main → post workflow with
@@ -410,13 +411,10 @@ class PrePostAgentMixin:
         # If pre or post agents are configured, use pre/post processing
         if self.pre_agent or self.post_agent:
             return await self.run_with_pre_post_processing(input_data)
-        else:
-            # Standard execution
-            return (
-                await super().arun(input_data)
-                if hasattr(super(), "arun")
-                else input_data
-            )
+        # Standard execution
+        return (
+            await super().arun(input_data) if hasattr(super(), "arun") else input_data
+        )
 
 
 # Factory functions for common patterns
@@ -425,7 +423,7 @@ class PrePostAgentMixin:
 def create_reflection_agent(
     main_agent: "Agent",
     reflection_agent: Optional["Agent"] = None,
-    name: Optional[str] = None,
+    name: str | None = None,
     **kwargs,
 ) -> "Agent":
     """Create an agent with reflection post-processing.
@@ -440,10 +438,9 @@ def create_reflection_agent(
         Agent with reflection capabilities
     """
     if not reflection_agent:
-        from haive.core.engine.aug_llm import AugLLMConfig
-
         # Import SimpleAgent locally to avoid circular import
         from haive.agents.simple.agent import SimpleAgent
+        from haive.core.engine.aug_llm import AugLLMConfig
 
         reflection_agent = SimpleAgent(
             name=f"{main_agent.name}_reflector",
@@ -469,7 +466,7 @@ def create_graded_reflection_agent(
     main_agent: "Agent",
     grading_agent: Optional["Agent"] = None,
     reflection_agent: Optional["Agent"] = None,
-    name: Optional[str] = None,
+    name: str | None = None,
     **kwargs,
 ) -> "Agent":
     """Create an agent with grading and reflection processing.
@@ -485,10 +482,9 @@ def create_graded_reflection_agent(
         Agent with grading and reflection capabilities
     """
     if not grading_agent:
-        from haive.core.engine.aug_llm import AugLLMConfig
-
         # Import SimpleAgent locally to avoid circular import
         from haive.agents.simple.agent import SimpleAgent
+        from haive.core.engine.aug_llm import AugLLMConfig
 
         grading_agent = SimpleAgent(
             name=f"{main_agent.name}_grader",
@@ -499,10 +495,9 @@ def create_graded_reflection_agent(
         )
 
     if not reflection_agent:
-        from haive.core.engine.aug_llm import AugLLMConfig
-
         # Import SimpleAgent locally to avoid circular import
         from haive.agents.simple.agent import SimpleAgent
+        from haive.core.engine.aug_llm import AugLLMConfig
 
         reflection_agent = SimpleAgent(
             name=f"{main_agent.name}_reflector",
@@ -529,7 +524,7 @@ def create_graded_reflection_agent(
 def create_structured_output_agent(
     main_agent: "Agent",
     output_model: type[BaseModel],
-    name: Optional[str] = None,
+    name: str | None = None,
     **kwargs,
 ) -> "Agent":
     """Create an agent with structured output post-processing.
@@ -543,9 +538,8 @@ def create_structured_output_agent(
     Returns:
         Agent with structured output capabilities
     """
-    from haive.core.engine.aug_llm import AugLLMConfig
-
     from haive.agents.structured_output.agent import StructuredOutputAgent
+    from haive.core.engine.aug_llm import AugLLMConfig
 
     # Create structured output agent
     structured_agent = StructuredOutputAgent(

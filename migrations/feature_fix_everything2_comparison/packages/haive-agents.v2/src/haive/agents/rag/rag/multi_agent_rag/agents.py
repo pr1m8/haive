@@ -7,8 +7,6 @@ using the multi-agent framework. Each agent focuses on a specific aspect of the 
 from collections.abc import Callable
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.fixtures.documents import conversation_documents
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 
@@ -26,6 +24,9 @@ from haive.agents.rag.multi_agent_rag.state import (
     RAGOperationType,
 )
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.fixtures.documents import conversation_documents
+
 
 # ============================================================================
 # PROMPT TEMPLATES

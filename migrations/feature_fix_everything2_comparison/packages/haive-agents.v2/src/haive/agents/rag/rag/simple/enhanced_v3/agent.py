@@ -38,28 +38,29 @@ Examples:
 from __future__ import annotations
 
 import logging
+from typing import Any
 import uuid
-from typing import Any, Dict, List, Optional, Type
 
+from langchain_core.documents import Document
+from pydantic import BaseModel, Field, field_validator, model_validator
+
+from haive.agents.multi.enhanced_multi_agent_v3 import EnhancedMultiAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.engine.vectorstore import VectorStoreConfig
 from haive.core.schema.prebuilt.enhanced_multi_agent_state import (
     EnhancedMultiAgentState,
 )
-from langchain_core.documents import Document
-from pydantic import BaseModel, Field, field_validator, model_validator
-
-from haive.agents.multi.enhanced_multi_agent_v3 import EnhancedMultiAgent
 
 from .answer_generator_agent import SimpleAnswerAgent
 from .retriever_agent import RetrieverAgent
 from .state import SimpleRAGState
 
+
 logger = logging.getLogger(__name__)
 
 
 # Type alias for the specific agent collection
-RAGAgentCollection = List[RetrieverAgent | SimpleAnswerAgent]
+RAGAgentCollection = list[RetrieverAgent | SimpleAnswerAgent]
 
 
 class SimpleRAGV3(EnhancedMultiAgent[RAGAgentCollection]):
@@ -149,7 +150,7 @@ class SimpleRAGV3(EnhancedMultiAgent[RAGAgentCollection]):
     )
 
     # Generation parameters
-    structured_output_model: Optional[Type[BaseModel]] = Field(
+    structured_output_model: type[BaseModel] | None = Field(
         default=None, description="Pydantic model for structured output"
     )
 
@@ -171,11 +172,11 @@ class SimpleRAGV3(EnhancedMultiAgent[RAGAgentCollection]):
     )
 
     # Custom prompt templates
-    context_template: Optional[str] = Field(
+    context_template: str | None = Field(
         default=None, description="Custom context template for answer generation"
     )
 
-    system_prompt_template: Optional[str] = Field(
+    system_prompt_template: str | None = Field(
         default=None, description="Custom system prompt template"
     )
 
@@ -212,9 +213,8 @@ class SimpleRAGV3(EnhancedMultiAgent[RAGAgentCollection]):
         return values
 
     @model_validator(mode="after")
-    def setup_rag_pipeline(self) -> "SimpleRAGV3":
+    def setup_rag_pipeline(self) -> SimpleRAGV3:
         """Setup the RAG pipeline with RetrieverAgent and SimpleAnswerAgent."""
-
         # Create RetrieverAgent
         retriever_agent = RetrieverAgent(
             name=f"{self.name}_retriever",
@@ -273,12 +273,12 @@ class SimpleRAGV3(EnhancedMultiAgent[RAGAgentCollection]):
     @classmethod
     def from_documents(
         cls,
-        documents: List[Document],
+        documents: list[Document],
         embedding_config: Any,
-        llm_config: Optional[AugLLMConfig] = None,
-        name: Optional[str] = None,
+        llm_config: AugLLMConfig | None = None,
+        name: str | None = None,
         **kwargs,
-    ) -> "SimpleRAGV3":
+    ) -> SimpleRAGV3:
         """Create SimpleRAG V3 from a list of documents.
 
         Args:
@@ -339,10 +339,10 @@ class SimpleRAGV3(EnhancedMultiAgent[RAGAgentCollection]):
     def from_vectorstore(
         cls,
         vector_store_config: VectorStoreConfig,
-        llm_config: Optional[AugLLMConfig] = None,
-        name: Optional[str] = None,
+        llm_config: AugLLMConfig | None = None,
+        name: str | None = None,
         **kwargs,
-    ) -> "SimpleRAGV3":
+    ) -> SimpleRAGV3:
         """Create SimpleRAG V3 from existing vector store configuration.
 
         Args:
@@ -399,10 +399,10 @@ class SimpleRAGV3(EnhancedMultiAgent[RAGAgentCollection]):
     async def retrieve_documents(
         self,
         query: str,
-        k: Optional[int] = None,
-        score_threshold: Optional[float] = None,
+        k: int | None = None,
+        score_threshold: float | None = None,
         **kwargs,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Retrieve documents using the retriever agent.
 
         Args:
@@ -425,7 +425,7 @@ class SimpleRAGV3(EnhancedMultiAgent[RAGAgentCollection]):
         return await retriever.arun(retrieval_input)
 
     async def generate_answer(
-        self, query: str, documents: List[Document], **kwargs
+        self, query: str, documents: list[Document], **kwargs
     ) -> Any:
         """Generate answer using the answer generation agent.
 
@@ -442,7 +442,7 @@ class SimpleRAGV3(EnhancedMultiAgent[RAGAgentCollection]):
         answer_agent = self.get_answer_agent()
         return await answer_agent.arun(answer_input, **kwargs)
 
-    def get_rag_info(self) -> Dict[str, Any]:
+    def get_rag_info(self) -> dict[str, Any]:
         """Get comprehensive information about the RAG configuration."""
         return {
             "name": self.name,
@@ -469,7 +469,7 @@ class SimpleRAGV3(EnhancedMultiAgent[RAGAgentCollection]):
         }
 
     async def arun(
-        self, input_data: str | Dict[str, Any], debug: bool = False, **kwargs
+        self, input_data: str | dict[str, Any], debug: bool = False, **kwargs
     ) -> Any:
         """Execute RAG pipeline using Enhanced MultiAgent V3 sequential execution.
 
@@ -549,8 +549,8 @@ SimpleRAGAgent = SimpleRAGV3
 EnhancedSimpleRAG = SimpleRAGV3
 
 __all__ = [
-    "SimpleRAGV3",
-    "SimpleRAGAgent",  # Legacy
     "EnhancedSimpleRAG",  # Legacy
     "RAGAgentCollection",
+    "SimpleRAGAgent",  # Legacy
+    "SimpleRAGV3",
 ]

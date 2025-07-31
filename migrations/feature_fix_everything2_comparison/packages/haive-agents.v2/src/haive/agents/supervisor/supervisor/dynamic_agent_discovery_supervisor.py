@@ -57,11 +57,10 @@ See Also:
     - :class:`haive.agents.react.dynamic_react_agent.DynamicReactAgent`
 """
 
-import logging
 from enum import Enum
+import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -75,6 +74,8 @@ from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
 from haive.agents.supervisor.agent import SupervisorState
 from haive.agents.supervisor.dynamic_state import SupervisorDecision
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 # from haive.tools.utility.document_loaders import DirectoryLoader
 # from haive.core.models.vectorstore import InMemoryVectorStore

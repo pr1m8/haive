@@ -10,13 +10,14 @@ This example demonstrates:
 
 import asyncio
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage
 from rich.console import Console
 
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
 from haive.agents.supervisor.integrated_supervisor import IntegratedDynamicSupervisor
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 console = Console()
 

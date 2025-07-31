@@ -7,7 +7,6 @@ providing automatic compatibility checking and adaptation.
 import contextlib
 from typing import Any
 
-from haive.core.fixtures.documents import conversation_documents
 from langchain_core.documents import Document
 
 from haive.agents.multi.compatibility_enhanced_base import (
@@ -27,6 +26,8 @@ from haive.agents.rag.multi_agent_rag.agents import (
     SimpleRAGAnswerAgent,
 )
 from haive.agents.rag.multi_agent_rag.state import MultiAgentRAGState
+from haive.core.fixtures.documents import conversation_documents
+
 
 # ============================================================================
 # COMPATIBILITY-ENHANCED RAG SYSTEMS

@@ -15,15 +15,16 @@ We just need to enhance the discovery mechanisms in the existing nodes.
 
 from typing import Any
 
-from haive.agents.simple.agent import SimpleAgent
 from langchain_core.messages import HumanMessage
 from langgraph.types import Command
 from pydantic import Field
 
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.parser_node_config import ParserNodeConfig
 from haive.core.graph.node.validation_node_config_v2 import ValidationNodeConfigV2
 from haive.core.schema.prebuilt.meta_state import MetaStateSchema
+
 
 # =============================================================================
 # EXAMPLE: Enhanced ValidationNodeConfigV2 with Stateful Discovery

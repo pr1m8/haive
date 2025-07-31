@@ -81,10 +81,11 @@ def format_messages_for_chain(messages: list[Any]) -> str:
 Factory functions for creating LATS agents.
 """
 from agents.lats.config import LATSAgentConfig
+from langchain_core.tools import BaseTool
+
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from haive.core.tools.search_tools import tavily_search_tool
-from langchain_core.tools import BaseTool
 
 
 def create_lats_agent(

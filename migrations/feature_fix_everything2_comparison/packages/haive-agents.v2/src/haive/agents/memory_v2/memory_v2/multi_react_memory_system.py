@@ -4,17 +4,16 @@ This advanced example shows how to coordinate multiple ReactAgents,
 each with specialized memory responsibilities.
 """
 
-import json
 from datetime import datetime
 from enum import Enum
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.tools import tool
 
 from haive.agents.memory_v2.react_memory_agent import ReactMemoryAgent
 from haive.agents.multi.simple.agent import SimpleMultiAgent
 from haive.agents.react.agent import ReactAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 class MemoryType(str, Enum):
@@ -399,7 +398,7 @@ For each memory, indicate the action and destination."""
             return "No relevant memories found."
 
         if len(results) == 1:
-            return list(results.values())[0]
+            return next(iter(results.values()))
 
         # Combine multiple results
         combined = f"Based on searching {len(results)} memory systems:\n\n"
@@ -434,7 +433,6 @@ async def example_multi_memory_system():
     system = MultiReactMemorySystem(user_id="alice_doe")
 
     # Store different types of memories
-    print("Storing memories...")
 
     # Episodic memory
     await system.store_memory(
@@ -456,25 +454,19 @@ async def example_multi_memory_system():
         "Currently working on the quarterly report, deadline is Friday at 5 PM"
     )
 
-    print("\nQuerying memories...")
-
     # Query that touches multiple systems
-    result1 = await system.process_query(
+    await system.process_query(
         "What am I currently working on and when did I last meet with Bob?"
     )
-    print(f"Multi-system query: {result1}")
 
     # Specific procedural query
-    result2 = await system.process_query("How do I make coffee?")
-    print(f"Procedural query: {result2}")
+    await system.process_query("How do I make coffee?")
 
     # Get memory statistics
-    stats = await system.get_memory_stats()
-    print(f"\nMemory statistics: {json.dumps(stats, indent=2)}")
+    await system.get_memory_stats()
 
     # Consolidate memories
-    consolidation = await system.consolidate_memories()
-    print(f"\nConsolidation result: {consolidation}")
+    await system.consolidate_memories()
 
 
 async def example_advanced_memory_operations():
@@ -492,15 +484,12 @@ async def example_advanced_memory_operations():
 
     for memory in memories:
         await system.store_memory(memory)
-        print(f"Stored: {memory[:50]}...")
 
     # Complex query spanning multiple memory types
-    result = await system.process_query(
+    await system.process_query(
         "What have I learned about Rust, what projects have I built, "
         "and what am I currently struggling with?"
     )
-
-    print(f"\nComprehensive query result:\n{result}")
 
 
 if __name__ == "__main__":

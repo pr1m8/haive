@@ -2,25 +2,25 @@
 # 🚀 Bulk Package Fix Script - Automated 5-Step Methodology
 # Usage: ./scripts/bulk_package_fix.sh <package_name>
 
-set -e  # Exit on any error
+set -e # Exit on any error
 
 PACKAGE_NAME=${1:-""}
-if [ -z "$PACKAGE_NAME" ]; then
-    echo "❌ Usage: $0 <package_name>"
-    echo "Example: $0 haive-games"
-    exit 1
+if [[ -z "${PACKAGE_NAME}" ]]; then
+	echo "❌ Usage: $0 <package_name>"
+	echo "Example: $0 haive-games"
+	exit 1
 fi
 
-PACKAGE_DIR="packages/$PACKAGE_NAME"
-if [ ! -d "$PACKAGE_DIR" ]; then
-    echo "❌ Package directory not found: $PACKAGE_DIR"
-    exit 1
+PACKAGE_DIR="packages/${PACKAGE_NAME}"
+if [[ ! -d "${PACKAGE_DIR}" ]]; then
+	echo "❌ Package directory not found${ $PACKAGE_D}IR"
+	exit 1
 fi
 
-echo "🚀 BULK PACKAGE FIX: $PACKAGE_NAME"
-echo "📍 Working in: $PACKAGE_DIR"
+echo "🚀 BULK PACKAGE FI${: $PACKAGE_N}AME"
+echo "📍 Working i${: $PACKAGE_}DIR"
 
-cd "$PACKAGE_DIR"
+cd "${PACKAGE_DIR}"
 
 # Phase 1: Safety Checkpoint
 echo "📋 PHASE 1: Creating safety checkpoint..."
@@ -31,7 +31,7 @@ git stash push -m "SAFETY_CHECKPOINT_${PACKAGE_NAME}_${TIMESTAMP}" -- . || echo 
 # Get baseline error count
 echo "📊 Getting baseline error count..."
 BASELINE_ERRORS=$(poetry run ruff check src/ --statistics 2>/dev/null | grep "Found" | grep -o '[0-9]*' | head -1 || echo "0")
-echo "🚨 BASELINE: $BASELINE_ERRORS errors"
+echo "🚨 BASELIN${: $BASELINE_ERR}ORS errors"
 
 # Phase 2: Automated 5-Step Cleanup
 echo "📋 PHASE 2: Applying 5-step cleanup methodology..."
@@ -60,9 +60,9 @@ PERCENTAGE=$((IMPROVEMENT * 100 / BASELINE_ERRORS))
 
 echo ""
 echo "🎉 RESULTS SUMMARY:"
-echo "📊 BEFORE: $BASELINE_ERRORS errors"
-echo "✅ AFTER:  $FINAL_ERRORS errors"
-echo "🎯 FIXED:  $IMPROVEMENT errors ($PERCENTAGE% improvement)"
+echo "📊 BEFOR${: $BASELINE_ERR}ORS errors"
+echo "✅ AFTER:${ $FINAL_ERRO}RS errors"
+echo "🎯 FIXED${  $IMPROVEM}ENT error${ ($PERCENT}AGE% improvement)"
 echo ""
 echo "🔄 ROLLBACK: git stash apply stash@{0} (if needed)"
-echo "✅ PACKAGE FIXED: $PACKAGE_NAME"
+echo "✅ PACKAGE FIXED${ $PACKAGE_NA}ME"

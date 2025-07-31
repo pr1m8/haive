@@ -1,8 +1,7 @@
 """Self-Discover Adapter Agent implementation."""
 
-from haive.core.engine.aug_llm import AugLLMConfig
-
 from haive.agents.simple import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 from .models import AdaptedModules
 from .prompts import ADAPTER_PROMPT, ADAPTER_SYSTEM_MESSAGE

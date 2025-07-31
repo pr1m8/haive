@@ -29,13 +29,14 @@ Key Insight: MultiAgent is generic on its agents, not just engine!
 MultiAgent[AgentsT] = Agent[AugLLMConfig] + agents: AgentsT
 """
 
+from abc import ABC, abstractmethod
 import asyncio
 import logging
 import time
-from abc import ABC, abstractmethod
 from typing import Any, Generic, Literal, TypeVar
 
 from pydantic import BaseModel, Field, field_validator
+
 
 logger = logging.getLogger(__name__)
 

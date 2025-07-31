@@ -6,11 +6,10 @@ into the documentation system, replacing mock data with actual agent outputs.
 """
 
 import json
-import os
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 
 @dataclass
@@ -35,7 +34,6 @@ class RealExamplesIntegrator:
 
     def discover_examples(self) -> list[ExampleOutput]:
         """Discover all real examples in the codebase."""
-
         # Find conversation outputs
         self._find_conversation_outputs()
 
@@ -150,7 +148,7 @@ class RealExamplesIntegrator:
                             example_category="execution_traces",
                         )
                         self.examples.append(example)
-                    except (json.JSONDecodeError, Exception) as e:
+                    except (json.JSONDecodeError, Exception):
                         pass
 
     def _find_capture_files(self):
@@ -180,7 +178,7 @@ class RealExamplesIntegrator:
                         example_category="execution_traces",
                     )
                     self.examples.append(example)
-                except (json.JSONDecodeError, Exception) as e:
+                except (json.JSONDecodeError, Exception):
                     pass
 
     def _extract_sections(self, content: str) -> list[str]:
@@ -205,7 +203,6 @@ class RealExamplesIntegrator:
 
     def generate_examples_index(self, output_path: Path):
         """Generate an index of all discovered examples."""
-
         # Group examples by category
         by_category = {}
         for example in self.examples:
@@ -252,10 +249,8 @@ These are actual outputs from agents, games, and conversations - not mock data.
         with open(output_path, "w") as f:
             f.write(content)
 
-
     def create_documentation_templates(self, output_dir: Path):
         """Create documentation templates using real examples."""
-
         output_dir.mkdir(parents=True, exist_ok=True)
 
         # Group examples by agent type
@@ -305,10 +300,8 @@ Real examples and outputs from the {agent_type} agent.
         with open(template_path, "w") as f:
             f.write(content)
 
-
     def integrate_with_sphinx(self, docs_dir: Path):
         """Integrate examples with Sphinx documentation."""
-
         # Create examples directory in docs
         examples_dir = docs_dir / "source" / "real_examples"
         examples_dir.mkdir(parents=True, exist_ok=True)
@@ -330,13 +323,12 @@ Real examples and outputs from the {agent_type} agent.
 """
 
         # Add agent type sections
-        agent_types = set(ex.agent_type for ex in self.examples if ex.agent_type)
+        agent_types = {ex.agent_type for ex in self.examples if ex.agent_type}
         for agent_type in sorted(agent_types):
             rst_content += f"   real_examples/{agent_type}_examples\n"
 
         with open(docs_dir / "source" / "real_examples.rst", "w") as f:
             f.write(rst_content)
-
 
 
 def main():
@@ -358,12 +350,11 @@ def main():
     for ex in examples:
         by_type[ex.type] = by_type.get(ex.type, 0) + 1
 
-    for ex_type, count in by_type.items():
+    for _ex_type, _count in by_type.items():
         pass
 
     # Integrate with documentation
     integrator.integrate_with_sphinx(docs_dir)
-
 
 
 if __name__ == "__main__":

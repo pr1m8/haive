@@ -4,17 +4,17 @@ RAG system that maintains conversation memory and uses ReAct (Reasoning + Acting
 pattern for complex multi-step queries requiring reasoning and tool use.
 """
 
-import json
 from enum import Enum
+import json
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 
 from haive.agents.chain import ChainAgent, flow_with_edges
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 
 class MemoryType(str, Enum):

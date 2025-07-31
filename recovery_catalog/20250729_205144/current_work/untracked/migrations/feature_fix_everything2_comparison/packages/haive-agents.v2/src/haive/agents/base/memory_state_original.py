@@ -5,9 +5,9 @@ haive.agents.ltm.memory_schemas with our V2 enhancements for token tracking, gra
 integration, and advanced memory management.
 """
 
-import logging
 from datetime import datetime
 from enum import Enum
+import logging
 from uuid import uuid4
 
 from pydantic import BaseModel, Field
@@ -19,6 +19,7 @@ from .memory_models_standalone import (
     KnowledgeTriple,
     MemoryItem,
 )
+
 
 # Commenting out broken imports
 # from haive.agents.ltm.memory_schemas import (
@@ -275,19 +276,19 @@ class MemoryState(BaseModel):
 
 # Export original models for compatibility
 __all__ = [
-    # Original models
-    "MemoryItem",
-    "KnowledgeTriple",
+    "EnhancedKnowledgeTriple",
     # Commented out undefined models: "Memory", "UserPreference", "FactualMemory", "PersonalContext", "ConversationalMemory",
     # Enhanced V2 models
     "EnhancedMemoryItem",
-    "EnhancedKnowledgeTriple",
-    "UnifiedMemoryEntry",
+    "ImportanceLevel",
+    "KnowledgeTriple",
+    # Original models
+    "MemoryItem",
+    "MemoryState",
+    "MemoryStats",
     # V2 infrastructure
     "MemoryType",
-    "ImportanceLevel",
-    "MemoryStats",
-    "MemoryState",
+    "UnifiedMemoryEntry",
     # Schema collections removed as they're undefined
     # "DEFAULT_MEMORY_SCHEMAS", "EXTENDED_MEMORY_SCHEMAS", "MINIMAL_MEMORY_SCHEMAS"
 ]

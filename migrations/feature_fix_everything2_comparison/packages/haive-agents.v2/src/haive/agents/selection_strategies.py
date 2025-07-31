@@ -5,8 +5,8 @@ criteria and approaches, providing flexibility in how tools are chosen for diffe
 contexts and use cases.
 """
 
-import logging
 from abc import ABC, abstractmethod
+import logging
 from typing import Any
 
 from haive.agents.discovery.dynamic_tool_selector import (
@@ -16,6 +16,7 @@ from haive.agents.discovery.dynamic_tool_selector import (
 from haive.agents.discovery.semantic_discovery import (
     ComponentMetadata,
 )
+
 
 logger = logging.getLogger(__name__)
 

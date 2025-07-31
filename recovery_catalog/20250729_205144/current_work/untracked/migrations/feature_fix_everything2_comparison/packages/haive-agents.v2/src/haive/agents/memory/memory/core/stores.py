@@ -5,11 +5,10 @@ that build on the existing store tools with intelligent classification,
 self-query retrieval, and memory lifecycle management.
 """
 
-import logging
 from datetime import datetime
+import logging
 from typing import Any
 
-from haive.core.tools.store_tools import StoreManager
 from pydantic import BaseModel, ConfigDict, Field
 
 from haive.agents.memory.core.classifier import MemoryClassifier, MemoryClassifierConfig
@@ -19,6 +18,8 @@ from haive.agents.memory.core.types import (
     MemoryQueryIntent,
     MemoryType,
 )
+from haive.core.tools.store_tools import StoreManager
+
 
 logger = logging.getLogger(__name__)
 

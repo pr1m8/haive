@@ -14,6 +14,7 @@ from step_back.agent import (
     get_step_back_rag_io_schema,
 )
 
+
 __all__ = [
     "DualRetrievalAgent",
     "StepBackQuery",

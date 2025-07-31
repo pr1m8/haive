@@ -33,7 +33,7 @@ positions = [(1, 4), (3, 4), (5, 4), (7, 4), (9, 4)]
 colors = ["#e8f4f8", "#d4edda", "#fff3cd", "#f8d7da", "#e2e3e5"]
 
 # Draw workflow boxes
-for i, (step, pos, color) in enumerate(zip(steps, positions, colors)):
+for i, (step, pos, color) in enumerate(zip(steps, positions, colors, strict=False)):
     # Create fancy box
     box = FancyBboxPatch(
         (pos[0] - 0.8, pos[1] - 0.4),
@@ -86,7 +86,9 @@ simple_components = ["User Input", "SimpleAgent", "LLM Engine", "Response"]
 simple_y = [3, 2, 1, 0]
 simple_colors = ["#17a2b8", "#28a745", "#ffc107", "#dc3545"]
 
-for i, (comp, y, color) in enumerate(zip(simple_components, simple_y, simple_colors)):
+for i, (comp, y, color) in enumerate(
+    zip(simple_components, simple_y, simple_colors, strict=False)
+):
     rect = mpatches.Rectangle(
         (0, y), 3, 0.8, facecolor=color, alpha=0.7, edgecolor="black"
     )
@@ -123,7 +125,7 @@ react_positions = [(1, 5), (1, 4), (0, 3), (2, 3), (1, 2), (1, 1)]
 react_colors = ["#17a2b8", "#28a745", "#fd7e14", "#6f42c1", "#e83e8c", "#dc3545"]
 
 for i, ((x, y), comp, color) in enumerate(
-    zip(react_positions, react_components, react_colors)
+    zip(react_positions, react_components, react_colors, strict=False)
 ):
     circle = plt.Circle((x, y), 0.4, facecolor=color, alpha=0.7, edgecolor="black")
     ax2.add_patch(circle)

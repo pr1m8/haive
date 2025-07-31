@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
-"""
-Agent Analyzer - Comprehensive agent type detection and analysis.
+"""Agent Analyzer - Comprehensive agent type detection and analysis.
 
 This module provides utilities to automatically detect agent types, analyze inheritance
 patterns, and extract metadata from agent implementations across the Haive ecosystem.
 """
 
 import ast
-import importlib
-import inspect
 import logging
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -35,20 +32,20 @@ class AgentInfo:
     file_path: Path
     module_path: str
     architecture: AgentArchitecture
-    base_classes: List[str]
+    base_classes: list[str]
     has_visualization: bool
     execution_pattern: str  # 'sync', 'async', 'both'
-    example_files: List[Path]
+    example_files: list[Path]
     config_pattern: str
     tools_support: bool
     streaming_support: bool
-    metadata: Dict[str, Any]
+    metadata: dict[str, Any]
 
 
 class AgentAnalyzer:
     """Comprehensive agent analysis and type detection."""
 
-    def __init__(self, project_root: Optional[Path] = None):
+    def __init__(self, project_root: Path | None = None):
         """Initialize the analyzer.
 
         Args:
@@ -67,9 +64,9 @@ class AgentAnalyzer:
 
         self.project_root = project_root
         self.packages_dir = project_root / "packages"
-        self._agent_cache: Dict[str, AgentInfo] = {}
+        self._agent_cache: dict[str, AgentInfo] = {}
 
-    def discover_all_agents(self) -> List[AgentInfo]:
+    def discover_all_agents(self) -> list[AgentInfo]:
         """Discover all agent implementations across the project.
 
         Returns:
@@ -93,7 +90,7 @@ class AgentAnalyzer:
         logger.info(f"Discovered {len(agents)} agents")
         return agents
 
-    def _scan_package_for_agents(self, package_dir: Path) -> List[AgentInfo]:
+    def _scan_package_for_agents(self, package_dir: Path) -> list[AgentInfo]:
         """Scan a package directory for agent files.
 
         Args:
@@ -122,7 +119,7 @@ class AgentAnalyzer:
 
         return agents
 
-    def _scan_examples_for_agents(self, examples_dir: Path) -> List[AgentInfo]:
+    def _scan_examples_for_agents(self, examples_dir: Path) -> list[AgentInfo]:
         """Scan examples directory for agent implementations.
 
         Args:
@@ -144,7 +141,7 @@ class AgentAnalyzer:
 
         return agents
 
-    def _analyze_agent_file(self, file_path: Path) -> Optional[AgentInfo]:
+    def _analyze_agent_file(self, file_path: Path) -> AgentInfo | None:
         """Analyze a single agent file for metadata.
 
         Args:
@@ -158,7 +155,7 @@ class AgentAnalyzer:
 
         try:
             # Parse the file to extract information
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, encoding="utf-8") as f:
                 content = f.read()
 
             # Parse AST for analysis
@@ -202,10 +199,10 @@ class AgentAnalyzer:
             )
 
         except Exception as e:
-            logger.error(f"Error analyzing {file_path}: {e}")
+            logger.exception(f"Error analyzing {file_path}: {e}")
             return None
 
-    def _extract_agent_classes(self, tree: ast.AST) -> List[ast.ClassDef]:
+    def _extract_agent_classes(self, tree: ast.AST) -> list[ast.ClassDef]:
         """Extract agent class definitions from AST.
 
         Args:
@@ -246,20 +243,19 @@ class AgentAnalyzer:
 
         if "haive-games" in path_str or "/games/" in path_str:
             return AgentArchitecture.HAIVE_GAMES
-        elif "haive-agents" in path_str or "/agents/" in path_str:
+        if "haive-agents" in path_str or "/agents/" in path_str:
             return AgentArchitecture.HAIVE_AGENTS_MIXIN
-        elif "haive-core" in path_str and "/engine/" in path_str:
+        if "haive-core" in path_str and "/engine/" in path_str:
             return AgentArchitecture.HAIVE_CORE_ENGINE
-        elif "from haive.agents" in content:
+        if "from haive.agents" in content:
             return AgentArchitecture.HAIVE_AGENTS_MIXIN
-        elif "from haive.core.engine" in content:
+        if "from haive.core.engine" in content:
             return AgentArchitecture.HAIVE_CORE_ENGINE
-        elif "from haive.games" in content:
+        if "from haive.games" in content:
             return AgentArchitecture.HAIVE_GAMES
-        else:
-            return AgentArchitecture.UNKNOWN
+        return AgentArchitecture.UNKNOWN
 
-    def _extract_base_classes(self, class_node: ast.ClassDef) -> List[str]:
+    def _extract_base_classes(self, class_node: ast.ClassDef) -> list[str]:
         """Extract base class names.
 
         Args:
@@ -324,12 +320,11 @@ class AgentAnalyzer:
 
         if has_async and has_sync:
             return "both"
-        elif has_async:
+        if has_async:
             return "async"
-        else:
-            return "sync"
+        return "sync"
 
-    def _find_related_examples(self, agent_file: Path) -> List[Path]:
+    def _find_related_examples(self, agent_file: Path) -> list[Path]:
         """Find example files related to this agent.
 
         Args:
@@ -391,12 +386,11 @@ class AgentAnalyzer:
         """
         if "AugLLMConfig" in content:
             return "AugLLMConfig"
-        elif "AgentConfig" in content:
+        if "AgentConfig" in content:
             return "AgentConfig"
-        elif "BaseModel" in content:
+        if "BaseModel" in content:
             return "Pydantic"
-        else:
-            return "Unknown"
+        return "Unknown"
 
     def _has_tools_support(self, tree: ast.AST, content: str) -> bool:
         """Check if agent supports tools.
@@ -426,7 +420,7 @@ class AgentAnalyzer:
             or "yield" in content
         )
 
-    def _extract_metadata(self, tree: ast.AST, content: str) -> Dict[str, Any]:
+    def _extract_metadata(self, tree: ast.AST, content: str) -> dict[str, Any]:
         """Extract additional metadata from agent file.
 
         Args:
@@ -457,18 +451,17 @@ class AgentAnalyzer:
         # Check for common imports
         imports = []
         for node in ast.walk(tree):
-            if isinstance(node, (ast.Import, ast.ImportFrom)):
+            if isinstance(node, ast.Import | ast.ImportFrom):
                 if isinstance(node, ast.Import):
                     for name in node.names:
                         imports.append(name.name)
-                else:
-                    if node.module:
-                        imports.append(node.module)
+                elif node.module:
+                    imports.append(node.module)
         metadata["imports"] = imports
 
         return metadata
 
-    def get_agent_by_name(self, name: str) -> Optional[AgentInfo]:
+    def get_agent_by_name(self, name: str) -> AgentInfo | None:
         """Get agent information by name.
 
         Args:
@@ -490,7 +483,7 @@ class AgentAnalyzer:
 
     def get_agents_by_architecture(
         self, architecture: AgentArchitecture
-    ) -> List[AgentInfo]:
+    ) -> list[AgentInfo]:
         """Get all agents using a specific architecture.
 
         Args:
@@ -505,7 +498,7 @@ class AgentAnalyzer:
             if agent.architecture == architecture
         ]
 
-    def analyze_inheritance_patterns(self) -> Dict[str, List[str]]:
+    def analyze_inheritance_patterns(self) -> dict[str, list[str]]:
         """Analyze inheritance patterns across all agents.
 
         Returns:

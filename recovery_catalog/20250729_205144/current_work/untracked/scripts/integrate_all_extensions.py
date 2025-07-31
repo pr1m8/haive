@@ -1,19 +1,17 @@
 #!/usr/bin/env python3
-"""
-Sphinx Extensions Integration Script
-Automatically integrates all installed Sphinx extensions into conf.py
+"""Sphinx Extensions Integration Script
+Automatically integrates all installed Sphinx extensions into conf.py.
 
 Created: 2025-07-29 17:00
 Purpose: Smart integration of 100+ Sphinx extensions with proper import names
 """
 
+import importlib
+import json
+import re
 import subprocess
 import sys
-import importlib
 from pathlib import Path
-from typing import List, Dict, Set, Tuple
-import re
-import json
 
 # Configuration
 CONF_PY_PATH = Path("/home/will/Projects/haive/backend/haive/docs/source/conf.py")
@@ -89,10 +87,10 @@ def log_message(message: str, also_print: bool = True):
     with open(EXTENSIONS_LOG, "a") as f:
         f.write(f"{message}\n")
     if also_print:
-        print(message)
+        pass
 
 
-def get_installed_packages() -> List[str]:
+def get_installed_packages() -> list[str]:
     """Get all installed packages from poetry."""
     try:
         result = subprocess.run(
@@ -112,7 +110,7 @@ def get_installed_packages() -> List[str]:
         return []
 
 
-def get_sphinx_extensions(packages: List[str]) -> List[str]:
+def get_sphinx_extensions(packages: list[str]) -> list[str]:
     """Filter packages to get only Sphinx extensions."""
     sphinx_extensions = []
 
@@ -150,7 +148,7 @@ def guess_import_name(package_name: str) -> str:
     return import_name
 
 
-def test_extension_import(import_name: str) -> Tuple[bool, str]:
+def test_extension_import(import_name: str) -> tuple[bool, str]:
     """Test if an extension can be imported."""
     try:
         # Try importing the main module
@@ -163,14 +161,14 @@ def test_extension_import(import_name: str) -> Tuple[bool, str]:
         return False, f"❌ Other error: {e}"
 
 
-def get_current_extensions() -> Set[str]:
+def get_current_extensions() -> set[str]:
     """Get currently configured extensions from conf.py."""
     current_extensions = set()
 
     if not CONF_PY_PATH.exists():
         return current_extensions
 
-    with open(CONF_PY_PATH, "r") as f:
+    with open(CONF_PY_PATH) as f:
         content = f.read()
 
     # Find extensions = [...] block
@@ -287,8 +285,6 @@ def integrate_extensions():
 
 
 if __name__ == "__main__":
-    print("🔧 Sphinx Extensions Integration Script")
-    print("======================================")
 
     # Ensure we're in the right directory
     import os
@@ -298,17 +294,9 @@ if __name__ == "__main__":
     try:
         results = integrate_extensions()
 
-        print(f"\n🎯 Integration Complete!")
-        print(f"✅ {len(results['working_extensions'])} extensions tested successfully")
-        print(f"🆕 {len(results['new_extensions'])} new extensions ready to add")
-        print(f"❌ {len(results['failed_extensions'])} extensions need research")
-
         if results["new_extensions"]:
-            print(
-                f"\n🚀 Ready to add {len(results['new_extensions'])} new extensions to conf.py!"
-            )
+            pass
 
     except Exception as e:
         log_message(f"💥 Fatal error: {e}")
-        print(f"💥 Fatal error: {e}")
         sys.exit(1)

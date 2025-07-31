@@ -15,9 +15,9 @@ Functions:
 
 # src/haive/core/graph/node/validation_node_config.py
 
+from collections.abc import Callable
 import json
 import logging
-from collections.abc import Callable
 from typing import Any
 
 from langchain_core.messages import AIMessage, ToolMessage
@@ -29,6 +29,7 @@ from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
 from haive.core.graph.common.types import ConfigLike, StateLike
 from haive.core.graph.node.base_config import NodeConfig
 from haive.core.graph.node.types import NodeType
+
 
 # Configure logger with rich handler
 logger = logging.getLogger(__name__)
@@ -557,9 +558,9 @@ class ValidationNodeConfig(NodeConfig, ToolRouteMixin):
 
         Returns ONLY routing decisions - no state updates!
         """
+        from datetime import datetime
         import json
         import traceback
-        from datetime import datetime
 
         validation_start_time = datetime.now()
         logger.info(

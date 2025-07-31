@@ -8,8 +8,8 @@ This solves the critical gap where you cannot easily modify node input/output
 schemas or create composed nodes with custom field mappings.
 """
 
-import logging
 from collections.abc import Callable
+import logging
 from typing import Any, TypeVar
 
 from pydantic import BaseModel
@@ -23,6 +23,7 @@ from haive.core.graph.node.composer.protocols import (
     UpdateFunction,
 )
 from haive.core.graph.node.composer.update_functions import UpdateFunctions
+
 
 logger = logging.getLogger(__name__)
 

@@ -11,11 +11,12 @@ from typing import Any
 from sphinx.ext.autosummary import Autosummary, ImportExceptionGroup, import_by_name
 from sphinx.util import logging as sphinx_logging
 
+
 logger = sphinx_logging.getLogger(__name__)
 
 
 def safe_import_by_name(
-    name: str, prefixes: list[str | None] = None
+    name: str, prefixes: list[str | None] | None = None
 ) -> tuple[str, Any, Any, str]:
     """Import by name with better error handling for namespace packages.
 

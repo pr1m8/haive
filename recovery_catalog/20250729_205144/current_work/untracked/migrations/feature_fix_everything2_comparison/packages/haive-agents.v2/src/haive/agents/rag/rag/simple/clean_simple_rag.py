@@ -1,5 +1,5 @@
 """Clean_Simple_Rag core module.
-from __future__ import annotations
+from __future__ import annotations.
 
 This module provides clean simple rag functionality for the Haive framework.
 
@@ -77,9 +77,6 @@ Examples:
 import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.engine.retriever import BaseRetrieverConfig
-from haive.core.engine.vectorstore import VectorStoreConfig
 from langchain_core.documents import Document
 from pydantic import BaseModel, Field, field_validator, model_validator
 
@@ -87,6 +84,10 @@ from pydantic import BaseModel, Field, field_validator, model_validator
 from haive.agents.multi.clean import MultiAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.engine.retriever import BaseRetrieverConfig
+from haive.core.engine.vectorstore import VectorStoreConfig
+
 
 logger = logging.getLogger(__name__)
 

@@ -5,11 +5,12 @@ for a professional, feature-rich documentation experience with enhanced
 theme support and comprehensive extension usage.
 """
 
+from datetime import datetime
 import logging
+from pathlib import Path
 import sys
 import warnings
-from datetime import datetime
-from pathlib import Path
+
 
 # Set up logging for debugging
 log_file = Path(__file__).parent / "sphinx_debug.log"

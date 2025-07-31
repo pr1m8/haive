@@ -5,6 +5,7 @@ This module provides engines functionality for the Haive framework.
 
 from langchain_core.prompts import PromptTemplate
 
+
 REWRITER_PROMPT = """
 Look at the input and try to reason about the underlying semantic intent / meaning.\n
 Here is the initial question:\n

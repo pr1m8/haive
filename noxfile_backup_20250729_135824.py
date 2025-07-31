@@ -204,7 +204,7 @@ def docs_fast(session):
                     f.flush()
                     output_lines.append(output.strip())
 
-            returncode = process.poll()
+            process.poll()
 
         # Show last 20 lines of output
         session.log("📄 Last 20 lines of build output:")
@@ -227,14 +227,12 @@ def docs_fast(session):
                     session.log(f"🌐 View docs: file://{html_files[0].absolute()}")
                 session.log(f"📋 Full build log: {log_file}")
                 return True
-            else:
-                session.log("❌ No HTML files generated")
-                session.log(f"📋 Check full log: {log_file}")
-                return False
-        else:
-            session.log("❌ Build directory not created")
+            session.log("❌ No HTML files generated")
             session.log(f"📋 Check full log: {log_file}")
             return False
+        session.log("❌ Build directory not created")
+        session.log(f"📋 Check full log: {log_file}")
+        return False
 
     except subprocess.TimeoutExpired:
         session.log("⏱️  Build timed out after 5 minutes")

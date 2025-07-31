@@ -75,15 +75,16 @@ import asyncio
 import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.engine.retriever import BaseRetrieverConfig
-from haive.core.engine.vectorstore import VectorStoreConfig
 from langchain_core.documents import Document
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 # Import existing agents for composition
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.engine.retriever import BaseRetrieverConfig
+from haive.core.engine.vectorstore import VectorStoreConfig
+
 
 logger = logging.getLogger(__name__)
 
@@ -661,9 +662,10 @@ __all__ = ["RAGResponse", "SimpleRAG", "SimpleRAGAgent"]  # Legacy alias
 if __name__ == "__main__":
     import asyncio
 
+    from langchain_core.documents import Document
+
     from haive.core.engine.aug_llm import AugLLMConfig
     from haive.core.engine.vectorstore import VectorStoreConfig
-    from langchain_core.documents import Document
 
     # Example documents
     example_docs = [

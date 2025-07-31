@@ -23,6 +23,7 @@ from typing import Any, Literal, TypeVar
 
 from pydantic import BaseModel, Field
 
+
 T = TypeVar("T", bound=str)  # Used for dynamic literals
 
 

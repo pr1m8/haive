@@ -5,6 +5,7 @@ This module provides prompts functionality for the Haive framework.
 
 from langchain_core.prompts import ChatPromptTemplate
 
+
 RAG_ANSWER_STANDARD = ChatPromptTemplate.from_messages(
     [
         (

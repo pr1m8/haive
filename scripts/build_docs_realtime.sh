@@ -19,12 +19,12 @@ mkdir -p docs/logs
 # Set log file with timestamp
 LOG_FILE="docs/logs/realtime_build_$(date +%Y%m%d_%H%M%S).log"
 
-echo "📝 Logging to: $LOG_FILE"
+echo "📝 Logging t${: $LOG_F}ILE"
 echo "==============================================="
 
 # Function to log with timestamp
 log_with_timestamp() {
-	echo "[$(date +'%H:%M:%S')] $1" | tee -a "$LOG_FILE"
+	echo "[$(date +'%H:%M:%S')] $1" | tee -a "${LOG_FILE}"
 }
 
 log_with_timestamp "🔍 Checking Poetry environment..."
@@ -47,19 +47,19 @@ poetry run sphinx-build \
 	docs/source \
 	docs/build/html \
 	2>&1 | while IFS= read -r line; do
-	echo "[$(date +'%H:%M:%S')] $line" | tee -a "$LOG_FILE"
+	echo "[$(date +'%H:%M:%S')] ${line}" | tee -a "${LOG_FILE}"
 done
 
 BUILD_STATUS=${PIPESTATUS[0]}
 
-if [ $BUILD_STATUS -eq 0 ]; then
+if [[ "$BUILD_STATUS" -eq 0 ]]; then
 	log_with_timestamp "✅ Documentation build SUCCESSFUL!"
 	log_with_timestamp "🌐 View docs: file://$(pwd)/docs/build/html/index.html"
 else
-	log_with_timestamp "❌ Documentation build completed with warnings/errors (status: $BUILD_STATUS)"
+	log_with_timestamp "❌ Documentation build completed with warnings/errors (status${ $BUILD_STAT}US)"
 	log_with_timestamp "🌐 Partial build available: file://$(pwd)/docs/build/html/index.html"
 fi
 
-log_with_timestamp "📋 Full build log saved: $LOG_FILE"
+log_with_timestamp "📋 Full build log save${: $LOG_F}ILE"
 echo "==============================================="
 echo "🏁 Build process complete!"

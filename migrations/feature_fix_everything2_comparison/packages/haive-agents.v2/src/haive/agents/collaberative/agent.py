@@ -22,6 +22,7 @@ from pydantic import Field
 from haive.agents.conversation.base.agent import BaseConversationAgent
 from haive.agents.conversation.collaberative.state import CollaborativeState
 
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.WARNING)
 
@@ -395,9 +396,8 @@ The final document has been compiled."""
         if sections is None:
             sections = ["Problem Statement", "Ideas", "Evaluation", "Action Items"]
 
-        from haive.core.engine.aug_llm import AugLLMConfig
-
         from haive.agents.simple.agent import SimpleAgent
+        from haive.core.engine.aug_llm import AugLLMConfig
 
         agents = {}
         for name in participants:
@@ -449,9 +449,8 @@ The final document has been compiled."""
             reviewers: Dictionary mapping reviewer names to expertise
             **kwargs: Additional configuration
         """
-        from haive.core.engine.aug_llm import AugLLMConfig
-
         from haive.agents.simple.agent import SimpleAgent
+        from haive.core.engine.aug_llm import AugLLMConfig
 
         agents = {}
         for name, expertise in reviewers.items():

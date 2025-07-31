@@ -6,9 +6,6 @@ MultiAgent[AgentsT] where AgentsT represents the agents it contains.
 import logging
 from typing import Any, Generic, Literal, TypeVar
 
-from haive.core.graph.node.agent_node_v3 import AgentNodeV3Config
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langgraph.graph import END, START
 from pydantic import Field, field_validator
 
@@ -16,6 +13,10 @@ from pydantic import Field, field_validator
 # from haive.agents.base.enhanced_agent import Agent
 # For now, use our working base class
 from haive.agents.simple.enhanced_simple_real import EnhancedAgentBase
+from haive.core.graph.node.agent_node_v3 import AgentNodeV3Config
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
 
 # Define Agent as alias to avoid import issues
 Agent = EnhancedAgentBase

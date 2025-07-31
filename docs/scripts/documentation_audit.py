@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Documentation Audit Script
+"""Documentation Audit Script.
 
 Finds all Python files with suboptimal or missing documentation.
 Checks for:
@@ -15,13 +14,10 @@ Checks for:
 
 import ast
 import json
-import os
-import re
 import sys
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple
 
 
 @dataclass
@@ -46,7 +42,7 @@ class FileReport:
     high_issues: int = 0
     medium_issues: int = 0
     low_issues: int = 0
-    issues: List[DocIssue] = field(default_factory=list)
+    issues: list[DocIssue] = field(default_factory=list)
 
     def add_issue(self, issue: DocIssue):
         """Add an issue to the report."""
@@ -68,11 +64,11 @@ class DocstringAnalyzer(ast.NodeVisitor):
     def __init__(self, file_path: str, source_code: str):
         self.file_path = file_path
         self.source_lines = source_code.splitlines()
-        self.issues: List[DocIssue] = []
+        self.issues: list[DocIssue] = []
         self.current_class = None
         self.has_module_docstring = False
-        self.module_exports: Set[str] = set()
-        self.defined_names: Set[str] = set()
+        self.module_exports: set[str] = set()
+        self.defined_names: set[str] = set()
 
     def visit_Module(self, node: ast.Module) -> None:
         """Check module-level documentation."""
@@ -334,7 +330,6 @@ class DocstringAnalyzer(ast.NodeVisitor):
         # If __init__ has parameters beyond self, they should be documented
         if len(node.args.args) > 1:  # More than just 'self'
             docstring = ast.get_docstring(node)
-            class_node = self.current_class
 
             # __init__ docstring is optional if class docstring has Args
             if not docstring:
@@ -391,18 +386,17 @@ class DocstringAnalyzer(ast.NodeVisitor):
                                     self.module_exports.add(elt.value)
 
         # Check if this is an __init__.py file
-        if "__init__.py" in self.file_path:
-            if not has_all:
-                self.issues.append(
-                    DocIssue(
-                        file_path=self.file_path,
-                        line_number=1,
-                        issue_type="missing___all__",
-                        severity="high",
-                        message="Module __init__.py missing __all__ exports",
-                        context="Add __all__ = ['exported', 'names']",
-                    )
+        if "__init__.py" in self.file_path and not has_all:
+            self.issues.append(
+                DocIssue(
+                    file_path=self.file_path,
+                    line_number=1,
+                    issue_type="missing___all__",
+                    severity="high",
+                    message="Module __init__.py missing __all__ exports",
+                    context="Add __all__ = ['exported', 'names']",
                 )
+            )
 
 
 def analyze_file(file_path: Path) -> FileReport:
@@ -426,7 +420,7 @@ def analyze_file(file_path: Path) -> FileReport:
                 line_number=0,
                 issue_type="parse_error",
                 severity="critical",
-                message=f"Failed to parse file: {str(e)}",
+                message=f"Failed to parse file: {e!s}",
                 context="",
             )
         )
@@ -434,7 +428,9 @@ def analyze_file(file_path: Path) -> FileReport:
     return report
 
 
-def find_python_files(root_dir: Path, exclude_dirs: Set[str] = None) -> List[Path]:
+def find_python_files(
+    root_dir: Path, exclude_dirs: set[str] | None = None
+) -> list[Path]:
     """Find all Python files in directory tree."""
     if exclude_dirs is None:
         exclude_dirs = {".venv", "__pycache__", ".git", ".nox", "build", "dist", ".tox"}
@@ -455,7 +451,7 @@ def find_python_files(root_dir: Path, exclude_dirs: Set[str] = None) -> List[Pat
     return sorted(python_files)
 
 
-def generate_report(reports: List[FileReport], output_format: str = "text") -> str:
+def generate_report(reports: list[FileReport], output_format: str = "text") -> str:
     """Generate summary report from file reports."""
     total_files = len(reports)
     total_issues = sum(r.total_issues for r in reports)
@@ -504,61 +500,61 @@ def generate_report(reports: List[FileReport], output_format: str = "text") -> s
 
         return json.dumps(data, indent=2)
 
-    else:  # text format
-        output = []
-        output.append("=" * 80)
-        output.append("DOCUMENTATION AUDIT REPORT")
-        output.append("=" * 80)
-        output.append("")
-        output.append(f"Total Files Analyzed: {total_files}")
-        output.append(f"Total Issues Found: {total_issues}")
-        output.append("")
-        output.append("Issue Breakdown by Severity:")
-        output.append(f"  🔴 Critical: {total_critical}")
-        output.append(f"  🟠 High: {total_high}")
-        output.append(f"  🟡 Medium: {total_medium}")
-        output.append(f"  🟢 Low: {total_low}")
-        output.append("")
-        output.append("Issue Types:")
-        for issue_type, count in sorted(
-            issues_by_type.items(), key=lambda x: x[1], reverse=True
-        ):
-            output.append(f"  - {issue_type}: {count}")
-        output.append("")
-        output.append("=" * 80)
-        output.append("DETAILED ISSUES BY FILE")
-        output.append("=" * 80)
+    # text format
+    output = []
+    output.append("=" * 80)
+    output.append("DOCUMENTATION AUDIT REPORT")
+    output.append("=" * 80)
+    output.append("")
+    output.append(f"Total Files Analyzed: {total_files}")
+    output.append(f"Total Issues Found: {total_issues}")
+    output.append("")
+    output.append("Issue Breakdown by Severity:")
+    output.append(f"  🔴 Critical: {total_critical}")
+    output.append(f"  🟠 High: {total_high}")
+    output.append(f"  🟡 Medium: {total_medium}")
+    output.append(f"  🟢 Low: {total_low}")
+    output.append("")
+    output.append("Issue Types:")
+    for issue_type, count in sorted(
+        issues_by_type.items(), key=lambda x: x[1], reverse=True
+    ):
+        output.append(f"  - {issue_type}: {count}")
+    output.append("")
+    output.append("=" * 80)
+    output.append("DETAILED ISSUES BY FILE")
+    output.append("=" * 80)
 
-        # Sort reports by number of issues (worst first)
-        sorted_reports = sorted(reports, key=lambda r: r.total_issues, reverse=True)
+    # Sort reports by number of issues (worst first)
+    sorted_reports = sorted(reports, key=lambda r: r.total_issues, reverse=True)
 
-        for report in sorted_reports:
-            if report.issues:
-                output.append("")
-                output.append(f"\n📁 {report.file_path}")
+    for report in sorted_reports:
+        if report.issues:
+            output.append("")
+            output.append(f"\n📁 {report.file_path}")
+            output.append(
+                f"   Issues: {report.total_issues} (C:{report.critical_issues} H:{report.high_issues} M:{report.medium_issues} L:{report.low_issues})"
+            )
+            output.append("-" * 60)
+
+            # Sort issues by line number
+            sorted_issues = sorted(report.issues, key=lambda i: i.line_number)
+
+            for issue in sorted_issues:
+                severity_icon = {
+                    "critical": "🔴",
+                    "high": "🟠",
+                    "medium": "🟡",
+                    "low": "🟢",
+                }.get(issue.severity, "❓")
+
                 output.append(
-                    f"   Issues: {report.total_issues} (C:{report.critical_issues} H:{report.high_issues} M:{report.medium_issues} L:{report.low_issues})"
+                    f"   {severity_icon} Line {issue.line_number}: {issue.message}"
                 )
-                output.append("-" * 60)
+                if issue.context:
+                    output.append(f"      Context: {issue.context}")
 
-                # Sort issues by line number
-                sorted_issues = sorted(report.issues, key=lambda i: i.line_number)
-
-                for issue in sorted_issues:
-                    severity_icon = {
-                        "critical": "🔴",
-                        "high": "🟠",
-                        "medium": "🟡",
-                        "low": "🟢",
-                    }.get(issue.severity, "❓")
-
-                    output.append(
-                        f"   {severity_icon} Line {issue.line_number}: {issue.message}"
-                    )
-                    if issue.context:
-                        output.append(f"      Context: {issue.context}")
-
-        return "\n".join(output)
+    return "\n".join(output)
 
 
 def main():
@@ -586,7 +582,6 @@ def main():
     path = Path(args.path)
 
     if not path.exists():
-        print(f"Error: Path '{path}' does not exist", file=sys.stderr)
         sys.exit(1)
 
     # Collect files to analyze
@@ -602,8 +597,6 @@ def main():
 
         files = find_python_files(path, exclude_dirs)
 
-    print(f"Analyzing {len(files)} Python files...", file=sys.stderr)
-
     # Analyze files
     reports = []
     for file_path in files:
@@ -616,9 +609,8 @@ def main():
     # Output results
     if args.output:
         Path(args.output).write_text(output)
-        print(f"Report written to: {args.output}", file=sys.stderr)
     else:
-        print(output)
+        pass
 
     # Exit with error if issues found
     total_issues = sum(r.total_issues for r in reports)

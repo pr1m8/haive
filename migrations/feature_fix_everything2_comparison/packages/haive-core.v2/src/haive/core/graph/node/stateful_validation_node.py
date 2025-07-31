@@ -12,8 +12,8 @@ Key features:
 - Integrates with ToolState for seamless tool tracking
 """
 
-import logging
 from datetime import datetime
+import logging
 from typing import Any
 
 from langchain_core.messages import AIMessage, ToolMessage
@@ -22,6 +22,7 @@ from pydantic import BaseModel, Field, ValidationError
 
 from haive.core.graph.node.base_node_config import BaseNodeConfig
 from haive.core.graph.node.types import NodeType
+
 
 logger = logging.getLogger(__name__)
 

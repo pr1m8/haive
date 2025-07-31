@@ -6,8 +6,8 @@ following LangChain patterns for long-term memory agents and graph construction.
 Based on: https://python.langchain.com/docs/versions/migrating_memory/long_term_memory_agent/
 """
 
-import logging
 from datetime import UTC, datetime
+import logging
 from typing import Any
 from uuid import uuid4
 
@@ -16,6 +16,7 @@ from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, System
 from pydantic import BaseModel, Field
 
 from .memory_state_original import EnhancedMemoryItem, ImportanceLevel
+
 
 logger = logging.getLogger(__name__)
 
@@ -54,7 +55,7 @@ class MessageMetadata(BaseModel):
 class TimestampedDocument(Document):
     """Document with enhanced timestamp and metadata for memory retrieval."""
 
-    def __init__(self, page_content: str, metadata: dict[str, Any] = None):
+    def __init__(self, page_content: str, metadata: dict[str, Any] | None = None):
         """Initialize with enhanced metadata."""
         if metadata is None:
             metadata = {}
@@ -403,7 +404,7 @@ class MessageDocumentConverter:
 class ConversationDocumentBatch:
     """Batch processor for converting entire conversations to documents."""
 
-    def __init__(self, conversation_id: str = None, user_id: str = None):
+    def __init__(self, conversation_id: str | None = None, user_id: str | None = None):
         """Initialize batch processor."""
         self.conversation_id = conversation_id or f"batch_{uuid4()}"
         self.user_id = user_id

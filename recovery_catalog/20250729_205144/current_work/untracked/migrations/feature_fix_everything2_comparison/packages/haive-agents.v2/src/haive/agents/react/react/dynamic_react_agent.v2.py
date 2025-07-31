@@ -12,15 +12,15 @@ Based on:
 
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.registry import RegistryItem
-from haive.core.schema.prebuilt.dynamic_activation_state import DynamicActivationState
-from haive.core.schema.prebuilt.meta_state import MetaStateSchema
 from langchain_core.tools import BaseTool
 from pydantic import Field, PrivateAttr
 
 from haive.agents.discovery.component_discovery_agent import ComponentDiscoveryAgent
 from haive.agents.react.agent import ReactAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.registry import RegistryItem
+from haive.core.schema.prebuilt.dynamic_activation_state import DynamicActivationState
+from haive.core.schema.prebuilt.meta_state import MetaStateSchema
 
 
 class DynamicToolState(DynamicActivationState):
@@ -527,10 +527,10 @@ class DynamicReactAgent(ReactAgent):
         to find and suggest appropriate tools for tasks.
         """
         try:
-            from haive.core.engine.retriever import BaseRetrieverConfig
             from langchain_core.documents import Document
 
             from haive.agents.rag.base.agent import BaseRAGAgent
+            from haive.core.engine.retriever import BaseRetrieverConfig
 
             # Get configuration
             rag_config = self._rag_config

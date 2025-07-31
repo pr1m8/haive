@@ -18,6 +18,7 @@ from flare.agent import (
     plan_flare_iteration,
 )
 
+
 __all__ = [
     "ActiveRetrievalAgent",
     "ConfidenceLevel",

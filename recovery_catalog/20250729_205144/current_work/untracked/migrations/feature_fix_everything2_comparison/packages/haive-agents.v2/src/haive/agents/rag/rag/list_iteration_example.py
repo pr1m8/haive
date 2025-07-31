@@ -6,16 +6,16 @@ or documents through RAG agents.
 
 from typing import Any
 
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
+
+from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.list_iteration_node import (
     create_engine_callable,
     create_list_iteration_node,
 )
 from haive.core.models.llm.base import AzureLLMConfig
-from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate
-
-from haive.agents.rag.simple.agent import SimpleRAGAgent
 
 
 # Example 1: Process multiple queries through a RAG agent
@@ -160,8 +160,9 @@ def create_parallel_document_grader() -> Any:
 # Example usage in a graph
 def example_graph_usage() -> Any:
     """Example of how to use list iteration nodes in a graph."""
-    from haive.core.graph.state_graph.base_graph2 import BaseGraph
     from langgraph.graph import END, START
+
+    from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
     # Create graph
     graph = BaseGraph(name="ListIterationExample")

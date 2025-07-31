@@ -8,6 +8,7 @@ from typing import Any, Protocol, TypeVar
 
 from pydantic import BaseModel
 
+
 # Type variables for protocol generics
 TState = TypeVar("TState", bound=BaseModel)
 TInput = TypeVar("TInput")

@@ -1,5 +1,4 @@
-"""
-Agent Cache Loader - Load cached agent execution data for documentation demos.
+"""Agent Cache Loader - Load cached agent execution data for documentation demos.
 
 This module loads pre-generated agent execution data and formats it for
 use in Jinja2 templates and documentation generation.
@@ -8,7 +7,7 @@ use in Jinja2 templates and documentation generation.
 import json
 import logging
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -16,16 +15,15 @@ logger = logging.getLogger(__name__)
 class AgentCacheLoader:
     """Loads and processes cached agent execution data."""
 
-    def __init__(self, cache_dir: Optional[Path] = None):
+    def __init__(self, cache_dir: Path | None = None):
         """Initialize with cache directory."""
         if cache_dir is None:
             cache_dir = Path(__file__).parent
         self.cache_dir = Path(cache_dir)
         self._cache = {}
 
-    def load_agent_cache(self, agent_type: str) -> Dict[str, Any]:
-        """
-        Load cached execution data for an agent type.
+    def load_agent_cache(self, agent_type: str) -> dict[str, Any]:
+        """Load cached execution data for an agent type.
 
         Args:
             agent_type: Agent type (e.g., 'simple', 'react', 'rag')
@@ -45,7 +43,7 @@ class AgentCacheLoader:
             return self._get_fallback_data(agent_type)
 
         try:
-            with open(cache_file, "r") as f:
+            with open(cache_file) as f:
                 cache_data = json.load(f)
 
             # Process and clean the data
@@ -60,10 +58,10 @@ class AgentCacheLoader:
             return processed_data
 
         except Exception as e:
-            logger.error(f"Error loading cache for {agent_type}: {e}")
+            logger.exception(f"Error loading cache for {agent_type}: {e}")
             return self._get_fallback_data(agent_type)
 
-    def _process_cache_data(self, cache_data: Dict[str, Any]) -> Dict[str, Any]:
+    def _process_cache_data(self, cache_data: dict[str, Any]) -> dict[str, Any]:
         """Process and clean cached data for template use."""
         processed = cache_data.copy()
 
@@ -125,7 +123,7 @@ class AgentCacheLoader:
 
         return processed
 
-    def _get_fallback_data(self, agent_type: str) -> Dict[str, Any]:
+    def _get_fallback_data(self, agent_type: str) -> dict[str, Any]:
         """Get fallback data when cache is not available."""
         return {
             "agent_type": agent_type,
@@ -154,9 +152,8 @@ class AgentCacheLoader:
             ],
         }
 
-    def get_agent_demo_data(self, agent_type: str) -> Dict[str, Any]:
-        """
-        Get formatted demo data for agent documentation.
+    def get_agent_demo_data(self, agent_type: str) -> dict[str, Any]:
+        """Get formatted demo data for agent documentation.
 
         Args:
             agent_type: Agent type (e.g., 'simple', 'react', 'rag')
@@ -218,7 +215,7 @@ class AgentCacheLoader:
         icons = {"simple": "🤖", "react": "⚡", "rag": "📚"}
         return icons.get(agent_type, "🔧")
 
-    def _get_agent_features(self, agent_type: str) -> List[str]:
+    def _get_agent_features(self, agent_type: str) -> list[str]:
         """Get agent features list."""
         features = {
             "simple": [
@@ -265,9 +262,8 @@ class AgentCacheLoader:
 _cache_loader = AgentCacheLoader()
 
 
-def get_agent_demo_context(agent_type: str) -> Dict[str, Any]:
-    """
-    Get agent demo context for Jinja2 templates.
+def get_agent_demo_context(agent_type: str) -> dict[str, Any]:
+    """Get agent demo context for Jinja2 templates.
 
     Args:
         agent_type: Agent type (e.g., 'simple', 'react', 'rag')
@@ -278,7 +274,7 @@ def get_agent_demo_context(agent_type: str) -> Dict[str, Any]:
     return _cache_loader.get_agent_demo_data(agent_type)
 
 
-def get_available_agent_types() -> List[str]:
+def get_available_agent_types() -> list[str]:
     """Get list of available agent types with cached data."""
     cache_dir = Path(__file__).parent
     cache_files = list(cache_dir.glob("agent_cache_*.json"))

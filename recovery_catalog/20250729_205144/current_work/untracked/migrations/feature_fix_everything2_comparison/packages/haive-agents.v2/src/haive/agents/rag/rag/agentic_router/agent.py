@@ -5,14 +5,10 @@ Implementation of autonomous RAG routing using ReAct (Reason + Act) patterns.
 Provides intelligent agent selection, strategy planning, and execution coordination.
 """
 
-import logging
 from enum import Enum
+import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
-from haive.core.schema.prebuilt.rag_state import RAGState
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
@@ -24,6 +20,11 @@ from haive.agents.rag.fusion.agent import RAGFusionAgent
 from haive.agents.rag.hyde.agent_v2 import HyDERAGAgentV2
 from haive.agents.rag.multi_query.agent import MultiQueryRAGAgent
 from haive.agents.rag.simple.agent import SimpleRAGAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+from haive.core.schema.prebuilt.rag_state import RAGState
+
 
 logger = logging.getLogger(__name__)
 

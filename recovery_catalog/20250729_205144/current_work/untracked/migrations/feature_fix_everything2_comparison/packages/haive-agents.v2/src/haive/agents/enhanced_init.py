@@ -17,6 +17,7 @@ from haive.agents.base.mixins import ExecutionMixin, PersistenceMixin, StateMixi
 from haive.agents.base.serialization_mixin import SerializationMixin
 from haive.agents.base.types import AgentInput, AgentOutput, AgentState
 
+
 __all__ = [
     # Enhanced classes
     "Agent",

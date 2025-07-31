@@ -72,6 +72,7 @@ from haive.agents.memory.unified_memory_api import (
     get_system_info,
 )
 
+
 __all__ = [
     "AgenticRAGCoordinator",
     "AgenticRAGCoordinatorConfig",

@@ -1,8 +1,7 @@
 """Self-Discover Selector Agent implementation."""
 
-from haive.core.engine.aug_llm import AugLLMConfig
-
 from haive.agents.simple import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 from .models import ModuleSelection
 from .prompts import SELECTOR_PROMPT, SELECTOR_SYSTEM_MESSAGE

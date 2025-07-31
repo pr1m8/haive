@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+
 """Multi-agent state schema for the Haive framework.
 
 This module provides a specialized StateSchema for multi-agent architectures, addressing
@@ -14,6 +15,7 @@ from typing import Any, Self
 from pydantic import Field, create_model, model_validator
 
 from haive.core.schema.state_schema import StateSchema
+
 
 # Get logger instance
 logger = logging.getLogger(__name__)

@@ -13,10 +13,10 @@ Functions:
 
 import logging
 
-from haive.core.engine.aug_llm import AugLLMConfig
-
 from haive.agents.conversation.collaberative.agent import CollaborativeConversation
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 # Set logging
 logging.getLogger("haive").setLevel(logging.WARNING)

@@ -6,9 +6,10 @@ with performance tracking, debug information, and comprehensive metadata.
 
 from typing import Any
 
-from haive.core.schema.state_schema import StateSchema
 from langchain_core.documents import Document
 from pydantic import BaseModel, Field
+
+from haive.core.schema.state_schema import StateSchema
 
 
 class RAGMetadata(BaseModel):

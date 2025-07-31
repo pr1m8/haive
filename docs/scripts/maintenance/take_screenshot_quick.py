@@ -3,7 +3,6 @@
 
 import asyncio
 import sys
-from pathlib import Path
 
 from playwright.async_api import async_playwright
 
@@ -21,12 +20,9 @@ async def take_screenshot(url: str, output_path: str):
         await page.screenshot(path=output_path, full_page=True)
         await browser.close()
 
-        print(f"✅ Screenshot saved to: {output_path}")
-
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print("Usage: python take_screenshot_quick.py <url> <output_path>")
         sys.exit(1)
 
     asyncio.run(take_screenshot(sys.argv[1], sys.argv[2]))

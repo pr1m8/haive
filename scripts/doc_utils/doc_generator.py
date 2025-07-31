@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Documentation Generator - Automated documentation creation for agents and examples.
+"""Documentation Generator - Automated documentation creation for agents and examples.
 
 This module provides comprehensive documentation generation capabilities,
 creating consistent documentation across all Haive agent types and examples.
@@ -8,14 +7,13 @@ It integrates with the analyzer and visualization tools to create complete docs.
 """
 
 import logging
-import time
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 from .agent_analyzer import AgentAnalyzer, AgentArchitecture, AgentInfo
-from .example_runner import ExecutionConfig, ExecutionResult, UniversalExampleRunner
+from .example_runner import UniversalExampleRunner
 from .visualization_utils import VisualizationConfig, VisualizationManager
 
 logger = logging.getLogger(__name__)
@@ -41,16 +39,16 @@ class DocumentationResult:
     """Result of documentation generation."""
 
     success: bool
-    output_files: List[Path] = None
-    index_file: Optional[Path] = None
-    error: Optional[str] = None
-    metadata: Dict[str, Any] = None
+    output_files: list[Path] = None
+    index_file: Path | None = None
+    error: str | None = None
+    metadata: dict[str, Any] = None
 
 
 class DocumentationGenerator:
     """Automated documentation generator for agents and examples."""
 
-    def __init__(self, project_root: Optional[Path] = None):
+    def __init__(self, project_root: Path | None = None):
         """Initialize the documentation generator.
 
         Args:
@@ -65,7 +63,7 @@ class DocumentationGenerator:
         self,
         agent_info: AgentInfo,
         output_dir: Path,
-        config: Optional[DocumentationConfig] = None,
+        config: DocumentationConfig | None = None,
     ) -> DocumentationResult:
         """Generate comprehensive documentation for a single agent.
 
@@ -145,11 +143,13 @@ class DocumentationGenerator:
             )
 
         except Exception as e:
-            logger.error(f"Failed to generate documentation for {agent_info.name}: {e}")
+            logger.exception(
+                f"Failed to generate documentation for {agent_info.name}: {e}"
+            )
             return DocumentationResult(success=False, error=str(e))
 
     async def generate_project_documentation(
-        self, output_dir: Path, config: Optional[DocumentationConfig] = None
+        self, output_dir: Path, config: DocumentationConfig | None = None
     ) -> DocumentationResult:
         """Generate documentation for the entire project.
 
@@ -231,7 +231,7 @@ class DocumentationGenerator:
             )
 
         except Exception as e:
-            logger.error(f"Failed to generate project documentation: {e}")
+            logger.exception(f"Failed to generate project documentation: {e}")
             return DocumentationResult(success=False, error=str(e))
 
     def _get_file_extension(self, format_type: str) -> str:
@@ -243,21 +243,18 @@ class DocumentationGenerator:
         self, agent_info: AgentInfo, config: DocumentationConfig
     ) -> str:
         """Generate documentation content for a single agent."""
-
         if config.output_format == "markdown":
             return await self._generate_markdown_agent_doc(agent_info, config)
-        elif config.output_format == "rst":
+        if config.output_format == "rst":
             return await self._generate_rst_agent_doc(agent_info, config)
-        elif config.output_format == "html":
+        if config.output_format == "html":
             return await self._generate_html_agent_doc(agent_info, config)
-        else:
-            return await self._generate_markdown_agent_doc(agent_info, config)
+        return await self._generate_markdown_agent_doc(agent_info, config)
 
     async def _generate_markdown_agent_doc(
         self, agent_info: AgentInfo, config: DocumentationConfig
     ) -> str:
         """Generate Markdown documentation for an agent."""
-
         lines = [
             f"# {agent_info.name}",
             "",
@@ -380,7 +377,6 @@ class DocumentationGenerator:
 
     def _generate_basic_usage_example(self, agent_info: AgentInfo) -> str:
         """Generate basic usage example based on agent architecture."""
-
         if agent_info.architecture == AgentArchitecture.HAIVE_AGENTS_MIXIN:
             return f"""from {agent_info.module_path} import {agent_info.name}
 from haive.core.engine.aug_llm import AugLLMConfig
@@ -401,7 +397,7 @@ agent = {agent_info.name}(
 response = agent.run("Your input here")
 print(response)"""
 
-        elif agent_info.architecture == AgentArchitecture.HAIVE_GAMES:
+        if agent_info.architecture == AgentArchitecture.HAIVE_GAMES:
             return f"""from {agent_info.module_path} import {agent_info.name}
 
 # Create game agent
@@ -411,8 +407,7 @@ agent = {agent_info.name}(name="player")
 action = agent.get_action(game_state)
 print(f"Agent action: {{action}}")"""
 
-        else:
-            return f"""from {agent_info.module_path} import {agent_info.name}
+        return f"""from {agent_info.module_path} import {agent_info.name}
 
 # Create agent
 agent = {agent_info.name}()
@@ -425,7 +420,6 @@ print(result)"""
         self, agent_info: AgentInfo, config: DocumentationConfig
     ) -> str:
         """Generate documentation content for agent examples."""
-
         lines = [
             f"# {agent_info.name} Examples",
             "",
@@ -445,7 +439,7 @@ print(result)"""
 
             # Try to extract example content
             try:
-                with open(example_file, "r", encoding="utf-8") as f:
+                with open(example_file, encoding="utf-8") as f:
                     content = f.read()
 
                 # Extract docstring if available
@@ -469,7 +463,6 @@ print(result)"""
         self, agent_info: AgentInfo, config: DocumentationConfig
     ) -> str:
         """Generate API documentation content."""
-
         lines = [
             f"# {agent_info.name} API Reference",
             "",
@@ -480,7 +473,6 @@ print(result)"""
         try:
             # Try to import and inspect the agent class
             import importlib.util
-            import inspect
 
             spec = importlib.util.spec_from_file_location(
                 agent_info.module_path, agent_info.file_path
@@ -506,9 +498,8 @@ print(result)"""
 
         return "\n".join(lines)
 
-    def _generate_class_api_doc(self, agent_class: type) -> List[str]:
+    def _generate_class_api_doc(self, agent_class: type) -> list[str]:
         """Generate API documentation for a class."""
-
         lines = [f"## Class: {agent_class.__name__}", ""]
 
         # Add class docstring
@@ -527,7 +518,7 @@ print(result)"""
                     # Add method signature
                     try:
                         sig = inspect.signature(method)
-                        lines.extend([f"```python", f"{method_name}{sig}", f"```", ""])
+                        lines.extend(["```python", f"{method_name}{sig}", "```", ""])
                     except:
                         pass
 
@@ -538,10 +529,9 @@ print(result)"""
         return lines
 
     async def _generate_project_index_content(
-        self, agents: List[AgentInfo], config: DocumentationConfig
+        self, agents: list[AgentInfo], config: DocumentationConfig
     ) -> str:
         """Generate project index documentation."""
-
         lines = [
             "# Haive Agent Documentation Index",
             "",
@@ -594,10 +584,9 @@ print(result)"""
         return "\n".join(lines)
 
     async def _generate_comparison_content(
-        self, agents: List[AgentInfo], config: DocumentationConfig
+        self, agents: list[AgentInfo], config: DocumentationConfig
     ) -> str:
         """Generate agent comparison documentation."""
-
         lines = [
             "# Agent Comparison",
             "",
@@ -666,10 +655,9 @@ print(result)"""
         return "\n".join(lines)
 
     async def _generate_architecture_overview(
-        self, agents: List[AgentInfo], config: DocumentationConfig
+        self, agents: list[AgentInfo], config: DocumentationConfig
     ) -> str:
         """Generate architecture overview documentation."""
-
         lines = [
             "# Architecture Overview",
             "",
@@ -744,8 +732,8 @@ print(result)"""
                 )
 
             # Common patterns in this architecture
-            config_patterns = set(agent.config_pattern for agent in arch_agents)
-            exec_patterns = set(agent.execution_pattern for agent in arch_agents)
+            config_patterns = {agent.config_pattern for agent in arch_agents}
+            exec_patterns = {agent.execution_pattern for agent in arch_agents}
 
             lines.extend(
                 [
@@ -757,9 +745,8 @@ print(result)"""
 
         return "\n".join(lines)
 
-    async def _find_related_agents(self, agent_info: AgentInfo) -> List[AgentInfo]:
+    async def _find_related_agents(self, agent_info: AgentInfo) -> list[AgentInfo]:
         """Find agents related to the given agent."""
-
         all_agents = self.analyzer.discover_all_agents()
         related = []
 

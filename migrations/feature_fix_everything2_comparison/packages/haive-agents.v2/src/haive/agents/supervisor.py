@@ -15,9 +15,6 @@ Functions:
 import operator
 from typing import Annotated
 
-from haive.core.common.mixins.getter_mixin import GetterMixin
-from haive.core.engine.aug_llm import AugLLMConfig
-
 # ============================================================================
 # REACT AGENT
 # ============================================================================
@@ -35,6 +32,8 @@ from haive.agents.react.agent import ReactAgent
 
 # from haive.agents.rag.base.agent import SimpleRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.common.mixins.getter_mixin import GetterMixin
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 @tool
@@ -72,6 +71,7 @@ def temp_node(state: Dict[str, Any]):
 
 
 from langgraph.graph import StateGraph
+
 
 base_graph = StateGraph(state_schema=MultiAgentState)
 base_graph.add_node(temp_node)

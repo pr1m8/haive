@@ -77,11 +77,6 @@ See Also:
 from enum import Enum
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.embeddings import OpenAIEmbeddings
-from haive.core.models.vectorstore import InMemoryVectorStore
-from haive.core.types import Name
-from haive.tools.utility.document_loaders import DirectoryLoader
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import Tool, tool
 from pydantic import ConfigDict, Field, field_validator, model_validator
@@ -95,6 +90,11 @@ from haive.agents.supervisor.types import (
     SupervisorDecision,
     SupervisorState,
 )
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.embeddings import OpenAIEmbeddings
+from haive.core.models.vectorstore import InMemoryVectorStore
+from haive.core.types import Name
+from haive.tools.utility.document_loaders import DirectoryLoader
 
 
 class ToolDiscoveryMode(str, Enum):

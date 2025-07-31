@@ -10,6 +10,7 @@ from pydantic import BaseModel
 
 from haive.core.graph.node.base_config import NodeConfig
 
+
 # Type variables for input/output schemas
 TInput = TypeVar("TInput", bound=BaseModel)
 TOutput = TypeVar("TOutput", bound=BaseModel)

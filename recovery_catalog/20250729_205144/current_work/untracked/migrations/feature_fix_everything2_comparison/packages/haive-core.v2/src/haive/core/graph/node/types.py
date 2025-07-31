@@ -26,6 +26,7 @@ from langchain_core.runnables import RunnableConfig
 from langgraph.types import Command, Send
 from pydantic import BaseModel
 
+
 # Type variables for better type safety
 StateInput = TypeVar("StateInput", bound=BaseModel | dict[str, Any] | Any)
 StateOutput = TypeVar(

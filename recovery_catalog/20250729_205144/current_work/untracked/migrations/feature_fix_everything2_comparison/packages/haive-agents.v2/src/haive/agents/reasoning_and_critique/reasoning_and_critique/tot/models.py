@@ -9,6 +9,7 @@ from typing import Any, Generic, Literal, TypeVar, Union
 
 from pydantic import BaseModel, ConfigDict, Field
 
+
 # Generic type for solution content
 T = TypeVar("T")
 

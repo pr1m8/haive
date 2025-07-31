@@ -16,9 +16,10 @@ Key Features:
 
 from __future__ import annotations
 
-import logging
 from collections.abc import Callable
+import logging
 from typing import TYPE_CHECKING, Any, Literal
+
 
 if TYPE_CHECKING:
     from haive.agents.base.agent import Agent
@@ -27,11 +28,13 @@ else:
         from haive.agents.base.agent import Agent
     except ImportError:
         Agent = None
+from langgraph.graph import END, START
+from pydantic import Field, model_validator
+
 from haive.core.graph.node.agent_node_v3 import create_agent_node_v3
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
-from langgraph.graph import END, START
-from pydantic import Field, model_validator
+
 
 logger = logging.getLogger(__name__)
 
@@ -391,21 +394,8 @@ class EnhancedMultiAgentV4(Agent):
 
     def display_info(self):
         """Display workflow information."""
-        print(f"\n=== Enhanced MultiAgent V4: {self.name} ===")
-        print(f"Execution Mode: {self.execution_mode}")
-        print(f"Build Mode: {self.build_mode}")
-        print(f"Entry Point: {self.entry_point or 'auto'}")
-        print(f"Agents ({len(self.agent_dict)}):")
-
-        for i, (name, agent) in enumerate(self.agent_dict.items(), 1):
-            agent_type = type(agent).__name__
-            print(f"  {i}. {name} ({agent_type})")
-
-        print(f"Conditional Edges: {len(self.conditional_edges)}")
-        print(
-            f"Graph Built: {'Yes' if hasattr(self, 'graph') and self.graph else 'No'}"
-        )
-        print()
+        for _i, (_name, agent) in enumerate(self.agent_dict.items(), 1):
+            type(agent).__name__
 
     # ========================================================================
     # ENHANCED BASE AGENT INTEGRATION
