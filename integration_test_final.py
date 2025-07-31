@@ -3,7 +3,7 @@
 
 def test_function():
     """Test function for integration."""
-    return "integration working perfectly - staged version"
+    return "integration working perfectly - testing staged-only push"
 
 
 def another_test():
