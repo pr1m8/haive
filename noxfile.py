@@ -22,9 +22,18 @@ from session_docs import (
     docs_history,
     docs_linkcheck,
     docs_logs,
+    docs_nitpicky,
     docs_pdf,
     docs_quality,
     docs_serve,
+    docs_test,
+)
+
+# Import phased documentation sessions
+from session_docs_phased import (
+    docs_diagnose,
+    docs_phased,
+    docs_validate,
 )
 
 # Import documentation testing sessions
