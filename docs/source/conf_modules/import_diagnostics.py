@@ -212,6 +212,10 @@ def get_autodoc_mock_imports_from_diagnosis(
             "haive.core.engine.base.agent_types",
             "haive.agents.chain.chain_agent",
             "haive.agents.archive.meta.agent",
+            "iterative_refinement",
+            "map_branch",
+            "haive.core.engine.document_loader",
+            "haive.agents.document_loader",
             # Missing class/function imports that can't be easily resolved
             "build_graph",
             "compare_to",
