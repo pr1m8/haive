@@ -108,8 +108,43 @@ autoapi_ignore = [
 # Preprocessing hook to handle Agent[T] pattern
 def autoapi_skip_member(app, what, name, obj, skip, options):
     """Skip or modify problematic members."""
-    # Let everything through - sphinx-toolbox handles generics
+    # Skip problematic generic classes
+    if what == "class" and hasattr(obj, '__name__'):
+        # Skip if this looks like a generic class causing issues
+        if hasattr(obj, '__args__') or (hasattr(obj, '__orig_bases__') and any('[' in str(base) for base in getattr(obj, '__orig_bases__', []))):
+            return True
     return skip
+
+# Monkey patch to handle Agent generics before autoapi processes them
+def patch_generic_handling():
+    """Patch generic class handling to prevent TypeErrors."""
+    import sys
+    from typing import _GenericAlias
+    
+    # Create a custom getitem that returns the base class
+    def safe_getitem(cls, params):
+        # Just return the base class, ignoring generic parameters
+        return cls
+    
+    # Find Agent class if imported and patch it
+    for module_name, module in list(sys.modules.items()):
+        if module and 'haive.agents' in module_name:
+            if hasattr(module, 'Agent'):
+                agent_class = getattr(module, 'Agent')
+                if hasattr(agent_class, '__class__'):
+                    # Create a metaclass that supports subscripting
+                    class SafeGenericMeta(type(agent_class)):
+                        def __getitem__(cls, params):
+                            return cls
+                    
+                    # Apply metaclass if possible
+                    try:
+                        agent_class.__class__ = SafeGenericMeta
+                    except:
+                        pass
+
+# Apply the patch early
+patch_generic_handling()
 
 # =============================================================================
 # HTML THEME CONFIGURATION
