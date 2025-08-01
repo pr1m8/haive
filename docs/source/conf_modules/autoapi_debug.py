@@ -14,27 +14,43 @@ from typing import Any, Dict, Optional
 
 
 class AutoAPIDebugger:
-    """Centralized debugging for AutoAPI issues."""
+    """Centralized debugging for AutoAPI issues with graceful error handling."""
 
     def __init__(self, log_dir: Path | None = None):
         """Initialize the debugger with a log directory."""
         self.log_dir = log_dir or Path(__file__).parent.parent / "logs"
         self.log_dir.mkdir(exist_ok=True)
+        
+        # Create timestamped run folder for this build
+        self.run_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        self.run_dir = self.log_dir / f"run_{self.run_timestamp}"
+        self.run_dir.mkdir(exist_ok=True)
+        
+        # Create organized subfolders
+        (self.run_dir / "errors").mkdir(exist_ok=True)
+        (self.run_dir / "warnings").mkdir(exist_ok=True)
+        (self.run_dir / "skipped").mkdir(exist_ok=True)
+        (self.run_dir / "successful").mkdir(exist_ok=True)
+        (self.run_dir / "by_package").mkdir(exist_ok=True)
 
         # Create separate log files for different types of issues
-        self.error_log = (
-            self.log_dir / f"autoapi_errors_{datetime.now():%Y%m%d_%H%M%S}.log"
-        )
-        self.skip_log = self.log_dir / "autoapi_skipped_files.log"
-        self.progress_log = self.log_dir / "autoapi_progress.log"
+        self.error_log = self.run_dir / "errors" / "detailed_errors.log"
+        self.skip_log = self.run_dir / "skipped" / "skipped_files.log"
+        self.progress_log = self.run_dir / "build_progress.log"
+        self.warnings_log = self.run_dir / "warnings" / "all_warnings.log"
+        self.failed_imports_log = self.run_dir / "errors" / "failed_imports.log"
+        self.package_summary_log = self.run_dir / "package_summary.log"
 
-        # Track statistics
+        # Track statistics with more detail
         self.stats = {
             "total_files": 0,
             "successful_files": 0,
             "failed_files": 0,
             "skipped_files": 0,
             "errors": [],
+            "warnings": [],
+            "failed_imports": {},  # package -> list of failed modules
+            "package_stats": {},   # package -> {success: int, failed: int, skipped: int}
         }
 
         self._setup_logging()
@@ -120,32 +136,233 @@ class AutoAPIDebugger:
     def log_success(self, filepath: str):
         """Log successful file processing."""
         self.stats["successful_files"] += 1
+        self._update_package_stats(filepath, "success")
         self.logger.debug(f"Successfully processed: {filepath}")
+    
+    def log_warning(self, filepath: str, warning: str, context: str = ""):
+        """Log warnings with package tracking."""
+        self.stats["warnings"].append({
+            "file": filepath,
+            "warning": warning,
+            "context": context,
+            "timestamp": datetime.now().isoformat(),
+        })
+        
+        # Write to warnings log
+        with open(self.warnings_log, "a") as f:
+            f.write(f"\n{'='*80}\n")
+            f.write(f"WARNING in file: {filepath}\n")
+            f.write(f"Timestamp: {datetime.now().isoformat()}\n")
+            f.write(f"Context: {context}\n")
+            f.write(f"Warning: {warning}\n")
+            f.write(f"{'='*80}\n")
+        
+        self.logger.warning(f"Warning in {filepath}: {warning}")
+    
+    def log_failed_import(self, package: str, module: str, error: Exception):
+        """Log failed imports by package."""
+        if package not in self.stats["failed_imports"]:
+            self.stats["failed_imports"][package] = []
+        
+        self.stats["failed_imports"][package].append({
+            "module": module,
+            "error": str(error),
+            "error_type": type(error).__name__,
+            "timestamp": datetime.now().isoformat(),
+        })
+        
+        # Write to failed imports log
+        with open(self.failed_imports_log, "a") as f:
+            f.write(f"\n{'='*60}\n")  
+            f.write(f"FAILED IMPORT - Package: {package}\n")
+            f.write(f"Module: {module}\n")
+            f.write(f"Error: {type(error).__name__}: {str(error)}\n")
+            f.write(f"Timestamp: {datetime.now().isoformat()}\n")
+            f.write(f"{'='*60}\n")
+        
+        self.logger.error(f"Failed import in {package}: {module} - {error}")
+    
+    def _update_package_stats(self, filepath: str, status: str):
+        """Update per-package statistics."""
+        # Extract package name from filepath
+        package = self._extract_package_name(filepath)
+        if not package:
+            return
+            
+        if package not in self.stats["package_stats"]:
+            self.stats["package_stats"][package] = {
+                "success": 0,
+                "failed": 0,
+                "skipped": 0,
+                "warnings": 0
+            }
+        
+        self.stats["package_stats"][package][status] += 1
+    
+    def _extract_package_name(self, filepath: str) -> str:
+        """Extract package name from file path."""
+        try:
+            if "/packages/" in filepath:
+                parts = filepath.split("/packages/")
+                if len(parts) > 1:
+                    package_part = parts[1].split("/")[0]
+                    return package_part
+            return "unknown"
+        except Exception:
+            return "unknown"
+    
+    def create_graceful_import_wrapper(self, module_path: str):
+        """Create a graceful import wrapper that handles failures."""
+        def safe_import():
+            try:
+                return __import__(module_path)
+            except ImportError as e:
+                package = self._extract_package_name(module_path)
+                self.log_failed_import(package, module_path, e)
+                return None
+            except Exception as e:
+                package = self._extract_package_name(module_path) 
+                self.log_failed_import(package, module_path, e)
+                return None
+        return safe_import
 
     def write_summary(self):
-        """Write a summary of the debugging session."""
-        summary_path = self.log_dir / "autoapi_summary.log"
-
+        """Write comprehensive summary with package breakdowns."""
+        # Main summary file
+        summary_path = self.run_dir / "build_summary.log"
+        
         with open(summary_path, "w") as f:
-            f.write("AutoAPI Debug Summary\n")
-            f.write("=" * 50 + "\n")
+            f.write("🚀 AutoAPI Debug Summary - Graceful Error Handling\n")
+            f.write("=" * 60 + "\n")
+            f.write(f"Run ID: {self.run_timestamp}\n")
             f.write(f"Generated at: {datetime.now():%Y-%m-%d %H:%M:%S}\n\n")
 
-            f.write("Statistics:\n")
+            # Overall Statistics
+            f.write("📊 Overall Statistics:\n")
             f.write(f"  Total files processed: {self.stats['total_files']}\n")
-            f.write(f"  Successful: {self.stats['successful_files']}\n")
-            f.write(f"  Failed: {self.stats['failed_files']}\n")
-            f.write(f"  Skipped: {self.stats['skipped_files']}\n\n")
+            f.write(f"  ✅ Successful: {self.stats['successful_files']}\n")
+            f.write(f"  ❌ Failed: {self.stats['failed_files']}\n")
+            f.write(f"  ⏭️  Skipped: {self.stats['skipped_files']}\n")
+            f.write(f"  ⚠️  Warnings: {len(self.stats['warnings'])}\n")
+            f.write(f"  📦 Packages with failed imports: {len(self.stats['failed_imports'])}\n\n")
 
+            # Package Statistics
+            f.write("📦 Per-Package Statistics:\n")
+            for package, stats in self.stats["package_stats"].items():
+                total = sum(stats.values())
+                success_rate = (stats["success"] / total * 100) if total > 0 else 0
+                f.write(f"  {package}:\n")
+                f.write(f"    ✅ Success: {stats['success']}\n")
+                f.write(f"    ❌ Failed: {stats['failed']}\n")
+                f.write(f"    ⏭️ Skipped: {stats['skipped']}\n")
+                f.write(f"    ⚠️ Warnings: {stats['warnings']}\n")
+                f.write(f"    📈 Success Rate: {success_rate:.1f}%\n\n")
+
+            # Failed Imports Summary
+            if self.stats["failed_imports"]:
+                f.write("🚫 Failed Imports by Package:\n")
+                for package, failures in self.stats["failed_imports"].items():
+                    f.write(f"  {package} ({len(failures)} failures):\n")
+                    for failure in failures[:5]:  # Show first 5
+                        f.write(f"    - {failure['module']}: {failure['error_type']}\n")
+                    if len(failures) > 5:
+                        f.write(f"    ... and {len(failures) - 5} more\n")
+                    f.write("\n")
+
+            # Recent Errors
             if self.stats["errors"]:
-                f.write("Failed Files:\n")
-                for error in self.stats["errors"]:
-                    f.write(f"\n  File: {error['file']}\n")
-                    f.write(
-                        f"  Error: {error['error_type']} - {error['error_message']}\n"
-                    )
-                    f.write(f"  Time: {error['timestamp']}\n")
+                f.write("🔥 Recent Errors:\n")
+                for error in self.stats["errors"][-10:]:  # Last 10 errors
+                    f.write(f"  📁 {error['file']}\n")
+                    f.write(f"     {error['error_type']}: {error['error_message'][:100]}...\n\n")
 
+        # Write package summaries to separate files
+        self._write_package_summaries()
+        
+        # Create index file pointing to all logs
+        self._write_log_index()
+
+        print(f"\n📊 AutoAPI Debug Summary written to: {summary_path}", file=sys.stderr)
+        print(f"📁 Full logs available in: {self.run_dir}", file=sys.stderr)
+        print(f"📋 Log index: {self.run_dir}/log_index.html", file=sys.stderr)
+    
+    def _write_package_summaries(self):
+        """Write individual summaries for each package."""
+        for package, failures in self.stats["failed_imports"].items():
+            package_file = self.run_dir / "by_package" / f"{package}_summary.log"
+            with open(package_file, "w") as f:
+                f.write(f"Package: {package}\n")
+                f.write("=" * 40 + "\n\n")
+                
+                stats = self.stats["package_stats"].get(package, {})
+                f.write("Statistics:\n")
+                for key, value in stats.items():
+                    f.write(f"  {key.capitalize()}: {value}\n")
+                f.write("\n")
+                
+                f.write("Failed Imports:\n")
+                for failure in failures:
+                    f.write(f"  Module: {failure['module']}\n")
+                    f.write(f"  Error: {failure['error_type']}: {failure['error']}\n")
+                    f.write(f"  Time: {failure['timestamp']}\n")
+                    f.write("-" * 40 + "\n")
+    
+    def _write_log_index(self):
+        """Create an HTML index of all log files."""
+        index_file = self.run_dir / "log_index.html"
+        with open(index_file, "w") as f:
+            f.write(f"""<!DOCTYPE html>
+<html>
+<head>
+    <title>AutoAPI Debug Logs - {self.run_timestamp}</title>
+    <style>
+        body {{ font-family: Arial, sans-serif; margin: 20px; }}
+        .log-section {{ margin: 20px 0; }}
+        .log-link {{ display: block; margin: 5px 0; padding: 5px; background: #f0f0f0; }}
+        .stats {{ background: #e8f4f8; padding: 10px; border-radius: 5px; }}
+    </style>
+</head>
+<body>
+    <h1>🚀 AutoAPI Debug Logs</h1>
+    <p><strong>Run ID:</strong> {self.run_timestamp}</p>
+    <p><strong>Generated:</strong> {datetime.now():%Y-%m-%d %H:%M:%S}</p>
+    
+    <div class="stats">
+        <h3>📊 Quick Stats</h3>
+        <p>✅ Successful: {self.stats['successful_files']}</p>
+        <p>❌ Failed: {self.stats['failed_files']}</p>
+        <p>⏭️ Skipped: {self.stats['skipped_files']}</p>
+        <p>⚠️ Warnings: {len(self.stats['warnings'])}</p>
+    </div>
+    
+    <div class="log-section">
+        <h3>📋 Main Logs</h3>
+        <a href="build_summary.log" class="log-link">📊 Build Summary</a>
+        <a href="build_progress.log" class="log-link">📈 Build Progress</a>
+        <a href="package_summary.log" class="log-link">📦 Package Summary</a>
+    </div>
+    
+    <div class="log-section">
+        <h3>🚫 Errors & Issues</h3>
+        <a href="errors/detailed_errors.log" class="log-link">🔥 Detailed Errors</a>
+        <a href="errors/failed_imports.log" class="log-link">📥 Failed Imports</a>
+    </div>
+    
+    <div class="log-section">
+        <h3>⚠️ Warnings & Skipped</h3>
+        <a href="warnings/all_warnings.log" class="log-link">⚠️ All Warnings</a>
+        <a href="skipped/skipped_files.log" class="log-link">⏭️ Skipped Files</a>
+    </div>
+    
+    <div class="log-section">
+        <h3>📦 By Package</h3>""")
+            
+            for package in self.stats["package_stats"].keys():
+                f.write(f'        <a href="by_package/{package}_summary.log" class="log-link">📦 {package}</a>\n')
+            
+            f.write("""    </div>
+</body>
+</html>""")
 
 
 # Global debugger instance
@@ -202,35 +419,31 @@ def patch_autoapi_for_debugging():
             try:
                 result = _original_parse_file(self, path)
                 if "/haive/packages/" in str(path):
-                    debugger.log_success(path)
+                    debugger.log_success(str(path))
                 return result
             except Exception as e:
-                debugger.log_error(path, e, context="Parser.parse_file")
-
-                # Show VERY prominent error message
-
-                # Show the actual file contents
-                try:
-                    with open(path) as f:
-                        lines = f.readlines()
-                        for i, line in enumerate(lines, 1):
-                            if i <= 30:  # Show first 30 lines
-                                if "import" in line or "from" in line:
-                                    pass
-                                else:
-                                    pass
-                            elif i == 31:
-                                break
-                except Exception as read_error:
-                    pass
-
-                # If it's an import error, try to provide more context
-                if (
-                    "import" in str(e).lower()
-                    or "TooManyLevelsError" in type(e).__name__
-                ):
-
-                raise
+                # Extract package for organized logging  
+                package = debugger._extract_package_name(str(path))
+                
+                # Check if this is a critical error that should stop the build
+                is_critical = any(critical in str(e).lower() for critical in [
+                    "syntaxerror", "indentationerror", "tabError"
+                ])
+                
+                if is_critical:
+                    # Log as error and re-raise to stop build
+                    debugger.log_error(str(path), e, context="Parser.parse_file - CRITICAL")
+                    debugger._update_package_stats(str(path), "failed") 
+                    raise
+                else:
+                    # Log as warning and try to continue gracefully
+                    warning_msg = f"Parse failed (non-critical): {type(e).__name__}: {str(e)}"
+                    debugger.log_warning(str(path), warning_msg, "Parser.parse_file - GRACEFUL")
+                    debugger.log_failed_import(package, str(path), e)
+                    debugger._update_package_stats(str(path), "skipped")
+                    
+                    # Return None to skip this file gracefully
+                    return None
 
         def debug_parse(self, node):
             """Wrapped parse method to track AST parsing."""
@@ -275,11 +488,11 @@ def patch_autoapi_for_debugging():
                 raise
 
         def debug_get_full_import_name(from_node, name):
-            """Wrapped get_full_import_name to catch import resolution errors."""
+            """Wrapped get_full_import_name with graceful error handling."""
             timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
             try:
                 module_file = getattr(from_node.root(), "file", "unknown")
-                # Only log for project files - but reduce verbosity
+                # Only log for project files - reduce verbosity
                 if (
                     "/haive/packages/" in str(module_file)
                     and debugger.stats["total_files"] % 100 == 0
@@ -292,41 +505,21 @@ def patch_autoapi_for_debugging():
                 module_file = getattr(
                     from_node.root(), "file", current_file.get("path", "unknown")
                 )
-                rel_path = str(module_file).replace(
-                    "/home/will/Projects/haive/backend/haive/", ""
-                )
-
-                # STOP EVERYTHING AND SHOW THE ERROR PROMINENTLY
-
-                # Show file contents around the problematic import
-                try:
-                    with open(module_file) as f:
-                        lines = f.readlines()
-                        for i, line in enumerate(lines[:20], 1):
-                            if "import" in line:
-                                pass  # Highlight import lines
-                            else:
-                                pass
-                except Exception:
-                    pass
-
-                if (
-                    "TooManyLevelsError" in str(e)
-                    or "TooManyLevelsError" in type(e).__name__
-                ):
-
-
-                # Log to file as well
-                debugger.log_error(
-                    module_file,
-                    e,
-                    context=f"get_full_import_name - Import: '{name}' - BUILD STOPPED",
-                )
-
-                # Don't re-raise - let's try to continue and see if there are more errors
-                # But mark this prominently
-
-                # Return a dummy value to continue processing
+                
+                # Extract package name for organized logging
+                package = debugger._extract_package_name(str(module_file))
+                
+                # Log as failed import with package tracking
+                debugger.log_failed_import(package, name, e)
+                
+                # Update package stats
+                debugger._update_package_stats(str(module_file), "failed")
+                
+                # Log as warning instead of stopping build
+                warning_msg = f"Import resolution failed: '{name}' - {type(e).__name__}: {str(e)}"
+                debugger.log_warning(str(module_file), warning_msg, "get_full_import_name")
+                
+                # Return a safe dummy value to continue processing gracefully
                 return f"ERROR_IMPORT_{name}"
 
         def debug_load(self, patterns=None, dirs=None, **kwargs):
