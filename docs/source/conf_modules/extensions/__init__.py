@@ -115,7 +115,7 @@ def get_additional_extensions() -> List[str]:
         "sphinx_notfound_page": "sphinx_notfound_page",
         "sphinxcontrib.fulltoc": "sphinxcontrib.fulltoc",
         "sphinxcontrib.jquery": "sphinxcontrib.jquery",
-        "sphinxemoji": "sphinxemoji",
+        # REMOVED: sphinxemoji (no setup function)
         # Diagram Extensions
         "sphinxcontrib.mermaid": "sphinxcontrib.mermaid",
         "sphinxcontrib.plantuml": "sphinxcontrib.plantuml",
@@ -136,7 +136,7 @@ def get_additional_extensions() -> List[str]:
         "sphinxext.opengraph": "sphinxext.opengraph",
         "sphinxext.rediraffe": "sphinxext.rediraffe",
         "sphinx_last_updated_by_git": "sphinx_last_updated_by_git",
-        "sphinxcontrib.versioning": "sphinxcontrib.versioning",
+        # REMOVED: sphinxcontrib.versioning (setup function issues)
         # Output Format Extensions
         "sphinxcontrib.applehelp": "sphinxcontrib.applehelp",
         "sphinxcontrib.devhelp": "sphinxcontrib.devhelp",
@@ -173,7 +173,7 @@ def get_development_extensions() -> List[str]:
         # Core Development Extensions
         "sphinx_autodoc_typehints": "sphinx_autodoc_typehints",
         "sphinx_paramlinks": "sphinx_paramlinks",
-        "sphinx_inline_tabs": "sphinx_inline_tabs",
+        # REMOVED: sphinx_inline_tabs (directive 'tab' already registered)
         "sphinx_prompt": "sphinx_prompt",
         "sphinx_substitution_extensions": "sphinx_substitution_extensions",
         # AutoDoc Extensions
@@ -263,7 +263,7 @@ def get_enhanced_extensions() -> List[str]:
         # Themes and Styling
         "sphinx_basic_ng": "sphinx_basic_ng",
         "sphinx_library": "sphinx_library",
-        "sphinx_modern_theme": "sphinx_modern_theme",
+        # REMOVED: sphinx_modern_theme (no setup function)
         "sphinx_rtd_theme": "sphinx_rtd_theme",
         "sphinx_typlog_theme": "sphinx_typlog_theme",
         # Icons and UI Elements
@@ -282,8 +282,7 @@ def get_enhanced_extensions() -> List[str]:
         "sphinx_disqus": "sphinx_disqus",
         "sphinx_social": "sphinx_social",
         "sphinx_desktop": "sphinx_desktop",
-        # Internationalization
-        "sphinx_intl": "sphinx_intl",
+        # Internationalization - REMOVED: sphinx_intl (no setup function)
         "sphinx_tsegsearch": "sphinx_tsegsearch",
         # PDF and Export
         "sphinx_pdf_generate": "sphinx_pdf_generate",
@@ -298,10 +297,10 @@ def get_enhanced_extensions() -> List[str]:
         "sphinx_multiproject": "sphinx_multiproject",
         "sphinx_multiversion": "sphinx_multiversion",
         "sphinx_polyversion": "sphinx_polyversion",
-        "sphinx_selective_exclude": "sphinx_selective_exclude",
+        # REMOVED: sphinx_selective_exclude (no setup function)
         "sphinx_variations": "sphinx_variations",
         "sphinx_versions": "sphinx_versions",
-        "sphinx_pyproject": "sphinx_pyproject",
+        # REMOVED: sphinx_pyproject (use in conf.py instead)
         "sphinx_toml": "sphinx_toml",
         # Web Framework Integration
         "sphinx_webtools": "sphinx_webtools",
@@ -309,7 +308,7 @@ def get_enhanced_extensions() -> List[str]:
         # Specialized Extensions
         "sphinx_icontract": "sphinx_icontract",
         "sphinx_jinja": "sphinx_jinja",
-        "sphinx_jinja2": "sphinx_jinja2",
+        # REMOVED: sphinx_jinja2 (no setup function)
         "sphinx_jinja2_compat": "sphinx_jinja2_compat",
         "sphinx_jsonschema": "sphinx_jsonschema",
         "sphinx_lastupdate": "sphinx_lastupdate",

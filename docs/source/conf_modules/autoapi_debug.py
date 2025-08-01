@@ -16,7 +16,7 @@ from typing import Any, Dict, Optional
 class AutoAPIDebugger:
     """Centralized debugging for AutoAPI issues."""
 
-    def __init__(self, log_dir: Optional[Path] = None):
+    def __init__(self, log_dir: Path | None = None):
         """Initialize the debugger with a log directory."""
         self.log_dir = log_dir or Path(__file__).parent.parent / "logs"
         self.log_dir.mkdir(exist_ok=True)
@@ -106,7 +106,7 @@ class AutoAPIDebugger:
 
         self.logger.info(f"Skipped {filepath}: {reason}")
 
-    def log_progress(self, message: str, filepath: Optional[str] = None):
+    def log_progress(self, message: str, filepath: str | None = None):
         """Log progress messages."""
         self.stats["total_files"] += 1 if filepath else 0
 
@@ -146,7 +146,6 @@ class AutoAPIDebugger:
                     )
                     f.write(f"  Time: {error['timestamp']}\n")
 
-        print(f"\n📊 AutoAPI Debug Summary written to: {summary_path}", file=sys.stderr)
 
 
 # Global debugger instance
@@ -209,60 +208,28 @@ def patch_autoapi_for_debugging():
                 debugger.log_error(path, e, context="Parser.parse_file")
 
                 # Show VERY prominent error message
-                print(f"\n{'='*120}", file=sys.stderr)
-                print(f"🚨 PARSING ERROR FOUND", file=sys.stderr)
-                print(f"{'='*120}", file=sys.stderr)
-                print(f"⏰ Time: {timestamp}", file=sys.stderr)
-                print(f"📁 File: {rel_path}", file=sys.stderr)
-                print(f"📍 Full path: {path}", file=sys.stderr)
-                print(f"⚠️  Error type: {type(e).__name__}", file=sys.stderr)
-                print(f"💬 Error message: {str(e)}", file=sys.stderr)
 
                 # Show the actual file contents
                 try:
-                    with open(path, "r") as f:
+                    with open(path) as f:
                         lines = f.readlines()
-                        print(f"\n📝 File contents:", file=sys.stderr)
                         for i, line in enumerate(lines, 1):
                             if i <= 30:  # Show first 30 lines
                                 if "import" in line or "from" in line:
-                                    print(
-                                        f"   {i:2d} ➤ {line.rstrip()}", file=sys.stderr
-                                    )
+                                    pass
                                 else:
-                                    print(
-                                        f"   {i:2d}   {line.rstrip()}", file=sys.stderr
-                                    )
+                                    pass
                             elif i == 31:
-                                print(
-                                    f"   ... (file continues for {len(lines)} total lines)",
-                                    file=sys.stderr,
-                                )
                                 break
                 except Exception as read_error:
-                    print(f"   (Could not read file: {read_error})", file=sys.stderr)
+                    pass
 
                 # If it's an import error, try to provide more context
                 if (
                     "import" in str(e).lower()
                     or "TooManyLevelsError" in type(e).__name__
                 ):
-                    print(f"\n🔍 IMPORT ANALYSIS:", file=sys.stderr)
-                    print(
-                        f"   This appears to be a relative import issue",
-                        file=sys.stderr,
-                    )
-                    print(
-                        f"   Look for imports with '..' or multiple dots",
-                        file=sys.stderr,
-                    )
-                    print(
-                        f"   These indicate relative imports that may be invalid",
-                        file=sys.stderr,
-                    )
 
-                print(f"\n🛑 BUILD FAILED ON THIS FILE", file=sys.stderr)
-                print(f"{'='*120}\n", file=sys.stderr)
                 raise
 
         def debug_parse(self, node):
@@ -305,7 +272,6 @@ def patch_autoapi_for_debugging():
                 return result
             except Exception as e:
                 debugger.log_error(path, e, context="Mapper.read_file")
-                print(f"\n❌ ERROR at {timestamp} reading: {path}", file=sys.stderr)
                 raise
 
         def debug_get_full_import_name(from_node, name):
@@ -331,56 +297,24 @@ def patch_autoapi_for_debugging():
                 )
 
                 # STOP EVERYTHING AND SHOW THE ERROR PROMINENTLY
-                print(f"\n{'='*120}", file=sys.stderr)
-                print(f"🚨 CRITICAL ERROR FOUND - STOPPING BUILD", file=sys.stderr)
-                print(f"{'='*120}", file=sys.stderr)
-                print(f"⏰ Time: {timestamp}", file=sys.stderr)
-                print(f"📁 File with error: {rel_path}", file=sys.stderr)
-                print(f"📍 Full path: {module_file}", file=sys.stderr)
-                print(f"📦 Failed import: '{name}'", file=sys.stderr)
-                print(f"⚠️  Error type: {type(e).__name__}", file=sys.stderr)
-                print(f"💬 Error message: {str(e)}", file=sys.stderr)
 
                 # Show file contents around the problematic import
                 try:
-                    with open(module_file, "r") as f:
+                    with open(module_file) as f:
                         lines = f.readlines()
-                        print(f"\n📝 File contents (first 20 lines):", file=sys.stderr)
                         for i, line in enumerate(lines[:20], 1):
                             if "import" in line:
-                                print(
-                                    f"   {i:2d} ➤ {line.rstrip()}", file=sys.stderr
-                                )  # Highlight import lines
+                                pass  # Highlight import lines
                             else:
-                                print(f"   {i:2d}   {line.rstrip()}", file=sys.stderr)
+                                pass
                 except Exception:
-                    print(f"   (Could not read file contents)", file=sys.stderr)
+                    pass
 
                 if (
                     "TooManyLevelsError" in str(e)
                     or "TooManyLevelsError" in type(e).__name__
                 ):
-                    print(
-                        f"\n🔍 DIAGNOSIS: Relative import with too many levels",
-                        file=sys.stderr,
-                    )
-                    print(
-                        f"   This means the file has a relative import like 'from .. import X'",
-                        file=sys.stderr,
-                    )
-                    print(
-                        f"   but there's no parent package to import from.",
-                        file=sys.stderr,
-                    )
-                    print(
-                        f"   Look for lines with '..' or multiple '.' in import statements.",
-                        file=sys.stderr,
-                    )
 
-                print(
-                    f"\n🛑 BUILD STOPPED - Fix this file and try again", file=sys.stderr
-                )
-                print(f"{'='*120}\n", file=sys.stderr)
 
                 # Log to file as well
                 debugger.log_error(
@@ -391,7 +325,6 @@ def patch_autoapi_for_debugging():
 
                 # Don't re-raise - let's try to continue and see if there are more errors
                 # But mark this prominently
-                print(f"⚠️  CONTINUING BUILD TO FIND MORE ERRORS...", file=sys.stderr)
 
                 # Return a dummy value to continue processing
                 return f"ERROR_IMPORT_{name}"
@@ -400,12 +333,6 @@ def patch_autoapi_for_debugging():
             """Wrapped load method to track overall progress and phases."""
             timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
 
-            print(f"\n{'='*80}", file=sys.stderr)
-            print(f"🚀 AUTOAPI STARTING at {timestamp}", file=sys.stderr)
-            print(
-                f"📂 Directories to process: {len(dirs) if dirs else 0}",
-                file=sys.stderr,
-            )
 
             debugger.log_progress(
                 f"[{timestamp}] Starting AutoAPI load process - Dirs: {dirs}"
@@ -417,10 +344,8 @@ def patch_autoapi_for_debugging():
                     rel_dir = str(d).replace(
                         "/home/will/Projects/haive/backend/haive/", ""
                     )
-                    print(f"   {i}. {rel_dir}", file=sys.stderr)
                     debugger.log_progress(f"  Processing directory: {d}")
 
-            print(f"{'='*80}\n", file=sys.stderr)
 
             # Track phases
             current_phase = {"phase": "INITIALIZATION", "start_time": datetime.now()}
@@ -428,16 +353,8 @@ def patch_autoapi_for_debugging():
             def update_phase(new_phase):
                 elapsed = (datetime.now() - current_phase["start_time"]).total_seconds()
                 timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-                print(
-                    f"[{timestamp}] ✅ Completed phase: {current_phase['phase'].upper()} ({elapsed:.1f}s)",
-                    file=sys.stderr,
-                )
                 current_phase["phase"] = new_phase
                 current_phase["start_time"] = datetime.now()
-                print(
-                    f"[{timestamp}] 📍 Starting phase: {new_phase.upper()}",
-                    file=sys.stderr,
-                )
                 debugger.log_progress(
                     f"PHASE CHANGE: {current_phase['phase']} -> {new_phase}"
                 )
@@ -446,10 +363,10 @@ def patch_autoapi_for_debugging():
             files_parsed = 0
 
             # Store original methods to intercept various phases
-            original_create_mapper = (
+            (
                 self.create_mapper if hasattr(self, "create_mapper") else None
             )
-            original_read_files = (
+            (
                 self.read_files if hasattr(self, "read_files") else None
             )
             original_map = self.map if hasattr(self, "map") else None
@@ -477,17 +394,13 @@ def patch_autoapi_for_debugging():
                         if files_processed % 50 == 0:
                             timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                             # Extract relative path for readability
-                            if isinstance(file_path, (str, Path)):
+                            if isinstance(file_path, str | Path):
                                 rel_path = str(file_path).replace(
                                     "/home/will/Projects/haive/backend/haive/", ""
                                 )
                             else:
                                 rel_path = str(file_path)
                             elapsed = (datetime.now() - discovery_start).total_seconds()
-                            print(
-                                f"[{timestamp}] 📂 Phase: {current_phase['phase']} | Files: {files_processed} | Current: {rel_path} | Elapsed: {elapsed:.1f}s",
-                                file=sys.stderr,
-                            )
 
                         # Show every 10th file in debug log
                         if files_processed % 10 == 0:
@@ -525,10 +438,6 @@ def patch_autoapi_for_debugging():
                             rel_path = str(path).replace(
                                 "/home/will/Projects/haive/backend/haive/", ""
                             )
-                            print(
-                                f"[{timestamp}] 🔍 Phase: {current_phase['phase']} | Parsed: {files_parsed}/{files_processed} | Current: {rel_path}",
-                                file=sys.stderr,
-                            )
 
                         return original_parser_parse(parser_self, path)
 
@@ -559,12 +468,6 @@ def patch_autoapi_for_debugging():
                 update_phase("RENDERING")
 
                 timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-                print(
-                    f"\n[{timestamp}] ✅ AUTOAPI COMPLETED SUCCESSFULLY",
-                    file=sys.stderr,
-                )
-                print(f"   Total files discovered: {files_processed}", file=sys.stderr)
-                print(f"   Total files parsed: {files_parsed}", file=sys.stderr)
 
                 debugger.log_progress(
                     f"AutoAPI load completed - Discovered: {files_processed}, Parsed: {files_parsed}"
@@ -574,11 +477,6 @@ def patch_autoapi_for_debugging():
 
             except Exception as e:
                 timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-                print(f"\n[{timestamp}] ❌ AUTOAPI FAILED", file=sys.stderr)
-                print(f"   Phase: {current_phase['phase']}", file=sys.stderr)
-                print(f"   Files discovered: {files_processed}", file=sys.stderr)
-                print(f"   Files parsed: {files_parsed}", file=sys.stderr)
-                print(f"   Error: {type(e).__name__}: {str(e)}", file=sys.stderr)
 
                 debugger.log_progress(
                     f"AutoAPI FAILED in phase {current_phase['phase']} - Discovered: {files_processed}, Parsed: {files_parsed}"
@@ -594,21 +492,15 @@ def patch_autoapi_for_debugging():
         Mapper.load = debug_load
         autoapi._astroid_utils.get_full_import_name = debug_get_full_import_name
 
-        print(
-            f"✅ AutoAPI debug patches installed at {datetime.now():%Y-%m-%d %H:%M:%S}",
-            file=sys.stderr,
-        )
-        print(f"📁 Debug logs will be written to: {debugger.log_dir}", file=sys.stderr)
         debugger.log_progress("AutoAPI debugging patches applied successfully")
 
     except ImportError as e:
-        print(f"⚠️  Could not patch AutoAPI for debugging: {e}", file=sys.stderr)
         import traceback
 
         traceback.print_exc()
 
 
-def configure_autoapi_debugging(app: Any) -> Dict[str, Any]:
+def configure_autoapi_debugging(app: Any) -> dict[str, Any]:
     """Configure AutoAPI with debugging options.
 
     Args:
@@ -664,6 +556,3 @@ def setup_debugging_hooks(app: Any):
 
     # Log initial setup
     debugger.log_progress("AutoAPI debugging hooks configured")
-    print(
-        f"✅ AutoAPI debugging enabled - logs in: {debugger.log_dir}", file=sys.stderr
-    )
