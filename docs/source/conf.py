@@ -119,12 +119,6 @@ def autoapi_skip_member(app, what, name, obj, skip, options):
 def patch_generic_handling():
     """Patch generic class handling to prevent TypeErrors."""
     import sys
-    from typing import _GenericAlias
-    
-    # Create a custom getitem that returns the base class
-    def safe_getitem(cls, params):
-        # Just return the base class, ignoring generic parameters
-        return cls
     
     # Find Agent class if imported and patch it
     for module_name, module in list(sys.modules.items()):
