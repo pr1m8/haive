@@ -100,10 +100,9 @@ def get_design_config() -> dict[str, Any]:
     """Configuration for sphinx-design."""
     return {
         "sd_fontawesome_latex": True,
-        "sd_custom_directives": {
-            "dropdown": {"inherit": "note"},
-            "tab-set": {"inherit": "container"},
-        },
+        # Removed sd_custom_directives - causing configuration warnings
+        #     "tab-set": {"inherit": "container"},
+        # },
     }
 
 
@@ -174,8 +173,8 @@ def get_fulltoc_config() -> dict[str, Any]:
 def get_autodoc_typehints_config() -> dict[str, Any]:
     """Configuration for sphinx-autodoc-typehints to handle generics."""
     return {
-        # CRITICAL: Configure for Agent generic types - use 'none' to bypass autosummary issues
-        "autodoc_typehints": "none",  # Disable typehints entirely to avoid generic expansion issues
+        # CRITICAL: Configure for Agent generic types - use 'description' with short format
+        "autodoc_typehints": "description",  # Show typehints in description
         "typehints_formatter": "short",  # Use modern Python 3.9+ style
         "typehints_fully_qualified": False,  # Use short names
         "autodoc_typehints_description_target": "documented",
