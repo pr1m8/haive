@@ -883,6 +883,49 @@ exclude = ["**/.cache/trunk/**", "**/.trunk/**"]
 # 🚀 Taskipy Development Workflow Tasks
 [tool.taskipy.tasks]
 
+# 🦥 Lazy Loading Management Tasks (with Universal Dry-Run Wrapper)
+lazy-loading-dry = "DRY_RUN=1 python scripts/maintenance/dryrun_wrapper.py -- python scripts/maintenance/safe_lazy_loading_deployment.py --auto --full-safety"
+lazy-loading-test = "python scripts/maintenance/dryrun_wrapper.py -- python scripts/maintenance/safe_lazy_loading_deployment.py --auto --test-only"
+lazy-loading-deploy = "python scripts/maintenance/dryrun_wrapper.py -- python scripts/maintenance/safe_lazy_loading_deployment.py --auto --full-safety"
+lazy-loading-models = "python scripts/maintenance/dryrun_wrapper.py -- python scripts/maintenance/safe_lazy_loading_deployment.py --files packages/haive-core/src/haive/core/models/__init__.py --full-safety"
+lazy-loading-tools = "python scripts/maintenance/dryrun_wrapper.py -- python scripts/maintenance/safe_lazy_loading_deployment.py --files packages/haive-core/src/haive/core/tools/__init__.py --full-safety"
+lazy-loading-agents = "python scripts/maintenance/dryrun_wrapper.py -- python scripts/maintenance/safe_lazy_loading_deployment.py --files packages/haive-agents/src/haive/agents/__init__.py --full-safety"
+lazy-loading-rollback = "python scripts/maintenance/safe_lazy_loading_deployment.py --list-backups"
+lazy-loading-preview = "DRY_RUN=1 python scripts/maintenance/dryrun_wrapper.py -- python scripts/maintenance/generalized_lazy_loading.py --auto --preview"
+
+# 🔧 Import Fixing Tasks (Smart Wrapper - Works with any package)
+fix-imports-dry = "DRY_RUN=1 python smart_dryrun_wrapper.py -- poetry run absolufy-imports packages/"
+fix-imports = "python smart_dryrun_wrapper.py -- poetry run absolufy-imports packages/"
+
+# 🎯 Per-package import fixing (UNIVERSAL - Works with any target!)
+# Using --target argument for maximum flexibility (supports any path/package/directory)
+fix-imports-core-dry = "DRY_RUN=1 python smart_dryrun_wrapper.py --target haive-core -- poetry run absolufy-imports"
+fix-imports-core = "python smart_dryrun_wrapper.py --target haive-core -- poetry run absolufy-imports"
+fix-imports-agents-dry = "DRY_RUN=1 python smart_dryrun_wrapper.py --target haive-agents -- poetry run absolufy-imports"
+fix-imports-agents = "python smart_dryrun_wrapper.py --target haive-agents -- poetry run absolufy-imports"
+fix-imports-tools-dry = "DRY_RUN=1 python smart_dryrun_wrapper.py --target haive-tools -- poetry run absolufy-imports"
+fix-imports-tools = "python smart_dryrun_wrapper.py --target haive-tools -- poetry run absolufy-imports"
+fix-imports-games-dry = "DRY_RUN=1 python smart_dryrun_wrapper.py --target haive-games -- poetry run absolufy-imports"
+fix-imports-games = "python smart_dryrun_wrapper.py --target haive-games -- poetry run absolufy-imports"
+fix-imports-dataflow-dry = "DRY_RUN=1 python smart_dryrun_wrapper.py --target haive-dataflow -- poetry run absolufy-imports"
+fix-imports-dataflow = "python smart_dryrun_wrapper.py --target haive-dataflow -- poetry run absolufy-imports"
+fix-imports-mcp-dry = "DRY_RUN=1 python smart_dryrun_wrapper.py --target haive-mcp -- poetry run absolufy-imports"
+fix-imports-mcp = "python smart_dryrun_wrapper.py --target haive-mcp -- poetry run absolufy-imports"
+fix-imports-prebuilt-dry = "DRY_RUN=1 python smart_dryrun_wrapper.py --target haive-prebuilt -- poetry run absolufy-imports"
+fix-imports-prebuilt = "python smart_dryrun_wrapper.py --target haive-prebuilt -- poetry run absolufy-imports"
+
+# 🧹 Code Quality Tasks (Smart Wrapper - Automatically Adds --check/--diff)  
+format-dry = "DRY_RUN=1 python smart_dryrun_wrapper.py -- poetry run ruff format packages/"
+format = "python smart_dryrun_wrapper.py -- poetry run ruff format packages/"
+lint-fix-dry = "DRY_RUN=1 python smart_dryrun_wrapper.py -- poetry run ruff check --fix packages/"
+lint-fix = "python smart_dryrun_wrapper.py -- poetry run ruff check --fix packages/"
+
+# 📦 Package Management (Smart Wrapper - Automatically Adds --dry-run)
+add-package-dry = "DRY_RUN=1 python smart_dryrun_wrapper.py -- poetry add"
+add-package = "python smart_dryrun_wrapper.py -- poetry add"
+remove-package-dry = "DRY_RUN=1 python smart_dryrun_wrapper.py -- poetry remove"
+remove-package = "python smart_dryrun_wrapper.py -- poetry remove"
+
 # 🧠 Intelligent Error Analysis & Categorization
 analyze-errors = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only"
 analyze-errors-verbose = "dev-tools/scripts/intelligent-error-analyzer.sh packages/haive-prebuilt/src --analyze-only --verbose"
@@ -917,9 +960,9 @@ fix-syntax-preview = "dev-tools/scripts/pre-flight-syntax-fixer.sh packages/haiv
 fix-indentation = "dev-tools/scripts/modern-indentation-fixer.sh packages/haive-prebuilt/src autopep8"
 fix-indentation-preview = "dev-tools/scripts/modern-indentation-fixer.sh packages/haive-prebuilt/src autopep8 --preview"
 
-# 📦 Import Management (3-Way System)
-fix-imports = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-prebuilt/src"
-fix-imports-preview = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-prebuilt/src --preview"
+# 📦 Import Management (3-Way System) - LEGACY (replaced by smart wrapper above)
+# fix-imports = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-prebuilt/src"
+# fix-imports-preview = "dev-tools/scripts/comprehensive-import-manager.sh packages/haive-prebuilt/src --preview"
 
 # 🐍 Python Modernization
 modernize-code = "dev-tools/scripts/syntax-and-modernization-fixer.sh packages/haive-prebuilt/src"
