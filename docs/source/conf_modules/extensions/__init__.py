@@ -173,6 +173,9 @@ def get_development_extensions() -> List[str]:
         # Core Development Extensions
         "sphinx_autodoc_typehints": "sphinx_autodoc_typehints",
         "sphinx_paramlinks": "sphinx_paramlinks",
+        # Sphinx Toolbox Extensions for generic classes
+        "sphinx_toolbox.more_autodoc.generic_bases": "sphinx_toolbox.more_autodoc.generic_bases",
+        "sphinx_toolbox": "sphinx_toolbox",
         # REMOVED: sphinx_inline_tabs (directive 'tab' already registered)
         "sphinx_prompt": "sphinx_prompt",
         "sphinx_substitution_extensions": "sphinx_substitution_extensions",
