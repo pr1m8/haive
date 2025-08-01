@@ -18,6 +18,7 @@ from extension_configs import (get_all_extension_configs,
                                get_conditional_configs)
 # Import extensions with rich debugging
 from extensions import get_all_extensions, test_extension_compatibility
+from import_diagnostics import get_autodoc_mock_imports_from_diagnosis
 from memory import get_memory_safe_sphinx_config, monitor_sphinx_build
 
 # =============================================================================
@@ -82,6 +83,9 @@ autoapi_dirs = [
     "../../packages/haive-mcp/src",
     "../../packages/haive-prebuilt/src",
 ]
+
+# Automatically diagnose and configure mock imports
+autodoc_mock_imports = get_autodoc_mock_imports_from_diagnosis(autoapi_dirs, str(Path(__file__).parent))
 autoapi_root = "api"
 autoapi_add_toctree_entry = False
 autoapi_generate_api_docs = True
