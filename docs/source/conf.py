@@ -85,7 +85,9 @@ autoapi_dirs = [
 ]
 
 # Automatically diagnose and configure mock imports
-autodoc_mock_imports = get_autodoc_mock_imports_from_diagnosis(autoapi_dirs, str(Path(__file__).parent))
+autodoc_mock_imports = get_autodoc_mock_imports_from_diagnosis(
+    autoapi_dirs, str(Path(__file__).parent)
+)
 autoapi_root = "api"
 autoapi_add_toctree_entry = False
 autoapi_generate_api_docs = True
@@ -167,11 +169,15 @@ autodoc_default_options = {
 }
 
 autodoc_typehints = "description"
-autodoc_typehints_description_target = "documented" 
+autodoc_typehints_description_target = "documented"
 autosummary_generate = True
 # Type hint configuration to handle generics
 typehints_fully_qualified = False
-autodoc_typehints_format = "short"
+autodoc_typehints_format = "short"  # Use shorter format
+autodoc_type_aliases = {
+    "Agent": "Agent",  # Map problematic generics
+    "T": "T",
+}
 
 # =============================================================================
 # INTERSPHINX MAPPING
@@ -224,7 +230,7 @@ autodoc_default_options.update(
     }
 )
 
-# Sphinx-design configuration (enhanced UI components)  
+# Sphinx-design configuration (enhanced UI components)
 if "sphinx_design" in extensions:
     sd_fontawesome_latex = True
     # Removed sd_custom_directives to avoid configuration warnings
@@ -332,6 +338,7 @@ epub_exclude_files = ["search.html"]
 # CUSTOM EVENT HANDLERS FOR GENERIC CLASS ISSUES
 # =============================================================================
 
+
 def skip_generic_agent_class(app, what, name, obj, skip, options):
     """Skip the Agent class from autosummary to avoid generic class errors."""
     # Skip the base Agent class that causes generic class errors
@@ -339,18 +346,23 @@ def skip_generic_agent_class(app, what, name, obj, skip, options):
         # Check if this is the problematic generic Agent class
         try:
             import inspect
-            if hasattr(obj, '__module__') and 'haive.agents.base.agent' in str(obj.__module__):
-                if hasattr(obj, '__orig_bases__') and obj.__orig_bases__:
+
+            if hasattr(obj, "__module__") and "haive.agents.base.agent" in str(
+                obj.__module__
+            ):
+                if hasattr(obj, "__orig_bases__") and obj.__orig_bases__:
                     # This is likely a generic class - skip it
                     return True
         except Exception:
             pass
     return skip
 
+
 # Connect the event handler
 def setup(app):
     """Setup function for custom Sphinx configuration."""
-    app.connect('autodoc-skip-member', skip_generic_agent_class)
+    app.connect("autodoc-skip-member", skip_generic_agent_class)
+
 
 # =============================================================================
 # CONFIGURATION SUMMARY
