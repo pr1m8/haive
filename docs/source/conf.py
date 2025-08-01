@@ -108,18 +108,8 @@ autoapi_ignore = [
 # Preprocessing hook to handle Agent[T] pattern
 def autoapi_skip_member(app, what, name, obj, skip, options):
     """Skip or modify problematic members."""
-    # Let everything through - we'll handle generics differently
+    # Let everything through - sphinx-toolbox handles generics
     return skip
-
-# Early monkey patch to handle Agent generics
-# This helps with the widespread Agent[ConfigType] pattern in the codebase
-class GenericAgentMeta(type):
-    """Metaclass that makes any class support generic subscripting."""
-    def __getitem__(cls, item):
-        # Just return the class itself, ignoring generic parameters
-        return cls
-
-# Patch will be applied later when modules are imported
 
 # =============================================================================
 # HTML THEME CONFIGURATION
@@ -355,28 +345,12 @@ epub_copyright = copyright
 epub_exclude_files = ["search.html"]
 
 # =============================================================================
-# CUSTOM EVENT HANDLERS FOR GENERIC CLASS ISSUES
+# CUSTOM EVENT HANDLERS
 # =============================================================================
-
-def skip_generic_agent_class(app, what, name, obj, skip, options):
-    """Skip the Agent class from autosummary to avoid generic class errors."""
-    # Skip the base Agent class that causes generic class errors
-    if what == "class" and name == "Agent":
-        # Check if this is the problematic generic Agent class
-        try:
-            import inspect
-            if hasattr(obj, '__module__') and 'haive.agents.base.agent' in str(obj.__module__):
-                if hasattr(obj, '__orig_bases__') and obj.__orig_bases__:
-                    # This is likely a generic class - skip it
-                    return True
-        except Exception:
-            pass
-    return skip
 
 # Connect the event handler
 def setup(app):
     """Setup function for custom Sphinx configuration."""
-    app.connect('autodoc-skip-member', skip_generic_agent_class)
     app.connect("autoapi-skip-member", autoapi_skip_member)
 
 # =============================================================================
