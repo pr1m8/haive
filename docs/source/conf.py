@@ -102,43 +102,22 @@ autoapi_options = [
 
 # Skip patterns to avoid problematic files during documentation generation
 autoapi_ignore = [
-    # We'll use sphinx-toolbox to handle generic classes instead
+    # Skip files with generic class patterns that cause TypeError
+    "**/supervisor/dynamic_activation_supervisor.py",
+    "**/multi/experiments/implementations/*.py",
+    "**/research/reasoning_agent.py",
+    "**/planning/planning_agent.py",
+    "**/multi/base_multi_agent.py",
+    "**/multi/enhanced_multi_agent_v3.py",
+    "**/multi/enhanced_multi_agent_v4.py",
+    "**/memory_v2/test_*.py",  # Skip test files in memory_v2
 ]
 
 # Preprocessing hook to handle Agent[T] pattern
 def autoapi_skip_member(app, what, name, obj, skip, options):
     """Skip or modify problematic members."""
-    # Skip problematic generic classes
-    if what == "class" and hasattr(obj, '__name__'):
-        # Skip if this looks like a generic class causing issues
-        if hasattr(obj, '__args__') or (hasattr(obj, '__orig_bases__') and any('[' in str(base) for base in getattr(obj, '__orig_bases__', []))):
-            return True
+    # Let autoapi handle most things, we're using ignore patterns for problematic files
     return skip
-
-# Monkey patch to handle Agent generics before autoapi processes them
-def patch_generic_handling():
-    """Patch generic class handling to prevent TypeErrors."""
-    import sys
-    
-    # Find Agent class if imported and patch it
-    for module_name, module in list(sys.modules.items()):
-        if module and 'haive.agents' in module_name:
-            if hasattr(module, 'Agent'):
-                agent_class = getattr(module, 'Agent')
-                if hasattr(agent_class, '__class__'):
-                    # Create a metaclass that supports subscripting
-                    class SafeGenericMeta(type(agent_class)):
-                        def __getitem__(cls, params):
-                            return cls
-                    
-                    # Apply metaclass if possible
-                    try:
-                        agent_class.__class__ = SafeGenericMeta
-                    except:
-                        pass
-
-# Apply the patch early
-patch_generic_handling()
 
 # =============================================================================
 # HTML THEME CONFIGURATION
