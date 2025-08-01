@@ -12,11 +12,11 @@ Main functions:
 
 from typing import Any, Dict, List, Optional
 
-# Import all configuration modules - absolute imports to avoid relative import issues
-from core import logging, paths, project
-from extensions import (api_generation, content, core_sphinx, diagrams,
-                        enhancement, export, external, quality)
-from themes import furo
+# Import all configuration modules - relative imports within package
+from .core import logging, paths, project
+from .extensions import (api_generation, content, core_sphinx, diagrams,
+                         enhancement, export, external, quality)
+from .themes import furo
 
 
 def create_minimal_config(
