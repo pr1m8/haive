@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# Haive AI Agent Framework Documentation
+# Generated: 2025-01-31
+Sitemap: https://haive.readthedocs.io/sitemap.xml
