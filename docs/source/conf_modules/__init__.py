@@ -15,7 +15,7 @@ from typing import Any, Dict, List, Optional
 # Import all configuration modules - relative imports within package
 from .core import logging, paths, project
 from .extensions import (api_generation, content, core_sphinx, diagrams,
-                         enhancement, export, external, quality)
+                        enhancement, export, external, quality)
 from .themes import furo
 
 
