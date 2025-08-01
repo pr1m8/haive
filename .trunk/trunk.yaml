@@ -58,6 +58,8 @@ lint:
         - "dist/**"
         - "build/**"
         - "*.egg-info/**"
+        - "docs/source/conf.py"
+        - "docs/source/conf_modules/**"
 
 # Trunk Actions - Following trunk's recommended defaults
 actions:
