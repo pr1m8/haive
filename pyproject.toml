@@ -383,6 +383,7 @@ snakeviz = "^2.2.2"
 gprof2dot = "^2025.4.14"
 pympler = "^1.1"
 blacken-docs = "^1.19.1"
+sphinx-toolbox = "^3.8"
 
 [tool.poetry.group.dev.dependencies.torch]
 version = "2.6.0+cu118"
