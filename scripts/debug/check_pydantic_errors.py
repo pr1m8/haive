@@ -106,25 +106,35 @@ def check_file_for_pydantic_errors(filepath: Path) -> list[str]:
 
 
 def main():
-    """Main function to check all Python files in packages/."""
+    """Main function to check all Python files in packages/ and migrations/."""
     project_root = Path(__file__).parent.parent.parent
     packages_dir = project_root / "packages"
+    migrations_dir = project_root / "migrations"
 
-    if not packages_dir.exists():
-        print(f"ERROR: Packages directory not found: {packages_dir}")
+    dirs_to_check = []
+    if packages_dir.exists():
+        dirs_to_check.append(packages_dir)
+    if migrations_dir.exists():
+        dirs_to_check.append(migrations_dir)
+
+    if not dirs_to_check:
+        print(f"ERROR: No directories found to check")
         sys.exit(1)
 
-    print(f"🔍 Checking for Pydantic validation errors in {packages_dir}")
+    print(
+        f"🔍 Checking for Pydantic validation errors in: {', '.join(str(d) for d in dirs_to_check)}"
+    )
     print("=" * 60)
 
     all_errors = []
     files_checked = 0
 
-    # Find all Python files in packages/
-    for py_file in packages_dir.rglob("*.py"):
-        files_checked += 1
-        errors = check_file_for_pydantic_errors(py_file)
-        all_errors.extend(errors)
+    # Find all Python files in packages/ and migrations/
+    for check_dir in dirs_to_check:
+        for py_file in check_dir.rglob("*.py"):
+            files_checked += 1
+            errors = check_file_for_pydantic_errors(py_file)
+            all_errors.extend(errors)
 
     print(f"📊 Checked {files_checked} Python files")
 
