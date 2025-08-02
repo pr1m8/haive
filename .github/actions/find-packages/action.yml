@@ -1,3 +1,4 @@
+---
 name: Find Packages
 description: Discovers all package directories in the repository
 outputs:
@@ -12,7 +13,7 @@ runs:
   steps:
     - id: find
       shell: bash
-      run: |
+      run: |-
         echo "Finding packages in packages/ directory..."
 
         # Create packages directory if it doesn't exist
@@ -51,9 +52,7 @@ runs:
           JSON_PACKAGES="${JSON_PACKAGES}\"${pkg}\","
         done
         JSON_PACKAGES="${JSON_PACKAGES%,}]"  # Remove trailing comma and close array
-
         echo "packages=${JSON_PACKAGES}" >> $GITHUB_OUTPUT
         echo "package_count=${#UNIQUE_PACKAGES[@]}" >> $GITHUB_OUTPUT
-
         echo "Found ${#UNIQUE_PACKAGES[@]} packages: ${UNIQUE_PACKAGES[*]}"
         echo "JSON packages: ${JSON_PACKAGES}"

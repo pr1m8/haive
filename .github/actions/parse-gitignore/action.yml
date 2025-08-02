@@ -1,3 +1,4 @@
+---
 name: Parse Gitignore
 description: Extracts patterns from .gitignore for CI workflow filtering
 outputs:
@@ -12,7 +13,7 @@ runs:
   steps:
     - id: extract
       shell: bash
-      run: |
+      run: |-
         # Check if .gitignore exists
         if [ ! -f ".gitignore" ]; then
           echo "No .gitignore file found, using defaults"
@@ -53,9 +54,7 @@ runs:
         if [ -z "$FORMATTED_RESOURCES" ]; then
           FORMATTED_RESOURCES="**/resources/**"
         fi
-
         echo "paths-ignore=$FORMATTED_IGNORE" >> $GITHUB_OUTPUT
         echo "resource-paths=$FORMATTED_RESOURCES" >> $GITHUB_OUTPUT
-
         echo "Extracted ignore patterns: $FORMATTED_IGNORE"
         echo "Extracted resource patterns: $FORMATTED_RESOURCES"

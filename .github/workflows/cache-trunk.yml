@@ -1,13 +1,11 @@
+---
 name: Cache Trunk
-
 on:
   push:
     branches: [main]
     paths: [.trunk/trunk.yaml]
-
 permissions:
   contents: read
-
 jobs:
   trunk-cache:
     name: Trunk Cache Population
@@ -20,7 +18,6 @@ jobs:
         with:
           submodules: true
           token: ${{ secrets.GH_TOKEN }}
-
       - name: 🧠 Populate Trunk Cache
         uses: trunk-io/trunk-action@v1
         with:

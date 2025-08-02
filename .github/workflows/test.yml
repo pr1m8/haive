@@ -1,14 +1,12 @@
+---
 name: 🧪 Test
-
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
-
 permissions:
   contents: read
-
 jobs:
   setup:
     name: ⚙️ Setup
@@ -24,22 +22,18 @@ jobs:
         with:
           submodules: true
           token: ${{ secrets.GH_TOKEN }}
-
       - name: 🔍 Parse Gitignore
         id: gitignore
         uses: ./.github/actions/parse-gitignore
-
       - name: 🔍 Find Packages
         id: find-packages
         uses: ./.github/actions/find-packages
-
       - name: 📊 Show Setup Info
         run: |
           echo "Found ${{ steps.find-packages.outputs.package_count }} packages:"
           echo "${{ steps.find-packages.outputs.packages }}"
           echo "Paths to ignore: ${{ steps.gitignore.outputs.paths-ignore }}"
           echo "Resource paths: ${{ steps.gitignore.outputs.resource-paths }}"
-
   lint:
     name: 🧹 Pre-commit Lint
     runs-on: ubuntu-latest
@@ -54,21 +48,17 @@ jobs:
         with:
           submodules: true
           token: ${{ secrets.GH_TOKEN }}
-
       - name: 📦 Get Root Poetry Info
         id: poetry
         uses: ./.github/actions/get-root-poetry-info
-
       - name: 🐍 Set up Python ${{ steps.poetry.outputs.python }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ steps.poetry.outputs.python }}
-
       - name: 📦 Install Pre-commit
         run: |
           python -m pip install --upgrade pip
           pip install pre-commit
-
       - name: ✅ Run Pre-commit
         run: |
           # Skip resource files based on patterns from gitignore
@@ -79,7 +69,6 @@ jobs:
           else
             pre-commit run --all-files
           fi
-
   test-packages:
     name: 🧪 Test ${{ matrix.package }}
     needs: setup
@@ -91,35 +80,29 @@ jobs:
       matrix:
         package: ${{ fromJson(needs.setup.outputs.packages) }}
       fail-fast: false
-
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
         with:
           submodules: true
           token: ${{ secrets.GH_TOKEN }}
-
       - name: 📦 Get Package Poetry Info
         id: package-info
         uses: ./.github/actions/get-package-poetry-info
         with:
           package: ${{ matrix.package }}
-
       - name: 🐍 Set up Python ${{ steps.package-info.outputs.python }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ steps.package-info.outputs.python }}
-
       - name: 🛠 Install Poetry
         run: |
           python -m pip install --upgrade pip
           pip install poetry==${{ steps.package-info.outputs.poetry_version }}
-
       - name: 🌱 Install Dependencies
         run: |
           cd packages/${{ matrix.package }}
           poetry install --with dev --no-interaction
-
       - name: ✅ Run Tests
         run: |
           cd packages/${{ matrix.package }}
@@ -134,7 +117,6 @@ jobs:
           else
             echo "No tests found for ${{ matrix.package }}, skipping"
           fi
-
   type-check:
     name: 🔎 Type Check ${{ matrix.package }}
     needs: setup
@@ -146,40 +128,33 @@ jobs:
       matrix:
         package: ${{ fromJson(needs.setup.outputs.packages) }}
       fail-fast: false
-
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
         with:
           submodules: true
           token: ${{ secrets.GH_TOKEN }}
-
       - name: 📦 Get Package Poetry Info
         id: package-info
         uses: ./.github/actions/get-package-poetry-info
         with:
           package: ${{ matrix.package }}
-
       - name: 🐍 Set up Python ${{ steps.package-info.outputs.python }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ steps.package-info.outputs.python }}
-
       - name: 🛠 Install Poetry
         run: |
           python -m pip install --upgrade pip
           pip install poetry==${{ steps.package-info.outputs.poetry_version }}
-
       - name: 🌱 Install Dependencies & Mypy
         run: |
           cd packages/${{ matrix.package }}
           poetry install --with dev --no-interaction
-
       - name: 🔍 Run Mypy
-        run: |
+        run: |-
           cd packages/${{ matrix.package }}
           RESOURCE_PATHS="${{ needs.setup.outputs.resource-paths }}"
-
           if [ -d "src" ]; then
             if [ -n "$RESOURCE_PATHS" ]; then
               echo "Type checking src directory (excluding resources)"
@@ -195,7 +170,6 @@ jobs:
               poetry run mypy src --ignore-missing-imports
             fi
           fi
-
           if [ -d "tests" ]; then
             if [ -n "$RESOURCE_PATHS" ]; then
               echo "Type checking tests directory (excluding resources)"

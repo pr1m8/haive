@@ -1,17 +1,14 @@
+---
 name: 🚀 Publish Release
-
 on:
   release:
     types: [published]
-
 permissions:
   contents: read
   id-token: write # Needed for PyPI trusted publishing
-
 concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: true
-
 jobs:
   publish:
     name: 📦 Publish ${{ matrix.package }}
@@ -21,26 +18,21 @@ jobs:
     strategy:
       matrix:
         package:
-          [
-            haive-core,
-            haive-agents,
-            haive-games,
-            haive-tools,
-            haive-prebuilt,
-            haive-dataflow,
-          ]
-
+          - haive-core
+          - haive-agents
+          - haive-games
+          - haive-tools
+          - haive-prebuilt
+          - haive-dataflow
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
         with:
           submodules: true
           token: ${{ secrets.GH_TOKEN }}
-
       - name: 📦 Get Poetry Metadata
         id: poetry
         uses: ./.github/actions/get-poetry-info
-
       - name: 🧾 Echo Package Metadata
         run: |
           echo "📦 Name:        ${{ steps.poetry.outputs.name }}"
@@ -53,21 +45,17 @@ jobs:
           echo "📚 Docs:        ${{ steps.poetry.outputs.documentation }}"
           echo "🏷 Classifiers:"
           echo "${{ steps.poetry.outputs.classifiers }}"
-
       - name: 🐍 Set up Python ${{ steps.poetry.outputs.python }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ steps.poetry.outputs.python }}
           cache: poetry
-
       - name: 🛠 Install Poetry
         run: pipx install poetry==1.8.0
-
       - name: 🔐 Configure PyPI Credentials
         run: poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
-
       - name: 📦 Build and Publish ${{ matrix.package }}
-        run: |
+        run: |-
           cd packages/${{ matrix.package }}
           poetry build --format wheel
           poetry publish --skip-existing

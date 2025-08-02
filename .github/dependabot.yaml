@@ -1,17 +1,17 @@
+---
 version: 2
 updates:
   # 🔁 GitHub Actions workflow updates (e.g. ruff, setup-python)
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
-      interval: "weekly"
+      interval: weekly
 
   # 📦 Poetry-managed Python dependencies
-  - package-ecosystem: "poetry"
-    directory: "/" # root where pyproject.toml lives
+  - package-ecosystem: poetry
+    directory: / # root where pyproject.toml lives
     schedule:
-      interval: "weekly"
+      interval: weekly
     groups:
       python-deps:
-        patterns:
-          - "*"
+        patterns: ["*"]
