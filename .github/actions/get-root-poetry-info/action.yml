@@ -1,3 +1,4 @@
+---
 name: Get Root Poetry Info
 description: Extracts Poetry information from root project
 outputs:
@@ -12,11 +13,10 @@ runs:
   steps:
     - id: extract
       shell: bash
-      run: |
+      run: |-
         # Default values
         PYTHON_VERSION="3.12"
         POETRY_VERSION="1.8.0"
-
         if [ -f "pyproject.toml" ]; then
           # Extract Python version
           if grep -q "python =" "pyproject.toml"; then

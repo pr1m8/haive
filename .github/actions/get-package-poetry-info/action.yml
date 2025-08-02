@@ -1,3 +1,4 @@
+---
 name: Get Package Poetry Info
 description: Extracts Poetry information from a specific package
 inputs:
@@ -22,7 +23,7 @@ runs:
   steps:
     - id: extract
       shell: bash
-      run: |
+      run: |-
         PACKAGE_DIR="packages/${{ inputs.package }}"
         PYPROJECT_PATH="${PACKAGE_DIR}/pyproject.toml"
 
@@ -43,16 +44,13 @@ runs:
           echo "::error::Package directory '$PACKAGE_DIR' not found"
           exit 1
         fi
-
         if [ ! -f "$PYPROJECT_PATH" ]; then
           # Try finding by pattern
           echo "Searching for pyproject.toml in package directory:"
           find "$PACKAGE_DIR" -name "pyproject.toml" -type f
-
           echo "::error::pyproject.toml not found at '$PYPROJECT_PATH'"
           exit 1
         fi
-
         echo "Extracting Poetry info from: $PYPROJECT_PATH"
 
         # Default values
@@ -65,7 +63,6 @@ runs:
         if grep -q "name =" "$PYPROJECT_PATH"; then
           NAME=$(grep "name =" "$PYPROJECT_PATH" | head -n 1 | cut -d '"' -f2 || echo "${{ inputs.package }}")
         fi
-
         if grep -q "version =" "$PYPROJECT_PATH"; then
           VERSION=$(grep "version =" "$PYPROJECT_PATH" | head -n 1 | cut -d '"' -f2 || echo "0.1.0")
         fi
