@@ -205,7 +205,7 @@ package-lock.json
 yarn.lock
 .npm
 .eslintcache
-
+pnpm-lock.yaml
 # =============================================================================
 # 🧪 Testing, profiling, and development tools
 # =============================================================================
