@@ -1,9 +1,9 @@
+---
 # PySpelling Configuration for Haive
 # Advanced spell checking with comprehensive dictionaries
 
 # ⚡ PERFORMANCE OPTIMIZATION
 jobs: 4 # Parallel processing (new in v2.10)
-
 matrix:
   - name: Python source code
     sources:
@@ -24,13 +24,8 @@ matrix:
           strings: false
           comments: true
           docstrings: true
-
   - name: Markdown documentation
-    sources:
-      - "**/*.md"
-      - "!.venv/**/*.md"
-      - "!build/**/*.md"
-      - "!dist/**/*.md"
+    sources: ["**/*.md", "!.venv/**/*.md", "!build/**/*.md", "!dist/**/*.md"]
     default_encoding: utf-8
     aspell:
       lang: en
@@ -39,9 +34,7 @@ matrix:
       personal: .aspell.en.pws
     filters:
       - pyspelling.filters.markdown:
-          markdown_extensions:
-            - pymdownx.superfences
-
+          markdown_extensions: [pymdownx.superfences]
   - name: RestructuredText documentation
     sources:
       - "**/*.rst"
@@ -54,5 +47,4 @@ matrix:
       d: en_US
       ignore-case: true
       personal: .aspell.en.pws
-    filters:
-      - pyspelling.filters.text
+    filters: [pyspelling.filters.text]
