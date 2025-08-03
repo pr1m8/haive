@@ -1,7 +1,0 @@
-{
-  "deployment_id": "20250731_212403",
-  "timestamp": "2025-07-31T21:24:03.293293",
-  "backups": {
-    "packages/haive-core/src/haive/core/tools/__init__.py": "/home/will/Projects/haive/backend/haive/.lazy_loading_backups/__init__.py_20250731_212403.backup"
-  }
-}
