@@ -384,6 +384,7 @@ gprof2dot = "^2025.4.14"
 pympler = "^1.1"
 blacken-docs = "^1.19.1"
 sphinx-toolbox = "^3.8"
+yamlfix = "^1.17.0"
 
 [tool.poetry.group.dev.dependencies.torch]
 version = "2.6.0+cu118"
@@ -551,6 +552,7 @@ sphinx-markdown = "^1.0.2"
 darglint2 = "^1.8.2"
 pytest-doctestplus = "^1.4.0"
 sphinx-testing = "^1.0.1"
+pydoctor = "^25.4.0"
 
 [tool.poetry.group.gmail_toolkit.dependencies]
 google-api-python-client = "^2.165.0"
@@ -800,6 +802,8 @@ lines-after-imports = 2
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
+[tool.yamlfix]
+exclude = ["**/.venv/**"]
 
 # =============================
 # 📚 Google-Style Docstring Enforcement
