@@ -1,472 +1,256 @@
-# 🚀 Haive Dev-Tools - Ultimate Python Code Enhancement Suite
+# Haive - AI Agent Framework
 
-**Version**: 3.0 - 2024 Edition  
-**Purpose**: Comprehensive automated Python code fixing with 60-80% error reduction  
-**Last Updated**: July 31, 2025
+A powerful, modular framework for building sophisticated AI agents with advanced capabilities including planning, reasoning, tool usage, and multi-agent collaboration.
 
-## 🎯 **QUICK START - ONE COMMAND SOLUTION**
+## 🚀 Quick Start
 
 ```bash
-# 🚀 THE ULTIMATE ALL-IN-ONE FIXER (Recommended)
-./dev-tools/scripts/ultimate-code-fixer.sh packages/haive-prebuilt/src --interactive
+# Clone the repository
+git clone https://github.com/yourusername/haive.git
+cd haive/backend/haive
 
-# 🎪 See it in action first
-./dev-tools/scripts/ultimate-code-fixer.sh packages/haive-prebuilt/src --demo
+# Install Poetry (if not installed)
+curl -sSL https://install.python-poetry.org | python3 -
 
-# 👀 Preview what would be fixed
-./dev-tools/scripts/ultimate-code-fixer.sh packages/haive-prebuilt/src --preview
-
-# 🤖 Fully automated (no prompts)
-./dev-tools/scripts/ultimate-code-fixer.sh packages/haive-prebuilt/src --auto
-```
-
-## 📊 **EXPECTED RESULTS**
-
-Based on your current error counts, our 2024 automation tools achieve:
-
-| Package            | Current Errors | Expected After | Reduction |
-| ------------------ | -------------- | -------------- | --------- |
-| **haive-prebuilt** | 407            | ~60            | **85%**   |
-| **haive-agents**   | 6,842          | ~4,100         | **40%**   |
-| **haive-tools**    | 322            | ~130           | **60%**   |
-| **haive-games**    | 1,401          | ~560           | **60%**   |
-| **haive-mcp**      | 1,200          | ~480           | **60%**   |
-| **haive-core**     | 2,042          | ~815           | **60%**   |
-| **haive-dataflow** | 2,908          | ~1,160         | **60%**   |
-
-**🎯 Overall: 60-80% automated error reduction across all packages!**
-
-## 🛠️ **HOW IT WORKS - 6-STEP AUTOMATED PROCESS**
-
-### **Step 1: Tool Installation & Verification** 🛠️
-
-Automatically installs and tests all required 2024 Python fixing tools:
-
-- **autoimport** - Fix F821 undefined names (~90% success rate)
-- **autoflake** - Fix F401 unused imports (100% success rate)
-- **pyupgrade** - Modernize datetime, f-strings, type hints (~70% success rate)
-- **isort** - Fix I001 unsorted imports (100% success rate)
-- **ruff** - Mass auto-fixes for 1000+ error types + formatting
-
-### **Step 2: Comprehensive Error Analysis** 📊
-
-Deep analysis of your Python code using ruff statistics:
-
-- Categorizes all error types (F821, F401, I001, W291, etc.)
-- Calculates auto-fixable vs manual review estimates
-- Provides realistic expectations for error reduction
-- Shows before/after predictions
-
-### **Step 3: Safety Checkpoint** 🛡️
-
-Creates package-level git stashes for safe rollback:
-
-- Only stashes the target directory (won't mess up your root)
-- Named checkpoints for easy identification
-- Full rollback instructions provided
-- Zero risk to your existing work
-
-### **Step 4: Automated Fixing Process** 🤖
-
-Executes fixes in optimal order:
-
-1. **autoimport**: Adds missing imports for undefined names
-2. **autoflake**: Removes unused imports and variables
-3. **pyupgrade**: Modernizes syntax (datetime.timezone.utc, f-strings, type hints)
-4. **isort**: Organizes and sorts import statements
-5. **ruff --fix**: Applies hundreds of additional automated fixes
-6. **ruff format**: Final code formatting and whitespace cleanup
-
-### **Step 5: Results Analysis** 📈
-
-Comprehensive before/after comparison:
-
-- Detailed error reduction statistics
-- Success rate assessment
-- Remaining errors that need manual attention
-- Git changes summary with modification counts
-
-### **Step 6: Final Options** 🔄
-
-Multiple paths forward:
-
-- Review changes with git diff
-- Commit improvements
-- Safe rollback to original state
-- Interactive approval at each step (in interactive mode)
-
-## 🎪 **EXECUTION MODES**
-
-### **Interactive Mode** (Recommended)
-
-```bash
-./dev-tools/scripts/ultimate-code-fixer.sh packages/haive-prebuilt/src --interactive
-```
-
-- Guided step-by-step execution
-- Approval prompts at each stage
-- Option to review changes between steps
-- Safe and educational
-
-### **Demo Mode** (Try First!)
-
-```bash
-./dev-tools/scripts/ultimate-code-fixer.sh packages/haive-prebuilt/src --demo
-```
-
-- Live demonstration with extra visual flair
-- Shows real-time error reduction
-- Perfect for understanding the process
-- All changes safely stashed
-
-### **Preview Mode** (Risk-Free)
-
-```bash
-./dev-tools/scripts/ultimate-code-fixer.sh packages/haive-prebuilt/src --preview
-```
-
-- Shows what would be fixed without making changes
-- Provides detailed fix plan
-- Estimates error reduction
-- Zero risk assessment
-
-### **Auto Mode** (Advanced Users)
-
-```bash
-./dev-tools/scripts/ultimate-code-fixer.sh packages/haive-prebuilt/src --auto
-```
-
-- Fully automated execution
-- No prompts or interruptions
-- Maximum efficiency
-- Best for trusted workflows
-
-## 📋 **WHAT GETS FIXED AUTOMATICALLY**
-
-### **100% Success Rate:**
-
-- ✅ **F401** - Unused imports (autoflake)
-- ✅ **I001** - Unsorted imports (isort)
-- ✅ **W291** - Trailing whitespace (ruff format)
-- ✅ **W293** - Blank line whitespace (ruff format)
-- ✅ **E202** - Whitespace before closing bracket (ruff format)
-
-### **90% Success Rate:**
-
-- ✅ **F821** - Undefined names/missing imports (autoimport)
-
-### **70% Success Rate:**
-
-- ✅ **UP006** - Non-PEP585 type annotations (pyupgrade)
-- ✅ **DTZ005** - Datetime without timezone (pyupgrade)
-- ✅ **UP032** - Use f-string instead of format (pyupgrade)
-
-### **Plus Hundreds More:**
-
-- Code modernization (f-strings, walrus operator, etc.)
-- Import organization and cleanup
-- Syntax improvements and PEP compliance
-- Formatting consistency
-- And much more via ruff's 1000+ rules
-
-### **Manual Attention Needed:**
-
-- 🔴 **G004** - Logging f-strings (no autofix available yet)
-- 🔴 **T201** - Print statements (replace with logging)
-- 🔴 **Complex F821** - Unusual import patterns (10% of cases)
-
-## 🏗️ **PACKAGE-SPECIFIC STRATEGIES**
-
-### **haive-prebuilt** (407 errors → ~60 errors)
-
-Primary issues: F821 undefined names, whitespace
-
-- Perfect candidate for autoimport
-- Expected 85% reduction
-
-### **haive-agents** (6,842 errors → ~4,100 errors)
-
-Primary issues: G004 logging, F821 undefined names, I001 imports
-
-- Large impact from import organization
-- Expected 40% reduction (G004 limits automation)
-
-### **haive-tools** (322 errors → ~130 errors)
-
-Primary issues: I001 imports, function naming, prints
-
-- High automation success rate
-- Expected 60% reduction
-
-### **Other packages** follow similar patterns with 60% average reduction
-
-## 🛡️ **SAFETY FEATURES**
-
-### **Git Safety**
-
-- Package-level stashing (won't touch root directory)
-- Named checkpoints for easy identification
-- Complete rollback instructions
-- No force-push or destructive operations
-
-### **Execution Safety**
-
-- Tool verification before use
-- Graceful handling of tool failures
-- Comprehensive error reporting
-- Safe exit at any point
-
-### **Code Safety**
-
-- No destructive transformations
-- Preserves code functionality
-- Only applies well-tested fixes
-- Maintains code semantics
-
-## 📂 **FILE STRUCTURE**
-
-```
-dev-tools/
-├── README.md                           # This comprehensive guide
-├── scripts/
-│   ├── ultimate-code-fixer.sh         # 🚀 THE ONE SCRIPT TO RULE THEM ALL
-│   ├── enhanced-master-orchestrator.sh # Advanced alternative
-│   ├── systematic-code-fixer.sh       # Step-by-step approach
-│   ├── install-modern-tools.sh        # Tool installation & testing
-│   ├── demo-error-reduction.sh        # Live demonstration
-│   └── SCRIPTS_COMPREHENSIVE_GUIDE.md # All 25+ scripts documentation
-└── logs/                               # Execution logs (auto-created)
-```
-
-## 🔧 **INSTALLATION & REQUIREMENTS**
-
-### **Prerequisites**
-
-- Python 3.8+ environment
-- Poetry package manager
-- Git for version control
-- Sufficient disk space for tool installation
-
-### **Tool Dependencies** (Auto-installed)
-
-```bash
-# These are automatically installed by the ultimate fixer:
-poetry add --group dev autoimport autoflake pyupgrade isort ruff
-```
-
-### **Manual Installation** (if needed)
-
-```bash
-# Install all tools manually
-./dev-tools/scripts/install-modern-tools.sh
-
-# Verify installation
-poetry show autoimport autoflake pyupgrade isort ruff
-```
-
-## 🎯 **USAGE EXAMPLES**
-
-### **Fix Single Package**
-
-```bash
-# Interactive fixing with approval prompts
-./dev-tools/scripts/ultimate-code-fixer.sh packages/haive-prebuilt/src --interactive
-
-# Preview fixes for haive-agents
-./dev-tools/scripts/ultimate-code-fixer.sh packages/haive-agents/src --preview
-
-# Automated fixing for haive-tools
-./dev-tools/scripts/ultimate-code-fixer.sh packages/haive-tools/src --auto
-```
-
-### **Fix Multiple Packages**
-
-```bash
-# Fix all packages with high automation potential
-for pkg in haive-prebuilt haive-tools haive-mcp; do
-    ./dev-tools/scripts/ultimate-code-fixer.sh packages/$pkg/src --auto
-done
-
-# Interactive fixing for complex packages
-for pkg in haive-agents haive-core; do
-    ./dev-tools/scripts/ultimate-code-fixer.sh packages/$pkg/src --interactive
-done
-```
-
-### **Development Workflow**
-
-```bash
-# 1. Assess current state
-./dev-tools/scripts/ultimate-code-fixer.sh packages/haive-prebuilt/src --preview
-
-# 2. Try demo to see process
-./dev-tools/scripts/ultimate-code-fixer.sh packages/haive-prebuilt/src --demo
-
-# 3. Apply fixes interactively
-./dev-tools/scripts/ultimate-code-fixer.sh packages/haive-prebuilt/src --interactive
-
-# 4. Review and commit
-git diff --stat
-git add packages/haive-prebuilt/src
-git commit -m "Automated code quality improvements: 85% error reduction"
-```
-
-## 📊 **MONITORING & PROGRESS TRACKING**
-
-### **Before/After Comparison**
-
-```bash
-# Get current error baseline
-poetry run ruff check packages/haive-prebuilt/src --statistics
-
-# Run ultimate fixer
-./dev-tools/scripts/ultimate-code-fixer.sh packages/haive-prebuilt/src --auto
-
-# Compare results (shown automatically)
-```
-
-### **Cross-Package Analysis**
-
-```bash
-# Check all packages
-for pkg in haive-*; do
-    echo "=== $pkg ==="
-    poetry run ruff check packages/$pkg/src --statistics | head -5
-done
-```
-
-## 🚨 **TROUBLESHOOTING**
-
-### **Common Issues**
-
-#### **Tool Installation Failures**
-
-```bash
-# Clear poetry cache and retry
-poetry cache clear pypi --all
+# Install dependencies
 poetry install --all-extras
 
-# Manual tool installation
-poetry add --group dev autoimport autoflake pyupgrade isort ruff
+# Activate virtual environment
+poetry shell
+
+# Run tests to verify installation
+poetry run pytest
+
+# Build documentation
+poetry run nox -s docs_fast
 ```
 
-#### **Import Errors**
+## 📋 Overview
+
+Haive is a comprehensive AI agent framework that provides:
+
+- **🤖 Pre-built Agents**: SimpleAgent, ReactAgent, PlannerAgent, and more
+- **🔧 Tool Integration**: Easy integration with external tools and APIs
+- **🧠 Advanced Reasoning**: Chain-of-thought, self-reflection, and planning capabilities
+- **👥 Multi-Agent Systems**: Coordinate multiple agents for complex workflows
+- **💾 State Management**: Persistent state and memory systems
+- **🎮 Game Environments**: Built-in game agents and environments
+- **📊 Data Processing**: Streaming and batch data processing capabilities
+
+## 🏗️ Architecture
+
+Haive is organized as a monorepo with multiple packages:
+
+```
+packages/
+├── haive-core/      # Core framework and infrastructure
+├── haive-agents/    # Pre-built agent implementations
+├── haive-tools/     # Tool integrations and utilities
+├── haive-games/     # Game environments and agents
+├── haive-dataflow/  # Data processing pipelines
+├── haive-mcp/       # Model Context Protocol integration
+└── haive-prebuilt/  # Ready-to-use configurations
+```
+
+## 💻 Basic Usage
+
+### Simple Agent Example
+
+```python
+from haive.agents.simple.agent_v3 import SimpleAgentV3
+from haive.core.engine.aug_llm import AugLLMConfig
+
+# Create an agent
+agent = SimpleAgentV3(
+    name="assistant",
+    engine=AugLLMConfig(
+        temperature=0.7,
+        system_message="You are a helpful assistant."
+    )
+)
+
+# Execute
+result = agent.run("What is the capital of France?")
+print(result)
+```
+
+### React Agent with Tools
+
+```python
+from haive.agents.react.agent import ReactAgent
+from langchain_core.tools import tool
+
+@tool
+def calculator(expression: str) -> str:
+    """Calculate mathematical expressions."""
+    return str(eval(expression))
+
+# Create agent with tools
+agent = ReactAgent(
+    name="math_agent",
+    engine=AugLLMConfig(),
+    tools=[calculator]
+)
+
+# Execute with tool usage
+result = agent.run("What is 25 * 37?")
+```
+
+### Multi-Agent System
+
+```python
+from haive.agents.multi.enhanced_multi_agent_v4 import EnhancedMultiAgentV4
+
+# Create a multi-agent workflow
+workflow = EnhancedMultiAgentV4([
+    PlannerAgent(name="planner"),
+    ResearchAgent(name="researcher"),
+    WriterAgent(name="writer")
+], mode="sequential")
+
+# Execute complex task
+result = workflow.run("Create a report on AI trends")
+```
+
+## 📚 Documentation
+
+- **Full Documentation**: Run `poetry run nox -s docs_serve` and visit http://localhost:8000
+- **Project Docs**: See `project_docs/` for architecture and design documents
+- **Memory Index**: `project_docs/memory_index/` for development patterns and solutions
+- **CLAUDE.md**: Central development hub with patterns and guidelines
+
+## 🧪 Testing
 
 ```bash
-# Verify poetry environment
-poetry env info
-poetry run python -c "import sys; print(sys.path)"
+# Run all tests
+poetry run pytest
 
-# Reinstall if needed
-poetry env remove python
+# Run specific package tests
+poetry run pytest packages/haive-agents/tests/
+
+# Run with coverage
+poetry run pytest --cov=haive --cov-report=html
+
+# Run specific test
+poetry run pytest -k "test_simple_agent"
+```
+
+## 🛠️ Development
+
+### Environment Setup
+
+```bash
+# VS Code users: Automatic setup
+./.vscode/setup-environment.sh
+
+# Manual setup
 poetry install --all-extras
+poetry shell
 ```
 
-#### **Git Stash Issues**
+### Code Quality
 
 ```bash
-# List all stashes
-git stash list
+# Run linters
+poetry run ruff check .
 
-# Apply specific stash
-git stash apply stash@{0}
+# Type checking
+poetry run mypy packages/
 
-# Clear old stashes
-git stash clear
+# Format code
+poetry run black .
+
+# All checks
+poetry run nox -s lint
 ```
 
-### **Performance Issues**
-
-- Large packages may take 2-5 minutes to process
-- Use `--auto` mode for faster execution
-- Consider processing subdirectories separately
-
-### **Rollback Process**
+### Common Tasks
 
 ```bash
-# If you have checkpoint
-git stash list | grep "ULTIMATE_FIXER"
-git stash apply stash@{N}  # Replace N with stash number
+# Build documentation
+poetry run nox -s docs
 
-# If no checkpoint
-git stash                  # Stash current changes
-git reset --hard HEAD      # Reset to last commit
+# Clean project
+poetry run nox -s clean
+
+# Update dependencies
+poetry update
 ```
 
-## 🔮 **FUTURE ENHANCEMENTS**
+## 🎯 Key Features
 
-### **Planned Features**
+### 1. Flexible Agent Types
 
-- **G004 logging f-string autofix** when ruff adds support
-- **Parallel package processing** for faster bulk fixes
-- **Custom rule configuration** for project-specific needs
-- **Integration with pre-commit hooks** for continuous quality
-- **AI-powered complex import resolution** for remaining F821 errors
+- **SimpleAgent**: Basic LLM-powered agent
+- **ReactAgent**: Reasoning and tool usage
+- **PlannerAgent**: Strategic planning
+- **RAGAgent**: Retrieval-augmented generation
+- **MultiAgent**: Agent coordination
 
-### **Tool Evolution**
+### 2. Advanced Capabilities
 
-- Stay updated with latest ruff releases
-- Monitor pyupgrade for new Python version support
-- Track autoimport improvements for better F821 handling
+- **Structured Output**: Pydantic model outputs
+- **Memory Systems**: Short and long-term memory
+- **Tool Integration**: Easy tool creation and usage
+- **State Management**: Persistent conversation state
+- **Async Support**: Full async/await compatibility
 
-## 📈 **SUCCESS METRICS**
+### 3. Production Ready
 
-### **Quality Improvements**
+- **No Mocks Testing**: Real component testing
+- **Type Safety**: Full type hints and validation
+- **Error Handling**: Comprehensive error management
+- **Performance**: Optimized for production use
+- **Extensible**: Easy to extend and customize
 
-- **60-80% error reduction** across all packages
-- **100% automated whitespace/formatting fixes**
-- **90% reduction in import-related issues**
-- **Significant improvement in code modernization**
+## 📖 Examples
 
-### **Development Efficiency**
+Find examples in the `examples/` directory:
 
-- **Saves hours** of manual code cleanup
-- **Consistent code style** across all packages
-- **Reduced code review overhead**
-- **Improved maintainability**
+- `simple_agent_example.py` - Basic agent usage
+- `react_agent_tools.py` - Tool integration
+- `multi_agent_workflow.py` - Complex workflows
+- `rag_agent_example.py` - RAG implementation
+- `game_agent_example.py` - Game playing agents
 
-## 🤝 **CONTRIBUTING**
+## 🤝 Contributing
 
-### **Adding New Tools**
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run tests (`poetry run pytest`)
+5. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
 
-1. Add tool to `install-modern-tools.sh`
-2. Integrate into `ultimate-code-fixer.sh` fixing process
-3. Update this README with new capabilities
-4. Test across all packages
+### Development Guidelines
 
-### **Improving Automation**
+- Follow the coding standards in `project_docs/active/standards/`
+- No mock testing - use real components
+- Include tests for new features
+- Update documentation as needed
+- Use conventional commits
 
-1. Monitor error patterns that resist automation
-2. Research new tools and techniques
-3. Enhance error categorization and prediction
-4. Optimize execution order and performance
+## 📄 License
 
-## 📞 **SUPPORT**
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-### **Getting Help**
+## 🔗 Resources
 
-1. Check this README for common scenarios
-2. Review `SCRIPTS_COMPREHENSIVE_GUIDE.md` for detailed options
-3. Use `--preview` mode to understand what would happen
-4. Try `--demo` mode for educational experience
+- **GitHub**: [github.com/yourusername/haive](https://github.com/yourusername/haive)
+- **Documentation**: [haive.readthedocs.io](https://haive.readthedocs.io)
+- **Issues**: [GitHub Issues](https://github.com/yourusername/haive/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/yourusername/haive/discussions)
 
-### **Reporting Issues**
+## 🙏 Acknowledgments
 
-- Include full command used
-- Provide error output
-- Share relevant package/directory info
-- Mention any customizations made
+Built with:
+
+- [LangChain](https://langchain.com/) - LLM application framework
+- [Pydantic](https://pydantic-docs.helpmanual.io/) - Data validation
+- [Poetry](https://python-poetry.org/) - Dependency management
+- [Sphinx](https://www.sphinx-doc.org/) - Documentation generation
 
 ---
 
-## 🎉 **CONCLUSION**
-
-The Haive Dev-Tools Ultimate Code Fixer represents the pinnacle of 2024 Python code automation. With one command, you can achieve 60-80% error reduction across your entire codebase, saving hours of manual work while dramatically improving code quality.
-
-**Ready to transform your code?**
-
-```bash
-./dev-tools/scripts/ultimate-code-fixer.sh packages/haive-prebuilt/src --interactive
-```
-
-**🚀 Welcome to the future of Python code maintenance!**
+**Note**: This is an active development project. APIs may change. Check CHANGELOG.md for updates.
