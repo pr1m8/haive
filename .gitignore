@@ -632,7 +632,7 @@ fix_*.py
 comprehensive_*.py
 test_*.py
 git_fsck_repair_20250729_213007/
-
+recovery_catalog/
 # Status/report files (moved to project_docs/)
 *_STATUS*.md
 *_ANALYSIS*.md
