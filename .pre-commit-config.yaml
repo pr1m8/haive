@@ -22,7 +22,7 @@ repos:
     rev: 1.17.0
     hooks:
       - id: yamlfix
-        exclude: "(.venv|.venv/|.venv/.*|.*/.venv/.*)"
+        exclude: (.venv|.venv/|.venv/.*|.*/.venv/.*)
 
   # 🧹 Code Cleanup
   - repo: https://github.com/PyCQA/autoflake
