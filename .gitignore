@@ -644,3 +644,4 @@ recovery_catalog/
 nohup.out
 server.log
 dynamic_graph.log
+archive/
