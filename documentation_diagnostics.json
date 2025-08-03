@@ -1,0 +1,22 @@
+{
+  "timestamp": "2025-08-03 16:37:59",
+  "issues": [
+    "API has src/haive nesting",
+    "Missing API path: haive/core",
+    "Missing API path: haive/agents",
+    "Missing API path: haive/tools",
+    "Missing API path: haive/games",
+    "Missing API path: haive/mcp",
+    "Missing API path: haive/dataflow",
+    "Missing API path: haive/prebuilt",
+    "Problematic path exists: src/haive/core",
+    "Problematic path exists: src/haive/agents"
+  ],
+  "stats": {
+    "rst_files": 2552,
+    "rst_size_mb": 9.207040786743164,
+    "html_files": 0,
+    "build_size_mb": 48.835187911987305
+  },
+  "recommendations": []
+}

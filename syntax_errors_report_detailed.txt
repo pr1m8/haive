@@ -1,7 +1,0 @@
-COMPREHENSIVE SYNTAX ERROR CATALOG
-================================================================================
-
-Total Errors: 0
-
-ERROR CATEGORIES:
-
