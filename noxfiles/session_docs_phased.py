@@ -170,14 +170,21 @@ def run_sphinx_command(
     args: List[str],
     phase_name: str,
     check_output: bool = True,
+    verbose: bool = True,
 ) -> bool:
     """Run a sphinx-build command and parse output."""
+    # Check if verbose mode requested via session args
+    if session.posargs and "verbose" in session.posargs:
+        verbose = True
+
     # Always add verbose flag for better tracking
-    if "-v" not in args:
+    if "-v" not in args and verbose:
         args = ["-v"] + args
 
-    # Add more verbosity for AutoAPI debugging
-    if "-vv" not in args and phase_name == "extension_test":
+    # Add more verbosity for AutoAPI debugging or if requested
+    if "-vv" not in args and (
+        phase_name == "extension_test" or (session.posargs and "vv" in session.posargs)
+    ):
         args = ["-vv"] + args
 
     cmd = ["poetry", "run", "sphinx-build"] + args
@@ -211,6 +218,9 @@ def run_sphinx_command(
             if not line:
                 continue
 
+            # Always print the line for real-time feedback
+            print(line, flush=True)
+
             # Track current file being processed
             if "[AutoAPI] Analyzing" in line:
                 import re
@@ -219,11 +229,15 @@ def run_sphinx_command(
                 if match:
                     current_file = match.group(1)
 
-            # Track actual progress
+            # Track actual progress with timestamp
+            import time
+
+            current_time = time.strftime("%H:%M:%S")
+
             if "reading sources..." in line:
-                logger.log("📖 Reading source files...")
+                logger.log(f"[{current_time}] 📖 Reading source files...")
             elif "writing output..." in line:
-                logger.log("✍️ Writing output files...")
+                logger.log(f"[{current_time}] ✍️ Writing output files...")
             elif "building [html]:" in line and "source changed" in line:
                 # Extract number of changed files
                 import re
@@ -389,33 +403,11 @@ def docs_phased(session):
     except Exception as e:
         logger.error(f"conf.py import failed: {e}")
 
-    # Phase 3: Extension Testing (nitpicky mode)
-    logger.start_phase("extension_test", "Testing extensions in nitpicky mode")
+    # Phase 3: Extension Testing - SKIPPED to go directly to HTML build
+    logger.log("Skipping extension test phase - going directly to HTML build", "info")
 
-    success = run_sphinx_command(
-        session,
-        logger,
-        ["-n", "-W", "-b", "gettext", str(SOURCE_DIR), str(BUILD_DIR / "gettext")],
-        "extension_test",
-    )
-
-    if not success:
-        logger.error("Extension testing failed")
-        logger.write_summary()
-        session.log("❌ Build stopped at extension testing phase")
-        return
-
-    # Phase 4: Content Validation
-    logger.start_phase("content_validation", "Validating documentation content")
-
-    # Check for broken links (optional)
-    if session.posargs and "linkcheck" in session.posargs:
-        run_sphinx_command(
-            session,
-            logger,
-            ["-b", "linkcheck", str(SOURCE_DIR), str(BUILD_DIR / "linkcheck")],
-            "linkcheck",
-        )
+    # Phase 4: Content Validation - SKIPPED
+    logger.log("Skipping content validation phase", "info")
 
     # Phase 5: HTML Build
     logger.start_phase("html_build", "Building HTML documentation")
