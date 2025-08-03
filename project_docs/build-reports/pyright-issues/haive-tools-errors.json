@@ -1,0 +1,1773 @@
+{
+  "version": "1.1.403",
+  "time": "1754107109145",
+  "generalDiagnostics": [
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/bing_search_tool_INC.py",
+      "severity": "error",
+      "message": "Import \"haive.config.config\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 10,
+          "character": 5
+        },
+        "end": {
+          "line": 10,
+          "character": 24
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/brave_search.py",
+      "severity": "error",
+      "message": "Module is not callable",
+      "range": {
+        "start": {
+          "line": 23,
+          "character": 20
+        },
+        "end": {
+          "line": 23,
+          "character": 48
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/dataforseo_tool.py",
+      "severity": "error",
+      "message": "Import \"haive.config.config\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 22,
+          "character": 5
+        },
+        "end": {
+          "line": 22,
+          "character": 24
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/hinge_tools.py",
+      "severity": "error",
+      "message": "Import \"squeaky_hinge\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 21,
+          "character": 5
+        },
+        "end": {
+          "line": 21,
+          "character": 18
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/ionic_tool.py",
+      "severity": "error",
+      "message": "Import \"ionic_langchain.tool\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 18,
+          "character": 5
+        },
+        "end": {
+          "line": 18,
+          "character": 25
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/reddit_search.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"reddit_client\", \"reddit_client_id\", \"reddit_client_secret\", \"reddit_user_agent\"",
+      "range": {
+        "start": {
+          "line": 48,
+          "character": 13
+        },
+        "end": {
+          "line": 48,
+          "character": 37
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.alpha_vantage\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 2,
+          "character": 5
+        },
+        "end": {
+          "line": 2,
+          "character": 39
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.amadues_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 7,
+          "character": 5
+        },
+        "end": {
+          "line": 7,
+          "character": 41
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.base\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 15,
+          "character": 5
+        },
+        "end": {
+          "line": 15,
+          "character": 30
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.chuck_norris_jokes_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 21,
+          "character": 5
+        },
+        "end": {
+          "line": 21,
+          "character": 52
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.citydsk_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 28,
+          "character": 5
+        },
+        "end": {
+          "line": 28,
+          "character": 41
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.clickup_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 36,
+          "character": 5
+        },
+        "end": {
+          "line": 36,
+          "character": 41
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.financialdatasets_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 37,
+          "character": 5
+        },
+        "end": {
+          "line": 37,
+          "character": 51
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.fred_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 42,
+          "character": 5
+        },
+        "end": {
+          "line": 42,
+          "character": 38
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.free_to_game_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 55,
+          "character": 5
+        },
+        "end": {
+          "line": 55,
+          "character": 46
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.google_calendar\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 65,
+          "character": 5
+        },
+        "end": {
+          "line": 65,
+          "character": 41
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.jira_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 70,
+          "character": 5
+        },
+        "end": {
+          "line": 70,
+          "character": 38
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.lcbo_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 77,
+          "character": 5
+        },
+        "end": {
+          "line": 77,
+          "character": 38
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.mongodb_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 85,
+          "character": 5
+        },
+        "end": {
+          "line": 85,
+          "character": 41
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.nla_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 86,
+          "character": 5
+        },
+        "end": {
+          "line": 86,
+          "character": 37
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.openlibrary_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 93,
+          "character": 5
+        },
+        "end": {
+          "line": 93,
+          "character": 45
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.poetry_db_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 101,
+          "character": 5
+        },
+        "end": {
+          "line": 101,
+          "character": 43
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.polygon_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 112,
+          "character": 5
+        },
+        "end": {
+          "line": 112,
+          "character": 41
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.request_tools\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 113,
+          "character": 5
+        },
+        "end": {
+          "line": 113,
+          "character": 39
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.rick_and_morty_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 114,
+          "character": 5
+        },
+        "end": {
+          "line": 114,
+          "character": 48
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.rps_101_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 126,
+          "character": 5
+        },
+        "end": {
+          "line": 126,
+          "character": 41
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.slack_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 132,
+          "character": 5
+        },
+        "end": {
+          "line": 132,
+          "character": 39
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.stack_exchange_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 133,
+          "character": 5
+        },
+        "end": {
+          "line": 133,
+          "character": 48
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.stripe_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 134,
+          "character": 5
+        },
+        "end": {
+          "line": 134,
+          "character": 40
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.trip_advisor_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 135,
+          "character": 5
+        },
+        "end": {
+          "line": 135,
+          "character": 46
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.twilio_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 148,
+          "character": 5
+        },
+        "end": {
+          "line": 148,
+          "character": 40
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.useless_facts_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 149,
+          "character": 5
+        },
+        "end": {
+          "line": 149,
+          "character": 47
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.vbible_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 154,
+          "character": 5
+        },
+        "end": {
+          "line": 154,
+          "character": 40
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.weather\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 171,
+          "character": 5
+        },
+        "end": {
+          "line": 171,
+          "character": 33
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.yugiioh_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 179,
+          "character": 5
+        },
+        "end": {
+          "line": 179,
+          "character": 41
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/clickup_toolkit.py",
+      "severity": "error",
+      "message": "Import \"haive.config.config\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 30,
+          "character": 5
+        },
+        "end": {
+          "line": 30,
+          "character": 24
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/clickup_toolkit.py",
+      "severity": "error",
+      "message": "No parameter named \"api_key\"",
+      "range": {
+        "start": {
+          "line": 48,
+          "character": 8
+        },
+        "end": {
+          "line": 48,
+          "character": 15
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/clickup_toolkit.py",
+      "severity": "error",
+      "message": "No parameter named \"redirect_uri\"",
+      "range": {
+        "start": {
+          "line": 49,
+          "character": 8
+        },
+        "end": {
+          "line": 49,
+          "character": 20
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/clickup_toolkit.py",
+      "severity": "error",
+      "message": "No parameter named \"client_id\"",
+      "range": {
+        "start": {
+          "line": 50,
+          "character": 8
+        },
+        "end": {
+          "line": 50,
+          "character": 17
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/clickup_toolkit.py",
+      "severity": "error",
+      "message": "No parameter named \"client_secret\"",
+      "range": {
+        "start": {
+          "line": 51,
+          "character": 8
+        },
+        "end": {
+          "line": 51,
+          "character": 21
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/clickup_toolkit.py",
+      "severity": "error",
+      "message": "No parameter named \"api_wrapper\"",
+      "range": {
+        "start": {
+          "line": 54,
+          "character": 26
+        },
+        "end": {
+          "line": 54,
+          "character": 37
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/__init__.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.dev.tools\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 2,
+          "character": 5
+        },
+        "end": {
+          "line": 2,
+          "character": 35
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/project_creation/__init__.py",
+      "severity": "error",
+      "message": "Import \"project_creation.github\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 2,
+          "character": 5
+        },
+        "end": {
+          "line": 2,
+          "character": 28
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/project_creation/github.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"required_approvals\", \"dismiss_stale_reviews\", \"require_code_owner_reviews\", \"enforce_admins\"",
+      "range": {
+        "start": {
+          "line": 199,
+          "character": 20
+        },
+        "end": {
+          "line": 199,
+          "character": 42
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/transformers/import_consolidator.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"value\" for class \"AsName\"\n  Attribute \"value\" is unknown",
+      "range": {
+        "start": {
+          "line": 40,
+          "character": 53
+        },
+        "end": {
+          "line": 40,
+          "character": 58
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/transformers/import_consolidator.py",
+      "severity": "error",
+      "message": "Argument of type \"Unknown | Name\" cannot be assigned to parameter \"asname\" of type \"AsName | None\" in function \"__init__\"\n  Type \"Unknown | Name\" is not assignable to type \"AsName | None\"\n    Type \"Name\" is not assignable to type \"AsName | None\"\n      \"Name\" is not assignable to \"AsName\"\n      \"Name\" is not assignable to \"None\"",
+      "range": {
+        "start": {
+          "line": 58,
+          "character": 31
+        },
+        "end": {
+          "line": 58,
+          "character": 86
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/code_smell_detector.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"lineno\" for class \"For\"\n  Attribute \"lineno\" is unknown",
+      "range": {
+        "start": {
+          "line": 50,
+          "character": 25
+        },
+        "end": {
+          "line": 50,
+          "character": 31
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py",
+      "severity": "error",
+      "message": "Argument of type \"BaseExpression | str\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  Type \"BaseExpression | str\" is not assignable to type \"str\"\n    \"BaseExpression\" is not assignable to \"str\"",
+      "range": {
+        "start": {
+          "line": 57,
+          "character": 16
+        },
+        "end": {
+          "line": 57,
+          "character": 50
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"value\" for class \"AsName\"\n  Attribute \"value\" is unknown",
+      "range": {
+        "start": {
+          "line": 57,
+          "character": 68
+        },
+        "end": {
+          "line": 57,
+          "character": 73
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py",
+      "severity": "error",
+      "message": "Argument of type \"BaseExpression | str\" cannot be assigned to parameter \"element\" of type \"str\" in function \"add\"\n  Type \"BaseExpression | str\" is not assignable to type \"str\"\n    \"BaseExpression\" is not assignable to \"str\"",
+      "range": {
+        "start": {
+          "line": 58,
+          "character": 29
+        },
+        "end": {
+          "line": 58,
+          "character": 40
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py",
+      "severity": "error",
+      "message": "Argument of type \"BaseExpression | str\" cannot be assigned to parameter \"element\" of type \"str\" in function \"add\"\n  Type \"BaseExpression | str\" is not assignable to type \"str\"\n    \"BaseExpression\" is not assignable to \"str\"",
+      "range": {
+        "start": {
+          "line": 59,
+          "character": 36
+        },
+        "end": {
+          "line": 59,
+          "character": 47
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py",
+      "severity": "error",
+      "message": "\"ImportStar\" is not iterable\n  \"__iter__\" method not defined",
+      "range": {
+        "start": {
+          "line": 73,
+          "character": 25
+        },
+        "end": {
+          "line": 73,
+          "character": 35
+        }
+      },
+      "rule": "reportGeneralTypeIssues"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py",
+      "severity": "error",
+      "message": "Argument of type \"BaseExpression | str\" cannot be assigned to parameter \"element\" of type \"str\" in function \"add\"\n  Type \"BaseExpression | str\" is not assignable to type \"str\"\n    \"BaseExpression\" is not assignable to \"str\"",
+      "range": {
+        "start": {
+          "line": 75,
+          "character": 33
+        },
+        "end": {
+          "line": 75,
+          "character": 44
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py",
+      "severity": "error",
+      "message": "Argument of type \"BaseExpression | str\" cannot be assigned to parameter \"element\" of type \"str\" in function \"add\"\n  Type \"BaseExpression | str\" is not assignable to type \"str\"\n    \"BaseExpression\" is not assignable to \"str\"",
+      "range": {
+        "start": {
+          "line": 76,
+          "character": 57
+        },
+        "end": {
+          "line": 76,
+          "character": 68
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/type_checking.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"value\" for class \"BaseExpression\"\n  Attribute \"value\" is unknown",
+      "range": {
+        "start": {
+          "line": 61,
+          "character": 55
+        },
+        "end": {
+          "line": 61,
+          "character": 60
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/background_process_manager.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"port\" for class \"tuple[()]\"\n  Attribute \"port\" is unknown",
+      "range": {
+        "start": {
+          "line": 207,
+          "character": 51
+        },
+        "end": {
+          "line": 207,
+          "character": 55
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/background_process_manager.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"ip\" for class \"tuple[()]\"\n  Attribute \"ip\" is unknown",
+      "range": {
+        "start": {
+          "line": 210,
+          "character": 54
+        },
+        "end": {
+          "line": 210,
+          "character": 56
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/logger.py",
+      "severity": "error",
+      "message": "\"SecureShellExecutor\" is not defined",
+      "range": {
+        "start": {
+          "line": 48,
+          "character": 11
+        },
+        "end": {
+          "line": 48,
+          "character": 30
+        }
+      },
+      "rule": "reportUndefinedVariable"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/permission.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"model\" for class \"ValidationError\"\n  Attribute \"model\" is unknown",
+      "range": {
+        "start": {
+          "line": 233,
+          "character": 81
+        },
+        "end": {
+          "line": 233,
+          "character": 86
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/shell.py",
+      "severity": "error",
+      "message": "Import \"haive.tools.toolkits.dev.permission\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 28,
+          "character": 5
+        },
+        "end": {
+          "line": 28,
+          "character": 40
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Type \"None\" is not assignable to declared type \"list[dict[str, Any]]\"\n  \"None\" is not assignable to \"list[dict[str, Any]]\"",
+      "range": {
+        "start": {
+          "line": 604,
+          "character": 36
+        },
+        "end": {
+          "line": 604,
+          "character": 40
+        }
+      },
+      "rule": "reportAssignmentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"lineno\" for class \"Name\"\n  Attribute \"lineno\" is unknown",
+      "range": {
+        "start": {
+          "line": 692,
+          "character": 39
+        },
+        "end": {
+          "line": 692,
+          "character": 45
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"lineno\" for class \"Name\"\n  Attribute \"lineno\" is unknown",
+      "range": {
+        "start": {
+          "line": 744,
+          "character": 39
+        },
+        "end": {
+          "line": 744,
+          "character": 45
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"body\" for class \"BaseSmallStatement\"\n  Attribute \"body\" is unknown",
+      "range": {
+        "start": {
+          "line": 809,
+          "character": 38
+        },
+        "end": {
+          "line": 809,
+          "character": 42
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"body\" for class \"BaseStatement\"\n  Attribute \"body\" is unknown",
+      "range": {
+        "start": {
+          "line": 809,
+          "character": 38
+        },
+        "end": {
+          "line": 809,
+          "character": 42
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"lineno\" for class \"Name\"\n  Attribute \"lineno\" is unknown",
+      "range": {
+        "start": {
+          "line": 818,
+          "character": 43
+        },
+        "end": {
+          "line": 818,
+          "character": 49
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"lineno\" for class \"Name\"\n  Attribute \"lineno\" is unknown",
+      "range": {
+        "start": {
+          "line": 841,
+          "character": 43
+        },
+        "end": {
+          "line": 841,
+          "character": 49
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"body\" for class \"BaseSmallStatement\"\n  Attribute \"body\" is unknown",
+      "range": {
+        "start": {
+          "line": 884,
+          "character": 38
+        },
+        "end": {
+          "line": 884,
+          "character": 42
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"body\" for class \"BaseStatement\"\n  Attribute \"body\" is unknown",
+      "range": {
+        "start": {
+          "line": 884,
+          "character": 38
+        },
+        "end": {
+          "line": 884,
+          "character": 42
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"lineno\" for class \"Name\"\n  Attribute \"lineno\" is unknown",
+      "range": {
+        "start": {
+          "line": 893,
+          "character": 43
+        },
+        "end": {
+          "line": 893,
+          "character": 49
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"lineno\" for class \"Name\"\n  Attribute \"lineno\" is unknown",
+      "range": {
+        "start": {
+          "line": 916,
+          "character": 43
+        },
+        "end": {
+          "line": 916,
+          "character": 49
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"lineno\" for class \"Param\"\n  Attribute \"lineno\" is unknown",
+      "range": {
+        "start": {
+          "line": 995,
+          "character": 31
+        },
+        "end": {
+          "line": 995,
+          "character": 37
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"lineno\" for class \"Name\"\n  Attribute \"lineno\" is unknown",
+      "range": {
+        "start": {
+          "line": 1014,
+          "character": 39
+        },
+        "end": {
+          "line": 1014,
+          "character": 45
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"lineno\" for class \"Name\"\n  Attribute \"lineno\" is unknown",
+      "range": {
+        "start": {
+          "line": 1121,
+          "character": 43
+        },
+        "end": {
+          "line": 1121,
+          "character": 49
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"lineno\" for class \"Name\"\n  Attribute \"lineno\" is unknown",
+      "range": {
+        "start": {
+          "line": 1136,
+          "character": 43
+        },
+        "end": {
+          "line": 1136,
+          "character": 49
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Argument of type \"Name\" cannot be assigned to parameter \"name\" of type \"AsName | None\" in function \"__init__\"\n  Type \"Name\" is not assignable to type \"AsName | None\"\n    \"Name\" is not assignable to \"AsName\"\n    \"Name\" is not assignable to \"None\"",
+      "range": {
+        "start": {
+          "line": 1214,
+          "character": 17
+        },
+        "end": {
+          "line": 1214,
+          "character": 30
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Argument of type \"Sequence[BaseStatement] | Sequence[BaseSmallStatement]\" cannot be assigned to parameter \"body\" of type \"Sequence[BaseStatement]\" in function \"__init__\"\n  Type \"Sequence[BaseStatement] | Sequence[BaseSmallStatement]\" is not assignable to type \"Sequence[BaseStatement]\"\n    \"Sequence[BaseSmallStatement]\" is not assignable to \"Sequence[BaseStatement]\"\n      Type parameter \"_T_co@Sequence\" is covariant, but \"BaseSmallStatement\" is not a subtype of \"BaseStatement\"\n        \"BaseSmallStatement\" is not assignable to \"BaseStatement\"",
+      "range": {
+        "start": {
+          "line": 1220,
+          "character": 40
+        },
+        "end": {
+          "line": 1220,
+          "character": 53
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"lineno\" for class \"Name\"\n  Attribute \"lineno\" is unknown",
+      "range": {
+        "start": {
+          "line": 1232,
+          "character": 35
+        },
+        "end": {
+          "line": 1232,
+          "character": 41
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"lineno\" for class \"Name\"\n  Attribute \"lineno\" is unknown",
+      "range": {
+        "start": {
+          "line": 1328,
+          "character": 35
+        },
+        "end": {
+          "line": 1328,
+          "character": 41
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"line_length\", \"use_black\", \"use_isort\", \"use_autoflake\", \"fix\", \"show_diff\"",
+      "range": {
+        "start": {
+          "line": 1399,
+          "character": 44
+        },
+        "end": {
+          "line": 1399,
+          "character": 61
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"diff\", \"backup_path\"",
+      "range": {
+        "start": {
+          "line": 1460,
+          "character": 19
+        },
+        "end": {
+          "line": 1466,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"diff\", \"backup_path\"",
+      "range": {
+        "start": {
+          "line": 1489,
+          "character": 19
+        },
+        "end": {
+          "line": 1495,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"error\", \"backup_path\"",
+      "range": {
+        "start": {
+          "line": 1507,
+          "character": 15
+        },
+        "end": {
+          "line": 1513,
+          "character": 9
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/financialdatasets_toolkit.py",
+      "severity": "error",
+      "message": "Type \"List[BaseTool]\" is not assignable to return type \"list[Tool]\"\n  \"List[BaseTool]\" is not assignable to \"list[Tool]\"\n    Type parameter \"_T@list\" is invariant, but \"BaseTool\" is not the same as \"Tool\"\n    Consider switching from \"list\" to \"Sequence\" which is covariant",
+      "range": {
+        "start": {
+          "line": 107,
+          "character": 11
+        },
+        "end": {
+          "line": 107,
+          "character": 30
+        }
+      },
+      "rule": "reportReturnType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/github_toolkit.py",
+      "severity": "error",
+      "message": "Import \"haive.config.config\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 22,
+          "character": 5
+        },
+        "end": {
+          "line": 22,
+          "character": 24
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/github_toolkit.py",
+      "severity": "error",
+      "message": "No parameter named \"app_id\"",
+      "range": {
+        "start": {
+          "line": 34,
+          "character": 4
+        },
+        "end": {
+          "line": 34,
+          "character": 10
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/github_toolkit.py",
+      "severity": "error",
+      "message": "No parameter named \"private_key\"",
+      "range": {
+        "start": {
+          "line": 34,
+          "character": 33
+        },
+        "end": {
+          "line": 34,
+          "character": 44
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/jira_toolkit.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"projects\" for class \"JiraAPIWrapper\"\n  Attribute \"projects\" is unknown",
+      "range": {
+        "start": {
+          "line": 115,
+          "character": 29
+        },
+        "end": {
+          "line": 115,
+          "character": 37
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/jira_toolkit.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"create_issue\" for class \"JiraAPIWrapper\"\n  Attribute \"create_issue\" is unknown",
+      "range": {
+        "start": {
+          "line": 145,
+          "character": 29
+        },
+        "end": {
+          "line": 145,
+          "character": 41
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/jira_toolkit.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"jql_query\" for class \"JiraAPIWrapper\"\n  Attribute \"jql_query\" is unknown",
+      "range": {
+        "start": {
+          "line": 157,
+          "character": 29
+        },
+        "end": {
+          "line": 157,
+          "character": 38
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/mongodb_toolkit.py",
+      "severity": "error",
+      "message": "Import \"langchain_mongodb.agent_toolkit.database\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 25,
+          "character": 5
+        },
+        "end": {
+          "line": 25,
+          "character": 45
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/mongodb_toolkit.py",
+      "severity": "error",
+      "message": "Import \"langchain_mongodb.agent_toolkit.toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 26,
+          "character": 5
+        },
+        "end": {
+          "line": 26,
+          "character": 44
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/office_365.py",
+      "severity": "error",
+      "message": "Import \"haive.config.config\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 20,
+          "character": 5
+        },
+        "end": {
+          "line": 20,
+          "character": 24
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/office_365.py",
+      "severity": "error",
+      "message": "No parameter named \"client_id\"",
+      "range": {
+        "start": {
+          "line": 35,
+          "character": 4
+        },
+        "end": {
+          "line": 35,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/office_365.py",
+      "severity": "error",
+      "message": "No parameter named \"client_secret\"",
+      "range": {
+        "start": {
+          "line": 36,
+          "character": 4
+        },
+        "end": {
+          "line": 36,
+          "character": 17
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/office_365.py",
+      "severity": "error",
+      "message": "No parameter named \"tenant_id\"",
+      "range": {
+        "start": {
+          "line": 37,
+          "character": 4
+        },
+        "end": {
+          "line": 37,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/office_365.py",
+      "severity": "error",
+      "message": "No parameter named \"scopes\"",
+      "range": {
+        "start": {
+          "line": 38,
+          "character": 4
+        },
+        "end": {
+          "line": 38,
+          "character": 10
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/powerbi_toolkit.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"powerbi\", \"llm\"",
+      "range": {
+        "start": {
+          "line": 12,
+          "character": 14
+        },
+        "end": {
+          "line": 15,
+          "character": 1
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/powerbi_toolkit.py",
+      "severity": "error",
+      "message": "No parameter named \"dataset_id\"",
+      "range": {
+        "start": {
+          "line": 13,
+          "character": 4
+        },
+        "end": {
+          "line": 13,
+          "character": 14
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/powerbi_toolkit.py",
+      "severity": "error",
+      "message": "No parameter named \"credential\"",
+      "range": {
+        "start": {
+          "line": 14,
+          "character": 4
+        },
+        "end": {
+          "line": 14,
+          "character": 14
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/request_tools.py",
+      "severity": "error",
+      "message": "Argument missing for parameter \"requests_wrapper\"",
+      "range": {
+        "start": {
+          "line": 64,
+          "character": 9
+        },
+        "end": {
+          "line": 64,
+          "character": 26
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/request_tools.py",
+      "severity": "error",
+      "message": "Argument missing for parameter \"requests_wrapper\"",
+      "range": {
+        "start": {
+          "line": 71,
+          "character": 9
+        },
+        "end": {
+          "line": 71,
+          "character": 27
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/slack_toolkit.py",
+      "severity": "error",
+      "message": "Import \"haive.config.config\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 31,
+          "character": 5
+        },
+        "end": {
+          "line": 31,
+          "character": 24
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/stripe_toolkit.py",
+      "severity": "error",
+      "message": "Argument of type \"dict[str, Any]\" cannot be assigned to parameter \"configuration\" of type \"Configuration | None\" in function \"__init__\"\n  Type \"dict[str, Any]\" is not assignable to type \"Configuration | None\"\n    \"dict[str, Any]\" is not assignable to \"Configuration\"\n    \"dict[str, Any]\" is not assignable to \"None\"",
+      "range": {
+        "start": {
+          "line": 87,
+          "character": 67
+        },
+        "end": {
+          "line": 87,
+          "character": 80
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/twilio_toolkit.py",
+      "severity": "error",
+      "message": "Import \"haive.config.config\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 26,
+          "character": 5
+        },
+        "end": {
+          "line": 26,
+          "character": 24
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/vbible_toolkit.py",
+      "severity": "error",
+      "message": "Import \"haive.haive.toolkits.vbible_toolkit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 22,
+          "character": 5
+        },
+        "end": {
+          "line": 22,
+          "character": 40
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/weather.py",
+      "severity": "error",
+      "message": "Import \"haive.config.config\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 37,
+          "character": 5
+        },
+        "end": {
+          "line": 37,
+          "character": 24
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/yugiioh_toolkit.py",
+      "severity": "error",
+      "message": "Argument of type \"type[GetCardInfoInput]\" cannot be assigned to parameter \"args_schema\" of type \"ArgsSchema | None\" in function \"from_function\"\n  Type \"type[GetCardInfoInput]\" is not assignable to type \"ArgsSchema | None\"\n    \"type[GetCardInfoInput]\" is not assignable to \"type[BaseModel]\"\n    Type \"type[GetCardInfoInput]\" is not assignable to type \"type[BaseModel]\"\n    Type \"type[GetCardInfoInput]\" is not assignable to type \"dict[str, Any]\"\n    Type is not assignable to \"None\"",
+      "range": {
+        "start": {
+          "line": 87,
+          "character": 16
+        },
+        "end": {
+          "line": 87,
+          "character": 32
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/translate_tools.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"text\" for class \"List[TextResult]\"\n  Attribute \"text\" is unknown",
+      "range": {
+        "start": {
+          "line": 185,
+          "character": 26
+        },
+        "end": {
+          "line": 185,
+          "character": 30
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/wolfram_alpha_tool.py",
+      "severity": "error",
+      "message": "Import \"haive.config.config\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 38,
+          "character": 5
+        },
+        "end": {
+          "line": 38,
+          "character": 24
+        }
+      },
+      "rule": "reportMissingImports"
+    }
+  ],
+  "summary": {
+    "filesAnalyzed": 112,
+    "errorCount": 110,
+    "warningCount": 0,
+    "informationCount": 0,
+    "timeInSec": 6.911
+  }
+}
