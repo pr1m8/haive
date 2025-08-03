@@ -1,22 +1,16 @@
+---
 # .trunk/trunk.yaml
 # See: https://docs.trunk.io/reference/trunk-yaml
 version: 0.1
-
 cli:
   version: 1.24.0
-
 plugins:
   sources:
     - id: trunk
       ref: v1.7.1
       uri: https://github.com/trunk-io/plugins
-
 runtimes:
-  enabled:
-    - go@1.21.0
-    - node@22.16.0
-    - python@3.10.8
-
+  enabled: [go@1.21.0, node@22.16.0, python@3.10.8]
 lint:
   enabled:
     - pre-commit-hooks@5.0.0
@@ -44,23 +38,22 @@ lint:
       paths:
         - "**/migrations/**"
         - "**/__pycache__/**"
-        - ".history/**"
-        - ".venv/**"
-        - "node_modules/**"
-        - "data/**"
-        - "scripts/**/dryrun_wrapper.py"
-        - "scripts/**/smart_dryrun_wrapper.py"
-        - "scripts/debug/diagnose_test_performance.py"
-        - "syntax_errors_*.json"
-        - "syntax_errors_*.txt"
-        - "resources/**"
-        - "assets/**"
-        - "dist/**"
-        - "build/**"
+        - .history/**
+        - .venv/**
+        - node_modules/**
+        - data/**
+        - scripts/**/dryrun_wrapper.py
+        - scripts/**/smart_dryrun_wrapper.py
+        - scripts/debug/diagnose_test_performance.py
+        - syntax_errors_*.json
+        - syntax_errors_*.txt
+        - resources/**
+        - assets/**
+        - dist/**
+        - build/**
         - "*.egg-info/**"
-        - "docs/source/conf.py"
-        - "docs/source/conf_modules/**"
-
+        - docs/source/conf.py
+        - docs/source/conf_modules/**
 # Trunk Actions - Following trunk's recommended defaults
 actions:
   disabled:
