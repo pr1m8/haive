@@ -1,3 +1,0 @@
-941b43fc fix/autosummary-module-detection@{2025-07-06 15:20:32 -0400}: commit: current update - things working schema refactor
-ff4661f6 fix/autosummary-module-detection@{2025-07-06 14:24:19 -0400}: commit: fix: Replace broken autosummary with manual module documentation
-f378e7c4 fix/autosummary-module-detection@{2025-07-06 14:11:36 -0400}: branch: Created from HEAD

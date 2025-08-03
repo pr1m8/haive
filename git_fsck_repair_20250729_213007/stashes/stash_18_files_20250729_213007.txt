@@ -1,5 +1,0 @@
-docs/screenshots/api_documentation_all_6_packages
-docs/screenshots/complete_documentation_homepage
-docs/screenshots/haive_agents_api_documentation
-docs/source/conf.py
-pyproject.toml

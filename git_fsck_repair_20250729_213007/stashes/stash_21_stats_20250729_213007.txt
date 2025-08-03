@@ -1,9 +1,0 @@
-commit 44398b5227fad2553f84173b6e4784f9a3ca3ceb
-Merge: 58977bec 134006ec
-Author: pr1m8 <william.astley@algebraicwealth.com>
-Date:   Sun Jul 27 15:45:07 2025 -0400
-
-    On feature/fix_everything: Current docs work
-
- docs/source/conf.py | 143 ++++++++++++++++++++++++----------------------------
- 1 file changed, 65 insertions(+), 78 deletions(-)

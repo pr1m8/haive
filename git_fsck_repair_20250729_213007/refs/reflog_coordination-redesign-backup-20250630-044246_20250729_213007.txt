@@ -1,5 +1,0 @@
-16e83ab4 coordination-redesign-backup-20250630-044246@{2025-06-30 09:21:34 -0400}: commit: Add comprehensive consistency & coherency analysis
-d6e09137 coordination-redesign-backup-20250630-044246@{2025-06-30 08:19:32 -0400}: commit: Documentation fixes and project updates
-a0239745 coordination-redesign-backup-20250630-044246@{2025-06-30 07:54:53 -0400}: commit: Fix documentation build and update agent showcase
-19311711 coordination-redesign-backup-20250630-044246@{2025-06-30 07:39:04 -0400}: commit: Redesign root as coordination layer with granular installation
-d7bcd108 coordination-redesign-backup-20250630-044246@{2025-06-30 04:42:46 -0400}: branch: Created from HEAD
