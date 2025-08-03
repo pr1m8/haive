@@ -1,17 +1,15 @@
+---
 version: 2
-
 build:
   os: ubuntu-22.04
   tools:
     python: "3.12"
-
 python:
   install:
     - method: poetry
-      path: "." # Ensure this is the directory with your pyproject.toml
+      path: . # Ensure this is the directory with your pyproject.toml
   system_packages: false
   extra_requirements:
     - docs # Only if you defined `docs` extras in poetry
-
 sphinx:
   configuration: docs/source/conf.py # Not docs/source
