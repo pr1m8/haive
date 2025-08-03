@@ -1,9 +1,0 @@
-commit 62a2b3b03b6e20748f5111a8e14168b882a4ca7f
-Merge: a5239ed5 9bf98e60
-Author: pr1m8 <william.astley@algebraicwealth.com>
-Date:   Mon Jul 28 04:51:46 2025 -0400
-
-    On feature/fix_everything: Safety backup before haive-core documentation fixes 20250728_045146
-
- project_docs/documentation_fix/MASTER_PLAN.md | 101 ++++++++++++++++++++------
- 1 file changed, 77 insertions(+), 24 deletions(-)

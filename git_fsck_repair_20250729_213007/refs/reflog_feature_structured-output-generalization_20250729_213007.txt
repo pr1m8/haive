@@ -1,8 +1,0 @@
-090d8f4f feature/structured-output-generalization@{2025-07-08 14:48:57 -0400}: commit: fix: Improve MessageList serialization with proper BaseMessage checking and engine metadata preservation
-a74e4d57 feature/structured-output-generalization@{2025-07-07 21:28:32 -0400}: commit: feat: Add comprehensive documentation for games, engines, and models
-2b205d21 feature/structured-output-generalization@{2025-07-07 19:22:46 -0400}: commit: fix: Consolidate API documentation structure and apply showcase styling
-b1606e46 feature/structured-output-generalization@{2025-07-07 19:19:55 -0400}: commit: docs: Add Claude memory documentation system
-58f3ff4c feature/structured-output-generalization@{2025-07-07 19:15:33 -0400}: commit: fix: Add exclusions for virtual environments and discovered_readmes
-8765cf2e feature/structured-output-generalization@{2025-07-07 19:13:09 -0400}: commit: fix: Remove discovered_readmes bloat and create missing page template
-3c4390d9 feature/structured-output-generalization@{2025-07-07 14:13:59 -0400}: commit: feat: Add structured output generalization for agents
-941b43fc feature/structured-output-generalization@{2025-07-07 14:03:10 -0400}: branch: Created from HEAD

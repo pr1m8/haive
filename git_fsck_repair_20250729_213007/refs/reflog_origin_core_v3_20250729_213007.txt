@@ -1,1 +1,0 @@
-37a0bebf refs/remotes/origin/core_v3@{2025-06-16 12:57:08 -0400}: pull --rebase: storing head
