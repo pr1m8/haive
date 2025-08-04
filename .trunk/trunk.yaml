@@ -71,6 +71,27 @@ actions:
       description: Invoke pre-commit against changed files
       triggers:
         - git_hooks: [pre-commit]
-      run: pre-commit run --files $TRUNK_CHANGED_FILES
+      run: |
+        FILES=$(git diff --cached --name-only | grep -v '^$' || true)
+        if [ -z "$FILES" ]; then
+          echo "No staged files to lint with pre-commit"
+          exit 0
+        fi
+        pre-commit run --files $FILES
       interactive: false
       notify_on_error: false
+
+    - id: trunk-check-pre-push
+      display_name: Trunk check on staged files only
+      description: Run Trunk check only on staged files before pushing
+      triggers:
+        - git_hooks: [pre-push]
+      run: |
+        FILES=$(git diff --cached --name-only | grep -v '^$' || true)
+        if [ -z "$FILES" ]; then
+          echo "No staged files to check with trunk"
+          exit 0
+        fi
+        trunk check --files $FILES
+      interactive: false
+      notify_on_error: true
