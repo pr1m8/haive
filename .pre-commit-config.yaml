@@ -376,13 +376,13 @@ repos:
         stages: [pre-commit]
 
       # 📦 Update Poetry Requirements
-      - id: update-requirements
-        name: Export Poetry requirements to docs/
-        entry: scripts/dev/update_requirements.sh
-        language: system
-        pass_filenames: false
-        files: ^(pyproject\.toml|poetry\.lock)$
-        stages: [pre-commit]
+      #- id: update-requirements
+      #  name: Export Poetry requirements to docs/
+      #  entry: scripts/dev/update_requirements.sh
+      #  language: system
+      #  pass_filenames: false
+      #  files: ^(pyproject\.toml|poetry\.lock)$
+      #  stages: [pre-commit]
 # ===================================================================
 # 📋 Pre-commit Configuration Settings
 # ===================================================================
