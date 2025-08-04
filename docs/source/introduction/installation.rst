@@ -4,9 +4,9 @@ Installation
 Requirements
 ------------
 
-* Python 3.9 or higher
-* Poetry (recommended) or pip
-* Git
+* Python 3.9 or higher*
+* Poetry (recommended) or pip*
+* Git*
 
 Quick Install
 -------------
@@ -26,8 +26,8 @@ Using Poetry (Recommended)
     # Activate the environment
     poetry shell
 
-Using pip
-~~~~~~~~~
+    Using pip
+    ~~~~~~~~~
 
 .. code-block:: bash
 
@@ -36,10 +36,10 @@ Using pip
     cd haive/backend/haive
     pip install -e .
 
-Development Installation
-------------------------
+    Development Installation
+    ------------------------
 
-For development work, install with all extras:
+    For development work, install with all extras:
 
 .. code-block:: bash
 
@@ -49,10 +49,10 @@ For development work, install with all extras:
     # Install pre-commit hooks
     pre-commit install
 
-Package Selection
------------------
+    Package Selection
+    -----------------
 
-You can install specific packages as needed:
+    You can install specific packages as needed:
 
 .. code-block:: bash
 
@@ -68,10 +68,10 @@ You can install specific packages as needed:
     # Everything
     poetry install --all-extras
 
-Configuration
--------------
+    Configuration
+    -------------
 
-Create a `.env` file in your project root:
+    Create a `.env` file in your project root:
 
 .. code-block:: bash
 
@@ -83,10 +83,10 @@ Create a `.env` file in your project root:
     HAIVE_LOG_LEVEL=INFO
     HAIVE_CACHE_DIR=~/.haive/cache
 
-Verification
-------------
+    Verification
+    ------------
 
-Test your installation:
+    Test your installation:
 
 .. code-block:: python
 
@@ -99,16 +99,16 @@ Test your installation:
 
     print("✅ Haive installed successfully!")
 
-Troubleshooting
----------------
+    Troubleshooting
+    ---------------
 
-Common issues and solutions:
+    Common issues and solutions:
 
-**Import Errors**
-  Ensure you're in the correct virtual environment and all packages are installed
+    **Import Errors**
+    Ensure you're in the correct virtual environment and all packages are installed
 
-**Missing Dependencies**
-  Run ``poetry install --all-extras`` to install all optional dependencies
+    **Missing Dependencies**
+    Run ``poetry install --all-extras`` to install all optional dependencies
 
-**API Key Issues**
-  Verify your API keys are set correctly in your environment
+    **API Key Issues**
+    Verify your API keys are set correctly in your environment

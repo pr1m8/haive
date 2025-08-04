@@ -13,7 +13,7 @@ Tool routing refers to how an agent decides which tool(s) to use in response to 
 
 tool routing can be:
 
-1. **LLM-drive***n**: The language model selects tools based on context
+1. **LLM-drive***n**: The language model selects tools based on context**
 
 2.*** **Rule-base***d**: Predetermined logic selects tools based on triggers
 
@@ -38,11 +38,11 @@ The most flexible approach lets the LLM choose tools:
     # The LLM will decide which tool(s) to use
     response = agent.run("I need to know if I should take an umbrella tomorrow in Seattle")
 
-Rule-Based Tool Selection
+    Rule-Based Tool Selection
 
--------------------------
+    -------------------------
 
-For more control, implement rules:
+    For more control, implement rules:
 
 .. code-block:: python
 
@@ -54,7 +54,7 @@ For more control, implement rules:
 
     if "weather" in query or "temperature" in query or "umbrella" in query:
     return {"tool": "weather_tool"}
-    elif "calculate" in query or any(op in query for op in ["+", "-", ***"*", "/"]):
+    elif "calculate" in query or any(op in query for op in ["+", "-", ***"*", "/"]):*
     return {"tool": "calculator"}
     else:
     return {"tool": "web_search"}
@@ -70,11 +70,11 @@ For more control, implement rules:
     graph.add_edge("tool_selector", "calculator", condition=lambda state: state.tool == "calculator")
     graph.add_edge("tool_selector", "web_search", condition=lambda state: state.tool == "web_search")
 
-Tool Filtering and Constraints
+    Tool Filtering and Constraints
 
-------------------------------
+    ------------------------------
 
-Limiting tool access based on context:
+    Limiting tool access based on context:
 
 .. code-block:: python
 
@@ -90,16 +90,16 @@ Limiting tool access based on context:
 
     return all_tools
 
-Dynamic Tool Loading
+    Dynamic Tool Loading
 
---------------------
+    --------------------
 
-Load tools on demand to optimize resource usage:
+    Load tools on demand to optimize resource usage:
 
 .. code-block:: python
 
     class DynamicToolAgent(ReactAgent):
-    def __init__(self,* *args,* **kwargs):
+    def __init__(self,* *args,* **kwargs):**
     super().__init__***(*args,* **kwargs)
     self.tool_registry = {}  # Cache for loaded tools
 
@@ -115,11 +115,11 @@ Load tools on demand to optimize resource usage:
 
     return self.tool_registry.get(tool_name)
 
-Tool Pipelines
+    Tool Pipelines
 
---------------
+    --------------
 
-Chain tools together for complex workflows:
+    Chain tools together for complex workflows:
 
 .. code-block:: python
 
@@ -140,11 +140,11 @@ Chain tools together for complex workflows:
     graph.add_edge("content_filter", "summarizer")
     graph.add_edge("summarizer", "formatter")
 
-Observability and Monitoring
+    Observability and Monitoring
 
-----------------------------
+    ----------------------------
 
-Track tool usage to optimize performance:
+    Track tool usage to optimize performance:
 
 .. code-block:: python
 
@@ -176,13 +176,13 @@ Track tool usage to optimize performance:
     for tool, data in self.tool_usage.items()
     }
 
-Next Steps
+    Next Steps
 
-----------
+    ----------
 
-To further enhance your tool routing capabilities:
+    To further enhance your tool routing capabilities:
 
-- Learn about the :mod:`haive.core.graph` system for complex routing logic
+    - Learn about the :mod:`haive.core.graph` system for complex routing logic
 
-- Explore :doc:`advanced_patterns` for sophisticated agent architectures
-- Check out :doc:`performance` for optimizing tool execution***
+    - Explore :doc:`advanced_patterns` for sophisticated agent architectures
+    - Check out :doc:`performance` for optimizing tool execution***

@@ -4,6 +4,7 @@
 .. currentmodule:: {{ module }}
 
 .. autoclass:: {{ objname }}
+
    :members:
    :show-inheritance:
    :inherited-members:
@@ -12,7 +13,8 @@
    .. rubric:: Examples
    
    {% if fullname.endswith('SimpleAgent') %}
-   .. code-block:: python
+
+.. code-block:: python
 
     from {{ module }} import {{ objname }}
     from haive.core.engine import AugLLMConfig
@@ -30,7 +32,7 @@
     {% endif %}
 
     {% if fullname.endswith('ReactAgent') %}
-   .. code-block:: python
+.. code-block:: python
 
     from {{ module }} import {{ objname }}
     from haive.tools import SearchTool, CalculatorTool
@@ -49,7 +51,7 @@
     {% endif %}
 
     {% if 'RAG' in fullname %}
-   .. code-block:: python
+.. code-block:: python
 
     from {{ module }} import {{ objname }}
     from haive.core.retrieval import VectorRetriever
@@ -68,7 +70,7 @@
     {% endif %}
 
     {% if 'Conversation' in fullname or 'Debate' in fullname %}
-   .. code-block:: python
+.. code-block:: python
 
     from {{ module }} import {{ objname }}
 
@@ -90,7 +92,7 @@
     {% if objname != 'Agent' and objname != 'GenericAgent' %}
     To visualize this agent's execution graph:
 
-   .. code-block:: python
+.. code-block:: python
 
     # Visualize the agent's graph
     agent.visualize_graph("{{ objname.lower() }}_graph.png")

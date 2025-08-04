@@ -39,8 +39,8 @@ Basic Conversation
 
     asyncio.run(run_conversation())
 
-Structured Output
-~~~~~~~~~~~~~~~~~
+    Structured Output
+    ~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -70,11 +70,11 @@ Structured Output
 
     review = asyncio.run(get_review())
 
-ReAct Agent Examples
---------------------
+    ReAct Agent Examples
+    --------------------
 
-Web Research
-~~~~~~~~~~~~
+    Web Research
+    ~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -107,8 +107,8 @@ Web Research
 
     result = asyncio.run(run_research())
 
-Code Analysis
-~~~~~~~~~~~~~
+    Code Analysis
+    ~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -132,11 +132,11 @@ Code Analysis
 
     analysis = asyncio.run(analyze_code())
 
-RAG Agent Examples
-------------------
+    RAG Agent Examples
+    ------------------
 
-Document Q&A
-~~~~~~~~~~~~
+    Document Q&A
+    ~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -173,8 +173,8 @@ Document Q&A
 
     answer = asyncio.run(get_answer())
 
-Adaptive RAG
-~~~~~~~~~~~~
+    Adaptive RAG
+    ~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -201,11 +201,11 @@ Adaptive RAG
 
     result = asyncio.run(run_adaptive())
 
-Conversation Agent Examples
----------------------------
+    Conversation Agent Examples
+    ---------------------------
 
-Debate Simulation
-~~~~~~~~~~~~~~~~~
+    Debate Simulation
+    ~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -231,8 +231,8 @@ Debate Simulation
 
     result = asyncio.run(run_debate())
 
-Collaborative Problem Solving
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Collaborative Problem Solving
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -274,11 +274,11 @@ Collaborative Problem Solving
 
     solution = asyncio.run(run_collaboration())
 
-Multi-Agent Examples
---------------------
+    Multi-Agent Examples
+    --------------------
 
-Research Pipeline
-~~~~~~~~~~~~~~~~~
+    Research Pipeline
+    ~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -319,8 +319,8 @@ Research Pipeline
 
     article = asyncio.run(run_pipeline())
 
-Supervisor Pattern
-~~~~~~~~~~~~~~~~~~
+    Supervisor Pattern
+    ~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -348,11 +348,11 @@ Supervisor Pattern
 
     result = asyncio.run(run_supervisor())
 
-Advanced Examples
------------------
+    Advanced Examples
+    -----------------
 
-Self-Healing Code Agent
-~~~~~~~~~~~~~~~~~~~~~~~
+    Self-Healing Code Agent
+    ~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -378,8 +378,8 @@ Self-Healing Code Agent
 
     fixed_code = asyncio.run(fix_code())
 
-Tree of Thoughts Reasoning
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Tree of Thoughts Reasoning
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -405,11 +405,11 @@ Tree of Thoughts Reasoning
 
     solution = asyncio.run(solve_problem())
 
-Visualization Examples
-----------------------
+    Visualization Examples
+    ----------------------
 
-Agent Graph Visualization
-~~~~~~~~~~~~~~~~~~~~~~~~~
+    Agent Graph Visualization
+    ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -426,8 +426,8 @@ Agent Graph Visualization
     graph = agent.graph
     graph.view()  # Opens in default viewer
 
-State Flow Visualization
-~~~~~~~~~~~~~~~~~~~~~~~~
+    State Flow Visualization
+    ~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -442,8 +442,8 @@ State Flow Visualization
     highlight_path=True
     )
 
-Performance Monitoring
-----------------------
+    Performance Monitoring
+    ----------------------
 
 .. code-block:: python
 
@@ -473,18 +473,18 @@ Performance Monitoring
 
     result = asyncio.run(run_with_monitoring())
 
-Best Practices
---------------
+    Best Practices
+    --------------
 
-1. **State Management**: Always use thread_id for conversation continuity
-2. **Error Handling**: Implement proper error handling for production use
-3. **Resource Management**: Set appropriate timeouts and token limits
-4. **Monitoring**: Enable monitoring for production deployments
-5. **Testing**: Write comprehensive tests for custom agents
+    1. **State Management**: Always use thread_id for conversation continuity
+    2. **Error Handling**: Implement proper error handling for production use
+    3. **Resource Management**: Set appropriate timeouts and token limits
+    4. **Monitoring**: Enable monitoring for production deployments
+    5. **Testing**: Write comprehensive tests for custom agents
 
-Next Steps
-----------
+    Next Steps
+    ----------
 
-- Explore the :doc:`api_reference` for detailed documentation
-- Check out :doc:`showcase` for production examples
-- Read the :doc:`../guides/building_agents` guide to create custom agents
+    - Explore the :doc:`api_reference` for detailed documentation
+    - Check out :doc:`showcase` for production examples
+    - Read the :doc:`../guides/building_agents` guide to create custom agents

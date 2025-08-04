@@ -10,15 +10,22 @@ This page should have normal content.
 
 .. raw:: html
 
-    <div class="test-container">
-        <h3>Simple Test Visualization</h3>
-        <p>This is a simple test of raw HTML content.</p>
-        
-        <div id="test-graph" 
-             class="agent-graph-container"
-             data-agent-graph='{"nodes": [{"id": "start", "type": "start", "label": "START"}], "edges": []}'>
-        </div>
-    </div>
+   .. raw:: html
+
+   <div class="test-container">
+   <h3>Simple Test Visualization</h3>
+   <p>This is a simple test of raw HTML content.</p>
+
+.. raw:: html
+
+   <div id="test-graph" 
+   class="agent-graph-container"
+   data-agent-graph='{"nodes": [{"id": "start", "type": "start", "label": "START"}], "edges": []}'>
+   </div>
+
+.. raw:: html
+
+   </div>
 
 End of Test
 -----------

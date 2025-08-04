@@ -4,9 +4,11 @@ Agent Demos
 Interactive demonstrations of all Haive agents with live execution and state tracking.
 
 .. grid:: 1 2 3 3
+
    :gutter: 3
 
    .. grid-item-card:: 🔍 Discovery Agent
+
       :link: discovery-demo
       :link-type: doc
 
@@ -15,6 +17,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Analysis
 
    .. grid-item-card:: 🤔 Reasoning & Critique Agent
+
       :link: reasoning_and_critique-demo
       :link-type: doc
 
@@ -23,6 +26,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Analysis
 
    .. grid-item-card:: ✍️ Wiki Writer Agent
+
       :link: wiki_writer-demo
       :link-type: doc
 
@@ -31,6 +35,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Content
 
    .. grid-item-card:: 🔄 React Agent
+
       :link: react-demo
       :link-type: doc
 
@@ -39,6 +44,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Core
 
    .. grid-item-card:: 💬 Simple Agent
+
       :link: simple-demo
       :link-type: doc
 
@@ -47,6 +53,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Core
 
    .. grid-item-card:: 📊 Structured Output
+
       :link: structuredoutput-demo
       :link-type: doc
 
@@ -55,6 +62,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Data
 
    .. grid-item-card:: 📊 Structured Output Agent
+
       :link: structured_output-demo
       :link-type: doc
 
@@ -63,6 +71,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Data
 
    .. grid-item-card:: 🔧 Self-Healing Code Agent
+
       :link: self_healing_code-demo
       :link-type: doc
 
@@ -71,6 +80,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Development
 
    .. grid-item-card:: 💭 Conversation Agent
+
       :link: conversation-demo
       :link-type: doc
 
@@ -79,6 +89,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Dialogue
 
    .. grid-item-card:: 📄 Document Agent
+
       :link: document-demo
       :link-type: doc
 
@@ -87,6 +98,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Document Processing
 
    .. grid-item-card:: 🔬 Research Agent
+
       :link: research-demo
       :link-type: doc
 
@@ -95,6 +107,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Investigation
 
    .. grid-item-card:: 🎯 Adaptive RAG
+
       :link: adaptiverag-demo
       :link-type: doc
 
@@ -103,6 +116,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Knowledge
 
    .. grid-item-card:: 📚 Base RAG
+
       :link: baserag-demo
       :link-type: doc
 
@@ -111,6 +125,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Knowledge
 
    .. grid-item-card:: 📚 RAG Agent
+
       :link: rag-demo
       :link-type: doc
 
@@ -119,6 +134,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Knowledge
 
    .. grid-item-card:: 🧠 Long-Term Memory Agent
+
       :link: long_term_memory-demo
       :link-type: doc
 
@@ -127,6 +143,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Memory
 
    .. grid-item-card:: 👔 Dynamic Supervisor
+
       :link: dynamic_supervisor-demo
       :link-type: doc
 
@@ -135,6 +152,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Orchestration
 
    .. grid-item-card:: 👨‍💼 Supervisor Agent
+
       :link: supervisor-demo
       :link-type: doc
 
@@ -143,6 +161,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Orchestration
 
    .. grid-item-card:: 📈 Task Analysis Agent
+
       :link: task_analysis-demo
       :link-type: doc
 
@@ -151,6 +170,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Planning
 
    .. grid-item-card:: 🪞 Reflection Agent
+
       :link: reflection-demo
       :link-type: doc
 
@@ -159,6 +179,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Quality
 
    .. grid-item-card:: 📋 Planning Agent
+
       :link: planning-demo
       :link-type: doc
 
@@ -167,6 +188,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Strategy
 
    .. grid-item-card:: 🔗 Chain Agent
+
       :link: chain-demo
       :link-type: doc
 
@@ -175,6 +197,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
       **Category**: Workflow
 
    .. grid-item-card:: ➡️ Sequential Agent
+
       :link: sequential-demo
       :link-type: doc
 
@@ -182,9 +205,8 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       **Category**: Workflow
 
-
-
 .. toctree::
+
    :maxdepth: 1
    :hidden:
 

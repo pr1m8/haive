@@ -1,17 +1,31 @@
 {{ name }} Example
-{{ "=" * (name|length + 8) }}
+{{ "=" * (name|length + 8) }}*
 
 .. raw:: html
 
-    <div class="agent-example-container">
-        <div class="agent-header">
-            <div class="agent-icon">🤖</div>
-            <div class="agent-info">
-                <h2>{{ name }} Usage Example</h2>
-                <p class="agent-description">{{ description }}</p>
-            </div>
-        </div>
-    </div>
+   .. raw:: html
+
+   <div class="agent-example-container">
+
+.. raw:: html
+
+   <div class="agent-header">
+
+.. raw:: html
+
+   <div class="agent-icon">🤖</div>
+
+.. raw:: html
+
+   <div class="agent-info">
+   <h2>{{ name }} Usage Example</h2>
+   <p class="agent-description">{{ description }}</p>
+   </div>
+
+.. raw:: html
+
+   </div>
+   </div>
 
 Overview
 --------
@@ -57,89 +71,101 @@ Basic Example
     # Run the example
     result = asyncio.run(run_example())
 
-{% if advanced_example %}
-Advanced Example
-----------------
+    {% if advanced_example %}
+    Advanced Example
+    ----------------
 
-{{ advanced_example }}
-{% endif %}
+    {{ advanced_example }}
+    {% endif %}
 
-{% if configuration_options %}
-Configuration Options
----------------------
+    {% if configuration_options %}
+    Configuration Options
+    ---------------------
 
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 60
+    .. list-table::
 
-   * - Parameter
+    :header-rows: 1
+    :widths: 20 20 60
+
+    * - Parameter*
+
      - Type
      - Description
-{% for option in configuration_options %}
-   * - {{ option.name }}
+
+    {% for option in configuration_options %}
+
+    * - {{ option.name }}*
+
      - {{ option.type }}
      - {{ option.description }}
-{% endfor %}
-{% endif %}
 
-Graph Visualization
--------------------
+    {% endfor %}
 
-.. raw:: html
+    {% endif %}
+
+    Graph Visualization
+    -------------------
+
+    .. raw:: html
+
+    .. raw:: html
 
     <div id="agent-graph-{{ name|lower }}" class="agent-graph-container">
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            new AgentGraphVisualizer('agent-graph-{{ name|lower }}', {
-                nodes: [
-                    {id: 'start', label: 'Start', type: 'input'},
-                    {id: 'process', label: '{{ name }}', type: 'agent'},
-                    {id: 'end', label: 'Output', type: 'output'}
-                ],
-                edges: [
-                    {from: 'start', to: 'process'},
-                    {from: 'process', to: 'end'}
-                ],
-                type: '{{ name }}'
-            });
-        });
-        </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    new AgentGraphVisualizer('agent-graph-{{ name|lower }}', {
+    nodes: [
+    {id: 'start', label: 'Start', type: 'input'},
+    {id: 'process', label: '{{ name }}', type: 'agent'},
+    {id: 'end', label: 'Output', type: 'output'}
+    ],
+    edges: [
+    {from: 'start', to: 'process'},
+    {from: 'process', to: 'end'}
+    ],
+    type: '{{ name }}'
+    });
+    });
+    </script>
     </div>
 
-{% if state_schema %}
-State Schema
-------------
+    {% if state_schema %}
+    State Schema
+    ------------
 
-.. autoclass:: {{ state_schema }}
-   :members:
-   :undoc-members:
-   :show-inheritance:
-{% endif %}
+    .. autoclass:: {{ state_schema }}
 
-Best Practices
---------------
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
-{% for practice in best_practices %}
-{{ loop.index }}. **{{ practice.title }}**: {{ practice.description }}
-{% endfor %}
+    {% endif %}
 
-Related Examples
-----------------
+    Best Practices
+    --------------
 
-{% for related in related_examples %}
-- :doc:`{{ related.path }}` - {{ related.description }}
-{% endfor %}
+    {% for practice in best_practices %}
+    {{ loop.index }}. **{{ practice.title }}**: {{ practice.description }}
+    {% endfor %}
 
-API Reference
--------------
+    Related Examples
+    ----------------
 
-.. autoclass:: {{ module_path }}.{{ name }}
-   :members:
-   :undoc-members:
-   :show-inheritance:
+    {% for related in related_examples %}
+    - :doc:`{{ related.path }}` - {{ related.description }}
+    {% endfor %}
 
-.. seealso::
+    API Reference
+    -------------
 
-   - :doc:`../api/{{ module_path|replace('.', '/') }}/index`
-   - :doc:`../guides/building_agents`
-   - :doc:`../guides/agent_patterns`
+    .. autoclass:: {{ module_path }}.{{ name }}
+
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+    .. seealso::
+
+    - :doc:`../api/{{ module_path|replace('.', '/') }}/index`
+    - :doc:`../guides/building_agents`
+    - :doc:`../guides/agent_patterns`

@@ -24,9 +24,9 @@ Basic Template
     self,
     agents: List[Agent],
     custom_param: str,
-    **kwargs
+    **kwargs**
     ):
-    super().__init__(agents=agents, **kwargs)
+    super().__init__(agents=agents, **kwargs)**
     self.custom_param = custom_param
     self.custom_state = {}
 
@@ -54,10 +54,10 @@ Basic Template
     # Add your custom processing
     self.update_custom_state(message)
 
-Example: Socratic Dialogue Pattern
-----------------------------------
+    Example: Socratic Dialogue Pattern
+    ----------------------------------
 
-A conversation pattern where one agent guides another through questions.
+    A conversation pattern where one agent guides another through questions.
 
 .. code-block:: python
 
@@ -70,12 +70,12 @@ A conversation pattern where one agent guides another through questions.
     student: Agent,
     topic: str,
     learning_objective: str,
-    **kwargs
+    **kwargs**
     ):
     super().__init__(
     agents=[teacher, student],
     topic=topic,
-    **kwargs
+    **kwargs**
     )
     self.teacher = teacher
     self.student = student
@@ -134,7 +134,7 @@ A conversation pattern where one agent guides another through questions.
     "therefore"
     ]
     score = sum(ind in response.lower() for ind in indicators)
-    return min(self.understanding_level + (score * 0.1), 1.0)
+    return min(self.understanding_level + (score * 0.1), 1.0)*
 
     async def should_end_conversation(self) -> bool:
     """End when objective is reached or max turns."""
@@ -145,7 +145,7 @@ A conversation pattern where one agent guides another through questions.
     return True
     return await super().should_end_conversation()
 
-**Usage Example:**
+    **Usage Example:**
 
 .. code-block:: python
 
@@ -170,10 +170,10 @@ A conversation pattern where one agent guides another through questions.
 
     result = await dialogue.run()
 
-Example: Negotiation Pattern
-----------------------------
+    Example: Negotiation Pattern
+    ----------------------------
 
-Multi-party negotiation with offers and counteroffers.
+    Multi-party negotiation with offers and counteroffers.
 
 .. code-block:: python
 
@@ -185,12 +185,12 @@ Multi-party negotiation with offers and counteroffers.
     parties: Dict[str, Agent],
     negotiation_subject: str,
     initial_positions: Dict[str, float],
-    **kwargs
+    **kwargs**
     ):
     super().__init__(
     agents=list(parties.values()),
     topic=f"Negotiating {negotiation_subject}",
-    **kwargs
+    **kwargs**
     )
     self.parties = parties
     self.positions = initial_positions.copy()
@@ -264,7 +264,7 @@ Multi-party negotiation with offers and counteroffers.
     return True
 
     # Detect deadlock
-    if len(self.offers) > len(self.agents) * 3:
+    if len(self.offers) > len(self.agents) * 3:*
     recent_offers = [o['amount'] for o in self.offers[-6:]]
     if len(set(recent_offers)) <= 2:
     await self.add_system_message("Negotiation deadlocked.")
@@ -272,10 +272,10 @@ Multi-party negotiation with offers and counteroffers.
 
     return await super().should_end_conversation()
 
-Example: Progressive Disclosure Pattern
----------------------------------------
+    Example: Progressive Disclosure Pattern
+    ---------------------------------------
 
-Information revealed gradually based on trust/progress.
+    Information revealed gradually based on trust/progress.
 
 .. code-block:: python
 
@@ -288,11 +288,11 @@ Information revealed gradually based on trust/progress.
     investigators: List[Agent],
     secret_info: List[str],
     trust_threshold: float = 0.7,
-    **kwargs
+    **kwargs**
     ):
     super().__init__(
     agents=[informant] + investigators,
-    **kwargs
+    **kwargs**
     )
     self.informant = informant
     self.investigators = investigators
@@ -336,17 +336,17 @@ Information revealed gradually based on trust/progress.
     ["demand", "tell", "now", "must"]):
     self.trust_level = max(self.trust_level - 0.1, 0.0)
 
-Advanced Patterns
------------------
+    Advanced Patterns
+    -----------------
 
-**1. Parallel Conversations**
+    **1. Parallel Conversations**
 
 .. code-block:: python
 
     class ParallelConversations(BaseConversation):
     """Multiple simultaneous conversation threads."""
 
-    def __init__(self, thread_configs: List[Dict], **kwargs):
+    def __init__(self, thread_configs: List[Dict], **kwargs):**
     # Initialize multiple conversation threads
     self.threads = [
     self.create_thread(config) 
@@ -356,56 +356,59 @@ Advanced Patterns
     async def run_parallel(self):
     """Run all threads concurrently."""
     import asyncio
-    results = await asyncio.gather(*[
+    results = await asyncio.gather(*[*
     thread.run() for thread in self.threads
     ])
     return self.merge_results(results)
 
-**2. Hierarchical Conversations**
+    **2. Hierarchical Conversations**
 
 .. code-block:: python
 
     class HierarchicalConversation(BaseConversation):
     """Conversations with reporting structure."""
 
-    def __init__(self, hierarchy: Dict[str, List[str]], **kwargs):
+    def __init__(self, hierarchy: Dict[str, List[str]], **kwargs):**
     self.hierarchy = hierarchy
     self.approval_needed = []
     self.decisions = {}
 
-**3. Time-Based Patterns**
+    **3. Time-Based Patterns**
 
 .. code-block:: python
 
     class TimeBasedConversation(BaseConversation):
     """Conversations with time-sensitive elements."""
 
-    def __init__(self, schedule: Dict[int, str], **kwargs):
+    def __init__(self, schedule: Dict[int, str], **kwargs):**
     self.schedule = schedule  # turn -> event
     self.time_pressure = False
 
-Best Practices for Custom Patterns
-----------------------------------
+    Best Practices for Custom Patterns
+    ----------------------------------
 
-1. **Clear State Management**
+    1. **Clear State Management**
+
    
-   - Track conversation-specific state
-   - Use dataclasses for complex state
-   - Implement state persistence if needed
+    - Track conversation-specific state
+    - Use dataclasses for complex state
+    - Implement state persistence if needed
 
-2. **Flexible Configuration**
+    2. **Flexible Configuration**
+
    
-   - Use keyword arguments for extensibility
-   - Provide sensible defaults
-   - Allow runtime configuration changes
+    - Use keyword arguments for extensibility
+    - Provide sensible defaults
+    - Allow runtime configuration changes
 
-3. **Robust Error Handling**
+    3. **Robust Error Handling**
+
    
-   - Handle agent failures gracefully
-   - Implement timeout mechanisms
-   - Provide fallback behaviors
+    - Handle agent failures gracefully
+    - Implement timeout mechanisms
+    - Provide fallback behaviors
 
-4. **Testing Your Pattern**
+    4. **Testing Your Pattern**
 
 .. code-block:: python
 
@@ -424,7 +427,7 @@ Best Practices for Custom Patterns
     assert len(result['messages']) > 0
     assert conv.custom_state['some_metric'] > 0
 
-5. **Documentation**
+    5. **Documentation**
 
 .. code-block:: python
 
@@ -444,12 +447,12 @@ Best Practices for Custom Patterns
     ...     special_param="value"
     ... )
     >>> result = await conv.run()
-    """
+"""""""""""""""""""""""""""""""""
 
-Publishing Your Pattern
------------------------
+    Publishing Your Pattern
+    -----------------------
 
-1. **Package Structure**
+    1. **Package Structure**
 
 .. code-block:: text
 
@@ -463,7 +466,7 @@ Publishing Your Pattern
     ├── examples/
     └── README.md
 
-2. **Registration**
+    2. **Registration**
 
 .. code-block:: python
 
@@ -473,7 +476,7 @@ Publishing Your Pattern
 
     register_pattern("my_pattern", MyCustomConversation)
 
-3. **Usage**
+    3. **Usage**
 
 .. code-block:: python
 
@@ -485,10 +488,10 @@ Publishing Your Pattern
     custom_param="value"
     )
 
-See Also
---------
+    See Also
+    --------
 
-- :doc:`index` - Conversation patterns overview
-- :doc:`/api/haive-agents` - Base classes documentation
-- :doc:`/guides/building_agents` - Agent development guide
-- :doc:`/guides/testing` - Testing conversational agents
+    - :doc:`index` - Conversation patterns overview
+    - :doc:`/api/haive-agents` - Base classes documentation
+    - :doc:`/guides/building_agents` - Agent development guide
+    - :doc:`/guides/testing` - Testing conversational agents

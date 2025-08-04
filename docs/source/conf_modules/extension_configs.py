@@ -173,9 +173,9 @@ def get_fulltoc_config() -> dict[str, Any]:
 def get_autodoc_typehints_config() -> dict[str, Any]:
     """Configuration for sphinx-autodoc-typehints to handle generics."""
     return {
-        # CRITICAL: Try alternative approach for Agent generic types
-        "autodoc_typehints": "none",  # Disable all typehints to bypass generic issues entirely
-        "typehints_formatter": "short",  # Use modern Python 3.9+ style
+        # Enable type hints in descriptions rather than signatures
+        "autodoc_typehints": "description",  # Show type hints in descriptions
+        "typehints_formatter": None,  # Use default formatter
         "typehints_fully_qualified": False,  # Use short names
         "always_use_bars_union": True,  # Use | instead of Union for Python 3.10+ style
         "autodoc_typehints_description_target": "documented",
@@ -195,10 +195,10 @@ def get_autodoc_typehints_config() -> dict[str, Any]:
         ],
         # Additional typehints settings to handle generics
         "typehints_defaults": "comma",
-        "always_document_param_types": False,  # Don't force parameter type documentation
-        "typehints_use_signature": False,  # Disable signature type info to avoid generics
+        "always_document_param_types": True,  # Document parameter types
+        "typehints_use_signature": True,  # Include type info in signatures
         "simplify_optional_unions": True,  # Simplify complex union types
-        "typehints_document_rtype": False,  # Don't document return types
+        "typehints_document_rtype": True,  # Document return types
     }
 
 

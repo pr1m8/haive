@@ -11,6 +11,7 @@ A breaking tech news story with multiple perspectives and reactions.
 **Full Example Code:**
 
 .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/social_media/example.py
+
    :language: python
    :pyobject: example_tech_news_discussion
    :caption: Tech News Social Media Simulation
@@ -21,7 +22,7 @@ A breaking tech news story with multiple perspectives and reactions.
 
     poetry run python packages/haive-agents/src/haive/agents/conversation/social_media/example.py
 
-**Sample Output:**
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -113,19 +114,20 @@ A breaking tech news story with multiple perspectives and reactions.
     - Share Velocity: 1,234 shares/minute
     - Comment Ratio: 1:5 (high discussion)
 
-Product Launch Campaign
------------------------
+    Product Launch Campaign
+    -----------------------
 
-A coordinated product launch with influencers and community reactions.
+    A coordinated product launch with influencers and community reactions.
 
-**Full Example Code:**
+    **Full Example Code:**
 
-.. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/social_media/example.py
-   :language: python
-   :pyobject: example_product_launch
-   :caption: Product Launch Social Campaign
+    .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/social_media/example.py
 
-**Sample Output:**
+    :language: python
+    :pyobject: example_product_launch
+    :caption: Product Launch Social Campaign
+
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -198,12 +200,12 @@ A coordinated product launch with influencers and community reactions.
     Join waitlist for early access!
     👍 2,345  💬 234  ⏰ 4 hours ago
 
-Community Drama Example
------------------------
+    Community Drama Example
+    -----------------------
 
-A controversial topic sparking heated community discussion.
+    A controversial topic sparking heated community discussion.
 
-**Example Code:**
+    **Example Code:**
 
 .. code-block:: python
 
@@ -251,7 +253,7 @@ A controversial topic sparking heated community discussion.
 
     result = drama.simulate(hours=6)
 
-**Sample Output:**
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -275,17 +277,17 @@ A controversial topic sparking heated community discussion.
     a "classic mode" for people who liked the old balance?
     👍 4.5K  💬 123
 
-Key Features Demonstrated
--------------------------
+    Key Features Demonstrated
+    -------------------------
 
-1. **Platform Dynamics**: Different behavior on different platforms
-2. **Viral Mechanics**: Content spread based on engagement
-3. **User Types**: Influencers, trolls, brands, regular users
-4. **Reactions**: Likes, shares, comments with threading
-5. **Metrics**: Real-time engagement tracking
+    1. **Platform Dynamics**: Different behavior on different platforms
+    2. **Viral Mechanics**: Content spread based on engagement
+    3. **User Types**: Influencers, trolls, brands, regular users
+    4. **Reactions**: Likes, shares, comments with threading
+    5. **Metrics**: Real-time engagement tracking
 
-Configuration Options
----------------------
+    Configuration Options
+    ---------------------
 
 .. code-block:: python
 
@@ -305,28 +307,28 @@ Configuration Options
     toxicity_filter=True,        # Auto-hide toxic content
     )
 
-Best Practices
---------------
+    Best Practices
+    --------------
 
-1. **Realistic Personas**: Create diverse, believable social media personalities
-2. **Platform Authenticity**: Match platform-specific behaviors and constraints
-3. **Engagement Patterns**: Model realistic timing and interaction patterns
-4. **Content Variety**: Mix text, media, links, and emoji
-5. **Metrics Tracking**: Monitor reach, engagement, and sentiment
+    1. **Realistic Personas**: Create diverse, believable social media personalities
+    2. **Platform Authenticity**: Match platform-specific behaviors and constraints
+    3. **Engagement Patterns**: Model realistic timing and interaction patterns
+    4. **Content Variety**: Mix text, media, links, and emoji
+    5. **Metrics Tracking**: Monitor reach, engagement, and sentiment
 
-Common Use Cases
-----------------
+    Common Use Cases
+    ----------------
 
-- **Marketing Simulation**: Test campaign strategies before launch
-- **Crisis Management**: Practice handling negative viral events
-- **Community Building**: Understand discussion dynamics
-- **Trend Analysis**: Study how topics spread and evolve
-- **Training**: Teach social media best practices
+    - **Marketing Simulation**: Test campaign strategies before launch
+    - **Crisis Management**: Practice handling negative viral events
+    - **Community Building**: Understand discussion dynamics
+    - **Trend Analysis**: Study how topics spread and evolve
+    - **Training**: Teach social media best practices
 
-Advanced Features
------------------
+    Advanced Features
+    -----------------
 
-**Influencer Networks**
+    **Influencer Networks**
 
 .. code-block:: python
 
@@ -337,7 +339,7 @@ Advanced Features
     follower_overlap=0.3
     )
 
-**Trend Modeling**
+    **Trend Modeling**
 
 .. code-block:: python
 
@@ -348,7 +350,7 @@ Advanced Features
     decay_rate=0.8
     )
 
-**Platform Algorithms**
+    **Platform Algorithms**
 
 .. code-block:: python
 
@@ -361,8 +363,8 @@ Advanced Features
     )
     )
 
-Analytics and Insights
-----------------------
+    Analytics and Insights
+    ----------------------
 
 .. code-block:: python
 
@@ -383,10 +385,10 @@ Analytics and Insights
     conversation.create_network_graph()
     conversation.generate_wordcloud()
 
-See Also
---------
+    See Also
+    --------
 
-- :doc:`directed` - Orchestrated conversations
-- :doc:`debate` - Structured argumentation
-- :doc:`examples/marketing` - Marketing campaign examples
-- :doc:`../api_reference` - Full API documentation
+    - :doc:`directed` - Orchestrated conversations
+    - :doc:`debate` - Structured argumentation
+    - :doc:`examples/marketing` - Marketing campaign examples
+    - :doc:`../api_reference` - Full API documentation

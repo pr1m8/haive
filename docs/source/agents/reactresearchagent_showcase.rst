@@ -9,18 +9,17 @@ A research agent using ReAct pattern with tool integration
 
 **Features:**
 
-* Streaming Support: ✅ Yes
-* Graph Visualization: ✅ Yes
-* Steps Captured: 5
-
+* Streaming Support: ✅ Yes*
+* Graph Visualization: ✅ Yes*
+* Steps Captured: 5*
 
 .. figure:: ../../captures/ReactResearchAgent_graph.png
+
    :alt: ReactResearchAgent Agent Graph
    :align: center
    :width: 80%
    
    Agent Architecture Graph
-
 
 Interactive Example
 -------------------
@@ -40,33 +39,31 @@ Researching solar panel technology developments
     "max_iterations": 5
     }
 
-**Result:** ✅ **Success**
+    **Result:** ✅ **Success**
 
-The agent completed successfully.
+    The agent completed successfully.
 
-**Execution Time:** 0.00 seconds
+    **Execution Time:** 0.00 seconds
 
-**Steps:** 5 processing steps
+    **Steps:** 5 processing steps
 
+    Live Execution Capture
+    ----------------------
 
-Live Execution Capture
-----------------------
+    Below is the complete execution trace captured from a live run of this agent:
 
-Below is the complete execution trace captured from a live run of this agent:
+    .. note::
 
+    Agent execution capture available at: ../../captures/ReactResearchAgent_36df075d-3abb-4e13-a950-807bdb120004_202506.json
 
-.. note::
+    Technical Details
+    -----------------
 
-   Agent execution capture available at: ../../captures/ReactResearchAgent_36df075d-3abb-4e13-a950-807bdb120004_202506.json
+    **Configuration**
 
-Technical Details
------------------
+    This agent is implemented as a ``ReactAgent`` class.
 
-**Configuration**
-
-This agent is implemented as a ``ReactAgent`` class.
-
-**Input Schema**
+    **Input Schema**
 
 .. code-block:: json
 
@@ -79,7 +76,7 @@ This agent is implemented as a ``ReactAgent`` class.
     "max_iterations": 5
     }
 
-**Output Schema**
+    **Output Schema**
 
 .. code-block:: json
 
@@ -92,14 +89,14 @@ This agent is implemented as a ``ReactAgent`` class.
     ]
     }
 
-**Performance**
+    **Performance**
 
-* Execution Time: 0.00s
-* Status: ✅ Success
-* Steps: 5
+    * Execution Time: 0.00s*
+    * Status: ✅ Success*
+    * Steps: 5*
 
-Usage Example
--------------
+    Usage Example
+    -------------
 
 .. code-block:: python
 
@@ -115,8 +112,8 @@ Usage Example
     for update in agent.stream({"task": "Research the latest developments in solar panel technology", "tools_required": ["web_search", "pdf_analysis"], "max_iterations": 5}):
     print(update)
 
-See Also
---------
+    See Also
+    --------
 
-* :doc:`../index` - Agent Index
-* :doc:`../showcase` - Agent Showcase
+    * :doc:`../index` - Agent Index*
+    * :doc:`../showcase` - Agent Showcase*

@@ -49,11 +49,11 @@ From a Python Script
     print(f"Graph visualization: {paths['graph']}")
     print(f"Documentation page: {paths['documentation']}")
 
-From the Command Line
+    From the Command Line
 
-~~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~~~
 
-Use the provided script to process existing state history files or run agents:
+    Use the provided script to process existing state history files or run agents:
 
 .. code-block:: bash
 
@@ -69,15 +69,15 @@ Use the provided script to process existing state history files or run agents:
     # Run all agents with a custom prompt
     python scripts/generate_agent_docs.py --all --prompt "Explain how you work"
 
-Advanced Usage
+    Advanced Usage
 
---------------
+    --------------
 
-Customizing Visualization
+    Customizing Visualization
 
-~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can create a custom`` ``AgentVisualize``r`` instance with specific output directories:
+    You can create a custom`` ``AgentVisualize``r`` instance with specific output directories:
 
 .. code-block:: python
 
@@ -104,11 +104,11 @@ You can create a custom`` ``AgentVisualize``r`` instance with specific output di
     max_states=5  # Limit to 5 states
     )
 
-Creating Documentation Pages
+    Creating Documentation Pages
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Generate complete documentation pages for agent examples:
+    Generate complete documentation pages for agent examples:
 
 .. code-block:: python
 
@@ -124,15 +124,15 @@ Generate complete documentation pages for agent examples:
     # Create an index page for all examples
     index_path = create_agent_example_index()
 
-Implementation Details
+    Implementation Details
 
-----------------------
+    ----------------------
 
-State History Format
+    State History Format
 
-~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~~
 
-The standard state history format is a JSON file with this structure:
+    The standard state history format is a JSON file with this structure:
 
 .. code-block:: json
 
@@ -155,35 +155,35 @@ The standard state history format is a JSON file with this structure:
     ]
     }
 
-Graph Visualization
+    Graph Visualization
 
-~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~
 
-The utility supports multiple graph formats:
+    The utility supports multiple graph formats:
 
-1. LangGraph Graph objects (using`` ``get_graph(``)``)
+    1. LangGraph Graph objects (using`` ``get_graph(``)``)
 
-2. Graphviz Digraph objects
+    2. Graphviz Digraph objects
 
-3. Dictionary representations of graphs
+    3. Dictionary representations of graphs
 
-Integration with Sphinx
+    Integration with Sphinx
 
------------------------
+    -----------------------
 
-To integrate agent examples into Sphinx documentation:
+    To integrate agent examples into Sphinx documentation:
 
-1. Create an examples directory in your docs:
+    1. Create an examples directory in your docs:
 
-   .. code-block:: bash
+.. code-block:: bash
 
     mkdir -p docs/source/agents/examples
 
-2. Generate agent examples using the utilities
+    2. Generate agent examples using the utilities
 
-3. Include the examples index in your toctree:
+    3. Include the examples index in your toctree:
 
-   .. code-block:: rst
+.. code-block:: rst
 
     .. toctree::
     :maxdepth: 2
@@ -192,47 +192,53 @@ To integrate agent examples into Sphinx documentation:
     agents/index
     agents/examples/index
 
-Best Practices
+    Best Practices
 
---------------
+    --------------
 
-1. **Consistent Agent Name***s**: Use descriptive, consistent names for agents
+    1. **Consistent Agent Name***s**: Use descriptive, consistent names for agents**
 
-2.*** **Add Metadat***a**: Include relevant metadata with each agent run
+    2.*** **Add Metadat***a**: Include relevant metadata with each agent run
 
-3.*** **Limit State Histor***y**: For documentation, limit to 5-10 states to keep pages concise
-4.*** **Use SVG Graph***s**: SVG format provides the best quality for documentation
-5.*** **Add Description***s**: Provide clear descriptions of what each agent example demonstrates
+    3.*** **Limit State Histor***y**: For documentation, limit to 5-10 states to keep pages concise
+    4.*** **Use SVG Graph***s**: SVG format provides the best quality for documentation
+    5.*** **Add Description***s**: Provide clear descriptions of what each agent example demonstrates
 
-Example Gallery
+    Example Gallery
 
----------------
+    ---------------
 
-Below is a gallery of example agent visualizations:
+    Below is a gallery of example agent visualizations:
 
+    .. card::
 
-   .. card::
       :link: ../agents/examples/simple_agent_example
       :link-type: doc
       :class-card: agent-card
 
       Basic conversational agent example
+
    
-   .. card::
+    .. card::
+
       :link: ../agents/examples/react_agent_example
       :link-type: doc
       :class-card: agent-card
 
       Reasoning and acting agent example
+
    
-   .. card::
+    .. card::
+
       :link: ../agents/examples/rag_agent_example
       :link-type: doc
       :class-card: agent-card
 
       Retrieval-augmented generation example
+
    
-   .. card::
+    .. card::
+
       :link: ../agents/examples/task_analysis_example
       :link-type: doc
       :class-card: agent-card

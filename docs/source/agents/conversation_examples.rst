@@ -11,6 +11,7 @@ A directed conversation uses a moderator agent to orchestrate the discussion bet
 **Example: AI Ethics Panel Discussion**
 
 .. literalinclude:: ../../../../packages/haive-agents/src/haive/agents/conversation/directed/example.py
+
    :language: python
    :caption: directed_conversation_example.py
    :lines: 1-50
@@ -36,12 +37,12 @@ A directed conversation uses a moderator agent to orchestrate the discussion bet
 
     [Discussion continues with directed turns...]
 
-Round Robin Conversation
-------------------------
+    Round Robin Conversation
+    ------------------------
 
-Agents take turns speaking in a fixed order, ensuring equal participation.
+    Agents take turns speaking in a fixed order, ensuring equal participation.
 
-**Example: Team Standup Meeting**
+    **Example: Team Standup Meeting**
 
 .. code-block:: python
 
@@ -68,7 +69,7 @@ Agents take turns speaking in a fixed order, ensuring equal participation.
     import asyncio
     asyncio.run(run_standup())
 
-**Sample Output:**
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -94,19 +95,20 @@ Agents take turns speaking in a fixed order, ensuring equal participation.
     Carol (QA Engineer): Great! I'll also need staging deployed 
     with the latest changes for comprehensive testing.
 
-Collaborative Conversation
---------------------------
+    Collaborative Conversation
+    --------------------------
 
-Agents work together to solve problems or brainstorm ideas.
+    Agents work together to solve problems or brainstorm ideas.
 
-**Example: Product Feature Brainstorming**
+    **Example: Product Feature Brainstorming**
 
-.. literalinclude:: ../../../../packages/haive-agents/src/haive/agents/conversation/collaberative/example.py
-   :language: python
-   :caption: collaborative_brainstorm.py
-   :pyobject: run_brainstorming_session
+    .. literalinclude:: ../../../../packages/haive-agents/src/haive/agents/conversation/collaberative/example.py
 
-**Sample Output:**
+    :language: python
+    :caption: collaborative_brainstorm.py
+    :pyobject: run_brainstorming_session
+
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -129,12 +131,12 @@ Agents work together to solve problems or brainstorm ideas.
 
     [Collaboration continues with ideas building on each other...]
 
-Debate Conversation
--------------------
+    Debate Conversation
+    -------------------
 
-Structured debates with opposing positions and scoring.
+    Structured debates with opposing positions and scoring.
 
-**Example: Technology Debate**
+    **Example: Technology Debate**
 
 .. code-block:: python
 
@@ -172,7 +174,7 @@ Structured debates with opposing positions and scoring.
     import asyncio
     asyncio.run(run_debate())
 
-**Sample Output:**
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -215,19 +217,20 @@ Structured debates with opposing positions and scoring.
     of technological solutions was more comprehensive and grounded in current 
     climate science consensus.
 
-Social Media Conversation
--------------------------
+    Social Media Conversation
+    -------------------------
 
-Simulates social media dynamics with posts, comments, and engagement.
+    Simulates social media dynamics with posts, comments, and engagement.
 
-**Example: Viral Tech News Discussion**
+    **Example: Viral Tech News Discussion**
 
-.. literalinclude:: ../../../../packages/haive-agents/src/haive/agents/conversation/social_media/example.py
-   :language: python
-   :caption: social_media_simulation.py
-   :lines: 1-40
+    .. literalinclude:: ../../../../packages/haive-agents/src/haive/agents/conversation/social_media/example.py
 
-**Sample Output:**
+    :language: python
+    :caption: social_media_simulation.py
+    :lines: 1-40
+
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -265,10 +268,10 @@ Simulates social media dynamics with posts, comments, and engagement.
     - Sentiment: 68% positive, 23% neutral, 9% negative
     - Top Keywords: quantum, breakthrough, skeptical, investment
 
-Running the Examples
---------------------
+    Running the Examples
+    --------------------
 
-All examples can be found in their respective module directories:
+    All examples can be found in their respective module directories:
 
 .. code-block:: bash
 
@@ -287,12 +290,12 @@ All examples can be found in their respective module directories:
     # Social media
     poetry run python packages/haive-agents/src/haive/agents/conversation/social_media/example.py
 
-Creating Custom Conversations
------------------------------
+    Creating Custom Conversations
+    -----------------------------
 
-To create your own conversation agent:
+    To create your own conversation agent:
 
-1. **Inherit from BaseConversation**
+    1. **Inherit from BaseConversation**
 
 .. code-block:: python
 
@@ -311,7 +314,7 @@ To create your own conversation agent:
     # Your logic for when to end
     pass
 
-2. **Implement Turn Management**
+    2. **Implement Turn Management**
 
 .. code-block:: python
 
@@ -330,7 +333,7 @@ To create your own conversation agent:
 
     return message
 
-3. **Add Specialized Features**
+    3. **Add Specialized Features**
 
 .. code-block:: python
 
@@ -344,17 +347,17 @@ To create your own conversation agent:
     topics = self.extract_topics(message)
     self.topic_history.extend(topics)
 
-Best Practices
---------------
+    Best Practices
+    --------------
 
-1. **Memory Management**: For long conversations, implement sliding window or summarization
-2. **Turn Limits**: Always set maximum turns to prevent infinite loops  
-3. **Error Handling**: Gracefully handle agent failures or timeouts
-4. **Logging**: Use structured logging for debugging conversations
-5. **Testing**: Test with mock agents before using LLM-based agents
+    1. **Memory Management**: For long conversations, implement sliding window or summarization
+    2. **Turn Limits**: Always set maximum turns to prevent infinite loops  
+    3. **Error Handling**: Gracefully handle agent failures or timeouts
+    4. **Logging**: Use structured logging for debugging conversations
+    5. **Testing**: Test with mock agents before using LLM-based agents
 
-.. seealso::
+    .. seealso::
 
-   - :doc:`/guides/building_agents` - General agent development guide
-   - :doc:`/api/haive-agents` - Full agents API reference
-   - :doc:`/agents/showcase` - More agent examples and demos
+    - :doc:`/guides/building_agents` - General agent development guide
+    - :doc:`/api/haive-agents` - Full agents API reference
+    - :doc:`/agents/showcase` - More agent examples and demos

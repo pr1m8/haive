@@ -115,28 +115,35 @@ To run any example:
 
 1. **Install Haive** with the relevant extras:
 
-   .. code-block:: bash
+.. code-block:: bash
+
    
+
        poetry install --extras "agents tools games mcp"
 
-2. **Set Environment Variables** (if needed):
+       2. **Set Environment Variables** (if needed):
 
-   .. code-block:: bash
+.. code-block:: bash
+
    
+
        export OPENAI_API_KEY="your-api-key"
        export ANTHROPIC_API_KEY="your-api-key"
 
-3. **Run the Example**:
+       3. **Run the Example**:
 
-   .. code-block:: bash
+.. code-block:: bash
+
    
+
        poetry run python packages/haive-agents/examples/simple_agent_example.py
 
-.. toctree::
-   :hidden:
-   :maxdepth: 2
+       .. toctree::
 
-   auto_examples_agents/index
-   auto_examples_tools/index
-   auto_examples_games/index
-   auto_examples_mcp/index
+       :hidden:
+       :maxdepth: 2
+
+       auto_examples_agents/index
+       auto_examples_tools/index
+       auto_examples_games/index
+       auto_examples_mcp/index

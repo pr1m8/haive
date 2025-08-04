@@ -6,14 +6,22 @@
 
 .. raw:: html
 
+   .. raw:: html
+
    <div class="agent-hero-section">
-      <div class="hero-content">
-         <h2>♟️ Advanced Chess Engine & AI</h2>
-         <p class="hero-description">
-            A complete chess implementation with sophisticated AI opponents, opening book, endgame tables, 
-            and position analysis. Test your agents against various difficulty levels.
-         </p>
-      </div>
+
+.. raw:: html
+
+   <div class="hero-content">
+   <h2>♟️ Advanced Chess Engine & AI</h2>
+   <p class="hero-description">
+   A complete chess implementation with sophisticated AI opponents, opening book, endgame tables, 
+   and position analysis. Test your agents against various difficulty levels.
+   </p>
+   </div>
+
+.. raw:: html
+
    </div>
 
 Overview
@@ -30,44 +38,62 @@ The Chess game in Haive provides a full-featured chess environment with:
 
 .. raw:: html
 
+   .. raw:: html
+
    <div class="showcase-section">
-      <div class="showcase-header">
-         <h2>🎯 Game Features</h2>
-      </div>
-      <div class="api-grid">
-         <div class="api-section">
-            <h4>🎮 Gameplay</h4>
-            <ul>
-               <li>Standard chess rules</li>
-               <li>Time controls</li>
-               <li>Move validation</li>
-               <li>Game history</li>
-               <li>Position import/export</li>
-            </ul>
-         </div>
-         
-         <div class="api-section">
-            <h4>🤖 AI Features</h4>
-            <ul>
-               <li>Minimax with alpha-beta</li>
-               <li>Iterative deepening</li>
-               <li>Transposition tables</li>
-               <li>Move ordering</li>
-               <li>Quiescence search</li>
-            </ul>
-         </div>
-         
-         <div class="api-section">
-            <h4>📊 Analysis</h4>
-            <ul>
-               <li>Position evaluation</li>
-               <li>Best move calculation</li>
-               <li>Threat detection</li>
-               <li>Opening identification</li>
-               <li>Endgame classification</li>
-            </ul>
-         </div>
-      </div>
+
+.. raw:: html
+
+   <div class="showcase-header">
+   <h2>🎯 Game Features</h2>
+   </div>
+
+.. raw:: html
+
+   <div class="api-grid">
+
+.. raw:: html
+
+   <div class="api-section">
+   <h4>🎮 Gameplay</h4>
+   <ul>
+   <li>Standard chess rules</li>
+   <li>Time controls</li>
+   <li>Move validation</li>
+   <li>Game history</li>
+   <li>Position import/export</li>
+   </ul>
+   </div>
+
+.. raw:: html
+
+   <div class="api-section">
+   <h4>🤖 AI Features</h4>
+   <ul>
+   <li>Minimax with alpha-beta</li>
+   <li>Iterative deepening</li>
+   <li>Transposition tables</li>
+   <li>Move ordering</li>
+   <li>Quiescence search</li>
+   </ul>
+   </div>
+
+.. raw:: html
+
+   <div class="api-section">
+   <h4>📊 Analysis</h4>
+   <ul>
+   <li>Position evaluation</li>
+   <li>Best move calculation</li>
+   <li>Threat detection</li>
+   <li>Opening identification</li>
+   <li>Endgame classification</li>
+   </ul>
+   </div>
+
+.. raw:: html
+
+   </div>
    </div>
 
 Quick Start
@@ -75,8 +101,10 @@ Quick Start
 
 .. raw:: html
 
+   .. raw:: html
+
    <div class="code-example-section">
-      <h4>🚀 Basic Chess Game</h4>
+   <h4>🚀 Basic Chess Game</h4>
 
 .. code-block:: python
 
@@ -85,82 +113,84 @@ Quick Start
    import asyncio
 
    async def play_chess():
-       # Create chess game
-       game = ChessGame()
-       
-       # Create AI agents with different strengths
-       white_agent = ChessAgent(
-           name="Magnus",
-           color="white",
-           engine=AugLLMConfig(temperature=0.1),
-           skill_level=8,  # 1-10 scale
-           style="aggressive"  # "aggressive", "positional", "defensive"
-       )
-       
-       black_agent = ChessAgent(
-           name="Stockfish",
-           color="black",
-           engine=AugLLMConfig(temperature=0.1),
-           skill_level=6,
-           style="positional"
-       )
-       
-       # Play the game
-       print("Starting chess game...")
-       game.display_board()
-       
-       while not game.is_game_over():
-           current_player = "white" if game.current_turn == "w" else "black"
-           agent = white_agent if current_player == "white" else black_agent
-           
-           # Get agent's move
-           move = await agent.get_move(game.get_board_state())
-           
-           # Make the move
-           success = game.make_move(move)
-           if success:
-               print(f"\n{agent.name} plays: {move}")
-               game.display_board()
-               
-               # Show evaluation
-               eval_score = game.evaluate_position()
-               print(f"Position evaluation: {eval_score:+.2f}")
-       
-       # Game over
-       result = game.get_result()
-       print(f"\nGame Over! Result: {result}")
-       
-       # Get game analysis
-       analysis = game.analyze_game()
-       print(f"\nGame Analysis:")
-       print(f"Total moves: {analysis['move_count']}")
-       print(f"Opening: {analysis['opening']}")
-       print(f"Critical moments: {analysis['critical_positions']}")
+   # Create chess game
+   game = ChessGame()
+
+   # Create AI agents with different strengths
+   white_agent = ChessAgent(
+   name="Magnus",
+   color="white",
+   engine=AugLLMConfig(temperature=0.1),
+   skill_level=8,  # 1-10 scale
+   style="aggressive"  # "aggressive", "positional", "defensive"
+   )
+
+   black_agent = ChessAgent(
+   name="Stockfish",
+   color="black",
+   engine=AugLLMConfig(temperature=0.1),
+   skill_level=6,
+   style="positional"
+   )
+
+   # Play the game
+   print("Starting chess game...")
+   game.display_board()
+
+   while not game.is_game_over():
+   current_player = "white" if game.current_turn == "w" else "black"
+   agent = white_agent if current_player == "white" else black_agent
+
+   # Get agent's move
+   move = await agent.get_move(game.get_board_state())
+
+   # Make the move
+   success = game.make_move(move)
+   if success:
+   print(f"\n{agent.name} plays: {move}")
+   game.display_board()
+
+   # Show evaluation
+   eval_score = game.evaluate_position()
+   print(f"Position evaluation: {eval_score:+.2f}")
+
+   # Game over
+   result = game.get_result()
+   print(f"\nGame Over! Result: {result}")
+
+   # Get game analysis
+   analysis = game.analyze_game()
+   print(f"\nGame Analysis:")
+   print(f"Total moves: {analysis['move_count']}")
+   print(f"Opening: {analysis['opening']}")
+   print(f"Critical moments: {analysis['critical_positions']}")
 
    # Run the game
    asyncio.run(play_chess())
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-Game Mechanics
---------------
+   Game Mechanics
+   --------------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="custom-section">
-      <h3>♟️ Chess Rules Implementation</h3>
+   <h3>♟️ Chess Rules Implementation</h3>
 
 .. code-block:: python
 
    from haive.games.chess import ChessGame, Move, Piece
    from haive.games.chess.rules import (
-       is_valid_move,
-       is_check,
-       is_checkmate,
-       is_stalemate,
-       get_legal_moves
+   is_valid_move,
+   is_check,
+   is_checkmate,
+   is_stalemate,
+   get_legal_moves
    )
 
    # Create and manipulate game state
@@ -180,15 +210,15 @@ Game Mechanics
 
    # Check game state
    if game.is_check():
-       print("King is in check!")
-       
-       # Get all moves that escape check
-       legal_moves = game.get_legal_moves()
-       escape_moves = [
-           move for move in legal_moves
-           if game.would_escape_check(move)
-       ]
-       print(f"Escape moves: {escape_moves}")
+   print("King is in check!")
+
+   # Get all moves that escape check
+   legal_moves = game.get_legal_moves()
+   escape_moves = [
+   move for move in legal_moves
+   if game.would_escape_check(move)
+   ]
+   print(f"Escape moves: {escape_moves}")
 
    # Position analysis
    position_info = game.analyze_position()
@@ -199,10 +229,10 @@ Game Mechanics
 
    # Threefold repetition and 50-move rule
    if game.is_threefold_repetition():
-       print("Draw by repetition available")
-   
+   print("Draw by repetition available")
+
    if game.halfmove_clock >= 100:  # 50 moves = 100 half-moves
-       print("Draw by 50-move rule available")
+   print("Draw by 50-move rule available")
 
    # Export/Import positions
    fen = game.to_fen()  # Export as FEN
@@ -211,32 +241,40 @@ Game Mechanics
    # Load a specific position
    game.load_fen("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1")
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-AI Strategies
--------------
+   AI Strategies
+   -------------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="showcase-section">
-      <div class="showcase-header">
-         <h2>🧠 Chess AI Implementation</h2>
-      </div>
+
+   .. raw:: html
+
+   <div class="showcase-header">
+   <h2>🧠 Chess AI Implementation</h2>
+   </div>
 
 .. code-block:: python
 
    from haive.games.chess import ChessAI, EvaluationFunction
    from haive.games.chess.ai import (
+
        MinimaxEngine,
        AlphaBetaEngine,
        MCTSEngine,
        NeuralEngine
+
    )
 
    # 1. Minimax with Alpha-Beta Pruning
    class AlphaBetaChessAI(ChessAI):
+
        def __init__(self, depth: int = 4):
            self.depth = depth
            self.transposition_table = {}
@@ -319,6 +357,7 @@ AI Strategies
 
    # 2. Position Evaluation
    class AdvancedEvaluator(EvaluationFunction):
+
        def __init__(self):
            # Piece values
            self.piece_values = {
@@ -363,6 +402,7 @@ AI Strategies
 
    # 3. Opening Book
    class OpeningBook:
+
        def __init__(self):
            self.book = {
                "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -": [
@@ -389,144 +429,151 @@ AI Strategies
                        return move
            return None
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-Training Chess Agents
----------------------
+   Training Chess Agents
+   ---------------------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="custom-section">
-      <h3>🎓 Training and Improvement</h3>
+   <h3>🎓 Training and Improvement</h3>
 
 .. code-block:: python
 
    from haive.games.chess import ChessTrainer, ChessAgent
    from haive.games.chess.training import (
-       SelfPlayTrainer,
-       OpeningTrainer,
-       EndgameTrainer,
-       TacticsTrainer
+   SelfPlayTrainer,
+   OpeningTrainer,
+   EndgameTrainer,
+   TacticsTrainer
    )
    import asyncio
 
    # Self-play training
    async def train_through_self_play():
-       trainer = SelfPlayTrainer(
-           base_agent=ChessAgent(
-               name="learner",
-               engine=AugLLMConfig(),
-               skill_level=5
-           ),
-           games_per_iteration=100,
-           learning_rate=0.01
-       )
-       
-       # Train for multiple iterations
-       for iteration in range(10):
-           print(f"\nTraining iteration {iteration + 1}")
-           
-           # Play games
-           results = await trainer.play_training_games()
-           
-           # Analyze games
-           improvements = trainer.analyze_games(results)
-           
-           # Update agent
-           trainer.update_agent(improvements)
-           
-           # Test against benchmark
-           win_rate = await trainer.test_against_benchmark()
-           print(f"Win rate vs benchmark: {win_rate:.1%}")
+   trainer = SelfPlayTrainer(
+   base_agent=ChessAgent(
+   name="learner",
+   engine=AugLLMConfig(),
+   skill_level=5
+   ),
+   games_per_iteration=100,
+   learning_rate=0.01
+   )
+
+   # Train for multiple iterations
+   for iteration in range(10):
+   print(f"\nTraining iteration {iteration + 1}")
+
+   # Play games
+   results = await trainer.play_training_games()
+
+   # Analyze games
+   improvements = trainer.analyze_games(results)
+
+   # Update agent
+   trainer.update_agent(improvements)
+
+   # Test against benchmark
+   win_rate = await trainer.test_against_benchmark()
+   print(f"Win rate vs benchmark: {win_rate:.1%}")
 
    # Opening repertoire training
    class OpeningTrainer:
-       def __init__(self, target_openings: List[str]):
-           self.target_openings = target_openings
-           self.opening_database = self.load_opening_database()
-       
-       async def train_opening(self, agent: ChessAgent, opening_name: str):
-           """Train specific opening."""
-           
-           # Get opening moves
-           opening_lines = self.opening_database[opening_name]
-           
-           for line in opening_lines:
-               # Set up position
-               game = ChessGame()
-               for move in line['moves']:
-                   game.make_move(move)
-               
-               # Train from this position
-               training_positions = self.generate_training_positions(game)
-               
-               for position in training_positions:
-                   # Get agent's move
-                   agent_move = await agent.get_move(position)
-                   
-                   # Compare with book move
-                   book_move = line['best_moves'].get(position.fen())
-                   
-                   if agent_move != book_move:
-                       # Provide feedback
-                       await agent.learn_from_mistake(
-                           position,
-                           agent_move,
-                           book_move,
-                           line['explanation']
-                       )
+   def __init__(self, target_openings: List[str]):
+   self.target_openings = target_openings
+   self.opening_database = self.load_opening_database()
+
+   async def train_opening(self, agent: ChessAgent, opening_name: str):
+   """Train specific opening."""
+
+   # Get opening moves
+   opening_lines = self.opening_database[opening_name]
+
+   for line in opening_lines:
+   # Set up position
+   game = ChessGame()
+   for move in line['moves']:
+   game.make_move(move)
+
+   # Train from this position
+   training_positions = self.generate_training_positions(game)
+
+   for position in training_positions:
+   # Get agent's move
+   agent_move = await agent.get_move(position)
+
+   # Compare with book move
+   book_move = line['best_moves'].get(position.fen())
+
+   if agent_move != book_move:
+   # Provide feedback
+   await agent.learn_from_mistake(
+   position,
+   agent_move,
+   book_move,
+   line['explanation']
+   )
 
    # Tactics training
    class TacticsTrainer:
-       def __init__(self, puzzle_database):
-           self.puzzles = puzzle_database
-       
-       async def train_tactics(self, agent: ChessAgent, difficulty: str):
-           """Train tactical patterns."""
-           
-           puzzles = self.get_puzzles_by_difficulty(difficulty)
-           correct = 0
-           
-           for puzzle in puzzles:
-               # Show position
-               game = ChessGame()
-               game.load_fen(puzzle['fen'])
-               
-               # Get agent's solution
-               solution = await agent.solve_puzzle(
-                   game,
-                   hint=puzzle.get('hint')
-               )
-               
-               # Check solution
-               if self.is_correct_solution(solution, puzzle['solution']):
-                   correct += 1
-                   print(f"✓ Solved: {puzzle['theme']}")
-               else:
-                   print(f"✗ Failed: {puzzle['theme']}")
-                   # Show correct solution
-                   await self.explain_solution(agent, puzzle)
-           
-           accuracy = correct / len(puzzles)
-           print(f"\nTactics accuracy: {accuracy:.1%}")
-           
-           return accuracy
+   def __init__(self, puzzle_database):
+   self.puzzles = puzzle_database
 
-.. raw:: html
+   async def train_tactics(self, agent: ChessAgent, difficulty: str):
+   """Train tactical patterns."""
+
+   puzzles = self.get_puzzles_by_difficulty(difficulty)
+   correct = 0
+
+   for puzzle in puzzles:
+   # Show position
+   game = ChessGame()
+   game.load_fen(puzzle['fen'])
+
+   # Get agent's solution
+   solution = await agent.solve_puzzle(
+   game,
+   hint=puzzle.get('hint')
+   )
+
+   # Check solution
+   if self.is_correct_solution(solution, puzzle['solution']):
+   correct += 1
+   print(f"✓ Solved: {puzzle['theme']}")
+   else:
+   print(f"✗ Failed: {puzzle['theme']}")
+   # Show correct solution
+   await self.explain_solution(agent, puzzle)
+
+   accuracy = correct / len(puzzles)
+   print(f"\nTactics accuracy: {accuracy:.1%}")
+
+   return accuracy
+
+   .. raw:: html
 
    </div>
 
-Analysis and Visualization
----------------------------
+   Analysis and Visualization
+   ---------------------------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="showcase-section">
-      <div class="showcase-header">
-         <h2>📊 Game Analysis Tools</h2>
-      </div>
+
+   .. raw:: html
+
+   <div class="showcase-header">
+   <h2>📊 Game Analysis Tools</h2>
+   </div>
 
 .. code-block:: python
 
@@ -561,6 +608,7 @@ Analysis and Visualization
    # Critical moments
    print("Critical Positions:")
    for moment in analysis['critical_moments']:
+
        print(f"Move {moment['move_number']}: {moment['description']}")
        print(f"  Best: {moment['best_move']} ({moment['best_eval']:+.2f})")
        print(f"  Played: {moment['played_move']} ({moment['played_eval']:+.2f})")
@@ -577,8 +625,10 @@ Analysis and Visualization
    
    # Mark critical moments
    for moment in analysis['critical_moments']:
-       move_num = moment['move_number'] * 2 - (2 if moment['color'] == 'white' else 1)
+
+       move_num = moment['move_number'] * 2 - (2 if moment['color'] == 'white' else 1)*
        plt.axvline(x=move_num, color='red', alpha=0.5)
+
    
    plt.xlabel('Move Number')
    plt.ylabel('Evaluation (pawns)')
@@ -613,6 +663,7 @@ Analysis and Visualization
    
    # Show specific position
    renderer.show_position(
+
        game.get_position_at_move(20),
        highlights={
            'e4': 'green',  # Good square
@@ -623,86 +674,151 @@ Analysis and Visualization
            ('e1', 'e8', 'blue'),  # Attack
            ('g1', 'f3', 'green')  # Defense
        ]
+
    )
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-API Reference
--------------
+   API Reference
+   -------------
 
-.. automodule:: haive.games.chess
+   .. automodule:: haive.games.chess
+
    :members:
    :show-inheritance:
 
-.. autoclass:: haive.games.chess.ChessGame
+   .. autoclass:: haive.games.chess.ChessGame
+
    :members:
    :show-inheritance:
 
-.. autoclass:: haive.games.chess.ChessAgent
+   .. autoclass:: haive.games.chess.ChessAgent
+
    :members:
    :show-inheritance:
 
-.. autoclass:: haive.games.chess.ChessAI
+   .. autoclass:: haive.games.chess.ChessAI
+
    :members:
    :show-inheritance:
 
-Next Steps
-----------
+   Next Steps
+   ----------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="showcase-section">
-      <div class="showcase-header">
-         <h2>🚀 Explore More Games</h2>
-      </div>
-      <div class="agent-showcase">
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">🎯</div>
-               <div>
-                  <h3 class="agent-title">Other Board Games</h3>
-                  <p class="agent-subtitle">More strategic challenges</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Try other board games like Go, Checkers, and Connect Four with similar AI capabilities.
-            </p>
-            <a href="../index.html" class="agent-link">Browse Games</a>
-         </div>
 
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">🏆</div>
-               <div>
-                  <h3 class="agent-title">Chess Tournaments</h3>
-                  <p class="agent-subtitle">Competitive play</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Organize tournaments between multiple agents with different strategies and skill levels.
-            </p>
-            <a href="../../guides/game_tournaments.html" class="agent-link">Tournament Guide</a>
-         </div>
+   .. raw:: html
 
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">🤖</div>
-               <div>
-                  <h3 class="agent-title">Custom Chess Agents</h3>
-                  <p class="agent-subtitle">Build your own AI</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Create custom chess agents with unique evaluation functions and playing styles.
-            </p>
-            <a href="../../guides/custom_game_agents.html" class="agent-link">Agent Guide</a>
-         </div>
-      </div>
+   <div class="showcase-header">
+   <h2>🚀 Explore More Games</h2>
    </div>
 
-.. seealso::
+   .. raw:: html
+
+   <div class="agent-showcase">
+
+   .. raw:: html
+
+   <div class="agent-card">
+
+   .. raw:: html
+
+   <div class="agent-header">
+
+   .. raw:: html
+
+   <div class="agent-emoji">🎯</div>
+
+   .. raw:: html
+
+   <div>
+   <h3 class="agent-title">Other Board Games</h3>
+   <p class="agent-subtitle">More strategic challenges</p>
+   </div>
+
+   .. raw:: html
+
+   </div>
+   <p class="agent-description">
+
+               Try other board games like Go, Checkers, and Connect Four with similar AI capabilities.
+   .. raw:: html
+
+   </p>
+   <a href="../index.html" class="agent-link">Browse Games</a>
+   </div>
+
+   .. raw:: html
+
+   <div class="agent-card">
+
+   .. raw:: html
+
+   <div class="agent-header">
+
+   .. raw:: html
+
+   <div class="agent-emoji">🏆</div>
+
+   .. raw:: html
+
+   <div>
+   <h3 class="agent-title">Chess Tournaments</h3>
+   <p class="agent-subtitle">Competitive play</p>
+   </div>
+
+   .. raw:: html
+
+   </div>
+   <p class="agent-description">
+
+               Organize tournaments between multiple agents with different strategies and skill levels.
+   .. raw:: html
+
+   </p>
+   <a href="../../guides/game_tournaments.html" class="agent-link">Tournament Guide</a>
+   </div>
+
+   .. raw:: html
+
+   <div class="agent-card">
+
+   .. raw:: html
+
+   <div class="agent-header">
+
+   .. raw:: html
+
+   <div class="agent-emoji">🤖</div>
+
+   .. raw:: html
+
+   <div>
+   <h3 class="agent-title">Custom Chess Agents</h3>
+   <p class="agent-subtitle">Build your own AI</p>
+   </div>
+
+   .. raw:: html
+
+   </div>
+   <p class="agent-description">
+
+               Create custom chess agents with unique evaluation functions and playing styles.
+   .. raw:: html
+
+   </p>
+   <a href="../../guides/custom_game_agents.html" class="agent-link">Agent Guide</a>
+   </div>
+   </div>
+   </div>
+
+   .. seealso::
 
    - :doc:`../../agents/index` - Agents that can play chess
    - :doc:`../../guides/game_ai` - Building game AI

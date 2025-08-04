@@ -9,18 +9,17 @@ Agent specializing in quantum computing education
 
 **Features:**
 
-* Streaming Support: ✅ Yes
-* Graph Visualization: ✅ Yes
-* Steps Captured: 5
-
+* Streaming Support: ✅ Yes*
+* Graph Visualization: ✅ Yes*
+* Steps Captured: 5*
 
 .. figure:: ../../captures/QuantumExplainerAgent_graph.png
+
    :alt: QuantumExplainerAgent Agent Graph
    :align: center
    :width: 80%
    
    Agent Architecture Graph
-
 
 Interactive Example
 -------------------
@@ -36,33 +35,31 @@ Example usage
     "format": "beginner"
     }
 
-**Result:** ✅ **Success**
+    **Result:** ✅ **Success**
 
-The agent completed successfully.
+    The agent completed successfully.
 
-**Execution Time:** 0.00 seconds
+    **Execution Time:** 0.00 seconds
 
-**Steps:** 5 processing steps
+    **Steps:** 5 processing steps
 
+    Live Execution Capture
+    ----------------------
 
-Live Execution Capture
-----------------------
+    Below is the complete execution trace captured from a live run of this agent:
 
-Below is the complete execution trace captured from a live run of this agent:
+    .. note::
 
+    Agent execution capture available at: ../../captures/QuantumExplainerAgent_dfca177b-5cba-4e06-99cc-c42174670413_202506.json
 
-.. note::
+    Technical Details
+    -----------------
 
-   Agent execution capture available at: ../../captures/QuantumExplainerAgent_dfca177b-5cba-4e06-99cc-c42174670413_202506.json
+    **Configuration**
 
-Technical Details
------------------
+    This agent is implemented as a ``SimpleAgent`` class.
 
-**Configuration**
-
-This agent is implemented as a ``SimpleAgent`` class.
-
-**Input Schema**
+    **Input Schema**
 
 .. code-block:: json
 
@@ -71,7 +68,7 @@ This agent is implemented as a ``SimpleAgent`` class.
     "format": "beginner"
     }
 
-**Output Schema**
+    **Output Schema**
 
 .. code-block:: json
 
@@ -84,14 +81,14 @@ This agent is implemented as a ``SimpleAgent`` class.
     ]
     }
 
-**Performance**
+    **Performance**
 
-* Execution Time: 0.00s
-* Status: ✅ Success
-* Steps: 5
+    * Execution Time: 0.00s*
+    * Status: ✅ Success*
+    * Steps: 5*
 
-Usage Example
--------------
+    Usage Example
+    -------------
 
 .. code-block:: python
 
@@ -107,8 +104,8 @@ Usage Example
     for update in agent.stream({"query": "Explain quantum computing principles", "format": "beginner"}):
     print(update)
 
-See Also
---------
+    See Also
+    --------
 
-* :doc:`../index` - Agent Index
-* :doc:`../showcase` - Agent Showcase
+    * :doc:`../index` - Agent Index*
+    * :doc:`../showcase` - Agent Showcase*

@@ -5,78 +5,160 @@ Manages persistent memory across sessions
 
 .. raw:: html
 
-    <div class="agent-demo-container">
-        <!-- Agent Overview -->
-        <div class="agent-overview-card">
-            <div class="agent-header">
-                <div class="agent-icon">🧠</div>
-                <div>
-                    <h2>Long-Term Memory Agent</h2>
-                    <p class="agent-category">Category: Memory</p>
-                </div>
-            </div>
+   <div class="agent-demo-container">
+   <!-- Agent Overview -->
 
-            <div class="agent-features">
-                <span class="feature-tag">Memory storage</span>
-                <span class="feature-tag">Retrieval</span>
-                <span class="feature-tag">Forgetting curves</span>
-                <span class="feature-tag">Association</span>
-            </div>
-        </div>
+.. raw:: html
 
-        <!-- Interactive Demo -->
-        <div class="agent-interface">
-            <div class="demo-controls">
-                <h3>Try Long-Term Memory Agent</h3>
-                <div class="input-area">
-                    <textarea id="long_term_memory-input" placeholder="Enter your input here..." rows="4"></textarea>
-                </div>
-                <button onclick="runAgent('long_term_memory')" class="run-agent-btn">
+   <div class="agent-overview-card">
+
+.. raw:: html
+
+   <div class="agent-header">
+
+.. raw:: html
+
+   <div class="agent-icon">🧠</div>
+
+.. raw:: html
+
+   <div>
+   <h2>Long-Term Memory Agent</h2>
+   <p class="agent-category">Category: Memory</p>
+   </div>
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="agent-features">
+   <span class="feature-tag">Memory storage</span>
+   <span class="feature-tag">Retrieval</span>
+   <span class="feature-tag">Forgetting curves</span>
+   <span class="feature-tag">Association</span>
+   </div>
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <!-- Interactive Demo -->
+
+.. raw:: html
+
+   <div class="agent-interface">
+
+.. raw:: html
+
+   <div class="demo-controls">
+   <h3>Try Long-Term Memory Agent</h3>
+
+.. raw:: html
+
+   <div class="input-area">
+   <textarea id="long_term_memory-input" placeholder="Enter your input here..." rows="4"></textarea>
+   </div>
+
+.. raw:: html
+
+   <button onclick="runAgent('long_term_memory')" class="run-agent-btn">
+
                     Run Agent
-                </button>
-            </div>
+.. raw:: html
 
-            <div id="long_term_memory-output" class="agent-output">
-                <!-- Agent output will appear here -->
-                <div class="output-placeholder">
-                    <p>Enter input and click "Run Agent" to see results</p>
-                </div>
-            </div>
-        </div>
+   </button>
+   </div>
 
-        <!-- Live Execution Stream -->
-        <div class="agent-streaming">
-            <h3>Live Execution</h3>
-            <div class="streaming-indicator">
-                Live Stream
-            </div>
-            <div class="execution-display">
-                <pre id="long_term_memory-execution">
-Memory Status:
-Total Memories: 1,247
-Recent Recalls: 5
-Memory Score: 92%
+.. raw:: html
 
-Last Interaction: "Project deadline discussion"
-Related Memories: 3 found
-                </pre>
-            </div>
-            <div class="execution-stats">
-                <div class="stat">
-                    <label>Status:</label>
-                    <span class="status-active">Active</span>
-                </div>
-                <div class="stat">
-                    <label>Runtime:</label>
-                    <span>1.2s</span>
-                </div>
-                <div class="stat">
-                    <label>Tokens:</label>
-                    <span>847</span>
-                </div>
-            </div>
-        </div>
-    </div>
+   <div id="long_term_memory-output" class="agent-output">
+   <!-- Agent output will appear here -->
+
+.. raw:: html
+
+   <div class="output-placeholder">
+   <p>Enter input and click "Run Agent" to see results</p>
+   </div>
+
+.. raw:: html
+
+   </div>
+   </div>
+
+.. raw:: html
+
+   <!-- Live Execution Stream -->
+
+.. raw:: html
+
+   <div class="agent-streaming">
+   <h3>Live Execution</h3>
+
+.. raw:: html
+
+   <div class="streaming-indicator">
+
+                   Live Stream
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="execution-display">
+
+.. raw:: html
+
+   <pre id="long_term_memory-execution">
+
+       Memory Status:
+       Total Memories: 1,247
+       Recent Recalls: 5
+       Memory Score: 92%
+
+   
+   Last Interaction: "Project deadline discussion"
+   Related Memories: 3 found
+
+.. raw:: html
+
+   </pre>
+   </div>
+
+.. raw:: html
+
+   <div class="execution-stats">
+
+.. raw:: html
+
+   <div class="stat">
+   <label>Status:</label>
+   <span class="status-active">Active</span>
+   </div>
+
+.. raw:: html
+
+   <div class="stat">
+   <label>Runtime:</label>
+   <span>1.2s</span>
+   </div>
+
+.. raw:: html
+
+   <div class="stat">
+   <label>Tokens:</label>
+   <span>847</span>
+   </div>
+
+.. raw:: html
+
+   </div>
+   </div>
+   </div>
 
 How It Works
 ------------
@@ -113,8 +195,8 @@ Code Example
     result = agent.run("Your input here")
     print(result)
 
-Configuration Options
---------------------
+    Configuration Options
+    ---------------------
 
 .. code-block:: python
 
@@ -125,9 +207,9 @@ Configuration Options
         "retry_attempts": 3
     }
 
-See Also
---------
+    See Also
+    --------
 
-- :doc:`/api/haive/agents/long_term_memory/index` - API documentation
-- :doc:`/guides/building_agents` - Agent development guide
-- :doc:`/examples/agent_patterns` - Common patterns
+    - :doc:`/api/haive/agents/long_term_memory/index` - API documentation
+    - :doc:`/guides/building_agents` - Agent development guide
+    - :doc:`/examples/agent_patterns` - Common patterns

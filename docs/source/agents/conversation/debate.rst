@@ -11,6 +11,7 @@ A formal debate on AI regulation with opening statements, rebuttals, and closing
 **Full Example Code:**
 
 .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/debate/example.py
+
    :language: python
    :pyobject: example_formal_debate
    :caption: Formal Debate Implementation
@@ -21,7 +22,7 @@ A formal debate on AI regulation with opening statements, rebuttals, and closing
 
     poetry run python packages/haive-agents/src/haive/agents/conversation/debate/example.py
 
-**Sample Output:**
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -125,19 +126,20 @@ A formal debate on AI regulation with opening statements, rebuttals, and closing
     innovation. The key winning arguments were the practical challenges 
     of implementing regulation and the global competition aspect.
 
-Panel Debate Example
---------------------
+    Panel Debate Example
+    --------------------
 
-A multi-agent panel debate on climate solutions.
+    A multi-agent panel debate on climate solutions.
 
-**Full Example Code:**
+    **Full Example Code:**
 
-.. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/debate/example.py
-   :language: python
-   :pyobject: example_panel_debate
-   :caption: Panel Debate Implementation
+    .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/debate/example.py
 
-**Sample Output:**
+    :language: python
+    :pyobject: example_panel_debate
+    :caption: Panel Debate Implementation
+
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -177,12 +179,12 @@ A multi-agent panel debate on climate solutions.
     Social movements created political will for past environmental laws. 
     We need all three approaches, but behavior change drives the others.
 
-Academic Debate Format
-----------------------
+    Academic Debate Format
+    ----------------------
 
-A structured academic debate with research citations.
+    A structured academic debate with research citations.
 
-**Example Code:**
+    **Example Code:**
 
 .. code-block:: python
 
@@ -218,7 +220,7 @@ A structured academic debate with research citations.
 
     result = debate.run({})
 
-**Sample Output:**
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -246,17 +248,17 @@ A structured academic debate with research citations.
     show true effects. Spain's COVID UBI attempt faced massive fraud and 
     implementation failures (Gentilini, 2022). No long-term successful example exists.
 
-Key Features Demonstrated
--------------------------
+    Key Features Demonstrated
+    -------------------------
 
-1. **Structured Format**: Clear rounds with specific purposes
-2. **Position Advocacy**: Agents strongly defend assigned positions
-3. **Evidence-Based**: Arguments supported by facts and logic
-4. **Dynamic Rebuttals**: Agents respond to opponent's points
-5. **Judged Outcomes**: Optional scoring based on multiple criteria
+    1. **Structured Format**: Clear rounds with specific purposes
+    2. **Position Advocacy**: Agents strongly defend assigned positions
+    3. **Evidence-Based**: Arguments supported by facts and logic
+    4. **Dynamic Rebuttals**: Agents respond to opponent's points
+    5. **Judged Outcomes**: Optional scoring based on multiple criteria
 
-Configuration Options
----------------------
+    Configuration Options
+    ---------------------
 
 .. code-block:: python
 
@@ -275,26 +277,26 @@ Configuration Options
     require_evidence=True,            # Must support claims
     )
 
-Best Practices
---------------
+    Best Practices
+    --------------
 
-1. **Clear Positions**: Define specific, opposing stances
-2. **Balanced Agents**: Similar capability levels for fair debate
-3. **Structured Rounds**: Use progressive round structure
-4. **Judgment Criteria**: Define clear scoring criteria
-5. **Time Management**: Set appropriate time limits
+    1. **Clear Positions**: Define specific, opposing stances
+    2. **Balanced Agents**: Similar capability levels for fair debate
+    3. **Structured Rounds**: Use progressive round structure
+    4. **Judgment Criteria**: Define clear scoring criteria
+    5. **Time Management**: Set appropriate time limits
 
-Common Use Cases
-----------------
+    Common Use Cases
+    ----------------
 
-- **Decision Making**: Exploring pros/cons of important decisions
-- **Education**: Teaching critical thinking and argumentation
-- **Research**: Examining different theoretical positions
-- **Policy**: Evaluating policy proposals from multiple angles
-- **Entertainment**: Engaging audiences with intellectual content
+    - **Decision Making**: Exploring pros/cons of important decisions
+    - **Education**: Teaching critical thinking and argumentation
+    - **Research**: Examining different theoretical positions
+    - **Policy**: Evaluating policy proposals from multiple angles
+    - **Entertainment**: Engaging audiences with intellectual content
 
-Advanced Example: Multi-Position Debate
----------------------------------------
+    Advanced Example: Multi-Position Debate
+    ---------------------------------------
 
 .. code-block:: python
 
@@ -317,8 +319,8 @@ Advanced Example: Multi-Position Debate
 
     winner = debate.run_tournament()
 
-Customizing Debate Styles
--------------------------
+    Customizing Debate Styles
+    -------------------------
 
 .. code-block:: python
 
@@ -344,10 +346,10 @@ Customizing Debate Styles
     prep_time=10_minutes
     )
 
-See Also
---------
+    See Also
+    --------
 
-- :doc:`conversation_directed` - Orchestrated multi-agent discussions
-- :doc:`conversation_collaborative` - Cooperative problem solving
-- :doc:`conversation_social_media` - Online discussion dynamics
-- :doc:`../api_reference` - Full API documentation
+    - :doc:`conversation_directed` - Orchestrated multi-agent discussions
+    - :doc:`conversation_collaborative` - Cooperative problem solving
+    - :doc:`conversation_social_media` - Online discussion dynamics
+    - :doc:`../api_reference` - Full API documentation

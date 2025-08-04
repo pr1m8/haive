@@ -4,6 +4,7 @@ Multi-Agent Systems
 Coordinate multiple agents to solve complex problems collaboratively.
 
 .. note::
+
    
    This is the user guide for multi-agent systems. For API documentation, see :doc:`/api/haive/agents/multi/index`.
 
@@ -32,53 +33,63 @@ Quick Start
    
    # Create multi-agent system
    multi_agent = SequentialMultiAgent(
+
        name="research_writer",
        agents=[researcher, writer],
        flow_description="Research topic then write article"
+
    )
    
    # Execute workflow
    result = await multi_agent.arun(
+
        "Write an article about quantum computing"
+
    )
 
-Coordination Patterns
----------------------
+   Coordination Patterns
+   ---------------------
 
-.. grid:: 2
+   .. grid:: 2
+
    :gutter: 3
 
    .. grid-item-card:: Sequential
+
       :text-align: center
 
       Agents work in order, each building on previous results
 
    .. grid-item-card:: Parallel
+
       :text-align: center
 
       Agents work simultaneously on different aspects
 
    .. grid-item-card:: Hierarchical
+
       :text-align: center
 
       Supervisor delegates tasks to specialized workers
 
    .. grid-item-card:: Collaborative
+
       :text-align: center
 
       Agents discuss and reach consensus
 
-Examples
---------
+   Examples
+   --------
 
-- Research and Writing Pipeline
-- Customer Support Escalation
-- Code Review System
-- Trading Strategy Committee
+   - Research and Writing Pipeline
+   - Customer Support Escalation
+   - Code Review System
+   - Trading Strategy Committee
 
-See :doc:`/guides/multi_agent_systems` for detailed examples.
+   See :doc:`/guides/multi_agent_systems` for detailed examples.
 
-.. toctree::
+   .. toctree::
+
    :maxdepth: 2
    :hidden:
 

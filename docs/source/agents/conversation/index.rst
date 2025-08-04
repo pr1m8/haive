@@ -8,8 +8,8 @@ Overview
 
 The Haive conversation system provides several conversation patterns, each optimized for different interaction styles:
 
-
    .. card::
+
       :link: directed
       :link-type: doc
       
@@ -17,6 +17,7 @@ The Haive conversation system provides several conversation patterns, each optim
       Perfect for panels, meetings, and classroom settings.
 
    .. card::
+
       :link: round_robin  
       :link-type: doc
       
@@ -24,6 +25,7 @@ The Haive conversation system provides several conversation patterns, each optim
       brainstorming, and status updates.
 
    .. card::
+
       :link: collaborative
       :link-type: doc
       
@@ -31,6 +33,7 @@ The Haive conversation system provides several conversation patterns, each optim
       problem-solving and creative work.
 
    .. card::
+
       :link: debate
       :link-type: doc
       
@@ -38,6 +41,7 @@ The Haive conversation system provides several conversation patterns, each optim
       decision-making and exploring ideas.
 
    .. card::
+
       :link: social_media
       :link-type: doc
       
@@ -45,6 +49,7 @@ The Haive conversation system provides several conversation patterns, each optim
       viral dynamics.
 
    .. card::
+
       :link: custom_patterns
       :link-type: doc
       
@@ -78,36 +83,48 @@ Quick Start
     # Run conversation
     result = await panel.run(max_rounds=5)
 
-Choosing a Conversation Type
-----------------------------
+    Choosing a Conversation Type
+    ----------------------------
 
-.. list-table:: Conversation Type Selection Guide
-   :header-rows: 1
-   :widths: 25 25 50
+    .. list-table:: Conversation Type Selection Guide
 
-   * - Type
+    :header-rows: 1
+    :widths: 25 25 50
+
+    * - Type*
+
      - Best For
      - Key Features
-   * - Directed
+
+    * - Directed*
+
      - Panels, meetings, Q&A
      - @mentions, orchestration, role-based
-   * - Round Robin
+
+    * - Round Robin*
+
      - Standups, reviews, brainstorming
      - Equal turns, predictable flow
-   * - Collaborative  
+
+    * - Collaborative  *
+
      - Problem solving, design, research
      - Emergent discussion, consensus building
-   * - Debate
+
+    * - Debate*
+
      - Decision making, exploration
      - Opposing views, scoring, evidence
-   * - Social Media
+
+    * - Social Media*
+
      - Simulations, viral content
      - Async posts, reactions, metrics
 
-Common Patterns
----------------
+    Common Patterns
+    ---------------
 
-**1. Expert Panel Discussion**
+    **1. Expert Panel Discussion**
 
 .. code-block:: python
 
@@ -118,7 +135,7 @@ Common Patterns
     rounds=3
     )
 
-**2. Team Problem Solving**
+    **2. Team Problem Solving**
 
 .. code-block:: python
 
@@ -129,7 +146,7 @@ Common Patterns
     consensus_required=True
     )
 
-**3. Decision Analysis**
+    **3. Decision Analysis**
 
 .. code-block:: python
 
@@ -140,12 +157,13 @@ Common Patterns
     evidence_required=True
     )
 
-Architecture
-------------
+    Architecture
+    ------------
 
-.. mermaid::
+    .. mermaid::
 
-   graph TD
+    graph TD
+
        A[Conversation Manager] --> B[Turn Management]
        A --> C[Message History]
        A --> D[Agent Coordination]
@@ -160,39 +178,43 @@ Architecture
        D --> J[Role Assignment]
        D --> K[Consensus Tracking]
 
-Key Components
---------------
+    Key Components
+    --------------
 
-1. **Base Conversation Class**
+    1. **Base Conversation Class**
+
    
-   - Message management
-   - Turn orchestration  
-   - History tracking
-   - Context building
+    - Message management
+    - Turn orchestration  
+    - History tracking
+    - Context building
 
-2. **Agent Integration**
+    2. **Agent Integration**
+
    
-   - Any Haive agent can participate
-   - Agents maintain individual context
-   - System messages guide behavior
+    - Any Haive agent can participate
+    - Agents maintain individual context
+    - System messages guide behavior
 
-3. **Conversation Flow**
+    3. **Conversation Flow**
+
    
-   - Configurable turn patterns
-   - Dynamic speaker selection
-   - Termination conditions
+    - Configurable turn patterns
+    - Dynamic speaker selection
+    - Termination conditions
 
-4. **Output Formats**
+    4. **Output Formats**
+
    
-   - Full transcript
-   - Summary generation
-   - Metrics and analytics
-   - Structured outcomes
+    - Full transcript
+    - Summary generation
+    - Metrics and analytics
+    - Structured outcomes
 
-Best Practices
---------------
+    Best Practices
+    --------------
 
-**1. Agent Preparation**
+    **1. Agent Preparation**
 
 .. code-block:: python
 
@@ -204,7 +226,7 @@ Best Practices
     Build on others' ideas with data-driven insights."""
     )
 
-**2. Conversation Configuration**
+    **2. Conversation Configuration**
 
 .. code-block:: python
 
@@ -216,7 +238,7 @@ Best Practices
     summary_interval=5   # Periodic summaries
     )
 
-**3. Error Handling**
+    **3. Error Handling**
 
 .. code-block:: python
 
@@ -227,10 +249,10 @@ Best Practices
     except AgentTimeout:
     result = conversation.continue_without_agent(failed_agent)
 
-Advanced Features
------------------
+    Advanced Features
+    -----------------
 
-**Dynamic Agent Addition**
+    **Dynamic Agent Addition**
 
 .. code-block:: python
 
@@ -241,7 +263,7 @@ Advanced Features
     introduction="I'm here to explain the quantum aspects..."
     )
 
-**Conversation Branching**
+    **Conversation Branching**
 
 .. code-block:: python
 
@@ -252,7 +274,7 @@ Advanced Features
     merge_after_turns=10
     )
 
-**Memory and Context**
+    **Memory and Context**
 
 .. code-block:: python
 
@@ -266,43 +288,45 @@ Advanced Features
     use_summary=True    # Compress old context
     )
 
-Examples by Use Case
---------------------
+    Examples by Use Case
+    --------------------
 
-.. toctree::
-   :maxdepth: 1
-   :caption: Conversation Types
+    .. toctree::
+
+    :maxdepth: 1
+    :caption: Conversation Types
    
-   directed
-   round_robin
-   collaborative
-   debate
-   social_media
-   custom_patterns
+    directed
+    round_robin
+    collaborative
+    debate
+    social_media
+    custom_patterns
 
-.. toctree::
-   :maxdepth: 1
-   :caption: Use Cases
+    .. toctree::
+
+    :maxdepth: 1
+    :caption: Use Cases
    
-   examples/education
-   examples/business
-   examples/research
-   examples/creative
-   examples/support
+    examples/education
+    examples/business
+    examples/research
+    examples/creative
+    examples/support
 
-Performance Considerations
---------------------------
+    Performance Considerations
+    --------------------------
 
-- **Token Usage**: Conversations can consume many tokens quickly
-- **Context Management**: Use sliding windows and summarization
-- **Parallel Processing**: Some patterns allow concurrent agent thinking
-- **Caching**: Cache agent responses for similar prompts
-- **Monitoring**: Track participation, quality, and outcomes
+    - **Token Usage**: Conversations can consume many tokens quickly
+    - **Context Management**: Use sliding windows and summarization
+    - **Parallel Processing**: Some patterns allow concurrent agent thinking
+    - **Caching**: Cache agent responses for similar prompts
+    - **Monitoring**: Track participation, quality, and outcomes
 
-See Also
---------
+    See Also
+    --------
 
-- :doc:`/guides/building_agents` - Create custom agents
-- :doc:`/api/haive-agents` - Full agents API reference  
-- :doc:`/guides/multi_agent_systems` - Advanced multi-agent patterns
-- :doc:`/examples/index` - More code examples
+    - :doc:`/guides/building_agents` - Create custom agents
+    - :doc:`/api/haive-agents` - Full agents API reference  
+    - :doc:`/guides/multi_agent_systems` - Advanced multi-agent patterns
+    - :doc:`/examples/index` - More code examples

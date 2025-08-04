@@ -5,112 +5,236 @@ Classic chess with AI agents of varying skill levels
 
 .. raw:: html
 
-    <div class="game-demo-container">
-        <!-- Game Overview -->
-        <div class="game-overview-card">
-            <div class="game-header">
-                <div class="game-icon">♟️</div>
-                <div>
-                    <h2>Chess</h2>
-                    <p class="game-complexity">Complexity: High</p>
-                </div>
-            </div>
+   <div class="game-demo-container">
+   <!-- Game Overview -->
 
-            <div class="game-stats">
-                <div class="stat">
-                    <label>Board Size:</label>
-                    <span>8x8</span>
-                </div>
-                <div class="stat">
-                    <label>AI Levels:</label>
-                    <span>4</span>
-                </div>
-            </div>
+.. raw:: html
 
-            <div class="game-features">
-                <span class="feature-tag">8x8 Board</span>
-                <span class="feature-tag">AI Opponents</span>
-                <span class="feature-tag">Move History</span>
-                <span class="feature-tag">Analysis</span>
-            </div>
-        </div>
+   <div class="game-overview-card">
 
-        <!-- Playable Game Interface -->
-        <div class="game-interface">
-            <div class="game-controls">
-                <h3>Play Chess</h3>
-                <div class="ai-selection">
-                    <label>AI Difficulty:</label>
-                    <select id="chess-ai-level">
-                        <option value="beginner">Beginner</option>
-                        <option value="intermediate">Intermediate</option>
-                        <option value="advanced">Advanced</option>
-                        <option value="master">Master</option>
-                    </select>
-                </div>
-                <button onclick="startGame('chess')" class="start-game-btn">
+.. raw:: html
+
+   <div class="game-header">
+
+.. raw:: html
+
+   <div class="game-icon">♟️</div>
+
+.. raw:: html
+
+   <div>
+   <h2>Chess</h2>
+   <p class="game-complexity">Complexity: High</p>
+   </div>
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="game-stats">
+
+.. raw:: html
+
+   <div class="stat">
+   <label>Board Size:</label>
+   <span>8x8</span>
+   </div>
+
+.. raw:: html
+
+   <div class="stat">
+   <label>AI Levels:</label>
+   <span>4</span>
+   </div>
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="game-features">
+   <span class="feature-tag">8x8 Board</span>
+   <span class="feature-tag">AI Opponents</span>
+   <span class="feature-tag">Move History</span>
+   <span class="feature-tag">Analysis</span>
+   </div>
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <!-- Playable Game Interface -->
+
+.. raw:: html
+
+   <div class="game-interface">
+
+.. raw:: html
+
+   <div class="game-controls">
+   <h3>Play Chess</h3>
+
+.. raw:: html
+
+   <div class="ai-selection">
+   <label>AI Difficulty:</label>
+   <select id="chess-ai-level">
+   <option value="beginner">Beginner</option>
+   <option value="intermediate">Intermediate</option>
+   <option value="advanced">Advanced</option>
+   <option value="master">Master</option>
+   </select>
+   </div>
+
+.. raw:: html
+
+   <button onclick="startGame('chess')" class="start-game-btn">
+
                     Start New Game
-                </button>
-            </div>
+.. raw:: html
 
-            <div id="chess-board" class="game-board">
-                <!-- Game board will be rendered here -->
-                <div class="board-placeholder">
-                    <p>Click "Start New Game" to begin playing Chess</p>
-                </div>
-            </div>
+   </button>
+   </div>
 
-            <div class="game-status">
-                <div id="chess-status" class="status-display">
-                    Ready to play
-                </div>
-                <div id="chess-moves" class="moves-history">
-                    <!-- Move history will appear here -->
-                </div>
-            </div>
-        </div>
+.. raw:: html
 
-        <!-- Game Analysis -->
-        <div class="game-analysis">
-            <h3>AI Analysis</h3>
-            <div id="chess-analysis" class="analysis-display">
-                <p>Start a game to see AI analysis and move suggestions.</p>
-            </div>
-        </div>
+   <div id="chess-board" class="game-board">
+   <!-- Game board will be rendered here -->
 
-        <!-- Live Game Stream -->
-        <div class="game-streaming">
-            <h3>Live Game Visualization</h3>
-            <div class="streaming-indicator">
-                Live Stream
-            </div>
-            <div class="game-state-display">
-                <pre id="chess-state">
-♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜
-♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟
-. . . . . . . .
-. . . . . . . .
-. . . . . . . .
-. . . . . . . .
-♙ ♙ ♙ ♙ ♙ ♙ ♙ ♙
-♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖
+.. raw:: html
 
-Turn: White | Move: 1
-Status: Game in progress
-                </pre>
-            </div>
-            <div class="move-history">
-                <h4>Move History</h4>
-                <div id="chess-moves-stream">
-                    <div class="move">1. e4 e5</div>
-                    <div class="move">2. Nf3 Nc6</div>
-                    <div class="move">3. Bb5 a6</div>
-                </div>
-            </div>
-        </div>
-    </div>
+   <div class="board-placeholder">
+   <p>Click "Start New Game" to begin playing Chess</p>
+   </div>
 
-    <script>
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="game-status">
+
+.. raw:: html
+
+   <div id="chess-status" class="status-display">
+
+                       Ready to play
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div id="chess-moves" class="moves-history">
+   <!-- Move history will appear here -->
+   </div>
+
+.. raw:: html
+
+   </div>
+   </div>
+
+.. raw:: html
+
+   <!-- Game Analysis -->
+
+.. raw:: html
+
+   <div class="game-analysis">
+   <h3>AI Analysis</h3>
+
+.. raw:: html
+
+   <div id="chess-analysis" class="analysis-display">
+   <p>Start a game to see AI analysis and move suggestions.</p>
+   </div>
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <!-- Live Game Stream -->
+
+.. raw:: html
+
+   <div class="game-streaming">
+   <h3>Live Game Visualization</h3>
+
+.. raw:: html
+
+   <div class="streaming-indicator">
+
+                   Live Stream
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="game-state-display">
+
+.. raw:: html
+
+   <pre id="chess-state">
+
+       ♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜
+       ♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟
+       . . . . . . . .
+       . . . . . . . .
+       . . . . . . . .
+       . . . . . . . .
+       ♙ ♙ ♙ ♙ ♙ ♙ ♙ ♙
+       ♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖
+
+   
+   Turn: White | Move: 1
+   Status: Game in progress
+
+.. raw:: html
+
+   </pre>
+   </div>
+
+.. raw:: html
+
+   <div class="move-history">
+   <h4>Move History</h4>
+
+.. raw:: html
+
+   <div id="chess-moves-stream">
+
+.. raw:: html
+
+   <div class="move">1. e4 e5</div>
+
+.. raw:: html
+
+   <div class="move">2. Nf3 Nc6</div>
+
+.. raw:: html
+
+   <div class="move">3. Bb5 a6</div>
+   </div>
+
+.. raw:: html
+
+   </div>
+   </div>
+   </div>
+
+.. raw:: html
+
+   <script>
+
     // Game initialization and interaction
     function startGame(gameId) {
         const board = document.getElementById(gameId + '-board');
@@ -128,233 +252,41 @@ Status: Game in progress
     function initializeGameBoard(gameId, boardElement) {
         // This would be replaced with actual game implementation
         boardElement.innerHTML = `
-            <div class="game-board-${gameId}">
-                <p>🎮 Interactive ${gameId} board would render here</p>
-                <p>Click positions to make moves</p>
-                <div class="demo-board" id="demo-board">
-                    <!-- Demo board will be generated by JS -->
-                </div>
-            </div>
-        `;
+
+.. raw:: html
+
+   <div class="game-board-${gameId}">
+   <p>🎮 Interactive ${gameId} board would render here</p>
+   <p>Click positions to make moves</p>
+
+.. raw:: html
+
+   <div class="demo-board" id="demo-board">
+   <!-- Demo board will be generated by JS -->
+   </div>
+
+.. raw:: html
+
+   </div>
+
+        `;`
     }
 
     function generateDemoBoard(gameId) {
         if (gameId === 'chess' || gameId === 'checkers') {
             let squares = '';
             for (let i = 0; i < 64; i++) {
-                squares += '<div class="square"></div>';
-            }
-            return `<div class="board-8x8">${squares}</div>`;
-        } else if (gameId === 'tictactoe') {
-            let cells = '';
-            for (let i = 0; i < 9; i++) {
-                cells += '<div class="cell" onclick="makeMove(this)"></div>';
-            }
-            return `<div class="board-3x3">${cells}</div>`;
-        }
-        return '<div class="custom-board">Game board visualization</div>';
-    }
 
-    function makeMove(cell) {
-        if (cell.textContent === '') {
-            cell.textContent = 'X';
-            // Trigger AI move
-            setTimeout(() => aiMove(), 500);
-        }
-    }
+                   squares += '<div class="square"></div>';
+               }
 
-    function aiMove() {
-        const emptyCells = document.querySelectorAll('.cell:empty');
-        if (emptyCells.length > 0) {
-            const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-            randomCell.textContent = 'O';
-        }
-    }
+               return `<div class="board-8x8">${squares}</div>`;
+           } else if (gameId === 'tictactoe') {
+               let cells = '';
+               for (let i = 0; i < 9; i++) {
 
-    function showGameInterface(gameId) {
-        // Enable game-specific interactions
-        console.log(`Started ${gameId} game`);
-    }
-    </script>
+                   cells += '<div class="cell" onclick="makeMove(this)"></div>';
+               }
 
-    <style>
-    .game-demo-container {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .game-overview-card {
-        background: var(--color-background-secondary);
-        border-radius: 12px;
-        padding: 2rem;
-        margin-bottom: 2rem;
-    }
-
-    .game-header {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .game-icon {
-        font-size: 3rem;
-    }
-
-    .game-stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 1rem;
-        margin: 1rem 0;
-    }
-
-    .stat {
-        display: flex;
-        justify-content: space-between;
-        padding: 0.5rem;
-        background: var(--color-background-primary);
-        border-radius: 6px;
-    }
-
-    .game-features {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-top: 1rem;
-    }
-
-    .feature-tag {
-        background: var(--color-brand-primary);
-        color: white;
-        padding: 0.25rem 0.75rem;
-        border-radius: 1rem;
-        font-size: 0.875rem;
-    }
-
-    .game-interface {
-        background: var(--color-background-secondary);
-        border-radius: 12px;
-        padding: 2rem;
-        margin-bottom: 2rem;
-    }
-
-    .game-controls {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 2rem;
-        flex-wrap: wrap;
-    }
-
-    .start-game-btn {
-        background: var(--color-brand-primary);
-        color: white;
-        border: none;
-        padding: 0.75rem 1.5rem;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: 600;
-    }
-
-    .game-board {
-        min-height: 400px;
-        background: var(--color-background-primary);
-        border: 2px solid var(--color-background-border);
-        border-radius: 8px;
-        padding: 2rem;
-        text-align: center;
-    }
-
-    .board-8x8 {
-        display: grid;
-        grid-template-columns: repeat(8, 1fr);
-        gap: 1px;
-        max-width: 400px;
-        margin: 0 auto;
-    }
-
-    .board-3x3 {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2px;
-        max-width: 300px;
-        margin: 0 auto;
-    }
-
-    .square, .cell {
-        aspect-ratio: 1;
-        background: #f0f0f0;
-        border: 1px solid #ccc;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        cursor: pointer;
-    }
-
-    .square:nth-child(odd) {
-        background: #d4c4b0;
-    }
-
-    .cell:hover {
-        background: #e0e0e0;
-    }
-
-    .game-status {
-        margin-top: 1rem;
-        padding: 1rem;
-        background: var(--color-background-primary);
-        border-radius: 6px;
-    }
-
-    .game-analysis {
-        background: var(--color-background-secondary);
-        border-radius: 12px;
-        padding: 2rem;
-    }
-    </style>
-
-Rules & Strategy
-----------------
-
-**How to Play:**
-
-Move pieces according to chess rules. Checkmate the opponent's king to win.
-
-**AI Opponents:**
-
-- **Beginner**: Beginner-friendly AI that makes some mistakes
-- **Intermediate**: Balanced AI with good strategic play
-- **Advanced**: Balanced AI with good strategic play
-- **Master**: Advanced AI using optimal strategies
-
-
-Code Example
-------------
-
-.. code-block:: python
-
-    from haive.games.chess import ChessGame
-    from haive.agents.simple import SimpleAgent
-
-    # Create game
-    game = ChessGame()
-
-    # Create AI players
-    player1 = SimpleAgent(name="Human")
-    player2 = SimpleAgent(name="AI_Agent", difficulty="advanced")
-
-    # Play game
-    winner = game.play(player1, player2)
-    print(f"Winner: {winner}")
-
-    # Get game history
-    for move in game.history:
-        print(f"{move.player}: {move.action}")
-
-See Also
---------
-
-- :doc:`/api/haive/games/index` - Games API documentation
-- :doc:`/guides/game-development` - Creating custom games
-- :doc:`/examples/game-agents` - More game examples
+               return `<div class="board-3x3">${cells}</div>`;
+           }

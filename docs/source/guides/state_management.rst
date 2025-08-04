@@ -37,27 +37,29 @@ Haive uses Pydantic for state schemas:
     resolution_steps: List[str] = Field(default_factory=list)
     resolved: bool = False
 
-State Lifecycle
+    State Lifecycle
 
----------------
+    ---------------
 
-Agent state goes through a typical lifecycle:
+    Agent state goes through a typical lifecycle:
 
-1. **Initializatio***n**: Created with default values
+    1. **Initialization**: Created with default values
 
-2.*** **Populatio***n**: Updated with new information
+    2. **Population**: Updated with new information
 
-3.*** **Persistenc***e**: Saved to storage
-4.*** **Retrieva***l**: Loaded from storage
-5.*** **Transformatio***n**: Modified during execution
+    3. **Persistence**: Saved to storage
 
-Working with State
+    4. **Retrieval**: Loaded from storage
 
-------------------
+    5. **Transformation**: Modified during execution
 
-Basic State Access
+    Working with State
 
-^^^^^^^^^^^^^^^^^^
+    ------------------
+
+    Basic State Access
+
+    ^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
 
@@ -76,9 +78,9 @@ Basic State Access
     else:
     print("Issue still pending")
 
-State Updates
+    State Updates
 
-^^^^^^^^^^^^^
+    ^^^^^^^^^^^^^
 
 .. code-block:: python
 
@@ -99,17 +101,17 @@ State Updates
     resolution_steps=["Reviewed account history"]
     )
 
-State Persistence
+    State Persistence
 
------------------
+    -----------------
 
-Haive supports multiple state persistence options:
+    Haive supports multiple state persistence options:
 
-In-memory
+    In-memory
 
-^^^^^^^^^
+    ^^^^^^^^^
 
-Default for short-lived agents:
+    Default for short-lived agents:
 
 .. code-block:: python
 
@@ -117,11 +119,11 @@ Default for short-lived agents:
     persistence_manager="memory"
     )
 
-File-based
+    File-based
 
-^^^^^^^^^^
+    ^^^^^^^^^^
 
-For local development and testing:
+    For local development and testing:
 
 .. code-block:: python
 
@@ -131,11 +133,11 @@ For local development and testing:
     )
     )
 
-Database
+    Database
 
-^^^^^^^^
+    ^^^^^^^^
 
-For production deployments:
+    For production deployments:
 
 .. code-block:: python
 
@@ -145,11 +147,11 @@ For production deployments:
     )
     )
 
-State Sharing
+    State Sharing
 
--------------
+    -------------
 
-Agents can share state:
+    Agents can share state:
 
 .. code-block:: python
 
@@ -166,25 +168,25 @@ Agents can share state:
     agent1.state.issue_description = "Password reset"
     print(agent2.state.issue_description)  # Password reset
 
-Best Practices
+    Best Practices
 
---------------
+    --------------
 
-- Define clear state schemas with appropriate types
+    - Define clear state schemas with appropriate types
 
-- Initialize state with sensible defaults
-- Document state fields with descriptive comments
-- Use state validation with Pydantic
-- Implement state persistence for important agents
-- Monitor state size to prevent excessive growth
+    - Initialize state with sensible defaults
+    - Document state fields with descriptive comments
+    - Use state validation with Pydantic
+    - Implement state persistence for important agents
+    - Monitor state size to prevent excessive growth
 
-Next Steps
+    Next Steps
 
-----------
+    ----------
 
-Continue with:
+    Continue with:
 
-- :doc:`engine_system` - Understanding the engine system
+    - :doc:`engine_system` - Understanding the engine system
 
-- :doc:`agent_patterns` - Common agent design patterns
-- :doc:`custom_agents` - Building agents with custom state***
+    - :doc:`agent_patterns` - Common agent design patterns
+    - :doc:`custom_agents` - Building agents with custom state

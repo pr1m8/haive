@@ -110,7 +110,7 @@ def get_additional_extensions() -> List[str]:
         "sphinx_design": "sphinx_design",
         "sphinx_tabs.tabs": "sphinx_tabs",
         "sphinx_togglebutton": "sphinx_togglebutton",
-        "sphinx_external_toc": "sphinx_external_toc",
+        # "sphinx_external_toc": "sphinx_external_toc",  # DISABLED: requires _toc.yml
         "sphinx_favicon": "sphinx_favicon",
         "sphinx_notfound_page": "sphinx_notfound_page",
         "sphinxcontrib.fulltoc": "sphinxcontrib.fulltoc",
@@ -196,7 +196,8 @@ def get_development_extensions() -> List[str]:
         # Code Documentation
         "sphinx_argparse": "sphinx_argparse",
         "sphinx_click": "sphinx_click",
-        "sphinx_codeautolink": "sphinx_codeautolink",
+        # REMOVED: sphinx_codeautolink - causes NodeType.MESSAGE_TRANSFORMER error with Sphinx 8.2.3
+        # "sphinx_codeautolink": "sphinx_codeautolink",
         "sphinx_codefence": "sphinx_codefence",
         "sphinx_codelinks": "sphinx_codelinks",
         "sphinx_exec_directive": "sphinx_exec_directive",
@@ -233,11 +234,11 @@ def get_enhanced_extensions() -> List[str]:
     extension_tests = {
         # Advanced Layout Extensions
         "sphinx_panels": "sphinx_panels",
-        "sphinx_book_theme": "sphinx_book_theme",
+        # "sphinx_book_theme": "sphinx_book_theme",  # DISABLED: Theme extension, not a regular extension
         "sphinx_examples": "sphinx_examples",
-        "sphinx_gallery.gen_gallery": "sphinx_gallery",
+        # "sphinx_gallery.gen_gallery": "sphinx_gallery",  # Temporarily disabled - requires proper example structure
         "sphinx_version_warning": "sphinx_version_warning",
-        "sphinx_multitoc_numbering": "sphinx_multitoc_numbering",
+        # "sphinx_multitoc_numbering": "sphinx_multitoc_numbering",  # DISABLED: toctree conflict
         # Advanced Documentation Features
         "sphinx_comments": "sphinx_comments",
         "sphinx_proof": "sphinx_proof",
@@ -263,17 +264,18 @@ def get_enhanced_extensions() -> List[str]:
         "sphinx_timeline": "sphinx_timeline",
         "sphinx_tags": "sphinx_tags",
         # Themes and Styling
-        "sphinx_basic_ng": "sphinx_basic_ng",
+        # "sphinx_basic_ng": "sphinx_basic_ng",  # DISABLED: Theme extension
         "sphinx_library": "sphinx_library",
         # REMOVED: sphinx_modern_theme (no setup function)
-        "sphinx_rtd_theme": "sphinx_rtd_theme",
-        "sphinx_typlog_theme": "sphinx_typlog_theme",
+        # "sphinx_rtd_theme": "sphinx_rtd_theme",  # DISABLED: Theme extension
+        # "sphinx_typlog_theme": "sphinx_typlog_theme",  # DISABLED: Theme extension
         # Icons and UI Elements
         "sphinx_btn": "sphinx_btn",
         "sphinx_icon": "sphinx_icon",
         "sphinx_fasvg": "sphinx_fasvg",
         # Mathematical and Scientific
-        "sphinx_math_dollar": "sphinx_math_dollar",
+        # DISABLED: sphinx_math_dollar incompatible with Sphinx 8.2.3 - causes NotImplementedError
+        # "sphinx_math_dollar": "sphinx_math_dollar",
         "sphinx_uml": "sphinx_uml",
         "sphinx_mindmap": "sphinx_mindmap",
         "sphinx_diagrams": "sphinx_diagrams",
@@ -297,7 +299,7 @@ def get_enhanced_extensions() -> List[str]:
         "sphinx_inplace": "sphinx_inplace",
         "sphinx_me": "sphinx_me",
         "sphinx_multiproject": "sphinx_multiproject",
-        "sphinx_multiversion": "sphinx_multiversion",
+        # "sphinx_multiversion": "sphinx_multiversion",  # DISABLED: May cause toctree conflicts
         "sphinx_polyversion": "sphinx_polyversion",
         # REMOVED: sphinx_selective_exclude (no setup function)
         "sphinx_variations": "sphinx_variations",
@@ -309,9 +311,9 @@ def get_enhanced_extensions() -> List[str]:
         "sphinx_pyscript": "sphinx_pyscript",
         # Specialized Extensions
         "sphinx_icontract": "sphinx_icontract",
-        "sphinx_jinja": "sphinx_jinja",
+        # "sphinx_jinja": "sphinx_jinja",  # DISABLED: May conflict with template system
         # REMOVED: sphinx_jinja2 (no setup function)
-        "sphinx_jinja2_compat": "sphinx_jinja2_compat",
+        # "sphinx_jinja2_compat": "sphinx_jinja2_compat",  # DISABLED: no setup() function
         "sphinx_jsonschema": "sphinx_jsonschema",
         "sphinx_lastupdate": "sphinx_lastupdate",
         "sphinx_mcp": "sphinx_mcp",

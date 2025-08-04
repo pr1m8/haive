@@ -6,14 +6,22 @@
 
 .. raw:: html
 
+   .. raw:: html
+
    <div class="agent-hero-section">
-      <div class="hero-content">
-         <h2>🛠️ Complete MCP Setup Guide</h2>
-         <p class="hero-description">
-            Step-by-step guide to configure MCP servers for development and production environments. 
-            From basic setup to advanced enterprise configurations.
-         </p>
-      </div>
+
+.. raw:: html
+
+   <div class="hero-content">
+   <h2>🛠️ Complete MCP Setup Guide</h2>
+   <p class="hero-description">
+   Step-by-step guide to configure MCP servers for development and production environments. 
+   From basic setup to advanced enterprise configurations.
+   </p>
+   </div>
+
+.. raw:: html
+
    </div>
 
 Comprehensive guide for setting up Model Context Protocol integration with detailed 
@@ -24,25 +32,27 @@ Prerequisites
 
 .. raw:: html
 
-   <div class="custom-section">
-      <h3>📋 System Requirements</h3>
-      <p>Ensure your system meets the requirements for MCP integration.</p>
+   .. raw:: html
 
-**Required Software:**
+   <div class="custom-section">
+   <h3>📋 System Requirements</h3>
+   <p>Ensure your system meets the requirements for MCP integration.</p>
+
+   **Required Software:**
 
 .. code-block:: bash
 
    # Python 3.12+ (recommended)
    python --version  # Should be 3.12+
-   
+
    # Node.js (for MCP servers)
    node --version     # Should be 18+
    npm --version      # Should be 9+
-   
+
    # Claude Code (for direct MCP usage)
    claude --version   # Latest version
 
-**Installation:**
+   **Installation:**
 
 .. code-block:: bash
 
@@ -56,347 +66,404 @@ Prerequisites
    # Install haive-mcp
    poetry add haive-mcp
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-Quick Setup Methods
--------------------
+   Quick Setup Methods
+   -------------------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="showcase-tabs">
-      <button class="showcase-tab active">Dynamic Discovery</button>
-      <button class="showcase-tab">Direct MCP Commands</button>
-      <button class="showcase-tab">Static Configuration</button>
-      <button class="showcase-tab">Hybrid Approach</button>
+   <button class="showcase-tab active">Dynamic Discovery</button>
+   <button class="showcase-tab">Direct MCP Commands</button>
+   <button class="showcase-tab">Static Configuration</button>
+   <button class="showcase-tab">Hybrid Approach</button>
    </div>
 
+   .. raw:: html
+
    <div class="showcase-content active">
-      <h3>🤖 Dynamic Discovery Setup</h3>
-      <p>Let AI automatically find and install servers based on your needs.</p>
+   <h3>🤖 Dynamic Discovery Setup</h3>
+   <p>Let AI automatically find and install servers based on your needs.</p>
 
 .. code-block:: python
 
-   from haive.mcp.agents import IntelligentMCPAgent
-   from haive.core.engine.aug_llm import AugLLMConfig
+   
 
-   # Create agent with auto-discovery
-   agent = IntelligentMCPAgent(
-       engine=AugLLMConfig(),
-       auto_discover=True,      # Enable AI discovery
-       require_approval=True    # Require approval for installs
-   )
+      from haive.mcp.agents import IntelligentMCPAgent
+      from haive.core.engine.aug_llm import AugLLMConfig
 
-   await agent.setup()
+   
 
-   # Agent automatically discovers and installs servers!
-   result = await agent.arun({
-       "messages": [{
-           "role": "user",
-           "content": "Connect to PostgreSQL and analyze user data"
-       }]
-   })
-   # Auto-installs postgres server if approved!
+      # Create agent with auto-discovery
+      agent = IntelligentMCPAgent(
+          engine=AugLLMConfig(),
+          auto_discover=True,      # Enable AI discovery
+          require_approval=True    # Require approval for installs
+      )
 
-**Benefits:**
-- Zero manual configuration
-- AI selects appropriate servers
-- Handles complex requirements automatically
-- Great for exploration and prototyping
+   
 
-.. raw:: html
+      await agent.setup()
 
-   </div>
+   
 
-   <div class="showcase-content">
+      # Agent automatically discovers and installs servers!
+      result = await agent.arun({
+          "messages": [{
+              "role": "user",
+              "content": "Connect to PostgreSQL and analyze user data"
+          }]
+      })
+      # Auto-installs postgres server if approved!
+
+   
+      **Benefits:**
+      - Zero manual configuration
+      - AI selects appropriate servers
+      - Handles complex requirements automatically
+      - Great for exploration and prototyping
+   
+      .. raw:: html
+
+      </div>
+
+      .. raw:: html
+
+      <div class="showcase-content">
       <h3>📡 Direct MCP Commands</h3>
       <p>Use Claude Code MCP commands for direct server management.</p>
 
 .. code-block:: bash
 
-   # PostgreSQL - Database operations
-   claude mcp add haive-db -s user -- npx -y @modelcontextprotocol/server-postgres "postgresql://localhost/haive"
+   
 
-   # Filesystem - Enhanced file operations
-   claude mcp add haive-files -s user -- npx -y @modelcontextprotocol/server-filesystem /home/user/project
+      # PostgreSQL - Database operations
+      claude mcp add haive-db -s user -- npx -y @modelcontextprotocol/server-postgres "postgresql://localhost/haive"
 
-   # GitHub - Repository management
-   claude mcp add haive-github -s user -e GITHUB_TOKEN=$GITHUB_TOKEN -- npx -y @modelcontextprotocol/server-github
+   
 
-   # Web search - Information retrieval
-   claude mcp add brave-search -s user -e BRAVE_API_KEY=$BRAVE_API_KEY -- npx -y @modelcontextprotocol/server-brave-search
+      # Filesystem - Enhanced file operations
+      claude mcp add haive-files -s user -- npx -y @modelcontextprotocol/server-filesystem /home/user/project
 
-   # Browser automation - Web testing
-   claude mcp add haive-browser -s user -- npx -y @modelcontextprotocol/server-puppeteer
+   
 
-   # List all configured servers
-   claude mcp list
+      # GitHub - Repository management
+      claude mcp add haive-github -s user -e GITHUB_TOKEN=$GITHUB_TOKEN -- npx -y @modelcontextprotocol/server-github
 
-**Benefits:**
-- Direct control over installations
-- Immediate availability
-- Easy to script and automate
-- Works with any MCP-compatible tool
+   
 
-.. raw:: html
+      # Web search - Information retrieval
+      claude mcp add brave-search -s user -e BRAVE_API_KEY=$BRAVE_API_KEY -- npx -y @modelcontextprotocol/server-brave-search
 
-   </div>
+   
 
-   <div class="showcase-content">
+      # Browser automation - Web testing
+      claude mcp add haive-browser -s user -- npx -y @modelcontextprotocol/server-puppeteer
+
+   
+
+      # List all configured servers
+      claude mcp list
+
+   
+      **Benefits:**
+      - Direct control over installations
+      - Immediate availability
+      - Easy to script and automate
+      - Works with any MCP-compatible tool
+   
+      .. raw:: html
+
+      </div>
+
+      .. raw:: html
+
+      <div class="showcase-content">
       <h3>⚙️ Static Configuration</h3>
       <p>Define servers in configuration files for production environments.</p>
 
 .. code-block:: python
 
-   from haive.mcp.config import MCPConfig, MCPServerConfig
-   from haive.mcp.agents import MCPAgent
+   
 
-   # Production configuration
-   production_config = MCPConfig(
-       enabled=True,
-       auto_discover=False,  # Disable auto-discovery
-       servers={
-           "postgres": MCPServerConfig(
-               name="postgres",
-               transport="stdio",
-               command="npx",
-               args=["-y", "@modelcontextprotocol/server-postgres"],
-               env={"DATABASE_URL": "postgresql://user:pass@localhost/db"}
-           ),
-           "github": MCPServerConfig(
-               name="github", 
-               transport="stdio",
-               command="npx",
-               args=["-y", "@modelcontextprotocol/server-github"],
-               env={"GITHUB_TOKEN": "your_token"}
-           ),
-           "filesystem": MCPServerConfig(
-               name="filesystem",
-               transport="stdio", 
-               command="npx",
-               args=["-y", "@modelcontextprotocol/server-filesystem"],
-               env={"ALLOWED_DIRS": "/app/data,/app/output"}
-           )
-       },
-       retry_attempts=3,
-       timeout=30
-   )
+      from haive.mcp.config import MCPConfig, MCPServerConfig
+      from haive.mcp.agents import MCPAgent
 
-   # Agent with static configuration
-   agent = MCPAgent(
-       engine=AugLLMConfig(),
-       mcp_config=production_config
-   )
+   
 
-   await agent.setup()
+      # Production configuration
+      production_config = MCPConfig(
+          enabled=True,
+          auto_discover=False,  # Disable auto-discovery
+          servers={
+              "postgres": MCPServerConfig(
+                  name="postgres",
+                  transport="stdio",
+                  command="npx",
+                  args=["-y", "@modelcontextprotocol/server-postgres"],
+                  env={"DATABASE_URL": "postgresql://user:pass@localhost/db"}
+              ),
+              "github": MCPServerConfig(
+                  name="github", 
+                  transport="stdio",
+                  command="npx",
+                  args=["-y", "@modelcontextprotocol/server-github"],
+                  env={"GITHUB_TOKEN": "your_token"}
+              ),
+              "filesystem": MCPServerConfig(
+                  name="filesystem",
+                  transport="stdio", 
+                  command="npx",
+                  args=["-y", "@modelcontextprotocol/server-filesystem"],
+                  env={"ALLOWED_DIRS": "/app/data,/app/output"}
+              )
+          },
+          retry_attempts=3,
+          timeout=30
+      )
 
-**Benefits:**
-- Predictable behavior
-- Version control friendly
-- Production ready
-- Security auditable
+   
 
-.. raw:: html
+      # Agent with static configuration
+      agent = MCPAgent(
+          engine=AugLLMConfig(),
+          mcp_config=production_config
+      )
 
-   </div>
+   
 
-   <div class="showcase-content">
+      await agent.setup()
+
+   
+      **Benefits:**
+      - Predictable behavior
+      - Version control friendly
+      - Production ready
+      - Security auditable
+   
+      .. raw:: html
+
+      </div>
+
+      .. raw:: html
+
+      <div class="showcase-content">
       <h3>🔀 Hybrid Approach</h3>
       <p>Combine static base configuration with dynamic discovery.</p>
 
 .. code-block:: python
 
-   # Base configuration with essential servers
-   base_config = MCPConfig(
-       servers={
-           "postgres": MCPServerConfig(
-               name="postgres",
-               transport="stdio",
-               command="npx", 
-               args=["-y", "@modelcontextprotocol/server-postgres"],
-               env={"DATABASE_URL": os.getenv("DATABASE_URL")}
-           ),
-           "filesystem": MCPServerConfig(
-               name="filesystem",
-               transport="stdio",
-               command="npx",
-               args=["-y", "@modelcontextprotocol/server-filesystem"],
-               env={"ALLOWED_DIRS": "/app/data"}
-           )
-       }
-   )
+   
 
-   # Agent with base config + dynamic discovery
-   agent = IntelligentMCPAgent(
-       engine=AugLLMConfig(),
-       mcp_config=base_config,    # Static base
-       auto_discover=True,        # Dynamic additions
-       require_approval=True      # Controlled expansion
-   )
+      # Base configuration with essential servers
+      base_config = MCPConfig(
+          servers={
+              "postgres": MCPServerConfig(
+                  name="postgres",
+                  transport="stdio",
+                  command="npx", 
+                  args=["-y", "@modelcontextprotocol/server-postgres"],
+                  env={"DATABASE_URL": os.getenv("DATABASE_URL")}
+              ),
+              "filesystem": MCPServerConfig(
+                  name="filesystem",
+                  transport="stdio",
+                  command="npx",
+                  args=["-y", "@modelcontextprotocol/server-filesystem"],
+                  env={"ALLOWED_DIRS": "/app/data"}
+              )
+          }
+      )
 
-   await agent.setup()
+   
 
-**Benefits:**
-- Reliable core functionality
-- Flexible expansion
-- Controlled growth
-- Best of both worlds
+      # Agent with base config + dynamic discovery
+      agent = IntelligentMCPAgent(
+          engine=AugLLMConfig(),
+          mcp_config=base_config,    # Static base
+          auto_discover=True,        # Dynamic additions
+          require_approval=True      # Controlled expansion
+      )
 
-.. raw:: html
+   
 
-   </div>
+      await agent.setup()
 
-Environment Configuration
--------------------------
+   
+      **Benefits:**
+      - Reliable core functionality
+      - Flexible expansion
+      - Controlled growth
+      - Best of both worlds
+   
+      .. raw:: html
 
-.. raw:: html
+      </div>
 
-   <div class="custom-section">
+      Environment Configuration
+      -------------------------
+
+      .. raw:: html
+
+      .. raw:: html
+
+      <div class="custom-section">
       <h3>🌍 Environment-Specific Settings</h3>
       <p>Configure MCP for different environments and use cases.</p>
 
-Development Environment
-~~~~~~~~~~~~~~~~~~~~~~~
+      Development Environment
+      ~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
    # Development configuration
    dev_config = MCPConfig(
-       enabled=True,
-       auto_discover=True,        # Enable discovery for exploration
-       lazy_init=True,           # Delay initialization
-       servers={
-           "postgres": MCPServerConfig(
-               name="postgres",
-               transport="stdio",
-               command="npx",
-               args=["-y", "@modelcontextprotocol/server-postgres"],
-               env={"DATABASE_URL": "postgresql://localhost/haive_dev"}
-           ),
-           "filesystem": MCPServerConfig(
-               name="filesystem",
-               transport="stdio",
-               command="npx",
-               args=["-y", "@modelcontextprotocol/server-filesystem"],
-               env={"ALLOWED_DIRS": "/home/user/dev/haive"}
-           )
-       },
-       retry_attempts=2,
-       timeout=10
+   enabled=True,
+   auto_discover=True,        # Enable discovery for exploration
+   lazy_init=True,           # Delay initialization
+   servers={
+   "postgres": MCPServerConfig(
+   name="postgres",
+   transport="stdio",
+   command="npx",
+   args=["-y", "@modelcontextprotocol/server-postgres"],
+   env={"DATABASE_URL": "postgresql://localhost/haive_dev"}
+   ),
+   "filesystem": MCPServerConfig(
+   name="filesystem",
+   transport="stdio",
+   command="npx",
+   args=["-y", "@modelcontextprotocol/server-filesystem"],
+   env={"ALLOWED_DIRS": "/home/user/dev/haive"}
+   )
+   },
+   retry_attempts=2,
+   timeout=10
    )
 
    # Development agent
    dev_agent = IntelligentMCPAgent(
-       engine=AugLLMConfig(temperature=0.7),
-       mcp_config=dev_config,
-       auto_discover=True,
-       require_approval=False  # Auto-approve for dev
+   engine=AugLLMConfig(temperature=0.7),
+   mcp_config=dev_config,
+   auto_discover=True,
+   require_approval=False  # Auto-approve for dev
    )
 
-Staging Environment
-~~~~~~~~~~~~~~~~~~~
+   Staging Environment
+   ~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
    # Staging configuration
    staging_config = MCPConfig(
-       enabled=True,
-       auto_discover=False,      # Disable discovery for stability
-       servers={
-           "postgres": MCPServerConfig(
-               name="postgres",
-               transport="stdio",
-               command="npx",
-               args=["-y", "@modelcontextprotocol/server-postgres"],
-               env={
-                   "DATABASE_URL": os.getenv("STAGING_DATABASE_URL"),
-                   "SSL_MODE": "require"
-               }
-           ),
-           "github": MCPServerConfig(
-               name="github",
-               transport="stdio",
-               command="npx",
-               args=["-y", "@modelcontextprotocol/server-github"],
-               env={
-                   "GITHUB_TOKEN": os.getenv("STAGING_GITHUB_TOKEN"),
-                   "GITHUB_OWNER": "staging-org"
-               }
-           )
-       },
-       retry_attempts=3,
-       timeout=30
+   enabled=True,
+   auto_discover=False,      # Disable discovery for stability
+   servers={
+   "postgres": MCPServerConfig(
+   name="postgres",
+   transport="stdio",
+   command="npx",
+   args=["-y", "@modelcontextprotocol/server-postgres"],
+   env={
+   "DATABASE_URL": os.getenv("STAGING_DATABASE_URL"),
+   "SSL_MODE": "require"
+   }
+   ),
+   "github": MCPServerConfig(
+   name="github",
+   transport="stdio",
+   command="npx",
+   args=["-y", "@modelcontextprotocol/server-github"],
+   env={
+   "GITHUB_TOKEN": os.getenv("STAGING_GITHUB_TOKEN"),
+   "GITHUB_OWNER": "staging-org"
+   }
+   )
+   },
+   retry_attempts=3,
+   timeout=30
    )
 
-Production Environment
-~~~~~~~~~~~~~~~~~~~~~~
+   Production Environment
+   ~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
    # Production configuration
    production_config = MCPConfig(
-       enabled=True,
-       auto_discover=False,      # Never auto-discover in production
-       servers={
-           "postgres": MCPServerConfig(
-               name="postgres",
-               transport="stdio",
-               command="npx",
-               args=["-y", "@modelcontextprotocol/server-postgres"],
-               env={
-                   "DATABASE_URL": os.getenv("DATABASE_URL"),
-                   "SSL_MODE": "require",
-                   "POOL_SIZE": "20"
-               }
-           ),
-           "redis": MCPServerConfig(
-               name="redis",
-               transport="stdio",
-               command="npx",
-               args=["-y", "@modelcontextprotocol/server-redis"],
-               env={
-                   "REDIS_URL": os.getenv("REDIS_URL"),
-                   "REDIS_TLS": "true"
-               }
-           )
-       },
-       retry_attempts=5,
-       timeout=60
+   enabled=True,
+   auto_discover=False,      # Never auto-discover in production
+   servers={
+   "postgres": MCPServerConfig(
+   name="postgres",
+   transport="stdio",
+   command="npx",
+   args=["-y", "@modelcontextprotocol/server-postgres"],
+   env={
+   "DATABASE_URL": os.getenv("DATABASE_URL"),
+   "SSL_MODE": "require",
+   "POOL_SIZE": "20"
+   }
+   ),
+   "redis": MCPServerConfig(
+   name="redis",
+   transport="stdio",
+   command="npx",
+   args=["-y", "@modelcontextprotocol/server-redis"],
+   env={
+   "REDIS_URL": os.getenv("REDIS_URL"),
+   "REDIS_TLS": "true"
+   }
+   )
+   },
+   retry_attempts=5,
+   timeout=60
    )
 
    # Production agent with strict approval
    production_agent = MCPAgent(
-       engine=AugLLMConfig(temperature=0.1),
-       mcp_config=production_config
+   engine=AugLLMConfig(temperature=0.1),
+   mcp_config=production_config
    )
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-Server-Specific Setup
----------------------
+   Server-Specific Setup
+   ---------------------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="server-setup-grid">
 
-.. _postgresql-setup:
+   .. _postgresql-setup:
 
-PostgreSQL Server Setup
-~~~~~~~~~~~~~~~~~~~~~~~
+   PostgreSQL Server Setup
+   ~~~~~~~~~~~~~~~~~~~~~~~
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="server-setup-card">
-      <h4>🗄️ PostgreSQL Configuration</h4>
-      <div class="server-badges">
-         <span class="status-badge stable">Stable</span>
-         <span class="status-badge official">Official</span>
-      </div>
+   <h4>🗄️ PostgreSQL Configuration</h4>
 
-**Basic Setup:**
+   .. raw:: html
+
+   <div class="server-badges">
+   <span class="status-badge stable">Stable</span>
+   <span class="status-badge official">Official</span>
+   </div>
+
+   **Basic Setup:**
 
 .. code-block:: bash
 
@@ -409,11 +476,12 @@ PostgreSQL Server Setup
    # With SSL
    claude mcp add haive-db -s user -- npx -y @modelcontextprotocol/server-postgres "postgresql://user:pass@localhost:5432/haive?sslmode=require"
 
-**Configuration Options:**
+   **Configuration Options:**
 
 .. code-block:: python
 
    postgres_config = MCPServerConfig(
+
        name="postgres",
        transport="stdio",
        command="npx",
@@ -424,9 +492,10 @@ PostgreSQL Server Setup
            "POOL_SIZE": "10",
            "TIMEOUT": "30"
        }
+
    )
 
-**Connection String Formats:**
+   **Connection String Formats:**
 
 .. code-block:: bash
 
@@ -442,7 +511,7 @@ PostgreSQL Server Setup
    # Production
    postgresql://user:password@prod-server:5432/database?sslmode=require&pool_size=20
 
-**Testing:**
+   **Testing:**
 
 .. code-block:: bash
 
@@ -454,25 +523,30 @@ PostgreSQL Server Setup
    @haive-db describe users
    @haive-db run SELECT version()
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-.. _filesystem-setup:
+   .. _filesystem-setup:
 
-Filesystem Server Setup
-~~~~~~~~~~~~~~~~~~~~~~~
+   Filesystem Server Setup
+   ~~~~~~~~~~~~~~~~~~~~~~~
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="server-setup-card">
-      <h4>📁 Filesystem Configuration</h4>
-      <div class="server-badges">
-         <span class="status-badge stable">Stable</span>
-         <span class="status-badge official">Official</span>
-      </div>
+   <h4>📁 Filesystem Configuration</h4>
 
-**Basic Setup:**
+   .. raw:: html
+
+   <div class="server-badges">
+   <span class="status-badge stable">Stable</span>
+   <span class="status-badge official">Official</span>
+   </div>
+
+   **Basic Setup:**
 
 .. code-block:: bash
 
@@ -481,15 +555,17 @@ Filesystem Server Setup
 
    # Multiple directories
    claude mcp add haive-files -s user -- npx -y @modelcontextprotocol/server-filesystem \
+
      /home/user/project \
      /home/user/documents \
      /home/user/data
 
-**Security Configuration:**
+   **Security Configuration:**
 
 .. code-block:: python
 
    filesystem_config = MCPServerConfig(
+
        name="filesystem",
        transport="stdio",
        command="npx",
@@ -500,9 +576,10 @@ Filesystem Server Setup
            "MAX_FILE_SIZE": "10MB",
            "BLOCKED_EXTENSIONS": ".exe,.bat,.sh"
        }
+
    )
 
-**Usage Examples:**
+   **Usage Examples:**
 
 .. code-block:: bash
 
@@ -512,25 +589,30 @@ Filesystem Server Setup
    @haive-files search for "TODO" in all files
    @haive-files create directory output/reports
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-.. _github-setup:
+   .. _github-setup:
 
-GitHub Server Setup
-~~~~~~~~~~~~~~~~~~~
+   GitHub Server Setup
+   ~~~~~~~~~~~~~~~~~~~
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="server-setup-card">
-      <h4>🐙 GitHub Configuration</h4>
-      <div class="server-badges">
-         <span class="status-badge stable">Stable</span>
-         <span class="status-badge official">Official</span>
-      </div>
+   <h4>🐙 GitHub Configuration</h4>
 
-**Prerequisites:**
+   .. raw:: html
+
+   <div class="server-badges">
+   <span class="status-badge stable">Stable</span>
+   <span class="status-badge official">Official</span>
+   </div>
+
+   **Prerequisites:**
 
 .. code-block:: bash
 
@@ -540,23 +622,26 @@ GitHub Server Setup
    # Get GitHub token from: https://github.com/settings/tokens
    # Required scopes: repo, read:org, read:user
 
-**Basic Setup:**
+   **Basic Setup:**
 
 .. code-block:: bash
 
    # Single repository
    claude mcp add haive-github -s user -e GITHUB_TOKEN=$GITHUB_TOKEN -- \
+
      npx -y @modelcontextprotocol/server-github --owner=yourusername --repo=yourrepo
 
    # Organization access
    claude mcp add haive-github -s user -e GITHUB_TOKEN=$GITHUB_TOKEN -- \
+
      npx -y @modelcontextprotocol/server-github --owner=yourorg
 
-**Configuration Options:**
+   **Configuration Options:**
 
 .. code-block:: python
 
    github_config = MCPServerConfig(
+
        name="github",
        transport="stdio",
        command="npx",
@@ -567,9 +652,10 @@ GitHub Server Setup
            "GITHUB_REPO": "your-repo",
            "GITHUB_API_URL": "https://api.github.com"  # Or enterprise
        }
+
    )
 
-**Usage Examples:**
+   **Usage Examples:**
 
 .. code-block:: bash
 
@@ -585,48 +671,56 @@ GitHub Server Setup
    @haive-github show workflow runs
    @haive-github get repository statistics
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-.. _brave-search-setup:
+   .. _brave-search-setup:
 
-Brave Search Server Setup
-~~~~~~~~~~~~~~~~~~~~~~~~~
+   Brave Search Server Setup
+   ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="server-setup-card">
-      <h4>🔍 Brave Search Configuration</h4>
-      <div class="server-badges">
-         <span class="status-badge stable">Stable</span>
-         <span class="status-badge official">Official</span>
-      </div>
+   <h4>🔍 Brave Search Configuration</h4>
 
-**Prerequisites:**
+   .. raw:: html
+
+   <div class="server-badges">
+   <span class="status-badge stable">Stable</span>
+   <span class="status-badge official">Official</span>
+   </div>
+
+   **Prerequisites:**
 
 .. code-block:: bash
 
    # Get API key from: https://api.search.brave.com/
    # Sign up for free tier or paid plan
 
-**Basic Setup:**
+   **Basic Setup:**
 
 .. code-block:: bash
 
    # Standard search
    claude mcp add brave-search -s user -e BRAVE_API_KEY=$BRAVE_API_KEY -- \
+
      npx -y @modelcontextprotocol/server-brave-search
 
    # With custom options
    claude mcp add brave-search -s user -e BRAVE_API_KEY=$BRAVE_API_KEY -- \
+
      npx -y @modelcontextprotocol/server-brave-search --max-results 20 --safe-search moderate
 
-**Configuration Options:**
+   **Configuration Options:**
 
 .. code-block:: python
 
    brave_config = MCPServerConfig(
+
        name="brave_search",
        transport="stdio",
        command="npx",
@@ -638,9 +732,10 @@ Brave Search Server Setup
            "COUNTRY": "US",
            "LANGUAGE": "en"
        }
+
    )
 
-**Usage Examples:**
+   **Usage Examples:**
 
 .. code-block:: bash
 
@@ -654,25 +749,27 @@ Brave Search Server Setup
    # Academic search
    @brave-search quantum computing research --type academic
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-Advanced Configuration
-----------------------
+   Advanced Configuration
+   ----------------------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="custom-section">
-      <h3>🔧 Advanced Setup Options</h3>
-      <p>Enterprise-grade configuration and security settings.</p>
+   <h3>🔧 Advanced Setup Options</h3>
+   <p>Enterprise-grade configuration and security settings.</p>
 
-Configuration Scopes
-~~~~~~~~~~~~~~~~~~~~~
+   Configuration Scopes
+   ~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -685,109 +782,111 @@ Configuration Scopes
    # User scope - available across all projects
    claude mcp add server-name -s user -- server-command
 
-Security Configuration
-~~~~~~~~~~~~~~~~~~~~~~
+   Security Configuration
+   ~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
    # Security-focused configuration
    secure_config = MCPConfig(
-       enabled=True,
-       auto_discover=False,      # Never auto-discover
-       servers={
-           "postgres": MCPServerConfig(
-               name="postgres",
-               transport="stdio",
-               command="npx",
-               args=["-y", "@modelcontextprotocol/server-postgres"],
-               env={
-                   "DATABASE_URL": os.getenv("DATABASE_URL"),
-                   "SSL_MODE": "require",
-                   "SSL_CERT": "/path/to/cert.pem",
-                   "SSL_KEY": "/path/to/key.pem",
-                   "SSL_CA": "/path/to/ca.pem"
-               }
-           )
-       },
-       retry_attempts=3,
-       timeout=30,
-       # Security settings
-       allowed_commands=["npx"],
-       blocked_packages=["suspicious-package"],
-       sandbox_mode=True
+   enabled=True,
+   auto_discover=False,      # Never auto-discover
+   servers={
+   "postgres": MCPServerConfig(
+   name="postgres",
+   transport="stdio",
+   command="npx",
+   args=["-y", "@modelcontextprotocol/server-postgres"],
+   env={
+   "DATABASE_URL": os.getenv("DATABASE_URL"),
+   "SSL_MODE": "require",
+   "SSL_CERT": "/path/to/cert.pem",
+   "SSL_KEY": "/path/to/key.pem",
+   "SSL_CA": "/path/to/ca.pem"
+   }
+   )
+   },
+   retry_attempts=3,
+   timeout=30,
+   # Security settings
+   allowed_commands=["npx"],
+   blocked_packages=["suspicious-package"],
+   sandbox_mode=True
    )
 
-Connection Pooling
-~~~~~~~~~~~~~~~~~~
+   Connection Pooling
+   ~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
    # Connection pooling configuration
    pooled_config = MCPConfig(
-       servers={
-           "postgres": MCPServerConfig(
-               name="postgres",
-               transport="stdio",
-               command="npx",
-               args=["-y", "@modelcontextprotocol/server-postgres"],
-               env={
-                   "DATABASE_URL": os.getenv("DATABASE_URL"),
-                   "POOL_SIZE": "20",
-                   "POOL_TIMEOUT": "30",
-                   "POOL_MAX_CONNECTIONS": "100"
-               }
-           )
-       },
-       # Manager settings
-       max_connections_per_server=10,
-       connection_timeout=30,
-       health_check_interval=60
+   servers={
+   "postgres": MCPServerConfig(
+   name="postgres",
+   transport="stdio",
+   command="npx",
+   args=["-y", "@modelcontextprotocol/server-postgres"],
+   env={
+   "DATABASE_URL": os.getenv("DATABASE_URL"),
+   "POOL_SIZE": "20",
+   "POOL_TIMEOUT": "30",
+   "POOL_MAX_CONNECTIONS": "100"
+   }
+   )
+   },
+   # Manager settings
+   max_connections_per_server=10,
+   connection_timeout=30,
+   health_check_interval=60
    )
 
-Load Balancing
-~~~~~~~~~~~~~~
+   Load Balancing
+   ~~~~~~~~~~~~~~
 
 .. code-block:: python
 
    # Multiple server instances for load balancing
    load_balanced_config = MCPConfig(
-       servers={
-           "postgres_primary": MCPServerConfig(
-               name="postgres_primary",
-               transport="stdio",
-               command="npx",
-               args=["-y", "@modelcontextprotocol/server-postgres"],
-               env={"DATABASE_URL": os.getenv("PRIMARY_DATABASE_URL")}
-           ),
-           "postgres_secondary": MCPServerConfig(
-               name="postgres_secondary",
-               transport="stdio",
-               command="npx",
-               args=["-y", "@modelcontextprotocol/server-postgres"],
-               env={"DATABASE_URL": os.getenv("SECONDARY_DATABASE_URL")}
-           )
-       },
-       # Load balancing settings
-       load_balancing_strategy="round_robin",
-       health_check_enabled=True,
-       failover_enabled=True
+   servers={
+   "postgres_primary": MCPServerConfig(
+   name="postgres_primary",
+   transport="stdio",
+   command="npx",
+   args=["-y", "@modelcontextprotocol/server-postgres"],
+   env={"DATABASE_URL": os.getenv("PRIMARY_DATABASE_URL")}
+   ),
+   "postgres_secondary": MCPServerConfig(
+   name="postgres_secondary",
+   transport="stdio",
+   command="npx",
+   args=["-y", "@modelcontextprotocol/server-postgres"],
+   env={"DATABASE_URL": os.getenv("SECONDARY_DATABASE_URL")}
+   )
+   },
+   # Load balancing settings
+   load_balancing_strategy="round_robin",
+   health_check_enabled=True,
+   failover_enabled=True
    )
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-Configuration File Management
------------------------------
+   Configuration File Management
+   -----------------------------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="custom-section">
-      <h3>📄 Configuration Files</h3>
-      <p>Manage configurations using files for different environments.</p>
+   <h3>📄 Configuration Files</h3>
+   <p>Manage configurations using files for different environments.</p>
 
-Configuration File Locations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   Configuration File Locations
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -800,76 +899,78 @@ Configuration File Locations
    # Linux
    ~/.config/claude/claude_desktop_config.json
 
-Example Configuration File
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   Example Configuration File
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: json
 
    {
-     "mcpServers": {
-       "haive-db": {
-         "command": "npx",
-         "args": [
-           "-y",
-           "@modelcontextprotocol/server-postgres",
-           "postgresql://localhost/haive"
-         ]
-       },
-       "haive-files": {
-         "command": "npx",
-         "args": [
-           "-y",
-           "@modelcontextprotocol/server-filesystem",
-           "/home/user/projects/haive"
-         ]
-       },
-       "haive-github": {
-         "command": "npx",
-         "args": [
-           "-y",
-           "@modelcontextprotocol/server-github",
-           "--owner=myorg",
-           "--repo=myrepo"
-         ],
-         "env": {
-           "GITHUB_TOKEN": "your_token_here"
-         }
-       }
-     }
+   "mcpServers": {
+   "haive-db": {
+   "command": "npx",
+   "args": [
+   "-y",
+   "@modelcontextprotocol/server-postgres",
+   "postgresql://localhost/haive"
+   ]
+   },
+   "haive-files": {
+   "command": "npx",
+   "args": [
+   "-y",
+   "@modelcontextprotocol/server-filesystem",
+   "/home/user/projects/haive"
+   ]
+   },
+   "haive-github": {
+   "command": "npx",
+   "args": [
+   "-y",
+   "@modelcontextprotocol/server-github",
+   "--owner=myorg",
+   "--repo=myrepo"
+   ],
+   "env": {
+   "GITHUB_TOKEN": "your_token_here"
+   }
+   }
+   }
    }
 
-Environment-Specific Files
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+   Environment-Specific Files
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
    # Development
    cp claude_desktop_config.json claude_desktop_config.dev.json
-   
+
    # Staging
    cp claude_desktop_config.json claude_desktop_config.staging.json
-   
+
    # Production
    cp claude_desktop_config.json claude_desktop_config.prod.json
 
    # Use environment-specific config
    export CLAUDE_CONFIG_FILE=claude_desktop_config.prod.json
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-Health Monitoring and Diagnostics
-----------------------------------
+   Health Monitoring and Diagnostics
+   ----------------------------------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="custom-section">
-      <h3>🏥 Health Monitoring</h3>
-      <p>Monitor server health and diagnose connection issues.</p>
+   <h3>🏥 Health Monitoring</h3>
+   <p>Monitor server health and diagnose connection issues.</p>
 
-Health Check Commands
-~~~~~~~~~~~~~~~~~~~~~
+   Health Check Commands
+   ~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -885,8 +986,8 @@ Health Check Commands
    # Get detailed status
    claude mcp status haive-db
 
-Programmatic Health Monitoring
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   Programmatic Health Monitoring
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -894,9 +995,9 @@ Programmatic Health Monitoring
 
    # Create manager with health monitoring
    manager = MCPManager(
-       auto_health_check=True,
-       health_check_interval=30.0,
-       max_retry_attempts=3
+   auto_health_check=True,
+   health_check_interval=30.0,
+   max_retry_attempts=3
    )
 
    # Get health status
@@ -907,20 +1008,20 @@ Programmatic Health Monitoring
    # Check specific server
    postgres_health = manager.get_server_health("postgres")
    if postgres_health:
-       print(f"Status: {postgres_health.status}")
-       print(f"Response time: {postgres_health.response_time}ms")
-       print(f"Last check: {postgres_health.last_check}")
+   print(f"Status: {postgres_health.status}")
+   print(f"Response time: {postgres_health.response_time}ms")
+   print(f"Last check: {postgres_health.last_check}")
 
    # Retry failed servers
    retry_results = await manager.retry_failed_servers()
    for result in retry_results:
-       if result.success:
-           print(f"✅ Recovered: {result.server_name}")
-       else:
-           print(f"❌ Still failed: {result.server_name}")
+   if result.success:
+   print(f"✅ Recovered: {result.server_name}")
+   else:
+   print(f"❌ Still failed: {result.server_name}")
 
-Automated Health Monitoring
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   Automated Health Monitoring
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -928,82 +1029,84 @@ Automated Health Monitoring
    import logging
 
    async def monitor_mcp_health(manager: MCPManager):
-       """Continuous health monitoring with alerts."""
-       while True:
-           try:
-               status = manager.get_all_server_status()
-               
-               # Log health summary
-               logging.info(
-                   f"MCP Health: Connected={status['summary']['connected_servers']}, "
-                   f"Failed={status['summary']['failed_servers']}, "
-                   f"Tools={status['summary']['total_tools']}"
-               )
-               
-               # Alert on failures
-               if status['summary']['failed_servers'] > 0:
-                   await alert_failed_servers(status)
-               
-               # Check response times
-               for server_name, server_info in status['servers'].items():
-                   if server_info.get('response_time', 0) > 5000:  # 5 second threshold
-                       logging.warning(f"Slow response from {server_name}: {server_info['response_time']}ms")
-               
-               await asyncio.sleep(60)  # Check every minute
-               
-           except Exception as e:
-               logging.error(f"Health monitoring error: {e}")
-               await asyncio.sleep(60)
+   """Continuous health monitoring with alerts."""
+   while True:
+   try:
+   status = manager.get_all_server_status()
 
-.. raw:: html
+   # Log health summary
+   logging.info(
+   f"MCP Health: Connected={status['summary']['connected_servers']}, "
+   f"Failed={status['summary']['failed_servers']}, "
+   f"Tools={status['summary']['total_tools']}"
+   )
+
+   # Alert on failures
+   if status['summary']['failed_servers'] > 0:
+   await alert_failed_servers(status)
+
+   # Check response times
+   for server_name, server_info in status['servers'].items():
+   if server_info.get('response_time', 0) > 5000:  # 5 second threshold
+   logging.warning(f"Slow response from {server_name}: {server_info['response_time']}ms")
+
+   await asyncio.sleep(60)  # Check every minute
+
+   except Exception as e:
+   logging.error(f"Health monitoring error: {e}")
+   await asyncio.sleep(60)
+
+   .. raw:: html
 
    </div>
 
-Troubleshooting
----------------
+   Troubleshooting
+   ---------------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="troubleshooting-section">
-      <h3>🔧 Common Issues and Solutions</h3>
+   <h3>🔧 Common Issues and Solutions</h3>
 
-**Server Not Starting:**
+   **Server Not Starting:**
 
 .. code-block:: bash
 
    # Check if npm/npx is available
    which npx
-   
+
    # Check if server package is installed
    npm list -g @modelcontextprotocol/server-postgres
-   
+
    # Reinstall if needed
    npm install -g @modelcontextprotocol/server-postgres
 
-**Connection Errors:**
+   **Connection Errors:**
 
 .. code-block:: bash
 
    # Test basic connectivity
    claude mcp test haive-db
-   
+
    # Check logs for details
    claude mcp logs haive-db
-   
+
    # Verify connection string
    echo $DATABASE_URL
 
-**Permission Issues:**
+   **Permission Issues:**
 
 .. code-block:: bash
 
    # Check file permissions
    ls -la /path/to/allowed/directory
-   
+
    # Fix permissions if needed
    chmod 755 /path/to/allowed/directory
 
-**Environment Variables:**
+   **Environment Variables:**
 
 .. code-block:: bash
 
@@ -1011,69 +1114,74 @@ Troubleshooting
    echo $GITHUB_TOKEN
    echo $BRAVE_API_KEY
    echo $DATABASE_URL
-   
+
    # Set if missing
    export GITHUB_TOKEN=your_token_here
 
-**Performance Issues:**
+   **Performance Issues:**
 
 .. code-block:: python
 
    # Enable debug logging
    import logging
    logging.getLogger("haive.mcp").setLevel(logging.DEBUG)
-   
+
    # Check connection pool settings
    manager = MCPManager(
-       connection_timeout=30.0,
-       max_retry_attempts=3,
-       health_check_interval=60.0
+   connection_timeout=30.0,
+   max_retry_attempts=3,
+   health_check_interval=60.0
    )
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-Best Practices
---------------
+   Best Practices
+   --------------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="best-practices">
-      <h3>✅ Setup Best Practices</h3>
-      <ul>
-         <li><strong>Use environment variables</strong> for sensitive data</li>
-         <li><strong>Test connections</strong> before deploying</li>
-         <li><strong>Monitor server health</strong> continuously</li>
-         <li><strong>Use static configs</strong> for production</li>
-         <li><strong>Implement proper error handling</strong></li>
-         <li><strong>Document your configurations</strong></li>
-         <li><strong>Use version control</strong> for config files</li>
-      </ul>
+   <h3>✅ Setup Best Practices</h3>
+   <ul>
+   <li><strong>Use environment variables</strong> for sensitive data</li>
+   <li><strong>Test connections</strong> before deploying</li>
+   <li><strong>Monitor server health</strong> continuously</li>
+   <li><strong>Use static configs</strong> for production</li>
+   <li><strong>Implement proper error handling</strong></li>
+   <li><strong>Document your configurations</strong></li>
+   <li><strong>Use version control</strong> for config files</li>
+   </ul>
    </div>
+
+   .. raw:: html
 
    <div class="warning-section">
-      <h3>⚠️ Security Considerations</h3>
-      <ul>
-         <li>Never commit secrets to version control</li>
-         <li>Use SSL/TLS for database connections</li>
-         <li>Limit filesystem access to necessary directories</li>
-         <li>Regularly rotate API keys and tokens</li>
-         <li>Use least privilege access principles</li>
-         <li>Audit server installations regularly</li>
-      </ul>
+   <h3>⚠️ Security Considerations</h3>
+   <ul>
+   <li>Never commit secrets to version control</li>
+   <li>Use SSL/TLS for database connections</li>
+   <li>Limit filesystem access to necessary directories</li>
+   <li>Regularly rotate API keys and tokens</li>
+   <li>Use least privilege access principles</li>
+   <li>Audit server installations regularly</li>
+   </ul>
    </div>
 
-Next Steps
-----------
+   Next Steps
+   ----------
 
-- **Test**: Verify your setup with simple commands
-- **Monitor**: Set up health monitoring
-- **Scale**: Add more servers as needed
-- **Secure**: Review and harden security settings
-- **Optimize**: Tune performance settings
+   - **Test**: Verify your setup with simple commands
+   - **Monitor**: Set up health monitoring
+   - **Scale**: Add more servers as needed
+   - **Secure**: Review and harden security settings
+   - **Optimize**: Tune performance settings
 
-.. toctree::
+   .. toctree::
+
    :maxdepth: 2
    :hidden:
 

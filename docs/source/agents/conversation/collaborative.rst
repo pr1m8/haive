@@ -11,6 +11,7 @@ A team collaboratively solving a technical challenge.
 **Full Example Code:**
 
 .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/collaberative/example.py
+
    :language: python
    :pyobject: example_problem_solving
    :caption: Collaborative Problem Solving
@@ -21,7 +22,7 @@ A team collaboratively solving a technical challenge.
 
     poetry run python packages/haive-agents/src/haive/agents/conversation/collaberative/example.py
 
-**Sample Output:**
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -71,19 +72,20 @@ A team collaboratively solving a technical challenge.
     proposal. Let's aim to have the immediate fixes in production by next 
     week and the architectural changes planned for next quarter.
 
-Creative Design Session
------------------------
+    Creative Design Session
+    -----------------------
 
-A design team collaborating on a new product feature.
+    A design team collaborating on a new product feature.
 
-**Full Example Code:**
+    **Full Example Code:**
 
-.. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/collaberative/example.py
-   :language: python
-   :pyobject: example_design_collaboration
-   :caption: Design Team Collaboration
+    .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/collaberative/example.py
 
-**Sample Output:**
+    :language: python
+    :pyobject: example_design_collaboration
+    :caption: Design Team Collaboration
+
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -134,12 +136,12 @@ A design team collaborating on a new product feature.
     appearance → clear privacy indicators → easy feedback mechanism. The 
     whole experience should feel like a helpful friend, not a surveillance tool.
 
-Research Collaboration
-----------------------
+    Research Collaboration
+    ----------------------
 
-Researchers collaborating on analyzing findings.
+    Researchers collaborating on analyzing findings.
 
-**Example Code:**
+    **Example Code:**
 
 .. code-block:: python
 
@@ -180,7 +182,7 @@ Researchers collaborating on analyzing findings.
 
     result = collaboration.run({})
 
-**Sample Output:**
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -221,17 +223,17 @@ Researchers collaborating on analyzing findings.
     planting recovers 1.2% yield, drought varieties add 1.8%. Combined with 
     optimal fertilization, we can offset up to 60% of climate impact.
 
-Key Features Demonstrated
--------------------------
+    Key Features Demonstrated
+    -------------------------
 
-1. **Natural Flow**: Agents join the conversation when they have relevant input
-2. **Building Ideas**: Each contribution builds on previous statements
-3. **Shared Goals**: All agents work toward the same objective
-4. **Consensus Building**: Group works toward agreement on solutions
-5. **Emergent Leadership**: Natural conversation flow without fixed order
+    1. **Natural Flow**: Agents join the conversation when they have relevant input
+    2. **Building Ideas**: Each contribution builds on previous statements
+    3. **Shared Goals**: All agents work toward the same objective
+    4. **Consensus Building**: Group works toward agreement on solutions
+    5. **Emergent Leadership**: Natural conversation flow without fixed order
 
-Configuration Options
----------------------
+    Configuration Options
+    ---------------------
 
 .. code-block:: python
 
@@ -246,26 +248,26 @@ Configuration Options
     track_contributions=True,             # Monitor each agent's input
     )
 
-Best Practices
---------------
+    Best Practices
+    --------------
 
-1. **Complementary Skills**: Use agents with different but complementary expertise
-2. **Clear Goals**: Define specific shared objectives for focus
-3. **Encourage Building**: System prompts should encourage "yes, and..." thinking
-4. **Monitor Participation**: Ensure all agents contribute meaningfully
-5. **Convergence**: Guide toward actionable outcomes, not endless discussion
+    1. **Complementary Skills**: Use agents with different but complementary expertise
+    2. **Clear Goals**: Define specific shared objectives for focus
+    3. **Encourage Building**: System prompts should encourage "yes, and..." thinking
+    4. **Monitor Participation**: Ensure all agents contribute meaningfully
+    5. **Convergence**: Guide toward actionable outcomes, not endless discussion
 
-Common Use Cases
-----------------
+    Common Use Cases
+    ----------------
 
-- **Problem Solving**: Technical challenges, debugging, optimization
-- **Design**: Product features, user experiences, architecture
-- **Research**: Data analysis, hypothesis forming, paper writing
-- **Planning**: Project planning, strategy development, roadmapping
-- **Creative**: Storytelling, content creation, brainstorming
+    - **Problem Solving**: Technical challenges, debugging, optimization
+    - **Design**: Product features, user experiences, architecture
+    - **Research**: Data analysis, hypothesis forming, paper writing
+    - **Planning**: Project planning, strategy development, roadmapping
+    - **Creative**: Storytelling, content creation, brainstorming
 
-Advanced Example: Startup Ideation
-----------------------------------
+    Advanced Example: Startup Ideation
+    ----------------------------------
 
 .. code-block:: python
 
@@ -298,8 +300,8 @@ Advanced Example: Startup Ideation
     mvp_features = extract_decisions(result, "MVP features")
     strategy = extract_decisions(result, "go-to-market")
 
-Tracking Collaboration Metrics
-------------------------------
+    Tracking Collaboration Metrics
+    ------------------------------
 
 .. code-block:: python
 
@@ -318,10 +320,10 @@ Tracking Collaboration Metrics
     # Export conversation with annotations
     collaboration.export_annotated_transcript("collaboration_results.md")
 
-See Also
---------
+    See Also
+    --------
 
-- :doc:`conversation_directed` - Structured conversations with direction
-- :doc:`conversation_round_robin` - Equal participation in fixed order
-- :doc:`conversation_debate` - Opposing viewpoints and argumentation
-- :doc:`../api_reference` - Full API documentation
+    - :doc:`conversation_directed` - Structured conversations with direction
+    - :doc:`conversation_round_robin` - Equal participation in fixed order
+    - :doc:`conversation_debate` - Opposing viewpoints and argumentation
+    - :doc:`../api_reference` - Full API documentation

@@ -28,8 +28,8 @@ Basic Agent
     response = await agent.arun("Hello! What can you help me with?")
     print(response)
 
-With Custom State
-~~~~~~~~~~~~~~~~~
+    With Custom State
+    ~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -53,8 +53,8 @@ With Custom State
     agent = ChatAgent(name="chat", engine=engine)
     response = await agent.arun("Let's talk about AI!")
 
-Multi-Agent Conversation
-~~~~~~~~~~~~~~~~~~~~~~~~~
+    Multi-Agent Conversation
+    ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -84,20 +84,20 @@ Multi-Agent Conversation
     "Research and write about quantum computing"
     )
 
-Next Steps
-----------
+    Next Steps
+    ----------
 
-Now that you have a basic agent running:
+    Now that you have a basic agent running:
 
-1. **Explore Examples**: Check out :doc:`../examples/index` for more complex scenarios
-2. **Learn Concepts**: Read :doc:`concepts` to understand the architecture
-3. **Build Tools**: Add custom tools to your agents
-4. **Create Workflows**: Design multi-step agent workflows
+    1. **Explore Examples**: Check out :doc:`../examples/index` for more complex scenarios
+    2. **Learn Concepts**: Read :doc:`concepts` to understand the architecture
+    3. **Build Tools**: Add custom tools to your agents
+    4. **Create Workflows**: Design multi-step agent workflows
 
-Common Patterns
----------------
+    Common Patterns
+    ---------------
 
-**Error Handling**
+    **Error Handling**
 
 .. code-block:: python
 
@@ -106,14 +106,14 @@ Common Patterns
     except Exception as e:
     print(f"Agent error: {e}")
 
-**Streaming Responses**
+    **Streaming Responses**
 
 .. code-block:: python
 
     async for chunk in agent.astream(user_input):
     print(chunk, end="", flush=True)
 
-**State Management**
+    **State Management**
 
 .. code-block:: python
 
@@ -123,7 +123,7 @@ Common Patterns
     # Update state
     agent.update_state({"conversation_count": 5})
 
-**Configuration**
+    **Configuration**
 
 .. code-block:: python
 

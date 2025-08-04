@@ -11,6 +11,7 @@ A teacher-led classroom discussion where the teacher directs questions to specif
 **Full Example Code:**
 
 .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/directed/example.py
+
    :language: python
    :pyobject: example_classroom_discussion
    :caption: Classroom Discussion Implementation
@@ -21,7 +22,7 @@ A teacher-led classroom discussion where the teacher directs questions to specif
 
     poetry run python packages/haive-agents/src/haive/agents/conversation/directed/example.py
 
-**Sample Output:**
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -63,19 +64,20 @@ A teacher-led classroom discussion where the teacher directs questions to specif
     conserving water, protecting wetlands that regulate water flow, and 
     supporting renewable energy to slow global warming's effects on the cycle.
 
-Team Meeting Example
---------------------
+    Team Meeting Example
+    --------------------
 
-A software team sprint meeting with directed updates and cross-functional questions.
+    A software team sprint meeting with directed updates and cross-functional questions.
 
-**Full Example Code:**
+    **Full Example Code:**
 
-.. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/directed/example.py
-   :language: python
-   :pyobject: example_team_meeting
-   :caption: Team Meeting Implementation
+    .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/directed/example.py
 
-**Sample Output:**
+    :language: python
+    :pyobject: example_team_meeting
+    :caption: Team Meeting Implementation
+
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -120,12 +122,12 @@ A software team sprint meeting with directed updates and cross-functional questi
     review after this meeting? The responsive breakpoints are working smoothly 
     down to 320px width.
 
-Panel Discussion Example
-------------------------
+    Panel Discussion Example
+    ------------------------
 
-An expert panel with a moderator directing topic flow.
+    An expert panel with a moderator directing topic flow.
 
-**Example Code:**
+    **Example Code:**
 
 .. code-block:: python
 
@@ -171,7 +173,7 @@ An expert panel with a moderator directing topic flow.
 
     result = panel.run({})
 
-**Sample Output:**
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -200,17 +202,17 @@ An expert panel with a moderator directing topic flow.
     transparency obligations, and human oversight. The challenge is 
     balancing innovation with protection while ensuring global coordination.
 
-Key Features Demonstrated
--------------------------
+    Key Features Demonstrated
+    -------------------------
 
-1. **@Mention System**: Agents can direct messages to specific participants
-2. **Turn Management**: The conversation flows naturally with directed responses
-3. **Role-Based Behavior**: Each agent maintains their role and expertise
-4. **Fallback Mechanisms**: Can fall back to round-robin if no mentions detected
-5. **Silence Handling**: Configurable behavior when agents don't respond
+    1. **@Mention System**: Agents can direct messages to specific participants
+    2. **Turn Management**: The conversation flows naturally with directed responses
+    3. **Role-Based Behavior**: Each agent maintains their role and expertise
+    4. **Fallback Mechanisms**: Can fall back to round-robin if no mentions detected
+    5. **Silence Handling**: Configurable behavior when agents don't respond
 
-Configuration Options
----------------------
+    Configuration Options
+    ---------------------
 
 .. code-block:: python
 
@@ -225,28 +227,28 @@ Configuration Options
     require_mention_response=True       # Must mentioned agent respond
     )
 
-Best Practices
---------------
+    Best Practices
+    --------------
 
-1. **Clear System Messages**: Give agents clear instructions about using mentions
-2. **Topic Focus**: Provide a specific topic to keep conversation on track
-3. **Role Definition**: Define clear roles and expertise for each agent
-4. **Mention Patterns**: Teach agents when and how to use mentions effectively
-5. **Conversation Length**: Set appropriate max_rounds to avoid repetition
+    1. **Clear System Messages**: Give agents clear instructions about using mentions
+    2. **Topic Focus**: Provide a specific topic to keep conversation on track
+    3. **Role Definition**: Define clear roles and expertise for each agent
+    4. **Mention Patterns**: Teach agents when and how to use mentions effectively
+    5. **Conversation Length**: Set appropriate max_rounds to avoid repetition
 
-Common Use Cases
-----------------
+    Common Use Cases
+    ----------------
 
-- **Educational**: Classroom discussions, tutoring sessions, Q&A
-- **Business**: Team meetings, project updates, brainstorming
-- **Panels**: Expert panels, interviews, moderated debates
-- **Support**: Multi-tier customer support, technical assistance
-- **Creative**: Collaborative storytelling, script writing
+    - **Educational**: Classroom discussions, tutoring sessions, Q&A
+    - **Business**: Team meetings, project updates, brainstorming
+    - **Panels**: Expert panels, interviews, moderated debates
+    - **Support**: Multi-tier customer support, technical assistance
+    - **Creative**: Collaborative storytelling, script writing
 
-See Also
---------
+    See Also
+    --------
 
-- :doc:`conversation_round_robin` - Simple turn-based conversations
-- :doc:`conversation_debate` - Structured debate format
-- :doc:`conversation_collaborative` - Collaborative problem solving
-- :doc:`../api_reference` - Full API documentation
+    - :doc:`conversation_round_robin` - Simple turn-based conversations
+    - :doc:`conversation_debate` - Structured debate format
+    - :doc:`conversation_collaborative` - Collaborative problem solving
+    - :doc:`../api_reference` - Full API documentation

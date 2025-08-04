@@ -11,6 +11,7 @@ A development team's daily standup meeting where each member shares updates in o
 **Full Example Code:**
 
 .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/round_robin/example.py
+
    :language: python
    :pyobject: example_daily_standup
    :caption: Daily Standup Implementation
@@ -21,7 +22,7 @@ A development team's daily standup meeting where each member shares updates in o
 
     poetry run python packages/haive-agents/src/haive/agents/conversation/round_robin/example.py
 
-**Sample Output:**
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -83,19 +84,20 @@ A development team's daily standup meeting where each member shares updates in o
     No blockers on my end, but I'll need everyone to avoid deployments 
     during the maintenance window.
 
-Brainstorming Session Example
------------------------------
+    Brainstorming Session Example
+    -----------------------------
 
-A creative brainstorming session where team members build on ideas in rounds.
+    A creative brainstorming session where team members build on ideas in rounds.
 
-**Full Example Code:**
+    **Full Example Code:**
 
-.. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/round_robin/example.py
-   :language: python
-   :pyobject: example_brainstorming
-   :caption: Brainstorming Session Implementation
+    .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/round_robin/example.py
 
-**Sample Output:**
+    :language: python
+    :pyobject: example_brainstorming
+    :caption: Brainstorming Session Implementation
+
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -157,12 +159,12 @@ A creative brainstorming session where team members build on ideas in rounds.
     We can tease voice commands as "coming soon" to build anticipation. 
     Social features for our 2.0 release?
 
-Book Club Discussion Example
-----------------------------
+    Book Club Discussion Example
+    ----------------------------
 
-A book club where members share thoughts chapter by chapter.
+    A book club where members share thoughts chapter by chapter.
 
-**Example Code:**
+    **Example Code:**
 
 .. code-block:: python
 
@@ -212,7 +214,7 @@ A book club where members share thoughts chapter by chapter.
 
     result = discussion.run({})
 
-**Sample Output:**
+    **Sample Output:**
 
 .. code-block:: text
 
@@ -237,17 +239,17 @@ A book club where members share thoughts chapter by chapter.
     bleakness of Oceania. The use of paradoxes like "War is Peace" creates 
     cognitive dissonance that puts readers in Winston's confused state of mind.
 
-Key Features Demonstrated
--------------------------
+    Key Features Demonstrated
+    -------------------------
 
-1. **Fixed Order**: Agents always speak in the same sequence
-2. **Equal Participation**: Every agent speaks exactly once per round
-3. **Round Structure**: Conversations organized into themed rounds
-4. **No Interruptions**: Clean, organized flow of ideas
-5. **Building Ideas**: Later speakers can reference earlier contributions
+    1. **Fixed Order**: Agents always speak in the same sequence
+    2. **Equal Participation**: Every agent speaks exactly once per round
+    3. **Round Structure**: Conversations organized into themed rounds
+    4. **No Interruptions**: Clean, organized flow of ideas
+    5. **Building Ideas**: Later speakers can reference earlier contributions
 
-Configuration Options
----------------------
+    Configuration Options
+    ---------------------
 
 .. code-block:: python
 
@@ -261,26 +263,26 @@ Configuration Options
     time_limit_per_turn=None,      # Optional time limit
     )
 
-Best Practices
---------------
+    Best Practices
+    --------------
 
-1. **Clear Roles**: Give each agent a distinct perspective or expertise
-2. **Round Themes**: Use round_names to structure the conversation progression
-3. **Appropriate Rounds**: Usually 2-4 rounds work best to avoid repetition
-4. **Speaking Order**: Consider putting synthesizers/summarizers last
-5. **Topic Clarity**: Provide specific topics or questions for focus
+    1. **Clear Roles**: Give each agent a distinct perspective or expertise
+    2. **Round Themes**: Use round_names to structure the conversation progression
+    3. **Appropriate Rounds**: Usually 2-4 rounds work best to avoid repetition
+    4. **Speaking Order**: Consider putting synthesizers/summarizers last
+    5. **Topic Clarity**: Provide specific topics or questions for focus
 
-Common Use Cases
-----------------
+    Common Use Cases
+    ----------------
 
-- **Status Meetings**: Daily standups, weekly syncs, project updates
-- **Brainstorming**: Idea generation, feature planning, problem solving
-- **Reviews**: Code reviews, design reviews, retrospectives  
-- **Education**: Student presentations, group discussions, peer review
-- **Creative**: Story building, collaborative writing, improv games
+    - **Status Meetings**: Daily standups, weekly syncs, project updates
+    - **Brainstorming**: Idea generation, feature planning, problem solving
+    - **Reviews**: Code reviews, design reviews, retrospectives  
+    - **Education**: Student presentations, group discussions, peer review
+    - **Creative**: Story building, collaborative writing, improv games
 
-Advanced Example: Retrospective
--------------------------------
+    Advanced Example: Retrospective
+    -------------------------------
 
 .. code-block:: python
 
@@ -308,10 +310,10 @@ Advanced Example: Retrospective
     action_items = extract_action_items(result["messages"])
     print(f"\nAction Items: {action_items}")
 
-See Also
---------
+    See Also
+    --------
 
-- :doc:`conversation_directed` - Orchestrated conversations with mentions
-- :doc:`conversation_collaborative` - Free-form collaborative discussions
-- :doc:`conversation_debate` - Structured debates with opposing sides
-- :doc:`../api_reference` - Full API documentation
+    - :doc:`conversation_directed` - Orchestrated conversations with mentions
+    - :doc:`conversation_collaborative` - Free-form collaborative discussions
+    - :doc:`conversation_debate` - Structured debates with opposing sides
+    - :doc:`../api_reference` - Full API documentation

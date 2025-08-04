@@ -9,18 +9,17 @@ Comprehensive climate change research agent
 
 **Features:**
 
-* Streaming Support: ✅ Yes
-* Graph Visualization: ✅ Yes
-* Steps Captured: 5
-
+* Streaming Support: ✅ Yes*
+* Graph Visualization: ✅ Yes*
+* Steps Captured: 5*
 
 .. figure:: ../../captures/ClimateResearchAgent_graph.png
+
    :alt: ClimateResearchAgent Agent Graph
    :align: center
    :width: 80%
    
    Agent Architecture Graph
-
 
 Interactive Example
 -------------------
@@ -36,33 +35,31 @@ Example usage
     "depth": "comprehensive"
     }
 
-**Result:** ✅ **Success**
+    **Result:** ✅ **Success**
 
-The agent completed successfully.
+    The agent completed successfully.
 
-**Execution Time:** 0.00 seconds
+    **Execution Time:** 0.00 seconds
 
-**Steps:** 5 processing steps
+    **Steps:** 5 processing steps
 
+    Live Execution Capture
+    ----------------------
 
-Live Execution Capture
-----------------------
+    Below is the complete execution trace captured from a live run of this agent:
 
-Below is the complete execution trace captured from a live run of this agent:
+    .. note::
 
+    Agent execution capture available at: ../../captures/ClimateResearchAgent_4101dd3c-ef9f-41df-a46f-3fc0eef7b22b_202506.json
 
-.. note::
+    Technical Details
+    -----------------
 
-   Agent execution capture available at: ../../captures/ClimateResearchAgent_4101dd3c-ef9f-41df-a46f-3fc0eef7b22b_202506.json
+    **Configuration**
 
-Technical Details
------------------
+    This agent is implemented as a ``SimpleAgent`` class.
 
-**Configuration**
-
-This agent is implemented as a ``SimpleAgent`` class.
-
-**Input Schema**
+    **Input Schema**
 
 .. code-block:: json
 
@@ -71,7 +68,7 @@ This agent is implemented as a ``SimpleAgent`` class.
     "depth": "comprehensive"
     }
 
-**Output Schema**
+    **Output Schema**
 
 .. code-block:: json
 
@@ -84,14 +81,14 @@ This agent is implemented as a ``SimpleAgent`` class.
     ]
     }
 
-**Performance**
+    **Performance**
 
-* Execution Time: 0.00s
-* Status: ✅ Success
-* Steps: 5
+    * Execution Time: 0.00s*
+    * Status: ✅ Success*
+    * Steps: 5*
 
-Usage Example
--------------
+    Usage Example
+    -------------
 
 .. code-block:: python
 
@@ -107,8 +104,8 @@ Usage Example
     for update in agent.stream({"research_topic": "climate change solutions", "depth": "comprehensive"}):
     print(update)
 
-See Also
---------
+    See Also
+    --------
 
-* :doc:`../index` - Agent Index
-* :doc:`../showcase` - Agent Showcase
+    * :doc:`../index` - Agent Index*
+    * :doc:`../showcase` - Agent Showcase*

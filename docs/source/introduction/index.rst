@@ -7,6 +7,7 @@ Welcome to Haive
 Haive is an AI agent framework designed for building intelligent, collaborative agents. This documentation will guide you through understanding and using the framework.
 
 .. toctree::
+
    :maxdepth: 2
    :caption: Getting Started
    
@@ -20,10 +21,10 @@ Overview
 
 Haive provides a comprehensive platform for:
 
-* Building intelligent agents with structured state management
-* Creating collaborative multi-agent workflows  
-* Integrating with various LLM engines and tools
-* Developing specialized agents for different domains
+* Building intelligent agents with structured state management*
+* Creating collaborative multi-agent workflows  *
+* Integrating with various LLM engines and tools*
+* Developing specialized agents for different domains*
 
 Key Features
 ------------

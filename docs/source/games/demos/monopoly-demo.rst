@@ -5,80 +5,164 @@ Economic strategy game with property trading and AI negotiation
 
 .. raw:: html
 
-    <div class="game-demo-container">
-        <!-- Game Overview -->
-        <div class="game-overview-card">
-            <div class="game-header">
-                <div class="game-icon">🏨</div>
-                <div>
-                    <h2>Monopoly</h2>
-                    <p class="game-complexity">Complexity: High</p>
-                </div>
-            </div>
+   <div class="game-demo-container">
+   <!-- Game Overview -->
 
-            <div class="game-stats">
-                <div class="stat">
-                    <label>Board Size:</label>
-                    <span>40 Spaces</span>
-                </div>
-                <div class="stat">
-                    <label>AI Levels:</label>
-                    <span>3</span>
-                </div>
-            </div>
+.. raw:: html
 
-            <div class="game-features">
-                <span class="feature-tag">Property Trading</span>
-                <span class="feature-tag">AI Negotiation</span>
-                <span class="feature-tag">Economic Strategy</span>
-                <span class="feature-tag">Chance Cards</span>
-            </div>
-        </div>
+   <div class="game-overview-card">
 
-        <!-- Playable Game Interface -->
-        <div class="game-interface">
-            <div class="game-controls">
-                <h3>Play Monopoly</h3>
-                <div class="ai-selection">
-                    <label>AI Difficulty:</label>
-                    <select id="monopoly-ai-level">
-                        <option value="conservative">Conservative</option>
-                        <option value="aggressive">Aggressive</option>
-                        <option value="balanced">Balanced</option>
-                    </select>
-                </div>
-                <button onclick="startGame('monopoly')" class="start-game-btn">
+.. raw:: html
+
+   <div class="game-header">
+
+.. raw:: html
+
+   <div class="game-icon">🏨</div>
+
+.. raw:: html
+
+   <div>
+   <h2>Monopoly</h2>
+   <p class="game-complexity">Complexity: High</p>
+   </div>
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="game-stats">
+
+.. raw:: html
+
+   <div class="stat">
+   <label>Board Size:</label>
+   <span>40 Spaces</span>
+   </div>
+
+.. raw:: html
+
+   <div class="stat">
+   <label>AI Levels:</label>
+   <span>3</span>
+   </div>
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="game-features">
+   <span class="feature-tag">Property Trading</span>
+   <span class="feature-tag">AI Negotiation</span>
+   <span class="feature-tag">Economic Strategy</span>
+   <span class="feature-tag">Chance Cards</span>
+   </div>
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <!-- Playable Game Interface -->
+
+.. raw:: html
+
+   <div class="game-interface">
+
+.. raw:: html
+
+   <div class="game-controls">
+   <h3>Play Monopoly</h3>
+
+.. raw:: html
+
+   <div class="ai-selection">
+   <label>AI Difficulty:</label>
+   <select id="monopoly-ai-level">
+   <option value="conservative">Conservative</option>
+   <option value="aggressive">Aggressive</option>
+   <option value="balanced">Balanced</option>
+   </select>
+   </div>
+
+.. raw:: html
+
+   <button onclick="startGame('monopoly')" class="start-game-btn">
+
                     Start New Game
-                </button>
-            </div>
+.. raw:: html
 
-            <div id="monopoly-board" class="game-board">
-                <!-- Game board will be rendered here -->
-                <div class="board-placeholder">
-                    <p>Click "Start New Game" to begin playing Monopoly</p>
-                </div>
-            </div>
+   </button>
+   </div>
 
-            <div class="game-status">
-                <div id="monopoly-status" class="status-display">
-                    Ready to play
-                </div>
-                <div id="monopoly-moves" class="moves-history">
-                    <!-- Move history will appear here -->
-                </div>
-            </div>
-        </div>
+.. raw:: html
 
-        <!-- Game Analysis -->
-        <div class="game-analysis">
-            <h3>AI Analysis</h3>
-            <div id="monopoly-analysis" class="analysis-display">
-                <p>Start a game to see AI analysis and move suggestions.</p>
-            </div>
-        </div>
-    </div>
+   <div id="monopoly-board" class="game-board">
+   <!-- Game board will be rendered here -->
 
-    <script>
+.. raw:: html
+
+   <div class="board-placeholder">
+   <p>Click "Start New Game" to begin playing Monopoly</p>
+   </div>
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="game-status">
+
+.. raw:: html
+
+   <div id="monopoly-status" class="status-display">
+
+                       Ready to play
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div id="monopoly-moves" class="moves-history">
+   <!-- Move history will appear here -->
+   </div>
+
+.. raw:: html
+
+   </div>
+   </div>
+
+.. raw:: html
+
+   <!-- Game Analysis -->
+
+.. raw:: html
+
+   <div class="game-analysis">
+   <h3>AI Analysis</h3>
+
+.. raw:: html
+
+   <div id="monopoly-analysis" class="analysis-display">
+   <p>Start a game to see AI analysis and move suggestions.</p>
+   </div>
+
+.. raw:: html
+
+   </div>
+   </div>
+
+.. raw:: html
+
+   <script>
+
     // Game initialization and interaction
     function startGame(gameId) {
         const board = document.getElementById(gameId + '-board');
@@ -96,265 +180,115 @@ Economic strategy game with property trading and AI negotiation
     function initializeGameBoard(gameId, boardElement) {
         // This would be replaced with actual game implementation
         boardElement.innerHTML = `
-            <div class="game-board-${gameId}">
-                <p>🎮 Interactive ${gameId} board would render here</p>
-                <p>Click positions to make moves</p>
-                <div class="demo-board" id="demo-board">
-                    <!-- Demo board will be generated by JS -->
-                </div>
-            </div>
-        `;
+
+.. raw:: html
+
+   <div class="game-board-${gameId}">
+   <p>🎮 Interactive ${gameId} board would render here</p>
+   <p>Click positions to make moves</p>
+
+.. raw:: html
+
+   <div class="demo-board" id="demo-board">
+   <!-- Demo board will be generated by JS -->
+   </div>
+
+.. raw:: html
+
+   </div>
+
+        `;`
     }
 
     function generateDemoBoard(gameId) {
         if (gameId === 'chess' || gameId === 'checkers') {
             let squares = '';
             for (let i = 0; i < 64; i++) {
-                squares += '<div class="square"></div>';
-            }
-            return `<div class="board-8x8">${squares}</div>`;
-        } else if (gameId === 'tictactoe') {
-            let cells = '';
-            for (let i = 0; i < 9; i++) {
-                cells += '<div class="cell" onclick="makeMove(this)"></div>';
-            }
-            return `<div class="board-3x3">${cells}
-        <!-- Live Game Stream -->
-        <div class="game-streaming">
-            <h3>Live Game Visualization</h3>
-            <div class="streaming-indicator">
-                Live Stream
-            </div>
-            <div class="game-state-display">
-                <pre id="monopoly-state">
-Board Position:
-┌─────┬─────┬─────┬─────┬─────┐
-│ GO  │ P1  │     │ P2  │ JAIL│
-├─────┼─────┴─────┴─────┼─────┤
-│     │   MONOPOLY      │     │
-│ P3  │     BOARD       │ P4  │
-├─────┼─────┬─────┬─────┼─────┤
-│     │     │ P5  │     │     │
-└─────┴─────┴─────┴─────┴─────┘
 
-P1: $1500 | P2: $1450 | P3: $1600
-Turn: Player 1 | Dice: Ready
-Status: Game in progress
-                </pre>
-            </div>
-            <div class="move-history">
-                <h4>Move History</h4>
-                <div id="monopoly-moves-stream">
-                    <div class="move">1. P1: Rolled 7, landed on Baltic Ave</div>
-                    <div class="move">2. P2: Rolled 5, bought Vermont Ave</div>
-                    <div class="move">3. P3: Rolled 12, passed GO</div>
-                </div>
-            </div>
-        </div>
-    </div>`;
+                   squares += '<div class="square"></div>';
+               }
+
+               return `<div class="board-8x8">${squares}</div>`;
+           } else if (gameId === 'tictactoe') {
+               let cells = '';
+               for (let i = 0; i < 9; i++) {
+
+                   cells += '<div class="cell" onclick="makeMove(this)"></div>';
+               }
+
+               return `<div class="board-3x3">${cells}`
+.. raw:: html
+
+   <!-- Live Game Stream -->
+
+.. raw:: html
+
+   <div class="game-streaming">
+   <h3>Live Game Visualization</h3>
+
+.. raw:: html
+
+   <div class="streaming-indicator">
+
+                   Live Stream
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="game-state-display">
+
+.. raw:: html
+
+   <pre id="monopoly-state">
+
+       Board Position:
+       ┌─────┬─────┬─────┬─────┬─────┐
+       │ GO  │ P1  │     │ P2  │ JAIL│
+       ├─────┼─────┴─────┴─────┼─────┤
+       │     │   MONOPOLY      │     │
+       │ P3  │     BOARD       │ P4  │
+       ├─────┼─────┬─────┬─────┼─────┤
+       │     │     │ P5  │     │     │
+       └─────┴─────┴─────┴─────┴─────┘
+
+   
+   P1: $1500 | P2: $1450 | P3: $1600
+   Turn: Player 1 | Dice: Ready
+   Status: Game in progress
+
+.. raw:: html
+
+   </pre>
+   </div>
+
+.. raw:: html
+
+   <div class="move-history">
+   <h4>Move History</h4>
+
+.. raw:: html
+
+   <div id="monopoly-moves-stream">
+
+.. raw:: html
+
+   <div class="move">1. P1: Rolled 7, landed on Baltic Ave</div>
+
+.. raw:: html
+
+   <div class="move">2. P2: Rolled 5, bought Vermont Ave</div>
+
+.. raw:: html
+
+   <div class="move">3. P3: Rolled 12, passed GO</div>
+   </div>
+
+.. raw:: html
+
+   </div>
+   </div>
+   </div>`;`
+
         }
-        return '<div class="custom-board">Game board visualization</div>';
-    }
-
-    function makeMove(cell) {
-        if (cell.textContent === '') {
-            cell.textContent = 'X';
-            // Trigger AI move
-            setTimeout(() => aiMove(), 500);
-        }
-    }
-
-    function aiMove() {
-        const emptyCells = document.querySelectorAll('.cell:empty');
-        if (emptyCells.length > 0) {
-            const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-            randomCell.textContent = 'O';
-        }
-    }
-
-    function showGameInterface(gameId) {
-        // Enable game-specific interactions
-        console.log(`Started ${gameId} game`);
-    }
-    </script>
-
-    <style>
-    .game-demo-container {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .game-overview-card {
-        background: var(--color-background-secondary);
-        border-radius: 12px;
-        padding: 2rem;
-        margin-bottom: 2rem;
-    }
-
-    .game-header {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .game-icon {
-        font-size: 3rem;
-    }
-
-    .game-stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 1rem;
-        margin: 1rem 0;
-    }
-
-    .stat {
-        display: flex;
-        justify-content: space-between;
-        padding: 0.5rem;
-        background: var(--color-background-primary);
-        border-radius: 6px;
-    }
-
-    .game-features {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-top: 1rem;
-    }
-
-    .feature-tag {
-        background: var(--color-brand-primary);
-        color: white;
-        padding: 0.25rem 0.75rem;
-        border-radius: 1rem;
-        font-size: 0.875rem;
-    }
-
-    .game-interface {
-        background: var(--color-background-secondary);
-        border-radius: 12px;
-        padding: 2rem;
-        margin-bottom: 2rem;
-    }
-
-    .game-controls {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 2rem;
-        flex-wrap: wrap;
-    }
-
-    .start-game-btn {
-        background: var(--color-brand-primary);
-        color: white;
-        border: none;
-        padding: 0.75rem 1.5rem;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: 600;
-    }
-
-    .game-board {
-        min-height: 400px;
-        background: var(--color-background-primary);
-        border: 2px solid var(--color-background-border);
-        border-radius: 8px;
-        padding: 2rem;
-        text-align: center;
-    }
-
-    .board-8x8 {
-        display: grid;
-        grid-template-columns: repeat(8, 1fr);
-        gap: 1px;
-        max-width: 400px;
-        margin: 0 auto;
-    }
-
-    .board-3x3 {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2px;
-        max-width: 300px;
-        margin: 0 auto;
-    }
-
-    .square, .cell {
-        aspect-ratio: 1;
-        background: #f0f0f0;
-        border: 1px solid #ccc;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        cursor: pointer;
-    }
-
-    .square:nth-child(odd) {
-        background: #d4c4b0;
-    }
-
-    .cell:hover {
-        background: #e0e0e0;
-    }
-
-    .game-status {
-        margin-top: 1rem;
-        padding: 1rem;
-        background: var(--color-background-primary);
-        border-radius: 6px;
-    }
-
-    .game-analysis {
-        background: var(--color-background-secondary);
-        border-radius: 12px;
-        padding: 2rem;
-    }
-    </style>
-
-Rules & Strategy
-----------------
-
-**How to Play:**
-
-Buy properties, collect rent, bankrupt opponents through smart trading.
-
-**AI Opponents:**
-
-- **Conservative**: Beginner-friendly AI that makes some mistakes
-- **Aggressive**: Balanced AI with good strategic play
-- **Balanced**: Advanced AI using optimal strategies
-
-
-Code Example
-------------
-
-.. code-block:: python
-
-    from haive.games.monopoly import MonopolyGame
-    from haive.agents.simple import SimpleAgent
-
-    # Create game
-    game = MonopolyGame()
-
-    # Create AI players
-    player1 = SimpleAgent(name="Human")
-    player2 = SimpleAgent(name="AI_Agent", difficulty="advanced")
-
-    # Play game
-    winner = game.play(player1, player2)
-    print(f"Winner: {winner}")
-
-    # Get game history
-    for move in game.history:
-        print(f"{move.player}: {move.action}")
-
-See Also
---------
-
-- :doc:`/api/haive/games/index` - Games API documentation
-- :doc:`/guides/game-development` - Creating custom games
-- :doc:`/examples/game-agents` - More game examples

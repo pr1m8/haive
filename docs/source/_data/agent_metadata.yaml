@@ -1,6 +1,6 @@
+---
 # Agent Metadata Configuration
 # This file defines metadata for automatic documentation generation
-
 agents:
   SimpleAgent:
     category: simple
@@ -10,7 +10,7 @@ agents:
       engine: AugLLMConfig
       params:
         temperature: 0.7
-        system_message: "You are a helpful assistant."
+        system_message: You are a helpful assistant.
     example_usage: |
       # Single turn conversation
       response = await agent.arun("What's the capital of France?")
@@ -29,15 +29,14 @@ agents:
       - Token usage tracking
       - Persistence integration
     benchmarks:
-      response_time: "< 1s"
+      response_time: < 1s
       tokens_per_second: 50
-
   ReactAgent:
     category: react
     description: Reasoning and acting agent with tool use capabilities
     icon: 🔄
     example_config:
-      tools: ["SearchTool()", "CalculatorTool()"]
+      tools: [SearchTool(), CalculatorTool()]
       params:
         max_iterations: 5
         verbose: true
@@ -63,7 +62,6 @@ agents:
       - Custom tool creation
       - Tool result caching
       - Reasoning strategy selection
-
   BaseRAGAgent:
     category: rag
     description: Foundation for retrieval-augmented generation agents
@@ -86,21 +84,20 @@ agents:
     visualization:
       supports_graph: true
       graph_type: dag
-      components: ["retriever", "reranker", "generator"]
+      components: [retriever, reranker, generator]
       state_schema: RAGState
     key_features:
       - Document retrieval
       - Source tracking
       - Reranking support
       - Context window management
-
   AdaptiveRAGAgent:
     category: rag
     subcategory: advanced
     description: RAG agent that dynamically selects retrieval strategy
     icon: 🎯
     example_config:
-      strategies: ["simple", "multi_query", "hyde", "fusion"]
+      strategies: [simple, multi_query, hyde, fusion]
       params:
         strategy_selector: auto
         fallback_strategy: simple
@@ -128,7 +125,6 @@ agents:
       multi_query: Generate multiple query variants
       hyde: Hypothetical document embeddings
       fusion: Reciprocal rank fusion
-
   DebateConversation:
     category: conversation
     description: Structured debate management with multiple participants
@@ -136,9 +132,9 @@ agents:
     example_config:
       factory_method: create_simple_debate
       params:
-        topic: "AI Ethics"
-        position_a: ["Alice", "Pro-regulation"]
-        position_b: ["Bob", "Pro-innovation"]
+        topic: AI Ethics
+        position_a: [Alice, Pro-regulation]
+        position_b: [Bob, Pro-innovation]
         enable_judge: true
         arguments_per_side: 3
     example_usage: |
@@ -159,11 +155,7 @@ agents:
       - Argument tracking
       - Judge integration
       - Position enforcement
-    debate_formats:
-      - traditional
-      - oxford
-      - parliamentary
-
+    debate_formats: [traditional, oxford, parliamentary]
   TreeOfThoughtsAgent:
     category: reasoning
     description: Explores multiple reasoning paths with tree search
@@ -192,13 +184,12 @@ agents:
       - Value-based pruning
       - Backtracking support
       - Path visualization
-
   MultiAgent:
     category: multi_agent
     description: Orchestrates multiple agents for complex workflows
     icon: 👥
     example_config:
-      agents: ["researcher", "analyst", "writer"]
+      agents: [researcher, analyst, writer]
       params:
         routing_strategy: sequential
         state_sharing: full
@@ -230,38 +221,29 @@ agents:
       parallel: Execute agents concurrently
       conditional: Route based on conditions
       skill_based: Route based on agent capabilities
-
 # Categories metadata
 categories:
   simple:
     name: Simple Agents
     description: Basic conversational and task agents
     icon: 🗣️
-
   react:
     name: ReAct Agents
     description: Reasoning and tool-using agents
     icon: 🔄
-
   rag:
     name: RAG Agents
     description: Retrieval-augmented generation agents
     icon: 📚
-    subcategories:
-      - core
-      - advanced
-      - specialized
-
+    subcategories: [core, advanced, specialized]
   conversation:
     name: Conversation Agents
     description: Multi-party dialogue management
     icon: 💬
-
   reasoning:
     name: Reasoning Agents
     description: Advanced reasoning and critique
     icon: 🧠
-
   multi_agent:
     name: Multi-Agent Systems
     description: Coordinated agent workflows

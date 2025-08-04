@@ -87,17 +87,17 @@ For documentation generation, use the docs-specific runner::
 
 This will:
 
-* Run key examples suitable for documentation
-* Generate RST files for Sphinx Gallery
-* Create visualization images in ``auto_examples/``
-* Update the examples gallery index
+* Run key examples suitable for documentation*
+* Generate RST files for Sphinx Gallery*
+* Create visualization images in ``auto_examples/``*
+* Update the examples gallery index*
 
 The docs runner is optimized for:
 
-* Shorter timeouts (suitable for CI/CD)
-* Filtered example selection (most important only)
-* Documentation-friendly output formatting
-* Integration with Sphinx build system
+* Shorter timeouts (suitable for CI/CD)*
+* Filtered example selection (most important only)*
+* Documentation-friendly output formatting*
+* Integration with Sphinx build system*
 
 Output Structure
 ----------------
@@ -110,73 +110,73 @@ The runner creates organized output:
     ├── execution_report.md          # Summary report
     ├── full_output.txt             # Complete output log
     ├── agent_visualization_1.png   # Generated diagrams
-    └── large_output_*.txt          # Individual large outputs
+    └── large_output_*.txt          # Individual large outputs*
 
-Example Discovery
------------------
+    Example Discovery
+    -----------------
 
-The system automatically discovers examples from:
+    The system automatically discovers examples from:
 
-* ``examples/`` directories in each package
-* ``example.py`` files in agent modules
-* Prebuilt agent examples
-* Documentation examples
-* Test examples (filtered appropriately)
+    * ``examples/`` directories in each package*
+    * ``example.py`` files in agent modules*
+    * Prebuilt agent examples*
+    * Documentation examples*
+    * Test examples (filtered appropriately)*
 
-Visualization Generation
-------------------------
+    Visualization Generation
+    ------------------------
 
-When examples include compatible agents, the runner:
+    When examples include compatible agents, the runner:
 
-1. Detects the agent type and architecture
-2. Creates a minimal agent instance
-3. Compiles the agent graph
-4. Generates a workflow visualization PNG
-5. Saves the diagram with a descriptive name
+    1. Detects the agent type and architecture
+    2. Creates a minimal agent instance
+    3. Compiles the agent graph
+    4. Generates a workflow visualization PNG
+    5. Saves the diagram with a descriptive name
 
-Supported visualizations:
+    Supported visualizations:
 
-* **Simple Agent Workflows**: Basic linear flows
-* **ReAct Agent Graphs**: Complex reasoning loops
-* **Multi-Agent Systems**: Agent interaction patterns
-* **Tool Integration**: Tool usage patterns
+    * **Simple Agent Workflows**: Basic linear flows
+    * **ReAct Agent Graphs**: Complex reasoning loops
+    * **Multi-Agent Systems**: Agent interaction patterns
+    * **Tool Integration**: Tool usage patterns
 
-Error Handling
---------------
+    Error Handling
+    --------------
 
-The runner gracefully handles:
+    The runner gracefully handles:
 
-* **Import Errors**: Reports missing dependencies
-* **Execution Timeouts**: Prevents hanging examples
-* **Large Outputs**: Saves oversized outputs to files
-* **Visualization Failures**: Continues without breaking
-* **Concurrent Failures**: Isolates failed examples
+    * **Import Errors**: Reports missing dependencies
+    * **Execution Timeouts**: Prevents hanging examples
+    * **Large Outputs**: Saves oversized outputs to files
+    * **Visualization Failures**: Continues without breaking
+    * **Concurrent Failures**: Isolates failed examples
 
-Reporting
----------
+    Reporting
+    ---------
 
-The execution report includes:
+    The execution report includes:
 
-* **Success/Failure Counts**: Overall statistics
-* **Execution Times**: Performance metrics
-* **Architecture Breakdown**: Agent type distribution
-* **Error Details**: Specific failure information
-* **Generated Files**: List of created visualizations
+    * **Success/Failure Counts**: Overall statistics
+    * **Execution Times**: Performance metrics
+    * **Architecture Breakdown**: Agent type distribution
+    * **Error Details**: Specific failure information
+    * **Generated Files**: List of created visualizations
 
-Integration with Build System
-------------------------------
+    Integration with Build System
+    ------------------------------
 
-The example runner integrates with:
+    The example runner integrates with:
 
-* **Nox Sessions**: Run via ``nox -s examples``
-* **CI/CD Pipelines**: Automated example testing
-* **Documentation Builds**: Gallery generation
-* **Development Workflow**: Quick testing of changes
+    * **Nox Sessions**: Run via ``nox -s examples``
+    * **CI/CD Pipelines**: Automated example testing
+    * **Documentation Builds**: Gallery generation
+    * **Development Workflow**: Quick testing of changes
 
-Nox Integration
-~~~~~~~~~~~~~~~
+    Nox Integration
+    ~~~~~~~~~~~~~~~
 
-Add to your development workflow::
+    Add to your development workflow::
 
     # Run examples during development
     nox -s examples
@@ -184,10 +184,10 @@ Add to your development workflow::
     # Run examples with docs generation
     nox -s examples_docs
 
-Custom Example Scripts
-----------------------
+    Custom Example Scripts
+    ----------------------
 
-You can create custom runners for specific needs:
+    You can create custom runners for specific needs:
 
 .. code-block:: python
 
@@ -216,48 +216,48 @@ You can create custom runners for specific needs:
         report = runner.generate_example_report(results)
         print(report)
 
-Troubleshooting
----------------
+    Troubleshooting
+    ---------------
 
-Common Issues
-~~~~~~~~~~~~~
+    Common Issues
+    ~~~~~~~~~~~~~
 
-**Import Errors**
+    **Import Errors**
     Ensure all dependencies are installed: ``poetry install --all-extras``
 
-**Timeout Issues**
+    **Timeout Issues**
     Increase timeout: ``--timeout 900`` (15 minutes)
 
-**Memory Issues**
+    **Memory Issues**
     Reduce concurrency: ``--concurrent 1``
 
-**Missing Visualizations**
+    **Missing Visualizations**
     Check that agents support the ``visualize_graph()`` method
 
-Debug Mode
-~~~~~~~~~~
+    Debug Mode
+    ~~~~~~~~~~
 
-Run with verbose logging::
+    Run with verbose logging::
 
     # Enable debug logging
     export PYTHONPATH=.
     python -m logging run_all_examples.py --verbose
 
-Performance Tips
-----------------
+    Performance Tips
+    ----------------
 
-* Use ``--viz-only`` for quick visualization generation
-* Adjust ``--concurrent`` based on your system capabilities
-* Set appropriate ``--timeout`` values for complex examples
-* Use the docs runner for CI/CD to run only essential examples
+    * Use ``--viz-only`` for quick visualization generation*
+    * Adjust ``--concurrent`` based on your system capabilities*
+    * Set appropriate ``--timeout`` values for complex examples*
+    * Use the docs runner for CI/CD to run only essential examples*
 
-Best Practices
---------------
+    Best Practices
+    --------------
 
-1. **Run regularly** during development to catch regressions
-2. **Review reports** to understand example health
-3. **Update examples** when agent APIs change
-4. **Use visualizations** to document agent workflows
-5. **Integrate with CI/CD** for automated testing
+    1. **Run regularly** during development to catch regressions
+    2. **Review reports** to understand example health
+    3. **Update examples** when agent APIs change
+    4. **Use visualizations** to document agent workflows
+    5. **Integrate with CI/CD** for automated testing
 
-The Universal Example Runner makes it easy to maintain and showcase the rich ecosystem of Haive agent examples across all packages.
+    The Universal Example Runner makes it easy to maintain and showcase the rich ecosystem of Haive agent examples across all packages.

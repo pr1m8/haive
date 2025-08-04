@@ -10,18 +10,31 @@ Here's a basic agent workflow visualization:
 
 .. raw:: html
 
-    <div class="agent-showcase">
-        <div class="agent-card">
-            <h3>Climate Research Agent</h3>
-            <p>Advanced Environmental Analysis with ReAct methodology.</p>
-            
-            <div id="demo-graph" class="agent-graph-container">
-                <!-- Graph will be rendered here -->
-            </div>
-        </div>
-    </div>
+   .. raw:: html
 
-    <script>
+   <div class="agent-showcase">
+
+.. raw:: html
+
+   <div class="agent-card">
+   <h3>Climate Research Agent</h3>
+   <p>Advanced Environmental Analysis with ReAct methodology.</p>
+
+.. raw:: html
+
+   <div id="demo-graph" class="agent-graph-container">
+   <!-- Graph will be rendered here -->
+   </div>
+
+.. raw:: html
+
+   </div>
+   </div>
+
+.. raw:: html
+
+   <script>
+
     document.addEventListener('DOMContentLoaded', function() {
         // Simple test of visualization
         const container = document.getElementById('demo-graph');
@@ -29,7 +42,9 @@ Here's a basic agent workflow visualization:
             container.innerHTML = '<p style="text-align: center; padding: 20px; background: #f0f0f0; border-radius: 8px;">Graph visualization would appear here</p>';
         }
     });
-    </script>
+.. raw:: html
+
+   </script>
 
 Interactive Features
 --------------------

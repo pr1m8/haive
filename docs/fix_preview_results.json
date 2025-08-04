@@ -1,0 +1,11 @@
+{
+  "rstfmt_changes": 2,
+  "docformatter_changes": 0,
+  "blacken_docs_changes": 2,
+  "spelling_issues": 10,
+  "rstcheck_issues": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 50
+  }
+}
