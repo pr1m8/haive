@@ -1,16 +1,23 @@
----
 # .trunk/trunk.yaml
-# See: https://docs.trunk.io/reference/trunk-yaml
+# Purpose: Use Trunk's built-in pre-commit/pre-push hooks with optional pre-commit integration
+
 version: 0.1
+
 cli:
   version: 1.24.0
+
 plugins:
   sources:
     - id: trunk
       ref: v1.7.1
       uri: https://github.com/trunk-io/plugins
+
 runtimes:
-  enabled: [go@1.21.0, node@22.16.0, python@3.10.8]
+  enabled:
+    - go@1.21.0
+    - node@22.16.0
+    - python@3.10.8
+
 lint:
   enabled:
     - codespell@2.4.1
@@ -37,6 +44,7 @@ lint:
     - taplo@0.9.3
     - trufflehog@3.90.2
     - yamllint@1.37.1
+
   ignore:
     - linters: [ALL]
       paths:
@@ -46,56 +54,46 @@ lint:
         - .venv/**
         - node_modules/**
         - data/**
-        - scripts/**/dryrun_wrapper.py
-        - scripts/**/smart_dryrun_wrapper.py
-        - scripts/debug/diagnose_test_performance.py
-        - syntax_errors_*.json
-        - syntax_errors_*.txt
         - resources/**
         - assets/**
         - dist/**
         - build/**
         - "*.egg-info/**"
+        - syntax_errors_*.json
+        - syntax_errors_*.txt
         - docs/source/conf.py
         - docs/source/conf_modules/**
+        - scripts/**/dryrun_wrapper.py
+        - scripts/**/smart_dryrun_wrapper.py
+        - scripts/debug/diagnose_test_performance.py
+
 actions:
+  output_level: verbose
+
   disabled:
-    - trunk-announce # Disable announcements only
+    - trunk-announce  # silence marketing messages
+
   enabled:
     - git-lfs
-    - trunk-fmt-pre-commit # ✅ Auto-format on commit
-    - trunk-check-pre-push # ✅ Check before push
     - trunk-cache-prune
     - trunk-upgrade-available
-    - run-pre-commit # Custom action to run your .pre-commit-config.yaml
-  output_level: verbose
+    - trunk-fmt-pre-commit       # ✅ built-in formatter on commit
+    - trunk-check-pre-push       # ✅ built-in checker on push
+    - run-pre-commit-hook        # ✅ your custom hook for pre-commit.yaml
+
   definitions:
-    - id: run-pre-commit
-      display_name: Run project’s pre-commit hooks
-      description: Invoke pre-commit against changed files
+    - id: run-pre-commit-hook
+      display_name: Run pre-commit YAML hooks
+      description: Run `.pre-commit-config.yaml` against staged files
       triggers:
         - git_hooks: [pre-commit]
       run: |
         FILES=$(git diff --cached --name-only | grep -v '^$' || true)
         if [ -z "$FILES" ]; then
-          echo "No staged files to lint with pre-commit"
+          echo "✅ No staged files to lint with pre-commit"
           exit 0
         fi
+        echo "🔧 Running pre-commit on staged files..."
         pre-commit run --files $FILES
       interactive: false
       notify_on_error: false
-
-    - id: trunk-check-pre-push
-      display_name: Trunk check on staged files only
-      description: Run Trunk check only on staged files before pushing
-      triggers:
-        - git_hooks: [pre-push]
-      run: |
-        FILES=$(git diff --cached --name-only | grep -v '^$' || true)
-        if [ -z "$FILES" ]; then
-          echo "No staged files to check with trunk"
-          exit 0
-        fi
-        trunk check --files $FILES
-      interactive: false
-      notify_on_error: true
