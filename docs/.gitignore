@@ -1,0 +1,17 @@
+# Documentation backups and archives
+docs/_archives/
+docs/source/*.log
+docs/source/conf_*.py
+!docs/source/conf.py
+docs/source/*_backup*
+docs/source/test_*.py
+docs/source/vault_cli_*.log
+
+# Temporary files
+*.bak
+*.tmp
+*~
+
+# Generated content
+docs/build/
+docs/source/logs/
