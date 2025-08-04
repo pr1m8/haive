@@ -1,5 +1,5 @@
 # .trunk/trunk.yaml
-# Purpose: Use Trunk's built-in pre-commit/pre-push hooks with optional pre-commit integration
+# Purpose: Use Trunk's full-repo pre-commit/pre-push hooks with optional pre-commit integration
 
 version: 0.1
 
@@ -71,20 +71,20 @@ actions:
   output_level: verbose
 
   disabled:
-    - trunk-announce  # silence marketing messages
+    - trunk-announce # silence Trunk marketing messages
 
   enabled:
     - git-lfs
     - trunk-cache-prune
     - trunk-upgrade-available
-    - trunk-fmt-pre-commit       # ✅ built-in formatter on commit
-    - trunk-check-pre-push       # ✅ built-in checker on push
-    - run-pre-commit-hook        # ✅ your custom hook for pre-commit.yaml
+    - trunk-fmt-pre-commit # ✅ built-in full-repo formatter on commit
+    - trunk-check-pre-push # ✅ built-in full-repo checker on push
+    - run-pre-commit-hook # ✅ integration with .pre-commit-config.yaml
 
   definitions:
     - id: run-pre-commit-hook
       display_name: Run pre-commit YAML hooks
-      description: Run `.pre-commit-config.yaml` against staged files
+      description: Run `.pre-commit-config.yaml` against staged changes
       triggers:
         - git_hooks: [pre-commit]
       run: |
