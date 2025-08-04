@@ -64,21 +64,33 @@ lint:
 
 actions:
   disabled:
-    - trunk-announce # Disable announcements only
+    - trunk-announce  # Disable announcements only
   enabled:
     - git-lfs
-    - trunk-fmt-pre-commit # ✅ Auto-format on commit
-    - trunk-check-pre-push # ✅ Check before push
+    - trunk-fmt-pre-commit   # ✅ Auto-format on commit
+    - trunk-check-pre-push   # ✅ Check before push
     - trunk-cache-prune
     - trunk-upgrade-available
-    - run-pre-commit # Custom action to run your .pre-commit-config.yaml
+    - run-pre-commit         # Custom action to run your .pre-commit-config.yaml
+  output_level: verbose
 
-  definitions:
-    - id: run-pre-commit
-      display_name: "Run project’s pre-commit hooks"
-      description: "Invoke pre-commit against all files in your repository"
-      triggers:
-        - git_hooks: [pre-commit]
-      run: pre-commit run --all-files
-      interactive: false
-      notify_on_error: false
+definitions:
+  - id: run-pre-commit
+    display_name: "Run project’s pre-commit hooks on staged files"
+    description: "Invoke pre-commit on staged Python files, excluding packages/"
+    triggers:
+      - git_hooks: [pre-commit]
+    run: >
+      bash -c '
+        files=$(git diff --cached --name-only --diff-filter=ACM \
+          | grep -E "\.(py|js|ts|sh)$" \
+          | grep -v "^packages/");
+        if [ -n "$files" ]; then
+          echo "Running pre-commit on:$files"
+          pre-commit run --files $files --verbose
+        else
+          echo "No relevant staged files to lint."
+        fi
+      '
+    interactive: false
+    notify_on_error: false
