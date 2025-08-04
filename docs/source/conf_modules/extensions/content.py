@@ -138,6 +138,8 @@ def _get_gallery_config(packages: list[str] | None = None) -> dict[str, Any]:
             "within_subsection_order": "FileNameSortKey",
             "show_signature": True,
             "plot_gallery": False,  # We don't need matplotlib plots
+            "execute_examples": False,  # Disable execution to avoid computational cost
+            "run_code_after_examples": False,  # Don't run code after examples
             "first_notebook_cell": "%matplotlib inline",
             "last_notebook_cell": "# End of example",
             "promote_jupyter_magic": True,
