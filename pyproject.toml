@@ -161,7 +161,7 @@ nox = "^2025.5.1"
 tomli = "^2.2.1"
 sgfmill = "^1.1.1"
 
-# CLI Dependencies - will make a group 
+# CLI Dependencies - will make a group
 click = "^8.2.1"
 typer = "^0.16.0"
 questionary = "^2.1.0"
@@ -958,7 +958,7 @@ fix-imports-mcp = "python scripts/smart_dryrun_wrapper.py --target haive-mcp -- 
 fix-imports-prebuilt-dry = "DRY_RUN=1 python scripts/smart_dryrun_wrapper.py --target haive-prebuilt -- poetry run absolufy-imports"
 fix-imports-prebuilt = "python scripts/smart_dryrun_wrapper.py --target haive-prebuilt -- poetry run absolufy-imports"
 
-# 🧹 Code Quality Tasks (Smart Wrapper - Automatically Adds --check/--diff)  
+# 🧹 Code Quality Tasks (Smart Wrapper - Automatically Adds --check/--diff)
 format-dry = "DRY_RUN=1 python scripts/smart_dryrun_wrapper.py -- poetry run ruff format packages/"
 format = "python scripts/smart_dryrun_wrapper.py -- poetry run ruff format packages/"
 lint-fix-dry = "DRY_RUN=1 python scripts/smart_dryrun_wrapper.py -- poetry run ruff check --fix packages/"
@@ -970,7 +970,7 @@ add-package = "python scripts/smart_dryrun_wrapper.py -- poetry add"
 remove-package-dry = "DRY_RUN=1 python scripts/smart_dryrun_wrapper.py -- poetry remove"
 remove-package = "python scripts/smart_dryrun_wrapper.py -- poetry remove"
 
-# 🤖 Interactive Versions (Ask before executing)  
+# 🤖 Interactive Versions (Ask before executing)
 fix-imports-dataflow-interactive = "INTERACTIVE=1 python scripts/smart_dryrun_wrapper.py --target haive-dataflow -- poetry run absolufy-imports"
 format-interactive = "INTERACTIVE=1 python scripts/smart_dryrun_wrapper.py -- poetry run ruff format packages/"
 add-package-interactive = "INTERACTIVE=1 python scripts/smart_dryrun_wrapper.py -- poetry add"
