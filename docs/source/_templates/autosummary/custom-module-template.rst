@@ -1,6 +1,7 @@
 {{ fullname | escape | underline}}
 
 .. automodule:: {{ fullname }}
+
    :members:
    :undoc-members:
    :show-inheritance:
@@ -12,11 +13,15 @@
    .. rubric:: Modules
 
    .. autosummary::
+
       :toctree:
       :template: custom-module-template.rst
       :recursive:
+
    {% for item in modules %}
+
       {{ item }}
+
    {%- endfor %}
    {% endif %}
    {% endblock %}
@@ -26,9 +31,13 @@
    .. rubric:: Classes
 
    .. autosummary::
+
       :toctree:
+
    {% for item in classes %}
+
       {{ item }}
+
    {%- endfor %}
    {% endif %}
    {% endblock %}
@@ -38,9 +47,13 @@
    .. rubric:: Functions
 
    .. autosummary::
+
       :toctree:
+
    {% for item in functions %}
+
       {{ item }}
+
    {%- endfor %}
    {% endif %}
    {% endblock %}
@@ -50,9 +63,13 @@
    .. rubric:: Exceptions
 
    .. autosummary::
+
       :toctree:
+
    {% for item in exceptions %}
+
       {{ item }}
+
    {%- endfor %}
    {% endif %}
    {% endblock %}

@@ -3,6 +3,7 @@
 .. currentmodule:: {{ module }}
 
 .. autoclass:: {{ objname }}
+
    :members:
    :show-inheritance:
    :inherited-members:
@@ -13,9 +14,13 @@
    .. rubric:: Methods
    
    .. autosummary::
+
       :nosignatures:
+
    {% for item in methods %}
+
       ~{{ name }}.{{ item }}
+
    {%- endfor %}
    {% endif %}
    {% endblock %}
@@ -25,9 +30,13 @@
    .. rubric:: Attributes
    
    .. autosummary::
+
       :nosignatures:
+
    {% for item in attributes %}
+
       ~{{ name }}.{{ item }}
+
    {%- endfor %}
    {% endif %}
    {% endblock %}

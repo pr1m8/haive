@@ -5,100 +5,207 @@ Mathematical strategy game
 
 .. raw:: html
 
-    <div class="game-demo-container">
-        <!-- Game Overview -->
-        <div class="game-overview-card">
-            <div class="game-header">
-                <div class="game-icon">🎮</div>
-                <div>
-                    <h2>Nim</h2>
-                    <p class="game-complexity">Complexity: Low</p>
-                </div>
-            </div>
+   <div class="game-demo-container">
+   <!-- Game Overview -->
 
-            <div class="game-stats">
-                <div class="stat">
-                    <label>Board Size:</label>
-                    <span>N/A</span>
-                </div>
-                <div class="stat">
-                    <label>Players:</label>
-                    <span>2-4</span>
-                </div>
-            </div>
+.. raw:: html
 
-            <div class="game-features">
-                <span class="feature-tag">Perfect strategy</span>
-                <span class="feature-tag">Multiple variants</span>
-                <span class="feature-tag">Quick games</span>
-                <span class="feature-tag">Mathematical basis</span>
-            </div>
-        </div>
+   <div class="game-overview-card">
 
-        <!-- Playable Game Interface -->
-        <div class="game-interface">
-            <div class="game-controls">
-                <h3>Play Nim</h3>
-                <div class="ai-selection">
-                    <label>AI Difficulty:</label>
-                    <select id="nim-ai-level">
-                        <option value="beginner">Beginner</option>
-                        <option value="intermediate">Intermediate</option>
-                        <option value="advanced">Advanced</option>
-                        <option value="master">Master</option>
-                    </select>
-                </div>
-                <button onclick="startGame('nim')" class="start-game-btn">
+.. raw:: html
+
+   <div class="game-header">
+
+.. raw:: html
+
+   <div class="game-icon">🎮</div>
+
+.. raw:: html
+
+   <div>
+   <h2>Nim</h2>
+   <p class="game-complexity">Complexity: Low</p>
+   </div>
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="game-stats">
+
+.. raw:: html
+
+   <div class="stat">
+   <label>Board Size:</label>
+   <span>N/A</span>
+   </div>
+
+.. raw:: html
+
+   <div class="stat">
+   <label>Players:</label>
+   <span>2-4</span>
+   </div>
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="game-features">
+   <span class="feature-tag">Perfect strategy</span>
+   <span class="feature-tag">Multiple variants</span>
+   <span class="feature-tag">Quick games</span>
+   <span class="feature-tag">Mathematical basis</span>
+   </div>
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <!-- Playable Game Interface -->
+
+.. raw:: html
+
+   <div class="game-interface">
+
+.. raw:: html
+
+   <div class="game-controls">
+   <h3>Play Nim</h3>
+
+.. raw:: html
+
+   <div class="ai-selection">
+   <label>AI Difficulty:</label>
+   <select id="nim-ai-level">
+   <option value="beginner">Beginner</option>
+   <option value="intermediate">Intermediate</option>
+   <option value="advanced">Advanced</option>
+   <option value="master">Master</option>
+   </select>
+   </div>
+
+.. raw:: html
+
+   <button onclick="startGame('nim')" class="start-game-btn">
+
                     Start New Game
-                </button>
-            </div>
+.. raw:: html
 
-            <div id="nim-board" class="game-board">
-                <!-- Game board will be rendered here -->
-                <div class="board-placeholder">
-                    <p>Click "Start New Game" to begin playing Nim</p>
-                </div>
-            </div>
+   </button>
+   </div>
 
-            <div class="game-status">
-                <div id="nim-status" class="status-display">
-                    Ready to play
-                </div>
-                <div id="nim-moves" class="moves-history">
-                    <!-- Move history will appear here -->
-                </div>
-            </div>
-        </div>
+.. raw:: html
 
-        <!-- Live Game Stream -->
-        <div class="game-streaming">
-            <h3>Live Game Visualization</h3>
-            <div class="streaming-indicator">
-                Live Stream
-            </div>
-            <div class="game-state-display">
-                <pre id="nim-state">
-Heap A: ||||| (5)
-Heap B: ||| (3)
-Heap C: |||||||| (8)
-Heap D: || (2)
+   <div id="nim-board" class="game-board">
+   <!-- Game board will be rendered here -->
 
-Last move: Player 1 took 3 from Heap C
-Current turn: Player 2
+.. raw:: html
 
-Classic rules: Take any number from one heap
-Goal: Force opponent to take last object
-                </pre>
-            </div>
-            <div class="move-history">
-                <h4>Recent Activity</h4>
-                <div id="nim-moves-stream">
-                    <div class="move">Game initialized...</div>
-                    <div class="move">Waiting for players...</div>
-                </div>
-            </div>
-        </div>
-    </div>
+   <div class="board-placeholder">
+   <p>Click "Start New Game" to begin playing Nim</p>
+   </div>
+
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="game-status">
+
+.. raw:: html
+
+   <div id="nim-status" class="status-display">
+
+                       Ready to play
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div id="nim-moves" class="moves-history">
+   <!-- Move history will appear here -->
+   </div>
+
+.. raw:: html
+
+   </div>
+   </div>
+
+.. raw:: html
+
+   <!-- Live Game Stream -->
+
+.. raw:: html
+
+   <div class="game-streaming">
+   <h3>Live Game Visualization</h3>
+
+.. raw:: html
+
+   <div class="streaming-indicator">
+
+                   Live Stream
+.. raw:: html
+
+   </div>
+
+.. raw:: html
+
+   <div class="game-state-display">
+
+.. raw:: html
+
+   <pre id="nim-state">
+
+       Heap A: ||||| (5)
+       Heap B: ||| (3)
+       Heap C: |||||||| (8)
+       Heap D: || (2)
+
+   
+   Last move: Player 1 took 3 from Heap C
+   Current turn: Player 2
+   
+   Classic rules: Take any number from one heap
+   Goal: Force opponent to take last object
+
+.. raw:: html
+
+   </pre>
+   </div>
+
+.. raw:: html
+
+   <div class="move-history">
+   <h4>Recent Activity</h4>
+
+.. raw:: html
+
+   <div id="nim-moves-stream">
+
+.. raw:: html
+
+   <div class="move">Game initialized...</div>
+
+.. raw:: html
+
+   <div class="move">Waiting for players...</div>
+   </div>
+
+.. raw:: html
+
+   </div>
+   </div>
+   </div>
 
 Rules & Strategy
 ----------------
@@ -133,9 +240,9 @@ Code Example
     winner = game.play(player1, player2)
     print(f"Winner: {winner}")
 
-See Also
---------
+    See Also
+    --------
 
-- :doc:`/api/haive/games/index` - Games API documentation
-- :doc:`/guides/game-development` - Creating custom games
-- :doc:`/examples/game-agents` - More game examples
+    - :doc:`/api/haive/games/index` - Games API documentation
+    - :doc:`/guides/game-development` - Creating custom games
+    - :doc:`/examples/game-agents` - More game examples

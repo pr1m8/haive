@@ -13,9 +13,11 @@ Submodules
 ----------
 
 .. toctree::
+
    :maxdepth: 1
 
 {% for item in modules %}
+
    {{ item }}
 
 {%- endfor %}

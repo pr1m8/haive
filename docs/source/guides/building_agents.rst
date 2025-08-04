@@ -8,27 +8,29 @@ This comprehensive guide shows you how to build powerful, production-ready agent
 
 .. raw:: html
 
+   .. raw:: html
+
    <div class="guide-hero">
-      <h2>🤖 Master the Art of Agent Building</h2>
-      <p>Learn how to create agents that can reason, use tools, maintain state, and work together</p>
+   <h2>🤖 Master the Art of Agent Building</h2>
+   <p>Learn how to create agents that can reason, use tools, maintain state, and work together</p>
    </div>
 
    <style>
-      .guide-hero {
-         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-         color: white;
-         padding: 2rem;
-         border-radius: 12px;
-         text-align: center;
-         margin: 1rem 0 2rem;
-      }
-      .guide-hero h2 {
-         margin: 0 0 0.5rem;
-      }
-      .guide-hero p {
-         margin: 0;
-         opacity: 0.9;
-      }
+   .guide-hero {
+   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+   color: white;
+   padding: 2rem;
+   border-radius: 12px;
+   text-align: center;
+   margin: 1rem 0 2rem;
+   }
+   .guide-hero h2 {
+   margin: 0 0 0.5rem;
+   }
+   .guide-hero p {
+   margin: 0;
+   opacity: 0.9;
+   }
    </style>
 
 Agent Fundamentals
@@ -37,7 +39,7 @@ Agent Fundamentals
 
 At their core, Haive agents are stateful processing units that:
 
-1. **Receive input***s** - Process queries, commands, and data
+1. **Receive input***s** - Process queries, commands, and data**
 
 2.*** **Think and reaso***n** - Use cognitive engines (LLMs) to understand and plan
 
@@ -138,9 +140,11 @@ Complete Agent Creation Examples
            except Exception as e:
                logger.error(f"Error in async chat: {e}")
                return f"I apologize, but I encountered an error: {str(e)}"
+
    
-   # Example usage
-   def demo_basic_agent():
+    # Example usage
+    def demo_basic_agent():
+
        """Demonstrate basic agent usage."""
        
        # Create assistant
@@ -163,14 +167,16 @@ Complete Agent Creation Examples
            print(f"Human: {query}")
            response = assistant.chat(query)
            print(f"Sophia: {response}\n")
-           print("-"*** * 80 + "\n")
+           print("-"*** * 80 + "\n")*
+
    
-   if __name__ == "__main__":
+    if __name__ == "__main__":
+
        demo_basic_agent()
 
-🎯 Example 2: Specialized Domain Expert
+    🎯 Example 2: Specialized Domain Expert
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -229,8 +235,10 @@ Complete Agent Creation Examples
            structured_output_model=MedicalAdvice,
            description="Provides educational medical information"
        )
+
    
-   def create_tech_support_expert() -> SimpleAgent:
+    def create_tech_support_expert() -> SimpleAgent:
+
        """Create a technical support expert agent."""
        
        system_prompt = """You are an expert technical support engineer with 
@@ -260,8 +268,10 @@ Complete Agent Creation Examples
            structured_output_model=TechnicalAnalysis,
            description="Expert technical support and troubleshooting"
        )
+
    
-   def create_financial_analyst() -> SimpleAgent:
+    def create_financial_analyst() -> SimpleAgent:
+
        """Create a financial analysis agent."""
        
        system_prompt = """You are a seasoned financial analyst with expertise in:
@@ -286,8 +296,10 @@ Complete Agent Creation Examples
            ),
            description="Financial analysis and market insights"
        )
+
    
-   def demo_domain_experts():
+    def demo_domain_experts():
+
        """Demonstrate specialized domain experts."""
        
        print("🏥 Medical Information Assistant Demo\n")
@@ -321,17 +333,19 @@ Complete Agent Creation Examples
            print(f"    Details: {solution['details']}")
        print(f"\nEstimated time: {result.estimated_time}")
        print(f"Difficulty: {result.difficulty_level}")
+
    
-   if __name__ == "__main__":
+    if __name__ == "__main__":
+
        demo_domain_experts()
 
-Advanced Tool Integration
+    Advanced Tool Integration
 
--------------------------
+    -------------------------
 
-🔧 Example 3: Multi-Tool Research Assistant
+    🔧 Example 3: Multi-Tool Research Assistant
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -390,8 +404,10 @@ Advanced Tool Integration
                return json.dumps({
                    "error": f"No data available for {ticker}"
                })
+
    
-   class DatabaseQueryTool(Tool):
+    class DatabaseQueryTool(Tool):
+
        """Custom tool for database queries."""
        
        name = "database_query"
@@ -423,8 +439,10 @@ Advanced Tool Integration
                    "error": "Query not recognized",
                    "suggestion": "Try querying for 'sales' data"
                })
+
    
-   def create_research_assistant() -> ReactAgent:
+    def create_research_assistant() -> ReactAgent:
+
        """Create a powerful research assistant with multiple tools."""
        
        tools = [
@@ -473,8 +491,10 @@ Advanced Tool Integration
            max_iterations=5,  # Allow multiple tool uses
            description="Comprehensive research assistant with multiple tools"
        )
+
    
-   def demo_tool_integration():
+    def demo_tool_integration():
+
        """Demonstrate advanced tool usage."""
        
        print("🔍 Multi-Tool Research Assistant Demo\n")
@@ -515,8 +535,10 @@ Advanced Tool Integration
            "showing historical data and projections."
        )
        print(f"Assistant: {result}\n")
+
    
-   def demonstrate_tool_selection():
+    def demonstrate_tool_selection():
+
        """Show how agents select appropriate tools."""
        
        print("\n🎯 Tool Selection Intelligence Demo\n")
@@ -540,19 +562,21 @@ Advanced Tool Integration
            print(f"Expected: {expected}")
            result = assistant.invoke(query)
            print(f"Result: {result[:150]}...\n")
+
    
-   if __name__ == "__main__":
+    if __name__ == "__main__":
+
        demo_tool_integration()
        print("\n" + "=*"*80 + "\n")
        demonstrate_tool_selection()
 
-Building Custom Agent Classes
+    Building Custom Agent Classes
 
------------------------------
+    -----------------------------
 
-🏗️ Example 4: Stateful Custom Agents
+    🏗️ Example 4: Stateful Custom Agents
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -612,7 +636,7 @@ Building Custom Agent Classes
 
     state_class = AdvancedResearchState
 
-    def __init__(self, name: str = "Advanced Researcher",* **kwargs):
+    def __init__(self, name: str = "Advanced Researcher",* **kwargs):**
     """Initialize the research agent."""
     # Set up tools
     tools = [
@@ -820,9 +844,11 @@ Building Custom Agent Classes
            
            else:
                raise ValueError(f"Unsupported format: {format}")
+
    
-   # Demonstration
-   def demo_custom_agent():
+    # Demonstration
+    def demo_custom_agent():
+
        """Demonstrate the custom research agent."""
        
        print("🔬 Advanced Research Agent Demo\n")
@@ -872,17 +898,19 @@ Building Custom Agent Classes
        with open(export_path, "w") as f:
            f.write(researcher.export_research("json"))
        print(f"Research exported to {export_path}")
+
    
-   if __name__ == "__main__":
+    if __name__ == "__main__":
+
        demo_custom_agent()
 
-Agent Design Patterns
+    Agent Design Patterns
 
----------------------
+    ---------------------
 
-🎯 Example 5: Implementing Core Agent Patterns
+    🎯 Example 5: Implementing Core Agent Patterns
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -928,9 +956,11 @@ Agent Design Patterns
            max_iterations=5,
            description="Solves complex problems with reasoning and actions"
        )
+
    
-   # Pattern 2: RAG (Retrieval-Augmented Generation)
-   def create_rag_knowledge_assistant() -> SimpleRAGAgent:
+    # Pattern 2: RAG (Retrieval-Augmented Generation)
+    def create_rag_knowledge_assistant() -> SimpleRAGAgent:
+
        """Create a RAG agent for knowledge-intensive tasks.
        
        Best for: Q&A over documents, knowledge bases, or specific domains
@@ -956,9 +986,11 @@ Agent Design Patterns
            top_k=5,
            description="Answers questions using retrieved knowledge"
        )
+
    
-   # Pattern 3: Plan-Execute
-   def create_plan_execute_agent() -> PlanExecuteAgent:
+    # Pattern 3: Plan-Execute
+    def create_plan_execute_agent() -> PlanExecuteAgent:
+
        """Create a Plan-Execute agent for complex workflows.
        
        Best for: Tasks requiring upfront planning and systematic execution
@@ -980,9 +1012,11 @@ Agent Design Patterns
            max_replanning_attempts=2,
            description="Plans and executes complex workflows"
        )
+
    
-   # Pattern 4: Multi-Agent Collaboration
-   class MultiAgentSystem:
+    # Pattern 4: Multi-Agent Collaboration
+    class MultiAgentSystem:
+
        """Coordinate multiple agents for complex tasks.
        
        Best for: Tasks requiring different expertise or parallel processing
@@ -1062,9 +1096,11 @@ Agent Design Patterns
                "analysis": analysis_results,
                "final_report": final_report
            }
+
    
-   # Demonstration of patterns
-   def demo_agent_patterns():
+    # Demonstration of patterns
+    def demo_agent_patterns():
+
        """Demonstrate different agent patterns."""
        
        print("🎭 Agent Design Patterns Demo\n")
@@ -1080,7 +1116,7 @@ Agent Design Patterns
        print(f"Problem: {problem}")
        solution = react_agent.invoke(problem)
        print(f"Solution: {solution[:300]}...\n")
-       print("-"*** * 80 + "\n")
+       print("-"*** * 80 + "\n")*
        
        # Pattern 2: Plan-Execute
        print("2️⃣ Plan-Execute Pattern Demo")
@@ -1112,9 +1148,11 @@ Agent Design Patterns
            print(f"📝 Final Report: {results['final_report'][:200]}...")
        
        asyncio.run(run_multi_agent_demo())
+
    
-   # Pattern selection guide
-   def print_pattern_guide():
+    # Pattern selection guide
+    def print_pattern_guide():
+
        """Print a guide for selecting agent patterns."""
        
        print("\n📚 Agent Pattern Selection Guide\n")
@@ -1151,18 +1189,20 @@ Agent Design Patterns
            print(f"🎯 {p['pattern']}")
            print(f"   Best for: {p['best_for']}")
            print(f"   Example: {p['example']}\n")
+
    
-   if __name__ == "__main__":
+    if __name__ == "__main__":
+
        demo_agent_patterns()
        print_pattern_guide()
 
-Production Best Practices
+    Production Best Practices
 
--------------------------
+    -------------------------
 
-🚀 Example 6: Production-Ready Agent Implementation
+    🚀 Example 6: Production-Ready Agent Implementation
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -1297,7 +1337,7 @@ Production Best Practices
        def _with_retry(func):
            """Decorator for retry logic."""
            @wraps(func)
-           async def wrapper(self,* *args,* **kwargs):
+           async def wrapper(self,* *args,* **kwargs):**
                last_error = None
                for attempt in range(self.max_retries):
                    try:
@@ -1348,7 +1388,7 @@ Production Best Practices
                response_time = time.time() - start_time
                self.metrics.successful_requests += 1
                self.metrics.average_response_time = (
-                   (self.metrics.average_response_time*** * (self.metrics.successful_requests - 1) + response_time)
+                   (self.metrics.average_response_time*** * (self.metrics.successful_requests - 1) + response_time)*
                    / self.metrics.successful_requests
                )
                
@@ -1417,9 +1457,11 @@ Production Best Practices
                )
            
            return health
+
    
-   # Demonstration
-   async def demo_production_agent():
+    # Demonstration
+    async def demo_production_agent():
+
        """Demonstrate production agent features."""
        
        print("🏭 Production Agent Demo\n")
@@ -1465,12 +1507,14 @@ Production Best Practices
            print(f"  Issues: {', '.join(health['issues'])}")
        else:
            print("  Issues: None")
+
    
-   # Scaling considerations
-   class AgentPool:
+    # Scaling considerations
+    class AgentPool:
+
        """Pool of agents for load balancing."""
        
-       def __init__(self, pool_size: int = 5,* **agent_kwargs):
+       def __init__(self, pool_size: int = 5,* **agent_kwargs):**
            """Initialize agent pool."""
            self.agents = [
                ProductionAgent(
@@ -1490,28 +1534,34 @@ Production Best Practices
        def get_pool_metrics(self) -> List[Dict[str, Any]]:
            """Get metrics for all agents in pool."""
            return [agent.get_metrics() for agent in self.agents]
+
    
-   if __name__ == "__main__":
+    if __name__ == "__main__":
+
        asyncio.run(demo_production_agent())
 
-Next Steps
+    Next Steps
 
-----------
+    ----------
 
-Continue your journey with these advanced topics:
+    Continue your journey with these advanced topics:
 
-- :doc:`agent_patterns` - Master advanced agent patterns like ReAct, RAG, and multi-agent systems
+    - :doc:`agent_patterns` - Master advanced agent patterns like ReAct, RAG, and multi-agent systems
 
-- :doc:`custom_agents` - Create highly specialized agents for your domain
-- :doc:`using_tools` - Learn to create and integrate custom tools
-- :doc:`state_management` - Understand agent state and memory systems
-- :doc:`engine_system` - Deep dive into cognitive engines and LLM configuration
+    - :doc:`custom_agents` - Create highly specialized agents for your domain
+    - :doc:`using_tools` - Learn to create and integrate custom tools
+    - :doc:`state_management` - Understand agent state and memory systems
+    - :doc:`engine_system` - Deep dive into cognitive engines and LLM configuration
 
-.. tip::
+    .. tip::
+
    
-  *** **Quick Reference Command***s**
+
+    *** **Quick Reference Command***s**
+
    
-   .. code-block:: bash
+
+.. code-block:: bash
 
     # Install Haive
     pip install haive-core haive-agents haive-tools

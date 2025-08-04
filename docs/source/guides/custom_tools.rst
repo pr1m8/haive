@@ -11,7 +11,7 @@ Tool Basics
 
 A Haive tool consists of:
 
-1. **Input Schem***a**: Defines the parameters the tool accepts
+1. **Input Schem***a**: Defines the parameters the tool accepts**
 
 2.*** **Logi***c**: The code that executes when the tool is called
 
@@ -65,25 +65,25 @@ Here's how to create a basic custom tool:
     humidity=50
     )
 
-Tool Best Practices
+    Tool Best Practices
 
--------------------
+    -------------------
 
-When creating custom tools:
+    When creating custom tools:
 
-1.*** **Clear Descriptio***n**: Write clear descriptions for your tool and parameters
+    1.*** **Clear Descriptio***n**: Write clear descriptions for your tool and parameters
 
-2.*** **Input Validatio***n**: Use Pydantic models to validate inputs
+    2.*** **Input Validatio***n**: Use Pydantic models to validate inputs
 
-3.*** **Error Handlin***g**: Gracefully handle errors and edge cases
-4.*** **Asynchronous Suppor***t**: For improved performance, consider implementing `_arun`
-5.*** **Documentatio***n**: Document your tool's purpose, inputs, outputs, and limitations
+    3.*** **Error Handlin***g**: Gracefully handle errors and edge cases
+    4.*** **Asynchronous Suppor***t**: For improved performance, consider implementing `_arun`
+    5.*** **Documentatio***n**: Document your tool's purpose, inputs, outputs, and limitations
 
-Creating Tool Kits
+    Creating Tool Kits
 
-------------------
+    ------------------
 
-Related tools can be organized into toolkits:
+    Related tools can be organized into toolkits:
 
 .. code-block:: python
 
@@ -100,11 +100,11 @@ Related tools can be organized into toolkits:
     HistoricalWeatherTool()
     ]
 
-Registering Custom Tools
+    Registering Custom Tools
 
-------------------------
+    ------------------------
 
-To make your tools available throughout your application:
+    To make your tools available throughout your application:
 
 .. code-block:: python
 
@@ -116,11 +116,11 @@ To make your tools available throughout your application:
     # Register a toolkit
     tool_registry.register(WeatherToolkit())
 
-Using Environment Variables and Configuration
+    Using Environment Variables and Configuration
 
----------------------------------------------
+    ---------------------------------------------
 
-For API keys and configuration:
+    For API keys and configuration:
 
 .. code-block:: python
 
@@ -137,11 +137,11 @@ For API keys and configuration:
     # Use self.api_key to authenticate API request
     # ...
 
-Testing Custom Tools
+    Testing Custom Tools
 
---------------------
+    --------------------
 
-Always write tests for your custom tools:
+    Always write tests for your custom tools:
 
 .. code-block:: python
 
@@ -154,13 +154,13 @@ Always write tests for your custom tools:
     assert isinstance(result.conditions, str)
     assert isinstance(result.humidity, int)
 
-Next Steps
+    Next Steps
 
-----------
+    ----------
 
-Now that you can create custom tools:
+    Now that you can create custom tools:
 
-- Learn about :doc:`tool_routing` for advanced tool usage patterns
+    - Learn about :doc:`tool_routing` for advanced tool usage patterns
 
-- Review the :mod:`haive.tools.base` API for more tool customization options
-- Explore :mod:`haive.core.registry` to understand tool registration***
+    - Review the :mod:`haive.tools.base` API for more tool customization options
+    - Explore :mod:`haive.core.registry` to understand tool registration***

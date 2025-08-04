@@ -3,9 +3,11 @@
 
 .. raw:: html
 
+   .. raw:: html
+
    <div class="feature-intro">
-       <h1 class="gradient-text">Documentation Generation & Analysis</h1>
-       <p>Comprehensive toolkit for analyzing, visualizing, and documenting all Haive agents across the ecosystem.</p>
+   <h1 class="gradient-text">Documentation Generation & Analysis</h1>
+   <p>Comprehensive toolkit for analyzing, visualizing, and documenting all Haive agents across the ecosystem.</p>
    </div>
 
 Overview
@@ -24,14 +26,17 @@ Quick Start
 -----------
 
 .. grid:: 1 1 2 2
+
    :gutter: 3
 
    .. grid-item::
       
+
       **Using Nox (Recommended)**
 
-      .. code-block:: bash
-         :class: copy-button
+.. code-block:: bash
+
+         :class:`copy`-button
 
          # Complete workflow
          nox -s doc_utils_full
@@ -41,12 +46,14 @@ Quick Start
          nox -s doc_utils_visualize   # Visualizations
          nox -s doc_utils_generate    # Documentation
 
-   .. grid-item::
+         .. grid-item::
       
-      **Direct CLI Usage**
 
-      .. code-block:: bash
-         :class: copy-button
+         **Direct CLI Usage**
+
+.. code-block:: bash
+
+         :class:`copy`-button
 
          # Agent analysis
          python doc_utils_runner.py analyze --report
@@ -57,62 +64,67 @@ Quick Start
          # Run examples
          python doc_utils_runner.py run --discover
 
-Core Components
----------------
+         Core Components
+         ---------------
 
-.. grid:: 1 2 2 2
-   :gutter: 3
+         .. grid:: 1 2 2 2
 
-   .. grid-item-card:: 🔍 AgentAnalyzer
-      :shadow: md
+         :gutter: 3
+
+         .. grid-item-card:: 🔍 AgentAnalyzer
+
+         :shadow: md
       
-      **Comprehensive agent discovery and analysis**
+         **Comprehensive agent discovery and analysis**
       
-      - Auto-detects 100+ agent types across packages
-      - Identifies architectures (haive.agents, haive.core, haive.games)
-      - Analyzes capabilities (visualization, tools, streaming)
-      - Maps inheritance patterns and relationships
+         - Auto-detects 100+ agent types across packages
+         - Identifies architectures (haive.agents, haive.core, haive.games)
+         - Analyzes capabilities (visualization, tools, streaming)
+         - Maps inheritance patterns and relationships
 
-   .. grid-item-card:: 🧪 UniversalExampleRunner
-      :shadow: md
+         .. grid-item-card:: 🧪 UniversalExampleRunner
+
+         :shadow: md
       
-      **Execute any example with monitoring**
+         **Execute any example with monitoring**
       
-      - Universal compatibility across all agent types
-      - Streaming output with intelligent chunking
-      - Timeout protection and error recovery
-      - Automatic visualization generation
+         - Universal compatibility across all agent types
+         - Streaming output with intelligent chunking
+         - Timeout protection and error recovery
+         - Automatic visualization generation
 
-   .. grid-item-card:: 🎨 VisualizationManager
-      :shadow: md
+         .. grid-item-card:: 🎨 VisualizationManager
+
+         :shadow: md
       
-      **Universal agent visualization**
+         **Universal agent visualization**
       
-      - Multiple formats: PNG, SVG, HTML, Mermaid
-      - Native visualization when available
-      - Synthetic diagrams for any agent type
-      - Comparison views across multiple agents
+         - Multiple formats: PNG, SVG, HTML, Mermaid
+         - Native visualization when available
+         - Synthetic diagrams for any agent type
+         - Comparison views across multiple agents
 
-   .. grid-item-card:: 📚 DocumentationGenerator
-      :shadow: md
+         .. grid-item-card:: 📚 DocumentationGenerator
+
+         :shadow: md
       
-      **Automated documentation creation**
+         **Automated documentation creation**
       
-      - Individual agent documentation
-      - Project-wide docs with cross-references
-      - Multiple formats: Markdown, RST, HTML
-      - API documentation extraction
+         - Individual agent documentation
+         - Project-wide docs with cross-references
+         - Multiple formats: Markdown, RST, HTML
+         - API documentation extraction
 
-Nox Integration
----------------
+         Nox Integration
+         ---------------
 
-The documentation utilities are fully integrated into the **nox build system** for seamless workflow integration:
+         The documentation utilities are fully integrated into the **nox build system** for seamless workflow integration:
 
-.. tabs::
+         .. tabs::
 
-   .. tab:: Quick Commands
+         .. tab:: Quick Commands
 
-      .. code-block:: bash
+.. code-block:: bash
          
          # Complete documentation utilities workflow
          nox -s doc_utils_full
@@ -123,9 +135,9 @@ The documentation utilities are fully integrated into the **nox build system** f
          nox -s doc_utils_visualize    # Generate visualizations
          nox -s doc_utils_generate     # Create documentation
 
-   .. tab:: Output Structure
+         .. tab:: Output Structure
 
-      .. code-block:: text
+.. code-block:: text
          
          docs/build/
          ├── agent_analysis/
@@ -142,26 +154,26 @@ The documentation utilities are fully integrated into the **nox build system** f
          │   └── [agent_name]/
          └── doc_utils_summary.md
 
-   .. tab:: Configuration
+         .. tab:: Configuration
 
-      Each nox session accepts environment variables for customization:
+         Each nox session accepts environment variables for customization:
 
-      .. code-block:: bash
+.. code-block:: bash
          
          # Customize timeouts and output
          TIMEOUT_SECONDS=120 nox -s doc_utils_examples
          MAX_OUTPUT_SIZE=50000000 nox -s doc_utils_examples
 
-Command-Line Interface
-----------------------
+         Command-Line Interface
+         ----------------------
 
-For more granular control, use the CLI directly:
+         For more granular control, use the CLI directly:
 
-.. tabs::
+         .. tabs::
 
-   .. tab:: Analysis Commands
+         .. tab:: Analysis Commands
 
-      .. code-block:: bash
+.. code-block:: bash
          
          # Analyze all agents
          python doc_utils_runner.py analyze --report --output analysis.md
@@ -172,9 +184,9 @@ For more granular control, use the CLI directly:
          # Generate inheritance report
          python doc_utils_runner.py analyze --report --output inheritance.md
 
-   .. tab:: Example Commands
+         .. tab:: Example Commands
 
-      .. code-block:: bash
+.. code-block:: bash
          
          # Discover all examples
          python doc_utils_runner.py run --discover
@@ -185,9 +197,9 @@ For more granular control, use the CLI directly:
          # Validate all examples (quick)
          python doc_utils_runner.py run --run-all --timeout 60 --max-concurrent 3
 
-   .. tab:: Visualization Commands
+         .. tab:: Visualization Commands
 
-      .. code-block:: bash
+.. code-block:: bash
          
          # Create agent comparison
          python doc_utils_runner.py visualize --compare --format html --theme dark
@@ -198,9 +210,9 @@ For more granular control, use the CLI directly:
          # Generate all visualizations
          python doc_utils_runner.py visualize --output ./visualizations/
 
-   .. tab:: Documentation Commands
+         .. tab:: Documentation Commands
 
-      .. code-block:: bash
+.. code-block:: bash
          
          # Generate project documentation
          python doc_utils_runner.py docs --format markdown --api-docs
@@ -211,16 +223,16 @@ For more granular control, use the CLI directly:
          # Minimal documentation
          python doc_utils_runner.py docs --style minimal --no-visualizations
 
-Programmatic API
-----------------
+         Programmatic API
+         ----------------
 
-Use the utilities programmatically in your scripts:
+         Use the utilities programmatically in your scripts:
 
-.. tabs::
+         .. tabs::
 
-   .. tab:: Agent Analysis
+         .. tab:: Agent Analysis
 
-      .. code-block:: python
+.. code-block:: python
 
          from scripts.doc_utils import AgentAnalyzer
 
@@ -240,9 +252,9 @@ Use the utilities programmatically in your scripts:
          with open("analysis_report.md", "w") as f:
              f.write(report)
 
-   .. tab:: Example Execution
+         .. tab:: Example Execution
 
-      .. code-block:: python
+.. code-block:: python
 
          import asyncio
          from scripts.doc_utils import UniversalExampleRunner, ExecutionConfig
@@ -267,9 +279,9 @@ Use the utilities programmatically in your scripts:
 
          asyncio.run(run_examples())
 
-   .. tab:: Visualization Generation
+         .. tab:: Visualization Generation
 
-      .. code-block:: python
+.. code-block:: python
 
          import asyncio
          from scripts.doc_utils import VisualizationManager, VisualizationConfig
@@ -298,9 +310,9 @@ Use the utilities programmatically in your scripts:
 
          asyncio.run(create_visualizations())
 
-   .. tab:: Documentation Generation
+         .. tab:: Documentation Generation
 
-      .. code-block:: python
+.. code-block:: python
 
          import asyncio
          from scripts.doc_utils import DocumentationGenerator, DocumentationConfig
@@ -331,14 +343,14 @@ Use the utilities programmatically in your scripts:
 
          asyncio.run(generate_docs())
 
-Configuration Options
----------------------
+         Configuration Options
+         ---------------------
 
-.. tabs::
+         .. tabs::
 
-   .. tab:: ExecutionConfig
+         .. tab:: ExecutionConfig
 
-      .. code-block:: python
+.. code-block:: python
 
          from scripts.doc_utils import ExecutionConfig
 
@@ -351,9 +363,9 @@ Configuration Options
              save_full_output=True          # Save large outputs to file
          )
 
-   .. tab:: VisualizationConfig
+         .. tab:: VisualizationConfig
 
-      .. code-block:: python
+.. code-block:: python
 
          from scripts.doc_utils import VisualizationConfig
 
@@ -366,9 +378,9 @@ Configuration Options
              dpi=300                        # Image DPI for PNG/SVG
          )
 
-   .. tab:: DocumentationConfig
+         .. tab:: DocumentationConfig
 
-      .. code-block:: python
+.. code-block:: python
 
          from scripts.doc_utils import DocumentationConfig
 
@@ -383,53 +395,57 @@ Configuration Options
              cross_reference=True           # Add cross-references
          )
 
-Supported Agent Types
----------------------
+         Supported Agent Types
+         ---------------------
 
-The system automatically handles all Haive agent architectures:
+         The system automatically handles all Haive agent architectures:
 
-.. grid:: 1 1 3 3
-   :gutter: 2
+         .. grid:: 1 1 3 3
 
-   .. grid-item-card:: haive.agents
-      :shadow: sm
+         :gutter: 2
+
+         .. grid-item-card:: haive.agents
+
+         :shadow: sm
       
-      **Mixin-based Architecture**
+         **Mixin-based Architecture**
       
-      - SimpleAgent, ReactAgent, MultiAgent
-      - RAG agents, Memory agents
-      - Planning agents, Document processing
-      - Conversation agents
+         - SimpleAgent, ReactAgent, MultiAgent
+         - RAG agents, Memory agents
+         - Planning agents, Document processing
+         - Conversation agents
 
-   .. grid-item-card:: haive.core.engine
-      :shadow: sm
+         .. grid-item-card:: haive.core.engine
+
+         :shadow: sm
       
-      **Protocol-based Architecture**
+         **Protocol-based Architecture**
       
-      - Registry-based agents
-      - Configurable execution patterns
-      - Engine-driven workflows
+         - Registry-based agents
+         - Configurable execution patterns
+         - Engine-driven workflows
 
-   .. grid-item-card:: haive.games
-      :shadow: sm
+         .. grid-item-card:: haive.games
+
+         :shadow: sm
       
-      **Game-specific Agents**
+         **Game-specific Agents**
       
-      - Chess, Go, Poker agents
-      - Board game strategies
-      - Multi-player coordination
-      - Tournament systems
+         - Chess, Go, Poker agents
+         - Board game strategies
+         - Multi-player coordination
+         - Tournament systems
 
-Output Examples
----------------
+         Output Examples
+         ---------------
 
-.. tabs::
+         .. tabs::
 
-   .. tab:: Analysis Report
+         .. tab:: Analysis Report
 
-      The agent analysis generates comprehensive reports:
+         The agent analysis generates comprehensive reports:
 
-      .. code-block:: markdown
+.. code-block:: markdown
 
          # Agent Analysis Report
 
@@ -449,38 +465,49 @@ Output Examples
          - sync: 31 agents
          - both: 18 agents
 
-   .. tab:: Visualization Output
+         .. tab:: Visualization Output
 
-      Multiple visualization formats are supported:
+         Multiple visualization formats are supported:
 
-      .. raw:: html
+         .. raw:: html
+
+         .. raw:: html
 
          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
-             <div>
-                 <h4>🖼️ Workflow Diagrams</h4>
-                 <ul>
-                     <li>PNG - High quality raster images</li>
-                     <li>SVG - Scalable vector graphics</li>
-                     <li>HTML - Interactive visualizations</li>
-                     <li>Mermaid - Diagram as code</li>
-                 </ul>
-             </div>
-             <div>
-                 <h4>📊 Comparison Views</h4>
-                 <ul>
-                     <li>Side-by-side agent comparison</li>
-                     <li>Capability matrix tables</li>
-                     <li>Architecture distribution charts</li>
-                     <li>Performance metrics</li>
-                 </ul>
-             </div>
+
+         .. raw:: html
+
+         <div>
+         <h4>🖼️ Workflow Diagrams</h4>
+         <ul>
+         <li>PNG - High quality raster images</li>
+         <li>SVG - Scalable vector graphics</li>
+         <li>HTML - Interactive visualizations</li>
+         <li>Mermaid - Diagram as code</li>
+         </ul>
          </div>
 
-   .. tab:: Documentation Structure
+         .. raw:: html
 
-      Generated documentation follows a consistent structure:
+         <div>
+         <h4>📊 Comparison Views</h4>
+         <ul>
+         <li>Side-by-side agent comparison</li>
+         <li>Capability matrix tables</li>
+         <li>Architecture distribution charts</li>
+         <li>Performance metrics</li>
+         </ul>
+         </div>
 
-      .. code-block:: text
+         .. raw:: html
+
+         </div>
+
+         .. tab:: Documentation Structure
+
+         Generated documentation follows a consistent structure:
+
+.. code-block:: text
 
          generated_docs/
          ├── index.md                    # Project overview
@@ -492,107 +519,122 @@ Output Examples
              ├── [agent_name]_api.md     # API reference
              └── [agent_name]_workflow.png # Visualization
 
-Performance & Scalability
---------------------------
+         Performance & Scalability
+         --------------------------
 
-The documentation utilities are designed for performance:
+         The documentation utilities are designed for performance:
 
-.. grid:: 1 2 2 2
-   :gutter: 2
+         .. grid:: 1 2 2 2
 
-   .. grid-item::
+         :gutter: 2
+
+         .. grid-item::
       
-      .. raw:: html
+
+         .. raw:: html
+
+         .. raw:: html
 
          <div class="metric-card">
-             <span class="value">100+</span>
-             <span class="label">Agents Analyzed</span>
+         <span class="value">100+</span>
+         <span class="label">Agents Analyzed</span>
          </div>
 
-   .. grid-item::
-      
-      .. raw:: html
+         .. grid-item::
+
+         .. raw:: html
+
+         .. raw:: html
 
          <div class="metric-card">
-             <span class="value">&lt;30s</span>
-             <span class="label">Full Analysis</span>
+         <span class="value">&lt;30s</span>
+         <span class="label">Full Analysis</span>
          </div>
 
-   .. grid-item::
+         .. grid-item::
       
-      .. raw:: html
+         .. raw:: html
+
+         .. raw:: html
 
          <div class="metric-card">
-             <span class="value">50+</span>
-             <span class="label">Examples/Min</span>
+         <span class="value">50+</span>
+         <span class="label">Examples/Min</span>
          </div>
 
-   .. grid-item::
-      
-      .. raw:: html
+         .. grid-item::
+
+         .. raw:: html
+
+         .. raw:: html
 
          <div class="metric-card">
-             <span class="value">10MB+</span>
-             <span class="label">Output Handling</span>
+         <span class="value">10MB+</span>
+         <span class="label">Output Handling</span>
          </div>
 
-**Key Performance Features:**
+         **Key Performance Features:**
 
-- **Concurrent Execution** - Multiple examples run in parallel
-- **Streaming Output** - Prevents memory issues with large responses  
-- **Intelligent Caching** - Repeated operations use cached results
-- **Timeout Protection** - Prevents hanging on problematic examples
-- **Graceful Degradation** - Works when optional dependencies are missing
+         - **Concurrent Execution** - Multiple examples run in parallel
+         - **Streaming Output** - Prevents memory issues with large responses  
+         - **Intelligent Caching** - Repeated operations use cached results
+         - **Timeout Protection** - Prevents hanging on problematic examples
+         - **Graceful Degradation** - Works when optional dependencies are missing
 
-Troubleshooting
----------------
+         Troubleshooting
+         ---------------
 
-.. dropdown:: Common Issues and Solutions
-   :animate: fade-in-slide-down
+         .. dropdown:: Common Issues and Solutions
 
-   **Import Errors**
+         :animate: fade-in-slide-down
+
+         **Import Errors**
    
-   Ensure you're running from the project root:
+         Ensure you're running from the project root:
    
-   .. code-block:: bash
+
+.. code-block:: bash
       
       cd /path/to/haive/backend/haive
       python doc_utils_runner.py analyze
 
-   **Missing Dependencies**
+      **Missing Dependencies**
    
-   Some visualizations require optional packages:
+      Some visualizations require optional packages:
    
-   .. code-block:: bash
+
+.. code-block:: bash
       
       pip install graphviz matplotlib  # For advanced visualizations
 
-   **Large Output Handling**
+      **Large Output Handling**
    
-   The system automatically saves large outputs to files:
+      The system automatically saves large outputs to files:
    
-   .. code-block:: text
+
+.. code-block:: text
       
       [OUTPUT TOO LARGE - Saved to: agent_output_1642789123.txt]
 
-   **Timeout Issues**
+      **Timeout Issues**
    
-   Increase timeout for slow examples:
+      Increase timeout for slow examples:
    
-   .. code-block:: bash
+
+.. code-block:: bash
       
       python doc_utils_runner.py run --timeout 600  # 10 minutes
 
-Integration with CI/CD
-----------------------
+      Integration with CI/CD
+      ----------------------
 
-Integrate documentation utilities into your CI/CD pipeline:
+      Integrate documentation utilities into your CI/CD pipeline:
 
-.. tabs::
+      .. tabs::
 
-   .. tab:: GitHub Actions
+      .. tab:: GitHub Actions
 
-      .. code-block:: yaml
+.. code-block:: yaml
 
          name: Documentation Utilities
          on: [push, pull_request]
@@ -622,9 +664,9 @@ Integrate documentation utilities into your CI/CD pipeline:
                    name: documentation-utilities
                    path: docs/build/
 
-   .. tab:: GitLab CI
+         .. tab:: GitLab CI
 
-      .. code-block:: yaml
+.. code-block:: yaml
 
          doc-utilities:
            stage: docs
@@ -639,9 +681,9 @@ Integrate documentation utilities into your CI/CD pipeline:
                - docs/build/
              expire_in: 30 days
 
-   .. tab:: Pre-commit Hook
+         .. tab:: Pre-commit Hook
 
-      .. code-block:: yaml
+.. code-block:: yaml
 
          # .pre-commit-config.yaml
          repos:
@@ -654,91 +696,96 @@ Integrate documentation utilities into your CI/CD pipeline:
                  pass_filenames: false
                  always_run: true
 
-Best Practices
---------------
+         Best Practices
+         --------------
 
-.. grid:: 1 1 2 2
-   :gutter: 3
+         .. grid:: 1 1 2 2
 
-   .. grid-item-card:: 🔄 Regular Updates
-      :shadow: sm
+         :gutter: 3
+
+         .. grid-item-card:: 🔄 Regular Updates
+
+         :shadow: sm
       
-      **Keep documentation current**
+         **Keep documentation current**
       
-      - Run ``nox -s doc_utils_full`` weekly
-      - Update visualizations after major changes
-      - Validate examples before releases
-      - Monitor agent discovery for new types
+         - Run ``nox -s doc_utils_full`` weekly
+         - Update visualizations after major changes
+         - Validate examples before releases
+         - Monitor agent discovery for new types
 
-   .. grid-item-card:: 🎯 Targeted Analysis
-      :shadow: sm
+         .. grid-item-card:: 🎯 Targeted Analysis
+
+         :shadow: sm
       
-      **Focus on what matters**
+         **Focus on what matters**
       
-      - Use ``--agent-name`` for specific analysis
-      - Generate visualizations for key agents
-      - Validate critical examples first
-      - Create focused documentation
+         - Use ``--agent-name`` for specific analysis
+         - Generate visualizations for key agents
+         - Validate critical examples first
+         - Create focused documentation
 
-   .. grid-item-card:: 📊 Performance Monitoring
-      :shadow: sm
+         .. grid-item-card:: 📊 Performance Monitoring
+
+         :shadow: sm
       
-      **Track documentation health**
+         **Track documentation health**
       
-      - Monitor execution times
-      - Check success rates
-      - Review output sizes
-      - Optimize slow components
+         - Monitor execution times
+         - Check success rates
+         - Review output sizes
+         - Optimize slow components
 
-   .. grid-item-card:: 🔧 Customization
-      :shadow: sm
+         .. grid-item-card:: 🔧 Customization
+
+         :shadow: sm
       
-      **Adapt to your needs**
+         **Adapt to your needs**
       
-      - Configure timeouts appropriately
-      - Choose visualization formats
-      - Set documentation styles
-      - Filter agent types
+         - Configure timeouts appropriately
+         - Choose visualization formats
+         - Set documentation styles
+         - Filter agent types
 
-Related Documentation
----------------------
+         Related Documentation
+         ---------------------
 
-- :doc:`../development/index` - Development guide
-- :doc:`../api/index` - API reference
-- :doc:`../agents/index` - Agent documentation
-- :doc:`../examples/index` - Example gallery
+         - :doc:`../development/index` - Development guide
+         - :doc:`../api/index` - API reference
+         - :doc:`../agents/index` - Agent documentation
+         - :doc:`../examples/index` - Example gallery
 
-.. raw:: html
+         .. raw:: html
 
-   <style>
-   .metric-card {
-       background: var(--haive-surface);
-       border: 1px solid var(--haive-border);
-       border-radius: 8px;
-       padding: 1.5rem;
-       text-align: center;
-       transition: transform 0.2s;
-   }
-   .metric-card:hover {
-       transform: translateY(-2px);
-   }
-   .metric-card .value {
-       display: block;
-       font-size: 2rem;
-       font-weight: bold;
-       color: var(--haive-primary);
-       margin-bottom: 0.5rem;
-   }
-   .metric-card .label {
-       display: block;
-       font-size: 0.875rem;
-       color: var(--haive-text-muted);
-   }
-   .feature-intro {
-       text-align: center;
-       margin-bottom: 2rem;
-       padding: 2rem;
-       background: linear-gradient(135deg, var(--haive-primary-light), var(--haive-secondary-light));
-       border-radius: 12px;
-   }
-   </style>
+         <style>
+         .metric-card {
+         background: var(--haive-surface);
+         border: 1px solid var(--haive-border);
+         border-radius: 8px;
+         padding: 1.5rem;
+         text-align: center;
+         transition: transform 0.2s;
+         }
+         .metric-card:hover {
+         transform: translateY(-2px);
+         }
+         .metric-card .value {
+         display: block;
+         font-size: 2rem;
+         font-weight: bold;
+         color: var(--haive-primary);
+         margin-bottom: 0.5rem;
+         }
+         .metric-card .label {
+         display: block;
+         font-size: 0.875rem;
+         color: var(--haive-text-muted);
+         }
+         .feature-intro {
+         text-align: center;
+         margin-bottom: 2rem;
+         padding: 2rem;
+         background: linear-gradient(135deg, var(--haive-primary-light), var(--haive-secondary-light));
+         border-radius: 12px;
+         }
+         </style>

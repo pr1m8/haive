@@ -6,14 +6,22 @@
 
 .. raw:: html
 
+   .. raw:: html
+
    <div class="agent-hero-section">
-      <div class="hero-content">
-         <h2>🔀 Database Operations via MCP</h2>
-         <p class="hero-description">
-            The PostgreSQL MCP server enables Claude Code to directly interact with your databases. 
-            Query schemas, run SQL, analyze performance, and manage database operations seamlessly.
-         </p>
-      </div>
+
+.. raw:: html
+
+   <div class="hero-content">
+   <h2>🔀 Database Operations via MCP</h2>
+   <p class="hero-description">
+   The PostgreSQL MCP server enables Claude Code to directly interact with your databases. 
+   Query schemas, run SQL, analyze performance, and manage database operations seamlessly.
+   </p>
+   </div>
+
+.. raw:: html
+
    </div>
 
 Overview
@@ -29,41 +37,59 @@ The PostgreSQL MCP (Model Context Protocol) server provides:
 
 .. raw:: html
 
+   .. raw:: html
+
    <div class="showcase-section">
-      <div class="showcase-header">
-         <h2>✨ Key Features</h2>
-      </div>
-      <div class="api-grid">
-         <div class="api-section">
-            <h4>🔍 Query Operations</h4>
-            <ul>
-               <li>Execute SELECT queries</li>
-               <li>Run INSERT/UPDATE/DELETE</li>
-               <li>Transaction management</li>
-               <li>Batch operations</li>
-            </ul>
-         </div>
-         
-         <div class="api-section">
-            <h4>📃 Schema Management</h4>
-            <ul>
-               <li>List tables and views</li>
-               <li>Describe columns</li>
-               <li>View indexes</li>
-               <li>Check constraints</li>
-            </ul>
-         </div>
-         
-         <div class="api-section">
-            <h4>📊 Analysis Tools</h4>
-            <ul>
-               <li>Query EXPLAIN plans</li>
-               <li>Performance metrics</li>
-               <li>Table statistics</li>
-               <li>Index usage</li>
-            </ul>
-         </div>
-      </div>
+
+.. raw:: html
+
+   <div class="showcase-header">
+   <h2>✨ Key Features</h2>
+   </div>
+
+.. raw:: html
+
+   <div class="api-grid">
+
+.. raw:: html
+
+   <div class="api-section">
+   <h4>🔍 Query Operations</h4>
+   <ul>
+   <li>Execute SELECT queries</li>
+   <li>Run INSERT/UPDATE/DELETE</li>
+   <li>Transaction management</li>
+   <li>Batch operations</li>
+   </ul>
+   </div>
+
+.. raw:: html
+
+   <div class="api-section">
+   <h4>📃 Schema Management</h4>
+   <ul>
+   <li>List tables and views</li>
+   <li>Describe columns</li>
+   <li>View indexes</li>
+   <li>Check constraints</li>
+   </ul>
+   </div>
+
+.. raw:: html
+
+   <div class="api-section">
+   <h4>📊 Analysis Tools</h4>
+   <ul>
+   <li>Query EXPLAIN plans</li>
+   <li>Performance metrics</li>
+   <li>Table statistics</li>
+   <li>Index usage</li>
+   </ul>
+   </div>
+
+.. raw:: html
+
+   </div>
    </div>
 
 Installation
@@ -71,83 +97,87 @@ Installation
 
 .. raw:: html
 
+   .. raw:: html
+
    <div class="code-example-section">
-      <h4>🚀 Quick Setup</h4>
+   <h4>🚀 Quick Setup</h4>
 
 .. code-block:: bash
 
    # Basic installation for local PostgreSQL
    claude mcp add postgres-local -s user -- \
-     npx -y @modelcontextprotocol/server-postgres \
-     "postgresql://localhost/mydatabase"
+   npx -y @modelcontextprotocol/server-postgres \
+   "postgresql://localhost/mydatabase"
 
    # With authentication
    claude mcp add postgres-prod -s user -- \
-     npx -y @modelcontextprotocol/server-postgres \
-     "postgresql://username:password@host:5432/database"
+   npx -y @modelcontextprotocol/server-postgres \
+   "postgresql://username:password@host:5432/database"
 
    # With SSL (for production databases)
    claude mcp add postgres-ssl -s user -- \
-     npx -y @modelcontextprotocol/server-postgres \
-     "postgresql://user:pass@host:5432/db?sslmode=require"
+   npx -y @modelcontextprotocol/server-postgres \
+   "postgresql://user:pass@host:5432/db?sslmode=require"
 
    # Multiple databases
    claude mcp add postgres-multi -s user -- \
-     npx -y @modelcontextprotocol/server-postgres \
-     "postgresql://localhost/db1" \
-     "postgresql://localhost/db2" \
-     "postgresql://localhost/db3"
+   npx -y @modelcontextprotocol/server-postgres \
+   "postgresql://localhost/db1" \
+   "postgresql://localhost/db2" \
+   "postgresql://localhost/db3"
 
    # With environment variable
    claude mcp add postgres-env -s user -e DATABASE_URL=$DATABASE_URL -- \
-     npx -y @modelcontextprotocol/server-postgres "${DATABASE_URL}"
+   npx -y @modelcontextprotocol/server-postgres "${DATABASE_URL}"
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-Configuration
--------------
+   Configuration
+   -------------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="custom-section">
-      <h3>⚙️ Advanced Configuration</h3>
+   <h3>⚙️ Advanced Configuration</h3>
 
 .. code-block:: json
 
    {
-     "mcpServers": {
-       "postgres-haive": {
-         "command": "npx",
-         "args": [
-           "-y",
-           "@modelcontextprotocol/server-postgres",
-           "postgresql://localhost/haive_dev"
-         ],
-         "env": {
-           "PGPASSWORD": "your_password",
-           "PGSSLMODE": "require",
-           "PGCONNECT_TIMEOUT": "10"
-         }
-       },
-       "postgres-readonly": {
-         "command": "npx",
-         "args": [
-           "-y",
-           "@modelcontextprotocol/server-postgres",
-           "--readonly",
-           "postgresql://readonly_user@localhost/production"
-         ]
-       }
-     }
+   "mcpServers": {
+   "postgres-haive": {
+   "command": "npx",
+   "args": [
+   "-y",
+   "@modelcontextprotocol/server-postgres",
+   "postgresql://localhost/haive_dev"
+   ],
+   "env": {
+   "PGPASSWORD": "your_password",
+   "PGSSLMODE": "require",
+   "PGCONNECT_TIMEOUT": "10"
+   }
+   },
+   "postgres-readonly": {
+   "command": "npx",
+   "args": [
+   "-y",
+   "@modelcontextprotocol/server-postgres",
+   "--readonly",
+   "postgresql://readonly_user@localhost/production"
+   ]
+   }
+   }
    }
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-### Connection Options
+   ### Connection Options
 
 .. code-block:: bash
 
@@ -173,15 +203,20 @@ Configuration
    # Supabase connection
    postgresql://postgres.xxxxx:password@db.xxxxx.supabase.co:5432/postgres
 
-Usage Examples
---------------
+   Usage Examples
+   --------------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="showcase-section">
-      <div class="showcase-header">
-         <h2>📝 Common Operations</h2>
-      </div>
+
+   .. raw:: html
+
+   <div class="showcase-header">
+   <h2>📝 Common Operations</h2>
+   </div>
 
 .. code-block:: sql
 
@@ -196,11 +231,13 @@ Usage Examples
    -- Show table schema with details
    @postgres-local
    SELECT 
+
        column_name,
        data_type,
        character_maximum_length,
        is_nullable,
        column_default
+
    FROM information_schema.columns
    WHERE table_name = 'agents'
    ORDER BY ordinal_position;
@@ -208,11 +245,13 @@ Usage Examples
    -- Query data
    @postgres-local
    SELECT 
+
        a.id,
        a.name,
        a.type,
        COUNT(c.id) as conversation_count,
        MAX(c.created_at) as last_active
+
    FROM agents a
    LEFT JOIN conversations c ON a.id = c.agent_id
    GROUP BY a.id, a.name, a.type
@@ -222,13 +261,14 @@ Usage Examples
    -- Analyze query performance
    @postgres-local
    EXPLAIN ANALYZE
-   SELECT * FROM large_table
+   SELECT * FROM large_table*
    WHERE created_at > NOW() - INTERVAL '7 days'
    AND status = 'active';
 
    -- Check table statistics
    @postgres-local
    SELECT 
+
        schemaname,
        tablename,
        pg_size_pretty(pg_total_relation_size(schemaname||'.'||tablename)) as size,
@@ -236,34 +276,37 @@ Usage Examples
        n_dead_tup as dead_rows,
        last_vacuum,
        last_autovacuum
+
    FROM pg_stat_user_tables
    ORDER BY pg_total_relation_size(schemaname||'.'||tablename) DESC;
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-Database Management
--------------------
+   Database Management
+   -------------------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="custom-section">
-      <h3>🔧 Administrative Tasks</h3>
+   <h3>🔧 Administrative Tasks</h3>
 
 .. code-block:: sql
 
    -- Check active connections
    @postgres-local
    SELECT 
-       pid,
-       usename,
-       application_name,
-       client_addr,
-       state,
-       query_start,
-       state_change,
-       LEFT(query, 100) as current_query
+   pid,
+   usename,
+   application_name,
+   client_addr,
+   state,
+   query_start,
+   state_change,
+   LEFT(query, 100) as current_query
    FROM pg_stat_activity
    WHERE state != 'idle'
    ORDER BY query_start;
@@ -271,10 +314,10 @@ Database Management
    -- Find slow queries
    @postgres-local
    SELECT 
-       pid,
-       now() - query_start as duration,
-       query,
-       state
+   pid,
+   now() - query_start as duration,
+   query,
+   state
    FROM pg_stat_activity
    WHERE (now() - query_start) > interval '5 minutes'
    AND state != 'idle';
@@ -286,8 +329,8 @@ Database Management
    -- Database sizes
    @postgres-local
    SELECT 
-       datname as database,
-       pg_size_pretty(pg_database_size(datname)) as size
+   datname as database,
+   pg_size_pretty(pg_database_size(datname)) as size
    FROM pg_database
    WHERE datistemplate = false
    ORDER BY pg_database_size(datname) DESC;
@@ -295,47 +338,53 @@ Database Management
    -- Index usage
    @postgres-local
    SELECT 
-       schemaname,
-       tablename,
-       indexname,
-       idx_scan as index_scans,
-       pg_size_pretty(pg_relation_size(indexrelid)) as index_size
+   schemaname,
+   tablename,
+   indexname,
+   idx_scan as index_scans,
+   pg_size_pretty(pg_relation_size(indexrelid)) as index_size
    FROM pg_stat_user_indexes
    ORDER BY idx_scan DESC;
 
    -- Missing indexes suggestion
    @postgres-local
    SELECT 
-       schemaname,
-       tablename,
-       attname as column_name,
-       n_distinct,
-       correlation
+   schemaname,
+   tablename,
+   attname as column_name,
+   n_distinct,
+   correlation
    FROM pg_stats
    WHERE schemaname = 'public'
    AND n_distinct > 100
    AND correlation < 0.1
    ORDER BY n_distinct DESC;
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-Haive-Specific Queries
-----------------------
+   Haive-Specific Queries
+   ----------------------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="showcase-section">
-      <div class="showcase-header">
-         <h2>🤖 Haive Database Queries</h2>
-      </div>
+
+   .. raw:: html
+
+   <div class="showcase-header">
+   <h2>🤖 Haive Database Queries</h2>
+   </div>
 
 .. code-block:: sql
 
    -- Agent performance metrics
    @postgres-local
    SELECT 
+
        a.name as agent_name,
        a.type as agent_type,
        COUNT(DISTINCT c.thread_id) as total_conversations,
@@ -343,6 +392,7 @@ Haive-Specific Queries
        AVG(m.token_count) as avg_tokens_per_message,
        AVG(m.response_time_ms) as avg_response_time_ms,
        MAX(c.updated_at) as last_active
+
    FROM agents a
    JOIN conversations c ON a.id = c.agent_id
    JOIN messages m ON c.id = m.conversation_id
@@ -353,11 +403,13 @@ Haive-Specific Queries
    -- Tool usage analysis
    @postgres-local
    SELECT 
+
        t.name as tool_name,
-       COUNT(*) as usage_count,
+       COUNT(*) as usage_count,*
        AVG(tc.execution_time_ms) as avg_execution_time,
        COUNT(DISTINCT tc.agent_id) as unique_agents,
-       SUM(CASE WHEN tc.success THEN 1 ELSE 0 END)::float / COUNT(*) as success_rate
+       SUM(CASE WHEN tc.success THEN 1 ELSE 0 END)::float / COUNT(*) as success_rate*
+
    FROM tool_calls tc
    JOIN tools t ON tc.tool_id = t.id
    WHERE tc.created_at > NOW() - INTERVAL '7 days'
@@ -367,11 +419,13 @@ Haive-Specific Queries
    -- Conversation checkpoints
    @postgres-local
    SELECT 
+
        c.thread_id,
        c.agent_id,
        COUNT(cp.id) as checkpoint_count,
        pg_size_pretty(SUM(LENGTH(cp.state_data)::bigint)) as total_size,
        MAX(cp.created_at) as last_checkpoint
+
    FROM conversations c
    JOIN checkpoints cp ON c.id = cp.conversation_id
    GROUP BY c.thread_id, c.agent_id
@@ -380,27 +434,31 @@ Haive-Specific Queries
    -- Memory usage by agent
    @postgres-local
    SELECT 
+
        a.name,
        COUNT(DISTINCT m.conversation_id) as conversations_with_memory,
        pg_size_pretty(SUM(LENGTH(m.content)::bigint)) as total_memory_size,
        AVG(LENGTH(m.content)) as avg_memory_size
+
    FROM agents a
    JOIN conversations c ON a.id = c.agent_id
    JOIN memory_entries m ON c.id = m.conversation_id
    GROUP BY a.id, a.name
    ORDER BY total_memory_size DESC;
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-Troubleshooting
----------------
+   Troubleshooting
+   ---------------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="warning-section">
-      <h3>⚠️ Common Issues</h3>
+   <h3>⚠️ Common Issues</h3>
 
 .. code-block:: bash
 
@@ -437,44 +495,48 @@ Troubleshooting
    WHERE state = 'idle'
    AND state_change < NOW() - INTERVAL '10 minutes';
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-Best Practices
---------------
+   Best Practices
+   --------------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="best-practices">
-      <h3>💡 PostgreSQL MCP Best Practices</h3>
-      <ul>
-         <li><strong>Use Read-Only Connections</strong> for production databases</li>
-         <li><strong>Limit Result Sets</strong> with LIMIT clause to avoid overwhelming Claude</li>
-         <li><strong>Use Transactions</strong> for multiple related updates</li>
-         <li><strong>Monitor Long Queries</strong> with pg_stat_activity</li>
-         <li><strong>Create Indexes</strong> for frequently queried columns</li>
-         <li><strong>Use EXPLAIN ANALYZE</strong> to optimize slow queries</li>
-         <li><strong>Regular VACUUM</strong> for table maintenance</li>
-         <li><strong>Connection Pooling</strong> for production use (pgBouncer)</li>
-      </ul>
+   <h3>💡 PostgreSQL MCP Best Practices</h3>
+   <ul>
+   <li><strong>Use Read-Only Connections</strong> for production databases</li>
+   <li><strong>Limit Result Sets</strong> with LIMIT clause to avoid overwhelming Claude</li>
+   <li><strong>Use Transactions</strong> for multiple related updates</li>
+   <li><strong>Monitor Long Queries</strong> with pg_stat_activity</li>
+   <li><strong>Create Indexes</strong> for frequently queried columns</li>
+   <li><strong>Use EXPLAIN ANALYZE</strong> to optimize slow queries</li>
+   <li><strong>Regular VACUUM</strong> for table maintenance</li>
+   <li><strong>Connection Pooling</strong> for production use (pgBouncer)</li>
+   </ul>
    </div>
 
-Security Considerations
------------------------
+   Security Considerations
+   -----------------------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="custom-section">
-      <h3>🔒 Security Guidelines</h3>
+   <h3>🔒 Security Guidelines</h3>
 
 .. code-block:: bash
 
    # 1. Use environment variables for credentials
    export PGPASSWORD="your_secure_password"
    claude mcp add postgres -s user -e PGPASSWORD=$PGPASSWORD -- \
-     npx -y @modelcontextprotocol/server-postgres \
-     "postgresql://user@host/db"
+   npx -y @modelcontextprotocol/server-postgres \
+   "postgresql://user@host/db"
 
    # 2. Create read-only user for MCP
    CREATE ROLE mcp_readonly WITH LOGIN PASSWORD 'secure_password';
@@ -496,65 +558,125 @@ Security Considerations
    ALTER SYSTEM SET log_min_duration_statement = 1000;  -- Log queries > 1s
    SELECT pg_reload_conf();
 
-.. raw:: html
+   .. raw:: html
 
    </div>
 
-Next Steps
-----------
+   Next Steps
+   ----------
 
-.. raw:: html
+   .. raw:: html
+
+   .. raw:: html
 
    <div class="showcase-section">
-      <div class="showcase-header">
-         <h2>🚀 Explore More MCP Servers</h2>
-      </div>
-      <div class="agent-showcase">
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">📁</div>
-               <div>
-                  <h3 class="agent-title">Filesystem Server</h3>
-                  <p class="agent-subtitle">Advanced file operations</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Browse, read, and manage files with the filesystem MCP server.
-            </p>
-            <a href="../filesystem/index.html" class="agent-link">Learn More</a>
-         </div>
 
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">🐙</div>
-               <div>
-                  <h3 class="agent-title">GitHub Server</h3>
-                  <p class="agent-subtitle">Repository management</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Manage issues, PRs, and repository operations through MCP.
-            </p>
-            <a href="../github/index.html" class="agent-link">Learn More</a>
-         </div>
+   .. raw:: html
 
-         <div class="agent-card">
-            <div class="agent-header">
-               <div class="agent-emoji">🔍</div>
-               <div>
-                  <h3 class="agent-title">Search Server</h3>
-                  <p class="agent-subtitle">Web search integration</p>
-               </div>
-            </div>
-            <p class="agent-description">
-               Search the web with Brave Search API through MCP.
-            </p>
-            <a href="../search/index.html" class="agent-link">Learn More</a>
-         </div>
-      </div>
+   <div class="showcase-header">
+   <h2>🚀 Explore More MCP Servers</h2>
    </div>
 
-.. seealso::
+   .. raw:: html
+
+   <div class="agent-showcase">
+
+   .. raw:: html
+
+   <div class="agent-card">
+
+   .. raw:: html
+
+   <div class="agent-header">
+
+   .. raw:: html
+
+   <div class="agent-emoji">📁</div>
+
+   .. raw:: html
+
+   <div>
+   <h3 class="agent-title">Filesystem Server</h3>
+   <p class="agent-subtitle">Advanced file operations</p>
+   </div>
+
+   .. raw:: html
+
+   </div>
+   <p class="agent-description">
+
+               Browse, read, and manage files with the filesystem MCP server.
+   .. raw:: html
+
+   </p>
+   <a href="../filesystem/index.html" class="agent-link">Learn More</a>
+   </div>
+
+   .. raw:: html
+
+   <div class="agent-card">
+
+   .. raw:: html
+
+   <div class="agent-header">
+
+   .. raw:: html
+
+   <div class="agent-emoji">🐙</div>
+
+   .. raw:: html
+
+   <div>
+   <h3 class="agent-title">GitHub Server</h3>
+   <p class="agent-subtitle">Repository management</p>
+   </div>
+
+   .. raw:: html
+
+   </div>
+   <p class="agent-description">
+
+               Manage issues, PRs, and repository operations through MCP.
+   .. raw:: html
+
+   </p>
+   <a href="../github/index.html" class="agent-link">Learn More</a>
+   </div>
+
+   .. raw:: html
+
+   <div class="agent-card">
+
+   .. raw:: html
+
+   <div class="agent-header">
+
+   .. raw:: html
+
+   <div class="agent-emoji">🔍</div>
+
+   .. raw:: html
+
+   <div>
+   <h3 class="agent-title">Search Server</h3>
+   <p class="agent-subtitle">Web search integration</p>
+   </div>
+
+   .. raw:: html
+
+   </div>
+   <p class="agent-description">
+
+               Search the web with Brave Search API through MCP.
+   .. raw:: html
+
+   </p>
+   <a href="../search/index.html" class="agent-link">Learn More</a>
+   </div>
+   </div>
+   </div>
+
+   .. seealso::
 
    - :doc:`../index` - MCP overview and setup
    - :doc:`../../guides/mcp_integration` - Integration guide

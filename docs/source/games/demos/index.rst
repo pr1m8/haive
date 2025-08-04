@@ -4,9 +4,11 @@ Game Demos
 Interactive game demonstrations with playable interfaces and AI opponents.
 
 .. grid:: 1 2 3 3
+
    :gutter: 3
 
    .. grid-item-card:: 🚢 Battleship
+
       :link: battleship-demo
       :link-type: doc
 
@@ -15,6 +17,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
       **Complexity**: Medium
 
    .. grid-item-card:: 🔍 Clue (Cluedo)
+
       :link: clue-demo
       :link-type: doc
 
@@ -23,6 +26,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
       **Complexity**: High
 
    .. grid-item-card:: 🔴 Connect Four
+
       :link: connect4-demo
       :link-type: doc
 
@@ -31,6 +35,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
       **Complexity**: Low
 
    .. grid-item-card:: 💬 Debate
+
       :link: debate-demo
       :link-type: doc
 
@@ -39,6 +44,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
       **Complexity**: High
 
    .. grid-item-card:: 🁯 Dominoes
+
       :link: dominoes-demo
       :link-type: doc
 
@@ -47,6 +53,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
       **Complexity**: Medium
 
    .. grid-item-card:: 🦊 Fox and Geese
+
       :link: fox_and_geese-demo
       :link-type: doc
 
@@ -55,6 +62,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
       **Complexity**: Medium
 
    .. grid-item-card:: ⚫ Go
+
       :link: go-demo
       :link-type: doc
 
@@ -63,6 +71,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
       **Complexity**: Very High
 
    .. grid-item-card:: 🕵️ Mafia
+
       :link: mafia-demo
       :link-type: doc
 
@@ -71,6 +80,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
       **Complexity**: Medium
 
    .. grid-item-card:: 🎯 Mastermind
+
       :link: mastermind-demo
       :link-type: doc
 
@@ -79,6 +89,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
       **Complexity**: Medium
 
    .. grid-item-card:: 🎮 Nim
+
       :link: nim-demo
       :link-type: doc
 
@@ -87,6 +98,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
       **Complexity**: Low
 
    .. grid-item-card:: ♠️ Poker
+
       :link: poker-demo
       :link-type: doc
 
@@ -95,6 +107,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
       **Complexity**: High
 
    .. grid-item-card:: ⚪ Reversi (Othello)
+
       :link: reversi-demo
       :link-type: doc
 
@@ -103,6 +116,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
       **Complexity**: Medium
 
    .. grid-item-card:: 🗺️ Risk
+
       :link: risk-demo
       :link-type: doc
 
@@ -111,6 +125,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
       **Complexity**: High
 
    .. grid-item-card:: 🃏 Texas Hold'em
+
       :link: hold_em-demo
       :link-type: doc
 
@@ -119,6 +134,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
       **Complexity**: High
 
    .. grid-item-card:: ❌ Tic Tac Toe
+
       :link: tictactoe-demo
       :link-type: doc
 
@@ -126,9 +142,8 @@ Interactive game demonstrations with playable interfaces and AI opponents.
 
       **Complexity**: Low
 
-
-
 .. toctree::
+
    :maxdepth: 1
    :hidden:
 

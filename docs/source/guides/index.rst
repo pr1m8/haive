@@ -10,6 +10,7 @@ Core Concepts
 -------------
 
 .. toctree::
+
    :maxdepth: 1
 
    core_concepts
@@ -21,6 +22,7 @@ Building Agents
 ---------------
 
 .. toctree::
+
    :maxdepth: 2
 
    building_agents
@@ -33,6 +35,7 @@ Working with Tools
 ------------------
 
 .. toctree::
+
    :maxdepth: 2
 
    using_tools
@@ -44,6 +47,7 @@ Documentation & Examples
 ------------------------
 
 .. toctree::
+
    :maxdepth: 2
 
    documentation/index
@@ -54,6 +58,7 @@ Integration Guides
 ------------------
 
 .. toctree::
+
    :maxdepth: 2
 
    frontend_integration
@@ -62,6 +67,7 @@ Advanced Topics
 ---------------
 
 .. toctree::
+
    :maxdepth: 2
 
    advanced_patterns

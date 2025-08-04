@@ -2,7 +2,8 @@ Custom Agents
 =============
 
 .. warning::
-   **This page is under development***.** 
+
+   **This page is under development***.** **
    
    We're actively working on this documentation section and it will be available soon.
 
@@ -10,11 +11,12 @@ Custom Agents
   *** **BETA STATU***S**: The Haive framework is currently in beta. APIs and functionality may change.
 
 .. admonition:: Future Content
-   :class: tip
+
+   :class:`tip`
    
    This section will include:
 
-  *** * Step-by-step guide for creating custom agents
+  *** * Step-by-step guide for creating custom agents*
   * * Agent state management strategies
   * * Custom prompt engineering techniques
   * * Integration with specialized tools
@@ -29,7 +31,7 @@ Custom Agents
   * * Document agent composition techniques
 
 -------
-*
-**Want to contribute***?** We welcome contributions to our documentation. 
+*******
+**Want to contribute***?** We welcome contributions to our documentation. **
 
 `See our contribution guidelines <https://github.com/will-astley/haive/blob/main/CONTRIBUTING.md>`_.***

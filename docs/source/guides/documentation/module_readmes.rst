@@ -23,7 +23,7 @@ Standard README Structure
 
 Each game module README should follow this structure:
 
-1. **Title and Overvie***w**: Brief introduction to the module
+1. **Title and Overvie***w**: Brief introduction to the module**
 
 2.*** **Feature***s**: List of key features
 
@@ -64,7 +64,7 @@ Example README Template
 
     ## Usage Example
 
-    ```python
+    ```python`
     from haive.games.{module_name} import {Game Name}Agent
     from haive.games.{module_name} import {Game Name}Config
 
@@ -109,48 +109,48 @@ Example README Template
     - Full compatibility with LLM-based reasoning
     - Langgraph-based workflow management
 
-Automatically Generating READMEs
+    Automatically Generating READMEs
 
---------------------------------
+    --------------------------------
 
-The ``add_docstrings.p``y`` script can automatically generate README files for modules that don't have them:
+    The ``add_docstrings.p``y`` script can automatically generate README files for modules that don't have them:
 
 .. code-block:: bash
 
     python scripts/add_docstrings.py --path src/haive/games/chess
 
-This will:
+    This will:
 
-1. Analyze the module structure
+    1. Analyze the module structure
 
-2. Identify components and features
+    2. Identify components and features
 
-3. Create a README.md file based on the template
-4. Fill in module-specific details
+    3. Create a README.md file based on the template
+    4. Fill in module-specific details
 
-Customizing Generated READMEs
+    Customizing Generated READMEs
 
------------------------------
+    -----------------------------
 
-After generating a README with the script, you should:
+    After generating a README with the script, you should:
 
-1. Review the content for accuracy
+    1. Review the content for accuracy
 
-2. Add game-specific rules and strategy information
+    2. Add game-specific rules and strategy information
 
-3. Enhance the usage examples with more detailed scenarios
-4. Add any special considerations or limitations
+    3. Enhance the usage examples with more detailed scenarios
+    4. Add any special considerations or limitations
 
-The generated README serves as a starting point that should be further customized for each module.
+    The generated README serves as a starting point that should be further customized for each module.
 
-Including READMEs in Documentation
+    Including READMEs in Documentation
 
-----------------------------------
+    ----------------------------------
 
-Module READMEs can be included in the Sphinx documentation by:
+    Module READMEs can be included in the Sphinx documentation by:
 
-1. Converting them to RST format
+    1. Converting them to RST format
 
-2. Adding them to the appropriate toctree
+    2. Adding them to the appropriate toctree
 
-3. Adding cross-references to relevant API documentation``***
+    3. Adding cross-references to relevant API documentation``***

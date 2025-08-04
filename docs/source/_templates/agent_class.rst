@@ -3,6 +3,7 @@
 .. currentmodule:: {{ module }}
 
 .. autoclass:: {{ objname }}
+
    :members:
    :undoc-members:
    :show-inheritance:
@@ -17,7 +18,9 @@
 
    .. autosummary::
    {% for item in methods %}
+
       ~{{ name }}.{{ item }}
+
    {%- endfor %}
    {% endif %}
    {% endblock %}
@@ -28,7 +31,9 @@
 
    .. autosummary::
    {% for item in attributes %}
+
       ~{{ name }}.{{ item }}
+
    {%- endfor %}
    {% endif %}
    {% endblock %}

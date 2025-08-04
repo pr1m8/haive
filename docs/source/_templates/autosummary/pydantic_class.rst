@@ -3,6 +3,7 @@
 .. currentmodule:: {{ module }}
 
 .. autopydantic_model:: {{ objname }}
+
    :members:
    :undoc-members:
    :show-inheritance:
@@ -23,9 +24,13 @@
    .. rubric:: {{ _('Methods') }}
 
    .. autosummary::
+
       :nosignatures:
+
    {% for item in methods %}
+
       ~{{ name }}.{{ item }}
+
    {%- endfor %}
    {% endif %}
    {% endblock %}
@@ -36,7 +41,9 @@
 
    .. autosummary::
    {% for item in attributes %}
+
       ~{{ name }}.{{ item }}
+
    {%- endfor %}
    {% endif %}
    {% endblock %}

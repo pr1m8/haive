@@ -1,10 +1,12 @@
+###############
 Real Examples
-=============
+###############
 
 .. toctree::
+
    :maxdepth: 2
    :caption: Real Agent Examples
-   
+
    real_examples/among_us_examples
    real_examples/base_examples
    real_examples/base_v2_examples

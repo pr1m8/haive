@@ -1,13 +1,18 @@
 {% if obj.display %}
+
    {% if is_own_page %}
+
 {{ obj.id | fix_module_name }}
-{{ "=" * (obj.id | fix_module_name) | length }}
+{{ "=" * (obj.id | fix_module_name) | length }}*
 
    {% endif %}
+
 .. py:function:: {% if is_own_page %}{{ obj.id | fix_module_name }}{% else %}{{ obj.short_name }}{% endif %}({{ obj.args }}){% if obj.return_annotation is not none %} -> {{ obj.return_annotation }}{% endif %}
+
    {% for (args, return_annotation) in obj.overloads %}
 
                  {%+ if is_own_page %}{{ obj.id | fix_module_name }}{% else %}{{ obj.short_name }}{% endif %}({{ args }}){% if return_annotation is not none %} -> {{ return_annotation }}{% endif %}
+
    {% endfor %}
    {% for property in obj.properties %}
 
@@ -18,4 +23,5 @@
 
    {{ obj.docstring|indent(3) }}
    {% endif %}
+
 {% endif %}

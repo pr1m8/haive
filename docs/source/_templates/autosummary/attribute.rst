@@ -3,4 +3,5 @@
 .. currentmodule:: {{ module }}
 
 .. autodata:: {{ objname }}
+
    :annotation:

@@ -4,6 +4,7 @@ RAG Agents
 Retrieval-Augmented Generation agents combine the power of LLMs with external knowledge sources.
 
 .. note::
+
    
    This is the user guide for RAG agents. For API documentation, see :doc:`/api/haive/agents/rag/index`.
 
@@ -30,48 +31,58 @@ Quick Start
    
    # Create RAG agent
    rag_agent = BaseRAGAgent(
+
        name="knowledge_assistant",
        vectorstore=vectorstore,
        retriever_config={"k": 5}
+
    )
    
    # Ask questions
    response = await rag_agent.arun(
+
        "What are the key features of our product?"
+
    )
 
-RAG Agent Types
----------------
+   RAG Agent Types
+   ---------------
 
-.. grid:: 2
+   .. grid:: 2
+
    :gutter: 3
 
    .. grid-item-card:: BaseRAGAgent
+
       :text-align: center
 
       Foundation RAG implementation with customizable retrieval
 
    .. grid-item-card:: HybridRAGAgent
+
       :text-align: center
 
       Combines keyword and semantic search
 
    .. grid-item-card:: AdaptiveRAGAgent
+
       :text-align: center
 
       Dynamically adjusts retrieval strategy
 
    .. grid-item-card:: GraphRAGAgent
+
       :text-align: center
 
       Knowledge graph-enhanced retrieval
 
-Examples
---------
+   Examples
+   --------
 
-See our :doc:`/guides/rag_agents` guide for detailed examples and best practices.
+   See our :doc:`/guides/rag_agents` guide for detailed examples and best practices.
 
-.. toctree::
+   .. toctree::
+
    :maxdepth: 2
    :hidden:
 

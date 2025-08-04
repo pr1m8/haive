@@ -1,0 +1,18 @@
+[
+  {
+    "success": true,
+    "package": "core",
+    "preset": "minimal",
+    "build_time": 0.6559758186340332,
+    "file_counts": {
+      "html": 3,
+      "css": 4,
+      "js": 6,
+      "api": 0
+    },
+    "has_api": false,
+    "total_size_mb": 0.08949470520019531,
+    "summary": "0.7s, 3 files, 0.1MB",
+    "timestamp": 1754255323.2131844
+  }
+]

@@ -26,57 +26,57 @@ At a high level, Haive consists of:
     │  └─────────────────┘  │
     └───────────────────────┘
 
-Core Components
----------------
+    Core Components
+    ---------------
 
-Agents
-^^^^^^
+    Agents
+    ^^^^^^
 
-Agents are the primary abstraction in Haive. Each agent:
+    Agents are the primary abstraction in Haive. Each agent:
 
-- Maintains internal state
-- Uses an engine for cognition
-- Accesses tools for capabilities
-- Follows defined patterns for processing
+    - Maintains internal state
+    - Uses an engine for cognition
+    - Accesses tools for capabilities
+    - Follows defined patterns for processing
 
-Engines
-^^^^^^^
+    Engines
+    ^^^^^^^
 
-Engines power agent cognition:
+    Engines power agent cognition:
 
-- **LLM Engines**: Connect to language models
-- **Vector Engines**: Manage embeddings and retrieval
-- **Specialized Engines**: Handle specific AI tasks
+    - **LLM Engines**: Connect to language models
+    - **Vector Engines**: Manage embeddings and retrieval
+    - **Specialized Engines**: Handle specific AI tasks
 
-Tools
-^^^^^
+    Tools
+    ^^^^^
 
-Tools extend agent capabilities:
+    Tools extend agent capabilities:
 
-- Perform specific functions
-- Access external systems
-- Execute specialized operations
-- Return structured results
+    - Perform specific functions
+    - Access external systems
+    - Execute specialized operations
+    - Return structured results
 
-State Management
-^^^^^^^^^^^^^^^^
+    State Management
+    ^^^^^^^^^^^^^^^^
 
-The state system:
+    The state system:
 
-- Tracks agent knowledge
-- Ensures persistence
-- Enables structured data schemas
-- Manages memory and context
+    - Tracks agent knowledge
+    - Ensures persistence
+    - Enables structured data schemas
+    - Manages memory and context
 
-Node System
------------
+    Node System
+    -----------
 
-The node system is a key architectural innovation, enabling:
+    The node system is a key architectural innovation, enabling:
 
-- Composable processing units
-- Flexible execution flows
-- Dynamic routing between components
-- Reusable patterns
+    - Composable processing units
+    - Flexible execution flows
+    - Dynamic routing between components
+    - Reusable patterns
 
 .. code-block:: text
 
@@ -91,32 +91,32 @@ The node system is a key architectural innovation, enabling:
     │   Node    │
     └───────────┘
 
-Graph System
-------------
+    Graph System
+    ------------
 
-For complex agent behaviors, Haive uses a graph-based execution model:
+    For complex agent behaviors, Haive uses a graph-based execution model:
 
-- Nodes connected in directed graphs
-- Conditional routing between nodes
-- State transformation across nodes
-- Parallelism and asynchronous execution
+    - Nodes connected in directed graphs
+    - Conditional routing between nodes
+    - State transformation across nodes
+    - Parallelism and asynchronous execution
 
-Extension Points
-----------------
+    Extension Points
+    ----------------
 
-Haive is designed for extensibility:
+    Haive is designed for extensibility:
 
-- **Custom Agents**: Specialized agent types
-- **Custom Tools**: New capabilities
-- **Custom Engines**: Alternative cognition engines
-- **Custom Nodes**: Specialized processing components
-- **Custom Patterns**: Reusable behavioral templates
+    - **Custom Agents**: Specialized agent types
+    - **Custom Tools**: New capabilities
+    - **Custom Engines**: Alternative cognition engines
+    - **Custom Nodes**: Specialized processing components
+    - **Custom Patterns**: Reusable behavioral templates
 
-Next Steps
-----------
+    Next Steps
+    ----------
 
-Continue with:
+    Continue with:
 
-- :doc:`state_management` - Understanding agent state
-- :doc:`engine_system` - Working with cognitive engines
-- :doc:`agent_patterns` - Common agent design patterns
+    - :doc:`state_management` - Understanding agent state
+    - :doc:`engine_system` - Working with cognitive engines
+    - :doc:`agent_patterns` - Common agent design patterns

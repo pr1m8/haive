@@ -27,6 +27,7 @@ Simple RAG Agents
 ~~~~~~~~~~~~~~~~~
 
 **SimpleRAGAgent**
+
    - Location: ``haive.agents.rag.simple``
    - Basic retrieval and generation
    - Best for: Quick prototypes and simple Q&A
@@ -43,18 +44,20 @@ Simple RAG Agents
 
     result = await agent.query("What is RAG?")
 
-**LLMRAGAgent**
-   - Location: ``haive.agents.rag.llm_rag``
-   - Direct LLM integration without complex routing
-   - Best for: When you have high-quality embeddings
+    **LLMRAGAgent**
 
-Advanced Query Processing
-~~~~~~~~~~~~~~~~~~~~~~~~~
+    - Location: ``haive.agents.rag.llm_rag``
+    - Direct LLM integration without complex routing
+    - Best for: When you have high-quality embeddings
 
-**HyDERAGAgent** (Hypothetical Document Embeddings)
-   - Location: ``haive.agents.rag.hyde``
-   - Generates hypothetical documents to improve retrieval
-   - Best for: Abstract or conceptual queries
+    Advanced Query Processing
+    ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    **HyDERAGAgent** (Hypothetical Document Embeddings)
+
+    - Location: ``haive.agents.rag.hyde``
+    - Generates hypothetical documents to improve retrieval
+    - Best for: Abstract or conceptual queries
 
 .. code-block:: python
 
@@ -66,23 +69,26 @@ Advanced Query Processing
     hypothesis_model="gpt-4"
     )
 
-**MultiQueryRAGAgent**
-   - Location: ``haive.agents.rag.multi_query``
-   - Generates multiple query variations
-   - Best for: Ambiguous or multi-faceted queries
+    **MultiQueryRAGAgent**
 
-**StepBackRAGAgent**
-   - Location: ``haive.agents.rag.step_back``
-   - Creates abstracted queries for better context
-   - Best for: Specific questions needing broader context
+    - Location: ``haive.agents.rag.multi_query``
+    - Generates multiple query variations
+    - Best for: Ambiguous or multi-faceted queries
 
-Document Grading & Validation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    **StepBackRAGAgent**
 
-**CorrectiveRAGAgent**
-   - Location: ``haive.agents.rag.corrective``
-   - Implements document grading and re-retrieval
-   - Best for: High-accuracy requirements
+    - Location: ``haive.agents.rag.step_back``
+    - Creates abstracted queries for better context
+    - Best for: Specific questions needing broader context
+
+    Document Grading & Validation
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    **CorrectiveRAGAgent**
+
+    - Location: ``haive.agents.rag.corrective``
+    - Implements document grading and re-retrieval
+    - Best for: High-accuracy requirements
 
 .. code-block:: python
 
@@ -95,23 +101,26 @@ Document Grading & Validation
     max_retries=3
     )
 
-**SelfRAGAgent**
-   - Location: ``haive.agents.rag.self_reflective``
-   - Self-reflection and critique mechanisms
-   - Best for: Complex reasoning tasks
+    **SelfRAGAgent**
 
-**HallucinationGradingAgent**
-   - Location: ``haive.agents.rag.hallucination_grading``
-   - Validates answers against source documents
-   - Best for: Factual accuracy critical applications
+    - Location: ``haive.agents.rag.self_reflective``
+    - Self-reflection and critique mechanisms
+    - Best for: Complex reasoning tasks
 
-Specialized Architectures
-~~~~~~~~~~~~~~~~~~~~~~~~~
+    **HallucinationGradingAgent**
 
-**AdaptiveRAGAgent**
-   - Location: ``haive.agents.rag.adaptive``
-   - Dynamically adjusts retrieval strategy
-   - Best for: Diverse query types
+    - Location: ``haive.agents.rag.hallucination_grading``
+    - Validates answers against source documents
+    - Best for: Factual accuracy critical applications
+
+    Specialized Architectures
+    ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    **AdaptiveRAGAgent**
+
+    - Location: ``haive.agents.rag.adaptive``
+    - Dynamically adjusts retrieval strategy
+    - Best for: Diverse query types
 
 .. code-block:: python
 
@@ -123,23 +132,26 @@ Specialized Architectures
     auto_select=True
     )
 
-**FusionRAGAgent**
-   - Location: ``haive.agents.rag.fusion``
-   - Combines multiple retrieval methods
-   - Best for: Maximum recall requirements
+    **FusionRAGAgent**
 
-**SpeculativeRAGAgent**
-   - Location: ``haive.agents.rag.speculative``
-   - Parallel retrieval with speculation
-   - Best for: Low-latency requirements
+    - Location: ``haive.agents.rag.fusion``
+    - Combines multiple retrieval methods
+    - Best for: Maximum recall requirements
 
-Database-Specific RAG
-~~~~~~~~~~~~~~~~~~~~~
+    **SpeculativeRAGAgent**
 
-**SQLRAGAgent**
-   - Location: ``haive.agents.rag.db_rag.sql_rag``
-   - Text-to-SQL with retrieval augmentation
-   - Best for: Structured data queries
+    - Location: ``haive.agents.rag.speculative``
+    - Parallel retrieval with speculation
+    - Best for: Low-latency requirements
+
+    Database-Specific RAG
+    ~~~~~~~~~~~~~~~~~~~~~
+
+    **SQLRAGAgent**
+
+    - Location: ``haive.agents.rag.db_rag.sql_rag``
+    - Text-to-SQL with retrieval augmentation
+    - Best for: Structured data queries
 
 .. code-block:: python
 
@@ -151,18 +163,20 @@ Database-Specific RAG
     schema_description="sales database"
     )
 
-**GraphRAGAgent**
-   - Location: ``haive.agents.rag.db_rag.graph_db``
-   - Graph database retrieval
-   - Best for: Relationship-heavy queries
+    **GraphRAGAgent**
 
-Multi-Agent RAG Systems
-~~~~~~~~~~~~~~~~~~~~~~~
+    - Location: ``haive.agents.rag.db_rag.graph_db``
+    - Graph database retrieval
+    - Best for: Relationship-heavy queries
 
-**MultiAgentRAG**
-   - Location: ``haive.agents.rag.multi_agent_rag``
-   - Orchestrates multiple specialized RAG agents
-   - Best for: Complex workflows
+    Multi-Agent RAG Systems
+    ~~~~~~~~~~~~~~~~~~~~~~~
+
+    **MultiAgentRAG**
+
+    - Location: ``haive.agents.rag.multi_agent_rag``
+    - Orchestrates multiple specialized RAG agents
+    - Best for: Complex workflows
 
 .. code-block:: python
 
@@ -176,11 +190,11 @@ Multi-Agent RAG Systems
     }
     )
 
-Configuration Patterns
-----------------------
+    Configuration Patterns
+    ----------------------
 
-Basic Configuration
-~~~~~~~~~~~~~~~~~~~
+    Basic Configuration
+    ~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -208,8 +222,8 @@ Basic Configuration
     memory_type="conversation_buffer"
     )
 
-Advanced Configuration
-~~~~~~~~~~~~~~~~~~~~~~
+    Advanced Configuration
+    ~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -232,11 +246,11 @@ Advanced Configuration
     fallback_strategy="factual"
     )
 
-Common Patterns
----------------
+    Common Patterns
+    ---------------
 
-Query Enhancement
-~~~~~~~~~~~~~~~~~
+    Query Enhancement
+    ~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -249,8 +263,8 @@ Query Enhancement
     )
     # Result: ["advantages of solar energy", "disadvantages of solar energy", ...]
 
-Document Processing
-~~~~~~~~~~~~~~~~~~~
+    Document Processing
+    ~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -265,8 +279,8 @@ Document Processing
 
     score = await grader.grade(document, query)
 
-Hallucination Prevention
-~~~~~~~~~~~~~~~~~~~~~~~~
+    Hallucination Prevention
+    ~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -279,11 +293,11 @@ Hallucination Prevention
     sources=retrieved_documents
     )
 
-Performance Optimization
-------------------------
+    Performance Optimization
+    ------------------------
 
-Caching Strategies
-~~~~~~~~~~~~~~~~~~
+    Caching Strategies
+    ~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -298,8 +312,8 @@ Caching Strategies
     cache_ttl=3600  # 1 hour
     )
 
-Batch Processing
-~~~~~~~~~~~~~~~~
+    Batch Processing
+    ~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -312,8 +326,8 @@ Batch Processing
     parallel=True
     )
 
-Streaming Responses
-~~~~~~~~~~~~~~~~~~~
+    Streaming Responses
+    ~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -321,11 +335,11 @@ Streaming Responses
     async for chunk in agent.stream_query("Complex question"):
     print(chunk, end="", flush=True)
 
-Integration Examples
---------------------
+    Integration Examples
+    --------------------
 
-With Memory Systems
-~~~~~~~~~~~~~~~~~~~
+    With Memory Systems
+    ~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -338,8 +352,8 @@ With Memory Systems
     include_memory_in_context=True
     )
 
-With Tool Usage
-~~~~~~~~~~~~~~~
+    With Tool Usage
+    ~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -352,8 +366,8 @@ With Tool Usage
     tool_selection="auto"
     )
 
-With Structured Output
-~~~~~~~~~~~~~~~~~~~~~~
+    With Structured Output
+    ~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -370,61 +384,65 @@ With Structured Output
     output_schema=AnalysisResult
     )
 
-Best Practices
---------------
+    Best Practices
+    --------------
 
-1. **Choose the Right Agent**
+    1. **Choose the Right Agent**
 
-   - Start with SimpleRAGAgent for prototypes
-   - Use CorrectiveRAGAgent for accuracy-critical tasks
-   - Deploy AdaptiveRAGAgent for diverse query types
+    - Start with SimpleRAGAgent for prototypes
+    - Use CorrectiveRAGAgent for accuracy-critical tasks
+    - Deploy AdaptiveRAGAgent for diverse query types
 
-2. **Optimize Retrieval**
+    2. **Optimize Retrieval**
 
-   - Tune chunk size based on your content
-   - Use hybrid search for better recall
-   - Implement semantic caching for common queries
+    - Tune chunk size based on your content
+    - Use hybrid search for better recall
+    - Implement semantic caching for common queries
 
-3. **Ensure Quality**
+    3. **Ensure Quality**
 
-   - Always enable document grading for production
-   - Implement hallucination checks for factual content
-   - Monitor retrieval and generation metrics
+    - Always enable document grading for production
+    - Implement hallucination checks for factual content
+    - Monitor retrieval and generation metrics
 
-4. **Scale Efficiently**
+    4. **Scale Efficiently**
 
-   - Use batch processing for multiple queries
-   - Implement connection pooling for databases
-   - Cache embeddings for frequently accessed documents
+    - Use batch processing for multiple queries
+    - Implement connection pooling for databases
+    - Cache embeddings for frequently accessed documents
 
-Troubleshooting
----------------
+    Troubleshooting
+    ---------------
 
-Common Issues
-~~~~~~~~~~~~~
+    Common Issues
+    ~~~~~~~~~~~~~
 
-**Low Retrieval Quality**
-   - Increase ``top_k`` parameter
-   - Try different embedding models
-   - Implement query enhancement (HyDE, multi-query)
+    **Low Retrieval Quality**
 
-**Hallucinations**
-   - Enable strict document grading
-   - Reduce generation temperature
-   - Implement fact-checking post-processing
+    - Increase ``top_k`` parameter
+    - Try different embedding models
+    - Implement query enhancement (HyDE, multi-query)
 
-**Performance Issues**
-   - Enable caching
-   - Use smaller embedding models
-   - Implement async processing
+    **Hallucinations**
 
-**Context Limits**
-   - Implement document summarization
-   - Use relevance-based truncation
-   - Consider multi-turn interactions
+    - Enable strict document grading
+    - Reduce generation temperature
+    - Implement fact-checking post-processing
 
-Monitoring & Debugging
-~~~~~~~~~~~~~~~~~~~~~~
+    **Performance Issues**
+
+    - Enable caching
+    - Use smaller embedding models
+    - Implement async processing
+
+    **Context Limits**
+
+    - Implement document summarization
+    - Use relevance-based truncation
+    - Consider multi-turn interactions
+
+    Monitoring & Debugging
+    ~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -444,11 +462,11 @@ Monitoring & Debugging
     print(f"Avg retrieval time: {metrics.avg_retrieval_time}s")
     print(f"Avg generation time: {metrics.avg_generation_time}s")
 
-Advanced Topics
----------------
+    Advanced Topics
+    ---------------
 
-Custom RAG Implementation
-~~~~~~~~~~~~~~~~~~~~~~~~~
+    Custom RAG Implementation
+    ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -467,8 +485,8 @@ Custom RAG Implementation
     # Custom generation logic
     pass
 
-Factory Pattern Usage
-~~~~~~~~~~~~~~~~~~~~~
+    Factory Pattern Usage
+    ~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -484,8 +502,8 @@ Factory Pattern Usage
     "grading_enabled": True
     })
 
-Multi-Modal RAG
-~~~~~~~~~~~~~~~
+    Multi-Modal RAG
+    ~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -500,10 +518,10 @@ Multi-Modal RAG
     }
     )
 
-See Also
---------
+    See Also
+    --------
 
-- **RAG API Reference**: ``/docs/source/api/agents/rag.rst``
-- **Vector Store Configuration**: ``/docs/source/guides/vector_stores.rst``
-- **Embedding Models Guide**: ``/docs/source/guides/embeddings.rst``
-- **RAG Examples**: ``/examples/rag/``
+    - **RAG API Reference**: ``/docs/source/api/agents/rag.rst``
+    - **Vector Store Configuration**: ``/docs/source/guides/vector_stores.rst``
+    - **Embedding Models Guide**: ``/docs/source/guides/embeddings.rst``
+    - **RAG Examples**: ``/examples/rag/``

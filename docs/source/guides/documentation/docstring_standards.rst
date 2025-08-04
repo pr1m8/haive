@@ -26,11 +26,11 @@ Module docstrings should be placed at the top of the file and describe the modul
 
 """"""""""""""""""""""""""""
 
-Class Docstrings
+    Class Docstrings
 
-----------------
+    ----------------
 
-Class docstrings should describe the class's purpose, functionality, attributes, and provide usage examples.
+    Class docstrings should describe the class's purpose, functionality, attributes, and provide usage examples.
 
 .. code-block:: python
 
@@ -49,11 +49,11 @@ Class docstrings should describe the class's purpose, functionality, attributes,
 
 """""""""""""""""""""""""""""""""
 
-Method/Function Docstrings
+    Method/Function Docstrings
 
---------------------------
+    --------------------------
 
-Function docstrings should describe the function's purpose, parameters, return values, exceptions, and provide usage examples.
+    Function docstrings should describe the function's purpose, parameters, return values, exceptions, and provide usage examples.
 
 .. code-block:: python
 
@@ -75,11 +75,11 @@ Function docstrings should describe the function's purpose, parameters, return v
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Pydantic Models
+    Pydantic Models
 
----------------
+    ---------------
 
-Pydantic models should have class docstrings and field descriptions.
+    Pydantic models should have class docstrings and field descriptions.
 
 .. code-block:: python
 
@@ -94,11 +94,11 @@ Pydantic models should have class docstrings and field descriptions.
         field1: type = Field(..., description="Description of field 1")
         field2: type = Field(default, description="Description of field 2")
 
-Game-Specific Docstrings
+    Game-Specific Docstrings
 
-------------------------
+    ------------------------
 
-For game modules, docstrings should include game-specific information:
+    For game modules, docstrings should include game-specific information:
 
 .. code-block:: python
 
@@ -121,21 +121,21 @@ For game modules, docstrings should include game-specific information:
 
 """"""""""""""""""""""""""""""""""""""""
 
-Special Cases
+    Special Cases
 
--------------
+    -------------
 
-1. **Abstract Method***s**: Should include a description of what implementing classes should do.
+    1. **Abstract Method***s**: Should include a description of what implementing classes should do.**
 
-2.*** **Propertie***s**: Should document the value being returned rather than parameters.
+    2.*** **Propertie***s**: Should document the value being returned rather than parameters.
 
-3.*** **Private Method***s**: Should still be documented even though they're not part of the public API.
+    3.*** **Private Method***s**: Should still be documented even though they're not part of the public API.
 
-Docstring Generation
+    Docstring Generation
 
---------------------
+    --------------------
 
-The ``add_docstrings.p``y`` script in the`` ``script``s`` directory can automatically generate appropriate docstrings for your code based on naming conventions and context.
+    The ``add_docstrings.p``y`` script in the`` ``script``s`` directory can automatically generate appropriate docstrings for your code based on naming conventions and context.
 
 .. code-block:: bash
 

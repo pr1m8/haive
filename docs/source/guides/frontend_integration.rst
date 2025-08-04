@@ -81,60 +81,60 @@ Configuration Options
     chunk_size: number;           // Buffer size (if buffering enabled)
     }
 
-Stream Modes
-~~~~~~~~~~~~
+    Stream Modes
+    ~~~~~~~~~~~~
 
-1. **Messages Mode** (``stream_mode: "messages"``)
+    1. **Messages Mode** (``stream_mode: "messages"``)
 
-   - Best for: Chat interfaces
-   - Returns: Individual message content
-   - Format options: ``text`` or ``json``
+    - Best for: Chat interfaces
+    - Returns: Individual message content
+    - Format options: ``text`` or ``json``
 
-2. **Values Mode** (``stream_mode: "values"``)
+    2. **Values Mode** (``stream_mode: "values"``)
 
-   - Best for: State-based applications
-   - Returns: Complete state values
-   - Format options: ``structured`` or ``json``
+    - Best for: State-based applications
+    - Returns: Complete state values
+    - Format options: ``structured`` or ``json``
 
-3. **Updates Mode** (``stream_mode: "updates"``)
+    3. **Updates Mode** (``stream_mode: "updates"``)
 
-   - Best for: Real-time progress tracking
-   - Returns: Only changes/updates
-   - Format options: ``structured``
+    - Best for: Real-time progress tracking
+    - Returns: Only changes/updates
+    - Format options: ``structured``
 
-4. **Debug Mode** (``stream_mode: "debug"``)
+    4. **Debug Mode** (``stream_mode: "debug"``)
 
-   - Best for: Development and debugging
-   - Returns: Detailed execution information
+    - Best for: Development and debugging
+    - Returns: Detailed execution information
 
-Available Agents
-----------------
+    Available Agents
+    ----------------
 
-Core Agents
-~~~~~~~~~~~
+    Core Agents
+    ~~~~~~~~~~~
 
-- ``SimpleAgent`` - Basic structured output
-- ``ReactAgent`` - Reasoning and action
-- ``ConversationAgent`` - Multi-turn chat
-- ``PlanningAgent`` - Task planning
-- ``ResearchAgent`` - Information gathering
+    - ``SimpleAgent`` - Basic structured output
+    - ``ReactAgent`` - Reasoning and action
+    - ``ConversationAgent`` - Multi-turn chat
+    - ``PlanningAgent`` - Task planning
+    - ``ResearchAgent`` - Information gathering
 
-Specialized Agents
-~~~~~~~~~~~~~~~~~~
+    Specialized Agents
+    ~~~~~~~~~~~~~~~~~~
 
-- ``CodeExecutorAgent`` - Code generation and execution
-- ``DataAnalysisAgent`` - Data processing and analysis
-- ``DocumentAgent`` - Document processing
-- ``RAGAgent`` - Retrieval-augmented generation
-- 20+ more specialized agents
+    - ``CodeExecutorAgent`` - Code generation and execution
+    - ``DataAnalysisAgent`` - Data processing and analysis
+    - ``DocumentAgent`` - Document processing
+    - ``RAGAgent`` - Retrieval-augmented generation
+    - 20+ more specialized agents
 
-Database Integration
---------------------
+    Database Integration
+    --------------------
 
-Supabase Schema
-~~~~~~~~~~~~~~~
+    Supabase Schema
+    ~~~~~~~~~~~~~~~
 
-Conversations are persisted in Supabase with:
+    Conversations are persisted in Supabase with:
 
 .. code-block:: sql
 
@@ -158,11 +158,11 @@ Conversations are persisted in Supabase with:
     id, agent_name, config_data, created_at
     )
 
-Frontend Implementation
------------------------
+    Frontend Implementation
+    -----------------------
 
-WebSocket Connection
-~~~~~~~~~~~~~~~~~~~~
+    WebSocket Connection
+    ~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: javascript
 
@@ -186,8 +186,8 @@ WebSocket Connection
     `ws://localhost:8000/api/ws/chat/SimpleAgent?token=${jwtToken}&config=${encodeURIComponent(JSON.stringify(config))}`
     );
 
-Message Handling
-~~~~~~~~~~~~~~~~
+    Message Handling
+    ~~~~~~~~~~~~~~~~
 
 .. code-block:: javascript
 
@@ -222,8 +222,8 @@ Message Handling
     }
     };
 
-Sending Messages
-~~~~~~~~~~~~~~~~
+    Sending Messages
+    ~~~~~~~~~~~~~~~~
 
 .. code-block:: javascript
 
@@ -233,8 +233,8 @@ Sending Messages
     content: 'Hello, agent!'
     }));
 
-React/Next.js Example
-~~~~~~~~~~~~~~~~~~~~~
+    React/Next.js Example
+    ~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: jsx
 
@@ -288,17 +288,21 @@ React/Next.js Example
     };
 
     return (
+
+    .. raw:: html
+
     <div>
     {/* Render messages and input */}
     </div>
+
     );
     }
 
-Error Handling
---------------
+    Error Handling
+    --------------
 
-Connection Errors
-~~~~~~~~~~~~~~~~~
+    Connection Errors
+    ~~~~~~~~~~~~~~~~~
 
 .. code-block:: javascript
 
@@ -313,45 +317,45 @@ Connection Errors
     }
     };
 
-Authentication Errors
-~~~~~~~~~~~~~~~~~~~~~
+    Authentication Errors
+    ~~~~~~~~~~~~~~~~~~~~~
 
-- **401 Unauthorized**: Invalid or expired JWT token
-- **403 Forbidden**: User doesn't have access to agent
-- **404 Not Found**: Agent doesn't exist
+    - **401 Unauthorized**: Invalid or expired JWT token
+    - **403 Forbidden**: User doesn't have access to agent
+    - **404 Not Found**: Agent doesn't exist
 
-Best Practices
---------------
+    Best Practices
+    --------------
 
-1. **Connection Management**
+    1. **Connection Management**
 
-   - Implement reconnection logic for dropped connections
-   - Clean up WebSocket connections on component unmount
-   - Handle connection state in your UI
+    - Implement reconnection logic for dropped connections
+    - Clean up WebSocket connections on component unmount
+    - Handle connection state in your UI
 
-2. **Message Buffering**
+    2. **Message Buffering**
 
-   - Queue messages when connection is unavailable
-   - Implement retry logic for failed messages
-   - Show connection status to users
+    - Queue messages when connection is unavailable
+    - Implement retry logic for failed messages
+    - Show connection status to users
 
-3. **Performance**
+    3. **Performance**
 
-   - Use appropriate stream modes for your use case
-   - Enable chunk buffering for better performance
-   - Implement virtual scrolling for long conversations
+    - Use appropriate stream modes for your use case
+    - Enable chunk buffering for better performance
+    - Implement virtual scrolling for long conversations
 
-4. **Security**
+    4. **Security**
 
-   - Always validate JWT tokens
-   - Implement rate limiting on the frontend
-   - Sanitize user input before sending
+    - Always validate JWT tokens
+    - Implement rate limiting on the frontend
+    - Sanitize user input before sending
 
-Testing
--------
+    Testing
+    -------
 
-Local Development
-~~~~~~~~~~~~~~~~~
+    Local Development
+    ~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -362,8 +366,8 @@ Local Development
     # Test WebSocket connection
     wscat -c "ws://localhost:8000/api/ws/chat/SimpleAgent?token=YOUR_TOKEN"
 
-Integration Testing
-~~~~~~~~~~~~~~~~~~~
+    Integration Testing
+    ~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: javascript
 
@@ -392,40 +396,40 @@ Integration Testing
     });
     });
 
-Troubleshooting
----------------
+    Troubleshooting
+    ---------------
 
-Common Issues
-~~~~~~~~~~~~~
+    Common Issues
+    ~~~~~~~~~~~~~
 
-1. **Connection Refused**
+    1. **Connection Refused**
 
-   - Check if backend is running
-   - Verify correct host and port
-   - Check firewall settings
+    - Check if backend is running
+    - Verify correct host and port
+    - Check firewall settings
 
-2. **Authentication Failed**
+    2. **Authentication Failed**
 
-   - Verify JWT token is valid
-   - Check token expiration
-   - Ensure user has proper permissions
+    - Verify JWT token is valid
+    - Check token expiration
+    - Ensure user has proper permissions
 
-3. **No Response from Agent**
+    3. **No Response from Agent**
 
-   - Check agent name is correct
-   - Verify agent is properly configured
-   - Check backend logs for errors
+    - Check agent name is correct
+    - Verify agent is properly configured
+    - Check backend logs for errors
 
-4. **Message Format Errors**
+    4. **Message Format Errors**
 
-   - Ensure messages are properly JSON-encoded
-   - Check required fields are present
-   - Validate message types
+    - Ensure messages are properly JSON-encoded
+    - Check required fields are present
+    - Validate message types
 
-Additional Resources
---------------------
+    Additional Resources
+    --------------------
 
-- **Agent Documentation**: ``/docs/source/agents/index.rst``
-- **API Reference**: ``/docs/source/api/index.rst``
-- **Example Applications**: ``/examples/frontend/``
-- **WebSocket Testing**: ``/tests/integration/websocket/``
+    - **Agent Documentation**: ``/docs/source/agents/index.rst``
+    - **API Reference**: ``/docs/source/api/index.rst``
+    - **Example Applications**: ``/examples/frontend/``
+    - **WebSocket Testing**: ``/tests/integration/websocket/``

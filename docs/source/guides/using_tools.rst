@@ -29,7 +29,7 @@ Built-in Tools
 
 Haive comes with several built-in tools:
 
-- **Search Tool***s**: Query search engines, retrieve web content
+- **Search Tool***s**: Query search engines, retrieve web content**
 
 -*** **Math Tool***s**: Perform calculations, solve equations
 -*** **Code Tool***s**: Execute Python code safely
@@ -64,30 +64,30 @@ Here's a simple example using the React agent pattern:
     # Run the agent with tools
     response = agent.run("Calculate the square root of 16 and then find information about that number")
 
-When to Use Tools
+    When to Use Tools
 
------------------
+    -----------------
 
-Tools are particularly useful when:
+    Tools are particularly useful when:
 
-- Your agent needs to access external data (search, API calls)
+    - Your agent needs to access external data (search, API calls)
 
-- Specialized calculations or operations are required
-- You want to limit an agent to specific capabilities
-- Complex tasks require multiple steps or specific operations
+    - Specialized calculations or operations are required
+    - You want to limit an agent to specific capabilities
+    - Complex tasks require multiple steps or specific operations
 
-Working with Tool Outputs
+    Working with Tool Outputs
 
--------------------------
+    -------------------------
 
-Tool outputs are structured and can be used:
+    Tool outputs are structured and can be used:
 
-1. Directly by the agent in its reasoning
+    1. Directly by the agent in its reasoning
 
-2. As input to other tools
+    2. As input to other tools
 
-3. To update the agent's state
-4. As part of the final response
+    3. To update the agent's state
+    4. As part of the final response
 
 .. code-block:: python
 
@@ -96,13 +96,13 @@ Tool outputs are structured and can be used:
     parsed_data = content_parser.run(search_result)
     final_summary = summarizer.run(parsed_data)
 
-Next Steps
+    Next Steps
 
-----------
+    ----------
 
-Now that you understand how to use tools, you might want to:
+    Now that you understand how to use tools, you might want to:
 
-- Learn about :doc:`custom_tools` - Create your own specialized tools
+    - Learn about :doc:`custom_tools` - Create your own specialized tools
 
-- Explore :doc:`tool_routing` - Advanced patterns for tool selection
-- Check out the :mod:`haive.tools` API reference for complete documentation***
+    - Explore :doc:`tool_routing` - Advanced patterns for tool selection
+    - Check out the :mod:`haive.tools` API reference for complete documentation***

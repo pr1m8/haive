@@ -9,18 +9,17 @@ A straightforward agent for content analysis and summarization
 
 **Features:**
 
-* Streaming Support: ✅ Yes
-* Graph Visualization: ✅ Yes
-* Steps Captured: 5
-
+* Streaming Support: ✅ Yes*
+* Graph Visualization: ✅ Yes*
+* Steps Captured: 5*
 
 .. figure:: ../../captures/SimpleAnalysisAgent_graph.png
+
    :alt: SimpleAnalysisAgent Agent Graph
    :align: center
    :width: 80%
    
    Agent Architecture Graph
-
 
 Interactive Example
 -------------------
@@ -36,33 +35,31 @@ Analyzing renewable energy components
     "context": "renewable energy research"
     }
 
-**Result:** ✅ **Success**
+    **Result:** ✅ **Success**
 
-The agent completed successfully.
+    The agent completed successfully.
 
-**Execution Time:** 0.00 seconds
+    **Execution Time:** 0.00 seconds
 
-**Steps:** 5 processing steps
+    **Steps:** 5 processing steps
 
+    Live Execution Capture
+    ----------------------
 
-Live Execution Capture
-----------------------
+    Below is the complete execution trace captured from a live run of this agent:
 
-Below is the complete execution trace captured from a live run of this agent:
+    .. note::
 
+    Agent execution capture available at: ../../captures/SimpleAnalysisAgent_2dc7adda-3576-49f8-a799-0505a1d9604b_20250626_113523.json
 
-.. note::
+    Technical Details
+    -----------------
 
-   Agent execution capture available at: ../../captures/SimpleAnalysisAgent_2dc7adda-3576-49f8-a799-0505a1d9604b_20250626_113523.json
+    **Configuration**
 
-Technical Details
------------------
+    This agent is implemented as a ``ReactAgent`` class.
 
-**Configuration**
-
-This agent is implemented as a ``ReactAgent`` class.
-
-**Input Schema**
+    **Input Schema**
 
 .. code-block:: json
 
@@ -71,7 +68,7 @@ This agent is implemented as a ``ReactAgent`` class.
     "context": "renewable energy research"
     }
 
-**Output Schema**
+    **Output Schema**
 
 .. code-block:: json
 
@@ -84,14 +81,14 @@ This agent is implemented as a ``ReactAgent`` class.
     ]
     }
 
-**Performance**
+    **Performance**
 
-* Execution Time: 0.00s
-* Status: ✅ Success
-* Steps: 5
+    * Execution Time: 0.00s*
+    * Status: ✅ Success*
+    * Steps: 5*
 
-Usage Example
--------------
+    Usage Example
+    -------------
 
 .. code-block:: python
 
@@ -107,8 +104,8 @@ Usage Example
     for update in agent.stream({"question": "What are the key components of a sustainable energy system?", "context": "renewable energy research"}):
     print(update)
 
-See Also
---------
+    See Also
+    --------
 
-* :doc:`../index` - Agent Index
-* :doc:`../showcase` - Agent Showcase
+    * :doc:`../index` - Agent Index*
+    * :doc:`../showcase` - Agent Showcase*
